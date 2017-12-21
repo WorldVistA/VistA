@@ -1,0 +1,359 @@
+$TXT Created by                  CLN1G2.AAC.DOMAIN.EXT  (KIDS) on Thursday, 10/05/17 at 06:01
+=============================================================================
+Run Date: NOV 02, 2017                     Designation: PSO*7*446
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #409                      Status: Released
+                  Compliance Date: DEC 03, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*446'
+                    (v)PSO*7*455   <<= must be installed BEFORE `PSO*7*446'
+                    (v)PSO*7*486   <<= must be installed BEFORE `PSO*7*446'
+
+Subject: RX HOLD, OPAI NON-RELEASE MSG, QTY CALCULATION, WRONG PROVIDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.  
+  
+ 1. Messages from PSO EXTERNAL DISPENSE do not specify site location 
+  
+ 2. Wrong authorization provider is listed on prescription in (PSPO 
+    #2696) CPRS and Outpatient Pharmacy
+  
+ 3. Remarks entered do not display when prescription is placed on Hold 
+  
+ 4. When editing day supply for controlled orders calculating (PSPO 
+    #2580) supply incorrect.
+  
+ 5. When editing the field QTY (#9) of a Pending Order the system will auto
+    calculate if Schedule not marked PRN
+  
+  
+ Associated NSR(s): 
+ ==================
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO #2696 - When finishing pending orders from CPRS using the Complete 
+ Orders from OERR[PSO LMOE FINISH] option, if the user selects not to 
+ display the patient profile and start processing pending orders a problem 
+ would occur for patients with orders issued by more than one single 
+ provider.
+  
+ PSPO #2580 - For pending orders with a dispense drug where the quantity 
+ can be automatically calculated based on the dosage and day's supply 
+ there was a problem for certain situations where the automatic calculation
+ was not desirable.
+  
+ Test Sites: 
+ ===========
+ Orlando VAMC
+ Erie VAMC
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1.I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+                  DISPENSE Message
+  
+ 2.I9897580FY16 - Wrong authorization provider is listed on prescription 
+                  in CPRS and Outpatient Pharmacy
+  
+ 3.I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+                  is on hold
+  
+ 4.I10167818FY16 - Editing day's supply incorrect
+  
+ 5 I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+                   system will auto calculate if Schedule not marked PRN
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+ 1. I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+                   DISPENSE Message
+   
+ Problem: 
+ --------
+ When OPAI (Outpatient Pharmacy Automated Interface) tries to release a 
+ prescription and it is unable to match the release information with a 
+ prescription fill on file it will create a Mailman message alerting users
+ about the issue. The problem for integrated sites with multiple sites 
+ using OPAI is that the Mailman message does not identify which site the
+ release information was for, prompting all the sites to lookup the Rx
+ record to find out whether it belongs to them or not.
+  
+ Current message subject: "External Dispense - Rx Release Attempted" 
+  
+ Resolution: 
+ -----------
+ The Mailman message subject was modified to include the Site Number at the
+ beginning. This will be consistent with other mailman messages that 
+ already identify the Rx site in the message subject.
+   
+ New message subject: "500 External Dispense - Rx Release Attempted" 
+   
+ Technical Resolution: 
+ ---------------------
+ Modify routine PSOHLDI1 at tag MAIL+13: add the following code: 
+  
+ S XMSUB=$S($G(PSOSITE):$$GET1^DIQ(59,PSOSITE,.06)_" ",1:"")_"External 
+ Dispense - Rx Release Attempted"
+  
+   
+ 2. I9897580FY16 - The Wrong authorization provider is listed on 
+                   prescription in CPRS and Outpatient Pharmacy
+  
+ PSPO #2696
+  
+ Problem: 
+ --------
+ When finishing pending orders from CPRS using the Complete Orders from 
+ OERR [PSO LMOE FINISH] option, if the user selects not to display the
+ patient profile and start processing pending orders a problem would occur
+ for patients with orders issued by more than one single provider. If the
+ user selected the Provider field (#13) and merely confirmed it,
+ the prescriber would be carried over to the next pending orders for that
+ same patient.
+   
+ Resolution: 
+ -----------
+ The array variable PSORX("PROVIDER NAME") that stores information about 
+ the provider was not being properly initialized between the processing
+ each of the patient's pending orders. The code was modified to kill the
+ array variable PSORX before processing each of the patient's pending
+ order.  
+  
+ Technical Resolution: 
+ ---------------------
+ Modified the routine PSOORFIN at tags SUCC+4 and PSOORFIN+19 to kill 
+ array variable PSORX("PROVIDER NAME")
+  
+  
+ 3. I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+                   is on HOLD 
+  
+ Problem: 
+ --------
+ Comments entered into the REMARKS field (#15) were not being displayed
+ when a prescription was put on hold. Once the prescription was removed
+ from hold, the remarks would become visible again.
+   
+ Resolution: 
+ -----------
+ Modified routine PSOORNE2 so the comments entered into the REMARKS field 
+ (#15) display when the prescription is put on hold. 
+  
+ Technical Resolution: 
+ ---------------------
+ Modified the routine ACT+2^PSOORNE2 to set just $P(RX3,"^") instead of 
+ the entire RX3 variable, as shown below:
+  
+ I 'RX3 S RX3=$P(RX2,"^",2),$P(^PSRX(RXN,3),"^")=$P(RX2,"^",2) 
+  
+  
+ 4. I10167818FY16 - Editing day's supply incorrect
+  
+ PSPO #2580 
+   
+ Problem: 
+ --------
+ For pending orders with a dispense drug where the quantity can be
+ automatically calculated based on the dosage and days supply there was a
+ problem for certain situations where the automatic calculation was not
+ desirable. For example, the prescriber would order 10 tablets of a 
+ controlled substance medication with a 30 days supply PRN (As Needed) to
+ be taken no more than twice a day. When the Outpatient Pharmacy user
+ edited the DAYS SUPPLY field (#8) for such order and changed it from 30 to
+ 28, as an example, the software would automatically update the quantity
+ from 10 to 56, which is clearly inconsistent with the prescriber's initial
+ intention.  
+   
+ Resolution: 
+ -----------
+ A new logic has been introduced related to the editing the DAYS SUPPLY 
+ field (#8) of a pending order:
+  
+  1. For single dose order the software will not automatically recalculate 
+     the Quantity field if the current Quantity value on the order is not
+     the result of a calculation based on the current Day Supply value
+     (before the edit), which suggests the Quantity was previously manually
+     entered (not calculated).
+  2. The software will not take into account whether the Schedule is marked
+     PRN (As Needed) or not when deciding to automatically recalculate the
+     QTY field (#9).
+  3. For a Controlled Substance pending order the system will not 
+     automatically recalculate the Quantity field (#9) if it will cause the
+     current Quantity value to be increased.
+  4. For a Complex Controlled Substance pending order the system will not 
+     automatically recalculate the Quantity field (#9).
+  5. For a pending order that qualify for a Quantity recalculation that did
+     not happen because of one of the rules above (1, 3 and 4), the system
+     will display the following message to the user editing the DAYS SUPPLY
+     field (#8): 
+     
+           The QTY (99) has not been changed.  
+           Please, review and update it if necessary.  
+  
+ Additionally, a modification was introduced to prevent any automatic
+ calculation/update of the QTY field (#9) for a new, pending or existing
+ order when the user selects to specifically edit the QTY field (#9)
+ itself.
+  
+ Technical Resolution: 
+ ---------------------
+ Modified routines PSODIR1, PSOSIG, PSOSIGCX and PSOSIGTX to implement the 
+ new rules above.
+   
+ 5. I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+                    system will auto calculate if Schedule not marked PRN
+    
+ Problem: 
+ --------
+ When using the options Patient Prescription Processing [PSO LM BACKDOOR
+ ORDERS] or Complete Orders from OERR [PSO LMOE FINISH] if the user tries 
+ to edit the QTY field (#9) of the pending order and if the quantity can be
+ automatically calculated and the current value does not match the 
+ calculated value the software will automatically replace the current value
+ with the calculated value before prompting the user for the QTY field (#9)
+ for the order.
+  
+ As seen on the example below:
+   
+     Pending OP Orders (ROUTINE)   Jun 06, 2017@15:13:57      Page: 2 of 3 
+      TESPATNM,ROB                                          <A> 
+        PID: 666-00-0258                          Ht(cm): _______ (______) 
+        DOB: JUL 21,1963 (53)                     Wt(kg): _______ (______) 
+     +---------------------------------------------------------------------
+        (4)   Pat Instruct:                                         
+         Provider Comments:                                         
+              Instructions: TAKE ONE TABLET PO QDAY                 
+                       SIG: TAKE ONE TABLET BY BY MOUTH EVERY DAY  
+        (5) Patient Status: SC                                   
+        (6)     Issue Date: JUN 6,2017        (7) Fill Date: JUN 6,2017 
+        (8)    Days Supply: 30                (9)   QTY (TAB): 10       
+          Provider ordered: days supply 30, quantity 10 & refills 0   
+       (10)   # of Refills: 0                (11)   Routing: MAIL     
+       (12)         Clinic: NHCU                                      
+       (13)       Provider: ROCHA,MARCELO                             
+       (14)         Copies: 1                                         
+       (15)        Remarks:                                           
+          Entry By: ROCHA,MARCELO            Entry Date: 06/06/17 12:07:24 
+     -------Digitally Signed Order---------------------------------------- 
+     BY  Bypass                DC  Discontinue           FL  Flag/Unflag 
+     ED  Edit                  FN  Finish 
+     Select Item(s): Quit// 9     
+   
+      Quantity has been changed from 10 to 30 
+   
+      Press Return to Continue: 
+   
+      QTY ( TAB ) : 30// 
+   
+ Resolution: 
+ -----------
+ A change was introduced to the code responsible for handling the editing 
+ of the QTY field (#9) of a pending order to prevent any automatic
+ recalculation and update of the quantity value from happening before the
+ user is prompted for the QTY prompt. Also, when entering a new order the
+ software will not try to auto update the QTY value if a value already is
+ defined and the user is chooses to edit the QTY field (#9).
+    
+ Technical Resolution: 
+ ---------------------
+ Modified the routine PSODIR1 at the QTY line tag that handles the QTY 
+ editing logic to not call QTY^PSOSIG (responsible for recalculating the
+ quantity) when a quantity already exists for the order.
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ Outpatient Pharmacy users should not be processing prescriptions while patch is
+ being installed. It should take less than 2 minutes to install this patch.  
+  
+    1. Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*446) 
+   
+         a.  Verify Checksums in Transport Global - This option will allow 
+             you to ensure the integrity of the routines that are in the 
+             transport global.  
+         b.  Print Transport Global - This option will allow you to view 
+             the components of the KIDS build.  
+         c.  Compare Transport Global to Current System - This option will 
+             allow you to view all changes that will be made when this 
+             patch 
+             is installed.  It compares all components of this patch 
+             (routines, DD's, templates, etc.).  
+         d.  Backup a Transport Global - This option will create a backup 
+             message of any routines exported with this patch. It will not 
+             backup any other changes such as DD's or templates.  
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*446.  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR1
+    Before: B95631218   After: B93842245  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391,
+                                           444,446**
+Routine Name: PSOHLDI1
+    Before: B12862238   After: B12994991  **259,268,330,446**
+Routine Name: PSOORFIN
+    Before: B63913344   After: B64024579  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391,372,416,446**
+Routine Name: PSOORNE2
+    Before:B107800723   After:B107853949  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313,282,427,454,446**
+Routine Name: PSOORNEW
+    Before: B98142553   After: B98552577  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486,446**
+Routine Name: PSOSIG
+    Before: B65860748   After: B90439889  **46,99,114,391,313,282,455,446**
+Routine Name: PSOSIGCX
+    Before: B33594823   After: B34720855  **46,282,446**
+Routine Name: PSOSIGTX
+    Before: B53937250   After: B57184360  **46,282,446**
+ 
+Routine list of preceding patches: 330, 454, 455, 486
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 26, 2015
+Completed By:                               Date Completed: NOV 01, 2017
+Released By :                               Date Released : NOV 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,403 @@
+
+=============================================================================
+Run Date: OCT 31, 2017                     Designation: ONC*2.2*6
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #6                    Status: Released
+                  Compliance Date: NOV 30, 2017
+=============================================================================
+
+Associated patches: (v)ONC*2.2*8   <<= must be installed BEFORE `ONC*2.2*6'
+
+Subject: NAACCR v16 and Oncology Updates
+
+Category: 
+  - Routine
+  - Input Template
+  - Data Dictionary
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA OncoTrax package.  The purpose of this release is to update
+ the functionality as described below.
+  
+ All Data Dictionary modifications and additions have been reviewed and
+ approved by the Data Base Administrator. 
+  
+ 1. Software Changes for NAACCR Vol II v2016
+ A. Addition of Clinical and Pathologic Indicators to the AJCC TNM fields
+ Clinical and Pathologic indicators have been added to the allowable values
+ for the CLINICAL T (#165.5, #37.1), CLINICAL N (#165.5, #37.2), CLINICAL
+ M (#165.5, #37.3), PATHOLOGIC T (#165.5, #85), PATHOLOGIC N (#165.5, #86),
+ PATHOLOGIC M (#165.5, #87) fields.  The indicators have been added by
+ modifying the existing values for the individual Clinical and Pathologic T, N,
+ M data items.  All the existing data in these 6 fields in the ONCOLOGY PRIMARY
+ (#165.5) file have been converted according to the NAACCR Implementation
+ Guidelines conversion crosswalk [Appendix C].  The Help Text and Input/Output
+ Transforms have also been modified to correspond to the new values so users
+ may use the new values when creating or editing abstracts. Finally, a new
+ validity check option has been created and added to the "Utility Options"
+ [ONCO UTIL MENU] menu; the new validity check option is called "Check
+ Validity of TNM Field Values" [ONCO ABSTRACT-VALID TNM].
+  
+ B. Expansion of values for Clinical and Pathologic Staged By fields
+ The STAGED BY (CLINICAL) (#165.5, #19) and STAGED BY (PATHOLOGIC)
+ (#165.5 ,#89) field values have been expanded and modified.  The allowable
+ codes have been expanded from 1 digit to 2 digits and the code values have
+ been modified.  All the existing data in these 2 fields in the ONCOLOGY
+ PRIMARY (#165.5) file have been converted according to the NAACCR
+ Implementation guidelines conversion crosswalk [Appendix A].  The Help
+ Text and Input/Output transforms have been modified to correspond to
+ the new codes/values so users may use the new values when creating
+ or editing abstracts.
+  
+ C. Replacement of term "Hermaphrodite"
+ A value for the SEX (#160, #10) field on the ONCOLOGY PATIENT (#160) file
+ has been modified.  The outdated term "Hermaphrodite" has been replaced
+ by "Other (intersex, disorders of sexual development/DSD)".
+  
+ D. Addition of 2 new METS AT DX fields
+ Two new fields have been added to the ONCOLOGY PRIMARY (#165.5) file:
+ METS AT DX-DISTANT LN (#165.5, #34.35) and METS AT DX-OTHER (#165.5,
+ #34.36).  These 2 new fields have been added to the Oncology Abstract so
+ that they are editable when creating or modifying an abstract in the EE
+ "Abstract Edit Primary" [ONCO ABSTRACT-EDIT] and AI "Complete Abstract"
+ [ONCO ABSTRACT-ENTER/EDIT].  The 2 fields have also been added to the
+ displays within the Abstract and when printing an Abstract using the PA
+ "Print Complete Abstract (132c)" [ONCO ABSTRACT-PRINT/EO132] option.
+ Also, for 2016+ cases if the METS AT DX (CS) field is "00" or "98"
+ the appropriate stuffing for all 6 METS AT DX fields has been removed
+ and users may enter values for these fields.  For cases before 2016 the
+ stuffing remains as it was.
+  
+ E. Addition of 3 new Tumor Size fields
+ Three new fields have been added to the ONCOLOGY PRIMARY (#165.5) file:
+ TUMOR SIZE CLINICAL (#165.5, #29.4), TUMOR SIZE PATHOLOGIC (#165.5,
+ #29.5) and TUMOR SIZE SUMMARY (#165.5, #29.3).  These 3 new fields have
+ been added to the Oncology Abstract so that they are editable when creating or
+ modifying an abstract in the EE "Abstract Edit Primary" [ONCO ABSTRACT-EDIT]
+ and AI "Complete Abstract" [ONCO ABSTRACT-ENTER/EDIT].  For 2016 and later
+ cases the 3 new fields will be displayed and editable instead of the existing
+ TUMOR SIZE (#29) field.  For cases prior to 2016, the old TUMOR SIZE (#29)
+ field will still be used instead of the 3 new fields.  The 3 new fields have
+ also been added to the displays within the Abstract and when printing an
+ Abstract using the PA "Print Complete Abstract (132c)"
+ [ONCO ABSTRACT-PRINT/EO132] option.
+  
+ F. New EDITS in Standards Vol II, Version 16 Metafile
+ The new Standards Volume II, version 16 metafile includes new edits for the
+ new and modified data items.  The edits and edit sets are consistent with the
+ reporting requirements as specified in the NAACCR 2016 Implementation
+ Guidelines as specified by CoC, NPCR, SEER and CCCR.
+  
+ G. Record Layout Changes
+ The overall record layout remains the same length.  Column spaces for some
+ data items have been moved in the record layout to accommodate the new
+ and expanded data items.
+  
+ H. Set Default DERIVED CS field values BLANK for NCDB, NAACCR Stat
+  and VACCR extracts
+ Per the NCDB (National Cancer Database) all 2016 and later cases using
+ NAACCR v16 edits will require all CS (Collaborative Stage) input data items
+ to be BLANK.  Therefore all CS input data items will be set to blank for the
+ NCDB Extract in the "Create ACOS Data Download" [ONCO #SITE-CREATE
+ ACOS DISC] option and the NAACCR State/VACCR Extracts in the "Create
+ State/VACCR Data Download" [ONCO #STATE DATA DISC] option. 
+  
+ 2. Removal of TUMOR SIZE field for cases diagnosed 2004 or later in
+ VACCR extract and Abstract Edit
+ The EOD-TUMOR SIZE (item #780) was retired and can be removed from the record
+ layout and VACCR data extract for 2004+ diagnosis years.  The EOD-TUMOR SIZE
+ item will be removed from the VACCR data extract in the "Create State/VACCR
+ Data Download" [ONCO #STATE DATA DISC] option.  Additionally the corresponding
+ TUMOR SIZE (#165.5, #29) field will be removed from the Abstract Primary Edit
+ option for 2016 and later cases and be replaced by TUMOR SIZE CLINICAL (#165.5,
+ #29.4), TUMOR SIZE PATHOLOGIC  (#165.5, #29.5) and TUMOR SIZE SUMMARY (#165.5,
+ #29.3) fields. 
+  
+ 3. EDITS errors for Surgery of Primary (R) fields though Abstract
+ Fields values are correct
+ Several EDITS errors were being returned when trying to complete old
+ (1998-2002) Leukemia (C42.1) cases.  If the case had a DATE OF NO
+ TREATMENT (#165.5, #124) value, then when completing the case, the
+ EDITS would return several errors indicating that the Surgery of Primary (R)
+ ROADS values were incorrectly "98" or "Blank" even though the field values
+ in the abstract were correctly "00".  This problem was traced back to a fix
+ for another issue which was made in ITEM #18 of Patch ONC*2.2*5.  The fix
+ for that issue caused this strange residual EDITS error; the error has been
+ fixed in this patch.
+  
+ 4. TUMOR SIZE (#165.5, #29) field removed from Required Fields to complete
+ an abstract
+ For 2016 and later cases the TUMOR SIZE field will be removed from the list
+ of required fields to complete an abstract.  For 2016 and later cases the TUMOR
+ SIZE CLINICAL (#165.5, #29.4), TUMOR SIZE PATHOLOGIC  (#165.5, #29.5) and TUMOR
+ SIZE SUMMARY (#165, #29.3) fields will replace the old TUMOR SIZE field.  The
+ new fields do not need to be added to the list of required fields.
+  
+ 5. VACCR Extract records will now send an "M" as the Record Type
+ for Updated Cases
+ For records in the VACCR Extract, if the case is an 'update' to an already
+ 'completed' case according to the VACCR EXTRACT INDICATOR (#165.5,
+ #282) field, the Record Type will now be set to "M".  Previously the Record
+ Type was "A" for all cases. .  In addition, if a FOLLOW-UP is done for a
+ patient this will trigger sending ALL "Completed" primary abstracts for the
+ patient through the EDITS server, rather than just one specific  abstract.
+  
+ 6. New Record Layout selection (SEER-Surveillance, Epidemiology
+ and End Results Program)
+ For the 'Create a report to preview State/VACCR output' [ONCO #STATE
+ DATA REPORT] and 'Create State/VACCR Data Download' {ONCO #STATE
+ DATA DISK} options there is a new available record layout for selection:
+ SEER State Record Layout v16.0.  The new SEER State Record Layout will
+ include all Collaborative Stage fields; this is required since some  VA
+ Facilities are in SEER states and need to have this record layout available.
+  
+ 7. Add 8 allowable codes to Clinical and Pathologic Stage groups for Lymphoma
+ cases
+ Due to a new 2016 EDIT for SSF2/TNM Stage Group, 8 codes had to be added to the
+ allowable codes for the Clinical Stage Group (#165.5, #38) and Pathologic Stage
+ Group (#165.5, #88) fields for Lymphoma cases.  The values IA, IB, IIA, IIB,
+ IIIA, IIIB, IVA and IVB were added so that they are selectable values for the
+ Clinical and Pathologic Stage Group for Lymphoma cases.
+  
+  
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 22 routines. 
+  
+ Files & Fields Associated:     
+ File Name (#)              Field Name (#)                   New/Modified/Deleted
+ -------------              ------------------               --------------------
+ ONCOLOGY PATIENT (#160)    SEX (#10)                        Modified
+  
+ ONCOLOGY DATA EXTRACT FORMAT (#160.16) <DATA>               Modified
+  
+ AJCC STAGE GROUP (#164.45) <DATA>                           Modified
+  
+ ONCOLOGY STAGED BY CODES (#165.7)                           New File
+  
+ ONCOLOGY PRIMARY (#165.5)  STAGED BY (CLINICAL STAGE) (#19) Modified
+                            TUMOR SIZE SUMMARY (#29.3)       New
+                            TUMOR SIZE CLINICAL (#29.4)      New
+                            TUMOR SIZE PATHOLOGIC (#29.5)    New
+                            METS AT DX-DISTANT LN (#34.35)   New
+                            METS AT DX-OTHER (#34.36)        New
+                            CLINICAL T (#37.1)               Modified
+                            CLINICAL N (#37.2)               Modified
+                            CLINICAL M (#37.3)               Modified
+                            CONVERTED STAGED BY FIELDS (#78.1) New
+                            CONVERTED TNM FIELDS (#78.2)     New
+                            PATHOLOGIC T (#85)               Modified
+                            PATHOLOGIC N (#86)               Modified
+                            PATHOLOGIC M (#87)               Modified
+                            STAGED BY (PATHOLOGIC STAGE) (#89) Modified
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                                        Type    New/Modified/Deleted
+ -----------                                        ----    --------------------
+ ONCO UTIL MENU                                     Menu    Modified
+ ONCO ABSTRACT-VALID TNM                            Option  New
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ ONCO ABSTRACT-I            Input     #165.5            Modified 
+  
+ Test Sites
+ ==========
+ Hines VAMC
+ Little Rock VAMC
+ Washington, DC VAMC 
+ West Haven, Ct
+  
+ Documentation Retrieval:
+ ========================
+ Documentation can be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ There is a pre-installation routine (ONCUPLPR), and a post installation
+ routine (ONC2PS06) associated with this patch.  The routines ONCUPLPR and
+ ONC2PS06 may optionally be deleted by the installer after the installation
+ is complete.
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation should take less than 5 minutes.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P6.KID.
+     
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT           
+   
+  The software distribution includes: 
+     
+ File Name                        Description                FTP Mode
+ --------------------------------------------------------------------------
+ ONC22P6.KID                      KIDS Build                 ASCII
+ 
+ Technical Manual and Package     onc_2_2_p6_tm              Binary
+ Security Guide
+   
+ User Manual                      onc_2_2_p6_um              Binary
+  
+  
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+ on the KIDS Installation menu. 
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO.
+  
+  
+ Back out/Rollback Plan
+ ----------------------
+ This patch contains routines which could be re-installed if they were 
+ Backed Up in item #2c above.  However, the patch also contains several 
+ data conversions that go along with some ^DD changes and changes to the 
+ Oncology Data Extract Format (#160.16) file, as well as a modified Input 
+ Template and some Print Templates.  These changes are required for VistA 
+ Oncology cases to be compliant with NAACCR v16 and therefore it is not 
+ recommended to try to roll back the patch.  If any assistance is needed 
+ please contact the development team and/or customer support for help.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONC2PS06
+    Before:       n/a   After: B23665567  **6**
+Routine Name: ONCACD0
+    Before:B183791801   After:B186336178  **1,4,5,8,6**
+Routine Name: ONCACDU2
+    Before:B119516553   After:B118654145  **1,4,7,5,6**
+Routine Name: ONCGENED
+    Before: B26788239   After: B28575882  **1,4,6**
+Routine Name: ONCNTX
+    Before: B87537325   After: B87723291  **1,6**
+Routine Name: ONCOAIF
+    Before: B52773252   After: B63074237  **1,4,5,6**
+Routine Name: ONCOAIP
+    Before:B111415051   After:B122414268  **1,4,5,6**
+Routine Name: ONCOAIP2
+    Before: B24643610   After: B25189252  **1,4,5,6**
+Routine Name: ONCOAIT
+    Before: B10249482   After: B13458423  **1,4,6**
+Routine Name: ONCODIS
+    Before:   B774218   After:   B774142  **1,4,7,5,8,6**
+Routine Name: ONCOEDC
+    Before: B30501240   After: B31265069  **1,5,6**
+Routine Name: ONCOEDC1
+    Before: B41015408   After: B39545395  **1,5,6**
+Routine Name: ONCOOT
+    Before: B71002979   After:B108906290  **1,6**
+Routine Name: ONCOPA1
+    Before: B58176942   After: B58177342  **1,5,6**
+Routine Name: ONCOPA1A
+    Before: B57499640   After: B61656187  **1,6**
+Routine Name: ONCOTN
+    Before:B122391694   After:B124357383  **1,4,5,6**
+Routine Name: ONCOTNM
+    Before:B137993546   After:B140013640  **1,6**
+Routine Name: ONCOTNM2
+    Before:       n/a   After: B51680850  **6**
+Routine Name: ONCPCS
+    Before: B15624112   After: B16302651  **1,4,6**
+Routine Name: ONCPSD
+    Before:  B6627917   After:  B8210758  **1,6**
+Routine Name: ONCPTX
+    Before: B86311833   After: B85832405  **1,5,6**
+Routine Name: ONCUPLPR
+    Before:       n/a   After:    B16433  **6**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 10, 2015
+Completed By:                               Date Completed: OCT 30, 2017
+Released By :                               Date Released : OCT 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

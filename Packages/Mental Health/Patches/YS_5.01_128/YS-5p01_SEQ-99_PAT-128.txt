@@ -1,0 +1,137 @@
+
+=============================================================================
+Run Date: NOV 07, 2017                     Designation: YS*5.01*128
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #99                   Status: Released
+                  Compliance Date: DEC 19, 2017
+=============================================================================
+
+Associated patches: (v)YS*5.01*116 <<= must be installed BEFORE `YS*5.01*128'
+                    (v)OR*3*434    <<= must be installed BEFORE `YS*5.01*128'
+
+Subject: UPDATE MH DLL FOR 2FA
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch provides the changes for the Mental Health dll used by the 
+ Computerized Patient Record System (CPRS) for the support of two-factor 
+ authentication.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ YS BROKER1      Broker  Modified
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ N/A 
+  
+ Test Sites:
+ ===========
+ Chillicothe, OH
+ Heartland East Healthcare System, MO
+ Heartland West Healthcare System, KS
+ Hudson Valley, NY
+ Salt Lake City, UT
+ San Diego, CA
+ Tomah, WI
+ Tuscaloosa, AL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ There is no documentation being released specifically for this 
+ patch. The software is being released in a combined zip file with 
+ the software in patch OR*3*434. 
+  
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v31a (OR*3*434) Deployment, Installation, 
+ Back-Out, and Rollback Guide" for installation and set-up information.
+ This document is exported as OR_30_434_IG.doc and OR_30_434_IG.pdf and is
+ included in OR_30_434.ZIP and will be emailed to the installation point of
+ contacts by the CPRS Implementation team.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS128PS0
+    Before:       n/a   After:  B1407495  **128**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 18, 2016
+Completed By:                               Date Completed: NOV 06, 2017
+Released By :                               Date Released : NOV 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

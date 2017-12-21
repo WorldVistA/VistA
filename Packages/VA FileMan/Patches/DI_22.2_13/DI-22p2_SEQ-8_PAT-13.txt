@@ -1,0 +1,293 @@
+$TXT Created by                FM2S2.AAC.DOMAIN.EXT  (KIDS) on Monday, 06/26/17 at 00:08
+=============================================================================
+Run Date: SEP 27, 2017                     Designation: DI*22.2*13
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #8                   Status: Released
+                  Compliance Date: OCT 28, 2017
+=============================================================================
+
+Associated patches: (v)DI*22.2*5   <<= must be installed BEFORE `DI*22.2*13'
+
+Subject: FIXES TO VA FILEMAN 22.2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DI*22.2*13 will repair five (5) VA FileMan 22.2 defects:
+   1. FT Pointer Help Text does not display with first request, it only 
+      displays every other time.
+   2. ScreenMan display is messed up in Screen Mode when adding one of the 
+      new Data Types with additional prompts.
+   3. LAYGO FT POINTER saves new entry even if user says No.
+   4. When using the screen-mode version of Modify File Attributes 
+      [DIMODIFY], the Command Area has an erroneous default value of EXIT.
+      This may trigger an <UNDEFINED> error when attempting to exit the
+      form if the field has not been fully defined.
+   5. Incomplete data dictionary when defining a multiple FT POINTER field.
+   
+   
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (#)     Field Name (#)                     New/Modified/Deleted
+ -------------     --------------                     --------------------
+ N/A
+   
+   
+ Forms Associated:
+   
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               --------------------
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    --------------------
+ N/A
+   
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name  Type  File Name (#)   New/Modified/Deleted
+ -------------  ----  -------------   --------------------
+ N/A
+   
+   
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+   
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+   
+ 1. Ticket N/A
+   
+ Problem:
+ --------
+ When entering "?" or "??" to see the help text for FT Pointer field, help 
+ text does not display for the first time. User has to try for the second 
+ time so see the help text.
+   
+ Resolution:
+ ----------
+ A change to DIETLIBF corrects this problem so the help text for a FT
+ POINTER field is always displays in response to a "?" or "??" request.
+   
+   
+ 2. Ticket N/A
+   
+ Problem:
+ --------
+ Adding a field using Screen Mode selecting any new Data Type which has
+ multiple prompts would mess up the ScreenMan display and cause the Command
+ Area to scroll to the top.
+   
+ Resolution:
+ -----------
+ A change to DICATTUD corrects this problem and keeps the Command Area 
+ from scrolling up into the area of the screen occupied by the ScreenMan 
+ display.
+   
+   
+ 3. Ticket #I13400572FY17
+   
+ Problem:
+ --------
+ A FT POINTER is defined as a multiple and LAYGO permission is set to yes. 
+ The user is prompted if they want to add to the pointer to file. If the 
+ user enters 'No', the record is still added to the pointed to file.
+   
+ Resolution:
+ -----------
+ A change to DICN corrects this problem so that LAYGO with the FT POINTER 
+ Data Type acts correctly and doesn't add a record to the pointed to file 
+ if the user enters 'No' when prompted.
+   
+   
+ 4. Ticket #I15684970FY17
+   
+ Problem:
+ --------
+ When using the screen-mode version of Modify File Attributes [DIMODIFY],
+ the Command Area has an erroneous default value of EXIT. This may trigger
+ an <UNDEFINED> error when attempting to exit the form if the field has not
+ been fully defined.
+   
+ Resolution:
+ -----------
+ A change to DDSCOM removes the default value of EXIT from the Command 
+ Area. Changes to DICATTDM prevent the <UNDEFINED> error from occurring.
+  
+   
+ 5. Ticket N/A
+   
+ Problem:
+ --------
+ When defining a field in FileMan to be a FT POINTER and saying yes to the 
+ option to make it a multiple, the data dictionary is left incomplete and 
+ the field cannot be used.
+   
+ Resolution:
+ -----------
+ Changes to DICATTDE and DICATT22 corrects this problem so that a multiple 
+ FT POINTER field behaves properly after it is added to a File.
+   
+   
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*13 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch DI*22.2*13 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+   
+   
+ Test Sites:
+ -----------
+ West Palm Beach, FL 
+ North Florida/South Georgia
+   
+   
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software distributed by PackMan.
+   
+   
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of routines. During the VistA Installation Procedure
+ of the Kernel Installation and Distribution System (KIDS) build, the
+ installer should back up the modified routines by the use of the 'Backup a
+ Transport Global' action (step 3a in the Installations Instructions
+ below).
+   
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the patch.
+   
+   
+ Patch Installation:
+   
+    
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install.
+   
+   
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the KIDS Menu, select the Installation Menu.  From this menu, you
+     may elect to use the following options. When prompted for the INSTALL
+     NAME, enter DI*22.2*13.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     when prompted for the INSTALL NAME, enter DI*22.2*5.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO.
+   
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+   
+ 7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+   
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDSCOM
+    Before: B21761308   After: B21823002  **5,13**
+Routine Name: DICATT22
+    Before: B15001986   After: B15509236  **2,13**
+Routine Name: DICATTDE
+    Before: B35121776   After: B35044915  **3,2,13**
+Routine Name: DICATTDM
+    Before: B14727373   After: B14787758  **2,13**
+Routine Name: DICATTUD
+    Before: B30462151   After: B31808223  **2,5,13**
+Routine Name: DICN
+    Before: B21489439   After: B21480119  **2,5,13**
+Routine Name: DIETLIBF
+    Before: B28622394   After: B28699638  **2,5,13**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 23, 2017
+Completed By:                               Date Completed: SEP 27, 2017
+Released By :                               Date Released : SEP 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

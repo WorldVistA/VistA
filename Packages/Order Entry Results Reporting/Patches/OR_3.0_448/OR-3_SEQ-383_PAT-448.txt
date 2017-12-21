@@ -1,0 +1,214 @@
+$TXT Created by               CPRS31A.DOMAIN.EXT  (KIDS) on Friday, 05/26/17 at 09:04
+=============================================================================
+Run Date: OCT 19, 2017                     Designation: OR*3*448
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #383                      Status: Released
+                  Compliance Date: NOV 19, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*353    <<= must be installed BEFORE `OR*3*448'
+
+Subject: 2FA ENABLED GROUP NOTES
+
+Category: 
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The purpose of this patch is to release the version of Group Notes that 
+ will support two factor authentication login.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name          Type    New/Modified/Deleted
+ -----------          ----    -------------------- 
+ OR GN SET LOCATIONS  A       Modified
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ VA Heartland East Healthcare System, MO
+ VA Heartland West Healthcare System, KS
+ Tuscaloosa, AL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the installation for this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software documentation directly using Secure File
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ File Name                  Contents                        FTP Mode 
+ -----------------------------------------------------------------------
+ OR_30_448.ZIP              GroupNotes.exe: Group Notes     Binary
+                            GUI executable
+                            CPRSGN.chm: New Group Notes
+                            help file
+                            GroupNotes.map: Debugging file
+  
+ Gnum.PDF                   Group Notes/Encounter           Binary
+                            Collection User Manual
+  
+ OR_30_448_IG.PDF           Group Notes (Patch OR*3.0*448)  Binary
+                            Deployment, Installation, 
+                            Backout, and Rollback Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Also, this patch is associated with a new Group Notes executable. Please 
+ coordinate with the appropriate personnel to ensure the patch and the 
+ executable are installed at the same time.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ # OR*3.0*448:
+ a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates.
+ b.      Compare Transport Global to Current System - This option will 
+ (allow you to view all changes that will be made when this patch        
+ is installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+ c.      Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+ 4.       From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', respond NO 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', respond NO
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', respond NO 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Ensure the Group Notes executable launches and performs correctly.
+  
+ Once the application is confirmed to work correctly, verify that the 
+ Group Notes GUI executable and Help files are installed and accessible to 
+ end users. Please refer to the Install Guide (OR_30_448_IG.PDF) for 
+ detailed instructions.
+  
+ Back-out, Rollback Strategy:
+ ----------------------------
+ If there is a catastrophic failure and you are instructed to back-out and 
+ rollback the installation of OR*3*448 you will need to:
+  
+ 1. Redistribute the Group Notes executable associated with OR*3*353.
+  
+ 2. Using FileMan, edit the OPTION OR GN SET LOCATIONS and modify the MENU 
+ TEXT field to change 448.8 to 353.10.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 30, 2017
+Completed By:                               Date Completed: OCT 19, 2017
+Released By :                               Date Released : OCT 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

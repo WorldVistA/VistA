@@ -1,0 +1,192 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/16/17 at 16:14
+=============================================================================
+Run Date: SEP 26, 2017                     Designation: TIU*1*301
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #279                      Status: Released
+                  Compliance Date: OCT 27, 2017
+=============================================================================
+
+Associated patches: (v)TIU*1*144   <<= must be installed BEFORE `TIU*1*301'
+
+Subject: NOTES ASSIGNED TO INCORRECT PATIENT'S CHART
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address a problem with consult notes being assigned
+ to an incorrect patient's chart as a result of post install instructions
+ for patch TIU*1.0*131 not being completed.
+  
+ Associated CA SDM ticket(s):
+ ============================
+ I10273633FY16
+ INC000001014575(d)
+ PSPO #2595
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Asheville, NC
+ Altoona, PA
+    
+ CA SDM Ticket Overview:
+ =======================
+ I10273633FY16 - Exact same note appearing on two different charts.
+  
+ Problem: 
+ ========
+ The same consult note is documented in the correct patient chart as well
+ as an incorrect patient chart, due to an incorrect consult number and an
+ incorrect parameter value used when uploading the note through TIU. It
+ was determined that this is a result of post install instructions for
+ patch TIU*1.0*131 not being followed leaving the TIU DOCUMENT 
+ DEFINITIONS Progress Notes and Consults records with incorrect values in
+ field #4.8 (UPLOAD FILING ERROR CODE). The upload would not be filed and
+ generate an error instead had the post install instructions for patch
+ TIU*1.0*131 been completed.
+  
+ Resolution:
+ ===========
+ This patch will run a post install routine. The post install routine
+ will review the PROGRESS NOTES class and CONSULTS document class (or
+ CONSULTS class) and all entries within them in the TIU DOCUMENT 
+ DEFINITIONS file (#8925.1). 
+  
+ The details of the install routine are as follows:
+  - If the current value of the UPLOAD FILING ERROR CODE (field #4.8) for
+    PROGRESS NOTES (and all document definitions under it) equals the
+    pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to 
+    "D PNFIX^TIUPNFIX" (if the record is not locked).
+  - If the current value of the UPLOAD FILING ERROR CODE (field #4.8) for
+    CONSULTS (and all document definitions under it) equals the
+    pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to
+    "D CNFIX^TIUCNFIX" (if the record is not locked).
+  - If a record has the pre-patch TIU*1.0*131 value and cannot be updated 
+    due to being locked it will need to be manually corrected.
+  
+ The below example information will be included in the patch INSTALL file
+ entry for historical purposes, and also in the mail message to any user
+ defined as a member of VistA mail groups 'PATIENT SAFETY NOTIFICATIONS' and 
+ 'TIU CACS' and to the user running the installation.  
+  
+   This patch reviews field #4.8 (UPLOAD FILING ERROR CODE) in the TIU 
+   DOCUMENT DEFINITIONS file for document classes and titles belonging to
+   CONSULTS and PROGRESS NOTES and are addressed as follows: 
+     1.  CONSULTS with the pre-patch TIU*1.0*131 value of 'D GETPN^TIUCHLP'
+         are changed to 'D CNFIX^TIUCNFIX'
+     2.  PROGRESS NOTES with the pre-patch TIU*1.0*131 value of 
+         'D GETPN^TIUCHLP' are changed to 'D PNFIX^TIUPNFIX'.  
+     3.  Any CONSULTS or PROGRESS NOTES with field #4.8 without a value
+         are not changed.
+     4.  Any CONSULTS or PROGRESS NOTES with the pre-patch TIU*1.0*131 value
+         of 'D GETPN^TIUCHLP' that are locked during the install NEED TO BE 
+         MANUALLY UPDATED using option TIU UPLOAD PARAMETER EDIT.
+     5.  Any document definitions with a value other than 'D GETPN^TIUCHLP'
+         are not updated.
+  
+   **IMPORTANT NOTE**  The 'Enhanced Mismatched Consults List' [TIU144
+   ENHANCED MISMATCH LIST] should be run regularly. Please take a moment now 
+   to run it and create a reminder in your calendar to run it again every 6 
+   months. If there are any mismatches, submit a help desk ticket for 
+   assistance resolving them.
+  
+    PATCH TIU*1.0*301 INSTALL
+       UPLOAD FILING ERROR CODE (Field #4.8) Review:
+  
+       IEN  Document Name (Type)
+            Result
+    --------------------------------------------
+    CONSULTS:
+       767  CONSULTS (DOCUMENT CLASS)
+            D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+       788  OPTOMETRY EYE CONSULT REPORT (TITLE)
+            D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+      1800  OPHTHALMOLOGY EYE CONSULT REPORT - PRALL (TITLE)
+            The record is currently locked.
+            Needs to be manually updated to D CNFIX^TIUCNFIX
+    PROGRESS NOTES:
+         3  PROGRESS NOTES (CLASS)
+            D GETPN^TIUCHLP changed to D PNFIX^TIUPNFIX
+      1331  C&P MEDICAL (TITLE)
+            No change.  Value is already D PNFIX^TIUPNFIX
+   
+  
+      ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. Users should not edit TIU document 
+ definitions during the install. It should take less than 2 minutes to install 
+ this patch.
+  
+ NOTE:
+ -----
+ Post-init routine EN^TIUP301 is automatically deleted. You will not be 
+ able to verify the checksums for this routine after the patch is
+ installed.
+  
+  
+    1. Ensure there are appropriate active user entries as members of both 
+       VistA mail groups 'PATIENT SAFETY NOTIFICATIONS' and 'TIU CACS'.
+       This can be accomplished using option 'Mail Group Edit' on the
+       Group/Distribution Management menu.
+  
+    2. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    4. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*301)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    5. Use the Install Package(s) option and select the package TIU*1.0*301.
+  
+    6. When Prompted "Rebuild Menu Tree Upon Completion: NO//, respond NO.
+  
+    7. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    8. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUP301
+    Before:       n/a   After: B42766519  **301**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2016
+Completed By:                               Date Completed: SEP 26, 2017
+Released By :                               Date Released : SEP 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

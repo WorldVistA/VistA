@@ -1,0 +1,182 @@
+$TXT Created by                  at CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Thursday, 09/21/17 at 13:16
+=============================================================================
+Run Date: OCT 11, 2017                     Designation: OR*3*401
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #382                      Status: Released
+                  Compliance Date: NOV 11, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*105    <<= must be installed BEFORE `OR*3*401'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*401'
+
+Subject: OPTION ORK EDITABLE BY USER, ORQQPL4 RPC FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the CPRS package:
+  
+   1. Some users do not receive order checks after ORK EDITABLE BY USER is
+      set to "NO".
+  
+   2. <UNDEFINED> Error that originates from Remote procedure call ORQQPL4
+      LEX .
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 901 (I10028223FY16)
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I10028223FY16 - OERR - Order checks: Can previous user setting override
+                    "ORK EDITABLE BY USER"?
+  
+    Problem:
+    --------
+    When an administrator changes the parameter ORK EDITABLE BY USER to
+    "NO" for a particular order check it appends the text "Mandatory" next
+    to the order check in the CPRS "Options" dialog box. If a user edited
+    their personal setting (ORK PROCESSING FLAG) to "Disabled" prior to it
+    being not editable, they will not receive the order check, despite it
+    now being labeled "Mandatory".  (PSPO 901)
+  
+    Resolution:
+    -----------
+    When the Parameter ORK EDITABLE BY USER is set to "NO" for an order 
+    check, the system will change all previous settings at the user level
+    to "Enabled".
+  
+    Routine ORKMGR has been edited to detect a change in parameter ORK 
+    EDITABLE BY USER to "NO", if a changed is detected the system creates a
+    list of individual settings for parameter ORK PROCESSING FLAG and
+    changes (to "Enabled") any that match the order check that was 
+    changed in ORK EDITABLE BY USER.
+  
+    This patch will include a post install routine that will change the
+    individual ORK PROCESSING FLAG to "Enabled" for all entities if the 
+    current setting of ORK EDITABLE BY USER is set to "NO". The post
+    install will also send a mailman message to the individual installing
+    the patch to let them know what entities were changed. The mailman
+    message will be formatted similar to the following example:
+  
+    (Actual content will vary from site to site)
+  
+    Subj: OR*3.0*401 Post install routine has completed  [#212116] 21 lines
+    From: ORDER ENTRY/RESULTS REPORTING PACKAGE  In 'IN' basket. Page 1
+    -----------------------------------------------------------------------
+    OR*3.0*401 Post install routine has completed
+    The ORK PROCESSING FLAG PARAMETER for the following entities have been 
+    changed to ENABLED
+  
+    INSTANCE "DUPLICATE DRUG ORDER":
+     PACKAGE - ORDER ENTRY/RESULTS REPORTING
+     NEW PERSON - AUGUSTINIAK,MARK
+     DOMAIN - CHEY113.FO-BAYPINES.DOMAIN.EXT
+     HOSPITAL LOCATION - C MEDICINE
+     INSTITUTION - 1ST DENTAL CO DET MARGARITA
+     SERVICE/SECTION - AUDIOLOGY
+  
+    INSTANCE "CRITICAL DRUG INTERACTION":
+     No changes
+  
+    INSTANCE "GLUCOPHAGE-LAB RESULTS":
+    NEW PERSON - AUGUSTINIAK,MARK
+    HOSPITAL LOCATION - C MEDICINE
+  
+    INSTANCE "DRUG DOSAGE":
+     No changes
+  
+  
+ 2. I10034371FY16 - <UNDEFINED>EN+3^LEXAFIL originating from ORQQPL4
+  
+    Problem:
+    --------
+    The hard error <UNDEFINED>EN+3^LEXAFIL occasionally and sporadically 
+    occurs when the variable DIC("S") gets left in memory and then the user
+    uses a function in CPRS that calls the Remote Procedure Call(RPC)
+    ORQQPL4 LEX.
+  
+    Resolution:
+    -----------
+    The Routine ORQQPL4 has been modified to "new" the variable DIC prior
+    to executing any other calls.
+  
+ Test Sites:
+ -----------
+ Cleveland VAMC
+ Richmond VAMC
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+  
+ NOTE:
+ -----
+ Post-init routine ORY401 is automatically deleted.  You will not be able 
+ to verify the checksums for this routine after the patch is installed.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch 
+     OR*3.0*401:
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch (OR*3.0*401)to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer 'NO'.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer 'NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORKMGR
+    Before: B20726138   After: B31961626  **9,85,105,401**
+Routine Name: ORQQPL4
+    Before: B15703032   After: B16376171  **306,361,350,401**
+Routine Name: ORY401
+    Before:       n/a   After:  B7864323  **401**
+ 
+Routine list of preceding patches: 105, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 18, 2014
+Completed By:                               Date Completed: OCT 11, 2017
+Released By :                               Date Released : OCT 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

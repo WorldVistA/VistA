@@ -1,0 +1,320 @@
+$TXT Created by              J at DEE.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 05/25/17 at 15:52
+=============================================================================
+Run Date: AUG 14, 2017                     Designation: PSS*1*195
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #181                      Status: Released
+                  Compliance Date: AUG 24, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*173   <<= must be installed BEFORE `PSS*1*195'
+                    (v)PSN*4*396   <<= must be installed BEFORE `PSS*1*195'
+                    (v)PSS*1*189   <<= must be installed BEFORE `PSS*1*195'
+                    (v)PSS*1*207   <<= must be installed BEFORE `PSS*1*195'
+
+Subject: PPS-N 3.0 - REPLACE NATIONAL DRUG FILE MANAGEMENT SYSTEM (NDFMS)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ This patch will install additional VistA code in support for the 
+ replacement of the current National Drug File Management System (NDFMS)
+ monthly update functionality via the FORUM patch process.
+  
+ This patch is being released in conjunction with National Drug File 
+ (NDF) patch PSN*4.0*396 which adds new fields for VA PRODUCT FILE 
+ (#50.68). 
+  
+ Patch Components:
+ -----------------
+ Patch PSS*1*195 will provide the following enhancements:
+  
+    ** NOTE **
+    Changes were made to display data for the new data dictionary (DD)
+    fields added in PSN*4*396. The new fields will only display if
+    information is defined. In this release, data will not be populated 
+    for the new fields except for a default value of NO for CLINICAL
+    EFFECTS OF DRUG multiple (#50.68108).
+  
+    The areas affected in the options are product selection list and the
+    body of the listing. The product selection list is where the product
+    identifiers are normally displayed and the body of the listing is where
+    the data displays for fields.
+  
+  1. The Lookup into Dispense Drug File [PSS LOOK] option has been
+     modified to include the following fields from VA PRODUCT file 
+     (#50.68) when values are defined:
+  
+       HAZARDOUS TO HANDLE field (#101)
+       HAZARDOUS TO DISPOSE field (#102)
+       PRIMARY EPA CODE field (#103)   
+       WASTE SORT CODE field (#104)
+       DOT SHIPPING CODE field (#105)  
+       FORMULARY DESIGNATOR field (#109)       
+       FORMULARY DESIGNATOR TEXT field (#110)
+  
+     Users will not see these fields populated or displayed as data will
+     not be present with patch PSS*1*195.
+  
+     When data is populated in a future patch, the hazardous waste group of
+     fields will display after CS FEDERAL SCHEDULE. FORMULARY DESIGNATOR
+     field (#109) will display after NATIONAL FORMULARY INDICATOR and
+     FORMULARY DESIGNATOR TEXT field (#110) will display as "Product Text"
+     after NATIONAL RESTRICTION".
+  
+         Hazardous to Handle: NO
+         Hazardous to Dispose: YES
+         Primary EPA Code: P001
+          Waste Sort Code: PBKC
+        DOT Shipping Name: Toxic Liquids, Organic, n.o.s.
+        
+        Formulary Designator: PA-N
+        Product Text: This product requires approval at the national level
+        prior to  dispensing.  See PBM Criteria for Use.
+  
+  
+  2. The Lookup Dosing Check Info for Drug [PSS DRUG DOSING LOOKUP] option
+     has been modified to include Clinical Effects of the Drug 
+     multiple (#50.68108) that includes:
+  
+       CLINICAL EFFECTS multiple (#50.68108) for:
+          PACKAGE field (#.01)
+          OMIT EXP/DC ORDER CHECK field (#1)
+          DURATION LIMIT field (#2)
+  
+     The DURATION LIMIT field (#2) defines the time frame that expired and
+     discontinued orders are omitted from Medication Order Check
+     Application (MOCHA) enhanced order checking. The default value of NO
+     will be displayed after LOCAL POSSIBLE DOSAGES.  Example:
+  
+        CLINICAL EFFECT DURATION: NO
+  
+     When data is populated in a future patch, the rest of the clinical
+     effects multiple fields will be displayed after LOCAL POSSIBLE
+     DOSAGES (i.e. PACKAGE field (#.01), OMIT EXP/DC ORDER CHECK field 
+     (#1), and DURATION LIMIT field (#2).  Example:
+  
+        CLINICAL EFFECT DURATION: YES
+          BOTH INPATIENT AND OUTPATIENT DURATION LIMIT: 45d
+             OMIT EXP/DC ORDER CHECK: NO 
+  
+   3. The Drug Enter/Edit [PSS DRUG ENTER/EDIT] option has been modified to
+      include the Formulary Designator in the drug selection list, after
+      NATIONAL FORUMULARY INDICATOR in the body of texts, in the product
+      selection list when matching a drug to the National Drug file, and on
+      the match acceptance screen.  Additionally the PSSCOMMON input
+      template was edited to display the Formulary Designator group of
+      fields after NATIONAL FORMULARY DESIGNATOR.
+  
+   4. The Pharmacy System file (#59.7) was changed to include the PPS-N 
+      ACCOUNT TYPE field (#17).  This field is used to indicate the type of
+      Pharmacy Product  System - National (PPS-N) account.  The account
+      type can be one of the following: "Q" for National Test SQA system,
+      "T" for Test/Mirror Account, "S" for Product Support, "N" for QA
+      NDFMS account, or "P" for Production account.
+  
+      Local VA sites will only use "P" for their production account and "T"
+      for their test/mirror accounts.
+  
+ Files & Fields Associated:
+ --------------------------
+ File Name (Number)  Field       Name (Number)          New/Modified/Delete
+ ------------------------  ----------------------       -------------------
+ PHARMACY SYSTEM FILE (#59.7)
+                           PPS-N ACCOUNT TYPE (#17)     NEW
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+  
+ Options Associated: 
+  
+  Option Name                  Type       Action
+  -----------                  ----       ------
+  N/A
+  
+ Protocols Associated:
+ ---------------------
+  
+  Protocol Name                            New/Modified/Deleted
+  -------------                            -------------------- 
+  N/A  
+  
+ Security Keys Associated:
+ -------------------------
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+ Templates Associated:
+ ---------------------
+  
+  Template Name     Type        File Name (Number)  New/Modified/Deleted
+  -------------     ----        ------------------  --------------------
+   PSSCOMMON        Input       Drug file (#50)     Modified
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ --------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ CENTRAL PLAINS HCS
+ BIG SPRING, TX
+ SHREVEPORT, LA
+ TUSCON, AZ
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by these patches are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                        FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual
+                                pss_1_um_r0817                    BINARY
+  
+ Pharmacy Data Management Technical Manual
+                                pss_1_tm_r0817                    BINARY
+  
+ PSN_4_396_PSS_1_195 Deployment,
+    Installation, Back-Out, and
+    Rollback Guide              PSN_4_396_PSS_1_195_IG_0817.DOCX  BINARY
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre/post install routines with this patch.
+                      
+ Pre-Installation Instructions:
+ ------------------------------
+ Please note that this patch is released in conjunction with PSN*4*396 and 
+ they should be installed together. This patch should be installed during
+ non-peak requirement hours.
+  
+ Install Time - less than 5 minutes
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+    All fields except RX Norm are added as part of National Drug File patch
+    PSN*4*396. Coding System fields were added in a previously released
+    Outpatient Pharmacy patch PSO*7.0*472 which will need to be installed
+    before these fields will be visible in inquiry.
+  
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation and Distribution System Menu, select the
+      Installation menu.
+    
+   3. From this menu, you may elect to use the following options (when 
+      prompted for INSTALL NAME, enter PSS*1.0*195):
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+    
+   4. Use the Install Package(s) options and select the package PSS*1.0*195
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+      respond "NO".
+    
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+      Protocols? YES//', respond "NO".
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before:B142583898   After:B149682695  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193,200,207,195**
+Routine Name: PSSDRDO2
+    Before:       n/a   After:  B6056930  **195**
+Routine Name: PSSDRDOS
+    Before:B158735065   After:B159075215  **160,173,195**
+Routine Name: PSSLOOK
+    Before: B94208630   After:B130430402  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195**
+ 
+Routine list of preceding patches: 173, 207
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 21, 2015
+Completed By:                               Date Completed: AUG 10, 2017
+Released By :                               Date Released : AUG 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

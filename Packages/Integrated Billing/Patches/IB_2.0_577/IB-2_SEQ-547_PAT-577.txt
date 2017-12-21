@@ -1,0 +1,578 @@
+$TXT Created by                 at TAS-EBIL-HFD.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 08/22/17 at 11:30
+=============================================================================
+Run Date: OCT 23, 2017                     Designation: IB*2*577
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #547                      Status: Released
+                  Compliance Date: NOV 22, 2017
+=============================================================================
+
+Associated patches: (v)IB*2*407    <<= must be installed BEFORE `IB*2*577'
+                    (v)IB*2*522    <<= must be installed BEFORE `IB*2*577'
+                    (v)IB*2*547    <<= must be installed BEFORE `IB*2*577'
+                    (v)IB*2*550    <<= must be installed BEFORE `IB*2*577'
+                    (v)IB*2*554    <<= must be installed BEFORE `IB*2*577'
+                    (v)IB*2*576    <<= must be installed BEFORE `IB*2*577'
+
+Subject: MCCF EDI TAS BUILD 2
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ Important Note: In production, there is one **MANDATORY**
+ pre-installation activity associated with this install.
+  
+ The Integrated Billing (IB) Staff MUST empty the 837 extract/transmission 
+ queue PRIOR to the installation of this patch.
+  
+ Please reference instructions from the Pre/Post Installation Overview for 
+ further details.
+  
+ Integrated Billing (IB) is a software module within Veterans Health
+ Information Systems and Technology Architecture (VistA) that provides
+ the ability for billing personnel to submit claims in either a paper or
+ electronic format to third-party payers.
+  
+ The following features of the IB software will be affected by this 
+ patch:
+  
+    * Cloning a Primary Claim
+  
+      The option Copy and Cancel [IB COPY AND CANCEL], cancels the bill
+      associated with the bill number entered by the user.  It also
+      creates a new bill, with a new bill number.  If the original bill
+      is a primary claim (destination payer is the primary payer) and it
+      has one or more associated Medicare-equivalent Remittance Advice
+      (MRA) or Explanation of Benefits (EOB), then the new primary claim
+      will now copy the COB data from the MRA/EOB to the new primary
+      claim correctly.
+  
+    * Field Length Adjustments
+  
+      The IB VistA package has the ability to send proprietary
+      professional and institutional medical claims to Financial Services
+      Center(FSC).  These claims contain data that is used by FSC to
+      create transactions that comply with the X12N/005010X222 Health
+      Care Claim (837) and X12N/005010X223 Health Care Claim (837)
+      standards.  Where possible, the IB software has been modified so
+      that claim data can be transmitted in updated data element sizes,
+      in the proprietary claim messages sent to FSC, that are compliant
+      with the latest version of the 837 standards.  The IB software has
+      also been modified to allow the entry of longer data.  This change
+      ensures that the third party payers receive and process claims and
+      distribute payments to the Department of Veterans Affairs (VA)
+      without any issues caused because VistA could not capture or store
+      data elements as long as those allowed by the standards.
+  
+    * Unit or Basis for Measurements Codes for Drugs
+  
+      Previously, when creating professional and institutional bills for
+      submission to payers, the system automatically defaulted to Unit as
+      the type of measurement and users were unable to choose another
+      type of measurement.  Users were prompted to enter only the
+      quantity of units. 
+  
+      The billing staff needed to be able to submit the correct type of
+      units or basis for measurement codes and a quantity of units for
+      medications provided during appointments.  These units or basis for
+      measurement codes are specific to the National Drug Code associated
+      with the medication.
+  
+      The system has been updated to allow for different types of
+      measurement (qualifiers) to be available to users.  Users can enter
+      ?? to display the available selections for a Unit or Basis for
+      Measurement code. The default value for unit or basis of
+      measurement continues to be Unit.  
+  
+      The following units or basis for measurement codes have been made
+      available from which billing staff can select:
+         o  F2  - International Unit
+         o  GR - Gram
+         o  ME - Milligram
+         o  ML - Milliliter
+         o  UN - Unit
+  
+    * Print NDC Number on UB04
+  
+      The IB VistA package has been modified to print the type of unit or
+      basis for measurement on Form Locator 43 on a locally printed UB04
+      claim form.  This is in addition to the printing of a non-
+      prescription National Drug Code (NDC) number and the quantity of
+      the medication delivered that previously printed on the UB04 claim
+      form.
+  
+    * Process Payer ID - Store HCCH Payer ID
+  
+      The Integrated Billing (IB) VistA package has been modified so
+      that for when there is no Professional or Institutional Payer ID
+      defined in VistA and a claim (or claims) is transmitted to the
+      payer(s) and the Health Care Clearing House (HCCH) has an
+      electronic agreement with the payer(s), the HCCH is to do a lookup
+      of the Payer IDs and return them to VistA in a 277STAT transaction.
+      The VistA software now uses the Payer IDs in the 277STAT message
+      to update the Payer IDs for the corresponding companies in the
+      Insurance Company file (#36) when those fields are blank.
+  
+      The system now processes a 277STAT message from Health Care
+      Clearing House (HCCH) and evaluates/updates Payer IDs as follows:
+         o  Update the Insurance file, field EDI ID NUMBER - PROF
+            [#36,3.02] or EDI ID NUMBER - INST [#36,3.04] with the Payer
+            IDs from the 277STAT transaction only when the value that is
+            on file is blank.  When these fields are updated new data
+            elements to capture changes are also updated along with the
+            date of update for reporting purposes.
+         o  If the Payer ID from the 277STAT transaction is different
+            than what is stored and it is not blank, then no update
+            occurs, but the data is stored with the new data elements
+            including the date for reporting purposes only.
+  
+      Also the intermittent issue of updating EDI ID numbers when there
+      is no value stored, has been resolved. 
+  
+    * Payer ID Report
+  
+      A new report has been created which, based on a specified period
+      of time, identifies what Insurance Company payers identification
+      numbers (EDI ID NUMBER - PROF [#36,3.02] or EDI ID NUMBER - INST
+      [#36,3.04] the system has either changed or attempted to change
+      as a result of a 277STAT message received from the Health Care
+      Clearing House (HCCH).
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ INSURANCE COMPANY (#36)                                   Modified
+                       ZIP CODE (#.116)                    Modified
+                       CLAIMS (INPT) PROCESS ZIP (#.126)   Modified
+                       APPEALS ADDRESS ZIP (#.146)         Modified
+                       INQUIRY ADDRESS ZIP CODE (#.156)    Modified
+                       CLAIMS (OPT) PROCESS ZIP (#.166)    Modified
+                       CLAIMS (RX) ZIP (#.186)             Modified
+  277EDI ID NUMBER sub-file (#36.017)                     New
+ IB ERROR (#350.8)                                         Modified
+      Screen: I $$INC3508^IBY577PR(Y)
+ IB SITE PARAMETERS (#350.9)                               Modified
+   PAY-TO PROVIDERS sub-file (#350.9004)                   Modified
+                       STREET ADDRESS 1 (#1.01)            Modified
+                       STREET ADDRESS 2 (#1.02)            Modified
+ IB NON/OTHER VA BILLING PROVIDER (#355.93)                Modified
+                       NAME (#.01)                         Modified
+                       STREET ADDRESS (#.05)               Modified
+ IB FORM SKELETON DEFINITION (#364.6)                      Modified
+      Screen: I $$INCLUDE^IBY577PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                            Modified
+      Screen: I $$INCLUDE^IBY577PR(7,Y)
+ BILL/CLAIMS (#399)                                        Modified
+                       CURRENT BILL PAYER SEQUENCE (#.21)  Modified
+                       TREATMENT AUTHORIZATION CODE (#163) Modified
+                       OFFSET AMOUNT (#202)                Modified
+                       SECONDARY AUTHORIZATION CODE (#230) Modified
+                       TERTIARY AUTHORIZATION CODE (#231)  Modified
+                       PRIMARY REFERRAL NUMBER (#253)      Modified
+                       SECONDARY REFERRAL NUMBER (#254)    Modified
+                       TERTIARY REFERRAL NUMBER (#255)     Modified
+                       PROPERTY/CASUALTY CLAIM NUMBER      Modified
+                         (#261) 
+                       AMBULANCE P/U ADDRESS 1 (#271)      Modified
+                       AMBULANCE P/U ADDRESS 2 (#272)      Modified
+                       AMBULANCE D/O ADDRESS 1 (#277)      Modified
+                       AMBULANCE D/O ADDRESS 2 (#278)      Modified
+   PROCEDURES sub-file (#399.0304)                         Modified
+                       UNITS/BASIS OF MEASUREMENT (#52)    New
+                       NDC (#53)                           Modified
+                       UNITS (#54)                         Modified
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IB HCCH PAYER ID REPORT      run routine                  New
+ IB SYSTEM DEFINITION MENU    menu                         Modified
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBJP IB PAY-TO ASSOCIATIONS MENU                          Modified
+ IBJP IB PAY-TO DIVISION ADD                               Modified
+ IBJP IB PAY-TO PROVIDER ADD                               Modified
+ IBJP IB PAY-TO PROVIDER DEL                               Modified
+ IBJP IB PAY-TO PROVIDER DIVISIONS                         Modified
+ IBJP IB PAY-TO PROVIDER EDIT                              Modified
+ IBJP IB PAY-TO PROVIDERS MENU                             Modified
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ N/A
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+  
+ 1. I16136712FY17 - Nine Digit Zip Code Issue After IB*2.0*576
+  
+ Problem:             
+ -------
+ There was an issue caused by IB*2.0*576 that made 9 digit zip codes in 
+ the INSURANCE COMPANY (#36) file display without the hyphen.  The output
+ transform which adds the hyphens during display, when called using FileMan
+ utilities, was present but not being invoked.
+  
+  
+ Resolution:
+ ----------
+ The output transform on the six zip code fields in question were 
+ deleted and then added back to the fields.
+  
+  
+ Test Sites:
+ ----------
+ Orlando
+ Fargo
+ Omaha
+ Cleveland
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  
+  
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                      SFTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,     ib_2_0_p577_ig.pdf              Binary
+  Back-out, and Rollback Guide (IB*2.0*577)
+ EDI User Guide                ib_2_0_p577_edi_ug.pdf          Binary
+ Integrated Billing (IB) V.2.0 ib_2_0_p577_tm.pdf              Binary
+  Technical Manual            
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ *************************************************************************
+ *                          IMPORTANT NOTE                               *
+ *  In PRODUCTION, there is one **MANDATORY** pre-installation activity  *
+ *  associated with this install.                                        *
+ *                                                                       *
+ *  The IB Staff MUST empty the 837 extract/transmission queue PRIOR to  *
+ *  the installation of this patch.                                      *
+ *************************************************************************
+     
+ INSTRUCTIONS ON HOW TO EMPTY THE 837 EXTRACT TRANSMISSION QUEUE:
+ ===============================================================
+ The site Information Resource Management (IRM) MUST coordinate with the
+ Billing Department to insure that the 837 extract/transmission queue is
+ empty. Once the Billing Department has completed the instructions, the 
+ Billing department is to inform IRM that the patch installation may 
+ proceed.
+    
+ The instructions to empty the queue are as follows:
+ Select the option: TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL TRANSMIT]
+     
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+     
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+      
+   Upon selecting this option you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+     
+   You should select 'A' for ALL
+      
+ There are no other mandatory pre-installation activities associated with
+ this patch.
+ ------------------------------------------------------------------------
+    
+ The Pre-install routine (IBY577PR) will automatically do the following:
+  *     Update entries used by the Forms Output Utility [IBCE OUTPUT 
+        FORMATTER].
+  *     Add a new entry in IB ERROR file (#350.8).
+    
+ The Post-install (IBY577PO) will automatically do the following:
+  *     Recompile the Billing Screen Input Templates
+  *     Survey the Form Type file (#353) to identify which form numbers
+        are being used at the site.  Then an email will be attempted to
+        be sent to the MCCF EDI TAS Development Team with this information
+        which will be used to determine which form numbers are available
+        for future development.
+     
+ Routines IBY577PO and IBY577PR may be manually deleted by IT/IRM upon
+ completion of the installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  To Install the Patch, from the Installation Menu, select the Install
+     Package(s) option and choose the patch to install. When prompted for
+     the INSTALL NAME, enter the patch # (ex. XXX*X.X*XX)
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  You may press return to accept the default answer of 
+     NO IF your system rebuilds menu trees nightly using TaskMan. If you 
+     do not have this scheduled as a nightly task, you must answer YES to 
+     rebuild the menu trees.  This could affect users on the system 
+     and your installation time will increase.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//, enter 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//, enter 'NO' 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 38
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB1
+    Before:B124097608   After:B125745915  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432,447,
+                                           488,554,577**
+Routine Name: IBCBB11
+    Before: B96464375   After:B112052327  **51,343,363,371,395,392,401,
+                                           384,400,436,432,516,550,577**
+Routine Name: IBCCC2
+    Before:B113680571   After:B116481460  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433,432,447,
+                                           516,577**
+Routine Name: IBCEF11
+    Before: B80990662   After: B86419290  **51,137,155,309,335,348,349,
+                                           371,432,447,473,516,577**
+Routine Name: IBCEF22
+    Before: B90984490   After: B97383500  **51,137,135,155,309,349,389,
+                                           432,488,516,577**
+Routine Name: IBCEF77
+    Before: B27920356   After: B27726430  **232,280,155,290,291,320,348,
+                                           349,516,577**
+Routine Name: IBCERP7
+    Before:       n/a   After: B32855168  **577**
+Routine Name: IBCEST
+    Before: B76027306   After: B96695131  **137,189,197,135,283,320,368,
+                                           397,407,577**
+Routine Name: IBCF23A
+    Before: B37854610   After: B39049121  **51,432,516,547,577**
+Routine Name: IBCF33
+    Before: B31973795   After: B35272389  **52,80,109,51,230,349,577**
+Routine Name: IBCSC8
+    Before:  B9775351   After:  B9956514  **432,447,488,577**
+Routine Name: IBCSC9
+    Before:  B7536045   After:  B9101884  **52,51,447,473,577**
+Routine Name: IBCU7
+    Before:B113207672   After:B116490042  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516,522,577**
+Routine Name: IBJPS3
+    Before:B111722417   After:B122000376  **400,432,516,577**
+Routine Name: IBY577PO
+    Before:       n/a   After:  B6012728  **577**
+Routine Name: IBY577PR
+    Before:       n/a   After:  B5196967  **577**
+ 
+Routine list of preceding patches: 407, 522, 547, 550, 554
+
+=============================================================================
+User Information:
+Entered By  :                HRISTOPHER     Date Entered  : OCT 07, 2016
+Completed By:                               Date Completed: OCT 18, 2017
+Released By :                               Date Released : OCT 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

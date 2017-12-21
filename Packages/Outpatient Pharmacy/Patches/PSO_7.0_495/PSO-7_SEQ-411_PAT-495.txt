@@ -1,0 +1,202 @@
+$TXT Created by                   A at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/28/17 at 13:50
+=============================================================================
+Run Date: NOV 16, 2017                     Designation: PSO*7*495
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #411                      Status: Released
+                  Compliance Date: DEC 16, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*225   <<= must be installed BEFORE `PSO*7*495'
+                    (v)PSO*7*391   <<= must be installed BEFORE `PSO*7*495'
+
+Subject: COPAY FLAGS/ADDRESS EDIT HARD ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will resolve the following issues.
+  
+  1. Using Option Reset Copay Status/Cancel Charges [PSOCP RESET COPAY
+     STATUS] displays ALL copay exemption flags after edit.
+  2. HARD ERROR DURING VERIFYING A DIGITALLY SIGNED PENDING ORDER
+  3. Controlled substance prescription hash mismatch.
+  4. Corrupted hash mismatch has a patient's last 4 of SSN incorrect.
+  
+  
+  Associated NSR(s)
+  =================
+  N/A 
+  
+ Test Sites:
+ ==========
+ Manchester VAMC 
+ Philadelphia VAMC 
+  
+ Associated CA SDM Ticket(s):
+ ============================
+  1. I8213786FY16  - Using Option Reset Copay Status/Cancel Charges [PSOCP 
+                     RESET COPAY STATUS] displays ALL copay exemption flags
+                     after edit.
+  2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED PENDING
+                     ORDER 
+  3. I11377620FY17 - Controlled substance prescription hash mismatch.
+  4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+                    of SSN incorrect.
+  
+  
+  Defect Tracking System Ticket(s) & Overview: 
+  ===========================================
+  
+  1. I8213786FY16 -  Using Option Reset Copay Status/Cancel Charges [PSOCP 
+                     RESET COPAY STATUS] displays ALL copay exemption flags
+                     after edit.
+  
+  Problem:
+  =======
+  While using option Reset Copay Status/Cancel Charges [PSOCP RESET COPAY
+  STATUS] to edit copay exemption flags, when a person is automatically
+  Exempt from Copay (such as Service Connected 70%) the output displays ALL
+  copay exemption flag end states rather than only those copay exemptions
+  that have changed. 
+  
+  Resolution:
+  ==========
+  The logic that determined whether the new exemption value was different 
+  from the old was based off a node in the PRESCRIPTION file (#52) that may
+  not exist. Routine PSOCPC was modified so now the system compares the
+  user's response to the value stored in the PRESCRIPTION file (#52) to
+  determine if the value has changed.
+  
+  2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED 
+                     PENDING ORDER 
+     Rational defect ID - 561158
+  
+  Problem:
+  =======
+  When processing a digitally signed pending order, if that order is 
+  auto discontinued due to an address mismatch, there is a possibility of
+  getting a hard error while generating the auto discontinued mail message.
+  This can happen for a patient who has a non-verified allergy and if the
+  patient address was changed using the PU Patient Record Update ListMan
+  action prior to processing the pending order.
+   
+  Resolution:
+  ==========
+  When the PU Patient Record Update ListMan action is used, it kills the 
+  DFN variable. Modified routine PSOPKIV2 to reset variable DFN if found 
+  missing and to make a call to VADPT.
+  
+  ROUTINE:
+  =======
+  At line tag ADCMAIL+1, added code,
+  S:'$G(DFN) DFN=PSODFN D ^VADPT,ADD^VADPT
+  At line tag PADAD+1, removed the call VADPT and ADD^VADPT as its moved
+  to ADCMAIL+1
+  
+  3. I11377620FY17 - Controlled substance prescription hash mismatch.
+  
+  Problem:
+  =======
+  Site reports that when a controlled substance prescription hash 
+  mismatch status the vista email that is generated has the incorrect 
+  last four the ssn. 
+  
+  Resolution:
+  ==========
+  When generating the auto discontinued mail message, variable VA("BID") 
+  that has the last 4 of the SSN is being used, which in this case happens 
+  to be from a previous patient.  
+  Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for 
+  that patient by making a call to VADPT.
+  
+  4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+                    of SSN incorrect.
+  
+  Problem:
+  =======
+  Site reports that a corrupted hash mismatch has a patient's last 4 
+  of SSN incorrect.
+  
+  Resolution:
+  ==========
+  When generating the auto discontinued mail message, variable VA("BID") 
+  that has the last 4 of the SSN is being used, which in this case happens 
+  to be from a previous patient.  
+  Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for 
+  that patient by making a call to VADPT.
+  
+  Pre-Installation Instructions:
+  =============================
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+  
+     ================INSTALLATION INSTRUCTIONS =================
+  
+  Pharmacy users should not be processing prescriptions while patch is 
+  being installed. It should take less than 5 minutes to install this
+  patch.
+  
+  1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+  2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+  3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSO*7.0*495)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        is installed (routines, DD's, templates, etc.).  
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+  4. Use the Install Package(s) option and select the package PSO*7.0*495.
+  
+  5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+   
+  6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCPC
+    Before: B74796456   After: B74377982  **10,9,71,85,114,157,143,239,
+                                           201,275,225,495**
+Routine Name: PSOPKIV2
+    Before: B23465178   After: B23138982  **391,495**
+ 
+Routine list of preceding patches: 225, 391
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 18, 2017
+Completed By:                               Date Completed: NOV 16, 2017
+Released By :                               Date Released : NOV 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

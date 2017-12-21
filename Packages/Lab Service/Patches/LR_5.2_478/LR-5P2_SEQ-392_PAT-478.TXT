@@ -1,0 +1,136 @@
+$TXT Created by                DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 09/14/17 at 12:34
+=============================================================================
+Run Date: SEP 19, 2017                     Designation: LR*5.2*478
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #392                    Status: Released
+                  Compliance Date: OCT 19, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*430  <<= must be installed BEFORE `LR*5.2*478'
+
+Subject: HOWDY WAIT TIME REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1. Entries outside entered search criteria included on Patient Wait Time
+    report.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated CA-SDM ticket:
+ =========================
+ 1) R11469217FY17:   Entries outside entered search criteria included on
+                     Patient Wait Time report.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*478 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*478 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*478 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Testing Sites:
+ ============================
+ Dallas, TX
+ Minneapolis, MN
+  
+ Ticket Overview:
+ ================
+ 1. R11469217FY17 - Entries outside entered search criteria included on
+                    Patient Wait Time report.
+    Problem:
+    --------
+    The Howdy Patient Wait Time Report includes entries that are outside
+    the time period entered as search criteria. All entries from the day
+    entered as the starting date/time are included in the report even if
+    they are outside the time entered.
+  
+    Solution:
+    ---------
+    Modify routine LRHY4X to also use the time element in determining the
+    starting point for the search.
+      
+    Routines: LRHY4X 
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+    3. From the Kernel Installation and Distribution System Menu, 
+       select the Installation Menu. From this menu, you may elect to
+       use the following options. When prompted for the INSTALL NAME enter
+       the patch LR*5.2*478.
+  
+       a.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       b.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+    4. From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+   
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+       NO//' answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHY4X
+    Before: B64257320   After: B64243347  **405,417,430,478**
+ 
+Routine list of preceding patches: 430
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 22, 2016
+Completed By:                               Date Completed: SEP 18, 2017
+Released By :                               Date Released : SEP 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,186 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 05/05/17 at 14:06
+=============================================================================
+Run Date: OCT 27, 2017                     Designation: PSO*7*442
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #408                      Status: Released
+                  Compliance Date: NOV 27, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*282   <<= must be installed BEFORE `PSO*7*442'
+                    (v)PSO*7*370   <<= must be installed BEFORE `PSO*7*442'
+                    (v)PSO*7*372   <<= must be installed BEFORE `PSO*7*442'
+                    (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*442'
+
+Subject: REINSTATE NOT DISCONTINUING, BINGO FILL TYPE, SCRIPTALK VARIABLE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+  
+ 1.      Users report that when a Window Partial is filled, the PATIENT 
+         NOTIFICATION (Rx Ready) file entry (52.11) is showing the Fill
+         Type as full instead of partial.
+  
+ 2.      The PSO RX Discontinue Prescription(s) reinstate process displays 
+         a Therapeutic Duplication warning message then prompts to
+         discontinue the active prescription containing the duplicate
+         class drug but does not discontinue the drug when "Y" is entered
+         at the prompt.
+  
+ 3.      The Outpatient Pharmacy ScripTalk label process is using %ZTIO 
+         variable to write to the Prescription file's Device field. This
+         is the incorrect variable.
+  
+  
+ Associated NSR(s) 
+ ================== 
+ N/A
+  
+ Test Sites:
+ ===========
+ Miami VAMC
+ William S. Middleton Memorial Veterans Hospital (Madison)
+  
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I10127365FY16 - Bingo Wait Time Fill Type
+ 2. I10129296FY16 - Discontinue Reinstate Not Discontinuing Duplicate Drug
+ 3. I10133616FY16 - ScripTalk %ZTIO Variable
+  
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+  
+ 1. I10127365FY16 - Bingo Wait Time Fill Type 
+  
+ Problem:
+ --------
+ Users report that when a Window Partial is filled, the PATIENT 
+ NOTIFICATION (Rx Ready) file entry (#52.11) is showing the Fill Type as 
+ "F" for full instead of "P" for partial. 
+  
+  
+ Resolution:
+ -----------
+ A Modification to routine PSORXPA1 to set the variable PSOFROM if a 
+ condition was met and a change to routine PSORXL was made to kill the
+ local array RXPR where the RX information is stored.
+  
+  
+ 2. I10129296FY16 - Discontinue Reinstate Not Discontinuing Duplicate Drug
+  
+ Problem:
+ --------
+ The PSO RX Discontinue Prescription(s) process displays a Therapeutic 
+ Duplication warning message then prompts to discontinue the active  
+ prescription containing the duplicate class drug but does not discontinue 
+ the drug when "Y" is entered at the prompt.
+  
+ Resolution:
+ -----------
+ Modified Discontinue and Reinstate Process PSOCAN1 routine to discontinue 
+ the current RX after the discontinued RX has been reinstated 
+  
+ 3. I10133616FY16 - ScripTalk %ZTIO Variable 
+  
+ Problem:
+ --------
+ I believe variable %ZTIO is a bug below. %ZTIO is never used in the 
+ device manipulation in ScripTalk label process.  I don't think 
+ we are capturing anything here. I just get NULL in production records.
+ The Device is piece 6 of the Label node, looks like they are setting it
+ in piece 5, so that's probably a mistake also.
+  
+ Resolution:
+ -----------
+ The PSOTALK routine TRANS subroutine sets the ZTIO variable to the device 
+ Internal Entry Number (IEN) then calls the % ZTLOAD routine. The %ZTLOAD 
+ routine calls the %ZTLOAD1 routine; the DEVICE subroutine kills the ZTIO 
+ variable before it is used to write to the PRESCRIPTION file (#52)
+ (^PSRX) in the PSOTALK1 routine.
+  
+ The PRESCRIPTION file (#52) should contain the name of the device not the
+ IEN of the device. A modification to the PSOTALK1 routine PSOTALK
+ subroutine was made to write to the PRESCRIPTION file (#52) device field
+ using the PSOLAP variable which contains the device name.
+  
+ Components:
+ ===========
+ N/A
+  
+ ================INSTALLATION INSTRUCTIONS =================
+  
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed.
+ It should take less than 5 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*442)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*442.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN1
+    Before: B60132005   After: B60678355  **8,20,24,27,32,131,163,185,
+                                           238,372,442**
+Routine Name: PSORXL
+    Before:B124759619   After:B124632613  **8,21,24,32,47,135,148,287,
+                                           334,251,354,367,370,442**
+Routine Name: PSORXPA1
+    Before: B35082205   After: B35364749  **11,27,56,77,130,152,181,174,
+                                           287,385,442**
+Routine Name: PSOTALK1
+    Before:  B5110576   After:  B5211959  **135,318,282,442**
+ 
+Routine list of preceding patches: 282, 370, 372, 385
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 17, 2014
+Completed By:                               Date Completed: OCT 25, 2017
+Released By :                               Date Released : OCT 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,351 @@
+
+=============================================================================
+Run Date: OCT 17, 2017                     Designation: HMP*2*12
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: Mandatory
+Version : 2        SEQ #10                      Status: Released
+                  Compliance Date: NOV 17, 2017
+=============================================================================
+
+
+Subject: SHUTDOWN OF THE ELECTRONIC HEALTH MANAGEMENT PLATFORM (eHMP)
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+ The electronic Health Management Platform (eHMP) will be shutdown as of
+ October 23, 2017. This patch description provides two steps that your site
+ needs to perform to properly shut down the eHMP synchronization process
+ for patients and instructions to mark eHMP menu options out of order.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ N/A
+   
+ Forms Associated:
+ -----------------
+ N/A
+   
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ The following options are to be marked out of order by following
+ the two steps specified in the patch installation section below.
+  
+ Name                               Menu Text
+ ---------------------------------------------------------------------
+ HMP APPLICATION PROXY              HMP Application Proxy
+ HMP APPOINTMENTS                   Return List of Tomorrow's Patients
+ HMP EVENT PURGE                    HMP Purge HMP EVENT file (#800003)
+ HMP MONITOR FOR XTMP GLOBAL        XTMP Global Monitor
+ HMP PATIENT ACTIVITY               Patient Appointments
+ HMP PATIENT DATA MONITOR           HMP Patient Data Monitor
+ HMP SYNCHRONIZATION CONTEXT        Synchronize the HMP
+ HMP UI CONTEXT                     HMP UI CONTEXT version 
+                                      20160108-01.US12195 
+ HMP WB DOMAINS                     Writeback of Domain Data to Vista
+ HMP WB PTDEM  HMP                  Writeback Patient Demographics
+ HMP XU EVENTS                      New Person Events for HMP
+ HMPM ADD HMP PATIENT               Manually Add Patient to HMP
+ HMPM ADD HMP USER                  Add Health Management Platform User
+ HMPM EMERGENCY STOP                Emergency Stop HMP Freshness Updates
+ HMPM RESTART FRESHNESS             Resume Freshness Updates That Have Been
+                                      Stopped
+ HMPMGR                             HMP Technical Management
+ HMPMON DASHBOARD                   HMP Dashboard
+ HMPMON SET PKG DASHBOARD RATE      Set Package's Dashboard Auto-update
+                                      Rate
+ HMPMON SET SYS DASHBOARD RATE      Set System's Dashboard Auto-update Rate
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ San Diego, CA
+ Hampton, VA
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Patch Installation:
+ -------------------
+ As soon as possible, sites need to perform the following two steps in the
+ order designated below to shutdown eHMP at your facility:
+  
+ STEP 1.
+ Using the Emergency Stop HMP Freshness Updates [HMPM EMERGENCY STOP]
+ option, shut down the eHMP freshness updates.  
+  
+ At the prompt - Choose domain to stop. (* stops all): type an asterisk (*)
+  
+ Sample:
+ -------
+  
+ Select Systems Manager Menu Option: HMP Technical Management
+  
+  
+           HMP Dashboard
+           Emergency Stop HMP Freshness Updates
+           Resume Freshness Updates That Have Been Stopped
+           Manually Add Patient to HMP
+           HMP Patient Data Monitor
+  
+  
+ Select HMP Technical Management Option: emergency Stop HMP Freshness
+ Updates
+ WARNING!  This will stop freshness updates for the HMP.
+           It will be necessary to re-synch patient data.
+  
+ allergy                   appointment               auxiliary
+ consult                   cpt                       diagnosis
+ diet                      document                  education
+ exam                      factor                    image
+ immunization              lab                       med
+ mh                        obs                       order
+ patient                   pov                       problem
+ procedure                 pt-select                 ptf
+ roadtrip                  roster                    skin
+ surgery                   task                      treatment
+ user                      visit                     vital
+  
+ Choose domain to stop. (* stops all): *
+ Stopping freshness updates for: allergy
+ Stopping freshness updates for: appointment
+ Stopping freshness updates for: auxiliary
+ Stopping freshness updates for: consult
+ Stopping freshness updates for: cpt
+ Stopping freshness updates for: diagnosis
+ Stopping freshness updates for: diet
+ Stopping freshness updates for: document
+ Stopping freshness updates for: education
+ Stopping freshness updates for: exam
+ Stopping freshness updates for: factor
+ Stopping freshness updates for: image
+ Stopping freshness updates for: immunization
+ Stopping freshness updates for: lab
+ Stopping freshness updates for: med
+ Stopping freshness updates for: mh
+ Stopping freshness updates for: obs
+ Stopping freshness updates for: order
+ Stopping freshness updates for: patient
+ Stopping freshness updates for: pov
+ Stopping freshness updates for: problem
+ Stopping freshness updates for: procedure
+ Stopping freshness updates for: pt-select
+ Stopping freshness updates for: ptf
+ Stopping freshness updates for: roadtrip
+ Stopping freshness updates for: roster
+ Stopping freshness updates for: skin
+ Stopping freshness updates for: surgery
+ Stopping freshness updates for: task
+ Stopping freshness updates for: treatment
+ Stopping freshness updates for: user
+ Stopping freshness updates for: visit
+ Stopping freshness updates for: vital
+  
+ STEP 2. Mark the HMP options as out of order with the statement 
+        "HMP*2.0*12 - shutdown of the eHMP Project"
+  
+ Go to the Out-Of-Order Set Management [XQOOMAIN] menu within the Menu 
+ Management [XUMAINT] menu.  The option Create a Set of Options To Mark 
+ Out-Of-Order [XQOOMAKE] will allow you to list the options to place out 
+ of order and populate the out of order message in all of them at once.  A 
+ sample is provided below
+  
+ Sample:
+ -------
+  
+ Select Out-Of-Order Set Management Option: CREATE a Set of Options To Mark
+ Out-Of-Order
+  
+ Enter a short name for this set of options and or protocols: HMP OPTIONS
+  
+ What should the Out Of Order message text be? : 
+ HMP*2.0*12 - shutdown of the eHMP Project
+  
+ Enter options you wish to mark as 'Out Of Order': 
+ HMP APPLICATION PROXY
+ HMP APPOINTMENTS
+ HMP EVENT PURGE
+ HMP MONITOR FOR XTMP GLOBAL
+ HMP PATIENT ACTIVITY
+ HMP PATIENT DATA MONITOR
+ HMP SYNCHRONIZATION
+ HMP UI CONTEXT
+ HMP WB DOMAINS
+ HMP WB PTDEM
+ HMP XU EVENTS
+ HMPM ADD HMP PATIENT
+ HMPM ADD HMP USER
+ HMPM EMERGENCY STOP
+ HMPM EXTRACT MONITOR
+ HMPM RESTART FRESHNESS
+ HMPMGR
+ HMPMON DASHBOARD
+ HMPMON SET PKG DASHBOARD RATE
+ HMPMON SET SYS DASHBOARD RATE
+  
+ Enter options you wish to mark as 'Out Of Order':   <press enter>
+  
+ Enter protocols you wish to mark as 'Out Of Order': <press enter> 
+ Should I mark these options/protocols out-of-order now? (Y/N) ? NO// YES  
+  
+  
+ Verification of the Out-Of-Order message:
+ -----------------------------------------
+  
+ To verify that the options are out of order, inquire into the OPTION 
+ (#19) file.  A sample is provided below
+  
+ Select VA FileMan Option: INquire to File Entries
+  
+ Output from what File: OPTION//           (13653 entries)
+ Select OPTION NAME: HMP APPLICATION PROXY
+ Another one: HMP APPOINTMENTS
+ Another one: HMP EVENT PURGE
+ Another one: HMP MONITOR FOR XTMP GLOBAL
+ Another one: HMP PATIENT ACTIVITY
+ Another one: HMP PATIENT DATA MONITOR
+ Another one: HMP SYNCHRONIZATION CONTEXT
+ Another one: HMP UI CONTEXT
+ Another one: HMP WB DOMAINS
+ Another one: HMP WB PTDEM  
+ Another one: HMP XU EVENTS 
+ Another one: HMPM ADD HMP PATIENT
+ Another one: HMPM ADD HMP USER
+ Another one: HMPM EMERGENCY STOP 
+ Another one: HMPM EXTRACT MONITOR
+ Another one: HMPM RESTART FRESHNESS
+ Another one: HMPMGR
+ Another one: HMPMON DASHBOARD
+ Another one: HMPMON SET PKG DASHBOARD RATE
+ Another one: HMPMON SET SYS DASHBOARD RATE
+ Another one:  <press enter>
+  
+ STORE THESE ENTRY ID'S IN TEMPLATE: 
+  
+ Standard Captioned Output? Yes// N  (No)
+ First Print FIELD: .01  NAME
+ Then Print FIELD: 1  MENU TEXT
+ Then Print FIELD: 2  OUT OF ORDER MESSAGE
+ Then Print FIELD: 
+ Heading (S/C): OPTION List// 
+ DEVICE: ;;999  HOME  (CRT)    Right Margin: 80// 
+ OPTION List                              SEP 26, 2017@11:59       PAGE 1
+ NAME
+   MENU TEXT
+   OUT OF ORDER MESSAGE
+ --------------------------------------------------------------------------
+  
+ HMP APPLICATION PROXY
+   HMP Application Proxy
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP APPOINTMENTS
+   Return List of Tomorrow's Patients
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP EVENT PURGE
+   HMP Purge HMP EVENT file (#800003)
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP MONITOR FOR XTMP GLOBAL
+   XTMP Global Monitor
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP PATIENT ACTIVITY
+   Patient Appointments
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP PATIENT DATA MONITOR
+   HMP Patient Data Monitor
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP SYNCHRONIZATION CONTEXT
+   Synchronize the HMP
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP UI CONTEXT
+   HMP UI CONTEXT version 20160108-01.US12195
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP WB DOMAINS
+   Writeback of Domain Data to Vista
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP WB PTDEM
+   HMP Writeback Patient Demographics
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMP XU EVENTS
+   New Person Events for HMP
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPM ADD HMP PATIENT
+   Manually Add Patient to HMP
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPM ADD HMP USER
+   Add Health Management Platform User
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPM EMERGENCY STOP
+   Emergency Stop HMP Freshness Updates
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPM EXTRACT MONITOR
+   Monitor HMP Server Synchronization
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPM RESTART FRESHNESS
+   Resume Freshness Updates That Have Been Stopped
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPMGR
+   HMP Technical Management
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPMON DASHBOARD
+   HMP Dashboard
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPMON SET PKG DASHBOARD RATE
+   Set Package's Dashboard Auto-update Rate
+   HMP*2.0*12 - shutdown of the eHMP Project
+ HMPMON SET SYS DASHBOARD RATE
+   Set System's Dashboard Auto-update Rate
+   HMP*2.0*12 - shutdown of the eHMP Project
+  
+ Back-out Procedures
+ ===================
+ Back-out procedures will be done only with the concurrence and 
+ participation of the development team and appropriate VA site/region 
+ personnel.  The decision to back-out or rollback software will be a joint 
+ decision between the development team, VA site/region personnel and other 
+ appropriate VA personnel. If a determination is made at some point to 
+ reactivate eHMP the specifics to accomplish this will be provided in a 
+ new patch.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2017
+Completed By:                               Date Completed: OCT 17, 2017
+Released By :                               Date Released : OCT 17, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

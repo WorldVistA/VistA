@@ -1,0 +1,129 @@
+$TXT Created by              J at FLDCACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 08/29/17 at 15:23
+=============================================================================
+Run Date: NOV 28, 2017                     Designation: PSS*1*213
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: EMERGENCY
+Version : 1       SEQ #183                      Status: Released
+                  Compliance Date: DEC 05, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*195   <<= must be installed BEFORE `PSS*1*213'
+
+Subject: ERROR IN OPTION [PSS LOOK] (ROUTINE PSSLOOK) 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve an undefined error encountered with the Lookup
+ into Dispense Drug File [PSS LOOK] option that occurred after install of
+ patch PSS*1*195.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ I16179176FY17 - ERROR IN OPTION [PSS LOOK] (ROUTINE PSSLOOK) DUE TO 
+ UNDEFINED PSXVP VARIABLE FOR A DRUG THAT WAS NEVER MATCHED TO NDF
+ (PATCH*1*195).
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ TEST SITES:
+ ===========
+ CENTRAL PLAINS HCS
+ BIG SPRING, TX
+ SHREVEPORT, LA
+ TUSCON, AZ
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) I16179176FY17 - Problem with PSS LOOK option
+  
+    Problem:
+    --------
+    The VistA option 'Lookup into Dispense Drug File' [PSS LOOK] receives
+    an undefined error for variable PSXVP.
+  
+  
+    Resolution:
+    ----------- 
+    The routine ^PSSLOOK will be modified so the VistA option 'Lookup into
+    Dispense Drug File' [PSS LOOK] option does not cause a hard error.
+  
+  
+ DATA DICTIONARY CHANGES:
+ ========================
+ Refer to patch PSS*1*195 for data dictionary changes.  There are not any 
+ changes for data dictionaries in this patch PSS*1*213.
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options.  Users should can be
+ on the system when this patch is installed.  It should take less 
+ than 5 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSS*1.0*213)
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are
+             in the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSS*1.0*213.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO. 
+  
+ Back-Out Plan:
+ --------------------
+ Install the backup that you create during installation of the patches.  
+ This will revert the PSSLOOK routine back to the pre-install version.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSLOOK
+    Before:B130430402   After:B130410178  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195,213**
+ 
+Routine list of preceding patches: 195
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 28, 2017
+Completed By:                               Date Completed: NOV 28, 2017
+Released By :                               Date Released : NOV 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

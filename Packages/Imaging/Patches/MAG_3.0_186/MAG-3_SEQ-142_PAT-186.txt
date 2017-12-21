@@ -1,0 +1,420 @@
+4 routines included
+=============================================================================
+Run Date: OCT 11, 2017                     Designation: MAG*3*186
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #142                      Status: Released
+                  Compliance Date: NOV 12, 2017
+=============================================================================
+
+
+Subject: VISTA IMAGING BACKGROUND PROCESSOR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ===================
+ This patch must be installed after MAG*3.0*154.
+  
+ Subject:  BACKGROUND PROCESSOR (BP) UPDATES
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ This document describes MAG*3.0*186, a patch that provides fixes to the 
+ Background Processor (BP). 
+  
+  In particular, this patch addresses the following issues:
+   <SUBSCRIPT>QPTER+6^MAGQBTM VistA error during BP processing.
+   Left-over "D" cross-reference of MAGQUEUE file #2006.03.
+   Auto scheduled BP Verifier stops processing at the IQ set IMAGE file 
+ #2005 at consolidated sites.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document 
+ provides an overview, explains the changes, and outlines the installation
+ for this patch.  MAG3_0P186_README.txt, if present, is an informative file
+ associated with the patch released.
+  
+ Software:
+ ========
+ File Name               Description
+ ========                ===========
+ MAG3_0P186.KID          Kernel Installation and Distribution System 
+                         (KIDS) build for Patch 186
+  
+ Documentation:
+ =============
+ This document, MAG3_0186_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.  Defect 504534  (Ticket #I13812648FY17) Jukebox Queue Error
+ Problem:  
+ There was an issue with the Jukebox queue where it would stop at about 
+ 100 and then would create thousands of VistA errors in the error trap.
+  
+ Resolution:  
+ The code was changed for the MAGQUEUE node entry in the MAGQBTM routine 
+ to prevent the issue of multiple BPs processing in the queue at the same
+ time.
+  
+ 2.  Defect 454048  (Ticket #R10845403FY16/INC000000976044) Entries in 
+ Queue File not Removed
+ Problem:  
+ The D cross-reference doesn't always get deleted when the status changes 
+ in the Queue file #2006.03.
+  
+ Resolution:  
+ The code was added to clean up the "D" cross-reference of the Orphan 
+ entries MAGQUEUE at the P186 KIDS pre-install stage.  Also, the de-queue
+ section of the MAGQBUT2 (M) routine was modified to remove all
+ cross-reference entries after the queue entry itself has been 
+ deleted.
+  
+ 3.  Defect 512732 (Ticket #R13143071FY17) BP Verifier on Auto Error
+ Problem:  
+ There is a problem with the BP Verifier process for consolidated sites.  
+ For consolidated sites, when running on auto, the Verifier will end as
+ soon as it finds an image that has already been verified (IQ field not
+ blank), whether or not it is for the correct site (or one of its
+ sub-sites).  If one site runs the Verifier, it checks the image; when
+ another site runs the Verifier, it comes across images already verified
+ and stops because the Verifier checks all images not by site.
+  
+ Resolution:  
+ To avoid the consolidated sites having the same issue, where the (Auto) 
+ Scheduled Verifier stops abnormally, the Verifier has now been coded to
+ NOT quit right at the first verified entry.  It will continue to look for
+ more images for the same site.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+    VISN 2 Upstate New York Health Care System (Buffalo, Batavia, 
+ Canandaigua, Syracuse, Bath, Albany)
+     Cheyenne VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ===================
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*186 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date. This patch has a KIDS file only.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active,
+ but all Background Processor tasks should be stopped and closed, including
+ the BP Verifier and Purge.  Installation for the KIDS will take less than
+ 15 minutes.  Some sites may have more than one BP server; please notify
+ all VistA sites and schedule the KIDS updates to occur during non-peak
+ hours.  Take care to install this patch well before the Scheduled Verifier
+ start time, and while it is not currently running.   
+ If the Scheduled (Auto) Verifier must be stopped, then the portion of
+ images not verified should be manually verified later.  As long as
+ the processes are stopped first, the best time might be during the day 
+ when Applications staff can coordinate with Imaging support.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.  Any Background Processor task
+ that is running (Queue Processor, Verifier, Purge) must be stopped
+ (applications are closed) prior to the installation of the KIDS.  However,
+ any image capture application (Clinical Capture and DICOM Gateway
+ processing) can continue to operate.
+  
+ Note:  
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*186.
+  
+ Post-Installation Instructions:
+ ==============================
+ Restart all Background Processor tasks that were stopped for installation.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1.   On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2.   Run the Installation option [XPD INSTALLATION MENU].
+ 3.   Load the KIDS file by performing the following steps:
+       a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+ load the KIDS distribution.
+       b.  When prompted, enter the full path and file name
+ (MAG3_0P186.KID) of the MAG*3.0*186 KIDS file.
+       c.  When prompted to continue with the load, enter "YES". A 
+ Distribution OK! message will be displayed when the load is complete.
+ 4.   After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+      a.   Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the
+ patch. 
+      b.   Compare Transport Global to Current System [XPD COMPARE TO 
+ SYSTEM] - Run this option if you want to view all changes that will be
+ made when the patch is installed.  All components (routines, options, and
+ so on) in the patch will be compared.
+      c.   Backup a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ It will NOT back up any of the other changes.
+ 5.  After performing the load and any optional verification steps, 
+ install the KIDS file by performing the following steps:
+      a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+      b. When prompted for the install name, enter "MAG*3.0*186".
+      c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6.   When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+ XPD INSTALLATION MENU Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: C:\KIDS FILES\MAG3_0P186.KID (Note: Your host location 
+ will be different, depending on OS.)
+  
+ KIDS Distribution saved on May 08, 2017@17:12:34
+ Comment: VistA Imaging V3 - Patch 186 Background Processor Maintenance
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*186
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MAG*3.0*186
+ Use INSTALL NAME: MAG*3.0*186 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*186      5/9/17@10:11:53
+      => VistA Imaging V3 - Patch 186 Background Processor Maintenance
+  
+ This Distribution was loaded on May 09, 2017@10:11:53 with header of 
+    VistA Imaging V3 - Patch 186 Background Processor Maintenance  
+ ;Created on May 08, 
+  
+ 2017@17:12:34
+    It consisted of the following Install(s):
+  
+ Install Questions for MAG*3.0*186
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? 
+ NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+       Install Started for MAG*3.0*186 : 
+                May 22, 2017@10:28
+  
+ Build Distribution Date: May 08, 2017
+  
+  Installing Routines:.....
+                May 22, 2017@10:28
+  
+  Running Pre-Install Routine: PRE^MAGIP186.Location: 1
+ ABSTRACT:
+     NOT_PROCESSED- 
+ DELETE:
+     NOT_PROCESSED- 
+ JUKEBOX:
+     NOT_PROCESSED- 
+  . . .
+  
+  Running Post-Install Routine: POS^MAGIP186.
+  
+ Post Install Mail Message: May 22, 2017@10:28:01
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*186 Installed. 
+                May 22, 2017@10:28:01
+  
+ Install Completed
+ Install Message sent
+  
+ Select Installation Option:<ENTER>
+  
+ Do you really want to halt? YES//<ENTER>
+  
+ Installing, Updating and Uninstalling the Background Processor
+ =================================================
+ For installing, updating, or uninstalling the Background 
+ Processor, refer to the Background Processor User Guide.
+  
+ Routine Information:
+ ================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.
+ For each routine, the second line will contain the following 
+ information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build nn;mm dd, yyyy
+  
+  
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGIP186        NEW             10511588        **186**
+ MAGQBPG1        113868040       115123718       **7, 8, 20, 81, 39, 135, 
+                                                 154, 186**
+ MAGQBTM         85282923        87348923        **1, 7, 8, 20, 81, 39,
+                                                 135, 186**
+ MAGQBUT2        91378529        103758000       **7, 8, 20, 81, 39, 186**
+  
+ Routine MAGIP186 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+Routine Name: MAGIP186
+    Checksum:
+  10511588
+ Description of Changes:
+  KID POST INSTALL routine
+
+Routine Name: MAGQBPG1
+    Checksum:
+  115123718
+ Description of Changes:
+  To avoid the consolidated sites having the same issue, where the (Auto) Scheduled Verifier stops abnormally, the Verifier has now been coded to NOT quit right at the first verified entry.  It will continue to look for more images for the same si
+  te.
+
+Routine Name: MAGQBTM
+    Checksum:
+  87348923
+ Description of Changes:
+  To handling this issue - <SUBSCRIPT>QPTER+6^MAGQBTM ^MAGQUEUE(2006.031,"C",1,"")
+  QUPDATE+3 S NODE=$G(^MAGQUEUE(2006.03,QPTR,0)) I NODE="" Q   ;P186 race issue, queue entry not exist
+
+Routine Name: MAGQBUT2
+    Checksum:
+  103758000
+ Description of Changes:
+  Added the codes to clean up "C" & "D" X-ref of MAGQUEUE(2006.03
+  DBQ+1:DBQ+7
+   F INDX="DELETE","ABSTRACT","JUKEBOX","JBTOHD","PREFET","IMPORT","EVAL" D
+   . K ^MAGQUEUE(2006.03,"C",PLACE,INDX,QIEN)
+   . K:$P(ZNODE,U,5)]"" ^MAGQUEUE(2006.03,"D",PLACE,INDX,$E($P(ZNODE,U,5),1,30),QIEN)
+   . I INDX="JUKEBOX" D
+   . . K:$P(ZNODE,U,7) ^MAGQUEUE(2006.03,"E",PLACE,$P(ZNODE,U,7),QIEN) Q
+   . I "^JBTOHD^PREFET^"[("^"_INDX_"^") D
+   . . K:((+$P(ZNODE,U,7))&($P(ZNODE,U,8)]"")) ^MAGQUEUE(2006.03,"F",PLACE,$P(ZNODE,U,7),$P(ZNODE,U,8),QIEN) Q
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 19, 2017
+Completed By:                               Date Completed: OCT 11, 2017
+Released By :                               Date Released : OCT 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

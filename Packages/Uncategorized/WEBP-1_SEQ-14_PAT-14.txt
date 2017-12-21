@@ -1,0 +1,360 @@
+
+=============================================================================
+Run Date: OCT 30, 2017                     Designation: WEBP*1*14
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: NOV 29, 2017
+=============================================================================
+
+
+Subject: PCMM WEB V1.14 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*14 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ 1. RTC 514210 - Change code that parses encounters in the AI process to 
+ not fail if any of the fields #2 - #14 are missing. Checks have been 
+ added to the parse process for fields #2-#14 to use an empty value in 
+ parsing if the field is absent.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 2. RTC 515527 - When a user resends a MPACT approval alert, only the 
+ Traveling Veteran Coordinator (TVC) that have not provided an approval 
+ should receive the alert instead of all TVC(s) to include those that have 
+ previously provided an approval. Changed the code to remove role based 
+ recipients from resend list at the sites that have already approved the 
+ request.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 3. RTC 523521 - During the auto-inactivation (AI) process, the process 
+ should exclude encounters that occur prior to the Start Date of a
+ patient's PACT team assignment from being applied to an existing
+ assignment. Modify code to use the assignment Start Date to determine
+ encounter validity in the AI Process.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 4. RTC 323054 - CPRS displays the 3 digit parent station number versus 
+ the 5 digit parent station number for integrated sites. Changed the code 
+ and corresponding Velocity template in the Data Base (DB) to use the
+ integrated facilities 5 digit parent station number when the 5 digit 
+ station is the parent of another 5 digit station. If a 5 digit station 
+ does not have a 5 digit parent station, the corresponding 3 digit station 
+ number is used as the parent station.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 5. RTC 228203 - During staff unassignment or reassignment, bad historical 
+ data was displayed when PCMM Web automatically adjusted any preceptor 
+ timelines prior to transition. Modified the code to only adjust the 
+ preceptor data after the site's official transition date to PCMM Web.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 6. RTC 291661 - For PC-HBPC teams, the PCP Position Profile should not 
+ have the ability to check the Override Capacity checkbox in the Patient 
+ Capacity section just like with PACT teams. Updated the query that 
+ determines whether current team role/staff role combination can be 
+ precepted from which availability of checkbox is derived for PACT team 
+ roles.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 7. RTC 324206 - PCMM Web Staff Search results table needs to display 
+ staff members that have a Status of "0" as inactivated/separated when 
+ searching for staff members within Web. Updated code to use the active 
+ flag instead of the separation date.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 8. RTC 219792 - PC-HBPC Team Assignment Invalid Effective Date Format 
+ returns an error of ConversionFailedException.  A validation check was 
+ added to prevent an invalid date entry upon submission of an assignment 
+ for PC-HBPC. 
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 9. RTC 331989 - During staff reassignment, new staff are not updated with 
+ the current Separation Date. Added code to the Staff Assignment screen to 
+ display the Separation Date field if a staff member has a separation date.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 10. RTC 309261 - Remove the VistA date of death (DOD) fetch from the MVI 
+ registration process. This process will be updated as part of the AI job.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 11. RTC 420321 - When searching for a Patient using the SSN, the 
+ application is not finding the Patient in VistA. FORTIFY scan suggested 
+ changing the "string" data type for the SSN field to "char array" type 
+ for security reasons. After the change, "equals" method for the logic did 
+ not work correctly which caused the defect. Changed the "equals" method 
+ implementation to account for the data type change.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 12. RTC 503053 - The "Absolute-Send-Redirect-Filter", which handles 
+ proper protocol scheme generation for URLs in the application, requires a
+ modification for Performance Optimization. Changed the handling from 
+ "Response" to "Request" which is much lighter in computing power 
+ consumption which should result in increased performance.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 13. RTC 456016 - The VA staff email icon displays the staff member's 
+ personal email address. Changed the code to only display emails from
+ domain.ext domain or one of its subdomains.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 14. RTC 227226 - The Non-PACT Calendar does not allow the user to use the 
+ tab key on Team Assignment pop up window. Changed the code to set the tab
+ order to allow the tab key functions in the popup window.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 15. RTC 271501 - The Team Position list is not correctly sorting back to 
+ the original display after clicking the sort dropdown arrow. Changed the 
+ code to not save state if care type is PACT or HBPC.
+ CA-SDM Ticket: I7135649FY16
+  
+ 16. RTC 222821 - If a TVC is 'inactive' in User Management (UM) the TVC 
+ should not be displayed in a newly created MPACT request. Changed the 
+ code to remove inactive TVC(s) from list.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 17. RTC 291650 - The MPACT Escalation Alerts R20, 21, 22 are being sent 
+ to Inactive Web users. Changed the code for these escalation alerts to
+ check whether a user is ACTIVE or INACTIVE in the application and not send
+ the alert if the user is INACTIVE.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 18. RTC 237055 - A provider with special character (') is showing as 
+ "&#39;" in the reassign to patient drop down. Changed the code to 
+ re-encode the HTML entity to show the single quote (').
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 19. RTC 377721 - A few Preceptor Relationships for non PCP team roles 
+ need to be removed from the DB. Removed all Non-PCP team roles that were 
+ included in the preceptor relationship table from the DB.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 20. RTC 260488 - During the Staff Reassignment process, the Details 
+ section on the Staff Information screen contains a checkmark for Current 
+ FTE that should not be displayed during this process. Removed the 
+ checkmark beside the Current FTE in the Details section so it does not 
+ display during the staff reassignment process.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 21. RTC 275983 - Non-VA Practice email validation issues when entering an 
+ invalid email address. Changed the initial validation code to not allow 
+ wrong email address to be saved.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 22. RTC 377430 - Manage Reference Data for the Non-VA Provider Role Name 
+ link produces a "SQLGrammarException: could not extract ResultSet" error 
+ when selecting a "Name" to edit. Changed the table name in the code to 
+ correspond to the DB table name to prevent this error from occurring when 
+ selecting a "Name" to edit.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 23. RTC 332938 - User cannot press the enter, spacebar or tab keys on the 
+ pop up message that appears for no results found during a patient search.
+ The problem was that after the attention dialog closed, the focus was
+ moved to the very top of browser window. Code was added to put back the
+ L+4 Name field.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 24. RTC 259965 - The white X that was available in the upper right corner 
+ of most screens is no longer there. Changed the display for the close 
+ icon from none to block.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 25. RTC 260158 - On the Patient Search screen for the VistA results table,
+ the label of 'SENSITIVE' has changed appearance. Restored the original
+ appearance of the *SENSITIVE* label.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 26. RTC 279961 - Multiple tables open displaying more than the requested 
+ 10 entries.  Changed table to default to 10 entries unless a different
+ value was used previously and saved in a cookie.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 27. RTC 280492 - Fortify issue where JavaScript code appears in the 
+ Alerts table. Changed "escapeXml" of "c:out" to false to preserve HTML so 
+ it properly shows in table.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 28. RTC 422034 - MPACT 30 day (R21) and 45 day (R22) Escalation emails in 
+ Outlook need to include the station number of the division that needs to 
+ approve. The Email template already has a block to include required 
+ information into the email but it was commented out. Modified Email 
+ template to uncomment this code to fix the defect.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 29. RTC 508999 - Removed purge job from the application codebase as it 
+ will be run via the DB scheduled jobs. Removed the unneeded code for 
+ purge job from the codebase. Removed the unused properties from the 
+ property files.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 30. RTC 432656 - The staff role of "ADVANCE PRACTICE NURSE TRAINEE" needs 
+ to be "ADVANCE PRACTICE NURSE ASSOCIATE PROVIDER" since this is not a 
+ trainee team role. Updated the staff role in all DBs to "ADVANCE PRACTICE 
+ NURSE ASSOCIATE PROVIDER."
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 31. RTC 552638 - First Encounter Date is not displayed as the Patient's 
+ Start Date when the assignment flips to ACTIVE when the patient has no 
+ other PACT assignments. Changed the order of adjusting the Start Date to
+ accommodate the 60 day lookback process during the patient assignment 
+ process based on other PACT assignments' End Date so the new Start Date
+ may still not coincide with first Encounter Date.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 32. RTC 564599 - An ACTIVE PACT assignment is not inactivated when the 
+ MPACT Request is approved if the encounter occurred before the MPACT was 
+ approved within the same 3 digit station. Code was added to the multipcp 
+ approval process to unassign other ACTIVE PACT assignments within same 3 
+ digit station.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 33. RTC 578627 - User Management (UM) - Need to rewrite the query and 
+ code which supports the first screen in UM to speed up the display. 
+ Changed the code to use native query and retrieve minimal required 
+ information with no SQL joins.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*14 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ 1.      I7135649FY16 - POSITION LIST NOT IN EXPECTED ORDER
+ Problem:
+ The Team Position list is not correctly sorting back to the original 
+ display after clicking the sort dropdown arrow. 
+  
+ Resolution:
+ Changed the code to 'not save' state if care type is PACT or HBPC.
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 626 - Nashville VAMC
+  
+ Documentation:
+ ==============
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_14.DOCX    BINARY
+ Module(PCMM) Web
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 19, 2017
+Completed By:                               Date Completed: OCT 25, 2017
+Released By :                               Date Released : OCT 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

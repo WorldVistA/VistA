@@ -1,0 +1,206 @@
+
+=============================================================================
+Run Date: NOV 06, 2017                     Designation: PSX*2*81
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #72                      Status: Released
+                  Compliance Date: DEC 06, 2017
+=============================================================================
+
+Associated patches: (v)PSX*2*70    <<= must be installed BEFORE `PSX*2*81'
+                    (v)PSX*2*77    <<= must be installed BEFORE `PSX*2*81'
+                    (v)PSX*2*79    <<= must be installed BEFORE `PSX*2*81'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 2
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*478
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*22
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*81
+  
+ All three of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO PSX BUNDLE 10.0
+   KIDS Host File name: BPS_1_22_PSO_PSX.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  1. This patch rectifies an ongoing problem in which some TRICARE and
+     CHAMPVA (Civilian Health and Medical Program of the Department of
+     Veterans Affairs) prescriptions on the CMOP queue would be left on
+     the queue during CMOP processing because claim responses would not be
+     received by VistA in a timely manner.  This release modifies the claim
+     submission process (BPS*1.0*22, PSO*7.0*478) and the CMOP process
+     (PSX*2.0*81) so that certain checks will no longer be performed
+     prematurely, allowing sufficient time for the claim responses to come
+     back.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A                       
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ (VDL) at:  http://www.domain.ext/vdl
+  
+ Title                                 File Name             Transfer Mode
+ --------------------------------------------------------------------------
+ *ECME Deploy Install Rollback Guide (BPS*1*22)
+                                       BPS_1_0_P22_IG.PDF        Binary
+  
+ *A single Release Notes document will be released with this multi-build.
+  It can be found on the ECME page of the VDL.
+  
+  
+ Patch Installation
+ ==================
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*22.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXBPSMS
+    Before: B21102458   After: B34074117  **48,77,81**
+Routine Name: PSXRPPL
+    Before: B67417884   After: B68822537  **3,23,33,28,40,42,41,48,62,
+                                           58,66,65,69,70,81**
+Routine Name: PSXRPPL1
+    Before: B53745747   After: B54793601  **3,48,62,66,65,69,73,74,81**
+Routine Name: PSXRPPL2
+    Before: B55367229   After: B72029409  **65,69,73,74,79,81**
+ 
+Routine list of preceding patches: 70, 77, 79
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 04, 2017
+Completed By:                               Date Completed: NOV 06, 2017
+Released By :                               Date Released : NOV 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

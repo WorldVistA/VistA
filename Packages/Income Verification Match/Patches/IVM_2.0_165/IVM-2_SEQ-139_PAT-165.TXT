@@ -1,0 +1,139 @@
+$TXT Created by                      at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/16/17 at 09:57
+=============================================================================
+Run Date: SEP 14, 2017                     Designation: IVM*2*165
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #139                      Status: Released
+                  Compliance Date: SEP 29, 2017
+=============================================================================
+
+Associated patches: (v)IVM*2*152   <<= must be installed BEFORE `IVM*2*165'
+
+Subject: DATE OF DEATH NOT UPDATED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *** Please note the shortened compliance date for this patch 
+ installation. ***
+  
+  
+ This patch will resolve the following issue:
+  
+ 1. The Z05 Enrollment/Demographics upload transmission is incorrectly
+    quitting if the Patient does not have an entry in the IVM PATIENT
+    (#301.5) file.
+  
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+  
+ ASSOCIATED CA TICKET(S):
+ ========================
+ 1. R12889948FY17 - Incoming Z05 message from ESR rejected in error
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VISN 2 - Upstate New York HCS
+ VA Butler Healthcare
+  
+  
+ CA OVERVIEW:
+ ================
+ 1. R12889948FY17 - Incoming Z05 message from ESR rejected in error
+  
+    Problem:
+    --------
+    The Z05 Enrollment/Eligibility upload transmission is incorrectly
+    quitting if the Patient does not have an entry in the IVM PATIENT
+    (#301.5) file.
+  
+    Resolution:
+    -----------
+    Routine IVMPREC6 was modified to properly update the IVM
+    PATIENT (#301.5) file and continue the processing of the 
+    transmission.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The HL7 incoming/outgoing filers should be stopped. Stop All Messaging
+ Background Processes by using the Stop All Messaging Background 
+ Processes [HL STOP ALL] option on the Filer and Link Management
+ Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu
+ [HL MAIN MENU].
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system, but it is 
+ recommended that the install be done during non-peak hours.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter IVM*2.0*165):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package IVM*2.0*165.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The HL7 incoming/outgoing filers should be restarted. Use the
+ Restart/Start All Links and Filers [HL TASK RESTART] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC6
+    Before:B147269412   After:B147873748  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151,152,165**
+ 
+Routine list of preceding patches: 152
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 23, 2017
+Completed By:                               Date Completed: SEP 13, 2017
+Released By :                               Date Released : SEP 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

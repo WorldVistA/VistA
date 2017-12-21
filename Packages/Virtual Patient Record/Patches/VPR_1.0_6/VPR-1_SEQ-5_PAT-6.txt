@@ -1,0 +1,133 @@
+$TXT Created by              J at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Sunday, 06/25/17 at 17:32
+=============================================================================
+Run Date: SEP 28, 2017                     Designation: VPR*1*6
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: OCT 29, 2017
+=============================================================================
+
+Associated patches: (v)VPR*1*5     <<= must be installed BEFORE `VPR*1*6'
+
+Subject: VPR GET PATIENT DATA XML UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package updates the VPR 
+ GET PATIENT DATA remote procedure call (RPC).  This RPC extracts patient
+ health data from the Veterans Health Information Systems and Technology
+ Architecture(VistA) database in Extensible Markup Language (XML) format.
+  
+ Currently, this RPC's output XML cannot be parsed by eHX Adapter because 
+ the data contains special characters.  Specifically, notes that contain 
+ the ASCII BELL (CTRL + G) character cannot be escaped within the RPC.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED CA SDM:
+ ==================
+ R7708760FY16 - VPR GET PATIENT DATA XML UPDATE
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ El Paso VAMC
+  
+ CA SDM OVERVIEW:
+ ================
+ R7708760FY16 - VPR GET PATIENT DATA XML UPDATE
+  
+ Problem:
+ --------
+ XML data returned by VPR GET PATIENT DATA contains non printable 
+ characters that are not properly escaped.  All non printable characters 
+ must be escaped using entity references.  An example is notes which 
+ contain the ASCII BELL (CTRL+G) character.  The RPC currently outputs XML 
+ that cannot be parsed by eHX Adapter if such characters exist.
+  
+ Resolution:
+ ===========
+ Modify ESC^VPRD to include the following line of code:
+  
+     F I=1:1:8,11,12,14:1:31 S X=$TR(X,$C(I))
+  
+ This line of code strips any unwanted control characters entered, 
+ including bell(7), backspace(8), vertical tab(11), form feed(12),
+ shift out(14), and unit separator(31).
+  
+ The exceptions would be tab(9), line feed(10), and/or carriage return(13).
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: 
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "VPR*1.0*6"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRD
+    Before: B43397804   After: B43812127  **1,2,4,5,6**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2017
+Completed By:                               Date Completed: SEP 28, 2017
+Released By :                               Date Released : SEP 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

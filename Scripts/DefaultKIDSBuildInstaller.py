@@ -37,7 +37,7 @@ DEFAULT_CACHE_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "../"))
 from VistAMenuUtil import VistAMenuUtil
 
 DEFAULT_INSTALL_DUZ = 17 # VistA user, "USER,SEVENTEEN"
-CHECK_INSTALLATION_PROGRESS_TIMEOUT = 1200 # 1200 seconds or 20 minutes
+CHECK_INSTALLATION_PROGRESS_TIMEOUT = 7200 # 7200 seconds or 120 minutes
 GLOBAL_IMPORT_BYTE_PER_SEC = 0.5*1024*1024 # import speed is 0.5 MiB per sec
 
 """ Default Installer for KIDS Build """

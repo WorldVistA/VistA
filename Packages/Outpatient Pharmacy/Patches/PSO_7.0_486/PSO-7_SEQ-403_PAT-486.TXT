@@ -1,0 +1,179 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/03/17 at 11:05
+=============================================================================
+Run Date: AUG 15, 2017                     Designation: PSO*7*486
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #403                      Status: Released
+                  Compliance Date: SEP 15, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*222   <<= must be installed BEFORE `PSO*7*486'
+                    (v)PSO*7*450   <<= must be installed BEFORE `PSO*7*486'
+
+Subject: PRESCRIPTION DELETED / EXPIRED PRESCRIPTION / DUPLICATE PRESCRIPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+  
+ 1. R10380204FY16 - when entering a new Rx using the Patient Prescription 
+    Processing [PSO LM BACKDOOR ORDERS], and then editing the dosage and 
+    entering an up caret (^) to exit, the Rx will be deleted as user
+    accepts the Rx.
+  
+ 2. R9361753FY16 - Using the Patient Prescription Processing [PSO LM BACKDOOR
+    ORDERS] option, when users edit/modify the Issue Date or Fill Date of an
+    Outpatient Rx, the Rx Expiration Date is reset to an incorrect date.
+  
+ 3. R15046343FY17 - A drug with same tab strength did NOT discontinue after
+    duplicate (new order) processing. This created a duplicate active order in
+    the patient's profile.
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. R10380204FY16 - When entering a new outpatient Rx, the Rx is Deleted on
+    editing the dosage and entering an up caret (^) to exit.
+ 2. R9361753FY16 - When editing/modifying the Issue Date or Fill Date of an
+    Outpatient Rx, the Rx expires on an incorrect date.
+ 3. R15046343FY17 - A drug with same tab strength did NOT discontinue after
+    duplicate (new order) processing.
+  
+ Participating Test Sites:
+ ========================
+ OKLAHOMA CITY
+ TAMPA BAY
+  
+ Ticket Overview:
+ ===============
+ 1. R10380204FY16- When entering a new RX using LM BACKDOOR ORDERS, the RX
+    is Deleted on editing the dosage and entering an up caret (^) to exit.
+  
+ Problem:
+ --------
+ When user enters a new Outpatient prescription and answers "NO" to the prompt
+ "Is this correct? YES//" and then user edits the dosage and enter an up caret 
+ (^) to exit the prompt "Dosage:" and accepts Rx then new Rx will be
+ deleted. 
+  
+ Resolution:
+ --------
+ Correct routine code ASK^PSOORED5 to call line tag EXE instead EX to escape 
+ killing required data before saving.
+  
+   
+ 2. R9361753FY16 - Outpatient Rx expired on an incorrect date, when Issue Date
+    or Fill Date is modified.
+  
+ Problem:
+ --------
+ When editing/modifying the Issue Date or Fill Date of an Outpatient Rx using
+ the backdoor pharmacy, the Rx expiration date is reset to an incorrect Date.
+   
+ Resolution:
+ --------
+ Corrected A^PSOEXDT to set up expiration date for prescription without
+ refills not less than 30 days after issue date unless it is a Clozapine
+ prescription. In addition, if the newly calculated Rx Expiration Date is
+ earlier than the Rx Fill Date the Rx Expiration Date will be re-calculated
+ to be the Rx Fill Date plus the Days Supply value.
+  
+   
+ 3. R15046343FY17 - A drug with same tab strength did NOT discontinue after
+    duplicate (new order) processing. This created a duplicate active order
+    in patient's profile.
+   
+ Problem: 
+ --------
+ When using the options Patient Prescription Processing [PSO LM BACKDOOR
+ ORDERS] or Complete Orders from OERR [PSO LMOE FINISH] for finishing 
+ pending orders there was a scenario where duplicate orders could remain
+ on the patient profile as ACTIVE. When finishing the pending order in
+ some instances the prompt "Press return to continue:" would be presented.
+ If the user entered an up caret (^) at this prompt, the duplicate existing
+ order would not be discontinued after the new order was accepted.
+    
+ Resolution:
+ --------
+ Changed PSOORNEW routine to initialize the array variable PSORX("DFLG") 
+ right before the call to file the new order and subsequent DC of the existing
+ duplicate order. This initialization will cause the code responsible for 
+ discontinuing the existing order (DCORD^PSONEW2) to perform the DCing of the
+ existing order without skipping it, like it was doing before this fix.
+      
+        ================INSTALLATION INSTRUCTIONS ================= 
+    
+ ******************************************************************************
+ * Pharmacy users should not be processing prescriptions while patch is being *
+ * installed. It should take less than 5 minutes to install this patch.       *
+ ****************************************************************************** 
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSO*7.0*486)
+   
+    a.  Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch is
+        installed (routines, DD's, templates, etc.).  
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSO*7.0*486.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOEXDT
+    Before:  B4855517   After:  B6433054  **23,73,222,486**
+Routine Name: PSOORED5
+    Before: B61788281   After: B61813792  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486**
+Routine Name: PSOORNEW
+    Before: B97649814   After: B98142553  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486**
+ 
+Routine list of preceding patches: 444, 450
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2017
+Completed By:                               Date Completed: AUG 15, 2017
+Released By :                               Date Released : AUG 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

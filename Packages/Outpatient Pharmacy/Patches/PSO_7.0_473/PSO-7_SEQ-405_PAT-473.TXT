@@ -1,0 +1,211 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/07/17 at 13:58
+=============================================================================
+Run Date: SEP 14, 2017                     Designation: PSO*7*473
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #405                      Status: Released
+                  Compliance Date: OCT 14, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*473'
+
+Subject: EXPIRATION DATE CALCULATION CHANGE & BATCH BARCODE RENEW EDT. CRASH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+  
+  1. I8924763FY16 - Expiration date changed for prescription marked as a
+                    titration script.
+  2. I9667491FY16 - Renewing a script using the Barcode Batch Prescription 
+                    Entry [PSO BATCH BARCODE] option causes crash.
+  3. R8247671FY16 - VistA patch used at VHA station #663 that resolves the 
+                    Fill Date issue 
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I8924763FY16 - Expiration date changed for prescription marked as a
+    titration script.
+  
+ 2. I9667491FY16 - Renewing a script using the Barcode Batch Prescription 
+    Entry [PSO BATCH BARCODE] option causes crash.
+  
+ 3. R8247671FY16 - VistA patch used at VHA station #663 that resolves the 
+    Fill Date issue.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. I8924763FY16 - When a Maintenance Rx was created as the result of
+     converting a Titration marked Rx instead of retaining the Expiration Date
+     from the Titration Rx it was wrongly being assigned a new Expiration
+     Date.
+  
+  Problem:
+  --------
+  When using the Patient Prescription Processing [PSO LM BACKDOOR ORDERS]
+  option and using the hidden action Convert Titration Rx (TR) to create a
+  new Maintenance dose prescription from a Titration Rx the user noticed
+  that the Expiration Date associated with the new Maintenance Rx was
+  calculated 366 days in the future instead of being assigned the exact 
+  same Expiration Data from the Titration Rx.
+   
+  Resolution:
+  -----------
+  Changed the routine PSON52 responsible for creating the new Maintenance Rx
+  to overwrite the calculated Expiration Date with the Expiration Date from
+  the original Titration Rx.
+  
+  ROUTINE:
+  --------
+  Added code at DT+1^PSON52 to set the array variable PSOX("STOP DATE") with 
+  the Titration Rx Expiration, if a Titration Rx To Maintenance Rx conversion
+  is taking place.
+  
+  
+  2. I9667491FY16 -The site would like to use the Barcode Batch 
+     Prescription Entry [PSO BATCH BARCODE] option to renew prescriptions.
+     When this is attempted the renewal appears to succeed and there is a
+     prompt to edit the renewal. If yes is selected the session will crash
+     with an undefined variable (hard error).
+  
+  Problem:
+  --------
+  When using the Barcode Batch Prescription Entry [PSO BATCH BARCODE] option
+  for renewals the users received a hard error and were logged out of the
+  system when they answered YES to the "Edit renewed Rx ?" prompt (before
+  accepting it).
+   
+  Resolution:
+  -----------
+  The root cause of this problem was due to the fact that the PSOACT variable
+  that controls which action a specific user can perform on an order, based on
+  the user security keys as well as whether the order was digitally signed or
+  not. The routine PSOBBC was modified to initialize the PSOACT variable
+  which will prevent the hard error.
+   
+  ROUTINE:
+  --------
+  Added code at NEW+9^PSOBBC to initialize the PSOACT variable according to 
+  the type of order, user's security keys and system parameters.
+  
+  
+  3. R8247671FY16 - We would like to request for assistance in the
+     identification and deployment of the VistA patch used at VHA station
+     #663 (Seattle division) that enables pharmacy staff resolves the Fill
+     Date issue and generates the error message described below.
+  
+     "The earliest fill date allowed is determined by the Issue Date, the
+     Fill Date cannot be before the Issue Date or past the Expiration
+     Date. Both the month and day are required."
+  
+  Problem:
+  --------
+  When using the speed renewal hidden action in Patient Prescription 
+  Processing [PSO LM BACKDOOR ORDERS] option, it was reported that when the
+  # of refills is zero, there are times the expiration date is set to a
+  date earlier than the filled date.
+   
+  Resolution:
+  -----------
+  In a situation where the # of refill is zero, patient is not a clozapine 
+  patient and the expiration date is < fill date, added new logic to 
+  calculate the most appropriate expiration date.
+  
+  
+  ROUTINE:
+  --------
+  Added new code to DT+1^PSON52 to check if the patient is not a clozapine 
+  patient, # of Refills is zero and the Expiration Date is < Filled Date,
+  then to set the expiration date.
+  The Expiration Date will normally be set to (Fill Date + Day Supply). 
+  However, it will be adjusted to comply with the following restrictions:
+   - For controlled substances, the maximum Expiration Date allowable is 
+     (Issue Date + 184 days)
+   - For non-controlled substances, the maximum Expiration Date allowable 
+     is (Issue Date + 366 days)
+   - If the Expiration Date is less than the Fill Date, it will be set to 
+     the same as the Fill Date
+  
+ Test Sites:
+ -----------
+ Oklahoma City HCS
+ Amarillo HCS
+ Palo Alto HCS
+ Meds by Mail
+  
+  
+ Installation Instructions:
+ --------------------------
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed. It should take less than 5 minutes to install this
+ patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSO*7.0*473)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        is installed (routines, DD's, templates, etc.).  
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSO*7.0*473.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBBC
+    Before:B104120785   After:B109320592  **11,22,27,34,46,130,146,185,
+                                           242,264,300,337,313,473**
+Routine Name: PSON52
+    Before: B91872301   After: B99620667  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408,
+                                           473**
+ 
+Routine list of preceding patches: 408
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2016
+Completed By:                               Date Completed: SEP 12, 2017
+Released By :                               Date Released : SEP 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

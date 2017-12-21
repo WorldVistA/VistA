@@ -1,0 +1,194 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 09/01/17 at 09:04
+=============================================================================
+Run Date: OCT 26, 2017                     Designation: PRCA*4.5*319
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #289                    Status: Released
+                  Compliance Date: NOV 25, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*312<<= must be installed BEFORE `PRCA*4.5*319'
+
+Subject: RESOLVE GETPHARM+21 ERROR AND ALLOW REPROCESS RECEIPTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PRCA*4.5*319 addresses the following Accounts Receivable issues:
+  
+ 1. The ERA Worklist [RCDPE EDI LOCKBOX WORKLIST] option produces error:
+    <UNDEFINED>GETPHARM+21^RCDPEWLP.
+  
+ 2. When using the Receipt Processing [RCDP RECEIPT PROCESSING] option to 
+    reprocess an auto posted receipt, the message "This receipt cannot be
+    processed - the receipt total does not match the EFT total for this EDI
+    Lockbox receipt" is received when an EFT/ERA spans several receipts.
+  
+ ASSOCIATED TICKETS:
+ ===================
+  1. I9003217FY16 - <UNDEFINED>GETPHARM+21^RCDPEWLP /CPAC VistA: EXPRESS 
+                    SCRIPTS EFTs
+     I9009432FY16(d)  - DUPLICATE Error <UNDEFINED>GETPHARM+21^RCDPEWLP
+     R9347370FY16(d)  - DUPLICATE <UNDEFINED>GETPHARM+21^RCDPEWLP
+     I10326780FY16(d) - DUPLICATE Error: <UNDEFINED>GETPHARM+21^RCDPEWLP
+     I11431256FY17(d) - DUPLICATE: Huntington is getting the following 
+                        error in the error trap: GETPHARM+21^RCDPEWLP
+     I14675621FY17(d) - CMS - $ZE= <UNDEFINED>GETPHARM+21^RCDPEWLP ^TMP("
+     R15284777FY17(d) - <UNDEFINED>GETPHARM+21^RCDPEWLP
+     R15271427FY17(d) - <UNDEFINED>GETPHARM+21^RCDPEWLP
+     I15864975FY17(d) - <UNDEFINED>GETPHARM+21^RCDPEWLP
+  
+  2. I6485975FY16 - Cannot Reprocess Auto-posted Receipts if EFT Split Over
+                    Several Receipts 
+     I7067629FY16(d)  - 659-Salisbury Receipts Rejected
+     I7067680FY16(d)  - 688-Wash DC Receipts Rejected
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Dayton VAMC
+ Huntington VAMC 
+  
+  
+ CA SDM Overview:
+ ================
+ 1. I9003217FY16 - <UNDEFINED>GETPHARM+21^RCDPEWLP /CPAC VistA: EXPRESS 
+                   SCRIPTS EFTs
+  
+    Problem:
+    ========
+    Error <UNDEFINED>GETPHARM+21^RCDPEWLP occurs when user tries to post an
+    Electronic Remittance Advice (ERA) from the ERA worklist [RCDPE EDI
+    LOCKBOX WORKLIST] option.
+  
+    Resolution:
+    ===========
+    Routine RCDPEWLP was modified to check for the presence of the RELEASED
+    DATE/TIME (#17) field in the REFILL (#52.1) sub-file of the PRESCRIPTION
+    (#52) file before using it to prevent the error from occurring.
+  
+ 2. I6485975FY16 - Cannot Reprocess Auto-posted Receipts if EFT Split Over
+                   Several Receipts 
+  
+    Problem:
+    ========
+    The message "This receipt cannot be processed - the receipt total does
+    not match the EFT total for this EDI Lockbox receipt" is received when
+    reprocessing an auto-posted receipt using the Receipt Processing [RCDP
+    RECEIPT PROCESSING] option. This happens when a Electronic Remittance
+    Advice (ERA) spans several receipts and one is rejected by the
+    Financial Management System (FMS). Patch PRCA*4.5*298 made changes so
+    that the Electronic Remittance Advice (#344.4) file entries can have
+    multiple receipts in the AR BATCH PAYMENT (#344) file.
+  
+    Resolution:
+    ===========
+    The RCDPURED routine was modified at section PAYTOTAL to total all of
+    the associated receipts on file for the AR BATCH PAYMENT (#344) file
+    entry.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ It is recommended this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ Should any errors occur due to power outages, incomplete or bad download 
+ of this build, or errors during install appear or errors are experienced
+ after the install is complete; it is recommended that a full VistA backup
+ is done prior to the installation of this patch.
+  
+  
+   1.   LOAD TRANSPORT GLOBAL 
+        ---------------------
+        Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+               Edits and Distribution ...  
+               Utilities ...  
+               Installation ...
+   
+        Select Kernel Installation & Distribution System Option: 
+               INStallation
+               Load a Distribution
+               Print Transport Global 
+               Compare Transport Global to Current System 
+               Verify Checksums in Transport Global 
+               Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution 
+               Backup a Transport Global 
+   
+   3.   Select Installation Option:
+        ---------------------------
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter PRCA*4.5*319):
+  
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+   
+   4.   Select Installation Option: Install Package(s)
+   
+       **This is the step to start the installation of this KIDS patch:
+       a. Choose the Install Package(s) option to start the patch install.
+       b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//' answer NO
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//' answer YES
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+          ERA Worklist                 [RCDPE EDI LOCKBOX WORKLIST]   
+          Receipt Processing           [RCDP RECEIPT PROCESSING]      
+          
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.                                                           
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPEWLP
+    Before:B173786255   After:B174410829  **298,303,304,319**
+Routine Name: RCDPURED
+    Before: B64234789   After: B68813703  **114,169,174,196,202,244,268,
+                                           271,304,301,312,319**
+ 
+Routine list of preceding patches: 312
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 12, 2016
+Completed By:                               Date Completed: OCT 26, 2017
+Released By :                               Date Released : OCT 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

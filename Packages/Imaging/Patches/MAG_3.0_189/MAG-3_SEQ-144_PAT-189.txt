@@ -1,0 +1,535 @@
+
+=============================================================================
+Run Date: NOV 09, 2017                     Designation: MAG*3*189
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #144                      Status: Released
+                  Compliance Date: DEC 11, 2017
+=============================================================================
+
+
+Subject: Clinical Capture issues.
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ================
+ This patch must be installed after MAG*3.0*178.
+  
+ Subject:  CLINICAL CAPTURE ISSUES
+ ======
+  
+ Category:  OTHER
+ =======
+  
+ Description:
+ =========
+ MAG*3.0*189 resolves the following issues for the Clinical Capture Client:
+  
+  Duplicate images are captured. When capturing images, it is possible to 
+ click the Capture button again, before the current image capture has
+ completed. This results in the same image being captured twice to the
+ Study Group.
+  
+  Telederm Consults do not display.  The lists of Telederm Consults are 
+ not displayed when the user clicks the Select Telederm Consult button.
+  
+  Patient not synchronizing without Clinical Context Object Workgroup 
+ (CCOW).  This issue was reported by Indian Health Service (IHS) users.  
+ The patient in Clinical Capture does not synchronize when a new patient is
+ selected in the IHS Electronic Health Record (EHR).  This issue will occur
+ at VA Sites if CCOW is not running.
+  
+ Patch Components:
+ ===============
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P189_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch.
+ MAG3_0P189_README.txt, if present, is an informative file associated with
+ the patch.
+  
+ Software:
+ ========
+ File Name                                       Description
+ =========                                       ===========
+ MAG3_0P189.KID                                  Kernel Installation and 
+                                                 Distribution System
+                                                 (KIDS)build for Patch 189
+  
+ MAG3_0P189_Clinical_Capture_ Setup.exe          Clinical Capture client 
+                                                 installation file
+ MAG3_0P189_Clinical_Capture_Install.msi         Clinical Capture push 
+                                                 installation file
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P189_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ 1.      Defect 585354 (Trouble Ticket I16213216FY17) Capture Button 
+ Selected Multiple Times and Defect 453724 (Trouble Ticket I6044024FY16)
+ Clinical Capture not Correctly Uploading
+ For this item, multiple problems were solved with the same solution.  
+ They are detailed below: 
+ Problem 1 (585354):  The Clinical Capture button
+ can be selected multiple times and the default saving setting is Study
+ (Group) as opposed to Single.
+ Problem 2 (453724):   The Clinical Capture attempts do not correctly 
+ upload.  An image stub is in VistA that shows in Clinical Display (as a
+ second image to the image group).
+ The user will try to open the image, is informed it does not exist and is 
+ advised to call Information Resource Management (IRM).  On the Verifier,
+ the image shows as file size zero but is not correctly removed from the
+ IMAGE (2005) File.
+  
+ Resolution: The problem results from the fact that the Capture and Image 
+ OK buttons remain enabled during the capture process, and that the image
+ is being saved to a study group.  A user can accidentally click the
+ Capture button a second time before the current capture process has
+ finished.
+  
+ Note:  Two results occur because of this issue.
+ ====
+ First, the same image is successfully captured twice.  This results in 
+ two of the same images being stored in the study group.  One of the
+ duplicate images needs to be manually deleted from the patient record.
+  
+ Second, the same image is both successfully and unsuccessfully captured.  
+ In this situation, the image entry for the unsuccessful capture does not
+ get cleared by the Verifier.  An image stub remains in the IMAGE (2005)
+ File.  The Verifier issue is not fixed in this patch.
+  
+ In Patch 189, the Capture and Image OK buttons are correctly disabled 
+ during the capture process.  This will stop the possibility of
+ accidentally capturing the same image twice.
+  
+ New Configuration Utility:
+ =========================
+ In this patch, a new utility is available, which will enable the user to 
+ change all configuration buttons at once.  The utility will change the
+ saving property of the configuration from "Saving: Study Group" to
+ "Saving: Single Image".  See Configuration Utility in the next section.
+  
+ 2.      Defect 573105 (Trouble Ticket I15833209FY17 & I15836535FY17) 
+ Teledermatology not Working after Upgrade
+  
+ Problem:  The button to select a Telederm Consult does not work.  When 
+ clicked, it blinks or flashes but the Telederm Consult selection list does
+ not display.
+  
+ Note: This issue was reported in Clinical Capture MAG*3.0*178.
+ ==== 
+  
+ Resolution:  The Telderm Consult window is fixed and now correctly 
+ displays as designed.
+  
+ 3.      Defect 548548 (Trouble Ticket I15201996FY17) Patient Selections 
+ not Updating
+ Problem:  This issue was reported by Indian Health Services (IHS).  When 
+ the patient is changed in the EHR (CPRS), the patient does not update in
+ Clinical Capture.
+  
+ Resolution:  The patient synchronization between Clinical Capture and EHR 
+ (IHS) has been fixed.  The patient in Clinical Capture will now correctly
+ change to the patient selected in EHR.
+  
+ Note:  
+ ====
+ If CCOW is not running at VA sites, and the Clinical Capture client was 
+ started from the CPRS tools menu, then the patient in Clinical Capture
+ will correctly change to the patient selected in CPRS.
+  
+ Configuration Utility:
+ =====================
+ Overview:  One of the property settings saved with all configuration 
+ buttons is the Saving As property.  This property defines whether the
+ captured images are saved as a part of a study (Group) or as a single
+ image.
+ When a single image is to be associated with the package report, (i.e., 
+ TIU Note), then Single Image should be used.  This is generally the
+ setting for document scanning and includes saving a multiple page document
+ as a single image, such as a PDF.  Study (Group) should only be used when
+ multiple images are associated with the same package report.
+ Generally, this is the setting for importing images, such as digital 
+ photographs.  A special situation occurs when only one image is saved in a
+ Study (Group); this is referred to as a group of one.  Although a group of
+ one will work, extra processing is required by Imaging functions in
+ Clinical Capture, Display and the Background Processor.
+  
+ Also, the user has extra steps to complete when capturing to an image 
+ group.  A group of one has been known to cause issues with Clinical
+ Display and the Background Processor and most recently with Clinical
+ Capture. The Imaging team strongly recommends that the Saving option be
+ changed to Single Image instead of Study (Group) and that the existing
+ Configuration Buttons on the workstation be changed to Single Image
+ instead of Study (Group).
+  
+ Note:  
+ ====
+ Prior to MAG*3.0*189 the default setting for saving was Study (Group).  
+ For workstations that have not had previous versions of Clinical Capture
+ installed, the default setting will be Single Image after installing
+ MAG*3.0*189.
+  
+ A new utility in the Clinical Capture client enables the user to change 
+ all existing configurations from Study (Group) to Single Image.
+  
+ Running the Utility:
+ Run the utility from the Clinical Capture main window menu:  
+ Configurations | Modify Configurations: change Group to Single
+ A confirmation window will display showing counts of existing 
+ configurations.
+  
+ Click "OK."      
+ The result will be displayed as a message at the bottom of the main 
+ window.  Optionally, you can verify that the changes were implemented by
+ running the utility again. Now, as shown on the right, there are no
+ configurations defined as an Image Group.
+  
+  
+ Changing from Single Image to Study (Group):
+ If a site does capture multiple images to a Study (Group), you can modify 
+ and save an existing configuration button.
+  
+ To modify the existing configuration, follow the directions below:
+ Click an existing configuration button that has Saving set to Single.
+                                                 
+ The configuration will be applied to the properties and fields of the 
+ Clinical Capture main window.    
+  
+ Change from Single Image to Study (Group).
+  
+ Click "OK."      
+  
+ Now save the configuration.      
+ The Save Configuration dialog window will display.  The button's name 
+ should be displayed, but if it's not, retype the name exactly as it
+ displayed on the button before you modified it.
+  
+ Click "OK." 
+ Click "OK" to overwrite the existing configuration.
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+  IHS Sites: 
+     o Gallup Indian Medical Center, Navajo Area
+     o Yellowhawk Health Center, Portland Area
+     o Clinton Service Unit, Oklahoma Area
+  
+  VA Sites:
+      o Southern Nevada Health Care System (Las Vegas)
+      o Fayetteville VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*189 is released, the list of supported versions of Clinical 
+ Capture will not change:
+  
+ Supported Versions      No Longer Supported 
+ 3.0.189                 3.0.122
+ 3.0.178                 3.0.117
+ 3.0.151                 3.0.106
+ 3.0.140                 3.0.94
+ 3.0.129
+  
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*189 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used.  This
+ patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active
+ and users are on the system.
+  
+ Installing the MAG*3.0*189 KIDS takes 1-5 minutes.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*189.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD 
+ MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+      a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+ load the KIDS distribution.
+      b.When prompted, enter the path and file name (MAG3_0P189.KID) of 
+ the Patch 189 KIDS file that was downloaded from the Download Server.
+      c. When prompted to continue with the load, enter "YES".  A 
+ Distribution OK! Message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch.
+      a.Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the
+ patch.
+     b.Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when
+ the patch is installed.  All components (routines, options, and so on) in
+ the patch will be compared.
+     c.Back up a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ The option will NOT back up any of the other changes.
+ 5.After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+     a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b.When prompted for the install name, enter MAG*3.0*189.
+     c.Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6.When the installation has finished, an Install Completed message will 
+ be displayed.
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If the user has already installed the patch and is installing
+ the KIDS file in a namespace on which it has previously been installed,
+ the output will be different.
+  
+ Select INSTALL NAME:    MAG*3.0*189    9/11/17@09:48:47
+      => VistA Imaging V3 - Patch 189  - Capture issues  ;Created on Sep 
+ 07,
+  
+ This Distribution was loaded on Sep 11, 2017@09:48:47 with header of
+    VistA Imaging V3 - Patch 189 - Capture issues  ;Created on Sep 07, 
+ 2017@09
+ :34:37
+    It consisted of the following Install(s):
+     MAG*3.0*189
+ Checking Install for Package MAG*3.0*189
+  
+ Install Questions for MAG*3.0*189
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// 
+  
+  Running Pre-Install Routine: PRE^MAGIP189
+  
+  Running Post-Install Routine: POS^MAGIP189
+  
+ Post Install Mail Message: Sep 11, 2017@09:49:07
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*189 Installed.
+                Sep 11, 2017@09:49:08
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+  
+  
+ Post-Installation Instructions:
+ ==============================
+ VistA Imaging Clinical Capture Client Installation Instructions
+ The Clinical Imaging Capture client software can be updated using one of 
+ the methods outlined below:
+  Manual installation
+  Automatic installation using other methods (SMS, PSexec, etc.)
+  
+ Note: 
+ ====
+ The Clinical Capture Application is only supported on a Windows 7 
+ operating system; other operating systems are not officially supported.
+ Clinical Capture is distributed as an MSI and EXE installation.  The MSI 
+ is intended for sites that want to do a push installation (using SCCM or
+ another tool).  The EXE is intended for use to install on a single
+ workstation. After client installation is complete, log into an updated
+ workstation and use the Help | About menu option to verify that the
+ version number is 3.0.189.2.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P189_Clinical_Capture_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation"
+ in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Uninstalling Clinical Capture Client MAG*3.0*189
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*189 client, use the Uninstall 
+ option from Windows Control Panel to uninstall: "VistA Imaging Clinical
+ Capture".Then install the previous version of Clinical Capture which was 
+ included in MAG*3.0*178.
+ If it is necessary to uninstall the MAG*3.0*189 VistA KIDS, you need to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see Installation Steps section, step 4c done 
+ before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+  
+  
+ 1.Select the message shown below:
+  
+ Backup of MAG*3.0*189 install on <mmm dd, yyyy>    <user name>
+  
+ 2.Select the Xtract PackMan option.
+ 3.Select the Install/Check Message option.
+ 4.Enter "Yes" at the prompt.
+ 5.Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGGTU4C (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;**[Patch List]** ; Mar 19, 2002;Build 31;Sep 06, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGGTU4C        5140530         5350343         **93, 94, 106, 117, 122, 
+                                                 129, 140, 151,178, 189**
+ MAGIP189        NA              4256693         **189**
+ Routine MAGIP189 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+Routine Name: MAGIP189
+    Checksum:
+  NA
+ Description of Changes:
+  Standard install routine that sends install message to
+  Mag Enterprise
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2017
+Completed By:                               Date Completed: NOV 07, 2017
+Released By :                               Date Released : NOV 09, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

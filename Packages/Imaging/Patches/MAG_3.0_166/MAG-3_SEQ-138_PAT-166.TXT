@@ -1,0 +1,605 @@
+
+=============================================================================
+Run Date: SEP 07, 2017                     Designation: MAG*3*166
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #138                      Status: Released
+                  Compliance Date: OCT 09, 2017
+=============================================================================
+
+
+Subject: DICOM Patch
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*173.
+  
+ Subject:  LEGACY DIGITAL IMAGING AND COMMUNICATIONS IN MEDICINE (DICOM) 
+ =======   GATEWAY (LDGW) UPDATE
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ This document describes MAG*3.0*166, a patch that provides updates to the 
+ Legacy Digital Imaging and Communications in Medicine (DICOM) Gateway 
+ (LDGW).
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 166_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P166_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ File Name                      Description
+ MAG3_0P166.KID                 Kernel Installation and Distribution System
+                                (KIDS) build for Patch 166
+ MAG3_0P166_DICOM_setup.exe     Legacy DICOM Gateway executable file
+  
+ Documentation:
+ =============
+ This document, MAG3_0166_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch.  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1.      Defect 292015 (Trouble Ticket I14509823FY17, R14507071FY17, 
+ R14511179FY17, R15488066FY17, I15621144FY17, I15440327FY17)  $ZUTIL 
+ Replacement Functions
+  
+ Problem:  The DICOM Gateways use InterSystems Cachi $ZUTIL calls for 
+ interfacing with the Windows operating systems and Cachi internals.  We 
+ have been advised by InterSystems that the $ZUTIL calls are being 
+ deprecated and that we need to switch over to Cachi class methods.
+  
+ The calls are isolated in four operating systems interface routines on 
+ the DICOM Gateway:
+  
+ 1.    MAGOSDIR - handles directory functions
+ 2.    MAGOSFIL - handles file access methods
+ 3.    MAGOSMSC - provides miscellaneous functions
+ 4.    MAGOSTCP - supports Transmission Control Protocol (TCP) capabilities
+  
+ Additionally, after the install of MAG*3.0*176, some sites saw an 
+ increase in the error message Error: <VALUE OUT OF
+ RANGE>CCHWILD+4^MAGOSDIR "<ZVALUE OUT OF RANGE-unknown>" at 
+ CCHWILD+4^MAGOSDIR MUMPS Code: " S 
+ TIME=$TR($ZDATETIME($ZU(140,2,NAME),8,1)," :",".")-17000000"
+  
+ Resolution:   Deprecated $ZU utilities functions were replaced with Cache'
+ method calls and the $$DEL functions were removed from the HOSTCMD 
+ subroutine in MAGOSMSC.  The explicit delete functions were causing
+ "Access Denied" errors at a site that had switched to SSH.
+  
+ 2.      Defect 292022  Multi-word Passwords
+ Problem:  Users were unable to run the Legacy DICOM Gateway during 
+ testing.  Further investigation showed it was due to a space in the IA 
+ (Integration Agreement) account.
+  
+ Resolution:  The code was modified to allow a space in the password.
+  
+ 3.      Defect 370873 (Trouble Tickets R10291624FY16 & R11277667FY17) 
+ JPEG Compression
+ Problem:  Sites were reporting routing compression no longer worked and 
+ they were receiving the error "JPEG 2000 Compression not licensed on this 
+ system."  It was discovered that this was due to a check for the file 
+ "awj2k.dll" in the wrong directory.   After the upgrade to OS 2012/2008 
+ the "\Program Files\VistA\" directory is replaced with "\Program files 
+ (x86)\Vista\", but Windows directories "\Program Files\VistA\" is hard 
+ coded in multiple ^MAG routines.
+  
+ Resolution:  The hardcoded path was modified to point to the correct file 
+ location.
+  
+ 4.      Defect 194666 (Trouble Ticket R6303222FY16/Ticket 1009542) Stop 
+ Daily Report Message
+ Problem:  Each of the approximately 700 VistA Imaging DICOM gateways 
+ transmits a Daily Report message to a system in which the data was 
+ compiled for use by the VistA Imaging (Food and Drug Administration) FDA 
+ consultant during development.  As these reports are no longer needed for 
+ sustainment, and multiple system database crashes have occurred due to 
+ the large amount of data continually compiled for these reports, the 
+ transmissions of these reports needs to be stopped.
+  
+ Resolution:  Code for the daily report message was removed.
+  
+ 5.      Defect 194693 (Ticket 1280785) HDIG Generates Improper Increment 
+ Entries in MAGDINPT
+ Problem:  The HDIG is somehow generating improper increments in the 
+ legacy DICOM Gateway.  When this occurs, that means the legacy 2-3 
+ process shuts down.  Global 2006.571 was being locked at the wrong time.
+  
+ Resolution:  This global lock was moved to prevent issues with inaccurate 
+ incrementing.
+  
+ 6.      Defect 198336 (Ticket 1280785) RPC "MAGV FIND STUDY TIU" Not 
+ Registered to the Option "MAG DICOM VISA"
+ Problem:  A previous installation of VistA Imaging included the MAGV FIND 
+ STUDY TIU Remote Procedure Call (RPC), but failed to add the RPC to the 
+ MAG DICOM VISA VistA menu.
+  
+ Resolution:  MAGV FIND STUDY TIU has been registered to the MAG DICOM 
+ VISA option.
+  
+ 7.      Defect 376171 (Tickets I10241107FY16, I10195009FY16, 
+ 10385359FY16, R10388245FY16, I10427768FY16) 174 Changes
+ Problem:  There were several issues addressed in emergency Patch 174, but 
+ this code also needs to be in this Gateway patch (MAG*3.0*166) since it 
+ was started first.
+  
+ Resolution:  All modified code for Patch 174 has been included in this 
+ patch (MAG*3.0*166).
+  
+ 8.       Defect 194602 Add "LAB_MEDIA" to the M Code
+ Problem:  When updating the instrument.dic file, there is M code that 
+ checks for RAD_MEDIA and CON_MEDIA.  However, Patch 138 added LAB orders, 
+ as well, but it appears the M code check did not get updated with 
+ LAB_MEDIA.  This needs to be addressed.
+  
+ Resolution:  The MAGDMFBI routine was modified on the DICOM Gateway that 
+ processes the INSTRUMENT.DIC file to require that RAD_MEDIA, CON_MEDIA, 
+ and LAB_MEDIA be in the file.
+  
+ IMPORTER III was modified to specifically look for RAD_MEDIA, CON_MEDIA, 
+ or LAB_MEDIA, based on Imaging Service (RAD, CON, or LAB).  It will then 
+ pass that value to the HDIG and that value will be passed onto the 
+ Gateway and recorded in statistics.  
+  
+ A LAB service is required in INSTRUMENT.DIC.  The following:is required:
+ # Place your entries below
+ RAD_MEDIA|Radiology Media Importer||RAD|65000|VHAxxxDIG1
+ CON_MEDIA|Consult Media Importer||CON|65001|VHAxxxDIG1
+ LAB_MEDIA|Lab Media Importer||LAB|65002|VHAxxxDIG1
+  
+ 9.      Defect 372434 (Trouble Ticket #s: R11995929FY17, I10849673FY16 
+ -   INC000001231626) Wrong Date of Birth (DOB)
+ Problem:  Site reported that the wrong DOB for a patient was sent to a 
+ modality and displayed in the worklist.  After researching the issue, 
+ Clin 3 was able to substantiate their claim; the patient's correct DOB 
+ could be found in the VistA Patient (#2) file, but an incorrect DOB was 
+ present in the Modality Worklist (MWL) data.  This was not a one-time 
+ occurrence; the patient had several exams over multiple days and each of 
+ the MWL entries contained an incorrect DOB.  Upon further review, we
+ found the issue has occurred for multiple patients.
+  
+ It was discovered that the Data File Number (DFN) value was actually
+ changed during the registration of the patient's exam in the Radiology 
+ package.  The code is actually setting the DFN to a different (incorrect) 
+ patient because it is referencing the wrong location in the array.  The 
+ change in the DFN value only occurs when the database contains a different
+ patient with a DFN that matches the original patient's Social Security
+ Number (SSN).
+  
+ Resolution:  The code was revised to modify a routine and the DFN was 
+ pulled from the correct array location.
+  
+ 10.      Defect 409999 (Trouble Ticket #s I10737760FY16, I14808934FY17) 
+ Sites Getting Unsent/Pending HL7 Message in the HLO Queue
+ Problem:  Sites were getting an unsent/pending HL7 message in the HL7 
+ Optimized (HLO) Queue.  VistA Imaging is creating HL7 messages to send to 
+ MAG DPS (digital pathology system), but the Digital Pathology System is 
+ not hooked up at this point in time.  This is causing the message to
+ remain in the HLO Queue.
+  
+ Resolution:  A switch parameter was added to the Site Parameters FileMan 
+ file on the VistA system that will toggle whether or not HLO messages are 
+ sent.
+  
+ 11.      Defect 414807 (Trouble Ticket # I10953108FY17)  DICOM Gateway 
+ Running out of Space
+ Problem:  A site reported that their DICOM gateway kept running out of 
+ disk space.  The C:\DICOM\CACHE directory was growing up to 40-50 GB 
+ before the drive filled up.  The gateway had been very busy processing 
+ images but that was still unusual for the Cache' directory to grow that 
+ large.
+  
+ In the release of Cache' 2010 in MAG*3.0*162, the journaling function 
+ changed and now can take up more space on the hard drive.
+  
+ Resolution:  Setting the DICOM database item, Global Journal State, 
+ option to "No" corrects the excessive disk space usage and an added 
+ benefit is that the image processing speed increased significantly.  If 
+ sites are experiencing this problem, it is recommended that they turn the 
+ journaling off.  From the Cache' System Management Portal Home, select 
+ the System Configuration tab and then Local Databases -> DICOM.  Set the 
+ Global Journal State checkbox to "No" and then click the Save button.  
+ The DICOM Installation Guide was also updated with this information.
+  
+ 12.      Defect 461667  (Trouble Ticket # R12662221FY17, R12658160FY17, 
+ R12635569FY17, I12623351FY17, I12618217FY17) Evaluator Will Not Run after 
+ FM 22.2 Installation
+ Problem:  The routing evaluator error "Remote process has ended: 
+ -3,Inactive: Interrupted" is being generated at sites that have updated 
+ to FileMan v22.2; specifically, the errors are as a result of a change in 
+ the output variables of the FileMan call DT^DICRW in Version 22.2.  This 
+ call is utilized in VistA Imaging routine MAGBRTE3 to set required 
+ variables for routing, but the MAG routine was affected by the new updates
+ to DT^DICRW introduced in FileMan v22.2.
+  
+ Resolution:  The VistA routine MAGBRTE3 has been updated to handle the 
+ DT^DICRW updates in FileMan v22.2.
+  
+ 13.     Defect 490401 (Trouble Ticket # s R11004539FY17 and 
+ I12492219FY17) Importer/HDIG Sending Wrong Item
+ Problem:  The Importer client is sending over the Station Number for RPC 
+ "MAGV RAD STAT COMPLETE" but the VistA code requires the Institution 
+ Internal Entry Number (IEN).
+  
+ Resolution:  The Station Number was converted to an IEN utilizing the 
+ supported IA# 2171.
+  
+ 14.     Defect 526930(Trouble Ticket # R13978077FY17) Update the 
+ BATCH_SEND_IMAGE.bat that is installed with the LDGW
+ Problem:  Clin 3 provided a new batch file for sending images used by the 
+ sites.  This file is installed with the LDGW but has been updated and
+ they would like the update to be included in the install.  This new file 
+ is called dcf_BATCH_SEND_IMAGE.bat.  Instead of replacing what is there, 
+ we are installing this file along with the other and the users have a
+ choice on which to use.
+  
+ Resolution:  The code for DICOM_Silent_Install_2011.ism was modified to 
+ include the DCF_BATCH_SEND_IMAGE.bat file
+  
+ Test Sites:
+ ==========
+ The following sites are test sites for this patch:
+         Denver Health Care System
+         Erie VAMC 
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*166 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*166 KIDS only takes 
+ 2-3 minutes.
+  
+ Note:  If sites have already installed MAG*3.0*176, they will need to 
+ follow the instructions for reinstall of MAG*3.0*176 once the MAG*3.0*166 
+ install is complete.  See the instructions in the Post Installation 
+ section below.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.  Prior to installation,
+ temporarily suspend DICOM processing and routing and work list 
+ functionality.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*166.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take two to three minutes.
+ 1. On the VistA system, access the Kernel Installation and 
+ Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+ load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P166.KID) of
+ the MAG*3.0*166 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A 
+ Distribution OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify 
+ the contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+ this option if you want to ensure the integrity of the routines in the 
+ patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO 
+ SYSTEM] - Run this option if you want to view all changes that will be 
+ made when the patch is installed.  All components (routines, options, and 
+ so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+ want to create a backup message of any routines exported with the patch.  
+ It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, 
+ install the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*166".
+    c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ XPD INSTALLATION MENU Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\KIDS FILES\MAG3_0P166.KID
+  
+ KIDS Distribution saved on Dec 21, 2016@08:51:45
+ Comment: P166
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MAG*3.0*166 has been loaded before, here is when: 
+       MAG*3.0*166   Install Completed
+                     was loaded on Oct 14, 2016@11:00:10
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MAG*3.0*166
+ Use INSTALL NAME: MAG*3.0*166 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*166      1/25/17@13:35:15
+      => P166 - LDGW  ;Created on Dec 21, 2016@08:51:45
+  
+ This Distribution was loaded on Jan 25, 2017@13:35:15 with header of 
+    P166  ;Created on Dec 21, 2016@08:51:45
+    It consisted of the following Install(s):
+     MAG*3.0*166
+ Checking Install for Package MAG*3.0*166
+  
+ Install Questions for MAG*3.0*166
+  
+ Incoming Files:
+  
+  
+    2005      IMAGE  (Partial Definition)
+ Note:  You already have the 'IMAGE' File.
+  
+  
+    2006.1    IMAGING SITE PARAMETERS  (Partial Definition)
+ Note:  You already have the 'IMAGING SITE PARAMETERS' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*166 : 
+                Jan 25, 2017@13:35:52
+  
+ Build Distribution Date: Dec 21, 2016
+  
+  Installing Routines:....
+                Jan 25, 2017@13:35:52
+  
+  Installing Data Dictionaries: ...
+                Jan 25, 2017@13:35:52
+  
+  Running Post-Install Routine: POS^MAGIP166.
+  
+ Post Install Mail Message: Jan 25, 2017@13:35:52
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*166 Installed. 
+                Jan 25, 2017@13:35:52
+  
+ Install Message sent
+  
+ Install Completed
+  
+ Select Installation Option:
+  
+ Do you really want to halt? YES//
+  
+ Post Installation
+ =================
+ Follow these instructions if your site has previously installed 
+ MAG*3.0*176:  Once MAG*3.0*166 installation is complete, rerun the 
+ DICOM_SSH_Setup.bat from the MAG*3.0*176 implementation (Section 4.0 in 
+ the Secure Shell Implementation Instructions for DICOM Gateway for 
+ MAG*3.0*176) to delete the old Telnet sessions.
+  
+ Legacy DICOM Gateway Installing and Updating
+ ============================================
+ For installing, updating, or uninstalling the Legacy DICOM Gateway, refer 
+ to the VistA Imaging DICOM Gateway Installation Guide.  
+  
+ Uninstalling MAG*3.0*166
+ ========================
+ If it is necessary to uninstall the MAG*3.0*166 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*166 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ *Message number will vary based on site.
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine     Checksum       Checksum       Patch List
+             Before         After
+ MAG7RS      54519012       55362619        **11, 40, 30, 123, 138, 166**
+ MAGBRTE3    17206043       17783232        **11, 51, 166**
+ MAGT7MA     130892650      124464922       **138, 173, 166**
+ MAGIP166    New            4110432         **166**
+ MAGTP005    12289427       12863512        **138, 166**
+ MAGVIM05    145735310      152501920       **118, 138, 164, 166**
+  
+ Routine MAGIP166 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+Routine Name: MAGDRVSN
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 24, 2015
+Completed By:                               Date Completed: SEP 07, 2017
+Released By :                               Date Released : SEP 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

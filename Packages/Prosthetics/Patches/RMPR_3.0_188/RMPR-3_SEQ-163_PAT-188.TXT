@@ -1,0 +1,117 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 05/26/17 at 08:55
+=============================================================================
+Run Date: SEP 06, 2017                     Designation: RMPR*3*188
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #163                      Status: Released
+                  Compliance Date: OCT 07, 2017
+=============================================================================
+
+Associated patches: (v)RMPR*3*163  <<= must be installed BEFORE `RMPR*3*188'
+
+Subject: DELAYED ORDER REPORT MISSING PATIENT IEN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue when running the Delayed Order Report 
+ (DOR) in the Prosthetics Graphical User Interface (GUI) and selecting
+ for an Excel spreadsheet to be generated, the patient internal entry
+ number (IEN) column is not populated. The change is to a VistA routine,
+ and not the GUI.
+  
+ Associated ticket:
+ ==================
+ 1. I14662603FY17  Prosthetics GUI DOR Report
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ VA Ann Arbor Healthcare System
+ Providence VA Medical Center
+  
+  
+   
+ Ticket Overview:
+ ================
+ 1. I14662603FY17  Prosthetics GUI DOR Report
+  
+  Problem: 
+  --------
+  If a user runs the Delayed Order Report (DOR) in the Prosthetics GUI
+ and exports to Excel, the Patient IEN column or data is not populated.
+    
+  
+  Resolution:
+  -----------
+  The process to compile the data will now pass back the patient IEN
+ from the PATIENT (#2) file so that it will display on the DOR report.
+  
+  Routines: RMPR9DO
+   
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to users.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*188
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package RMPR*3.0*188.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR9DO
+    Before: B94727310   After: B94877723  **59,77,90,60,135,163,188**
+ 
+Routine list of preceding patches: 163
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 25, 2017
+Completed By:                               Date Completed: SEP 05, 2017
+Released By :                               Date Released : SEP 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

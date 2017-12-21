@@ -1,0 +1,139 @@
+$TXT Created by                    at ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Monday, 08/07/17 at 11:31
+=============================================================================
+Run Date: NOV 14, 2017                     Designation: RMPR*3*189
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #165                      Status: Released
+                  Compliance Date: DEC 15, 2017
+=============================================================================
+
+Associated patches: (v)RMPR*3*133  <<= must be installed BEFORE `RMPR*3*189'
+                    (v)RMPR*3*180  <<= must be installed BEFORE `RMPR*3*189'
+
+Subject: HARMONIZE FIELD VALUES BETWEEN FILES 660 AND 664
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ If a user modifies a contract number through the Edit 2319 [RMPR EDIT 
+ 2319] option, the change is NOT reflected on the Reprint a Purchase Card 
+ Form [RMPR4 RPC] output, and this is fixed with this patch. 
+  
+ Associated ticket:
+ ==================
+ 1. R14373803FY17  SYR - Vendor Quantity Cost option
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Birmingham VA Medical Center
+ VA Maine Health Care Systems (Togus)
+   
+ Ticket Overview:
+ ================
+ 1.  R14373803FY17  SYR - Vendor Quantity Cost option
+  
+  Problem: 
+  --------
+  If a user modifies a contract number through the Edit 2319 [RMPR EDIT 
+  2319] option, the change is NOT reflected on the Reprint a Purchase Card 
+  Form [RMPR4 RPC] output, and it should be. 
+  
+  Resolution:
+  -----------
+  The resolution is:
+  
+  a) If the RECORD OF PROS APPLIANCE/REPAIR (#660) file is updated for the
+  CONTRACT # (#38.7) field, PRODUCT MODEL (#9.2) field, SERIAL NUMBER (#9)
+  and/or LOT NUMBER (#21) field, then the changes are reflected in the
+  corresponding fields on the PROSTHETICS 1358 (#664) file: BILLING ITEM (#2)
+  multiple, CONTRACT # (#13) sub-field, MODEL (#15.4) sub-field, LOT # (15.6)
+  sub-field, and SERIAL NUMBER (#15); and also the reverse,
+  
+  b) If the PROSTHETICS 1358 (#664) file is updated for any of those four
+  fields, then the changes are reflected in the corresponding fields on
+  RECORD OF PROS APPLIANCE/REPAIR (#660) file.
+  
+  Routines: RMPR4M
+            RMPRE29
+   
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to users.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*189
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package RMPR*3.0*189.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//," respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+  
+       Protocols? YES//," respond YES.
+  
+       a) When prompted "Enter options you wish to mark as 'Out of Order':"
+       enter the following options:
+  
+       Edit 2319  [RMPR EDIT 2319]  
+       Reconcile/Close Out Purchase Card Transaction  [RMPR4 CLOSE OUT]
+        
+  
+       b) When prompted "Enter protocols you wish to mark as 'Out of
+          Order':" just press <Return>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR4M
+    Before: B29241453   After: B35332873  **3,26,28,30,41,62,90,133,189**
+Routine Name: RMPRE29
+    Before: B41267108   After: B46941510  **36,41,51,57,62,74,81,61,145,
+                                           150,180,189**
+ 
+Routine list of preceding patches: 133, 180
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2017
+Completed By:                               Date Completed: NOV 14, 2017
+Released By :                               Date Released : NOV 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

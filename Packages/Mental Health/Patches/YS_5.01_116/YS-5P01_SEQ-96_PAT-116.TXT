@@ -1,0 +1,97 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: YS*5.01*116
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #96                   Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+
+Subject: Upgrading YS_MHA_A_Dll from Delphi 7 to Delphi X xe3
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will correct the following issue in the Mental Health DLL
+ feature of the CPRS GUI:
+  
+ 1. CPRS 30 is being upgraded to Delphi XE3 and will now use the unicode
+    character standard. Since the YS_MHA_A.dll is based on the ansi 
+    character standard there is a conflict when CPRS tries to make a call 
+    out to the dll.
+    
+ 2. Introduce a new parameter (YS MHA_A DLL NAME) that will return the 
+    current name of the YS MHA_A Dll.
+  
+  
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Defect Tracking System Tickets:
+ ===============================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA  
+  
+ Remedy Overview:
+ ================     
+ NA  
+      
+             
+ Software Retrieval and Installation Instructions:
+ =================================================
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 12, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,289 @@
+$TXT Created by                 CHEYL135.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 11/07/17 at 14:25
+=============================================================================
+Run Date: NOV 16, 2017                     Designation: SD*5.3*671
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #557                    Status: Released
+                  Compliance Date: DEC 19, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*669  <<= must be installed BEFORE `SD*5.3*671'
+
+Subject: VSE Return to Clinic
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  The Vista Scheduling (VS) Graphical User Interface GUI v2.0.0.13 and this
+  patch provide additional enhancements to the (VS)(GUI) v2.0.0.8. This
+  patch addresses the following issues:
+  
+  
+      Return to Clinic - The GUI must auto-populate the Clinically 
+      Indicated Date (CID) from the Return to Clinic (RTC) orders in
+      the Computerized Patient Record System (CPRS).
+      
+      Mismatched grids/overwriting appointments instead of canceling
+      in Appointment Management [SDAM APPT MGT].
+  
+      Inactive patient flags showing as active in the VS GUI.
+  
+      Delete check out removes encounter information and not directly
+      tied to SD SUPERVISOR key. User must have SD SUPERVISOR key to
+      perform this option.
+  
+  Note: This patch SD*5.3*671 and OR*3*434 are independent patches. The 
+        patches do share functionality and it is recommended that they be 
+        installed together.
+   
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (#)                Field Name (#)  New/Modified/Deleted
+  -------------                --------------  --------------------
+  SDEC APPT REQUEST (#409.85)  ORDER ID(#46)          New
+  SDEC APPT REQUEST (#409.85)  TIME SENSITIVE(#47)    New
+  SDEC APPT REQUEST (#409.85)  PREREQUISITE(#48)      New
+  
+  
+  Forms Associated:
+  
+  Form Name                File #             New/Modified/Deleted
+  ---------                ------             --------------------
+  N/A
+  
+  Mail Groups Associated:
+  
+  Mail Group Name                             New/Modified/Deleted
+  ---------------                             --------------------
+  N/A
+  
+  Options Associated:
+  
+  Option Name               Type              New/Modified/Deleted
+  -----------               ----              --------------------
+  SDECRPC           Broker (Client/Server)         Modified
+  
+  Parameter Definitions Associated:
+  
+  Parameter Name                              New/Modified/Deleted
+  --------------                              --------------------
+  N/A
+  
+  Protocols Associated:
+  
+  Protocol Name                               New/Modified/Deleted
+  -------------                               --------------------
+  SD EVSEND OR                                        New
+  SD RECEIVE OR                                       New
+  
+  Remote Procedures Associated:
+  
+  RPC Name                                    New/Modified/Deleted
+  --------                                    --------------------
+  SDEC GETPRER                                        New
+  SDEC EDIT RETURN                                    New 
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  Templates Associated:
+  
+  Template Name     Type     File Name (#)     New/Modified/Deleted
+  -------------     ----     -------------     --------------------
+  N/A
+  
+  New Service Requests (NSRs):
+  ----------------------------
+  20141109 - National Return to Clinic Order
+  
+  Additional Information:
+  -----------------------
+  N/A
+  
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+  
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+  I15863501FY17
+  I12719561FY17
+  R15961555FY17
+  R15212234FY17
+  R15563148FY17
+  
+  Test Sites:
+  -----------
+  Tomah VA Medical Center
+  Tuscaloosa VA Medical Center
+  
+  Software and Documentation Retrieval Instructions:
+  ----------------------------------------------------
+  Software being released as a host file and/or documentation describing
+  the new functionality introduced by this patch are available.
+  
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may
+  also elect to retrieve files directly from a specific server.
+  
+  Sites may retrieve the software and/or documentation directly using 
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+  directory at the following OI Field Offices:
+  
+  Hines:          domain.ext
+  Salt Lake City: domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library
+  at:
+  http://www4.domain.ext/vdl/
+  
+  VS GUI User Guide 1.3.2
+  
+  Patch Installation:
+  -------------------
+  
+  Post Installation Overview:
+  -------------------------------
+  The post-init routine SDEC671 will transfer from SDEC APPT REQUEST 
+  (#409.85) file the Patient Contact (#44) field multiple to the SDEC 
+  CONTACT (#409.86). No data will be deleted or fields removed at this 
+  time.
+  
+  IF RESTART IS REQUIRED:
+  
+  NOTE: The following procedures require someone with programmer access 
+        and knowledge.
+  
+  The post-init routine sets the XTMP global, to record the last entry 
+  transferred. If the routine stops for any reason it can be re-started
+  by doing the following:
+  
+  D RESTART^SDEC671
+  
+  Also entries in the file SDEC APPOINTMENT (#409.84) that have
+  no corresponding entry in the PATIENT (#2) will be displayed and deleted.
+  The entries are also saved in the XTMP("671SDEC") global.
+  
+  THIS PROCEDURE CAN BE RE-STARTED BY DOING THE FOLLOWING:
+  
+  D PORT2^SDEC671
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  
+  This patch should not be installed with VistA Scheduling GUI users on the
+  system and it is recommended that it be installed during non-peak hours 
+  to minimize potential disruption to other users. This patch should take
+  less than 5 minutes to install.
+  
+  The following options should be disabled to ensure that no processing
+  takes place during the install:
+  
+    Clinical Scheduling Procedure Calls [SDECRPC]
+    Scheduling Manager's Menu           [SDMGR]
+    Supervisor Menu                     [SDSUP]
+    Scheduling Menu                     [SDUSER]
+    Set up a Clinic                     [SDBUILD]
+  
+  Installation Instructions:
+  --------------------------
+  
+  This installation will update routines that support VistA Scheduling GUI
+  APIs.
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      SD*5.3*671
+  
+    a. Backup a Transport Global - This option will create a backup message
+          of any routines exported with this patch. It will not backup any
+          other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will allow
+          you to view all changes that will be made when this
+          patch is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you to
+          ensure the integrity of the routines that are in
+          the transport global.
+  
+  4. From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Respond with 'NO'
+  
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+        Respond with 'NO'
+  
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//' Respond with 'YES' Option to mark as out of order:
+  
+          Clinical Scheduling Procedure Calls [SDECRPC]
+          Scheduling Manager's Menu           [SDMGR]
+          Supervisor Menu                     [SDSUP]
+          Scheduling Menu                     [SDUSER]
+          Set up a Clinic                     [SDBUILD]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC07
+    Before:B186068449   After:B187944035  **627,642,651,658,665,669,671**
+Routine Name: SDEC25
+    Before:B108318139   After:B115273682  **627,665,671**
+Routine Name: SDEC55A
+    Before: B79593054   After: B80956414  **627,671**
+Routine Name: SDEC671
+    Before:       n/a   After: B40695301  **671**
+Routine Name: SDECAR
+    Before: B92353393   After: B90430673  **627,642,671**
+Routine Name: SDECAR2
+    Before:B158474911   After:B191968590  **627,642,658,671**
+Routine Name: SDECELG
+    Before:  B1142489   After:  B3245996  **669,671**
+Routine Name: SDECEPT
+    Before:B134242125   After:B129602604  **669,671**
+Routine Name: SDECHL7
+    Before:       n/a   After:  B3330551  **671**
+Routine Name: SDECU2
+    Before: B12359142   After: B12464546  **627,658,671**
+Routine Name: SDHL7
+    Before:       n/a   After:B103204707  **671**
+Routine Name: SDHL7BLD
+    Before:       n/a   After: B15632226  **671**
+Routine Name: SDM2
+    Before: B24545266   After: B24069088  **32,132,168,356,434,467,478,671**
+ 
+Routine list of preceding patches: 478, 669
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 25, 2017
+Completed By:                               Date Completed: NOV 15, 2017
+Released By :                               Date Released : NOV 16, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

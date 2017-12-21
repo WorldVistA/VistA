@@ -1,0 +1,297 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/13/16 at 16:46
+=============================================================================
+Run Date: OCT 02, 2017                     Designation: PSO*7*422
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #407                      Status: Released
+                  Compliance Date: NOV 01, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*291   <<= must be installed BEFORE `PSO*7*422'
+                    (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*422'
+                    (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*422'
+                    (v)PSO*7*469   <<= must be installed BEFORE `PSO*7*422'
+
+Subject: SIG DISCREPANCY/PRN/DUPLICATE RX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. If patient has Other Language Preference set to Yes and medication
+    instructions are entered into Other Patient Instructions, this
+    information will not print on the pharmacy fill part of the label.
+  
+ 2. Duplicate Prescriptions are active on a patient's profile
+  
+ 3. Pharmacy staff can process their own prescriptions
+  
+ 4. When editing the Drug on a Prescription and answering NO to Edit 
+    the SIG prompt, the Dosage is not updated to match the Drug and SIG.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO #2270 - If patient has Other Language Preference set to Yes and 
+              medication instructions are entered into Other Patient
+              Instructions, this information will not print on the
+              pharmacy fill part of the label. 
+  
+ PSPO #868 - Two prescriptions are staying Active on patient's profile
+ PSPO#2242
+  
+ PSPO #3573 - When editing the Drug on a Prescription and answering NO to 
+              edit the SIG prompt, the Dosage is not updated to match the
+              Drug and SIG.
+  
+ Test Sites:
+ ===========
+ Birmingham VAMC
+ West Palm Beach VAMC
+  
+  
+ Associated CA SDM Ticket(s):
+ ============================
+  
+ 1. I9884654FY16 - If patient has Other Language Preference set to Yes and 
+                   medication instructions are entered into Other Patient
+                   Instructions, this information will not print on the
+                   pharmacy fill part of the label.
+  
+  
+ 2. I9882312FY16 - Duplicate Prescriptions are active on a patient's 
+                   profile
+  
+ 3. I9884924FY16 - Pharmacy staff can process their own prescriptions
+  
+ 4. I9883609FY16 - When editing the Drug on a Prescription and answering 
+                   NO to Edit the SIG prompt, the Dosage is not updated to
+                   match the Drug and SIG.
+  
+  
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+  
+ 1.  I9884654FY16 - If patient has Other Language Preference set to Yes 
+                    and medication instructions are entered into Other
+                    Patient Instructions, this information will not print
+                    on the pharmacy fill part of the label.
+  
+ PSPO #2270
+  
+ Problem:
+ --------
+ The medication instructions appear to be missing from the prescription
+ label when the Other Language Preference switch is set to Yes and the
+ user enters instructions in only one of two possible fields, Patient
+ Instructions or Other Patient Instructions.
+  
+ Resolution:
+ -----------
+ Modify functionality so if the patient has Other Language Preference set 
+ to Yes, then Patient Instructions and Other Patient Instructions are
+ either both populated or both blank. Routines PSODIR, PSOHELP3, PSONEW1, 
+ PSOORED1, PSOORNE1, PSOORNW2 are being modified.
+  
+ 2.  I9882312FY16 - Duplicate Prescriptions are active on a patient's 
+                    profile
+  
+ PSPO #868
+ PSPO #2242
+  
+ Problem:
+ --------
+ Two prescriptions are staying Active on patient's profile
+  
+ Resolution:
+ -----------
+ Modify processing so the Duplicate Order check is performed when the 
+ Dispense Drug is edited on an Active prescription.
+  
+ Technical Resolution:
+ ---------------------
+ Modify CT1+11^PSOORNW1 - 
+ D:$G(PSOAC) POST^PSODRG I $G(PSORX("DFLG")) K PSODRUG N LST...
+        1^PSOORNE1 - 
+ I $G(PSOSIGFL) S PSOAC=1 D 2^PSOORNW1 K PSOAC Q:PSORX("DFLG")  DRDSPL 
+    G DSPL^PSOORNE3 Q
+  
+ 3. I9884924FY16 - Pharmacy staff can process their own prescriptions  
+  
+ Problem:
+ --------
+ Using menu option Edit Prescriptions [PSO RXEDIT], users can edit their 
+ own prescriptions.  A user accessing one's own prescription is a violation
+ of VHA guidelines.
+  
+ Resolution:
+ -----------
+ Menu option Edit Prescriptions [PSO RXEDIT] will be modified so users 
+ will no longer be able to process their own prescriptions.
+  
+ Technical Resolution:
+ ---------------------
+ Need to modify routines PR^PSORXPR, CHK+8^PSODPT, PT+7^PSORXEDT and
+ EDIT^PSOVER1.
+ Add call to $$CHK^PSOPT(DFN,1,1), quit if return value=-1
+  
+ 4. I9883609FY16 - When editing the Drug on a Prescription and answering 
+                   NO to Edit the SIG prompt, the Dosage is not updated to
+                   match the Drug and SIG.
+  
+    I14605157FY17 - Duplicate
+  
+ PSPO #3573
+  
+ Problem:
+ --------
+ When editing the Drug on a Prescription and answering NO to edit the SIG
+ prompt, the Dosage is not updated to match the Drug and SIG.
+  
+ Resolution:
+ -----------
+ Modify processing so the user is no longer prompted YES/NO to edit the SIG
+ if the Drug is edited.  This will cause the user to edit the Dosage which
+ will update the Dosage to match the Drug and SIG.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routines 6^PSODRGN, DRG^PSOORED6, PSOI^PSOORED6, 1^PSOORNE1,
+ 2^PSOORNW1 and DT1^PSOORNW1 so the user is no longer prompted to edit
+ the SIG and they are automatically taken into editing the data.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                 SFTP Mode
+ -----------------------------------------------------------------
+ User Manual - Manager - Outpatient Pharmacy V.7.0
+                               PSO_7_MAN_UM.PDF  Binary
+ User Manual - Pharmacist - Outpatient Pharmacy V.7.0
+                               PSO_7_PHAR_UM.PDF Binary
+ User Manual - Technician - Outpatient Pharmacy V.7.0
+                               PSO_7_TECH_UM.PDF Binary
+  
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+    
+ Installation will take less than 2 minutes.  Users should not be 
+ processing prescriptions when this patch is installed.
+  
+    
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+     (when prompted for INSTALL NAME, enter PSO*7.0*422)
+    
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+    
+   4. Use the Install Package(s) option and select the package PSO*7.0*422
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 132
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR
+    Before: B34430452   After: B42450394  **37,46,111,117,146,164,211,
+                                           264,275,391,372,416,422**
+Routine Name: PSODPT
+    Before:  B2714408   After:  B2911997  **139,185,422**
+Routine Name: PSODRGN
+    Before: B12292884   After: B11617807  **268,422**
+Routine Name: PSOHELP3
+    Before: B22564080   After: B29022810  **20,291,422**
+Routine Name: PSONEW1
+    Before: B14209647   After: B18114075  **46,104,117,143,422**
+Routine Name: PSOORED1
+    Before: B64951982   After: B76283215  **5,23,46,78,114,117,131,146,
+                                           223,148,244,249,268,206,313,
+                                           444,422**
+Routine Name: PSOORED6
+    Before: B68287627   After: B63254797  **78,104,117,133,143,219,148,
+                                           247,268,260,269,251,372,422**
+Routine Name: PSOORNE1
+    Before: B77126364   After: B88261913  **11,21,27,32,37,46,71,94,104,
+                                           117,133,148,279,251,372,313,
+                                           422**
+Routine Name: PSOORNW1
+    Before: B34256749   After: B34134148  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379,391,313,
+                                           444,469,422**
+Routine Name: PSOORNW2
+    Before: B45717814   After: B49647517  **10,23,37,46,117,131,133,148,
+                                           222,269,206,251,422**
+Routine Name: PSORXEDT
+    Before: B48455949   After: B49246602  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313,427,422**
+Routine Name: PSORXPR
+    Before: B29984044   After: B30390926  **131,156,148,251,422**
+Routine Name: PSOVER1
+    Before:B126108249   After:B126916647  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379,390,372,416,411,422**
+ 
+Routine list of preceding patches: 291, 411, 427, 469
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 18, 2013
+Completed By:                               Date Completed: SEP 28, 2017
+Released By :                               Date Released : OCT 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

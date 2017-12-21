@@ -1,0 +1,546 @@
+$TXT Created by                 at DEVVFF.DOMAIN.EXT  (KIDS) on Friday, 08/05/16 at 11:59
+=============================================================================
+Run Date: NOV 30, 2017                     Designation: VIAA*1*3
+Package : VIAA - REAL TIME LOCATION SYSTEM    Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: DEC 31, 2017
+=============================================================================
+
+Associated patches: (v)VIAA*1*1    <<= must be installed BEFORE `VIAA*1*3'
+
+Subject: RTLS INTERFACE WITH VISTA ENGINEERING
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) is implementing an integrated, 
+ enterprise-wide solution for a Real Time Location System (RTLS) for VA. 
+ The RTLS will be used for the purpose of tracking equipment, supplies, 
+ and instruments. This patch creates the RTLS interface between 
+ Intelligent Insites and the VistA Engineering files EQUIPMENT INV. (#6914)
+ and ENG SPACE (#6928).
+  
+ This patch supports the implementation of the project across the VHA
+ network of medical centers in the country. 
+  
+ PLEASE NOTE:  Upon National Release, all facilities must install 
+ both RTLS Asset Tracking (AT) patches (VIAA*1.0*3 and EN*7.0*100)
+ in their local production environments, regardless of whether RTLS AT
+ will be implemented locally. This process is separate from and not to be 
+ confused with activation of these patches.
+  Those facilities that will not be using RTLS AT will leave the patches 
+ installed in their production environments but will not activate them.
+  Those facilities that will be using RTLS AT will be contacted after 
+ installation and later on in 2018 by their RTLS vendor. At that time,
+ additional instructions regarding software activation and use will be
+ provided.
+  
+  
+ New Functionality Exported by This Patch 
+ -----------------------------------------
+  
+ New Remote Procedure Calls (RPC) to support the interface between VistA
+ Engineering and RTLS:
+  
+ a)  VIAA ENG ASSET MOVE: This RPC updates two fields in the EQUIPMENT INV.
+ file (#6914) when equipment moves to a new location.
+  
+ b)  VIAA ENG GET DATA: This RPC returns to RTLS equipment data for a given
+ entry number in EQUIPMENT INV. file (#6914).
+  
+ c)  VIAA ENG GET CATEGORY: This RPC makes three methods for finding
+ categories in the EQUIPMENT CATEGORY file (#6911) available to the Java
+ client.
+  
+ d)  VIAA ENG GET EQUIPMENT: This RPC returns all the new entries (by 
+ internal entry numbers) from the ENGINEERING INV. file (#6914) for a given
+ entry number sent from Intelligent InSites.
+  
+ e)  VIAA ENG GET LOCATION: This RPC returns 8 fields from the ENG SPACE 
+ file (#6928) for all defined rooms (locations).
+  
+ f)  VIAA ENG GET PRIMARY STATION: This RPC is used to verify that VistA is
+ up and the KIDS build for the VIAA package has been installed by the 
+ site. No input parameter is required by this RPC.
+  
+  
+ New Option to Send Engineering Record Changes to RTLS Database
+ --------------------------------------------------------------
+  
+ This patch is exporting a new option, 'Make Web Call to Mule' [VIAA
+ MAKE WEB CALL TO MULE], that will be used to send Engineering record
+ changes (triggered by MUMPS cross-references) to the RTLS database via a
+ Mule server. Basically the option is a queue process that can check every
+ number of minutes, configured by the site, to see if there are any record 
+ changes from files #6914 and #6928 that need to be transmitted to RTLS.  
+ For example, the site can schedule the job to run every 3 to 5 minutes 
+ for effective record transmission.
+  
+  
+ New File to Hold and Send Engineering Record Changes to RTLS
+ ------------------------------------------------------------
+  
+ A new file, PENDING RTLS EVENTS (#6930), is exported with this patch
+ and its only job is to hold any record changes just before transmission 
+ to RTLS and when the Mule server is off-line. Once the Mule server comes 
+ back online, the next run of the queue will transmit every record it finds
+ and the file is cleaned up immediately. While the file may be populated 
+ with record changes at any time, its use is limited to very shorts periods
+ of time and will not take any disk space at the local site. The PENDING
+ RTLS EVENTS file (#6930) introduces a redundancy to save record changes
+ that cannot be sent to RTLS when the Mule server goes offline for any
+ reason.
+  
+  
+ New Web Service and Web Server
+ ------------------------------
+  
+ The new web service 'VIAA VISTA TRIGGER SERVICE' and the new web 
+ server 'VIAA VISTA TRIGGER SERVER' will provide communication with RTLS.
+ These new additions will be added by the patch to files WEB SERVICE 
+ (#18.02) and WEB SERVER (#18.12) during the post-initialization phase.
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PENDING RTLS EVENTS        SITE ID (.01)           New
+ (6930)                     FILE ID (1)             New
+                            IEN (2)                 New
+                            CREATE DATE (3)         New
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #                New/Modified/Deleted
+ ---------                    ------                --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                    New/Modified/Deleted
+ ---------------                                    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type                  New/Modified/Deleted
+ -----------                  ----                  -------------------- 
+ Make Web Call to Mule [VIAA  Run Routine           New 
+  MAKE WEB CALL TO MULE] 
+  option
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                      New/Modified/Deleted
+ -------------                                      -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name                         New/Modified/Deleted
+ --------------------------                         --------------------
+ VIAA ENG ASSET MOVE                                New
+ VIAA ENG GET CATEGORY                              New
+ VIAA ENG GET DATA                                  New
+ VIAA ENG GET EQUIPMENT                             New
+ VIAA ENG GET LOCATION                              New
+ VIAA ENG GET PRIMARY STATION                       New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)    New/Modified/Deleted 
+ -------------      ----      ------------------    --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Livermore
+ Oklahoma City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ RTLS Asset Tracking     RTLS_AT_Patch_Installation_Guide.PDF  Binary
+  Interface VistA Patch
+  Installation Guide
+ RTLS ESE Interfaces     RTLS_ESE_Interfaces_Technical_        Binary 
+  Technical Manual        Manual.PDF
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ During the post-initialization of the patch, the menu option
+ 'RTLS Interface Menu' [VIAA01 RTLS RPC MENU] is updated with the RCP list
+ exported with this patch. No user action is required.
+  
+ After installation of the patch, the site is required to set up a TaskMan 
+ job for the new option 'Make Web Call to Mule' [VIAA MAKE WEB CALL TO
+ MULE]. Please see the example provided in the Post Installation section of
+ this patch. The suggested execution interval for the new job is to run it
+ every 3 to 5 minutes (180 - 600 seconds).
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to Engineering users. This patch should take less
+ than 5 minutes to install.
+  
+ Engineering users should not be making record changes in either the 
+ EQUIPMENT INV. file (#6914) or the ENG SPACE file (#6928) during 
+ installation of this patch. For a list of fields monitored for changes in
+ the Engineering files, please see the patch description of EN*7.0*100.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. VIAA*1.0*3):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter VIAA*1.0*3
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' press 'enter'    
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' press 'enter'
+     
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Enter 'YES'
+  
+     a) When prompted 'Enter options you wish to mark as "Out of Order":', 
+        enter the following:
+  
+        New Inventory Entry         [ENINVNEW]
+        Multiple Inventory Entry    [ENIN-ENTER-MULTI]
+        Inventory Edit              [ENINV EDIT]
+        Enter New Room Space Data   [ENSPROOM]
+        Display/Edit Room Data      [ENSPROOMD]
+        
+     
+     b) When prompted 'Enter protocols you wish to mark as "Out of
+        Order":', just press 'enter'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Set up the option 'Make Web Call to Mule' [VIAA MAKE WEB CALL TO MULE]
+ in VistA as follows:
+  
+ Step 1: Scheduling new option in TaskMan:
+  
+  
+ CPM>D ^XUP
+  
+ Setting up programmer environment
+ This is a TEST account.
+  
+ Terminal Type set to: C-VT100
+  
+ Select OPTION NAME: EVE       Systems Manager Menu
+      
+           Core Applications ...
+           Device Management ...
+    FM     VA FileMan ...
+           Menu Management ...
+           Programmer Options ...
+           Operations Management ...
+           Spool Management ...
+           Information Security Officer Menu ...
+           Taskman Management ...
+           User Management ...
+           Application Utilities ...
+           Capacity Management ...
+           Manage Mailman ...
+  
+           Select Systems Manager Menu Option: TASKman Management
+  
+           Schedule/Unschedule Options
+           One-time Option Queue
+           Taskman Management Utilities ...
+           List Tasks
+           Dequeue Tasks
+           Requeue Tasks
+           Delete Tasks
+           Print Options that are Scheduled to run
+           Cleanup Task List
+           Print Options Recommended for Queueing
+  
+           Select Taskman Management Option: SCHEDULe/Unschedule Options
+  
+ Select OPTION to schedule or reschedule: VIAA MAKE WEB CALL TO MULE       
+ Make Web Call to Mule
+          Are you adding 'VIAA MAKE WEB CALL TO MULE' as 
+          a new OPTION SCHEDULING (the 32ND)? No// Y
+  
+                           Edit Option Schedule
+     Option Name: VIAA MAKE WEB CALL TO MULE
+     Menu Text: Make Web Call to Mule                     TASK ID: 490309
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: T@10:50 <press enter>  <<== enter a new date
+   and time here
+  
+ DEVICE FOR QUEUED JOB OUTPUT:  <press enter>
+  
+  QUEUED TO RUN ON VOLUME SET:  <press enter>
+  
+       RESCHEDULING FREQUENCY: 300S <press enter>     <<== option will run
+       every 5 minutes
+  
+              TASK PARAMETERS:  <press enter>
+  
+             SPECIAL QUEUEING:  <press enter>
+  
+ (Save and exit)
+  
+ Step 2:  The steps below need coordination between the Cache 
+ Administrator for the VAMC and the Enterprise Service Bus (ESB) System 
+ Administrator. If these steps are not completed, the RTLS database will 
+ not receive any triggered events from VistA via the HealtheVet Web 
+ Services Client (HWSC) application.
+  
+  
+ VAMC (IRM)/Cache Administrator:
+ =============================== 
+  
+ Ensure that after installation of this patch in VistA, the following
+ entries for files WEB SERVICE (#18.02) and WEB SERVER (#18.12) are 
+ populated with data as shown in the the following example from the VistA
+ account. Please note that the SERVER and PASSWORD fields in the WEB 
+ SERVER file (#18.12) must be updated manually. From programmer's prompt
+ invoke VA FileMan as follows:
+  
+ a) CPM>D P^DI
+  
+  
+    VA FileMan 22.0
+  
+  
+    Select OPTION: INQUIRE TO FILE ENTRIES
+  
+  
+  
+    OUTPUT FROM WHAT FILE: WEB SERVER// 18.02  WEB SERVICE
+                                           (4 entries)
+     Select WEB SERVICE NAME: VIAA VISTA TRIGGER SERVICE
+     ANOTHER ONE:
+     STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+     Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN),
+     no Computed Fields
+  
+     NAME: VIAA VISTA TRIGGER SERVICE        TYPE: REST
+       DATE REGISTERED: JUN 19, 2013@09:51:40   <<== this date can be 
+       different
+       CONTEXT ROOT: esb/assettrax/services/vistatrigger
+  
+  
+  
+     Select WEB SERVICE NAME: <press enter>
+ ======================================================= 
+  
+ b)  CPM>D P^DI 
+  
+  
+     VA FileMan 22.0
+  
+  
+     Select OPTION: INQUIRE TO FILE ENTRIES
+  
+    
+     OUTPUT FROM WHAT FILE: WEB SERVICE// 18.12  WEB SERVER
+                                               (1 entry)
+     Select WEB SERVER NAME: VIAA VISTA TRIGGER SERVER
+     ANOTHER ONE:
+     STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+     Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), 
+     no Computed Fields
+  
+     NAME: VIAA VISTA TRIGGER SERVER         PORT: 443
+       SERVER: uspnsvulx142.eslabs.ssn.hp.com  <<== Use FileMan to 
+      enter the information in this field. Obtain the correct
+      load-balanced ESB fully qualified domain name from the ESB System
+      Administrator.
+  
+       STATUS: ENABLED                       DEFAULT HTTP TIMEOUT: 30
+       LOGIN REQUIRED: YES
+       DATE PASSWORD LAST CHANGED: JUN 25, 2013@14:59:07
+       SSL ENABLED: TRUE                     SSL CONFIGURATION: RTLS_CLIENT
+       SSL PORT: 443
+     WEB SERVICE: VIAA VISTA TRIGGER SERVICE
+     STATUS: ENABLED
+       USERNAME: rtlsuser                    PASSWORD: <Hidden>  <<== the 
+     password for this field will be supplied by the ESB System
+     Administrator and must be entered via the option 'ENTER OR EDIT FILE
+     ENTRIES' of VA FileMan
+  
+     Select WEB SERVER NAME:
+ =============================================== 
+  
+ c)  ESB System Administrator:
+     =========================
+  
+     Using the Cache Cube, proceed as follows:
+  
+     Access Management Portal
+     System Administration > Security > SSL/TLS Configurations > Go
+  
+     Create New Configuration - Configuration Name needs to match the name 
+     given for "SSL CONFIGURATION:" value in the "VIAA VISTA TRIGGER
+     SERVER" configuration.
+  
+     Configuration Name: RTLS_CLIENT
+     Description: RTLS_CLIENT
+     Enabled: Checked
+     Type: Client 
+     Peer Certificate verification level: None
+  
+     File containing trusted Certificate Authority X.509 certificates 
+     placed in a known safe location on the server. For VA, this contains
+     the VA CA Root and the Intermediaries.
+        
+     This client's credentials:  Left defaulted (empty)
+     Cryptographic settings: Left defaulted 
+           Defaults seen
+                Protocols SSLv3 enabled, TLSv1 enabled.
+                            Enabled ciphersuites 
+     TLSv1:SSLv3:!ADH:!LOW:!EXP:@STRENGTH
+  
+     Press "Test" button prompts for Server and port to test to
+       
+     When succeeded, see output:
+                     SSL connection succeeded
+                     Protocol: TLSv1/SSLv3
+                     Ciphersuite: DHE-RSA-AES256-SHA
+                     Peer:
+                     Request: GET / HTTP/1.0
+                     Reply: HTTP/1.1 403 Forbidden
+  
+     Consider 403 the expected response when hitting the reverse proxy 
+     without a known URL.
+  
+     Press the "Save" button to save the new configuration.   
+  
+     ***** End of patch post-installation *****
+  
+ --------------------------------------------------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;RTLS;**[Patch List]**;April 22, 2013;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIAA1P3
+    Before:       n/a   After: B15449033  **3**
+Routine Name: VIAAEAD
+    Before:       n/a   After:B125561613  **3**
+Routine Name: VIAAEUT
+    Before:       n/a   After: B40236608  **3**
+Routine Name: VIAAMB1
+    Before:       n/a   After:   B303759  **3**
+Routine Name: VIAAQUE
+    Before:       n/a   After:  B6693749  **3**
+Routine Name: VIAATRI
+    Before:       n/a   After:  B2232416  **3**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 23, 2015
+Completed By:                               Date Completed: NOV 30, 2017
+Released By :                               Date Released : NOV 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

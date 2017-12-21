@@ -1,0 +1,123 @@
+$TXT Created by THOMAS,GAIL at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 12/10/08 at 11:42
+=============================================================================
+Run Date: MAR 17, 2009                     Designation: ECX*3*116
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #104                      Status: Released
+                  Compliance Date: APR 17, 2009
+=============================================================================
+
+Associated patches: (v)ECX*3*94    <<= must be installed BEFORE `ECX*3*116'
+
+Subject: NATIONAL PROSTHETIC PATIENT DATABASE CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch RMPR*3*144 added Prosthetics code NPPD 970 A to the Prosthetics package.
+ As a result of this patch the Prosthetics PRO Extract Audit Report receives an 
+ <UNDEFINED> error when processing because this same code is unaccounted for in 
+ Decision Support System Extracts (DSS).
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ HD0000000287291:       <UNDEFINED>CDATA+12^ECXAPRO1
+  
+ Duplicate
+ HD0000000288915:       <UNDEFINED>CDATA+12^ECXAPRO1
+  
+  
+ ASSOCIATED NSR(s) :
+ ===================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Arkansas HCS
+ Memphis, TN
+ Milwaukee, WI
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000287291:        <UNDEFINED>CDATA+12^ECXAPRO1
+  
+ Problem:
+ --------
+ NPPD 970 A code needs to be added to PRO Extract Audit Report.
+  
+ Resolution
+ ----------
+ The 970 code was added to routine ECXAPRO3. This will prevent error 
+ <UNDEFINED>CDATA+12^ECXAPRO1 from occurring in the PRO Extract Audit 
+ Report.  
+  
+ The code being added is:
+  
+ BIO IMPLANTS
+ =================
+ 970 A; BIOLOGICAL IMPLANTS 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ This patch can be loaded with users on the system.  Installation will take
+ less than 5 minutes.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+     the KIDS distribution included with this message.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter ECX*3.0*116):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package ECX*3.0*116.
+  
+ 5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//", Respond "No".
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', Respond "NO".
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXAPRO3
+    Before: B24620502   After: B25192651  **21,31,76,94,116**
+ 
+Routine list of preceding patches: 94
+
+=============================================================================
+User Information:
+Entered By  : THOMAS,GAIL                   Date Entered  : DEC 02, 2008
+Completed By: TSAIMEUCHONG,BRENDA           Date Completed: FEB 27, 2009
+Released By : STRICKLAND,JOAN C             Date Released : MAR 17, 2009
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

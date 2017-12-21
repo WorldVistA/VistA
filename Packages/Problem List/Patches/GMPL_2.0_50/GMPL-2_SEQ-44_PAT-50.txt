@@ -1,0 +1,170 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 01/31/17 at 13:58
+=============================================================================
+Run Date: OCT 12, 2017                     Designation: GMPL*2*50
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #44                      Status: Released
+                  Compliance Date: NOV 12, 2017
+=============================================================================
+
+Associated patches: (v)GMPL*2*40   <<= must be installed BEFORE `GMPL*2*50'
+
+Subject: FIX GMPLSAVE ERROR OUT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address a problem with an improperly altered SNOMED 
+ (Systematized Nomenclature of Medicine) narrative causing the routine
+ GMPLSAVE to error out and fail to save a new diagnosis to the Problem List
+ from PCE (Patient Care Encounter) and the PCE data is lost.
+  
+  
+ Associated CA Tickets:
+ ======================
+ I9913186FY16 - <UNDEFIND>NEW+29^GMPLSAVE
+  
+         Duplicates:
+         -----------
+         I9206958FY16  Report of diagnoses not showing up in encounter
+         I10026510FY16 PCE DIAGNOSIS NOT STICKING/NEW+29^TGMPLSAVE ERRORS
+         I10494398FY16 Was notified by AEU that a physician was entering
+                       his note, selected an encounter, signed his note
+                       but generated the attached error. Thank you!
+         I12353237FY17 Error trap message: $ZE= <UNDEFINED>NEW+29^GMPLSAVE
+                       *GMPSYN("S")
+         I12534302FY17 Encounter Form dropping entries
+                       <UNDEFINED>NEW+29^GMPLSAVE *GMPSYS("S") Duplicates:
+         R13989154FY17 Encounter info not sticking        
+         R15109355FY17 Needing the assistance of Region 2 VistA Apps group
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Northport
+ Biloxi
+  
+ CA Ticket Overview:
+ ===================
+  
+ 1. I9913186FY16 <UNDEFIND>NEW+29^GMPLSAVE
+  
+  
+ Problem:
+ --------
+ The clinician is entering a patient encounter. The clinician adds a new 
+ ICD10 (International Classification of Diseases) diagnosis to the PCE
+ form. The clinician will click the check box to add this diagnosis as a
+ new problem in the Problem List. The clinician will then add a SNOMED code
+ to the new diagnosis. The clinician will save the completed PCE in CPRS 
+ (Computerized Patient Record System) GUI (Graphical Uaer Interface).
+ If the SNOMED code has a narrative with an embedded set of parentheses the
+ routine GMPLUTL will alter the narrative to remove the embedded set of
+ parentheses and any text they may contain. This will cause the routine
+ GMPLSAVE to error out and not save the new diagnosis to the Problem List.
+ PCE will lose this diagnosis data as well. The PCE form data and any
+ associated progress note are saved without the diagnosis being saved to
+ the Problem List or linked to the encounter.
+  
+  
+ Resolution:
+ -----------
+ Modify the routine GMPLUTL to not remove the embedded parentheses and any 
+ text they may contain in the SNOMED narrative.
+  
+  
+  
+ ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter GMPL*2*50)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       GMPL*2*50.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. 
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ GMPL*2.0*50 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch GMPL*2.0*50 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLUTL
+    Before: B62818534   After: B62929915  **3,6,8,10,16,26,35,39,36,42,40,50**
+ 
+Routine list of preceding patches: 40
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2016
+Completed By:                               Date Completed: OCT 11, 2017
+Released By :                               Date Released : OCT 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

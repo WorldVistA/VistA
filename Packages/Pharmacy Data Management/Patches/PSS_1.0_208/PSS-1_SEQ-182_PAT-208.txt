@@ -1,0 +1,315 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/04/17 at 14:33
+=============================================================================
+Run Date: NOV 14, 2017                     Designation: PSS*1*208
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #182                      Status: Released
+                  Compliance Date: DEC 14, 2017
+=============================================================================
+
+Associated patches: (v)PSS*1*90    <<= must be installed BEFORE `PSS*1*208'
+
+Subject: NDF DISPLAY/PRICE PER DISPENSE UNIT/IV ADDITIVE PRINT NAME
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses three (3) issues:
+  
+ 1. When using the Drug Enter/Edit [PSS DRUG ENTER/EDIT] option for a drug 
+    that has been unmatched from the National Drug File (NDF), the NATIONAL
+    FORUMULARY INDICATOR field(#29) on the screen displays 'YES' instead of
+    'Not Matched to NDF'.
+  
+ 2. The Data Dictionary for the DRUG file (#50) PRICE PER DISPENSE UNIT 
+    field (#16) is incorrect.  The Prompt Message displays "Type a Number 
+    between 0 and 222, 4 decimal digits".  This does not accurately reflect 
+    the data stored in this field.  There are many drug items on the 
+    market with a price per dispense unit greater than $222.
+    The Data Dictionary needs to be updated to more accurately reflect the
+    content of the field.
+                
+ 3. There is an issue with the PRINT NAME field (#.01) in the IV ADDITIVE 
+    file (#52.6) when it contains a tilde (~).  When an IV label is printed
+    for an additive that has a print name that contains a tilde, it may not 
+    display the amount of the IV additive. When the tilde is removed, the
+    IV additive amount will print.
+  
+ Defect Tracking System Tickets(s) & Overview:
+ ---------------------------------------------
+ 1. I11907550FY17
+   
+    Problem: 
+    ========
+    When using the Drug Enter/Edit [PSS DRUG ENTER/EDIT] option for a drug 
+    that has been unmatched from the NDF, the NATIONAL FORUMULARY INDICATOR
+    field (#29) on the screen displays 'YES' instead of 'Not Matched to
+    NDF'.
+  
+    The reason is that during unmatching, the code in SETNULL^PSSDEE1 sets 
+    many fields in the "ND" node in the DRUG file (#50) to NULL, but it does 
+    not alter the NATIONAL FORMULARY INDICATOR field (#29).  
+  
+    Resolution:
+    ===========
+    Changed code in SETNULL^PSSDEE1 to null the sixth and eleventh pieces
+    of the "ND" node in the DRUG file (#50) when the drug is unmatched.
+  
+    Before patch installation:
+  
+    SETNULL  S ZXZX=$P(^PSDRUG(DA,"ND"),"^",2),$P(^PSDRUG(DA,"ND"),"^",1)="",
+               $P(^PSDRUG(DA,"ND"),"^",2)="",$P(^PSDRUG(DA,"ND"),"^",3)="",
+               $P(^PSDRUG(DA,"ND"),"^",4)="",$P(^PSDRUG(DA,"ND"),"^",5)="",
+               $P(^PSDRUG(DA,"ND"),"^",10)="" D NULL1
+             Q
+  
+    After patch installation:
+  
+    SETNULL  S ZXZX=$P(^PSDRUG(DA,"ND"),"^",2)
+             F I=1:1:6,10,11 S $P(^PSDRUG(DA,"ND"),"^",I)=""
+             D NULL1
+             Q
+   
+ 2. I11741762FY17
+    I8658700FY16 
+   
+    Problem:
+    ========
+    The Data Dictionary for the DRUG file (#50) PRICE PER DISPENSE UNIT 
+    field (#16) is incorrect.  The Prompt Message displays "Type a Number 
+    between 0 and 222, 4 decimal digits".  This does not accurately reflect 
+    the data stored in this field.  There are many drug items on the 
+    market with a price per dispense unit greater than $222. The Data
+    Dictionary needs to be updated to more accurately reflect the content
+    of the field.
+  
+    The PRICE PER DISPENSE UNIT field (#16) in the DRUG file (#50), 
+    is a calculated field:
+  
+    Price Per Order Unit / Dispense Units Per Order Unit = Price Per 
+    Dispense Unit
+  
+    The field in the Data Dictionary only allows an amount between 0 and 222 
+    and 4 decimal places, via FileMan.  However, the field will store
+    larger calculated amounts up to 999999.0000.
+  
+    The PRICE PER ORDER UNIT(#13) field and the PRICE PER ORDER UNIT 
+    (#402) synonym field need to be modified, as well, to handle six digit
+    numbers.
+  
+  
+    Resolution:
+    ===========
+  
+    The Input Transform for the PRICE PER DISPENSE UNIT field (#16)
+    needs to be changed from:
+    K:+X'=X!(X>222)!(X<0)!(X?.E1"".""5N.N) X"
+  
+    to:
+    K:+X'=X!(X>999999)!(X<0)!(X?.E1"".""5N.N) X"
+  
+    The Help Prompt Message also needs to be changed from:
+    Type a Number between 0 and 222, 4 Decimal Digits
+  
+    to:
+    Type a Number between 0 and 999999, 4 Decimal Digits
+  
+  
+    The Input Transform and help prompts for the PRICE PER ORDER UNIT
+    fields (#13) and (#402) need to be changed, as well, to handle
+    six-digit fields.
+  
+    From:
+    INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) 
+    K:X'?.N.1".".2N!(X>99999)!(X<0)!(X?.E1"."3.N) X
+    HELP-PROMPT:      Type a Dollar Amount between 0 and 99999, 2 Decimal 
+    Digits.
+  
+    To:
+    INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) 
+    K:X'?.N.1".".2N!(X>999999)!(X<0)!(X?.E1"."3.N) X
+    HELP-PROMPT:      Type a Dollar Amount between 0 and 999999, 2 Decimal 
+    Digits.
+  
+  
+  
+    A post-installation routine, ^PSS208P, was written to recalculate
+    the Price Per Dispense Unit and store it correctly in the DRUG file
+    (#50). It will also generate a MailMan message of all the drugs where
+    the changes were made and will send it to PSNMGR, PSAMGR and PSA ORDERS
+    key holders. 
+  
+ 3. I11266042FY17
+  
+    Problem:
+    ========
+    There is an issue with the PRINT NAME field (#.01) in the IV ADDITIVE 
+    file (#52.6) when it contains a tilde (~).  When an IV label is printed
+    for an additive that has a print name that contains a tilde, it may not 
+    display the amount of the IV additive. When the tilde is removed, the
+    IV additive amount will print.
+  
+    Resolution:
+    ===========
+    Current Input Transform for PRINT NAME field (#.01):
+    K:$L(X)>30!(X?.N)!($L(X)<3)!'(X'?1P.E)!(X'?.ANP) X
+  
+    Current Help Prompt Message:
+    Name must be 3-30 characters, not numeric or starting with punctuation
+  
+    New Input Transform for PRINT NAME field (#.01):
+    K:$L(X)>30!(X?.N)!($L(X)<3)!'(X'?1P.E)!(X'?.ANP)!(X["~") X               
+  
+    New Help Prompt Message:
+    Name must be 3 - 30 Characters, not numeric, not starting with
+    punctuation or containing tilde
+  
+    Note:  The label print routines have an issue with tilde (~) in
+    particular, since it is used in the DATA variable as a delimiter.  
+    VistA takes care of the most common delimiter, ^, which cannot be used, 
+    but ~ needs to be screened out.
+  
+ Test Sites:
+ -----------
+ HONOLULU, HI -HCS
+ OKLAHOMA CITY, OK -HCS
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)  Field Name (Number)           New/Modified/Deleted
+ ------------------  -------------------           --------------------
+ DRUG (#50)          PRICE PER DISPENSE UNIT (#16) Modified
+                     PRICE PER ORDER UNIT (#13)    Modified
+                     PRICE PER ORDER UNIT (#402)   Modified
+  
+ IV ADDITIVE (#52.6) PRINT NAME (#.01)             Modified
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ A post-installation routine, ^PSS208P, will clean up the PRICE PER 
+ DISPENSE UNIT DRUG field (#16) and store it correctly in the DRUG file 
+ (#50).  A MailMan message will be generated to show all the drugs where 
+ changes were made and be sent to PSNMGR, PSAMGR and PSA ORDERS key 
+ holders. 
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ It is not necessary to disable any options.  
+  
+ Users may be on the system, but this patch should be installed during
+ non-peak hours.
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSS*1.0*208)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSS*1.0*208.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+ Post Installation Instructions:
+ -------------------------------
+ The post installation PRICE PER DISPENSE UNIT clean-up routine, ^PSS208P, 
+ is not automatically deleted as part of the installation process. You may 
+ delete it after installation if you desire. 
+  
+ Example: 
+ VISTAS1:VISTA>D ^%RDELETE
+  
+ Delete routines/INCLUDE files.
+ WARNING: When <rtn>.MAC.0 is deleted, the latest backup is moved
+          to <rtn>.MAC.0, UNCOMPILED.
+  
+ Routine(s): PSS208P 
+  
+ Once the post installation routine has run to completion, the installer
+ and users with Security Keys PSNMGR, PSAMGR and PSA ORDERS will receive a 
+ MailMan message that includes a report of changes made by the clean-up 
+ process.
+  
+ NOTE:  Due to limited space on the email report, leading zeroes have been 
+ removed from the NDC field and PPDU dollar amounts have been rounded to 
+ two decimal places.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and
+ participation of development team and appropriate VA site/region
+ personnel. The decision to back-out or rollback software will be a joint
+ decision between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ As part of the back-out procedure, the mail message that was generated 
+ during the post-install can be used to restore the value for the PRICE
+ PER DISPENSE UNIT field (#16) of the DRUG file (#50). 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS208P
+    Before:       n/a   After: B11145076  **208**
+Routine Name: PSSDEE1
+    Before: B23957466   After: B22862365  **15,20,34,38,68,90,208**
+ 
+Routine list of preceding patches: 90
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 08, 2017
+Completed By:                               Date Completed: NOV 13, 2017
+Released By :                               Date Released : NOV 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

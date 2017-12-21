@@ -1,0 +1,233 @@
+$TXT Created by               at CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 05/23/17 at 20:54
+=============================================================================
+Run Date: NOV 03, 2017                     Designation: GMTS*2.7*120
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #111                    Status: Released
+                  Compliance Date: DEC 04, 2017
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*100<<= must be installed BEFORE `GMTS*2.7*120'
+
+Subject: MRT2 UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Currently, on the Medication Worksheet (aka, Medication Reconciliation 
+ Tool #2 (MRT2)), non-VA medications do not display in the same way as VA 
+ prescribed medications.
+  
+ This patch will remove the inconsistencies in the display on the 
+ patient-facing report generated from Health Summary data and given to a 
+ patient when admitted, discharged or transferred. Per the Joint 
+ Commission's NPSG.03.06.01, a medication summary must be given to a 
+ patient upon each admission, discharge or transfer. The document used 
+ currently does not display non-VA medication information as thoroughly as 
+ it does VA medications.
+  
+ One of the challenges is that Non-VA medication orders are not required 
+ to have all the same fields as a VA prescribed medication. However, this 
+ enhancement does not address that particular item.
+  
+ Even when all information is available, the MRT2 report doesn't present 
+ the Non-VA meds consistently, and, in fact, there is no 'worksheet space' 
+ available for the non-VA medications. Those are the items addressed by 
+ this patch.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 2010911 - MRT2 Non-VA Medication Dose Enhancement
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Black Hills Health Care System,SD
+ Boise, ID
+ Cincinnati, OH
+ Orlando, FL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                                  File Name               FTP Mode
+ -----------------------------------------------------------------------
+ Health Summary Release Notes           GMTS_2_7_120_RN.doc     Binary
+ Health Summary User Manual             GMTS_2_7_120_UM.doc     Binary
+ Health Summary Technical Manual        GMTS_2_7_120_TM.doc     Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no special pre/post installation steps required.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ # GMTS*2.7*120:
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DDs or templates. 
+         b. Compare Transport Global to Current System - This option will
+            (allow you to view all changes that will be made when this
+            patch is installed. It compares all components of this patch
+            routines, DDs, templates, etc.). 
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+ 4.       From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//' 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routine included 
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSPST2
+    Before: B66514696   After: B97679179  **92,100,120**
+ 
+Routine list of preceding patches: 100
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2016
+Completed By:                               Date Completed: NOV 02, 2017
+Released By :                               Date Released : NOV 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

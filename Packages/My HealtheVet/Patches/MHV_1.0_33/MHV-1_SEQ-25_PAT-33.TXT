@@ -1,0 +1,175 @@
+
+=============================================================================
+Run Date: SEP 14, 2017                     Designation: MHV*1*33
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #25                      Status: Released
+                  Compliance Date: OCT 16, 2017
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2017.4.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The quarterly MyHealtheVet Release MHV_2017.4.0.0 will be promoted to the 
+ MHV Production environment on Saturday, September 16th, 2017 starting at 
+ 10:00PM EDT.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY SM ENHANCEMENTS 
+ JAZZ    525174  SM - SM VA Staff NOT in ET time zone must schedule 
+ Surrogates in ET
+ JAZZ    531572  SM - Update GUI for SM Provider to display SM account
+ status and Last login date for the patient
+ JAZZ    562247  SM - Update Create/Edit Triage Group pages with
+ appropriate error messages
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    446100  Password Management: Password in Configuration File (17.1 
+ MHV NP Fortify base scan)
+ JAZZ    537544  Switch Property Loading Logging to TRACE
+ JAZZ    538140  Veterans Health Benefits Handbook (VHBH)
+  
+ SRE DATABASE ENHANCEMENTS:
+ JAZZ    569906  Create trigger to update LAST_UPDATED in 
+ MHV_PROPS.COMPONENT_PROPERTIES
+ JAZZ    576320  Create script to load MHV API entries into the MHV 
+ database
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL/BATCH-R ENHANCEMENTS
+ JAZZ    487464  Patient Statement Enhancements
+ JAZZ    489426  C32 PDFs won't download when the Xalan libraries are used
+ JAZZ    538096  Federated Credentials - MHV Credential to LOA2
+ JAZZ    538127  VA Health Summary - CCDA (Field Test)
+ JAZZ    538133  Ensemble Services call migration
+ JAZZ    538230  MHV National Portal migration to Database Sourced 
+ Properties
+ JAZZ    540719  Patient Statements Enhancement - Development
+ JAZZ    541541  Change VAPii wsdl url to version less endpoint
+ JAZZ    552658  Test new version of cda.xsl file for compatibility with 
+ PDF generation
+  
+  
+ MHV LEGACY ENHANCEMENTS
+ JAZZ    443590  Epic: Admin Portal Enhancements
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    540719  Patient Statements Enhancements
+ JAZZ    583216  Stage test users in field test group for USPS pilot
+  
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    451416  Theme Re-Design
+ JAZZ    495990  VAR Seamless Login (VAR phase 2)
+ JAZZ    522174  VAR Phase 1:  JAZZ: VAR SSO US01: MHV User Logs Directly 
+ Into VAR from MHV without logging into VAR separately
+ JAZZ    558019  Add in UTF-8 encoding for C-CDA xml
+ JAZZ    560459  Perform MHV Theme Redesign for mhv_bluebutton Project 
+ Portlets
+ JAZZ    563374  VAMF Integration Portlet Error Handling
+ JAZZ    566731  Perform MHV Theme Redesign for EAuth Project Portlets
+ JAZZ    573170  VAMF Integration Portlet - Add SSN to JWT
+ JAZZ    574059  US04 MHV Credential as an Identity Provider (SSO) for 
+ vets.gov 
+ JAZZ    576793  MHV Redesign Application Properties Updates
+ JAZZ    582742  UAT - On the 'Health Calendar' page, when the user 
+ selects Overdue from the 'To-Do List' drop-down the system still includes 
+ To-Dos that are "In Progress" and the Due Date is the current date.
+ JAZZ    582763  UAT - Health Calendar Delete an Event still displays if 
+ you Cancel out of Add Event
+ JAZZ    582771  UAT - the 'Health Calendar' page, if the user selects the 
+ 'Export' hyperlink and then selects the 'Export' button, the system 
+ displays Error Message
+ JAZZ    583116  UAT - VA Health Summary - Send My Health Summary feature 
+ select Preview the VA Health Summary the focus goes to the bottom of the 
+ page making it difficult to see if Preview worked.
+ JAZZ    584559  Breadcrumb issue: "My HealtheVet/" link needs to be 
+ rerouted to "/mhv-portal-web/home" or 
+ "/mhv-portal-web/web/myhealthevet/home"
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    550427  MHV Identity Provider Single-Sign-On Account Activity 
+ Logging
+ JAZZ    576804  Update MHV Application Properties to Remove Unnecessary 
+ Formatting
+ JAZZ    581701  BBMI update the list of field testers for BBMI from Puget 
+ Sound site
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS
+ JAZZ    577799  SM - Remediate Privacy Violation (Critical)
+ JAZZ    574203  SM - Remediate portability flaw: locale dependent 
+ comparison (high)
+ JAZZ    574198  Remediate system information leak (high) for SM and SM 
+ Admin Portal
+ JAZZ    572833  Remediate JavaScript Code Injection (Critical)
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    141217  Health History Information Last Updated message
+ JAZZ    269247  MHV account can be correlated when unmatched  
+ JAZZ    275564  Account successfully correlates to MVI but no match date 
+ is set in MHV
+ JAZZ    469358  Journals: Reset Button is displaying error for both Food 
+ and Activity Journal
+ JAZZ    478821  LOGIN User receives 2 error boxes on the 5th failed 
+ attempt to login.  Only one box is needed.
+ JAZZ    479885  Link to reset password on 5th attempt error message box 
+ is incorrect  
+ JAZZ    485893  Repair broken Search function with new search engine URL
+ JAZZ    511724  Revise the alert message to reflect that the Help Desk 
+ cannot reset the password of a frozen account
+ JAZZ    563378  Resolve MHV-portal-web AppScan XSS Findings (88)
+ JAZZ    573500  Remove the HTML tags in the Primary Insurance, ID # and 
+ Group # on the Health Information Card
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    552042  Determine a configuration management approach for 
+ managing and archiving changed values in the MHV_PROPS database schema
+ JAZZ    577272  Resolve phrmgr stage_message_control cleanup job failure
+ JAZZ    577571  The PHR_DAILY_REPORT report is failing due to the size of 
+ the e-mail
+ JAZZ    572973  Account deactivated by system cannot be reactivated
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+  Documentation Retrieval Instructions:
+ ------------------------------------- 
+  MHV Documentation can be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 11, 2017
+Completed By:                               Date Completed: SEP 13, 2017
+Released By :                               Date Released : SEP 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

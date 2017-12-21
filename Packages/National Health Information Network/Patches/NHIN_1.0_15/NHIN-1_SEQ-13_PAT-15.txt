@@ -1,0 +1,85 @@
+
+=============================================================================
+Run Date: OCT 19, 2017                     Designation: NHIN*1*15
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: NOV 19, 2017
+=============================================================================
+
+
+Subject: eHXE Adapter Build 4 (v7.3.0.8)
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the eHealth Exchange 
+ (formerly VLER and formerly NHIN) servers located there using a 
+ pre-approved Request for Change Order and Implementation Plan.  This 
+ Deployment is scheduled to take place on October 19, 2017 from 8:00 PM 
+ EST- 11:00 PM EST.
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+ **************************************************************************
+ eHealth Exchange (formerly VLER and formerly NHIN) Adapter 7.3.0 (Build 
+ 4) release introduces the capability of VA to generate a C-CDA Single 
+ Encounter Summary (SES). This new supported document type narrows the 
+ scope of a traditional health summary to only include data pertaining to 
+ a single encounter, selected by the requesting partner. Several 
+ enhancements were also made to the C-CDA XML, including: 
+  
+         CCM-174: Corrected the use of invalid HTML tags that were 
+ previously used to format (bold, italicize) text within the C-CDA 
+ documents, to using the compliant <content styleCode> attributes; 
+         CCM-035/36/37: Corrected text alignment of tables in the 
+ Encounters, Procedures, and Results sections; 
+         CCM-225/7: Business rule text throughout the CCD and SES 
+ documents (for both standard and MHV versions); 
+         CCM-138: Reactivated the C&P MHV filter and implemented an 
+ independent configurable hold period;
+         CCM-198: Added conditional logic to the Clinical Procedure note 
+ hold period for MHV;
+         CCM-245: Implemented dynamic use of the typeCode element in the 
+ QD response message so SSA can easily parse the new SES document type.
+ Architecturally, the Adapter team designed and built a prototype of the 
+ new asynchronous orchestration/subscription service that will be used to 
+ allow VA clients to subscribe to document feeds for a given patient and 
+ notify in real-time as those documents are retrieved and become available 
+ for viewing. This prototype was demonstrated successfully to the business 
+ stakeholders and will be "shelved" until the DAS client is available to 
+ integrate and test the service.
+ Finally, the CDW data back-up of the Adapter and VAP audit database 
+ tables has been successfully running in production. The next step is to 
+ prioritize requirements for how VAP users can access the data stored in 
+ CDW via a new or existing reporting interface, and how/when to archive 
+ "stale" data from the live Adapter and VAP tables so that the current 
+ performance/response issues can be mitigated. 
+ Test sites: N/A
+ The upgraded software will be deployed to a centralized system at AITC.
+  External Partner Test Sites: 
+         For eHXE enhancements testing SOAP UI Scripts mimics different 
+ partner testing. No real world end-to-end testing was performed.
+ Downstream Dependent System Testing: Testing efforts with eHX Adapter, 
+ VAP, Connect and MVI and downstream systems were successful.
+ Remedy tickets: None
+ Routine Information:
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 11, 2017
+Completed By:                               Date Completed: OCT 19, 2017
+Released By :                               Date Released : OCT 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

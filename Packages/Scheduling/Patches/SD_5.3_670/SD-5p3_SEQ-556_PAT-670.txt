@@ -1,0 +1,159 @@
+$TXT Created by                    at ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 09/14/17 at 14:38
+=============================================================================
+Run Date: NOV 15, 2017                     Designation: SD*5.3*670
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #556                    Status: Released
+                  Compliance Date: DEC 16, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*621  <<= must be installed BEFORE `SD*5.3*670'
+
+Subject: ACRP Print Queue issue for Transmission History Report
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an issue with the option Transmission History Report 
+ - Full [SCDX AMBCAR XMIT HIST FULL]. The report prints correctly when sent
+ to the screen; however, when sent to a queued device, such as a printer,
+ it does not print any data.
+  
+  
+ Associated CA ticket(s):
+ =======================
+ I13415844FY17 - Transmission history report issue 
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ VA North Florida/South Georgia HCS
+ Erie VA Medical Center
+  
+  
+ CA NSD Ticket Overview:
+ ======================
+ 1. I13415844FY17 - Transmission history report issue  
+  
+   
+    Problem:
+    -------
+    The Transmission History Report - Full [SCDX AMBCAR XMIT HIST FULL] 
+    report does not print data when the output is sent to MailMan
+    (P-MESSAGE) or a file/printer. The report's output is only viewable
+    on the screen. The mail message or report will show "No Data Printed"  
+    even though data will print to the screen.
+  
+  
+    Resolution:
+    ----------
+    Routine SCDXPRN2 was modified to prevent premature killing of the sort 
+    data when the print job was spooled to a remote device.
+  
+    Two subsequent issues were identified once the report, Transmission
+    History Report - Full [SCDX AMBCAR XMIT HIST FULL], was able to print.
+   
+    Issue one appears to be a collision of requirements for page length
+    between ^%ZIS print jobs and EN1^DIP print jobs. This causes many
+    blank lines to be included at the bottom of each page of a report and
+    in some cases can be extremely large. The issue is being referred to
+    the FileMan team with ticket number R16063614FY17 as a global fix for
+    reports across all applications. As a temporary fix this report,
+    Transmission History Report - Full [SCDX AMBCAR XMIT HIST FULL], will
+    print in browser mode with the page breaks suppressed.
+   
+    Issue two appears in network multi-machine configurations. The 
+    original report is using ^TMP with the $J job address variable to
+    uniquely identify the sort global. The $J value changes when the job
+    is sent to another machine and the sort is lost. This is aggravated by
+    the fact that ^TMP globals are not translatable across network nodes,
+    so the sort global was changed to ^XTMP and uses the users DUZ number
+    for the unique identifier. This allows the job to print in production
+    environments where it was failing. This issue does not seem to show in
+    test environments, as they aren't usually configured in this manner.
+  
+ Technical:
+ =========
+    Routine SCDXPRN2 has been modified to set variable DIOEND to "K
+    ^TMP(""SCDXPRN2"",$J)". Previously EN1^DIP would only kill the sort
+    node so the PRINT tag of SCDXPRN2 would follow with a kill to finish
+    the cleanup. This kill was killing the sort global before %ZIS could
+    spool it to the output. This change for the DIOEND variable makes it
+    possible to remove the extra kill, so line PRINT+44^SCDXPRN2  was
+    commented out (K @SCDXGLO).
+  
+  
+ Installation Instructions:
+ =========================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours. Users should not be 
+ calling the Transmission History Report - Full  [SCDX AMBCAR XMIT HIST 
+ FULL] while install is in progress.
+   
+ Installation will take less than 2 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+  
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter SD*5.3*670).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch 
+           is installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+  
+     4. Use the Install Package(s) option and select the package
+        SD*5.3*670.
+  
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+  
+     6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//,' respond Yes.
+  
+        List of menu option(s) and/or protocol(s) here:
+  
+        Transmission History Report - Full  [SCDX AMBCAR XMIT HIST FULL] 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCDXPRN2
+    Before: B28222804   After: B29970218  **128,135,405,621,670**
+ 
+Routine list of preceding patches: 621
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 24, 2017
+Completed By:                               Date Completed: NOV 15, 2017
+Released By :                               Date Released : NOV 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

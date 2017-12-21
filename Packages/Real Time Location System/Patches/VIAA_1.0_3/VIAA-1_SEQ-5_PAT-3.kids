@@ -1,0 +1,2427 @@
+Released VIAA*1*3 SEQ #5
+Extracted from mail message
+**KIDS**:VIAA*1.0*3^
+
+**INSTALL NAME**
+VIAA*1.0*3
+"BLD",9274,0)
+VIAA*1.0*3^REAL TIME LOCATION SYSTEM^0^3160805^y
+"BLD",9274,1,0)
+^^16^16^3160519^
+"BLD",9274,1,1,0)
+This build supports the RTLS interface between Intelligent Insites
+"BLD",9274,1,2,0)
+and the VistA Engineering files #6914 and #6928. A list of remote
+"BLD",9274,1,3,0)
+procedure calls (RPC) is exported with this patch as part of the
+"BLD",9274,1,4,0)
+interface. The RPC list will be added to the common VistA option
+"BLD",9274,1,5,0)
+'VIAA01 RTLS RPC MENU'. At the post-init phase, the patch checks and if
+"BLD",9274,1,6,0)
+needed completes the set ups for a web server and a web service used to 
+"BLD",9274,1,7,0)
+communicate with RTLS.
+"BLD",9274,1,8,0)
+ 
+"BLD",9274,1,9,0)
+The new file PENDING RTLS EVENTS, #6930, is exported with this patch in 
+"BLD",9274,1,10,0)
+order to hold Engineering changes momentarily while they are sent to 
+"BLD",9274,1,11,0)
+RTLS. Once the changes are transmitted, the file is cleaned up.
+"BLD",9274,1,12,0)
+ 
+"BLD",9274,1,13,0)
+The changes from Engineering files are transmitted to RTLS via the option 
+"BLD",9274,1,14,0)
+VIAA MAKE A WEB CALL TO MULE. This option should be scheduled to run in 
+"BLD",9274,1,15,0)
+TaskMan periodically. See the patch description in Forum for additional 
+"BLD",9274,1,16,0)
+details on how to set it up.
+"BLD",9274,4,0)
+^9.64PA^6930^1
+"BLD",9274,4,6930,0)
+6930
+"BLD",9274,4,6930,222)
+y^y^f^^^^n
+"BLD",9274,4,"B",6930,6930)
+
+"BLD",9274,6.3)
+20
+"BLD",9274,"ABPKG")
+n
+"BLD",9274,"INID")
+^y
+"BLD",9274,"INIT")
+POST^VIAA1P3
+"BLD",9274,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9274,"KRN",.4,0)
+.4
+"BLD",9274,"KRN",.401,0)
+.401
+"BLD",9274,"KRN",.402,0)
+.402
+"BLD",9274,"KRN",.403,0)
+.403
+"BLD",9274,"KRN",.5,0)
+.5
+"BLD",9274,"KRN",.84,0)
+.84
+"BLD",9274,"KRN",3.6,0)
+3.6
+"BLD",9274,"KRN",3.8,0)
+3.8
+"BLD",9274,"KRN",9.2,0)
+9.2
+"BLD",9274,"KRN",9.8,0)
+9.8
+"BLD",9274,"KRN",9.8,"NM",0)
+^9.68A^7^6
+"BLD",9274,"KRN",9.8,"NM",2,0)
+VIAAEAD^^0^B125561613
+"BLD",9274,"KRN",9.8,"NM",3,0)
+VIAATRI^^0^B2232416
+"BLD",9274,"KRN",9.8,"NM",4,0)
+VIAAEUT^^0^B40236608
+"BLD",9274,"KRN",9.8,"NM",5,0)
+VIAAMB1^^0^B303759
+"BLD",9274,"KRN",9.8,"NM",6,0)
+VIAAQUE^^0^B6693749
+"BLD",9274,"KRN",9.8,"NM",7,0)
+VIAA1P3^^0^B15449033
+"BLD",9274,"KRN",9.8,"NM","B","VIAA1P3",7)
+
+"BLD",9274,"KRN",9.8,"NM","B","VIAAEAD",2)
+
+"BLD",9274,"KRN",9.8,"NM","B","VIAAEUT",4)
+
+"BLD",9274,"KRN",9.8,"NM","B","VIAAMB1",5)
+
+"BLD",9274,"KRN",9.8,"NM","B","VIAAQUE",6)
+
+"BLD",9274,"KRN",9.8,"NM","B","VIAATRI",3)
+
+"BLD",9274,"KRN",19,0)
+19
+"BLD",9274,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",9274,"KRN",19,"NM",1,0)
+VIAA MAKE WEB CALL TO MULE^^0
+"BLD",9274,"KRN",19,"NM","B","VIAA MAKE WEB CALL TO MULE",1)
+
+"BLD",9274,"KRN",19.1,0)
+19.1
+"BLD",9274,"KRN",101,0)
+101
+"BLD",9274,"KRN",409.61,0)
+409.61
+"BLD",9274,"KRN",771,0)
+771
+"BLD",9274,"KRN",779.2,0)
+779.2
+"BLD",9274,"KRN",870,0)
+870
+"BLD",9274,"KRN",8989.51,0)
+8989.51
+"BLD",9274,"KRN",8989.52,0)
+8989.52
+"BLD",9274,"KRN",8994,0)
+8994
+"BLD",9274,"KRN",8994,"NM",0)
+^9.68A^6^6
+"BLD",9274,"KRN",8994,"NM",1,0)
+VIAA ENG ASSET MOVE^^0
+"BLD",9274,"KRN",8994,"NM",2,0)
+VIAA ENG GET CATEGORY^^0
+"BLD",9274,"KRN",8994,"NM",3,0)
+VIAA ENG GET DATA^^0
+"BLD",9274,"KRN",8994,"NM",4,0)
+VIAA ENG GET EQUIPMENT^^0
+"BLD",9274,"KRN",8994,"NM",5,0)
+VIAA ENG GET LOCATION^^0
+"BLD",9274,"KRN",8994,"NM",6,0)
+VIAA ENG GET PRIMARY STATION^^0
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG ASSET MOVE",1)
+
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG GET CATEGORY",2)
+
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG GET DATA",3)
+
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG GET EQUIPMENT",4)
+
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG GET LOCATION",5)
+
+"BLD",9274,"KRN",8994,"NM","B","VIAA ENG GET PRIMARY STATION",6)
+
+"BLD",9274,"KRN","B",.4,.4)
+
+"BLD",9274,"KRN","B",.401,.401)
+
+"BLD",9274,"KRN","B",.402,.402)
+
+"BLD",9274,"KRN","B",.403,.403)
+
+"BLD",9274,"KRN","B",.5,.5)
+
+"BLD",9274,"KRN","B",.84,.84)
+
+"BLD",9274,"KRN","B",3.6,3.6)
+
+"BLD",9274,"KRN","B",3.8,3.8)
+
+"BLD",9274,"KRN","B",9.2,9.2)
+
+"BLD",9274,"KRN","B",9.8,9.8)
+
+"BLD",9274,"KRN","B",19,19)
+
+"BLD",9274,"KRN","B",19.1,19.1)
+
+"BLD",9274,"KRN","B",101,101)
+
+"BLD",9274,"KRN","B",409.61,409.61)
+
+"BLD",9274,"KRN","B",771,771)
+
+"BLD",9274,"KRN","B",779.2,779.2)
+
+"BLD",9274,"KRN","B",870,870)
+
+"BLD",9274,"KRN","B",8989.51,8989.51)
+
+"BLD",9274,"KRN","B",8989.52,8989.52)
+
+"BLD",9274,"KRN","B",8994,8994)
+
+"BLD",9274,"QUES",0)
+^9.62^^
+"BLD",9274,"REQB",0)
+^9.611^1^1
+"BLD",9274,"REQB",1,0)
+VIAA*1.0*1^1
+"BLD",9274,"REQB","B","VIAA*1.0*1",1)
+
+"FIA",6930)
+PENDING RTLS EVENTS
+"FIA",6930,0)
+^VIAA(6930,
+"FIA",6930,0,0)
+6930
+"FIA",6930,0,1)
+y^y^f^^^^n
+"FIA",6930,0,10)
+
+"FIA",6930,0,11)
+
+"FIA",6930,0,"RLRO")
+
+"FIA",6930,0,"VR")
+1.0^VIAA
+"FIA",6930,6930)
+0
+"INIT")
+POST^VIAA1P3
+"KRN",19,11522,-1)
+0^1
+"KRN",19,11522,0)
+VIAA MAKE WEB CALL TO MULE^Make Web Call to Mule^^R^^^^^^^^
+"KRN",19,11522,1,0)
+^19.06^2^2^3130506^^
+"KRN",19,11522,1,1,0)
+ Send Engineering files entries that have been updated in VistA
+"KRN",19,11522,1,2,0)
+ to Intelligent Insites.
+"KRN",19,11522,20)
+
+"KRN",19,11522,25)
+SEND^VIAAQUE
+"KRN",19,11522,"U")
+MAKE WEB CALL TO MULE
+"KRN",8994,2995,-1)
+0^1
+"KRN",8994,2995,0)
+VIAA ENG ASSET MOVE^EQMVUPD^VIAAEAD^2^R^^^^^^1
+"KRN",8994,2995,1,0)
+^8994.01^2^2^3140613^^^^
+"KRN",8994,2995,1,1,0)
+This RPC updates the Engineering file #6914 after a piece of equipment 
+"KRN",8994,2995,1,2,0)
+has moved and its new location is sent to RTLS.
+"KRN",8994,2995,2,0)
+^8994.02A^^-1
+"KRN",8994,2995,2,1,0)
+RETSTA^2^511^1
+"KRN",8994,2995,2,1,1,0)
+^8994.021^1^1^3120215^^
+"KRN",8994,2995,2,1,1,1,0)
+Return array
+"KRN",8994,2995,2,2,0)
+AEMSID^1^30^1^1
+"KRN",8994,2995,2,2,1,0)
+^8994.021^1^1^3140206^^
+"KRN",8994,2995,2,2,1,1,0)
+AEMS asset identifier
+"KRN",8994,2995,2,3,0)
+ROOMNUM^1^30^1^2
+"KRN",8994,2995,2,3,1,0)
+^8994.021^1^1^3151104^^^
+"KRN",8994,2995,2,3,1,1,0)
+New location of asset
+"KRN",8994,2995,2,5,0)
+TMSTMP^1^20^1^3
+"KRN",8994,2995,2,5,1,0)
+^8994.021^1^1^3140613^^^^
+"KRN",8994,2995,2,5,1,1,0)
+Date-Time of location move
+"KRN",8994,2995,2,"B","AEMSID",2)
+
+"KRN",8994,2995,2,"B","RETSTA",1)
+
+"KRN",8994,2995,2,"B","ROOMNUM",3)
+
+"KRN",8994,2995,2,"B","TMSTMP",5)
+
+"KRN",8994,2995,2,"PARAMSEQ",1,2)
+
+"KRN",8994,2995,2,"PARAMSEQ",2,3)
+
+"KRN",8994,2995,2,"PARAMSEQ",3,5)
+
+"KRN",8994,2995,2,"PARAMSEQ",4,5)
+
+"KRN",8994,2995,3,0)
+^8994.03^11^11^3140206^^^^
+"KRN",8994,2995,3,1,0)
+For a successful execution of the call the output sent to the client will
+"KRN",8994,2995,3,2,0)
+be placed in the variable RETSTA(0) using the following format:
+"KRN",8994,2995,3,3,0)
+ 
+"KRN",8994,2995,3,4,0)
+RETSTA(0)="1^Update of EQUIPMENT INV. file, #6914, successful"
+"KRN",8994,2995,3,5,0)
+ 
+"KRN",8994,2995,3,6,0)
+If an error occurs during call execution, a message will be 
+"KRN",8994,2995,3,7,0)
+returned to the client using the following format in RETSTA(0):
+"KRN",8994,2995,3,8,0)
+ 
+"KRN",8994,2995,3,9,0)
+RETSTA(0)="-###^reason_for_failure" will be returned, where '###' is a
+"KRN",8994,2995,3,10,0)
+3-digit http status code. The piece 'reason_for_failure' explains what
+"KRN",8994,2995,3,11,0)
+caused the error in VistA.
+"KRN",8994,2996,-1)
+0^5
+"KRN",8994,2996,0)
+VIAA ENG GET LOCATION^GETLOC^VIAAEUT^4^R^^^1^^^1
+"KRN",8994,2996,1,0)
+^8994.01^2^2^3140206^^^^
+"KRN",8994,2996,1,1,0)
+This RCP requires two input parameters and returns 8 fields from the
+"KRN",8994,2996,1,2,0)
+Engineering SPACE file, #6928.
+"KRN",8994,2996,2,0)
+^8994.02A^2^1
+"KRN",8994,2996,2,1,0)
+RETSTA^2^32000^1^
+"KRN",8994,2996,2,1,1,0)
+^8994.021^1^1^3130104^^^^
+"KRN",8994,2996,2,1,1,1,0)
+This the return array for the calling application.
+"KRN",8994,2996,2,2,0)
+REQDATA^1^255^1^1
+"KRN",8994,2996,2,2,1,0)
+^8994.021^2^2^3131023^^^^
+"KRN",8994,2996,2,2,1,1,0)
+The key word "LOCATION" to indicate the return of all locations in the
+"KRN",8994,2996,2,2,1,2,0)
+SPACE file, #6928.
+"KRN",8994,2996,2,"B","REQDATA",2)
+
+"KRN",8994,2996,2,"B","RETSTA",1)
+
+"KRN",8994,2996,2,"PARAMSEQ",1,1)
+
+"KRN",8994,2996,2,"PARAMSEQ",1,2)
+
+"KRN",8994,2996,2,"PARAMSEQ",2,2)
+
+"KRN",8994,2996,3,0)
+^8994.03^14^14^3140206^^
+"KRN",8994,2996,3,1,0)
+For a successful call execution, the output for the client will be placed
+"KRN",8994,2996,3,2,0)
+in ^TMP("VIAALOCATION",$J,count,0) and returned via the variable
+"KRN",8994,2996,3,3,0)
+RETSTA; it will consist of the following fields from file #6928 using '^'
+"KRN",8994,2996,3,4,0)
+as a delimiter:
+"KRN",8994,2996,3,5,0)
+ 
+"KRN",8994,2996,3,6,0)
+IEN, ROOM NUMBER, BUILDING NUMBER, BUILDING FILE POINTER, DIVISION, WING,
+"KRN",8994,2996,3,7,0)
+SERVICE, and INVERSE LOCATION. 
+"KRN",8994,2996,3,8,0)
+ 
+"KRN",8994,2996,3,9,0)
+If an error occurs during call execution, a message will be returned to
+"KRN",8994,2996,3,10,0)
+the client using the following format in ^TMP:
+"KRN",8994,2996,3,11,0)
+ 
+"KRN",8994,2996,3,12,0)
+^TMP("VIAALOCATION",$J,0)="-###^reason_for_failure", where '###' is a
+"KRN",8994,2996,3,13,0)
+3-digit http status code. The piece 'reason_for_failure' explains what
+"KRN",8994,2996,3,14,0)
+caused the error in VistA.
+"KRN",8994,2997,-1)
+0^2
+"KRN",8994,2997,0)
+VIAA ENG GET CATEGORY^GETCAT^VIAAEUT^4^R^^^1^^^1
+"KRN",8994,2997,1,0)
+^8994.01^2^2^3140206^^^^
+"KRN",8994,2997,1,1,0)
+This RPC requires three input parameters and returns all the entries
+"KRN",8994,2997,1,2,0)
+in the Engineering file Equipment Category, #6911.
+"KRN",8994,2997,2,0)
+^8994.02A^3^2
+"KRN",8994,2997,2,1,0)
+RETSTA^2^32000^1^
+"KRN",8994,2997,2,1,1,0)
+^8994.021^1^1^3130104^^^^
+"KRN",8994,2997,2,1,1,1,0)
+This is the array for the return data from the call.
+"KRN",8994,2997,2,2,0)
+REQDATA^1^255^1^1
+"KRN",8994,2997,2,2,1,0)
+^8994.021^2^2^3130104^^^^
+"KRN",8994,2997,2,2,1,1,0)
+This is the keyword "CATEGORY" to indicate the return of all the entries
+"KRN",8994,2997,2,2,1,2,0)
+in the Equipment Category file, #6911.
+"KRN",8994,2997,2,3,0)
+DATAID^1^255^1^2
+"KRN",8994,2997,2,3,1,0)
+^8994.021^1^1^3131023^^^^
+"KRN",8994,2997,2,3,1,1,0)
+Defines the scope of the data requested: 'ALL' for all the data on file.
+"KRN",8994,2997,2,"B","DATAID",3)
+
+"KRN",8994,2997,2,"B","REQDATA",2)
+
+"KRN",8994,2997,2,"B","RETSTA",1)
+
+"KRN",8994,2997,2,"PARAMSEQ",1,1)
+
+"KRN",8994,2997,2,"PARAMSEQ",1,2)
+
+"KRN",8994,2997,2,"PARAMSEQ",2,2)
+
+"KRN",8994,2997,2,"PARAMSEQ",2,3)
+
+"KRN",8994,2997,2,"PARAMSEQ",3,3)
+
+"KRN",8994,2997,3,0)
+^8994.03^14^14^3140206^^^
+"KRN",8994,2997,3,1,0)
+For a successful call execution, the output for the client will be placed
+"KRN",8994,2997,3,2,0)
+in ^TMP("VIAACATEGORY",$J,count,0) and returned via the variable RETSTA; 
+"KRN",8994,2997,3,3,0)
+it will consist of the following fields from file #6911 using '^' as a
+"KRN",8994,2997,3,4,0)
+delimiter:
+"KRN",8994,2997,3,5,0)
+ 
+"KRN",8994,2997,3,6,0)
+^TMP("VIAACATEGORY",$J,count,0)=categoryIEN^categoryDescription
+"KRN",8994,2997,3,7,0)
+. . .
+"KRN",8994,2997,3,8,0)
+ 
+"KRN",8994,2997,3,9,0)
+If an error occurs during call execution, a message will be returned to
+"KRN",8994,2997,3,10,0)
+the client using the following format in ^TMP:
+"KRN",8994,2997,3,11,0)
+ 
+"KRN",8994,2997,3,12,0)
+^TMP("VIAACATEGORY",$J,0)="-###^reason_for_failure", where '###'
+"KRN",8994,2997,3,13,0)
+is a 3-digit http status code. The piece 'reason_for_failure' explains
+"KRN",8994,2997,3,14,0)
+what caused the error in VistA.
+"KRN",8994,2998,-1)
+0^4
+"KRN",8994,2998,0)
+VIAA ENG GET EQUIPMENT^LASTEE^VIAAEUT^4^R^^^1^^^1
+"KRN",8994,2998,1,0)
+^8994.01^2^2^3140523^^^^
+"KRN",8994,2998,1,1,0)
+This RPC requires two input parameters and returns all the new entries
+"KRN",8994,2998,1,2,0)
+(IENs) from the Engineering file #6914 following a given entry number.
+"KRN",8994,2998,2,0)
+^8994.02A^2^1
+"KRN",8994,2998,2,1,0)
+RETSTA^2^32000^1^
+"KRN",8994,2998,2,1,1,0)
+^8994.021^1^1^3130104^^^^
+"KRN",8994,2998,2,1,1,1,0)
+This is the return array for the call.
+"KRN",8994,2998,2,2,0)
+REQDATA^1^255^1^1
+"KRN",8994,2998,2,2,1,0)
+^8994.021^3^3^3140523^^^^
+"KRN",8994,2998,2,2,1,1,0)
+This is the last IEN that was stored in Weblogic and InSites.
+"KRN",8994,2998,2,2,1,2,0)
+Once the RPC gets it, it can check if new entries have been added
+"KRN",8994,2998,2,2,1,3,0)
+and report them in a list.
+"KRN",8994,2998,2,"B","REQDATA",2)
+
+"KRN",8994,2998,2,"B","RETSTA",1)
+
+"KRN",8994,2998,2,"PARAMSEQ",1,1)
+
+"KRN",8994,2998,2,"PARAMSEQ",1,2)
+
+"KRN",8994,2998,2,"PARAMSEQ",2,2)
+
+"KRN",8994,2998,3,0)
+^8994.03^17^17^3140523^^
+"KRN",8994,2998,3,1,0)
+For a successful call execution, the output for the client will be placed
+"KRN",8994,2998,3,2,0)
+in ^TMP("VIAALASTEE",$J,count,0) and returned via the variable RETSTA; it
+"KRN",8994,2998,3,3,0)
+will consist of the following fields from file #6914:
+"KRN",8994,2998,3,4,0)
+ 
+"KRN",8994,2998,3,5,0)
+^TMP("VIAALASTEE",$J,count,0)=IEN
+"KRN",8994,2998,3,6,0)
+^TMP("VIAALASTEE",$J,count+1,0)=next_IEN
+"KRN",8994,2998,3,7,0)
+. . .
+"KRN",8994,2998,3,8,0)
+ 
+"KRN",8994,2998,3,9,0)
+The output will consist of a list of EE numbers found in file #6914 which
+"KRN",8994,2998,3,10,0)
+follow the EE number sent from Insites.
+"KRN",8994,2998,3,11,0)
+ 
+"KRN",8994,2998,3,12,0)
+If an error occurs during call execution, a message will be returned to 
+"KRN",8994,2998,3,13,0)
+the client using the following format in ^TMP:
+"KRN",8994,2998,3,14,0)
+ 
+"KRN",8994,2998,3,15,0)
+^TMP("VIAALASTEE",$J,0)="-###^reason_for_failure", where '###' is a
+"KRN",8994,2998,3,16,0)
+3-digit http status code. The piece 'reason_for_failure' explains what
+"KRN",8994,2998,3,17,0)
+caused the error in VistA.
+"KRN",8994,3003,-1)
+0^3
+"KRN",8994,3003,0)
+VIAA ENG GET DATA^RTLSDTEX^VIAAEAD^4^R^^^1^^^1
+"KRN",8994,3003,1,0)
+^8994.01^2^2^3140206^^^^
+"KRN",8994,3003,1,1,0)
+This RPC returns to RTLS equipment data for a given entry number in file 
+"KRN",8994,3003,1,2,0)
+#6914.
+"KRN",8994,3003,2,0)
+^8994.02A^3^2
+"KRN",8994,3003,2,1,0)
+RETSTA^2^32000^1
+"KRN",8994,3003,2,2,0)
+REQDATA^1^255^1^1
+"KRN",8994,3003,2,2,1,0)
+^8994.021^4^4^3130422^^
+"KRN",8994,3003,2,2,1,1,0)
+Type of data required
+"KRN",8994,3003,2,2,1,2,0)
+"EQUIPMENT" for equipment
+"KRN",8994,3003,2,2,1,3,0)
+"CATEGORY" for categories
+"KRN",8994,3003,2,2,1,4,0)
+"LOCATION" for locations
+"KRN",8994,3003,2,3,0)
+DATAID^1^255^1^2
+"KRN",8994,3003,2,3,1,0)
+^8994.021^2^2^3131023^^^
+"KRN",8994,3003,2,3,1,1,0)
+"ALL" to get all data available,
+"KRN",8994,3003,2,3,1,2,0)
+ID to get data for a single item (equipment, category, location)
+"KRN",8994,3003,2,"B","DATAID",3)
+
+"KRN",8994,3003,2,"B","REQDATA",2)
+
+"KRN",8994,3003,2,"B","RETSTA",1)
+
+"KRN",8994,3003,2,"PARAMSEQ",1,2)
+
+"KRN",8994,3003,2,"PARAMSEQ",2,3)
+
+"KRN",8994,3003,3,0)
+^8994.03^35^35^3140206^^
+"KRN",8994,3003,3,1,0)
+For a successful call execution, the output for the client will be placed 
+"KRN",8994,3003,3,2,0)
+in ^TMP("VIAAEQUIPMENT",$J,count,0) and returned via the variable 
+"KRN",8994,3003,3,3,0)
+RETSTA; it will consist of the following fields from file #6914 using '^'
+"KRN",8994,3003,3,4,0)
+as a delimiter:
+"KRN",8994,3003,3,5,0)
+ 
+"KRN",8994,3003,3,6,0)
+ENTRY NUMBER
+"KRN",8994,3003,3,7,0)
+LOCATION
+"KRN",8994,3003,3,8,0)
+MODEL
+"KRN",8994,3003,3,9,0)
+MANUFACTURER
+"KRN",8994,3003,3,10,0)
+EQUIPMENT CATEGORY 
+"KRN",8994,3003,3,11,0)
+SYNONYM
+"KRN",8994,3003,3,12,0)
+USE STATUS
+"KRN",8994,3003,3,13,0)
+SERIAL #
+"KRN",8994,3003,3,14,0)
+TOTAL ASSET VALUE
+"KRN",8994,3003,3,15,0)
+DATE ENTERED
+"KRN",8994,3003,3,16,0)
+PHYSICAL INVENTORY DATE
+"KRN",8994,3003,3,17,0)
+MFGR. EQUIPMENT NAME
+"KRN",8994,3003,3,18,0)
+CMR
+"KRN",8994,3003,3,19,0)
+SERVICE POINTER
+"KRN",8994,3003,3,20,0)
+CATEGORY STOCK NUMBER
+"KRN",8994,3003,3,21,0)
+BRIEF DESCRIPTION
+"KRN",8994,3003,3,22,0)
+PARENT SYSTEM
+"KRN",8994,3003,3,23,0)
+TYPE OF ENTRY
+"KRN",8994,3003,3,24,0)
+PURCHASE ORDER #
+"KRN",8994,3003,3,25,0)
+ACQUISITION DATE
+"KRN",8994,3003,3,26,0)
+RESPONSIBLE SHOP
+"KRN",8994,3003,3,27,0)
+STATION NUMBER
+"KRN",8994,3003,3,28,0)
+DISPOSITION DATE
+"KRN",8994,3003,3,29,0)
+ 
+"KRN",8994,3003,3,30,0)
+If an error occurs during call execution, a message will be returned to 
+"KRN",8994,3003,3,31,0)
+the client using the following format in ^TMP:
+"KRN",8994,3003,3,32,0)
+ 
+"KRN",8994,3003,3,33,0)
+^TMP("VIAAEQUIPMENT",$J,0)="-###^reason_for_failure", where '###' is a
+"KRN",8994,3003,3,34,0)
+3-digit http status code. The piece 'reason_for_failure' explains what
+"KRN",8994,3003,3,35,0)
+caused the error in VistA.
+"KRN",8994,3006,-1)
+0^6
+"KRN",8994,3006,0)
+VIAA ENG GET PRIMARY STATION^PINGRP^VIAAMB1^1^R^^^1^^^1
+"KRN",8994,3006,1,0)
+^^3^3^3140314^
+"KRN",8994,3006,1,1,0)
+This RPC is used to verify that VistA is up and the KIDS build for the
+"KRN",8994,3006,1,2,0)
+VIAA package has been installed by the site. No input parameter is 
+"KRN",8994,3006,1,3,0)
+required by this RPC.
+"KRN",8994,3006,3,0)
+^8994.03^3^3^3140314^^
+"KRN",8994,3006,3,1,0)
+The successful execution of the RPC returns the primary station number to
+"KRN",8994,3006,3,2,0)
+the calling application via the variable RETSTA. The primary station
+"KRN",8994,3006,3,3,0)
+number comes from the Engineering Init Parameters file, #6910.
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",223,-1)
+1^1
+"PKG",223,0)
+REAL TIME LOCATION SYSTEM^VIAA^REAL TIME LOCATION SYSTEM
+"PKG",223,20,0)
+^9.402P^^
+"PKG",223,22,0)
+^9.49I^1^1
+"PKG",223,22,1,0)
+1.0
+"PKG",223,22,1,"PAH",1,0)
+3^3160805
+"PKG",223,22,1,"PAH",1,1,0)
+^^16^16^3160805
+"PKG",223,22,1,"PAH",1,1,1,0)
+This build supports the RTLS interface between Intelligent Insites
+"PKG",223,22,1,"PAH",1,1,2,0)
+and the VistA Engineering files #6914 and #6928. A list of remote
+"PKG",223,22,1,"PAH",1,1,3,0)
+procedure calls (RPC) is exported with this patch as part of the
+"PKG",223,22,1,"PAH",1,1,4,0)
+interface. The RPC list will be added to the common VistA option
+"PKG",223,22,1,"PAH",1,1,5,0)
+'VIAA01 RTLS RPC MENU'. At the post-init phase, the patch checks and if
+"PKG",223,22,1,"PAH",1,1,6,0)
+needed completes the set ups for a web server and a web service used to 
+"PKG",223,22,1,"PAH",1,1,7,0)
+communicate with RTLS.
+"PKG",223,22,1,"PAH",1,1,8,0)
+ 
+"PKG",223,22,1,"PAH",1,1,9,0)
+The new file PENDING RTLS EVENTS, #6930, is exported with this patch in 
+"PKG",223,22,1,"PAH",1,1,10,0)
+order to hold Engineering changes momentarily while they are sent to 
+"PKG",223,22,1,"PAH",1,1,11,0)
+RTLS. Once the changes are transmitted, the file is cleaned up.
+"PKG",223,22,1,"PAH",1,1,12,0)
+ 
+"PKG",223,22,1,"PAH",1,1,13,0)
+The changes from Engineering files are transmitted to RTLS via the option 
+"PKG",223,22,1,"PAH",1,1,14,0)
+VIAA MAKE A WEB CALL TO MULE. This option should be scheduled to run in 
+"PKG",223,22,1,"PAH",1,1,15,0)
+TaskMan periodically. See the patch description in Forum for additional 
+"PKG",223,22,1,"PAH",1,1,16,0)
+details on how to set it up.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","VIAA1P3")
+0^7^B15449033^n/a
+"RTN","VIAA1P3",1,0)
+VIAA1P3 ;ALB/CR - POST INIT FOR PATCH 3 OF RTLS ;5/4/16 9:55am
+"RTN","VIAA1P3",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAA1P3",3,0)
+ Q
+"RTN","VIAA1P3",4,0)
+POST ; Add the TABLE of remote procedure calls to common RTLS menu in VistA.
+"RTN","VIAA1P3",5,0)
+ ; Check the setup for a server and service for RTLS. If they exist,
+"RTN","VIAA1P3",6,0)
+ ; get out and pass the information to the installation log.
+"RTN","VIAA1P3",7,0)
+ ; Otherwise add the web server and service to call Mule in RTLS.
+"RTN","VIAA1P3",8,0)
+ ; 
+"RTN","VIAA1P3",9,0)
+ D BMES^XPDUTL("  POST-INIT: Starting Post-Install of Patch VIAA*1.0*3...")
+"RTN","VIAA1P3",10,0)
+ D REGRPC
+"RTN","VIAA1P3",11,0)
+ D BMES^XPDUTL("  ...Menu option 'VIAA01 RTLS RPC MENU' is now set up with new entries.")
+"RTN","VIAA1P3",12,0)
+ ;
+"RTN","VIAA1P3",13,0)
+ D BMES^XPDUTL("")
+"RTN","VIAA1P3",14,0)
+ I $D(^XOB(18.02,"B","VIAA VISTA TRIGGER SERVICE")) D BMES^XPDUTL("  ...found a trigger service, checking for a trigger server....") D POST1 Q
+"RTN","VIAA1P3",15,0)
+ E  D BMES^XPDUTL("  Adding a new web service, please wait...")
+"RTN","VIAA1P3",16,0)
+ ;
+"RTN","VIAA1P3",17,0)
+ N CONTEXT,CURRDT,DA,DIC,DLAYGO,FDA
+"RTN","VIAA1P3",18,0)
+ N SVCNAME,SERVER,PORT,SSL,STATUS,TYPE,X,Y
+"RTN","VIAA1P3",19,0)
+ S CURRDT=$$NOW^XLFDT
+"RTN","VIAA1P3",20,0)
+ S DIC(0)="L",DLAYGO=18.02,DIC="^XOB(18.02,"
+"RTN","VIAA1P3",21,0)
+ S SVCNAME="VIAA VISTA TRIGGER SERVICE",TYPE=2
+"RTN","VIAA1P3",22,0)
+ S CONTEXT="esb/assettrax/services/vistatrigger"
+"RTN","VIAA1P3",23,0)
+ S X=SVCNAME
+"RTN","VIAA1P3",24,0)
+ D FILE^DICN
+"RTN","VIAA1P3",25,0)
+ S DA=+Y
+"RTN","VIAA1P3",26,0)
+ L +^XOB(18.02,DA):5 I '$T D BMES^XPDUTL("  ...cannot lock file #18.02 - try later.") Q
+"RTN","VIAA1P3",27,0)
+ S FDA(18.02,DA_",",.02)=TYPE
+"RTN","VIAA1P3",28,0)
+ S FDA(18.02,DA_",",200)=CONTEXT
+"RTN","VIAA1P3",29,0)
+ S FDA(18.02,DA_",",.03)=CURRDT
+"RTN","VIAA1P3",30,0)
+ D UPDATE^DIE("","FDA","ERR")
+"RTN","VIAA1P3",31,0)
+ L -^XOB(18.02,DA)
+"RTN","VIAA1P3",32,0)
+ D CLEAN^DILF
+"RTN","VIAA1P3",33,0)
+ D BMES^XPDUTL("  ...new web service "_SVCNAME_" added.")
+"RTN","VIAA1P3",34,0)
+ D POST1
+"RTN","VIAA1P3",35,0)
+ Q
+"RTN","VIAA1P3",36,0)
+ ;
+"RTN","VIAA1P3",37,0)
+POST1 ;
+"RTN","VIAA1P3",38,0)
+ I $D(^XOB(18.12,"B","VIAA VISTA TRIGGER SERVER")) D BMES^XPDUTL("  ...found a trigger server - nothing else to do, quitting!") Q
+"RTN","VIAA1P3",39,0)
+ N DEFHTTPT,LOGIN,MULT,SVCPTR,SSL,SSLCFIG
+"RTN","VIAA1P3",40,0)
+ D BMES^XPDUTL("  Adding a new web server, please wait...")
+"RTN","VIAA1P3",41,0)
+ S DIC(0)="L",DLAYGO=18.12,DIC="^XOB(18.12,"
+"RTN","VIAA1P3",42,0)
+ S SERVER="VIAA VISTA TRIGGER SERVER",PORT=443
+"RTN","VIAA1P3",43,0)
+ S SVCPTR=+$O(^XOB(18.02,"B","VIAA VISTA TRIGGER SERVICE","")) ; need pointer for later use
+"RTN","VIAA1P3",44,0)
+ S STATUS=1,SSL=1,LOGIN=1,SSLCFIG="RTLS_CLIENT"
+"RTN","VIAA1P3",45,0)
+ S DEFHTTPT=30  ; default http timeout
+"RTN","VIAA1P3",46,0)
+ S X=SERVER
+"RTN","VIAA1P3",47,0)
+ D FILE^DICN
+"RTN","VIAA1P3",48,0)
+ S DA=+Y
+"RTN","VIAA1P3",49,0)
+ L +^XOB(18.12,DA):5 I '$T D BMES^XPDUTL("  ...cannot lock file #18.12 - try later.") Q
+"RTN","VIAA1P3",50,0)
+ S FDA(18.12,DA_",",.03)=PORT
+"RTN","VIAA1P3",51,0)
+ S FDA(18.12,DA_",",.06)=STATUS
+"RTN","VIAA1P3",52,0)
+ S FDA(18.12,DA_",",.07)=DEFHTTPT
+"RTN","VIAA1P3",53,0)
+ S FDA(18.12,DA_",",1.01)=LOGIN
+"RTN","VIAA1P3",54,0)
+ S FDA(18.12,DA_",",3.01)=SSL
+"RTN","VIAA1P3",55,0)
+ S FDA(18.12,DA_",",3.02)=SSLCFIG
+"RTN","VIAA1P3",56,0)
+ S FDA(18.12,DA_",",3.03)=PORT
+"RTN","VIAA1P3",57,0)
+ D UPDATE^DIE("","FDA","")
+"RTN","VIAA1P3",58,0)
+ D CLEAN^DILF
+"RTN","VIAA1P3",59,0)
+ ; add to multiple 100
+"RTN","VIAA1P3",60,0)
+ S MULT(1,18.121,"+1,"_DA_",",.01)=SVCPTR
+"RTN","VIAA1P3",61,0)
+ S MULT(1,18.121,"+1,"_DA_",",.06)=STATUS
+"RTN","VIAA1P3",62,0)
+ D UPDATE^DIE("","MULT(1)","")
+"RTN","VIAA1P3",63,0)
+ L -^XOB(18.12,DA)
+"RTN","VIAA1P3",64,0)
+ D CLEAN^DILF
+"RTN","VIAA1P3",65,0)
+ D BMES^XPDUTL("  ...new web server "_SERVER_" added.")
+"RTN","VIAA1P3",66,0)
+ D BMES^XPDUTL("  Please note: the web server just added will need a ")
+"RTN","VIAA1P3",67,0)
+ D BMES^XPDUTL("  fully qualified domain name, username, and password.")
+"RTN","VIAA1P3",68,0)
+ D BMES^XPDUTL("  The information will be available via secure communication later on.")
+"RTN","VIAA1P3",69,0)
+ D BMES^XPDUTL("  Post-Install for Patch VIAA*1.0*3 Finished.")
+"RTN","VIAA1P3",70,0)
+ Q
+"RTN","VIAA1P3",71,0)
+ ;
+"RTN","VIAA1P3",72,0)
+REGRPC ; register RPC
+"RTN","VIAA1P3",73,0)
+ N I,J,X,Y,DIC,FDA,REGRPC,RPCIEN,OPTIEN,VIAAOPT
+"RTN","VIAA1P3",74,0)
+ S VIAAOPT="VIAA01 RTLS RPC MENU"
+"RTN","VIAA1P3",75,0)
+ F I=1:1 S J=$P($E($T(TABLE+I),2,40),";;",2),REGRPC=J D ADD Q:J=""
+"RTN","VIAA1P3",76,0)
+ Q
+"RTN","VIAA1P3",77,0)
+ ;
+"RTN","VIAA1P3",78,0)
+ADD ;
+"RTN","VIAA1P3",79,0)
+ S DIC(0)="I",X=REGRPC,DIC="^XWB(8994,"
+"RTN","VIAA1P3",80,0)
+ D ^DIC Q:'(Y>0)  S RPCIEN=+Y
+"RTN","VIAA1P3",81,0)
+ D CLEAN^DILF
+"RTN","VIAA1P3",82,0)
+ ;
+"RTN","VIAA1P3",83,0)
+ S DIC(0)="I",X=VIAAOPT,DIC="^DIC(19,"
+"RTN","VIAA1P3",84,0)
+ D ^DIC Q:'(Y>0)  S OPTIEN=+Y
+"RTN","VIAA1P3",85,0)
+ D CLEAN^DILF
+"RTN","VIAA1P3",86,0)
+ S FDA(19.05,"?+1,"_OPTIEN_",",.01)=RPCIEN
+"RTN","VIAA1P3",87,0)
+ D UPDATE^DIE("","FDA","")
+"RTN","VIAA1P3",88,0)
+ Q
+"RTN","VIAA1P3",89,0)
+ ;
+"RTN","VIAA1P3",90,0)
+TABLE ; list the RPCs to be added to the menu option
+"RTN","VIAA1P3",91,0)
+ ;;VIAA ENG ASSET MOVE
+"RTN","VIAA1P3",92,0)
+ ;;VIAA ENG GET CATEGORY
+"RTN","VIAA1P3",93,0)
+ ;;VIAA ENG GET DATA
+"RTN","VIAA1P3",94,0)
+ ;;VIAA ENG GET EQUIPMENT
+"RTN","VIAA1P3",95,0)
+ ;;VIAA ENG GET LOCATION
+"RTN","VIAA1P3",96,0)
+ ;;VIAA ENG GET PRIMARY STATION
+"RTN","VIAAEAD")
+0^2^B125561613^n/a
+"RTN","VIAAEAD",1,0)
+VIAAEAD ;ALB/CR - RTLS Multiple RPCs for Engineering ;5/4/16 10:08am
+"RTN","VIAAEAD",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAAEAD",3,0)
+ ;
+"RTN","VIAAEAD",4,0)
+ Q
+"RTN","VIAAEAD",5,0)
+ ; Access to file #6914 covered by IA #5913
+"RTN","VIAAEAD",6,0)
+ ; Access to file #6911 covered by IA #5914
+"RTN","VIAAEAD",7,0)
+ ; Access to file #6928 covered by IA #5915
+"RTN","VIAAEAD",8,0)
+ ; Access to file #6917 covered by IA #5916
+"RTN","VIAAEAD",9,0)
+ ; Access to file #6914.1 covered by IA #5917
+"RTN","VIAAEAD",10,0)
+ ; Access to file #6912 covered by IA #5918
+"RTN","VIAAEAD",11,0)
+ ; Access to file #6910 covered by IA #5920
+"RTN","VIAAEAD",12,0)
+ ;
+"RTN","VIAAEAD",13,0)
+EQMVUPD(RETSTA,AEMSID,ROOMNUM,TMSTMP) ; Equipment move into AEMS
+"RTN","VIAAEAD",14,0)
+ ; RPC [VIAA ENG ASSET MOVE]
+"RTN","VIAAEAD",15,0)
+ ;
+"RTN","VIAAEAD",16,0)
+ ; When equipment moves to a new location this function updates the
+"RTN","VIAAEAD",17,0)
+ ; following fields in file 6914:
+"RTN","VIAAEAD",18,0)
+ ; LOCATION (24)
+"RTN","VIAAEAD",19,0)
+ ; PHYSICAL INVENTORY DATE (23)
+"RTN","VIAAEAD",20,0)
+ ; 
+"RTN","VIAAEAD",21,0)
+ ; Input:
+"RTN","VIAAEAD",22,0)
+ ;   RETSTA is the name of the return array
+"RTN","VIAAEAD",23,0)
+ ;   AEMSID is equipment ID (IEN in 6914)
+"RTN","VIAAEAD",24,0)
+ ;   ROOMNUM is the room number for the location the equipment was
+"RTN","VIAAEAD",25,0)
+ ;   moved to
+"RTN","VIAAEAD",26,0)
+ ;   TMSTMP is timestamp in ISO format but time is optional
+"RTN","VIAAEAD",27,0)
+ ; Output:
+"RTN","VIAAEAD",28,0)
+ ;   "1^update successful" if update succeeds, otherwise
+"RTN","VIAAEAD",29,0)
+ ;   "-###^" concatenated with a failure message, where '###' is a 3-digit code
+"RTN","VIAAEAD",30,0)
+ ;
+"RTN","VIAAEAD",31,0)
+ I $G(AEMSID)="" S RETSTA(0)="-400^AEMS IEN not specified for look up in the EQUIPMENT INV. file, #6914" Q
+"RTN","VIAAEAD",32,0)
+ I '$D(^ENG(6914,"EE",AEMSID)) S RETSTA(0)="-404^AEMS IEN "_AEMSID_" was not found in the EQUIPMENT INV. file, #6914" Q
+"RTN","VIAAEAD",33,0)
+ I $G(ROOMNUM)="" S RETSTA(0)="-400^Room Number not specified for look up in the ENG SPACE file, #6928" Q
+"RTN","VIAAEAD",34,0)
+ I '$D(^ENG("SP","B",ROOMNUM)) S RETSTA(0)="-404^Room number "_ROOMNUM_" not found in the ENG SPACE file, #6928" Q
+"RTN","VIAAEAD",35,0)
+ I $G(TMSTMP)="" S RETSTA(0)="-400^Time Stamp of equipment move not specified" Q
+"RTN","VIAAEAD",36,0)
+ N FDA,ERR,RECCT,ROOMIEN
+"RTN","VIAAEAD",37,0)
+ K ^TMP("VIAADUP",$J)
+"RTN","VIAAEAD",38,0)
+ S RECCT=0
+"RTN","VIAAEAD",39,0)
+ ; if the room number is a duplicate in file #6928, reject the move and inform RTLS
+"RTN","VIAAEAD",40,0)
+ S ROOMIEN=0 F  S ROOMIEN=$O(^ENG("SP","B",ROOMNUM,ROOMIEN)) Q:'ROOMIEN  S ^TMP("VIAADUP",$J,ROOMIEN)="",RECCT=$G(RECCT)+1
+"RTN","VIAAEAD",41,0)
+ I $D(^TMP("VIAADUP",$J))&(RECCT>1) D  Q
+"RTN","VIAAEAD",42,0)
+ . S RETSTA(0)="-409^Move Failed - Duplicate Room Number ("_ROOMNUM_") Detected."
+"RTN","VIAAEAD",43,0)
+ . K ^TMP("VIAADUP",$J)
+"RTN","VIAAEAD",44,0)
+ ;
+"RTN","VIAAEAD",45,0)
+ ; convert timestamp from ISO format to FileMan internal format
+"RTN","VIAAEAD",46,0)
+ S TMSTMP=$$ISO2FM(TMSTMP)
+"RTN","VIAAEAD",47,0)
+ I TMSTMP=-1 S RETSTA(0)="-400^Time Stamp not valid" Q
+"RTN","VIAAEAD",48,0)
+ S AEMSID=$O(^ENG(6914,"EE",AEMSID,""))
+"RTN","VIAAEAD",49,0)
+ S ROOMIEN=+$O(^ENG("SP","B",ROOMNUM,""))
+"RTN","VIAAEAD",50,0)
+ ;
+"RTN","VIAAEAD",51,0)
+ S FDA(6914,AEMSID_",",23)=TMSTMP
+"RTN","VIAAEAD",52,0)
+ S FDA(6914,AEMSID_",",24)=ROOMIEN
+"RTN","VIAAEAD",53,0)
+ D UPDATE^DIE(,"FDA",,"ERR")
+"RTN","VIAAEAD",54,0)
+ I $D(ERR) S RETSTA(0)="-500^Update of EQUIPMENT INV. file, #6914, failed" Q
+"RTN","VIAAEAD",55,0)
+ S RETSTA(0)="1^Update of EQUIPMENT INV. file, #6914, successful"
+"RTN","VIAAEAD",56,0)
+ Q
+"RTN","VIAAEAD",57,0)
+ ;
+"RTN","VIAAEAD",58,0)
+RTLSDTEX(RETSTA,REQDATA,DATAID) ; Extract AEMS-RTLS DATA
+"RTN","VIAAEAD",59,0)
+ ; RPC [VIAA ENG GET DATA]
+"RTN","VIAAEAD",60,0)
+ ; 
+"RTN","VIAAEAD",61,0)
+ ; This RPC allows retrieval of one or all entries from the following
+"RTN","VIAAEAD",62,0)
+ ; files:
+"RTN","VIAAEAD",63,0)
+ ;   EQUIPMENT INV. (6914)
+"RTN","VIAAEAD",64,0)
+ ;   EQUIPMENT CATEGORY (6911)
+"RTN","VIAAEAD",65,0)
+ ;   ENG SPACE (6928) 
+"RTN","VIAAEAD",66,0)
+ ;  
+"RTN","VIAAEAD",67,0)
+ ; Input:
+"RTN","VIAAEAD",68,0)
+ ;   RETSTA is the name of the return array
+"RTN","VIAAEAD",69,0)
+ ;   REQDATA identifies the type of data that is required
+"RTN","VIAAEAD",70,0)
+ ;     "EQUIPMENT" for equipment
+"RTN","VIAAEAD",71,0)
+ ;     "CATEGORY" for categories
+"RTN","VIAAEAD",72,0)
+ ;     "LOCATION" for locations
+"RTN","VIAAEAD",73,0)
+ ;   DATAID identifies which data is to be returned for REQDATA
+"RTN","VIAAEAD",74,0)
+ ;     "ALL" for all data for a given REQDATA
+"RTN","VIAAEAD",75,0)
+ ;     AEMSID for individual equipment item
+"RTN","VIAAEAD",76,0)
+ ;     CATID for an individual category
+"RTN","VIAAEAD",77,0)
+ ;     LOCID (IEN) for an individual location
+"RTN","VIAAEAD",78,0)
+ ; Output:
+"RTN","VIAAEAD",79,0)
+ ;   Global ^TMP("VIAA"_REQDATA,$J)
+"RTN","VIAAEAD",80,0)
+ ;     Contains data for REQDATA and DATAID,
+"RTN","VIAAEAD",81,0)
+ ;     (if REQDATA="EQUIPMENT" and DATAID="ALL" 
+"RTN","VIAAEAD",82,0)
+ ;      then just AEMSIDs are returned)
+"RTN","VIAAEAD",83,0)
+ ;     otherwise
+"RTN","VIAAEAD",84,0)
+ ;     "-###^" concatenated with reason for failure message, where 
+"RTN","VIAAEAD",85,0)
+ ;     '###' is a 3-digit code
+"RTN","VIAAEAD",86,0)
+ ;
+"RTN","VIAAEAD",87,0)
+ ;
+"RTN","VIAAEAD",88,0)
+ N RNS
+"RTN","VIAAEAD",89,0)
+ S RNS="VIAA"_REQDATA
+"RTN","VIAAEAD",90,0)
+ I $G(REQDATA)="" S RNS="VIAAEQUIPMENT",^TMP(RNS,$J,0)="-400^REQDATA parameter not specified" D EX1 Q
+"RTN","VIAAEAD",91,0)
+ I $G(DATAID)="" S ^TMP(RNS,$J,0)="-400^DATA ID parameter not specified" D EX1 Q
+"RTN","VIAAEAD",92,0)
+ ;
+"RTN","VIAAEAD",93,0)
+ I ("^EQUIPMENT^CATEGORY^LOCATION^"'[("^"_REQDATA_"^")) D  Q
+"RTN","VIAAEAD",94,0)
+ . S ^TMP(RNS,$J,0)="-400^REQDATA parameter not recognized" D EX1
+"RTN","VIAAEAD",95,0)
+ ;
+"RTN","VIAAEAD",96,0)
+ ; scan appropriate file and save data in ^TMP
+"RTN","VIAAEAD",97,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEAD",98,0)
+ I REQDATA="EQUIPMENT" D GETEQPD(REQDATA,DATAID)
+"RTN","VIAAEAD",99,0)
+ I REQDATA="CATEGORY" D GETCATD(REQDATA,DATAID)
+"RTN","VIAAEAD",100,0)
+ I REQDATA="LOCATION" D GETSPCD(REQDATA,DATAID)
+"RTN","VIAAEAD",101,0)
+ ; 
+"RTN","VIAAEAD",102,0)
+EX1 S RETSTA=$S($D(^TMP(RNS,$J)):$NA(^TMP(RNS,$J)),RETSTA'="":RETSTA,1:"-404^No data found")
+"RTN","VIAAEAD",103,0)
+ Q
+"RTN","VIAAEAD",104,0)
+ ;
+"RTN","VIAAEAD",105,0)
+GETEQPD(REQDATA,DATAID) ; get equipment data
+"RTN","VIAAEAD",106,0)
+ ;
+"RTN","VIAAEAD",107,0)
+ ; check that asset is on file if info for single asset requested
+"RTN","VIAAEAD",108,0)
+ I DATAID'="ALL",'$D(^ENG(6914,"EE",DATAID)) D  Q
+"RTN","VIAAEAD",109,0)
+ . S ^TMP(RNS,$J,0)="-404^AEMS IEN "_DATAID_" was not found in the EQUIPMENT INV. file, #6914"
+"RTN","VIAAEAD",110,0)
+ ;
+"RTN","VIAAEAD",111,0)
+ N RECCT
+"RTN","VIAAEAD",112,0)
+ S RECCT=0
+"RTN","VIAAEAD",113,0)
+ ; return info for a single asset
+"RTN","VIAAEAD",114,0)
+ I DATAID'="ALL" D  Q
+"RTN","VIAAEAD",115,0)
+ . D GETEQPD1(DATAID)
+"RTN","VIAAEAD",116,0)
+ ;
+"RTN","VIAAEAD",117,0)
+ ; return info for all assets 'IN USE'
+"RTN","VIAAEAD",118,0)
+ N AEMSID
+"RTN","VIAAEAD",119,0)
+ S AEMSID=""
+"RTN","VIAAEAD",120,0)
+ F  S AEMSID=$O(^ENG(6914,"EE",AEMSID)) Q:AEMSID=""  D
+"RTN","VIAAEAD",121,0)
+ . S EIEN=$O(^ENG(6914,"EE",AEMSID,""))
+"RTN","VIAAEAD",122,0)
+ . I $$GET1^DIQ(6914,EIEN,20,"I")'=1 Q
+"RTN","VIAAEAD",123,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEAD",124,0)
+ . S ^TMP(RNS,$J,RECCT,0)=AEMSID
+"RTN","VIAAEAD",125,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found"
+"RTN","VIAAEAD",126,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",127,0)
+ Q
+"RTN","VIAAEAD",128,0)
+ ;
+"RTN","VIAAEAD",129,0)
+GETEQPD1(AEMSID) ; get data for one item
+"RTN","VIAAEAD",130,0)
+ ;
+"RTN","VIAAEAD",131,0)
+ N EIEN,LOCID,MODEL,MANUF,CATDET,CATDET2,CATEG,SERNO,USESTAT,VALUE
+"RTN","VIAAEAD",132,0)
+ N ENTDAT,MOVDAT,EQNAM,CMRDESC,CMRPTR,SERVICE,CSTKNO,CSTKDESC,CSTKIEN
+"RTN","VIAAEAD",133,0)
+ N ACQDATE,CMRNAM,PASYST,DATA,FSYNON,DISPDATE
+"RTN","VIAAEAD",134,0)
+ N PURCHORD,RESPSHOP,TYPENTRY,SITEID,DEFSITE
+"RTN","VIAAEAD",135,0)
+ ;
+"RTN","VIAAEAD",136,0)
+ S EIEN=$O(^ENG(6914,"EE",AEMSID,"")) ; equipment IEN
+"RTN","VIAAEAD",137,0)
+ S LOCID=$$GET1^DIQ(6914,EIEN,24)     ; location
+"RTN","VIAAEAD",138,0)
+ S MANUF=$$GET1^DIQ(6914,EIEN,1)      ; manufacturer
+"RTN","VIAAEAD",139,0)
+ S PASYST=$$GET1^DIQ(6914,EIEN,2)     ; parent system
+"RTN","VIAAEAD",140,0)
+ S EQNAM=$$GET1^DIQ(6914,EIEN,3)      ; mfgr. equipment name
+"RTN","VIAAEAD",141,0)
+ S MODEL=$$GET1^DIQ(6914,EIEN,4)      ; model
+"RTN","VIAAEAD",142,0)
+ S SERNO=$$GET1^DIQ(6914,EIEN,5)      ; serial number
+"RTN","VIAAEAD",143,0)
+ ;
+"RTN","VIAAEAD",144,0)
+ ; use category IEN to get cat desc and first record of the synonym
+"RTN","VIAAEAD",145,0)
+ S CATEG=$$GET1^DIQ(6914,EIEN,6,"I")  ; equipment category ien
+"RTN","VIAAEAD",146,0)
+ I $G(CATEG)="" S CATDET="^" ; category does not exist in entry
+"RTN","VIAAEAD",147,0)
+ ; get category description and first synonym
+"RTN","VIAAEAD",148,0)
+ I CATEG]"" D
+"RTN","VIAAEAD",149,0)
+ . S CATDESC=$P($G(^ENG(6911,CATEG,0)),U)
+"RTN","VIAAEAD",150,0)
+ . S FSYNON=$P($G(^ENG(6911,CATEG,1,1,0)),U)
+"RTN","VIAAEAD",151,0)
+ . S CATDET=CATDESC_U_FSYNON
+"RTN","VIAAEAD",152,0)
+ . ; get the rest of synonyms (if any)
+"RTN","VIAAEAD",153,0)
+ . S CATDET2=$$SYN(CATEG)
+"RTN","VIAAEAD",154,0)
+ . S CATDET=CATDET_CATDET2 ; category description and all synonyms
+"RTN","VIAAEAD",155,0)
+ . I CATDET2="" S CATDET=CATDET_"" ; no synonym found
+"RTN","VIAAEAD",156,0)
+ ;
+"RTN","VIAAEAD",157,0)
+ S TYPENTRY=$$GET1^DIQ(6914,EIEN,7)    ; type of entry
+"RTN","VIAAEAD",158,0)
+ S PURCHORD=$$GET1^DIQ(6914,EIEN,11)   ; purchase order #
+"RTN","VIAAEAD",159,0)
+ S VALUE=$$GET1^DIQ(6914,EIEN,12)      ; asset value
+"RTN","VIAAEAD",160,0)
+ S ACQDATE=$$GET1^DIQ(6914,EIEN,13,"I")    ; acquisition date
+"RTN","VIAAEAD",161,0)
+ ;
+"RTN","VIAAEAD",162,0)
+ ; get category stock # and brief description
+"RTN","VIAAEAD",163,0)
+ S CSTKNO=$$GET1^DIQ(6914,EIEN,18)
+"RTN","VIAAEAD",164,0)
+ I $G(CSTKNO)="" S CSTKDESC=""
+"RTN","VIAAEAD",165,0)
+ I CSTKNO]"" D
+"RTN","VIAAEAD",166,0)
+ . S CSTKIEN=+$O(^ENCSN(6917,"B",CSTKNO,""))
+"RTN","VIAAEAD",167,0)
+ . S CSTKDESC=$$GET1^DIQ(6917,CSTKIEN,2,"E")
+"RTN","VIAAEAD",168,0)
+ ;
+"RTN","VIAAEAD",169,0)
+ S CMRPTR=$$GET1^DIQ(6914,EIEN,19,"I")          ; cmr pointer
+"RTN","VIAAEAD",170,0)
+ S CMRNAM=$$GET1^DIQ(6914.1,CMRPTR,.01)         ; cmr name
+"RTN","VIAAEAD",171,0)
+ I CMRPTR>0 S CMRDESC=$P($G(^ENG(6914.1,CMRPTR,0)),U,8)  ; brief description
+"RTN","VIAAEAD",172,0)
+ I '$D(CMRDESC) S CMRDESC=""
+"RTN","VIAAEAD",173,0)
+ S USESTAT=$$GET1^DIQ(6914,EIEN,20)        ; use status
+"RTN","VIAAEAD",174,0)
+ S SERVICE=$$GET1^DIQ(6914,EIEN,21)        ; service pointer
+"RTN","VIAAEAD",175,0)
+ S ENTDAT=$$GET1^DIQ(6914,EIEN,.6,"I") ; date asset entered in AEMS
+"RTN","VIAAEAD",176,0)
+ S MOVDAT=$$GET1^DIQ(6914,EIEN,23,"I") ; physical inventory date
+"RTN","VIAAEAD",177,0)
+ S RESPSHOP=$$GET1^DIQ(6914.04,"1,"_EIEN_",",.01) ; responsible shop
+"RTN","VIAAEAD",178,0)
+ S SITEID=$$GET1^DIQ(6914,EIEN,60)       ; station number for eqmt
+"RTN","VIAAEAD",179,0)
+ S DEFSITE=$$GET1^DIQ(6910,1,1,"I")      ; default station number
+"RTN","VIAAEAD",180,0)
+ S DISPDATE=$$GET1^DIQ(6914,EIEN,22,"I") ; disposition date
+"RTN","VIAAEAD",181,0)
+ S DATA=AEMSID_U_LOCID_U_MODEL_U_MANUF_U_CATDET_U_USESTAT
+"RTN","VIAAEAD",182,0)
+ S DATA=DATA_U_SERNO_U_VALUE_U_ENTDAT_U_MOVDAT_U_EQNAM_U_CMRDESC_U_CMRNAM ; added CMRNAM per VA change 9/23/13
+"RTN","VIAAEAD",183,0)
+ S DATA=DATA_U_SERVICE_U_CSTKNO_U_CSTKDESC_U_PASYST_U_TYPENTRY
+"RTN","VIAAEAD",184,0)
+ S DATA=DATA_U_PURCHORD_U_ACQDATE_U_RESPSHOP_U_SITEID_U_DEFSITE_U_DISPDATE
+"RTN","VIAAEAD",185,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEAD",186,0)
+ S ^TMP(RNS,$J,RECCT,0)=DATA
+"RTN","VIAAEAD",187,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",188,0)
+ Q
+"RTN","VIAAEAD",189,0)
+ ;
+"RTN","VIAAEAD",190,0)
+GETCATD(REQDATA,DATAID) ; retrieve AEMS category data from file 6911
+"RTN","VIAAEAD",191,0)
+ ;
+"RTN","VIAAEAD",192,0)
+ ; if name is longer than 30 characters, use special handling
+"RTN","VIAAEAD",193,0)
+ N RECCT
+"RTN","VIAAEAD",194,0)
+ S RECCT=0
+"RTN","VIAAEAD",195,0)
+ I $L(DATAID)>30 D  Q
+"RTN","VIAAEAD",196,0)
+ . N DATAID1,EIEN
+"RTN","VIAAEAD",197,0)
+ . S DATAID1=$E(DATAID,1,30)
+"RTN","VIAAEAD",198,0)
+ . I '$D(^ENG(6911,"B",DATAID1)) S ^TMP(RNS,$J,0)="-404^"_DATAID_" was not found in the EQUIPMENT CATEGORY file, #6911" Q
+"RTN","VIAAEAD",199,0)
+ . F EIEN=0:0 S EIEN=$O(^ENG(6911,"B",DATAID1,EIEN)) Q:'EIEN  I $P(^ENG(6911,EIEN,0),"^",1)=DATAID S ^TMP(RNS,$J,RECCT+1,0)=EIEN_"^"_$P(^ENG(6911,EIEN,0),"^",1)
+"RTN","VIAAEAD",200,0)
+ ;
+"RTN","VIAAEAD",201,0)
+ ; check that asset is on file if info for single asset requested
+"RTN","VIAAEAD",202,0)
+ I DATAID'="ALL",'$D(^ENG(6911,"B",DATAID)) D  Q
+"RTN","VIAAEAD",203,0)
+ . S ^TMP(RNS,$J,0)="-404^"_DATAID_" is not a recognized category in the EQUIPMENT CATEGORY file, #6911"
+"RTN","VIAAEAD",204,0)
+ ;
+"RTN","VIAAEAD",205,0)
+ ; return info for a single category
+"RTN","VIAAEAD",206,0)
+ I DATAID'="ALL" D  Q
+"RTN","VIAAEAD",207,0)
+ . D GETCATD1(DATAID)
+"RTN","VIAAEAD",208,0)
+ ;
+"RTN","VIAAEAD",209,0)
+ ; return info for all categories
+"RTN","VIAAEAD",210,0)
+ N CATID
+"RTN","VIAAEAD",211,0)
+ F CATID=0:0 S CATID=$O(^ENG(6911,CATID)) Q:'CATID  D
+"RTN","VIAAEAD",212,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEAD",213,0)
+ . S CATDESC=$P($G(^ENG(6911,CATID,0)),U,1) ; category description
+"RTN","VIAAEAD",214,0)
+ . S DATA=CATID_U_CATDESC
+"RTN","VIAAEAD",215,0)
+ . S ^TMP(RNS,$J,RECCT,0)=CATID_U_CATDESC
+"RTN","VIAAEAD",216,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found"
+"RTN","VIAAEAD",217,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",218,0)
+ Q
+"RTN","VIAAEAD",219,0)
+ ;
+"RTN","VIAAEAD",220,0)
+GETCATD1(CATID) ; get data for one category
+"RTN","VIAAEAD",221,0)
+ N CIEN,DATA,CATDESC
+"RTN","VIAAEAD",222,0)
+ I '$D(^ENG(6911,"B",CATID)) S ^TMP(RNS,$J,0)="-404^"_CATID_" was not found in the EQUIPMENT CATEGORY file, #6911" Q
+"RTN","VIAAEAD",223,0)
+ S CIEN=$O(^ENG(6911,"B",CATID,""))
+"RTN","VIAAEAD",224,0)
+ S CATDESC=$P($G(^ENG(6911,CIEN,0)),U,1) ; category description
+"RTN","VIAAEAD",225,0)
+ S DATA=CIEN_U_CATDESC
+"RTN","VIAAEAD",226,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEAD",227,0)
+ S ^TMP(RNS,$J,RECCT,0)=DATA
+"RTN","VIAAEAD",228,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",229,0)
+ Q
+"RTN","VIAAEAD",230,0)
+ ;
+"RTN","VIAAEAD",231,0)
+GETSPCD(REQDATA,DATAID) ; retrieve AEMS space/location data from file 6928
+"RTN","VIAAEAD",232,0)
+ ;
+"RTN","VIAAEAD",233,0)
+ ; check asset is on file if info for single space/location requested
+"RTN","VIAAEAD",234,0)
+ I DATAID'="ALL",'$D(^ENG("SP",DATAID)) D  Q
+"RTN","VIAAEAD",235,0)
+ . S ^TMP(RNS,$J,0)="-404^"_DATAID_" is not a recognized location in the ENG SPACE file, #6928"
+"RTN","VIAAEAD",236,0)
+ ;
+"RTN","VIAAEAD",237,0)
+ N RECCT
+"RTN","VIAAEAD",238,0)
+ S RECCT=0
+"RTN","VIAAEAD",239,0)
+ ; return info for a single space/location
+"RTN","VIAAEAD",240,0)
+ I DATAID'="ALL" D  Q
+"RTN","VIAAEAD",241,0)
+ . D GETSPCD1(DATAID)
+"RTN","VIAAEAD",242,0)
+ ;
+"RTN","VIAAEAD",243,0)
+ ; return info for all spaces/locations
+"RTN","VIAAEAD",244,0)
+ N LOCDESC ; location description
+"RTN","VIAAEAD",245,0)
+ S LOCDESC=""
+"RTN","VIAAEAD",246,0)
+ F  S LOCDESC=$O(^ENG("SP","B",LOCDESC)) Q:LOCDESC=""  D
+"RTN","VIAAEAD",247,0)
+ . D GETSPCD2(LOCDESC)
+"RTN","VIAAEAD",248,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found"
+"RTN","VIAAEAD",249,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",250,0)
+ Q
+"RTN","VIAAEAD",251,0)
+ ;
+"RTN","VIAAEAD",252,0)
+GETSPCD1(LOCID) ; get data for one location
+"RTN","VIAAEAD",253,0)
+ N DATA,LOCDESC
+"RTN","VIAAEAD",254,0)
+ I +LOCID=0 S ^TMP(RNS,$J,0)="-404^"_LOCID_" is not a valid Location ID in the ENG SPACE file, #6928" Q
+"RTN","VIAAEAD",255,0)
+ S LOCDESC=$P(^ENG("SP",LOCID,0),U,1)
+"RTN","VIAAEAD",256,0)
+ S DATA=LOCID_U_LOCDESC
+"RTN","VIAAEAD",257,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEAD",258,0)
+ S ^TMP(RNS,$J,RECCT,0)=DATA
+"RTN","VIAAEAD",259,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",260,0)
+ Q 
+"RTN","VIAAEAD",261,0)
+ ;
+"RTN","VIAAEAD",262,0)
+GETSPCD2(LOCDESC) ; get data for all locations
+"RTN","VIAAEAD",263,0)
+ N DATA,LOCIEN
+"RTN","VIAAEAD",264,0)
+ S LOCIEN=$O(^ENG("SP","B",LOCDESC,""))
+"RTN","VIAAEAD",265,0)
+ S DATA=LOCIEN_U_LOCDESC
+"RTN","VIAAEAD",266,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEAD",267,0)
+ S ^TMP(RNS,$J,RECCT,0)=DATA
+"RTN","VIAAEAD",268,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",269,0)
+ Q
+"RTN","VIAAEAD",270,0)
+ ;
+"RTN","VIAAEAD",271,0)
+GETNEENS(RETSTA,AEMSID,NUMBER) ; Get a number of AEMSID's
+"RTN","VIAAEAD",272,0)
+ ;
+"RTN","VIAAEAD",273,0)
+ S AEMSID=$G(AEMSID)
+"RTN","VIAAEAD",274,0)
+ S NUMBER=$G(NUMBER,50)
+"RTN","VIAAEAD",275,0)
+ I NUMBER'=+NUMBER S RETSTA="Number must be numeric" Q
+"RTN","VIAAEAD",276,0)
+ S RNS="VIAAENR",REQDATA="EQUIPMENT"
+"RTN","VIAAEAD",277,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEAD",278,0)
+ S RECCT=0
+"RTN","VIAAEAD",279,0)
+ F  S AEMSID=$O(^ENG(6914,"EE",AEMSID)) Q:AEMSID=""  Q:RECCT=NUMBER  D
+"RTN","VIAAEAD",280,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEAD",281,0)
+ . S ^TMP(RNS,$J,RECCT,0)=AEMSID
+"RTN","VIAAEAD",282,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found"
+"RTN","VIAAEAD",283,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEAD",284,0)
+ Q
+"RTN","VIAAEAD",285,0)
+ ;
+"RTN","VIAAEAD",286,0)
+EQSEED(RETSTA,AEMSID,LOCID,TMSTMP) ; RPC to save an equipment move into AEMS
+"RTN","VIAAEAD",287,0)
+ ; When equipment moves to a new location
+"RTN","VIAAEAD",288,0)
+ ; this function updates the following fields in file 6914:
+"RTN","VIAAEAD",289,0)
+ ; LOCATION
+"RTN","VIAAEAD",290,0)
+ ; 
+"RTN","VIAAEAD",291,0)
+ ; RETSTA is the name of the return array
+"RTN","VIAAEAD",292,0)
+ ; AEMSID is equipment ID (IEN in 6914)
+"RTN","VIAAEAD",293,0)
+ ; LOCID is the identity of the location at which the equipment is arriving
+"RTN","VIAAEAD",294,0)
+ ; TMSTMP is timestamp in ISO format
+"RTN","VIAAEAD",295,0)
+ ;
+"RTN","VIAAEAD",296,0)
+ S RETSTA=1
+"RTN","VIAAEAD",297,0)
+ I $G(AEMSID)="" S RETSTA="-400^AEMS ID "_AEMSID_" not specified for EQUIPMENT INV. file, #6914" Q
+"RTN","VIAAEAD",298,0)
+ I $G(LOCID)="" S RETSTA="-400^Location ID not specified for ENG SPACE file, #6928" Q
+"RTN","VIAAEAD",299,0)
+ I $G(TMSTMP)="" S RETSTA="-400^timestamp not specified" Q
+"RTN","VIAAEAD",300,0)
+ I '$D(^ENG(6914,"EE",AEMSID)) S RETSTA="-404^"_AEMSID_" AEMS IEN was not found in the EQUIPMENT INV. file, #6914" Q
+"RTN","VIAAEAD",301,0)
+ N FDA,ERR
+"RTN","VIAAEAD",302,0)
+ ; convert timestamp from ISO format to FileMan internal format
+"RTN","VIAAEAD",303,0)
+ S TMSTMP=$$ISO2FM(TMSTMP)
+"RTN","VIAAEAD",304,0)
+ S AEMSID=$O(^ENG(6914,"EE",AEMSID,""))
+"RTN","VIAAEAD",305,0)
+ ; need to establish LOCID format
+"RTN","VIAAEAD",306,0)
+ S FDA(6914,AEMSID_",",23)=TMSTMP
+"RTN","VIAAEAD",307,0)
+ S FDA(6914,AEMSID_",",24)=LOCID
+"RTN","VIAAEAD",308,0)
+ D UPDATE^DIE(,"FDA",,"ERR")
+"RTN","VIAAEAD",309,0)
+ I $D(ERR) S RETSTA="-500^update failed" Q
+"RTN","VIAAEAD",310,0)
+ S RETSTA="1^update successful"
+"RTN","VIAAEAD",311,0)
+ Q
+"RTN","VIAAEAD",312,0)
+ ;
+"RTN","VIAAEAD",313,0)
+ISO2FM(TMSTMP) ; External date to FM date
+"RTN","VIAAEAD",314,0)
+ ; incoming format yyyy-mm-dd<space>hh:MM:ss
+"RTN","VIAAEAD",315,0)
+ ; e.g. 2012-02-07 09:08:06
+"RTN","VIAAEAD",316,0)
+ N D,P,DTTM,DTTT
+"RTN","VIAAEAD",317,0)
+ S D="-",P="."
+"RTN","VIAAEAD",318,0)
+ ; first convert incoming date to an HL7 format
+"RTN","VIAAEAD",319,0)
+ S DTTT=$P(TMSTMP,D,4)
+"RTN","VIAAEAD",320,0)
+ S DTTM=$TR($P(TMSTMP,D,1,3),":- ")
+"RTN","VIAAEAD",321,0)
+ S $P(DTTM,D,2)=$E(10000+DTTT,2,5)
+"RTN","VIAAEAD",322,0)
+ ; then convert HL7 date to FM date
+"RTN","VIAAEAD",323,0)
+ S DTTM=$$HL7TFM^XLFDT(DTTM)
+"RTN","VIAAEAD",324,0)
+ Q DTTM
+"RTN","VIAAEAD",325,0)
+ ;
+"RTN","VIAAEAD",326,0)
+FM2ISO(DATE) ; convert FM date to ISO date
+"RTN","VIAAEAD",327,0)
+ N DTTM,D,P,C
+"RTN","VIAAEAD",328,0)
+ S C=":",D="-",P="."
+"RTN","VIAAEAD",329,0)
+ S DATE=$$FMTHL7^XLFDT(DATE)
+"RTN","VIAAEAD",330,0)
+ S DTTM=$E(DATE,1,4)_D_$E(DATE,5,6)_D_$E(DATE,7,8)
+"RTN","VIAAEAD",331,0)
+ S DTTM=DTTM_"T"
+"RTN","VIAAEAD",332,0)
+ S DTTM=DTTM_$E(DATE,9,10)_C_$E(DATE,11,12)_C_$E(DATE,13,14)_P_"000"
+"RTN","VIAAEAD",333,0)
+ S DTTM=DTTM_D_$E(DATE,16,17)_C_$E(DATE,18,19)
+"RTN","VIAAEAD",334,0)
+ Q DTTM
+"RTN","VIAAEAD",335,0)
+ ;
+"RTN","VIAAEAD",336,0)
+SYN(CATEG) ; get all synonyms for a given category in a piece of equipment
+"RTN","VIAAEAD",337,0)
+ N I,COUNT,RECDEL,SYNON
+"RTN","VIAAEAD",338,0)
+ S RECDEL="|" ; record delimiter
+"RTN","VIAAEAD",339,0)
+ ;
+"RTN","VIAAEAD",340,0)
+ S COUNT=+$P($G(^ENG(6911,CATEG,1,0)),U,4)
+"RTN","VIAAEAD",341,0)
+ I $G(COUNT)=0!($G(COUNT)=1) S CATDET2="" Q CATDET2  ; no synonyms found
+"RTN","VIAAEAD",342,0)
+ F I=2:1:COUNT D
+"RTN","VIAAEAD",343,0)
+ . S SYNON=$G(SYNON)_RECDEL_$P($G(^ENG(6911,CATEG,1,I,0)),U)
+"RTN","VIAAEAD",344,0)
+ S CATDET2=SYNON ; remaining category synonyms
+"RTN","VIAAEAD",345,0)
+ Q CATDET2
+"RTN","VIAAEUT")
+0^4^B40236608^n/a
+"RTN","VIAAEUT",1,0)
+VIAAEUT ;ALB/CR - RTLS Get ENG Information ;5/4/16 9:59am
+"RTN","VIAAEUT",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAAEUT",3,0)
+ ;
+"RTN","VIAAEUT",4,0)
+ ; Access to file #49 covered by IA #10093
+"RTN","VIAAEUT",5,0)
+ ; Access to file #6914 covered by IA #5913
+"RTN","VIAAEUT",6,0)
+ ; Access to file #6911 covered by IA #5914
+"RTN","VIAAEUT",7,0)
+ ; Access to file #6928 covered by IA #5915
+"RTN","VIAAEUT",8,0)
+ ;
+"RTN","VIAAEUT",9,0)
+ Q
+"RTN","VIAAEUT",10,0)
+ ; get all the categories from Engineering file #6911
+"RTN","VIAAEUT",11,0)
+GETCAT(RETSTA,REQDATA,DATAID) ;
+"RTN","VIAAEUT",12,0)
+ ; RPC [VIAA ENG GET CATEGORY]
+"RTN","VIAAEUT",13,0)
+ ;
+"RTN","VIAAEUT",14,0)
+ ; Input: all required
+"RTN","VIAAEUT",15,0)
+ ;   RETSTA is the name of the return array
+"RTN","VIAAEUT",16,0)
+ ;   REQDATA = keywords "CATEGORY" or "NAME" or "IEN" only
+"RTN","VIAAEUT",17,0)
+ ;   1) DATAID = "ALL" to return all category names
+"RTN","VIAAEUT",18,0)
+ ;   2) DATAID = name of the desired category
+"RTN","VIAAEUT",19,0)
+ ;   3) DATAID=  IEN (number) for the desired category
+"RTN","VIAAEUT",20,0)
+ ;
+"RTN","VIAAEUT",21,0)
+ ;   For all cases: return ien^name of category
+"RTN","VIAAEUT",22,0)
+ ;
+"RTN","VIAAEUT",23,0)
+ ; Output:
+"RTN","VIAAEUT",24,0)
+ ;   Global ^TMP("VIAA"_REQDATA,$J) returned via RETSTA which is used
+"RTN","VIAAEUT",25,0)
+ ;   as a reference, or if there is a failure
+"RTN","VIAAEUT",26,0)
+ ;   "-###^" concatenated with the reason for failure message, where
+"RTN","VIAAEUT",27,0)
+ ;   '###' is a 3-digit code
+"RTN","VIAAEUT",28,0)
+ ;
+"RTN","VIAAEUT",29,0)
+ N DATA,EIEN,ENCAT,RNS,RECCT
+"RTN","VIAAEUT",30,0)
+ S RNS="VIAA"_REQDATA
+"RTN","VIAAEUT",31,0)
+ ;
+"RTN","VIAAEUT",32,0)
+ I $G(REQDATA)=""&($G(DATAID)="") S RETSTA="-400^REQDATA and DATAID parameters are missing." D EX1 Q
+"RTN","VIAAEUT",33,0)
+ I $G(REQDATA)="" S RETSTA="-400^REQDATA parameter is null. Legal values are: CATEGORY, NAME, and IEN." D EX1 Q
+"RTN","VIAAEUT",34,0)
+ I $G(DATAID)="" S RETSTA="-400^DATAID is null. Legal values are: keyword 'ALL', a category name, or a number greater than zero." D EX1 Q
+"RTN","VIAAEUT",35,0)
+ ;
+"RTN","VIAAEUT",36,0)
+ I ("^CATEGORY^NAME^IEN^"'[("^"_REQDATA_"^")) D  Q
+"RTN","VIAAEUT",37,0)
+ . S RETSTA="-400^REQDATA parameter not recognized." D EX1
+"RTN","VIAAEUT",38,0)
+ ;
+"RTN","VIAAEUT",39,0)
+ I REQDATA="CATEGORY" D ALLCAT(REQDATA,DATAID)
+"RTN","VIAAEUT",40,0)
+ I REQDATA="NAME" D NAMECAT(REQDATA,DATAID)
+"RTN","VIAAEUT",41,0)
+ I REQDATA="IEN" D IENCAT(REQDATA,DATAID)
+"RTN","VIAAEUT",42,0)
+ ;
+"RTN","VIAAEUT",43,0)
+EX1 S RETSTA=$S($D(^TMP(RNS,$J)):$NA(^(0)),$D(RETSTA):RETSTA,1:"-404^No data found.")
+"RTN","VIAAEUT",44,0)
+ Q
+"RTN","VIAAEUT",45,0)
+ ;
+"RTN","VIAAEUT",46,0)
+ ;
+"RTN","VIAAEUT",47,0)
+ALLCAT(REQDATA,DATAID) ;
+"RTN","VIAAEUT",48,0)
+ ; return IENs and names for all equipment categories
+"RTN","VIAAEUT",49,0)
+ ;
+"RTN","VIAAEUT",50,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEUT",51,0)
+ I DATAID'="ALL" S RETSTA="-400^"_DATAID_" is not valid to get all categories. Expected 'ALL'." Q
+"RTN","VIAAEUT",52,0)
+ S RECCT=0
+"RTN","VIAAEUT",53,0)
+ S ENCAT=""  ; engineering category
+"RTN","VIAAEUT",54,0)
+ F EIEN=0:0 S EIEN=$O(^ENG(6911,EIEN)) Q:EIEN'>0  D
+"RTN","VIAAEUT",55,0)
+ . S ENCAT=$$GET1^DIQ(6911,EIEN,.01,"E")
+"RTN","VIAAEUT",56,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEUT",57,0)
+ . S ^TMP(RNS,$J,RECCT,0)=EIEN_U_ENCAT
+"RTN","VIAAEUT",58,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found."
+"RTN","VIAAEUT",59,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEUT",60,0)
+ Q
+"RTN","VIAAEUT",61,0)
+ ;
+"RTN","VIAAEUT",62,0)
+ ;
+"RTN","VIAAEUT",63,0)
+NAMECAT(REQDATA,DATAID) ;
+"RTN","VIAAEUT",64,0)
+ ; return IEN and name for one category name
+"RTN","VIAAEUT",65,0)
+ ;
+"RTN","VIAAEUT",66,0)
+ S RECCT=0
+"RTN","VIAAEUT",67,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEUT",68,0)
+ ; if name passed is longer than 30 characters, use special handling
+"RTN","VIAAEUT",69,0)
+ I $L(DATAID)>30 D  Q
+"RTN","VIAAEUT",70,0)
+ . N DATAID1,EIEN
+"RTN","VIAAEUT",71,0)
+ . S DATAID1=$E(DATAID,1,30)
+"RTN","VIAAEUT",72,0)
+ . I '$D(^ENG(6911,"B",DATAID1)) S RETSTA="-404^"_DATAID_" was not found in the EQUIPMENT CATEGORY file, #6911." Q
+"RTN","VIAAEUT",73,0)
+ . F EIEN=0:0 S EIEN=$O(^ENG(6911,"B",DATAID1,EIEN)) Q:'EIEN  I $P(^ENG(6911,EIEN,0),"^",1)=DATAID S ^TMP(RNS,$J,RECCT+1,0)=EIEN_"^"_$P(^ENG(6911,EIEN,0),"^",1)
+"RTN","VIAAEUT",74,0)
+ ;
+"RTN","VIAAEUT",75,0)
+ I '$D(^ENG(6911,"B",DATAID)) S RETSTA="-404^"_DATAID_" was not found in the EQUIPMENT CATEGORY file, #6911." Q
+"RTN","VIAAEUT",76,0)
+ S EIEN=+$O(^ENG(6911,"B",DATAID,""))
+"RTN","VIAAEUT",77,0)
+ S ENCAT=$$GET1^DIQ(6911,EIEN,.01,"E")
+"RTN","VIAAEUT",78,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEUT",79,0)
+ S ^TMP(RNS,$J,RECCT,0)=EIEN_U_ENCAT
+"RTN","VIAAEUT",80,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEUT",81,0)
+ Q
+"RTN","VIAAEUT",82,0)
+ ;
+"RTN","VIAAEUT",83,0)
+ ;
+"RTN","VIAAEUT",84,0)
+IENCAT(REQDATA,DATAID) ;
+"RTN","VIAAEUT",85,0)
+ ; return IEN and name for one IEN category
+"RTN","VIAAEUT",86,0)
+ ;
+"RTN","VIAAEUT",87,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEUT",88,0)
+ I +DATAID=0 S RETSTA="-400^DATAID cannot be zero for an IEN in the EQUIPMENT CATEGORY file, #6911." Q
+"RTN","VIAAEUT",89,0)
+ I DATAID<0 S RETSTA="-400^"_DATAID_" must be greater than zero for an IEN in the EQUIPMENT CATEGORY file, #6911." Q
+"RTN","VIAAEUT",90,0)
+ I '$D(^ENG(6911,DATAID)) S RETSTA="-404^"_DATAID_" was not found in the EQUIPMENT CATEGORY file, #6911." Q
+"RTN","VIAAEUT",91,0)
+ S RECCT=0
+"RTN","VIAAEUT",92,0)
+ S ENCAT=$$GET1^DIQ(6911,DATAID,.01,"E")
+"RTN","VIAAEUT",93,0)
+ S DATA=DATAID_U_ENCAT
+"RTN","VIAAEUT",94,0)
+ S RECCT=RECCT+1
+"RTN","VIAAEUT",95,0)
+ S ^TMP(RNS,$J,RECCT,0)=DATA
+"RTN","VIAAEUT",96,0)
+ S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEUT",97,0)
+ Q
+"RTN","VIAAEUT",98,0)
+ ;
+"RTN","VIAAEUT",99,0)
+ ; get all locations from Engineering file #6928
+"RTN","VIAAEUT",100,0)
+GETLOC(RETSTA,REQDATA) ;
+"RTN","VIAAEUT",101,0)
+ ; RPC [VIAA ENG GET LOCATION]
+"RTN","VIAAEUT",102,0)
+ ;
+"RTN","VIAAEUT",103,0)
+ ; Input: all required
+"RTN","VIAAEUT",104,0)
+ ;  RETSTA is the return array
+"RTN","VIAAEUT",105,0)
+ ;  REQDATA is the key word "LOCATION" for all locations.
+"RTN","VIAAEUT",106,0)
+ ;
+"RTN","VIAAEUT",107,0)
+ ; Output:
+"RTN","VIAAEUT",108,0)
+ ;  Global ^TMP("VIAALOCATION",$J) - all available locations with the
+"RTN","VIAAEUT",109,0)
+ ;  following fields will be returned:
+"RTN","VIAAEUT",110,0)
+ ;  IEN, room number, building number, building file pointer,
+"RTN","VIAAEUT",111,0)
+ ;  division, wing, service, and inverse location
+"RTN","VIAAEUT",112,0)
+ ;
+"RTN","VIAAEUT",113,0)
+ N EIEN,ROOMN,BLDNUM,BLDPTR,DIV,SERV,SERVNAM,INVLOC,WING,RECCT,RNS
+"RTN","VIAAEUT",114,0)
+ S RNS="VIAALOCATION"
+"RTN","VIAAEUT",115,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEUT",116,0)
+ I $G(REQDATA)="" S ^TMP(RNS,$J,0)="-400^Location cannot be null for look up in the SPACE file, #6928." D EX2 Q
+"RTN","VIAAEUT",117,0)
+ I REQDATA'="LOCATION" S ^TMP(RNS,$J,0)="-400^Keyword 'LOCATION' is missing." D EX2 Q
+"RTN","VIAAEUT",118,0)
+ S ROOMN="",RECCT=0
+"RTN","VIAAEUT",119,0)
+ F EIEN=0:0 S EIEN=$O(^ENG("SP",EIEN)) Q:EIEN'>0  D
+"RTN","VIAAEUT",120,0)
+ . S ROOMN=$$GET1^DIQ(6928,EIEN,.01,"E")           ; room number
+"RTN","VIAAEUT",121,0)
+ . S BLDNUM=$$GET1^DIQ(6928,EIEN,.5,"E")           ; building number
+"RTN","VIAAEUT",122,0)
+ . S BLDPTR=$$GET1^DIQ(6928,EIEN,.51,"I")          ; building pointer
+"RTN","VIAAEUT",123,0)
+ . S DIV=$$GET1^DIQ(6928,EIEN,.6,"E")              ; division
+"RTN","VIAAEUT",124,0)
+ . S WING=$$GET1^DIQ(6928,EIEN,1,"E")
+"RTN","VIAAEUT",125,0)
+ . S SERVNAM=$$GET1^DIQ(6928,EIEN,1.5,"E")         ; service name
+"RTN","VIAAEUT",126,0)
+ . S INVLOC=$$GET1^DIQ(6928,EIEN,19,"E")           ; inversed location
+"RTN","VIAAEUT",127,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEUT",128,0)
+ . S ^TMP(RNS,$J,RECCT,0)=EIEN_U_ROOMN_U_BLDNUM_U_BLDPTR_U_DIV_U_WING_U_SERVNAM_U_INVLOC
+"RTN","VIAAEUT",129,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No data found."
+"RTN","VIAAEUT",130,0)
+EX2 S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEUT",131,0)
+ Q
+"RTN","VIAAEUT",132,0)
+ ;
+"RTN","VIAAEUT",133,0)
+ ; get the latest entries from Engineering file #6914
+"RTN","VIAAEUT",134,0)
+LASTEE(RETSTA,REQDATA) ;
+"RTN","VIAAEUT",135,0)
+ ; RPC [VIAA ENG GET EQUIPMENT]
+"RTN","VIAAEUT",136,0)
+ ;
+"RTN","VIAAEUT",137,0)
+ ; Input: all required
+"RTN","VIAAEUT",138,0)
+ ;   RETSTA is the return array
+"RTN","VIAAEUT",139,0)
+ ;   REQDATA contains the latest stored EE number from InSites
+"RTN","VIAAEUT",140,0)
+ ;
+"RTN","VIAAEUT",141,0)
+ ; Output:
+"RTN","VIAAEUT",142,0)
+ ;   Global ^TMP("VIAALASTEE",$J) - list of most recent EE numbers
+"RTN","VIAAEUT",143,0)
+ ;   if available, otherwise an error message is sent back to client
+"RTN","VIAAEUT",144,0)
+ ;
+"RTN","VIAAEUT",145,0)
+ N EEDIF,I,LASTEE,RECCT,RNS
+"RTN","VIAAEUT",146,0)
+ S RNS="VIAALASTEE"
+"RTN","VIAAEUT",147,0)
+ K ^TMP(RNS,$J)
+"RTN","VIAAEUT",148,0)
+ S RECCT=0
+"RTN","VIAAEUT",149,0)
+ I $G(REQDATA)="" S ^TMP(RNS,$J,0)="-400^EE number cannot be null for look up in EQUIPMENT INV. file, #6914." D EX3 Q
+"RTN","VIAAEUT",150,0)
+ I (REQDATA'>0)!(REQDATA'?1N.10N) S ^TMP(RNS,$J,0)="-400^"_REQDATA_" is not a legal EE number in the EQUIPMENT INV. file, #6914." D EX3 Q
+"RTN","VIAAEUT",151,0)
+ I (REQDATA>9999999999)!(REQDATA<1)!(REQDATA?.E1"."1N.N) D  Q
+"RTN","VIAAEUT",152,0)
+ . S ^TMP(RNS,$J,0)="-400^"_REQDATA_" is not a legal EE number in the EQUIPMENT INV. file, #6914." D EX3
+"RTN","VIAAEUT",153,0)
+ I '$D(^ENG(6914,REQDATA)) S ^TMP(RNS,$J,0)="-404^EE number "_REQDATA_" was not found in the EQUIPMENT INV. file, #6914." D EX3 Q
+"RTN","VIAAEUT",154,0)
+ S LASTEE=$P(^ENG(6914,0),"^",3) ; last entry
+"RTN","VIAAEUT",155,0)
+ S EEDIF=LASTEE-REQDATA ; get # of new EE entries
+"RTN","VIAAEUT",156,0)
+ I EEDIF<0 S ^TMP(RNS,$J,0)="-404^EE number "_REQDATA_" was not found in the EQUIPMENT INV. file, #6914." D EX3 Q
+"RTN","VIAAEUT",157,0)
+ F I=1:1:EEDIF D
+"RTN","VIAAEUT",158,0)
+ . S REQDATA=REQDATA+1
+"RTN","VIAAEUT",159,0)
+ . S RECCT=RECCT+1
+"RTN","VIAAEUT",160,0)
+ . S ^TMP(RNS,$J,RECCT,0)=REQDATA
+"RTN","VIAAEUT",161,0)
+ I RECCT=0 S ^TMP(RNS,$J,0)="-404^No new EE entries found."
+"RTN","VIAAEUT",162,0)
+EX3 S RETSTA=$NA(^TMP(RNS,$J))
+"RTN","VIAAEUT",163,0)
+ Q
+"RTN","VIAAMB1")
+0^5^B303759^n/a
+"RTN","VIAAMB1",1,0)
+VIAAMB1 ;ALB/CR - RTLS Ping Test Utility ;5/4/16 10:54am
+"RTN","VIAAMB1",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAAMB1",3,0)
+ ;
+"RTN","VIAAMB1",4,0)
+ ; Access to file #6910 covered by IA #5920
+"RTN","VIAAMB1",5,0)
+ ; This RPC is a simple test to verify that the VistA system is up
+"RTN","VIAAMB1",6,0)
+ ; and running along with the VIAA patch installed. No input is
+"RTN","VIAAMB1",7,0)
+ ; required from the calling application.
+"RTN","VIAAMB1",8,0)
+ ;
+"RTN","VIAAMB1",9,0)
+PINGRP(RETSTA) ; - Test that VistA is up with VIAA patch installed
+"RTN","VIAAMB1",10,0)
+ ; RPC: VIAA ENG GET PRIMARY STATION
+"RTN","VIAAMB1",11,0)
+ ; Output:  passed via the variable RETSTA consists of the primary
+"RTN","VIAAMB1",12,0)
+ ;          station number for the site
+"RTN","VIAAMB1",13,0)
+ N PSTATION
+"RTN","VIAAMB1",14,0)
+ ; the Engineering package must have one entry that reflects 
+"RTN","VIAAMB1",15,0)
+ ; the primary station for the site
+"RTN","VIAAMB1",16,0)
+ S PSTATION=+$P($G(^DIC(6910,1,0)),U,2)
+"RTN","VIAAMB1",17,0)
+ S RETSTA=PSTATION ; primary station # for the site
+"RTN","VIAAMB1",18,0)
+ Q
+"RTN","VIAAQUE")
+0^6^B6693749^n/a
+"RTN","VIAAQUE",1,0)
+VIAAQUE ;ALB/CR - RTLS Queue General Utility ;5/04/16 10:00am
+"RTN","VIAAQUE",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAAQUE",3,0)
+ ;
+"RTN","VIAAQUE",4,0)
+ Q
+"RTN","VIAAQUE",5,0)
+ ;
+"RTN","VIAAQUE",6,0)
+ ; create a task that can requeue itself and check file #6930
+"RTN","VIAAQUE",7,0)
+ ; every 3-6 minutes (180-360 seconds) or so
+"RTN","VIAAQUE",8,0)
+ ; =============== NOTICE ==================== 
+"RTN","VIAAQUE",9,0)
+ ; Per HPMO reference # OITIMB33554520, a waiver has been granted
+"RTN","VIAAQUE",10,0)
+ ; for the use of Cache ObjectScript along with standard MUMPS commands
+"RTN","VIAAQUE",11,0)
+ ;
+"RTN","VIAAQUE",12,0)
+STR ; enter here to send a message right away if entries are found
+"RTN","VIAAQUE",13,0)
+ L +^VIAA(6930):5 Q:'$T  ; we want just one job running
+"RTN","VIAAQUE",14,0)
+ N COUNT,DATA,ROOT
+"RTN","VIAAQUE",15,0)
+ I '$D(^VIAA(6930)) Q
+"RTN","VIAAQUE",16,0)
+ F COUNT=0:0 S COUNT=+$O(^VIAA(6930,COUNT)) Q:'COUNT  D
+"RTN","VIAAQUE",17,0)
+ . S ROOT=$G(^VIAA(6930,COUNT,0))
+"RTN","VIAAQUE",18,0)
+ . ; get all 3 pieces for processing in Eng file
+"RTN","VIAAQUE",19,0)
+ . S DATA=$P(ROOT,U,1,3) ; take first 3 pieces at once
+"RTN","VIAAQUE",20,0)
+ . D MSG
+"RTN","VIAAQUE",21,0)
+ L -^VIAA(6930)
+"RTN","VIAAQUE",22,0)
+ ;
+"RTN","VIAAQUE",23,0)
+ ; -- if Mule is reachable, then call web service and deliver the
+"RTN","VIAAQUE",24,0)
+ ; -- entries. Otherwise, defer any action to the queue process.
+"RTN","VIAAQUE",25,0)
+ Q
+"RTN","VIAAQUE",26,0)
+ ;
+"RTN","VIAAQUE",27,0)
+SEND ; come here to place the entries in the queue for the Mule service
+"RTN","VIAAQUE",28,0)
+ ;
+"RTN","VIAAQUE",29,0)
+ N ZTRTN,ZTIO,ZTSAVE,ZTDESC,ZTDTH
+"RTN","VIAAQUE",30,0)
+ I $D(^VIAA(6930)) D
+"RTN","VIAAQUE",31,0)
+ . S ZTDESC="Pending RTLS File Queue Transmission"
+"RTN","VIAAQUE",32,0)
+ . S ZTRTN="STR^VIAAQUE"
+"RTN","VIAAQUE",33,0)
+ . S ZTIO="NULL",ZTDTH=$H ; need the null device for HWSC call
+"RTN","VIAAQUE",34,0)
+ . S ZTSAVE("*")=""
+"RTN","VIAAQUE",35,0)
+ . D ^%ZTLOAD
+"RTN","VIAAQUE",36,0)
+ Q
+"RTN","VIAAQUE",37,0)
+ ;
+"RTN","VIAAQUE",38,0)
+ ; for transmission to Mule:
+"RTN","VIAAQUE",39,0)
+ ; if status = 500, we have to hold the entries for the next round
+"RTN","VIAAQUE",40,0)
+ ; of the queue; if status = 200, Mule has accepted the record and we
+"RTN","VIAAQUE",41,0)
+ ; can clean it from the file PENDING RTLS EVENTS (#6930)
+"RTN","VIAAQUE",42,0)
+MSG N MSG,STATUS,XCODE
+"RTN","VIAAQUE",43,0)
+ ;
+"RTN","VIAAQUE",44,0)
+ S MSG="?siteID="_$P(DATA,U,1)_"&"_"fileNumber="_$P(DATA,U,2)_"&"_"IEN="_$P(DATA,U,3)
+"RTN","VIAAQUE",45,0)
+ S XCODE=$$XMIT(MSG)
+"RTN","VIAAQUE",46,0)
+ S STATUS=$S(XCODE=200:"OK",XCODE=500:"NOK",1:XCODE)
+"RTN","VIAAQUE",47,0)
+ I STATUS'="OK" Q
+"RTN","VIAAQUE",48,0)
+ D DEL^VIAATRI(COUNT) ; clear entry from file #6930
+"RTN","VIAAQUE",49,0)
+ Q
+"RTN","VIAAQUE",50,0)
+ ;
+"RTN","VIAAQUE",51,0)
+XMIT(DATA) ; Transmit the RESTful request.
+"RTN","VIAAQUE",52,0)
+ ;
+"RTN","VIAAQUE",53,0)
+ N $ETRAP,$ESTACK,ERR,REST,XCODE,XOBREADR,XOBREAK,XOBSTAT
+"RTN","VIAAQUE",54,0)
+ S $ETRAP="D XERR^VIAAQUE"
+"RTN","VIAAQUE",55,0)
+ ;
+"RTN","VIAAQUE",56,0)
+ S XCODE=0
+"RTN","VIAAQUE",57,0)
+ S REST=$$GETREST^XOBWLIB("VIAA VISTA TRIGGER SERVICE","VIAA VISTA TRIGGER SERVER")
+"RTN","VIAAQUE",58,0)
+ S REST.Timeout=60
+"RTN","VIAAQUE",59,0)
+ I $$POST^XOBWLIB(REST,DATA,.ERR) D
+"RTN","VIAAQUE",60,0)
+ . S XOBSTAT=##class(%XML.TextReader).ParseStream(REST.HttpResponse.Data,.XOBREADR)
+"RTN","VIAAQUE",61,0)
+ . I ($$STATCHK^XOBWLIB(XOBSTAT,.ERR)) D
+"RTN","VIAAQUE",62,0)
+ .. S XOBREAK=0 F  Q:XOBREAK!XOBREADR.EOF!'XOBREADR.Read()  D
+"RTN","VIAAQUE",63,0)
+ ... I (XOBREADR.NodeType="element"),(XOBREADR.LocalName="code") D
+"RTN","VIAAQUE",64,0)
+ .... I XOBREADR.MoveToContent() D
+"RTN","VIAAQUE",65,0)
+ ..... S XCODE=XOBREADR.Value,XOBREAK=1
+"RTN","VIAAQUE",66,0)
+ Q XCODE
+"RTN","VIAAQUE",67,0)
+ ;
+"RTN","VIAAQUE",68,0)
+XERR ; -- Error trap handler --
+"RTN","VIAAQUE",69,0)
+ ;
+"RTN","VIAAQUE",70,0)
+ S $ECODE=""
+"RTN","VIAAQUE",71,0)
+ Q
+"RTN","VIAATRI")
+0^3^B2232416^n/a
+"RTN","VIAATRI",1,0)
+VIAATRI ;ALB/CR - RTLS Triggers General Utility ;5/4/16 10:06am
+"RTN","VIAATRI",2,0)
+ ;;1.0;RTLS;**3**;April 22, 2013;Build 20
+"RTN","VIAATRI",3,0)
+ ;
+"RTN","VIAATRI",4,0)
+ Q
+"RTN","VIAATRI",5,0)
+ ; Engineering call to this routine covered by IA #6069
+"RTN","VIAATRI",6,0)
+ ;
+"RTN","VIAATRI",7,0)
+ ; ------- collect record changes for RTLS -------
+"RTN","VIAATRI",8,0)
+ ; this tag is called from multiple fields in files #6914 and #6928
+"RTN","VIAATRI",9,0)
+ ; to capture data changes as they happen, a record ID is added in
+"RTN","VIAATRI",10,0)
+ ; file #6930 (PENDING RTLS EVENTS) for the queue process
+"RTN","VIAATRI",11,0)
+ ;
+"RTN","VIAATRI",12,0)
+ ; ============================================================
+"RTN","VIAATRI",13,0)
+WC(FILE,ENTRY) ; FILE = either #6914 or #6928, ENTRY = IEN of the record
+"RTN","VIAATRI",14,0)
+ ;
+"RTN","VIAATRI",15,0)
+ ; All the triggered fields in files #6914 and #6928 have been added
+"RTN","VIAATRI",16,0)
+ ; the 'NOREINDEX' flag to prevent flooding file #6930 if re-indexing
+"RTN","VIAATRI",17,0)
+ ; of any of the M X-Refs is attempted.
+"RTN","VIAATRI",18,0)
+ ;
+"RTN","VIAATRI",19,0)
+ I $G(FILE)=""!($G(ENTRY)="") Q
+"RTN","VIAATRI",20,0)
+ N DA,DATA,DIC,DO,D0,DLAYGO,IEN,FDA,MATCH,X,Y
+"RTN","VIAATRI",21,0)
+ N DEFSITE,SITE,SITEIEN,TMSTMP
+"RTN","VIAATRI",22,0)
+ ; don't store the same record multiple times
+"RTN","VIAATRI",23,0)
+ S MATCH=0
+"RTN","VIAATRI",24,0)
+ S IEN="" F  S IEN=$O(^VIAA(6930,IEN)) Q:IEN=""  D  Q:MATCH
+"RTN","VIAATRI",25,0)
+ . S DATA=$G(^VIAA(6930,IEN,0))
+"RTN","VIAATRI",26,0)
+ . I $P(DATA,U,2)=FILE,$P(DATA,U,3)=ENTRY S MATCH=1
+"RTN","VIAATRI",27,0)
+ I MATCH Q
+"RTN","VIAATRI",28,0)
+ ;
+"RTN","VIAATRI",29,0)
+ S TMSTMP=$$NOW^XLFDT
+"RTN","VIAATRI",30,0)
+ ; get station number for equipment or space
+"RTN","VIAATRI",31,0)
+ I FILE=6914!(FILE=6928) S SITE=$P($G(^DIC(6910,1,0)),U,2)
+"RTN","VIAATRI",32,0)
+ S DIC(0)="L",DLAYGO=6930,DIC="^VIAA(6930,",X=SITE
+"RTN","VIAATRI",33,0)
+ D FILE^DICN
+"RTN","VIAATRI",34,0)
+ S DA=+Y
+"RTN","VIAATRI",35,0)
+ L +^VIAA(6930,DA):5 I '$T D EN^DDIOL("File is in use - try again later.","","!") Q
+"RTN","VIAATRI",36,0)
+ S FDA(6930,DA_",",1)=FILE
+"RTN","VIAATRI",37,0)
+ S FDA(6930,DA_",",2)=ENTRY
+"RTN","VIAATRI",38,0)
+ S FDA(6930,DA_",",3)=TMSTMP
+"RTN","VIAATRI",39,0)
+ D UPDATE^DIE(,"FDA")
+"RTN","VIAATRI",40,0)
+ L -^VIAA(6930,DA)
+"RTN","VIAATRI",41,0)
+ Q
+"RTN","VIAATRI",42,0)
+ ;
+"RTN","VIAATRI",43,0)
+ ; =============================================================
+"RTN","VIAATRI",44,0)
+DEL(COUNT) ; clean up file PENDING RTLS EVENTS after transmission to Mule
+"RTN","VIAATRI",45,0)
+ ; called from VIAAQUE after transmission of a record
+"RTN","VIAATRI",46,0)
+ N DA,DIK
+"RTN","VIAATRI",47,0)
+ S DIK="^VIAA(6930,"
+"RTN","VIAATRI",48,0)
+ S DA=COUNT D ^DIK
+"RTN","VIAATRI",49,0)
+ Q
+"SEC","^DD",6930,6930,.01,9)
+
+"SEC","^DIC",6930,6930,0,"AUDIT")
+@
+"SEC","^DIC",6930,6930,0,"DD")
+@
+"SEC","^DIC",6930,6930,0,"DEL")
+@
+"SEC","^DIC",6930,6930,0,"LAYGO")
+@
+"SEC","^DIC",6930,6930,0,"RD")
+
+"SEC","^DIC",6930,6930,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",6930,6930,0)
+FIELD^^3^4
+"^DD",6930,6930,0,"DDA")
+N
+"^DD",6930,6930,0,"DT")
+3130723
+"^DD",6930,6930,0,"IX","B",6930,.01)
+
+"^DD",6930,6930,0,"NM","PENDING RTLS EVENTS")
+
+"^DD",6930,6930,0,"VRPK")
+VIAA
+"^DD",6930,6930,.01,0)
+SITE ID^RF^^0;1^K:$L(X)>3!($L(X)<3)!'(X?3N) X
+"^DD",6930,6930,.01,1,0)
+^.1
+"^DD",6930,6930,.01,1,1,0)
+6930^B
+"^DD",6930,6930,.01,1,1,1)
+S ^VIAA(6930,"B",$E(X,1,30),DA)=""
+"^DD",6930,6930,.01,1,1,2)
+K ^VIAA(6930,"B",$E(X,1,30),DA)
+"^DD",6930,6930,.01,3)
+Answer must be 3 characters in length.
+"^DD",6930,6930,.01,21,0)
+^^1^1^3130719^
+"^DD",6930,6930,.01,21,1,0)
+This is the main station number for the file entry being reported.
+"^DD",6930,6930,.01,"DT")
+3130719
+"^DD",6930,6930,1,0)
+FILE ID^RP1'^DIC(^0;2^Q
+"^DD",6930,6930,1,3)
+Select the file.
+"^DD",6930,6930,1,21,0)
+^^1^1^3130723^
+"^DD",6930,6930,1,21,1,0)
+This is the file containing the record that was changed.
+"^DD",6930,6930,1,"DT")
+3130723
+"^DD",6930,6930,2,0)
+IEN^RF^^0;3^K:$L(X)>25!($L(X)<1) X
+"^DD",6930,6930,2,3)
+Answer must be 1-25 characters in length.
+"^DD",6930,6930,2,21,0)
+^.001^1^1^3130719^^
+"^DD",6930,6930,2,21,1,0)
+Internal entry number for the record that was changed.
+"^DD",6930,6930,2,"DT")
+3130719
+"^DD",6930,6930,3,0)
+CREATE DATE^RD^^0;4^S %DT="EST" D ^%DT S X=Y K:Y<1 X
+"^DD",6930,6930,3,3)
+Date/time record was added to this file.
+"^DD",6930,6930,3,21,0)
+^^3^3^3130719^
+"^DD",6930,6930,3,21,1,0)
+This is the date/time that the entry was created for a specific record 
+"^DD",6930,6930,3,21,2,0)
+change in a file. This field is not sent to RTLS but is available for
+"^DD",6930,6930,3,21,3,0)
+troubleshooting in VistA.
+"^DD",6930,6930,3,"DT")
+3130715
+"^DIC",6930,6930,0)
+PENDING RTLS EVENTS^6930
+"^DIC",6930,6930,0,"GL")
+^VIAA(6930,
+"^DIC",6930,6930,"%",0)
+^1.005^^0
+"^DIC",6930,6930,"%D",0)
+^^18^18^3130719^
+"^DIC",6930,6930,"%D",1,0)
+This file is used by the Engineering package to store minimal information 
+"^DIC",6930,6930,"%D",2,0)
+of file entries that have been modified and that need to be forwarded to
+"^DIC",6930,6930,"%D",3,0)
+Intelligent Insites (RTLS). Records added to this file will have a very 
+"^DIC",6930,6930,"%D",4,0)
+short life while they wait for a queue process to send them to RTLS.
+"^DIC",6930,6930,"%D",5,0)
+ 
+"^DIC",6930,6930,"%D",6,0)
+The option 'VIAA MAKE WEB CALL TO MULE' has to be used to schedule a queue
+"^DIC",6930,6930,"%D",7,0)
+process that can run periodically via Task Manager at a time interval 
+"^DIC",6930,6930,"%D",8,0)
+suitable to the site. Once a file entry is sent to RTLS, it is cleaned up
+"^DIC",6930,6930,"%D",9,0)
+immediately, so this file will stay empty most of the time as long as RTLS
+"^DIC",6930,6930,"%D",10,0)
+is on online.
+"^DIC",6930,6930,"%D",11,0)
+ 
+"^DIC",6930,6930,"%D",12,0)
+The information stored in this file will be used by a web service running 
+"^DIC",6930,6930,"%D",13,0)
+in VistA that is capable of triggering a remote procedure call (RPC) back
+"^DIC",6930,6930,"%D",14,0)
+to VistA to extract additional information about the record that was
+"^DIC",6930,6930,"%D",15,0)
+changed. There is no direct user interaction with any of the fields in
+"^DIC",6930,6930,"%D",16,0)
+this file. The content is handled via triggers in the Engineering files
+"^DIC",6930,6930,"%D",17,0)
+being tracked. Initially files #6914 and #6928 are being tracked but other
+"^DIC",6930,6930,"%D",18,0)
+files could be added in the future if needed.
+"^DIC",6930,"B","PENDING RTLS EVENTS",6930)
+
+"BLD",9274,6)
+^5
+**END**
+**END**
+

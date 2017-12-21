@@ -1,0 +1,189 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/17/17 at 14:38
+=============================================================================
+Run Date: OCT 04, 2017                     Designation: SD*5.3*664
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #553                    Status: Released
+                  Compliance Date: OCT 15, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*63   <<= must be installed BEFORE `SD*5.3*664'
+                    (v)SD*5.3*85   <<= must be installed BEFORE `SD*5.3*664'
+
+Subject: TABLE UPDATE FOR FILE #409.45
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch SD*5.3*664 provides updates to the OUTPATIENT CLASSIFICATION STOP
+ CODE EXCEPTION file (#409.45) as requested by the Veterans Integrated 
+ Service Network (VISN) 20 Veteran Equitable Resource Allocation
+ Coordinator (VERA) and approved by the Office of Community Care - Policy
+ and Planning.
+  
+ After installation of this patch, the OUTPATIENT CLASSIFICATION STOP CODE
+ EXCEPTION file (#409.45) will be locked down in order to prevent editing.
+  
+ **************************************************************************
+ ***                              NOTE                                  ***
+ ***                                                                    ***
+ *** This patch is being released with a compliance date of October 15, ***
+ *** 2017 and should be installed as close to Close of Business (COB)   ***
+ *** on October 14, 2017 as possible, but not after October 15, 2017.   ***
+ **************************************************************************
+  
+  
+ Associated CA SDM tickets:
+ ==========================
+ R12969262FY17   Encounter Action Required Report (EARR) issue with 
+ Occasion of Service (OOS)
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Coatesville VAMC
+ Connecticut HCS (West Haven)
+  
+  
+ CA SDM Overview:
+ ================
+ R12969262FY17   Encounter Action Required Report (EARR) issue with OOS
+  
+ Problem:
+ --------
+ The Veterans Integrated Service Network (VISN) 20 Veteran Equitable
+ Resource Allocation Coordinator (VERA) requested that the OUTPATIENT
+ CLASSIFICATION STOP CODE EXCEPTION file (#409.45) be updated to 
+ inactivate and modify sixteen codes.
+  
+ Resolution:
+ -----------
+ A post-installation routine SD53P664 has been created for updating the
+ entries in the OUTPATIENT CLASSIFICATION STOP CODE EXCEPTION file
+ (#409.45).  The following sixteen (16) entries need to remain in the file
+ and will inactivate all the inappropriate ones. After installation the 
+ file will be locked down in order to prevent editing.
+  
+ NUMBER     DATE         ACTIVE
+ ------------------------------
+  104    JAN 1, 1993       YES
+  105    JAN 1, 1993       YES
+  106    JAN 1, 1993       YES
+  107    JAN 1, 1993       YES
+  108    JAN 1, 1993       YES
+  109    JAN 1, 1993       YES
+  115    JAN 1, 1993       YES
+  128    JAN 1, 1993       YES
+  144    OCT 1, 1993       YES
+  145    OCT 1, 1993       YES
+  149    OCT 1, 1995       YES
+  150    OCT 1, 1995       YES
+  151    OCT 1, 1995       YES
+  153    OCT 1, 1995       YES
+  421    OCT 1, 1996       YES
+  703    OCT 1, 1996       YES
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch is being released with a compliance date of October 15, 2017
+ and should be installed as close to Close of Business (COB) on October 
+ 14, 2017 as possible, but not after October 15, 2017.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.
+  
+ Install Time - less than 2 minutes
+  
+ NOTE:   Upon successful completion of this patch, you may remove the 
+         routine SD53P664 from your system by using the Delete Routines 
+         [XTRDEL] option.
+  
+ 1.  Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  Start Up KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*664):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch.  It will not 
+        backup any other changes such as DD's or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.)
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch:
+  
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//' answer NO
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53P664
+    Before:       n/a   After: B18085044  **664**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: OCT 04, 2017
+Released By :                               Date Released : OCT 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,621 @@
+
+=============================================================================
+Run Date: OCT 02, 2017                     Designation: EAS*1*153
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #124                      Status: Released
+                  Compliance Date: NOV 02, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.7 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.7. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development efforts, including
+ enhancements to support Community Care (CC) and ES Sustainment.
+  
+ The following functionalities are included in the ES 4.7 release:
+ 
+ ESM:
+ - Manage Pending Applications
+ - Health Care Application (HCA) Future Discharge Date (FDD) 
+ - Stop Communications 
+      - Roles/permissions
+      - User interface (UI) message when user attempts to re-mail if the stop
+        communications option is selected
+      - Stop communications override capability 
+ - Medal of Honor (MOH) eligibility factor inclusion into Priority Group 1
+ - Date of Death (DOD) source of notification enhancements to support Master
+   Veteran Index (MVI) as authoritative service
+ - 365-Day Pending Letter Communication - change triggers to Pending
+   Application process 
+ 
+ Community Care:
+ - Automatically assign/un-assign CC Health Benefit Plans
+ - Share CC Health Benefit Plans with Veterans Information Systems and
+   Technology Architecture (VistA), controlled by an ES System Parameter
+ - Allow users with permission to manually override the CC Outcome determined
+   by ES
+ - Display CC Determination history (accessed by a hyperlink on the CC
+   Determination page in ES)
+ - CC Letters: 900 (Mileage eligible), 901 (Mileage ineligible), and 903
+   (Exceptions)
+ 
+ VistA:
+ The following patch will be added to VistA: 
+ DG*5.3*940 - Permanent & Total Disabled Display Updates/Reason for Closed
+ Application
+ 
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ I11955182FY17    ES user cannot access VOA re-submit function.
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    -------------------
+ 192782      Problem: Financials Overview displays dependent count as "0" even
+             if there is a dependent present.
+ 
+             Resolution: Updated financialsOverviewContent.jsp file to
+             correctly display the total number of dependents.
+ 
+ 193160      Problem: QRYZ11 Parsed message - Veteran's name is run together.
+ 
+             Resolution: Changed XSD for QRF segment and updated the
+             transformation .xslt file.
+ 
+ 350444      Problem: IV5 Report is missing station number box.
+ 
+             Resolution: Updated the report parameter screen to enable station
+             number box.
+ 
+ 350475      Problem: QM6 Duplicate header reported.
+ 
+             Resolution: Removed duplicate header.
+ 
+ 350645      Problem: Eligibility, Enrollment Division (EED) 10 report
+             has typographical errors in the table header.
+ 
+             Resolution: Corrected the typographical errors in the 
+             JasperReport (.jrxml) file.
+ 
+ 350889      Problem: Quality Management (QM) 15 - Status header is missing.
+ 
+             Resolution: Updated JasperReport file to move work item status to 
+             Status Group and updated Functional Group to accept all values 
+             (Data Quality, Enrollment Eligibility, and IVM Functional Group).
+ 
+ 351066      Problem: QM 15 - Missing date elements reported.
+ 
+             Resolution: Fixed the report to allow the user to choose sub-
+             items.
+ 
+ 415358      Problem: 1010EZ PDF Document View cuts off discharge type "Other 
+             Than Honorable".
+ 
+             Resolution: Updated the size of the Discharge Type field on 
+             1010EZ fillable template PDF (SECTION II - MILITARY SERVICE 
+             INFORMATION 1C Discharge Type) under Enrollment tab.
+ 
+ 426097      Problem: 508 Compliance issue with keyboard navigation for Edit 
+             Eligibility.
+ 
+             Resolution: Added script to set focus to the "Edit Current 
+             Eligibility" link when the view loads in the 
+             eligibilityViewContent page.
+ 
+ 437483      Problem: SDM I11955182FY17 ES user cannot access VOA re-submit 
+             function.
+ 
+             Resolution: Updated line 181 in 
+             HECMS_ui/web/tiles/common/header.jsp to address correct 
+             capability authorization check.
+ 
+ 442173      Problem: Military Service Number incorrectly shown as a required 
+             field during Add A Person.
+ 
+             Resolution: Updated .jsp file and the action class to update 
+             Military Service Number as non-required field when adding person.
+ 
+ 457927      Problem: ES should be validating the State Code field.
+ 
+             Resolution: Updated JavaScript to accept Alaska, Hawaii, American 
+             Samoa, Mariana Islands, and Virgin Islands with P.O. Box and 
+             General Delivery for a Residential Address; Added Northern 
+             Mariana Islands to JavaScript to validate states.
+ 
+ 458639      Problem: Failing Test Case "ESM_2.0_Verify MSDS label changed to 
+             eMIS" when executing Test Execution Record "ESM_2.0_Verify MSDS 
+             label changed to eMIS on Military Service tab_Stage1b".
+ 
+             Resolution: "Send Query to eMIS Broker" changed to "SEND QUERY TO 
+             eMIS SERVICE".
+ 
+ 461266      Problem: There is a defect in the Internal Revenue Service (IRS) 
+             Transmission Query Logic.
+ 
+             Resolution: Updated the selection query to use a subquery for the 
+             current tax year in the bind variable. Added row number limit and 
+             updated scheduler to run every day on smaller chunks instead of 
+             one time per year on the whole population.
+ 
+ 464513      Problem: Incorrect tab order on Demographics/Identity Traits tab.
+ 
+             Resolution: Removed invalid property ("tabindex...") from 
+             stateSelection select element.
+ 
+ 474345      Problem: There is an error in the audit identification (ID) for 
+             person table stub record creation.
+ 
+             Resolution: Overrode the audit ID in the stub record flow to 
+             StubRecordProcess instead of the default audit ID of the user in 
+             session. Updated the stub record insert method in 
+             PersonServiceImpl to set the security audit ID during the insert, 
+             then set it back to logged in user before returning.
+ 
+ 474348      Problem: There is a performance defect with code for batch job
+             GenerateACAMailExtract.
+ 
+             Resolution: Updated the interface to support the unique ID/Public 
+             Key (PK) in the mail files. Added spawned thread tasks to the 
+             mail generation process to speed it up. Added custom execution to 
+             override the thread pool size.
+ 
+ 474355      Problem: There are software ID validation failures for tax year 
+             2015 IRS corrections.
+ 
+             Resolution: Created separate client Java ARchive (jar) for 
+             previous tax year schemas and used jarjar to version the package 
+             names as IRS uses identical package names and classes across 
+             different versions that cause classloader conflicts. Created a 
+             versioned IRS payload handler to deal with the separate versions 
+             and separate software IDs for each tax year. Added checks for the 
+             tax year to invoke the specific payload handler for that year. 
+             Added read_me file in the client jar library directory with 
+             instructions for versioning the client for next year's updates.
+ 
+ 482695      Problem: Reports Filtered report results do not show 
+             reports for current day.
+ 
+             Resolution: Updated all reports to include ToDate in Report 
+             Filter; updated end date with the timestamp from 00:00:00 to 
+             23:59:59.
+ 
+ 493555      Problem: On the Demographics/Addresses/Add Edit Address page - 
+             Screen reader does not read the error message.
+ 
+             Resolution: Adjusted handler in onLoadInit function to set focus 
+             to the Message/Error contentAreaLink if the link is loaded to the 
+             page.
+ 
+ 493605      Problem: On the Demographics/Addresses/Add Edit Address page - 
+             Source of Change label is not properly read by screen reader in 
+             the Phone Numbers or Email Address sections.
+ 
+             Resolution: Updated Source of Change and Site of Change rows for 
+             both Email and Phone Number fields.
+ 
+ 493613      Problem: On the Demographics/Addresses/Add Edit Address page - 
+             "label for" is missing for Add/Edit Address combination box.
+ 
+             Resolution: Added label to "Add/Edit Address" text.
+ 
+ 493935      Problem: In the FDD Detailed Report, the Sort By field 
+             name displays incorrectly.
+ 
+             Resolution: Updated JasperReport file to display last name as 
+             Last Name.
+ 
+ 493942      Problem: In the FDD Schedule Report Detailed Report, the Sort By 
+             function is not working.
+ 
+             Resolution: Updated jasper file for correct sorting.
+ 
+ 494594      Problem: When adding a person and adding an FDD record, the 
+             required fields are not being marked correctly with the asterisk 
+             symbol.
+ 
+             Resolution: Blue asterisk issue has been fixed. The validation 
+             for service component has been removed since service component is 
+             not required in Add a Person.
+ 
+ 494789      Problem: Enrollment System Redesign (ESR) User Agreement Checkbox
+             is not enforced.
+ 
+             Resolution: Added code validation on logonAction that prevents
+             users from logging in to the system without accepting the
+             agreement checkbox first.
+ 
+ 495337      Problem: In the FDD Reports, Time is missing in Date/Time Run in 
+             the Report Headers.
+ 
+             Resolution: Updated the JasperReport file for the EED21 summary 
+             report.
+ 
+ 497575      Problem: ES does not delete the FDD when a record is returned 
+             from eMIS with the same Branch of Service and Service 
+             Entry Date.
+ 
+             Resolution: Matched Military Service Episode (MSE) to FDD upon 
+             receipt from the broker of new MSEs. Removed FDD from the FDD 
+             table (and automatically moved to history). The 7/90 day clock 
+             will continue to run until its next trigger. Upon the next 
+             trigger of the 7/90 clock, the clock processing will detect the 
+             matching MSE and close the clock process.
+ 
+ 497994      Problem: User Functional Testing (UFT) issues for Online Help
+             items.
+ 
+             Resolution: Online Screen Help - Eligibility tab: Misspelled word 
+             corrected. Address Accuracy and Veterans Choice List (VCL) 
+             matched with User Guide - Phrase "in geocoding table" text 
+             corrected. Community Care Determination History text corrected. 
+             Added hyperlink to Demographic Overview: Add/Edit Address Button 
+             on Online Help screen.
+ 
+ 502616      Problem: Log full Person Service Identity Management (PSIM) 
+             response payload error.
+ 
+             Resolution: Added payload logging to the error handlers in each 
+             of the PSIM response parsers; full message response will log in 
+             any case where response code is not AA.
+ 
+ 503993      Problem: eCIS did not validate the addresses from ES properly.
+ 
+             Resolution: Implemented retry logic to resend the request to eCIS
+             if a "locking exception" error response from eCIS is received.
+ 
+ 504491      Problem: Address History displays CASS Validation flag 
+             Description.
+ 
+             Resolution: Changed to display Name instead of Description.
+ 
+ 505558      Problem: Run Fortify scan of ES.
+ 
+             Resolution: Fortify scan results sent to SwA team for review. 
+             PASS response received.
+ 
+ 509010      Problem: Fortify: Resolve ESM Critical Priority Cross-Site 
+             Scripting: Reflected and Log Forging Vulnerabilities.
+ 
+             Resolution: Updated Enrollment System Redesign (ESR) code to 
+             extend the removal of XSS attack patterns from 
+             getParameterNames(), getHeaderNames(), and getInputStream().
+ 
+ 513577      Problem: User unable to delete phone number.
+ 
+             Resolution: Resolution: Added call to removeAllPhones method to 
+             accommodate re- adding/removing phone numbers based on inbound 
+             form data: Class: DemographicAddressesConversionService / Method: 
+             convertFormToPerson
+ 
+ 524151      Problem: A grammatical correction was needed in the Auto Retrieve 
+             Agreement Code.
+ 
+             Resolution: Corrected the grammatical errors in messages and 
+             popup dialogs.
+ 
+ 530372      Problem: Resolve Critical, High, Medium and Low priority code 
+             issues reported by Fortify SwA Team.
+ 
+             Resolution: Fixed Critical, High, Medium and Low priority code 
+             issues reported by Fortify SWA Team.
+ 
+ 532212      Problem: eCIS Java Messaging Service (JMS) seeding priority is
+             not updating from the default.
+ 
+             Resolution: Created separate JMS seeding outbound template and
+             set default priority to zero.
+ 
+ 532462      Problem: Resolve ES Fortify Medium and Low findings as reported 
+             by Fortify software 17.10 scan.
+ 
+             Resolution: Updated code to resolve ES Fortify Medium and Low 
+             findings as reported by Fortify software 17.10 scan.
+ 
+ 536865      Problem: The Special Authority is not setting properly for Agent 
+             Orange and Radiation Exposure method.
+ 
+             Resolution: Added logic to return "NO" for Special Authority.
+ 
+ 537307      Problem: Veterans Integrated Services Network 
+             (VISN) Number, Station Name/Station Number, and Station Address 
+             fields are blank (null) although the Residential Address has been 
+             geocoded.
+ 
+             Resolution: Added Null checks around the Distance, VISN Number, 
+             Station Name/Station Number, and Station Address fields.
+ 
+ 540090      Problem: Pressing enter upon inputting user's VA email address 
+             does not send security code by email.
+ 
+             Resolution: Added a check in the code to make sure key 
+             press/enter event is not enabled.
+ 
+ 541766      Problem: Do not assign mileage for P.O. Box only or General 
+             Delivery only Veterans.
+ 
+             Resolution: The query to retrieve the addresses to be geocoded
+             was changed to not include P.O. Box addresses.
+ 
+ 542457      Problem: Resolve ES Fortify High findings as reported by Fortify 
+             SwA ES v4.7 2017-06-13 FAIL Report.
+ 
+             Resolution: Updated code to resolve ES Fortify High findings as 
+             reported by Fortify SwA ES v4.7 2017-06-13 FAIL Report.
+ 
+ 542700      Problem: Dependents section is missing on Financials screen for 
+             IY2016 and 2016.
+ 
+             Resolution: Updated FinancialsOverviewContent.jsp file to display 
+             total number of dependents in Current Financials Assessment 
+             section.
+ 
+ 542703      Problem: "To Date" field is not displaying on the EED19 report.
+ 
+             Resolution: Updated Jasper, hibernate, and Data Access Objects 
+             (DAO) file to display "To Date" in header.
+ 
+ 544310      On Stop Communication Cancel Mailing, screen reader
+             does not read the entire check box label.
+ 
+             Resolution: Approved by Section 508 Office.
+ 
+ 548507      Problem: Resolve ES Fortify High findings as reported by VA SwA 
+             Code Validation Enrollment System v4.7 2017-06-27 FAIL Report.
+ 
+             Resolution: Updated code to resolve ES Fortify High findings as 
+             reported by VA SwA Code Validation Enrollment System v4.7 2017-
+             06-27 FAIL Report.
+ 
+ 548740      Problem: Resolve ES Fortify High findings as reported by Fortify 
+             scan with new code.
+ 
+             Resolution: Updated code to resolve ES Fortify High findings as 
+             reported by Fortify scan with new code.
+ 
+ 549103      Problem: On Stop Communication, "Letter Mailed on Behalf of
+             Veteran" table is not recognized as a data table by screen reader
+             and read as a plain text.
+ 
+             Resolution: Works with Jaws 18. Approved by Section 508 Office.
+ 
+ 549206      Problem: User can not open CC determination hyperlink when Agent
+             Orange and Radiation exposure are not set.
+ 
+             Resolution: The code was updated to resolve the null pointer
+             exception.
+ 
+ 554304      Problem: On Community Care Determination History page, table is 
+             not recognized as a data table by screen reader and is read as 
+             plain text.
+ 
+             Resolution: Works with Jaws 18. Approved by Section 508 Office.
+ 
+ 554779      Problem: Third Party Administrator (TPA) file has duplicated 
+             Veteran entries.
+ 
+             Resolution: Changed the query to prepare TPA records from ES 
+             Batch Process in order to avoid duplicates in the 
+             Phone/Electronic Data Interchange Personal Identifier (EDIPI) 
+             from PSIM.PS_PERSON_CORRELATION table and the Preferred Facility.
+ 
+ 554918      Problem: Extra bullet displays when opening a letter.
+ 
+             Resolution: Updated iLOG file to display the following missing 
+             information: "Previous enrollment status is not equal to 
+             Rejected; Below EGT".
+ 
+ 555987      Problem: Mileage should take precedence over Hardship if person 
+             qualifies for both.
+ 
+             Resolution: Changed the order of calculation in the Extract 
+             Transform Load (ETL) for calculating Eligibility so that Mileage 
+             takes priority over Hardship.
+ 
+ 556253      Problem: Appointment Desired Date is all zeroes in TPA file.
+ 
+             Resolution: Updated the ETL with properly formatted data inserted 
+             in the Administrative Data Repository (ADR) tables.
+ 
+ 556267      Problem: CON type always granting Wait-Time - should be 
+             restricted to CHOICE-FIRST only.
+ 
+             Resolution: Modified the ETL query to avoid picking up Non-VA 
+             CARE records. The ETL will only pick up the CON type of records 
+             for Wait-Time processing.
+ 
+ 556748      Problem: On the Total Closed Applications Detailed report,
+             the data table is not properly tagged.
+ 
+             Resolution: Added associated tags to the JasperReport.
+ 
+ 557396      Problem: View Prior Enrollments table is not recognized by screen
+             reader.
+ 
+             Resolution: Works with Jaws 18. Approved by Section 508 Office.
+ 
+ 560419      Problem: TPA file should use ADDRESS_PHONE_NUMBER field from
+             ADDRESS table for Temporary Address.
+ 
+             Resolution: Changed query to return the Address Phone Number
+             instead of the Temporary Phone Number.
+ 
+ 561199      Problem: The address ID field, not the address type field, should
+             be used to process eCIS seeding results.
+ 
+             Resolution: Updated ECIS seeding to use address ID field instead
+             of address type field.
+ 
+ 572590      Problem: Manual Override drop down "Enrollment Systems Record
+             Error" needs to be changed to "Enrollment System Record Error".
+ 
+             Resolution: Database updated.
+ 
+ 572843      Problem: Online Help - CC Manual Override indicator / Community
+             Care Outcome Section needs additional information.
+ 
+             Resolution: Information was added to the links for the Community
+             Care Determination Override button.
+ 
+ 567466      Problem: Special Authority is not set correctly for Southwest
+             Asia Condition, Shipboard Hazard and Defense (SHAD), Camp
+             Lejeune, Nose Throat Radium, and Combat Veteran.
+ 
+             Resolution: Removed the else condition from the Special Authority
+             indicator.
+ 
+ 572860      Problem: When a user adds or updates the residential address, it
+             should not show up on the CC Determination screen until it has
+             been geocoded.
+ 
+             Resolution: .jsp updated to pick up Historic Addresses.
+ 
+ 577568      Problem: Social Security Number (SSN) field in VA-Specific 
+             Patient Dependent Information Segment (ZDP) in the Z10 message is 
+             being populated with object reference rather than SSN value.
+ 
+             Resolution: Updated code to fix Z10 segment outputting SSN object 
+             reference.
+ 
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 4.7 User Guide                ES_4_7_User_Guide.pdf         binary
+ ES 4.7 Release Notes             ES_4_7_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 03, 2017
+Completed By:                               Date Completed: OCT 02, 2017
+Released By :                               Date Released : OCT 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

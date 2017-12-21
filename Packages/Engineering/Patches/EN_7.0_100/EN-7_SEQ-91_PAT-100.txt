@@ -1,0 +1,284 @@
+$TXT Created by                 at DEVVFF.DOMAIN.EXT  (KIDS) on Tuesday, 06/21/16 at 12:12
+=============================================================================
+Run Date: NOV 30, 2017                     Designation: EN*7*100
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #91                      Status: Released
+                  Compliance Date: DEC 31, 2017
+=============================================================================
+
+Associated patches: (v)VIAA*1*3    <<= must be installed BEFORE `EN*7*100'
+
+Subject: ENGINEERING SUPPORT FOR RTLS
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) is implementing an integrated, 
+ enterprise-wide solution for a Real Time Location System (RTLS) for VA. 
+ The RTLS will be used for the purpose of tracking equipment, supplies, 
+ and instruments. This patch provides support for the interface between 
+ VistA Engineering files EQUIPMENT INV. (#6914) and ENG SPACE (#6928).
+  
+ Specifically, the VistA Engineering files EQUIPMENT INV. (#6914) and ENG 
+ SPACE (#6928) will be tracked on a limited number of fields and any data 
+ changes detected will be sent to RTLS to keep its database up to date.
+  
+ The data dictionary changes introduced by this patch are invisible to the
+ Engineering users. Therefore, there are no changes in functionality for
+ the menus available to the users of the package. For a complete list of
+ the fields affected by this patch, see the section 'Patch Components' 
+ in this document. Notice that this patch must be installed after the
+ companion patch VIAA*1.0*3.
+  
+ PLEASE NOTE:  Upon National Release, all facilities must install
+ both RTLS Asset Tracking (AT) patches (VIAA*1.0*3 and EN*7.0*100)
+ in their local production environments, regardless of whether RTLS AT
+ will be implemented locally. This process is separate from and not to be 
+ confused with activation of these patches.
+  Those facilities that will not be using RTLS AT will leave the patches 
+ installed in their production environments but will not activate them.
+  Those facilities that will be using RTLS AT will be contacted after 
+ installation and later on in 2018 by their RTLS vendor. At that time,
+ additional instructions regarding software activation and use will be
+ provided.
+  
+  
+ New Functionality Exported by This Patch:
+ ----------------------------------------- 
+  
+ a)  New MUMPS cross-references on multiple fields to track data changes
+ in the Engineering files EQUIPMENT INV. (#6914) and ENG SPACE (#6928). The
+ fields PHYSICAL INVENTORY DATE (#23) and LOCATION (#24) in file #6914 are
+ not set with any new MUMPS cross-references but they will be updated by
+ RTLS when a piece equipment is moved to a new location. Additionally, the
+ descriptions of these two fields in the data dictionary will be extended
+ to reflect the update by RTLS.
+  
+ b)  This patch also sets the flag 'NOREINDEX' in all the fields in the  
+ EQUIPMENT INV. file (#6914) and ENG SPACE file (#6928) that are modified
+ with a MUMPS cross-reference to send changes to RTLS. The new flag
+ prevents the reindexing of the files if there is an attempt to reindex
+ the fields tracked by RTLS.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)         New/Modified/Deleted
+ ------------------        -------------------         --------------------
+ EQUIPMENT INV. (6914)     ENTRY NUMBER (.01)              Modified
+                           MANUFACTURER (1)                Modified
+                           PARENT SYSTEM (2)               Modified
+                           MFGR. EQUIPMENT NAME (3)        Modified
+                           MODEL (4)                       Modified
+                           SERIAL # (5)                    Modified
+                           EQUIPMENT CATEGORY (6)          Modified
+                           TYPE OF ENTRY (7)               Modified
+                           PURCHASE ORDER # (11)           Modified
+                           TOTAL ASSET VALUE (12)          Modified
+                           ACQUISITION DATE (13)           Modified
+                           CATEGORY STOCK NUMBER (18)      Modified
+                           CMR (19)                        Modified
+                           USE STATUS (20)                 Modified
+                           SERVICE POINTER (21)            Modified
+                           DISPOSITION DATE (22)           Modified
+                           PHYSICAL INVENTORY DATE (23)    Modified
+                           LOCATION (24)                   Modified
+                           RESPONSIBLE SHOP (6914.04,.01)  Modified
+                           STATION NUMBER (60)             Modified
+  
+ ENG SPACE (6928)          ROOM NUMBER (.01)               Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #                   New/Modified/Deleted
+ ---------                    ------                   --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                       New/Modified/Deleted
+ ---------------                                       --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type                     New/Modified/Deleted
+ -----------                  ----                     --------------------
+  
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                         New/Modified/Deleted
+ -------------                                         --------------------
+  
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name                            New/Modified/Deleted
+ --------------------------                            --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)       New/Modified/Deleted
+ -------------      ----      ------------------       --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Livermore 
+ Oklahoma City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:           domain.ext  
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ RTLS Asset Tracking     RTLS_AT_Patch_Installation_Guide.PDF  Binary
+  Interface VistA Patch
+  Installation Guide
+ RTLS ESE Interfaces     RTLS_ESE_Interfaces_Technical_        Binary 
+  Technical Manual        Manual.PDF
+  
+ Engineering             Eng_tm_EN_1_100.PDF                   Binary
+  Technical Manual                                     
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch makes data dictionary changes to the EQUIPMENT INV. file 
+ (#6914) and the ENG SPACE file (#6928). The site OI&T should make a backup
+ of the data dictionaries before installing this patch in order to
+ facilitate a rollback of the changes if it is desired later. Please make
+ sure that you create the backup for the data dictionary fields listed
+ above before proceeding.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Engineering users should not be making record changes in either the 
+ EQUIPMENT INV. file (#6914) or the ENG SPACE file (#6928) during 
+ installation of this patch. This patch should take less than 5 minutes to
+ install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # (EN*7.0*100)
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter EN*7.0*100
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' press 'enter'    
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' press 'enter'
+     
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' enter 'Yes'
+  
+     a) When prompted 'Enter options you wish to mark as "Out of Order":', 
+        enter the following:
+  
+        New Inventory Entry         [ENINVNEW]
+        Multiple Inventory Entry    [ENIN-ENTER-MULTI]
+        Inventory Edit              [ENINV EDIT]
+        Enter New Room Space Data   [ENSPROOM]
+        Display/Edit Room Data      [ENSPROOMD]
+  
+     b) When prompted 'Enter protocols you wish to mark as "Out of
+        Order":', just press 'enter'.
+     
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2015
+Completed By:                               Date Completed: NOV 30, 2017
+Released By :                               Date Released : NOV 30, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

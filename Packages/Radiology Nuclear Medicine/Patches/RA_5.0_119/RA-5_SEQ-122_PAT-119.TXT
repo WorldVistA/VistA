@@ -1,0 +1,231 @@
+Original message: "RA5.0*119T7 Hines OI 08/07/2017 cdt" [#10549950]
+=============================================================================
+Run Date: SEP 08, 2017                     Designation: RA*5*119
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #122                      Status: Released
+                  Compliance Date: OCT 09, 2017
+=============================================================================
+
+Associated patches: (v)RA*5*113    <<= must be installed BEFORE `RA*5*119'
+                    (v)MAG*3*157   <<= must be installed BEFORE `RA*5*119'
+                    (v)MAG*3*172   <<= must be installed BEFORE `RA*5*119'
+
+Subject: RADIATION DOSE MOP-UP
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the (3) following issues:
+  
+ 1. An undefined error occurs in the VistA Radiology/Nuclear Medicine
+    package when calling the Imaging Application Programming Interface
+    (API) while using Importer III.
+  
+ 2. The Exam Profile with Radiation Dosage Data [RA PROFRAD DOSE] option 
+    was impacted by the 'inefficient patient lookup for radiation dose
+    patients' and a 'column header for our report was misspelled'.
+  
+ 3. Data dictionary update: RADIATION ABSORBED DOSE (#70.3) file.
+   
+ National Service Request:
+ =========================
+ 20100402
+  
+ Associated Ticket(s):
+ =====================
+ I9841010FY16
+  
+ Participating Test Sites:
+ =========================
+ Lexington VAMC
+ St. Louis HCA (waived)
+ Fayetteville VAMC (waived)
+  
+ Issue 1:
+ --------
+ 1. An undefined error occurs in the VistA Radiology/Nuclear Medicine
+    package when calling the Imaging Application Programming Interface
+    (API) while using Importer III.
+  
+ Corrective Action for Issue 1:
+ ------------------------------
+ 1. Check for the existence of the variable RADTE. Set RADTE if it is not 
+    defined with the (GETDOSE^RADUTL) call. 
+  
+ Issue 2:
+ --------
+ The Exam Profile with Radiation Dosage Data [RA PROFRAD DOSE] option was 
+ impacted by the following:
+ 1. Inefficient patient lookup. Radiation dose patients are not presented
+    to the user in a timely manner.
+  
+ 2. A column header for our report was misspelled. "Assession" is the 
+    column header in question.
+  
+ Corrective Actions for Issue 2:
+ -------------------------------
+ 1. The inefficient patient lookup was corrected by using a cross 
+    reference identifying VistA RIS patients with a radiation dose history.
+    The MIX^DIC1 call was used to use this specific cross reference to
+    increase the efficiency of the patient lookup.
+  
+ 2. "Assession" was corrected to "Accession."
+  
+ Issue 3:
+ --------
+ Data dictionary update: RADIATION ABSORBED DOSE (#70.3) file.
+  
+ 1. The precision of the data returned from the modalities was greater than
+    the tolerances allowed by the RADIATION ABSORBED DOSE (#70.3) file.
+  
+ 2. The AIR KERMA AREA PRODUCT (#.06 field) identified the units for data
+    as being 'Gy-cm2'. This unit measurement is incorrect.
+  
+ Corrective Actions for Issue 3:
+ -------------------------------
+ 1. Increase the tolerance for the following fields in the RADIATION 
+    ABSORBED DOSE (#70.3) file: AIR KERMA (#.05), AIR KERMA AREA PRODUCT 
+    (#.06), CTDIvol (#4), and DLP (#5) to accept the greatest tolerance
+    allowed by FileMan (nine digits to the right of the decimal point).
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+    Note: An environment check will run prior to the loading and 
+     installation of patch RA*5.0*119. The intent of the check is to
+     ensure that there is no radiation dose data on file in either the
+     VistA Imaging and the VistA Radiology databases. If the environment
+     check routine finds rad dose data the loading and/or installation of
+     the patch is prohibited.
+  
+     In order to purge rad dose data the installing site will have to file
+     a support ticket to the national support team. In this case that
+     would be Clinical Support III (Clin III). After that ticket is filed,
+     it will be referred to national radiology development where personnel
+     will require access to the production account to purge the data. A
+     locally namespaced routine will be required to install on the host
+     system with the rad dose data.
+  
+  
+  All Radiology users should be off the system at the time of installation 
+  of RA*5.0*119. This includes all voice recognition activity. 
+  Installation of this patch should complete in under two minutes.
+  
+   1. Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+   
+  2. Startup KIDS
+     ------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution system Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+  3. Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5*119:
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+   
+  4. Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch:
+   
+      a. Choose the Install Package(s) option to start the patch
+         install and select the package RA*5*119.
+   
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', answer NO.
+   
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', answer YES.
+  
+  Enter options you wish to mark as 'Out Of Order':
+  1. RA RAD DOSE SUMMARY       Radiation Dose Summary Report
+  2. RA PROFRAD DOSE           Exam Profile with Radiation Dosage Data
+  3. RA EXAMEDIT               Exam Entry/Edit Menu
+  4. RA RPT                    Films Reporting Menu
+  
+     d. Enter protocols you wish to mark as 'Out Of Order': 
+  
+  NOTE: Both the environment check routine, RA119ENV, and the post-init 
+        routine, RAIPS119, will not be deleted after the installation of
+        RA*5.0*119.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA119ENV
+    Before:       n/a   After:  B3380968  **119**
+Routine Name: RADRPT1
+    Before: B50436794   After: B53164228  **113,119**
+Routine Name: RADRPT1A
+    Before:B113032077   After:B114118092  **113,119**
+Routine Name: RADRPT2
+    Before: B62181281   After: B68075283  **113,119**
+ Description of Changes:
+  Descriptive comments added (CTDIvol & DLP relationship)
+
+Routine Name: RADRPT2A
+    Before: B96661088   After:B115224298  **113,119**
+ Description of Changes:
+  The change in this routine handles an end of screen issue where more that 
+  one caret has to be entered to exit the option.
+
+Routine Name: RADUTL
+    Before: B31087705   After: B42704172  **113,119**
+ Description of Changes:
+  T4: $SELECT added for fields 4 & 5 above to record a null value as an
+  empty field. '+$P(X,D,2) 'used to turn 5.100000000 to 5.1. Reports will
+  display values to their proper fractional part precision.
+
+Routine Name: RAIPS119
+    Before:       n/a   After:   B473200  **119**
+ 
+Routine list of preceding patches: 113
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 01, 2014
+Completed By:                               Date Completed: SEP 08, 2017
+Released By :                               Date Released : SEP 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

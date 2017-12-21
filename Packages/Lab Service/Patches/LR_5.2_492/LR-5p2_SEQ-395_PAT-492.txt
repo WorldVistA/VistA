@@ -1,0 +1,208 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/07/17 at 19:55
+=============================================================================
+Run Date: NOV 13, 2017                     Designation: LR*5.2*492
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #395                    Status: Released
+                  Compliance Date: DEC 14, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*423  <<= must be installed BEFORE `LR*5.2*492'
+                    (v)LR*5.2*427  <<= must be installed BEFORE `LR*5.2*492'
+
+Subject: LAB PHLEBOTOMY COLLECTION LIST ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three (3) VistA Laboratory issues related to 
+ phlebotomy collection list logic:
+  
+ 1.  Test orders that roll over from one collection list to another may 
+ appear to be ordered twice in CPRS even though they are only ordered once.
+  
+ 2.  Merged orders created by collection list generation sometimes do not 
+ have correct CPRS start date/times as well as other discrepancies.
+  
+ 3.  The LAB ORDER ENTRY (#69) file LAB ARRIVAL DATE/TIME (#20) field is 
+ erroneously set during collection list generation.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated CA-SDM tickets:
+ =========================
+  
+ 1.  I9678021FY16: Collection List Rollover Issue
+  
+ 2.  I9678978FY16: Merged Order Issues
+  
+ 3.  I15331849FY17: Lab Arrival Date/Time Issue
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*492 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*492 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*492 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ PUGET SOUND
+ ATLANTA
+  
+ Ticket Overview:
+ ================
+  
+ 1.  I9678021FY16: Collection List Rollover Issue 
+  
+     Problem:
+     -------
+  
+     When an order is added to the collection list, rolled over to the next
+     collection list, and combined/merged with an order on the second
+     collection list, the orders may display multiple times on the
+     collection list.  The sites have reported that "sometimes when using
+     option LRPHITEM, the merged tests are not fully accessioned, and thus
+     cannot be found when the auto instrument queries for orders."   The
+     root cause of this situation is that merged tests may have multiple
+     entries in the LAB ORDER ENTRY (#69) file, but only one entry per test
+     is accessioned. Also, the accession in the ACCESSION (#68) file may 
+     not match the corresponding accession field in the LAB ORDER ENTRY
+     (#69) file.
+     
+     Resolution:
+     ----------
+  
+     Modify routine LRTSTSET so that during the collection list merge 
+     process, the LAB ORDER ENTRY (#69) file will only have one active
+     entry per test ordered, and thus only one accession per test ordered.
+     Also, the accession in the ACCESSION (#68) file will match the 
+     corresponding accession field in the LAB ORDER ENTRY (#69) file.
+     
+     Routine: LRTSTSET
+  
+  
+  2. I9678978FY16: Merged Order Issues
+  
+     Problem:
+     -------
+  
+     Orders that are merged during collection list generation may not
+     display the correct value for the CPRS Start Date/Time.  Sites have
+     also reported that a message of "Not accepted" is displayed when
+     trying to receive some orders.
+  
+     Resolution:
+     ----------
+  
+     Modify routines LRPHSET2 and LRTSTSET to set the LAB ORDER ENTRY (#69)
+     file and the ORDERS (#100) file correctly when orders are merged
+     during collection list generation.
+  
+     Routines: LRPHSET2 and LRTSTSET
+  
+ 3.  I15331849FY17: Lab Arrival Date/Time Issue
+  
+     Problem:
+     -------
+  
+     The LAB ORDER ENTRY (#69) file LAB ARRIVAL DATE/TIME (#20) field is 
+     set after Phlebotomy List is generated. The LAB ARRIVAL DATE/TIME 
+ (#20) field should not be set until orders are received into the lab using
+     an option such as LRPHITEM.
+  
+  
+     Resolution:
+     -----------
+  
+     Modify routine LRPHSET1 to not set the LAB ARRIVAL DATE/TIME (#20) 
+     field during phlebotomy collection list generation.
+  
+     Routine: LRPHSET1
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*492'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRPHSET1
+    Before: B10152359   After: B10839269  **121,191,221,240,423,492**
+Routine Name: LRPHSET2
+    Before: B27649309   After: B44272962  **121,202,350,427,492**
+Routine Name: LRTSTSET
+    Before: B10120516   After: B12817102  **65,100,121,153,201,202,263,
+                                           291,350,492**
+ 
+Routine list of preceding patches: 423, 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2017
+Completed By:                               Date Completed: NOV 06, 2017
+Released By :                               Date Released : NOV 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

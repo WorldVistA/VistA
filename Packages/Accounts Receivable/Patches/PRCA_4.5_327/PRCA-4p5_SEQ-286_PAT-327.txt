@@ -1,0 +1,237 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/09/17 at 16:56
+=============================================================================
+Run Date: SEP 25, 2017                     Designation: PRCA*4.5*327
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #286                    Status: Released
+                  Compliance Date: SEP 28, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*159<<= must be installed BEFORE `PRCA*4.5*327'
+                    (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*327'
+
+Subject: TCSP BATCH RUN CORRECTIONS;AR/RC RECONCILE ROLL-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following two issues:
+  
+ 1) The weekly TCSP (Treasury Cross Service) batch run at site will error
+    when the debtor is not defined in the debtor file.
+  
+ 2) AR/RC Reconcile Roll-up emails have single mail address no longer
+    used.
+  
+  
+  
+ Associated CA Tickets:
+ ======================
+ 1) I14830000FY17 - Treasury Cross Service weekly job failed to transmit 
+                    to AAC.
+  
+ 2) II8333392FY16 - AR/RC Reconcile Roll-up emails have single mail 
+                    address no longer defined.
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Richard L. Roudebush VA Medical Center (Indianapolis)
+ VA Hudson Valley Health Care System 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) I14830000FY17 - Treasury Cross Service weekly job failed to transmit 
+                    to AAC.
+  
+  
+ Problem:
+ --------
+ At times bills are sent from Integrated Billing (IB) or Pharmacy with a 
+ debtor that is no longer defined in the Accounts Receivable system in
+ the AR DEBTOR (#340) file.  This undefined debtor causes the weekly TCSP
+ batch run to fail due to an <UNDEFINED> error.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the TCSP weekly batch run to bypass
+ any debtors that are not defined correctly in the AR DEBTOR (#340) file.
+ For those debtors found to be corrupted a mail message will be sent to
+ the 'TCSP' mail group alerting the members to contact region IT staff
+ immediately to correct the corrupt debtors.
+  
+  
+ Also, code added to insure that work files are purged (deleted) entirely 
+ after 5 days instead of the previous 3 day cycle.
+  
+  
+ Lastly, control nodes were added to the compile process to allow a
+ site to determine where the batch processing stands at any time and 
+ sends an email to the 'TCSP' mail group when the process has been
+ completed and transmitted.
+  
+  
+  Routines: RCTCSPD, RCTCSPD0 (new), RCTCSP7 (new)
+  
+ Below are the two new mail messages that will be sent to the 'TCSP' mail
+ group when a batch run is complete and the second message demonstrates
+ the mail message for corrupt debtors.
+  
+  
+ Subj: **** FAILED DEBTOR ACTION NOTICE ***  [#2733579] 08/09/17@14:31  9 
+ lines
+ From: AR PACKAGE  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ The following corrupted debtor records were found during the batch run.
+ They can be found in xref ^PRCA(430,_"C"_) and have no file 340 entry or a
+ corrupted entry (missing node 0 or 1).
+  
+ CORRUPT DEBTOR INTERNAL: 2602
+ CORRUPT DEBTOR INTERNAL: 9999
+  
+ *** These corrupt debtor file records must be reported to ***
+ *** region IT staff to be corrected immediately !!        ***
+  
+ Enter message action (in IN basket): Ignore// 
+  
+ ================================================
+  
+ Subj: *** Batch Completion Notice ***  [#2733580] 08/09/17@14:31  1 line
+ From: AR PACKAGE  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ The batch run and transmission completed on 20170809.143158
+  
+ Enter message action (in IN basket): Ignore//
+  
+ 2) II8333392FY16 -  AR/RC Reconcile Roll-up emails have single mail 
+                     address no longer defined.
+  
+  
+ Problem:
+ --------
+ When the monthly roll-up occurs on AR/RC Reconcile, the resulting data
+ is mailed to various email addresses hard coded in the routine.  However,
+ the outlook address is no longer active and needs to be removed from 
+ the transmission.
+  
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to remove the inactive email address 
+ 'OGCNASRI@MAIL.DOMAIN.EXT^OGCRegion8DeathNotification@mail.domain.ext'
+ from the routines.
+  
+  
+  Routines: RCRCUTL, RCRCXMS
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+  
+ Hines:                   domain.ext    
+ Salt Lake City:      domain.ext
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ The following files should be downloaded in the binary SFTP mode.
+   
+   Filename                              Description
+   --------                              -----------
+   prca_4_5_p327_um.pdf                  Cross-Servicing User Manual
+   prca_4_5_p327_tm.pdf                  Accounts Receivable Technical 
+                                         Manual/Security Guide
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*327)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*327.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", hit ENTER.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCRCUTL
+    Before: B29191013   After: B28977482  **63,159,327**
+Routine Name: RCRCXMS
+    Before: B63503495   After: B63973009  **63,159,327**
+Routine Name: RCTCSP7
+    Before:       n/a   After:  B5112376  **327**
+Routine Name: RCTCSPD
+    Before:B168545559   After:B153936257  **301,327**
+Routine Name: RCTCSPD0
+    Before:       n/a   After:  B8111368  **327**
+ 
+Routine list of preceding patches: 159, 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 06, 2017
+Completed By:                               Date Completed: SEP 25, 2017
+Released By :                               Date Released : SEP 25, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

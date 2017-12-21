@@ -1,0 +1,693 @@
+Released SD*5.3*646 SEQ #552
+Extracted from mail message
+**KIDS**:SD*5.3*646^
+
+**INSTALL NAME**
+SD*5.3*646
+"BLD",10568,0)
+SD*5.3*646^SCHEDULING^0^3170807^y
+"BLD",10568,1,0)
+^^13^13^3170705^
+"BLD",10568,1,1,0)
+This patch adds consistency checks for DIRECT PATIENT SCHEDULING? field 
+"BLD",10568,1,2,0)
+(#61) and DISPLAY CLIN APPT TO PATIENTS? field (#62) in the HOSPITAL 
+"BLD",10568,1,3,0)
+LOCATION file (#44) when creating a new clinic or editing an existing 
+"BLD",10568,1,4,0)
+clinic by using the Set up a Clinic [SDBUILD] menu option.
+"BLD",10568,1,5,0)
+ 
+"BLD",10568,1,6,0)
+This effort was requested by the Veterans Health Administration (VHA) 
+"BLD",10568,1,7,0)
+Access and Clinic Administration Program (ACAP) in support of the VistA 
+"BLD",10568,1,8,0)
+Scheduling Enhancements (VSE) project.
+"BLD",10568,1,9,0)
+ 
+"BLD",10568,1,10,0)
+Additional changes added to fix hard error when calling Wait List or 
+"BLD",10568,1,11,0)
+Recall Reminder whenever the help text for Select LANGUAGE DATE/TIME: 
+"BLD",10568,1,12,0)
+prompt invoked while executing the Make Appointment option in [SDAM 
+"BLD",10568,1,13,0)
+APPT MGT] Appointment Management.
+"BLD",10568,4,0)
+^9.64PA^44^1
+"BLD",10568,4,44,0)
+44
+"BLD",10568,4,44,2,0)
+^9.641^44^1
+"BLD",10568,4,44,2,44,0)
+HOSPITAL LOCATION  (File-top level)
+"BLD",10568,4,44,2,44,1,0)
+^9.6411^62^2
+"BLD",10568,4,44,2,44,1,61,0)
+DIRECT PATIENT SCHEDULING?
+"BLD",10568,4,44,2,44,1,62,0)
+DISPLAY CLIN APPT TO PATIENTS?
+"BLD",10568,4,44,222)
+y^n^p^^^^n^^n
+"BLD",10568,4,44,224)
+
+"BLD",10568,4,"APDD",44,44)
+
+"BLD",10568,4,"APDD",44,44,61)
+
+"BLD",10568,4,"APDD",44,44,62)
+
+"BLD",10568,4,"B",44,44)
+
+"BLD",10568,6.3)
+8
+"BLD",10568,"ABPKG")
+n
+"BLD",10568,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10568,"KRN",.4,0)
+.4
+"BLD",10568,"KRN",.401,0)
+.401
+"BLD",10568,"KRN",.402,0)
+.402
+"BLD",10568,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",10568,"KRN",.402,"NM",1,0)
+SDB    FILE #44^44^0
+"BLD",10568,"KRN",.402,"NM","B","SDB    FILE #44",1)
+
+"BLD",10568,"KRN",.403,0)
+.403
+"BLD",10568,"KRN",.5,0)
+.5
+"BLD",10568,"KRN",.84,0)
+.84
+"BLD",10568,"KRN",3.6,0)
+3.6
+"BLD",10568,"KRN",3.8,0)
+3.8
+"BLD",10568,"KRN",9.2,0)
+9.2
+"BLD",10568,"KRN",9.8,0)
+9.8
+"BLD",10568,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10568,"KRN",9.8,"NM",1,0)
+SDWLE11^^0^B8942141
+"BLD",10568,"KRN",9.8,"NM",2,0)
+SDRR1^^0^B16380201
+"BLD",10568,"KRN",9.8,"NM","B","SDRR1",2)
+
+"BLD",10568,"KRN",9.8,"NM","B","SDWLE11",1)
+
+"BLD",10568,"KRN",19,0)
+19
+"BLD",10568,"KRN",19.1,0)
+19.1
+"BLD",10568,"KRN",101,0)
+101
+"BLD",10568,"KRN",409.61,0)
+409.61
+"BLD",10568,"KRN",771,0)
+771
+"BLD",10568,"KRN",779.2,0)
+779.2
+"BLD",10568,"KRN",870,0)
+870
+"BLD",10568,"KRN",8989.51,0)
+8989.51
+"BLD",10568,"KRN",8989.52,0)
+8989.52
+"BLD",10568,"KRN",8994,0)
+8994
+"BLD",10568,"KRN","B",.4,.4)
+
+"BLD",10568,"KRN","B",.401,.401)
+
+"BLD",10568,"KRN","B",.402,.402)
+
+"BLD",10568,"KRN","B",.403,.403)
+
+"BLD",10568,"KRN","B",.5,.5)
+
+"BLD",10568,"KRN","B",.84,.84)
+
+"BLD",10568,"KRN","B",3.6,3.6)
+
+"BLD",10568,"KRN","B",3.8,3.8)
+
+"BLD",10568,"KRN","B",9.2,9.2)
+
+"BLD",10568,"KRN","B",9.8,9.8)
+
+"BLD",10568,"KRN","B",19,19)
+
+"BLD",10568,"KRN","B",19.1,19.1)
+
+"BLD",10568,"KRN","B",101,101)
+
+"BLD",10568,"KRN","B",409.61,409.61)
+
+"BLD",10568,"KRN","B",771,771)
+
+"BLD",10568,"KRN","B",779.2,779.2)
+
+"BLD",10568,"KRN","B",870,870)
+
+"BLD",10568,"KRN","B",8989.51,8989.51)
+
+"BLD",10568,"KRN","B",8989.52,8989.52)
+
+"BLD",10568,"KRN","B",8994,8994)
+
+"BLD",10568,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10568,"QUES",0)
+^9.62^^
+"BLD",10568,"REQB",0)
+^9.611^5^4
+"BLD",10568,"REQB",2,0)
+SD*5.3*619^2
+"BLD",10568,"REQB",3,0)
+SD*5.3*446^2
+"BLD",10568,"REQB",4,0)
+SD*5.3*566^2
+"BLD",10568,"REQB",5,0)
+SD*5.3*627^2
+"BLD",10568,"REQB","B","SD*5.3*446",3)
+
+"BLD",10568,"REQB","B","SD*5.3*566",4)
+
+"BLD",10568,"REQB","B","SD*5.3*619",2)
+
+"BLD",10568,"REQB","B","SD*5.3*627",5)
+
+"FIA",44)
+HOSPITAL LOCATION
+"FIA",44,0)
+^SC(
+"FIA",44,0,0)
+44I
+"FIA",44,0,1)
+y^n^p^^^^n^^n
+"FIA",44,0,10)
+
+"FIA",44,0,11)
+
+"FIA",44,0,"RLRO")
+
+"FIA",44,0,"VR")
+5.3^SD
+"FIA",44,44)
+1
+"FIA",44,44,61)
+
+"FIA",44,44,62)
+
+"KRN",.402,67,-1)
+0^1
+"KRN",.402,67,0)
+SDB^3170706.0608^^44^^^3170707
+"KRN",.402,67,"AR",44,1335)
+1^SDBT5
+"KRN",.402,67,"DIAB",1,1,44.03,0)
+ALL
+"KRN",.402,67,"DIAB",1,1,44.04,0)
+ALL
+"KRN",.402,67,"DIAB",5,0,44,0)
+61;"ALLOW DIRECT PATIENT SCHEDULING?"
+"KRN",.402,67,"DR",1,44)
+.01;1;60;2504//Y;61ALLOW DIRECT PATIENT SCHEDULING?~;I (X["Y")!($P($G(^SC(DA,"PA")),"^",2)="Y")  S $P(^SC(DA,"PA"),"^",3)="Y",Y="@07";62;@07;9;2502;S:X'["Y" Y="@05";2502.5;@05;
+"KRN",.402,67,"DR",1,44,1)
+S:$S('$D(^DG(43,1,"GL")):1,$D(^DG(43,1,"GL"))&('$P(^DG(43,1,"GL"),"^",2)):1,1:0) Y="@10";3.5//^S X=+$O(^DG(40.8,0)),X=$S($D(^(X,0)):$P(^(0),"^"),1:"");@10;8;2507//REGULAR;2802;99;S:X="" $P(^SC(DA,99.1),"^",1)="",Y="@15";99.1;@15;
+"KRN",.402,67,"DR",1,44,2)
+2000;2000.5//YES;2508;2509;2510;2511;24;2600;2801;2700;30;2001;2002;S:+$O(^SC(DA,"ST",0))>0 Y="@25";1914;@25;2003;2005;1918.5;2503;2500;S:X'="Y" Y="@30";2501;@30;10;1916;1918;1910;1912;I '$D(SDLA) S SDLA=X;1913;
+"KRN",.402,67,"DR",1,44,3)
+S:+$O(^SC(DA,"ST",0))>0 Y="@99";1917//4;@99;
+"KRN",.402,67,"DR",2,44.03)
+.01
+"KRN",.402,67,"DR",2,44.04)
+.01
+"KRN",.402,67,"DR",2,44.1)
+.01;.02;
+"KRN",.402,67,"DR",2,44.11)
+.01;.02;
+"KRN",.402,67,"ROU")
+^SDBT
+"KRN",.402,67,"ROUOLD")
+SDBT
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+646^3170807
+"PKG",16,22,1,"PAH",1,1,0)
+^^13^13^3170807
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch adds consistency checks for DIRECT PATIENT SCHEDULING? field 
+"PKG",16,22,1,"PAH",1,1,2,0)
+(#61) and DISPLAY CLIN APPT TO PATIENTS? field (#62) in the HOSPITAL 
+"PKG",16,22,1,"PAH",1,1,3,0)
+LOCATION file (#44) when creating a new clinic or editing an existing 
+"PKG",16,22,1,"PAH",1,1,4,0)
+clinic by using the Set up a Clinic [SDBUILD] menu option.
+"PKG",16,22,1,"PAH",1,1,5,0)
+ 
+"PKG",16,22,1,"PAH",1,1,6,0)
+This effort was requested by the Veterans Health Administration (VHA) 
+"PKG",16,22,1,"PAH",1,1,7,0)
+Access and Clinic Administration Program (ACAP) in support of the VistA 
+"PKG",16,22,1,"PAH",1,1,8,0)
+Scheduling Enhancements (VSE) project.
+"PKG",16,22,1,"PAH",1,1,9,0)
+ 
+"PKG",16,22,1,"PAH",1,1,10,0)
+Additional changes added to fix hard error when calling Wait List or 
+"PKG",16,22,1,"PAH",1,1,11,0)
+Recall Reminder whenever the help text for Select LANGUAGE DATE/TIME: 
+"PKG",16,22,1,"PAH",1,1,12,0)
+prompt invoked while executing the Make Appointment option in [SDAM 
+"PKG",16,22,1,"PAH",1,1,13,0)
+APPT MGT] Appointment Management.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","SDRR1")
+0^2^B16380201^B16208086
+"RTN","SDRR1",1,0)
+SDRR1 ;10N20/MAH ;RECALL REMINDER ENTER EDIT 7/28/04
+"RTN","SDRR1",2,0)
+ ;;5.3;Scheduling;**536,561,566,646**;Aug 13, 1993;Build 8
+"RTN","SDRR1",3,0)
+EN ;Entry point
+"RTN","SDRR1",4,0)
+ ;Tag STR will determine if the patient has already been enter into open access
+"RTN","SDRR1",5,0)
+ ;This routine is SDRRCLR EVENT protocol which is put on to SDAM MENU
+"RTN","SDRR1",6,0)
+ ;protocol
+"RTN","SDRR1",7,0)
+ ;This routine does not kill off DFN
+"RTN","SDRR1",8,0)
+STR(SDFN) ;Start checking entries in 403.5 if there is a "b" goes to update - if not goes to NEW   
+"RTN","SDRR1",9,0)
+ N I,Y,CLINIC,C,D,KEY,KY,COMM
+"RTN","SDRR1",10,0)
+ S DFN=SDFN
+"RTN","SDRR1",11,0)
+ I '$D(^SD(403.5,"B",DFN)) W !,"No Clinic Recall on file",! S DIR(0)="Y",DIR("A")="Are you sure you want to add a Recall entry ",DIR("B")="NO" D ^DIR I Y'=1 G QUIT
+"RTN","SDRR1",12,0)
+ I $G(Y)>0 I '$D(^SD(403.5,"B",DFN)) G NEW
+"RTN","SDRR1",13,0)
+EN1 S C=0 F I=0:0 S I=$O(^SD(403.5,"B",DFN,I)) Q:'I  I $D(^SD(403.5,I,0)) S D=^(0),C=C+1 S ^TMP("SDRRCLR",$J,C)=I_"^"_D
+"RTN","SDRR1",14,0)
+ S (ER,OK)=0 W !,"CHOOSE FROM:" F I=0:0 S I=$O(^TMP("SDRRCLR",$J,I)) Q:'I   S CLINIC=$P($G(^TMP("SDRRCLR",$J,I)),"^",3) D
+"RTN","SDRR1",15,0)
+ .W !,$J(I,4),">  "
+"RTN","SDRR1",16,0)
+ .I CLINIC'="" S CLINIC=$$GET1^DIQ(44,CLINIC_",",.01)
+"RTN","SDRR1",17,0)
+ .I CLINIC="" S CLINIC="UNK. CLINIC"
+"RTN","SDRR1",18,0)
+ .S PROV=$P($G(^TMP("SDRRCLR",$J,I)),"^",6) I PROV'="" S PROV=$P($G(^SD(403.54,PROV,0)),"^",1) I PROV'="" S PROV=$$NAME^XUSER(PROV,"F")
+"RTN","SDRR1",19,0)
+ .I PROV="" S PROV="UNK. PROVIDER"
+"RTN","SDRR1",20,0)
+ .S RDT=$P(^TMP("SDRRCLR",$J,I),"^",7) S Y=RDT D DD^%DT S RDT=Y
+"RTN","SDRR1",21,0)
+ .S RS=$P(^TMP("SDRRCLR",$J,I),"^",11) S Y=RS D DD^%DT S RS=Y
+"RTN","SDRR1",22,0)
+ .S COMM="",COMM=$P(^TMP("SDRRCLR",$J,I),"^",8)
+"RTN","SDRR1",23,0)
+ .W "CLINIC:"_$E(CLINIC,1,15),?28," R/DATE:"_RDT,?53," NOTICE SENT:"_RS
+"RTN","SDRR1",24,0)
+ .W !,?5,"PROVIDER:"_$E(PROV,1,20) S Z=I I $G(COMM)]"" W !,?5,$G(COMM) S Z=I
+"RTN","SDRR1",25,0)
+ W !,"CHOOSE 1-",Z_" OR TYPE ""A"" TO ADD:" W:$D(^TMP("SDRRCLR",$J,I+1)) !,"OR '^' TO QUIT" W ": " R X:DTIME I $S('$T!(X["^"):1,X="":1,1:0) S ER=1 G QUIT
+"RTN","SDRR1",26,0)
+ ;CHECK PARAM IF NEEDED
+"RTN","SDRR1",27,0)
+ G QUIT:ER
+"RTN","SDRR1",28,0)
+ X ^%ZOSF("UPPERCASE") S X=Y  ;SD*561 convert lowercase to uppercase
+"RTN","SDRR1",29,0)
+ I X["A" G NEW
+"RTN","SDRR1",30,0)
+ S DA=$P($G(^TMP("SDRRCLR",$J,X)),"^",1) I DA="" K DA,C,CLINIC,PROV,RDT G EN1
+"RTN","SDRR1",31,0)
+ S (PROV1,KEY,FLAG)="" S PROV1=$P($G(^SD(403.5,DA,0)),"^",5) I PROV1'="" S KEY=$P($G(^SD(403.54,PROV1,0)),"^",7) D
+"RTN","SDRR1",32,0)
+ .I PROV1="" Q
+"RTN","SDRR1",33,0)
+ .I KEY="" Q
+"RTN","SDRR1",34,0)
+ .N VALUE
+"RTN","SDRR1",35,0)
+ .S VALUE=$$LKUP^XPDKEY(KEY) K KY D OWNSKEY^XUSRB(.KY,VALUE,DUZ)
+"RTN","SDRR1",36,0)
+ .I $P(KY(0),"^",1)=0 W !,?25,"**YOU DO NOT HAVE ACCESS TO THIS ENTRY**",!,?12,"PLEASE CHECK WITH YOUR ADPAC OR IRM TO GET THE PROPER SECURITY KEY" R X:3 K KEY,PROV1 D QUIT S FLAG=1
+"RTN","SDRR1",37,0)
+ .Q
+"RTN","SDRR1",38,0)
+ I FLAG=1 K FLAG Q
+"RTN","SDRR1",39,0)
+ ;END OF NEW CHANGE
+"RTN","SDRR1",40,0)
+ G UPDATE
+"RTN","SDRR1",41,0)
+ Q
+"RTN","SDRR1",42,0)
+ ;
+"RTN","SDRR1",43,0)
+NEW ;Adds new entry
+"RTN","SDRR1",44,0)
+ K DIC,DIR,DR,DIE,DO ;*646
+"RTN","SDRR1",45,0)
+ W !!,"*Must have Recall Date,approved Recall Clinic,Recall Provider and Type of Recall"
+"RTN","SDRR1",46,0)
+ S DIR(0)="Y",DIR("A")="Do you have this information",DIR("B")="NO" D ^DIR I Y'=1 G QUIT
+"RTN","SDRR1",47,0)
+ S (DIC,DIE)="^SD(403.5,",DIC(0)="LZ",X=DFN,DLAYGO=403.5 D FILE^DICN S NUM=+Y
+"RTN","SDRR1",48,0)
+ S DA=NUM,DR="[SDRR RECALL CARD ADD]",DIE("NO^")="Not Allowed" D ^DIE
+"RTN","SDRR1",49,0)
+ I $D(DTOUT) D DELETE  ;SD*566 if time out delete new incomplete record
+"RTN","SDRR1",50,0)
+ K DIC,DIE,DR,D0,DA,DLAYGO,NUM,PROV,X,Y,Z,OK,RDT,CLINIC,RS,KEY,COMM,DIR
+"RTN","SDRR1",51,0)
+ K DTOUT,^TMP("SDRRCLR",$J)
+"RTN","SDRR1",52,0)
+ Q
+"RTN","SDRR1",53,0)
+ ;
+"RTN","SDRR1",54,0)
+DELETE ;SD*566 user timed out - delete new incomplete record & display message
+"RTN","SDRR1",55,0)
+ S DIK=DIE
+"RTN","SDRR1",56,0)
+ D ^DIK K DIK
+"RTN","SDRR1",57,0)
+ W !!,*7,"*** ALL REQUIRED DATA WAS NOT ENTERED. ***",!,"*** RECALL REMINDER NOT CREATED FOR PATIENT:  ",$P(^DPT(DFN,0),U,1),". ***"
+"RTN","SDRR1",58,0)
+ Q
+"RTN","SDRR1",59,0)
+ ;
+"RTN","SDRR1",60,0)
+UPDATE ;Asks for new data
+"RTN","SDRR1",61,0)
+ K DIC,DIE,DR S DIE="^SD(403.5,",DR="[SDRR RECALL CARD ADD]",DIE("NO^")="BACKOUTOK" D ^DIE
+"RTN","SDRR1",62,0)
+ K DIC,DIE,DR,D0,DA,DLAYGO,NUM,PROV,X,Y,Z,OK,RDT,CLINIC,RS,KEY,COMM
+"RTN","SDRR1",63,0)
+ D QUIT
+"RTN","SDRR1",64,0)
+ Q
+"RTN","SDRR1",65,0)
+SDAM ;Entry Point for Appointment Management protocol
+"RTN","SDRR1",66,0)
+ N ORACTION,ORVP,XQORQUIT,SDAMERR,SDCOAP,VALMY
+"RTN","SDRR1",67,0)
+ S VALMBCK=""
+"RTN","SDRR1",68,0)
+ D FULL^VALM1
+"RTN","SDRR1",69,0)
+ I SDAMTYP="P" W !!,VALMHDR(1),! D STR(SDFN)
+"RTN","SDRR1",70,0)
+ I SDAMTYP="C" D
+"RTN","SDRR1",71,0)
+ .D EN^VALM2(XQORNOD(0))
+"RTN","SDRR1",72,0)
+ .S SDCOAP=0 F  S SDCOAP=$O(VALMY(SDCOAP)) Q:'SDCOAP  D
+"RTN","SDRR1",73,0)
+ ..I $D(^TMP("SDAMIDX",$J,SDCOAP)) K SDAT S SDAT=^(SDCOAP) D
+"RTN","SDRR1",74,0)
+ ...W !!,^TMP("SDAM",$J,+SDAT,0),!
+"RTN","SDRR1",75,0)
+ ...D STR(+$P(SDAT,"^",2))
+"RTN","SDRR1",76,0)
+ S VALMBCK="R"
+"RTN","SDRR1",77,0)
+QUIT K PROV,CLINIC,X,Y,C,D,ER,OK,PROV1,KEY,RS,FLAG,DIR,DFN,DIR
+"RTN","SDRR1",78,0)
+ K ^TMP("SDRRCLR",$J)
+"RTN","SDRR1",79,0)
+ Q
+"RTN","SDWLE11")
+0^1^B8942141^B8484611
+"RTN","SDWLE11",1,0)
+SDWLE11 ;;IOFO BAY PINES/TEH - WAITING LIST-ENTER/EDIT - WAIT LIST TYPE/INSTUTITION;06/12/2002 ; 20 Aug 2002 2:10 PM
+"RTN","SDWLE11",2,0)
+ ;;5.3;scheduling;**263,485,497,446,646**;AUG 13 1993;Build 8
+"RTN","SDWLE11",3,0)
+ ;
+"RTN","SDWLE11",4,0)
+ ;
+"RTN","SDWLE11",5,0)
+ ;******************************************************************
+"RTN","SDWLE11",6,0)
+ ; CHANGE LOG
+"RTN","SDWLE11",7,0)
+ ; 
+"RTN","SDWLE11",8,0)
+ ; DATE PATCH DESCRIPTION
+"RTN","SDWLE11",9,0)
+ ; ---- ----- -----------
+"RTN","SDWLE11",10,0)
+ ; 05/09/2006 SD*5.3*485 CORRECT ENROLLMENT STATUS. 
+"RTN","SDWLE11",11,0)
+ ; 06/05/2006 SD*5.3*446 Scheduling reminder flag 
+"RTN","SDWLE11",12,0)
+ ; 
+"RTN","SDWLE11",13,0)
+ ; 
+"RTN","SDWLE11",14,0)
+NEW ;ADD NEW PATIENT
+"RTN","SDWLE11",15,0)
+ ;SD*5.3*646 K DIC,DIR,DR,DIE N %H,SDWLDS,SDWLE,SDWLNEW,SDWLRNED,SDWLX,SDWLY
+"RTN","SDWLE11",16,0)
+ K DIC,DIR,DR,DIE,DO N %H,SDWLDS,SDWLE,SDWLNEW,SDWLRNED,SDWLX,SDWLY
+"RTN","SDWLE11",17,0)
+ S DIC(0)="LX",X=SDWLDFN,DIC="^SDWL(409.3," D FILE^DICN S (SDWLDA,DA)=+Y
+"RTN","SDWLE11",18,0)
+ S SDWLNEW=1 K DIC
+"RTN","SDWLE11",19,0)
+ L +^SDWL(409.3,SDWLDA):$G(DILOCKTM,3) I '$T W !,"Unable to acquire a lock on the Wait List file" Q
+"RTN","SDWLE11",20,0)
+ S DIE="^SDWL(409.3,",DR="1////^S X=DT"
+"RTN","SDWLE11",21,0)
+ D:$G(SDWLACA)  ; 446
+"RTN","SDWLE11",22,0)
+ .W !,"Note: you are about to create an EWL entry to be used as a Scheduling Reminder."
+"RTN","SDWLE11",23,0)
+ .S DR=DR_";33////^S X=""Y"""
+"RTN","SDWLE11",24,0)
+ .Q
+"RTN","SDWLE11",25,0)
+ D ^DIE
+"RTN","SDWLE11",26,0)
+ L -^SDWL(409.3,SDWLDA)
+"RTN","SDWLE11",27,0)
+ ;
+"RTN","SDWLE11",28,0)
+ ;DETERMINE ENROLLEE STATUS
+"RTN","SDWLE11",29,0)
+ ;
+"RTN","SDWLE11",30,0)
+ ;SDWLE=1 = NEW ENROLLEE
+"RTN","SDWLE11",31,0)
+ ;SDWLE=2 = ESTABLISHED
+"RTN","SDWLE11",32,0)
+ ;SDWLE=3 = PRIOR ENROLLEE
+"RTN","SDWLE11",33,0)
+ ;SDWLE=4 = UNDETERMINED
+"RTN","SDWLE11",34,0)
+TST ;
+"RTN","SDWLE11",35,0)
+EN S SDWLDE=+$H,SDWLE=1,(SDWLEE,SDWLRNED,SDWLDB)=0 D SB1
+"RTN","SDWLE11",36,0)
+ G SB0:SDWLE=2
+"RTN","SDWLE11",37,0)
+ S SDWLRNE=$$ENROLL^EASWTAPI(SDWLDFN) G SB0:$P(SDWLRNE,U,4)="A" S SDWLRNED=$P(SDWLRNE,U,3)
+"RTN","SDWLE11",38,0)
+ I SDWLRNED S X=SDWLRNED D H^%DTC S SDWLDS=%H S SDWLDE=+$H,SDWLDET=SDWLDE-SDWLDS,SDWLDB=2 I SDWLDET<366 S SDWLE=1
+"RTN","SDWLE11",39,0)
+ I $D(SDWLDET),SDWLDET>365 S SDWLE=3
+"RTN","SDWLE11",40,0)
+ I 'SDWLRNE S SDWLE=4
+"RTN","SDWLE11",41,0)
+SB0 I $D(SDWLRNE),$P(SDWLRNE,U,4)="A" D
+"RTN","SDWLE11",42,0)
+ .I $D(SDWLEE),SDWLEE>730!(SDWLEE=730) S SDWLE=4 Q
+"RTN","SDWLE11",43,0)
+ .I 'SDWLEE S SDWLE=4 Q
+"RTN","SDWLE11",44,0)
+ S SDWLRNE=$S(SDWLE=1:"N",SDWLE=2:"E",SDWLE=3:"P",SDWLE=4:"U",1:"U")
+"RTN","SDWLE11",45,0)
+ ;-Code here for filling in 409.3
+"RTN","SDWLE11",46,0)
+ S DR="27////^S X=SDWLRNE",DIE="^SDWL(409.3,",DA=SDWLDA D ^DIE
+"RTN","SDWLE11",47,0)
+ ;SAVE ENROLLEE CALCULATION DATE
+"RTN","SDWLE11",48,0)
+ S DR="27.1////^S X=$S($G(SDWLRNED):SDWLRNED,$G(SDWLD):SDWLD,1:"""")" D ^DIE
+"RTN","SDWLE11",49,0)
+ ;SAVE DATABASE FILE
+"RTN","SDWLE11",50,0)
+ S DR="27.2////^S X=SDWLDB" D ^DIE
+"RTN","SDWLE11",51,0)
+ S DR="9////^S X=DUZ" D ^DIE
+"RTN","SDWLE11",52,0)
+ K SDWLRNE,SDWLD,SDWLDE,SDWLEE,SDWLDET,DIC,DIR,DR,DIE,X
+"RTN","SDWLE11",53,0)
+ Q
+"RTN","SDWLE11",54,0)
+SB1 I '$D(^DGCN(391.91,"B",SDWLDFN)) N SDWLDB S SDWLE=3 Q
+"RTN","SDWLE11",55,0)
+ S SDWLX="" F  S SDWLX=$O(^DGCN(391.91,"B",SDWLDFN,SDWLX)) Q:SDWLX=""  D
+"RTN","SDWLE11",56,0)
+ .S SDWLY=$G(^DGCN(391.91,SDWLX,0)) D
+"RTN","SDWLE11",57,0)
+ ..;CHECK FOR VALID TF
+"RTN","SDWLE11",58,0)
+ ..I $$TF^XUAF4(+$P(SDWLY,U,2)) D
+"RTN","SDWLE11",59,0)
+ ...;GET LIST OF DATES FOR TF
+"RTN","SDWLE11",60,0)
+ ...S SDWLD=$P(SDWLY,U,3) I SDWLD S SDWLDTF(9999999-SDWLD)=SDWLX
+"RTN","SDWLE11",61,0)
+ ;FIND LAST TREATMENT DATE
+"RTN","SDWLE11",62,0)
+ I '$D(SDWLDTF) Q
+"RTN","SDWLE11",63,0)
+ S SDWLDTF=$O(SDWLDTF(0)) I SDWLDTF S (SDWLD,X)=9999999-SDWLDTF D H^%DTC S SDWLEE=SDWLDE-%H,SDWLDB=1 I SDWLEE<730 S SDWLE=2
+"RTN","SDWLE11",64,0)
+ I $D(SDWLEE),SDWLEE>730!(SDWLEE=730) S SDWLE=3
+"RTN","SDWLE11",65,0)
+ K SDWLDTF
+"RTN","SDWLE11",66,0)
+END Q
+"VER")
+8.0^22.2
+"^DD",44,44,61,0)
+DIRECT PATIENT SCHEDULING?^RSa^Y:YES;N:NO;^PA;2^Q
+"^DD",44,44,61,3)
+Enter 'Yes' if patients can self-schedule into this clinic.
+"^DD",44,44,61,21,0)
+^.001^3^3^3150211^^^^
+"^DD",44,44,61,21,1,0)
+This field will determine if patients can self-schedule into this 
+"^DD",44,44,61,21,2,0)
+clinic. A "Yes" in this field will enable patients to directly schedule 
+"^DD",44,44,61,21,3,0)
+appointments into this clinic.
+"^DD",44,44,61,"AUDIT")
+y
+"^DD",44,44,61,"DT")
+3160211
+"^DD",44,44,62,0)
+DISPLAY CLIN APPT TO PATIENTS?^RSa^Y:YES;N:NO;^PA;3^Q
+"^DD",44,44,62,3)
+Enter 'Yes' if clinic appointment will be displayed to patients.
+"^DD",44,44,62,21,0)
+^^4^4^3160211^
+"^DD",44,44,62,21,1,0)
+This field will determine if the clinic appointment information will be 
+"^DD",44,44,62,21,2,0)
+displayed to patients. A "Yes" in this field will enable patients to see
+"^DD",44,44,62,21,3,0)
+their appointments in this clinic. If DIRECT PATIENT SCHEDULING? (#61) 
+"^DD",44,44,62,21,4,0)
+is set to YES, this field defaults to YES and is not editable.
+"^DD",44,44,62,"AUDIT")
+y
+"^DD",44,44,62,"DT")
+3160211
+"BLD",10568,6)
+^552
+**END**
+**END**
+

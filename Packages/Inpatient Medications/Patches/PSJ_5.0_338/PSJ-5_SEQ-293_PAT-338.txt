@@ -1,0 +1,275 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/01/17 at 13:55
+=============================================================================
+Run Date: OCT 05, 2017                     Designation: PSJ*5*338
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #293                      Status: Released
+                  Compliance Date: NOV 04, 2017
+=============================================================================
+
+Associated patches: (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*338'
+                    (v)PSJ*5*328   <<= must be installed BEFORE `PSJ*5*338'
+
+Subject: COPY ORDER ISSUES/DOSAGE ISSUES/DUR OF ADMIN/COMPLEX ORDER ISSUE 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1)     UNDEFINED error when renew is changed to copy of an order
+ 2)     Unit Dose order has zero for dosage
+ 3)     Copied UD order with >1 dispense drug, one inactive, 
+        copies incorrectly
+ 4)     "^" at Duration of Admin still allows order to continue
+ 5)     UNDEFINED AGAIN+26^PSJDOSE *PSJCONT
+ 6)     Dispense drug not deleting correctly while finishing complex orders
+  
+  
+ Associated NSR(s): 
+ ==================
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO3491 - I13103401FY17 Dispense drug not deleting correctly
+  
+  
+ CA SDM Defect Tracking System Ticket(s) & Overview:
+ ===================================================
+  
+ I9190964FY16        UNDEFINED error when renew is changed to copy an order
+ R11878202FY17       Unit dose order has zero for dosage.
+ I8405721FY16        Copied UD order with >1 dispense drug, one inactive,
+                      copies incorrectly
+ I12228956FY17       "^" at Duration of Administration still allows
+                      order to continue.
+ I15018816FY17       UNDEFINED error in PSJDOSE when modifying Dosage.
+ I13103401FY17       Dispense drug not deleting correctly while finishing
+                      complex orders.
+  
+ Issue 1
+ --------
+ I9190964FY16       UNDEFINED error when renew is changed to copy an order
+   
+ Problem: 
+ ========
+ A unit dose inpatient order in Vista was selected to be renewed (RN).  At the
+ STOP DATE/TIME display the user realized they didn't want to renew the order
+ but to copy it.  Entering an up-caret (^) at this point will take the user
+ back to the originally selected order with no changes made.  The user then
+ enters CO (copy) and attempts to copy the order.  During the copying
+ process the user receives the <UNDEFINED>INIT+58^PSJLMUDE error and is
+ taken out of Vista. 
+  
+ During the RENEW process some of the values in the INPATIENT USER PARAMETERS
+ FILE (#53.45), which contains information about the displayed order, are
+ killed off.  When the user decided/realized they wanted the order copied
+ and not renewed, some of the pertinent information that was removed was
+ not getting set back into this file.  This is the reason the user received
+ the UNDEFINED error.
+  
+ Resolution:
+ ===========
+ A modification was made to MOVE^PSGOER to ensure that the INPATIENT USER
+ PARAMETERS FILE (#53.45) is populated with all the correct information for
+ processing.
+  
+ Issue 2
+ --------
+ R11878202FY17       Unit dose order has zero for dosage.
+   
+ Problem: 
+ ========
+ An active unit dose order in Vista was modified by changing the Orderable
+ Item. When this is done, both the Orderable Item and Dosage Ordered are 
+ deleted. When entering the new Orderable Item, the user is not prompted 
+ for the Dosage Ordered and is able to accept the order.  This results in
+ the new order being created without a Dosage Ordered. If there is only
+ one Dispense Drug for the newly entered orderable item, the prompt for 
+ Dosage Ordered is not displayed. This is current functionality.
+  
+  
+ Resolution:
+ ===========
+ Modifications were made to 6 routines, PSGOE8, PSGOE9, PSJOE1, PSJLMUDE,
+ PSJDOSE & PSGOEE.
+ These modifications will prompt the user to enter a Dosage Ordered when
+ they change the Orderable Item unless there is only one Dispense Drug for
+ the entered Orderable Item.
+  
+  
+ Issue 3
+ --------
+ I8405721FY16        Copied UD order with >1 dispense drug, one
+                     inactive, copies incorrectly.
+  
+ Problem:
+ ========
+ A Unit Dose order that has more than one Dispense Drug associated
+ with it, one being inactive, will not copy correctly.  
+  
+ When the order is copies, the inactive Dispense Drug(s) are not
+ supposed to be copied to the new order.  If the inactive Dispense
+ Drug is the first one then the second Dispense Drug will show
+ on the new copied order twice.  If the inactive Dispense Drug is
+ last it will show on the copied order.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSGOD to remove the inactive
+ Dispense Drug from the INPATIENT USER PARAMETERS FILE (#53.45).
+  
+  
+ Issue 4:
+ --------
+ I12228956FY17     "^" at Duration of Admin still allows order to 
+                     continue
+  
+ Problem:
+ ========
+ A user went to edit an active Transdermal Inpatient order, and the 
+ Pharmacy Orderable Item is marked for PROMPT FOR REMOVAL IN BCMA (value 
+ 2 or 3) and the Dosage form is Patch.  During the edit of the verified 
+ order the user aborts ("^") at the Duration of Administration prompt 
+ after entering the admin times. The system will allow the creation of 
+ the new order without the Duration of Administration being entered.
+  
+ Resolution:
+ ===========
+ A modification to PSGOEE to prevent the user from continuing to create
+ a new order without the required Duration of Administration value.
+  
+  
+ Issue 5:
+ ---------
+ I15018816FY17     UNDEFINED error in PSJDOSE when modifying Dosage.
+  
+ Problem:
+ ========
+ An active unit dose order in VistA was modified by changing the Dosage
+ Ordered field.  When the dosage options/selections appeared, the user
+ opted to enter a free text dosage that exceeded 15 characters.  This
+ resulted in the UNDEFINED error.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJDOSE to ensure that the user will
+ no longer receive the UNDEFINED error.  
+  
+ This modification will send the user back to the dosage prompt if the value
+ exceeds 15 characters.
+  
+ Issue 6:
+ ---------
+ I13103401FY17     Dispense drug not deleting correctly while finishing
+                    complex orders
+  
+ Problem: 
+ ========
+ An Inpatient Med complex order was created in CPRS.  While finishing
+ the order in Vista, the Pharmacist adds a new Dispense Drug (12) to the
+ order then deletes the original Dispense Drug.  Once the order is
+ completed and you go back into the order, both the new and deleted
+ Dispense Drugs are displayed.
+  
+ Resolution:
+ ===========
+ A modification is needed in routine PSJCOM to update the NON-VERIFIED ORDERS
+ FILE (53.1) with the new Dispense Drug information.  
+  
+ Test Sites: 
+ ===========
+ VA Illiana HCS
+ Southern Arizona VA Health Care System 
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ This patch should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*338)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*338.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOD
+    Before: B25616562   After: B28187977  **67,58,111,133,181,286,281,315,338**
+Routine Name: PSGOE8
+    Before: B52703048   After: B53298336  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287,315,338**
+Routine Name: PSGOE9
+    Before: B45686408   After: B46523279  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269,315,338**
+Routine Name: PSGOEE
+    Before:B103314834   After:B103788427  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281,315,338**
+Routine Name: PSGOER
+    Before: B87272469   After: B87602402  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281,
+                                           315,338**
+Routine Name: PSJCOM
+    Before: B42503350   After: B43877303  **110,186,267,281,315,338**
+Routine Name: PSJDOSE
+    Before: B62450032   After: B64879386  **50,65,106,111,216,264,328,338**
+Routine Name: PSJLMUDE
+    Before: B86619867   After: B87296083  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228,315,317,338**
+Routine Name: PSJOE1
+    Before: B31281544   After: B31376376  **2,7,25,30,47,56,64,179,181,
+                                           252,281,315,338**
+ 
+Routine list of preceding patches: 317, 328
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2017
+Completed By:                               Date Completed: OCT 03, 2017
+Released By :                               Date Released : OCT 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

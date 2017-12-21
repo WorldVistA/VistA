@@ -1,0 +1,375 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/28/17 at 10:08
+=============================================================================
+Run Date: SEP 20, 2017                     Designation: EC*2*137
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #131                      Status: Released
+                  Compliance Date: OCT 21, 2017
+=============================================================================
+
+Associated patches: (v)EC*2*132    <<= must be installed BEFORE `EC*2*137'
+
+Subject: FY18 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 1 issue:
+   
+  1. This patch will update the EC NATIONAL PROCEDURE (#725) file by 
+     inactivating 49 existing procedures, adding 119 new procedures, 
+     changing three CPT codes, and changing 22 procedure names in the file.
+   
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. I13486621FY17 - FY18 Event Capture National Procedure (#725) File Update
+       
+      
+  PARTICIPATING TEST SITES:
+  =========================
+ Battle Creek VA Medical Center
+ VA North Florida / South Georgia VA Health Care System  (Gainesville, 
+ Lake City)
+      
+       
+  REMEDY OVERVIEW:
+  ================
+   
+  1. I13486621FY17 - FY18 Event Capture National Procedure (#725) File Update
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to the EC 
+     NATIONAL PROCEDURE (#725) file. The request is to inactivate 49 existing
+     procedures, add 119 new procedures, change three CPT codes, and change 22
+     procedure names in the file.
+  
+    
+     Resolution:
+     -----------
+     The routines included in this patch will update the EC NATIONAL 
+     PROCEDURE file (#725) by inactivating 49 existing procedures, adding 119
+     new procedures, changing three CPT codes, and changing 22 procedure names 
+     in the file.
+    
+     The entries that will be inactivated in the NATIONAL PROCEDURE (#725) file
+     on 10/01/17 are:
+    
+         Natl #          Description               
+         ------          ---------------------           
+        RC010           TEAMEET CAREPLAN FF
+        RC012           IDT GRP
+        RC013           REC CREAT ART IND
+        RC014           REC  CREAT ART GRP
+        RC017           REC THER EMOT IND
+        RC018           REC THER COG IND
+        RC019           REC THER PHY IND
+        RC020           REC THER SOC IND
+        RC021           REC THER SOC GRP
+        RC033           CREAT ARTS SOC IND
+        RC034           CREAT ARTS COG IND
+        RC053           MUSTHER SOC IND 15M
+        RC054           MUSTHER COG IND 15M
+        RC055           CREAT ARTS PHY IND
+        RC056           CREAT ARTS EMOT IND
+        RC057           CREAT ARTS GRP
+        RC069           AQUATIC ACT IND
+        RC070           AQUATIC ACT GRP
+        RC074           AQUATIC THER GRP
+        RC092           CASE MGMT IND
+        RC093           CASE MGMT GRP 2-4
+        RC094           CASE MGMT GRP 5-8
+        RC100           WHEELCHAIR ASSESSMENT
+        RC102           BIOFEEDBACK IND
+        SW001           CASE MANAGEMENT PROVIDED IN THE HOME
+        SW046           CNH FOLLOW UP 30 MIN
+        SW048           CRC FOLLOWUP, 15M
+        SW060           COMP/PENS EXAM V15M
+        SW072           IND FUNCTIONAL IMPVMT@15M
+        SW073           SELFCARE OP V15M
+        SW074           COMWORKREIN OP V15M
+        SW077           PSYCHOSOCIAL ASSESS 60M
+        SW088           NONEMERTRANSPORV15M
+        SW094           WARD ROUNDS V15M
+        SW095           DIALYSIS SUPPORT V15M
+        SW104           MEDICAID V15M
+        SW107           SA SCREEN/INTER V15M
+        SW108           HOMELESS REF V15M
+        SW121           SPECIAL ASSES V15M
+        SW123           COMMUN RESOURCE V15M
+        SW127           PT/FAM END OF LIFE COUNSEL
+        SW128           SA COUNSELING V15M
+        SW129           INDIV  COUNSEL V15M
+        SW131           FAMILY COUNSELING W/O PT
+        SW132           FAM SUPPORT GP V15M
+        SW133           FAM BEREAVEMENT V15M
+        SW134           MARITAL COUNSEL V15M
+        SW135           MDS ASSESS, V 15M
+        SW136           COUNSULT F2F ONLY, 15M 
+  
+  
+     The entries that will be added in the NATIONAL PROCEDURE (#725) file are:
+  
+         Natl #  Description                                  CPT CODE
+         ------  ---------------------                         --------  
+        NO001   NON-OR REC TIME CATH LAB        
+        NO002   NON-OR REC TIME ENDOSCOPY       
+        NO003   NON-OR REC TIME RADIOLOGY       
+        NO004   NON-OR REC TIME CARDIOLOGY      
+        NO005   NON-OR REC TIME OTHER   
+        NU216   PHONE CALL W/PT EA AD'L 5M      
+        OT001   OT EVAL- LOW COMPLEX                            97165
+        OT002   OT EVAL - MOD COMPLEX                           97166
+        OT003   OT EVAL - HIGH COMPLEX                          97167
+        OT004   OT REEVAL EST PLAN OF CARE                      97168
+        PT001   PT EVAL- LOW COMPLEX                            97161
+        PT002   PT EVAL - MOD COMPLEX                           97162
+        PT003   PT EVAL - HIGH COMPLEX                          97163
+        PT004   PT REEVAL EST PLAN OF CARE                      97164
+        RC103   HEALTH BEH INTERVENT 15M                        96152
+        RC104   COGNITIVE SKILLS DVMT 15M                       97532
+        RC105   EXERCISE GRP                                    S9451
+        RC106   VESTIBULAR REHAB TRMT                           97112
+        RC107   HEALTH & BEH INTER, GRP                         96153
+        RC108   HEALTH & BEH INTER, FAM W/PT                    96154
+        RC109   HEALTH & BEH INTER, FAM NO PT                   96155
+        RC110   THER PROC, GAIT TRNG, IND                       97116
+        RC111   UNLISTED THER PROCEDURE                         97139
+        RC112   WHCHAIR MGMT/PROP TRNG IND                      97542
+        RC113   PHYSICAL PERF TEST/MEASURE IND                  97750
+        RC114   DEVICE FILL ORTH/PROS USE                       97762
+        RC115   TELEPHONE SERVICE 11-20M                        98967
+        RC116   TELEPHONE SERVICE 21-30M                        98968
+        RC117   MED TESTIMONY/DEPOSITIONS                       99075
+        RC118   SPECIAL RPT/FORM NON-STD                        99080
+        RC119   NON-MD TEAM CONF W/PT                           99366
+        RC120   DRIVE TIME, 15M 
+        RC121   HOME VISIT BY NON-MD NOS                        99600
+        RC122   SCHD INTERDISCP TEAM CONF W/PT                  G0175
+        RC123   TELEHEALTH                                      Q3014
+        RC124   WT MGMT NON-MD EA SESSION                       S9449
+        RC125   CASE MGMT IND                                   T1016
+        RC126   THERAPEUTIC ACTIVITY IND                        97530
+        RC127   THERAPEUTIC PROC GRP                            97150
+        RC128   THERAPEUTIC PROC IND 15M                        97110
+        RC129   EDUC AND TRNG, IND 30M                          98960
+        RC130   EDUC AND TRNG, 2-4 PT 30M                       98961
+        RC131   EDUC AND TRNG, 5-8 PT 30M                       98962
+        SL011   ED/TRNG  F2F 2-4 PTS 30M                        98961
+        SL012   NC-ED/TRNG  F2F 2-4 PTS 30M     
+        SL013   ED/TRNG  F2F 5-8 PTS 30M                        98962
+        SL014   NC-ED/TRNG  F2F 5-8 PTS 30M     
+        SL015   ED/TRNG  F2F IND 30M                            98960
+        SL016   NC-ED/TRNG  F2F IND 30M 
+        SL017   PT ED GRP EA SESSION                            S9446
+        SL018   NC-PT ED GRP EA SESSION 
+        SL019   PT ED IND EA SESSION                            S9445
+        SL020   NC-PT ED IND EA SESSION 
+        SL021   TELEMONITORING                                  S9110
+        SL022   NC-TELEMONITORING       
+        SL023   TELEPHONE CLINIC 5-10M                          98966
+        SL024   NC-TELEPHONE CLINIC 5-10M       
+        SL025   TELEPHONE CLINIC 11-20M                         98967
+        SL026   NC-TELEPHONE CLINIC 11-20M      
+        SL027   TELEPHONE CLINIC 21-30M                         98968
+        SL028   NC-TELEPHONE CLINIC 21-30M      
+        SL029   CPAP CLINIC                                     99201
+        SL030   NC-CPAP CLINIC  
+        SL031   DME SUPPLY PROVISION                            98961
+        SL032   NC-DME SUPPLY PROVISION 
+        SL036   DOCUMENT DME ORDER      
+        SL039   DATA DOWNLOAD                                   99091
+        SL040   NC-DATA DOWNLOAD        
+        SL041   MASK REFITTING                                  K0739
+        SL042   NC-MASK REFITTING       
+        SL043   EQUIPMENT REPAIR                                K0739
+        SL044   NC-EQUIPMENT REPAIR     
+        SL052   CHART REVIEW    
+        SL054   DME SUPPLY COLLECTION   
+        SL056   SUPPLY ORDER REFILL     
+        SL058   SCHEDULING      
+        SL060   DEFECTIVE EQUIP RETURN  
+        SW140   INTERACTIVE COMPLEXITY                          90785
+        SW141   PROLONGED CARE F2F OPT 1ST HR                   99354
+        SW142   PROLONGED CARE F2F OPT EA AD'L 30M              99355
+        SW143   PROLONGED CARE F2F IPT                          99356
+        SW144   PROLONGED CARE F2F IPT EA AD'L 30M              99357
+        SW145   PSYCHOTHERAPY CRISIS 16-29M                     90832
+        SW146   PSYCHOTHERAPY CRISIS 1ST HR                     90839
+        SW147   PSYCHOTHERAPY CRISIS  EA AD'L 30M               90840
+        SW148   CONSULTATION WITH FAMILY                        90887
+        SW149   IND PSYCHOPHYSIO THPY BIOFDBACK 30M             90875
+        SW150   IND PSYCHOPHYSIO THPY BIOFDBACK 45M             90876
+        SW151   TEAM CONFERENCE W/O PT W/ PRESCRIBER 30M        99367
+        SW153   PROGRAM INTAKE ASSESSMENT                       T1023
+        SW154   HOME VISIT MARRIAGE COUNSEL                     99510
+        SW155   PT EDUCATION, GRP                               S9446
+        SW156   PT EDUCATION, IND                               S9445
+        SW157   SMOKING CESSATION CLASS                         S9453
+        SW158   STRESS MGMT CLASS                               S9454
+        SW159   TRNG/EDUC R/T DISABLING MH PROBS                G0177
+        SW160   HEALTH & BEH ASSMT,EA 15M INITIAL               96150
+        SW161   HEALTH & BEH REASSMT 15M                        96151
+        SW162   HEALTH & BEH INTERVENT 15M FAM W/ PT            96154
+        SW163   HEALTH & BEH INTERVENT 15M FAM W/O PT           96155
+        SW164   HOSPICE REFERRAL VISIT                          S0255
+        SW165   ETOH &/OR DRUG ABUSE STRUCTURED ASSMT 15-30M    G0396
+        SW166   ETOH &/OR DRUG ABUSE STRUCTURED ASSMT >30M      G0397
+        SW167   PSYCH EVAL HOSP RECS MED DX                     90885
+        SW168   RESULTS INTERP EXAMS TO OTHERS                  90887
+        SW169   ENVIRON INTERVENT MED MGMT MH PT                90882
+        SW170   CASE MGMT ETOH/DRUG SERVICES                    H0006
+        SW171   ETOH &/OR DRUG ASSMNT                           H0001
+        SW172   BEH HEALTH IND/GRP COUNSEL TX 15M               H0004
+        SW173   GRP COUNSEL ETOH &/OR DRUG SERVICES             H0005
+        SW174   ETOH &/OR SA FAM/COUPLE COUNSEL                 T1006
+        SW175   ETOH &/OR SA TX PLAN DVMT/MOD                   T1007
+        SW176   BEH HEALTH COUNSEL THPY 15M                     H0004
+        SW177   ETOH &/OR DRUG SERVICES GRP COUNSEL             H0005
+        SW178   ETOH &/OR DRUG SERVICES CRISIS OPT              H0007
+        SW179   PSYCHOEDUC SERVICE, 15M                         H2027
+        SW180   ETOH &/OR DRUG SERVICES METHADONE               H0020
+        SW181   SECURE MESSAGES                                 98969
+        SW182   ADV DIRECTIVES EA AD'L30M                       99498
+  
+  
+     The entries whose CPT Codes will be changed in the NATIONAL PROCEDURE 
+     (#725) file are:
+  
+          Natl #         Description                     CPT CODE
+         ------          ---------------------           ----------  
+        SW130           FAMILY COUNSELING W/PT          H0004
+        SW076           HOME VISIT 15M                  T1016
+        SW087           HOMEHEALTH F/U 15M              T1016
+  
+             
+     The entries whose procedure names will be changed the NATIONAL PROCEDURE 
+     (#725) file are:
+    
+          Natl #         Description                
+         ------          ---------------------            
+        NU007           NUTR PROB-NONE 10M
+        NU008           NUTR PROB-PREDICTED 10M
+        NU009           NUTR PROB-PRESENT 10M
+        NU019           PHONE 5-10M NO PT
+        NU020           PHONE 11-20M NO PT
+        NU021           PHONE 21-30M NO PT
+        NU022           PHONE 5-10M PROV
+        NU023           PHONE 11-20M PROV
+        NU024           PHONE 21-30M PROV
+        RC009           NON-MD TEAM CONF, NO PT
+        RC073           AQUATICTHER W/THER EX,IND
+        RC077           COMM REINT TRNG, IND 15M
+        RC081           PT ED NON-MD PROV IND SES
+        RC082           PT ED NON-MD PROV GRP SES
+        RC085           TELEPHONE SERVICE 5-10M
+        SD011           PREV RATE STATE DOM
+        SH011           PREV RATE STATE ADHC
+        SN011           PREV RATE STATE HOME
+        SW003           CASE MANAGEMENT
+        SW076           HOME VISIT 15M
+        SW087           HOMEHEALTH F/U 15M
+        SW124           DISCH CONF PT, FAM OR S/O
+  
+  
+    ===========================================================================
+     Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+     environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+     will add the new numbers and it will keep what the sites have on file. In
+     addition, a message similar to the one below will be printed during
+     installation: 
+     
+     ***EXAMPLE***
+     "Entry #3457 for 99999 SAMPLE [CPT: 99999] (XXXXX)  ...
+     successfully added. Your site has a local procedure (entry #90999) in
+     File #725 which uses XXXXX as its National Number. Please inactivate
+     this local procedure."
+     
+     Please review the installed message.
+    ==========================================================================
+    
+    
+  Installation Instructions:
+  ==========================
+    
+      ***************************NOTE****************************  
+      * It is not necessary to disable any options.  You may    *
+      * install these routines at any time without interruption *
+      * to users.                                               *
+      ***********************************************************
+    
+     Installation will take less than 2 minutes.
+    
+     Suggested time to install: Non-peak requirement hours.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*137)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*137.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//" respond NO.
+  
+      7. Review the installation message for notifications.
+   
+      8. You may delete the routines EC2P137A, EC2P137B, and EC2P137C from your
+         production system after the patch has been successfully tested.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P137A
+    Before:       n/a   After:  B2321654  **137**
+Routine Name: EC2P137B
+    Before:       n/a   After: B71150451  **137**
+Routine Name: EC2P137C
+    Before:       n/a   After: B16516187  **137**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 04, 2017
+Completed By:                               Date Completed: SEP 11, 2017
+Released By :                               Date Released : SEP 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

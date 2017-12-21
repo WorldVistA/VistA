@@ -1,0 +1,1113 @@
+Released TIU*1*301 SEQ #279
+Extracted from mail message
+**KIDS**:TIU*1.0*301^
+
+**INSTALL NAME**
+TIU*1.0*301
+"BLD",10340,0)
+TIU*1.0*301^TEXT INTEGRATION UTILITIES^0^3170216^y
+"BLD",10340,1,0)
+^^146^146^3170216^
+"BLD",10340,1,1,0)
+This patch will address a problem with consult notes being assigned
+"BLD",10340,1,2,0)
+to an incorrect patient's chart as a result of post install instructions
+"BLD",10340,1,3,0)
+for patch TIU*1.0*131 not being completed.
+"BLD",10340,1,4,0)
+ 
+"BLD",10340,1,5,0)
+Associated CA SDM ticket(s):
+"BLD",10340,1,6,0)
+============================
+"BLD",10340,1,7,0)
+I10273633FY16
+"BLD",10340,1,8,0)
+ INC000001014575(d)
+"BLD",10340,1,9,0)
+ PSPO #2595
+"BLD",10340,1,10,0)
+ 
+"BLD",10340,1,11,0)
+Associated NSR(s):
+"BLD",10340,1,12,0)
+==================
+"BLD",10340,1,13,0)
+N/A
+"BLD",10340,1,14,0)
+ 
+"BLD",10340,1,15,0)
+Test Sites:
+"BLD",10340,1,16,0)
+===========
+"BLD",10340,1,17,0)
+TBD
+"BLD",10340,1,18,0)
+   
+"BLD",10340,1,19,0)
+SDM Ticket Overview:
+"BLD",10340,1,20,0)
+====================
+"BLD",10340,1,21,0)
+I10273633FY16 - Exact same note appearing on two different charts.
+"BLD",10340,1,22,0)
+  
+"BLD",10340,1,23,0)
+Problem: 
+"BLD",10340,1,24,0)
+========
+"BLD",10340,1,25,0)
+The same consult note is documented in the correct patient chart as well
+"BLD",10340,1,26,0)
+as an incorrect patient chart, due to an incorrect consult number and an
+"BLD",10340,1,27,0)
+incorrect parameter value used when uploading the note through TIU.  It
+"BLD",10340,1,28,0)
+was determined that this is a result of post install instructions for
+"BLD",10340,1,29,0)
+patch TIU*1.0*131 not being followed leaving the TIU DOCUMENT 
+"BLD",10340,1,30,0)
+DEFINITIONS Progress Notes and Consults records with incorrect values in
+"BLD",10340,1,31,0)
+field 4.8 (UPLOAD FILING ERROR CODE).  The upload would not be filed and
+"BLD",10340,1,32,0)
+generate an error instead had the post install instructions for patch
+"BLD",10340,1,33,0)
+TIU*1.0*131 been completed.
+"BLD",10340,1,34,0)
+ 
+"BLD",10340,1,35,0)
+Resolution:
+"BLD",10340,1,36,0)
+===========
+"BLD",10340,1,37,0)
+This patch will run a post install routine.  The post install routine
+"BLD",10340,1,38,0)
+will review the PROGRESS NOTES class and CONSULTS document class (or
+"BLD",10340,1,39,0)
+CONSULTS class) and all entries within them in the TIU Document 
+"BLD",10340,1,40,0)
+Definitions file (8925.1). 
+"BLD",10340,1,41,0)
+ 
+"BLD",10340,1,42,0)
+The details of the install routine are as follows:
+"BLD",10340,1,43,0)
+ - If the current value of the UPLOAD FILING ERROR CODE (field 4.8) for
+"BLD",10340,1,44,0)
+   PROGRESS NOTES (and all document definitions under it) equals the
+"BLD",10340,1,45,0)
+   pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to 
+"BLD",10340,1,46,0)
+   "D PNFIX^TIUPNFIX" (if the record is not locked).
+"BLD",10340,1,47,0)
+ - If the current value of the UPLOAD FILING ERROR CODE (field 4.8) 
+"BLD",10340,1,48,0)
+   for CONSULTS (and all document definitions under it) equals the
+"BLD",10340,1,49,0)
+   pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to
+"BLD",10340,1,50,0)
+   "D CNFIX^TIUCNFIX" (if the record is not locked).
+"BLD",10340,1,51,0)
+ - If a record has the pre-patch TIU*1.0*131 value and cannot be updated 
+"BLD",10340,1,52,0)
+   due to being locked it will need to be manually corrected.
+"BLD",10340,1,53,0)
+ 
+"BLD",10340,1,54,0)
+The below example information will be included in the mail message
+"BLD",10340,1,55,0)
+to any user defined as a member of VistA mail groups
+"BLD",10340,1,56,0)
+'PATIENT SAFETY NOTIFICATIONS' and 'TIU CACS' as well as to the user
+"BLD",10340,1,57,0)
+running the installation:
+"BLD",10340,1,58,0)
+ 
+"BLD",10340,1,59,0)
+  Subj: PATCH TIU*1.0*301 
+"BLD",10340,1,60,0)
+  From: PATCH TIU*1.0*301  In 'IN' basket.   Page 1  
+"BLD",10340,1,61,0)
+--------------------------------------------------------------------------
+"BLD",10340,1,62,0)
+  This patch reviews field 4.8 (UPLOAD FILING ERROR CODE) in the TIU 
+"BLD",10340,1,63,0)
+  DOCUMENT DEFINITIONS file for document classes and titles belonging to
+"BLD",10340,1,64,0)
+  CONSULTS and PROGRESS NOTES and are addressed as follows: 
+"BLD",10340,1,65,0)
+    1.  CONSULTS with the pre-patch TIU*1.0*131 value of 'D GETPN^TIUCHLP'
+"BLD",10340,1,66,0)
+        are changed to 'D CNFIX^TIUCNFIX'
+"BLD",10340,1,67,0)
+    2.  PROGRESS NOTES with the pre-patch TIU*1.0*131 value of 
+"BLD",10340,1,68,0)
+        'D GETPN^TIUCHLP' are changed to 'D PNFIX^TIUPNFIX'.  
+"BLD",10340,1,69,0)
+    3.  Any CONSULTS or PROGRESS NOTES with field 4.8 without a value are
+"BLD",10340,1,70,0)
+        not changed.
+"BLD",10340,1,71,0)
+    4.  Any CONSULTS or PROGRESS NOTES with the pre-patch TIU*1.0*131 
+"BLD",10340,1,72,0)
+        value of 'D GETPN^TIUCHLP' that are locked during the install
+"BLD",10340,1,73,0)
+        NEED TO BE MANUALLY UPDATED using option TIU UPLOAD PARAMETER 
+"BLD",10340,1,74,0)
+        EDIT.
+"BLD",10340,1,75,0)
+    5.  Any document definitions with a value other than 'D GETPN^TIUCHLP'
+"BLD",10340,1,76,0)
+        are not updated.
+"BLD",10340,1,77,0)
+ 
+"BLD",10340,1,78,0)
+  **IMPORTANT NOTE**  The 'Enhanced Mismatched Consults List' [TIU144
+"BLD",10340,1,79,0)
+  ENHANCED MISMATCH LIST] should be run regularly. Please take a moment 
+"BLD",10340,1,80,0)
+  now to run it and create a reminder in your calendar to run it again
+"BLD",10340,1,81,0)
+  every 6 months.  If there are any mismatches, submit a help desk
+"BLD",10340,1,82,0)
+  ticket for assistance resolving them.
+"BLD",10340,1,83,0)
+ 
+"BLD",10340,1,84,0)
+   PATCH TIU*1.0*301 INSTALL
+"BLD",10340,1,85,0)
+      UPLOAD FILING ERROR CODE (Field 4.8) Review:
+"BLD",10340,1,86,0)
+ 
+"BLD",10340,1,87,0)
+      IEN  Document Name (Type)
+"BLD",10340,1,88,0)
+           Result
+"BLD",10340,1,89,0)
+   --------------------------------------------
+"BLD",10340,1,90,0)
+   CONSULTS:
+"BLD",10340,1,91,0)
+      767  CONSULTS (DOCUMENT CLASS)
+"BLD",10340,1,92,0)
+           D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+"BLD",10340,1,93,0)
+      788  OPTOMETRY EYE CONSULT REPORT (TITLE)
+"BLD",10340,1,94,0)
+           D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+"BLD",10340,1,95,0)
+     1800  OPHTHALMOLOGY EYE CONSULT REPORT - PRALL (TITLE)
+"BLD",10340,1,96,0)
+           The record is currently locked.
+"BLD",10340,1,97,0)
+           Needs to be manually updated to D CNFIX^TIUCNFIX
+"BLD",10340,1,98,0)
+   PROGRESS NOTES:
+"BLD",10340,1,99,0)
+        3  PROGRESS NOTES (CLASS)
+"BLD",10340,1,100,0)
+           D GETPN^TIUCHLP changed to D PNFIX^TIUPNFIX
+"BLD",10340,1,101,0)
+     1331  C&P MEDICAL (TITLE)
+"BLD",10340,1,102,0)
+           No change.  Value is already D PNFIX^TIUPNFIX
+"BLD",10340,1,103,0)
+ 
+"BLD",10340,1,104,0)
+   
+"BLD",10340,1,105,0)
+     ================INSTALLATION INSTRUCTIONS =================
+"BLD",10340,1,106,0)
+ 
+"BLD",10340,1,107,0)
+It is not necessary to disable any options.  Users should not edit TIU 
+"BLD",10340,1,108,0)
+document definitions during the install. It should take less than 
+"BLD",10340,1,109,0)
+2 minutes to install this patch.
+"BLD",10340,1,110,0)
+ 
+"BLD",10340,1,111,0)
+   1. Ensure there are appropriate active user entries as members of both 
+"BLD",10340,1,112,0)
+      VistA mail groups 'PATIENT SAFETY NOTIFICATIONS' and 'TIU CACS'.
+"BLD",10340,1,113,0)
+      This can be accomplished using option 'Mail Group Edit' on the
+"BLD",10340,1,114,0)
+      Group/Distribution Management menu.
+"BLD",10340,1,115,0)
+ 
+"BLD",10340,1,116,0)
+   2. Choose the PackMan message containing this patch and invoke the
+"BLD",10340,1,117,0)
+      INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",10340,1,118,0)
+  
+"BLD",10340,1,119,0)
+   3. From the Kernel Installation & Distribution System menu, select 
+"BLD",10340,1,120,0)
+      the Installation menu.  
+"BLD",10340,1,121,0)
+  
+"BLD",10340,1,122,0)
+   4. From this menu, you may select to use the following options: 
+"BLD",10340,1,123,0)
+      (when prompted for INSTALL NAME, enter TIU*1.0*301)
+"BLD",10340,1,124,0)
+  
+"BLD",10340,1,125,0)
+        a.  Verify Checksums in Transport Global - This option will allow
+"BLD",10340,1,126,0)
+            you to ensure the integrity of the routines that are in the
+"BLD",10340,1,127,0)
+            transport global.
+"BLD",10340,1,128,0)
+        b.  Print Transport Global - This option will allow you to view
+"BLD",10340,1,129,0)
+            the components of the KIDS build.
+"BLD",10340,1,130,0)
+        c.  Compare Transport Global to Current System - This option will
+"BLD",10340,1,131,0)
+            allow you to view all changes that will be made when this 
+"BLD",10340,1,132,0)
+            patch is installed.  It compares all components of this
+"BLD",10340,1,133,0)
+            patch (routines, DD's, templates, etc.).
+"BLD",10340,1,134,0)
+        d.  Backup a Transport Global - This option will create a backup
+"BLD",10340,1,135,0)
+            message of any routines exported with this patch. It will not
+"BLD",10340,1,136,0)
+            backup any other changes such as DD's or templates.
+"BLD",10340,1,137,0)
+  
+"BLD",10340,1,138,0)
+   5. Use the Install Package(s) option and select the package TIU*1.0*301
+"BLD",10340,1,139,0)
+ 
+"BLD",10340,1,140,0)
+   6. When Prompted "Rebuild Menu Tree Upon Completion: NO// respond NO.
+"BLD",10340,1,141,0)
+ 
+"BLD",10340,1,142,0)
+   7. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",10340,1,143,0)
+      NO//" respond NO.  
+"BLD",10340,1,144,0)
+  
+"BLD",10340,1,145,0)
+   8. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+"BLD",10340,1,146,0)
+      Protocols? NO//" respond NO.
+"BLD",10340,4,0)
+^9.64PA^^
+"BLD",10340,6.3)
+15
+"BLD",10340,"ABPKG")
+n
+"BLD",10340,"INID")
+^y
+"BLD",10340,"INIT")
+EN^TIUP301
+"BLD",10340,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10340,"KRN",.4,0)
+.4
+"BLD",10340,"KRN",.401,0)
+.401
+"BLD",10340,"KRN",.402,0)
+.402
+"BLD",10340,"KRN",.403,0)
+.403
+"BLD",10340,"KRN",.5,0)
+.5
+"BLD",10340,"KRN",.84,0)
+.84
+"BLD",10340,"KRN",3.6,0)
+3.6
+"BLD",10340,"KRN",3.8,0)
+3.8
+"BLD",10340,"KRN",9.2,0)
+9.2
+"BLD",10340,"KRN",9.8,0)
+9.8
+"BLD",10340,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10340,"KRN",9.8,"NM",1,0)
+TIUP301^^0^B42766519
+"BLD",10340,"KRN",9.8,"NM","B","TIUP301",1)
+ 
+"BLD",10340,"KRN",19,0)
+19
+"BLD",10340,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10340,"KRN",19.1,0)
+19.1
+"BLD",10340,"KRN",101,0)
+101
+"BLD",10340,"KRN",409.61,0)
+409.61
+"BLD",10340,"KRN",771,0)
+771
+"BLD",10340,"KRN",779.2,0)
+779.2
+"BLD",10340,"KRN",870,0)
+870
+"BLD",10340,"KRN",8989.51,0)
+8989.51
+"BLD",10340,"KRN",8989.52,0)
+8989.52
+"BLD",10340,"KRN",8994,0)
+8994
+"BLD",10340,"KRN","B",.4,.4)
+ 
+"BLD",10340,"KRN","B",.401,.401)
+ 
+"BLD",10340,"KRN","B",.402,.402)
+ 
+"BLD",10340,"KRN","B",.403,.403)
+ 
+"BLD",10340,"KRN","B",.5,.5)
+ 
+"BLD",10340,"KRN","B",.84,.84)
+ 
+"BLD",10340,"KRN","B",3.6,3.6)
+ 
+"BLD",10340,"KRN","B",3.8,3.8)
+ 
+"BLD",10340,"KRN","B",9.2,9.2)
+ 
+"BLD",10340,"KRN","B",9.8,9.8)
+ 
+"BLD",10340,"KRN","B",19,19)
+ 
+"BLD",10340,"KRN","B",19.1,19.1)
+ 
+"BLD",10340,"KRN","B",101,101)
+ 
+"BLD",10340,"KRN","B",409.61,409.61)
+ 
+"BLD",10340,"KRN","B",771,771)
+ 
+"BLD",10340,"KRN","B",779.2,779.2)
+ 
+"BLD",10340,"KRN","B",870,870)
+ 
+"BLD",10340,"KRN","B",8989.51,8989.51)
+ 
+"BLD",10340,"KRN","B",8989.52,8989.52)
+ 
+"BLD",10340,"KRN","B",8994,8994)
+ 
+"BLD",10340,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10340,"QUES",0)
+^9.62^^
+"BLD",10340,"REQB",0)
+^9.611^1^1
+"BLD",10340,"REQB",1,0)
+TIU*1.0*144^2
+"BLD",10340,"REQB","B","TIU*1.0*144",1)
+ 
+"INIT")
+EN^TIUP301
+"MBREQ")
+0
+"PKG",470,-1)
+1^1
+"PKG",470,0)
+TEXT INTEGRATION UTILITIES^TIU^Text Integration Utilities 
+"PKG",470,20,0)
+^9.402P^^
+"PKG",470,22,0)
+^9.49I^1^1
+"PKG",470,22,1,0)
+1.0^3010801^3010806^66481
+"PKG",470,22,1,"PAH",1,0)
+301^3170216
+"PKG",470,22,1,"PAH",1,1,0)
+^^146^146^3170216
+"PKG",470,22,1,"PAH",1,1,1,0)
+This patch will address a problem with consult notes being assigned
+"PKG",470,22,1,"PAH",1,1,2,0)
+to an incorrect patient's chart as a result of post install instructions
+"PKG",470,22,1,"PAH",1,1,3,0)
+for patch TIU*1.0*131 not being completed.
+"PKG",470,22,1,"PAH",1,1,4,0)
+ 
+"PKG",470,22,1,"PAH",1,1,5,0)
+Associated CA SDM ticket(s):
+"PKG",470,22,1,"PAH",1,1,6,0)
+============================
+"PKG",470,22,1,"PAH",1,1,7,0)
+I10273633FY16
+"PKG",470,22,1,"PAH",1,1,8,0)
+ INC000001014575(d)
+"PKG",470,22,1,"PAH",1,1,9,0)
+ PSPO #2595
+"PKG",470,22,1,"PAH",1,1,10,0)
+ 
+"PKG",470,22,1,"PAH",1,1,11,0)
+Associated NSR(s):
+"PKG",470,22,1,"PAH",1,1,12,0)
+==================
+"PKG",470,22,1,"PAH",1,1,13,0)
+N/A
+"PKG",470,22,1,"PAH",1,1,14,0)
+ 
+"PKG",470,22,1,"PAH",1,1,15,0)
+Test Sites:
+"PKG",470,22,1,"PAH",1,1,16,0)
+===========
+"PKG",470,22,1,"PAH",1,1,17,0)
+TBD
+"PKG",470,22,1,"PAH",1,1,18,0)
+   
+"PKG",470,22,1,"PAH",1,1,19,0)
+SDM Ticket Overview:
+"PKG",470,22,1,"PAH",1,1,20,0)
+====================
+"PKG",470,22,1,"PAH",1,1,21,0)
+I10273633FY16 - Exact same note appearing on two different charts.
+"PKG",470,22,1,"PAH",1,1,22,0)
+  
+"PKG",470,22,1,"PAH",1,1,23,0)
+Problem: 
+"PKG",470,22,1,"PAH",1,1,24,0)
+========
+"PKG",470,22,1,"PAH",1,1,25,0)
+The same consult note is documented in the correct patient chart as well
+"PKG",470,22,1,"PAH",1,1,26,0)
+as an incorrect patient chart, due to an incorrect consult number and an
+"PKG",470,22,1,"PAH",1,1,27,0)
+incorrect parameter value used when uploading the note through TIU.  It
+"PKG",470,22,1,"PAH",1,1,28,0)
+was determined that this is a result of post install instructions for
+"PKG",470,22,1,"PAH",1,1,29,0)
+patch TIU*1.0*131 not being followed leaving the TIU DOCUMENT 
+"PKG",470,22,1,"PAH",1,1,30,0)
+DEFINITIONS Progress Notes and Consults records with incorrect values in
+"PKG",470,22,1,"PAH",1,1,31,0)
+field 4.8 (UPLOAD FILING ERROR CODE).  The upload would not be filed and
+"PKG",470,22,1,"PAH",1,1,32,0)
+generate an error instead had the post install instructions for patch
+"PKG",470,22,1,"PAH",1,1,33,0)
+TIU*1.0*131 been completed.
+"PKG",470,22,1,"PAH",1,1,34,0)
+ 
+"PKG",470,22,1,"PAH",1,1,35,0)
+Resolution:
+"PKG",470,22,1,"PAH",1,1,36,0)
+===========
+"PKG",470,22,1,"PAH",1,1,37,0)
+This patch will run a post install routine.  The post install routine
+"PKG",470,22,1,"PAH",1,1,38,0)
+will review the PROGRESS NOTES class and CONSULTS document class (or
+"PKG",470,22,1,"PAH",1,1,39,0)
+CONSULTS class) and all entries within them in the TIU Document 
+"PKG",470,22,1,"PAH",1,1,40,0)
+Definitions file (8925.1). 
+"PKG",470,22,1,"PAH",1,1,41,0)
+ 
+"PKG",470,22,1,"PAH",1,1,42,0)
+The details of the install routine are as follows:
+"PKG",470,22,1,"PAH",1,1,43,0)
+ - If the current value of the UPLOAD FILING ERROR CODE (field 4.8) for
+"PKG",470,22,1,"PAH",1,1,44,0)
+   PROGRESS NOTES (and all document definitions under it) equals the
+"PKG",470,22,1,"PAH",1,1,45,0)
+   pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to 
+"PKG",470,22,1,"PAH",1,1,46,0)
+   "D PNFIX^TIUPNFIX" (if the record is not locked).
+"PKG",470,22,1,"PAH",1,1,47,0)
+ - If the current value of the UPLOAD FILING ERROR CODE (field 4.8) 
+"PKG",470,22,1,"PAH",1,1,48,0)
+   for CONSULTS (and all document definitions under it) equals the
+"PKG",470,22,1,"PAH",1,1,49,0)
+   pre-patch TIU*1.0*131 value of "D GETPN^TIUCHLP" it will be changed to
+"PKG",470,22,1,"PAH",1,1,50,0)
+   "D CNFIX^TIUCNFIX" (if the record is not locked).
+"PKG",470,22,1,"PAH",1,1,51,0)
+ - If a record has the pre-patch TIU*1.0*131 value and cannot be updated 
+"PKG",470,22,1,"PAH",1,1,52,0)
+   due to being locked it will need to be manually corrected.
+"PKG",470,22,1,"PAH",1,1,53,0)
+ 
+"PKG",470,22,1,"PAH",1,1,54,0)
+The below example information will be included in the mail message
+"PKG",470,22,1,"PAH",1,1,55,0)
+to any user defined as a member of VistA mail groups
+"PKG",470,22,1,"PAH",1,1,56,0)
+'PATIENT SAFETY NOTIFICATIONS' and 'TIU CACS' as well as to the user
+"PKG",470,22,1,"PAH",1,1,57,0)
+running the installation:
+"PKG",470,22,1,"PAH",1,1,58,0)
+ 
+"PKG",470,22,1,"PAH",1,1,59,0)
+  Subj: PATCH TIU*1.0*301 
+"PKG",470,22,1,"PAH",1,1,60,0)
+  From: PATCH TIU*1.0*301  In 'IN' basket.   Page 1  
+"PKG",470,22,1,"PAH",1,1,61,0)
+--------------------------------------------------------------------------
+"PKG",470,22,1,"PAH",1,1,62,0)
+  This patch reviews field 4.8 (UPLOAD FILING ERROR CODE) in the TIU 
+"PKG",470,22,1,"PAH",1,1,63,0)
+  DOCUMENT DEFINITIONS file for document classes and titles belonging to
+"PKG",470,22,1,"PAH",1,1,64,0)
+  CONSULTS and PROGRESS NOTES and are addressed as follows: 
+"PKG",470,22,1,"PAH",1,1,65,0)
+    1.  CONSULTS with the pre-patch TIU*1.0*131 value of 'D GETPN^TIUCHLP'
+"PKG",470,22,1,"PAH",1,1,66,0)
+        are changed to 'D CNFIX^TIUCNFIX'
+"PKG",470,22,1,"PAH",1,1,67,0)
+    2.  PROGRESS NOTES with the pre-patch TIU*1.0*131 value of 
+"PKG",470,22,1,"PAH",1,1,68,0)
+        'D GETPN^TIUCHLP' are changed to 'D PNFIX^TIUPNFIX'.  
+"PKG",470,22,1,"PAH",1,1,69,0)
+    3.  Any CONSULTS or PROGRESS NOTES with field 4.8 without a value are
+"PKG",470,22,1,"PAH",1,1,70,0)
+        not changed.
+"PKG",470,22,1,"PAH",1,1,71,0)
+    4.  Any CONSULTS or PROGRESS NOTES with the pre-patch TIU*1.0*131 
+"PKG",470,22,1,"PAH",1,1,72,0)
+        value of 'D GETPN^TIUCHLP' that are locked during the install
+"PKG",470,22,1,"PAH",1,1,73,0)
+        NEED TO BE MANUALLY UPDATED using option TIU UPLOAD PARAMETER 
+"PKG",470,22,1,"PAH",1,1,74,0)
+        EDIT.
+"PKG",470,22,1,"PAH",1,1,75,0)
+    5.  Any document definitions with a value other than 'D GETPN^TIUCHLP'
+"PKG",470,22,1,"PAH",1,1,76,0)
+        are not updated.
+"PKG",470,22,1,"PAH",1,1,77,0)
+ 
+"PKG",470,22,1,"PAH",1,1,78,0)
+  **IMPORTANT NOTE**  The 'Enhanced Mismatched Consults List' [TIU144
+"PKG",470,22,1,"PAH",1,1,79,0)
+  ENHANCED MISMATCH LIST] should be run regularly. Please take a moment 
+"PKG",470,22,1,"PAH",1,1,80,0)
+  now to run it and create a reminder in your calendar to run it again
+"PKG",470,22,1,"PAH",1,1,81,0)
+  every 6 months.  If there are any mismatches, submit a help desk
+"PKG",470,22,1,"PAH",1,1,82,0)
+  ticket for assistance resolving them.
+"PKG",470,22,1,"PAH",1,1,83,0)
+ 
+"PKG",470,22,1,"PAH",1,1,84,0)
+   PATCH TIU*1.0*301 INSTALL
+"PKG",470,22,1,"PAH",1,1,85,0)
+      UPLOAD FILING ERROR CODE (Field 4.8) Review:
+"PKG",470,22,1,"PAH",1,1,86,0)
+ 
+"PKG",470,22,1,"PAH",1,1,87,0)
+      IEN  Document Name (Type)
+"PKG",470,22,1,"PAH",1,1,88,0)
+           Result
+"PKG",470,22,1,"PAH",1,1,89,0)
+   --------------------------------------------
+"PKG",470,22,1,"PAH",1,1,90,0)
+   CONSULTS:
+"PKG",470,22,1,"PAH",1,1,91,0)
+      767  CONSULTS (DOCUMENT CLASS)
+"PKG",470,22,1,"PAH",1,1,92,0)
+           D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+"PKG",470,22,1,"PAH",1,1,93,0)
+      788  OPTOMETRY EYE CONSULT REPORT (TITLE)
+"PKG",470,22,1,"PAH",1,1,94,0)
+           D GETPN^TIUCHLP changed to D CNFIX^TIUCNFIX
+"PKG",470,22,1,"PAH",1,1,95,0)
+     1800  OPHTHALMOLOGY EYE CONSULT REPORT - PRALL (TITLE)
+"PKG",470,22,1,"PAH",1,1,96,0)
+           The record is currently locked.
+"PKG",470,22,1,"PAH",1,1,97,0)
+           Needs to be manually updated to D CNFIX^TIUCNFIX
+"PKG",470,22,1,"PAH",1,1,98,0)
+   PROGRESS NOTES:
+"PKG",470,22,1,"PAH",1,1,99,0)
+        3  PROGRESS NOTES (CLASS)
+"PKG",470,22,1,"PAH",1,1,100,0)
+           D GETPN^TIUCHLP changed to D PNFIX^TIUPNFIX
+"PKG",470,22,1,"PAH",1,1,101,0)
+     1331  C&P MEDICAL (TITLE)
+"PKG",470,22,1,"PAH",1,1,102,0)
+           No change.  Value is already D PNFIX^TIUPNFIX
+"PKG",470,22,1,"PAH",1,1,103,0)
+ 
+"PKG",470,22,1,"PAH",1,1,104,0)
+   
+"PKG",470,22,1,"PAH",1,1,105,0)
+     ================INSTALLATION INSTRUCTIONS =================
+"PKG",470,22,1,"PAH",1,1,106,0)
+ 
+"PKG",470,22,1,"PAH",1,1,107,0)
+It is not necessary to disable any options.  Users should not edit TIU 
+"PKG",470,22,1,"PAH",1,1,108,0)
+document definitions during the install. It should take less than 
+"PKG",470,22,1,"PAH",1,1,109,0)
+2 minutes to install this patch.
+"PKG",470,22,1,"PAH",1,1,110,0)
+ 
+"PKG",470,22,1,"PAH",1,1,111,0)
+   1. Ensure there are appropriate active user entries as members of both 
+"PKG",470,22,1,"PAH",1,1,112,0)
+      VistA mail groups 'PATIENT SAFETY NOTIFICATIONS' and 'TIU CACS'.
+"PKG",470,22,1,"PAH",1,1,113,0)
+      This can be accomplished using option 'Mail Group Edit' on the
+"PKG",470,22,1,"PAH",1,1,114,0)
+      Group/Distribution Management menu.
+"PKG",470,22,1,"PAH",1,1,115,0)
+ 
+"PKG",470,22,1,"PAH",1,1,116,0)
+   2. Choose the PackMan message containing this patch and invoke the
+"PKG",470,22,1,"PAH",1,1,117,0)
+      INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",470,22,1,"PAH",1,1,118,0)
+  
+"PKG",470,22,1,"PAH",1,1,119,0)
+   3. From the Kernel Installation & Distribution System menu, select 
+"PKG",470,22,1,"PAH",1,1,120,0)
+      the Installation menu.  
+"PKG",470,22,1,"PAH",1,1,121,0)
+  
+"PKG",470,22,1,"PAH",1,1,122,0)
+   4. From this menu, you may select to use the following options: 
+"PKG",470,22,1,"PAH",1,1,123,0)
+      (when prompted for INSTALL NAME, enter TIU*1.0*301)
+"PKG",470,22,1,"PAH",1,1,124,0)
+  
+"PKG",470,22,1,"PAH",1,1,125,0)
+        a.  Verify Checksums in Transport Global - This option will allow
+"PKG",470,22,1,"PAH",1,1,126,0)
+            you to ensure the integrity of the routines that are in the
+"PKG",470,22,1,"PAH",1,1,127,0)
+            transport global.
+"PKG",470,22,1,"PAH",1,1,128,0)
+        b.  Print Transport Global - This option will allow you to view
+"PKG",470,22,1,"PAH",1,1,129,0)
+            the components of the KIDS build.
+"PKG",470,22,1,"PAH",1,1,130,0)
+        c.  Compare Transport Global to Current System - This option will
+"PKG",470,22,1,"PAH",1,1,131,0)
+            allow you to view all changes that will be made when this 
+"PKG",470,22,1,"PAH",1,1,132,0)
+            patch is installed.  It compares all components of this
+"PKG",470,22,1,"PAH",1,1,133,0)
+            patch (routines, DD's, templates, etc.).
+"PKG",470,22,1,"PAH",1,1,134,0)
+        d.  Backup a Transport Global - This option will create a backup
+"PKG",470,22,1,"PAH",1,1,135,0)
+            message of any routines exported with this patch. It will not
+"PKG",470,22,1,"PAH",1,1,136,0)
+            backup any other changes such as DD's or templates.
+"PKG",470,22,1,"PAH",1,1,137,0)
+  
+"PKG",470,22,1,"PAH",1,1,138,0)
+   5. Use the Install Package(s) option and select the package TIU*1.0*301
+"PKG",470,22,1,"PAH",1,1,139,0)
+ 
+"PKG",470,22,1,"PAH",1,1,140,0)
+   6. When Prompted "Rebuild Menu Tree Upon Completion: NO// respond NO.
+"PKG",470,22,1,"PAH",1,1,141,0)
+ 
+"PKG",470,22,1,"PAH",1,1,142,0)
+   7. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",470,22,1,"PAH",1,1,143,0)
+      NO//" respond NO.  
+"PKG",470,22,1,"PAH",1,1,144,0)
+  
+"PKG",470,22,1,"PAH",1,1,145,0)
+   8. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+"PKG",470,22,1,"PAH",1,1,146,0)
+      Protocols? NO//" respond NO.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+ 
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","TIUP301")
+0^1^B42766519^n/a
+"RTN","TIUP301",1,0)
+TIUP301 ; SLC/DJH - Patch 301 post-install routine  ; 1/11/17 4:54pm
+"RTN","TIUP301",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**301**;;Build 15
+"RTN","TIUP301",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","TIUP301",4,0)
+ Q
+"RTN","TIUP301",5,0)
+ ; TIU*1.0*301
+"RTN","TIUP301",6,0)
+ ; This routine sets the parameter 'UPLOAD FILING ERROR CODE'
+"RTN","TIUP301",7,0)
+ ; from 'D GETPN^TIUCHLP' to 'D CNFIX^TIUCNFIX' for all CONSULTS
+"RTN","TIUP301",8,0)
+ ; document types & from 'D GETPN^TIUCHLP' to 'D PNFIX^TIUPNFIX'
+"RTN","TIUP301",9,0)
+ ; for all PROGRESS NOTES document types.   This is to resolve 
+"RTN","TIUP301",10,0)
+ ; issues caused by facilities who didn't complete the post install
+"RTN","TIUP301",11,0)
+ ; instructions for patch TIU*1.0*131 or didn't complete the
+"RTN","TIUP301",12,0)
+ ; instructions because they didn't upload CONSULTS or PROGRESS NOTES
+"RTN","TIUP301",13,0)
+ ; when patch 131 was installed.
+"RTN","TIUP301",14,0)
+ ;
+"RTN","TIUP301",15,0)
+ ; EXTERNAL REFERENCES
+"RTN","TIUP301",16,0)
+ ;  $$FIND1^DIC
+"RTN","TIUP301",17,0)
+ ;  $$GET1^DIQ
+"RTN","TIUP301",18,0)
+ ;  $$HTE^XLFDT
+"RTN","TIUP301",19,0)
+ ;  $$NOW^XLFDT
+"RTN","TIUP301",20,0)
+ ;  $$FMADD^XLFDT
+"RTN","TIUP301",21,0)
+ ;  $$FMTH^XLFDT
+"RTN","TIUP301",22,0)
+ ;  $$FMTE^XLFDT
+"RTN","TIUP301",23,0)
+ ;  BMES^XPDUTL
+"RTN","TIUP301",24,0)
+ ;  MES^XPDUTL
+"RTN","TIUP301",25,0)
+ ;  FILE^DIE
+"RTN","TIUP301",26,0)
+ ;  ^XMD
+"RTN","TIUP301",27,0)
+EN ;
+"RTN","TIUP301",28,0)
+ N IEN,TIUIEN,TIUIEN2,TIUCONS,TIUPN,IND,TIUDOCN,CNT,BEGDT,TXT
+"RTN","TIUP301",29,0)
+ N NAMSP,TIUBADV,TIUPARAM,MSG,TYPE,PATCH,JOBN,IND,DOCTYPE
+"RTN","TIUP301",30,0)
+ N PURGDT,TEXT,TIUCURR,TIUMSG,FDARR,IENS,ERR,FLAGS,REPORT
+"RTN","TIUP301",31,0)
+ S NAMSP=$$NAMSP,PATCH="TIU*1.0*301"
+"RTN","TIUP301",32,0)
+ S JOBN="TIU PATCH 301 INSTALL"
+"RTN","TIUP301",33,0)
+ S IND=$J(" ",8),CNT=1000,MSG(CNT)="",CNT=CNT+1
+"RTN","TIUP301",34,0)
+ S TIUBADV="D GETPN^TIUCHLP"   ; Bad param value
+"RTN","TIUP301",35,0)
+ ; Get the IENs for PATIENT RECORD FLAG CAT I/II Doc Class
+"RTN","TIUP301",36,0)
+ ;
+"RTN","TIUP301",37,0)
+ ; INITIALIZE ^XTMP
+"RTN","TIUP301",38,0)
+ S BEGDT=$$NOW^XLFDT,PURGDT=$$FMADD^XLFDT(BEGDT,365)  ;365 day life
+"RTN","TIUP301",39,0)
+ S ^XTMP(NAMSP,0)=PURGDT_"^"_BEGDT_"^"_PATCH
+"RTN","TIUP301",40,0)
+ S ^XTMP(NAMSP,0,"STATUS")="RUN^"_$$NOW^XLFDT_"^^^"
+"RTN","TIUP301",41,0)
+ ;
+"RTN","TIUP301",42,0)
+ D MESSHDR ; Build message header
+"RTN","TIUP301",43,0)
+ ;
+"RTN","TIUP301",44,0)
+ ; PROCESS CONSULTS
+"RTN","TIUP301",45,0)
+ S TIUCONS=$$FIND1^DIC(8925.1,"","X","CONSULTS","B") ; Consults IEN
+"RTN","TIUP301",46,0)
+ S MSG(CNT)="CONSULTS:",CNT=CNT+1
+"RTN","TIUP301",47,0)
+ S TYPE=TIUCONS
+"RTN","TIUP301",48,0)
+ S TIUPARAM="D CNFIX^TIUCNFIX"
+"RTN","TIUP301",49,0)
+ S DOCTYPE=$$GET1^DIQ(8925.1,TIUCONS,.04)
+"RTN","TIUP301",50,0)
+ ;Consults is a stand-alone class
+"RTN","TIUP301",51,0)
+ I DOCTYPE="CLASS" D
+"RTN","TIUP301",52,0)
+ . D FIX(TYPE) ;fix CL record first
+"RTN","TIUP301",53,0)
+ . D GETCL
+"RTN","TIUP301",54,0)
+ ; Consults is a Document Class
+"RTN","TIUP301",55,0)
+ I DOCTYPE'="CLASS" D
+"RTN","TIUP301",56,0)
+ . D FIX(TYPE) ;fix DC record first
+"RTN","TIUP301",57,0)
+ . S TIUIEN=TYPE
+"RTN","TIUP301",58,0)
+ . D GETDOC
+"RTN","TIUP301",59,0)
+ ;
+"RTN","TIUP301",60,0)
+ ; PROCESS PROGRESS NOTES
+"RTN","TIUP301",61,0)
+ S TIUPN=$$FIND1^DIC(8925.1,"","X","PROGRESS NOTES","B") ; Progress Notes CL IEN
+"RTN","TIUP301",62,0)
+ S MSG(CNT)="PROGRESS NOTES:",CNT=CNT+1
+"RTN","TIUP301",63,0)
+ S TYPE=TIUPN
+"RTN","TIUP301",64,0)
+ S TIUPARAM="D PNFIX^TIUPNFIX"
+"RTN","TIUP301",65,0)
+ D FIX(TYPE)  ; First fix CL record
+"RTN","TIUP301",66,0)
+ D GETCL
+"RTN","TIUP301",67,0)
+ ;
+"RTN","TIUP301",68,0)
+ D MAIL
+"RTN","TIUP301",69,0)
+ Q
+"RTN","TIUP301",70,0)
+ ;
+"RTN","TIUP301",71,0)
+ ; =============== SUBROUTINES =================
+"RTN","TIUP301",72,0)
+ ;
+"RTN","TIUP301",73,0)
+MESSHDR ; Build message header
+"RTN","TIUP301",74,0)
+ S MSG(CNT)="PATCH TIU*1.0*301 INSTALL",CNT=CNT+1
+"RTN","TIUP301",75,0)
+ S MSG(CNT)="   UPLOAD FILING ERROR CODE (Field 4.8) Review:",CNT=CNT+1
+"RTN","TIUP301",76,0)
+ S MSG(CNT)="",CNT=CNT+1
+"RTN","TIUP301",77,0)
+ S MSG(CNT)="   IEN  Document Name (Type)",CNT=CNT+1
+"RTN","TIUP301",78,0)
+ S MSG(CNT)="        Result",CNT=CNT+1
+"RTN","TIUP301",79,0)
+ S MSG(CNT)="--------------------------------------------",CNT=CNT+1
+"RTN","TIUP301",80,0)
+ Q
+"RTN","TIUP301",81,0)
+ ;
+"RTN","TIUP301",82,0)
+GETCL ; Find all DOCUMENT CLASSES within the Class
+"RTN","TIUP301",83,0)
+ S TIUIEN=0
+"RTN","TIUP301",84,0)
+ F  S TIUIEN=$O(^TIU(8925.1,TYPE,10,"B",TIUIEN)) Q:'TIUIEN  D
+"RTN","TIUP301",85,0)
+ . ;Skip Consults
+"RTN","TIUP301",86,0)
+ . Q:TIUIEN=TIUCONS
+"RTN","TIUP301",87,0)
+ . D:$$GET1^DIQ(8925.1,TIUIEN,4.8)'="" FIX(TIUIEN)
+"RTN","TIUP301",88,0)
+ . D GETDOC
+"RTN","TIUP301",89,0)
+ Q
+"RTN","TIUP301",90,0)
+ ;
+"RTN","TIUP301",91,0)
+GETDOC ; Find all DOCUMENTS within the Document Class
+"RTN","TIUP301",92,0)
+ S TIUIEN2=0
+"RTN","TIUP301",93,0)
+ F  S TIUIEN2=$O(^TIU(8925.1,TIUIEN,10,"B",TIUIEN2)) Q:'TIUIEN2  D
+"RTN","TIUP301",94,0)
+ . Q:TIUIEN2=TIUCONS
+"RTN","TIUP301",95,0)
+ . Q:$$GET1^DIQ(8925.1,TIUIEN2,4.8)=""  ; No value
+"RTN","TIUP301",96,0)
+ . D FIX(TIUIEN2)
+"RTN","TIUP301",97,0)
+ Q
+"RTN","TIUP301",98,0)
+ ; 
+"RTN","TIUP301",99,0)
+FIX(IEN) ;
+"RTN","TIUP301",100,0)
+ S TIUDOCN=$$GET1^DIQ(8925.1,IEN,.01)_" ("_$$GET1^DIQ(8925.1,IEN,.04)_")"
+"RTN","TIUP301",101,0)
+ S TIUCURR=$$GET1^DIQ(8925.1,IEN,4.8)  ; current value in field 4.8
+"RTN","TIUP301",102,0)
+ S REPORT=0
+"RTN","TIUP301",103,0)
+ ;
+"RTN","TIUP301",104,0)
+ I TIUCURR'=TIUPARAM,TIUCURR'=TIUBADV Q
+"RTN","TIUP301",105,0)
+ ;
+"RTN","TIUP301",106,0)
+ S MSG(CNT)=$J(IEN,6)_"  "_TIUDOCN,CNT=CNT+1
+"RTN","TIUP301",107,0)
+ ;
+"RTN","TIUP301",108,0)
+ I TIUCURR=TIUPARAM D
+"RTN","TIUP301",109,0)
+ . S MSG(CNT)=IND_"No change.  Value is already "_TIUPARAM,CNT=CNT+1
+"RTN","TIUP301",110,0)
+ ;
+"RTN","TIUP301",111,0)
+ I TIUCURR=TIUBADV D
+"RTN","TIUP301",112,0)
+ . S IENS=""""_IEN_","""
+"RTN","TIUP301",113,0)
+ . S FDARR="FDA(8925.1,"_IENS_")",FLAGS="K"
+"RTN","TIUP301",114,0)
+ . S @FDARR@(4.8)=TIUPARAM
+"RTN","TIUP301",115,0)
+ . D FILE^DIE(FLAGS,"FDA","TIUMSG")
+"RTN","TIUP301",116,0)
+ . I '$D(TIUMSG) S MSG(CNT)=IND_TIUCURR_" changed to "_TIUPARAM,CNT=CNT+1 Q
+"RTN","TIUP301",117,0)
+ . S ERR=0 F  S ERR=$O(TIUMSG("DIERR",1,"TEXT",ERR)) Q:ERR=""  D
+"RTN","TIUP301",118,0)
+ . . S MSG(CNT)=IND_TIUMSG("DIERR",1,"TEXT",ERR),CNT=CNT+1
+"RTN","TIUP301",119,0)
+ . S MSG(CNT)=IND_"Needs to be manually updated to "_TIUPARAM,CNT=CNT+1
+"RTN","TIUP301",120,0)
+ Q
+"RTN","TIUP301",121,0)
+ ;
+"RTN","TIUP301",122,0)
+MAIL ;
+"RTN","TIUP301",123,0)
+ N XMY,XMDUZ,DIFROM,XMSUB,XMTEXT,NMSP,VAR
+"RTN","TIUP301",124,0)
+ S XMY(DUZ)=""
+"RTN","TIUP301",125,0)
+ S XMY("G.TIU CACS")=""
+"RTN","TIUP301",126,0)
+ S XMY("G.PATIENT SAFETY NOTIFICATIONS")=""
+"RTN","TIUP301",127,0)
+ S XMSUB="PATCH TIU*1.0*301 INSTALL",XMTEXT="MSG(",XMDUZ="Patch TIU*1.0*301"
+"RTN","TIUP301",128,0)
+ S CNT=1
+"RTN","TIUP301",129,0)
+ S MSG(CNT)="PATCH TIU*1.0*301 completed processing.",CNT=CNT+1
+"RTN","TIUP301",130,0)
+ S MSG(CNT)="",CNT=CNT+1
+"RTN","TIUP301",131,0)
+ S MSG(CNT)="This patch reviewed field 4.8 (UPLOAD FILING ERROR CODE) in TIU DOCUMENT",CNT=CNT+1
+"RTN","TIUP301",132,0)
+ S MSG(CNT)="DEFINITIONS for document classes and titles belonging to CONSULTS and PROGRESS",CNT=CNT+1
+"RTN","TIUP301",133,0)
+ S MSG(CNT)="NOTES.  Any values that equaled the pre-patch TIU*1.0*131 value of",CNT=CNT+1
+"RTN","TIUP301",134,0)
+ S MSG(CNT)="'D GETPN^TIUCHLP' and were not in use at the time of the install ('locked')",CNT=CNT+1
+"RTN","TIUP301",135,0)
+ S MSG(CNT)="were updated as follows:",CNT=CNT+1
+"RTN","TIUP301",136,0)
+ S MSG(CNT)="   1.  CONSULTS were changed to 'D CNFIX^TIUCNFIX', PROGRESS NOTES were changed",CNT=CNT+1
+"RTN","TIUP301",137,0)
+ S MSG(CNT)="       to 'D PNFIX^TIUPNFIX'.",CNT=CNT+1
+"RTN","TIUP301",138,0)
+ S MSG(CNT)="   2.  Any classes or titles that were locked during the install NEED TO",CNT=CNT+1
+"RTN","TIUP301",139,0)
+ S MSG(CNT)="       BE MANUALLY UPDATED using option TIU UPLOAD PARAMETER EDIT.",CNT=CNT+1
+"RTN","TIUP301",140,0)
+ S MSG(CNT)="   3.  Any values other than 'D GETPN^TIUCHLP' were not changed and are noted",CNT=CNT+1
+"RTN","TIUP301",141,0)
+ S MSG(CNT)="       only in the install file for historical purposes and no action to them",CNT=CNT+1
+"RTN","TIUP301",142,0)
+ S MSG(CNT)="       is required with this patch.",CNT=CNT+1
+"RTN","TIUP301",143,0)
+ S MSG(CNT)="   4.  Any field 4.8 without a value were not changed and are not listed.",CNT=CNT+1
+"RTN","TIUP301",144,0)
+ S MSG(CNT)="",CNT=CNT+1
+"RTN","TIUP301",145,0)
+ S MSG(CNT)="**IMPORTANT NOTE**  The 'Enhanced Mismatched Consults List' [TIU144",CNT=CNT+1
+"RTN","TIUP301",146,0)
+ S MSG(CNT)="ENHANCED MISMATCH LIST] should be run regularly. Please take a moment now",CNT=CNT+1
+"RTN","TIUP301",147,0)
+ S MSG(CNT)="to run it and create a reminder in your calendar to run it again every",CNT=CNT+1
+"RTN","TIUP301",148,0)
+ S MSG(CNT)="6 months.  If there are any mismatches submit a help desk ticket for",CNT=CNT+1
+"RTN","TIUP301",149,0)
+ S MSG(CNT)="assistance resolving them.",CNT=CNT+1
+"RTN","TIUP301",150,0)
+ ;
+"RTN","TIUP301",151,0)
+ D ^XMD
+"RTN","TIUP301",152,0)
+ Q
+"RTN","TIUP301",153,0)
+ ;
+"RTN","TIUP301",154,0)
+NAMSP() ;
+"RTN","TIUP301",155,0)
+ Q $T(+0)
+"VER")
+8.0^22.0
+"BLD",10340,6)
+^279
+**END**
+**END**
+

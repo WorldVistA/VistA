@@ -1,0 +1,208 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Wednesday, 11/15/17 at 11:17
+=============================================================================
+Run Date: NOV 27, 2017                     Designation: ECX*3*169
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #151                      Status: Released
+                  Compliance Date: NOV 28, 2017
+=============================================================================
+
+Associated patches: (v)ECX*3*166   <<= must be installed BEFORE `ECX*3*169'
+
+Subject: DSS FY 2018 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Since the release of the FY18 DSS Sustainment patch, ECX*3.0*166, a
+ couple of issues have been identified.  The first issue is in the PRO
+ extract.  Under certain circumstances, it's possible for prosthetics
+ records to be skipped that should be included in the extract.  The second 
+ issue is that the treating specialty extract audit report shows no records
+ even if there are records in the selected extract.
+  
+ During the release of the patch, it was noted that the patch application 
+ line, typically line 2 of any routine, incorrectly noted the patches 
+ applied to routine ECXWRD.
+  
+ This patch will address these issues.
+  
+ Problem #1: Prosthetics extract not correctly counting workload 
+  
+   ASSOCIATED CA Service Desk:
+   ==========================
+   I17314063FY18
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When the prosthetics extract is run, it's possible for the extract to
+   skip records that should be included in the extract.  This causes the
+   extract to incorrectly identify workload for the extract period.
+  
+   Resolution:
+   -----------
+   Routine ECXPRO was modified so that the extracting station number isn't
+   changed from its original value.  Inadvertent modification of the
+   extracting station number caused records to be skipped.
+  
+ Problem #2: Treating specialty extract audit report doesn't report any 
+             records.
+  
+   ASSOCIATED CA Service Desk:
+   ==========================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When the treating specialty extract audit report is run the report
+   indicates that there are no records to show.
+  
+   Resolution:
+   -----------
+   Routine ECXATRT was modified so that the extract record would be 
+   included in the report regardless of the value found in the facility
+   field for that record.
+  
+ Problem #3: Routine ECXWRD has an incorrect patch history
+  
+   ASSOCIATED CA Service Desk:
+   ==========================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   -------- 
+   After release of the patch, it was discovered that the patch history
+   listing for routine ECXWRD was incorrect.
+  
+   Resolution:
+   -----------
+   The second line of routine ECXWRD was changed so that the proper patch
+   history, including patch 169, is now shown.
+  
+ Test Sites:
+ -----------
+ Boston
+ Little Rock
+ North Texas
+  
+ INSTALLATION:
+ =============
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+                  Extract Manager's Options [ECXMGR]
+   
+ Install Time - less than 2 minutes (unless otherwise indicated) 
+  
+ ***********************************************************
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke 
+         the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS
+         -------------
+         Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:  
+  
+              Edits and Distribution ...
+              Utilities ...
+              Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+              Load a Distribution 
+              Print Transport Global
+              Compare Transport Global to Current System
+              Verify Checksums in Transport Global              
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+              Backup a Transport Global     
+    
+    Select Installation Option: 
+    
+    3.   Select Installation Option:
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the 
+               INSTALL NAME, enter ECX*3.0*169):
+  
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It
+             will not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made
+             when this patch is installed.  It compares all components of
+             this patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that
+             are in the transport global.
+  
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch:
+  
+         a.  Choose the Install Package(s) option to start the patch
+             install.  Enter ECX*3.0*169 when prompted for a build 
+             name.
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during 
+             the install?  NO//' answer NO.
+         c.  When prompted 'Want to DISABLE Scheduled Options, 
+             Menu Options, and Protocols? NO//' answer YES.
+         d.  When prompted 'Enter options you wish to mark as 'Out 
+             Of Order':'  Enter the following options:
+  
+                      Extract Manager's Options [ECXMGR]
+  
+         e.  If prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':' press <return>. 
+         f.  If prompted 'Delay Install (Minutes):  (0-60):  0//'          
+             answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXATRT
+    Before: B70445295   After: B71794842  **1,6,8,107,105,149,169**
+Routine Name: ECXPRO
+    Before: B51138960   After: B51537210  **9,13,15,21,24,33,39,46,71,
+                                           92,105,120,127,132,136,144,149,
+                                           154,161,166,169**
+Routine Name: ECXWRD
+    Before: B18988653   After: B18988653  **2,8,127,149,166,169**
+ 
+Routine list of preceding patches: 166
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 08, 2017
+Completed By:                               Date Completed: NOV 27, 2017
+Released By :                               Date Released : NOV 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

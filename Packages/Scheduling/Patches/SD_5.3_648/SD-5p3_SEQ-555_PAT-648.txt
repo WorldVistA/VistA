@@ -1,0 +1,201 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/11/17 at 15:07
+=============================================================================
+Run Date: NOV 02, 2017                     Designation: SD*5.3*648
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #555                    Status: Released
+                  Compliance Date: DEC 03, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*648'
+                    (v)SD*5.3*643  <<= must be installed BEFORE `SD*5.3*648'
+
+Subject: SDRR DELETE REASON AND CLINIC TYPE ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes the following three (3) issues:
+  
+ 1. The Delete Reason "APPT SCHEDULED" is missing in the RECALL REMINDERS 
+    REMOVED file (#403.56).
+    
+ 2. When entering a patient into Recall Reminder, customer requests to 
+    limit the TYPE of location to clinic only. 
+  
+ 3. When running the Recall Patient Inquiry [SDRR PATIENT INQUIRY] option,
+    if a queued device is selected, the error <NOTOPEN>ALL+1^SDRRINQ1 
+    occurs.
+  
+  
+ Associated CA SDM tickets:
+ ==========================
+ 1. I9842364FY16      Scheduling - Recall Reminder
+  
+ 2. I9842951FY16      Scheduling - Recall Reminder
+  
+ 3. R7453264FY16      VISTA printing issue in SDRR
+    Duplicate:
+    I8142213FY16      User states that when she tries to print a report
+                      in vista it closes out
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Erie VA Medical Center
+ Louis A. Johnson VA Medical Center - Clarksburg 
+  
+  
+ CA SDM Overview:
+ ================
+ 1. I9842364FY16      Scheduling - Recall Reminder
+  
+    Problem:
+    --------
+    When running Recall Reminder nightly background job, Clean Up Clinic 
+    Recall Entries [SDRR CLEAN-UP] option, a copy of the recall reminder
+    record is added to the RECALL REMINDERS REMOVED file (#403.56), but 
+    the Delete Reason, APPT SCHEDULED, is not populated. 
+    
+    Resolution:
+    -----------
+    Modified routine SDRRISRU to make sure Delete Reason "APPT SCHEDULED" 
+    is populated in the DELETE REASON field (#203) of the RECALL REMINDERS 
+    REMOVED file (#403.56).
+  
+  
+ 2. I9842951FY16      Scheduling - Recall Reminder
+  
+    Problem:
+    --------
+    When entering a patient into Recall Reminder, customer requests to
+    limit the TYPE of location to clinic only.
+  
+    Resolution:
+    -----------
+    Routine SDRRUTL has been modified to select the clinic with TYPE of 
+    location assigned to clinic only.
+  
+  
+ 3. R7453264FY16      VISTA printing issue in SDRR
+    
+    Problem:
+    --------
+    Site reported that when running the Recall Patient Inquiry [SDRR  
+    PATIENT INQUIRY] option, if a user selects a queued device, the 
+    error <NOTOPEN>ALL+1^SDRRINQ1 occurs. Users are only able to print 
+    to the screen.
+  
+    Resolution:
+    -----------
+    Routine SDRRINQ1 has been modified to correct the <NOTOPEN> error.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ If installed during the normal workday, it is recommended that the 
+ Scheduling and Recall Reminders users be off the system and when Recall 
+ Reminder nightly background job [SDRR CLEAN-UP] is not scheduled to
+ run.  Other VISTA users will not be affected.
+  
+ Install Time - less than 2 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*648):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+  
+           Add/Edit Clinic Recall Patient [SDRR CARD ADD]
+           Clean Up Clinic Recall Entries [SDRR CLEAN-UP]
+           Recall Patient Inquiry [SDRR PATIENT INQUIRY]
+  
+     d.  When prompted, 'Enter protocols you wish to mark as 'Out of
+         Order':', enter: <ENTER> 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRINQ1
+    Before: B59730952   After: B59740412  **536,566,582,648**
+Routine Name: SDRRISRU
+    Before: B14287203   After: B15714753  **536,627,648**
+Routine Name: SDRRUTL
+    Before: B62204339   After: B64608837  **536,571,582,643,648**
+ 
+Routine list of preceding patches: 627, 643
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2016
+Completed By:                               Date Completed: NOV 02, 2017
+Released By :                               Date Released : NOV 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
