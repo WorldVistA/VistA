@@ -247,16 +247,15 @@ the configure step.
 TEST_VISTA_FRESH and TEST_VISTA_SETUP
 ``````````````````````````````````````
 
-There is an option that is not needed to run the testing but may become useful.
 The TEST_VISTA_FRESH option will show up during configuration of the VistA
-Testing.  It uses a series of Python scripts to clean the database of the VistA
-instance.   This would all be done during the build phase of a nightly
-dashboard submission.
+Testing.  When this option is selected, a series of Python scripts will be
+configured to clean the database of the VistA instance. These scripts would be
+executed during the build phase of a nightly dashboard submission.
 
-This combination can also configure the VistA instance and set up a fictional
-environment within VistA with fake patients, doctors and nurses, and a simple
-clinic. This information is required to be there for the functional tests to
-complete successfully.
+The TEST_VISTA_SETUP option can be used to configure the VistA instance and
+set up a fictional environment within VistA with fake patients, doctors and
+nurses, and a simple clinic. This information is required to be there for the
+functional tests to complete successfully.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/6b856178-cmakeGUIFreshcallout.png
    :align: center
@@ -265,8 +264,8 @@ complete successfully.
 
 To utilize this option on Caché, the TEST_VISTA_FRESH checkbox must be checked
 to tell CMake to configure the correct files. You will also need to create a
-new cache.dat and  set the TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to the
-location of that newly created cache.dat.  It will then shut down the Caché
+new (empty) cache.dat and set the TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to
+the location of that newly created cache.dat.  It will then shut down the Caché
 instance, copy the empty database in place of the old one, restart Caché, then
 collect and import the OSEHRA routines and globals.
 
@@ -274,7 +273,6 @@ collect and import the OSEHRA routines and globals.
 
 See the instructions found in the ``Configuring Caché`` section of the
 `Install Caché`_ document.
-
 
 .. figure:: http://code.osehra.org/content/named/SHA1/974956f3-cmakeGUIFreshcalloutconfigureCache.png
    :align: center

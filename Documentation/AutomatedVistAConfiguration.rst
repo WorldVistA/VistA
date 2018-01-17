@@ -1,12 +1,13 @@
 Automated VistA Import and Configuration
 ========================================
 
-The manual steps for the Caché and GTM importing process can be found at ImportCache_ and ImportGT.M_.
-The ImportRG script runs files that mirror these scripts and will introduce the same codebase into the database.
+The process for importing VistA-M routines and globals into Caché and GTM has
+been automated. The automated import and configuration scripts are configured
+and prepared during the setup of the VistA repository after selecting the
+TEST_VISTA_FRESH_ option.
 
-The process for importing VistA-M routines and globals into Caché and GTM has been automated. These files are configured and prepared during the setup
-of the VistA repository after selecting the TEST_VISTA_FRESH_ option.  The TEST_VISTA_FRESH option also uses this import and configuration during the \'build\'
-step of a CTest dashboard submission. To execute the automated import and configuration via the command line, execute the following steps from a gitbash (Windows) or linux shell:
+To execute the automated import and configuration via the command line, execute
+the following steps from a gitbash (Windows) or linux shell:
 
 .. parsed-literal::
 
@@ -14,7 +15,17 @@ step of a CTest dashboard submission. To execute the automated import and config
 
   $ cmake -P Testing/Setup/ImportRG.cmake
 
-Note that during the execution of the ImportRG script, in addition to the Routine and Global imports, three additional setup scripts are executed automatically:
+
+Note: The manual steps for the Caché and GTM importing process can be found at
+ImportCache_ and ImportGT.M_. The ImportRG script runs files that mirror these
+scripts and will introduce the same codebase into the database.
+
+
+Automated VistA Setup
+=====================
+
+If the `TEST_VISTA_SETUP` option was selected, then during the execution of the
+ImportRG script, three additional setup scripts are executed automatically:
 
 =============================  ================================================================
    Script Name                                 Purpose
