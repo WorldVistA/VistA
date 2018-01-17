@@ -2,7 +2,8 @@ Howto Update Spreadsheets
 =========================
 
 This document describes how to update the ``Packages/Uncategorized/*.csv`` FOIA
-patch spreadsheets using the latest ``.xls`` files from the VA VistA FOIA site.
+patch spreadsheets using the latest ``.xls`` files from the OSEHRA FOIA VistA
+site.
 
 Branch
 ------
@@ -21,10 +22,10 @@ other branches instead of overwriting them.
 Download
 --------
 
-Download the ``.xls`` files from the FOIA web site for some ``${year}``::
+Download the ``.xls`` files from the OSEHRA FOIA VistA web site for some ``${year}``::
 
  wget --continue --input-file=- --user-agent='' \
-  https://downloads.va.gov/files/FOIA/Software/DBA_VistA_FOIA_System_Files/Listing_of_Released_VistA_Patches_${year}.xls
+  https://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/All_Listing_of_Released_VistA_Patches/${year}_Listing_of_Released_VistA_Patches.xls
 
 Convert
 -------
