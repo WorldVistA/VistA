@@ -1,0 +1,341 @@
+
+=============================================================================
+Run Date: NOV 07, 2017                     Designation: OR*3*434
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #384                      Status: Released
+                  Compliance Date: DEC 19, 2017
+=============================================================================
+
+Associated patches: (v)XWB*1.1*64  <<= must be installed BEFORE `OR*3*434'
+                    (v)XU*8*659    <<= must be installed BEFORE `OR*3*434'
+                    (v)OR*3*421    <<= must be installed BEFORE `OR*3*434'
+                    (v)OR*3*423    <<= must be installed BEFORE `OR*3*434'
+                    (v)OR*3*424    <<= must be installed BEFORE `OR*3*434'
+                    (v)OR*3*425    <<= must be installed BEFORE `OR*3*434'
+                    (v)OR*3*436    <<= must be installed BEFORE `OR*3*434'
+
+Subject: CPRS V31A
+
+Category: 
+  - Other
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ 1. The Computerized Patient Record System (CPRS) Graphical User Interface
+ (GUI) v31.A is addressing the requirement to implement two factor 
+ authentication for CPRS login utilizing the Personal Identification 
+ Verification (PIV) card.
+  
+ 2. This patch also contains components necessary for the future 
+ transition from VistAWeb to JLV. In the future, JLV (Joint Legacy Viewer) 
+ will replace VistAWeb for viewing external remote data. Some sites may 
+ not switch to JLV until VistAWeb is decommissioned, others may choose to 
+ transition sooner. This transition should be made in collaboration with 
+ local Informatics staff and the JLV team. 
+  
+ To facilitate this transition to JLV, a new Parameter (ORWRP LEGACY 
+ VIEWER LABEL) is being created that will allow sites to edit the label on 
+ the VistAWeb button in CPRS to JLV. To make the change, use the General 
+ Parameter Tools | Edit Parameter Values on the Vista CPRS Configuration 
+ (IRM) menu. Make the change at the System level.
+  
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME:    ORWRP LEGACY VIEWER LABEL   
+  JLV Remote Button Label Name
+  
+ ORWRP LEGACY VIEWER LABEL may be set for the following:
+  
+      1   User          USR    [choose from NEW PERSON]
+      2   Division      DIV    [choose from INSTITUTION]
+      3   System        SYS    [CPRS31A.DOMAIN.EXT]
+      4   Package       PKG    [ORDER ENTRY/RESULTS REPORTING]
+  
+ Enter selection: 3  System   CPRS31A.DOMAIN.EXT
+  
+ -- Setting ORWRP LEGACY VIEWER LABEL for System: FO-X.DOMAIN.EXT --
+ JLV REMOTE BUTTON LABEL NAME: JLV//
+  
+ 3. Return to Clinic orders will also be introduced with this patch. The 
+ VistA Scheduling application does not provide key elements necessary to
+ meet patient and provider appointment scheduling needs. Presently, the
+ provider is limited to entering a return date as a note in the patient's 
+ record via CPRS. The provider may forget to enter a return date or the 
+ scheduling clerk may not look for or see the individual note among the 
+ volume of progress notes listed. Because of this issue, the clerk may rely
+ on when the patient states they need to return to the clinic. This 
+ situation leads to inconsistent appointment notifications to patients and
+ incorrect scheduling of return appointments. This results in missed 
+ appointments, available appointment slots that go unscheduled, and 
+ ultimately leads to a lack of effective communication and capture of 
+ Veteran scheduling needs.
+   
+ The Access and Clinic Administrative Program (ACAP) is a single entity 
+ responsible for defining, standardizing, and coordinating system-wide 
+ administrative clinic operations and management. In matters regarding 
+ Medical Appointment Scheduling, the ACAP serves as the VHA business owner
+ and manager in collaboration with VA OI&T. This request addresses an 
+ immediate need to create a national Return to Clinic (RTC) order for 
+ patients. The order will capture the appointment return date or Clinically
+ Indicated Date (CID) for when the patient is to be seen. This process
+ will help improve communication and expectations for when the patient is
+ returning to VHA to receive timely access to care. This process will help
+ enable appointment notifications to be performed in a more consistent and
+ standardized manner in supporting patient centered scheduling services
+ instead of by provider availability. 
+  
+ Patch SD*5.3*671 must be installed in VistA before users can access the 
+ new Return to Clinic Order Dialog in CPRS. However, CACs can create Quick 
+ Orders and add the Return to Clinic Order Dialog to any menu before the 
+ SD patch is installed. If a user tries to access the Return to Clinic 
+ Order Dialog before the SD patch is installed, they will see an error 
+ message in CPRS stating the Order Dialog cannot be used until the SD patch
+ is installed.
+  
+ Note: This patch, OR*3*434, and patch SD*5.3*671 are independent patches. 
+ However, as explained above, the patches do share functionality and it
+ is recommended that they be installed together.
+  
+  
+ Patch Components 
+ ================
+  
+ Display Group              New/Modified
+ -------------              ------------
+ CLINIC SCHEDULING          New
+  
+ Order Dialog               New/Modified
+ ------------               ------------
+ SD RTC                     New
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ ORDER ACTIONS (100.008)    DISPOSITION BY (40)             New
+                            DISPOSITION DATE/TIME (41)      New
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR CPRS GUI CHART      Broker             Modified
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ ORWRP LEGACY VIEWER LABEL             New
+ OR MOB DLL NAME                       New
+ OR SD ADDITIONAL INFORMATION          New
+ OR SD DIALOG PREREQ                   New
+  
+  
+ Protocols Associated:         
+  
+ Protocol Name                 New/Modified/Deleted
+ -------------                 -------------------- 
+ OCX ORDER CHECK HL7 RECIEVE [sic]     New
+ OR EVSEND SD                          New
+  
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ ORWCIRN JLV LABEL                            New
+ ORWDSD1 ODSLCT                               New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Chillicothe, OH
+ Heartland East Healthcare System, MO
+ Heartland West Healthcare System, KS
+ Hudson Valley, NY
+ Salt Lake City, UT
+ San Diego, CA
+ Tomah, WI
+ Tuscaloosa, AL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host and zip file, along with documentation 
+ describing the new functionality is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+   
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ File Name                   Contents                       FTP Mode
+  
+ CPRSV31A_COMBINED_BUILD.KID  OR*3.0*434                    ASCII
+                              GMRV*5.0*34
+                              YS*5.01*128
+  
+ CPRSGUITM.PDF                CPRS Technical Manual: GUI    Binary
+                              Version
+  
+ CPRSGUIUM.PDF                CPRS User Guide: GUI Version  Binary
+  
+ OR_30_434.ZIP                Borlndmm.dll                  Binary
+                              CPRSChart.exe
+                              CPRSChart.map
+                              GMV_VitalsViewEnter.cnt
+                              GMV_VitalsViewEnter.dll
+                              GMV_VitalsViewEnter.hlp
+                              RoboEx32.dll
+                              YS_MHA_A_XE8.dll
+                              Help directory
+                              cprsguium.doc
+                              cprsguium.pdf
+                              cprsguitm.doc
+                              cprsguitm.pdf
+                              or_30_434_ig.docx
+                              or_30_434_ig.pdf
+                              or_30_434_rn.docx
+                              or_30_434_rn.pdf
+  
+ OR_30_434_IG.PDF             CPRS v31a (OR*3*434)          Binary
+                              Deployment, Installation,
+                              Back-Out, and Rollback Guide
+  
+ OR_30_434_RN.PDF             CPRS GUI v31a (PATCH          Binary
+                              OR*3.0*434) Release Notes
+  
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v31a Deployment, Installation, Back-Out and 
+ Rollback Guide" for installation and set-up information. This document is
+ exported as OR_30_434_IG.doc/pdf and is included in OR_30_434.ZIP.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3FUP2
+    Before: B68246237   After: B69924581  **31,64,88,112,243,434**
+Routine Name: ORCACT0
+    Before: B63963642   After: B67480788  **7,27,48,72,86,92,94,141,165,
+                                           177,173,190,215,243,289,204,
+                                           306,350,425,434**
+Routine Name: ORCDSD
+    Before:       n/a   After:  B4626273  **434**
+Routine Name: ORM
+    Before: B17869206   After: B18341854  **3,97,141,187,195,434**
+Routine Name: ORMBLD
+    Before: B44600527   After: B46482441  **3,33,26,45,79,97,133,168,187,
+                                           190,195,215,350,434**
+Routine Name: ORMBLDSD
+    Before:       n/a   After: B17436904  **434**
+Routine Name: ORMSD
+    Before:       n/a   After: B98846550  **434**
+Routine Name: ORQ20
+    Before: B49432908   After: B51272743  **12,27,92,94,116,141,177,186,
+                                           190,215,243,434**
+Routine Name: ORUTL4
+    Before: B10505895   After: B10504145  **350,424,434**
+Routine Name: ORWCIRN
+    Before: B10494851   After: B11510332  **10,101,109,132,141,160,208,
+                                           239,215,243,350,434**
+Routine Name: ORWDSD1
+    Before:       n/a   After:  B8338183  **434**
+Routine Name: ORWDXA
+    Before:B116618620   After:B119097370  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306,
+                                           390,421,436,434**
+Routine Name: ORWDXM1
+    Before:B106857204   After:B111273921  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388,350,
+                                           423,434**
+Routine Name: ORWDXM3
+    Before:B111449239   After:B118361960  **10,85,131,132,141,185,187,
+                                           190,195,215,243,303,296,280,
+                                           350,434**
+Routine Name: ORWDXM4
+    Before: B43181122   After: B43793101  **10,85,215,296,280,394,350,434**
+Routine Name: ORY434
+    Before:       n/a   After: B11036555  **434**
+ 
+Routine list of preceding patches: 423, 424, 425, 436
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 28, 2016
+Completed By:                               Date Completed: NOV 06, 2017
+Released By :                               Date Released : NOV 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

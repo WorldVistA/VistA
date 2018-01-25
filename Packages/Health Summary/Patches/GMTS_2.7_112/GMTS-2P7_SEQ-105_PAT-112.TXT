@@ -1,0 +1,226 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: GMTS*2.7*112
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #105                    Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*90 <<= must be installed BEFORE `GMTS*2.7*112'
+                    (v)GMTS*2.7*96 <<= must be installed BEFORE `GMTS*2.7*112'
+                    (v)GMRC*3*81   <<= must be installed BEFORE `GMTS*2.7*112'
+
+Subject: HEALTH SUMMARY UPDATE FOR CPRS GUI v30.B
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch is being released in conjunction with CPRS GUI v30.B 
+ (OR*3*350). The following changes are being implemented. Please refer to
+ other patch descriptions mentioned for items specific to those patches 
+ and to CPRS documentation for additional information.
+  
+ A minor update to the CONSULTS BRIEF (CNB) health summary component.  
+ This component displays brief information about consult requests.  The
+ CONSULT/REQUEST TRACKING package (GMRC) via GMRC*3.0*81 is changing the
+ name of the EARLIEST DATE field to CLINICALLY INDICATED DATE (CID). As the
+ CNB component currently includes "Earliest Date" in the report output,
+ this heading will be updated to reflect the new field name in GMRC.
+  
+ Before:
+   ------- CNB - Brief Consults (max 10 occurrences or 99 years) -------
+                                   
+  
+   Request Date/  Request From                  Earliest Date
+   Number         Request To                    Last Action    Action Date
+   ------------------------------------------------------------------------
+   09/04/2014     20 MINUTE (MEDICINE)          09/04/2014
+   1111           AUDIOLOGY OUTPATIENT          ENTERED        09/04/2014
+  
+  
+ After:
+   ------- CNB - Brief Consults (max 10 occurrences or 99 years) -------
+                                   
+  
+   Request Date/  Request From                  Clinically Ind. Date
+   Number         Request To                    Last Action    Action Date
+   -----------------------------------------------------------------------
+   09/04/2014     20 MINUTE (MEDICINE)          09/04/2014
+   1111           AUDIOLOGY OUTPATIENT          ENTERED        09/04/2014
+  
+  
+ The DESCRIPTION of the CNB component is also being updated to indicate
+ that the CID is part of the report output.
+  
+ Before         T
+          This component displays Consults in a brief format, to
+          include the consult number, request date, requesting
+          service, last action, last action date, and the
+          consult "TO" service.  
+  
+ After
+          This component displays Consults in a brief format, to
+          include the consult number, request date, requesting
+          service, last action, clinically indicated date, last
+          action date, and the consult "TO" service.
+  
+ Some previously released Health Summary Components were found to be 
+ missing from the PATIENT DATA EXCHANGE (PDX). These copmonents were
+ released as part of GMTS*2.7*99.  This patch, GMTS*2.7*112, will add 
+ those components to the PDX.  The list of components is:
+ MAS CONTACTS
+ MAS MH CLINIC VISITS FUTURE
+ MH HIGH RISK PRF HX
+ MH TREATMENT COORDINATOR
+  
+ This patch also includes some changes in the routine GMTSLROE which
+ is an extract of Lab Data used to generate lab reports on the Labs and
+ Reports tabs in CPRS. Previous to this patch, the extract did not
+ correctly identify lab orders with a status of "On Collection List"
+ but would rather give them a status of "PROCESSING". This was misleading
+ clinicians into thinking that these orders had already been collected.
+ This patch also fixes a problem found with the STATUS display for orders
+ that contain multiple tests/panels that are setup in the Lab files to
+ split/explode into multiple accession areas. Prior to this patch, these
+ orders displayed a status of COLLECTED when all of its sub-components
+ had been completed. Now, the parent order will display a status of
+ COMPLETED when all of its components have been completed.
+ The reports affected are some new reports being released with CPRS 30b,
+ patch OR*3.0*350. These reports are: "Lab Overview", "Pending Lab Orders",
+ and "Lab Orders (All)"
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File                                ENTRY          New/Modified/Deleted
+ ---------------------------------------------------------------------
+ HEALTH SUMMARY COMPONENT (#142.1)   CONSULTS BRIEF     Modified
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Title                           File Name       FTP Mode
+ --------------------------------------------------------
+ Health Summary User Manual      hsum_2_7_um.pdf Binary
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSCNB
+    Before: B49040445   After: B49123943  **46,47,58,90,112**
+Routine Name: GMTSLROE
+    Before: B12396519   After: B13446109  **9,28,47,96,112**
+Routine Name: GMTSP112
+    Before:       n/a   After:  B4270408  **112**
+ 
+Routine list of preceding patches: 90, 96
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

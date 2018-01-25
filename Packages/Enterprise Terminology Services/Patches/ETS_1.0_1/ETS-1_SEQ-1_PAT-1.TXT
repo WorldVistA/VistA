@@ -1,0 +1,471 @@
+
+=============================================================================
+Run Date: SEP 01, 2017                     Designation: ETS*1*1
+Package : ETS - ENTERPRISE TERMINOLOGY SERVIC Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: OCT 02, 2017
+=============================================================================
+
+Associated patches: (v)ETS*1*0     <<= must be installed BEFORE `ETS*1*1'
+
+Subject: RXNORM CODE SET AND LOINC UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Veterans Information Systems and Technology Architecture (VistA)
+ Evolution program to modernize VistA includes modernizing Veterans Affairs
+ (VA's) enterprise data management capabilities.  Modernizing VA FileMan
+ will functionally standardize VistA's database.  This will enable
+ structured data query and exchange across all VistA instances, creating
+ an enterprise view of VistA data in standardized, computable form.  This
+ modernized VA FileMan is called VA FileMan Enterprise for its enterprise
+ data management capabilities.
+  
+ This patch, ETS*1.0*1, introduces new and modified routines and data
+ dictionaries to implement Enterprise Terminology Services (ETS) package.
+ The Enterprise Terminology Services package exists to provide 
+ enterprise-wide access to common code sets that are needed in a health
+ care system. It will contain VA FileMan files with the data and 
+ Application Program Interfaces (APIs) that can be used to provide access
+ and process the data. The Integration Control Registrations will be
+ supported and thus open to all VistA applications.
+  
+ Specifically, patch ETS*1.0*1 contains the following:
+ ---------------------------------------------------------
+ 1. The following new files have been created in ETS to support the RxNorm
+    code set in VistA. 
+  
+    a) The RXNORM CONCEPT NAMES AND SOURCES file (#129.2)
+    b) The RXNORM SIMPLE CONCEPT AND ATOM ATTRIBUTES file (#129.21)
+    c) The RXNORM RELATED CONCEPTS file (#129.22)
+    d) The RXNORM SEMANTIC TYPES file (#129.23)
+    e) The RXNORM SOURCE INFORMATION file (#129.24)
+  
+ 2. The data for the above files will be populated. This will require
+    approximately 516 megabytes of disk space and 11.2 gigabytes of journal
+    space.
+  
+ 3. The following new APIs were created to retrieve RxNorm data.
+  
+    a) $$CSDATA^ETSRXN: Get Detailed Information about a RxNorm Concept
+       Unique Identifier (RXCUI)
+    b) $$CSYS^ETSRXN: Retrieve the Coding System Information
+    c) $$GETDATA^ETSRXN: Return all information for a RXCUI
+    d) $$HIST^ETSRXN: Get Activation History for a RXCUI
+    e) $$NDC2RXN^ETSRXN: Return RXCUI for a National Drug Code (NDC)
+    f) $$PERIOD^ETSRXN: Get Activation/Inactivation Periods for a RXCUI
+    g) $RXN2OUT^ETSRXN: Retrieve a VA Unique Identifier (VUID) and NDC for
+       a RXCUI
+    h) $$TAX^ETSRXN: Return list of VUIDs in same value set
+    i) $$VUICLASS^ETSRXN: Return list of VUIDs with the same drug class
+    j) $$VUI2RXN^ETSRXN: Retrieve RXCUI(s) for a valid VUID
+  
+ 4. The following Logical Observation Identifiers Names and Codes (LOINC)
+    APIs were modified.
+  
+    a) $$CHKCODE^ETSLNC
+        i) Change input value to be the full LOINC Code
+       ii) Change return value from Yes/No (1 or 0) to Internal Entry
+           Number (IEN)
+    b) $$COMLST^ETSLNC: Allow Input of Component Name in addition to
+       Component IEN
+    c) $$CSDATA^ETSLNC: Change Return value to be the full LOINC Code
+    d) $$GETCODE^ETSLNC: 
+        i)       Add SHORT NAME (#81) field to the output
+       ii)       Change input value to be the full LOINC Code
+    e) $$GETNAME^ETSLNC: Change input value to be the full LOINC Code
+    f) $$GETREC^ETSLNC
+        i) Change input value to be the full LOINC Code
+       ii) Add EXTERNAL COPYRIGHT (#84) and COMPONENT (#1) fields to
+           the output
+    g) $$GETSTAT^ETSLNC: Change input value to be the full LOINC Code
+    h) $$HIST^ETSLNC: Change input value to be the full LOINC Code
+    i) $$PERIOD^ETSLNC: Change input value to be the full LOINC Code
+    j) $$TAX^ETSLNC: Change input value to be the full LOINC Code
+  
+ 5. Modify the screens for the NON-PATIENT SPECIMEN (#1.7) and the 
+    TIME MODIFIER (#3.1) fields of the LOINC (#129.1) file.
+  
+ 6. Update sixteen records in the LOINC AXIS CODES (#129.22) so that 
+    NAME (#.01) field is unique.
+  
+ Detailed information on the APIs and the tasks they perform is included
+ in the ETS 1.0 Technical Manual/Security Guide. 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                               New/Modified/
+   Sub-file Name (#)      Field Name (#)                       Deleted
+ -------------------      --------------                     -------------
+ LOINC (#129.1)           NON-PATIENT SPECIMEN (#1.7)        Modified
+ LOINC (#129.1)           TIME MODIFIER (#3.1)               Modified
+ RXNORM CONCEPT NAMES AND SOURCES (#129.2)                   New
+ RXNORM SIMPLE CONCEPT AND ATOM ATTRIBUTES (#129.21)         New 
+ RXNORM RELATED CONCEPTS (#129.22)                           New
+ RXNORM SEMANTIC TYPES (#129.23)                             New
+ RXNORM SOURCE INFORMATION (#129.24)                         New
+  
+  
+ Forms Associated:
+  
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ N/A 
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch ETS*1.0*1 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch ETS*1.0*1 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+  
+ Test Sites:
+ -----------
+ VA Caribbean Healthcare System (San Juan)
+ Ralph H. Johnson VA Medical Center (Charleston)
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ under the Clinical folder. 
+  
+ Title                              File Name          SFTP Mode
+ ---------------------------------------------------------------
+ ETS 1.0 Technical/Security Guide   ETS_1_TM.PDF       Binary
+ Software Installation Host file    ETS_1_0_1.KID      ASCII
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ The rollback plan for VistA applications is complex and not able to be
+ a 'one size fits all' solution. The development team recommends that 
+ sites log a CA Service Desk Manager (SDM) ticket for the Health Systems 
+ Platform group if this patch needs to be backed-out. The support team will
+ determine the best approach to restore the system to its previous state.
+ Rollback may be performed prior to response from the support team by 
+ first unloading the Kernel Installation and Distribution System (KIDS)
+ distribution and then clearing all data from the new files contained in
+ this patch:
+  
+ RXNORM CONCEPT NAMES AND SOURCES (#129.2)
+ RXNORM SIMPLE CONCEPT AND ATOM ATTRIBUTES (#129.21)
+ RXNORM RELATED CONCEPTS (#129.22)
+ RXNORM SEMANTIC TYPES (#129.23)
+ RXNORM SOURCE INFORMATION (#129.24)
+  
+ During the VistA Installation Procedure of the KIDS build, the installer
+ should back up the modified routines by the use of the 'Backup a Transport
+ Global' action (step 4a in the Installations Instructions below). The
+ installer can restore the routines using the MailMan message that were
+ saved prior to installing the patch. The backout procedure for data
+ dictionary data loads is more complex and may require the issuance of a
+ follow-on patch to ensure all components are properly removed. Note that a
+ rollback of all software components, including routines must be restored
+ to their previous state at the same time and in conjunction with
+ restoration of the data.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a pre-install routine PRE^ETS1P1 that prepares the current 
+ process for the install.
+  
+ There is a post-install routine PST^ETS1P1 that will update the NAME
+ (#.01) field of the LOINC AXIS CODES (#129.22) file for sixteen records.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take approximately 90
+ minutes to install.
+  
+ Note: Due to the length of time for this installation, the installation 
+ process should be queued to avoid installation failure due to session 
+ timeout or a forced system reboot/restart.
+  
+ No options or protocols need to be disabled to install this patch.
+  
+ The installation of this patch can be queued.
+  
+ Note: Installation of this patch will require approximately 516 
+ megabytes of disk space and 11.2 gigabytes of journal space. 
+ Ensure there is sufficient space allocated prior to installation. 
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  OBTAIN PATCH
+     ------------
+     Obtain the host file ETS_1_0_1.KID, which contains the following 
+     patch:
+  
+         ETS*1.0*1
+  
+     Sites can retrieve VistA software directly using Secure File Transfer
+     Protocol (sFTP) from the ANONYMOUS.SOFTWARE directory at the following
+     sFTP address:
+  
+                     download.vista.domain.ext
+  
+     This will transmit the files from the first available sFTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+     The ETS_1_0_1.KID host file is located in the  
+     directory. Use ASCII Mode when downloading the file.
+  
+     Due to the large size of this patch (approximately 516 megabytes), 
+     download may take 20+/- minutes depending upon bandwidth.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory
+     path where the host file ETS_1_0_1.KID was saved. For example:  
+     
+     SYS$SYSDEVICE:[ANONYMOUS]ETS_1_0_1.KID
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         ETS*1.0*1
+      Use INSTALL NAME: ETS*1.0*1 to install this Distribution.
+  
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS
+     ---------------------------------
+     From the Installation menu, you may select to use the following
+     optional options (when prompted for the INSTALL NAME, enter 
+     ETS*1.0*1):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+         
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL THE BUILD
+     -----------------
+     This is the step to start the installation of this KIDS patch. 
+     This will need to be run for the ETS*1.0*1 patch.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted for the "Select INSTALL NAME:", enter ETS*1.0*1.
+  
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+  
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+  
+     e.  When prompted "Device: HOME//", enter "Q" (without quotes) to 
+         queue the installation as a background task.
+  
+     f.  When prompted "DEVICE: HOME//", enter HFS.
+  
+     g.  When prompted "HOST FILE NAME:", enter the full path of the file 
+         where you want to direct the output of the installation.
+  
+     h.  When prompted "ADDRESS/PARAMETERS: "NWS"//", enter NWS.
+  
+     i.  When prompted for "Request Start Time: //", enter a valid FileMan 
+         Date/Time when you want the installation to begin, e.g., NOW+3'
+         to start the installation 3 minutes from now.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 1. In order to update the META DATA DICTIONARY File, run the UPDATE THE 
+    META DATA DICTIONARY [DDU UPDATE META DD] option, which is located on
+    the DATA DICTIONARY UTILITIES [DI DDU] menu of VA FileMan [DIUSER].
+    When prompted "OK? No//" respond YES.
+  
+    Here is an abbreviated example of what to expect when you run this 
+    option. There will be approximately 100 rows of dots, and it should
+    take less than one minute to complete.
+    
+    SINCE NO FILE IS IN APPLICATION GROUP 'DDD',
+    the entire FileMan database will be scanned, and
+    a Central Data Dictionary will now be compiled.
+    OK? No// YES...........................................................
+    .......................................................................
+    .......................................................................
+    <DONE>
+  
+ 2. The ETS1P1 post install routine may be deleted after install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;Enterprise Terminology Service;**[Patch List]**;Mar 20, 2017;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ETS10P0
+    Before:  B1054269   After:    Delete  
+Routine Name: ETS1P1
+    Before:       n/a   After:  B5937912  **1**
+Routine Name: ETSLNC
+    Before: B84730591   After: B86929400  **1**
+Routine Name: ETSLNC1
+    Before: B11070106   After: B14161218  **1**
+Routine Name: ETSLNC2
+    Before:  B6148545   After:  B8966655  **1**
+Routine Name: ETSLNC3
+    Before: B49858538   After: B58309656  **1**
+Routine Name: ETSLNCIX
+    Before:  B9991707   After:  B9991707  **1**
+Routine Name: ETSLNCTX
+    Before: B27568889   After: B32085670  **1**
+Routine Name: ETSRXN
+    Before:       n/a   After: B54861353  **1**
+Routine Name: ETSRXN1
+    Before:       n/a   After: B70502187  **1**
+Routine Name: ETSRXNTX
+    Before:       n/a   After: B77757125  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2017
+Completed By:                               Date Completed: AUG 29, 2017
+Released By :                               Date Released : SEP 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

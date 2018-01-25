@@ -1,0 +1,1775 @@
+Released EN*7*100 SEQ #91
+Extracted from mail message
+**KIDS**:EN*7.0*100^
+
+**INSTALL NAME**
+EN*7.0*100
+"BLD",9282,0)
+EN*7.0*100^ENGINEERING^0^3160621^y
+"BLD",9282,1,0)
+^^14^14^3160520^
+"BLD",9282,1,1,0)
+This build supports the interface between the Real Time Location System 
+"BLD",9282,1,2,0)
+(RTLS) at Intelligent Insites and VistA files #6914 and #6928 in 
+"BLD",9282,1,3,0)
+Engineering.
+"BLD",9282,1,4,0)
+ 
+"BLD",9282,1,5,0)
+After installation of this patch, field #.01 of file #6928 will have
+"BLD",9282,1,6,0)
+one RTLS trigger to notify the RTLS database of the creation of a new
+"BLD",9282,1,7,0)
+room. Also, this build places MUMPS cross references (behave like a
+"BLD",9282,1,8,0)
+trigger) on multiple fields of file #6914, expands the description text
+"BLD",9282,1,9,0)
+for fields #23 and #24, and adds a description to the cross reference 'AB'
+"BLD",9282,1,10,0)
+on #.01 sub-field of the multiple field Responsible Shop. This build also
+"BLD",9282,1,11,0)
+places the flag 'NOREINDEX' in all the fields with an RTLS trigger in
+"BLD",9282,1,12,0)
+order to stop the flooding of the file #6930 in case one of those fields
+"BLD",9282,1,13,0)
+is reindexed. See the Forum patch description for the list of fields
+"BLD",9282,1,14,0)
+affected in files #6914 and #6928.
+"BLD",9282,4,0)
+^9.64PA^6928^2
+"BLD",9282,4,6914,0)
+6914
+"BLD",9282,4,6914,2,0)
+^9.641^6914.04^2
+"BLD",9282,4,6914,2,6914,0)
+EQUIPMENT INV.  (File-top level)
+"BLD",9282,4,6914,2,6914,1,0)
+^9.6411^24^19
+"BLD",9282,4,6914,2,6914,1,.01,0)
+ENTRY NUMBER
+"BLD",9282,4,6914,2,6914,1,1,0)
+MANUFACTURER
+"BLD",9282,4,6914,2,6914,1,2,0)
+PARENT SYSTEM
+"BLD",9282,4,6914,2,6914,1,3,0)
+MFGR. EQUIPMENT NAME
+"BLD",9282,4,6914,2,6914,1,4,0)
+MODEL
+"BLD",9282,4,6914,2,6914,1,5,0)
+SERIAL #
+"BLD",9282,4,6914,2,6914,1,6,0)
+EQUIPMENT CATEGORY
+"BLD",9282,4,6914,2,6914,1,7,0)
+TYPE OF ENTRY
+"BLD",9282,4,6914,2,6914,1,11,0)
+PURCHASE ORDER #
+"BLD",9282,4,6914,2,6914,1,12,0)
+TOTAL ASSET VALUE
+"BLD",9282,4,6914,2,6914,1,13,0)
+ACQUISITION DATE
+"BLD",9282,4,6914,2,6914,1,18,0)
+CATEGORY STOCK NUMBER
+"BLD",9282,4,6914,2,6914,1,19,0)
+CMR
+"BLD",9282,4,6914,2,6914,1,20,0)
+USE STATUS
+"BLD",9282,4,6914,2,6914,1,21,0)
+SERVICE POINTER
+"BLD",9282,4,6914,2,6914,1,22,0)
+DISPOSITION DATE
+"BLD",9282,4,6914,2,6914,1,23,0)
+PHYSICAL INVENTORY DATE
+"BLD",9282,4,6914,2,6914,1,24,0)
+LOCATION
+"BLD",9282,4,6914,2,6914,1,60,0)
+STATION NUMBER
+"BLD",9282,4,6914,2,6914.04,0)
+RESPONSIBLE SHOP  (sub-file)
+"BLD",9282,4,6914,2,6914.04,1,0)
+^9.6411^.01^1
+"BLD",9282,4,6914,2,6914.04,1,.01,0)
+RESPONSIBLE SHOP
+"BLD",9282,4,6914,222)
+y^y^p^^^^n^^n
+"BLD",9282,4,6914,224)
+
+"BLD",9282,4,6928,0)
+6928
+"BLD",9282,4,6928,2,0)
+^9.641^6928^1
+"BLD",9282,4,6928,2,6928,0)
+ENG SPACE  (File-top level)
+"BLD",9282,4,6928,2,6928,1,0)
+^9.6411^.01^1
+"BLD",9282,4,6928,2,6928,1,.01,0)
+ROOM NUMBER
+"BLD",9282,4,6928,222)
+y^y^p^^^^n^^n
+"BLD",9282,4,6928,224)
+
+"BLD",9282,4,"APDD",6914,6914)
+
+"BLD",9282,4,"APDD",6914,6914,.01)
+
+"BLD",9282,4,"APDD",6914,6914,1)
+
+"BLD",9282,4,"APDD",6914,6914,2)
+
+"BLD",9282,4,"APDD",6914,6914,3)
+
+"BLD",9282,4,"APDD",6914,6914,4)
+
+"BLD",9282,4,"APDD",6914,6914,5)
+
+"BLD",9282,4,"APDD",6914,6914,6)
+
+"BLD",9282,4,"APDD",6914,6914,7)
+
+"BLD",9282,4,"APDD",6914,6914,11)
+
+"BLD",9282,4,"APDD",6914,6914,12)
+
+"BLD",9282,4,"APDD",6914,6914,13)
+
+"BLD",9282,4,"APDD",6914,6914,18)
+
+"BLD",9282,4,"APDD",6914,6914,19)
+
+"BLD",9282,4,"APDD",6914,6914,20)
+
+"BLD",9282,4,"APDD",6914,6914,21)
+
+"BLD",9282,4,"APDD",6914,6914,22)
+
+"BLD",9282,4,"APDD",6914,6914,23)
+
+"BLD",9282,4,"APDD",6914,6914,24)
+
+"BLD",9282,4,"APDD",6914,6914,60)
+
+"BLD",9282,4,"APDD",6914,6914.04)
+
+"BLD",9282,4,"APDD",6914,6914.04,.01)
+
+"BLD",9282,4,"APDD",6928,6928)
+
+"BLD",9282,4,"APDD",6928,6928,.01)
+
+"BLD",9282,4,"B",6914,6914)
+
+"BLD",9282,4,"B",6928,6928)
+
+"BLD",9282,6.3)
+31
+"BLD",9282,"ABPKG")
+n
+"BLD",9282,"INI")
+
+"BLD",9282,"INID")
+^^
+"BLD",9282,"INIT")
+
+"BLD",9282,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9282,"KRN",.4,0)
+.4
+"BLD",9282,"KRN",.401,0)
+.401
+"BLD",9282,"KRN",.402,0)
+.402
+"BLD",9282,"KRN",.403,0)
+.403
+"BLD",9282,"KRN",.5,0)
+.5
+"BLD",9282,"KRN",.84,0)
+.84
+"BLD",9282,"KRN",3.6,0)
+3.6
+"BLD",9282,"KRN",3.8,0)
+3.8
+"BLD",9282,"KRN",9.2,0)
+9.2
+"BLD",9282,"KRN",9.8,0)
+9.8
+"BLD",9282,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",9282,"KRN",19,0)
+19
+"BLD",9282,"KRN",19.1,0)
+19.1
+"BLD",9282,"KRN",101,0)
+101
+"BLD",9282,"KRN",409.61,0)
+409.61
+"BLD",9282,"KRN",771,0)
+771
+"BLD",9282,"KRN",779.2,0)
+779.2
+"BLD",9282,"KRN",870,0)
+870
+"BLD",9282,"KRN",8989.51,0)
+8989.51
+"BLD",9282,"KRN",8989.52,0)
+8989.52
+"BLD",9282,"KRN",8994,0)
+8994
+"BLD",9282,"KRN","B",.4,.4)
+
+"BLD",9282,"KRN","B",.401,.401)
+
+"BLD",9282,"KRN","B",.402,.402)
+
+"BLD",9282,"KRN","B",.403,.403)
+
+"BLD",9282,"KRN","B",.5,.5)
+
+"BLD",9282,"KRN","B",.84,.84)
+
+"BLD",9282,"KRN","B",3.6,3.6)
+
+"BLD",9282,"KRN","B",3.8,3.8)
+
+"BLD",9282,"KRN","B",9.2,9.2)
+
+"BLD",9282,"KRN","B",9.8,9.8)
+
+"BLD",9282,"KRN","B",19,19)
+
+"BLD",9282,"KRN","B",19.1,19.1)
+
+"BLD",9282,"KRN","B",101,101)
+
+"BLD",9282,"KRN","B",409.61,409.61)
+
+"BLD",9282,"KRN","B",771,771)
+
+"BLD",9282,"KRN","B",779.2,779.2)
+
+"BLD",9282,"KRN","B",870,870)
+
+"BLD",9282,"KRN","B",8989.51,8989.51)
+
+"BLD",9282,"KRN","B",8989.52,8989.52)
+
+"BLD",9282,"KRN","B",8994,8994)
+
+"BLD",9282,"QUES",0)
+^9.62^^
+"BLD",9282,"REQB",0)
+^9.611^2^1
+"BLD",9282,"REQB",2,0)
+VIAA*1.0*3^1
+"BLD",9282,"REQB","B","VIAA*1.0*3",2)
+
+"FIA",6914)
+EQUIPMENT INV.
+"FIA",6914,0)
+^ENG(6914,
+"FIA",6914,0,0)
+6914I
+"FIA",6914,0,1)
+y^y^p^^^^n^^n
+"FIA",6914,0,10)
+
+"FIA",6914,0,11)
+
+"FIA",6914,0,"RLRO")
+
+"FIA",6914,0,"VR")
+7.0^EN
+"FIA",6914,6914)
+1
+"FIA",6914,6914,.01)
+
+"FIA",6914,6914,1)
+
+"FIA",6914,6914,2)
+
+"FIA",6914,6914,3)
+
+"FIA",6914,6914,4)
+
+"FIA",6914,6914,5)
+
+"FIA",6914,6914,6)
+
+"FIA",6914,6914,7)
+
+"FIA",6914,6914,11)
+
+"FIA",6914,6914,12)
+
+"FIA",6914,6914,13)
+
+"FIA",6914,6914,18)
+
+"FIA",6914,6914,19)
+
+"FIA",6914,6914,20)
+
+"FIA",6914,6914,21)
+
+"FIA",6914,6914,22)
+
+"FIA",6914,6914,23)
+
+"FIA",6914,6914,24)
+
+"FIA",6914,6914,30)
+
+"FIA",6914,6914,60)
+
+"FIA",6914,6914.04)
+1
+"FIA",6914,6914.04,.01)
+
+"FIA",6928)
+ENG SPACE
+"FIA",6928,0)
+^ENG("SP",
+"FIA",6928,0,0)
+6928I
+"FIA",6928,0,1)
+y^y^p^^^^n^^n
+"FIA",6928,0,10)
+
+"FIA",6928,0,11)
+
+"FIA",6928,0,"RLRO")
+
+"FIA",6928,0,"VR")
+7.0^EN
+"FIA",6928,6928)
+1
+"FIA",6928,6928,.01)
+
+"IX",6914,6914,"ACMR",0)
+6914^ACMR^Terminate IT assignments when appropriate.^MU^^F^^I^6914^^^^^A
+"IX",6914,6914,"ACMR",.1,0)
+^^4^4^3080204^
+"IX",6914,6914,"ACMR",.1,1,0)
+Automatically terminate active IT assignments of responsibility when the
+"IX",6914,6914,"ACMR",.1,2,0)
+equipment CMR is deleted or changed to one that does not have IT TRACKING
+"IX",6914,6914,"ACMR",.1,3,0)
+= YES.  A message is sent to mail group G.EN IT EQUIPMENT if any
+"IX",6914,6914,"ACMR",.1,4,0)
+assignments are terminated.
+"IX",6914,6914,"ACMR",1)
+Q
+"IX",6914,6914,"ACMR",2)
+D CMRUPD^ENTIDD(DA,X1(1),X2(1))
+"IX",6914,6914,"ACMR",2.4)
+S X=$S(X2(1)'=X1(1):1,1:0)
+"IX",6914,6914,"ACMR",11.1,0)
+^.114IA^1^1
+"IX",6914,6914,"ACMR",11.1,1,0)
+1^F^6914^19^^^F
+"IX",6914,6914,"ALNSP",0)
+6914^ALNSP^Deletes the NON-SPACE FILE LOCATION field.^MU^^F^^I^6914^^^^^A
+"IX",6914,6914,"ALNSP",.1,0)
+^^2^2^3080204^
+"IX",6914,6914,"ALNSP",.1,1,0)
+This cross-reference deletes the NON-SPACE FILE LOCATION value whenever a
+"IX",6914,6914,"ALNSP",.1,2,0)
+new LOCATION value is entered.
+"IX",6914,6914,"ALNSP",1)
+D DELNSP^ENTINSD(DA)
+"IX",6914,6914,"ALNSP",1.4)
+S X=$S((X2(1)'=X1(1))&(X2(1)'=""):1,1:0)
+"IX",6914,6914,"ALNSP",2)
+Q
+"IX",6914,6914,"ALNSP",11.1,0)
+^.114IA^1^1
+"IX",6914,6914,"ALNSP",11.1,1,0)
+1^F^6914^24^^1^F
+"MBREQ")
+0
+"PKG",18,-1)
+1^1
+"PKG",18,0)
+ENGINEERING^EN^AUTOMATED ENGINEERING MANAGEMENT SYSTEM
+"PKG",18,20,0)
+^9.402P^^
+"PKG",18,22,0)
+^9.49I^1^1
+"PKG",18,22,1,0)
+7.0^2930817^2960611
+"PKG",18,22,1,"PAH",1,0)
+100^3160621
+"PKG",18,22,1,"PAH",1,1,0)
+^^14^14^3160621
+"PKG",18,22,1,"PAH",1,1,1,0)
+This build supports the interface between the Real Time Location System 
+"PKG",18,22,1,"PAH",1,1,2,0)
+(RTLS) at Intelligent Insites and VistA files #6914 and #6928 in 
+"PKG",18,22,1,"PAH",1,1,3,0)
+Engineering.
+"PKG",18,22,1,"PAH",1,1,4,0)
+ 
+"PKG",18,22,1,"PAH",1,1,5,0)
+After installation of this patch, field #.01 of file #6928 will have
+"PKG",18,22,1,"PAH",1,1,6,0)
+one RTLS trigger to notify the RTLS database of the creation of a new
+"PKG",18,22,1,"PAH",1,1,7,0)
+room. Also, this build places MUMPS cross references (behave like a
+"PKG",18,22,1,"PAH",1,1,8,0)
+trigger) on multiple fields of file #6914, expands the description text
+"PKG",18,22,1,"PAH",1,1,9,0)
+for fields #23 and #24, and adds a description to the cross reference 'AB'
+"PKG",18,22,1,"PAH",1,1,10,0)
+on #.01 sub-field of the multiple field Responsible Shop. This build also
+"PKG",18,22,1,"PAH",1,1,11,0)
+places the flag 'NOREINDEX' in all the fields with an RTLS trigger in
+"PKG",18,22,1,"PAH",1,1,12,0)
+order to stop the flooding of the file #6930 in case one of those fields
+"PKG",18,22,1,"PAH",1,1,13,0)
+is reindexed. See the Forum patch description for the list of fields
+"PKG",18,22,1,"PAH",1,1,14,0)
+affected in files #6914 and #6928.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"UP",6914,6914.04,-1)
+6914^4
+"UP",6914,6914.04,0)
+6914.04
+"VER")
+8.0^22.0
+"^DD",6914,6914,.01,0)
+ENTRY NUMBER^RNJ10,0X^^0;1^K:+X'=X!(X>9999999999)!(X<1)!(X?.E1"."1N.N) X I $D(X) K:$L(X)>($L($P(^ENG(6914,0),U,3))+1) X I $D(X) S DINUM=+X
+"^DD",6914,6914,.01,1,0)
+^.1
+"^DD",6914,6914,.01,1,1,0)
+6914^B
+"^DD",6914,6914,.01,1,1,1)
+S ^ENG(6914,"B",$E(X,1,30),DA)=""
+"^DD",6914,6914,.01,1,1,2)
+K ^ENG(6914,"B",$E(X,1,30),DA)
+"^DD",6914,6914,.01,1,2,0)
+6914^EE^MUMPS
+"^DD",6914,6914,.01,1,2,1)
+S ^ENG(6914,"EE",$P(^DIC(6910,1,0),U,2)_" EE"_DA,DA)=""
+"^DD",6914,6914,.01,1,2,2)
+K ^ENG(6914,"EE",$P(^DIC(6910,1,0),U,2)_" EE"_DA,DA)
+"^DD",6914,6914,.01,1,2,"%D",0)
+^^1^1^2970227^
+"^DD",6914,6914,.01,1,2,"%D",1,0)
+Equipment bar code label.
+"^DD",6914,6914,.01,1,2,"DT")
+2970227
+"^DD",6914,6914,.01,1,3,0)
+^^TRIGGER^6914^.5
+"^DD",6914,6914,.01,1,3,1)
+X ^DD(6914,.01,1,3,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,0)):^(0),1:"") S X=$P(Y(1),U,6),X=X S DIU=X K Y S X=DIV S X=DUZ X ^DD(6914,.01,1,3,1.4)
+"^DD",6914,6914,.01,1,3,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(1)=$S($D(^ENG(6914,D0,0)):^(0),1:"") S X=$S('$D(^VA(200,+$P(Y(1),U,6),0)):"",1:$P(^(0),U,1))=""
+"^DD",6914,6914,.01,1,3,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,6)=DIV,DIH=6914,DIG=.5 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,.01,1,3,2)
+Q
+"^DD",6914,6914,.01,1,3,"CREATE CONDITION")
+#.5=""
+"^DD",6914,6914,.01,1,3,"CREATE VALUE")
+S X=DUZ
+"^DD",6914,6914,.01,1,3,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,.01,1,3,"DT")
+2961112
+"^DD",6914,6914,.01,1,3,"FIELD")
+#.5
+"^DD",6914,6914,.01,1,4,0)
+^^TRIGGER^6914^.6
+"^DD",6914,6914,.01,1,4,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(1)=$S($D(^ENG(6914,D0,0)):^(0),1:"") S X=$P(Y(1),U,7)="" I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,0)):^(0),1:"") S X=$P(Y(1),U,7),X=X S DIU=X K Y S X=DIV N %I,%H,% D NOW^%DTC X ^DD(6914,.01,1,4,1.4)
+"^DD",6914,6914,.01,1,4,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,7)=DIV,DIH=6914,DIG=.6 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,.01,1,4,2)
+Q
+"^DD",6914,6914,.01,1,4,"CREATE CONDITION")
+#.6=""
+"^DD",6914,6914,.01,1,4,"CREATE VALUE")
+TODAY
+"^DD",6914,6914,.01,1,4,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,.01,1,4,"DT")
+2961112
+"^DD",6914,6914,.01,1,4,"FIELD")
+#.6
+"^DD",6914,6914,.01,1,5,0)
+6914^AS^MUMPS
+"^DD",6914,6914,.01,1,5,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,.01,1,5,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,.01,1,5,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,.01,1,5,"%D",1,0)
+After the ENTRY NUMBER is changed a notification is sent out to update the
+"^DD",6914,6914,.01,1,5,"%D",2,0)
+Real Time Location System (RTLS) database.
+"^DD",6914,6914,.01,1,5,"DT")
+3130724
+"^DD",6914,6914,.01,1,5,"NOREINDEX")
+1
+"^DD",6914,6914,.01,3)
+Enter a whole number between 1 and 9999999999.
+"^DD",6914,6914,.01,21,0)
+^^3^3^2961217^^^^
+"^DD",6914,6914,.01,21,1,0)
+Changed to a sequential number with Version 6.4 so that file can be used
+"^DD",6914,6914,.01,21,2,0)
+during the equipment request process; before manufacturer, model, and
+"^DD",6914,6914,.01,21,3,0)
+serial number are established.
+"^DD",6914,6914,.01,"AUDIT")
+
+"^DD",6914,6914,.01,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Can't delete until FD Document sent.","","!?5") I 1
+"^DD",6914,6914,.01,"DT")
+3130724
+"^DD",6914,6914,1,0)
+MANUFACTURER^RP6912'X^ENG("MFG",^1;4^Q
+"^DD",6914,6914,1,1,0)
+^.1
+"^DD",6914,6914,1,1,1,0)
+6914^K
+"^DD",6914,6914,1,1,1,1)
+S ^ENG(6914,"K",$E(X,1,30),DA)=""
+"^DD",6914,6914,1,1,1,2)
+K ^ENG(6914,"K",$E(X,1,30),DA)
+"^DD",6914,6914,1,1,2,0)
+6914^AT^MUMPS
+"^DD",6914,6914,1,1,2,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,1,1,2,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,1,1,2,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,1,1,2,"%D",1,0)
+After the MANUFACTURER is changed a notification is sent out to update
+"^DD",6914,6914,1,1,2,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,1,1,2,"DT")
+3130725
+"^DD",6914,6914,1,1,2,"NOREINDEX")
+1
+"^DD",6914,6914,1,3)
+Select the equipment manufacturer.
+"^DD",6914,6914,1,21,0)
+^^2^2^2890618^^^
+"^DD",6914,6914,1,21,1,0)
+Firm that actually manufactured this equipment, not necessarily the
+"^DD",6914,6914,1,21,2,0)
+company from which it was purchased.
+"^DD",6914,6914,1,"DT")
+3130725
+"^DD",6914,6914,2,0)
+PARENT SYSTEM^P6914'X^ENG(6914,^0;3^K:X=DA X
+"^DD",6914,6914,2,1,0)
+^.1
+"^DD",6914,6914,2,1,1,0)
+6914^AE
+"^DD",6914,6914,2,1,1,1)
+S ^ENG(6914,"AE",$E(X,1,30),DA)=""
+"^DD",6914,6914,2,1,1,2)
+K ^ENG(6914,"AE",$E(X,1,30),DA)
+"^DD",6914,6914,2,1,2,0)
+^^TRIGGER^6914^82
+"^DD",6914,6914,2,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG(6914,D0,9)):^(9),1:"") S X=$P(Y(1),U,12),X=X S DIU=X K Y X ^DD(6914,2,1,2,1.1) X ^DD(6914,2,1,2,1.4)
+"^DD",6914,6914,2,1,2,1.1)
+S X=DIV X ^DD(6914,2,1,2,49.2) S X=$S('$D(^ENG(6918.1,+$P(Y(101),U,12),0)):"",1:$P(^(0),U,1)) S D0=I(0,0)
+"^DD",6914,6914,2,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),9)):^(9),1:""),DIV=X S $P(^(9),U,12)=DIV,DIH=6914,DIG=82 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,2,1,2,2)
+Q
+"^DD",6914,6914,2,1,2,49.2)
+S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENG(6914,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6914,D0,9)):^(9),1:"")
+"^DD",6914,6914,2,1,2,"%D",0)
+^^2^2^2980821^
+"^DD",6914,6914,2,1,2,"%D",1,0)
+Will populate the Y2K UTILITY SYSTEMS field when a Y2K UTILITY SYSTEMS
+"^DD",6914,6914,2,1,2,"%D",2,0)
+field exists for a newly defined PARENT SYSTEM.
+"^DD",6914,6914,2,1,2,"CREATE VALUE")
+#2:#82
+"^DD",6914,6914,2,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,2,1,2,"DT")
+2980821
+"^DD",6914,6914,2,1,2,"FIELD")
+#82
+"^DD",6914,6914,2,1,3,0)
+6914^A8^MUMPS
+"^DD",6914,6914,2,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,2,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,2,1,3,"%D",0)
+^.101^2^2^3151210^^
+"^DD",6914,6914,2,1,3,"%D",1,0)
+After the PARENT SYSTEM is changed a notification is sent out to update
+"^DD",6914,6914,2,1,3,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,2,1,3,"DT")
+3130919
+"^DD",6914,6914,2,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,2,3)
+Select an existing record as a parent.
+"^DD",6914,6914,2,21,0)
+^.001^9^9^3130920^^^^
+"^DD",6914,6914,2,21,1,0)
+If Item A is a component of Item B, then the PARENT field of Item A
+"^DD",6914,6914,2,21,2,0)
+should contain the CONTROL NUMBER of Item B. If Item B is, in turn,
+"^DD",6914,6914,2,21,3,0)
+a component of an even larger Item C; then the PARENT field of Item B
+"^DD",6914,6914,2,21,4,0)
+should contain the CONTROL NUMBER of Item C, and so on.
+"^DD",6914,6914,2,21,5,0)
+Inventory items with no entry in the PARENT field are either free
+"^DD",6914,6914,2,21,6,0)
+standing devices or major systems with one or more levels of components
+"^DD",6914,6914,2,21,7,0)
+beneath them.
+"^DD",6914,6914,2,21,8,0)
+An item must already be in the EQUIPMENT file before it can be named
+"^DD",6914,6914,2,21,9,0)
+as the PARENT of another item.
+"^DD",6914,6914,2,"DT")
+3130919
+"^DD",6914,6914,3,0)
+MFGR. EQUIPMENT NAME^F^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>80!($L(X)<1)!'(X?.ANP) X
+"^DD",6914,6914,3,1,0)
+^.1
+"^DD",6914,6914,3,1,1,0)
+6914^H
+"^DD",6914,6914,3,1,1,1)
+S ^ENG(6914,"H",$E(X,1,40),DA)=""
+"^DD",6914,6914,3,1,1,2)
+K ^ENG(6914,"H",$E(X,1,40),DA)
+"^DD",6914,6914,3,1,2,0)
+6914^A9^MUMPS
+"^DD",6914,6914,3,1,2,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,3,1,2,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,3,1,2,"%D",0)
+^.101^2^2^3151210^^
+"^DD",6914,6914,3,1,2,"%D",1,0)
+After the MFGR. EQUIPMENT NAME is changed a notification is sent out to
+"^DD",6914,6914,3,1,2,"%D",2,0)
+update the Real Time Location System (RTLS) database.
+"^DD",6914,6914,3,1,2,"DT")
+3130919
+"^DD",6914,6914,3,1,2,"NOREINDEX")
+1
+"^DD",6914,6914,3,3)
+Enter the manufacturer equipment name, 1-80 characters in length.
+"^DD",6914,6914,3,21,0)
+^.001^3^3^3130920^^^^
+"^DD",6914,6914,3,21,1,0)
+Brief narrative description of item.  For NX (non-expendable) equipment,
+"^DD",6914,6914,3,21,2,0)
+this data element can be triggered in from the Category Stock Number
+"^DD",6914,6914,3,21,3,0)
+file if your site chooses to do so.
+"^DD",6914,6914,3,"DT")
+3130919
+"^DD",6914,6914,4,0)
+MODEL^FX^^1;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>30!($L(X)<1)!'(X?.ANP)!($E(X)'?1AN) X
+"^DD",6914,6914,4,1,0)
+^.1
+"^DD",6914,6914,4,1,1,0)
+6914^E
+"^DD",6914,6914,4,1,1,1)
+S ^ENG(6914,"E",$E(X,1,30),DA)=""
+"^DD",6914,6914,4,1,1,2)
+K ^ENG(6914,"E",$E(X,1,30),DA)
+"^DD",6914,6914,4,1,1,"DT")
+2970304
+"^DD",6914,6914,4,1,2,0)
+^^TRIGGER^6914^4.1
+"^DD",6914,6914,4,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG(6914,D0,1)):^(1),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y X ^DD(6914,4,1,2,1.1) X ^DD(6914,4,1,2,1.4)
+"^DD",6914,6914,4,1,2,1.1)
+S X=DIV X ^DD(6914,4,1,2,49.3) X "F %=1:1:$L(X) S:$E(X,%)?1L X=$E(X,0,%-1)_$C($A(X,%)-32)_$E(X,%+1,999)" S X=X_" "
+"^DD",6914,6914,4,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),1)):^(1),1:""),DIV=X S $P(^(1),U,5)=DIV,DIH=6914,DIG=4.1 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,4,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG(6914,D0,1)):^(1),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y S X="" X ^DD(6914,4,1,2,2.4)
+"^DD",6914,6914,4,1,2,2.4)
+S DIH=$S($D(^ENG(6914,DIV(0),1)):^(1),1:""),DIV=X S $P(^(1),U,5)=DIV,DIH=6914,DIG=4.1 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,4,1,2,49.2)
+S X=DIV,Y(1)=X S X=" ~!@#$%^&*()_+|`-=\{}[]:"";'<>?,./",Y(2)=X S X=""
+"^DD",6914,6914,4,1,2,49.3)
+X ^DD(6914,4,1,2,49.2) S X1=Y(2) S X2=Y(1) X "F %=1:1:$L(X1) F %Y=0:0 S %Y=$F(X2,$E(X1,%),%Y) Q:'%Y  S I=$E(X,%),X2=$E(X2,1,%Y-2)_I_$E(X2,%Y,999) S:I="""" %Y=%Y-1" S X=X2 S X=X
+"^DD",6914,6914,4,1,2,"%D",0)
+^^2^2^2970305^
+"^DD",6914,6914,4,1,2,"%D",1,0)
+Compressed version of MODEL. Spaces and punctuation stripped away. One
+"^DD",6914,6914,4,1,2,"%D",2,0)
+space concatenated on end for consistency in sorting.
+"^DD",6914,6914,4,1,2,"CREATE VALUE")
+UPPERCASE(TRANSLATE(#4," ~!@#$%^&*()_+|`-=\{}[]:"";'<>?,./",""))_" "
+"^DD",6914,6914,4,1,2,"DELETE VALUE")
+@
+"^DD",6914,6914,4,1,2,"DT")
+2970305
+"^DD",6914,6914,4,1,2,"FIELD")
+#4.1
+"^DD",6914,6914,4,1,3,0)
+6914^AU^MUMPS
+"^DD",6914,6914,4,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,4,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,4,1,3,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,4,1,3,"%D",1,0)
+After the MODEL is changed a notification is sent out to update the Real
+"^DD",6914,6914,4,1,3,"%D",2,0)
+Time Location System (RTLS) database.
+"^DD",6914,6914,4,1,3,"DT")
+3130725
+"^DD",6914,6914,4,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,4,3)
+Enter a model, 1-30 characters in length.
+"^DD",6914,6914,4,21,0)
+^^2^2^2961011^
+"^DD",6914,6914,4,21,1,0)
+Model number or designation, normally assigned by manufacturer. Spaces and
+"^DD",6914,6914,4,21,2,0)
+punctuation may be included.
+"^DD",6914,6914,4,"DT")
+3130725
+"^DD",6914,6914,5,0)
+SERIAL #^FX^^1;3^K:$L(X)>30!($L(X)<1)!'(X?.NAP) X I $D(X),$G(DIUTIL)'="VERIFY FIELDS",$D(^ENG(6914,"F",X)) D EN^DDIOL($C(7)_"NOTE: This serial number already in use.","","!?15") I $D(DJSC) H 3
+"^DD",6914,6914,5,1,0)
+^.1
+"^DD",6914,6914,5,1,1,0)
+6914^F
+"^DD",6914,6914,5,1,1,1)
+S ^ENG(6914,"F",$E(X,1,30),DA)=""
+"^DD",6914,6914,5,1,1,2)
+K ^ENG(6914,"F",$E(X,1,30),DA)
+"^DD",6914,6914,5,1,1,"DT")
+2970304
+"^DD",6914,6914,5,1,2,0)
+^^TRIGGER^6914^5.1
+"^DD",6914,6914,5,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG(6914,D0,1)):^(1),1:"") S X=$P(Y(1),U,6),X=X S DIU=X K Y X ^DD(6914,5,1,2,1.1) X ^DD(6914,5,1,2,1.4)
+"^DD",6914,6914,5,1,2,1.1)
+S X=DIV X ^DD(6914,5,1,2,49.3) X "F %=1:1:$L(X) S:$E(X,%)?1L X=$E(X,0,%-1)_$C($A(X,%)-32)_$E(X,%+1,999)" S X=X_" "
+"^DD",6914,6914,5,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),1)):^(1),1:""),DIV=X S $P(^(1),U,6)=DIV,DIH=6914,DIG=5.1 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,5,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG(6914,D0,1)):^(1),1:"") S X=$P(Y(1),U,6),X=X S DIU=X K Y S X="" X ^DD(6914,5,1,2,2.4)
+"^DD",6914,6914,5,1,2,2.4)
+S DIH=$S($D(^ENG(6914,DIV(0),1)):^(1),1:""),DIV=X S $P(^(1),U,6)=DIV,DIH=6914,DIG=5.1 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,5,1,2,49.2)
+S X=DIV,Y(1)=X S X=" ~!@#$%^&*()_+|`{}[]:"";'<>?,./-=\",Y(2)=X S X=""
+"^DD",6914,6914,5,1,2,49.3)
+X ^DD(6914,5,1,2,49.2) S X1=Y(2) S X2=Y(1) X "F %=1:1:$L(X1) F %Y=0:0 S %Y=$F(X2,$E(X1,%),%Y) Q:'%Y  S I=$E(X,%),X2=$E(X2,1,%Y-2)_I_$E(X2,%Y,999) S:I="""" %Y=%Y-1" S X=X2 S X=X
+"^DD",6914,6914,5,1,2,"%D",0)
+^^2^2^2970305^^
+"^DD",6914,6914,5,1,2,"%D",1,0)
+Compressed version of SERIAL #. Spaces and punctuation stripped away. One
+"^DD",6914,6914,5,1,2,"%D",2,0)
+space added for consistency in sorting.
+"^DD",6914,6914,5,1,2,"CREATE VALUE")
+UPPERCASE(TRANSLATE(#5," ~!@#$%^&*()_+|`{}[]:"";'<>?,./-=\",""))_" "
+"^DD",6914,6914,5,1,2,"DELETE VALUE")
+@
+"^DD",6914,6914,5,1,2,"DT")
+2970304
+"^DD",6914,6914,5,1,2,"FIELD")
+#5.1
+"^DD",6914,6914,5,1,3,0)
+6914^AV^MUMPS
+"^DD",6914,6914,5,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,5,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,5,1,3,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,5,1,3,"%D",1,0)
+After the SERIAL # is changed a notification is sent out to update the
+"^DD",6914,6914,5,1,3,"%D",2,0)
+Real Time Location System (RTLS) database.
+"^DD",6914,6914,5,1,3,"DT")
+3130725
+"^DD",6914,6914,5,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,5,3)
+Enter a serial #, 1-30 characters in length.
+"^DD",6914,6914,5,21,0)
+^^3^3^2961120^^
+"^DD",6914,6914,5,21,1,0)
+Serial number. Assigned by manufacturer. Should be unique within model
+"^DD",6914,6914,5,21,2,0)
+and manufacturer. Use numbers, upper case letters, punctuation, and spaces
+"^DD",6914,6914,5,21,3,0)
+as needed.
+"^DD",6914,6914,5,"AUDIT")
+
+"^DD",6914,6914,5,"DT")
+3130725
+"^DD",6914,6914,6,0)
+EQUIPMENT CATEGORY^P6911'X^ENG(6911,^1;1^Q
+"^DD",6914,6914,6,1,0)
+^.1
+"^DD",6914,6914,6,1,1,0)
+6914^G
+"^DD",6914,6914,6,1,1,1)
+S ^ENG(6914,"G",$E(X,1,30),DA)=""
+"^DD",6914,6914,6,1,1,2)
+K ^ENG(6914,"G",$E(X,1,30),DA)
+"^DD",6914,6914,6,1,2,0)
+^^TRIGGER^6914^27
+"^DD",6914,6914,6,1,2,1)
+X ^DD(6914,6,1,2,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,3)):^(3),1:"") S X=$P(Y(1),U,9),X=X S DIU=X K Y X ^DD(6914,6,1,2,1.1) X ^DD(6914,6,1,2,1.4)
+"^DD",6914,6914,6,1,2,1.1)
+S X=DIV S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENG(6911,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6911,D0,0)):^(0),1:"") S X=$P(Y(101),U,3),X=X S X=X S D0=I(0,0)
+"^DD",6914,6914,6,1,2,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^DD(6914,6,1,2,69.2) S X=$P($P(Y(102),$C(59)_$P(Y(101),U,3)_":",2),$C(59),1)]"" S D0=I(0,0)
+"^DD",6914,6914,6,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),3)):^(3),1:""),DIV=X S $P(^(3),U,9)=DIV,DIH=6914,DIG=27 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,6,1,2,2)
+Q
+"^DD",6914,6914,6,1,2,69.2)
+S I(0,0)=$S($D(D0):D0,1:""),D0=Y(0) S:'$D(^ENG(6911,+D0,0)) D0=-1 S Y(102)=$C(59)_$S($D(^DD(6911,3,0)):$P(^(0),U,3),1:""),Y(101)=$S($D(^ENG(6911,D0,0)):^(0),1:"")
+"^DD",6914,6914,6,1,2,"%D",0)
+^^2^2^2970121^
+"^DD",6914,6914,6,1,2,"%D",1,0)
+This is a convenience trigger. It will only be executed if the JCAHO field
+"^DD",6914,6914,6,1,2,"%D",2,0)
+in the EQUIPMENT CATEGORY File (#6911) has a value.
+"^DD",6914,6914,6,1,2,"CREATE CONDITION")
+#6:#3]""
+"^DD",6914,6914,6,1,2,"CREATE VALUE")
+INTERNAL(#6:#3)
+"^DD",6914,6914,6,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,6,1,2,"DT")
+2970121
+"^DD",6914,6914,6,1,2,"FIELD")
+JCAHO
+"^DD",6914,6914,6,1,3,0)
+^^TRIGGER^6914^9
+"^DD",6914,6914,6,1,3,1)
+X ^DD(6914,6,1,3,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,0)):^(0),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y X ^DD(6914,6,1,3,1.1) X ^DD(6914,6,1,3,1.4)
+"^DD",6914,6914,6,1,3,1.1)
+S X=DIV S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENG(6911,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6911,D0,0)):^(0),1:"") S X=$P(Y(101),U,2),X=X S X=X S D0=I(0,0)
+"^DD",6914,6914,6,1,3,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^DD(6914,6,1,3,69.2) S X=$P($P(Y(102),$C(59)_$P(Y(101),U,2)_":",2),$C(59),1)]"" S D0=I(0,0)
+"^DD",6914,6914,6,1,3,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,5)=DIV,DIH=6914,DIG=9 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,6,1,3,2)
+Q
+"^DD",6914,6914,6,1,3,69.2)
+S I(0,0)=$S($D(D0):D0,1:""),D0=Y(0) S:'$D(^ENG(6911,+D0,0)) D0=-1 S Y(102)=$C(59)_$S($D(^DD(6911,2,0)):$P(^(0),U,3),1:""),Y(101)=$S($D(^ENG(6911,D0,0)):^(0),1:"")
+"^DD",6914,6914,6,1,3,"%D",0)
+^^3^3^2970121^
+"^DD",6914,6914,6,1,3,"%D",1,0)
+Makes it possible for sites to maintain the 'LOCKOUT REQUIRED?' fields in
+"^DD",6914,6914,6,1,3,"%D",2,0)
+their Equipment File (#6914) by maintaining the 'LOCKOUT REQUIRED?' fields
+"^DD",6914,6914,6,1,3,"%D",3,0)
+in their Equipment Category File (#6911), which has fewer records.
+"^DD",6914,6914,6,1,3,"CREATE CONDITION")
+#6:#2]""
+"^DD",6914,6914,6,1,3,"CREATE VALUE")
+INTERNAL(#6:#2)
+"^DD",6914,6914,6,1,3,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,6,1,3,"DT")
+2970121
+"^DD",6914,6914,6,1,3,"FIELD")
+lock
+"^DD",6914,6914,6,1,4,0)
+6914^AW^MUMPS
+"^DD",6914,6914,6,1,4,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,6,1,4,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,6,1,4,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,6,1,4,"%D",1,0)
+After the EQUIPMENT CATEGORY is changed a notification is sent out to
+"^DD",6914,6914,6,1,4,"%D",2,0)
+update the Real Time Location System (RTLS) database.
+"^DD",6914,6914,6,1,4,"DT")
+3130725
+"^DD",6914,6914,6,1,4,"NOREINDEX")
+1
+"^DD",6914,6914,6,3)
+Select the equipment category.
+"^DD",6914,6914,6,21,0)
+^^3^3^2970418^^^
+"^DD",6914,6914,6,21,1,0)
+Category of device (ex: DEFIBRILLATOR, AIR CONDITIONER, etc.) to which
+"^DD",6914,6914,6,21,2,0)
+this piece of equipment belongs. Useful in establishing and maintaining
+"^DD",6914,6914,6,21,3,0)
+preventive maintenance schedules.
+"^DD",6914,6914,6,"AUDIT")
+
+"^DD",6914,6914,6,"DT")
+3130725
+"^DD",6914,6914,7,0)
+TYPE OF ENTRY^SX^NX:NON-EXPENDABLE EQPT;BSE:BUILDING SERVICE EQPT;EXP:EXPENDABLE EQPT;^0;4^I $G(DIUTIL)'="VERIFY FIELDS" D TYPE^ENLIB3
+"^DD",6914,6914,7,1,0)
+^.1
+"^DD",6914,6914,7,1,1,0)
+6914^AI^MUMPS
+"^DD",6914,6914,7,1,1,1)
+I $P(^ENG(6914,DA,0),U,4)="NX",$P($G(^(2)),U,3)>4999.99,$P($G(^(8)),U,2)="" S $P(^(8),U,2)=$S($P($G(^(2)),U,3)>99999.99:1,1:"A")
+"^DD",6914,6914,7,1,1,2)
+Q
+"^DD",6914,6914,7,1,1,"%D",0)
+^.101^2^2^3020604^^^^
+"^DD",6914,6914,7,1,1,"%D",1,0)
+Populate a blank INVESTMENT CATEGORY for NX equipment with a value of
+"^DD",6914,6914,7,1,1,"%D",2,0)
+$5,000 or more.
+"^DD",6914,6914,7,1,1,"DT")
+3020604
+"^DD",6914,6914,7,1,2,0)
+6914^AR
+"^DD",6914,6914,7,1,2,1)
+S ^ENG(6914,"AR",$E(X,1,30),DA)=""
+"^DD",6914,6914,7,1,2,2)
+K ^ENG(6914,"AR",$E(X,1,30),DA)
+"^DD",6914,6914,7,1,2,"DT")
+2980826
+"^DD",6914,6914,7,1,3,0)
+6914^AX^MUMPS
+"^DD",6914,6914,7,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,7,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,7,1,3,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,7,1,3,"%D",1,0)
+After the TYPE OF ENTRY is changed a notification is sent out to update
+"^DD",6914,6914,7,1,3,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,7,1,3,"DT")
+3130725
+"^DD",6914,6914,7,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,7,3)
+Select the type of entry.
+"^DD",6914,6914,7,21,0)
+^.001^2^2^3020530^^^
+"^DD",6914,6914,7,21,1,0)
+Discriminates between entries for which a CMR Official is legally
+"^DD",6914,6914,7,21,2,0)
+responsible and those that are accounted for in other ways.
+"^DD",6914,6914,7,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Can't change this field until FD Document sent.","","!?5") I 1
+"^DD",6914,6914,7,"DT")
+3130725
+"^DD",6914,6914,11,0)
+PURCHASE ORDER #^FX^^2;2^K:X[""""!($A(X)=45) X I $D(X) K:X[""""!(X'?.ANP) X I $D(X) K:$L(X)>12!($L(X)<1) X
+"^DD",6914,6914,11,1,0)
+^.1
+"^DD",6914,6914,11,1,1,0)
+6914^M
+"^DD",6914,6914,11,1,1,1)
+S ^ENG(6914,"M",$E(X,1,30),DA)=""
+"^DD",6914,6914,11,1,1,2)
+K ^ENG(6914,"M",$E(X,1,30),DA)
+"^DD",6914,6914,11,1,2,0)
+6914^AH^MUMPS
+"^DD",6914,6914,11,1,2,1)
+D ^ENLIB3
+"^DD",6914,6914,11,1,2,2)
+Q
+"^DD",6914,6914,11,1,2,"DT")
+2960216
+"^DD",6914,6914,11,1,3,0)
+6914^AY^MUMPS
+"^DD",6914,6914,11,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,11,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,11,1,3,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,11,1,3,"%D",1,0)
+After the PURCHASE ORDER # is changed a notification is sent out to update
+"^DD",6914,6914,11,1,3,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,11,1,3,"DT")
+3130725
+"^DD",6914,6914,11,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,11,3)
+Enter a purchase order #, 1-12 characters in length.
+"^DD",6914,6914,11,21,0)
+^^3^3^2880831^
+"^DD",6914,6914,11,21,1,0)
+VA Purchase Order number. May be assigned by the facility or perhaps by
+"^DD",6914,6914,11,21,2,0)
+a centralized purchasing unit of the Office of Acquisitions and Material
+"^DD",6914,6914,11,21,3,0)
+Management.
+"^DD",6914,6914,11,"DT")
+3130725
+"^DD",6914,6914,12,0)
+TOTAL ASSET VALUE^NJ10,2X^^2;3^S:X["$" X=$P(X,"$",2) K:+X'=X&(X'?.N1"."2N)!(X>99999999)!(X<0) X I $G(DIUTIL)'="VERIFY FIELDS",$D(X),$P(^ENG(6914,DA,0),U,4)="NX" D NX^ENLIB3
+"^DD",6914,6914,12,1,0)
+^.1
+"^DD",6914,6914,12,1,1,0)
+6914^AZ^MUMPS
+"^DD",6914,6914,12,1,1,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,12,1,1,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,12,1,1,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,12,1,1,"%D",1,0)
+After the TOTAL ASSET VALUE is changed a notification is sent out to
+"^DD",6914,6914,12,1,1,"%D",2,0)
+update the Real Time Location System (RTLS) database.
+"^DD",6914,6914,12,1,1,"DT")
+3130725
+"^DD",6914,6914,12,1,1,"NOREINDEX")
+1
+"^DD",6914,6914,12,3)
+Enter the total asset value between 0 and 99999999.
+"^DD",6914,6914,12,21,0)
+^^2^2^2960719^^^
+"^DD",6914,6914,12,21,1,0)
+Cost of this equipment at the time of purchase. This field is likely to
+"^DD",6914,6914,12,21,2,0)
+become the basis for estimating depreciated value and replacement cost.
+"^DD",6914,6914,12,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Use FC Document to change this field.","","!?5") I 1
+"^DD",6914,6914,12,"DT")
+3130725
+"^DD",6914,6914,13,0)
+ACQUISITION DATE^DX^^2;4^S %DT="E" D ^%DT S X=Y K:Y<1 X I $G(DIUTIL)'="VERIFY FIELDS",$D(X),$P(^ENG(6914,DA,0),U,4)="NX" D NX^ENLIB3
+"^DD",6914,6914,13,1,0)
+^.1
+"^DD",6914,6914,13,1,1,0)
+6914^AF^MUMPS
+"^DD",6914,6914,13,1,1,1)
+I $P(^ENG(6914,DA,2),U,6)]"",$P(^(2),U,10)="" S $P(^(2),U,10)=($E(X,1,3)+$P(^(2),U,6))_$S($E(X,4,7)="0229":"0228",1:$E(X,4,7))
+"^DD",6914,6914,13,1,1,2)
+Q
+"^DD",6914,6914,13,1,1,"%D",0)
+^^2^2^2960724^
+"^DD",6914,6914,13,1,1,"%D",1,0)
+Determine initial replacement date from acquisition date and life
+"^DD",6914,6914,13,1,1,"%D",2,0)
+expectancy.
+"^DD",6914,6914,13,1,1,"DT")
+2960724
+"^DD",6914,6914,13,1,2,0)
+6914^A1^MUMPS
+"^DD",6914,6914,13,1,2,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,13,1,2,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,13,1,2,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,13,1,2,"%D",1,0)
+After the AQUISITION DATE is changed a notification is sent out to update
+"^DD",6914,6914,13,1,2,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,13,1,2,"DT")
+3130725
+"^DD",6914,6914,13,1,2,"NOREINDEX")
+1
+"^DD",6914,6914,13,3)
+Enter the acquisition date.
+"^DD",6914,6914,13,21,0)
+^^2^2^2880831^
+"^DD",6914,6914,13,21,1,0)
+Date of acceptance of this equipment by the agency. Month and year are
+"^DD",6914,6914,13,21,2,0)
+generally sufficient.
+"^DD",6914,6914,13,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Use FC Document to change this field.","","!?5") I 1
+"^DD",6914,6914,13,"DT")
+3130725
+"^DD",6914,6914,18,0)
+CATEGORY STOCK NUMBER^P6917'X^ENCSN(6917,^2;8^I $G(DIUTIL)'="VERIFY FIELDS",$D(^ENG(6915.2,"B",DA)) D NX^ENLIB3
+"^DD",6914,6914,18,1,0)
+^.1
+"^DD",6914,6914,18,1,1,0)
+6914^J
+"^DD",6914,6914,18,1,1,1)
+S ^ENG(6914,"J",$E(X,1,30),DA)=""
+"^DD",6914,6914,18,1,1,2)
+K ^ENG(6914,"J",$E(X,1,30),DA)
+"^DD",6914,6914,18,1,2,0)
+^^TRIGGER^6914^15
+"^DD",6914,6914,18,1,2,1)
+X ^DD(6914,18,1,2,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,2)):^(2),1:"") S X=$P(Y(1),U,6),X=X S DIU=X K Y X ^DD(6914,18,1,2,1.1) X ^DD(6914,18,1,2,1.4)
+"^DD",6914,6914,18,1,2,1.1)
+S X=DIV S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENCSN(6917,+D0,0)) D0=-1 S Y(101)=$S($D(^ENCSN(6917,D0,0)):^(0),1:"") S X=$P(Y(101),U,2) S D0=I(0,0)
+"^DD",6914,6914,18,1,2,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^DD(6914,18,1,2,69.2) S X=X>0,Y(102)=X S X=Y(2)=0,Y=X,X=Y(102),X=X&Y S D0=I(0,0)
+"^DD",6914,6914,18,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),2)):^(2),1:""),DIV=X S $P(^(2),U,6)=DIV,DIH=6914,DIG=15 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,18,1,2,2)
+Q
+"^DD",6914,6914,18,1,2,69.2)
+X $P(^DD(6914,66,0),U,5,99) S Y(2)=X S I(0,0)=$S($D(D0):D0,1:""),D0=Y(0) S:'$D(^ENCSN(6917,+D0,0)) D0=-1 S Y(101)=$S($D(^ENCSN(6917,D0,0)):^(0),1:"") S X=$P(Y(101),U,2)
+"^DD",6914,6914,18,1,2,"%D",0)
+^^4^4^2960229^
+"^DD",6914,6914,18,1,2,"%D",1,0)
+Brings in a value from the Category Stock Number. User may manually
+"^DD",6914,6914,18,1,2,"%D",2,0)
+overwrite after the fact, but selection of a Category Stock Number is
+"^DD",6914,6914,18,1,2,"%D",3,0)
+designed to automatically update the LIFE EXPECTANCY. Assets which are
+"^DD",6914,6914,18,1,2,"%D",4,0)
+currently reported to FAP won't be changed.
+"^DD",6914,6914,18,1,2,"CREATE CONDITION")
+(#18:#1)>0&(#66=0)
+"^DD",6914,6914,18,1,2,"CREATE VALUE")
+#18:#1
+"^DD",6914,6914,18,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,18,1,2,"DT")
+2960229
+"^DD",6914,6914,18,1,2,"FIELD")
+#15
+"^DD",6914,6914,18,1,3,0)
+6914^A2^MUMPS
+"^DD",6914,6914,18,1,3,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,18,1,3,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,18,1,3,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,18,1,3,"%D",1,0)
+After the CATEGORY STOCK NUMBER is changed a notification is sent out to
+"^DD",6914,6914,18,1,3,"%D",2,0)
+update the Real Time Location System (RTLS) database.
+"^DD",6914,6914,18,1,3,"DT")
+3130725
+"^DD",6914,6914,18,1,3,"NOREINDEX")
+1
+"^DD",6914,6914,18,3)
+Select the category stock number.
+"^DD",6914,6914,18,21,0)
+^^3^3^2960822^^^^
+"^DD",6914,6914,18,21,1,0)
+Pointer to Category Stock Number File. This file was introduced to DHCP
+"^DD",6914,6914,18,21,2,0)
+with Version 6.5 of the Engineering Package, and is maintained by
+"^DD",6914,6914,18,21,3,0)
+Acquisition and Materiel Management (Cataloging).
+"^DD",6914,6914,18,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Use FC Document to change this field.","","!?5") I 1
+"^DD",6914,6914,18,"DT")
+3130725
+"^DD",6914,6914,19,0)
+CMR^P6914.1'X^ENG(6914.1,^2;9^I $G(DIUTIL)'="VERIFY FIELDS" K:$$CMRCHK^ENTIDD(DA,X) X I $D(X) D NX^ENLIB3
+"^DD",6914,6914,19,1,0)
+^.1
+"^DD",6914,6914,19,1,1,0)
+6914^AD
+"^DD",6914,6914,19,1,1,1)
+S ^ENG(6914,"AD",$E(X,1,30),DA)=""
+"^DD",6914,6914,19,1,1,2)
+K ^ENG(6914,"AD",$E(X,1,30),DA)
+"^DD",6914,6914,19,1,2,0)
+^^TRIGGER^6914^60
+"^DD",6914,6914,19,1,2,1)
+X ^DD(6914,19,1,2,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,9)):^(9),1:"") S X=$P(Y(1),U,5),X=X S DIU=X K Y X ^DD(6914,19,1,2,1.1) X ^DD(6914,19,1,2,1.4)
+"^DD",6914,6914,19,1,2,1.1)
+S X=DIV S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENG(6914.1,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6914.1,D0,0)):^(0),1:"") S X=$P(Y(101),U,7) S D0=I(0,0)
+"^DD",6914,6914,19,1,2,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X X ^DD(6914,19,1,2,69.2) S X=$L(X)>2,Y(102)=X S X=Y(2)=0,Y=X,X=Y(102),X=X&Y S D0=I(0,0)
+"^DD",6914,6914,19,1,2,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),9)):^(9),1:""),DIV=X S $P(^(9),U,5)=DIV,DIH=6914,DIG=60 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,19,1,2,2)
+Q
+"^DD",6914,6914,19,1,2,69.2)
+X $P(^DD(6914,66,0),U,5,99) S Y(2)=X S I(0,0)=$S($D(D0):D0,1:""),D0=Y(0) S:'$D(^ENG(6914.1,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6914.1,D0,0)):^(0),1:"") S X=$P(Y(101),U,7)
+"^DD",6914,6914,19,1,2,"%D",0)
+^^2^2^2960228^
+"^DD",6914,6914,19,1,2,"%D",1,0)
+Pick up accounting station from CMR when possible. Don't change if asset
+"^DD",6914,6914,19,1,2,"%D",2,0)
+if currently reported to FAP.
+"^DD",6914,6914,19,1,2,"CREATE CONDITION")
+$L(#19:#5)>2&(#66=0)
+"^DD",6914,6914,19,1,2,"CREATE VALUE")
+#19:#5
+"^DD",6914,6914,19,1,2,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,19,1,2,"DT")
+2960228
+"^DD",6914,6914,19,1,2,"FIELD")
+#60
+"^DD",6914,6914,19,1,3,0)
+^^TRIGGER^6914^21
+"^DD",6914,6914,19,1,3,1)
+X ^DD(6914,19,1,3,1.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,3)):^(3),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y X ^DD(6914,19,1,3,1.1) X ^DD(6914,19,1,3,1.4)
+"^DD",6914,6914,19,1,3,1.1)
+S X=DIV S I(0,0)=$S($D(D0):D0,1:""),D0=DIV S:'$D(^ENG(6914.1,+D0,0)) D0=-1 S Y(101)=$S($D(^ENG(6914.1,D0,0)):^(0),1:"") S X=$P(Y(101),U,5),X=X S X=X S D0=I(0,0)
+"^DD",6914,6914,19,1,3,1.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(1)=$S($D(^ENG(6914,D0,3)):^(3),1:"") S X=$S('$D(^DIC(49,+$P(Y(1),U,2),0)):"",1:$P(^(0),U,1))=""
+"^DD",6914,6914,19,1,3,1.4)
+S DIH=$S($D(^ENG(6914,DIV(0),3)):^(3),1:""),DIV=X S $P(^(3),U,2)=DIV,DIH=6914,DIG=21 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,19,1,3,2)
+Q
+"^DD",6914,6914,19,1,3,"%D",0)
+^^1^1^2960422^
+"^DD",6914,6914,19,1,3,"%D",1,0)
+Picks up the SERVICE POINTER field from the CMR when possible.
+"^DD",6914,6914,19,1,3,"CREATE CONDITION")
+SERVICE POINTER=""
+"^DD",6914,6914,19,1,3,"CREATE VALUE")
+INTERNAL(CMR:SERVICE)
+"^DD",6914,6914,19,1,3,"DELETE VALUE")
+NO EFFECT
+"^DD",6914,6914,19,1,3,"DT")
+2960422
+"^DD",6914,6914,19,1,3,"FIELD")
+SERVICE POINTER
+"^DD",6914,6914,19,1,4,0)
+6914^A3^MUMPS
+"^DD",6914,6914,19,1,4,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,19,1,4,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,19,1,4,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,19,1,4,"%D",1,0)
+After the CMR is changed a notification is sent out to update the Real
+"^DD",6914,6914,19,1,4,"%D",2,0)
+Time Location System (RTLS) database.
+"^DD",6914,6914,19,1,4,"DT")
+3130725
+"^DD",6914,6914,19,1,4,"NOREINDEX")
+1
+"^DD",6914,6914,19,3)
+Select the consolidated memorandum of receipt (CMR).
+"^DD",6914,6914,19,21,0)
+^^2^2^2880823^^^^
+"^DD",6914,6914,19,21,1,0)
+Consolidated Memorandum of Receipt. The basic instrument by which
+"^DD",6914,6914,19,21,2,0)
+accountability for capital equipment is established.
+"^DD",6914,6914,19,"AUDIT")
+
+"^DD",6914,6914,19,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Use FR Document to change this field.","","!?5") I 1
+"^DD",6914,6914,19,"DT")
+3130725
+"^DD",6914,6914,20,0)
+USE STATUS^SX^1:IN USE;2:OUT OF SERVICE;3:LOANED OUT;4:TURNED IN;5:LOST OR STOLEN;^3;1^Q
+"^DD",6914,6914,20,1,0)
+^.1
+"^DD",6914,6914,20,1,1,0)
+6914^A4^MUMPS
+"^DD",6914,6914,20,1,1,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,20,1,1,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,20,1,1,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,20,1,1,"%D",1,0)
+After the USE STATUS is changed a notification is sent out to update the
+"^DD",6914,6914,20,1,1,"%D",2,0)
+Real Time Location System (RTLS) database.
+"^DD",6914,6914,20,1,1,"DT")
+3130725
+"^DD",6914,6914,20,1,1,"NOREINDEX")
+1
+"^DD",6914,6914,20,3)
+Select the use status.
+"^DD",6914,6914,20,21,0)
+^^2^2^2930429^
+"^DD",6914,6914,20,21,1,0)
+Tells the user whether or not the equipment is currently in
+"^DD",6914,6914,20,21,2,0)
+active use.
+"^DD",6914,6914,20,"DT")
+3130725
+"^DD",6914,6914,21,0)
+SERVICE POINTER^P49'^DIC(49,^3;2^Q
+"^DD",6914,6914,21,1,0)
+^.1
+"^DD",6914,6914,21,1,1,0)
+6914^AC
+"^DD",6914,6914,21,1,1,1)
+S ^ENG(6914,"AC",$E(X,1,30),DA)=""
+"^DD",6914,6914,21,1,1,2)
+K ^ENG(6914,"AC",$E(X,1,30),DA)
+"^DD",6914,6914,21,1,2,0)
+6914^A5^MUMPS
+"^DD",6914,6914,21,1,2,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,21,1,2,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,21,1,2,"%D",0)
+^.101^2^2^3151210^^^
+"^DD",6914,6914,21,1,2,"%D",1,0)
+After the SERVICE POINTER is changed a notification is sent out to update
+"^DD",6914,6914,21,1,2,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,21,1,2,"DT")
+3130725
+"^DD",6914,6914,21,1,2,"NOREINDEX")
+1
+"^DD",6914,6914,21,3)
+Select the service/section.
+"^DD",6914,6914,21,5,1,0)
+6914^19^3
+"^DD",6914,6914,21,21,0)
+^^2^2^2880705^
+"^DD",6914,6914,21,21,1,0)
+The functional entity (generally a service) within the facility that uses
+"^DD",6914,6914,21,21,2,0)
+the device.
+"^DD",6914,6914,21,"DT")
+3130725
+"^DD",6914,6914,22,0)
+DISPOSITION DATE^DX^^3;11^S %DT="E" D ^%DT S X=Y K:Y<1 X I $D(X) D DTCHK^ENLIB3(22) I $G(DIUTIL)'="VERIFY FIELDS",$D(X),$D(^ENG(6915.2,"B",DA)) D NX^ENLIB3
+"^DD",6914,6914,22,1,0)
+^.1
+"^DD",6914,6914,22,1,1,0)
+6914^A10^MUMPS
+"^DD",6914,6914,22,1,1,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,22,1,1,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,22,1,1,"%D",0)
+^.101^2^2^3151210^^
+"^DD",6914,6914,22,1,1,"%D",1,0)
+After the DISPOSITION DATE is changed a notification is sent out to
+"^DD",6914,6914,22,1,1,"%D",2,0)
+update the Real Time Location System (RTLS) database.
+"^DD",6914,6914,22,1,1,"DT")
+3130919
+"^DD",6914,6914,22,1,1,"NOREINDEX")
+1
+"^DD",6914,6914,22,3)
+Enter the disposition date.
+"^DD",6914,6914,22,21,0)
+^.001^3^3^3130920^^^
+"^DD",6914,6914,22,21,1,0)
+Date on which item is physically disposed of by Materiel Management.
+"^DD",6914,6914,22,21,2,0)
+Items may be excessed, scrapped, etc.  Item is removed from asset
+"^DD",6914,6914,22,21,3,0)
+account on this date.
+"^DD",6914,6914,22,"AUDIT")
+
+"^DD",6914,6914,22,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Use FD Document to change this field.","","!?5") I 1
+"^DD",6914,6914,22,"DT")
+3130919
+"^DD",6914,6914,23,0)
+PHYSICAL INVENTORY DATE^DX^^2;13^S %DT="E",%DT(0)="-NOW" D ^%DT K %DT S X=Y K:Y<1 X
+"^DD",6914,6914,23,1,0)
+^.1^^0
+"^DD",6914,6914,23,3)
+Future dates are not allowed.
+"^DD",6914,6914,23,21,0)
+^^8^8^3130924^
+"^DD",6914,6914,23,21,1,0)
+Date of last physical inventory of this item (CMR reconciliation).
+"^DD",6914,6914,23,21,2,0)
+Intent is to populate this field automatically via physical inventory
+"^DD",6914,6914,23,21,3,0)
+software using bar code technologies. Completion of a Preventive
+"^DD",6914,6914,23,21,4,0)
+Maintenance Inspection will also update this field, provided that the PM
+"^DD",6914,6914,23,21,5,0)
+STATUS does not contain 'DEFERRED'.
+"^DD",6914,6914,23,21,6,0)
+ 
+"^DD",6914,6914,23,21,7,0)
+For equipment with an RTLS tag ID defined, the physical inventory date is 
+"^DD",6914,6914,23,21,8,0)
+generated by RTLS tag readers.
+"^DD",6914,6914,23,"DT")
+3130924
+"^DD",6914,6914,24,0)
+LOCATION^P6928'^ENG("SP",^3;5^Q
+"^DD",6914,6914,24,1,0)
+^.1^^-1
+"^DD",6914,6914,24,1,1,0)
+6914^D
+"^DD",6914,6914,24,1,1,1)
+S ^ENG(6914,"D",$E(X,1,30),DA)=""
+"^DD",6914,6914,24,1,1,2)
+K ^ENG(6914,"D",$E(X,1,30),DA)
+"^DD",6914,6914,24,1,1,"DT")
+2930120
+"^DD",6914,6914,24,1,2,0)
+6914^AN^MUMPS
+"^DD",6914,6914,24,1,2,1)
+S:$P($P($G(^ENG("SP",X,0)),U),"-",2)]"" ^ENG(6914,"N",$P($P(^ENG("SP",X,0),U),"-",2),DA)=""
+"^DD",6914,6914,24,1,2,2)
+K:$P($P($G(^ENG("SP",X,0)),U),"-",2)]"" ^ENG(6914,"N",$P($P(^ENG("SP",X,0),U),"-",2),DA)
+"^DD",6914,6914,24,1,2,"%D",0)
+^^1^1^2970227^
+"^DD",6914,6914,24,1,2,"%D",1,0)
+Facilitates equipment lookup by BUILDING.
+"^DD",6914,6914,24,1,2,"DT")
+2970227
+"^DD",6914,6914,24,1,3,0)
+^^TRIGGER^6914^24.5
+"^DD",6914,6914,24,1,3,1)
+Q
+"^DD",6914,6914,24,1,3,2)
+X ^DD(6914,24,1,3,2.3) I X S X=DIV S Y(1)=$S($D(^ENG(6914,D0,3)):^(3),1:"") S X=$P(Y(1),U,8),X=X S DIU=X K Y X ^DD(6914,24,1,3,2.1) X ^DD(6914,24,1,3,2.4)
+"^DD",6914,6914,24,1,3,2.1)
+S X=DIV S X=$S('$D(^ENG("SP",+X,0)):"",1:$P(^(0),U,1))
+"^DD",6914,6914,24,1,3,2.3)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(1)=$S($D(^ENG(6914,D0,3)):^(3),1:"") S X=$S('$D(^ENG("SP",+$P(Y(1),U,5),0)):"",1:$P(^(0),U,1))'=$S('$D(^ENG("SP",+X,0)):"",1:$P(^(0),U,1))
+"^DD",6914,6914,24,1,3,2.4)
+S DIH=$S($D(^ENG(6914,DIV(0),3)):^(3),1:""),DIV=X S $P(^(3),U,8)=DIV,DIH=6914,DIG=24.5 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6914,6914,24,1,3,"%D",0)
+^^1^1^2960904^
+"^DD",6914,6914,24,1,3,"%D",1,0)
+Save old value when changed. Maintains previous location chain.
+"^DD",6914,6914,24,1,3,"CREATE VALUE")
+NO EFFECT
+"^DD",6914,6914,24,1,3,"DELETE CONDITION")
+LOCATION'=OLD LOCATION
+"^DD",6914,6914,24,1,3,"DELETE VALUE")
+OLD LOCATION
+"^DD",6914,6914,24,1,3,"DT")
+2960904
+"^DD",6914,6914,24,1,3,"FIELD")
+PREVIOUS LOCATION
+"^DD",6914,6914,24,3)
+Enter as ROOM-BUILDING (or select a SYNONYM).
+"^DD",6914,6914,24,21,0)
+^^3^3^3130924^^
+"^DD",6914,6914,24,21,1,0)
+Physical location of this item at the facility. For equipment being
+"^DD",6914,6914,24,21,2,0)
+tracked by RTLS, the location is populated by the AEMS-MERS RTLS
+"^DD",6914,6914,24,21,3,0)
+interface.  
+"^DD",6914,6914,24,"DT")
+3130924
+"^DD",6914,6914,30,0)
+RESPONSIBLE SHOP^6914.04PA^^4;0
+"^DD",6914,6914,30,21,0)
+^^4^4^2950627^^^^
+"^DD",6914,6914,30,21,1,0)
+Any shop having maintenance responsibility for this item should be entered
+"^DD",6914,6914,30,21,2,0)
+here. The principal use of this field is in generating preventive
+"^DD",6914,6914,30,21,3,0)
+maintenance worklists. If there is no RESPONSIBLE SHOP, the item will
+"^DD",6914,6914,30,21,4,0)
+be ignored by the PM module.
+"^DD",6914,6914,60,0)
+STATION NUMBER^FX^^9;5^K:$L(X)>5!($L(X)<3)!'(X?3N.NU) X I $G(DIUTIL)'="VERIFY FIELDS",$D(X),$D(^ENG(6915.2,"B",DA)) D NX^ENLIB3
+"^DD",6914,6914,60,1,0)
+^.1
+"^DD",6914,6914,60,1,1,0)
+6914^A7^MUMPS
+"^DD",6914,6914,60,1,1,1)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,60,1,1,2)
+D WC^VIAATRI(6914,DA)
+"^DD",6914,6914,60,1,1,"%D",0)
+^.101^2^2^3151210^^^^
+"^DD",6914,6914,60,1,1,"%D",1,0)
+After the STATION NUMBER is changed a notification is sent out to update
+"^DD",6914,6914,60,1,1,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914,60,1,1,"DT")
+3130725
+"^DD",6914,6914,60,1,1,"NOREINDEX")
+1
+"^DD",6914,6914,60,3)
+Enter the station number, 3-5 characters in length.
+"^DD",6914,6914,60,5,1,0)
+6914^19^2
+"^DD",6914,6914,60,21,0)
+^^3^3^2950719^
+"^DD",6914,6914,60,21,1,0)
+Station number of the facility that owns this equipment. If this equipment
+"^DD",6914,6914,60,21,2,0)
+is owned by a national cemetery that is serviced by a VAMC, then the
+"^DD",6914,6914,60,21,3,0)
+station number of the cemetery should appear in this field.
+"^DD",6914,6914,60,"DEL",1,0)
+I +$$CHKFA^ENFAUTL(DA) D EN^DDIOL("Item reported to FAP. Can't change this field until FD Document sent.","","!?5") I 1
+"^DD",6914,6914,60,"DT")
+3130725
+"^DD",6914,6914.04,0)
+RESPONSIBLE SHOP SUB-FIELD^^3^6
+"^DD",6914,6914.04,0,"NM","RESPONSIBLE SHOP")
+
+"^DD",6914,6914.04,.01,0)
+RESPONSIBLE SHOP^MP6922'X^DIC(6922,^0;1^Q
+"^DD",6914,6914.04,.01,1,0)
+^.1
+"^DD",6914,6914.04,.01,1,1,0)
+6914.04^B
+"^DD",6914,6914.04,.01,1,1,1)
+S ^ENG(6914,DA(1),4,"B",$E(X,1,30),DA)=""
+"^DD",6914,6914.04,.01,1,1,2)
+K ^ENG(6914,DA(1),4,"B",$E(X,1,30),DA)
+"^DD",6914,6914.04,.01,1,2,0)
+6914^AB
+"^DD",6914,6914.04,.01,1,2,1)
+S ^ENG(6914,"AB",$E(X,1,30),DA(1),DA)=""
+"^DD",6914,6914.04,.01,1,2,2)
+K ^ENG(6914,"AB",$E(X,1,30),DA(1),DA)
+"^DD",6914,6914.04,.01,1,2,"%D",0)
+^^2^2^3160205^
+"^DD",6914,6914.04,.01,1,2,"%D",1,0)
+This cross reference keeps track of the Engineering Section shop
+"^DD",6914,6914.04,.01,1,2,"%D",2,0)
+responsible for performing maintenance on a given piece of equipment.
+"^DD",6914,6914.04,.01,1,3,0)
+6914^A6^MUMPS
+"^DD",6914,6914.04,.01,1,3,1)
+D WC^VIAATRI(6914,DA(1))
+"^DD",6914,6914.04,.01,1,3,2)
+D WC^VIAATRI(6914,DA(1))
+"^DD",6914,6914.04,.01,1,3,"%D",0)
+^.101^2^2^3160205^^^^
+"^DD",6914,6914.04,.01,1,3,"%D",1,0)
+After the RESPONSIBLE SHOP is changed a notification is sent out to update
+"^DD",6914,6914.04,.01,1,3,"%D",2,0)
+the Real Time Location System (RTLS) database.
+"^DD",6914,6914.04,.01,1,3,"DT")
+3160205
+"^DD",6914,6914.04,.01,1,3,"NOREINDEX")
+1
+"^DD",6914,6914.04,.01,3)
+Select the responsible shop.
+"^DD",6914,6914.04,.01,"DT")
+3160205
+"^DD",6928,6928,.01,0)
+ROOM NUMBER^RFX^^0;1^K:X[""""!($L(X)>20)!($L(X)<3) X I $D(X) D ROOM^ENLIB I $D(X),$P(X,"-",2)'="",'$D(^ENG(6928.3,"B",$P(X,"-",2,3))) D BLDG^ENLIB K X
+"^DD",6928,6928,.01,1,0)
+^.1
+"^DD",6928,6928,.01,1,1,0)
+6928^B
+"^DD",6928,6928,.01,1,1,1)
+S ^ENG("SP","B",$E(X,1,30),DA)=""
+"^DD",6928,6928,.01,1,1,2)
+K ^ENG("SP","B",$E(X,1,30),DA)
+"^DD",6928,6928,.01,1,2,0)
+^^TRIGGER^6928^.5
+"^DD",6928,6928,.01,1,2,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG("SP",D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y X ^DD(6928,.01,1,2,1.1) X ^DD(6928,.01,1,2,1.4)
+"^DD",6928,6928,.01,1,2,1.1)
+S X=DIV S X=DIV,Y(1)=X S X="-",Y(2)=X S X=2,X=$P(Y(1),Y(2),X)
+"^DD",6928,6928,.01,1,2,1.4)
+S DIH=$S($D(^ENG("SP",DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=6928,DIG=.5 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6928,6928,.01,1,2,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG("SP",D0,0)):^(0),1:"") S X=$P(Y(1),U,2),X=X S DIU=X K Y S X="" S DIH=$S($D(^ENG("SP",DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,2)=DIV,DIH=6928,DIG=.5 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6928,6928,.01,1,2,"CREATE VALUE")
+$P(ROOM NUMBER,"-",2)
+"^DD",6928,6928,.01,1,2,"DELETE VALUE")
+@
+"^DD",6928,6928,.01,1,2,"DT")
+2990909
+"^DD",6928,6928,.01,1,2,"FIELD")
+#.5
+"^DD",6928,6928,.01,1,3,0)
+^^TRIGGER^6928^.6
+"^DD",6928,6928,.01,1,3,1)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG("SP",D0,0)):^(0),1:"") S X=$P(Y(1),U,10),X=X S DIU=X K Y X ^DD(6928,.01,1,3,1.1) X ^DD(6928,.01,1,3,1.4)
+"^DD",6928,6928,.01,1,3,1.1)
+S X=DIV S X=DIV,Y(1)=X S X="-",Y(2)=X S X=3,X=$P(Y(1),Y(2),X)
+"^DD",6928,6928,.01,1,3,1.4)
+S DIH=$S($D(^ENG("SP",DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,10)=DIV,DIH=6928,DIG=.6 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6928,6928,.01,1,3,2)
+K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(^ENG("SP",D0,0)):^(0),1:"") S X=$P(Y(1),U,10),X=X S DIU=X K Y S X="" X ^DD(6928,.01,1,3,2.4)
+"^DD",6928,6928,.01,1,3,2.4)
+S DIH=$S($D(^ENG("SP",DIV(0),0)):^(0),1:""),DIV=X S $P(^(0),U,10)=DIV,DIH=6928,DIG=.6 D ^DICR:$O(^DD(DIH,DIG,1,0))>0
+"^DD",6928,6928,.01,1,3,"CREATE VALUE")
+$P(ROOM NUMBER,"-",3)
+"^DD",6928,6928,.01,1,3,"DELETE VALUE")
+@
+"^DD",6928,6928,.01,1,3,"DT")
+2990909
+"^DD",6928,6928,.01,1,3,"FIELD")
+#.6
+"^DD",6928,6928,.01,1,4,0)
+6928^AC^MUMPS
+"^DD",6928,6928,.01,1,4,1)
+N ENX S ENX=$P(X,"-",3)_":"_$P(X,"-",2)_":"_$P(X,"-"),$P(^ENG("SP",DA,9),U)=ENX,^ENG("SP","AD",ENX,DA)=""
+"^DD",6928,6928,.01,1,4,2)
+N ENX S ENX=$P(X,"-",3)_":"_$P(X,"-",2)_":"_$P(X,"-") K ^ENG("SP","AD",ENX,DA)
+"^DD",6928,6928,.01,1,4,"%D",0)
+^^2^2^2930322^^^^
+"^DD",6928,6928,.01,1,4,"%D",1,0)
+To facilitate sorting by DIVISION first, then BUILDING, then ROOM.
+"^DD",6928,6928,.01,1,4,"%D",2,0)
+This x-ref automatically maintains the INVERSE LOCATION field.
+"^DD",6928,6928,.01,1,4,"DT")
+2930321
+"^DD",6928,6928,.01,1,5,0)
+6928^AF^MUMPS
+"^DD",6928,6928,.01,1,5,1)
+N ENX,ENX1 S ENX=$P(X,"-",2,3) I ENX]"" S ENX1=$O(^ENG(6928.3,"B",ENX,0)),$P(^ENG("SP",DA,0),U,14)=ENX1 S:ENX1]"" ^ENG("SP","AE",ENX1,DA)="" Q
+"^DD",6928,6928,.01,1,5,2)
+N ENX,ENX1 S ENX=$P(X,"-",2,3) I ENX]"" S ENX1=$O(^ENG(6928.3,"B",ENX,0)) K:ENX1]"" ^ENG("SP","AE",ENX1,DA) Q
+"^DD",6928,6928,.01,1,5,"%D",0)
+^^1^1^2930322^^^^
+"^DD",6928,6928,.01,1,5,"%D",1,0)
+Set the BUILDING FILE POINTER field on basis of ROOM NUMBER.
+"^DD",6928,6928,.01,1,5,"DT")
+2930322
+"^DD",6928,6928,.01,1,6,0)
+6928^AG^MUMPS
+"^DD",6928,6928,.01,1,6,1)
+D WC^VIAATRI(6928,DA)
+"^DD",6928,6928,.01,1,6,2)
+D WC^VIAATRI(6928,DA)
+"^DD",6928,6928,.01,1,6,"%D",0)
+^.101^2^2^3160505^^^^
+"^DD",6928,6928,.01,1,6,"%D",1,0)
+After the ROOM NUMBER is changed a notification is sent out to update the
+"^DD",6928,6928,.01,1,6,"%D",2,0)
+Real Time Location System (RTLS) database.
+"^DD",6928,6928,.01,1,6,"DT")
+3130723
+"^DD",6928,6928,.01,1,6,"NOREINDEX")
+1
+"^DD",6928,6928,.01,3)
+Enter a room number, 3-20 characters in length.
+"^DD",6928,6928,.01,4)
+W !!,"Enter as 'ROOM-BUILDING' or 'ROOM-BUILDING-DIVISION' at two-division",!,"facilities and other sites where building numbers may be duplicated. The",!,"Building File (6928.3) is used for data validation."
+"^DD",6928,6928,.01,20,0)
+^.3LA^^0
+"^DD",6928,6928,.01,20,1,0)
+{
+"^DD",6928,6928,.01,21,0)
+^^20^20^3151210^
+"^DD",6928,6928,.01,21,1,0)
+Identifier of a physical location (room). With the advent of bar coding,
+"^DD",6928,6928,.01,21,2,0)
+it is essential that this field uniquely and unambiguously specify a
+"^DD",6928,6928,.01,21,3,0)
+particular location. Entries may consist of one, two, or three pieces.
+"^DD",6928,6928,.01,21,4,0)
+Hyphens (if present) are treated as delimiters between pieces. First
+"^DD",6928,6928,.01,21,5,0)
+piece (always present) is room designation, second piece (optional) is
+"^DD",6928,6928,.01,21,6,0)
+building designation, and third piece (optional) is division
+"^DD",6928,6928,.01,21,7,0)
+designation (may be used for outpatient clinics, regional offices, etc.
+"^DD",6928,6928,.01,21,8,0)
+as well as for formal divisions).
+"^DD",6928,6928,.01,21,9,0)
+ 
+"^DD",6928,6928,.01,21,10,0)
+It is anticipated that most sites will use two piece entries. True
+"^DD",6928,6928,.01,21,11,0)
+single-building facilities may use one-piece entries. Multi-division
+"^DD",6928,6928,.01,21,12,0)
+facilities and sites supporting remote offices where duplicate building
+"^DD",6928,6928,.01,21,13,0)
+numbers may be a problem should use three-piece entries.
+"^DD",6928,6928,.01,21,14,0)
+ 
+"^DD",6928,6928,.01,21,15,0)
+Entry of a two-piece ROOM NUMBER will automatically populate the
+"^DD",6928,6928,.01,21,16,0)
+BUILDING field. Entry of a three-piece ROOM NUMBER will automatically
+"^DD",6928,6928,.01,21,17,0)
+populate the BUILDING and DIVISION fields.
+"^DD",6928,6928,.01,21,18,0)
+ 
+"^DD",6928,6928,.01,21,19,0)
+Hyphens must not be used as anything other than delimiters between
+"^DD",6928,6928,.01,21,20,0)
+ROOM, BUILDING, and DIVISION.
+"^DD",6928,6928,.01,"DEL",1,0)
+I $D(^ENG(6914,"D",DA)) D EN^DDIOL("Can't delete because EQUIPMENT file (#6914) entries point to this location.") I 1
+"^DD",6928,6928,.01,"DEL",2,0)
+I $D(^ENG(6920,"C",DA)) D EN^DDIOL("Can't delete because WORK ORDER file (#6920) entries point to this location.") I 1
+"^DD",6928,6928,.01,"DT")
+3151210
+"BLD",9282,6)
+^91
+**END**
+**END**
+

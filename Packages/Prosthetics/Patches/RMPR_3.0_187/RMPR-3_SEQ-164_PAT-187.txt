@@ -1,0 +1,129 @@
+
+=============================================================================
+Run Date: NOV 02, 2017                     Designation: RMPR*3*187
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #164                      Status: Released
+                  Compliance Date: DEC 03, 2017
+=============================================================================
+
+
+Subject: PROSTHETICS GUI - DOR SORTING & INACTIVE HCPCS
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+ This is only an update to the Prosthetics Graphical User Interface (GUI).
+ When running the "Delayed Order Report" in the Prosthetics GUI, the user
+ does not have the ability to sort each column. While in the Prosthetics
+ GUI, users are able to select an "inactive" Healthcare Common Procedure
+ Coding System (HCPCS) code on the Orthotic Work Order and Lab (OWL) form.
+  
+ RMPR*3*187 does not update any VistA routines but does update the 
+ Prosthetics GUI.
+  
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1) I13416952FY17   Prosthetics GUI Delayed Order Report will not sort 
+                    after RMPR*3*183 
+       I16614356FY17 (d)
+ 2) I7050502FY16    inactive codes that are being used in the OWL 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Birmingham VA Medical Center
+ Central Alabama Veterans Health Care System (Tuskegee, Montgomery)
+ Clement J. Zablocki Veterans Affairs Medical Center (Milwaukee)
+  
+  
+ TICKET OVERVIEW:
+ ================
+ 1) I13416952FY17   Prosthetics GUI Delayed Order Report will not sort 
+                    after RMPR*3*183 
+   
+  Problem: 
+  --------
+  After running the "Delayed Order Report" in the Prosthetics GUI, the
+  user does not have the ability to sort each column. 
+   
+  Resolution:
+  -----------
+  Modified the properties associated with the "grdConsult" component to
+  allow sorting.
+  
+ 2) I7050502FY16    inactive codes that are being used in the OWL 
+   
+  Problem: 
+  --------
+  While in the Prosthetics GUI users are able to select an "inactive"
+  HCPCS code on the OWL form.
+   
+  Resolution:
+  ----------- 
+  When the call is made to Vista to retrieve the list of HCPCS codes, it 
+  will screen out any "inactive" entries. 
+  
+ SOFTWARE AND DOCUMENTATION DISTRIBUTION:
+ ======================================== 
+ Sites may retrieve the new GUI and documentation directly via Secure File 
+ Transfer Protocol (SFTP). The preferred method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the file directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+   OI FIELD OFFICE          FTP ADDRESS                  DIRECTORY
+   ===============          ===========                  =========
+   HINES                    domain.ext          
+   SALT LAKE                domain.ext            
+   FIRST AVAILABLE SERVER   download.vista.domain.ext    
+  
+  
+ Filename                    Description
+ ========                    ===========
+ RMPR3_0p187GUI_1.ZIP        Software Executable
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode.  
+  
+  
+ GUI Installation Instructions
+ =============================
+ The Prosthetics GUI client software is being distributed as a zip file 
+ (2864 KB). Sites can retrieve the zip file as indicated above, containing
+ the necessary files to run the Prosthetics GUI, and extract locally as a
+ distribution method. 
+  
+ 1) Once the executable has been retrieved right click on the zip file 
+    and select "Extract All.".
+  
+ 2) Select the location to unzip the file to and click "Extract".
+  
+ 3) Once the file has been unzipped, navigate to the directory where the
+    file was placed and run the "ProsMenu.exe" executable.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 30, 2017
+Completed By:                               Date Completed: NOV 01, 2017
+Released By :                               Date Released : NOV 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

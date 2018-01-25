@@ -1,0 +1,184 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 06/08/17 at 16:35
+=============================================================================
+Run Date: OCT 05, 2017                     Designation: YS*5.01*131
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #98                   Status: Released
+                  Compliance Date: NOV 05, 2017
+=============================================================================
+
+
+Subject: CIWA-AR SCORING ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+ 1.    CIWA question number 11 for headache not totaling.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================
+ 1. R14616270FY17 - CIWA question number 11 for headache not totaling.
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Mountain Home
+ Valley Coastal Bend
+  
+ CA SDM TICKET OVERVIEW:
+ =======================
+ 1. R14616270FY17 - CIWA question number 11 for headache not totaling.
+  
+ Problem:
+ --------
+ CIWA-AR question number 11 for headache not totaling when option 6 is 
+ selected. In the MH SCORING KEY file (# 601.91) the TARGET value field (#
+ 3) contains a typo.
+  
+ MH SCORING KEY # 6189, TARGET VALUE: "Very Severe"
+  
+ This issue carries over to its replacement instrument CIWA-AR-.
+ MH SCORING KEY # 9587, TARGET VALUE: "Very Severe"
+  
+ Resolution:
+ -----------
+ Post-init routine YSZ131 will correct "Very Severe" to "Very severe" in
+ the affected records.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 2 minutes 
+ to install.
+  
+ Installation Instructions:
+ --------------------------  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 3. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 4. From this menu, you may select to use the following options:
+    (when prompted for INSTALL NAME, enter YS*5.01*131)
+   
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+   
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch
+       is installed. It compares all components of the patch (routines,
+       DDs, templates, etc.).
+   
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+   
+ 5. Use the Install Package(s) option and select the package YS*5.01*131.
+   
+ 6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.
+  
+ 7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes): (0 - 60): 0//' respond 0.  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Routine YSZ131 will be run in the post install process. It will display
+ a message to the user giving the status and success of the updates. It
+ will also send a MailMan message to the user with the same information.
+  
+ The MailMan message will tell the user if the patch made any changes 
+ to the data on file. If the records in the MH SCORING KEY file (#601.91)
+ have already corrected then the patch will made no additional changes.
+  
+ If the records in the MH SCORING KEY file (#601.91) were corrected by this
+ patch. The MailMan Message will look like this:
+ ==========================================================================
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ Patch YS*5.01*131 Installation Messages
+ R14616270FY17 - CIWA question number 11 for headache not totaling.
+ MH SCORING KEY records #6189 and #9587 have Target fields with an 
+ incorrect
+ value of 'Very Severe'. These records will be corrected with 'Very 
+ severe'.
+ MH SCORING KEY # 6189
+     Target: Very Severe
+         Value will be set to the correct value of Very severe
+ MH SCORING KEY # 9587
+     Target: Very Severe
+         Value will be set to the correct value of Very severe
+  
+ If the records in the MH SCORING KEY file (#601.91) are already correct
+ when this patch is installed. The MailMan Message will look like this:
+ ==========================================================================
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ Patch YS*5.01*131 Installation Messages
+ R14616270FY17 - CIWA question number 11 for headache not totaling.
+ MH SCORING KEY records #6189 and #9587 have Target fields with an 
+ incorrect
+ value of 'Very Severe'. These records will be corrected with 'Very 
+ severe'.
+ MH SCORING KEY # 6189
+     Target: Very severe
+         Value is already correct.
+ MH SCORING KEY # 9587
+     Target: Very severe
+         Value is already correct.
+  
+  
+ When the patch has been successfully installed, the sites may delete
+ the YSZ131 routine.
+  
+ Instructions to delete routine YSZ131
+ -------------------------------------
+ 1. Select the Programmer Options from the Systems Manager Menu.
+ 2. Select the Routine Management Menu from the Programmer Options.
+ 3. Select the Delete Routines from the Routine Management Menu.
+ 4. At the "All Routines?" prompt enter N for No. If it defaults to 
+    No press the enter key.
+ 5. At the "Routine:" prompt type in the name of the routine to be 
+    deleted. In this case type in YSZ131. NOTE: NAME MUST BE EXACT.
+ 6. At the "#routines to DELETE, OK:" prompt (# will be number of 
+    routines to delete. In this case it will read 1.) Type in Y for Yes.
+ 7. The user message of "Done" will be displayed to the user and it 
+    will return to the Routine Management Menu.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YSZ131
+    Before:       n/a   After: B12913728  **131**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 19, 2017
+Completed By:                               Date Completed: OCT 04, 2017
+Released By :                               Date Released : OCT 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

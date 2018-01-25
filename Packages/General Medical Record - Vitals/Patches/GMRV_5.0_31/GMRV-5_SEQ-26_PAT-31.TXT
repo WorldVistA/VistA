@@ -1,0 +1,146 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 11/14/16 at 13:07
+=============================================================================
+Run Date: SEP 20, 2017                     Designation: GMRV*5*31
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #26                      Status: Released
+                  Compliance Date: OCT 21, 2017
+=============================================================================
+
+Associated patches: (v)GMRV*5*23   <<= must be installed BEFORE `GMRV*5*31'
+
+Subject: CHANGE LB TO KG CONVERSION FACTOR IN CUMULATIVE REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+ The pounds to kilograms weight conversion factor is currently 2.20 in 
+ routine GMRVUTL, which is used for the Vitals Cumulative Report. CPRS 
+ (Computerized Patient Record System) and Vitals Lite both use a 
+ conversion factor of 2.20462262.
+            
+ Associated CA/SDM ticket:
+ =========================
+ I9840386FY16 Vitals Measurement - Other:
+      
+ Associated NSR(s):
+ ==================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ Lexington, KY
+ Oklahoma, OK
+ San Antonio, TX 
+      
+ CA/SDM Ticket
+ =============
+ I9840386FY16 Vitals Measurement - Other:
+  
+ Problem:
+ --------
+      
+ The pounds to kilograms weight conversion factor is currently 
+ 2.20 in routine GMRVUTL, which is used for the Vitals 
+ Cumulative Report. CPRS (Computerized Patient Record System)
+ and Vitals Lite both use a conversion factor of 2.20462262.
+      
+ Resolution:
+ ----------- 
+ Modify routine GMRVUTL to utilize the correct conversion 
+ factor.      
+      
+ Installation Instructions:
+ ==========================
+      
+ If installed during the normal workday, it is recommended that 
+ the Vitals/Measurement users be off the system. Other VISTA (Veterans 
+ Health Information Systems and Technology Architecture) users
+ will not be affected.
+  
+ Install Time - less than 2 minutes
+     
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter GMRV*5.0*31):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's (Data Dictionaries)
+         or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+   a.  Choose the Install Package(s) option to start the patch
+       install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//', answer NO. 
+  
+   c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+       Options, and Protocols? YES//', answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRVUTL
+    Before:  B4909510   After:  B5421541  **23,31**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2016
+Completed By:                               Date Completed: SEP 19, 2017
+Released By :                               Date Released : SEP 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

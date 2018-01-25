@@ -1,0 +1,128 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/19/17 at 11:21
+=============================================================================
+Run Date: SEP 25, 2017                     Designation: FB*3.5*174
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #148                    Status: Released
+                  Compliance Date: OCT 25, 2017
+=============================================================================
+
+Associated patches: (v)FB*3.5*154  <<= must be installed BEFORE `FB*3.5*174'
+
+Subject: SYNTAX ERROR - EN+12_FBAADEM1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains the following issue:
+ A syntax error occurs in a series of sequent events when selecting the 
+ Fee Patient Inquiry [FBAA PATIENT INQUIRY] option.
+  
+ ASSOCIATED CA TICKETS:
+ ======================
+ 1. I9260083FY16 - Replacing Remedy ticket 1252723 -<SYNTAX> EN+12^FBAADEM1
+       I11114891FY17(d) - <SYNTAX>EN+12^FBAADEM1
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Coatesville VA Medical Center
+ Miami VA Healthcare System
+ Minneapolis VA Medical Center
+  
+ CA TICKET OVERVIEW:
+ ===================
+ 1. I9260083FY16 - Replacing Remedy ticket 1252723 -<SYNTAX> EN+12^FBAADEM1
+   
+    Problem:
+    --------
+    An issue arises when using a custom menu option which contains either
+    the Re-open Unauthorized Claim [FBUC REOPEN] option or the Modify
+    Unauthorized Claim [FBUC MODIFY UNAUTHORIZED CLAIM] option, and also
+    the Fee Patient Inquiry [FBAA PATIENT INQUIRY] option. If either of the
+    first two options are used and then the Fee Patient Inquiry [FBAA
+    PATIENT INQUIRY] option is used then a syntax error occurs.
+  
+    Resolution:
+    -----------
+    Routine FBUCED was modified to add the variable FBPROG to the
+    End tagline which will clean up the FBPROG variable upon exiting
+    the Re-open Unauthorized Claim [FBUC REOPEN] and Modify
+    Unauthorized Claim [FBUC MODIFY UNAUTHORIZED CLAIM] options.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours. However, as
+ certain Fee Basis options are going to be placed out of order, it is 
+ recommended that Fee Basis users not be on the system at the time.   
+  
+ Install Time - less than 2 minutes.  
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+       
+  2. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+    
+  3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter FB*3.5*174):
+           a.  Verify Checksums in Transport Global - This option will 
+               allow you to ensure the integrity of the routines that are  
+               in the transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option 
+               will allow you to view all changes that will be made when
+               this patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will 
+               not backup any other changes such as DD's or templates.
+    
+  5. Use the Install Package(s) option and select the package FB*3.5*174:
+  
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+          NO//", answer NO.
+  
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//", answer YES.
+  
+      When prompted, "Enter options you wish to mark as 'Out Of Order':",
+      enter:
+  
+       Re-open Unauthorized Claim     [FBUC REOPEN]
+       Modify Unauthorized Claim      [FBUC MODIFY UNAUTHORIZED CLAIM]
+  
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>                                    
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBUCED
+    Before: B41181903   After: B41601866  **32,38,154,174**
+ 
+Routine list of preceding patches: 154
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 19, 2016
+Completed By:                               Date Completed: SEP 21, 2017
+Released By :                               Date Released : SEP 25, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

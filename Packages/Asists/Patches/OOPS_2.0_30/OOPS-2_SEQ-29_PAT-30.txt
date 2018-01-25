@@ -1,0 +1,168 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/07/17 at 11:05
+=============================================================================
+Run Date: NOV 28, 2017                     Designation: OOPS*2*30
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #29                      Status: Released
+                  Compliance Date: DEC 13, 2017
+=============================================================================
+
+Associated patches: (v)OOPS*2*29   <<= must be installed BEFORE `OOPS*2*30'
+
+Subject: ASISTS GUI - DISPLAY INCIDENCE RATES WORKSHEET DATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ **NOTE: This patch is going to be released with a shorten compliance date 
+ of December 13, 2017.**
+ **************************************************************************
+  
+ This patch fixes issues when running the "Display Incidence Rates 
+ Worksheet" GUI option where the "Start Year" and "End Year" do not 
+ allow selection of 2017 dates.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Nebraska Western Iowa Health Care System 
+ Health Care System
+ West Texas VA Health Care System (Big Spring)
+ VA New York Harbor Health Care System (Brooklyn, Manhattan)
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ R12624959FY17  ASISTS - Dates Needed for 2017
+  
+  
+ TICKET OVERVIEW:
+ ================
+ R12624959FY17  ASISTS - Dates Needed for 2017
+  
+  
+ Problem: 
+ --------
+ While running the "Display Incidence Rates Worksheet" option, the "Start
+ Year" and "End Year" do not allow selection of 2017 dates.  This occurs
+ because the date values are hard coded and only go up to 2016. 
+   
+ Resolution:
+ -----------
+ Rather than using hard coded values, the ASISTS application will
+ dynamically populate the dropdowns with values starting at 2004 and ending
+ on the current year.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Sites may retrieve the new GUI and documentation directly via Secure File 
+ Transfer Protocol (SFTP). The preferred method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the file directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+   OI FIELD OFFICE          FTP ADDRESS                  DIRECTORY
+   ===============          ===========                  =========
+   HINES                    domain.ext          
+   SALT LAKE                domain.ext            
+   FIRST AVAILABLE SERVER   download.vista.domain.ext    
+  
+  
+ Filename                    Description
+ ========                    ===========
+ oops2_p30.zip      ZIP file                BINARY                8554
+ oops2_0um.pdf      ASISTS User Manual      BINARY                5232
+ oops2_0ig.pdf      ASISTS Install Guide    BINARY                 400
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode.  
+  
+  
+ GUI Installation Instructions
+ =============================
+ The ASISTS GUI client software is being distributed as a zip file 
+ (8554 KB). Sites can retrieve the zip file as indicated above, containing
+ the necessary files to run the ASISTS GUI, and extract locally as a
+ distribution method. 
+  
+ 1) Once the zip file has been retrieved right click on the zip file 
+    and select "Extract All.".
+  
+ 2) Select the location to unzip the file to and click "Extract".
+  
+ 3) Once the file has been unzipped, navigate to the directory where the
+    file was placed and run the "ASISTS.exe" executable.
+  
+  
+ ==================== INSTALLATION INSTRUCTIONS =====================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*30)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OOPS*2.0*30.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34497641   After: B34497332  **4,8,7,11,15,18,20,21,23,28,29,30**
+ 
+Routine list of preceding patches: 29
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2017
+Completed By:                               Date Completed: NOV 27, 2017
+Released By :                               Date Released : NOV 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

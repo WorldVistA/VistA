@@ -1,0 +1,370 @@
+$TXT Created by                at CDMS.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 06/12/17 at 17:11
+=============================================================================
+Run Date: AUG 14, 2017                     Designation: PSN*4*396
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #513                      Status: Released
+                  Compliance Date: AUG 24, 2017
+=============================================================================
+
+Associated patches: (v)PSN*4*33    <<= must be installed BEFORE `PSN*4*396'
+                    (v)PSN*4*109   <<= must be installed BEFORE `PSN*4*396'
+                    (v)PSN*4*492   <<= must be installed BEFORE `PSN*4*396'
+
+Subject: PPS-N 3.0 - REPLACE NATIONAL DRUG FILE MANAGEMENT SYSTEM (NDFMS)
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch will install additional VistA code and menu options that
+ will be used to replace the current National Drug File Management
+ System (NDFMS) monthly update functionality via the FORUM patch process.
+  
+ This patch is being released in conjunction with Pharmacy Data Management 
+ patch PSS*1.0*195.
+  
+ Patch Components:
+ -----------------
+ Patch PSN*4*396 will provide the following enhancements:
+  
+ 1.  The following fields have been added to the VA PRODUCT FILE (#50.68):
+        HAZARDOUS TO HANDLE field (#101)
+        HAZARDOUS TO DISPOSE field (#102)
+        PRIMARY EPA CODE field (#103)
+        WASTE SORT CODE field (#104)
+        DOT SHIPPING CODE field (#105)
+        FORMULARY DESIGNATOR field (#109)
+        FORMULARY DESIGNATOR TEXT field (#110)
+        CLINICAL EFFECTS OF DRUG multiple (#50.68108)
+          PACKAGE field (#.01)
+          OMIT EXP/DC ORDER CHECK field (#1)
+          DURATION LIMIT field (#2)
+  
+  
+    ** NOTE **
+    Changes were made to display data for the new data dictionary (DD)
+    fields added in this patch. The new fields will only display if
+    information is defined. In this release, data will not be
+    populated for the new fields except for a default value of NO for
+    CLINICAL EFFECTS OF DRUG multiple (#50.68108).
+  
+    The areas affected in the options are product selection list and the
+    body of the listing. The product selection list is where the product
+    identifiers are normally displayed and the body of the listing is where
+    the data displays for the fields.
+  
+ 2. The Inquire to National Files [PSNACT] option has been modified to
+    include the following fields from the VA PRODUCT file (#50.68) when
+    values are defined:
+  
+        HAZARDOUS TO HANDLE field (#101)
+        HAZARDOUS TO DISPOSE field (#102)
+        PRIMARY EPA CODE field (#103)
+        WASTE SORT CODE field (#104)
+        DOT SHIPPING CODE field (#105)
+        FORMULARY DESIGNATOR field (#109)
+        FORMULARY DESIGNATOR TEXT field (#110)
+        CLINICAL EFFECT multiple (#50.68108)
+          PACKAGE field (#.01)
+          OMIT EXP/DC ORDER CHECK field (#1)
+          DURATION LIMIT field (#2)
+  
+     Users will not see these fields populated or displayed as data will 
+     not be present with patch PSN*4*396.
+  
+     When data is populated in a future patch, the hazardous waste group of
+     fields will display after Maximum Days Supply. FORMULARY DESIGNATOR 
+     field (#109) will display after NATIONAL FORMULARY INDICATOR and
+     FORMULARY DESIGNATOR TEXT field (#110) will display as "Product Text"
+     after NATIONAL FORMULARY RESTRICTION"
+  
+     The DURATION LIMIT field (#2) of the CLINICAL EFFECTS OF DRUG multiple
+     (#50.68108) defines the time frame that expired and discontinued
+     orders are omitted from Medication Order Check Application (MOCHA)
+     enhanced order checking.  The default value of NO will be displayed
+     after Override DF Exclude from Dosage Checks.
+  
+     Example:
+  
+         National Formulary Indicator: Yes
+         Formulary Designator: PA-N
+         National Formulary Restriction: 
+         Product Text: This product requires approval at the national level
+         prior to  dispensing.  See PBM Criteria for Use.
+  
+         Copay Tier: 2
+         Copay Effective Date: FEB 27, 2017
+  
+  
+         Override DF Exclude from Dosage Checks: No
+  
+         CLINICAL EFFECT DURATION: NO
+  
+         Auto-Create Default Possible Dosage? Yes
+         Maximum Days Supply: 
+  
+         Hazardous to Handle: YES
+         Hazardous to Dispose: YES
+                 Primary EPA Code: DEA
+                  Waste Sort Code: UPC3
+                DOT Shipping Name: FLAMMABLE 
+  
+  
+ 3. The Inquire to VA Product Info For Local Drug [PSNLOOK] option has been
+    modified to include the same fields as in number 1 if defined.
+  
+    Example:
+  
+       National Formulary Indicator: Yes
+       Formulary Designator: PA-N
+       Product Text: This product requires approval at the national level
+       prior to  dispensing.  See PBM Criteria for Use.
+       Copay Tier: 1
+       Copay Effective Date: APR 01, 2017
+  
+       Override DF Exclude from Dosage Checks: No
+  
+       CLINICAL EFFECT DURATION: NO
+  
+       Auto-Create Default Possible Dosage? Yes
+       Maximum Days Supply: 
+  
+       Hazardous to Handle: YES
+       Hazardous to Dispose: YES
+  
+  
+           Primary EPA Code: DEA
+            Waste Sort Code: UB21
+          DOT Shipping Name: Flammable if wet 
+    
+  
+ 4. The Rematch / Match Single Drugs [PSNDRUG] option has been modified 
+    include FORMULARY DESIGNATOR field (#109) only in the selection list
+    of the drug if defined.
+  
+    Example showing PA-N formulary designator:
+  
+      Select DRUG GENERIC NAME: OMEP
+            1   OMEPARZOLE 40MG EC CAP UD  
+            2   OMEPRAZOLE 10MG CAP   PA-N Tier 4
+      CHOOSE 1-2: 1  OMEPARZOLE 40MG EC CAP UD
+  
+ 5. The Verify Matches [PSNVFY] option has been modified to include the 
+    FORMULARY DESIGNATOR field (#109) and FORMULARY DESIGNATOR TEXT field 
+    (#110) if defined.
+  
+    Example:
+  
+       National Formulary Indicator: Yes
+       Formulary Designator: PA-N
+       Product Text: This product requires approval at the national level
+       prior to  dispensing.  See PBM Criteria for Use.
+       Copay Tier: 1
+  
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)         Field Name (Number)             New/Mod/Delete
+ ------------------------   ----------------------          --------------
+ VA PRODUCT (#50.68)           
+                            HAZARDOUS TO HANDLE (#101)          New
+                            HAZARDOUS TO DISPOSE(#102)          New
+                            PRIMARY EPA CODE (#103)             New
+                            WASTE SORT CODE (#104)              New
+                            DOT SHIPPING CODE (#105)            New
+                            FORMULARY DESIGNATOR (#109)         New
+                            FORMULARY DESIGNATOR TEXT (#110)    New
+  
+   CLINICAL EFFECTS OF DRUG (sub-file)(#50.68108)               New
+                            PACKAGE (#.01)                      New
+                            OMIT EXP/DC ORDER CHECK (#1)        New
+                            DURATION LIMIT (#2)                 New
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+  
+ Options Associated: 
+  
+  Option Name              Type              New/Modified/Deleted
+  ---------------          -----------       --------------------
+  N/A 
+  
+ Protocols Associated:
+ ---------------------
+  
+  Protocol Name                            New/Modified/Deleted
+  -------------                            -------------------- 
+  N/A 
+  
+  
+ Security Keys Associated:
+ -------------------------
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+ Templates Associated:
+ ---------------------
+  
+  Template Name     Type        File Name (Number)  New/Modified/Deleted
+  -------------     ----        ------------------  --------------------
+  N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ CENTRAL PLAINS HCS
+ BIG SPRING, TX
+ SHREVEPORT, LA
+ TUSCON, AZ
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by these patches are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Albany:                domain.ext
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File       Name                  FTP Mode
+ --------------------------------------------------------------------------
+ National Drug File User Manual  psn_4_um_r0817                    BINARY
+  
+ National Drug File Technical Manual
+                                 psn_4_tm_r0817                    BINARY 
+  
+ PSN_4_396_PSS_1_195 Deployment,
+    Installation, Back-Out, and
+    Rollback Guide               PSN_4_396_PSS_1_195_IG_0817.DOCX  BINARY
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There aren't any Pre/Post Install steps for this patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+    All fields except RX Norm are added as part of National Drug File patch
+    PSN*4*396. Coding System fields were added in a previously released
+    Outpatient Pharmacy patch PSO*7.0*472 which will need to be installed
+    before these fields will be visible in inquiry.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation and Distribution System Menu, select the
+      Installation menu.
+    
+   3. From this menu, you may elect to use the following options (when 
+      prompted for INSTALL NAME, enter PSN*4.0*396):
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+    
+   4. Use the Install Package(s) options and select the package PSN*4.0*396
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+      respond "NO".
+    
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+      Protocols? YES//', respond "NO".
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 190
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN50P68
+    Before: B17364727   After: B24576514  **80,94,104,109,396**
+Routine Name: PSNACT
+    Before:B121966674   After:B156137593  **22,35,47,62,65,70,160,169,
+                                           262,296,429,492,396**
+Routine Name: PSNCLEHW
+    Before:       n/a   After: B12524464  **396**
+Routine Name: PSNDRUG
+    Before: B15442388   After: B15993340  **2,3,33,396**
+Routine Name: PSNHIT
+    Before: B26995302   After: B27416707  **22,47,65,492,396**
+Routine Name: PSNLOOK
+    Before: B55919915   After: B63244023  **2,3,5,11,22,27,62,70,169,262,
+                                           296,429,492,396**
+Routine Name: PSNVFY
+    Before: B17319517   After: B18516900  **3,22,65,492,396**
+ 
+Routine list of preceding patches: 33, 109, 492
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 13, 2014
+Completed By:                               Date Completed: AUG 10, 2017
+Released By :                               Date Released : AUG 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

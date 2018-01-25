@@ -1,0 +1,246 @@
+$TXT Created by                      at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/07/17 at 17:02
+=============================================================================
+Run Date: SEP 25, 2017                     Designation: SD*5.3*646
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #552                    Status: Released
+                  Compliance Date: OCT 26, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*646'
+                    (v)SD*5.3*566  <<= must be installed BEFORE `SD*5.3*646'
+                    (v)SD*5.3*619  <<= must be installed BEFORE `SD*5.3*646'
+                    (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*646'
+
+Subject: INTEGRITY CHECKS IN CLINIC FILE, WAIT LIST AND RECALL REMINDERS FIXES.
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+
+Description:
+============
+
+  
+ This patch adds consistency checks for DIRECT PATIENT SCHEDULING? field 
+ (#61) and DISPLAY CLIN APPT TO PATIENTS? field (#62) in the HOSPITAL 
+ LOCATION file (#44) when creating a new clinic or editing an existing 
+ clinic by using the Set up a Clinic [SDBUILD] menu option.
+  
+ This effort was requested by the Veterans Health Administration (VHA) 
+ Access and Clinic Administration Program (ACAP) in support of the VistA 
+ Scheduling Enhancements (VSE) project.
+  
+ Additional changes added to fix hard error when calling Wait List or 
+ Recall Reminder whenever the help text for Select LANGUAGE DATE/TIME: 
+ prompt invoked while executing the Make Appointment action [MA  Make 
+ Appointment] in Appointment Management [SDAM APPT MGT].
+  
+ Associated CA ticket(s):
+ ===============================
+ R7372939FY16 -  ADDING CHKS FOR FLDS #61 AND #62 IN FILE #44
+  
+ I13596655FY17 - error trap: $ZE=<UNDEFINED>N5+16^DICN0 *DA(1)
+  
+ R14038622FY17 - vista: Error when adding a patient to the waiting 
+ list... 
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Coatesville VAMC
+ VA Maryland Health Care System
+ VA New Jersey Health Care System 
+  
+  
+  
+ CA Ticket Overview:
+ =================== 
+ 1. R7372939FY16 - ADDING CHKS FOR FLDS #61 AND #62 IN FILE #44
+  
+  
+  Problem:
+  --------
+  This is a request for additional data integrity checks for fields 
+  added by patch SD*5.3*635. In addition, the input template for Clinic
+  Definition needs to enforce the following business rules:
+  DISPLAY CLIN APPT TO PATIENTS? (#62)  MUST be set to YES if 
+  DIRECT PATIENT SCHEDULING=YES (#61)
+  DISPLAY CLIN APPT TO PATIENTS? (#62)  MAY NOT be set to NO if 
+  DIRECT PATIENT SCHEDULING= YES (#61)
+  
+  
+  Resolution:
+  -----------
+ DIRECT PATIENT SCHEDULING? field (#61) and DISPLAY CLIN APPT TO PATIENTS?
+ field (#62) in the HOSPITAL LOCATION file (#44) were updated to require
+ field DISPLAY CLIN APPT TO PATIENTS? (#62) to be yes if field DIRECT
+ PATIENT SCHEDULING? (#61) is yes. Input Template SDB changed to enforce
+ these rules.
+  
+  
+  DIRECT PATIENT SCHEDULING field (#61) input will prompt for Direct
+  patient scheduling. If "NO" is entered it will go to Display Clin Appt to
+  Patients prompt.  If "Yes" is entered it will skip to the Service prompt
+  and set both DIRECT PATIENT SCHEDULING? field (#61) and DISPLAY
+  CLIN APPT TO PATIENTS? field (#62) to "YES"
+  
+ 2. I13596655FY17 - Error trap: $ZE= <UNDEFINED>N5+16^DICN0 *DA(1)
+  
+  Problem:
+  --------
+  When trying to add Recall Reminder to patient, the DO variable was 
+  initialized and the value was causing FILE^DICN to error out with
+  $ZE=<UNDEFINED>N5+16^DICN0 *DA(1.
+  
+  Resolution:
+  -----------
+  NEW+1^SDRR1 was changed to add the variable DO to its kill list.
+  
+ 3. R14038622FY17 vista: Error when adding a patient to the waiting 
+ list... 
+  
+  
+  Problem:
+  --------
+  When trying to add patient to Waiting List, the DO variable was 
+  initialized and the value was causing FILE^DICN to error out with
+  $ZE=<UNDEFINED>N5+16^DICN0 *DA(1).
+  
+  
+  Resolution:
+  -----------
+  NEW+1^SDWLE11 was changed to add the variable DO to its kill list.
+  NEW+4^SDWLE11 was also changed to add incremental lock with timeout and 
+  message for failed lock.
+  
+  
+ OTHER COMPONENTS:
+ ================= 
+ For R7372939FY16
+  
+  44,61 DIRECT PATIENT SCHEDULING? PA;2 SET (Required) (audited)
+  
+                                 'Y' FOR YES; 
+                                 'N' FOR NO; 
+               LAST EDITED:      FEB 11, 2016 
+               HELP-PROMPT:      Enter 'Yes' if patients can self-schedule 
+                                 into this clinic.
+               DESCRIPTION:      This field will determine if patients can
+                                 self-schedule into this clinic. A "Yes" 
+                                 in this field will enable patients to
+                                 directly schedule appointments into this
+                                 clinic.  
+  
+               AUDIT:            YES, ALWAYS
+  
+  44,62 DISPLAY CLIN APPT TO PATIENTS? PA;3 SET (Required) (audited)
+  
+                                 'Y' FOR YES; 
+                                 'N' FOR NO; 
+               LAST EDITED:      FEB 11, 2016 
+               HELP-PROMPT:      Enter 'Yes' if clinic appointment will be 
+                                 displayed to patients. 
+               DESCRIPTION:      This field will determine if the clinic
+                                 appointment information will be displayed 
+                                 to patients. A "Yes" in this field will
+                                 enable patients to see their appointments
+                                 in this clinic. If DIRECT PATIENT
+                                 SCHEDULING? (#61) is set to YES, this
+                                 field defaults to YES and is not editable.
+  
+               AUDIT:            YES, ALWAYS
+  
+ Software and Documentation Distribution:
+ ========================================
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Filename        Description
+ =======         ========================================================
+ supv.pdf        PIMS V. 5.3 Scheduling Module User Manual Supervisor Menu
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode. 
+  
+ The complete and updated User Manual will be posted to the VDL immediately
+ after the release of the patch.
+  
+  
+ Installation Instructions:
+ ==========================
+   
+ Installation will take less than 2 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+  
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter SD*5.3*646).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch 
+           is installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+  
+     4. Use the Install Package(s) option and select the package
+        SD*5.3*646.
+  
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+  
+     6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRR1
+    Before: B16208086   After: B16380201  **536,561,566,646**
+Routine Name: SDWLE11
+    Before:  B8484611   After:  B8942141  **263,485,497,446,646**
+ 
+Routine list of preceding patches: 446, 566
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2016
+Completed By:                               Date Completed: SEP 25, 2017
+Released By :                               Date Released : SEP 25, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

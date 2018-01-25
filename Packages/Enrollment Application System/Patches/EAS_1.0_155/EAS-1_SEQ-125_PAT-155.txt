@@ -1,0 +1,308 @@
+
+=============================================================================
+Run Date: OCT 23, 2017                     Designation: EAS*1*155
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #125                      Status: Released
+                  Compliance Date: NOV 23, 2017
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.8 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 4.8. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development efforts, including
+ enhancements to support Community Care (CC) and ES Sustainment.
+  
+ The following functionalities are included in the ES 4.8 release:
+  
+ Community Care:
+ - Send initial seeding of all Veterans' CC Eligibility information to
+   Community Care Network (CCN) Contractors
+ - Send Veteran CC Eligibility information to CCN Contractors upon changes to
+   contact information or CC Eligibility data in ES
+ - Receive Health Insurance information from CCN Contractors
+ - Share received insurance information with VistA
+ - Manage CCN Contractors and Regions via new screens in ES
+  
+   NOTE: Sending information to, and receiving information from, the CCN
+   Contractors will be inactive in this release.  It will be activated when
+   the CCN Contractors become available for integration and testing efforts.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    -------------------
+ 565313      Problem: Resolve Fortify findings as per scan of ESR Mars Dev
+             stream.
+ 
+             Resolution: Code was updated to resolve Fortify findings as per
+             scan of ESR Mars Dev stream.
+ 
+ 569545      Problem: UFT-FDD Summary Report shows incorrect number of
+             records.
+  
+             Resolution: The Selection option was updated to match the detail
+             report. Only FDD entries with a valid entry in the PSIM report
+             table will be counted.
+  
+ 571558      Problem: CC Manual Override Error message show up when user
+             manual override from the new record VCE is No data available to
+             Basic.
+  
+             Resolution: The issue was fixed by forcing a cache refresh of the
+             person. Refresh the person record in ES before doing the CC
+             override by clicking the "Person Search" hyperlink located in the
+             upper-left.
+  
+ 577667      Problem: Resolve Fortify Formula findings as per scan of ESR Mars
+             Dev stream dated 08/22/2017.
+  
+             Resolution: Updated code to remove Fortify High Finding Formula
+             Injection blacklist characters such as =, +, - and @ from
+             spreadsheet contents.
+  
+ 579544      Problem: DOD - Sometimes ES UI displays incorrect Source of
+             Notification other than what was received from MVI.
+  
+             Resolution: Updated code to ensure that the code interpreted is
+             for code="DOD_SOURCE" to display correct Source of Notification.
+  
+ 580551      Problem: DOD - Should not recalculate Enrollment End Date when
+             there is no update to date of death.
+  
+             Resolution: Updated by making the comparison ahead of the rule
+             calls. Once the process demographic rule has been completed the
+             Boolean result of the comparison is sent to calculate EE
+             flow. This is used further down in the calculatedDateOfDeath
+             demographic input parameter.
+  
+ 583130      Problem: Wait Time VISN Number is not showing up in TPA file.
+  
+             Resolution: Updated with the VISN number correction in the
+             BatchProcess to display the Wait Time VISN Number in the TPA
+             file.
+  
+ 583587      Problem: Veteran Records erroring out from SSA Response Files.
+  
+             Resolution: Updated code to remove extra SSN null check in
+             between the spouse and Veteran checks.
+  
+ 583788      Problem: Letter 742 - 652A DOES NOT get automatically generated
+             for an Updated Address with a USPS Return File.
+  
+             Resolution: Modified the order of check between letters 742-652A
+             and 742-652 for the history records.
+  
+ 585915      Problem: CC History page does not show residential address or
+             wait-time/hardship data.
+  
+             Resolution: Updated the VC History page to show all the
+             residential address or wait-time/hardship data.
+  
+ 586483      Problem: The SSN field in ZDP in the Z10 message is being
+             populated with object reference rather than SSN value.
+  
+             Resolution: Updated code to fix Z10 segment outputting SSN object
+             reference and commented out code to reset buffer.
+  
+ 587140      Problem: CC Override history is sometimes displayed out of order.
+  
+             Resolution: Fixed the code where there is a date value getting
+             updated to display history in correct order.
+  
+ 589612      Problem: CCN Service Log Search by Status is not working.
+  
+             Resolution: Updated code status search to enable filtering on
+             status of CCN Service Log Search.
+  
+ 589835      Problem: ES is removing 'X' manual override.
+  
+             Resolution: The ETL handling the CC Eligibility was changed to
+             not update the CCE changes when the record is marked with Manual
+             Override value of 'X'. Only if the CC Eligibility change is due
+             to Enrollment / Eligibility changes will it remove the Manual
+             Override from 'X'.
+  
+ 589937      Problem: 1302 message from ES to MVI sends imprecise DOD
+             (mm/yyyy) in wrong format.
+  
+             Resolution: A new format was created for formatWithTimeImpl to
+             cater for the imprecise YYYYMM format to be sent.
+  
+ 590287      Problem: UI: Search results exceeding 1,000 error message is
+             displayed, but first 1,000 results are missing.
+ 
+             Resolution: Code changes were made to the PaginatedQueryExecuter
+            (subclass) to allow search results of up to 1,000 to return along
+             with the error message.
+ 
+ 591215      Problem: Manage CCN Contractors screen - An 's' is missing from
+             Manage CCN Contractors title, and page number/totals are missing.
+  
+             Resolution: Page numbers are not needed in the State-Regions page
+             and the Manage Contractors page. Updated the
+             AdminMessages.properties file to add 's' to the missing label
+             (Manage CCN Contractors) title.
+  
+ 595867      Problem: CC HBP Veterans Choice Wait-Time - The hyphen is missing
+             from the name in ES (Veteran Plan - Veterans Choice Wait-Time).
+ 
+             Resolution: Submit a request to SDS to update one row in
+             STD_HEALTHBENEFITPLAN table. Update the NAME for row with CODE
+             202 (ID 1812497) to this: 'Veteran Plan - Veterans Choice Wait-
+             Time'.
+ 
+ 597458      Problem: Community Care page not rendering.
+  
+             Resolution:  Updated the vcDetermination.jsp' file, added
+             <c:choose> </choose > for st1 Element The Community Care
+             Determinations page to have the proper rendering.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 4.8 User Guide                ES_4_8_User_Guide.pdf         binary
+ ES 4.8 Release Notes             ES_4_8_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2017
+Completed By:                               Date Completed: OCT 23, 2017
+Released By :                               Date Released : OCT 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

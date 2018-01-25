@@ -1,0 +1,134 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 08/11/17 at 10:31
+=============================================================================
+Run Date: OCT 24, 2017                     Designation: PRCA*4.5*331
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #288                    Status: Released
+                  Compliance Date: OCT 27, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*331'
+
+Subject: REJECTIONS FOR DEBTOR/BILL SUBMISSIONS FOR FOREIGN COUNTRY ADDRESS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ The weekly TCSP (Treasury Cross Service) batch run at site does
+ not set the correct address information in the C2CA message
+ segment for veterans living in a foreign country.
+  
+  
+  
+ Associated CA Ticket:
+ =====================
+ 1)  I15730572FY17 - NECPAC -- Veteran Services -- Foreign address not 
+                     processing through to Treasury
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Montana HCS
+ Puget Sound HCS
+  
+  
+  
+ CA Ticket Overview:
+ =================== 
+ 1)  I15730572FY17 - NECPAC -- Veteran Services -- Foreign address not 
+                     processing through to Treasury
+  
+  
+ Problem:
+ --------
+ First Party foreign addresses are not passing over to Treasury Cross 
+ Servicing due to a hard set that overrides the foreign address code and 
+ will default to US address form. This causes the account to reject. 
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the TCSP weekly batch run to 
+ ensure that the correct country, state and zip code are set when a 
+ veteran address is outside the United States.  The majority of these 
+ address issues deal with Canadian border VA sites (Upstate NY &
+ Fort Harrison).
+  
+  
+  Routines: RCTCSP1
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*331)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*331.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", hit ENTER.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTCSP1
+    Before:B168147966   After:B174226266  **301,331**
+ 
+Routine list of preceding patches: 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 27, 2017
+Completed By:                               Date Completed: OCT 19, 2017
+Released By :                               Date Released : OCT 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

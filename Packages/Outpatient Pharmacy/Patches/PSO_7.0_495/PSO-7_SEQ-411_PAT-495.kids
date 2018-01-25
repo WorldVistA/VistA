@@ -1,0 +1,1109 @@
+Released PSO*7*495 SEQ #411
+Extracted from mail message
+**KIDS**:PSO*7.0*495^
+
+**INSTALL NAME**
+PSO*7.0*495
+"BLD",10669,0)
+PSO*7.0*495^OUTPATIENT PHARMACY^0^3170728^y
+"BLD",10669,1,0)
+^^86^86^3170728^
+"BLD",10669,1,1,0)
+This patch will resolve the following issues.
+"BLD",10669,1,2,0)
+ 
+"BLD",10669,1,3,0)
+ 1. I8213786FY16  - Using Option RESET COPAY STATUS/CANCEL displays 
+"BLD",10669,1,4,0)
+                    ALL copay exemption flags after edit.
+"BLD",10669,1,5,0)
+ 2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED 
+"BLD",10669,1,6,0)
+                    PENDING ORDER 
+"BLD",10669,1,7,0)
+ 3. I11377620FY17 - Controlled substance prescription hash mismatch. 
+"BLD",10669,1,8,0)
+ 4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+"BLD",10669,1,9,0)
+                   of SSN incorrect. 
+"BLD",10669,1,10,0)
+ 
+"BLD",10669,1,11,0)
+ Defect Tracking System Ticket(s) & Overview: 
+"BLD",10669,1,12,0)
+ ===========================================
+"BLD",10669,1,13,0)
+ 
+"BLD",10669,1,14,0)
+ 1. I8213786FY16 -  Using Option RESET COPAY STATUS/CANCEL displays
+"BLD",10669,1,15,0)
+                    ALL copay exemption flags after edit.
+"BLD",10669,1,16,0)
+ 
+"BLD",10669,1,17,0)
+ Problem:
+"BLD",10669,1,18,0)
+ =======
+"BLD",10669,1,19,0)
+ While using option RESET COPAY STATUS/CANCEL to edit copay exemption
+"BLD",10669,1,20,0)
+ flags, when a person is automatically Exempt from Copay (such as Service
+"BLD",10669,1,21,0)
+ Connected 70%) the output displays ALL copay exemption flag end states 
+"BLD",10669,1,22,0)
+ rather than only those copay exemptions that have changed. 
+"BLD",10669,1,23,0)
+ 
+"BLD",10669,1,24,0)
+ Resolution:
+"BLD",10669,1,25,0)
+ ==========
+"BLD",10669,1,26,0)
+ The logic that determined whether the new exemption value was different
+"BLD",10669,1,27,0)
+ from the old was based off a node in the prescription file that may not 
+"BLD",10669,1,28,0)
+ exist. The routine for this option now compares the user's response to
+"BLD",10669,1,29,0)
+ the value stored in the prescription file to determine if the value has
+"BLD",10669,1,30,0)
+ changed.
+"BLD",10669,1,31,0)
+ 
+"BLD",10669,1,32,0)
+ 2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED 
+"BLD",10669,1,33,0)
+                    PENDING ORDER 
+"BLD",10669,1,34,0)
+ 
+"BLD",10669,1,35,0)
+ Problem:
+"BLD",10669,1,36,0)
+ =======
+"BLD",10669,1,37,0)
+ When processing a digitally signed pending order, if that order is 
+"BLD",10669,1,38,0)
+ auto discontinued due to an address mismatch, there is a possibility of
+"BLD",10669,1,39,0)
+ getting a hard error while generating the auto discontinued mail message.
+"BLD",10669,1,40,0)
+ This can happen for a patient who has a non verified allergy and if the
+"BLD",10669,1,41,0)
+ patient address was changed using the PU Patient Record Update ListMan
+"BLD",10669,1,42,0)
+ action prior to processing the pending order.
+"BLD",10669,1,43,0)
+ 
+"BLD",10669,1,44,0)
+ Resolution:
+"BLD",10669,1,45,0)
+ ==========
+"BLD",10669,1,46,0)
+ When the PU Patient Record Update ListMan action is used, it kills the 
+"BLD",10669,1,47,0)
+ DFN variable. Modified routine PSOPKIV2 to reset variable DFN if found 
+"BLD",10669,1,48,0)
+ missing and to make a call to VADPT.
+"BLD",10669,1,49,0)
+ 
+"BLD",10669,1,50,0)
+ ROUTINE:
+"BLD",10669,1,51,0)
+ =======
+"BLD",10669,1,52,0)
+ At line tag ADCMAIL+1, added code,
+"BLD",10669,1,53,0)
+ S:'$G(DFN) DFN=PSODFN D ^VADPT,ADD^VADPT
+"BLD",10669,1,54,0)
+ At line tag PADAD+1, removed the call VADPT and ADD^VADPT as it's moved
+"BLD",10669,1,55,0)
+ to ADCMAIL+1
+"BLD",10669,1,56,0)
+ 
+"BLD",10669,1,57,0)
+ 3. I11377620FY17 - Controlled substance prescription hash mismatch.
+"BLD",10669,1,58,0)
+ 
+"BLD",10669,1,59,0)
+ Problem:
+"BLD",10669,1,60,0)
+ =======
+"BLD",10669,1,61,0)
+ Site reports that when a controlled substance prescription hash 
+"BLD",10669,1,62,0)
+ mismatch status the vista email that is generated has the incorrect 
+"BLD",10669,1,63,0)
+ last four the the ssn. 
+"BLD",10669,1,64,0)
+ 
+"BLD",10669,1,65,0)
+ Resolution:
+"BLD",10669,1,66,0)
+ ==========
+"BLD",10669,1,67,0)
+ When generating the auto discontinued mail message, variable VA("BID") 
+"BLD",10669,1,68,0)
+ that has the last 4 of the SSN is being used, which in this case happens 
+"BLD",10669,1,69,0)
+ to be from a previous patient.  
+"BLD",10669,1,70,0)
+ Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for 
+"BLD",10669,1,71,0)
+ that patient by making a call to VADPT.
+"BLD",10669,1,72,0)
+ 
+"BLD",10669,1,73,0)
+ 4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+"BLD",10669,1,74,0)
+                   of SSN incorrect.
+"BLD",10669,1,75,0)
+ 
+"BLD",10669,1,76,0)
+ Problem:
+"BLD",10669,1,77,0)
+ =======
+"BLD",10669,1,78,0)
+ Site reports that a corrupted hash mismatch has a patient's last 4 
+"BLD",10669,1,79,0)
+ of SSN incorrect.
+"BLD",10669,1,80,0)
+ 
+"BLD",10669,1,81,0)
+ Resolution:
+"BLD",10669,1,82,0)
+ ==========
+"BLD",10669,1,83,0)
+ When generating the auto discontinued mail message, variable VA("BID") 
+"BLD",10669,1,84,0)
+ that has the last 4 of the SSN is being used, which in this case happens 
+"BLD",10669,1,85,0)
+ to be from a previous patient.  
+"BLD",10669,1,86,0)
+ Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for
+"BLD",10669,4,0)
+^9.64PA^^
+"BLD",10669,6.3)
+9
+"BLD",10669,"ABPKG")
+n
+"BLD",10669,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10669,"KRN",.4,0)
+.4
+"BLD",10669,"KRN",.401,0)
+.401
+"BLD",10669,"KRN",.402,0)
+.402
+"BLD",10669,"KRN",.403,0)
+.403
+"BLD",10669,"KRN",.5,0)
+.5
+"BLD",10669,"KRN",.84,0)
+.84
+"BLD",10669,"KRN",3.6,0)
+3.6
+"BLD",10669,"KRN",3.8,0)
+3.8
+"BLD",10669,"KRN",9.2,0)
+9.2
+"BLD",10669,"KRN",9.8,0)
+9.8
+"BLD",10669,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10669,"KRN",9.8,"NM",1,0)
+PSOPKIV2^^0^B23138982
+"BLD",10669,"KRN",9.8,"NM",2,0)
+PSOCPC^^0^B74377982
+"BLD",10669,"KRN",9.8,"NM","B","PSOCPC",2)
+
+"BLD",10669,"KRN",9.8,"NM","B","PSOPKIV2",1)
+
+"BLD",10669,"KRN",19,0)
+19
+"BLD",10669,"KRN",19.1,0)
+19.1
+"BLD",10669,"KRN",101,0)
+101
+"BLD",10669,"KRN",409.61,0)
+409.61
+"BLD",10669,"KRN",771,0)
+771
+"BLD",10669,"KRN",779.2,0)
+779.2
+"BLD",10669,"KRN",870,0)
+870
+"BLD",10669,"KRN",8989.51,0)
+8989.51
+"BLD",10669,"KRN",8989.52,0)
+8989.52
+"BLD",10669,"KRN",8994,0)
+8994
+"BLD",10669,"KRN","B",.4,.4)
+
+"BLD",10669,"KRN","B",.401,.401)
+
+"BLD",10669,"KRN","B",.402,.402)
+
+"BLD",10669,"KRN","B",.403,.403)
+
+"BLD",10669,"KRN","B",.5,.5)
+
+"BLD",10669,"KRN","B",.84,.84)
+
+"BLD",10669,"KRN","B",3.6,3.6)
+
+"BLD",10669,"KRN","B",3.8,3.8)
+
+"BLD",10669,"KRN","B",9.2,9.2)
+
+"BLD",10669,"KRN","B",9.8,9.8)
+
+"BLD",10669,"KRN","B",19,19)
+
+"BLD",10669,"KRN","B",19.1,19.1)
+
+"BLD",10669,"KRN","B",101,101)
+
+"BLD",10669,"KRN","B",409.61,409.61)
+
+"BLD",10669,"KRN","B",771,771)
+
+"BLD",10669,"KRN","B",779.2,779.2)
+
+"BLD",10669,"KRN","B",870,870)
+
+"BLD",10669,"KRN","B",8989.51,8989.51)
+
+"BLD",10669,"KRN","B",8989.52,8989.52)
+
+"BLD",10669,"KRN","B",8994,8994)
+
+"BLD",10669,"QUES",0)
+^9.62^^
+"BLD",10669,"REQB",0)
+^9.611^2^2
+"BLD",10669,"REQB",1,0)
+PSO*7.0*225^2
+"BLD",10669,"REQB",2,0)
+PSO*7.0*391^2
+"BLD",10669,"REQB","B","PSO*7.0*225",1)
+
+"BLD",10669,"REQB","B","PSO*7.0*391",2)
+
+"MBREQ")
+0
+"PKG",206,-1)
+1^1
+"PKG",206,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",206,20,0)
+^9.402P^^
+"PKG",206,22,0)
+^9.49I^1^1
+"PKG",206,22,1,0)
+7.0^3021122^3021202^66481
+"PKG",206,22,1,"PAH",1,0)
+495^3170728
+"PKG",206,22,1,"PAH",1,1,0)
+^^86^86^3170728
+"PKG",206,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues.
+"PKG",206,22,1,"PAH",1,1,2,0)
+ 
+"PKG",206,22,1,"PAH",1,1,3,0)
+ 1. I8213786FY16  - Using Option RESET COPAY STATUS/CANCEL displays 
+"PKG",206,22,1,"PAH",1,1,4,0)
+                    ALL copay exemption flags after edit.
+"PKG",206,22,1,"PAH",1,1,5,0)
+ 2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED 
+"PKG",206,22,1,"PAH",1,1,6,0)
+                    PENDING ORDER 
+"PKG",206,22,1,"PAH",1,1,7,0)
+ 3. I11377620FY17 - Controlled substance prescription hash mismatch. 
+"PKG",206,22,1,"PAH",1,1,8,0)
+ 4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+"PKG",206,22,1,"PAH",1,1,9,0)
+                   of SSN incorrect. 
+"PKG",206,22,1,"PAH",1,1,10,0)
+ 
+"PKG",206,22,1,"PAH",1,1,11,0)
+ Defect Tracking System Ticket(s) & Overview: 
+"PKG",206,22,1,"PAH",1,1,12,0)
+ ===========================================
+"PKG",206,22,1,"PAH",1,1,13,0)
+ 
+"PKG",206,22,1,"PAH",1,1,14,0)
+ 1. I8213786FY16 -  Using Option RESET COPAY STATUS/CANCEL displays
+"PKG",206,22,1,"PAH",1,1,15,0)
+                    ALL copay exemption flags after edit.
+"PKG",206,22,1,"PAH",1,1,16,0)
+ 
+"PKG",206,22,1,"PAH",1,1,17,0)
+ Problem:
+"PKG",206,22,1,"PAH",1,1,18,0)
+ =======
+"PKG",206,22,1,"PAH",1,1,19,0)
+ While using option RESET COPAY STATUS/CANCEL to edit copay exemption
+"PKG",206,22,1,"PAH",1,1,20,0)
+ flags, when a person is automatically Exempt from Copay (such as Service
+"PKG",206,22,1,"PAH",1,1,21,0)
+ Connected 70%) the output displays ALL copay exemption flag end states 
+"PKG",206,22,1,"PAH",1,1,22,0)
+ rather than only those copay exemptions that have changed. 
+"PKG",206,22,1,"PAH",1,1,23,0)
+ 
+"PKG",206,22,1,"PAH",1,1,24,0)
+ Resolution:
+"PKG",206,22,1,"PAH",1,1,25,0)
+ ==========
+"PKG",206,22,1,"PAH",1,1,26,0)
+ The logic that determined whether the new exemption value was different
+"PKG",206,22,1,"PAH",1,1,27,0)
+ from the old was based off a node in the prescription file that may not 
+"PKG",206,22,1,"PAH",1,1,28,0)
+ exist. The routine for this option now compares the user's response to
+"PKG",206,22,1,"PAH",1,1,29,0)
+ the value stored in the prescription file to determine if the value has
+"PKG",206,22,1,"PAH",1,1,30,0)
+ changed.
+"PKG",206,22,1,"PAH",1,1,31,0)
+ 
+"PKG",206,22,1,"PAH",1,1,32,0)
+ 2. I15627556FY17 - HARD ERROR DURING VERIFYING A DIGITALLY SIGNED 
+"PKG",206,22,1,"PAH",1,1,33,0)
+                    PENDING ORDER 
+"PKG",206,22,1,"PAH",1,1,34,0)
+ 
+"PKG",206,22,1,"PAH",1,1,35,0)
+ Problem:
+"PKG",206,22,1,"PAH",1,1,36,0)
+ =======
+"PKG",206,22,1,"PAH",1,1,37,0)
+ When processing a digitally signed pending order, if that order is 
+"PKG",206,22,1,"PAH",1,1,38,0)
+ auto discontinued due to an address mismatch, there is a possibility of
+"PKG",206,22,1,"PAH",1,1,39,0)
+ getting a hard error while generating the auto discontinued mail message.
+"PKG",206,22,1,"PAH",1,1,40,0)
+ This can happen for a patient who has a non verified allergy and if the
+"PKG",206,22,1,"PAH",1,1,41,0)
+ patient address was changed using the PU Patient Record Update ListMan
+"PKG",206,22,1,"PAH",1,1,42,0)
+ action prior to processing the pending order.
+"PKG",206,22,1,"PAH",1,1,43,0)
+ 
+"PKG",206,22,1,"PAH",1,1,44,0)
+ Resolution:
+"PKG",206,22,1,"PAH",1,1,45,0)
+ ==========
+"PKG",206,22,1,"PAH",1,1,46,0)
+ When the PU Patient Record Update ListMan action is used, it kills the 
+"PKG",206,22,1,"PAH",1,1,47,0)
+ DFN variable. Modified routine PSOPKIV2 to reset variable DFN if found 
+"PKG",206,22,1,"PAH",1,1,48,0)
+ missing and to make a call to VADPT.
+"PKG",206,22,1,"PAH",1,1,49,0)
+ 
+"PKG",206,22,1,"PAH",1,1,50,0)
+ ROUTINE:
+"PKG",206,22,1,"PAH",1,1,51,0)
+ =======
+"PKG",206,22,1,"PAH",1,1,52,0)
+ At line tag ADCMAIL+1, added code,
+"PKG",206,22,1,"PAH",1,1,53,0)
+ S:'$G(DFN) DFN=PSODFN D ^VADPT,ADD^VADPT
+"PKG",206,22,1,"PAH",1,1,54,0)
+ At line tag PADAD+1, removed the call VADPT and ADD^VADPT as it's moved
+"PKG",206,22,1,"PAH",1,1,55,0)
+ to ADCMAIL+1
+"PKG",206,22,1,"PAH",1,1,56,0)
+ 
+"PKG",206,22,1,"PAH",1,1,57,0)
+ 3. I11377620FY17 - Controlled substance prescription hash mismatch.
+"PKG",206,22,1,"PAH",1,1,58,0)
+ 
+"PKG",206,22,1,"PAH",1,1,59,0)
+ Problem:
+"PKG",206,22,1,"PAH",1,1,60,0)
+ =======
+"PKG",206,22,1,"PAH",1,1,61,0)
+ Site reports that when a controlled substance prescription hash 
+"PKG",206,22,1,"PAH",1,1,62,0)
+ mismatch status the vista email that is generated has the incorrect 
+"PKG",206,22,1,"PAH",1,1,63,0)
+ last four the the ssn. 
+"PKG",206,22,1,"PAH",1,1,64,0)
+ 
+"PKG",206,22,1,"PAH",1,1,65,0)
+ Resolution:
+"PKG",206,22,1,"PAH",1,1,66,0)
+ ==========
+"PKG",206,22,1,"PAH",1,1,67,0)
+ When generating the auto discontinued mail message, variable VA("BID") 
+"PKG",206,22,1,"PAH",1,1,68,0)
+ that has the last 4 of the SSN is being used, which in this case happens 
+"PKG",206,22,1,"PAH",1,1,69,0)
+ to be from a previous patient.  
+"PKG",206,22,1,"PAH",1,1,70,0)
+ Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for 
+"PKG",206,22,1,"PAH",1,1,71,0)
+ that patient by making a call to VADPT.
+"PKG",206,22,1,"PAH",1,1,72,0)
+ 
+"PKG",206,22,1,"PAH",1,1,73,0)
+ 4. I9662455FY16 - Corrupted hash mismatch has a patient's last 4 
+"PKG",206,22,1,"PAH",1,1,74,0)
+                   of SSN incorrect.
+"PKG",206,22,1,"PAH",1,1,75,0)
+ 
+"PKG",206,22,1,"PAH",1,1,76,0)
+ Problem:
+"PKG",206,22,1,"PAH",1,1,77,0)
+ =======
+"PKG",206,22,1,"PAH",1,1,78,0)
+ Site reports that a corrupted hash mismatch has a patient's last 4 
+"PKG",206,22,1,"PAH",1,1,79,0)
+ of SSN incorrect.
+"PKG",206,22,1,"PAH",1,1,80,0)
+ 
+"PKG",206,22,1,"PAH",1,1,81,0)
+ Resolution:
+"PKG",206,22,1,"PAH",1,1,82,0)
+ ==========
+"PKG",206,22,1,"PAH",1,1,83,0)
+ When generating the auto discontinued mail message, variable VA("BID") 
+"PKG",206,22,1,"PAH",1,1,84,0)
+ that has the last 4 of the SSN is being used, which in this case happens 
+"PKG",206,22,1,"PAH",1,1,85,0)
+ to be from a previous patient.  
+"PKG",206,22,1,"PAH",1,1,86,0)
+ Modified routine PSOPKIV2 to ensure that the variable VA("BID") is for
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSOCPC")
+0^2^B74377982^B74796456
+"RTN","PSOCPC",1,0)
+PSOCPC ;BHAM ISC/BAB - PHARMACY CO-PAY APPLICATION ;06/09/92
+"RTN","PSOCPC",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**10,9,71,85,114,157,143,239,201,275,225,495**;DEC 1997;Build 9
+"RTN","PSOCPC",3,0)
+ ;
+"RTN","PSOCPC",4,0)
+ ;REF/IA
+"RTN","PSOCPC",5,0)
+ ;piece 9 of zero node of File 350 and APDT cross reference of File 350/2215
+"RTN","PSOCPC",6,0)
+ ;$$STATUS^IBARX/125
+"RTN","PSOCPC",7,0)
+ ;File 350.1/592 (DBIA125-B)
+"RTN","PSOCPC",8,0)
+WARN ; Message when attempt is made to delete a refill date on COPAY
+"RTN","PSOCPC",9,0)
+ N PSOIB,PSOIBST
+"RTN","PSOCPC",10,0)
+ S PSOFLG=0
+"RTN","PSOCPC",11,0)
+ G:'$D(^PSRX(DA(1),1,DA,"IB")) ENDW
+"RTN","PSOCPC",12,0)
+ S PSOIB=^PSRX(DA(1),1,DA,"IB")
+"RTN","PSOCPC",13,0)
+ I +PSOIB'>0 G ENDW
+"RTN","PSOCPC",14,0)
+ S PSOIBST=$$STATUS^IBARX(+PSOIB) I PSOIBST=2!(PSOIBST=0) G ENDW
+"RTN","PSOCPC",15,0)
+ I +PSOIB>0 D CANCEL G ENDW:PSOFLG=0
+"RTN","PSOCPC",16,0)
+ I '$G(PSOXXDEL) D EN^DDIOL("This REFILL has COPAY charges, which MUST be removed","","$C(7),!!"),EN^DDIOL("BEFORE the refill date is deleted.","","!")
+"RTN","PSOCPC",17,0)
+ I '$G(PSOXXDEL) D EN^DDIOL("Use option RESET COPAY STATUS/CANCEL CHARGES, return to EDIT A PRESCRIPTION,","","!!"),EN^DDIOL("and delete the refill date.","","!"),EN^DDIOL(" ","","!!")
+"RTN","PSOCPC",18,0)
+ S PSOFLG=1
+"RTN","PSOCPC",19,0)
+ENDW ;
+"RTN","PSOCPC",20,0)
+ I PSOFLG
+"RTN","PSOCPC",21,0)
+ K PSOFLG
+"RTN","PSOCPC",22,0)
+ Q
+"RTN","PSOCPC",23,0)
+CANCEL ;Check if charge is cancelled for this Refill date
+"RTN","PSOCPC",24,0)
+ S PSOFLG=1 ;indicates a charge not cancelled
+"RTN","PSOCPC",25,0)
+ S PSOX=+^PSRX(DA(1),1,DA,"IB")
+"RTN","PSOCPC",26,0)
+ D LAST I PSOLAST'=PSOPARNT,$D(^IB(PSOLAST,0)),$P(^IBE(350.1,$P(^IB(PSOLAST,0),"^",3),0),"^",5)=2 S PSOFLG=0
+"RTN","PSOCPC",27,0)
+ K PSOLAST,PSOPARNT,PSOX,PSOL,PSOLDT
+"RTN","PSOCPC",28,0)
+ Q
+"RTN","PSOCPC",29,0)
+LAST ;find last entry
+"RTN","PSOCPC",30,0)
+ S PSOLAST=""
+"RTN","PSOCPC",31,0)
+ S PSOPARNT=$P(^IB(+PSOX,0),"^",9) I 'PSOPARNT S PSOPARNT=+PSOX
+"RTN","PSOCPC",32,0)
+ S PSOLDT=$O(^IB("APDT",PSOPARNT,"")) I +PSOLDT F PSOL=0:0 S PSOL=$O(^IB("APDT",PSOPARNT,PSOLDT,PSOL)) Q:'PSOL  S PSOLAST=PSOL
+"RTN","PSOCPC",33,0)
+ I PSOLAST="" S PSOLAST=PSOPARNT
+"RTN","PSOCPC",34,0)
+ Q
+"RTN","PSOCPC",35,0)
+ ;
+"RTN","PSOCPC",36,0)
+EXEMCHK ; Allow reset of exemption answers
+"RTN","PSOCPC",37,0)
+ N PSOTG,PSOCPN,PSOEXMT,PSOANS,OLDIBQ,PSOSCP,PSOSCA
+"RTN","PSOCPC",38,0)
+ S PSOANS=0 D SCP^PSORN52D
+"RTN","PSOCPC",39,0)
+ S OLDIBQ=$G(^PSRX(PSODA,"IBQ"))
+"RTN","PSOCPC",40,0)
+ I OLDIBQ[0!(OLDIBQ)[1 D
+"RTN","PSOCPC",41,0)
+ . S PSOANS=1
+"RTN","PSOCPC",42,0)
+ . I $P(OLDIBQ,"^",1)'="" S PSOTG("SC")=$P(OLDIBQ,"^",1)
+"RTN","PSOCPC",43,0)
+ . I $P(OLDIBQ,"^",2)'="" S PSOTG("MST")=$P(OLDIBQ,"^",2)
+"RTN","PSOCPC",44,0)
+ . I $P(OLDIBQ,"^",3)'="" S PSOTG("AO")=$P(OLDIBQ,"^",3)
+"RTN","PSOCPC",45,0)
+ . I $P(OLDIBQ,"^",4)'="" S PSOTG("IR")=$P(OLDIBQ,"^",4)
+"RTN","PSOCPC",46,0)
+ . I $P(OLDIBQ,"^",5)'="" S PSOTG("EC")=$P(OLDIBQ,"^",5)
+"RTN","PSOCPC",47,0)
+ . I $P(OLDIBQ,"^",6)'="" S PSOTG("HNC")=$P(OLDIBQ,"^",6)
+"RTN","PSOCPC",48,0)
+ . I $P(OLDIBQ,"^",7)'="" S PSOTG("CV")=$P(OLDIBQ,"^",7)
+"RTN","PSOCPC",49,0)
+ . I $P(OLDIBQ,"^",8)'="" S PSOTG("SHAD")=$P(OLDIBQ,"^",8)
+"RTN","PSOCPC",50,0)
+ S PSOCPN=$P(^PSRX(PSODA,0),"^",2)
+"RTN","PSOCPC",51,0)
+ S RXP=PSODA
+"RTN","PSOCPC",52,0)
+ D SCNEW^PSOCP(.PSOTG,PSOCPN,"",PSODA)
+"RTN","PSOCPC",53,0)
+ N EXMT
+"RTN","PSOCPC",54,0)
+ D XTYPE^PSOCP ; KEEP THIS CALL IN HERE TO SEE IF SC QUESTION APPLIES
+"RTN","PSOCPC",55,0)
+ ;I $D(PSOTG("SC")) S PSOTG("SC")=$P(OLDIBQ,"^",1) ; CHANGED TO JUST USE IBQ SETTING IF SC QUESTION APPLIES - DON'T RE-CALCULATE SERVICE-CONNECTED
+"RTN","PSOCPC",56,0)
+ S EXMT="" F  S EXMT=$O(PSOTG(EXMT)) Q:EXMT=""  I PSOTG(EXMT)'="" S PSOANS=1 Q
+"RTN","PSOCPC",57,0)
+ I $O(PSOTG(""))="" Q
+"RTN","PSOCPC",58,0)
+ I PSOANS W !!,"The following exemption flags have been set:"
+"RTN","PSOCPC",59,0)
+ F EXMT="SC","CV","AO","IR","EC","SHAD","MST","HNC" I $G(PSOTG(EXMT))'="" W !,$S(EXMT="EC":"SWAC",1:EXMT),": ",?6,$S(PSOTG(EXMT)=1:"Yes",PSOTG(EXMT)=0:"No",1:"")
+"RTN","PSOCPC",60,0)
+ W !
+"RTN","PSOCPC",61,0)
+ W ! K DIR S DIR(0)="Y",DIR("B")="N" D  S DIR("A")="Do you want to enter/edit any copay exemption flags"
+"RTN","PSOCPC",62,0)
+ . S EXMT="" F  S EXMT=$O(PSOTG(EXMT)) Q:EXMT=""  I PSOTG(EXMT)="" S DIR("B")="Y" Q
+"RTN","PSOCPC",63,0)
+ S DIR("?")="Enter 'Y' for Yes if you want to edit any applicable medication exemption flags."
+"RTN","PSOCPC",64,0)
+ S DIR("??")="^D HELPEXEM^PSOCPC"
+"RTN","PSOCPC",65,0)
+ D ^DIR K DIR S PSOEXMT=Y I Y'=1 Q
+"RTN","PSOCPC",66,0)
+ ; PRESENT ALL APPLICABLE EXEMPTIONS AND SAVE NEW ANSWERS
+"RTN","PSOCPC",67,0)
+ N PSOIBQ,PSOSUBS,PSOQUES,PSOLTAG,OLDIBQ,II,PSOCHG,PSOPATST
+"RTN","PSOCPC",68,0)
+ S PSOPATST=$$GET1^DIQ(52,PSODA_",",3,"I")
+"RTN","PSOCPC",69,0)
+ S PSOIBQ=""
+"RTN","PSOCPC",70,0)
+ S OLDIBQ=$G(^PSRX(PSODA,"IBQ"))
+"RTN","PSOCPC",71,0)
+ I '$D(^PSRX(PSODA,"IBQ")),+($G(^PSRX(PSODA,"IB")))=2 S $P(OLDIBQ,"^",1)=0 ; SC QUESTION WAS PREVIOUSLY ANSWERED AS N
+"RTN","PSOCPC",72,0)
+ S PSOCOMM="",PSOOLD="",PSONW=""
+"RTN","PSOCPC",73,0)
+ S II=0
+"RTN","PSOCPC",74,0)
+ F EXMT="SC","CV","AO","IR","EC","SHAD","MST","HNC" I $D(PSOTG(EXMT)) D
+"RTN","PSOCPC",75,0)
+ . S PSOLTAG="REL"_EXMT_"^PSOCPE"
+"RTN","PSOCPC",76,0)
+ . S HELPTAG="HELP"_EXMT
+"RTN","PSOCPC",77,0)
+ . S PSOQUES=$P($T(@PSOLTAG),";",2) I PSOQUES="" Q
+"RTN","PSOCPC",78,0)
+ . S PSOQUES=$P(PSOQUES,"?")
+"RTN","PSOCPC",79,0)
+ . S PSOSUBS=$P($T(@PSOLTAG),";",3) I PSOSUBS="" Q
+"RTN","PSOCPC",80,0)
+ . D ASKEXEM
+"RTN","PSOCPC",81,0)
+ I $D(PSOCHG) D
+"RTN","PSOCPC",82,0)
+ . ;PSO*7*275 IBQ node should not be present in some cases.
+"RTN","PSOCPC",83,0)
+ . K ^PSRX(PSODA,"IBQ")
+"RTN","PSOCPC",84,0)
+ . S:PSOSCP<50&($TR(PSOIBQ,"^")'="")&($P($G(^PS(53,+$G(PSOPATST),0)),"^",7)'=1) ^PSRX(PSODA,"IBQ")=PSOIBQ
+"RTN","PSOCPC",85,0)
+ . D RESET^PSORN52D  ;set SC/EI on ICD node
+"RTN","PSOCPC",86,0)
+ . S PSOPFSA=1 ;PFSS-denotes to calling routine that outpatient classifications changed.
+"RTN","PSOCPC",87,0)
+ . D EN^PSOHLSN1(PSODA,"XX","","Order edited")
+"RTN","PSOCPC",88,0)
+ . I PCOPAY,PSOIBQ["1" D  ; RESET TO NO COPAY
+"RTN","PSOCPC",89,0)
+ . . W !,"Editing of exemption flag(s) has resulted in a copay status change.",!,"The status for this Rx will be reset to NO COPAY."
+"RTN","PSOCPC",90,0)
+ . . S $P(^PSRX(PSODA,"IB"),"^",1)=""
+"RTN","PSOCPC",91,0)
+ . . S PSOREF="",PSOOLD="Copay",PSONW="No Copay",PREA="R" D ACTLOG^PSOCPA
+"RTN","PSOCPC",92,0)
+ . . S PSOCOMM="Copay status reset due to exemption flag(s)"
+"RTN","PSOCPC",93,0)
+ . . S PSI=0 D SETSUMM
+"RTN","PSOCPC",94,0)
+ . I $G(II)>0 D
+"RTN","PSOCPC",95,0)
+ . . S PSOCOMM="The following exemption flags have been changed: ",PSI=0 D SETSUMM
+"RTN","PSOCPC",96,0)
+ . . S II="" F  S II=$O(PSOCHG(II)) Q:II=""  S PSOCOMM=PSOCHG(II),PSI=0 D SETSUMM
+"RTN","PSOCPC",97,0)
+ Q
+"RTN","PSOCPC",98,0)
+ ;
+"RTN","PSOCPC",99,0)
+ASKEXEM ; ASK THE EXEMPTION QUESTIONS
+"RTN","PSOCPC",100,0)
+ K DIR S DIR("A")=PSOQUES,DIR(0)="YO" S:PSOTG(EXMT)=1 DIR("B")="Y" S:PSOTG(EXMT)=0 DIR("B")="N" D @HELPTAG
+"RTN","PSOCPC",101,0)
+ASKEXEM1 D ^DIR I X="@" R !,"  Are you sure you want to delete this answer? ",X:DTIME I $E(X)'="Y",$E(X)'="y" G ASKEXEM1
+"RTN","PSOCPC",102,0)
+ I X="^"!($D(DTOUT)) S X=$G(DIR("B")) S Y=$S(X="Y":1,X="N":0,1:"")
+"RTN","PSOCPC",103,0)
+ S $P(PSOIBQ,"^",PSOSUBS)=$S(Y=1:1,Y=0:0,1:"")
+"RTN","PSOCPC",104,0)
+ I Y'=PSOTG(EXMT) S II=II+1,PSOCHG(II)=$S(EXMT="EC":"SWAC",1:EXMT)_": "_$S($P(PSOIBQ,"^",PSOSUBS)=1:"Yes",$P(PSOIBQ,"^",PSOSUBS)=0:"No",1:"")
+"RTN","PSOCPC",105,0)
+ I Y=1 D
+"RTN","PSOCPC",106,0)
+ . I PSOCOMM'="" Q
+"RTN","PSOCPC",107,0)
+ . D SETCOMM^PSOCP
+"RTN","PSOCPC",108,0)
+ Q
+"RTN","PSOCPC",109,0)
+ ;
+"RTN","PSOCPC",110,0)
+HELPEXEM ; help text for exemption edit question
+"RTN","PSOCPC",111,0)
+ W !,"Enter 'Y' for Yes if you want to edit any applicable exemption flags such as"
+"RTN","PSOCPC",112,0)
+ W !,"Service Connected (SC), Combat Veteran(CV), Agent Orange (AO), Ionizing"
+"RTN","PSOCPC",113,0)
+ W !,"Radiation (IR), Southwest Asia Conditions (SWAC), PROJ 112/SHAD,"
+"RTN","PSOCPC",114,0)
+ W !,"Military Sexual Trauma (MST), or Head and/or Neck Cancer (HNC)."
+"RTN","PSOCPC",115,0)
+ Q
+"RTN","PSOCPC",116,0)
+ ;
+"RTN","PSOCPC",117,0)
+HELPSC ;
+"RTN","PSOCPC",118,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is for a Service Connected condition."
+"RTN","PSOCPC",119,0)
+ S DIR("?",2)="This response will be used to determine whether or not a copay should be"
+"RTN","PSOCPC",120,0)
+ S DIR("?",3)="applied to the prescription."
+"RTN","PSOCPC",121,0)
+ Q
+"RTN","PSOCPC",122,0)
+ ;
+"RTN","PSOCPC",123,0)
+HELPAO ;
+"RTN","PSOCPC",124,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition due to",DIR("?",2)="Vietnam-Era Herbicide (Agent Orange) exposure. This response will be used to"
+"RTN","PSOCPC",125,0)
+ S DIR("?",3)="determine whether or not a copay should be applied to the prescription."
+"RTN","PSOCPC",126,0)
+ Q
+"RTN","PSOCPC",127,0)
+ ;
+"RTN","PSOCPC",128,0)
+HELPIR ;
+"RTN","PSOCPC",129,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition due to",DIR("?",2)="ionizing radiation exposure during military service. This response will be used"
+"RTN","PSOCPC",130,0)
+ S DIR("?",3)="to determine whether or not a copay should be applied to the prescription."
+"RTN","PSOCPC",131,0)
+ Q
+"RTN","PSOCPC",132,0)
+ ;
+"RTN","PSOCPC",133,0)
+HELPEC ;
+"RTN","PSOCPC",134,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition related to",DIR("?",2)="service in Southwest Asia. This response will be used to determine whether"
+"RTN","PSOCPC",135,0)
+ S DIR("?",3)="or not a copay should be applied to the prescription."
+"RTN","PSOCPC",136,0)
+ Q
+"RTN","PSOCPC",137,0)
+ ;
+"RTN","PSOCPC",138,0)
+HELPMST ;
+"RTN","PSOCPC",139,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition related",DIR("?",2)="to Military Sexual Trauma. This response will be used to determine whether or"
+"RTN","PSOCPC",140,0)
+ S DIR("?",3)="not a copay should be applied to the prescription."
+"RTN","PSOCPC",141,0)
+ Q
+"RTN","PSOCPC",142,0)
+ ;
+"RTN","PSOCPC",143,0)
+HELPHNC ;
+"RTN","PSOCPC",144,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat Head and/or Neck Cancer",DIR("?",2)="due to nose or throat radium treatments while in the military. This response"
+"RTN","PSOCPC",145,0)
+ S DIR("?",3)="will be used to determine whether or not a copay should be applied to the",DIR("?",4)="prescription."
+"RTN","PSOCPC",146,0)
+ Q
+"RTN","PSOCPC",147,0)
+ ;
+"RTN","PSOCPC",148,0)
+HELPCV ;
+"RTN","PSOCPC",149,0)
+ S DIR("?")=" "
+"RTN","PSOCPC",150,0)
+ S DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition related"
+"RTN","PSOCPC",151,0)
+ S DIR("?",2)="to Combat Services. This response will be used to determine whether or"
+"RTN","PSOCPC",152,0)
+ S DIR("?",3)="not a copay should be applied to the prescription."
+"RTN","PSOCPC",153,0)
+ Q
+"RTN","PSOCPC",154,0)
+ ;
+"RTN","PSOCPC",155,0)
+HELPSHAD ;
+"RTN","PSOCPC",156,0)
+ S DIR("?")=" "
+"RTN","PSOCPC",157,0)
+ S DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition related"
+"RTN","PSOCPC",158,0)
+ S DIR("?",2)="to PROJ 112/SHAD. This response will be used to determine whether or"
+"RTN","PSOCPC",159,0)
+ S DIR("?",3)="not a copay should be applied to the prescription."
+"RTN","PSOCPC",160,0)
+ Q
+"RTN","PSOCPC",161,0)
+SETSUMM ; SET MESSAGE INTO SUMMARY
+"RTN","PSOCPC",162,0)
+ S PSI=$O(PSOSUMM(PSI)) G:$O(PSOSUMM(PSI)) SETSUMM
+"RTN","PSOCPC",163,0)
+ S PSI=PSI+1,PSOSUMM(PSI)=PSOCOMM
+"RTN","PSOCPC",164,0)
+ K PSOCOMM
+"RTN","PSOCPC",165,0)
+ Q
+"RTN","PSOCPC",166,0)
+ ;
+"RTN","PSOPKIV2")
+0^1^B23138982^B23465178
+"RTN","PSOPKIV2",1,0)
+PSOPKIV2 ;BIR/MHA - Dig Signed Pending order Auto-DC message ;08/17/11
+"RTN","PSOPKIV2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**391,495**;DEC 1997;Build 9
+"RTN","PSOPKIV2",3,0)
+ ;
+"RTN","PSOPKIV2",4,0)
+ADCMAIL ;
+"RTN","PSOPKIV2",5,0)
+ N XX,QQ,ZZ S ZZ="PSOPODC" S:'$G(DFN) DFN=PSODFN D ^VADPT,ADD^VADPT
+"RTN","PSOPKIV2",6,0)
+ K ^TMP(ZZ,$J)
+"RTN","PSOPKIV2",7,0)
+ S XMSUB=$P(^PS(59,PSOSITE,0),"^",6)_" - DIGITALLY SIGNED "_$S($P(OR0,"^",3)="RNW":"RE",1:"")_"NEW ORDER AUTO DISCONTINUED",XMDUZ=.5
+"RTN","PSOPKIV2",8,0)
+ S LC=1,^TMP(ZZ,$J,LC)="",LC=LC+1
+"RTN","PSOPKIV2",9,0)
+ S ^TMP(ZZ,$J,LC)="Following order was auto discontinued when finishing a pending order due to "_$P(PKIE,": ",2),LC=LC+1
+"RTN","PSOPKIV2",10,0)
+ S ^TMP(ZZ,$J,LC)="",LC=LC+1
+"RTN","PSOPKIV2",11,0)
+ S ^TMP(ZZ,$J,LC)="Division      : "_$P(^PS(59,PSOSITE,0),"^"),LC=LC+1
+"RTN","PSOPKIV2",12,0)
+ S ^TMP(ZZ,$J,LC)="CPRS Order #  : "_$P(OR0,"^"),LC=LC+1
+"RTN","PSOPKIV2",13,0)
+ S ^TMP(ZZ,$J,LC)="Issue Date    : "_PSONEW("ISSUE DATE"),LC=LC+1
+"RTN","PSOPKIV2",14,0)
+ S ^TMP(ZZ,$J,LC)="Patient       : "_$P(^DPT(DFN,0),U)_" ("_$G(VA("BID"))_")",LC=LC+1
+"RTN","PSOPKIV2",15,0)
+ ;S ^TMP(ZZ,$J,LC)="Address       : ",LC=LC+1
+"RTN","PSOPKIV2",16,0)
+ D PATAD
+"RTN","PSOPKIV2",17,0)
+ S ^TMP(ZZ,$J,LC)="Drug          : "_$G(PSODRUG("NAME")),LC=LC+1
+"RTN","PSOPKIV2",18,0)
+ S QQ=PSONEW("DOSE",1) S:PSONEW("UNITS",1) QQ=QQ_"("_$P(^PS(50.607,PSONEW("UNITS",1),0),"^")_")"
+"RTN","PSOPKIV2",19,0)
+ I $O(PSONEW("DOSE",1)) S XX=1 F  S XX=$O(PSONEW("DOSE",XX)) Q:'XX  D
+"RTN","PSOPKIV2",20,0)
+ .S QQ=QQ_","_PSONEW("DOSE",XX)
+"RTN","PSOPKIV2",21,0)
+ .S:PSONEW("UNITS",XX) QQ=QQ_"("_$P(^PS(50.607,PSONEW("UNITS",XX),0),"^")_")"
+"RTN","PSOPKIV2",22,0)
+ S ^TMP(ZZ,$J,LC)="Dosage Ordered: "_QQ
+"RTN","PSOPKIV2",23,0)
+ S LC=LC+1
+"RTN","PSOPKIV2",24,0)
+ S ^TMP(ZZ,$J,LC)="Dosage Form   : "_PSONEW("NOUN",1),LC=LC+1
+"RTN","PSOPKIV2",25,0)
+ S ^TMP(ZZ,$J,LC)="Quantity      : "_PSONEW("QTY")
+"RTN","PSOPKIV2",26,0)
+ N TLC K TMP("ZZ") S XX=0,TLC=1,TMP("ZZ",1,0)="SIG           : "
+"RTN","PSOPKIV2",27,0)
+ F  S XX=$O(^PS(52.41,ORD,"SIG",XX)) Q:'XX  D
+"RTN","PSOPKIV2",28,0)
+ .S QQ=^PS(52.41,ORD,"SIG",XX,0)
+"RTN","PSOPKIV2",29,0)
+ .D WORDWRAP^PSOUTLA2(QQ,.TLC,$NA(TMP("ZZ")),15)
+"RTN","PSOPKIV2",30,0)
+ S XX=0 F  S XX=$O(TMP("ZZ",XX)) Q:'XX  S ^TMP(ZZ,$J,LC+1)=TMP("ZZ",XX,0)
+"RTN","PSOPKIV2",31,0)
+ S LC=LC+1
+"RTN","PSOPKIV2",32,0)
+ S ^TMP(ZZ,$J,LC)="Provider      : "_PSONEW("PROVIDER NAME"),LC=LC+1
+"RTN","PSOPKIV2",33,0)
+ D PRV
+"RTN","PSOPKIV2",34,0)
+ S LC=LC+1,^TMP(ZZ,$J,LC)=""
+"RTN","PSOPKIV2",35,0)
+ I $G(PKIOR)=16 D MISMCH
+"RTN","PSOPKIV2",36,0)
+ D MGRP
+"RTN","PSOPKIV2",37,0)
+ S XMY(DUZ)="",XMTEXT="^TMP(ZZ,$J," N DIFROM D ^XMD K XMDUZ,XMTEXT,XMSUB
+"RTN","PSOPKIV2",38,0)
+ K ^TMP(ZZ,$J)
+"RTN","PSOPKIV2",39,0)
+ Q
+"RTN","PSOPKIV2",40,0)
+ ;
+"RTN","PSOPKIV2",41,0)
+MISMCH ;Reason for mis-match
+"RTN","PSOPKIV2",42,0)
+ N XX,XY,XZ,X1,X2,XM,PSOARY,HASH
+"RTN","PSOPKIV2",43,0)
+ S HASH=$$HSHCHK^PSOPKIV1(.PSOARY,ORD) I HASH'=-1 Q
+"RTN","PSOPKIV2",44,0)
+ I $O(PSOARY(""))="" Q
+"RTN","PSOPKIV2",45,0)
+ ;I $G(PSOARY)'=-1 Q
+"RTN","PSOPKIV2",46,0)
+ S $P(XZ," ",80)="",LC=LC+1
+"RTN","PSOPKIV2",47,0)
+ S ^TMP(ZZ,$J,LC)="Differences in CPRS and Pharmacy Pending File",LC=LC+1,^TMP(ZZ,$J,LC)=""
+"RTN","PSOPKIV2",48,0)
+ S LC=LC+1,^TMP(ZZ,$J,LC)="Data Name          CPRS File                    Pharmacy Pending File"
+"RTN","PSOPKIV2",49,0)
+ S LC=LC+1,^TMP(ZZ,$J,LC)="---------          ---------                    ---------------------"
+"RTN","PSOPKIV2",50,0)
+ S LC=LC+1,XX=""
+"RTN","PSOPKIV2",51,0)
+ F  S XX=$O(PSOARY(XX)) Q:XX=""  D
+"RTN","PSOPKIV2",52,0)
+ .S XY=PSOARY(XX),LC=LC+1
+"RTN","PSOPKIV2",53,0)
+ .S X1=$P(XY,"^"),X2=$P(XY,"^",2)
+"RTN","PSOPKIV2",54,0)
+ .S XM=$S($L(X1)>$L(X2):X1,1:X2),STR=""
+"RTN","PSOPKIV2",55,0)
+ .F I=0:1:$L(XM) Q:$E(XM,28*I,$L(XM))=""  D
+"RTN","PSOPKIV2",56,0)
+ .. S ^TMP(ZZ,$J,LC)=$S(I=0:$E(XX,1,18),1:"")_$$BLNK(19,$S(I=0:$E(XX,1,18),1:""))_$E(X1,(28*I),(28*I+28))_$$BLNK(29,$S($E(X1,(28*I),(28*I+28))]"":$E(X1,(28*I),(28*I+28)),1:""))_$E(X2,(28*I),(28*I+28)),LC=LC+1
+"RTN","PSOPKIV2",57,0)
+ Q
+"RTN","PSOPKIV2",58,0)
+ ;
+"RTN","PSOPKIV2",59,0)
+BLNK(X,STR) ;blank spaces
+"RTN","PSOPKIV2",60,0)
+ N XZ,SP
+"RTN","PSOPKIV2",61,0)
+ Q:X="" ""
+"RTN","PSOPKIV2",62,0)
+ S $P(XZ," ",80)="",SP=X-$L(STR)
+"RTN","PSOPKIV2",63,0)
+ Q $E(XZ,1,SP)
+"RTN","PSOPKIV2",64,0)
+MGRP ;
+"RTN","PSOPKIV2",65,0)
+ N MDUZ S MDUZ=0 F  S MDUZ=$O(^XUSEC("PSDMGR",MDUZ)) Q:MDUZ'>0  S XMY(MDUZ)=""
+"RTN","PSOPKIV2",66,0)
+ Q
+"RTN","PSOPKIV2",67,0)
+ ;
+"RTN","PSOPKIV2",68,0)
+PRV ;
+"RTN","PSOPKIV2",69,0)
+ N DEA,VADD,PRV,DRG,ORN
+"RTN","PSOPKIV2",70,0)
+ S PRV=$G(PSONEW("PROVIDER")),DRG=$G(PSODRUG("IEN")),ORN=$P(OR0,"^")
+"RTN","PSOPKIV2",71,0)
+ I PRV="" Q
+"RTN","PSOPKIV2",72,0)
+ S DEA=$$DEA^XUSER(0,PRV)
+"RTN","PSOPKIV2",73,0)
+ S DEA=$S(DEA["-":"VA#           : ",1:"DEA#          : ")_DEA
+"RTN","PSOPKIV2",74,0)
+ S ^TMP(ZZ,$J,LC)=DEA
+"RTN","PSOPKIV2",75,0)
+ I $$DETOX^PSSOPKI(DRG),$$DETOX^XUSER(PRV)'="" S ^TMP(ZZ,$J,LC)=^TMP(ZZ,$J,LC)_"  DETOX#: "_$$DETOX^XUSER(PRV)
+"RTN","PSOPKIV2",76,0)
+ D PRVAD
+"RTN","PSOPKIV2",77,0)
+ I $G(VADD(1))]"" D
+"RTN","PSOPKIV2",78,0)
+ .S LC=LC+1,^TMP(ZZ,$J,LC)="Site Address  : "_VADD(1)
+"RTN","PSOPKIV2",79,0)
+ .S:VADD(2)'="" LC=LC+1,^TMP(ZZ,$J,LC)="                "_VADD(2)
+"RTN","PSOPKIV2",80,0)
+ .S:VADD(3)'="" LC=LC+1,^TMP(ZZ,$J,LC)="                "_VADD(3)
+"RTN","PSOPKIV2",81,0)
+ Q
+"RTN","PSOPKIV2",82,0)
+ ;
+"RTN","PSOPKIV2",83,0)
+PRVAD ;
+"RTN","PSOPKIV2",84,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV2",85,0)
+ D ARCHIVE^ORDEA(ORN)
+"RTN","PSOPKIV2",86,0)
+ I $D(^TMP($J,"ORDEA",ORN,3)) S VADD=^(3) D
+"RTN","PSOPKIV2",87,0)
+ .S VADD(1)=$P(VADD,"^",2),VADD(2)=$P(VADD,"^",3),VADD(3)=$P(VADD,"^",4)_", "_$P(VADD,"^",5)_" "_$P($P(VADD,"^",6),"-")
+"RTN","PSOPKIV2",88,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV2",89,0)
+ Q
+"RTN","PSOPKIV2",90,0)
+ ;
+"RTN","PSOPKIV2",91,0)
+PATAD ;
+"RTN","PSOPKIV2",92,0)
+ N PSOBADR,PSOTEMP,PSOFORGN,I,T
+"RTN","PSOPKIV2",93,0)
+ S PSOBADR=0,PSOTEMP=0,XX=0
+"RTN","PSOPKIV2",94,0)
+ S PSOFORGN=$P($G(VAPA(25)),"^",2) I PSOFORGN'="",PSOFORGN'["UNITED STATES" S PSOFORGN=1
+"RTN","PSOPKIV2",95,0)
+ I 'PSOFORGN S PSOBADR=$$BADADR^DGUTL3(DFN)
+"RTN","PSOPKIV2",96,0)
+ I 'PSOFORGN,PSOBADR S PSOTEMP=$$CHKTEMP^PSOBAI(DFN)
+"RTN","PSOPKIV2",97,0)
+ F I=1:1:3 I $G(VAPA(I))]"" D
+"RTN","PSOPKIV2",98,0)
+ . S T="" I I=1,'PSOFORGN,PSOBADR,'$G(PSOTEMP) S T="** BAD ADDRESS INDICATED **"
+"RTN","PSOPKIV2",99,0)
+ . I I=1,T="",PSOFORGN S T="*** FOREIGN ADDRESS ***"
+"RTN","PSOPKIV2",100,0)
+ . I T="" I 'PSOFORGN I 'PSOBADR!$G(PSOTEMP) S T=$G(VAPA(I))
+"RTN","PSOPKIV2",101,0)
+ . I I=1,T]"" S ^TMP(ZZ,$J,LC)="Address       : "_T,LC=LC+1
+"RTN","PSOPKIV2",102,0)
+ . I I>1,T]"" S ^TMP(ZZ,$J,LC)="                "_T,LC=LC+1
+"RTN","PSOPKIV2",103,0)
+ S I=+$G(VAPA(5)) I I S I=$S($D(^DIC(5,I,0)):$P(^(0),"^",2),1:"UNKNOWN")
+"RTN","PSOPKIV2",104,0)
+ S T="" I 'PSOFORGN I 'PSOBADR!$G(PSOTEMP) S T=$G(VAPA(4))_", "_I_"  "_$S($G(VAPA(11)):$P(VAPA(11),"^",2),1:$G(VAPA(6)))
+"RTN","PSOPKIV2",105,0)
+ S:T]"" ^TMP(ZZ,$J,LC)="                "_T,LC=LC+1
+"RTN","PSOPKIV2",106,0)
+ Q
+"RTN","PSOPKIV2",107,0)
+ ;
+"VER")
+8.0^22.2
+"BLD",10669,6)
+^411
+**END**
+**END**
+

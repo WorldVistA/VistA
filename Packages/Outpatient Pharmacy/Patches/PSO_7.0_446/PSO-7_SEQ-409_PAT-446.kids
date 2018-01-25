@@ -1,0 +1,3837 @@
+Released PSO*7*446 SEQ #409
+Extracted from mail message
+**KIDS**:PSO*7.0*446^
+
+**INSTALL NAME**
+PSO*7.0*446
+"BLD",10432,0)
+PSO*7.0*446^OUTPATIENT PHARMACY^0^3171005^y
+"BLD",10432,1,0)
+^^250^250^3171005^^^
+"BLD",10432,1,1,0)
+This patch will resolve the following issues.  
+"BLD",10432,1,2,0)
+ 
+"BLD",10432,1,3,0)
+1. Messages from PSO EXTERNAL DISPENSE do not specify site location 
+"BLD",10432,1,4,0)
+ 
+"BLD",10432,1,5,0)
+2. Wrong authorization provider is listed on prescription in (PSPO 
+"BLD",10432,1,6,0)
+   #2696) CPRS and Outpatient Pharmacy
+"BLD",10432,1,7,0)
+ 
+"BLD",10432,1,8,0)
+3. Remarks entered do not display when prescription is placed on Hold 
+"BLD",10432,1,9,0)
+ 
+"BLD",10432,1,10,0)
+4. When editing day supply for controlled orders calculating (PSPO 
+"BLD",10432,1,11,0)
+   #2580) supply incorrect.
+"BLD",10432,1,12,0)
+ 
+"BLD",10432,1,13,0)
+5. When editing the field QTY (#9) of a Pending Order the system will auto
+"BLD",10432,1,14,0)
+   calculate if Schedule not marked PRN
+"BLD",10432,1,15,0)
+ 
+"BLD",10432,1,16,0)
+ 
+"BLD",10432,1,17,0)
+Associated NSR(s): 
+"BLD",10432,1,18,0)
+==================
+"BLD",10432,1,19,0)
+N/A 
+"BLD",10432,1,20,0)
+ 
+"BLD",10432,1,21,0)
+Patient Safety Issues (PSIs):
+"BLD",10432,1,22,0)
+=============================
+"BLD",10432,1,23,0)
+PSPO #2696 - When finishing pending orders from CPRS using the Complete 
+"BLD",10432,1,24,0)
+Orders from OERR[PSO LMOE FINISH] option, if the user selects not to 
+"BLD",10432,1,25,0)
+display the patient profile and start processing pending orders a problem 
+"BLD",10432,1,26,0)
+would occur for patients with orders issued by more than one single 
+"BLD",10432,1,27,0)
+provider.
+"BLD",10432,1,28,0)
+ 
+"BLD",10432,1,29,0)
+PSPO #2580 - For pending orders with a dispense drug where the quantity 
+"BLD",10432,1,30,0)
+can be automatically calculated based on the dosage and day's supply 
+"BLD",10432,1,31,0)
+there was a problem for certain situations where the automatic calculation
+"BLD",10432,1,32,0)
+was not desirable.
+"BLD",10432,1,33,0)
+ 
+"BLD",10432,1,34,0)
+Test Sites: 
+"BLD",10432,1,35,0)
+===========
+"BLD",10432,1,36,0)
+Orlando VAMC
+"BLD",10432,1,37,0)
+Erie VAMC
+"BLD",10432,1,38,0)
+ 
+"BLD",10432,1,39,0)
+Associated CA SDM Ticket(s):
+"BLD",10432,1,40,0)
+============================
+"BLD",10432,1,41,0)
+1.I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+"BLD",10432,1,42,0)
+                 DISPENSE Message
+"BLD",10432,1,43,0)
+ 
+"BLD",10432,1,44,0)
+2.I9897580FY16 - Wrong authorization provider is listed on prescription 
+"BLD",10432,1,45,0)
+                 in CPRS and Outpatient Pharmacy
+"BLD",10432,1,46,0)
+ 
+"BLD",10432,1,47,0)
+3.I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+"BLD",10432,1,48,0)
+                 is on hold
+"BLD",10432,1,49,0)
+ 
+"BLD",10432,1,50,0)
+4.I10167818FY16 - Editing day's supply incorrect
+"BLD",10432,1,51,0)
+ 
+"BLD",10432,1,52,0)
+5 I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+"BLD",10432,1,53,0)
+                  system will auto calculate if Schedule not marked PRN
+"BLD",10432,1,54,0)
+ 
+"BLD",10432,1,55,0)
+Defect Tracking System Ticket(s) Overview:
+"BLD",10432,1,56,0)
+==========================================
+"BLD",10432,1,57,0)
+1. I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+"BLD",10432,1,58,0)
+                  DISPENSE Message
+"BLD",10432,1,59,0)
+  
+"BLD",10432,1,60,0)
+Problem: 
+"BLD",10432,1,61,0)
+--------
+"BLD",10432,1,62,0)
+When OPAI (Outpatient Pharmacy Automated Interface) tries to release a 
+"BLD",10432,1,63,0)
+prescription and it is unable to match the release information with a 
+"BLD",10432,1,64,0)
+prescription fill on file it will create a Mailman message alerting users
+"BLD",10432,1,65,0)
+about the issue. The problem for integrated sites with multiple sites 
+"BLD",10432,1,66,0)
+using OPAI is that the Mailman message does not identify which site the
+"BLD",10432,1,67,0)
+release information was for, prompting all the sites to lookup the Rx
+"BLD",10432,1,68,0)
+record to find out whether it belongs to them or not.
+"BLD",10432,1,69,0)
+ 
+"BLD",10432,1,70,0)
+Current message subject: "External Dispense - Rx Release Attempted" 
+"BLD",10432,1,71,0)
+ 
+"BLD",10432,1,72,0)
+Resolution: 
+"BLD",10432,1,73,0)
+-----------
+"BLD",10432,1,74,0)
+The Mailman message subject was modified to include the Site Number at the
+"BLD",10432,1,75,0)
+beginning. This will be consistent with other mailman messages that 
+"BLD",10432,1,76,0)
+already identify the Rx site in the message subject.
+"BLD",10432,1,77,0)
+  
+"BLD",10432,1,78,0)
+New message subject: "500 External Dispense - Rx Release Attempted" 
+"BLD",10432,1,79,0)
+  
+"BLD",10432,1,80,0)
+Technical Resolution: 
+"BLD",10432,1,81,0)
+---------------------
+"BLD",10432,1,82,0)
+Modify routine PSOHLDI1 at tag MAIL+13: add the following code: 
+"BLD",10432,1,83,0)
+ 
+"BLD",10432,1,84,0)
+S XMSUB=$S($G(PSOSITE):$$GET1^DIQ(59,PSOSITE,.06)_" ",1:"")_"External 
+"BLD",10432,1,85,0)
+Dispense - Rx Release Attempted"
+"BLD",10432,1,86,0)
+ 
+"BLD",10432,1,87,0)
+  
+"BLD",10432,1,88,0)
+2. I9897580FY16 - The Wrong authorization provider is listed on 
+"BLD",10432,1,89,0)
+                  prescription in CPRS and Outpatient Pharmacy
+"BLD",10432,1,90,0)
+ 
+"BLD",10432,1,91,0)
+PSPO #2696
+"BLD",10432,1,92,0)
+ 
+"BLD",10432,1,93,0)
+Problem: 
+"BLD",10432,1,94,0)
+--------
+"BLD",10432,1,95,0)
+When finishing pending orders from CPRS using the Complete Orders from 
+"BLD",10432,1,96,0)
+OERR [PSO LMOE FINISH] option, if the user selects not to display the
+"BLD",10432,1,97,0)
+patient profile and start processing pending orders a problem would occur
+"BLD",10432,1,98,0)
+for patients with orders issued by more than one single provider. If the
+"BLD",10432,1,99,0)
+user selected the Provider field (#13) and merely confirmed it,
+"BLD",10432,1,100,0)
+the prescriber would be carried over to the next pending orders for that
+"BLD",10432,1,101,0)
+same patient.
+"BLD",10432,1,102,0)
+  
+"BLD",10432,1,103,0)
+Resolution: 
+"BLD",10432,1,104,0)
+-----------
+"BLD",10432,1,105,0)
+The array variable PSORX("PROVIDER NAME") that stores information about 
+"BLD",10432,1,106,0)
+the provider was not being properly initialized between the processing
+"BLD",10432,1,107,0)
+each of the patient's pending orders. The code was modified to kill the
+"BLD",10432,1,108,0)
+array variable PSORX before processing each of the patient's pending
+"BLD",10432,1,109,0)
+order.  
+"BLD",10432,1,110,0)
+ 
+"BLD",10432,1,111,0)
+Technical Resolution: 
+"BLD",10432,1,112,0)
+---------------------
+"BLD",10432,1,113,0)
+Modified the routine PSOORFIN at tags SUCC+4 and PSOORFIN+19 to kill 
+"BLD",10432,1,114,0)
+array variable PSORX("PROVIDER NAME")
+"BLD",10432,1,115,0)
+ 
+"BLD",10432,1,116,0)
+ 
+"BLD",10432,1,117,0)
+3. I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+"BLD",10432,1,118,0)
+                  is on HOLD 
+"BLD",10432,1,119,0)
+ 
+"BLD",10432,1,120,0)
+Problem: 
+"BLD",10432,1,121,0)
+--------
+"BLD",10432,1,122,0)
+Comments entered into the REMARKS field (#15) were not being displayed
+"BLD",10432,1,123,0)
+when a prescription was put on hold. Once the prescription was removed
+"BLD",10432,1,124,0)
+from hold, the remarks would become visible again.
+"BLD",10432,1,125,0)
+  
+"BLD",10432,1,126,0)
+Resolution: 
+"BLD",10432,1,127,0)
+-----------
+"BLD",10432,1,128,0)
+Modified routine PSOORNE2 so the comments entered into the REMARKS field 
+"BLD",10432,1,129,0)
+(#15) display when the prescription is put on hold. 
+"BLD",10432,1,130,0)
+ 
+"BLD",10432,1,131,0)
+Technical Resolution: 
+"BLD",10432,1,132,0)
+---------------------
+"BLD",10432,1,133,0)
+Modified the routine ACT+2^PSOORNE2 to set just $P(RX3,"^") instead of 
+"BLD",10432,1,134,0)
+the entire RX3 variable, as shown below:
+"BLD",10432,1,135,0)
+ 
+"BLD",10432,1,136,0)
+I 'RX3 S RX3=$P(RX2,"^",2),$P(^PSRX(RXN,3),"^")=$P(RX2,"^",2) 
+"BLD",10432,1,137,0)
+ 
+"BLD",10432,1,138,0)
+ 
+"BLD",10432,1,139,0)
+4. I10167818FY16 - Editing day's supply incorrect
+"BLD",10432,1,140,0)
+ 
+"BLD",10432,1,141,0)
+PSPO #2580 
+"BLD",10432,1,142,0)
+  
+"BLD",10432,1,143,0)
+Problem: 
+"BLD",10432,1,144,0)
+--------
+"BLD",10432,1,145,0)
+For pending orders with a dispense drug where the quantity can be
+"BLD",10432,1,146,0)
+automatically calculated based on the dosage and days supply there was a
+"BLD",10432,1,147,0)
+problem for certain situations where the automatic calculation was not
+"BLD",10432,1,148,0)
+desirable. For example, the prescriber would order 10 tablets of a 
+"BLD",10432,1,149,0)
+controlled substance medication with a 30 days supply PRN (As Needed) to
+"BLD",10432,1,150,0)
+be taken no more than twice a day. When the Outpatient Pharmacy user
+"BLD",10432,1,151,0)
+edited the DAYS SUPPLY field (#8) for such order and changed it from 30 to
+"BLD",10432,1,152,0)
+28, as an example, the software would automatically update the quantity
+"BLD",10432,1,153,0)
+from 10 to 56, which is clearly inconsistent with the prescriber's initial
+"BLD",10432,1,154,0)
+intention.  
+"BLD",10432,1,155,0)
+  
+"BLD",10432,1,156,0)
+Resolution: 
+"BLD",10432,1,157,0)
+-----------
+"BLD",10432,1,158,0)
+A new logic has been introduced related to the editing the DAYS SUPPLY 
+"BLD",10432,1,159,0)
+field (#8) of a pending order:
+"BLD",10432,1,160,0)
+ 
+"BLD",10432,1,161,0)
+ 1. For single dose order the software will not automatically recalculate 
+"BLD",10432,1,162,0)
+    the Quantity field if the current Quantity value on the order is not
+"BLD",10432,1,163,0)
+    the result of a calculation based on the current Day Supply value
+"BLD",10432,1,164,0)
+    (before the edit), which suggests the Quantity was previously manually
+"BLD",10432,1,165,0)
+    entered (not calculated).
+"BLD",10432,1,166,0)
+ 2. The software will not take into account whether the Schedule is marked
+"BLD",10432,1,167,0)
+    PRN (As Needed) or not when deciding to automatically recalculate the
+"BLD",10432,1,168,0)
+    QTY field (#9).
+"BLD",10432,1,169,0)
+ 3. For a Controlled Substance pending order the system will not 
+"BLD",10432,1,170,0)
+    automatically recalculate the Quantity field (#9) if it will cause the
+"BLD",10432,1,171,0)
+    current Quantity value to be increased.
+"BLD",10432,1,172,0)
+ 4. For a Complex Controlled Substance pending order the system will not 
+"BLD",10432,1,173,0)
+    automatically recalculate the Quantity field (#9).
+"BLD",10432,1,174,0)
+ 5. For a pending order that qualify for a Quantity recalculation that did
+"BLD",10432,1,175,0)
+    not happen because of one of the rules above (1, 3 and 4), the system
+"BLD",10432,1,176,0)
+    will display the following message to the user editing the DAYS SUPPLY
+"BLD",10432,1,177,0)
+    field (#8): 
+"BLD",10432,1,178,0)
+    
+"BLD",10432,1,179,0)
+          The QTY (99) has not been changed.  
+"BLD",10432,1,180,0)
+          Please, review and update it if necessary.  
+"BLD",10432,1,181,0)
+ 
+"BLD",10432,1,182,0)
+Additionally, a modification was introduced to prevent any automatic
+"BLD",10432,1,183,0)
+calculation/update of the QTY field (#9) for a new, pending or existing
+"BLD",10432,1,184,0)
+order when the user selects to specifically edit the QTY field (#9)
+"BLD",10432,1,185,0)
+itself.
+"BLD",10432,1,186,0)
+ 
+"BLD",10432,1,187,0)
+Technical Resolution: 
+"BLD",10432,1,188,0)
+---------------------
+"BLD",10432,1,189,0)
+Modified routines PSODIR1, PSOSIG, PSOSIGCX and PSOSIGTX to implement the 
+"BLD",10432,1,190,0)
+new rules above.
+"BLD",10432,1,191,0)
+  
+"BLD",10432,1,192,0)
+5. I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+"BLD",10432,1,193,0)
+                   system will auto calculate if Schedule not marked PRN
+"BLD",10432,1,194,0)
+   
+"BLD",10432,1,195,0)
+Problem: 
+"BLD",10432,1,196,0)
+--------
+"BLD",10432,1,197,0)
+When using the options Patient Prescription Processing [PSO LM BACKDOOR
+"BLD",10432,1,198,0)
+ORDERS] or Complete Orders from OERR [PSO LMOE FINISH] if the user tries 
+"BLD",10432,1,199,0)
+to edit the QTY field (#9) of the pending order and if the quantity can be
+"BLD",10432,1,200,0)
+automatically calculated and the current value does not match the 
+"BLD",10432,1,201,0)
+calculated value the software will automatically replace the current value
+"BLD",10432,1,202,0)
+with the calculated value before prompting the user for the QTY field (#9)
+"BLD",10432,1,203,0)
+for the order.
+"BLD",10432,1,204,0)
+ 
+"BLD",10432,1,205,0)
+As seen on the example below:
+"BLD",10432,1,206,0)
+  
+"BLD",10432,1,207,0)
+    Pending OP Orders (ROUTINE)   Jun 06, 2017@15:13:57      Page: 2 of 3 
+"BLD",10432,1,208,0)
+     TESPATNM,ROB                                          <A> 
+"BLD",10432,1,209,0)
+       PID: 666-00-0258                          Ht(cm): _______ (______) 
+"BLD",10432,1,210,0)
+       DOB: JUL 21,1963 (53)                     Wt(kg): _______ (______) 
+"BLD",10432,1,211,0)
+    +---------------------------------------------------------------------
+"BLD",10432,1,212,0)
+       (4)   Pat Instruct:                                         
+"BLD",10432,1,213,0)
+        Provider Comments:                                         
+"BLD",10432,1,214,0)
+             Instructions: TAKE ONE TABLET PO QDAY                 
+"BLD",10432,1,215,0)
+                      SIG: TAKE ONE TABLET BY BY MOUTH EVERY DAY  
+"BLD",10432,1,216,0)
+       (5) Patient Status: SC                                   
+"BLD",10432,1,217,0)
+       (6)     Issue Date: JUN 6,2017        (7) Fill Date: JUN 6,2017 
+"BLD",10432,1,218,0)
+       (8)    Days Supply: 30                (9)   QTY (TAB): 10       
+"BLD",10432,1,219,0)
+         Provider ordered: days supply 30, quantity 10 & refills 0   
+"BLD",10432,1,220,0)
+      (10)   # of Refills: 0                (11)   Routing: MAIL     
+"BLD",10432,1,221,0)
+      (12)         Clinic: NHCU                                      
+"BLD",10432,1,222,0)
+      (13)       Provider: ROCHA,MARCELO                             
+"BLD",10432,1,223,0)
+      (14)         Copies: 1                                         
+"BLD",10432,1,224,0)
+      (15)        Remarks:                                           
+"BLD",10432,1,225,0)
+         Entry By: ROCHA,MARCELO            Entry Date: 06/06/17 12:07:24 
+"BLD",10432,1,226,0)
+    -------Digitally Signed Order---------------------------------------- 
+"BLD",10432,1,227,0)
+    BY  Bypass                DC  Discontinue           FL  Flag/Unflag 
+"BLD",10432,1,228,0)
+    ED  Edit                  FN  Finish 
+"BLD",10432,1,229,0)
+    Select Item(s): Quit// 9     
+"BLD",10432,1,230,0)
+  
+"BLD",10432,1,231,0)
+     Quantity has been changed from 10 to 30 
+"BLD",10432,1,232,0)
+  
+"BLD",10432,1,233,0)
+     Press Return to Continue: 
+"BLD",10432,1,234,0)
+  
+"BLD",10432,1,235,0)
+     QTY ( TAB ) : 30// 
+"BLD",10432,1,236,0)
+  
+"BLD",10432,1,237,0)
+Resolution: 
+"BLD",10432,1,238,0)
+-----------
+"BLD",10432,1,239,0)
+A change was introduced to the code responsible for handling the editing 
+"BLD",10432,1,240,0)
+of the QTY field (#9) of a pending order to prevent any automatic
+"BLD",10432,1,241,0)
+recalculation and update of the quantity value from happening before the
+"BLD",10432,1,242,0)
+user is prompted for the QTY prompt. Also, when entering a new order the
+"BLD",10432,1,243,0)
+software will not try to auto update the QTY value if a value already is
+"BLD",10432,1,244,0)
+defined and the user is chooses to edit the QTY field (#9).
+"BLD",10432,1,245,0)
+   
+"BLD",10432,1,246,0)
+Technical Resolution: 
+"BLD",10432,1,247,0)
+---------------------
+"BLD",10432,1,248,0)
+Modified the routine PSODIR1 at the QTY line tag that handles the QTY 
+"BLD",10432,1,249,0)
+editing logic to not call QTY^PSOSIG (responsible for recalculating the
+"BLD",10432,1,250,0)
+quantity) when a quantity already exists for the order.
+"BLD",10432,4,0)
+^9.64PA^^
+"BLD",10432,6)
+1^
+"BLD",10432,6.3)
+20
+"BLD",10432,"ABPKG")
+n
+"BLD",10432,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10432,"KRN",.4,0)
+.4
+"BLD",10432,"KRN",.401,0)
+.401
+"BLD",10432,"KRN",.402,0)
+.402
+"BLD",10432,"KRN",.403,0)
+.403
+"BLD",10432,"KRN",.5,0)
+.5
+"BLD",10432,"KRN",.84,0)
+.84
+"BLD",10432,"KRN",3.6,0)
+3.6
+"BLD",10432,"KRN",3.8,0)
+3.8
+"BLD",10432,"KRN",9.2,0)
+9.2
+"BLD",10432,"KRN",9.8,0)
+9.8
+"BLD",10432,"KRN",9.8,"NM",0)
+^9.68A^8^8
+"BLD",10432,"KRN",9.8,"NM",1,0)
+PSOHLDI1^^0^B12994991
+"BLD",10432,"KRN",9.8,"NM",2,0)
+PSOSIG^^0^B90439889
+"BLD",10432,"KRN",9.8,"NM",3,0)
+PSODIR1^^0^B93842245
+"BLD",10432,"KRN",9.8,"NM",4,0)
+PSOORFIN^^0^B64024579
+"BLD",10432,"KRN",9.8,"NM",5,0)
+PSOORNE2^^0^B107853949
+"BLD",10432,"KRN",9.8,"NM",6,0)
+PSOSIGCX^^0^B34720855
+"BLD",10432,"KRN",9.8,"NM",7,0)
+PSOSIGTX^^0^B57184360
+"BLD",10432,"KRN",9.8,"NM",8,0)
+PSOORNEW^^0^B98552577
+"BLD",10432,"KRN",9.8,"NM","B","PSODIR1",3)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOHLDI1",1)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOORFIN",4)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOORNE2",5)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOORNEW",8)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOSIG",2)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOSIGCX",6)
+
+"BLD",10432,"KRN",9.8,"NM","B","PSOSIGTX",7)
+
+"BLD",10432,"KRN",19,0)
+19
+"BLD",10432,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10432,"KRN",19.1,0)
+19.1
+"BLD",10432,"KRN",101,0)
+101
+"BLD",10432,"KRN",409.61,0)
+409.61
+"BLD",10432,"KRN",771,0)
+771
+"BLD",10432,"KRN",779.2,0)
+779.2
+"BLD",10432,"KRN",870,0)
+870
+"BLD",10432,"KRN",8989.51,0)
+8989.51
+"BLD",10432,"KRN",8989.52,0)
+8989.52
+"BLD",10432,"KRN",8994,0)
+8994
+"BLD",10432,"KRN","B",.4,.4)
+
+"BLD",10432,"KRN","B",.401,.401)
+
+"BLD",10432,"KRN","B",.402,.402)
+
+"BLD",10432,"KRN","B",.403,.403)
+
+"BLD",10432,"KRN","B",.5,.5)
+
+"BLD",10432,"KRN","B",.84,.84)
+
+"BLD",10432,"KRN","B",3.6,3.6)
+
+"BLD",10432,"KRN","B",3.8,3.8)
+
+"BLD",10432,"KRN","B",9.2,9.2)
+
+"BLD",10432,"KRN","B",9.8,9.8)
+
+"BLD",10432,"KRN","B",19,19)
+
+"BLD",10432,"KRN","B",19.1,19.1)
+
+"BLD",10432,"KRN","B",101,101)
+
+"BLD",10432,"KRN","B",409.61,409.61)
+
+"BLD",10432,"KRN","B",771,771)
+
+"BLD",10432,"KRN","B",779.2,779.2)
+
+"BLD",10432,"KRN","B",870,870)
+
+"BLD",10432,"KRN","B",8989.51,8989.51)
+
+"BLD",10432,"KRN","B",8989.52,8989.52)
+
+"BLD",10432,"KRN","B",8994,8994)
+
+"BLD",10432,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10432,"QUES",0)
+^9.62^^
+"BLD",10432,"REQB",0)
+^9.611^5^3
+"BLD",10432,"REQB",1,0)
+PSO*7.0*455^2
+"BLD",10432,"REQB",4,0)
+PSO*7.0*454^2
+"BLD",10432,"REQB",5,0)
+PSO*7.0*486^2
+"BLD",10432,"REQB","B","PSO*7.0*454",4)
+
+"BLD",10432,"REQB","B","PSO*7.0*455",1)
+
+"BLD",10432,"REQB","B","PSO*7.0*486",5)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+446^3171005^520824666
+"PKG",170,22,1,"PAH",1,1,0)
+^^250^250^3171005
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues.  
+"PKG",170,22,1,"PAH",1,1,2,0)
+ 
+"PKG",170,22,1,"PAH",1,1,3,0)
+1. Messages from PSO EXTERNAL DISPENSE do not specify site location 
+"PKG",170,22,1,"PAH",1,1,4,0)
+ 
+"PKG",170,22,1,"PAH",1,1,5,0)
+2. Wrong authorization provider is listed on prescription in (PSPO 
+"PKG",170,22,1,"PAH",1,1,6,0)
+   #2696) CPRS and Outpatient Pharmacy
+"PKG",170,22,1,"PAH",1,1,7,0)
+ 
+"PKG",170,22,1,"PAH",1,1,8,0)
+3. Remarks entered do not display when prescription is placed on Hold 
+"PKG",170,22,1,"PAH",1,1,9,0)
+ 
+"PKG",170,22,1,"PAH",1,1,10,0)
+4. When editing day supply for controlled orders calculating (PSPO 
+"PKG",170,22,1,"PAH",1,1,11,0)
+   #2580) supply incorrect.
+"PKG",170,22,1,"PAH",1,1,12,0)
+ 
+"PKG",170,22,1,"PAH",1,1,13,0)
+5. When editing the field QTY (#9) of a Pending Order the system will auto
+"PKG",170,22,1,"PAH",1,1,14,0)
+   calculate if Schedule not marked PRN
+"PKG",170,22,1,"PAH",1,1,15,0)
+ 
+"PKG",170,22,1,"PAH",1,1,16,0)
+ 
+"PKG",170,22,1,"PAH",1,1,17,0)
+Associated NSR(s): 
+"PKG",170,22,1,"PAH",1,1,18,0)
+==================
+"PKG",170,22,1,"PAH",1,1,19,0)
+N/A 
+"PKG",170,22,1,"PAH",1,1,20,0)
+ 
+"PKG",170,22,1,"PAH",1,1,21,0)
+Patient Safety Issues (PSIs):
+"PKG",170,22,1,"PAH",1,1,22,0)
+=============================
+"PKG",170,22,1,"PAH",1,1,23,0)
+PSPO #2696 - When finishing pending orders from CPRS using the Complete 
+"PKG",170,22,1,"PAH",1,1,24,0)
+Orders from OERR[PSO LMOE FINISH] option, if the user selects not to 
+"PKG",170,22,1,"PAH",1,1,25,0)
+display the patient profile and start processing pending orders a problem 
+"PKG",170,22,1,"PAH",1,1,26,0)
+would occur for patients with orders issued by more than one single 
+"PKG",170,22,1,"PAH",1,1,27,0)
+provider.
+"PKG",170,22,1,"PAH",1,1,28,0)
+ 
+"PKG",170,22,1,"PAH",1,1,29,0)
+PSPO #2580 - For pending orders with a dispense drug where the quantity 
+"PKG",170,22,1,"PAH",1,1,30,0)
+can be automatically calculated based on the dosage and day's supply 
+"PKG",170,22,1,"PAH",1,1,31,0)
+there was a problem for certain situations where the automatic calculation
+"PKG",170,22,1,"PAH",1,1,32,0)
+was not desirable.
+"PKG",170,22,1,"PAH",1,1,33,0)
+ 
+"PKG",170,22,1,"PAH",1,1,34,0)
+Test Sites: 
+"PKG",170,22,1,"PAH",1,1,35,0)
+===========
+"PKG",170,22,1,"PAH",1,1,36,0)
+Orlando VAMC
+"PKG",170,22,1,"PAH",1,1,37,0)
+Erie VAMC
+"PKG",170,22,1,"PAH",1,1,38,0)
+ 
+"PKG",170,22,1,"PAH",1,1,39,0)
+Associated CA SDM Ticket(s):
+"PKG",170,22,1,"PAH",1,1,40,0)
+============================
+"PKG",170,22,1,"PAH",1,1,41,0)
+1.I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+"PKG",170,22,1,"PAH",1,1,42,0)
+                 DISPENSE Message
+"PKG",170,22,1,"PAH",1,1,43,0)
+ 
+"PKG",170,22,1,"PAH",1,1,44,0)
+2.I9897580FY16 - Wrong authorization provider is listed on prescription 
+"PKG",170,22,1,"PAH",1,1,45,0)
+                 in CPRS and Outpatient Pharmacy
+"PKG",170,22,1,"PAH",1,1,46,0)
+ 
+"PKG",170,22,1,"PAH",1,1,47,0)
+3.I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+"PKG",170,22,1,"PAH",1,1,48,0)
+                 is on hold
+"PKG",170,22,1,"PAH",1,1,49,0)
+ 
+"PKG",170,22,1,"PAH",1,1,50,0)
+4.I10167818FY16 - Editing day's supply incorrect
+"PKG",170,22,1,"PAH",1,1,51,0)
+ 
+"PKG",170,22,1,"PAH",1,1,52,0)
+5 I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+"PKG",170,22,1,"PAH",1,1,53,0)
+                  system will auto calculate if Schedule not marked PRN
+"PKG",170,22,1,"PAH",1,1,54,0)
+ 
+"PKG",170,22,1,"PAH",1,1,55,0)
+Defect Tracking System Ticket(s) Overview:
+"PKG",170,22,1,"PAH",1,1,56,0)
+==========================================
+"PKG",170,22,1,"PAH",1,1,57,0)
+1. I9896500FY16 - Request for site ID in subject line/PSO EXTERNAL 
+"PKG",170,22,1,"PAH",1,1,58,0)
+                  DISPENSE Message
+"PKG",170,22,1,"PAH",1,1,59,0)
+  
+"PKG",170,22,1,"PAH",1,1,60,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,61,0)
+--------
+"PKG",170,22,1,"PAH",1,1,62,0)
+When OPAI (Outpatient Pharmacy Automated Interface) tries to release a 
+"PKG",170,22,1,"PAH",1,1,63,0)
+prescription and it is unable to match the release information with a 
+"PKG",170,22,1,"PAH",1,1,64,0)
+prescription fill on file it will create a Mailman message alerting users
+"PKG",170,22,1,"PAH",1,1,65,0)
+about the issue. The problem for integrated sites with multiple sites 
+"PKG",170,22,1,"PAH",1,1,66,0)
+using OPAI is that the Mailman message does not identify which site the
+"PKG",170,22,1,"PAH",1,1,67,0)
+release information was for, prompting all the sites to lookup the Rx
+"PKG",170,22,1,"PAH",1,1,68,0)
+record to find out whether it belongs to them or not.
+"PKG",170,22,1,"PAH",1,1,69,0)
+ 
+"PKG",170,22,1,"PAH",1,1,70,0)
+Current message subject: "External Dispense - Rx Release Attempted" 
+"PKG",170,22,1,"PAH",1,1,71,0)
+ 
+"PKG",170,22,1,"PAH",1,1,72,0)
+Resolution: 
+"PKG",170,22,1,"PAH",1,1,73,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,74,0)
+The Mailman message subject was modified to include the Site Number at the
+"PKG",170,22,1,"PAH",1,1,75,0)
+beginning. This will be consistent with other mailman messages that 
+"PKG",170,22,1,"PAH",1,1,76,0)
+already identify the Rx site in the message subject.
+"PKG",170,22,1,"PAH",1,1,77,0)
+  
+"PKG",170,22,1,"PAH",1,1,78,0)
+New message subject: "500 External Dispense - Rx Release Attempted" 
+"PKG",170,22,1,"PAH",1,1,79,0)
+  
+"PKG",170,22,1,"PAH",1,1,80,0)
+Technical Resolution: 
+"PKG",170,22,1,"PAH",1,1,81,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,82,0)
+Modify routine PSOHLDI1 at tag MAIL+13: add the following code: 
+"PKG",170,22,1,"PAH",1,1,83,0)
+ 
+"PKG",170,22,1,"PAH",1,1,84,0)
+S XMSUB=$S($G(PSOSITE):$$GET1^DIQ(59,PSOSITE,.06)_" ",1:"")_"External 
+"PKG",170,22,1,"PAH",1,1,85,0)
+Dispense - Rx Release Attempted"
+"PKG",170,22,1,"PAH",1,1,86,0)
+ 
+"PKG",170,22,1,"PAH",1,1,87,0)
+  
+"PKG",170,22,1,"PAH",1,1,88,0)
+2. I9897580FY16 - The Wrong authorization provider is listed on 
+"PKG",170,22,1,"PAH",1,1,89,0)
+                  prescription in CPRS and Outpatient Pharmacy
+"PKG",170,22,1,"PAH",1,1,90,0)
+ 
+"PKG",170,22,1,"PAH",1,1,91,0)
+PSPO #2696
+"PKG",170,22,1,"PAH",1,1,92,0)
+ 
+"PKG",170,22,1,"PAH",1,1,93,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,94,0)
+--------
+"PKG",170,22,1,"PAH",1,1,95,0)
+When finishing pending orders from CPRS using the Complete Orders from 
+"PKG",170,22,1,"PAH",1,1,96,0)
+OERR [PSO LMOE FINISH] option, if the user selects not to display the
+"PKG",170,22,1,"PAH",1,1,97,0)
+patient profile and start processing pending orders a problem would occur
+"PKG",170,22,1,"PAH",1,1,98,0)
+for patients with orders issued by more than one single provider. If the
+"PKG",170,22,1,"PAH",1,1,99,0)
+user selected the Provider field (#13) and merely confirmed it,
+"PKG",170,22,1,"PAH",1,1,100,0)
+the prescriber would be carried over to the next pending orders for that
+"PKG",170,22,1,"PAH",1,1,101,0)
+same patient.
+"PKG",170,22,1,"PAH",1,1,102,0)
+  
+"PKG",170,22,1,"PAH",1,1,103,0)
+Resolution: 
+"PKG",170,22,1,"PAH",1,1,104,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,105,0)
+The array variable PSORX("PROVIDER NAME") that stores information about 
+"PKG",170,22,1,"PAH",1,1,106,0)
+the provider was not being properly initialized between the processing
+"PKG",170,22,1,"PAH",1,1,107,0)
+each of the patient's pending orders. The code was modified to kill the
+"PKG",170,22,1,"PAH",1,1,108,0)
+array variable PSORX before processing each of the patient's pending
+"PKG",170,22,1,"PAH",1,1,109,0)
+order.  
+"PKG",170,22,1,"PAH",1,1,110,0)
+ 
+"PKG",170,22,1,"PAH",1,1,111,0)
+Technical Resolution: 
+"PKG",170,22,1,"PAH",1,1,112,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,113,0)
+Modified the routine PSOORFIN at tags SUCC+4 and PSOORFIN+19 to kill 
+"PKG",170,22,1,"PAH",1,1,114,0)
+array variable PSORX("PROVIDER NAME")
+"PKG",170,22,1,"PAH",1,1,115,0)
+ 
+"PKG",170,22,1,"PAH",1,1,116,0)
+ 
+"PKG",170,22,1,"PAH",1,1,117,0)
+3. I9898461FY16 - Comment placed in "REMARKS" prompt is not visible if Rx 
+"PKG",170,22,1,"PAH",1,1,118,0)
+                  is on HOLD 
+"PKG",170,22,1,"PAH",1,1,119,0)
+ 
+"PKG",170,22,1,"PAH",1,1,120,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,121,0)
+--------
+"PKG",170,22,1,"PAH",1,1,122,0)
+Comments entered into the REMARKS field (#15) were not being displayed
+"PKG",170,22,1,"PAH",1,1,123,0)
+when a prescription was put on hold. Once the prescription was removed
+"PKG",170,22,1,"PAH",1,1,124,0)
+from hold, the remarks would become visible again.
+"PKG",170,22,1,"PAH",1,1,125,0)
+  
+"PKG",170,22,1,"PAH",1,1,126,0)
+Resolution: 
+"PKG",170,22,1,"PAH",1,1,127,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,128,0)
+Modified routine PSOORNE2 so the comments entered into the REMARKS field 
+"PKG",170,22,1,"PAH",1,1,129,0)
+(#15) display when the prescription is put on hold. 
+"PKG",170,22,1,"PAH",1,1,130,0)
+ 
+"PKG",170,22,1,"PAH",1,1,131,0)
+Technical Resolution: 
+"PKG",170,22,1,"PAH",1,1,132,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,133,0)
+Modified the routine ACT+2^PSOORNE2 to set just $P(RX3,"^") instead of 
+"PKG",170,22,1,"PAH",1,1,134,0)
+the entire RX3 variable, as shown below:
+"PKG",170,22,1,"PAH",1,1,135,0)
+ 
+"PKG",170,22,1,"PAH",1,1,136,0)
+I 'RX3 S RX3=$P(RX2,"^",2),$P(^PSRX(RXN,3),"^")=$P(RX2,"^",2) 
+"PKG",170,22,1,"PAH",1,1,137,0)
+ 
+"PKG",170,22,1,"PAH",1,1,138,0)
+ 
+"PKG",170,22,1,"PAH",1,1,139,0)
+4. I10167818FY16 - Editing day's supply incorrect
+"PKG",170,22,1,"PAH",1,1,140,0)
+ 
+"PKG",170,22,1,"PAH",1,1,141,0)
+PSPO #2580 
+"PKG",170,22,1,"PAH",1,1,142,0)
+  
+"PKG",170,22,1,"PAH",1,1,143,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,144,0)
+--------
+"PKG",170,22,1,"PAH",1,1,145,0)
+For pending orders with a dispense drug where the quantity can be
+"PKG",170,22,1,"PAH",1,1,146,0)
+automatically calculated based on the dosage and days supply there was a
+"PKG",170,22,1,"PAH",1,1,147,0)
+problem for certain situations where the automatic calculation was not
+"PKG",170,22,1,"PAH",1,1,148,0)
+desirable. For example, the prescriber would order 10 tablets of a 
+"PKG",170,22,1,"PAH",1,1,149,0)
+controlled substance medication with a 30 days supply PRN (As Needed) to
+"PKG",170,22,1,"PAH",1,1,150,0)
+be taken no more than twice a day. When the Outpatient Pharmacy user
+"PKG",170,22,1,"PAH",1,1,151,0)
+edited the DAYS SUPPLY field (#8) for such order and changed it from 30 to
+"PKG",170,22,1,"PAH",1,1,152,0)
+28, as an example, the software would automatically update the quantity
+"PKG",170,22,1,"PAH",1,1,153,0)
+from 10 to 56, which is clearly inconsistent with the prescriber's initial
+"PKG",170,22,1,"PAH",1,1,154,0)
+intention.  
+"PKG",170,22,1,"PAH",1,1,155,0)
+  
+"PKG",170,22,1,"PAH",1,1,156,0)
+Resolution: 
+"PKG",170,22,1,"PAH",1,1,157,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,158,0)
+A new logic has been introduced related to the editing the DAYS SUPPLY 
+"PKG",170,22,1,"PAH",1,1,159,0)
+field (#8) of a pending order:
+"PKG",170,22,1,"PAH",1,1,160,0)
+ 
+"PKG",170,22,1,"PAH",1,1,161,0)
+ 1. For single dose order the software will not automatically recalculate 
+"PKG",170,22,1,"PAH",1,1,162,0)
+    the Quantity field if the current Quantity value on the order is not
+"PKG",170,22,1,"PAH",1,1,163,0)
+    the result of a calculation based on the current Day Supply value
+"PKG",170,22,1,"PAH",1,1,164,0)
+    (before the edit), which suggests the Quantity was previously manually
+"PKG",170,22,1,"PAH",1,1,165,0)
+    entered (not calculated).
+"PKG",170,22,1,"PAH",1,1,166,0)
+ 2. The software will not take into account whether the Schedule is marked
+"PKG",170,22,1,"PAH",1,1,167,0)
+    PRN (As Needed) or not when deciding to automatically recalculate the
+"PKG",170,22,1,"PAH",1,1,168,0)
+    QTY field (#9).
+"PKG",170,22,1,"PAH",1,1,169,0)
+ 3. For a Controlled Substance pending order the system will not 
+"PKG",170,22,1,"PAH",1,1,170,0)
+    automatically recalculate the Quantity field (#9) if it will cause the
+"PKG",170,22,1,"PAH",1,1,171,0)
+    current Quantity value to be increased.
+"PKG",170,22,1,"PAH",1,1,172,0)
+ 4. For a Complex Controlled Substance pending order the system will not 
+"PKG",170,22,1,"PAH",1,1,173,0)
+    automatically recalculate the Quantity field (#9).
+"PKG",170,22,1,"PAH",1,1,174,0)
+ 5. For a pending order that qualify for a Quantity recalculation that did
+"PKG",170,22,1,"PAH",1,1,175,0)
+    not happen because of one of the rules above (1, 3 and 4), the system
+"PKG",170,22,1,"PAH",1,1,176,0)
+    will display the following message to the user editing the DAYS SUPPLY
+"PKG",170,22,1,"PAH",1,1,177,0)
+    field (#8): 
+"PKG",170,22,1,"PAH",1,1,178,0)
+    
+"PKG",170,22,1,"PAH",1,1,179,0)
+          The QTY (99) has not been changed.  
+"PKG",170,22,1,"PAH",1,1,180,0)
+          Please, review and update it if necessary.  
+"PKG",170,22,1,"PAH",1,1,181,0)
+ 
+"PKG",170,22,1,"PAH",1,1,182,0)
+Additionally, a modification was introduced to prevent any automatic
+"PKG",170,22,1,"PAH",1,1,183,0)
+calculation/update of the QTY field (#9) for a new, pending or existing
+"PKG",170,22,1,"PAH",1,1,184,0)
+order when the user selects to specifically edit the QTY field (#9)
+"PKG",170,22,1,"PAH",1,1,185,0)
+itself.
+"PKG",170,22,1,"PAH",1,1,186,0)
+ 
+"PKG",170,22,1,"PAH",1,1,187,0)
+Technical Resolution: 
+"PKG",170,22,1,"PAH",1,1,188,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,189,0)
+Modified routines PSODIR1, PSOSIG, PSOSIGCX and PSOSIGTX to implement the 
+"PKG",170,22,1,"PAH",1,1,190,0)
+new rules above.
+"PKG",170,22,1,"PAH",1,1,191,0)
+  
+"PKG",170,22,1,"PAH",1,1,192,0)
+5. I14933412FY17 - When editing the QTY field (#9) of a Pending Order the 
+"PKG",170,22,1,"PAH",1,1,193,0)
+                   system will auto calculate if Schedule not marked PRN
+"PKG",170,22,1,"PAH",1,1,194,0)
+   
+"PKG",170,22,1,"PAH",1,1,195,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,196,0)
+--------
+"PKG",170,22,1,"PAH",1,1,197,0)
+When using the options Patient Prescription Processing [PSO LM BACKDOOR
+"PKG",170,22,1,"PAH",1,1,198,0)
+ORDERS] or Complete Orders from OERR [PSO LMOE FINISH] if the user tries 
+"PKG",170,22,1,"PAH",1,1,199,0)
+to edit the QTY field (#9) of the pending order and if the quantity can be
+"PKG",170,22,1,"PAH",1,1,200,0)
+automatically calculated and the current value does not match the 
+"PKG",170,22,1,"PAH",1,1,201,0)
+calculated value the software will automatically replace the current value
+"PKG",170,22,1,"PAH",1,1,202,0)
+with the calculated value before prompting the user for the QTY field (#9)
+"PKG",170,22,1,"PAH",1,1,203,0)
+for the order.
+"PKG",170,22,1,"PAH",1,1,204,0)
+ 
+"PKG",170,22,1,"PAH",1,1,205,0)
+As seen on the example below:
+"PKG",170,22,1,"PAH",1,1,206,0)
+  
+"PKG",170,22,1,"PAH",1,1,207,0)
+    Pending OP Orders (ROUTINE)   Jun 06, 2017@15:13:57      Page: 2 of 3 
+"PKG",170,22,1,"PAH",1,1,208,0)
+     TESPATNM,ROB                                          <A> 
+"PKG",170,22,1,"PAH",1,1,209,0)
+       PID: 666-00-0258                          Ht(cm): _______ (______) 
+"PKG",170,22,1,"PAH",1,1,210,0)
+       DOB: JUL 21,1963 (53)                     Wt(kg): _______ (______) 
+"PKG",170,22,1,"PAH",1,1,211,0)
+    +---------------------------------------------------------------------
+"PKG",170,22,1,"PAH",1,1,212,0)
+       (4)   Pat Instruct:                                         
+"PKG",170,22,1,"PAH",1,1,213,0)
+        Provider Comments:                                         
+"PKG",170,22,1,"PAH",1,1,214,0)
+             Instructions: TAKE ONE TABLET PO QDAY                 
+"PKG",170,22,1,"PAH",1,1,215,0)
+                      SIG: TAKE ONE TABLET BY BY MOUTH EVERY DAY  
+"PKG",170,22,1,"PAH",1,1,216,0)
+       (5) Patient Status: SC                                   
+"PKG",170,22,1,"PAH",1,1,217,0)
+       (6)     Issue Date: JUN 6,2017        (7) Fill Date: JUN 6,2017 
+"PKG",170,22,1,"PAH",1,1,218,0)
+       (8)    Days Supply: 30                (9)   QTY (TAB): 10       
+"PKG",170,22,1,"PAH",1,1,219,0)
+         Provider ordered: days supply 30, quantity 10 & refills 0   
+"PKG",170,22,1,"PAH",1,1,220,0)
+      (10)   # of Refills: 0                (11)   Routing: MAIL     
+"PKG",170,22,1,"PAH",1,1,221,0)
+      (12)         Clinic: NHCU                                      
+"PKG",170,22,1,"PAH",1,1,222,0)
+      (13)       Provider: ROCHA,MARCELO                             
+"PKG",170,22,1,"PAH",1,1,223,0)
+      (14)         Copies: 1                                         
+"PKG",170,22,1,"PAH",1,1,224,0)
+      (15)        Remarks:                                           
+"PKG",170,22,1,"PAH",1,1,225,0)
+         Entry By: ROCHA,MARCELO            Entry Date: 06/06/17 12:07:24 
+"PKG",170,22,1,"PAH",1,1,226,0)
+    -------Digitally Signed Order---------------------------------------- 
+"PKG",170,22,1,"PAH",1,1,227,0)
+    BY  Bypass                DC  Discontinue           FL  Flag/Unflag 
+"PKG",170,22,1,"PAH",1,1,228,0)
+    ED  Edit                  FN  Finish 
+"PKG",170,22,1,"PAH",1,1,229,0)
+    Select Item(s): Quit// 9     
+"PKG",170,22,1,"PAH",1,1,230,0)
+  
+"PKG",170,22,1,"PAH",1,1,231,0)
+     Quantity has been changed from 10 to 30 
+"PKG",170,22,1,"PAH",1,1,232,0)
+  
+"PKG",170,22,1,"PAH",1,1,233,0)
+     Press Return to Continue: 
+"PKG",170,22,1,"PAH",1,1,234,0)
+  
+"PKG",170,22,1,"PAH",1,1,235,0)
+     QTY ( TAB ) : 30// 
+"PKG",170,22,1,"PAH",1,1,236,0)
+  
+"PKG",170,22,1,"PAH",1,1,237,0)
+Resolution: 
+"PKG",170,22,1,"PAH",1,1,238,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,239,0)
+A change was introduced to the code responsible for handling the editing 
+"PKG",170,22,1,"PAH",1,1,240,0)
+of the QTY field (#9) of a pending order to prevent any automatic
+"PKG",170,22,1,"PAH",1,1,241,0)
+recalculation and update of the quantity value from happening before the
+"PKG",170,22,1,"PAH",1,1,242,0)
+user is prompted for the QTY prompt. Also, when entering a new order the
+"PKG",170,22,1,"PAH",1,1,243,0)
+software will not try to auto update the QTY value if a value already is
+"PKG",170,22,1,"PAH",1,1,244,0)
+defined and the user is chooses to edit the QTY field (#9).
+"PKG",170,22,1,"PAH",1,1,245,0)
+   
+"PKG",170,22,1,"PAH",1,1,246,0)
+Technical Resolution: 
+"PKG",170,22,1,"PAH",1,1,247,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,248,0)
+Modified the routine PSODIR1 at the QTY line tag that handles the QTY 
+"PKG",170,22,1,"PAH",1,1,249,0)
+editing logic to not call QTY^PSOSIG (responsible for recalculating the
+"PKG",170,22,1,"PAH",1,1,250,0)
+quantity) when a quantity already exists for the order.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+8
+"RTN","PSODIR1")
+0^3^B93842245^B95631218
+"RTN","PSODIR1",1,0)
+PSODIR1 ;IHS/DSD - ASKS DATA FOR RX ORDER ENTRY CONT. ;5/18/10 2:28pm
+"RTN","PSODIR1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**23,46,78,102,121,131,146,166,184,222,268,206,266,340,391,444,446**;DEC 1997;Build 20
+"RTN","PSODIR1",3,0)
+ ;External reference ^PS(55 supported by DBIA 2228
+"RTN","PSODIR1",4,0)
+ ;External reference ^PSDRUG( supported by DBIA 221
+"RTN","PSODIR1",5,0)
+ ;External reference $$MXDAYSUP^PSSUTIL1 supported by DBIA 6229
+"RTN","PSODIR1",6,0)
+ ;
+"RTN","PSODIR1",7,0)
+PTSTAT(PSODIR) ;
+"RTN","PSODIR1",8,0)
+PTSTATEN K DIC,DR,DIE S PSODIR("FIELD")=0
+"RTN","PSODIR1",9,0)
+ I $G(PSOTPBFG),$G(PSOFROM)="NEW" K PSORX("PATIENT STATUS"),PSODIR("PATIENT STATUS") N PSOFNDRX,PSOFNDFL,PSOFNDPS D
+"RTN","PSODIR1",10,0)
+ .S PSOFNDFL=0 F PSOFNDPS=0:0 S PSOFNDPS=$O(^PS(53,PSOFNDPS)) Q:'PSOFNDPS!(PSOFNDFL)  D
+"RTN","PSODIR1",11,0)
+ ..S PSOFNDRX=$P($G(^PS(53,PSOFNDPS,0)),"^") S PSOFNDRX=$$UP^XLFSTR(PSOFNDRX) I PSOFNDRX="NON-VA" S PSOFNDFL=1 S (PSORX("PATIENT STATUS"),DIC("B"))=$P($G(^PS(53,PSOFNDPS,0)),"^")
+"RTN","PSODIR1",12,0)
+ I $G(PSOTPBFG),$G(PSOFROM)="NEW",$G(PSORX("PATIENT STATUS"))="" W !,"Could not find a 'NON-VA' Patient Status in the RX PATIENT STATUS file (#53)!" D PSTPB D  S PSODIR("DFLG")=1 G PTSTATX
+"RTN","PSODIR1",13,0)
+ .K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSODIR1",14,0)
+ I $G(PSOTPBFG),$G(PSOFROM)="NEW" G TPBB
+"RTN","PSODIR1",15,0)
+ N PSOX
+"RTN","PSODIR1",16,0)
+ S PSOX=$G(^PS(55,PSODFN,"PS")) I PSOX]"" S PSORX("PATIENT STATUS")=$P($G(^PS(53,PSOX,0)),"^"),DIC("B")=PSORX("PATIENT STATUS")
+"RTN","PSODIR1",17,0)
+ S:$G(PSODIR("PATIENT STATUS"))]"" DIC("B")=PSODIR("PATIENT STATUS")
+"RTN","PSODIR1",18,0)
+TPBB ;
+"RTN","PSODIR1",19,0)
+ D ELIG^VADPT W !,"Eligibility: "_$P(VAEL(1),"^",2)_$S(+VAEL(3):"     SC%: "_$P(VAEL(3),"^",2),1:"")
+"RTN","PSODIR1",20,0)
+ S N=0 F  S N=$O(VAEL(1,N)) Q:'N  W !,?10,$P(VAEL(1,N),"^",2)
+"RTN","PSODIR1",21,0)
+ S DIC("A")="RX PATIENT STATUS: "
+"RTN","PSODIR1",22,0)
+ S DIC(0)="QEAMZ",DIC=53 D ^DIC K DIC
+"RTN","PSODIR1",23,0)
+ I $G(PSOTPBFG),$G(PSOFROM)="NEW" N PSOPSDIR,PSOFNDZZ,PSOPSUPA S (PSOPSDIR,PSOPSUPA)=0 D  I PSOPSDIR S:PSOPSUPA PSODIR("DFLG")=1 G:PSOPSUPA PTSTATX W ! D PSTPB G PTSTATEN
+"RTN","PSODIR1",24,0)
+ .I +Y'>0!($D(DTOUT))!($D(DUOUT)) S (PSOPSDIR,PSOPSUPA)=1 Q
+"RTN","PSODIR1",25,0)
+ .S (PSODIR("PATIENT STATUS"),PSORX("PATIENT STATUS"))=+Y,PSODIR("PTST NODE")=Y(0)
+"RTN","PSODIR1",26,0)
+ .S PSOFNDZZ=$P($G(^PS(53,+Y,0)),"^") S PSOFNDZZ=$$UP^XLFSTR(PSOFNDZZ) I PSOFNDZZ'="NON-VA" S PSOPSDIR=1 K PSODIR("PATIENT STATUS"),PSORX("PATIENT STATUS"),PSODIR("PTST NODE")
+"RTN","PSODIR1",27,0)
+ I $G(PSOTPBFG),$G(PSOFROM)="NEW" G TPBSC
+"RTN","PSODIR1",28,0)
+ I X[U,$L(X)>1 D:'$G(PSOEDIT) JUMP G PTSTATX
+"RTN","PSODIR1",29,0)
+ I $D(DUOUT)!$D(DTOUT) S PSODIR("DFLG")=1 G PTSTATX
+"RTN","PSODIR1",30,0)
+ I Y=-1 W $C(7)," Required" G PTSTATEN
+"RTN","PSODIR1",31,0)
+ N PSOFNDX,PSOFNDXY,PSOFNDXX,PSOFNDYY
+"RTN","PSODIR1",32,0)
+ S PSOFNDXY=$G(Y),PSOFNDYY=$G(Y(0))
+"RTN","PSODIR1",33,0)
+ I '$G(PSOTPBFG),$G(PSOFROM)="NEW" S PSOFNDX=$P($G(^PS(53,+Y,0)),"^") S PSOFNDXX=$$UP^XLFSTR(PSOFNDX) I PSOFNDXX="NON-VA" K PSOFNDX,PSOFNDXY,PSOFNDYY,PSOFNDXX,Y W !!,"Cannot select 'NON-VA' Rx Patient Status!",! G PTSTATEN
+"RTN","PSODIR1",34,0)
+ S Y=$G(PSOFNDXY),Y(0)=$G(PSOFNDYY)
+"RTN","PSODIR1",35,0)
+ K PSOFNDXY,PSOFNDYY,PSOFNDX,PSOFNDXX
+"RTN","PSODIR1",36,0)
+ S (PSODIR("PATIENT STATUS"),PSORX("PATIENT STATUS"))=+Y
+"RTN","PSODIR1",37,0)
+ S PSODIR("PTST NODE")=Y(0)
+"RTN","PSODIR1",38,0)
+TPBSC ;
+"RTN","PSODIR1",39,0)
+ I $G(PSOFDR),$P($G(OR0),"^",17)="C" G PTSTATX
+"RTN","PSODIR1",40,0)
+ L +^PS(55,PSODFN):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) I '$T G PTSTATX
+"RTN","PSODIR1",41,0)
+ S DIE="55",DR="3////"_+Y,DA=PSODFN D ^DIE K DIE,DA,D0
+"RTN","PSODIR1",42,0)
+ L -^PS(55,PSODFN)
+"RTN","PSODIR1",43,0)
+PTSTATX K DTOUT,DUOUT,X,Y,DA
+"RTN","PSODIR1",44,0)
+ Q
+"RTN","PSODIR1",45,0)
+SIG(PSODIR) ;
+"RTN","PSODIR1",46,0)
+ I $G(PSOFDR),$G(PSODIR("SIG"))']"" D SIGOK G:$G(SIGOK)!($G(PSODIR("DFLG"))) SIGX
+"RTN","PSODIR1",47,0)
+ K DIR,DIC
+"RTN","PSODIR1",48,0)
+ S DIR(0)="52,10"
+"RTN","PSODIR1",49,0)
+ S:$G(PSODRUG("SIG"))]"" DIR("B")=PSODRUG("SIG")
+"RTN","PSODIR1",50,0)
+ S:$G(PSODIR("SIG"))]"" DIR("B")=PSODIR("SIG")
+"RTN","PSODIR1",51,0)
+ D DIR G:PSODIR("DFLG")!PSODIR("FIELD") SIGX
+"RTN","PSODIR1",52,0)
+ S PSODIR("SIG")=Y,SIGOK=0 K SIG
+"RTN","PSODIR1",53,0)
+SIGX K X,Y
+"RTN","PSODIR1",54,0)
+ Q
+"RTN","PSODIR1",55,0)
+QTY(PSODIR) ;
+"RTN","PSODIR1",56,0)
+QTYA K DIR,DIC
+"RTN","PSODIR1",57,0)
+ I $G(CLOZPAT)=1 S DIR("A",1)="Patient Eligible for 14 day supply or 7 day supply with 1 refill"
+"RTN","PSODIR1",58,0)
+ I $G(CLOZPAT)=2 S DIR("A",1)="Patient Eligible 28 day supply or 14 day supply with 1 refill or 7 day supply with 3 refill"
+"RTN","PSODIR1",59,0)
+ S DIR(0)="52,7" S:$G(PSODRUG("IEN")) DIR("A")="QTY ( "_$G(PSODRUG("UNIT"))_" ) "_$S($P($G(^PSDRUG(+PSODRUG("IEN"),5)),"^")]"":$P(^PSDRUG(+PSODRUG("IEN"),5),"^"),1:"")
+"RTN","PSODIR1",60,0)
+ K QTYHLD I $G(PSODIR("QTY"))]"" S QTYHLD=PSODIR("QTY") K PSODIR("QTY")
+"RTN","PSODIR1",61,0)
+ D:'$G(PSOQTY) QTY^PSOSIG(.PSODIR)
+"RTN","PSODIR1",62,0)
+ I '$G(SPEED),$G(QTYHLD),'$G(PSODIR("QTY")) S PSODIR("QTY")=QTYHLD
+"RTN","PSODIR1",63,0)
+ K QTYHLD K:'$G(PSODIR("QTY")) PSODIR("QTY")
+"RTN","PSODIR1",64,0)
+ I $G(SPEED),$G(PSODIR("QTY"))']"" S PSODIR("QTY")=$P(^PSRX(PSORENW("OIRXN"),0),"^",7)
+"RTN","PSODIR1",65,0)
+ S:$G(PSODIR("QTY"))]"" DIR("B")=PSODIR("QTY")
+"RTN","PSODIR1",66,0)
+ D DIR G:PSODIR("DFLG")!PSODIR("FIELD") QTYX
+"RTN","PSODIR1",67,0)
+ I $G(Y),$G(PSODRUG("MAXDOSE"))]"",$G(PSODIR("DAYS SUPPLY")),(Y/+PSODIR("DAYS SUPPLY")>PSODRUG("MAXDOSE")) D  G:$G(PSODIR("DFLG")) QTYX  G QTYA
+"RTN","PSODIR1",68,0)
+ .W !,$C(7)," Greater than Maximum dose of "_PSODRUG("MAXDOSE")_" per day" D DAYSEN
+"RTN","PSODIR1",69,0)
+ I $G(PSOFDR),$P($G(OR0),"^",24),$G(PSODIR("QTY")),+Y>$G(PSODIR("QTY")) D  G QTYX
+"RTN","PSODIR1",70,0)
+ .W !!,"Digitally Signed Order - QTY cannot be increased",!
+"RTN","PSODIR1",71,0)
+ .N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSODIR1",72,0)
+ S PSODIR("QTY")=Y
+"RTN","PSODIR1",73,0)
+QTYX K X,Y
+"RTN","PSODIR1",74,0)
+ Q
+"RTN","PSODIR1",75,0)
+COPIES(PSODIR) ;
+"RTN","PSODIR1",76,0)
+ K DIR,DIC
+"RTN","PSODIR1",77,0)
+ S DIR(0)="52,10.6"
+"RTN","PSODIR1",78,0)
+ S DIR("B")=$S($G(PSODIR("COPIES"))]"":PSODIR("COPIES"),1:1)
+"RTN","PSODIR1",79,0)
+ D DIR G:PSODIR("DFLG")!PSODIR("FIELD") COPIESX
+"RTN","PSODIR1",80,0)
+ S PSODIR("COPIES")=Y
+"RTN","PSODIR1",81,0)
+COPIESX K X,Y
+"RTN","PSODIR1",82,0)
+ Q
+"RTN","PSODIR1",83,0)
+DAYS(PSODIR) ;
+"RTN","PSODIR1",84,0)
+DAYSEN K DIR,DIC N PSORFLS
+"RTN","PSODIR1",85,0)
+ ;PSO*7*266
+"RTN","PSODIR1",86,0)
+ N S2DS,MXDAYSUP,DFDAYSUP,CSDRUG,NEWTOTDS S S2DS=0
+"RTN","PSODIR1",87,0)
+ S MXDAYSUP=90,CSDRUG=0
+"RTN","PSODIR1",88,0)
+ I $D(PSODRUG("IEN")) D
+"RTN","PSODIR1",89,0)
+ .S MXDAYSUP=$$MXDAYSUP^PSSUTIL1(PSODRUG("IEN"))
+"RTN","PSODIR1",90,0)
+ .S S2DS=$$CSDS^PSOSIGDS(PSODRUG("IEN")) I S2DS,$P($G(PSODIR("PTST NODE")),"^",3)>29 S S2DS=30
+"RTN","PSODIR1",91,0)
+ .S PSORFLS=$S($G(PSODIR("# OF REFILLS")):PSODIR("# OF REFILLS"),1:$P($G(PSODIR("RX0")),"^",9))
+"RTN","PSODIR1",92,0)
+ .I '$D(PSODRUG("DEA")) S PSODRUG("DEA")=$$GET1^DIQ(50,PSODRUG("IEN"),3,"")
+"RTN","PSODIR1",93,0)
+ .I (PSODRUG("DEA")["2")!(PSODRUG("DEA")["3")!(PSODRUG("DEA")["4")!(PSODRUG("DEA")["5") S CSDRUG=1
+"RTN","PSODIR1",94,0)
+ S DIR(0)="N^1:"_$S($G(CLOZPAT)=2:28,$G(CLOZPAT)=1:14,$G(CLOZPAT)=0:7,1:MXDAYSUP)
+"RTN","PSODIR1",95,0)
+ S DFDAYSUP=$S($D(CLOZPAT)&('$G(PSODIR("DAYS SUPPLY"))):7,$G(PSODIR("DAYS SUPPLY"))]"":PSODIR("DAYS SUPPLY"),S2DS>1:S2DS,$P($G(PSODIR("PTST NODE")),"^",3):$P(PSODIR("PTST NODE"),"^",3),1:30)
+"RTN","PSODIR1",96,0)
+ I DFDAYSUP>MXDAYSUP D  S DFDAYSUP=MXDAYSUP
+"RTN","PSODIR1",97,0)
+ .W:$G(PSODIR("DAYS SUPPLY")) !!,$C(7),"Invalid DAYS SUPPLY value (",DFDAYSUP,"), resetting it to ",MXDAYSUP," (maximum allowed).",!
+"RTN","PSODIR1",98,0)
+ S DIR("B")=DFDAYSUP
+"RTN","PSODIR1",99,0)
+ S DIR("A")="DAYS SUPPLY",DIR("?")="Enter a whole number between 1 and "_$S($G(CLOZPAT)=2:28,$G(CLOZPAT)=1:14,$G(CLOZPAT)=0:7,1:MXDAYSUP)
+"RTN","PSODIR1",100,0)
+ D DIR G:PSODIR("DFLG")!PSODIR("FIELD") DAYSX
+"RTN","PSODIR1",101,0)
+ I $G(Y),$G(PSODRUG("MAXDOSE"))]"",$G(PSODIR("QTY"))]"",(+PSODIR("QTY")/Y>PSODRUG("MAXDOSE")) D  G DAYSEN
+"RTN","PSODIR1",102,0)
+ .W !,$C(7)," Greater than Maximum dose of "_PSODRUG("MAXDOSE")_" per day"
+"RTN","PSODIR1",103,0)
+ I $G(PSOFDR),$P($G(OR0),"^",24),$G(PSODIR("DAYS SUPPLY")),+Y>$G(PSODIR("DAYS SUPPLY")) D  G DAYSX
+"RTN","PSODIR1",104,0)
+ .W !!,"Digitally Signed Order - Days Supply cannot be increased",!
+"RTN","PSODIR1",105,0)
+ .N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSODIR1",106,0)
+ I $G(PSONEW("FLD"))=8,PSODIR("DAYS SUPPLY")=Y Q
+"RTN","PSODIR1",107,0)
+ S:$G(PSODIR("DAYS SUPPLY")) PSODIR("OLD DAYS SUPPLY")=PSODIR("DAYS SUPPLY")
+"RTN","PSODIR1",108,0)
+ S PSODIR("DAYS SUPPLY")=Y
+"RTN","PSODIR1",109,0)
+ ; Checking the # Of Refills field value after the Days Supply field was edited
+"RTN","PSODIR1",110,0)
+ I $D(PSODRUG("IEN")),$G(Y) D
+"RTN","PSODIR1",111,0)
+ .N PTST
+"RTN","PSODIR1",112,0)
+ .S PTST=+$G(PSODIR("PATIENT STATUS")) S:'PTST PTST=$P($G(PSODIR("RX0")),"^",3)
+"RTN","PSODIR1",113,0)
+ .I 'PTST,$G(PSODFN) S PTST=+$G(^PS(55,PSODFN,"PS"))
+"RTN","PSODIR1",114,0)
+ .I PSORFLS>$$MAXNUMRF^PSOUTIL(PSODRUG("IEN"),Y,PTST,.CLOZPAT) D
+"RTN","PSODIR1",115,0)
+ .. W !,$C(7),"Invalid number of REFILLS for amount of DAYS SUPPLY.",!,"REFILL EDIT FORCED." D REFILL(.PSODIR)
+"RTN","PSODIR1",116,0)
+ .. S PSODIR("FLD",9)=PSODIR("# OF REFILLS")
+"RTN","PSODIR1",117,0)
+ S:$G(CLOZPAT)=0 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=0
+"RTN","PSODIR1",118,0)
+ D:$G(CLOZPAT)=2
+"RTN","PSODIR1",119,0)
+ .S:PSODIR("DAYS SUPPLY")=28 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=0
+"RTN","PSODIR1",120,0)
+ .S:PSODIR("DAYS SUPPLY")=14 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=1
+"RTN","PSODIR1",121,0)
+ .S:PSODIR("DAYS SUPPLY")=7 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=3
+"RTN","PSODIR1",122,0)
+ D:$G(CLOZPAT)=1
+"RTN","PSODIR1",123,0)
+ .S:PSODIR("DAYS SUPPLY")=14 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=0
+"RTN","PSODIR1",124,0)
+ .S:PSODIR("DAYS SUPPLY")=7 (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=1
+"RTN","PSODIR1",125,0)
+ K QTYHLD S:$G(PSODIR("QTY")) QTYHLD=PSODIR("QTY") D QTY^PSOSIG(.PSODIR)
+"RTN","PSODIR1",126,0)
+ I $G(QTYHLD),'$G(PSODIR("QTY")) S PSODIR("QTY")=QTYHLD
+"RTN","PSODIR1",127,0)
+ K QTYHLD K:'$G(PSODIR("QTY")) PSODIR("QTY")
+"RTN","PSODIR1",128,0)
+DAYSX K X,Y
+"RTN","PSODIR1",129,0)
+ Q
+"RTN","PSODIR1",130,0)
+REFILL(PSODIR) ;
+"RTN","PSODIR1",131,0)
+ N PSODAYS,PSOX
+"RTN","PSODIR1",132,0)
+ S PSODAYS=+$G(PSODIR("DAYS SUPPLY"))
+"RTN","PSODIR1",133,0)
+ ;Recalculating RFTT if it doesn't exist
+"RTN","PSODIR1",134,0)
+ I '$G(PSONEW) D
+"RTN","PSODIR1",135,0)
+ .N I I '$G(RFTT),$G(PSORXED("IRXN")) F I=0:0 S I=$O(^PSRX(PSORXED("IRXN"),1,I)) Q:'I  S RFTT=$G(RFTT)+1
+"RTN","PSODIR1",136,0)
+ ;
+"RTN","PSODIR1",137,0)
+ I $G(PSODIR("PTST NODE"))="" D
+"RTN","PSODIR1",138,0)
+ .N X,Y
+"RTN","PSODIR1",139,0)
+ .S X=$G(PSODIR("PATIENT STATUS")) S:'X X=$P(RX0,"^",3)
+"RTN","PSODIR1",140,0)
+ .S DIC=53,DIC(0)="QXZ" D ^DIC K DIC
+"RTN","PSODIR1",141,0)
+ .S:+Y PSODIR("PTST NODE")=Y(0)
+"RTN","PSODIR1",142,0)
+ .S:'$G(PSODIR("PATIENT STATUS")) PSODIR("PATIENT STATUS")=+Y
+"RTN","PSODIR1",143,0)
+ S $P(PSODIR("PTST NODE"),"^",4)=+$P($G(PSODIR("PTST NODE")),"^",4)
+"RTN","PSODIR1",144,0)
+ I $G(OR0) G REFOR
+"RTN","PSODIR1",145,0)
+ K DIR,DIC,PSOX
+"RTN","PSODIR1",146,0)
+ ; Controlled Substance
+"RTN","PSODIR1",147,0)
+ S PSODIR("CS")=0
+"RTN","PSODIR1",148,0)
+ I (PSODRUG("DEA")["2")!(PSODRUG("DEA")["3")!(PSODRUG("DEA")["4")!(PSODRUG("DEA")["5") D
+"RTN","PSODIR1",149,0)
+ . S $P(PSODIR("CS"),"^")=1 S:(PSODRUG("DEA")["2") $P(PSODIR("CS"),"^",2)=1
+"RTN","PSODIR1",150,0)
+ ;
+"RTN","PSODIR1",151,0)
+ ; Retrieving the Maximum Number of Refills allowed
+"RTN","PSODIR1",152,0)
+ S PSOX=$$MAXNUMRF^PSOUTIL(+$G(PSODRUG("IEN")),PSODAYS,+$G(PSODIR("PATIENT STATUS")),.CLOZPAT)
+"RTN","PSODIR1",153,0)
+ ;
+"RTN","PSODIR1",154,0)
+ I '$D(CLOZPAT) I PSODRUG("DEA")["A"&(PSODRUG("DEA")'["B")!(PSODRUG("DEA")["F")!(PSODRUG("DEA")[1)!(PSODRUG("DEA")[2) D  G REFILLX
+"RTN","PSODIR1",155,0)
+ .I PSODRUG("DEA")["A"&(PSODRUG("DEA")'["B")!(PSODRUG("DEA")[1)!(PSODRUG("DEA")[2)!'$O(^PSRX(+$G(PSODIR("IRXN")),1,0))!('$G(PSOLOKED)) D  Q
+"RTN","PSODIR1",156,0)
+ ..S VALMSG="No refills allowed on "_$S(PSODRUG("DEA")["F":"this drug.",1:"Narcotics.") W !,VALMSG,!
+"RTN","PSODIR1",157,0)
+ ..S:$D(PSODIR("FIELD")) PSODIR("FIELD")=0 S PSODIR("# OF REFILLS")=0
+"RTN","PSODIR1",158,0)
+ ..Q
+"RTN","PSODIR1",159,0)
+ .;reset refills to the # given
+"RTN","PSODIR1",160,0)
+ .D RFRSET^PSODIR2
+"RTN","PSODIR1",161,0)
+ .Q
+"RTN","PSODIR1",162,0)
+ I $P($G(PSODIR("CS")),"^",2)=1 W !,"No refills allowed on Schedule 2 drugs...",! S:$D(PSODIR("FIELD")) PSODIR("FIELD")=0 S PSODIR("# OF REFILLS")=0 G REFILLX
+"RTN","PSODIR1",163,0)
+ ;PSO*7*266 make sure PSOX is greater than RFTT
+"RTN","PSODIR1",164,0)
+ S DIR(0)="N^"_$S($G(RFTT):RFTT,1:0)_":"_$S(+$G(RFTT)>PSOX:RFTT,1:PSOX),DIR("A")="# OF REFILLS"
+"RTN","PSODIR1",165,0)
+ ;PSO*7*340 Correct Default Value.
+"RTN","PSODIR1",166,0)
+ S DIR("B")=$S($G(COPY):PSODIR("# OF REFILLS"),$G(PSODIR("N# REF"))]"":PSODIR("N# REF"),$G(PSODIR("# OF REFILLS"))]"":PSODIR("# OF REFILLS"),$G(RFTT)>PSOX:RFTT,1:PSOX)
+"RTN","PSODIR1",167,0)
+ S DIR("?",1)="Enter a whole number. The maximum number of refills is based on"
+"RTN","PSODIR1",168,0)
+ S DIR("?")="the DAYS SUPPLY and the PATIENT STATUS fields."
+"RTN","PSODIR1",169,0)
+ D DIR G:PSODIR("DFLG")!PSODIR("FIELD") REFILLX
+"RTN","PSODIR1",170,0)
+ S (PSODIR("N# REF"),PSODIR("# OF REFILLS"))=Y
+"RTN","PSODIR1",171,0)
+REFILLX S:$G(PSODIR("# OF REFILLS"))']"" PSODIR("# OF REFILLS")=$S($G(PSODIR("N# REF"))]"":PSODIR("N# REF"),1:PSOX)
+"RTN","PSODIR1",172,0)
+ K X,Y,PSOX,DEA,PSOCS,RFTT ;PSO*7*340 Kill RFTT
+"RTN","PSODIR1",173,0)
+ Q
+"RTN","PSODIR1",174,0)
+ ;OERR CALL
+"RTN","PSODIR1",175,0)
+REFOR ;
+"RTN","PSODIR1",176,0)
+ D REFOR^PSODIR3
+"RTN","PSODIR1",177,0)
+ G REFILLX
+"RTN","PSODIR1",178,0)
+ Q
+"RTN","PSODIR1",179,0)
+DIR ;
+"RTN","PSODIR1",180,0)
+ S (PSODIR("FIELD"),PSODIR("DFLG"))=0
+"RTN","PSODIR1",181,0)
+ G:$G(DIR(0))']"" DIRX
+"RTN","PSODIR1",182,0)
+ D ^DIR K DIR,DIE,DIC,DA
+"RTN","PSODIR1",183,0)
+ I $D(DUOUT)!($D(DTOUT))!($D(DIROUT)),$L($G(X))'>1!(Y="") S PSODIR("DFLG")=1 G DIRX
+"RTN","PSODIR1",184,0)
+ I $D(DIRUT)!($D(DIROUT)),$G(SPEED) S PSODIR("DFLG")=1 G DIRX
+"RTN","PSODIR1",185,0)
+ I X[U,$L(X)>1 D JUMP
+"RTN","PSODIR1",186,0)
+DIRX K DIRUT,DTOUT,DUOUT,DIROUT
+"RTN","PSODIR1",187,0)
+ Q
+"RTN","PSODIR1",188,0)
+JUMP ;
+"RTN","PSODIR1",189,0)
+ I $G(PSOEDIT)!($G(OR0)) S PSODIR("DFLG")=1 Q
+"RTN","PSODIR1",190,0)
+ S X=$P(X,"^",2),DIC="^DD(52,",DIC(0)="QM" D ^DIC K DIC
+"RTN","PSODIR1",191,0)
+ I Y=-1 S PSODIR("FIELD")=PSODIR("FLD") G JUMPX
+"RTN","PSODIR1",192,0)
+ I $G(PSONEW1)=0 D JUMP^PSONEW1 G JUMPX
+"RTN","PSODIR1",193,0)
+ I $G(PSOREF1)=0 D JUMP^PSOREF1 G JUMPX
+"RTN","PSODIR1",194,0)
+ I $G(PSONEW3)=0 D JUMP^PSONEW3 G JUMPX
+"RTN","PSODIR1",195,0)
+ I $G(PSORENW3)=0 D JUMP^PSORENW3 G JUMPX
+"RTN","PSODIR1",196,0)
+JUMPX S X="^"_X
+"RTN","PSODIR1",197,0)
+ Q
+"RTN","PSODIR1",198,0)
+SIGOK ;review and decide on oerr sig
+"RTN","PSODIR1",199,0)
+ I '$O(SIG(0)) S SIGOK=0 Q
+"RTN","PSODIR1",200,0)
+ K SIGOK W !,"SIG: "
+"RTN","PSODIR1",201,0)
+ F SIG=0:0 S SIG=$O(SIG(SIG)) W SIG(SIG)_" ",!?5 Q:'$O(SIG(SIG))
+"RTN","PSODIR1",202,0)
+ K DIR,DIRUT,DUOUT,DTOUT S DIR("B")="YES",DIR(0)="Y",DIR("A")="Is this SIG correct" D ^DIR K DIR I $D(DIRUT) S PSODIR("DFLG")=1 K DIRUT,DUOUT,DTOUT Q
+"RTN","PSODIR1",203,0)
+ S SIGOK=Y I Y K PSODIR("SIG")
+"RTN","PSODIR1",204,0)
+ Q
+"RTN","PSODIR1",205,0)
+PSTPB ;
+"RTN","PSODIR1",206,0)
+ W !,"New orders entered through this option must have a Patient Status of 'NON-VA'!",!
+"RTN","PSODIR1",207,0)
+ Q
+"RTN","PSOHLDI1")
+0^1^B12994991^B12862238
+"RTN","PSOHLDI1",1,0)
+PSOHLDI1 ;BIR/PWC,SAB - Automated Dispense Completion HL7 v.2.4 cont. ;5/29/09 3:28pm
+"RTN","PSOHLDI1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**259,268,330,446**;DEC 1997;Build 20
+"RTN","PSOHLDI1",3,0)
+ ;Reference to ^PSD(58.8 supported by DBIA 1036
+"RTN","PSOHLDI1",4,0)
+ ;Reference to ^XTMP("PSA" supported by DBIA 1036
+"RTN","PSOHLDI1",5,0)
+ ;This routine is called by PSOHLDIS
+"RTN","PSOHLDI1",6,0)
+ ;
+"RTN","PSOHLDI1",7,0)
+ ;*259 create routine to hold DRGACCT, psohldis exceeded 10k, also
+"RTN","PSOHLDI1",8,0)
+ ;     add MAIL tag for Email Alert to mail group.
+"RTN","PSOHLDI1",9,0)
+ ;
+"RTN","PSOHLDI1",10,0)
+ Q
+"RTN","PSOHLDI1",11,0)
+ ;
+"RTN","PSOHLDI1",12,0)
+BINGREL ;displays to bingo board
+"RTN","PSOHLDI1",13,0)
+ N NAM,NAME,RXO,SSN S ADA="",BRXP=RXID
+"RTN","PSOHLDI1",14,0)
+ F XX=0:0 S XX=$O(^PS(52.11,"B",BNAM,XX)) Q:'XX  D
+"RTN","PSOHLDI1",15,0)
+ .F BRX=0:0 S BRX=$O(^PS(52.11,XX,2,"B",BRX)) Q:'BRX  I BRX=BRXP S (DA,ODA)=XX
+"RTN","PSOHLDI1",16,0)
+ Q:'$D(DA)
+"RTN","PSOHLDI1",17,0)
+ I $P($G(^PS(52.11,DA,0)),"^",7)]"" Q
+"RTN","PSOHLDI1",18,0)
+ I $P($P($G(^PS(52.11,DA,0)),"^",5),".")'=DT S DIK="^PS(52.11," D ^DIK K DIK Q
+"RTN","PSOHLDI1",19,0)
+ N TM,TM1 D NOW^%DTC S TM=$E(%,1,12),TM1=$P(TM,".",2)
+"RTN","PSOHLDI1",20,0)
+ S NM=$P(^DPT($P(^PS(52.11,DA,0),"^"),0),"^"),DR="6////"_$E(TM1_"0000",1,4)_";8////"_NM_"",DIE="^PS(52.11,"
+"RTN","PSOHLDI1",21,0)
+ L +^PS(52.11,DA):$S(+$G(^DD("DILOCKTM"))>0:+^DD("DILOCKTM"),1:3) E  Q
+"RTN","PSOHLDI1",22,0)
+ D ^DIE L -^PS(52.11,DA) I $G(X)="" S DIK="^PS(52.11," D ^DIK K DIK Q
+"RTN","PSOHLDI1",23,0)
+ S RX0=^PS(52.11,DA,0),JOES=$P(RX0,"^",4),TICK=+$P($G(RX0),"^",2),GRP=$P($G(^PS(59.3,$P($G(^PS(52.11,DA,0)),"^",3),0)),"^",2)
+"RTN","PSOHLDI1",24,0)
+ I GRP="T",'$G(TICK) S DIK="^PS(52.11," D ^DIK K DIK
+"RTN","PSOHLDI1",25,0)
+ Q:'$G(DA)
+"RTN","PSOHLDI1",26,0)
+ S PSZ=0 I '$D(^PS(59.2,DT,0)) K DD,DIC,DO,DA S X=DT,DIC="^PS(59.2,",DIC(0)="",DINUM=X D FILE^DICN S PSZ=1 Q:Y'>0 
+"RTN","PSOHLDI1",27,0)
+ I PSZ=1 S DA(1)=+Y,DIC=DIC_DA(1)_",1,",(DINUM,X)=JOES,DIC(0)="",DIC("P")=$P(^DD(59.2,1,0),"^",2) K DD,DO D FILE^DICN K DIC,DA Q:Y'>0
+"RTN","PSOHLDI1",28,0)
+ I PSZ=0 K DD,DIC,DO,DA S DA(1)=DT,(DINUM,X)=JOES,DIC="^PS(59.2,"_DT_",1,",DIC(0)="LZ" D FILE^DICN K DIC,DA,DO
+"RTN","PSOHLDI1",29,0)
+ S DA=ODA D STATS1^PSOBRPRT,WTIME^PSOBING1
+"RTN","PSOHLDI1",30,0)
+ Q
+"RTN","PSOHLDI1",31,0)
+ ;
+"RTN","PSOHLDI1",32,0)
+DRGACCT(RXP,PSOSITE) ;update Drug Accountability Package PSO*209,*330
+"RTN","PSOHLDI1",33,0)
+ S RXP=+$G(RXP) Q:'RXP
+"RTN","PSOHLDI1",34,0)
+ S PSOSITE=+$G(PSOSITE) Q:'PSOSITE    ; PSO*7*330
+"RTN","PSOHLDI1",35,0)
+ N PSA,DIC,DA,DR,X,Y,DIQ,PSODA,QDRUG,QTY,JOB192
+"RTN","PSOHLDI1",36,0)
+ S (JOB192,PSODA)=0
+"RTN","PSOHLDI1",37,0)
+ ;check for Drug Acct background job
+"RTN","PSOHLDI1",38,0)
+ S X="PSA IV ALL LOCATIONS",DIC(0)="MZ",DIC=19.2 D ^DIC S JOB192=Y
+"RTN","PSOHLDI1",39,0)
+ I JOB192>0,$P($G(Y(0)),U,2)>DT D
+"RTN","PSOHLDI1",40,0)
+ . S PSODA=1
+"RTN","PSOHLDI1",41,0)
+ . S:'$P($G(^XTMP("PSA",0)),U,2) $P(^(0),U,2)=DT
+"RTN","PSOHLDI1",42,0)
+ I JOB192'>0 D             ;check old way of scheduling
+"RTN","PSOHLDI1",43,0)
+ . S X="PSA IV ALL LOCATIONS",DIC(0)="MZ",DIC=19 D ^DIC
+"RTN","PSOHLDI1",44,0)
+ . K DIQ,PSA S DA=+Y,DIC=19,DIQ="PSA",DR=200,DIQ(0)="IN" D EN^DIQ1
+"RTN","PSOHLDI1",45,0)
+ . I $G(PSA(19,DA,200,"I"))>DT D
+"RTN","PSOHLDI1",46,0)
+ . . S PSODA=1
+"RTN","PSOHLDI1",47,0)
+ . . S:'$P($G(^XTMP("PSA",0)),U,2) $P(^(0),U,2)=DT
+"RTN","PSOHLDI1",48,0)
+ ;drug stocked in Drug Acct Location?
+"RTN","PSOHLDI1",49,0)
+ S PSODA(1)=$S($D(^PSD(58.8,+$O(^PSD(58.8,"AOP",PSOSITE,0)),1,+$P(^PSRX(RXP,0),U,6))):1,1:0)
+"RTN","PSOHLDI1",50,0)
+ ;if appropriate update ^XTMP("PSA", for Drug Acct
+"RTN","PSOHLDI1",51,0)
+ S QTY=$P($G(^PSRX(RXP,0)),"^",7)
+"RTN","PSOHLDI1",52,0)
+ S QDRUG=+$P($G(^PSRX(RXP,0)),"^",6)
+"RTN","PSOHLDI1",53,0)
+ Q:'QDRUG
+"RTN","PSOHLDI1",54,0)
+ I $G(PSODA),$G(PSODA(1)),'$D(^PSRX("AR",$$NOW^XLFDT,RXP,0)) S ^XTMP("PSA",PSOSITE,QDRUG,DT)=$G(^XTMP("PSA",PSOSITE,QDRUG,DT))+QTY
+"RTN","PSOHLDI1",55,0)
+ Q
+"RTN","PSOHLDI1",56,0)
+ ;
+"RTN","PSOHLDI1",57,0)
+MAIL ;Send mail message
+"RTN","PSOHLDI1",58,0)
+ S:'$G(DUZ) DUZ=.5
+"RTN","PSOHLDI1",59,0)
+ N USR,PSOTTEXT,XMY,XMDUZ,XMSUB,XMTEXT
+"RTN","PSOHLDI1",60,0)
+ ;if no Active members in group, then send to PSXCMOPMGR key holders
+"RTN","PSOHLDI1",61,0)
+ I $$GOTLOCAL^XMXAPIG("PSO EXTERNAL DISPENSE ALERTS") D
+"RTN","PSOHLDI1",62,0)
+ . S XMY("G.PSO EXTERNAL DISPENSE ALERTS")=""
+"RTN","PSOHLDI1",63,0)
+ E  D
+"RTN","PSOHLDI1",64,0)
+ . S USR=0 F  S USR=$O(^XUSEC("PSXCMOPMGR",USR)) Q:'USR  S XMY(USR)=""
+"RTN","PSOHLDI1",65,0)
+ I $G(FLL)'="" D
+"RTN","PSOHLDI1",66,0)
+ . I FLL="P" S FLLN="Partial "_FLLN
+"RTN","PSOHLDI1",67,0)
+ S XMDUZ="PSO EXTERNAL DISPENSE"
+"RTN","PSOHLDI1",68,0)
+ S XMSUB=$S($G(PSOSITE):$$GET1^DIQ(59,PSOSITE,.06)_" ",1:"")_"External Dispense - Rx Release Attempted"
+"RTN","PSOHLDI1",69,0)
+ S PSOTTEXT(1)="Patient: "_NAME_"   SSN: "_PSSN
+"RTN","PSOHLDI1",70,0)
+ S PSOTTEXT(2)="   Rx #: "_PSORX_"   Fill: "_FLLN
+"RTN","PSOHLDI1",71,0)
+ S PSOTTEXT(3)="   Drug: "_$P(GIVECOD,"~",2)
+"RTN","PSOHLDI1",72,0)
+ S PSOTTEXT(4)=""
+"RTN","PSOHLDI1",73,0)
+ S PSOTTEXT(5)=ATXT
+"RTN","PSOHLDI1",74,0)
+ S PSOTTEXT(6)=""
+"RTN","PSOHLDI1",75,0)
+ S:ACTN]"" PSOTTEXT(7)=ACTN
+"RTN","PSOHLDI1",76,0)
+ S XMTEXT="PSOTTEXT(" D ^XMD
+"RTN","PSOHLDI1",77,0)
+ Q
+"RTN","PSOORFIN")
+0^4^B64024579^B63913344
+"RTN","PSOORFIN",1,0)
+PSOORFIN ;BIR/SAB-finish cprs orders ;8/27/08 4:57pm
+"RTN","PSOORFIN",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**7,15,27,32,44,46,84,106,111,117,131,146,139,195,225,315,266,338,391,372,416,446**;DEC 1997;Build 20
+"RTN","PSOORFIN",3,0)
+ ;PSSLOCK-2789,PSDRUG-221,50.7-2223,55-2228,50.606-2174
+"RTN","PSOORFIN",4,0)
+ ;PSO*7*266 Change order of calling ^PSOBING1 and ^PSORXL
+"RTN","PSOORFIN",5,0)
+ ;
+"RTN","PSOORFIN",6,0)
+ D:'$D(PSOPAR) ^PSOLSET I '$D(PSOPAR) D MSG^PSODPT G EX
+"RTN","PSOORFIN",7,0)
+ D INST^PSOORFI2 I $G(PSOIQUIT) K PSOIQUIT G EX
+"RTN","PSOORFIN",8,0)
+ I $P($G(PSOPAR),"^",2),'$D(^XUSEC("PSORPH",DUZ)) S PSORX("VERIFY")=1
+"RTN","PSOORFIN",9,0)
+ S (PSOFIN,POERR)=1
+"RTN","PSOORFIN",10,0)
+ K PSOBCK,MEDA,MEDP,SRT,DIR D KQ
+"RTN","PSOORFIN",11,0)
+ S DIR("?")="^D ST^PSOORFI1",DIR("A")="Select By",DIR("B")="PATIENT"
+"RTN","PSOORFIN",12,0)
+ S DIR(0)="SMB^PA:PATIENT;RT:ROUTE;PR:PRIORITY;CL:CLINIC;FL:FLAGGED;CS:CONTROLLED SUBSTANCES;E:EXIT"
+"RTN","PSOORFIN",13,0)
+ D ^DIR I $D(DIRUT)!(Y="E") G EX
+"RTN","PSOORFIN",14,0)
+ K:Y="FL" ^TMP($J,"PSOFLPO") ;file not needed when selection="FL"
+"RTN","PSOORFIN",15,0)
+ G:Y="PA" PAT G:Y="PR" PRI^PSOORFI5 G:Y="CL" ^PSOORFI3 G:Y="FL" FLG^PSOORFI5 G:Y="CS" CS^PSOORFI5
+"RTN","PSOORFIN",16,0)
+ K DIR S PSOSORT="ROUTE"
+"RTN","PSOORFIN",17,0)
+ S DIR("?")="^D RT^PSOORFI1",DIR("A")="Route",DIR(0)="SBM^W:WINDOW;M:MAIL;C:CLINIC;E:EXIT",DIR("B")="WINDOW"
+"RTN","PSOORFIN",18,0)
+ D ^DIR G:$D(DIRUT)!(Y="E") EX S PSOSORT=PSOSORT_"^"_Y,PSRT=Y
+"RTN","PSOORFIN",19,0)
+ S LG=0,PATA=0 F  S LG=$O(^PS(52.41,"AD",LG)) Q:'LG!($G(POERR("QFLG")))  F PSOD=0:0 S PSOD=$O(^PS(52.41,"AD",LG,PSOPINST,PSOD)) Q:'PSOD!($G(POERR("QFLG")))  D
+"RTN","PSOORFIN",20,0)
+ .Q:$P($G(^PS(52.41,PSOD,0)),"^",23)
+"RTN","PSOORFIN",21,0)
+ .Q:$G(PAT($P(^PS(52.41,PSOD,0),"^",2)))=$P(^PS(52.41,PSOD,0),"^",2)  S PAT=$P(^PS(52.41,PSOD,0),"^",2)
+"RTN","PSOORFIN",22,0)
+ .;PSO*7*266
+"RTN","PSOORFIN",23,0)
+ .I PAT'=PATA D LBL
+"RTN","PSOORFIN",24,0)
+ .I '$O(^PS(52.41,"AC",PAT,PSRT,0)) S PSOLK=1,PAT(PAT)=PAT Q
+"RTN","PSOORFIN",25,0)
+ .D RTE^PSOORFI2 I $G(PSZFIN) S PSOLK=1,PAT(PAT)=PAT Q
+"RTN","PSOORFIN",26,0)
+ .D LK I $G(POERR("QFLG")) K POERR("QFLG") S PSOLK=1,PAT(PAT)=PAT Q
+"RTN","PSOORFIN",27,0)
+ .I $$CHK^PSODPT(PAT_"^"_$P($G(^DPT(PAT,0)),"^"),1,1)<0 S PSOLK=1,PAT(PAT)=PAT S X=PAT D ULP Q
+"RTN","PSOORFIN",28,0)
+ .S (PSODFN,Y)=PAT_"^"_$P($G(^DPT(PAT,0)),"^"),PATA=PAT
+"RTN","PSOORFIN",29,0)
+ .D:'$G(MEDA) PROFILE^PSOORFI2 S Y=PSODFN I $G(MEDP) D SPL D OERR^PSORX1 S PSOFIN=1 D QU S X=PSOPTLOK D KLLP,ULP,KLL Q
+"RTN","PSOORFIN",30,0)
+ .D SDFN D POST^PSOORFI1 I $G(PSOQFLG)!($G(PSOQUIT)) S:$G(PSOQUIT) POERR("QFLG")=1 S:$G(PSOQFLG) PAT(PAT)=PAT S X=PAT D ULP K PSOQFLG Q
+"RTN","PSOORFIN",31,0)
+ .D PP S ORD=0 D @PSRT S PAT(PAT)=PAT
+"RTN","PSOORFIN",32,0)
+ .S X=PAT D ULP
+"RTN","PSOORFIN",33,0)
+ ;PSO*7*266
+"RTN","PSOORFIN",34,0)
+ K POERR("QFLG"),PSOQFLG,PSOPTPST,MAIL,WIN,CLI D LBL
+"RTN","PSOORFIN",35,0)
+ I $G(PSOQUIT) K PSOQUIT D EX G PSOORFIN
+"RTN","PSOORFIN",36,0)
+EX D EX^PSOORFI1
+"RTN","PSOORFIN",37,0)
+ Q
+"RTN","PSOORFIN",38,0)
+W D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"W",ORD)) Q:'ORD!($G(POERR("QFLG")))  I $P(^PS(52.41,ORD,0),"^",3)'="DC",$P(^(0),"^",3)'="DE" D LK1,ORD S MAIL=1
+"RTN","PSOORFIN",39,0)
+ Q:$G(POERR("QFLG"))  I $G(MAIL) S ORD=0 D
+"RTN","PSOORFIN",40,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"M",ORD)) Q:'ORD!($G(POERR("QFLG")))  D:$P(^PS(52.41,ORD,0),"^",3)'="DC"&($P(^(0),"^",3)'="DE") LK1,ORD
+"RTN","PSOORFIN",41,0)
+ .Q:$G(POERR("QFLG"))
+"RTN","PSOORFIN",42,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"C",ORD)) Q:'ORD!($G(POERR("QFLG")))  D:$P(^PS(52.41,ORD,0),"^",3)'="DC"&($P(^(0),"^",3)'="DE") LK1,ORD
+"RTN","PSOORFIN",43,0)
+ Q
+"RTN","PSOORFIN",44,0)
+M D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"M",ORD)) Q:'ORD!($G(POERR("QFLG")))  I $P(^PS(52.41,ORD,0),"^",3)'="DC",$P(^(0),"^",3)'="DE" D LK1,ORD S WIN=1
+"RTN","PSOORFIN",45,0)
+ Q:$G(POERR("QFLG"))  I $G(WIN) S ORD=0 D
+"RTN","PSOORFIN",46,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"W",ORD)) Q:'ORD!($G(POERR("QFLG")))  I $P(^PS(52.41,ORD,0),"^",3)'="DC",$P(^(0),"^",3)'="DE" D LK1,ORD
+"RTN","PSOORFIN",47,0)
+ .Q:$G(POERR("QFLG"))
+"RTN","PSOORFIN",48,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"C",ORD)) Q:'ORD!($G(POERR("QFLG")))  D:$P(^PS(52.41,ORD,0),"^",3)'="DC"&($P(^(0),"^",3)'="DE") LK1,ORD
+"RTN","PSOORFIN",49,0)
+ Q
+"RTN","PSOORFIN",50,0)
+C D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"C",ORD)) Q:'ORD!($G(POERR("QFLG")))  I $P(^PS(52.41,ORD,0),"^",3)'="DC",$P(^(0),"^",3)'="DE" D LK1,ORD S CLI=1
+"RTN","PSOORFIN",51,0)
+ Q:$G(POERR("QFLG"))  I $G(CLI) S ORD=0 D
+"RTN","PSOORFIN",52,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"M",ORD)) Q:'ORD!($G(POERR("QFLG")))  I $P(^PS(52.41,ORD,0),"^",3)'="DC",$P(^(0),"^",3)'="DE" D LK1,ORD
+"RTN","PSOORFIN",53,0)
+ .Q:$G(POERR("QFLG"))
+"RTN","PSOORFIN",54,0)
+ .D KQ F  S ORD=$O(^PS(52.41,"AC",PAT,"W",ORD)) Q:'ORD!($G(POERR("QFLG")))  D:$P(^PS(52.41,ORD,0),"^",3)'="DC"&($P(^(0),"^",3)'="DE") LK1,ORD
+"RTN","PSOORFIN",55,0)
+ Q
+"RTN","PSOORFIN",56,0)
+PAT W ! K MEDP,MEDA,POERR("DFLG"),DIR D KQ S PSOSORT="PATIENT"
+"RTN","PSOORFIN",57,0)
+ S DIR("?")="^D PT^PSOORFI1",DIR("A")="All Patients or Single Patient",DIR(0)="SBM^A:ALL;S:SINGLE;E:EXIT",DIR("B")="SINGLE"
+"RTN","PSOORFIN",58,0)
+ D ^DIR K DIR G:$D(DIRUT)!(Y="E") EX I Y="S" S PSOSORT=PSOSORT_"^"_"SINGLE" G SPAT
+"RTN","PSOORFIN",59,0)
+ S PSOSORT=PSOSORT_"^ALL"
+"RTN","PSOORFIN",60,0)
+ S LG=0,PATA=0 F  S LG=$O(^PS(52.41,"AD",LG)) Q:'LG!($G(POERR("QFLG")))  F PSOD=0:0 S PSOD=$O(^PS(52.41,"AD",LG,PSOPINST,PSOD)) Q:'PSOD!($G(POERR("QFLG")))  D
+"RTN","PSOORFIN",61,0)
+ .Q:'$D(^PS(52.41,PSOD,0))!($P($G(^PS(52.41,PSOD,0)),"^",23))
+"RTN","PSOORFIN",62,0)
+ .Q:$G(PAT($P(^PS(52.41,PSOD,0),"^",2)))=$P(^PS(52.41,PSOD,0),"^",2)  S PAT=$P(^PS(52.41,PSOD,0),"^",2)
+"RTN","PSOORFIN",63,0)
+ .;PSO*7*266
+"RTN","PSOORFIN",64,0)
+ .I PAT'=PATA D LBL
+"RTN","PSOORFIN",65,0)
+ .D LK I $G(POERR("QFLG")) K POERR("QFLG") S PSOLK=1,PAT(PAT)=PAT Q
+"RTN","PSOORFIN",66,0)
+ .I $$CHK^PSODPT(PAT_"^"_$P($G(^DPT(PAT,0)),"^"),1,1)<0 S PSOLK=1,PAT(PAT)=PAT S X=PAT D ULP K PSOQFLG,PSOQQ Q
+"RTN","PSOORFIN",67,0)
+ .S (PSODFN,Y)=PAT_"^"_$P($G(^DPT(PAT,0)),"^"),PATA=PAT
+"RTN","PSOORFIN",68,0)
+ .D:'$G(MEDA) PROFILE^PSOORFI2 S Y=PSODFN I $G(MEDP) D SPL D OERR^PSORX1 S PSOFIN=1 D QU S X=PSOPTLOK D KLLP,ULP,KLL Q
+"RTN","PSOORFIN",69,0)
+ .D SDFN D POST^PSOORFI1 I $G(PSOQFLG)!($G(PSOQUIT)) S:$G(PSOQUIT) POERR("QFLG")=1 S:$G(PSOQFLG) PAT(PAT)=PAT S X=PAT D ULP K PSOQFLG Q
+"RTN","PSOORFIN",70,0)
+ .S PAT(PAT)=PAT
+"RTN","PSOORFIN",71,0)
+ .F ORD=0:0 S ORD=$O(^PS(52.41,"AOR",PAT,PSOPINST,ORD)) Q:'ORD!($G(POERR("QFLG")))!($G(PSOQQ))  D
+"RTN","PSOORFIN",72,0)
+ ..I '$P($G(^PS(52.41,ORD,0)),"^",23) D PP,LK1,ORD
+"RTN","PSOORFIN",73,0)
+ .S X=PAT D ULP K PSOQQ
+"RTN","PSOORFIN",74,0)
+ I $O(PSORX("PSOL",0))!($D(RXRS)) D LBL
+"RTN","PSOORFIN",75,0)
+ I $G(PSOQUIT) K PSOQUIT D EX G PSOORFIN
+"RTN","PSOORFIN",76,0)
+ G EX
+"RTN","PSOORFIN",77,0)
+ ;PSO*7*266 kill BINGCRT,BINGRTE when selecting pat.
+"RTN","PSOORFIN",78,0)
+SPAT K MEDA,MEDP,PSOQFLG,PSORX("FN"),BINGCRT,BINGRTE D KQ,KV^PSOVER1
+"RTN","PSOORFIN",79,0)
+ S DIR(0)="FO^2:30",DIR("A")="Select Patient",DIR("?")="^D HELP^PSOORFI2" D ^DIR I $E(X)="?" G SPAT
+"RTN","PSOORFIN",80,0)
+ G:$D(DIRUT) EX D KV^PSOVER1
+"RTN","PSOORFIN",81,0)
+ S DIC(0)="EQM",DIC=2,DIC("S")="I $D(^PS(52.41,""AOR"",+Y,PSOPINST))"
+"RTN","PSOORFIN",82,0)
+ D ^DIC K DIC G:"^"[X EX G:Y=-1 SPAT S (PSODFN,PAT)=+Y,PSOFINY=Y
+"RTN","PSOORFIN",83,0)
+ D LK I $G(POERR("QFLG")) G SPAT
+"RTN","PSOORFIN",84,0)
+ N SNGLPAT S SNGLPAT=1
+"RTN","PSOORFIN",85,0)
+ ;PSO*7*266
+"RTN","PSOORFIN",86,0)
+ D:'$G(MEDA) PROFILE^PSOORFI2 S Y=PSOFINY I $G(MEDP) D SPL D OERR^PSORX1 D LBL S PSOFIN=1,X=PSOPTLOK D KLLP,ULP,KLL G SPAT
+"RTN","PSOORFIN",87,0)
+ D PP,SDFN,POST^PSOORFI1 D:$G(PSOQFLG)  G:$G(PSOQFLG) EX I $G(PSOQUIT) S:$G(PSOQUIT) POERR("QFLG")=1 S X=PAT D ULP G SPAT
+"RTN","PSOORFIN",88,0)
+ .S X=PAT D ULP
+"RTN","PSOORFIN",89,0)
+ S ORD=0 F  S ORD=$O(^PS(52.41,"P",PAT,ORD)) Q:'ORD!($G(POERR("QFLG")))  D:'$P($G(^PS(52.41,ORD,0)),"^",23)
+"RTN","PSOORFIN",90,0)
+ .D:$P(^PS(52.41,ORD,0),"^",3)'="DC"&($P(^(0),"^",3)'="DE")&($P(^(0),"^",3)'="HD") LK1,ORD
+"RTN","PSOORFIN",91,0)
+ ;PSO*7*266
+"RTN","PSOORFIN",92,0)
+ D LBL
+"RTN","PSOORFIN",93,0)
+ S PSOFIN=1,X=PAT D ULP G SPAT
+"RTN","PSOORFIN",94,0)
+ORD I $G(PSOBCK) N LST,ORN
+"RTN","PSOORFIN",95,0)
+ E  S PSOLOUD=1 D:$P($G(^PS(55,PAT,0)),"^",6)'=2 EN^PSOHLUP(PAT) K PSOLOUD
+"RTN","PSOORFIN",96,0)
+ K DRET,SIG,^TMP("PSORXDC",$J) Q:'$D(^PS(52.41,ORD,0))
+"RTN","PSOORFIN",97,0)
+ I $G(PSOFIN),$P($G(^PS(52.41,ORD,"INI")),"^")'=$G(PSOPINST) Q
+"RTN","PSOORFIN",98,0)
+ D L1^PSOORFI3 I '$G(PSOMSG) K PSOMSG Q
+"RTN","PSOORFIN",99,0)
+ I '$D(^PS(52.41,ORD,0)) K PSOMSG Q
+"RTN","PSOORFIN",100,0)
+ K DRET,SIG,PSOPRC,PHI,PRC,PSOSIGFL,OBX,PSOMSG,PSOFOERR S OR0=^PS(52.41,ORD,0)
+"RTN","PSOORFIN",101,0)
+ I $P(OR0,"^",24),($P(OR0,"^",3)="RNW"!($P(OR0,"^",3)="NW")) N PKI,PKI1,PKIR,PKIE,PKID S PKI=0 D CER^PSOPKIV1 I PKI<1 D UL1^PSOORFI3 K OR0 Q
+"RTN","PSOORFIN",102,0)
+ S (PSOFOERR,PSOFDR)=1,OI=$P(OR0,"^",8),PSORX("SC")=$P(OR0,"^",16)
+"RTN","PSOORFIN",103,0)
+ I $O(^PS(52.41,ORD,2,0)) S PHI=^PS(52.41,ORD,2,0),T=0 F  S T=$O(^PS(52.41,ORD,2,T)) Q:'T  S PHI(T)=^PS(52.41,ORD,2,T,0)
+"RTN","PSOORFIN",104,0)
+ I $P($G(^PS(52.41,ORD,"EXT")),"^")'="" K PHI I $O(^PS(52.41,ORD,"SIG",0)) S PHI=$G(^PS(52.41,ORD,"SIG",0)),T=0 F  S T=$O(^PS(52.41,ORD,"SIG",T)) Q:'T  S PHI(T)=$G(^PS(52.41,ORD,"SIG",T,0))
+"RTN","PSOORFIN",105,0)
+ I $O(^PS(52.41,ORD,3,0)) S PRC=^PS(52.41,ORD,3,0),T=0 F  S T=$O(^PS(52.41,ORD,3,T)) Q:'T  S PRC(T)=^PS(52.41,ORD,3,T,0)
+"RTN","PSOORFIN",106,0)
+ I $P(OR0,"^",3)="RNW",$D(^PSRX(+$P(OR0,"^",21),0)) D  G SUCC ;process renews
+"RTN","PSOORFIN",107,0)
+ .K PSOREEDT S (PSOORRNW,PSOFDR)=1,PSORENW("OIRXN")=$P(OR0,"^",21),PSOOPT=3,(PSORENW("DFLG"),PSORENW("QFLG"))=0 D ^PSOORRNW,SQR
+"RTN","PSOORFIN",108,0)
+ I $P(OR0,"^",3)="RF",$D(^PSRX(+$P(OR0,"^",19),0)) D RF^PSOORFI2 G SUCC
+"RTN","PSOORFIN",109,0)
+ N PSODRUG,PSONEW S PSOFROM="PENDING" D:'$G(PSOTPBFG) DSPL^PSOTPCAN(ORD) D DSPL^PSOORFI1,SQN^PSOORFI3
+"RTN","PSOORFIN",110,0)
+SUCC ;
+"RTN","PSOORFIN",111,0)
+ D UL1^PSOORFI3,FULL^VALM1
+"RTN","PSOORFIN",112,0)
+ D:$P($G(^PS(52.41,+$G(ORD),0)),"^",3)'="NW"&($P($G(^(0)),"^",3)'="RNW")&($P($G(^(0)),"^",3)'="HD")&($P($G(^(0)),"^",3)'="RF")
+"RTN","PSOORFIN",113,0)
+ .K PSOSD("PENDING",$S('$G(OID):$P(^PS(50.7,$P(OR0,"^",8),0),"^")_" "_$P(^PS(50.606,$P(^PS(50.7,$P(OR0,"^",8),0),"^",2),0),"^"),1:$P(^PSDRUG($P(OR0,"^",9),0),"^")))
+"RTN","PSOORFIN",114,0)
+ S:$G(POERR("DFLG")) POERR("QFLG")=1 K POERR("DFLG"),PSONEW,ACP,OR0,DRET,SIG,OID,OI
+"RTN","PSOORFIN",115,0)
+ K PSORX("SC"),PSORX("CLINIC"),PSORX("PROVIDER NAME"),PSODRUG,PSOFOERR
+"RTN","PSOORFIN",116,0)
+ Q
+"RTN","PSOORFIN",117,0)
+ ;PSO*7*266 change order of bingo checks.
+"RTN","PSOORFIN",118,0)
+LBL I $O(PSORX("PSOL",0))!($D(RXRS)) S PSOFROM="NEW" D ^PSORXL K PSORX("PSOL"),PPL,RXRS
+"RTN","PSOORFIN",119,0)
+ D:$D(BINGCRT)&($D(BINGRTE)&($D(DISGROUP))) ^PSOBING1 K BINGCRT,BINGRTE,PSONEW,BBFLG,BBRX,PSORX("DOSING OFF"),PSOONOFC
+"RTN","PSOORFIN",120,0)
+ Q
+"RTN","PSOORFIN",121,0)
+CHK ;
+"RTN","PSOORFIN",122,0)
+ D:'$D(PSOPAR) ^PSOLSET I '$D(PSOPAR) W !,$C(7),"Outpatient Division MUST be selected!",! G EX
+"RTN","PSOORFIN",123,0)
+ D INST1^PSOORFI2
+"RTN","PSOORFIN",124,0)
+ S PSZCNT=0 F PSZZI=0:0 S PSZZI=$O(^PS(59,PSZZI)) Q:'PSZZI  S PSZCNT=PSZCNT+1
+"RTN","PSOORFIN",125,0)
+ S TC=0 F TO=0:0 S TO=$O(^PS(52.41,"AOR",TO)) Q:'TO  F TZ=0:0 S TZ=$O(^PS(52.41,"AOR",TO,TZ)) Q:'TZ  F PSTZ=0:0 S PSTZ=$O(^PS(52.41,"AOR",TO,TZ,PSTZ)) Q:'PSTZ  S TC=TC+1
+"RTN","PSOORFIN",126,0)
+ W !!?10,$C(7),"Orders to be completed"_$S(PSZCNT=1:": ",1:" for all divisions: ")_TC,! Q:'TC
+"RTN","PSOORFIN",127,0)
+ D SUMM^PSOORNE1 K PSZZI,PSZCNT,PSTZ
+"RTN","PSOORFIN",128,0)
+ Q
+"RTN","PSOORFIN",129,0)
+ ;
+"RTN","PSOORFIN",130,0)
+LK D LOCK^PSOORFI1
+"RTN","PSOORFIN",131,0)
+ Q
+"RTN","PSOORFIN",132,0)
+LK1 D LOCK1^PSOORFI1 Q
+"RTN","PSOORFIN",133,0)
+QU I $G(PSOQUIT) S POERR("QFLG")=1 K PSOQUIT
+"RTN","PSOORFIN",134,0)
+ S:$G(PSOQFLG) PAT(PAT)=PAT
+"RTN","PSOORFIN",135,0)
+ Q
+"RTN","PSOORFIN",136,0)
+ULP K PSORX("MAIL/WINDOW"),PSORX("METHOD OF PICK-UP")
+"RTN","PSOORFIN",137,0)
+ D CLEAN^PSOVER1
+"RTN","PSOORFIN",138,0)
+ I '$G(X) Q
+"RTN","PSOORFIN",139,0)
+ D UL^PSSLOCK(X) Q
+"RTN","PSOORFIN",140,0)
+KLL K PSOPTLOK Q
+"RTN","PSOORFIN",141,0)
+KLLP K PSONOLCK Q
+"RTN","PSOORFIN",142,0)
+SPL D SPL^PSOORFI4 Q
+"RTN","PSOORFIN",143,0)
+SDFN S PSODFN=+$G(PSODFN) Q
+"RTN","PSOORFIN",144,0)
+PP D PP^PSOORFI4 Q
+"RTN","PSOORFIN",145,0)
+KQ K PSOQUIT,POERR("QFLG") Q
+"RTN","PSOORFIN",146,0)
+SQR ;
+"RTN","PSOORFIN",147,0)
+ K PSOORRNW,PSOOPT,PSOREEDT,PSOQUIT,VALMSG S POERR("DFLG")=0
+"RTN","PSOORFIN",148,0)
+ Q
+"RTN","PSOORNE2")
+0^5^B107853949^B107800723
+"RTN","PSOORNE2",1,0)
+PSOORNE2 ;BIR/SAB - Display finished orders from backdoor ;7/15/16 2:30pm
+"RTN","PSOORNE2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**11,21,23,27,32,37,46,84,103,117,131,146,156,210,148,222,238,264,281,289,251,379,391,313,282,427,454,446**;DEC 1997;Build 20
+"RTN","PSOORNE2",3,0)
+ ;
+"RTN","PSOORNE2",4,0)
+ ;^PSDRUG( -  221
+"RTN","PSOORNE2",5,0)
+ ;^YSCL(603.01 - 2697
+"RTN","PSOORNE2",6,0)
+ ;^PS(50.606 - 2174
+"RTN","PSOORNE2",7,0)
+ ;^PS(50.7 - 2223
+"RTN","PSOORNE2",8,0)
+ ;PSO*210 add call to WORDWRAP api
+"RTN","PSOORNE2",9,0)
+ ;$$DAWEXT^PSSDAWUT - 4708
+"RTN","PSOORNE2",10,0)
+ ;
+"RTN","PSOORNE2",11,0)
+SEL N ORN,ORD,PSORRBLD I '$G(PSOCNT),'$G(PSORCNT) S VALMSG="This patient has no Prescriptions!" S VALMBCK="" Q
+"RTN","PSOORNE2",12,0)
+ D K1^PSOORNE6 S DIR("A")="Select Orders by number",DIR(0)="LO^1:"_$S($G(PSORCNT):PSORCNT,1:PSOCNT) D ^DIR I $D(DIRUT) D KV^PSOVER1 S VALMBCK="" Q
+"RTN","PSOORNE2",13,0)
+NEWSEL N ORN,ORD D K2^PSOORNE6
+"RTN","PSOORNE2",14,0)
+ ;*282 Correct Patient Instructions Copy
+"RTN","PSOORNE2",15,0)
+ I +Y S PSOOELSE=1,PSLST=Y K PSOREEDT F ORD=1:1:$L(PSLST,",") Q:$P(PSLST,",",ORD)']""  D  D UL1 K ^TMP("PSORXPO",$J),PSORXED,PSONEW,PSOPINS I $G(PSOQUIT) K PSOQUIT Q
+"RTN","PSOORNE2",16,0)
+ .; bwf 1/21/2014 - replaced line below with the one that follows for remote rx data handling.
+"RTN","PSOORNE2",17,0)
+ .;S ORN=+$P(PSLST,",",ORD) D @$S(+PSOLST(ORN)=52:"ACT",1:"PEN^PSOORNE5")
+"RTN","PSOORNE2",18,0)
+ .S ORN=+$P(PSLST,",",ORD) D @$S(+PSOLST(ORN)=52:"ACT",$P(PSOLST(ORN),"^")="R52":"RACT",1:"PEN^PSOORNE5")
+"RTN","PSOORNE2",19,0)
+ .K PSOREEDT,PSOSIGFL,PSONACT,SIGOK,PSOFDR,DRET,SIG,INS1
+"RTN","PSOORNE2",20,0)
+ K PRC,PHI,RTE I '$G(PSOOELSE) S VALMBCK=""
+"RTN","PSOORNE2",21,0)
+ K PSONACT,PSOOELSE,CLOZPAT
+"RTN","PSOORNE2",22,0)
+ ;
+"RTN","PSOORNE2",23,0)
+ ; Only rebuild remote if something changed
+"RTN","PSOORNE2",24,0)
+ I $G(PSORRBLD) W !!,"Updating prescription order list...",!! D REMOTERX^PSORRX1(PSODFN,PSOSITE) K PSORRBLD
+"RTN","PSOORNE2",25,0)
+ ;
+"RTN","PSOORNE2",26,0)
+ D ^PSOBUILD,BLD^PSOORUT1,K3^PSOORNE6
+"RTN","PSOORNE2",27,0)
+ Q
+"RTN","PSOORNE2",28,0)
+ ;
+"RTN","PSOORNE2",29,0)
+ACT N REF,RPHKEY,PKIND K ^TMP("PSOAO",$J),PCOMX,PDA,PHI,PRC,ACOM,ANS,PSOFDR,CLOZPAT,ANQREM,DUR,DRET
+"RTN","PSOORNE2",30,0)
+ S RXN=$P(PSOLST(ORN),"^",2),RX0=^PSRX(RXN,0),RX2=$G(^(2)),RX3=$G(^(3)),ST=+$G(^("STA")),RXOR=$G(^("OR1")),POE=$G(^("POE")),EXDT=$S($P($G(^(2)),"^",6)>DT:1,1:0)
+"RTN","PSOORNE2",31,0)
+ I 'RX3 S $P(RX3,"^",1)=$P(RX2,"^",2),$P(^PSRX(RXN,3),"^")=$P(RX2,"^",2)
+"RTN","PSOORNE2",32,0)
+ S PSODRG=+$P(RX0,"^",6),PSODRUG0=^PSDRUG(PSODRG,0),INDT=$G(^("I"))
+"RTN","PSOORNE2",33,0)
+ ;PSO*7*238;SET PSODRUG ARRAY ; PSOY KILLED AT END OF SET^PSODRG
+"RTN","PSOORNE2",34,0)
+ K PSODRUG
+"RTN","PSOORNE2",35,0)
+ S PSOY=PSODRG,PSOY(0)=PSODRUG0 D SET^PSODRG
+"RTN","PSOORNE2",36,0)
+ I 'RXOR,$P(^PSDRUG(PSODRG,2),"^") S $P(^PSRX(RXN,"OR1"),"^")=$P(^PSDRUG(PSODRG,2),"^"),RXOR=$P(^PSDRUG(PSODRG,2),"^")
+"RTN","PSOORNE2",37,0)
+ I $P($G(^PSDRUG(PSODRG,"CLOZ1")),"^")="PSOCLO1" D
+"RTN","PSOORNE2",38,0)
+ .S CLOZPAT=$O(^YSCL(603.01,"C",PSODFN,0)) Q:'CLOZPAT
+"RTN","PSOORNE2",39,0)
+ .;S CLOZPAT=$S($P(^YSCL(603.01,CLOZPAT,0),"^",3)="B":1,1:0)
+"RTN","PSOORNE2",40,0)
+ .S CLOZPAT=$P(^YSCL(603.01,CLOZPAT,0),"^",3)
+"RTN","PSOORNE2",41,0)
+ .S CLOZPAT=$S(CLOZPAT="M":2,CLOZPAT="B":1,1:0)
+"RTN","PSOORNE2",42,0)
+ S PKIND=$D(^PSRX(RXN,"PKI")),RPHKEY=$S('PKIND&($D(^XUSEC("PSORPH",DUZ))):1,PKIND&($D(^XUSEC("PSDRPH",DUZ))):1,1:0)
+"RTN","PSOORNE2",43,0)
+ I RPHKEY S RPH=1 D
+"RTN","PSOORNE2",44,0)
+ .S PSOACT=$S('ST&($G(INDT)]"")&(DT>$G(INDT)):"DHPLATC",ST=1!(ST=4):"DVE",ST=3:"DU",ST=5:"ELTD",ST=11:"ETDPCL",ST=12&EXDT:"EDCL",ST=12&'EXDT:"ECL",(ST=14!(ST=15))&'EXDT:"ECL",ST=13:"L",ST=16:"DL",1:"DHPEATCL")
+"RTN","PSOORNE2",45,0)
+ .D GET^PSOORNE5 S PSOACT=PSOACT_$S(ACTREN:"N",1:""),PSOACT=PSOACT_$S(ACTREF:"R",1:"")
+"RTN","PSOORNE2",46,0)
+ .I ST=5 S SURX=$O(^PS(52.5,"B",RXN,0)) I SURX,$P($G(^PS(52.5,SURX,0)),"^",7)="L" S PSOACT="TL" K SURX Q
+"RTN","PSOORNE2",47,0)
+ .S:ST'=12&('$D(^PS(50.7,+$P(RXOR,"^"),0))) PSOACT="DL",VALMSG="No Pharmacy Orderable Item !",PSONACT=1
+"RTN","PSOORNE2",48,0)
+ .S:ST=12&('$D(^PS(50.7,+$P(RXOR,"^"),0))) PSOACT="L",VALMSG="No Pharmacy Orderable Item !",PSONACT=1
+"RTN","PSOORNE2",49,0)
+ .S:ST=16 VALMSG="Rx Placed on HOLD by Provider."
+"RTN","PSOORNE2",50,0)
+ E  D
+"RTN","PSOORNE2",51,0)
+ .I ST=5 S SURX=$O(^PS(52.5,"B",RXN,0)) I SURX,$P($G(^PS(52.5,SURX,0)),"^",7)="L" S PSOACT="TL" Q
+"RTN","PSOORNE2",52,0)
+ .S PSOACT=$S(ST'<1&(ST'>4)!(ST>12):"",ST=12&EXDT&($P($G(PSOPAR),"^",2)):"CDPLT",1:"CPLT")
+"RTN","PSOORNE2",53,0)
+ .D GET^PSOORNE5 S PSOACT=PSOACT_$S(ACTREN:"N",1:""),PSOACT=PSOACT_$S(ACTREF:"R",1:"")
+"RTN","PSOORNE2",54,0)
+ .S:'$D(^PS(50.7,+$P(RXOR,"^"),0)) PSOACT="L",PSONACT=1,VALMSG="No Pharmacy Orderable Item !"
+"RTN","PSOORNE2",55,0)
+ ;K PSOLKFL D PSOL^PSSLOCK(RXN) I '$G(PSOMSG) K PSOMSG S PSOLKFL=1 S PSOACT="",VALMSG="This Order is being edited by another user."
+"RTN","PSOORNE2",56,0)
+ K PSOMSG S IEN=0,$P(RN," ",12)=" "
+"RTN","PSOORNE2",57,0)
+ D DIN^PSONFI(+RXOR,$P(RX0,"^",6))
+"RTN","PSOORNE2",58,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=$S($P($G(^PSRX(RXN,"TPB")),"^"):"            TPB Rx #: ",1:"                Rx #: ")
+"RTN","PSOORNE2",59,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_$P(RX0,"^")_$S($G(^PSRX(RXN,"IB")):"$",1:"")_$$ECME^PSOBPSUT(RXN)_$$TITRX^PSOUTL(RXN)_$E(RN,$L($P(RX0,"^")_$S($G(^PSRX(RXN,"IB")):"$",1:"")_$$ECME^PSOBPSUT(RXN)_$$TITRX^PSOUTL(RXN))+1,12)
+"RTN","PSOORNE2",60,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=" ("_$S($P(PSOPAR,"^",3):1,1:"#")_")"_" *Orderable Item: "_$S($D(^PS(50.7,$P(+RXOR,"^"),0)):$P(^PS(50.7,$P(+RXOR,"^"),0),"^")_" "_$P(^PS(50.606,$P(^(0),"^",2),0),"^"),1:"")_NFIO
+"RTN","PSOORNE2",61,0)
+ S:NFIO["<DIN>" NFIO=IEN_","_($L(^TMP("PSOAO",$J,IEN,0))-4)
+"RTN","PSOORNE2",62,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=" ("_$S($P(PSOPAR,"^",3):2,1:"#")_")"_$S($D(^PSDRUG("AQ",$P(RX0,"^",6))):"       CMOP ",1:"            ")_"Drug: "_$P(^PSDRUG($P(RX0,"^",6),0),"^")_NFID
+"RTN","PSOORNE2",63,0)
+ S:NFID["<DIN>" NFID=IEN_","_($L(^TMP("PSOAO",$J,IEN,0))-4)
+"RTN","PSOORNE2",64,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=" "_$S('$P(PSOPAR,"^",3):"(2)",1:"   ")_"             NDC: "_$$GETNDC^PSONDCUT(RXN,0)
+"RTN","PSOORNE2",65,0)
+ S:$G(^PSRX(RXN,"TN"))]"" IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="          Trade Name: "_$G(^PSRX(RXN,"TN"))
+"RTN","PSOORNE2",66,0)
+ D DOSE^PSOORNE5
+"RTN","PSOORNE2",67,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=" (4)Pat Instructions:" D INS^PSOORNE5
+"RTN","PSOORNE2",68,0)
+ D PC^PSOORNE5
+"RTN","PSOORNE2",69,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="                 SIG:"
+"RTN","PSOORNE2",70,0)
+ I '$P($G(^PSRX(RXN,"SIG")),"^",2) S SIGOK=0 D  G PTST
+"RTN","PSOORNE2",71,0)
+ .S X=$P($G(^PSRX(RXN,"SIG")),"^") D SIGONE^PSOHELP S SIG=$E($G(INS1),2,250)
+"RTN","PSOORNE2",72,0)
+ .F SG=1:1:$L(SIG) S:$L(^TMP("PSOAO",$J,IEN,0)_" "_$P(SIG," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOAO",$J,IEN,0)," ",21)=" " S:$P(SIG," ",SG)'="" ^TMP("PSOAO",$J,IEN,0)=$G(^TMP("PSOAO",$J,IEN,0))_" "_$P(SIG," ",SG)
+"RTN","PSOORNE2",73,0)
+ S SIGOK=1
+"RTN","PSOORNE2",74,0)
+ F I=0:0 S I=$O(^PSRX(RXN,"SIG1",I)) Q:'I  D                  ;PSO*210
+"RTN","PSOORNE2",75,0)
+ . S MIG=$P(^PSRX(RXN,"SIG1",I,0),"^")
+"RTN","PSOORNE2",76,0)
+ . D WORDWRAP^PSOUTLA2(MIG,.IEN,$NA(^TMP("PSOAO",$J)),21)
+"RTN","PSOORNE2",77,0)
+ S SIGOK=1 K MIG,SG
+"RTN","PSOORNE2",78,0)
+PTST S $P(RN," ",25)=" ",PTST=$S($G(^PS(53,+$P(RX0,"^",3),0))]"":$P($G(^PS(53,+$P(RX0,"^",3),0)),"^"),1:""),IEN=IEN+1
+"RTN","PSOORNE2",79,0)
+ S ^TMP("PSOAO",$J,IEN,0)=" (5)  Patient Status: "_PTST_$E(RN,$L(PTST)+1,25)
+"RTN","PSOORNE2",80,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)=" (6)      Issue Date: "_$E($P(RX0,"^",13),4,5)_"/"_$E($P(RX0,"^",13),6,7)_"/"_$E($P(RX0,"^",13),2,3)
+"RTN","PSOORNE2",81,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_"               (7)  Fill Date: "_$E($P(RX2,"^",2),4,5)_"/"_$E($P(RX2,"^",2),6,7)_"/"_$E($P(RX2,"^",2),2,3)
+"RTN","PSOORNE2",82,0)
+ S ROU=$S($P(RX0,"^",11)="W":"Window",1:"Mail")
+"RTN","PSOORNE2",83,0)
+ S REFL=$P(RX0,"^",9),I=0 F  S I=$O(^PSRX(RXN,1,I)) Q:'I  S REFL=REFL-1,ROU=$S($P(^PSRX(RXN,1,I,0),"^",2)="W":"Window",1:"Mail")
+"RTN","PSOORNE2",84,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="      Last Fill Date: "_$E($P(RX3,"^"),4,5)_"/"_$E($P(RX3,"^"),6,7)_"/"_$E($P(RX3,"^"),2,3)
+"RTN","PSOORNE2",85,0)
+ D CMOP^PSOORNE3
+"RTN","PSOORNE2",86,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_" ("_ROU_$S($G(PSOCMOP)]"":", "_PSOCMOP,1:"")_")" K ROU,PSOCMOP
+"RTN","PSOORNE2",87,0)
+ ;*282 Correct return to stock/release display
+"RTN","PSOORNE2",88,0)
+ S IEN=IEN+1 D
+"RTN","PSOORNE2",89,0)
+ .S RLD=$S($P(RX2,"^",13):$E($P(RX2,"^",13),4,5)_"/"_$E($P(RX2,"^",13),6,7)_"/"_$E($P(RX2,"^",13),2,3),1:"")
+"RTN","PSOORNE2",90,0)
+ .I $O(^PSRX(RXN,1,0)) F I=0:0 S I=$O(^PSRX(RXN,1,I)) Q:'I  D
+"RTN","PSOORNE2",91,0)
+ ..I $P(^PSRX(RXN,1,I,0),"^",18) S RLD=$E($P(^(0),"^",18),4,5)_"/"_$E($P(^(0),"^",18),6,7)_"/"_$E($P(^(0),"^",18),2,3)
+"RTN","PSOORNE2",92,0)
+ .I $P(RX2,"^",15)&'$G(RLD) S ^TMP("PSOAO",$J,IEN,0)="   Returned to Stock: "_$E($P(RX2,"^",15),4,5)_"/"_$E($P(RX2,"^",15),6,7)_"/"_$E($P(RX2,"^",15),2,3)_$S($P(RX2,"^",14):" (Reprinted)",1:"")
+"RTN","PSOORNE2",93,0)
+ .E  S ^TMP("PSOAO",$J,IEN,0)="   Last Release Date: "_$S($G(RLD)]"":RLD,1:"        ")
+"RTN","PSOORNE2",94,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_"               (8)      Lot #: "_$P($G(RX2),"^",4)
+"RTN","PSOORNE2",95,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="             Expires: "_$E($P(RX2,"^",6),4,5)_"/"_$E($P(RX2,"^",6),6,7)_"/"_$E($P(RX2,"^",6),2,3)
+"RTN","PSOORNE2",96,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_"                          MFG: "_$P($G(RX2),"^",8)
+"RTN","PSOORNE2",97,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(9)      Days Supply: "_$P(RX0,"^",8)_$S($L($P(RX0,"^",8))=1:" ",1:"")
+"RTN","PSOORNE2",98,0)
+ S ^TMP("PSOAO",$J,IEN,0)=^TMP("PSOAO",$J,IEN,0)_"                    (10)  QTY"_$S($P($G(^PSDRUG($P(RX0,"^",6),660)),"^",8)]"":" ("_$P($G(^PSDRUG($P(RX0,"^",6),660)),"^",8)_")",1:" (  )")_": "_$P(RX0,"^",7)
+"RTN","PSOORNE2",99,0)
+ I $P($G(^PSDRUG($P(RX0,"^",6),5)),"^")]"" D
+"RTN","PSOORNE2",100,0)
+ .S $P(RN," ",79)=" ",IEN=IEN+1
+"RTN","PSOORNE2",101,0)
+ .S ^TMP("PSOAO",$J,IEN,0)=$E(RN,$L("QTY DSP MSG: "_$P(^PSDRUG($P(RX0,"^",6),5),"^"))+1,79)_"QTY DSP MSG: "_$P(^PSDRUG($P(RX0,"^",6),5),"^") K RN
+"RTN","PSOORNE2",102,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(11)    # of Refills: "_$P(RX0,"^",9)_$S($L($P(RX0,"^",9))=1:" ",1:"")_"                          Remaining: "_REFL
+"RTN","PSOORNE2",103,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(12)        Provider: "_$S($D(^VA(200,$P(RX0,"^",4),0)):$P(^VA(200,$P(RX0,"^",4),0),"^"),1:"UNKNOWN")
+"RTN","PSOORNE2",104,0)
+ I +$P($G(^PSDRUG($P(RX0,"^",6),0)),"^",3)>1,+$P($G(^PSDRUG($P(RX0,"^",6),0)),"^",3)<6 D PRV^PSOORNE5
+"RTN","PSOORNE2",105,0)
+ I $P(RX3,"^",3) S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="        Cos-Provider: "_$P(^VA(200,$S($G(PSORX("COSIGNING PROVIDER")):PSORX("COSIGNING PROVIDER"),1:$P(RX3,"^",3)),0),"^")
+"RTN","PSOORNE2",106,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(13)         Routing: "_$S($P(RX0,"^",11)="M":"MAIL",1:"WINDOW")_"                  (14)     Copies: "_$S($P(RX0,"^",18):$P(RX0,"^",18),1:1)
+"RTN","PSOORNE2",107,0)
+ S:$P(RX0,"^",11)="W"&($P(PSOPAR,"^",12)) IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="    Method of Pickup: "_$G(^PSRX(RXN,"MP"))
+"RTN","PSOORNE2",108,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(15)          Clinic: "_$S($D(^SC(+$P(RX0,"^",5),0)):$P(^SC($P(RX0,"^",5),0),"^"),1:"Not on File")
+"RTN","PSOORNE2",109,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(16)        Division: "_$S($G(^PS(59,+$P(RX2,"^",9),0))]"":$P(^PS(59,$P(RX2,"^",9),0),"^")_" ("_$P(^(0),"^",6)_")",1:"UNKNOWN")
+"RTN","PSOORNE2",110,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(17)      Pharmacist: "_$S($P(RX2,"^",3):$P(^VA(200,$P(RX2,"^",3),0),"^"),1:"")
+"RTN","PSOORNE2",111,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(18)         Remarks:" D RMK^PSOORNE3
+"RTN","PSOORNE2",112,0)
+ S IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(19)      Counseling: "_$S($P($G(^PSRX(RXN,"PC")),"^"):"YES",1:"NO")_"                      "_$S($P($G(^PSRX(RXN,"PC")),"^"):"Was Counseling Understood: "_$S($P($G(^PSRX(RXN,"PC")),"^",2):"YES",1:"NO"),1:"")
+"RTN","PSOORNE2",113,0)
+ S:$O(^PSRX(RXN,1,0)) REF=1,IEN=IEN+1,^TMP("PSOAO",$J,IEN,0)="(20)     Refill Data"
+"RTN","PSOORNE2",114,0)
+ I $$STATUS^PSOBPSUT(RXN,0)'="" D
+"RTN","PSOORNE2",115,0)
+ . N DAW S IEN=IEN+1,DAW=$$GETDAW^PSODAWUT(RXN,0)
+"RTN","PSOORNE2",116,0)
+ . S ^TMP("PSOAO",$J,IEN,0)="(21)        DAW Code: "_DAW_" - "_$$DAWEXT^PSSDAWUT(DAW)
+"RTN","PSOORNE2",117,0)
+ D DISP^PSOORNE6
+"RTN","PSOORNE2",118,0)
+ I $G(PSOBEDT),PSOACT["E" S PSOACT="E"
+"RTN","PSOORNE2",119,0)
+ I $G(PSOBEDT),PSOACT'["E" S PSOACT=""
+"RTN","PSOORNE2",120,0)
+ Q:$G(PSORXED)!($G(COPY))!($G(UPMI))
+"RTN","PSOORNE2",121,0)
+ S:$G(PSOBEDT) (PSOEDIT,PSORXED)=1
+"RTN","PSOORNE2",122,0)
+RENERR S PSORERR=0 D ^PSOLMLST
+"RTN","PSOORNE2",123,0)
+ I PSORERR=1 S:$G(PSOBEDT) (PSOEDIT,PSORXED)=1 G RENERR
+"RTN","PSOORNE2",124,0)
+ K DRET,SIG
+"RTN","PSOORNE2",125,0)
+ Q
+"RTN","PSOORNE2",126,0)
+UL1 ;
+"RTN","PSOORNE2",127,0)
+ Q
+"RTN","PSOORNE2",128,0)
+ ; bwf 1/21/2014 - adding display of remote active orders.
+"RTN","PSOORNE2",129,0)
+RACT ; display remote active order
+"RTN","PSOORNE2",130,0)
+ N REMSITE,CNT,REMDATA,RSITENM,RRXNUM,RDETSTR,RSIGSTR,RDET,RSIG,REMSIEN,RXSTAT,SIGLOOP,DETLOOP,DONE,SRXSTAT,SDNAME,DNAME
+"RTN","PSOORNE2",131,0)
+ K ^TMP("PSOAO",$J)
+"RTN","PSOORNE2",132,0)
+ S (RSIG,RDET)=""
+"RTN","PSOORNE2",133,0)
+ S REMSITE=$P(PSOLST(ORN),U,4) Q:'REMSITE
+"RTN","PSOORNE2",134,0)
+ S REMSIEN=$O(^DIC(4,"D",REMSITE,""))
+"RTN","PSOORNE2",135,0)
+ S REMSIEN=$$FIND1^DIC(4,,"X",REMSITE,"D","I $P(^(0),U,11)=""N"",'$P($G(^(99)),U,4)") Q:'REMSIEN
+"RTN","PSOORNE2",136,0)
+ S RSITENM=$$GET1^DIQ(4,REMSIEN,.01,"E")
+"RTN","PSOORNE2",137,0)
+ ; do not continue if we are missing the remote order number for some reason
+"RTN","PSOORNE2",138,0)
+ S RRXNUM=$P(PSOLST(ORN),U,2) Q:'RRXNUM
+"RTN","PSOORNE2",139,0)
+ S DONE=0
+"RTN","PSOORNE2",140,0)
+ S RXSTAT="" F  S RXSTAT=$O(^XTMP("PSORRX1",$J,PSODFN,REMSITE,RXSTAT)) Q:RXSTAT=""!DONE  D
+"RTN","PSOORNE2",141,0)
+ .S SRXSTAT=RXSTAT
+"RTN","PSOORNE2",142,0)
+ .S DNAME="" F  S DNAME=$O(^XTMP("PSORRX1",$J,PSODFN,REMSITE,RXSTAT,DNAME)) Q:DNAME=""!DONE  D
+"RTN","PSOORNE2",143,0)
+ ..S SDNAME=DNAME
+"RTN","PSOORNE2",144,0)
+ ..I $P(^XTMP("PSORRX1",$J,PSODFN,REMSITE,RXSTAT,DNAME,0),U,1)=RRXNUM S DONE=1 Q
+"RTN","PSOORNE2",145,0)
+ Q:$G(SRXSTAT)=""
+"RTN","PSOORNE2",146,0)
+ S REMDATA=$G(^XTMP("PSORRX1",$J,PSODFN,REMSITE,SRXSTAT,SDNAME,0))
+"RTN","PSOORNE2",147,0)
+ S RDETSTR=$G(^XTMP("PSORRX1",$J,PSODFN,REMSITE,SRXSTAT,SDNAME,"DETAIL"))
+"RTN","PSOORNE2",148,0)
+ S RSIGSTR=$G(^XTMP("PSORRX1",$J,PSODFN,REMSITE,SRXSTAT,SDNAME,"SIG"))
+"RTN","PSOORNE2",149,0)
+ S CNT=1
+"RTN","PSOORNE2",150,0)
+ S ^TMP("PSOAO",$J,CNT,0)="         Site #: "_REMSITE_"("_RSITENM_")",CNT=CNT+1
+"RTN","PSOORNE2",151,0)
+ S ^TMP("PSOAO",$J,CNT,0)="           Rx #: "_RRXNUM,CNT=CNT+1
+"RTN","PSOORNE2",152,0)
+ S ^TMP("PSOAO",$J,CNT,0)="      Drug Name: "_$P(REMDATA,U,11),CNT=CNT+1
+"RTN","PSOORNE2",153,0)
+ S ^TMP("PSOAO",$J,CNT,0)="    Days Supply: "_$S($E($P(REMDATA,U,4),1)?1A:$E($P(REMDATA,U,4),2,99),1:$P(REMDATA,U,4)),CNT=CNT+1
+"RTN","PSOORNE2",154,0)
+ S ^TMP("PSOAO",$J,CNT,0)="       Quantity: "_$P(REMDATA,U,2),CNT=CNT+1
+"RTN","PSOORNE2",155,0)
+ S ^TMP("PSOAO",$J,CNT,0)="        Refills: "_$P(REMDATA,U,3),CNT=CNT+1
+"RTN","PSOORNE2",156,0)
+ S ^TMP("PSOAO",$J,CNT,0)="Expiration Date: "_$$RDT($P($P(REMDATA,U,5),".")),CNT=CNT+1
+"RTN","PSOORNE2",157,0)
+ S ^TMP("PSOAO",$J,CNT,0)="     Issue Date: "_$$RDT($P($P(REMDATA,U,6),".")),CNT=CNT+1
+"RTN","PSOORNE2",158,0)
+ S ^TMP("PSOAO",$J,CNT,0)="      Stop Date: "_$$RDT($P($P(REMDATA,U,7),".")),CNT=CNT+1
+"RTN","PSOORNE2",159,0)
+ S ^TMP("PSOAO",$J,CNT,0)=" Last Fill Date: "_$$RDT($P($P(REMDATA,U,8),".")),CNT=CNT+1
+"RTN","PSOORNE2",160,0)
+ ;D RCHUNK(.RDET,RDETSTR),RCHUNK(.RSIG,RSIGSTR)
+"RTN","PSOORNE2",161,0)
+ ;S ^TMP("PSOAO",$J,CNT,0)="         Detail: "_$G(RDET(1)),CNT=CNT+1
+"RTN","PSOORNE2",162,0)
+ ;S DETLOOP=1 F  S DETLOOP=$O(RDET(DETLOOP)) Q:'DETLOOP  D
+"RTN","PSOORNE2",163,0)
+ ;.S ^TMP("PSOAO",$J,CNT,0)="               "_RDET(DETLOOP),CNT=CNT+1
+"RTN","PSOORNE2",164,0)
+ D RCHUNK(.RSIG,RSIGSTR)
+"RTN","PSOORNE2",165,0)
+ S ^TMP("PSOAO",$J,CNT,0)="            Sig: "_$G(RSIG(1))
+"RTN","PSOORNE2",166,0)
+ S SIGLOOP=1 F  S SIGLOOP=$O(RSIG(SIGLOOP)) Q:'SIGLOOP  D
+"RTN","PSOORNE2",167,0)
+ .S CNT=CNT+1,^TMP("PSOAO",$J,CNT,0)="               "_RSIG(SIGLOOP)
+"RTN","PSOORNE2",168,0)
+ ; ^PSOLMLST is the local order template
+"RTN","PSOORNE2",169,0)
+ D EN^PSOROS
+"RTN","PSOORNE2",170,0)
+ Q
+"RTN","PSOORNE2",171,0)
+RCHUNK(ARR,STR) ;
+"RTN","PSOORNE2",172,0)
+ N START,END,I,C,ROOM
+"RTN","PSOORNE2",173,0)
+ S ROOM=60
+"RTN","PSOORNE2",174,0)
+ ; if there is enough room for 1 line, no wrapping needed
+"RTN","PSOORNE2",175,0)
+ I $L(STR)'>ROOM S ARR(1)=STR Q
+"RTN","PSOORNE2",176,0)
+ ; add a space to the end of the string to avoid dropping last character
+"RTN","PSOORNE2",177,0)
+ S START=1,END=ROOM,STR=STR_" "
+"RTN","PSOORNE2",178,0)
+ F C=1:1 D  Q:$L(STR)<START  ; stop if we have made it to the end of the data string
+"RTN","PSOORNE2",179,0)
+ .; start at the end and work backwards until you find a blank space, cut the line there and move on to the next line 
+"RTN","PSOORNE2",180,0)
+ .F I=END:-1:START I $E(STR,I)=" " S ARR(C)=$E(STR,START,I),START=I+1,END=ROOM+START Q
+"RTN","PSOORNE2",181,0)
+ .; make sure there wasn't a really long string without spaces
+"RTN","PSOORNE2",182,0)
+ .I I=START S ARR(C)=$E(STR,START,END),START=END+1,END=ROOM+START
+"RTN","PSOORNE2",183,0)
+ Q
+"RTN","PSOORNE2",184,0)
+RDT(DATE) ;
+"RTN","PSOORNE2",185,0)
+ N Y,M,D
+"RTN","PSOORNE2",186,0)
+ S Y=$E(DATE,3,4),M=$E(DATE,5,6),D=$E(DATE,7,8)
+"RTN","PSOORNE2",187,0)
+ Q M_"/"_D_"/"_Y
+"RTN","PSOORNEW")
+0^8^B98552577^B98142553
+"RTN","PSOORNEW",1,0)
+PSOORNEW ;BIR/SAB - display orders from oerr ;6/19/06 3:53pm
+"RTN","PSOORNEW",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**11,23,27,32,55,46,71,90,94,106,131,133,143,237,222,258,206,225,251,386,390,391,372,416,431,313,408,436,411,444,486,446**;DEC 1997;Build 20
+"RTN","PSOORNEW",3,0)
+ ;External reference to ^PS(50.7 supported by DBIA 2223
+"RTN","PSOORNEW",4,0)
+ ;External reference to ^PSDRUG supported by DBIA 221
+"RTN","PSOORNEW",5,0)
+ ;External reference to ^PS(50.606 supported by DBIA 2174
+"RTN","PSOORNEW",6,0)
+ ;External reference to ^PS(55 supported by DBIA 2228
+"RTN","PSOORNEW",7,0)
+ ;External reference to EN1^ORCFLAG supported by DBIA 3620
+"RTN","PSOORNEW",8,0)
+ ;
+"RTN","PSOORNEW",9,0)
+ ;PSO*237 quit Finish if Today > Issue date + 365
+"RTN","PSOORNEW",10,0)
+ ;
+"RTN","PSOORNEW",11,0)
+DSPL I $G(PSODSPL) S VALMBCK="Q" K PSODSPL,PSOANSQD Q
+"RTN","PSOORNEW",12,0)
+ Q:'$D(PSOLMC)  K ^TMP("PSOPO",$J) S PSOLMC=PSOLMC+1
+"RTN","PSOORNEW",13,0)
+ I $D(CLOZPAT) S PSONEW("DAYS SUPPLY")=$S($G(PSONEW("DAYS SUPPLY")):PSONEW("DAYS SUPPLY"),1:7) G OI
+"RTN","PSOORNEW",14,0)
+ S PSONEW("DAYS SUPPLY")=$S($G(PSONEW("DAYS SUPPLY")):PSONEW("DAYS SUPPLY"),+$G(^PS(55,PSODFN,"PS"))&($P(^PS(53,+$G(^PS(55,PSODFN,"PS")),0),"^",3))&('$G(PSONEW("DAYS SUPPLY"))):$P(^PS(53,+$G(^PS(55,PSODFN,"PS")),0),"^",3),1:30)
+"RTN","PSOORNEW",15,0)
+OI I '$G(PSODRUG("OI")) D
+"RTN","PSOORNEW",16,0)
+ .N OI,OID S (OI,PSODRUG("OI"))=$P(OR0,"^",8),PSODRUG("OIN")=$P(^PS(50.7,$P(OR0,"^",8),0),"^"),OID=$P(OR0,"^",9)
+"RTN","PSOORNEW",17,0)
+ .I $P($G(OR0),"^",9) S POERR=1,DREN=$P(OR0,"^",9) D DRG^PSOORDRG K POERR
+"RTN","PSOORNEW",18,0)
+ I '$D(CLOZPAT) I $G(PSODRUG("DEA"))["A",$G(PSODRUG("DEA"))'["B"!($G(PSODRUG("DEA"))["F") S PSONEW("# OF REFILLS")=0
+"RTN","PSOORNEW",19,0)
+ I $D(CLOZPAT) S PSONEW("# OF REFILLS")=$S($D(PSONEW("# OF REFILLS")):PSONEW("# OF REFILLS"),$G(CLOZPAT)=2&($P(OR0,"^",11)>2):3,$G(CLOZPAT)&($P(OR0,"^",11)>1):1,1:0)
+"RTN","PSOORNEW",20,0)
+ S IEN=0 D OBX^PSOORFI1,DIN^PSONFI(PSODRUG("OI"),$S($G(PSODRUG("IEN")):PSODRUG("IEN"),1:""))
+"RTN","PSOORNEW",21,0)
+ D LMDISP^PSOORFI5(+$G(ORD)) ; Display Flag/Unflag Information
+"RTN","PSOORNEW",22,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="*(1) Orderable Item: "_$P(^PS(50.7,PSODRUG("OI"),0),"^")_" "_$P(^PS(50.606,$P(^(0),"^",2),0),"^")_NFIO
+"RTN","PSOORNEW",23,0)
+ S:NFIO["<DIN>" NFIO=IEN_","_($L(^TMP("PSOPO",$J,IEN,0))-4)
+"RTN","PSOORNEW",24,0)
+ K LST I $G(PSODRUG("NAME"))]"" D  G PT
+"RTN","PSOORNEW",25,0)
+ .S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (2)"_$S($D(^PSDRUG("AQ",PSODRUG("IEN"))):"      CMOP ",1:"           ")_"Drug: "_PSODRUG("NAME")_NFID
+"RTN","PSOORNEW",26,0)
+ .S:NFID["<DIN>" NFID=IEN_","_($L(^TMP("PSOPO",$J,IEN,0))-4)
+"RTN","PSOORNEW",27,0)
+ .I $P($G(^PSDRUG(PSODRUG("IEN"),0)),"^",10)]"" S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="       Drug Message:" D DRGMSG
+"RTN","PSOORNEW",28,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (2)           Drug: No Dispense Drug Selected"
+"RTN","PSOORNEW",29,0)
+PT D DOSE2^PSOORFI4
+"RTN","PSOORNEW",30,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (4)   Pat Instruct:" D:$O(PSONEW("SIG",0)) INST^PSOORFI4
+"RTN","PSOORNEW",31,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="  Provider Comments:" S TY=3 D INST^PSOORFI1
+"RTN","PSOORNEW",32,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="       Instructions:" S TY=2 D INST^PSOORFI1
+"RTN","PSOORNEW",33,0)
+ K PSOELSE S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="                SIG:"
+"RTN","PSOORNEW",34,0)
+ F I=0:0 S I=$O(SIG(I)) Q:'I  S SIG=SIG(I) D
+"RTN","PSOORNEW",35,0)
+ .F SG=1:1:$L(SIG) S:$L(^TMP("PSOPO",$J,IEN,0)_" "_$P(SIG," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOPO",$J,IEN,0)," ",20)=" " S:$P(SIG," ",SG)'="" ^TMP("PSOPO",$J,IEN,0)=$G(^TMP("PSOPO",$J,IEN,0))_" "_$P(SIG," ",SG)
+"RTN","PSOORNEW",36,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (5) Patient Status: "_$P($G(^PS(53,+PSONEW("PATIENT STATUS"),0)),"^")
+"RTN","PSOORNEW",37,0)
+ K PSOELSE I $G(PSONEW("ISSUE DATE"))']"" S PSOELSE=1 S IEN=IEN+1,(PSOID,Y)=$E($P(OR0,"^",6),1,7) X ^DD("DD") S PSONEW("ISSUE DATE")=Y,^TMP("PSOPO",$J,IEN,0)=" (4)     Issue Date: "_Y
+"RTN","PSOORNEW",38,0)
+ I '$G(PSOELSE) S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (6)     Issue Date: "_PSONEW("ISSUE DATE")
+"RTN","PSOORNEW",39,0)
+ K PSOELSE I $G(PSORX("FILL DATE"))']"" S PSOELSE=1 D
+"RTN","PSOORNEW",40,0)
+ .S (Y,PSORX("FILL DATE"))=$S($E($P(OR0,"^",6),1,7)<DT:DT,1:$E($P(OR0,"^",6),1,7)) X ^DD("DD") S PSONEW("FILL DATE")=Y,^TMP("PSOPO",$J,IEN,0)=^TMP("PSOPO",$J,IEN,0)_"                  (5) Fill Date: "_Y
+"RTN","PSOORNEW",41,0)
+ I '$G(PSOELSE) S Y=PSORX("FILL DATE") X ^DD("DD") S PSORX("FILL DATE")=Y,^TMP("PSOPO",$J,IEN,0)=^TMP("PSOPO",$J,IEN,0)_"       (7) Fill Date: "_PSORX("FILL DATE")
+"RTN","PSOORNEW",42,0)
+ I $P(OR0,"^",18) S IEN=IEN+1,Y=$P(OR0,"^",18) X ^DD("DD") S $P(^TMP("PSOPO",$J,IEN,0)," ",39)="Effective Date: "_Y
+"RTN","PSOORNEW",43,0)
+ I $D(CLOZPAT) D ELIG^PSOORFI2 S:'$D(PSONEW("QTY")) PSONEW("QTY")=0
+"RTN","PSOORNEW",44,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)=" (8)    Days Supply: "_PSONEW("DAYS SUPPLY")
+"RTN","PSOORNEW",45,0)
+ S ^TMP("PSOPO",$J,IEN,0)=^TMP("PSOPO",$J,IEN,0)_"               (9)   QTY"_$S($P($G(^PSDRUG(+$G(PSODRUG("IEN")),660)),"^",8)]"":" ("_$P($G(^PSDRUG(+PSODRUG("IEN"),660)),"^",8)_")",1:" (  )")
+"RTN","PSOORNEW",46,0)
+ S ^TMP("PSOPO",$J,IEN,0)=^TMP("PSOPO",$J,IEN,0)_": "_$S($G(PSONEW("QTY"))]"":PSONEW("QTY"),1:$P(OR0,"^",10))
+"RTN","PSOORNEW",47,0)
+ I $P($G(^PSDRUG(+$G(PSODRUG("IEN")),5)),"^")]"" D
+"RTN","PSOORNEW",48,0)
+ .S $P(RN," ",79)=" ",IEN=IEN+1
+"RTN","PSOORNEW",49,0)
+ .S ^TMP("PSOPO",$J,IEN,0)=$E(RN,$L("QTY DSP MSG: "_$P(^PSDRUG(PSODRUG("IEN"),5),"^"))+1,79)_"QTY DSP MSG: "_$P(^PSDRUG(PSODRUG("IEN"),5),"^") K RN
+"RTN","PSOORNEW",50,0)
+ S IEN=IEN+1
+"RTN","PSOORNEW",51,0)
+ I $P(OR0,"^",24) S ^TMP("PSOPO",$J,IEN,0)="   Provider ordered: days supply "_+$P(OR0,"^",22)_", quantity "_+$P(OR0,"^",10)_" & refills "_+$P(OR0,"^",11)
+"RTN","PSOORNEW",52,0)
+ E  S ^TMP("PSOPO",$J,IEN,0)="       Provider ordered "_+$P(OR0,"^",11)_" refills"
+"RTN","PSOORNEW",53,0)
+ D:$D(CLOZPAT) PQTY^PSOORFI4
+"RTN","PSOORNEW",54,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="(10)   # of Refills: "_$S($G(PSONEW("# OF REFILLS"))]"":PSONEW("# OF REFILLS"),1:$P(OR0,"^",11))_"               (11)   Routing: "_$S($G(PSONEW("MAIL/WINDOW"))="M":"MAIL",1:"WINDOW")
+"RTN","PSOORNEW",55,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="(12)         Clinic: "_PSORX("CLINIC")
+"RTN","PSOORNEW",56,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="(13)       Provider: "_PSONEW("PROVIDER NAME")
+"RTN","PSOORNEW",57,0)
+ D:$P(OR0,"^",24)!((+$G(PSODRUG("DEA"))>1)&(+$G(PSODRUG("DEA"))<6)) PRV^PSOORFI5($G(PSONEW("PROVIDER")),$G(PSODRUG("IEN")),$P(OR0,"^"))
+"RTN","PSOORNEW",58,0)
+ I $P($G(^VA(200,$S($G(PSONEW("PROVIDER")):PSONEW("PROVIDER"),1:$P(OR0,"^",5)),"PS")),"^",7)&($P($G(^("PS")),"^",8)) D
+"RTN","PSOORNEW",59,0)
+ .S IEN=IEN+1,PSONEW("COSIGNING PROVIDER")=$S($G(PSONEW("COSIGNING PROVIDER")):PSONEW("COSIGNING PROVIDER"),1:$P(^("PS"),"^",8))
+"RTN","PSOORNEW",60,0)
+ .S ^TMP("PSOPO",$J,IEN,0)="       Cos-Provider: "_$P(^VA(200,PSONEW("COSIGNING PROVIDER"),0),"^")
+"RTN","PSOORNEW",61,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="(14)         Copies: "_$S($G(PSONEW("COPIES")):PSONEW("COPIES"),1:1)
+"RTN","PSOORNEW",62,0)
+ S PSONEW("REMARKS")=$S($G(PSONEW("REMARKS"))]"":PSONEW("REMARKS"),$P(OR0,"^",17)="C":"Administered in Clinic.",1:"")
+"RTN","PSOORNEW",63,0)
+ K PSONEW("ADMINCLINIC") S:$P(OR0,"^",17)="C" PSONEW("ADMINCLINIC")=1
+"RTN","PSOORNEW",64,0)
+ S IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="(15)        Remarks:"
+"RTN","PSOORNEW",65,0)
+ I $G(PSONEW("REMARKS"))]"" D
+"RTN","PSOORNEW",66,0)
+ .F SG=1:1:$L(PSONEW("REMARKS")) S:$L(^TMP("PSOPO",$J,IEN,0)_" "_$P(PSONEW("REMARKS")," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOPO",$J,IEN,0)," ",20)=" " D
+"RTN","PSOORNEW",67,0)
+ ..S:$P(PSONEW("REMARKS")," ",SG)'="" ^TMP("PSOPO",$J,IEN,0)=$G(^TMP("PSOPO",$J,IEN,0))_" "_$P(PSONEW("REMARKS")," ",SG)
+"RTN","PSOORNEW",68,0)
+ I $G(PSOSIGFL)!(PSODRUG("OI")'=$P(OR0,"^",8)) S PSONEW("CLERK CODE")=DUZ,PSORX("CLERK CODE")=$P(^VA(200,DUZ,0),"^"),VALMSG="This change will create a new prescription!"
+"RTN","PSOORNEW",69,0)
+ S $P(RN," ",35)=" ",IEN=IEN+1,^TMP("PSOPO",$J,IEN,0)="   Entry By: "_$P(^VA(200,PSONEW("CLERK CODE"),0),"^")_$E(RN,$L($P(^VA(200,PSONEW("CLERK CODE"),0),"^"))+1,35)
+"RTN","PSOORNEW",70,0)
+ S Y=$P(OR0,"^",12) X ^DD("DD") S ^TMP("PSOPO",$J,IEN,0)=^TMP("PSOPO",$J,IEN,0)_"Entry Date: "_$E($P(OR0,"^",12),4,5)_"/"_$E($P(OR0,"^",12),6,7)_"/"_$E($P(OR0,"^",12),2,3)_" "_$P(Y,"@",2) K RN
+"RTN","PSOORNEW",71,0)
+ I PSOLMC<2 D ^PSOLMPO1 S VALMBCK="Q",PSOLMC=0
+"RTN","PSOORNEW",72,0)
+ S:PSOLMC>1 VALMBCK="R"
+"RTN","PSOORNEW",73,0)
+ Q
+"RTN","PSOORNEW",74,0)
+ORCHK D PROVCOM^PSOORFI4,ORCHK^PSOORFI4
+"RTN","PSOORNEW",75,0)
+ Q
+"RTN","PSOORNEW",76,0)
+EDT D KV S DIR("A",1)="* Indicates which fields will create an new Order",DIR("A")="Select Field to Edit by number",DIR(0)="LO^1:15" D ^DIR Q:$D(DTOUT)!($D(DUOUT))
+"RTN","PSOORNEW",77,0)
+EDTSEL N LST,FLD,OUT D KV S OUT=0
+"RTN","PSOORNEW",78,0)
+ S PSONEW("FLD")=0
+"RTN","PSOORNEW",79,0)
+ I +Y S LST=Y D FULL^VALM1 N PSODOSE M PSODOSE=PSONEW D  G DSPL
+"RTN","PSOORNEW",80,0)
+ .F FLD=1:1:$L(LST,",") Q:$P(LST,",",FLD)']""!(OUT)  D @(+$P(LST,",",FLD)) D:$P(LST,",",FLD)=8 REF D KV
+"RTN","PSOORNEW",81,0)
+ E  S VALMBCK="" Q
+"RTN","PSOORNEW",82,0)
+ Q
+"RTN","PSOORNEW",83,0)
+ACP ;
+"RTN","PSOORNEW",84,0)
+ N PSOORNEW,DIR,Y S Y=0,PSOORNEW=1
+"RTN","PSOORNEW",85,0)
+ I $G(ORD),+$P($G(^PS(52.41,+ORD,0)),"^",23)=1 D  Q:$D(DIRUT)!'Y  D EN1^ORCFLAG(+$P($G(^PS(52.41,ORD,0)),"^")) H 1
+"RTN","PSOORNEW",86,0)
+ . D FULL^VALM1
+"RTN","PSOORNEW",87,0)
+ . I '$D(^XUSEC("PSORPH",DUZ)) D  S Y=0 Q
+"RTN","PSOORNEW",88,0)
+ . . S DIR("A",1)="Order must be unflagged by a pharmacist before it can be finished."
+"RTN","PSOORNEW",89,0)
+ . . S DIR("A",2)=""
+"RTN","PSOORNEW",90,0)
+ . . S DIR(0)="E",DIR("A")="Enter RETURN to continue" W !,$C(7) D ^DIR
+"RTN","PSOORNEW",91,0)
+ . . S VALMBCK="R"
+"RTN","PSOORNEW",92,0)
+ . D KV
+"RTN","PSOORNEW",93,0)
+ . S DIR("A",1)="This Order is flagged. In order to finish it"
+"RTN","PSOORNEW",94,0)
+ . S DIR("A",2)="you must unflag it first."
+"RTN","PSOORNEW",95,0)
+ . S DIR("A",3)=""
+"RTN","PSOORNEW",96,0)
+ . S DIR(0)="Y",DIR("A")="Unflag Order",DIR("B")="NO"
+"RTN","PSOORNEW",97,0)
+ . W ! D ^DIR I $D(DIRUT)!'Y S VALMBCK="Q"
+"RTN","PSOORNEW",98,0)
+ I $G(ORD),+$P($G(^PS(52.41,+ORD,0)),"^",23)=1 Q
+"RTN","PSOORNEW",99,0)
+ ;
+"RTN","PSOORNEW",100,0)
+ I $D(CLOZPAT),+$G(PSONEW("QTY"))=0 S VALMSG="Unable to calculate the quantity, enter a quantity" G DSPL
+"RTN","PSOORNEW",101,0)
+ S (PSODIR("DFLG"),PSORX("DFLG"),PSODIR("QFLD"))=0,ACP=1 D ORCHK
+"RTN","PSOORNEW",102,0)
+ G:$G(PSONEW("QFLG")) DSPL
+"RTN","PSOORNEW",103,0)
+ I $G(PSODIR("DFLG"))!$G(PSORX("DFLG")) Q
+"RTN","PSOORNEW",104,0)
+ I $G(PSONEW("FLD"))!($G(PSODRUG("NAME"))']"")!('$O(SIG(0))) G DSPL
+"RTN","PSOORNEW",105,0)
+ I $G(PSODRUG("NAME"))]"",'$G(ORCHK)!($G(ORDRG)'=PSODRUG("NAME")) D  I $G(PSORX("DFLG")) D CLEAN^PSOVER1 G DSPL
+"RTN","PSOORNEW",106,0)
+ . D POST^PSODRG S:'$G(PSORX("DFLG")) ORCHK=1,ORDRG=PSODRUG("NAME")
+"RTN","PSOORNEW",107,0)
+ D:'$G(PSORX("DFLG")) DOSCK^PSODOSUT("N") I $G(PSORX("DFLG")) G DSPL
+"RTN","PSOORNEW",108,0)
+ I '$D(PSONEW("RX #")) S PSOFROM="NEW",RTN=$S($P($G(PSOPAR),"^",7):"AUTO^PSONRXN",1:"MANUAL^PSONRXN") D @RTN Q:PSONEW("QFLG")  I '$P($G(PSOPAR),"^",7) S PSOX=PSONEW("RX #") D CHECK^PSONRXN
+"RTN","PSOORNEW",109,0)
+ D RXNCHK^PSOORNE1 I $G(PSONEW("QFLG")) S PSONEW("DFLG")=1 Q
+"RTN","PSOORNEW",110,0)
+ I DT>$$FMADD^XLFDT($P(OR0,"^",6),365) D EXPR^PSONEW2 G DSPL
+"RTN","PSOORNEW",111,0)
+ D STOP^PSONEW2,DISPLAY^PSONEW2,^PSONEWF
+"RTN","PSOORNEW",112,0)
+ I $G(PSOCPZ("DFLG")) W !!,"No action taken!",! K DIR S DIR(0)="E",DIR("?")="Press Return to continue",DIR("A")="Press Return to continue" D ^DIR,KV K PSOCPZ("DFLG"),DRET,PSOANSQD S VALMBCK="Q" Q
+"RTN","PSOORNEW",113,0)
+ ;
+"RTN","PSOORNEW",114,0)
+ K PSOCPZ("DFLG") D KV S DIR(0)="Y",DIR("A")="Are you sure you want to Accept this Order",DIR("B")="NO" D ^DIR I $D(DIRUT) D KV K DRET,PSOANSQ,PSOANSQD S VALMBCK="Q" Q
+"RTN","PSOORNEW",115,0)
+ D KV I 'Y K PSOANSQ G DSPL
+"RTN","PSOORNEW",116,0)
+ I $G(PSONEW("MAIL/WINDOW"))["W" D:$P($G(PSOPAR),"^",12)  S BINGCRT="Y",BINGRTE="W",PSORX("MAIL/WINDOW")="WINDOW" K RTN
+"RTN","PSOORNEW",117,0)
+ .W ! K DIR,DIRUT S DIR(0)="52,35O"
+"RTN","PSOORNEW",118,0)
+ .S:$G(PSORX("METHOD OF PICK-UP"))]"" DIR("B")=PSORX("METHOD OF PICK-UP") D ^DIR I $D(DIRUT) K DIR,DIRUT Q
+"RTN","PSOORNEW",119,0)
+ .S (PSONEW("METHOD OF PICK-UP"),PSORX("METHOD OF PICK-UP"))=Y K X,Y
+"RTN","PSOORNEW",120,0)
+ S PSONEW("POE")=1 K PSORX("DFLG"),PSONEW("DFLG") D EN^PSON52(.PSONEW) G:$G(PSONEW("DFLG")) ABORT D DCORD^PSONEW2 D:$G(PKI)=89802020 ALERT^PSOPKIV1
+"RTN","PSOORNEW",121,0)
+ ; - Possible Titration Rx?
+"RTN","PSOORNEW",122,0)
+ I $G(PSONEW("IRXN")) D MARK^PSOOTMRX(PSONEW("IRXN"),0)
+"RTN","PSOORNEW",123,0)
+ ;saves drug allergy order chks pso*7*390
+"RTN","PSOORNEW",124,0)
+ I $D(^TMP("PSODAOC",$J)) D
+"RTN","PSOORNEW",125,0)
+ .I $G(PSORX("DFLG")) K ^TMP("PSODAOC",$J) Q
+"RTN","PSOORNEW",126,0)
+ .S RXN=PSONEW("IRXN"),PSODAOC="Finished CPRS Rx "_$S($P(^PSRX(RXN,"STA"),"^")=4:"NON-VERIFIED ",1:"")_"Order Acceptance_OP"
+"RTN","PSOORNEW",127,0)
+ .D DAOC^PSONEW
+"RTN","PSOORNEW",128,0)
+ D NPSOSD^PSOUTIL(.PSONEW),FULL^VALM1 K PSORX("MAIL/WINDOW")
+"RTN","PSOORNEW",129,0)
+ D EOJ^PSONEW
+"RTN","PSOORNEW",130,0)
+ABORT S VALMBCK="Q",DIR(0)="E",DIR("?")="Press Return to continue",DIR("A")="Press Return to Continue" D ^DIR,CLEAN^PSOVER1,KV
+"RTN","PSOORNEW",131,0)
+ Q
+"RTN","PSOORNEW",132,0)
+KV K DIRUT,DUOUT,DTOUT,DIR,PSOEDDOS
+"RTN","PSOORNEW",133,0)
+ Q
+"RTN","PSOORNEW",134,0)
+REF ;
+"RTN","PSOORNEW",135,0)
+ ; Retrieving the Maximum Number of Refills allowed
+"RTN","PSOORNEW",136,0)
+ N MAXRF S MAXRF=$$MAXNUMRF^PSOUTIL(+$G(PSODRUG("IEN")),+$G(PSONEW("DAYS SUPPLY")),+$G(PSONEW("PATIENT STATUS")),.CLOZPAT)
+"RTN","PSOORNEW",137,0)
+ I ($G(PSONEW("# OF REFILLS"))'="")&($G(PSONEW("# OF REFILLS"))'>MAXRF) D
+"RTN","PSOORNEW",138,0)
+ . S PSONEW("N# REF")=PSONEW("# OF REFILLS")
+"RTN","PSOORNEW",139,0)
+ E  D
+"RTN","PSOORNEW",140,0)
+ . S (PSONEW("N# REF"),PSONEW("# OF REFILLS"))=MAXRF
+"RTN","PSOORNEW",141,0)
+ Q
+"RTN","PSOORNEW",142,0)
+1 I $P($G(OR0),"^",24) D  Q
+"RTN","PSOORNEW",143,0)
+ . W !!,"Digitally Signed Order - Orderable Item cannot be changed",! D PZ
+"RTN","PSOORNEW",144,0)
+ N PSOBDR,PSOBDRG S PSOBDRG=1 D 1^PSOORNW2 Q  ;oi
+"RTN","PSOORNEW",145,0)
+ ;
+"RTN","PSOORNEW",146,0)
+4 D INS^PSOORNW2 Q
+"RTN","PSOORNEW",147,0)
+ ;
+"RTN","PSOORNEW",148,0)
+3 I $G(LST)["3,",$P(OR0,"^",24) D  Q 
+"RTN","PSOORNEW",149,0)
+ . W !!,"Digitally Signed Order - Dose cannot be changed",! D PZ
+"RTN","PSOORNEW",150,0)
+ N PSOEDDOS S PSOEDDOS=1 D DOSE^PSOORED4(.PSONEW) Q
+"RTN","PSOORNEW",151,0)
+ ;
+"RTN","PSOORNEW",152,0)
+6 D 4^PSOORNW2 Q  ;idt
+"RTN","PSOORNEW",153,0)
+ ;
+"RTN","PSOORNEW",154,0)
+7 D 5^PSOORNW2 Q  ;fdt
+"RTN","PSOORNEW",155,0)
+ ;
+"RTN","PSOORNEW",156,0)
+5 D 3^PSOORNW2 Q  ;pstat
+"RTN","PSOORNEW",157,0)
+ ;
+"RTN","PSOORNEW",158,0)
+13 I $P($G(OR0),"^",24) D  Q
+"RTN","PSOORNEW",159,0)
+ . W !!,"Digitally Signed Order - Provider cannot be changed",! D PZ
+"RTN","PSOORNEW",160,0)
+ D 12^PSOORNW2 Q  ;doc
+"RTN","PSOORNEW",161,0)
+ ;
+"RTN","PSOORNEW",162,0)
+12 D 11^PSOORNW2 Q  ;cli
+"RTN","PSOORNEW",163,0)
+ ;
+"RTN","PSOORNEW",164,0)
+2 N PSOCSIG I '$G(PSOBDRG) N PSOBDR,PSOBDRG S PSOBDRG=1,PSOQFLG=0
+"RTN","PSOORNEW",165,0)
+ N CPRN S CPRN=+$P($G(OR0),"^",24) D 2^PSOORNW1 Q:$G(PSOQFLG)  D EN^PSODIAG  ;drg/ICD
+"RTN","PSOORNEW",166,0)
+ I $G(PSOCSIG) K PSOCSIG G 3
+"RTN","PSOORNEW",167,0)
+ Q
+"RTN","PSOORNEW",168,0)
+ ;
+"RTN","PSOORNEW",169,0)
+9 D 8^PSOORNW2 Q  ;qty
+"RTN","PSOORNEW",170,0)
+ ;
+"RTN","PSOORNEW",171,0)
+8 N CPRN S CPRN=+$P($G(OR0),"^",24) D 7^PSOORNW2 Q  ;ds
+"RTN","PSOORNEW",172,0)
+ ;
+"RTN","PSOORNEW",173,0)
+10 I $P($G(OR0),"^",24) D  Q
+"RTN","PSOORNEW",174,0)
+ . W !!,"Digitally Signed Order - Refills cannot be changed",! D PZ
+"RTN","PSOORNEW",175,0)
+ D 9^PSOORNW2 Q  ;#rfs
+"RTN","PSOORNEW",176,0)
+ ;
+"RTN","PSOORNEW",177,0)
+14 D 13^PSOORNW2 Q  ;cop
+"RTN","PSOORNEW",178,0)
+ ;
+"RTN","PSOORNEW",179,0)
+11 D 10^PSOORNW2 Q  ;m/w
+"RTN","PSOORNEW",180,0)
+ ;
+"RTN","PSOORNEW",181,0)
+15 D 14^PSOORNW2 Q  ;rem
+"RTN","PSOORNEW",182,0)
+ ;
+"RTN","PSOORNEW",183,0)
+DRGMSG ;
+"RTN","PSOORNEW",184,0)
+ F SG=1:1:$L($P(^PSDRUG(PSODRUG("IEN"),0),"^",10)) S:$L(^TMP("PSOPO",$J,IEN,0)_" "_$P($P(^PSDRUG(PSODRUG("IEN"),0),"^",10)," ",SG))>80 IEN=IEN+1,$P(^TMP("PSOPO",$J,IEN,0)," ",20)=" " D
+"RTN","PSOORNEW",185,0)
+ .S:$P($P(^PSDRUG(PSODRUG("IEN"),0),"^",10)," ",SG)'="" ^TMP("PSOPO",$J,IEN,0)=$G(^TMP("PSOPO",$J,IEN,0))_" "_$P($P(^PSDRUG(PSODRUG("IEN"),0),"^",10)," ",SG)
+"RTN","PSOORNEW",186,0)
+ K SG
+"RTN","PSOORNEW",187,0)
+ Q
+"RTN","PSOORNEW",188,0)
+ ;
+"RTN","PSOORNEW",189,0)
+PZ ;
+"RTN","PSOORNEW",190,0)
+ N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOORNEW",191,0)
+ Q
+"RTN","PSOSIG")
+0^2^B90439889^B65860748
+"RTN","PSOSIG",1,0)
+PSOSIG ;BIR/RTR-Utility to create SIG ;6/04/00
+"RTN","PSOSIG",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,99,114,391,313,282,455,446**;DEC 1997;Build 20
+"RTN","PSOSIG",3,0)
+ ;External reference to PS(51 supported by DBIA 2224
+"RTN","PSOSIG",4,0)
+ ;External reference to PS(51.1 supported by DBIA 2225
+"RTN","PSOSIG",5,0)
+ ;External reference to PSDRUG( supported by DBIA 221
+"RTN","PSOSIG",6,0)
+ ;
+"RTN","PSOSIG",7,0)
+EN(PSOSIGX) ;
+"RTN","PSOSIG",8,0)
+ N VARIABLE
+"RTN","PSOSIG",9,0)
+ Q
+"RTN","PSOSIG",10,0)
+SCH ;*282 Preserve old functionality
+"RTN","PSOSIG",11,0)
+ S SCHEX=$$SCHE(SCH)
+"RTN","PSOSIG",12,0)
+ Q
+"RTN","PSOSIG",13,0)
+ ;
+"RTN","PSOSIG",14,0)
+ ;SCHE is the new schedule expander
+"RTN","PSOSIG",15,0)
+SCHE(SCH) ;
+"RTN","PSOSIG",16,0)
+ ;SCH = Schedule entered
+"RTN","PSOSIG",17,0)
+ ;Returns Expanded Schedule, or ""
+"RTN","PSOSIG",18,0)
+ N SCHEX,SPCT
+"RTN","PSOSIG",19,0)
+ I SCH[""""!($A(SCH)=45)!(SCH?.E1C.E)!($L(SCH," ")>$S(SCH["PRN":4,1:3))!($L(SCH)>20)!($L(SCH)<1) K SCH Q ""
+"RTN","PSOSIG",20,0)
+ S SCH=$$UPPER(SCH)
+"RTN","PSOSIG",21,0)
+ S SPCT=0 F I=1:1:$L(SCH) I $E(SCH,I)=" " S SPCT=SPCT+1
+"RTN","PSOSIG",22,0)
+ S SCHEX=$$EXP(SCH) I SCHEX]"" Q SCHEX
+"RTN","PSOSIG",23,0)
+ Q:SPCT=0 SCH
+"RTN","PSOSIG",24,0)
+ Q $$SCHE($P(SCH," ",1,SPCT))_" "_$$SCHE($P(SCH," ",SPCT+1))
+"RTN","PSOSIG",25,0)
+EXP(X) ; expand based on 51.1 and 51
+"RTN","PSOSIG",26,0)
+ N PSIN,SCFLG,SCHEX
+"RTN","PSOSIG",27,0)
+ S PSIN=0 F  S PSIN=$O(^PS(51.1,"APPSJ",X,PSIN)) Q:'PSIN!$G(SCFLG)  I $P(^PS(51.1,PSIN,0),"^",8)'="" S SCHEX=$P($G(^(0)),"^",8),SCFLG=1
+"RTN","PSOSIG",28,0)
+ Q:$G(SCFLG) SCHEX
+"RTN","PSOSIG",29,0)
+ S PSIN=0 F  S PSIN=$O(^PS(51,"B",X,PSIN)) Q:'PSIN!$G(SCLFL)  I PSIN,($P(^PS(51,PSIN,0),"^",4)<2)&($P($G(^PS(51,"A",X)),"^")'="") S SCHEX=$P(^(X),"^"),SCFLG=1
+"RTN","PSOSIG",30,0)
+ Q:$G(SCFLG) SCHEX
+"RTN","PSOSIG",31,0)
+ Q ""
+"RTN","PSOSIG",32,0)
+ ;
+"RTN","PSOSIG",33,0)
+QTY(PSOQX) ; PSOQX - Array containing Rx information
+"RTN","PSOSIG",34,0)
+ N QDOSE,PSORXIEN,PSODSEDT,PSOOUTQT
+"RTN","PSOSIG",35,0)
+ K PSOQX("QTY")
+"RTN","PSOSIG",36,0)
+ S PSORXIEN=$S($G(PSOQX("IRXN")):+PSOQX("IRXN"),1:0)
+"RTN","PSOSIG",37,0)
+ S PSODSEDT=$S(PSORXIEN&$D(PSOQX(52,PSORXIEN,8)):1,'PSORXIEN&($G(PSOQX("FLD"))=8):1,1:0)  ; DAYS SUPPLY field edited
+"RTN","PSOSIG",38,0)
+ I 'PSORXIEN,$G(PSOQX("FLD"))=7 Q   ; QTY field being edite for Pending Order (do not ajust current QTY)
+"RTN","PSOSIG",39,0)
+ S PSOOUTQT=1
+"RTN","PSOSIG",40,0)
+QTYCP ;CPRS qty call comes through here
+"RTN","PSOSIG",41,0)
+ N PSQQUIT,QTSH,PSQ,PSQMIN,PSQMINZ,PSOQRND,PSOLOWER,PSOLOWX,PSOLOWXL,PSOLOWST
+"RTN","PSOSIG",42,0)
+ K PSOFRQ S PSQQUIT=0
+"RTN","PSOSIG",43,0)
+ I '$G(PSOCPRQT) S QDOSE=0 F PSQ=0:0 S PSQ=$O(PSOQX("DOSE",PSQ)) Q:'PSQ  S QDOSE=PSQ S:'$G(PSOQX("DOSE ORDERED",PSQ)) PSQQUIT=1
+"RTN","PSOSIG",44,0)
+ I '$G(PSOCPRQT) Q:PSQQUIT
+"RTN","PSOSIG",45,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIG",46,0)
+ Q:'$G(QDOSE)
+"RTN","PSOSIG",47,0)
+ G:QDOSE>1 COMP
+"RTN","PSOSIG",48,0)
+ Q:'$G(PSOQX("DOSE ORDERED",1))
+"RTN","PSOSIG",49,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))&('$G(PSOQX("DURATION",1)))
+"RTN","PSOSIG",50,0)
+ S PSOLOWER=0
+"RTN","PSOSIG",51,0)
+ I $G(PSOQX("DURATION",1)) D
+"RTN","PSOSIG",52,0)
+ .S PSOLOWX=$L(PSOQX("DURATION",1))
+"RTN","PSOSIG",53,0)
+ .S PSOLOWXL=$S($E(PSOQX("DURATION",1),PSOLOWX)="M":1,$E(PSOQX("DURATION",1),PSOLOWX)="H":60,$E(PSOQX("DURATION",1),PSOLOWX)="S":.01666,$E(PSOQX("DURATION",1),PSOLOWX)="W":10080,$E(PSOQX("DURATION",1),PSOLOWX)="L":43200,1:1440)
+"RTN","PSOSIG",54,0)
+ .S PSOLOWER=PSOLOWXL*(+$G(PSOQX("DURATION",1)))
+"RTN","PSOSIG",55,0)
+ S PSOLOWX=0 I +$G(PSOQX("DAYS SUPPLY")) S PSOLOWX=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIG",56,0)
+ Q:'$G(PSOLOWER)&('$G(PSOLOWX))
+"RTN","PSOSIG",57,0)
+ S QTSH=$G(PSOQX("SCHEDULE",1)) D QTS Q:PSQQUIT!('$G(PSOFRQ))
+"RTN","PSOSIG",58,0)
+ S PSOLOWST=$S('$G(PSOLOWER):$G(PSOLOWX),'$G(PSOLOWX):$G(PSOLOWER),$G(PSOLOWER)>$G(PSOLOWX):$G(PSOLOWX),$G(PSOLOWX)>$G(PSOLOWER):$G(PSOLOWER),$G(PSOLOWX)=$G(PSOLOWER):$G(PSOLOWER),1:0)
+"RTN","PSOSIG",59,0)
+ Q:'$G(PSOLOWST)
+"RTN","PSOSIG",60,0)
+ S PSQMIN=+$G(PSOLOWST)
+"RTN","PSOSIG",61,0)
+ S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIG",62,0)
+ S PSOQRND=PSQMINZ*+$G(PSOQX("DOSE ORDERED",1)) Q:'PSOQRND
+"RTN","PSOSIG",63,0)
+ ;If DAYS SUPPLY was edited by Pharmacy and previous quantity was calculated, don't calculate/update quantity automatically
+"RTN","PSOSIG",64,0)
+ I $G(PSODSEDT),'$$UPDQTY(PSOQRND+.9999\1) Q
+"RTN","PSOSIG",65,0)
+ D ROUND G QEND
+"RTN","PSOSIG",66,0)
+ Q
+"RTN","PSOSIG",67,0)
+COMP ;COMPLEX DOSE HERE
+"RTN","PSOSIG",68,0)
+ N PSOQEXC,PSOQAND,PSOQTHEN,PSQL,PSQMNL,PSQMNLX,PSODUTOT,PSODUDIF,PSODUMIS,PSODUREP,PSQ1,PSODUX,PSODUXX,PSODSMIN
+"RTN","PSOSIG",69,0)
+ ;PSODUTOT = TOTAL OF ALL DURATIONS
+"RTN","PSOSIG",70,0)
+ ;PSODUDIF = DIFF. OF DURATION VS DAYS SUPPLY
+"RTN","PSOSIG",71,0)
+ ;PSODUMIS = # OF SEQUENCES MISSING A DURATION IF >1 CAN'T DEFAULT
+"RTN","PSOSIG",72,0)
+ ;PSODUREP = SEQUENCE # THAT IS MISSING DURATION
+"RTN","PSOSIG",73,0)
+ ;PSODSMIN = MINUTES OF DAYS SUPPLY
+"RTN","PSOSIG",74,0)
+ S (PSODUTOT,PSODUDIF,PSODUMIS,PSODUREP,PSODSMIN,PSOQAND,PSOQTHEN,PSOQEXC)=0
+"RTN","PSOSIG",75,0)
+ F PSQL=1:1:QDOSE S:$G(PSOQX("CONJUNCTION",PSQL))["A" PSOQAND=1 S:$G(PSOQX("CONJUNCTION",PSQL))["T" PSOQTHEN=1 S:$G(PSOQX("CONJUNCTION",PSQL))["X" PSOQEXC=1
+"RTN","PSOSIG",76,0)
+ I $G(PSOQEXC) G QEND
+"RTN","PSOSIG",77,0)
+ I $G(PSOQAND) G COMP^PSOSIGCX
+"RTN","PSOSIG",78,0)
+ F PSQ1=1:1:QDOSE D  Q:PSODUMIS>1
+"RTN","PSOSIG",79,0)
+ .I '$G(PSOQX("DURATION",PSQ1)) S PSODUMIS=PSODUMIS+1,PSODUREP=PSQ1 Q
+"RTN","PSOSIG",80,0)
+ .S PSODUX=$L(PSOQX("DURATION",PSQ1))
+"RTN","PSOSIG",81,0)
+ .S PSODUXX=$S($E(PSOQX("DURATION",PSQ1),PSODUX)="M":1,$E(PSOQX("DURATION",PSQ1),PSODUX)="H":60,$E(PSOQX("DURATION",PSQ1),PSODUX)="S":.01666,$E(PSOQX("DURATION",PSQ1),PSODUX)="W":10080,$E(PSOQX("DURATION",PSQ1),PSODUX)="L":43200,1:1440)
+"RTN","PSOSIG",82,0)
+ .S PSODUTOT=PSODUTOT+(PSODUXX*(+$G(PSOQX("DURATION",PSQ1))))
+"RTN","PSOSIG",83,0)
+ G:PSODUMIS>1 QEND ; More than 1 sequence missing a duration
+"RTN","PSOSIG",84,0)
+ I $G(PSODUMIS),'$G(PSOQX("DAYS SUPPLY")) G QEND ; missing 1 duration, no days supply
+"RTN","PSOSIG",85,0)
+ S PSODSMIN=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIG",86,0)
+ I $G(PSODSMIN),$G(PSODSMIN)<$G(PSODUTOT) G QEND
+"RTN","PSOSIG",87,0)
+ I '$G(PSODUMIS),$G(PSODSMIN),$G(PSODUTOT)>$G(PSODSMIN) G QEND ; no missing durations, but total durations are greater than days supply
+"RTN","PSOSIG",88,0)
+ I $G(PSODUMIS),$G(PSODSMIN),$G(PSODSMIN)'>$G(PSODUTOT) G QEND ; 1 missing duration, and total of other durations are not less than days supply
+"RTN","PSOSIG",89,0)
+ I '$G(PSODSMIN),$G(PSODUMIS) G QEND ; no days supply, missing a duration
+"RTN","PSOSIG",90,0)
+ I $G(PSODUREP) S PSODUDIF=$G(PSODSMIN)-$G(PSODUTOT)
+"RTN","PSOSIG",91,0)
+ F PSQ=1:1:QDOSE D  Q:$G(PSQQUIT)
+"RTN","PSOSIG",92,0)
+ .I '$G(PSOQX("DOSE ORDERED",PSQ))!($G(PSOQX("SCHEDULE",PSQ))="") S PSQQUIT=1 Q
+"RTN","PSOSIG",93,0)
+ .S QTSH=$G(PSOQX("SCHEDULE",PSQ)) D QTS S:'$G(PSOFRQ) PSQQUIT=1 Q:$G(PSQQUIT)
+"RTN","PSOSIG",94,0)
+ .I $G(PSOQX("DURATION",PSQ)) S PSQMNL=$L(PSOQX("DURATION",PSQ)) D
+"RTN","PSOSIG",95,0)
+ ..S PSQMNLX=$S($E(PSOQX("DURATION",PSQ),PSQMNL)="M":1,$E(PSOQX("DURATION",PSQ),PSQMNL)="H":60,$E(PSOQX("DURATION",PSQ),PSQMNL)="S":.01666,$E(PSOQX("DURATION",PSQ),PSQMNL)="W":10080,$E(PSOQX("DURATION",PSQ),PSQMNL)="L":43200,1:1440)
+"RTN","PSOSIG",96,0)
+ ..S PSQMIN=PSQMNLX*(+$G(PSOQX("DURATION",PSQ)))
+"RTN","PSOSIG",97,0)
+ .I '$G(PSOQX("DURATION",PSQ)) S PSQMIN=$G(PSODUDIF)
+"RTN","PSOSIG",98,0)
+ .S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIG",99,0)
+ .S PSOQRND=$S('$G(PSOQRND):PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ)),1:$G(PSOQRND)+(PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ))))
+"RTN","PSOSIG",100,0)
+ I $G(PSQQUIT) G QEND
+"RTN","PSOSIG",101,0)
+ ;If DAYS SUPPLY was edited by Pharmacy, don't re-calculate QTY automatically for Digitally Signed Pending Orders
+"RTN","PSOSIG",102,0)
+ I $G(PSODSEDT),$G(QTYHLD),$G(PSOFDR),$P($G(OR0),"^",24) D  Q
+"RTN","PSOSIG",103,0)
+ . W !!,"The Quantity (",QTYHLD,") has not been changed."
+"RTN","PSOSIG",104,0)
+ . W !,"Please review and update it if necessary.",!,$C(7)
+"RTN","PSOSIG",105,0)
+ . N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOSIG",106,0)
+ I $G(PSOQRND) D ROUND
+"RTN","PSOSIG",107,0)
+ G QEND
+"RTN","PSOSIG",108,0)
+QTS ;*282 Preserve Old Functionality
+"RTN","PSOSIG",109,0)
+ S PSOFRQ=$$QTSCH(QTSH)
+"RTN","PSOSIG",110,0)
+ I '$G(PSOFRQ) S PSQQUIT=1
+"RTN","PSOSIG",111,0)
+ Q
+"RTN","PSOSIG",112,0)
+ ;
+"RTN","PSOSIG",113,0)
+QTSCH(QTSH) ; 
+"RTN","PSOSIG",114,0)
+ ; Return Frequency for Schedule QTSH
+"RTN","PSOSIG",115,0)
+ ; Otherwise return ""
+"RTN","PSOSIG",116,0)
+ N PSOFRQ,SPCT,FOUND
+"RTN","PSOSIG",117,0)
+ Q:$G(QTSH)="" ""
+"RTN","PSOSIG",118,0)
+ Q:$E(QTSH,1)=" " ""
+"RTN","PSOSIG",119,0)
+ S QTSH=$$UPPER(QTSH)
+"RTN","PSOSIG",120,0)
+ S SPCT=1,PSOFRQ=0 F I=1:1:$L(QTSH) I $E(QTSH,I)=" " S SPCT=SPCT+1
+"RTN","PSOSIG",121,0)
+ F I=0:1:SPCT-1 S SCHTMP=$P(QTSH," ",1,SPCT-I) Q:PSOFRQ  D
+"RTN","PSOSIG",122,0)
+ . F II=0:0 S II=$O(^PS(51.1,"APPSJ",SCHTMP,II)) Q:'II!PSOFRQ  S PSOFRQ=$P(^PS(51.1,II,0),"^",3)
+"RTN","PSOSIG",123,0)
+ Q:PSOFRQ PSOFRQ
+"RTN","PSOSIG",124,0)
+  F I=0:1:SPCT-1 S SCHTMP=$P(QTSH," ",1,SPCT-I) Q:PSOFRQ  D
+"RTN","PSOSIG",125,0)
+ . F II=0:0 S II=$O(^PS(51,"B",SCHTMP,II)) Q:'II!PSOFRQ  I $P(^PS(51,II,0),"^",4)<2 S PSOFRQ=$P(^PS(51,II,0),"^",8)
+"RTN","PSOSIG",126,0)
+ Q:PSOFRQ PSOFRQ
+"RTN","PSOSIG",127,0)
+ Q ""
+"RTN","PSOSIG",128,0)
+ ;
+"RTN","PSOSIG",129,0)
+QEND ;
+"RTN","PSOSIG",130,0)
+ ; PSOMTFLG variable indicates a Maintenance Rx (Titration/Maintenance)
+"RTN","PSOSIG",131,0)
+ K PSOFRQ
+"RTN","PSOSIG",132,0)
+ I $G(PSOOUTQT),$G(QTYHLD),$G(PSOQX("QTY")),$G(QTYHLD)'=$G(PSOQX("QTY")) W !!,"Quantity has been changed from "_QTYHLD_" to "_PSOQX("QTY") D  I '$G(PSOMTFLG) W ! N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOSIG",133,0)
+ .I $G(PSONEW("FLD"))=8,$P($G(OR0),"^",24),$G(PSODRUG("IEN")),$D(^PSDRUG(+$G(PSODRUG("IEN")),0)) D
+"RTN","PSOSIG",134,0)
+ ..I $P(^PSDRUG(PSODRUG("IEN"),0),"^",3)[2!($P(^PSDRUG(PSODRUG("IEN"),0),"^",3)["F") Q
+"RTN","PSOSIG",135,0)
+ ..N ZRFA S ZRFA=$S($G(CLOZPAT)=2&(PSOQX("DAYS SUPPLY")=14):1,$G(CLOZPAT)=2&(PSOQX("DAYS SUPPLY")=7):3,$G(CLOZPAT)=1&(PSOQX("DAYS SUPPLY")=7):1,$D(CLOZPAT):0,1:5)
+"RTN","PSOSIG",136,0)
+ ..N ZREF,ZTQ S ZREF=QTYHLD\PSOQX("QTY") I ZREF>0 D
+"RTN","PSOSIG",137,0)
+ ...S ZTQ=QTYHLD*(PSOQX("# OF REFILLS")+1),ZTQ=ZTQ-PSOQX("QTY"),ZREF=ZTQ\PSOQX("QTY") S:ZREF>ZRFA ZREF=ZRFA
+"RTN","PSOSIG",138,0)
+ ...I ZREF'=PSOQX("# OF REFILLS") W !,"# of Refills has been changed from "_PSOQX("# OF REFILLS")_" to "_ZREF S PSOQX("# OF REFILLS")=ZREF
+"RTN","PSOSIG",139,0)
+ Q
+"RTN","PSOSIG",140,0)
+ROUND ;
+"RTN","PSOSIG",141,0)
+ Q:'$G(PSOQRND)
+"RTN","PSOSIG",142,0)
+ I PSOQRND'["." S PSOQX("QTY")=PSOQRND Q
+"RTN","PSOSIG",143,0)
+ S PSOQX("QTY")=$P(PSOQRND,".")+1
+"RTN","PSOSIG",144,0)
+ Q
+"RTN","PSOSIG",145,0)
+DAY(DATE) ;First 5 digits of FileMan date
+"RTN","PSOSIG",146,0)
+ N X
+"RTN","PSOSIG",147,0)
+ I DATE'?5N Q -1
+"RTN","PSOSIG",148,0)
+ S X=$E(DATE,4,5) I X<1!(X>12) Q -1
+"RTN","PSOSIG",149,0)
+ S X=DATE+1+(X=12*88)_"01"
+"RTN","PSOSIG",150,0)
+ Q $E($$FMADD^XLFDT(X,-1),6,7)
+"RTN","PSOSIG",151,0)
+ ;
+"RTN","PSOSIG",152,0)
+QTYX(PSOQX) ;
+"RTN","PSOSIG",153,0)
+ N PSOQLP,PSOQLN,PSOQAR,PSOCPRQT,QDOSE,QDOSEX S PSOCPRQT=1 F PSOQLP=0:0 S PSOQLP=$O(PSOQX("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIG",154,0)
+ .S PSOQAR("DURATION",PSOQLP)=$G(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIG",155,0)
+ .I $E(PSOQX("DURATION",PSOQLP))?1A S PSOQLN=$L(PSOQX("DURATION",PSOQLP)) S PSOQX("DURATION",PSOQLP)=$E(PSOQX("DURATION",PSOQLP),2,PSOQLN)_$E(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIG",156,0)
+ S QDOSE=0 F QDOSEX=0:0 S QDOSEX=$O(PSOQX("DOSE ORDERED",QDOSEX)) Q:'QDOSEX  S QDOSE=QDOSE+1
+"RTN","PSOSIG",157,0)
+ I '$G(PSOQX("QTY")) D QTYCP G QPASS
+"RTN","PSOSIG",158,0)
+ D QTYCP^PSOSIGDS
+"RTN","PSOSIG",159,0)
+QPASS F PSOQLP=0:0 S PSOQLP=$O(PSOQAR("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIG",160,0)
+ .S PSOQX("DURATION",PSOQLP)=$G(PSOQAR("DURATION",PSOQLP))
+"RTN","PSOSIG",161,0)
+ K PSOCPRQT
+"RTN","PSOSIG",162,0)
+ Q
+"RTN","PSOSIG",163,0)
+DAYS(PSOQX) ;Entry point for Days Supply calc for PSO
+"RTN","PSOSIG",164,0)
+ ;Kill days supply here
+"RTN","PSOSIG",165,0)
+ Q:'$G(PSOQX("QTY"))
+"RTN","PSOSIG",166,0)
+ D QTYOPS^PSOSIGDS
+"RTN","PSOSIG",167,0)
+ Q
+"RTN","PSOSIG",168,0)
+ ;
+"RTN","PSOSIG",169,0)
+UPDQTY(NEWQTY) ; If DAYS SUPPLY is being edited and previous QTY was not calculated, don't calculate and update QTY
+"RTN","PSOSIG",170,0)
+ ; Also, if digitally signed, do not automatically calculate and update quantity if QTY increases
+"RTN","PSOSIG",171,0)
+ ; Input: NEWQTY - Newly Calculated Quantity
+"RTN","PSOSIG",172,0)
+ ;Output: 1: YES - Update Rx with re-calculated QTY / 0: NO - Don't update Rx with re-calculated QTY
+"RTN","PSOSIG",173,0)
+ N UPDQTY,PSOFREQ,PSOOLDDS,PSONEWDS,PSOOLDQT,PSODOSOR,PSODUR
+"RTN","PSOSIG",174,0)
+ S UPDQTY=1 I 'NEWQTY Q UPDQTY
+"RTN","PSOSIG",175,0)
+ S PSOOLDDS=$G(PSOQX("OLD DAYS SUPPLY")) I 'PSOOLDDS Q UPDQTY ; DAYS SUPPLY value prior to edit
+"RTN","PSOSIG",176,0)
+ S PSONEWDS=$G(PSOQX("DAYS SUPPLY")) I 'PSONEWDS Q UPDQTY ; New DAYS SUPPLY value
+"RTN","PSOSIG",177,0)
+ S PSOOLDQT=$G(QTYHLD) I 'PSOOLDQT Q UPDQTY ; QTY on file, possibly calculated
+"RTN","PSOSIG",178,0)
+ S PSOFREQ=$$SCHFREQ(),PSODOSOR=$G(PSOQX("DOSE ORDERED",1))
+"RTN","PSOSIG",179,0)
+ S PSODUR=$G(PSOQX("DURATION",1)) I PSODUR,PSODUR<PSOOLDDS S PSOOLDDS=PSODUR
+"RTN","PSOSIG",180,0)
+ ;
+"RTN","PSOSIG",181,0)
+ ;Checking whether current QTY was previously calculated, if not don't update with new QTY
+"RTN","PSOSIG",182,0)
+ I (PSODOSOR<1)!(PSOFREQ>1440) D
+"RTN","PSOSIG",183,0)
+ . ;Different calculation for doses of less than one QTY (e.g., 1/2 tablet) OR frequency lower than every 24hrs
+"RTN","PSOSIG",184,0)
+ . I PSOFREQ,(((PSOOLDDS*(1440/PSOFREQ))*PSODOSOR)+.9\1)'=PSOOLDQT S UPDQTY=0
+"RTN","PSOSIG",185,0)
+ E  D
+"RTN","PSOSIG",186,0)
+ . ;Checking whether current QTY was previously calculated
+"RTN","PSOSIG",187,0)
+ . I ((NEWQTY/PSONEWDS)'=(PSOOLDQT/PSOOLDDS)) S UPDQTY=0
+"RTN","PSOSIG",188,0)
+ ;
+"RTN","PSOSIG",189,0)
+ ;QTY is increasing for a CS Rx/Order, so don't update with new QTY
+"RTN","PSOSIG",190,0)
+ I ($G(PSOFDR)&$P($G(OR0),"^",24)&(NEWQTY>PSOOLDQT)) S UPDQTY=0
+"RTN","PSOSIG",191,0)
+ ;
+"RTN","PSOSIG",192,0)
+ I 'UPDQTY D
+"RTN","PSOSIG",193,0)
+ . W !!,"The Quantity (",PSOOLDQT,") has not been changed."
+"RTN","PSOSIG",194,0)
+ . W !,"Please review and update it if necessary.",!,$C(7)
+"RTN","PSOSIG",195,0)
+ . N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOSIG",196,0)
+ Q UPDQTY
+"RTN","PSOSIG",197,0)
+ ;
+"RTN","PSOSIG",198,0)
+SCHFREQ() ; Returns the Frequency (in minutes) for the schedule
+"RTN","PSOSIG",199,0)
+ ; Output: SCHFREQ - Schedule Frequency (in minutes)
+"RTN","PSOSIG",200,0)
+ N SCHED,SCHEDIEN
+"RTN","PSOSIG",201,0)
+ S SCHED=$G(PSOQX("SCHEDULE",1)) I SCHED="" Q 0
+"RTN","PSOSIG",202,0)
+ S SCHEDIEN=$O(^PS(51.1,"B",SCHED,0)) I SCHEDIEN Q $$GET1^DIQ(51.1,SCHEDIEN,2)
+"RTN","PSOSIG",203,0)
+ S SCHEDIEN=$O(^PS(51,"B",SCHED,0)) I SCHEDIEN Q $$GET1^DIQ(51,SCHEDIEN,31)
+"RTN","PSOSIG",204,0)
+ Q 0
+"RTN","PSOSIG",205,0)
+ ;
+"RTN","PSOSIG",206,0)
+UPPER(PSOSCUP) ;
+"RTN","PSOSIG",207,0)
+ Q $TR(PSOSCUP,"abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+"RTN","PSOSIGCX")
+0^6^B34720855^B33594823
+"RTN","PSOSIGCX",1,0)
+PSOSIGCX ;BIR/RTR-Utility to calculate quantity ;3/23/11 8:24am
+"RTN","PSOSIGCX",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,282,446**;DEC 1997;Build 20
+"RTN","PSOSIGCX",3,0)
+ ;External reference to PS(51 supported by DBIA 2224
+"RTN","PSOSIGCX",4,0)
+ ;External reference to PS(51.1 supported by DBIA 2225
+"RTN","PSOSIGCX",5,0)
+ ;
+"RTN","PSOSIGCX",6,0)
+EN(PSOSIGX) ;
+"RTN","PSOSIGCX",7,0)
+ N VARIABLE
+"RTN","PSOSIGCX",8,0)
+ Q
+"RTN","PSOSIGCX",9,0)
+SCH ;*282 Centralized
+"RTN","PSOSIGCX",10,0)
+ D SCH^PSOSIG
+"RTN","PSOSIGCX",11,0)
+ Q
+"RTN","PSOSIGCX",12,0)
+QTY(PSOQX) ;
+"RTN","PSOSIGCX",13,0)
+ N QDOSE
+"RTN","PSOSIGCX",14,0)
+QTYCP ;CPRS qty call comes through here
+"RTN","PSOSIGCX",15,0)
+ N PSQQUIT,QTSH,PSQ,PSQMIN,PSQMINZ,PSOQRND,PSOLOWER,PSOLOWX,PSOLOWXL,PSOLOWST
+"RTN","PSOSIGCX",16,0)
+ K PSOFRQ S PSQQUIT=0
+"RTN","PSOSIGCX",17,0)
+ I '$G(PSOCPRQT) S QDOSE=0 F PSQ=0:0 S PSQ=$O(PSOQX("DOSE",PSQ)) Q:'PSQ  S QDOSE=PSQ S:'$G(PSOQX("DOSE ORDERED",PSQ)) PSQQUIT=1
+"RTN","PSOSIGCX",18,0)
+ ;Q:PSQQUIT!('QDOSE)
+"RTN","PSOSIGCX",19,0)
+ I '$G(PSOCPRQT) Q:PSQQUIT
+"RTN","PSOSIGCX",20,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGCX",21,0)
+ Q:'$G(QDOSE)
+"RTN","PSOSIGCX",22,0)
+ G:QDOSE>1 COMP
+"RTN","PSOSIGCX",23,0)
+ Q:'$G(PSOQX("DOSE ORDERED",1))
+"RTN","PSOSIGCX",24,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))&('$G(PSOQX("DURATION",1)))
+"RTN","PSOSIGCX",25,0)
+ S PSOLOWER=0
+"RTN","PSOSIGCX",26,0)
+ I $G(PSOQX("DURATION",1)) D
+"RTN","PSOSIGCX",27,0)
+ .S PSOLOWX=$L(PSOQX("DURATION",1))
+"RTN","PSOSIGCX",28,0)
+ .S PSOLOWXL=$S($E(PSOQX("DURATION",1),PSOLOWX)="M":1,$E(PSOQX("DURATION",1),PSOLOWX)="H":60,$E(PSOQX("DURATION",1),PSOLOWX)="S":.01666,$E(PSOQX("DURATION",1),PSOLOWX)="W":10080,$E(PSOQX("DURATION",1),PSOLOWX)="L":43200,1:1440)
+"RTN","PSOSIGCX",29,0)
+ .S PSOLOWER=PSOLOWXL*(+$G(PSOQX("DURATION",1)))
+"RTN","PSOSIGCX",30,0)
+ S PSOLOWX=0 I +$G(PSOQX("DAYS SUPPLY")) S PSOLOWX=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGCX",31,0)
+ Q:'$G(PSOLOWER)&('$G(PSOLOWX))
+"RTN","PSOSIGCX",32,0)
+ S QTSH=$G(PSOQX("SCHEDULE",1)) D QTS Q:PSQQUIT!('$G(PSOFRQ))
+"RTN","PSOSIGCX",33,0)
+ S PSOLOWST=$S('$G(PSOLOWER):$G(PSOLOWX),'$G(PSOLOWX):$G(PSOLOWER),$G(PSOLOWER)>$G(PSOLOWX):$G(PSOLOWX),$G(PSOLOWX)>$G(PSOLOWER):$G(PSOLOWER),$G(PSOLOWX)=$G(PSOLOWER):$G(PSOLOWER),1:0)
+"RTN","PSOSIGCX",34,0)
+ Q:'$G(PSOLOWST)
+"RTN","PSOSIGCX",35,0)
+ S PSQMIN=+$G(PSOLOWST)
+"RTN","PSOSIGCX",36,0)
+ S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIGCX",37,0)
+ S PSOQRND=PSQMINZ*+$G(PSOQX("DOSE ORDERED",1)) Q:'PSOQRND
+"RTN","PSOSIGCX",38,0)
+ D ROUND G QEND
+"RTN","PSOSIGCX",39,0)
+ Q
+"RTN","PSOSIGCX",40,0)
+COMP ;COMPLEX DOSE HERE - ALL ANDS
+"RTN","PSOSIGCX",41,0)
+ ;N PSOQAND,PSQL,PSQMNL,PSQMNLX,PSODUTOT,PSODUDIF,PSODUMIS,PSODUREP,PSQ1,PSODUX,PSODUXX,PSODSMIN
+"RTN","PSOSIGCX",42,0)
+ ;PSODUTOT = TOTAL OF ALL DURATIONS
+"RTN","PSOSIGCX",43,0)
+ ;PSODUDIF = DIFF. OF DURATION VS DAYS SUPPLY
+"RTN","PSOSIGCX",44,0)
+ ;PSODUMIS = # OF SEQUENCES MISSING A DURATION IF >1 CAN'T DEFAULT
+"RTN","PSOSIGCX",45,0)
+ ;PSODUREP = SEQUENCE # THAT IS MISSING DURATION
+"RTN","PSOSIGCX",46,0)
+ ;PSODSMIN = MINUTES OF DAYS SUPPLY
+"RTN","PSOSIGCX",47,0)
+ ;PSODSAME = FLAG THAT TELL IF DURATIONS ARE THE SAME
+"RTN","PSOSIGCX",48,0)
+ ;PSODURT = DURATION MINUTES FOR COMPARE
+"RTN","PSOSIGCX",49,0)
+ I $G(PSOQTHEN) G COMP^PSOSIGTX
+"RTN","PSOSIGCX",50,0)
+ N PSODUMSS,PSODSAME,PSODURT S (PSODUMSS,PSODSAME,PSODURT)=0
+"RTN","PSOSIGCX",51,0)
+ F PSQ1=1:1:QDOSE D
+"RTN","PSOSIGCX",52,0)
+ .I '$G(PSOQX("DURATION",PSQ1)) S PSODUMIS=PSODUMIS+1,PSODUREP=PSQ1 Q
+"RTN","PSOSIGCX",53,0)
+ .S PSODUX=$L(PSOQX("DURATION",PSQ1))
+"RTN","PSOSIGCX",54,0)
+ .S PSODUMSS=1
+"RTN","PSOSIGCX",55,0)
+ .S PSODUXX=$S($E(PSOQX("DURATION",PSQ1),PSODUX)="M":1,$E(PSOQX("DURATION",PSQ1),PSODUX)="H":60,$E(PSOQX("DURATION",PSQ1),PSODUX)="S":.01666,$E(PSOQX("DURATION",PSQ1),PSODUX)="W":10080,$E(PSOQX("DURATION",PSQ1),PSODUX)="L":43200,1:1440)
+"RTN","PSOSIGCX",56,0)
+ .S PSODUTOT=PSODUTOT+(PSODUXX*(+$G(PSOQX("DURATION",PSQ1))))
+"RTN","PSOSIGCX",57,0)
+ .I '$G(PSODSAME),$G(PSODURT),PSODURT'=(PSODUXX*(+$G(PSOQX("DURATION",PSQ1)))) S PSODSAME=1
+"RTN","PSOSIGCX",58,0)
+ .S PSODURT=(PSODUXX*(+$G(PSOQX("DURATION",PSQ1))))
+"RTN","PSOSIGCX",59,0)
+ I '$G(PSOQX("DAYS SUPPLY")) G QEND ; missing Days Supply
+"RTN","PSOSIGCX",60,0)
+ S PSODSMIN=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGCX",61,0)
+ I PSODUMIS,PSODSAME G QEND ; Missing Durations, other are different
+"RTN","PSOSIGCX",62,0)
+ I 'PSODUMIS,PSODSAME,$G(PSODUTOT)>PSODSMIN G QEND ; Every sequence has a duration, some are different, and the total is greater than Days Supply
+"RTN","PSOSIGCX",63,0)
+ I 'PSODSAME,PSODURT>PSODSMIN G QEND ; All have a duration, and it's the same, but it's greater than Days Supply, or Missing Durations with other duration the same but greater than Days Supply
+"RTN","PSOSIGCX",64,0)
+ F PSQ=1:1:QDOSE D  Q:$G(PSQQUIT)
+"RTN","PSOSIGCX",65,0)
+ .I '$G(PSOQX("DOSE ORDERED",PSQ))!($G(PSOQX("SCHEDULE",PSQ))="") S PSQQUIT=1 Q
+"RTN","PSOSIGCX",66,0)
+ .S QTSH=$G(PSOQX("SCHEDULE",PSQ)) D QTS S:'$G(PSOFRQ) PSQQUIT=1 Q:$G(PSQQUIT)
+"RTN","PSOSIGCX",67,0)
+ .I $G(PSOQX("DURATION",PSQ)) S PSQMNL=$L(PSOQX("DURATION",PSQ)) D
+"RTN","PSOSIGCX",68,0)
+ ..S PSQMNLX=$S($E(PSOQX("DURATION",PSQ),PSQMNL)="M":1,$E(PSOQX("DURATION",PSQ),PSQMNL)="H":60,$E(PSOQX("DURATION",PSQ),PSQMNL)="S":.01666,$E(PSOQX("DURATION",PSQ),PSQMNL)="W":10080,$E(PSOQX("DURATION",PSQ),PSQMNL)="L":43200,1:1440)
+"RTN","PSOSIGCX",69,0)
+ ..S PSQMIN=PSQMNLX*(+$G(PSOQX("DURATION",PSQ)))
+"RTN","PSOSIGCX",70,0)
+ .I '$G(PSOQX("DURATION",PSQ)) S PSQMIN=$S($G(PSODURT)&('$G(PSODSAME)):$G(PSODURT),1:$G(PSODSMIN))
+"RTN","PSOSIGCX",71,0)
+ .S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIGCX",72,0)
+ .S PSOQRND=$S('$G(PSOQRND):PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ)),1:$G(PSOQRND)+(PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ))))
+"RTN","PSOSIGCX",73,0)
+ I $G(PSQQUIT) G QEND
+"RTN","PSOSIGCX",74,0)
+ ;
+"RTN","PSOSIGCX",75,0)
+ ;If DAYS SUPPLY was edited by Pharmacy, don't re-calculate QTY automatically for Digitally Signed Pending Orders
+"RTN","PSOSIGCX",76,0)
+ I $G(PSODSEDT),$G(QTYHLD),$G(PSOFDR),$P($G(OR0),"^",24) D  Q
+"RTN","PSOSIGCX",77,0)
+ . W !!,"The Quantity (",QTYHLD,") has not been changed."
+"RTN","PSOSIGCX",78,0)
+ . W !,"Please review and update it if necessary.",!,$C(7)
+"RTN","PSOSIGCX",79,0)
+ . N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOSIGCX",80,0)
+ I $G(PSOQRND) D ROUND
+"RTN","PSOSIGCX",81,0)
+ G QEND
+"RTN","PSOSIGCX",82,0)
+QTS ;*282 Centralized call
+"RTN","PSOSIGCX",83,0)
+ D QTS^PSOSIG
+"RTN","PSOSIGCX",84,0)
+ Q
+"RTN","PSOSIGCX",85,0)
+QEND ;
+"RTN","PSOSIGCX",86,0)
+ K PSOFRQ
+"RTN","PSOSIGCX",87,0)
+ Q
+"RTN","PSOSIGCX",88,0)
+ROUND ;
+"RTN","PSOSIGCX",89,0)
+ Q:'$G(PSOQRND)
+"RTN","PSOSIGCX",90,0)
+ I PSOQRND'["." S PSOQX("QTY")=PSOQRND Q
+"RTN","PSOSIGCX",91,0)
+ S PSOQX("QTY")=$P(PSOQRND,".")+1
+"RTN","PSOSIGCX",92,0)
+ Q
+"RTN","PSOSIGCX",93,0)
+DAY(DATE) ;First 5 digits of FileMan date
+"RTN","PSOSIGCX",94,0)
+ N X
+"RTN","PSOSIGCX",95,0)
+ I DATE'?5N Q -1
+"RTN","PSOSIGCX",96,0)
+ S X=$E(DATE,4,5) I X<1!(X>12) Q -1
+"RTN","PSOSIGCX",97,0)
+ S X=DATE+1+(X=12*88)_"01"
+"RTN","PSOSIGCX",98,0)
+ Q $E($$FMADD^XLFDT(X,-1),6,7)
+"RTN","PSOSIGCX",99,0)
+ ;
+"RTN","PSOSIGCX",100,0)
+QTYX(PSOQX) ;
+"RTN","PSOSIGCX",101,0)
+ N PSOQLP,PSOQLN,PSOQAR,PSOCPRQT,QDOSE,QDOSEX S PSOCPRQT=1 F PSOQLP=0:0 S PSOQLP=$O(PSOQX("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIGCX",102,0)
+ .S PSOQAR("DURATION",PSOQLP)=$G(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIGCX",103,0)
+ .I $E(PSOQX("DURATION",PSOQLP))?1A S PSOQLN=$L(PSOQX("DURATION",PSOQLP)) S PSOQX("DURATION",PSOQLP)=$E(PSOQX("DURATION",PSOQLP),2,PSOQLN)_$E(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIGCX",104,0)
+ S QDOSE=0 F QDOSEX=0:0 S QDOSEX=$O(PSOQX("DOSE ORDERED",QDOSEX)) Q:'QDOSEX  S QDOSE=QDOSE+1
+"RTN","PSOSIGCX",105,0)
+ I '$G(PSOQX("QTY")) D QTYCP G QPASS
+"RTN","PSOSIGCX",106,0)
+ D QTYCP^PSOSIGDS
+"RTN","PSOSIGCX",107,0)
+QPASS F PSOQLP=0:0 S PSOQLP=$O(PSOQAR("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIGCX",108,0)
+ .S PSOQX("DURATION",PSOQLP)=$G(PSOQAR("DURATION",PSOQLP))
+"RTN","PSOSIGCX",109,0)
+ K PSOCPRQT
+"RTN","PSOSIGCX",110,0)
+ Q
+"RTN","PSOSIGCX",111,0)
+DAYS(PSOQX) ;Entry point for Days Supply calc for PSO
+"RTN","PSOSIGCX",112,0)
+ ;Kill days supply here
+"RTN","PSOSIGCX",113,0)
+ Q:'$G(PSOQX("QTY"))
+"RTN","PSOSIGCX",114,0)
+ D QTYOPS^PSOSIGDS
+"RTN","PSOSIGCX",115,0)
+ Q
+"RTN","PSOSIGTX")
+0^7^B57184360^B53937250
+"RTN","PSOSIGTX",1,0)
+PSOSIGTX ;BIR/RTR-Utility to calculate quantity ;3/23/11 8:25am
+"RTN","PSOSIGTX",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,282,446**;DEC 1997;Build 20
+"RTN","PSOSIGTX",3,0)
+ ;External reference to PS(51 supported by DBIA 2224
+"RTN","PSOSIGTX",4,0)
+ ;External reference to PS(51.1 supported by DBIA 2225
+"RTN","PSOSIGTX",5,0)
+ ;
+"RTN","PSOSIGTX",6,0)
+EN(PSOSIGX) ;
+"RTN","PSOSIGTX",7,0)
+ N VARIABLE
+"RTN","PSOSIGTX",8,0)
+ Q
+"RTN","PSOSIGTX",9,0)
+SCH ;*282 Centralized Call
+"RTN","PSOSIGTX",10,0)
+ D SCH^PSOSIG
+"RTN","PSOSIGTX",11,0)
+ Q
+"RTN","PSOSIGTX",12,0)
+QTY(PSOQX) ;
+"RTN","PSOSIGTX",13,0)
+ N QDOSE
+"RTN","PSOSIGTX",14,0)
+QTYCP ;CPRS qty call comes through here
+"RTN","PSOSIGTX",15,0)
+ N PSQQUIT,QTSH,PSQ,PSQMIN,PSQMINZ,PSOQRND,PSOLOWER,PSOLOWX,PSOLOWXL,PSOLOWST
+"RTN","PSOSIGTX",16,0)
+ K PSOFRQ S PSQQUIT=0
+"RTN","PSOSIGTX",17,0)
+ I '$G(PSOCPRQT) S QDOSE=0 F PSQ=0:0 S PSQ=$O(PSOQX("DOSE",PSQ)) Q:'PSQ  S QDOSE=PSQ S:'$G(PSOQX("DOSE ORDERED",PSQ)) PSQQUIT=1
+"RTN","PSOSIGTX",18,0)
+ ;Q:PSQQUIT!('QDOSE)
+"RTN","PSOSIGTX",19,0)
+ I '$G(PSOCPRQT) Q:PSQQUIT
+"RTN","PSOSIGTX",20,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGTX",21,0)
+ Q:'$G(QDOSE)
+"RTN","PSOSIGTX",22,0)
+ G:QDOSE>1 COMP
+"RTN","PSOSIGTX",23,0)
+TOP ;One Dose for complex and/then
+"RTN","PSOSIGTX",24,0)
+ N PSOQDUR
+"RTN","PSOSIGTX",25,0)
+ Q:'$G(PSOQX("DOSE ORDERED",PSQDOSE))
+"RTN","PSOSIGTX",26,0)
+ Q:'$G(PSOQX("DAYS SUPPLY"))&('$G(PSOQX("DURATION",PSQDOSE)))
+"RTN","PSOSIGTX",27,0)
+ S PSOLOWER=0
+"RTN","PSOSIGTX",28,0)
+ I $G(PSOQX("DURATION",PSQDOSE)) D
+"RTN","PSOSIGTX",29,0)
+ .S PSOLOWX=$L(PSOQX("DURATION",PSQDOSE))
+"RTN","PSOSIGTX",30,0)
+ .S PSOQDUR=$G(PSOQX("DURATION",PSQDOSE))
+"RTN","PSOSIGTX",31,0)
+ .S PSOLOWXL=$S($E(PSOQDUR,PSOLOWX)="M":1,$E(PSOQDUR,PSOLOWX)="H":60,$E(PSOQDUR,PSOLOWX)="S":.01666,$E(PSOQDUR,PSOLOWX)="W":10080,$E(PSOQDUR,PSOLOWX)="L":43200,1:1440)
+"RTN","PSOSIGTX",32,0)
+ .S PSOLOWER=PSOLOWXL*(+$G(PSOQX("DURATION",PSQDOSE)))
+"RTN","PSOSIGTX",33,0)
+ I $G(PSOLOWER),$G(PSOLOWER)>PSODSMXX Q
+"RTN","PSOSIGTX",34,0)
+ S PSOLOWX=$G(PSODSMXX)
+"RTN","PSOSIGTX",35,0)
+ Q:'$G(PSOLOWER)&('$G(PSOLOWX))
+"RTN","PSOSIGTX",36,0)
+ S QTSH=$G(PSOQX("SCHEDULE",PSQDOSE)) D QTS Q:PSQQUIT!('$G(PSOFRQ))
+"RTN","PSOSIGTX",37,0)
+ S PSOLOWST=$S('$G(PSOLOWER):$G(PSOLOWX),'$G(PSOLOWX):$G(PSOLOWER),$G(PSOLOWER)>$G(PSOLOWX):$G(PSOLOWX),$G(PSOLOWX)>$G(PSOLOWER):$G(PSOLOWER),$G(PSOLOWX)=$G(PSOLOWER):$G(PSOLOWER),1:0)
+"RTN","PSOSIGTX",38,0)
+ Q:'$G(PSOLOWST)
+"RTN","PSOSIGTX",39,0)
+ Q:PSOLOWST'>0
+"RTN","PSOSIGTX",40,0)
+ S PSQMIN=+$G(PSOLOWST)
+"RTN","PSOSIGTX",41,0)
+ S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIGTX",42,0)
+ S PSOQRND=PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQDOSE)) Q:'PSOQRND
+"RTN","PSOSIGTX",43,0)
+ S PSODSMXX=PSODSMXX-PSQMIN
+"RTN","PSOSIGTX",44,0)
+ Q:PSODSMXX<0
+"RTN","PSOSIGTX",45,0)
+ D ROUND G QEND
+"RTN","PSOSIGTX",46,0)
+ Q
+"RTN","PSOSIGTX",47,0)
+COMP ;COMPLEX DOSE HERE - ANDS AND THENS
+"RTN","PSOSIGTX",48,0)
+ ;N PSOQAND,PSQL,PSQMNL,PSQMNLX,PSODUTOT,PSODUDIF,PSODUMIS,PSODUREP,PSQ1,PSODUX,PSODUXX,PSODSMIN
+"RTN","PSOSIGTX",49,0)
+ ;PSODUTOT = TOTAL OF ALL DURATIONS
+"RTN","PSOSIGTX",50,0)
+ ;PSODUDIF = DIFF. OF DURATION VS DAYS SUPPLY
+"RTN","PSOSIGTX",51,0)
+ ;PSODUMIS = # OF SEQUENCES MISSING A DURATION IF >1 CAN'T DEFAULT
+"RTN","PSOSIGTX",52,0)
+ ;PSODUREP = SEQUENCE # THAT IS MISSING DURATION
+"RTN","PSOSIGTX",53,0)
+ ;PSODSMIN = MINUTES OF DAYS SUPPLY
+"RTN","PSOSIGTX",54,0)
+ ;PSODSAME = FLAG THAT TELL IF DURATIONS ARE THE SAME
+"RTN","PSOSIGTX",55,0)
+ ;PSODURT = DURATION MINUTES FOR COMPARE
+"RTN","PSOSIGTX",56,0)
+ ;S (PSODUTOT,PSODUDIF,PSODUMIS,PSODUREP,PSODSMIN,PSOQAND)=0
+"RTN","PSOSIGTX",57,0)
+ ;F PSQL=1:1:QDOSE S:$G(PSOQX("CONJUNCTION",PSQL))["A" PSOQAND=1 Q:PSOQAND
+"RTN","PSOSIGTX",58,0)
+ ;I $G(PSOQTHEN) G COMP^PSOSIGTX
+"RTN","PSOSIGTX",59,0)
+ N PSQHOLDX,PSQFLAG,PSQMINLP,PSQMINAR,PSODSMXX,PSOTFLAG,PSODSDEC,PSORNDXX,PSOATQUT,PSQDOSE,PSQDOSEX,PSOQZ,PSOQZX S (PSORNDXX,PSOATQUT,PSODSDEC,PSOTFLAG)=0,PSQDOSE=0,PSQDOSEX=QDOSE
+"RTN","PSOSIGTX",60,0)
+ I '$D(PSOQX("CONJUNCTION",PSQDOSEX)) S PSOQX("CONJUNCTION",PSQDOSEX)="A",PSOTFLAG=1
+"RTN","PSOSIGTX",61,0)
+ S (PSODSMIN,PSODSMXX)=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGTX",62,0)
+ F  S PSQDOSE=$O(PSOQX("CONJUNCTION",PSQDOSE)) Q:$G(PSOATQUT)!($G(PSQDOSE)="")  I $G(PSOQX("CONJUNCTION",PSQDOSE))["T"!(PSQDOSE=PSQDOSEX) S PSOATQUT=1 D
+"RTN","PSOSIGTX",63,0)
+ .;I 1 DO TOP ELSE DO BELOW, SET BEGINNIG AND END COUNTERS, USE THOSE ON LOOPS BELOW, OR THE SINGLE NUMBER FOR UP TOP (CHANGE 1'S TO NUMBERS)
+"RTN","PSOSIGTX",64,0)
+ .I '$G(PSOQZ) S PSOQZ=1
+"RTN","PSOSIGTX",65,0)
+ .I PSQDOSE-PSOQZ=0 D TOP S PSOQZ=PSQDOSE+1 Q
+"RTN","PSOSIGTX",66,0)
+ .D BOT
+"RTN","PSOSIGTX",67,0)
+ .S PSOQZ=PSQDOSE+1
+"RTN","PSOSIGTX",68,0)
+ ;
+"RTN","PSOSIGTX",69,0)
+ ;If DAYS SUPPLY was edited by Pharmacy, don't re-calculate QTY automatically for Digitally Signed Pending Orders
+"RTN","PSOSIGTX",70,0)
+ I $G(PSODSEDT),$G(QTYHLD),$G(PSOFDR),$P($G(OR0),"^",24) D  Q
+"RTN","PSOSIGTX",71,0)
+ . W !!,"The Quantity (",QTYHLD,") has not been changed."
+"RTN","PSOSIGTX",72,0)
+ . W !,"Please review and update it if necessary.",!,$C(7)
+"RTN","PSOSIGTX",73,0)
+ . N DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR W !
+"RTN","PSOSIGTX",74,0)
+ . K PSOQX("QTY")
+"RTN","PSOSIGTX",75,0)
+ ;
+"RTN","PSOSIGTX",76,0)
+ ;SET LAST CONJUNCTION, MAKE SURE IT'S NOT PASSED IN FROM cprs
+"RTN","PSOSIGTX",77,0)
+ I $G(PSOTFLAG) K PSOQX("CONJUNCTION",PSQDOSEX)
+"RTN","PSOSIGTX",78,0)
+ I PSOATQUT K PSOQX("QTY") Q
+"RTN","PSOSIGTX",79,0)
+ I $G(PSOQX("QTY")) D ROUNDF
+"RTN","PSOSIGTX",80,0)
+ Q
+"RTN","PSOSIGTX",81,0)
+BOT ;
+"RTN","PSOSIGTX",82,0)
+ N PSODUMSS,PSODSAME,PSODURT S (PSODUMSS,PSODSAME,PSODURT,PSODUMIS,PSOQRND,PSODUTOT)=0
+"RTN","PSOSIGTX",83,0)
+ F PSQ1=PSOQZ:1:PSQDOSE D
+"RTN","PSOSIGTX",84,0)
+ .I '$G(PSOQX("DURATION",PSQ1)) S PSODUMIS=PSODUMIS+1,PSODUREP=PSQ1 Q
+"RTN","PSOSIGTX",85,0)
+ .S PSODUX=$L(PSOQX("DURATION",PSQ1))
+"RTN","PSOSIGTX",86,0)
+ .S PSODUMSS=1
+"RTN","PSOSIGTX",87,0)
+ .S PSODUXX=$S($E(PSOQX("DURATION",PSQ1),PSODUX)="M":1,$E(PSOQX("DURATION",PSQ1),PSODUX)="H":60,$E(PSOQX("DURATION",PSQ1),PSODUX)="S":.01666,$E(PSOQX("DURATION",PSQ1),PSODUX)="W":10080,$E(PSOQX("DURATION",PSQ1),PSODUX)="L":43200,1:1440)
+"RTN","PSOSIGTX",88,0)
+ .S PSODUTOT=PSODUTOT+(PSODUXX*(+$G(PSOQX("DURATION",PSQ1))))
+"RTN","PSOSIGTX",89,0)
+ .I '$G(PSODSAME),$G(PSODURT),PSODURT'=(PSODUXX*(+$G(PSOQX("DURATION",PSQ1)))) S PSODSAME=1
+"RTN","PSOSIGTX",90,0)
+ .S PSODURT=(PSODUXX*(+$G(PSOQX("DURATION",PSQ1))))
+"RTN","PSOSIGTX",91,0)
+ ;I PSODUMIS,PSODSAME G QEND ; missing durations, and other durations are all not the same
+"RTN","PSOSIGTX",92,0)
+ I '$G(PSOQX("DAYS SUPPLY")) G QEND ; missing Days Supply
+"RTN","PSOSIGTX",93,0)
+ ;S PSODSMIN=1440*+$G(PSOQX("DAYS SUPPLY"))
+"RTN","PSOSIGTX",94,0)
+ I PSODUMIS,PSODSAME G QEND ; Missing Durations, other are different
+"RTN","PSOSIGTX",95,0)
+ I 'PSODUMIS,PSODSAME,$G(PSODUTOT)>PSODSMIN G QEND ; Every sequence has a duration, some are different, and the total is greater than Days Supply
+"RTN","PSOSIGTX",96,0)
+ I 'PSODSAME,PSODURT>PSODSMIN G QEND ; All have a duration, and it's the same, but it's greater than Days Supply, or Missing Durations with other duration the same but greater than Days Supply
+"RTN","PSOSIGTX",97,0)
+ I $G(PSODUMIS),PSODUMSS S PSODUDIF=$G(PSODSMIN)-$G(PSODUTOT)
+"RTN","PSOSIGTX",98,0)
+ K PSQMINAR F PSQ=PSOQZ:1:PSQDOSE D  Q:$G(PSQQUIT)
+"RTN","PSOSIGTX",99,0)
+ .I '$G(PSOQX("DOSE ORDERED",PSQ))!($G(PSOQX("SCHEDULE",PSQ))="") S PSQQUIT=1 Q
+"RTN","PSOSIGTX",100,0)
+ .S QTSH=$G(PSOQX("SCHEDULE",PSQ)) D QTS S:'$G(PSOFRQ) PSQQUIT=1 Q:$G(PSQQUIT)
+"RTN","PSOSIGTX",101,0)
+ .I $G(PSOQX("DURATION",PSQ)) S PSQMNL=$L(PSOQX("DURATION",PSQ)) D
+"RTN","PSOSIGTX",102,0)
+ ..S PSQMNLX=$S($E(PSOQX("DURATION",PSQ),PSQMNL)="M":1,$E(PSOQX("DURATION",PSQ),PSQMNL)="H":60,$E(PSOQX("DURATION",PSQ),PSQMNL)="S":.01666,$E(PSOQX("DURATION",PSQ),PSQMNL)="W":10080,$E(PSOQX("DURATION",PSQ),PSQMNL)="L":43200,1:1440)
+"RTN","PSOSIGTX",103,0)
+ ..S PSQMIN=PSQMNLX*(+$G(PSOQX("DURATION",PSQ)))
+"RTN","PSOSIGTX",104,0)
+ ..I $G(PSQMIN) S PSQMINAR(PSQ)=PSQMIN
+"RTN","PSOSIGTX",105,0)
+ .I '$G(PSOQX("DURATION",PSQ)) S PSQMIN=$S($G(PSODURT)&('$G(PSODSAME)):$G(PSODURT),1:$G(PSODSMXX)) I PSQMIN S PSQMINAR(PSQ)=PSQMIN
+"RTN","PSOSIGTX",106,0)
+ .S PSQMINZ=PSQMIN/PSOFRQ
+"RTN","PSOSIGTX",107,0)
+ .S PSOQRND=$S('$G(PSOQRND):PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ)),1:$G(PSOQRND)+(PSQMINZ*+$G(PSOQX("DOSE ORDERED",PSQ))))
+"RTN","PSOSIGTX",108,0)
+ .;S PSODSMXX=PSODSMXX-PSQMIN
+"RTN","PSOSIGTX",109,0)
+ S (PSQFLAG,PSQHOLDX)=0 S PSQMINLP="" F  S PSQMINLP=$O(PSQMINAR(PSQMINLP)) Q:PSQMINLP=""  S:$G(PSQHOLDX)&($G(PSQHOLDX)'=$G(PSQMINAR(PSQMINLP))) PSQFLAG=1 S PSQHOLDX=$G(PSQMINAR(PSQMINLP))
+"RTN","PSOSIGTX",110,0)
+ I $G(PSQFLAG) S PSQMINLP="" F  S PSQMINLP=$O(PSQMINAR(PSQMINLP)) Q:PSQMINLP=""  I $G(PSQMINAR(PSQMINLP)) S PSODSMXX=PSODSMXX-PSQMINAR(PSQMINLP)
+"RTN","PSOSIGTX",111,0)
+ I '$G(PSQFLAG) S PSQMINLP="" F  S PSQMINLP=$O(PSQMINAR(PSQMINLP)) Q:PSQMINLP=""!($G(PSQFLAG))  I $G(PSQMINAR(PSQMINLP)) S PSODSMXX=PSODSMXX-PSQMINAR(PSQMINLP),PSQFLAG=1
+"RTN","PSOSIGTX",112,0)
+ K PSQMINAR,PSQFLAG
+"RTN","PSOSIGTX",113,0)
+ I PSODSMXX<0 G QEND
+"RTN","PSOSIGTX",114,0)
+ I $G(PSQQUIT) G QEND
+"RTN","PSOSIGTX",115,0)
+ I $G(PSOQRND) D ROUND
+"RTN","PSOSIGTX",116,0)
+ G QEND
+"RTN","PSOSIGTX",117,0)
+QTS ;*282 Centralized call
+"RTN","PSOSIGTX",118,0)
+ D QTS^PSOSIG
+"RTN","PSOSIGTX",119,0)
+ Q
+"RTN","PSOSIGTX",120,0)
+QEND ;
+"RTN","PSOSIGTX",121,0)
+ K PSOFRQ
+"RTN","PSOSIGTX",122,0)
+ Q
+"RTN","PSOSIGTX",123,0)
+ROUND ;
+"RTN","PSOSIGTX",124,0)
+ Q:'$G(PSOQRND)
+"RTN","PSOSIGTX",125,0)
+ S PSOQX("QTY")=$G(PSOQX("QTY"))+$G(PSOQRND)
+"RTN","PSOSIGTX",126,0)
+ S PSOATQUT=0
+"RTN","PSOSIGTX",127,0)
+ Q
+"RTN","PSOSIGTX",128,0)
+ROUNDF ;
+"RTN","PSOSIGTX",129,0)
+ I PSOQX("QTY")'["." Q
+"RTN","PSOSIGTX",130,0)
+ S PSOQX("QTY")=$P(PSOQX("QTY"),".")+1
+"RTN","PSOSIGTX",131,0)
+ Q
+"RTN","PSOSIGTX",132,0)
+DAY(DATE) ;First 5 digits of FileMan date
+"RTN","PSOSIGTX",133,0)
+ N X
+"RTN","PSOSIGTX",134,0)
+ I DATE'?5N Q -1
+"RTN","PSOSIGTX",135,0)
+ S X=$E(DATE,4,5) I X<1!(X>12) Q -1
+"RTN","PSOSIGTX",136,0)
+ S X=DATE+1+(X=12*88)_"01"
+"RTN","PSOSIGTX",137,0)
+ Q $E($$FMADD^XLFDT(X,-1),6,7)
+"RTN","PSOSIGTX",138,0)
+ ;
+"RTN","PSOSIGTX",139,0)
+QTYX(PSOQX) ;
+"RTN","PSOSIGTX",140,0)
+ N PSOQLP,PSOQLN,PSOQAR,PSOCPRQT,QDOSE,QDOSEX S PSOCPRQT=1 F PSOQLP=0:0 S PSOQLP=$O(PSOQX("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIGTX",141,0)
+ .S PSOQAR("DURATION",PSOQLP)=$G(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIGTX",142,0)
+ .I $E(PSOQX("DURATION",PSOQLP))?1A S PSOQLN=$L(PSOQX("DURATION",PSOQLP)) S PSOQX("DURATION",PSOQLP)=$E(PSOQX("DURATION",PSOQLP),2,PSOQLN)_$E(PSOQX("DURATION",PSOQLP))
+"RTN","PSOSIGTX",143,0)
+ S QDOSE=0 F QDOSEX=0:0 S QDOSEX=$O(PSOQX("DOSE ORDERED",QDOSEX)) Q:'QDOSEX  S QDOSE=QDOSE+1
+"RTN","PSOSIGTX",144,0)
+ I '$G(PSOQX("QTY")) D QTYCP G QPASS
+"RTN","PSOSIGTX",145,0)
+ D QTYCP^PSOSIGDS
+"RTN","PSOSIGTX",146,0)
+QPASS F PSOQLP=0:0 S PSOQLP=$O(PSOQAR("DURATION",PSOQLP)) Q:'PSOQLP  D
+"RTN","PSOSIGTX",147,0)
+ .S PSOQX("DURATION",PSOQLP)=$G(PSOQAR("DURATION",PSOQLP))
+"RTN","PSOSIGTX",148,0)
+ K PSOCPRQT
+"RTN","PSOSIGTX",149,0)
+ Q
+"RTN","PSOSIGTX",150,0)
+DAYS(PSOQX) ;Entry point for Days Supply calc for PSO
+"RTN","PSOSIGTX",151,0)
+ ;Kill days supply here
+"RTN","PSOSIGTX",152,0)
+ Q:'$G(PSOQX("QTY"))
+"RTN","PSOSIGTX",153,0)
+ D QTYOPS^PSOSIGDS
+"RTN","PSOSIGTX",154,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10432,6)
+^409
+**END**
+**END**
+

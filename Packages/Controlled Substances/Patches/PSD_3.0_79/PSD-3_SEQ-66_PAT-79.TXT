@@ -1,0 +1,329 @@
+$TXT Created by                  CTST.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 06/05/17 at 13:49
+=============================================================================
+Run Date: SEP 07, 2017                     Designation: PSD*3*79
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #66                      Status: Released
+                  Compliance Date: OCT 07, 2017
+=============================================================================
+
+Associated patches: (v)PSD*3*20    <<= must be installed BEFORE `PSD*3*79'
+                    (v)PSD*3*51    <<= must be installed BEFORE `PSD*3*79'
+                    (v)PSD*3*64    <<= must be installed BEFORE `PSD*3*79'
+                    (v)PSD*3*66    <<= must be installed BEFORE `PSD*3*79'
+                    (v)PSD*3*67    <<= must be installed BEFORE `PSD*3*79'
+                    (v)PSD*3*71    <<= must be installed BEFORE `PSD*3*79'
+
+Subject: VAULT SELECTION/LOCK/INVENTORY UPDATE/HARD ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problems: 
+  
+ 1. Return to Stock Issue 
+  
+ 2. Return to stock entry not always accepted 
+  
+ 3. Site Reporting Problems with Controlled Substance Green Sheets 
+  
+ 4. Inventory Sheet inaccurate for Biloxi inpatient Vault  
+  
+ 5. Using option "PSD DESTROY DRUGS" to process a destruction cancellation,
+    resulted in an error
+  
+ 6. Similar issue as in #5, but in the DRUG ITEM field (#13) (free text)
+  
+  
+ ASSOCIATED CA SDM TICKET(S): 
+ ============================
+ 1. I10091822FY16 - Return to Stock Issue 
+ 2. I10140662FY16 - Return to stock entry not always accepted 
+ 3. I10152355FY16 - Site reporting problems with Controlled Substance Green
+                    Sheets 
+ 4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+ 5. R14730330FY17 - Reporting event of errors that occurred during VISTA
+                    operations
+ 6. I14905678FY17 - Similar issue as in R14730330FY17, but in the DRUG ITEM
+                    field (#13) (free text)
+  
+  
+ ASSOCIATED NSR(s): 
+ ==================
+ N/A 
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ OKLAHOMA CITY, OK
+ NEW JERSEY HCS 
+   
+ CA SDM OVERVIEW: 
+ ================
+ 1. I10091822FY16 - Return to Stock Issue 
+  
+ Problem: 
+ --------
+ A Controlled Substance (CS) Refill is returned to stock through Outpatient
+ Pharmacy (OP) package. When prompted, the user selects NO to add the stock to
+ the balance in the Narcotic vault because the medication was going to be
+ destroyed if it is left in the pharmacy. (They cannot add it back to stock in
+ this case.)  The refill was marked as Returned to Stock in the OP package. 
+ When the user re-submitted the refill, they tried to post it in the CS
+ package. The system allows the user to release the refill in the OP
+ package, but since the refill had not been added back to inventory, the CS
+ package did not recognize that the refill had been filled again, and did
+ not allow them to post the refill.
+   
+ Resolution: 
+ -----------
+ The routine PSDOPT0 that is called from the Outpatient Pharmacy system that
+ performs the Return To Stock for Controlled Substances will be modified to 
+ account for a Controlled Substance drug that is being returned with the intent
+ to destroy.  
+   
+ Technical: 
+ ----------
+ Routine PSDOPT0 will be modified to set the return to stock quantity to zero
+ if the user answers NO to the Do you want ## added to balance in the Narcotic
+ vault? Yes// prompt. (## is the quantity that that was dispensed) 
+  
+ 2. I10140662FY16 - Return to stock entry not always accepted 
+  
+ Problem: 
+ --------
+ When a pharmacist is entering return to stock in the Controlled substance 
+ package, it is not being accepted if the user does not select a Controlled
+ Substance vault to return it to.  
+   
+ Resolution: 
+ -----------
+ The routine PSDOPT0 that performs the 'Return to Stock' for Controlled
+ Substances was fixed to force a user to select a Vault and not enter
+ past. The "Prescription Not Returned to Stock" message will also be displayed.  
+  
+ Technical: 
+ ----------
+ Routine PSDOPT0 will be modified to exit properly without making any updates
+ if the user does not select a Controlled Substance vault to return the 
+ drug to.  
+  
+ 3. I10152355FY16 - SITE Reporting Problems with Controlled Substance 
+                    Green Sheets 
+  
+ Problem: 
+ --------
+ The Green Sheet Ready for Pickup Log [PSD PRINT GS PICKUP] option does not
+ show all of the Green Sheets Ready for Pickup. This is caused when 2 users
+ order the same drug from the same Narcotics Area Of Use (NAOU) at the same
+ time. This results in multiple orders being assigned to the same request
+ number for a drug in the DRUG ACCOUNTABILTY STATS file (#58.8).
+  
+ Resolution: 
+ -----------
+ The routines that create the entries in the DRUG ACCOUNTABILITY STATS file
+ (#58.8) will be modified to lock drug at the pharmacy location prior to
+ acquiring and setting request number in the DRUG ACCOUNTABILITY STATS file
+ (#58.8) during ordering.  
+  
+ A post-install cleanup routine (PSD79P) will search any transactions that
+ have different pharmacy dispensing numbers and the same DRUG
+ ACCOUNTABILITY STATS file (#58.8) request number. Once these transactions
+ have been identified, a new request number will be assigned and saved.
+  
+ An informational report will be sent in MailMan to all the users that hold the
+ PSDMGR security key.  
+  
+  
+ Example Report: Subj: PSD*3*79 TRANSACTION REPORT  [#141412] 04/18/12@14:49 15
+ lines From: PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+ --------------------------------------------------------------------------
+   This report contains Controlled Substance drugs that assigned multiple 
+   Pharmacy Dispensing numbers to a single request number in the Narcotics 
+   Area Of Use (NAOU) during order processing.  
+  
+   These transactions have been identified and corrected.  
+  
+ NAOU                                       Pharmacy   Transaction    Old/New 
+  Drug Name                                Dispensing #   Number     Request # 
+ ==========================================================================
+ ECU-EAST 
+  LEVORPHANOL TARTRATE 2MG TAB               31359       347041         2/3 
+                                             31360       347042         2/NA 
+  
+  
+ ***** End Of Report ***** 
+   
+ In cases where no transactions need to be fixed the Mailman message below
+ will be sent:
+   
+ Subj: PSD*3*79 TRANSACTION REPORT  [#141414] 04/18/12@14:53  4 lines From:
+ PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+ --------------------------------------------------------------------------
+  
+ THERE WERE NO TRANSACTIONS TO REPORT.  
+  
+ ***** End Of Report ***** 
+  
+ Technical: 
+ ----------
+ ^PSDEXGS1, ^PSDNTT1, ^PSDNTTP1, ^PSDOPT0, ^PSDOR2, ^PSDORD, ^PSDORD3, ^PSDORD4
+ ,^PSDORN0, ^PSDORNO, ^PSDORP, ^PSDORP2 and ^PSDORV routines will be 
+ modified to lock the pharmacy location at the drug level prior to
+ acquiring and incrementing the request number in the DRUG ACCOUNTABILITY 
+ STATS file (#58.8) when a user orders a drug.
+  
+ 4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+  
+ Problem: 
+ --------
+ When the user up-carets (^) out at the prompt, "REASON EDITED" during 
+ Edit/Cancel Verified Orders [PSD EDIT/CANC VER ORD] option with the intent of
+ cancelling the request, it displays "** No action taken. **", indicating the
+ transaction was aborted. When you look at the master vault inventory, it has
+ been updated, however, the Controlled Substance order for the NAOU and the
+ green sheet are not updated, creating a discrepancy.  
+  
+ Resolution: 
+ -----------
+ The routine (PSDEV01) that performs the transaction updates has been
+ modified to perform all updates after all the user prompts. If the user
+ up-carets (^) out then the changes are aborted.
+  
+ Technical: 
+ ----------
+ Routine PSDEVO1 has been modified to update the master vault inventory, NAOU
+ Controlled Substance order and the green sheet only after the user completes
+ all the prompts.
+  
+ 5 & 6.  R14730330FY17 - Reporting event of errors that occurred during
+         VISTA operations
+      
+         I14905678FY17 - Similar issue as in R14730330FY17, but in the 
+         DRUG ITEM field (#13) (free text)
+  
+ Problem: 
+ --------
+ When using the options, Non-VA Drug Placed on Hold for Destruction [PSD 
+ DEST TEXT DRUG] option and the Destroy a Controlled Substances Drug [PSD
+ DESTROY DRUGS] option, entering a ";" in a free text field such as 
+ the DRUG ITEM field (#13) or the comment field causes a hard error.
+  
+  
+ Resolution: 
+ -----------
+ To prevent the hard error, the drug item and the comment field will be
+ validated to not allow entry of a ";".
+  
+ Technical: 
+ ----------
+ Routine PSDEST and PSDESTF will be modified to check for ";" in the 
+ comment field and to display a message, "A semicolon is not allowed in the
+ COMMENTS field. Please edit your entry."
+  
+ Routine PSDESTF will be modified to check for ";" in the drug item field
+ and to display a message, "A semicolon is not allowed in the DRUG ITEM
+ field. Please edit your entry."
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ If installed during the normal workday, it is recommended that the Controlled
+ Substance users be off the system.  Other VISTA users will not be affected.  
+  
+ Install Time less than 2 minutes.  
+  
+    1. Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSD*3.0*79) 
+   
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.  
+         b.  Print Transport Global - This option will allow you to 
+             view the components of the KIDS build.  
+         c.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of 
+             this patch(routines, DD's, templates, etc.).  
+         d.  Backup a Transport Global - This option will create a 
+             backup message of any routines exported with this patch.  
+             It will not backup any other changes such as DD's or 
+             templates.  
+   
+    4. Use the Install Package(s) option and select the package 
+       PSD*3.0*79.  
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch List]**;10/24/97;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSD79P
+    Before:       n/a   After: B45831087  **79**
+Routine Name: PSDEST
+    Before: B24175819   After: B25150803  **8,79**
+Routine Name: PSDESTF
+    Before: B20769006   After: B22540238  **8,66,69,79**
+Routine Name: PSDEVO1
+    Before: B15175785   After: B15537831  **66,79**
+Routine Name: PSDEXGS1
+    Before:  B8308810   After:  B8758642  **33,66,79**
+Routine Name: PSDNTT1
+    Before: B16173482   After: B16796985  **1,56,66,79**
+Routine Name: PSDNTTP1
+    Before: B14234646   After: B14819177  **64,79**
+Routine Name: PSDOPT
+    Before: B86888301   After: B86544635  **10,11,15,21,30,39,48,62,69,71,79**
+Routine Name: PSDOPT0
+    Before: B72940281   After: B87954847  **10,30,37,39,45,48,66,79**
+Routine Name: PSDOPT2
+    Before: B21217886   After: B20661695  **30,39,48,79**
+Routine Name: PSDOR2
+    Before: B11468238   After: B11972172  **20,79**
+Routine Name: PSDORD
+    Before: B20832774   After: B21419524  **51,79**
+Routine Name: PSDORD3
+    Before: B16404681   After: B16937115  **79**
+Routine Name: PSDORD4
+    Before:  B9037751   After:  B9420813  **79**
+Routine Name: PSDORN0
+    Before:  B3755003   After:  B4086421  **79**
+Routine Name: PSDORNO
+    Before: B12280134   After: B12728562  **20,79**
+Routine Name: PSDORP
+    Before: B23089929   After: B23737263  **58,62,67,79**
+Routine Name: PSDORP2
+    Before: B16047567   After: B16572981  **79**
+Routine Name: PSDORV
+    Before: B16936413   After: B17456680  **79**
+ 
+Routine list of preceding patches: 20, 51, 64, 67, 71
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 04, 2014
+Completed By:                               Date Completed: AUG 31, 2017
+Released By :                               Date Released : SEP 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

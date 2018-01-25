@@ -1,0 +1,585 @@
+Released VPR*1*6 SEQ #5
+Extracted from mail message
+**KIDS**:VPR*1.0*6^
+
+**INSTALL NAME**
+VPR*1.0*6
+"BLD",10560,0)
+VPR*1.0*6^VIRTUAL PATIENT RECORD^0^3170625^y
+"BLD",10560,1,0)
+^^3^3^3170625^
+"BLD",10560,1,1,0)
+This patch updates the VPR GET PATIENT DATA remote procedure call 
+"BLD",10560,1,2,0)
+(RPC).  It will now parse for the ASCII BELL character among other
+"BLD",10560,1,3,0)
+invalid ASCII characters.
+"BLD",10560,4,0)
+^9.64PA^^
+"BLD",10560,6)
+1^
+"BLD",10560,6.3)
+2
+"BLD",10560,"ABPKG")
+n
+"BLD",10560,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10560,"KRN",.4,0)
+.4
+"BLD",10560,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",10560,"KRN",.401,0)
+.401
+"BLD",10560,"KRN",.402,0)
+.402
+"BLD",10560,"KRN",.403,0)
+.403
+"BLD",10560,"KRN",.5,0)
+.5
+"BLD",10560,"KRN",.84,0)
+.84
+"BLD",10560,"KRN",3.6,0)
+3.6
+"BLD",10560,"KRN",3.8,0)
+3.8
+"BLD",10560,"KRN",9.2,0)
+9.2
+"BLD",10560,"KRN",9.8,0)
+9.8
+"BLD",10560,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10560,"KRN",9.8,"NM",1,0)
+VPRD^^0^B43812127
+"BLD",10560,"KRN",9.8,"NM","B","VPRD",1)
+
+"BLD",10560,"KRN",19,0)
+19
+"BLD",10560,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10560,"KRN",19.1,0)
+19.1
+"BLD",10560,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",10560,"KRN",101,0)
+101
+"BLD",10560,"KRN",409.61,0)
+409.61
+"BLD",10560,"KRN",771,0)
+771
+"BLD",10560,"KRN",779.2,0)
+779.2
+"BLD",10560,"KRN",870,0)
+870
+"BLD",10560,"KRN",8989.51,0)
+8989.51
+"BLD",10560,"KRN",8989.52,0)
+8989.52
+"BLD",10560,"KRN",8994,0)
+8994
+"BLD",10560,"KRN",8994,"NM",0)
+^9.68A^^
+"BLD",10560,"KRN","B",.4,.4)
+
+"BLD",10560,"KRN","B",.401,.401)
+
+"BLD",10560,"KRN","B",.402,.402)
+
+"BLD",10560,"KRN","B",.403,.403)
+
+"BLD",10560,"KRN","B",.5,.5)
+
+"BLD",10560,"KRN","B",.84,.84)
+
+"BLD",10560,"KRN","B",3.6,3.6)
+
+"BLD",10560,"KRN","B",3.8,3.8)
+
+"BLD",10560,"KRN","B",9.2,9.2)
+
+"BLD",10560,"KRN","B",9.8,9.8)
+
+"BLD",10560,"KRN","B",19,19)
+
+"BLD",10560,"KRN","B",19.1,19.1)
+
+"BLD",10560,"KRN","B",101,101)
+
+"BLD",10560,"KRN","B",409.61,409.61)
+
+"BLD",10560,"KRN","B",771,771)
+
+"BLD",10560,"KRN","B",779.2,779.2)
+
+"BLD",10560,"KRN","B",870,870)
+
+"BLD",10560,"KRN","B",8989.51,8989.51)
+
+"BLD",10560,"KRN","B",8989.52,8989.52)
+
+"BLD",10560,"KRN","B",8994,8994)
+
+"BLD",10560,"QUES",0)
+^9.62^^
+"BLD",10560,"REQB",0)
+^9.611^1^1
+"BLD",10560,"REQB",1,0)
+VPR*1.0*5^2
+"BLD",10560,"REQB","B","VPR*1.0*5",1)
+
+"MBREQ")
+0
+"PKG",587,-1)
+1^1
+"PKG",587,0)
+VIRTUAL PATIENT RECORD^VPR^Utilities to manage a virtual copy of the patient record
+"PKG",587,20,0)
+^9.402P^^
+"PKG",587,22,0)
+^9.49I^1^1
+"PKG",587,22,1,0)
+1.0^3110804^3110909^15000051
+"PKG",587,22,1,"PAH",1,0)
+6^3170625^15000044
+"PKG",587,22,1,"PAH",1,1,0)
+^^3^3^3170625
+"PKG",587,22,1,"PAH",1,1,1,0)
+This patch updates the VPR GET PATIENT DATA remote procedure call 
+"PKG",587,22,1,"PAH",1,1,2,0)
+(RPC).  It will now parse for the ASCII BELL character among other
+"PKG",587,22,1,"PAH",1,1,3,0)
+invalid ASCII characters.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","VPRD")
+0^1^B43812127^B43397804
+"RTN","VPRD",1,0)
+VPRD ;SLC/MKB -- Serve VistA data as XML via RPC ;8/2/11  15:29
+"RTN","VPRD",2,0)
+ ;;1.0;VIRTUAL PATIENT RECORD;**1,2,4,5,6**;Sep 01, 2011;Build 2
+"RTN","VPRD",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","VPRD",4,0)
+ ;
+"RTN","VPRD",5,0)
+ ; External References          DBIA#
+"RTN","VPRD",6,0)
+ ; -------------------          -----
+"RTN","VPRD",7,0)
+ ; ^DPT                         10035
+"RTN","VPRD",8,0)
+ ; ^SC                          10040
+"RTN","VPRD",9,0)
+ ; ^USC(8932.1)                  4984
+"RTN","VPRD",10,0)
+ ; DIQ                           2056
+"RTN","VPRD",11,0)
+ ; MPIF001                       2701
+"RTN","VPRD",12,0)
+ ; VASITE                       10112
+"RTN","VPRD",13,0)
+ ; XLFDT                        10103
+"RTN","VPRD",14,0)
+ ; XLFSTR                       10104
+"RTN","VPRD",15,0)
+ ; XPAR                          2263
+"RTN","VPRD",16,0)
+ ; XUAF4                         2171
+"RTN","VPRD",17,0)
+ ; XUSTAX                        4911
+"RTN","VPRD",18,0)
+ ;
+"RTN","VPRD",19,0)
+GET(VPR,DFN,TYPE,START,STOP,MAX,ID,FILTER) ; -- Return search results as XML in @VPR@(n)
+"RTN","VPRD",20,0)
+ ; RPC = VPR GET PATIENT DATA
+"RTN","VPRD",21,0)
+ N ICN,VPRI,VPRTOTL,VPRTEXT
+"RTN","VPRD",22,0)
+ S VPR=$NA(^TMP("VPR",$J)) K @VPR
+"RTN","VPRD",23,0)
+ S VPRTEXT=+$G(FILTER("text")) ;include report/document text?
+"RTN","VPRD",24,0)
+ ;
+"RTN","VPRD",25,0)
+ ; parse & validate input parameters
+"RTN","VPRD",26,0)
+ S ICN=+$P($G(DFN),";",2),DFN=+$G(DFN),ID=$G(ID)
+"RTN","VPRD",27,0)
+ I DFN<1,ICN S DFN=+$$GETDFN^MPIF001(ICN)
+"RTN","VPRD",28,0)
+ I DFN<1!'$D(^DPT(DFN)) D ERR(1,DFN) G GTQ
+"RTN","VPRD",29,0)
+ S TYPE=$$LOW^XLFSTR($G(TYPE)) I TYPE="" S TYPE=$$ALL
+"RTN","VPRD",30,0)
+ S:'$G(START) START=1410102 S:'$G(STOP) STOP=4141015 S:'$G(MAX) MAX=9999
+"RTN","VPRD",31,0)
+ I START,STOP,STOP<START N X S X=START,START=STOP,STOP=X  ;switch
+"RTN","VPRD",32,0)
+ I STOP,$L(STOP,".")<2 S STOP=STOP_".24"
+"RTN","VPRD",33,0)
+ I ID="",$D(FILTER("id")) S ID=FILTER("id")
+"RTN","VPRD",34,0)
+ ;
+"RTN","VPRD",35,0)
+ ; extract data
+"RTN","VPRD",36,0)
+ N VPRTYPE,VPRP,VPRHDR,VPRTAG,VPRTN
+"RTN","VPRD",37,0)
+ D ADD("<results version='"_$$GET^XPAR("ALL","VPR VERSION")_"' timeZone='"_$$TZ^XLFDT_"' >")
+"RTN","VPRD",38,0)
+ S VPRTYPE=TYPE
+"RTN","VPRD",39,0)
+ F VPRP=1:1:$L(VPRTYPE,";") S VPRTAG=$P(VPRTYPE,";",VPRP) I $L(VPRTAG) D
+"RTN","VPRD",40,0)
+ . S VPRTN="EN^"_$$RTN(.VPRTAG) Q:'$L($T(@VPRTN))  ;D ERR(2) Q
+"RTN","VPRD",41,0)
+ . D ADD("<"_VPRTAG) S VPRHDR=VPRI,VPRTOTL=0
+"RTN","VPRD",42,0)
+ . D @(VPRTN_"(DFN,START,STOP,MAX,ID)")
+"RTN","VPRD",43,0)
+ . S @VPR@(VPRHDR)=@VPR@(VPRHDR)_" total='"_+$G(VPRTOTL)_"' >" D ADD("</"_VPRTAG_">")
+"RTN","VPRD",44,0)
+ D ADD("</results>")
+"RTN","VPRD",45,0)
+ ;
+"RTN","VPRD",46,0)
+GTQ ; end
+"RTN","VPRD",47,0)
+ K ^TMP("VPRD",$J)
+"RTN","VPRD",48,0)
+ Q
+"RTN","VPRD",49,0)
+ ;
+"RTN","VPRD",50,0)
+RTN(X) ; -- Return name of VPRDxxxx routine for clinical domain X
+"RTN","VPRD",51,0)
+ ;  X is also enforced as expected group tag name, if passed by ref
+"RTN","VPRD",52,0)
+ N Y S Y="VPRD",X=$G(X) I X="" Q Y
+"RTN","VPRD",53,0)
+ I X["accession"    S Y="VPRDLRA",X="accessions"
+"RTN","VPRD",54,0)
+ I X["allerg"       S Y="VPRDGMRA",X="reactions"
+"RTN","VPRD",55,0)
+ I X["appointment"  S Y="VPRDSDAM",X="appointments"
+"RTN","VPRD",56,0)
+ I X["clinicalproc" S Y="VPRDMC",X="clinicalProcedures"
+"RTN","VPRD",57,0)
+ I X["consult"      S Y="VPRDGMRC",X="consults"
+"RTN","VPRD",58,0)
+ I X["demograph"    S Y="VPRDPT",X="demographics"
+"RTN","VPRD",59,0)
+ I X["document"     S Y="VPRDTIU",X="documents"
+"RTN","VPRD",60,0)
+ I X["factor"       S Y="VPRDPXHF",X="healthFactors"
+"RTN","VPRD",61,0)
+ I X["flag"         S Y="VPRDGPF",X="flags"
+"RTN","VPRD",62,0)
+ I X["function"     S Y="VPRDRMIM",X="functionalMeasurements"
+"RTN","VPRD",63,0)
+ I X="fim"          S Y="VPRDRMIM",X="functionalMeasurements"
+"RTN","VPRD",64,0)
+ I X["immunization" S Y="VPRDPXIM",X="immunizations"
+"RTN","VPRD",65,0)
+ I X["skin"         S Y="VPRDPXSK",X="skinTests"
+"RTN","VPRD",66,0)
+ I X?1"exam".E      S Y="VPRDPXAM",X="exams"
+"RTN","VPRD",67,0)
+ I X["educat"       S Y="VPRDPXED",X="educationTopics"
+"RTN","VPRD",68,0)
+ I X["insur"        S Y="VPRDIB",X="insurancePolicies"
+"RTN","VPRD",69,0)
+ I X["polic"        S Y="VPRDIB",X="insurancePolicies"
+"RTN","VPRD",70,0)
+ I X["lab"          S Y="VPRDLR",X="labs"
+"RTN","VPRD",71,0)
+ I X["panel"        S Y="VPRDLRO",X="panels"
+"RTN","VPRD",72,0)
+ I X["med"          S Y="VPRDPS",X="meds"
+"RTN","VPRD",73,0)
+ I X["pharm"        S Y="VPRDPSOR",X="meds"
+"RTN","VPRD",74,0)
+ I X["observ"       S Y="VPRDMDC",X="observations"
+"RTN","VPRD",75,0)
+ I X["order"        S Y="VPRDOR",X="orders"
+"RTN","VPRD",76,0)
+ I X["patient"      S Y="VPRDPT",X="demographics"
+"RTN","VPRD",77,0)
+ I X["problem"      S Y="VPRDGMPL",X="problems"
+"RTN","VPRD",78,0)
+ I X?1"procedure".E S Y="VPRDPROC",X="procedures"
+"RTN","VPRD",79,0)
+ I X["reaction"     S Y="VPRDGMRA",X="reactions"
+"RTN","VPRD",80,0)
+ I X["reminder"     S Y="VPRDPXRM",X="reminders"
+"RTN","VPRD",81,0)
+ I X["surg"         S Y="VPRDSR",X="surgeries"
+"RTN","VPRD",82,0)
+ I X["visit"        S Y="VPRDVSIT",X="visits"
+"RTN","VPRD",83,0)
+ I X["vital"        S Y="VPRDGMV",X="vitals"
+"RTN","VPRD",84,0)
+ I X["rad"          S Y="VPRDRA",X="radiologyExams"
+"RTN","VPRD",85,0)
+ I X["xray"         S Y="VPRDRA",X="radiologyExams"
+"RTN","VPRD",86,0)
+ Q Y
+"RTN","VPRD",87,0)
+ ;
+"RTN","VPRD",88,0)
+TAG(X) ; -- return plural name for group tags
+"RTN","VPRD",89,0)
+ N Y S:X'?1.L X=$$LOW^XLFSTR(X)
+"RTN","VPRD",90,0)
+ I $E(X,$L(X))="s" S Y=X
+"RTN","VPRD",91,0)
+ I $E(X,$L(X))="y" S Y=$E(X,1,$L(X)-1)_"ies"
+"RTN","VPRD",92,0)
+ E  S Y=X_"s"
+"RTN","VPRD",93,0)
+ Q Y
+"RTN","VPRD",94,0)
+ ;
+"RTN","VPRD",95,0)
+ALL() ; -- return string for all types of data
+"RTN","VPRD",96,0)
+ Q "demographics;reactions;problems;vitals;labs;meds;immunizations;observations;visits;appointments;documents;procedures;consults;flags;factors;skinTests;exams;education;insurance;reminders"
+"RTN","VPRD",97,0)
+ ;
+"RTN","VPRD",98,0)
+ERR(X,VAL) ; -- return error message
+"RTN","VPRD",99,0)
+ N MSG  S MSG="Error"
+"RTN","VPRD",100,0)
+ I X=1  S MSG="Patient with DFN '"_$G(VAL)_"' not found"
+"RTN","VPRD",101,0)
+ I X=2  S MSG="Requested domain type '"_$G(VAL)_"' not recognized"
+"RTN","VPRD",102,0)
+ I X=99 S MSG="Unknown request"
+"RTN","VPRD",103,0)
+ ;
+"RTN","VPRD",104,0)
+ D ADD("<error>")
+"RTN","VPRD",105,0)
+ D ADD("<message>"_MSG_"</message>")
+"RTN","VPRD",106,0)
+ D ADD("</error>")
+"RTN","VPRD",107,0)
+ Q
+"RTN","VPRD",108,0)
+ ;
+"RTN","VPRD",109,0)
+ESC(X) ; -- escape outgoing XML
+"RTN","VPRD",110,0)
+ ; Q $ZCONVERT(X,"O","HTML")  ; uncomment for fastest performance on Cache
+"RTN","VPRD",111,0)
+ ;
+"RTN","VPRD",112,0)
+ N I,Y,QOT S QOT=""""
+"RTN","VPRD",113,0)
+ F I=1:1:8,11,12,14:1:31 S X=$TR(X,$C(I))
+"RTN","VPRD",114,0)
+ S Y=$P(X,"&") F I=2:1:$L(X,"&") S Y=Y_"&amp;"_$P(X,"&",I)
+"RTN","VPRD",115,0)
+ S X=Y,Y=$P(X,"<") F I=2:1:$L(X,"<") S Y=Y_"&lt;"_$P(X,"<",I)
+"RTN","VPRD",116,0)
+ S X=Y,Y=$P(X,">") F I=2:1:$L(X,">") S Y=Y_"&gt;"_$P(X,">",I)
+"RTN","VPRD",117,0)
+ S X=Y,Y=$P(X,"'") F I=2:1:$L(X,"'") S Y=Y_"&apos;"_$P(X,"'",I)
+"RTN","VPRD",118,0)
+ S X=Y,Y=$P(X,QOT) F I=2:1:$L(X,QOT) S Y=Y_"&quot;"_$P(X,QOT,I)
+"RTN","VPRD",119,0)
+ Q Y
+"RTN","VPRD",120,0)
+ ;
+"RTN","VPRD",121,0)
+ADD(X) ; Add a line @VPR@(n)=X
+"RTN","VPRD",122,0)
+ S VPRI=$G(VPRI)+1
+"RTN","VPRD",123,0)
+ S @VPR@(VPRI)=X
+"RTN","VPRD",124,0)
+ Q
+"RTN","VPRD",125,0)
+ ;
+"RTN","VPRD",126,0)
+STRING(ARRAY) ; -- Return text in ARRAY(n) or ARRAY(n,0) as a string
+"RTN","VPRD",127,0)
+ N I,X,Y S Y=""
+"RTN","VPRD",128,0)
+ S I=+$O(ARRAY("")) I I=0 S I=+$O(ARRAY(0))
+"RTN","VPRD",129,0)
+ S Y=$S($D(ARRAY(I,0)):ARRAY(I,0),1:$G(ARRAY(I)))
+"RTN","VPRD",130,0)
+ F  S I=$O(ARRAY(I)) Q:I<1  D
+"RTN","VPRD",131,0)
+ . S X=$S($D(ARRAY(I,0)):ARRAY(I,0),1:ARRAY(I))
+"RTN","VPRD",132,0)
+ . I $E(X)=" " S Y=Y_$C(13,10)_X Q
+"RTN","VPRD",133,0)
+ . S Y=Y_$S($E(Y,$L(Y))=" ":"",1:" ")_X
+"RTN","VPRD",134,0)
+ Q Y
+"RTN","VPRD",135,0)
+ ;
+"RTN","VPRD",136,0)
+FAC(X) ; -- return Institution file station# for location X
+"RTN","VPRD",137,0)
+ N HLOC,FAC,Y0,Y S Y=""
+"RTN","VPRD",138,0)
+ S HLOC=$G(^SC(+$G(X),0)),FAC=$P(HLOC,U,4)
+"RTN","VPRD",139,0)
+ ; Get P:4 via Med Ctr Div, if not directly linked
+"RTN","VPRD",140,0)
+ I 'FAC,$P(HLOC,U,15) S FAC=$$GET1^DIQ(44,+$G(X)_",","3.5:.07","I")
+"RTN","VPRD",141,0)
+ S Y0=$S(FAC:$$NS^XUAF4(FAC),1:$P($$SITE^VASITE,U,2,3)) ;name^stn#
+"RTN","VPRD",142,0)
+ S:$L(Y0) Y=$P(Y0,U,2)_U_$P(Y0,U) ;switch to stn#^name
+"RTN","VPRD",143,0)
+ I $L(Y),'Y S $P(Y,U)=FAC
+"RTN","VPRD",144,0)
+ Q Y
+"RTN","VPRD",145,0)
+ ;
+"RTN","VPRD",146,0)
+PROVTAGS() ; -- Return attribute tags for provider info as built below
+"RTN","VPRD",147,0)
+ Q "officePhone^analogPager^fax^email^taxonomyCode^providerType^classification^specialization^service"
+"RTN","VPRD",148,0)
+ ;
+"RTN","VPRD",149,0)
+PROVSPC(NP) ; -- Return contact & specialty info for provider NP
+"RTN","VPRD",150,0)
+ ; save strings in ^TMP("VPRD",$J,NP) for efficiency
+"RTN","VPRD",151,0)
+ N X,Y,I,CLS,RES,X13,X15 S NP=+$G(NP) ;protect I for calling routine
+"RTN","VPRD",152,0)
+ S RES=$G(^TMP("VPRD",$J,NP)) I $L(RES) Q RES
+"RTN","VPRD",153,0)
+ S X13=$G(^VA(200,NP,.13)),X15=$G(^(.15))
+"RTN","VPRD",154,0)
+ S RES=$P(X13,U,2)_U_$P(X13,U,7)_U_$P(X13,U,6)_U_$P(X15,U)_U
+"RTN","VPRD",155,0)
+ S X=$$TAXIND^XUSTAX(NP) I $P(X,U,2) D  ;= X12 code ^ #8932.1 ien
+"RTN","VPRD",156,0)
+ . S CLS=$G(^USC(8932.1,$P(X,U,2),0)) Q:CLS=""
+"RTN","VPRD",157,0)
+ . S RES=RES_$P(X,U)_U_$P(CLS,U,1,3) ;X12^type^class^specialization
+"RTN","VPRD",158,0)
+ S $P(RES,U,9)=$$GET1^DIQ(200,NP_",",29)
+"RTN","VPRD",159,0)
+ S ^TMP("VPRD",$J,NP)=RES
+"RTN","VPRD",160,0)
+ Q RES
+"RTN","VPRD",161,0)
+ ;
+"RTN","VPRD",162,0)
+VUID(IEN,FILE) ; -- Return VUID for item
+"RTN","VPRD",163,0)
+ Q $$GET1^DIQ(FILE,IEN_",",99.99)
+"RTN","VPRD",164,0)
+ ;
+"RTN","VPRD",165,0)
+VERSION(RET) ; -- Return current version of data extracts
+"RTN","VPRD",166,0)
+ S RET=$$GET^XPAR("ALL","VPR VERSION")
+"RTN","VPRD",167,0)
+ Q
+"RTN","VPRD",168,0)
+ ;
+"RTN","VPRD",169,0)
+TEST(DFN,TYPE,ID,START,STOP,MAX,TEXT,IN) ; -- test GET, write results to screen
+"RTN","VPRD",170,0)
+ N OUT,IDX S U="^"
+"RTN","VPRD",171,0)
+ S DFN=+$G(DFN) Q:DFN<1
+"RTN","VPRD",172,0)
+ S TYPE=$G(TYPE) Q:TYPE=""
+"RTN","VPRD",173,0)
+ D GET(.OUT,DFN,TYPE,$G(START),$G(STOP),$G(MAX),$G(ID),.IN)
+"RTN","VPRD",174,0)
+ ;
+"RTN","VPRD",175,0)
+ S IDX=OUT
+"RTN","VPRD",176,0)
+ F  S IDX=$Q(@IDX) Q:IDX'?1"^TMP(""VPR"","1.N.E  Q:+$P(IDX,",",2)'=$J  W !,@IDX
+"RTN","VPRD",177,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10560,6)
+^5
+**END**
+**END**
+

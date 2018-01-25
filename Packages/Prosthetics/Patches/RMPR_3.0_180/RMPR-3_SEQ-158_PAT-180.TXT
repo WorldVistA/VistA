@@ -1,0 +1,232 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 08/15/16 at 10:25
+=============================================================================
+Run Date: OCT 13, 2016                     Designation: RMPR*3*180
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #158                      Status: Released
+                  Compliance Date: NOV 13, 2016
+=============================================================================
+
+Associated patches: (v)RMPR*3*150  <<= must be installed BEFORE `RMPR*3*180'
+                    (v)RMPR*3*168  <<= must be installed BEFORE `RMPR*3*180'
+
+Subject: HO INACTIVE HCPCS USAGE;REMOVE NOTIF LTR USAGE;HO NEW PATIENT REPORT;EDIT 2319
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following four issues:
+  
+ 1) Adding a new prescription to a Home Oxygen patient, will allow the
+    user to associate an inactive Healthcare Common Procedure Coding 
+    System (HCPCS) code.
+                                                                  
+ 2) Remove all routines & option for Patient Notification Letter processing
+  
+ 3) Home Oxygen 'New Patient' report gets <undefined> error
+  
+ 4) Site is unable to edit MODEL#/CONTRACT# in option Edit 2319
+                       
+  
+ Associated Trouble Tickets:
+ ===========================
+ 1) I7202994FY16 - User able to use inactive HCPCS code when adding
+                   new prescription/item to HO patient.
+  
+ 2) R7259735FY16 - Remove all routines and option from defunct
+                   Patient Notification Letter processing
+  
+ 3) I8368381FY16 - HO 'New Patient' report gets <undefined> error 
+  
+ 4) I8215214FY16 - Cannot edit MODEL#/CONTRACT# in option Edit 2319
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Upstate NY HCS
+ Clement Zablocki (Milwaukee) VAMC
+ Philadelphia VAMC 
+  
+ Ticket Overview:
+ ================ 
+ 1)  I7202994FY16 
+  
+ Problem:
+ --------
+ Analysis found that when associating a new item with a prescription on
+ a Home Oxygen patient, users are able to link an inactive Healthcare 
+ Common Procedure Coding System (HCPCS) code to the item.
+  
+  
+ Resolution:
+ -----------
+ Modifications were made to the HCPCS query (in template) to never allow 
+ an inactive HCPCS linked to an item.  Users will always be asked to 
+ enter an active HCPCS. 
+  
+  
+  Routines: RMPOPED
+  
+  
+  
+ 2) R7259735FY16 
+  
+ Problem:
+ --------
+ The Patient Notification Processing was installed nationally, but never
+ approved for processing.  Previously some of the components were removed
+ but not all of them.
+  
+  
+ Resolution:
+ -----------
+ The remaining components (4 routines and 1 option) associated with the
+ defunct Patient Notification Letter processing will be removed.
+  
+  
+  Routines: RMPRDVN, RMPRDVN1, RMPRDVN2, RMPRDVN3 [ALL DELETED]
+            RMPRTDEL (Removes tasked option: RMPR DVN NIGHTLY JOB)
+  
+  Option:  RMPR DVN NIGHTLY JOB  [DELETED]
+  
+  
+ 3) I8368381FY16  
+  
+ Problem:
+ --------
+ When users try to run the Home Oxygen (HO) 'New Patient' report they are 
+ receiving an undefined error.
+  
+ Resolution:
+ -----------
+ Modifications were made to the HO New Patient report to set the deceased
+ patient counter to zero.
+  
+  
+ Routine: RMPORNQ
+  
+  
+ 4) I8215214FY16 
+  
+ Problem:
+ --------
+ Prosthetics users have the ability to enter Product Model or Contract
+ # for an order when using the GUI suite for Prosthetics ordering. 
+ However, they cannot edit the resultant 2319 in the Vista Prosthetics
+ Edit 2319 option [RMPR EDIT 2319]. These fields can be found in the RECORD
+ OF PROS APPLIANCE/REPAIR File [#660], PRODUCT MODEL field [#9.2] and
+ CONTRACT field  [#38.7].
+  
+ Resolution:
+ -----------
+ Modify the Edit 2319 option [RMPR EDIT 2319] to include the Product Model
+ and Contract Number fields to be edited. This will greatly assist staff in
+ the recall process in determining correctly identified model numbers and
+ ensure the correct contract has been posted for item.
+  
+ Routine: RMPRE29
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+   *********************************************************************
+   PLEASE NOTE: Pre install routine RMPRTDEL will be deleted once the
+   install is complete.  If you wish to check the checksum of these
+   routines please use the 'Verify Checksums in Transport Global' under
+   the Installation Menu.
+   *********************************************************************
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*180)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*180.
+   
+    5. When Prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//", respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+       New Patients                     [RMPO-RPT-HONEWPT]
+       Add/Edit Home Oxygen Patient     [RMPO ADD/EDIT PAT]
+       Edit 2319                        [RMPR EDIT 2319]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOPED
+    Before:B301665198   After:B312319222  **29,44,41,52,77,110,140,148,
+                                           168,180**
+Routine Name: RMPORNQ
+    Before:  B5946232   After:  B6321620  **29,77,180**
+Routine Name: RMPRDVN
+    Before: B58045899   After:    Delete  
+Routine Name: RMPRDVN1
+    Before:  B7487666   After:    Delete  
+Routine Name: RMPRDVN2
+    Before:  B7371208   After:    Delete  
+Routine Name: RMPRDVN3
+    Before: B14695880   After:    Delete  
+Routine Name: RMPRE29
+    Before: B40052214   After: B41267108  **36,41,51,57,62,74,81,61,145,
+                                           150,180**
+Routine Name: RMPRTDEL
+    Before:       n/a   After:  B1345520  **180**
+ 
+Routine list of preceding patches: 150, 168
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 18, 2016
+Completed By:                               Date Completed: OCT 06, 2016
+Released By :                               Date Released : OCT 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

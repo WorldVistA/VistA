@@ -1,0 +1,240 @@
+
+=============================================================================
+Run Date: NOV 06, 2017                     Designation: PSO*7*478
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #410                      Status: Released
+                  Compliance Date: DEC 06, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*367   <<= must be installed BEFORE `PSO*7*478'
+                    (v)PSO*7*448   <<= must be installed BEFORE `PSO*7*478'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 2
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*478
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*22
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*81
+  
+ All three of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO PSX BUNDLE 10.0
+   KIDS Host File name: BPS_1_22_PSO_PSX.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+  1. The Reprint an Outpatient Rx Label [PSO RXRPT] and Outpatient Rx Label
+     [PSO SCRIPTALK REPRINT VISTA LB] will no longer allow a user to
+     reprint a label for a prescription with an open third party payer
+     reject on the worklist
+  
+  2. The Pharmacy Reject Information Screen will be updated to display the
+     Tax ID and PCN.
+  
+  3. This patch rectifies an ongoing problem in which some TRICARE and
+     CHAMPVA (Civilian Health and Medical Program of the Department of
+     Veterans Affairs) prescriptions on the CMOP queue would be left on
+     the queue during CMOP processing because claim responses would not be
+     received by VistA in a timley manner.  This release modifies
+     the claim submission process (BPS*1.0*22, PSO*7.0*478) and the CMOP
+     process (PSX*2.0*81) so that certain checks will no longer be
+     performed prematurely, allowing sufficient time for the claim
+     responses to come back.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PRESCRIPTIONS (#52)
+   REJECT INFO (#52.25) PCN (#34)                            New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                             Deleted/Attach
+ -------------                                             ---------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                        Type                   Deleted
+ -------------                        ----                 -------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ (VDL) at:  http://www.domain.ext/vdl
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ User Manual - Manager - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P478_MAN_UM.PDF      Binary
+ User Manual - Pharmacist - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P478_PHARM_UM.PDF    Binary
+ *ECME Deploy Install Rollback Guide (BPS*1*22)
+                                     BPS_1_0_P22_IG.PDF           Binary
+  
+ *A single Release Notes document will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+ Patch Installation
+ ==================
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named PSO7P478.
+ This routine will run in the background.  The purpose of the post-install
+ routine is to:
+  
+  a. Update the field PCN on the REJECT INFO sub-file of the PRESCRIPTION
+     file.  This field is being added with this patch.  The data will come
+     from the field PROCESSOR CONTROL NUMBER on the BPS CLAIMS file.
+  b. Send an email to the installer indicating the number of
+     PRESCRIPTION records that were updated during the post-install
+     process.
+  
+ The post-install routine is automatically deleted by the system if allowed
+ by your Kernel site parameters configuration. You may delete this routine
+ if the installation was successful and it is not automatically deleted by
+ KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*22.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P478
+    Before:       n/a   After:  B7833760  **478**
+Routine Name: PSOREJP1
+    Before:B201229195   After:B202372294  **148,247,260,281,287,289,290,
+                                           358,359,385,403,421,427,448,
+                                           478**
+Routine Name: PSOREJU2
+    Before: B60756541   After: B63731679  **148,260,287,341,290,358,359,
+                                           385,403,421,427,478**
+Routine Name: PSOREJU3
+    Before: B86770782   After: B98042345  **287,290,358,359,385,421,427,
+                                           448,478**
+Routine Name: PSOREJUT
+    Before:B110735693   After:B113532440  **148,247,260,287,289,290,358,
+                                           359,385,403,421,427,448,478**
+Routine Name: PSORXRP2
+    Before: B35963491   After: B37627986  **11,27,120,138,135,156,185,
+                                           280,251,367,478**
+ 
+Routine list of preceding patches: 367, 448
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2017
+Completed By:                               Date Completed: NOV 06, 2017
+Released By :                               Date Released : NOV 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

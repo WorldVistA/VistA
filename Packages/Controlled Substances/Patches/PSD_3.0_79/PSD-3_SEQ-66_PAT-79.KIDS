@@ -1,0 +1,3739 @@
+Released PSD*3*79 SEQ #66
+Extracted from mail message
+**KIDS**:PSD*3.0*79^
+
+**INSTALL NAME**
+PSD*3.0*79
+"BLD",9901,0)
+PSD*3.0*79^CONTROLLED SUBSTANCES^0^3170605^y
+"BLD",9901,1,0)
+^^197^197^3170605^^^^
+"BLD",9901,1,1,0)
+This patch addresses the following problems: 
+"BLD",9901,1,2,0)
+ 
+"BLD",9901,1,3,0)
+1. Return to Stock Issue 
+"BLD",9901,1,4,0)
+ 
+"BLD",9901,1,5,0)
+2. Return to stock entry not always accepted 
+"BLD",9901,1,6,0)
+ 
+"BLD",9901,1,7,0)
+3. Site Reporting Problems with Controlled Substance Green Sheets 
+"BLD",9901,1,8,0)
+ 
+"BLD",9901,1,9,0)
+4. Inventory Sheet inaccurate for Biloxi inpatient Vault  
+"BLD",9901,1,10,0)
+ 
+"BLD",9901,1,11,0)
+5. Using option "PSD DESTROY DRUGS" to process a destruction cancellation,
+"BLD",9901,1,12,0)
+   resulted in an error
+"BLD",9901,1,13,0)
+ 
+"BLD",9901,1,14,0)
+ASSOCIATED REMEDY TICKET(S): 
+"BLD",9901,1,15,0)
+============================
+"BLD",9901,1,16,0)
+1. I10091822FY16 - Return to Stock Issue 
+"BLD",9901,1,17,0)
+2. I10140662FY16 - Return to stock entry not always accepted 
+"BLD",9901,1,18,0)
+3. I10152355FY16 - Site reporting problems with Controlled Substance Green Sheets 
+"BLD",9901,1,19,0)
+4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+"BLD",9901,1,20,0)
+5. Using option "PSD DESTROY DRUGS" to process a destruction cancellation,
+"BLD",9901,1,21,0)
+   resulted in an error
+"BLD",9901,1,22,0)
+6. I14905678FY17 - Similar issue as in R14730330FY17, but in the drug item
+"BLD",9901,1,23,0)
+                   field (free text)
+"BLD",9901,1,24,0)
+ 
+"BLD",9901,1,25,0)
+ 
+"BLD",9901,1,26,0)
+ASSOCIATED NSR(s): 
+"BLD",9901,1,27,0)
+==================
+"BLD",9901,1,28,0)
+N/A 
+"BLD",9901,1,29,0)
+ 
+"BLD",9901,1,30,0)
+PARTICIPATING TEST SITES: 
+"BLD",9901,1,31,0)
+=========================
+"BLD",9901,1,32,0)
+OKLAHOMA CITY, OK
+"BLD",9901,1,33,0)
+HUDSON VALLEY HCS 
+"BLD",9901,1,34,0)
+  
+"BLD",9901,1,35,0)
+OVERVIEW: 
+"BLD",9901,1,36,0)
+=========
+"BLD",9901,1,37,0)
+1. I10091822FY16 - Return to Stock Issue 
+"BLD",9901,1,38,0)
+ 
+"BLD",9901,1,39,0)
+Problem: 
+"BLD",9901,1,40,0)
+--------
+"BLD",9901,1,41,0)
+A Controlled Substance (CS) Refill is returned to stock through Outpatient
+"BLD",9901,1,42,0)
+Pharmacy (OP) package. When prompted, the user selects NO to add the stock to
+"BLD",9901,1,43,0)
+the balance in the Narcotic vault because the medication was going to be
+"BLD",9901,1,44,0)
+destroyed if it is left in the pharmacy. (They cannot add it back to stock in
+"BLD",9901,1,45,0)
+this case.)  The refill was marked as Returned to Stock in the OP package. 
+"BLD",9901,1,46,0)
+When the user re-submitted the refill, they tried to post it in the CS package.
+"BLD",9901,1,47,0)
+The system allows the user to release the refill in the OP package, but since
+"BLD",9901,1,48,0)
+the refill had not been added back to inventory, the CS package did not
+"BLD",9901,1,49,0)
+recognize that the refill had been filled again, and did not allow them to post
+"BLD",9901,1,50,0)
+the refill.  
+"BLD",9901,1,51,0)
+  
+"BLD",9901,1,52,0)
+Resolution: 
+"BLD",9901,1,53,0)
+-----------
+"BLD",9901,1,54,0)
+The routine PSDOPT0 that is called from the Outpatient Pharmacy system that
+"BLD",9901,1,55,0)
+performs the Return To Stock for Controlled Substances will be modified to 
+"BLD",9901,1,56,0)
+account for a Controlled Substance drug that is being returned with the intent
+"BLD",9901,1,57,0)
+to destroy.  
+"BLD",9901,1,58,0)
+  
+"BLD",9901,1,59,0)
+Technical: 
+"BLD",9901,1,60,0)
+----------
+"BLD",9901,1,61,0)
+Routine PSDOPT0 will be modified to set the return to stock quantity to zero
+"BLD",9901,1,62,0)
+if the user answers NO to the Do you want ## added to balance in the Narcotic
+"BLD",9901,1,63,0)
+vault? Yes// prompt. (## is the quantity that that was dispensed) 
+"BLD",9901,1,64,0)
+ 
+"BLD",9901,1,65,0)
+2. I10140662FY16 - Return to stock entry not always accepted 
+"BLD",9901,1,66,0)
+ 
+"BLD",9901,1,67,0)
+Problem: 
+"BLD",9901,1,68,0)
+--------
+"BLD",9901,1,69,0)
+When a pharmacist is entering return to stock in the Controlled substance 
+"BLD",9901,1,70,0)
+package, it is not being accepted if the user does not select a Controlled
+"BLD",9901,1,71,0)
+Substance vault to return it to.  
+"BLD",9901,1,72,0)
+  
+"BLD",9901,1,73,0)
+Resolution: 
+"BLD",9901,1,74,0)
+-----------
+"BLD",9901,1,75,0)
+The routine PSDOPT0 that performs the 'Return to Stock' for Controlled
+"BLD",9901,1,76,0)
+Substances will be changed to force a user to select a Vault and not enter
+"BLD",9901,1,77,0)
+past. The "Prescription Not Returned to Stock" message will also be displayed.  
+"BLD",9901,1,78,0)
+ 
+"BLD",9901,1,79,0)
+Technical: 
+"BLD",9901,1,80,0)
+----------
+"BLD",9901,1,81,0)
+Routine PSDOPT0 will be modified to exit properly without making any updates if
+"BLD",9901,1,82,0)
+the user does not select a Controlled Substance vault to return the drug to.  
+"BLD",9901,1,83,0)
+ 
+"BLD",9901,1,84,0)
+3. I10152355FY16 - SITE Reporting Problems with Controlled Substance 
+"BLD",9901,1,85,0)
+                   Green Sheets 
+"BLD",9901,1,86,0)
+ 
+"BLD",9901,1,87,0)
+Problem: 
+"BLD",9901,1,88,0)
+--------
+"BLD",9901,1,89,0)
+The Green Sheet Ready for Pickup Log [PSD PRINT GS PICKUP] option does not show
+"BLD",9901,1,90,0)
+all of the Green Sheets Ready for Pickup. This is caused when 2 users order the
+"BLD",9901,1,91,0)
+same drug from the same Narcotics Area Of Use (NAOU) at the same time. This
+"BLD",9901,1,92,0)
+results in multiple orders being assigned to the same request number for a drug
+"BLD",9901,1,93,0)
+in the Drug Accountability Stats file (#58.8).  
+"BLD",9901,1,94,0)
+ 
+"BLD",9901,1,95,0)
+Resolution: 
+"BLD",9901,1,96,0)
+-----------
+"BLD",9901,1,97,0)
+The routines that create the entries in the Drug Accountability Stats file
+"BLD",9901,1,98,0)
+(#58.8) will be modified to lock drug at the pharmacy location prior to
+"BLD",9901,1,99,0)
+acquiring and setting request number in the Drug Accountability Stats file
+"BLD",9901,1,100,0)
+(#58.8) during ordering.  
+"BLD",9901,1,101,0)
+ 
+"BLD",9901,1,102,0)
+A post-install cleanup routine will search any transactions that have different
+"BLD",9901,1,103,0)
+pharmacy dispensing numbers and the same Drug Accountability Stats file (#58.8)
+"BLD",9901,1,104,0)
+request number. Once these transactions have been identified, a new request
+"BLD",9901,1,105,0)
+number will be assigned and saved.  
+"BLD",9901,1,106,0)
+ 
+"BLD",9901,1,107,0)
+An informational report will be sent in MailMan to all the users that hold the
+"BLD",9901,1,108,0)
+PSDMGR security key.  
+"BLD",9901,1,109,0)
+ 
+"BLD",9901,1,110,0)
+ 
+"BLD",9901,1,111,0)
+Example Report: Subj: PSD*3*79 TRANSACTION REPORT  [#141412] 04/18/12@14:49  15
+"BLD",9901,1,112,0)
+lines From: PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+"BLD",9901,1,113,0)
+--------------------------------------------------------------------------
+"BLD",9901,1,114,0)
+  This report contains Controlled Substance drugs that assigned multiple 
+"BLD",9901,1,115,0)
+  Pharmacy Dispensing numbers to a single request number in the Narcotics 
+"BLD",9901,1,116,0)
+  Area Of Use (NAOU) during order processing.  
+"BLD",9901,1,117,0)
+ 
+"BLD",9901,1,118,0)
+  These transactions have been identified and corrected.  
+"BLD",9901,1,119,0)
+ 
+"BLD",9901,1,120,0)
+NAOU                                       Pharmacy   Transaction    Old/New 
+"BLD",9901,1,121,0)
+ Drug Name                                Dispensing #   Number     Request # 
+"BLD",9901,1,122,0)
+==========================================================================
+"BLD",9901,1,123,0)
+ECU-EAST 
+"BLD",9901,1,124,0)
+ LEVORPHANOL TARTRATE 2MG TAB               31359       347041         2/3 
+"BLD",9901,1,125,0)
+                                            31360       347042         2/NA 
+"BLD",9901,1,126,0)
+ 
+"BLD",9901,1,127,0)
+ 
+"BLD",9901,1,128,0)
+***** End Of Report ***** 
+"BLD",9901,1,129,0)
+  
+"BLD",9901,1,130,0)
+In case no transactions need to be fixed the Mailman message below will be
+"BLD",9901,1,131,0)
+sent:
+"BLD",9901,1,132,0)
+  
+"BLD",9901,1,133,0)
+Subj: PSD*3*79 TRANSACTION REPORT  [#141414] 04/18/12@14:53  4 lines From:
+"BLD",9901,1,134,0)
+PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+"BLD",9901,1,135,0)
+--------------------------------------------------------------------------
+"BLD",9901,1,136,0)
+ 
+"BLD",9901,1,137,0)
+THERE WERE NO TRANSACTIONS TO REPORT.  
+"BLD",9901,1,138,0)
+ 
+"BLD",9901,1,139,0)
+***** End Of Report ***** 
+"BLD",9901,1,140,0)
+ 
+"BLD",9901,1,141,0)
+Technical: 
+"BLD",9901,1,142,0)
+----------
+"BLD",9901,1,143,0)
+^PSDEXGS1, ^PSDNTT1, ^PSDNTTP1, ^PSDOPT0, ^PSDOR2, ^PSDORD, ^PSDORD3, ^PSDORD4,
+"BLD",9901,1,144,0)
+^PSDORN0, ^PSDORNO, ^PSDORP, ^PSDORP2 and ^PSDORV routines will be modified to
+"BLD",9901,1,145,0)
+lock the pharmacy location at the drug level prior to acquiring and
+"BLD",9901,1,146,0)
+incrementing the request number in the Drug Accountability Stats file (#58.8)
+"BLD",9901,1,147,0)
+when a user orders a drug.  
+"BLD",9901,1,148,0)
+ 
+"BLD",9901,1,149,0)
+4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+"BLD",9901,1,150,0)
+ 
+"BLD",9901,1,151,0)
+Problem: 
+"BLD",9901,1,152,0)
+--------
+"BLD",9901,1,153,0)
+When the user up-carets (^) out at the prompt, "REASON EDITED" during 
+"BLD",9901,1,154,0)
+Edit/Cancel Verified Orders [PSD EDIT/CANC VER ORD] option with the intent of
+"BLD",9901,1,155,0)
+cancelling the request, it displays "** No action taken. **", indicating the
+"BLD",9901,1,156,0)
+transaction was aborted. When you look at the master vault inventory, it has
+"BLD",9901,1,157,0)
+been updated, however, the Controlled Substance order for the NAOU and the
+"BLD",9901,1,158,0)
+green sheet are not updated, creating a discrepancy.  
+"BLD",9901,1,159,0)
+ 
+"BLD",9901,1,160,0)
+Resolution: 
+"BLD",9901,1,161,0)
+-----------
+"BLD",9901,1,162,0)
+The routine that performs the transaction updates has been modified to perform
+"BLD",9901,1,163,0)
+all updates after all the user prompts. If the user up-carets (^) out then the
+"BLD",9901,1,164,0)
+changes are aborted.  
+"BLD",9901,1,165,0)
+ 
+"BLD",9901,1,166,0)
+Technical: 
+"BLD",9901,1,167,0)
+----------
+"BLD",9901,1,168,0)
+Routine PSDEVO1 has been modified to update the master vault inventory, NAOU
+"BLD",9901,1,169,0)
+Controlled Substance order and the green sheet only after the user completes
+"BLD",9901,1,170,0)
+all the prompts.
+"BLD",9901,1,171,0)
+ 
+"BLD",9901,1,172,0)
+5. R14730330FY17 - Reporting event of errors that occurred during VISTA
+"BLD",9901,1,173,0)
+                   operations
+"BLD",9901,1,174,0)
+6. I14905678FY17 - Similar issue as in R14730330FY17, but in the drug item
+"BLD",9901,1,175,0)
+                   field (free text)
+"BLD",9901,1,176,0)
+ 
+"BLD",9901,1,177,0)
+Problem: 
+"BLD",9901,1,178,0)
+--------
+"BLD",9901,1,179,0)
+When using the options, Non-VA Drug Placed on Hold for Destruction [PSD 
+"BLD",9901,1,180,0)
+DEST TEXT DRUG] and Destroy a Controlled Substances Drug [PSD DESTROY 
+"BLD",9901,1,181,0)
+DRUGS], entering a ";" in a free text field such as drug item or the 
+"BLD",9901,1,182,0)
+comment field causes a hard error.
+"BLD",9901,1,183,0)
+ 
+"BLD",9901,1,184,0)
+Resolution: 
+"BLD",9901,1,185,0)
+-----------
+"BLD",9901,1,186,0)
+To prevent the hard error, the drug item and the comment field will be
+"BLD",9901,1,187,0)
+validated to not allow entry of a ";".
+"BLD",9901,1,188,0)
+  
+"BLD",9901,1,189,0)
+Technical: 
+"BLD",9901,1,190,0)
+----------
+"BLD",9901,1,191,0)
+Routine PSDEST and PSDESTF will be modified to check for ";" in the 
+"BLD",9901,1,192,0)
+comment field and to display a message, "A semicolon is not allowed in the
+"BLD",9901,1,193,0)
+COMMENTS field. Please edit your entry."
+"BLD",9901,1,194,0)
+ 
+"BLD",9901,1,195,0)
+Routine PSDESTF will be modified to check for ";" in the drug item field
+"BLD",9901,1,196,0)
+and to display a message, "A semicolon is not allowed in the DRUG ITEM
+"BLD",9901,1,197,0)
+field. Please edit your entry."
+"BLD",9901,4,0)
+^9.64PA^^
+"BLD",9901,6)
+7^
+"BLD",9901,6.3)
+20
+"BLD",9901,"ABPKG")
+n
+"BLD",9901,"INID")
+^y
+"BLD",9901,"INIT")
+EN^PSD79P
+"BLD",9901,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9901,"KRN",.4,0)
+.4
+"BLD",9901,"KRN",.401,0)
+.401
+"BLD",9901,"KRN",.402,0)
+.402
+"BLD",9901,"KRN",.403,0)
+.403
+"BLD",9901,"KRN",.5,0)
+.5
+"BLD",9901,"KRN",.84,0)
+.84
+"BLD",9901,"KRN",3.6,0)
+3.6
+"BLD",9901,"KRN",3.8,0)
+3.8
+"BLD",9901,"KRN",9.2,0)
+9.2
+"BLD",9901,"KRN",9.8,0)
+9.8
+"BLD",9901,"KRN",9.8,"NM",0)
+^9.68A^20^19
+"BLD",9901,"KRN",9.8,"NM",1,0)
+PSDEXGS1^^0^B8758642
+"BLD",9901,"KRN",9.8,"NM",2,0)
+PSDNTT1^^0^B16796985
+"BLD",9901,"KRN",9.8,"NM",3,0)
+PSDNTTP1^^0^B14819177
+"BLD",9901,"KRN",9.8,"NM",5,0)
+PSDOR2^^0^B11972172
+"BLD",9901,"KRN",9.8,"NM",6,0)
+PSDORD^^0^B21419524
+"BLD",9901,"KRN",9.8,"NM",7,0)
+PSDORD3^^0^B16937115
+"BLD",9901,"KRN",9.8,"NM",8,0)
+PSDORD4^^0^B9420813
+"BLD",9901,"KRN",9.8,"NM",9,0)
+PSDORN0^^0^B4086421
+"BLD",9901,"KRN",9.8,"NM",10,0)
+PSDORNO^^0^B12728562
+"BLD",9901,"KRN",9.8,"NM",11,0)
+PSDORP^^0^B23737263
+"BLD",9901,"KRN",9.8,"NM",12,0)
+PSDORP2^^0^B16572981
+"BLD",9901,"KRN",9.8,"NM",13,0)
+PSDORV^^0^B17456680
+"BLD",9901,"KRN",9.8,"NM",14,0)
+PSD79P^^0^B45831087
+"BLD",9901,"KRN",9.8,"NM",15,0)
+PSDOPT0^^0^B87954847
+"BLD",9901,"KRN",9.8,"NM",16,0)
+PSDOPT^^0^B86544635
+"BLD",9901,"KRN",9.8,"NM",17,0)
+PSDOPT2^^0^B20661695
+"BLD",9901,"KRN",9.8,"NM",18,0)
+PSDEVO1^^0^B15537831
+"BLD",9901,"KRN",9.8,"NM",19,0)
+PSDEST^^0^B25150803
+"BLD",9901,"KRN",9.8,"NM",20,0)
+PSDESTF^^0^B22540238
+"BLD",9901,"KRN",9.8,"NM","B","PSD79P",14)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDEST",19)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDESTF",20)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDEVO1",18)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDEXGS1",1)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDNTT1",2)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDNTTP1",3)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDOPT",16)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDOPT0",15)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDOPT2",17)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDOR2",5)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORD",6)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORD3",7)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORD4",8)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORN0",9)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORNO",10)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORP",11)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORP2",12)
+
+"BLD",9901,"KRN",9.8,"NM","B","PSDORV",13)
+
+"BLD",9901,"KRN",19,0)
+19
+"BLD",9901,"KRN",19.1,0)
+19.1
+"BLD",9901,"KRN",101,0)
+101
+"BLD",9901,"KRN",409.61,0)
+409.61
+"BLD",9901,"KRN",771,0)
+771
+"BLD",9901,"KRN",779.2,0)
+779.2
+"BLD",9901,"KRN",870,0)
+870
+"BLD",9901,"KRN",8989.51,0)
+8989.51
+"BLD",9901,"KRN",8989.52,0)
+8989.52
+"BLD",9901,"KRN",8994,0)
+8994
+"BLD",9901,"KRN","B",.4,.4)
+
+"BLD",9901,"KRN","B",.401,.401)
+
+"BLD",9901,"KRN","B",.402,.402)
+
+"BLD",9901,"KRN","B",.403,.403)
+
+"BLD",9901,"KRN","B",.5,.5)
+
+"BLD",9901,"KRN","B",.84,.84)
+
+"BLD",9901,"KRN","B",3.6,3.6)
+
+"BLD",9901,"KRN","B",3.8,3.8)
+
+"BLD",9901,"KRN","B",9.2,9.2)
+
+"BLD",9901,"KRN","B",9.8,9.8)
+
+"BLD",9901,"KRN","B",19,19)
+
+"BLD",9901,"KRN","B",19.1,19.1)
+
+"BLD",9901,"KRN","B",101,101)
+
+"BLD",9901,"KRN","B",409.61,409.61)
+
+"BLD",9901,"KRN","B",771,771)
+
+"BLD",9901,"KRN","B",779.2,779.2)
+
+"BLD",9901,"KRN","B",870,870)
+
+"BLD",9901,"KRN","B",8989.51,8989.51)
+
+"BLD",9901,"KRN","B",8989.52,8989.52)
+
+"BLD",9901,"KRN","B",8994,8994)
+
+"BLD",9901,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9901,"QUES",0)
+^9.62^^
+"BLD",9901,"REQB",0)
+^9.611^6^6
+"BLD",9901,"REQB",1,0)
+PSD*3.0*20^1
+"BLD",9901,"REQB",2,0)
+PSD*3.0*51^1
+"BLD",9901,"REQB",3,0)
+PSD*3.0*67^1
+"BLD",9901,"REQB",4,0)
+PSD*3.0*64^1
+"BLD",9901,"REQB",5,0)
+PSD*3.0*66^1
+"BLD",9901,"REQB",6,0)
+PSD*3.0*71^1
+"BLD",9901,"REQB","B","PSD*3.0*20",1)
+
+"BLD",9901,"REQB","B","PSD*3.0*51",2)
+
+"BLD",9901,"REQB","B","PSD*3.0*64",4)
+
+"BLD",9901,"REQB","B","PSD*3.0*66",5)
+
+"BLD",9901,"REQB","B","PSD*3.0*67",3)
+
+"BLD",9901,"REQB","B","PSD*3.0*71",6)
+
+"INIT")
+EN^PSD79P
+"MBREQ")
+0
+"PKG",276,-1)
+1^1
+"PKG",276,0)
+CONTROLLED SUBSTANCES^PSD^Controlled Substances Inventory and Tracking module.
+"PKG",276,22,0)
+^9.49I^1^1
+"PKG",276,22,1,0)
+3.0^2970213^2970430^11595
+"PKG",276,22,1,"PAH",1,0)
+79^3170605^11863
+"PKG",276,22,1,"PAH",1,1,0)
+^^197^197^3170605
+"PKG",276,22,1,"PAH",1,1,1,0)
+This patch addresses the following problems: 
+"PKG",276,22,1,"PAH",1,1,2,0)
+ 
+"PKG",276,22,1,"PAH",1,1,3,0)
+1. Return to Stock Issue 
+"PKG",276,22,1,"PAH",1,1,4,0)
+ 
+"PKG",276,22,1,"PAH",1,1,5,0)
+2. Return to stock entry not always accepted 
+"PKG",276,22,1,"PAH",1,1,6,0)
+ 
+"PKG",276,22,1,"PAH",1,1,7,0)
+3. Site Reporting Problems with Controlled Substance Green Sheets 
+"PKG",276,22,1,"PAH",1,1,8,0)
+ 
+"PKG",276,22,1,"PAH",1,1,9,0)
+4. Inventory Sheet inaccurate for Biloxi inpatient Vault  
+"PKG",276,22,1,"PAH",1,1,10,0)
+ 
+"PKG",276,22,1,"PAH",1,1,11,0)
+5. Using option "PSD DESTROY DRUGS" to process a destruction cancellation,
+"PKG",276,22,1,"PAH",1,1,12,0)
+   resulted in an error
+"PKG",276,22,1,"PAH",1,1,13,0)
+ 
+"PKG",276,22,1,"PAH",1,1,14,0)
+ASSOCIATED REMEDY TICKET(S): 
+"PKG",276,22,1,"PAH",1,1,15,0)
+============================
+"PKG",276,22,1,"PAH",1,1,16,0)
+1. I10091822FY16 - Return to Stock Issue 
+"PKG",276,22,1,"PAH",1,1,17,0)
+2. I10140662FY16 - Return to stock entry not always accepted 
+"PKG",276,22,1,"PAH",1,1,18,0)
+3. I10152355FY16 - Site reporting problems with Controlled Substance Green Sheets 
+"PKG",276,22,1,"PAH",1,1,19,0)
+4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+"PKG",276,22,1,"PAH",1,1,20,0)
+5. Using option "PSD DESTROY DRUGS" to process a destruction cancellation,
+"PKG",276,22,1,"PAH",1,1,21,0)
+   resulted in an error
+"PKG",276,22,1,"PAH",1,1,22,0)
+6. I14905678FY17 - Similar issue as in R14730330FY17, but in the drug item
+"PKG",276,22,1,"PAH",1,1,23,0)
+                   field (free text)
+"PKG",276,22,1,"PAH",1,1,24,0)
+ 
+"PKG",276,22,1,"PAH",1,1,25,0)
+ 
+"PKG",276,22,1,"PAH",1,1,26,0)
+ASSOCIATED NSR(s): 
+"PKG",276,22,1,"PAH",1,1,27,0)
+==================
+"PKG",276,22,1,"PAH",1,1,28,0)
+N/A 
+"PKG",276,22,1,"PAH",1,1,29,0)
+ 
+"PKG",276,22,1,"PAH",1,1,30,0)
+PARTICIPATING TEST SITES: 
+"PKG",276,22,1,"PAH",1,1,31,0)
+=========================
+"PKG",276,22,1,"PAH",1,1,32,0)
+OKLAHOMA CITY, OK
+"PKG",276,22,1,"PAH",1,1,33,0)
+HUDSON VALLEY HCS 
+"PKG",276,22,1,"PAH",1,1,34,0)
+  
+"PKG",276,22,1,"PAH",1,1,35,0)
+OVERVIEW: 
+"PKG",276,22,1,"PAH",1,1,36,0)
+=========
+"PKG",276,22,1,"PAH",1,1,37,0)
+1. I10091822FY16 - Return to Stock Issue 
+"PKG",276,22,1,"PAH",1,1,38,0)
+ 
+"PKG",276,22,1,"PAH",1,1,39,0)
+Problem: 
+"PKG",276,22,1,"PAH",1,1,40,0)
+--------
+"PKG",276,22,1,"PAH",1,1,41,0)
+A Controlled Substance (CS) Refill is returned to stock through Outpatient
+"PKG",276,22,1,"PAH",1,1,42,0)
+Pharmacy (OP) package. When prompted, the user selects NO to add the stock to
+"PKG",276,22,1,"PAH",1,1,43,0)
+the balance in the Narcotic vault because the medication was going to be
+"PKG",276,22,1,"PAH",1,1,44,0)
+destroyed if it is left in the pharmacy. (They cannot add it back to stock in
+"PKG",276,22,1,"PAH",1,1,45,0)
+this case.)  The refill was marked as Returned to Stock in the OP package. 
+"PKG",276,22,1,"PAH",1,1,46,0)
+When the user re-submitted the refill, they tried to post it in the CS package.
+"PKG",276,22,1,"PAH",1,1,47,0)
+The system allows the user to release the refill in the OP package, but since
+"PKG",276,22,1,"PAH",1,1,48,0)
+the refill had not been added back to inventory, the CS package did not
+"PKG",276,22,1,"PAH",1,1,49,0)
+recognize that the refill had been filled again, and did not allow them to post
+"PKG",276,22,1,"PAH",1,1,50,0)
+the refill.  
+"PKG",276,22,1,"PAH",1,1,51,0)
+  
+"PKG",276,22,1,"PAH",1,1,52,0)
+Resolution: 
+"PKG",276,22,1,"PAH",1,1,53,0)
+-----------
+"PKG",276,22,1,"PAH",1,1,54,0)
+The routine PSDOPT0 that is called from the Outpatient Pharmacy system that
+"PKG",276,22,1,"PAH",1,1,55,0)
+performs the Return To Stock for Controlled Substances will be modified to 
+"PKG",276,22,1,"PAH",1,1,56,0)
+account for a Controlled Substance drug that is being returned with the intent
+"PKG",276,22,1,"PAH",1,1,57,0)
+to destroy.  
+"PKG",276,22,1,"PAH",1,1,58,0)
+  
+"PKG",276,22,1,"PAH",1,1,59,0)
+Technical: 
+"PKG",276,22,1,"PAH",1,1,60,0)
+----------
+"PKG",276,22,1,"PAH",1,1,61,0)
+Routine PSDOPT0 will be modified to set the return to stock quantity to zero
+"PKG",276,22,1,"PAH",1,1,62,0)
+if the user answers NO to the Do you want ## added to balance in the Narcotic
+"PKG",276,22,1,"PAH",1,1,63,0)
+vault? Yes// prompt. (## is the quantity that that was dispensed) 
+"PKG",276,22,1,"PAH",1,1,64,0)
+ 
+"PKG",276,22,1,"PAH",1,1,65,0)
+2. I10140662FY16 - Return to stock entry not always accepted 
+"PKG",276,22,1,"PAH",1,1,66,0)
+ 
+"PKG",276,22,1,"PAH",1,1,67,0)
+Problem: 
+"PKG",276,22,1,"PAH",1,1,68,0)
+--------
+"PKG",276,22,1,"PAH",1,1,69,0)
+When a pharmacist is entering return to stock in the Controlled substance 
+"PKG",276,22,1,"PAH",1,1,70,0)
+package, it is not being accepted if the user does not select a Controlled
+"PKG",276,22,1,"PAH",1,1,71,0)
+Substance vault to return it to.  
+"PKG",276,22,1,"PAH",1,1,72,0)
+  
+"PKG",276,22,1,"PAH",1,1,73,0)
+Resolution: 
+"PKG",276,22,1,"PAH",1,1,74,0)
+-----------
+"PKG",276,22,1,"PAH",1,1,75,0)
+The routine PSDOPT0 that performs the 'Return to Stock' for Controlled
+"PKG",276,22,1,"PAH",1,1,76,0)
+Substances will be changed to force a user to select a Vault and not enter
+"PKG",276,22,1,"PAH",1,1,77,0)
+past. The "Prescription Not Returned to Stock" message will also be displayed.  
+"PKG",276,22,1,"PAH",1,1,78,0)
+ 
+"PKG",276,22,1,"PAH",1,1,79,0)
+Technical: 
+"PKG",276,22,1,"PAH",1,1,80,0)
+----------
+"PKG",276,22,1,"PAH",1,1,81,0)
+Routine PSDOPT0 will be modified to exit properly without making any updates if
+"PKG",276,22,1,"PAH",1,1,82,0)
+the user does not select a Controlled Substance vault to return the drug to.  
+"PKG",276,22,1,"PAH",1,1,83,0)
+ 
+"PKG",276,22,1,"PAH",1,1,84,0)
+3. I10152355FY16 - SITE Reporting Problems with Controlled Substance 
+"PKG",276,22,1,"PAH",1,1,85,0)
+                   Green Sheets 
+"PKG",276,22,1,"PAH",1,1,86,0)
+ 
+"PKG",276,22,1,"PAH",1,1,87,0)
+Problem: 
+"PKG",276,22,1,"PAH",1,1,88,0)
+--------
+"PKG",276,22,1,"PAH",1,1,89,0)
+The Green Sheet Ready for Pickup Log [PSD PRINT GS PICKUP] option does not show
+"PKG",276,22,1,"PAH",1,1,90,0)
+all of the Green Sheets Ready for Pickup. This is caused when 2 users order the
+"PKG",276,22,1,"PAH",1,1,91,0)
+same drug from the same Narcotics Area Of Use (NAOU) at the same time. This
+"PKG",276,22,1,"PAH",1,1,92,0)
+results in multiple orders being assigned to the same request number for a drug
+"PKG",276,22,1,"PAH",1,1,93,0)
+in the Drug Accountability Stats file (#58.8).  
+"PKG",276,22,1,"PAH",1,1,94,0)
+ 
+"PKG",276,22,1,"PAH",1,1,95,0)
+Resolution: 
+"PKG",276,22,1,"PAH",1,1,96,0)
+-----------
+"PKG",276,22,1,"PAH",1,1,97,0)
+The routines that create the entries in the Drug Accountability Stats file
+"PKG",276,22,1,"PAH",1,1,98,0)
+(#58.8) will be modified to lock drug at the pharmacy location prior to
+"PKG",276,22,1,"PAH",1,1,99,0)
+acquiring and setting request number in the Drug Accountability Stats file
+"PKG",276,22,1,"PAH",1,1,100,0)
+(#58.8) during ordering.  
+"PKG",276,22,1,"PAH",1,1,101,0)
+ 
+"PKG",276,22,1,"PAH",1,1,102,0)
+A post-install cleanup routine will search any transactions that have different
+"PKG",276,22,1,"PAH",1,1,103,0)
+pharmacy dispensing numbers and the same Drug Accountability Stats file (#58.8)
+"PKG",276,22,1,"PAH",1,1,104,0)
+request number. Once these transactions have been identified, a new request
+"PKG",276,22,1,"PAH",1,1,105,0)
+number will be assigned and saved.  
+"PKG",276,22,1,"PAH",1,1,106,0)
+ 
+"PKG",276,22,1,"PAH",1,1,107,0)
+An informational report will be sent in MailMan to all the users that hold the
+"PKG",276,22,1,"PAH",1,1,108,0)
+PSDMGR security key.  
+"PKG",276,22,1,"PAH",1,1,109,0)
+ 
+"PKG",276,22,1,"PAH",1,1,110,0)
+ 
+"PKG",276,22,1,"PAH",1,1,111,0)
+Example Report: Subj: PSD*3*79 TRANSACTION REPORT  [#141412] 04/18/12@14:49  15
+"PKG",276,22,1,"PAH",1,1,112,0)
+lines From: PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+"PKG",276,22,1,"PAH",1,1,113,0)
+--------------------------------------------------------------------------
+"PKG",276,22,1,"PAH",1,1,114,0)
+  This report contains Controlled Substance drugs that assigned multiple 
+"PKG",276,22,1,"PAH",1,1,115,0)
+  Pharmacy Dispensing numbers to a single request number in the Narcotics 
+"PKG",276,22,1,"PAH",1,1,116,0)
+  Area Of Use (NAOU) during order processing.  
+"PKG",276,22,1,"PAH",1,1,117,0)
+ 
+"PKG",276,22,1,"PAH",1,1,118,0)
+  These transactions have been identified and corrected.  
+"PKG",276,22,1,"PAH",1,1,119,0)
+ 
+"PKG",276,22,1,"PAH",1,1,120,0)
+NAOU                                       Pharmacy   Transaction    Old/New 
+"PKG",276,22,1,"PAH",1,1,121,0)
+ Drug Name                                Dispensing #   Number     Request # 
+"PKG",276,22,1,"PAH",1,1,122,0)
+==========================================================================
+"PKG",276,22,1,"PAH",1,1,123,0)
+ECU-EAST 
+"PKG",276,22,1,"PAH",1,1,124,0)
+ LEVORPHANOL TARTRATE 2MG TAB               31359       347041         2/3 
+"PKG",276,22,1,"PAH",1,1,125,0)
+                                            31360       347042         2/NA 
+"PKG",276,22,1,"PAH",1,1,126,0)
+ 
+"PKG",276,22,1,"PAH",1,1,127,0)
+ 
+"PKG",276,22,1,"PAH",1,1,128,0)
+***** End Of Report ***** 
+"PKG",276,22,1,"PAH",1,1,129,0)
+  
+"PKG",276,22,1,"PAH",1,1,130,0)
+In case no transactions need to be fixed the Mailman message below will be
+"PKG",276,22,1,"PAH",1,1,131,0)
+sent:
+"PKG",276,22,1,"PAH",1,1,132,0)
+  
+"PKG",276,22,1,"PAH",1,1,133,0)
+Subj: PSD*3*79 TRANSACTION REPORT  [#141414] 04/18/12@14:53  4 lines From:
+"PKG",276,22,1,"PAH",1,1,134,0)
+PSD*3*79 POST INSTALL  In 'IN' basket.   Page 1  *New* 
+"PKG",276,22,1,"PAH",1,1,135,0)
+--------------------------------------------------------------------------
+"PKG",276,22,1,"PAH",1,1,136,0)
+ 
+"PKG",276,22,1,"PAH",1,1,137,0)
+THERE WERE NO TRANSACTIONS TO REPORT.  
+"PKG",276,22,1,"PAH",1,1,138,0)
+ 
+"PKG",276,22,1,"PAH",1,1,139,0)
+***** End Of Report ***** 
+"PKG",276,22,1,"PAH",1,1,140,0)
+ 
+"PKG",276,22,1,"PAH",1,1,141,0)
+Technical: 
+"PKG",276,22,1,"PAH",1,1,142,0)
+----------
+"PKG",276,22,1,"PAH",1,1,143,0)
+^PSDEXGS1, ^PSDNTT1, ^PSDNTTP1, ^PSDOPT0, ^PSDOR2, ^PSDORD, ^PSDORD3, ^PSDORD4,
+"PKG",276,22,1,"PAH",1,1,144,0)
+^PSDORN0, ^PSDORNO, ^PSDORP, ^PSDORP2 and ^PSDORV routines will be modified to
+"PKG",276,22,1,"PAH",1,1,145,0)
+lock the pharmacy location at the drug level prior to acquiring and
+"PKG",276,22,1,"PAH",1,1,146,0)
+incrementing the request number in the Drug Accountability Stats file (#58.8)
+"PKG",276,22,1,"PAH",1,1,147,0)
+when a user orders a drug.  
+"PKG",276,22,1,"PAH",1,1,148,0)
+ 
+"PKG",276,22,1,"PAH",1,1,149,0)
+4. R11999082FY17 - Inventory Sheet inaccurate for Biloxi inpatient Vault 
+"PKG",276,22,1,"PAH",1,1,150,0)
+ 
+"PKG",276,22,1,"PAH",1,1,151,0)
+Problem: 
+"PKG",276,22,1,"PAH",1,1,152,0)
+--------
+"PKG",276,22,1,"PAH",1,1,153,0)
+When the user up-carets (^) out at the prompt, "REASON EDITED" during 
+"PKG",276,22,1,"PAH",1,1,154,0)
+Edit/Cancel Verified Orders [PSD EDIT/CANC VER ORD] option with the intent of
+"PKG",276,22,1,"PAH",1,1,155,0)
+cancelling the request, it displays "** No action taken. **", indicating the
+"PKG",276,22,1,"PAH",1,1,156,0)
+transaction was aborted. When you look at the master vault inventory, it has
+"PKG",276,22,1,"PAH",1,1,157,0)
+been updated, however, the Controlled Substance order for the NAOU and the
+"PKG",276,22,1,"PAH",1,1,158,0)
+green sheet are not updated, creating a discrepancy.  
+"PKG",276,22,1,"PAH",1,1,159,0)
+ 
+"PKG",276,22,1,"PAH",1,1,160,0)
+Resolution: 
+"PKG",276,22,1,"PAH",1,1,161,0)
+-----------
+"PKG",276,22,1,"PAH",1,1,162,0)
+The routine that performs the transaction updates has been modified to perform
+"PKG",276,22,1,"PAH",1,1,163,0)
+all updates after all the user prompts. If the user up-carets (^) out then the
+"PKG",276,22,1,"PAH",1,1,164,0)
+changes are aborted.  
+"PKG",276,22,1,"PAH",1,1,165,0)
+ 
+"PKG",276,22,1,"PAH",1,1,166,0)
+Technical: 
+"PKG",276,22,1,"PAH",1,1,167,0)
+----------
+"PKG",276,22,1,"PAH",1,1,168,0)
+Routine PSDEVO1 has been modified to update the master vault inventory, NAOU
+"PKG",276,22,1,"PAH",1,1,169,0)
+Controlled Substance order and the green sheet only after the user completes
+"PKG",276,22,1,"PAH",1,1,170,0)
+all the prompts.
+"PKG",276,22,1,"PAH",1,1,171,0)
+ 
+"PKG",276,22,1,"PAH",1,1,172,0)
+5. R14730330FY17 - Reporting event of errors that occurred during VISTA
+"PKG",276,22,1,"PAH",1,1,173,0)
+                   operations
+"PKG",276,22,1,"PAH",1,1,174,0)
+6. I14905678FY17 - Similar issue as in R14730330FY17, but in the drug item
+"PKG",276,22,1,"PAH",1,1,175,0)
+                   field (free text)
+"PKG",276,22,1,"PAH",1,1,176,0)
+ 
+"PKG",276,22,1,"PAH",1,1,177,0)
+Problem: 
+"PKG",276,22,1,"PAH",1,1,178,0)
+--------
+"PKG",276,22,1,"PAH",1,1,179,0)
+When using the options, Non-VA Drug Placed on Hold for Destruction [PSD 
+"PKG",276,22,1,"PAH",1,1,180,0)
+DEST TEXT DRUG] and Destroy a Controlled Substances Drug [PSD DESTROY 
+"PKG",276,22,1,"PAH",1,1,181,0)
+DRUGS], entering a ";" in a free text field such as drug item or the 
+"PKG",276,22,1,"PAH",1,1,182,0)
+comment field causes a hard error.
+"PKG",276,22,1,"PAH",1,1,183,0)
+ 
+"PKG",276,22,1,"PAH",1,1,184,0)
+Resolution: 
+"PKG",276,22,1,"PAH",1,1,185,0)
+-----------
+"PKG",276,22,1,"PAH",1,1,186,0)
+To prevent the hard error, the drug item and the comment field will be
+"PKG",276,22,1,"PAH",1,1,187,0)
+validated to not allow entry of a ";".
+"PKG",276,22,1,"PAH",1,1,188,0)
+  
+"PKG",276,22,1,"PAH",1,1,189,0)
+Technical: 
+"PKG",276,22,1,"PAH",1,1,190,0)
+----------
+"PKG",276,22,1,"PAH",1,1,191,0)
+Routine PSDEST and PSDESTF will be modified to check for ";" in the 
+"PKG",276,22,1,"PAH",1,1,192,0)
+comment field and to display a message, "A semicolon is not allowed in the
+"PKG",276,22,1,"PAH",1,1,193,0)
+COMMENTS field. Please edit your entry."
+"PKG",276,22,1,"PAH",1,1,194,0)
+ 
+"PKG",276,22,1,"PAH",1,1,195,0)
+Routine PSDESTF will be modified to check for ";" in the drug item field
+"PKG",276,22,1,"PAH",1,1,196,0)
+and to display a message, "A semicolon is not allowed in the DRUG ITEM
+"PKG",276,22,1,"PAH",1,1,197,0)
+field. Please edit your entry."
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+19
+"RTN","PSD79P")
+0^14^B45831087^n/a
+"RTN","PSD79P",1,0)
+PSD79P ;DAL/RJS - PSD*3*79 DATA FIX ;8/15/12
+"RTN","PSD79P",2,0)
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**79**;10/24/97;Build 20
+"RTN","PSD79P",3,0)
+ Q
+"RTN","PSD79P",4,0)
+EN ; POST INSTALL ENTRY POINT
+"RTN","PSD79P",5,0)
+ ;Identify and fix multiple Pharmacy Dispensing numbers assigned to a single request number in the Narcotics
+"RTN","PSD79P",6,0)
+ ;Area Of Use (NAOU) during order processing.
+"RTN","PSD79P",7,0)
+ S ZTDESC="CONTROLLED SUBSTANCES - PSD*3*79 POST INSTALL",ZTIO="",ZTDTH=$H,ZTRTN="START^PSD79P",ZTSAVE="" D ^%ZTLOAD
+"RTN","PSD79P",8,0)
+ D BMES^XPDUTL("PSD*3*79 POST INSTALL Task Queued!")
+"RTN","PSD79P",9,0)
+ K ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE
+"RTN","PSD79P",10,0)
+ Q
+"RTN","PSD79P",11,0)
+START ;
+"RTN","PSD79P",12,0)
+ K ^TMP($J,"PSD79P")
+"RTN","PSD79P",13,0)
+ N PSDPN,PSDTR,PSD81,PSDREQ,PSDNAOU,PSDRG,PSD8
+"RTN","PSD79P",14,0)
+ ; Gathering All entries in 58.81  (PSDPN: Pharmacy Dispensing #, PSDTR: Transaction IEN, PSDNAOU: NAOU, PSDREQ: Order Request #, PSDRG: Drug IEN)
+"RTN","PSD79P",15,0)
+ S PSDPN="" F  S PSDPN=$O(^PSD(58.81,"D",PSDPN)) Q:PSDPN=""  D
+"RTN","PSD79P",16,0)
+ .S PSDTR=0 F  S PSDTR=$O(^PSD(58.81,"D",PSDPN,PSDTR)) Q:'PSDTR  D
+"RTN","PSD79P",17,0)
+ ..S PSD81(0)=$G(^PSD(58.81,PSDTR,0)),PSDREQ=$P(PSD81(0),"^",20),PSDNAOU=$P(PSD81(0),"^",18),PSDRG=$P(PSD81(0),"^",5)
+"RTN","PSD79P",18,0)
+ ..I $G(PSDNAOU),$G(PSDRG),$G(PSDREQ) D
+"RTN","PSD79P",19,0)
+ ...S ^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ,PSDTR)=""
+"RTN","PSD79P",20,0)
+ ...S ^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ)=$G(^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ))+1
+"RTN","PSD79P",21,0)
+ ;
+"RTN","PSD79P",22,0)
+ K ^TMP($J,"PSD79P1")
+"RTN","PSD79P",23,0)
+ ; Identifying entries with issue (missing 58.8 sub-file correspong record)
+"RTN","PSD79P",24,0)
+ S PSDNAOU=0 F  S PSDNAOU=$O(^TMP($J,"PSD79P",PSDNAOU)) Q:'PSDNAOU  D
+"RTN","PSD79P",25,0)
+ .S PSDRG=0 F  S PSDRG=$O(^TMP($J,"PSD79P",PSDNAOU,PSDRG)) Q:'PSDRG  D
+"RTN","PSD79P",26,0)
+ ..S PSDREQ=0 F  S PSDREQ=$O(^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ)) Q:'PSDREQ  D
+"RTN","PSD79P",27,0)
+ ...I $G(^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ))>1 D
+"RTN","PSD79P",28,0)
+ ....S PSDTR=0 F  S PSDTR=$O(^TMP($J,"PSD79P",PSDNAOU,PSDRG,PSDREQ,PSDTR)) Q:'PSDTR  D
+"RTN","PSD79P",29,0)
+ .....S PSD8(0)=$G(^PSD(58.8,PSDNAOU,1,PSDRG,3,PSDREQ,0)) I $P(PSD8(0),"^",17)="" Q
+"RTN","PSD79P",30,0)
+ .....I PSDTR'=$P(PSD8(0),"^",17) S ^TMP($J,"PSD79P1",PSDNAOU,PSDRG,PSDTR)=PSDREQ_"^"_$P(PSD8(0),"^",17)
+"RTN","PSD79P",31,0)
+ ;
+"RTN","PSD79P",32,0)
+ K ^TMP($J,"PSD79P2")
+"RTN","PSD79P",33,0)
+ ; Fixing entries with issue (missing 58.8 sub-file correspong record)
+"RTN","PSD79P",34,0)
+ S PSDNAOU=0 F  S PSDNAOU=$O(^TMP($J,"PSD79P1",PSDNAOU)) Q:'PSDNAOU  D
+"RTN","PSD79P",35,0)
+ .S PSDRG=0 F  S PSDRG=$O(^TMP($J,"PSD79P1",PSDNAOU,PSDRG)) Q:'PSDRG  D
+"RTN","PSD79P",36,0)
+ ..S PSDTR=0 F  S PSDTR=$O(^TMP($J,"PSD79P1",PSDNAOU,PSDRG,PSDTR)) Q:'PSDTR  D
+"RTN","PSD79P",37,0)
+ ...S PSDREQ=$P($G(^TMP($J,"PSD79P1",PSDNAOU,PSDRG,PSDTR)),"^",1),PSDTRN=$P($G(^TMP($J,"PSD79P1",PSDNAOU,PSDRG,PSDTR)),"^",2)
+"RTN","PSD79P",38,0)
+ ...S PSD81(0)=$G(^PSD(58.81,PSDTR,0)),PSDPN=$P(PSD81(0),"^",17),PSD81(1)=$G(^PSD(58.81,PSDTR,1))
+"RTN","PSD79P",39,0)
+ ...S PSD8(0)=$G(^PSD(58.8,PSDNAOU,1,PSDRG,3,PSDREQ,0)),PSDRQ=$P($G(^PSD(58.8,PSDNAOU,1,PSDRG,3,0)),"^",3)
+"RTN","PSD79P",40,0)
+ ...S PSDS=$P(PSD81(0),"^",3),PSDQTY=$P(PSD81(0),"^",6),PSDSTAT=$P(PSD81(0),"^",11),PSDMFR=$P(PSD81(0),"^",13)
+"RTN","PSD79P",41,0)
+ ...S PSDDDT=$P(PSD81(0),"^",4)
+"RTN","PSD79P",42,0)
+ ...S PSDLOT=$P(PSD81(0),"^",14),PSDXDT=$P(PSD81(0),"^",15),PSDCSTAT=$P(PSD81(0),"^",12),PSDCDT=$P(PSD81(0),"^",19)
+"RTN","PSD79P",43,0)
+ ...S PSDDBY=$P(PSD81(1),"^",1),PSDRBY=$P(PSD81(1),"^",3),PSDT=$P(PSD81(1),"^",6),PSDUZ=$P(PSD81(1),"^",7)
+"RTN","PSD79P",44,0)
+ ...S PSDRDT=$P(PSD81(1),"^",4),PSDRQTY=$P(PSD81(1),"^",8)
+"RTN","PSD79P",45,0)
+ ...D DIE
+"RTN","PSD79P",46,0)
+ ;
+"RTN","PSD79P",47,0)
+ ; Generating Mailman message with entries cleaned up or No transactions to report message
+"RTN","PSD79P",48,0)
+ K D,D0,DI,DIC,DQ,PSD8,PSD81,PSDA,PSDCDT,PSDCNT,PSDCSTAT,PSDDBY,PSDDDT,PSDLOT,PSDMFR,PSDNAOU,PSDPN
+"RTN","PSD79P",49,0)
+ K PSDQTY,PSDRBY,PSDRDT,PSDREQ,PSDRQ,PSDRQTY,PSDS,PSDSTAT,PSDT,PSDTR,PSDTRN,PSDUZ,PSDXDT,X
+"RTN","PSD79P",50,0)
+ I '$D(^TMP($J,"PSD79P1")) D NOMAIL,MAIL Q
+"RTN","PSD79P",51,0)
+ S PSDCNTR=1,PSDROU="PSD79PR",PSDLN="",$P(PSDLN,"=",80)=""
+"RTN","PSD79P",52,0)
+ K PSD1,PSD2 F PSD3=1:1 S PSD1=$T(HDR+PSD3) Q:PSD1[";;END"  S PSD2=$P(PSD1,";;",2),PSD2(PSD3,0)=PSD1,^TMP($J,PSDROU,PSDCNTR)=PSD2,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",53,0)
+ S ^TMP($J,PSDROU,PSDCNTR)="",PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",54,0)
+ S PSDDAT="" D TXT("NAOU",0),TXT("Pharmacy",44),TXT("Transaction",55),TXT("Old",70),TXT("/",73),TXT("New",74)
+"RTN","PSD79P",55,0)
+ S ^TMP($J,PSDROU,PSDCNTR)=PSDDAT,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",56,0)
+ S PSDDAT="" D TXT("Drug Name",2),TXT("Dispensing #",43),TXT("Number",58),TXT("Request #",69)
+"RTN","PSD79P",57,0)
+ S ^TMP($J,PSDROU,PSDCNTR)=PSDDAT,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",58,0)
+ S ^TMP($J,PSDROU,PSDCNTR)=PSDLN,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",59,0)
+ S PSDNAOU=0 F  S PSDNAOU=$O(^TMP($J,"PSD79P2",PSDNAOU)) Q:'PSDNAOU  D
+"RTN","PSD79P",60,0)
+ .S PSDNAOUN=$P(^PSD(58.8,PSDNAOU,0),"^",1),^TMP($J,PSDROU,PSDCNTR)=PSDNAOUN,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",61,0)
+ .S PSDDRG=0 F  S PSDRG=$O(^TMP($J,"PSD79P2",PSDNAOU,PSDRG)) Q:'PSDRG  D
+"RTN","PSD79P",62,0)
+ ..S PSDFLG=0,PSDRGN=$P(^PSDRUG(PSDRG,0),"^",1) I $L(PSDRGN)>40 S PSDRGN=$E(PSDRGN,1,45)
+"RTN","PSD79P",63,0)
+ ..S PSDTR=0 F  S PSDTR=$O(^TMP($J,"PSD79P2",PSDNAOU,PSDRG,PSDTR)) Q:'PSDTR  D
+"RTN","PSD79P",64,0)
+ ...S:'PSDFLG PSDDAT="" D TXT(PSDRGN,2)
+"RTN","PSD79P",65,0)
+ ...S PSD0=$G(^TMP($J,"PSD79P2",PSDNAOU,PSDRG,PSDTR))
+"RTN","PSD79P",66,0)
+ ...S PSDPN1=$P(PSD0,"^",2),PSDRQ1=$P(PSD0,"^",1),PSDRQ2=$P(PSD0,"^",3)
+"RTN","PSD79P",67,0)
+ ...S PSDPN2=$P(PSD0,"^",5),PSDTR2=$P(PSD0,"^",4)
+"RTN","PSD79P",68,0)
+ ...S:PSDFLG PSDDAT="" D TXT(PSDPN1,45),TXT(PSDTR,57),TXT(PSDRQ2,(73-$L(PSDRQ2))),TXT("/",73),TXT(PSDRQ1,74)
+"RTN","PSD79P",69,0)
+ ...S ^TMP($J,PSDROU,PSDCNTR)=PSDDAT,PSDCNTR=PSDCNTR+1,PSDFLG=1
+"RTN","PSD79P",70,0)
+ ...S PSDDAT="" D TXT(PSDPN2,45),TXT(PSDTR2,57),TXT(PSDRQ2,(73-$L(PSDRQ2))),TXT("/",73),TXT("NA",74)
+"RTN","PSD79P",71,0)
+ ...S ^TMP($J,PSDROU,PSDCNTR)=PSDDAT,PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",72,0)
+ ...S ^TMP($J,PSDROU,PSDCNTR)="",PSDCNTR=PSDCNTR+1 K PSDATA
+"RTN","PSD79P",73,0)
+ D MAIL
+"RTN","PSD79P",74,0)
+ ;
+"RTN","PSD79P",75,0)
+EXIT ;
+"RTN","PSD79P",76,0)
+ K PSD0,PSD3,PSDCNTR,PSDDAT,PSDDRG,PSDFLG,PSDLN,PSDNAOU,PSDNAOUN,PSDPN1,PSDPN2
+"RTN","PSD79P",77,0)
+ K PSDRG,PSDRGN,PSDROU,PSDRQ1,PSDRQ2,PSDTR,PSDTR2,XMDUN,XMDUZ,XMSUB,XMTEXT,XMY
+"RTN","PSD79P",78,0)
+ K ^TMP($J,"PSD79P"),^TMP($J,"PSD79P1"),^TMP($J,"PSD79P2"),^TMP($J,"PSD79PR")
+"RTN","PSD79P",79,0)
+ Q
+"RTN","PSD79P",80,0)
+DIE ;create the order request
+"RTN","PSD79P",81,0)
+ F  L +^PSD(58.8,PSDNAOU,1,PSDRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSD79P",82,0)
+DIE2 S PSDA=$P(^PSD(58.8,PSDNAOU,1,PSDRG,3,0),"^",3)+1 I $D(^PSD(58.8,PSDNAOU,1,PSDRG,3,PSDA)) S $P(^PSD(58.8,PSDNAOU,1,PSDRG,3,0),"^",3)=$P(^PSD(58.8,PSDNAOU,1,PSDRG,3,0),"^",3)+1 G DIE2
+"RTN","PSD79P",83,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_PSDNAOU_",1,"_PSDRG_",3,",DA(2)=PSDNAOU,DA(1)=PSDRG,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSD79P",84,0)
+ S DA=PSDA,DA(1)=PSDRG,DA(2)=PSDNAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";4////"_PSDDBY_";5////"_PSDQTY_";6////"_PSDRBY_";7////"_PSDMFR_";8////"_PSDLOT_";9////"_PSDXDT
+"RTN","PSD79P",85,0)
+ S DR=DR_";10////"_PSDSTAT_";11////"_PSDCSTAT_";12////"_PSDCDT_";14////"_PSDDDT_";15////"_PSDRDT_";16////"_PSDPN_";17////"_PSDTR_";19////"_PSDRQTY_";20////"_PSDQTY_";22////"
+"RTN","PSD79P",86,0)
+ D ^DIE K D,DA,DIE,DIC,DD,DR,DO,DINUM,X
+"RTN","PSD79P",87,0)
+ ;Saving Comments
+"RTN","PSD79P",88,0)
+ N TMP,COMM5881,COMM588 D GETS^DIQ(58.81,PSDTR_",","26","","TMP")
+"RTN","PSD79P",89,0)
+ M COMM5881=TMP(58.81,PSDTR_",",26)
+"RTN","PSD79P",90,0)
+ I $D(COMM5881(1)) D
+"RTN","PSD79P",91,0)
+ . S COMM588(58.800118,PSDA_","_PSDRG_","_PSDNAOU_",",13)="COMM5881"
+"RTN","PSD79P",92,0)
+ . D UPDATE^DIE("","COMM588")
+"RTN","PSD79P",93,0)
+ L -^PSD(58.8,PSDNAOU,1,PSDRG,0)
+"RTN","PSD79P",94,0)
+ F  L +^PSD(58.81,PSDTR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSD79P",95,0)
+ S DIE="^PSD(58.81,",DA=PSDTR,DR="40////"_PSDA
+"RTN","PSD79P",96,0)
+ D ^DIE K DIE,DR,DA
+"RTN","PSD79P",97,0)
+ L -^PSD(58.81,PSDTR,0)
+"RTN","PSD79P",98,0)
+ S ^TMP($J,"PSD79P2",PSDNAOU,PSDRG,PSDTR)=PSDA_"^"_PSDPN_"^"_PSDREQ_"^"_PSDTRN_"^"_$P(^PSD(58.8,PSDNAOU,1,PSDRG,3,PSDREQ,0),"^",16)
+"RTN","PSD79P",99,0)
+ Q
+"RTN","PSD79P",100,0)
+MAIL ;CREATE AND SEND MAIL
+"RTN","PSD79P",101,0)
+ N DIFROM
+"RTN","PSD79P",102,0)
+ S PSDCNTR=PSDCNTR+1,^TMP($J,PSDROU,PSDCNTR)="",PSDCNTR=PSDCNTR+1,^TMP($J,PSDROU,PSDCNTR)="***** End Of Report *****"
+"RTN","PSD79P",103,0)
+ S XMTEXT="^TMP($J,"""_PSDROU_""","
+"RTN","PSD79P",104,0)
+ N PSDUSR S PSDUSR=.5 F  S PSDUSR=$O(^XUSEC("PSDMGR",PSDUSR)) Q:'PSDUSR  S XMY(PSDUSR)=""
+"RTN","PSD79P",105,0)
+ S XMSUB="PSD*3*79 TRANSACTION REPORT",XMDUZ="PSD*3*79 POST INSTALL"
+"RTN","PSD79P",106,0)
+ D ^XMD
+"RTN","PSD79P",107,0)
+ Q
+"RTN","PSD79P",108,0)
+NOMAIL ;
+"RTN","PSD79P",109,0)
+ S PSDCNTR=1,PSDROU="PSD79PR",PSDLN="",$P(PSDLN,"=",80)=""
+"RTN","PSD79P",110,0)
+ S ^TMP($J,PSDROU,PSDCNTR)="",PSDCNTR=PSDCNTR+1
+"RTN","PSD79P",111,0)
+ S ^TMP($J,PSDROU,PSDCNTR)="THERE WERE NO TRANSACTIONS TO REPORT."
+"RTN","PSD79P",112,0)
+ Q
+"RTN","PSD79P",113,0)
+TXT(PSDVAL,PSDCOL) S:'$D(PSDDAT) PSDDAT="" S PSDDAT=$$SETSTR^VALM1(PSDVAL,PSDDAT,PSDCOL,$L(PSDVAL)) Q
+"RTN","PSD79P",114,0)
+ Q
+"RTN","PSD79P",115,0)
+HDR ; MAILMAN REPORT INTRODUCTION
+"RTN","PSD79P",116,0)
+ ;;  This report contains Controlled Substance drugs that assigned multiple 
+"RTN","PSD79P",117,0)
+ ;;  Pharmacy Dispensing numbers to a single request number in the Narcotics
+"RTN","PSD79P",118,0)
+ ;;  Area Of Use (NAOU) during order processing.
+"RTN","PSD79P",119,0)
+ ;;
+"RTN","PSD79P",120,0)
+ ;;  These transactions have been identified and corrected.
+"RTN","PSD79P",121,0)
+ ;;END
+"RTN","PSDEST")
+0^19^B25150803^B24175819
+"RTN","PSDEST",1,0)
+PSDEST ;BIR/BJW - Destroy a Drug from the Holding file ;9 Feb 98
+"RTN","PSDEST",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**8,79**;13 Feb 97;Build 20
+"RTN","PSDEST",3,0)
+ ;**Y2K compliance**, "P" added to date input string
+"RTN","PSDEST",4,0)
+ I '$D(PSDSITE) D ^PSDSET Q:'$D(PSDSITE)
+"RTN","PSDEST",5,0)
+ I '$D(^XUSEC("PSDMGR",DUZ)) W !!,"Please contact your Pharmacy Coordinator for access to",!,"destroy Controlled Substances.",!!,"PSDMGR security key required.",! G END
+"RTN","PSDEST",6,0)
+ S PSDUZ=DUZ
+"RTN","PSDEST",7,0)
+ I PSDUZ S PSDUZAN=$P($G(^VA(200,+PSDUZ,0)),"^")
+"RTN","PSDEST",8,0)
+SETDATE ;7/17/96,inital set to current date
+"RTN","PSDEST",9,0)
+ S PSDT=DT
+"RTN","PSDEST",10,0)
+ASKD ;ask disp location
+"RTN","PSDEST",11,0)
+ S PSDS=$P(PSDSITE,U,3),PSDSN=$P(PSDSITE,U,4)
+"RTN","PSDEST",12,0)
+ G:$P(PSDSITE,U,5) ASKN
+"RTN","PSDEST",13,0)
+ K DIC,DA S DIC=58.8,DIC(0)="QEAZ",DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$S($P(^(0),""^"",2)[""M"":1,$P(^(0),""^"",2)[""S"":1,1:0)"
+"RTN","PSDEST",14,0)
+ S DIC("A")="Select Primary Dispensing Site: ",DIC("B")=PSDSN
+"RTN","PSDEST",15,0)
+ D ^DIC K DIC G:Y<0 END
+"RTN","PSDEST",16,0)
+ S PSDS=+Y,PSDSN=$P(Y,"^",2),$P(PSDSITE,U,3)=+Y,$P(PSDSITE,U,4)=PSDSN
+"RTN","PSDEST",17,0)
+ASKN ;ask holding number
+"RTN","PSDEST",18,0)
+ W !!,?3,"**Searching for the next available drug awaiting destruction**",!
+"RTN","PSDEST",19,0)
+ K DIC,DA S DIC=58.86,DIC("A")="Select Destructions #: ",DIC(0)="QEAZ",DIC("S")="I $P(^(0),""^"",7)=PSDS"
+"RTN","PSDEST",20,0)
+ F PSD=0:0 S PSD=$O(^PSD(58.86,PSD)) Q:'PSD!($D(DIC("B")))  I $D(^PSD(58.86,PSD,0)),'+$P(^(0),"^",10),+$P(^(0),"^",7)=+PSDS S DIC("B")=PSD
+"RTN","PSDEST",21,0)
+ D ^DIC K DA,DIC G:Y<0 END S PSDA=+Y
+"RTN","PSDEST",22,0)
+ W !!,?3,"**You Must enter a DATE to destroy or cancel this Holding Num**"
+"RTN","PSDEST",23,0)
+DISPLAY ;
+"RTN","PSDEST",24,0)
+ K LN S $P(LN,"-",30)="",PSDR=$P(Y(0),"^",2),PSDRN=$S($P($G(^PSD(58.86,PSDA,1)),"^")]"":$P($G(^PSD(58.86,PSDA,1)),"^"),1:$P($G(^PSDRUG(+PSDR,0)),"^")),NUM=$P(Y(0),"^"),QTY=$P(Y(0),"^",3)
+"RTN","PSDEST",25,0)
+ S PSDCT=$S($P(Y(0),"^",8)]"":$P(Y(0),"^",8),1:1),NBKU=$S($P(Y(0),"^",12)]"":$P(Y(0),"^",12),1:$P($G(^PSD(58.8,+PSDS,1,+PSDR,0)),"^",8))
+"RTN","PSDEST",26,0)
+ S PSDCAN=$P($G(^PSD(58.86,PSDA,3)),"^") I PSDCAN S Y=PSDCAN X ^DD("DD") S PSDCAN=Y D MSG2 G ASKN
+"RTN","PSDEST",27,0)
+ S PSDST=$P(Y(0),"^",11) I PSDST S Y=PSDST X ^DD("DD") S PSDST=Y D MSG1 G ASKN
+"RTN","PSDEST",28,0)
+ W @IOF,!,"HOLDING FOR DESTRUCTION",!,LN,!!,"Holding Number: ",NUM
+"RTN","PSDEST",29,0)
+ W !,"Drug: ",PSDRN,!,"Quantity "_$S($D(^PSD(58.8,+PSDR,0)):"("_NBKU_")",1:"")_": ",QTY,!
+"RTN","PSDEST",30,0)
+OK ;ask ok
+"RTN","PSDEST",31,0)
+ K DA,DIR,DIRUT S DIR(0)="Y",DIR("B")="YES",DIR("A")="Do you want to destroy this Controlled Substances"
+"RTN","PSDEST",32,0)
+ S DIR("?",1)="Answer 'YES' if you are destroying this drug,",DIR("?")="answer 'NO' and this drug will remain pending destruction."
+"RTN","PSDEST",33,0)
+ D ^DIR K DIR I $D(DIRUT) D MSG G END
+"RTN","PSDEST",34,0)
+ S ANS=Y(0) I ANS="YES" D DATE G:'$D(PSDT) END G DIE
+"RTN","PSDEST",35,0)
+ I ANS="NO" G OK1 G:'$D(PSDT) END
+"RTN","PSDEST",36,0)
+DATE ; ask date,7/17/96 added %DT("B")default date or user can enter new date
+"RTN","PSDEST",37,0)
+ K %DT W !
+"RTN","PSDEST",38,0)
+ S %DT="AEPTX",%DT(0)="-NOW",%DT("A")="DATE DESTROYED/CANCELLED: ",%DT("B")=$$FMTE^XLFDT(PSDT) D ^%DT G:Y<0 END S PSDT=Y W !
+"RTN","PSDEST",39,0)
+ Q
+"RTN","PSDEST",40,0)
+OK1 ;ask if entry error
+"RTN","PSDEST",41,0)
+ K DA,DIR,DIRUT S DIR(0)="Y",DIR("B")="NO",DIR("A")="Was this a destruction holding number entry error"
+"RTN","PSDEST",42,0)
+ S DIR("?",1)="Answer 'NO' drug will be destroyed,",DIR("?")="answer 'YES' and this drug will not be destroyed."
+"RTN","PSDEST",43,0)
+ D ^DIR K DIR I $D(DIRUT) D MSG G END
+"RTN","PSDEST",44,0)
+OK2 ;ask do you want to cancel holding #,E3R# 4990
+"RTN","PSDEST",45,0)
+ K DA,DIR,DIRUT S DIR(0)="Y",DIR("B")="NO",DIR("A")="Do you want to cancel this destruction holding number"
+"RTN","PSDEST",46,0)
+ S DIR("?",1)="Answer 'NO' if you do not want to cancel this destruction holding number,",DIR("?")="answer 'YES' and the destruction holding number will be cancelled."
+"RTN","PSDEST",47,0)
+ D ^DIR K DIR I $D(DIRUT) D MSG G END
+"RTN","PSDEST",48,0)
+ I 'Y DO MSG G ASKN
+"RTN","PSDEST",49,0)
+DIRC ;enter reason,date and pharmacist cancelling holding #,E3R# 4990
+"RTN","PSDEST",50,0)
+ W !! D DATE G:'$D(PSDT) END
+"RTN","PSDEST",51,0)
+COM ; enter free-text information(comments) 
+"RTN","PSDEST",52,0)
+ K DA,DIR,DIRUT S DIR(0)="58.86,17" D ^DIR K DIR I $D(DIRUT) D MSG G END
+"RTN","PSDEST",53,0)
+ I Y[";" W !,"A semicolon is not allowed in the COMMENTS field. Please edit your entry.",$C(7) G COM
+"RTN","PSDEST",54,0)
+ S PSDCOM3=Y
+"RTN","PSDEST",55,0)
+ K DIRUT,DTOUT,DUOUT
+"RTN","PSDEST",56,0)
+ I PSDT S (Y,YYY)=PSDT X ^DD("DD") S PSDT=Y
+"RTN","PSDEST",57,0)
+ W !,"DATE/TIME CANCELLED: ",PSDT
+"RTN","PSDEST",58,0)
+ W !,"CANCELLED BY: ",PSDUZAN
+"RTN","PSDEST",59,0)
+DIE1 ;update 58.86 for cancelling holding #,E3R# 4990
+"RTN","PSDEST",60,0)
+ ;The AC,AD X-ref's entries are built on the condition that data is in
+"RTN","PSDEST",61,0)
+ ;Field 10(date/time destroyed),11/29/95 added I $D(Y) 
+"RTN","PSDEST",62,0)
+ K DA,DIE,DR S DA=PSDA,DIE=58.86,DR="9////"_PSDUZ_";10///"_PSDT_";15///"_PSDT_";16////"_PSDUZ_";17////"_PSDCOM3_";11///^S X=PSDCT;12///^S X=NBKU" D ^DIE K DA,DIE,DR I $D(Y) D MSG G END
+"RTN","PSDEST",63,0)
+ W !!,"Holding Number: ",NUM,?19," flagged as entry error"
+"RTN","PSDEST",64,0)
+ S PSDT=YYY G ASKN
+"RTN","PSDEST",65,0)
+DIE ;update 58.86
+"RTN","PSDEST",66,0)
+ ;10/22/96 added / to fld#11,12 to remove prompt;11/29/95 added I $D(Y)
+"RTN","PSDEST",67,0)
+ W !,?3,"** Updating the record **",! K DA,DIE,DR S DA=PSDA,DIE=58.86,DR="9////"_PSDUZ_";10///"_PSDT_";11///^S X=PSDCT;12///^S X=NBKU" D ^DIE K DA,DIE,DR
+"RTN","PSDEST",68,0)
+ I $D(Y) D MSG G END
+"RTN","PSDEST",69,0)
+ W !!,?3,"=> Holding Number: ",NUM," has been destroyed.",!!
+"RTN","PSDEST",70,0)
+ G ASKN
+"RTN","PSDEST",71,0)
+END K %,%DT,%H,%I,ANS,DA,DIC,DIE,DIR,DIROUT,DIRUT,DR,DTOUT,DUOUT,LN,NBKU,NUM
+"RTN","PSDEST",72,0)
+ K PSD,PSDA,PSDCAN,PSDCOM3,PSDR,PSDRN,PSDCT,PSDS,PSDSN,PSDT,PSDST,PSDUZ,PSDUZAN,QTY,X,Y,YYY
+"RTN","PSDEST",73,0)
+ Q
+"RTN","PSDEST",74,0)
+MSG W !!,"No action taken",!!
+"RTN","PSDEST",75,0)
+ Q
+"RTN","PSDEST",76,0)
+MSG1 ;msg when already destroyed
+"RTN","PSDEST",77,0)
+ W $C(7),!!,"Drug: ",PSDRN,!,"=> Destruction #: ",NUM," was destroyed on ",PSDST,".",!!
+"RTN","PSDEST",78,0)
+ Q
+"RTN","PSDEST",79,0)
+MSG2 ;msg when cancelled,E3R# 4990
+"RTN","PSDEST",80,0)
+ W $C(7),!!,"Drug: ",PSDRN,!,"=> Destruction #: ",NUM," was cancelled on ",PSDCAN,".",!!
+"RTN","PSDEST",81,0)
+ Q
+"RTN","PSDESTF")
+0^20^B22540238^B20769006
+"RTN","PSDESTF",1,0)
+PSDESTF ;BIR/BJW - Add Non-CS Drug to Holding file ;26 Feb 98
+"RTN","PSDESTF",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**8,66,69,79**;13 Feb 97;Build 20
+"RTN","PSDESTF",3,0)
+ ;**Y2K compliance**;display 4 digit year on va forms
+"RTN","PSDESTF",4,0)
+ ;References to ^PSD(58.86, supported by DBIA4472
+"RTN","PSDESTF",5,0)
+ ;
+"RTN","PSDESTF",6,0)
+ I '$D(PSDSITE) D ^PSDSET Q:'$D(PSDSITE)
+"RTN","PSDESTF",7,0)
+ I '$D(^XUSEC("PSJ RPHARM",DUZ)),'$D(^XUSEC("PSD TECH ADV",DUZ)) W !!,"Please contact your Pharmacy Coordinator for access to",!,"destroy Controlled Substances.",!!,"PSJ RPHARM or PSD TECH ADV security key required.",! G END
+"RTN","PSDESTF",8,0)
+ S PSDUZ=DUZ,PSDOUT=0 D NOW^%DTC S PSDT=+$E(%,1,12)
+"RTN","PSDESTF",9,0)
+ W !!,?5,"NOTE: This Holding for Destruction transaction WILL NOT update your",!,?5,"Controlled Substances inventory balance.",!!
+"RTN","PSDESTF",10,0)
+ASKD ;ask disp location
+"RTN","PSDESTF",11,0)
+ S PSDS=$P(PSDSITE,U,3),PSDSN=$P(PSDSITE,U,4) G:$P(PSDSITE,U,5) DEST
+"RTN","PSDESTF",12,0)
+ K DIC,DA S DIC=58.8,DIC(0)="QEAZ",DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$S($P(^(0),""^"",2)[""M"":1,$P(^(0),""^"",2)[""S"":1,1:0)"
+"RTN","PSDESTF",13,0)
+ S DIC("A")="Select Primary Dispensing Site: ",DIC("B")=PSDSN
+"RTN","PSDESTF",14,0)
+ D ^DIC K DIC G:Y<0 END
+"RTN","PSDESTF",15,0)
+ S PSDS=+Y,PSDSN=$P(Y,"^",2),$P(PSDSITE,U,3)=+Y,$P(PSDSITE,U,4)=PSDSN
+"RTN","PSDESTF",16,0)
+DEST ;set up file 58.86
+"RTN","PSDESTF",17,0)
+ S PSDOUT=0,PSDCT=1
+"RTN","PSDESTF",18,0)
+ S (MFG,LOT,EXP)=""
+"RTN","PSDESTF",19,0)
+DIR ;ask free-text drug name
+"RTN","PSDESTF",20,0)
+ W !!,"You may create a free-text CS drug to place on hold for destruction.",!,"Your Dispensing Site inventory balance WILL NOT be updated.",!!
+"RTN","PSDESTF",21,0)
+DIR0 ;
+"RTN","PSDESTF",22,0)
+ K DA,DIR,DIRUT S DIR(0)="58.86,13" D ^DIR K DA,DIR
+"RTN","PSDESTF",23,0)
+ I $D(DIRUT) D MSG G END
+"RTN","PSDESTF",24,0)
+ I Y']"" D MSG G END
+"RTN","PSDESTF",25,0)
+ I Y[";" W !,"A semicolon is not allowed in the DRUG ITEM field. Please edit your entry.",!,$C(7) G DIR0
+"RTN","PSDESTF",26,0)
+ S PSDRN=Y
+"RTN","PSDESTF",27,0)
+DIR2 K DA,DIR,DIRUT,DTOUT,DUOUT F PSDANS=2,4,11,12,18 S DIR(0)="58.86,"_PSDANS D ^DIR K DA,DIR D  I PSDOUT D MSG G END
+"RTN","PSDESTF",28,0)
+ .I $D(DTOUT)!($D(DUOUT)) S PSDOUT=1 Q
+"RTN","PSDESTF",29,0)
+ .I PSDANS'=4,PSDANS'=18,Y']"" S PSDOUT=1 Q
+"RTN","PSDESTF",30,0)
+ .S PSD(PSDANS)=Y
+"RTN","PSDESTF",31,0)
+ .K DIRUT,DTOUT,DUOUT
+"RTN","PSDESTF",32,0)
+ ;DIR3 added 5/7/95 to add comments field
+"RTN","PSDESTF",33,0)
+DIR3 ;enter free-text information(comments)
+"RTN","PSDESTF",34,0)
+ W !!,"You may enter free-text info regarding drug placed on hold for destruction."
+"RTN","PSDESTF",35,0)
+ K DA,DIR,DIRUT S DIR(0)="58.86,14" D ^DIR K DA,DIR
+"RTN","PSDESTF",36,0)
+ I $D(DTOUT)!($D(DUOUT)) D MSG G END
+"RTN","PSDESTF",37,0)
+ I Y[";" W !,"A semicolon is not allowed in the COMMENTS field. Please edit your entry.",!,$C(7) G DIR3
+"RTN","PSDESTF",38,0)
+ S PSDCOMS=Y
+"RTN","PSDESTF",39,0)
+ASKY ;ask ok to continue
+"RTN","PSDESTF",40,0)
+ W !!,PSDRN," has been selected.",!
+"RTN","PSDESTF",41,0)
+ K DA,DIR,DIRUT S DIR(0)="YA",DIR("B")="NO",DIR("A")="Is this OK to create Holding for Destructions number? "
+"RTN","PSDESTF",42,0)
+ S DIR("?",1)="Answer 'YES' to create a Holding for Destruction number for this drug,",DIR("?")="answer 'NO' to create a different free-text CS drug, or '^' to quit."
+"RTN","PSDESTF",43,0)
+ D ^DIR K DIR I $D(DIRUT) D MSG G END
+"RTN","PSDESTF",44,0)
+ I 'Y G DIR
+"RTN","PSDESTF",45,0)
+ W !!,"Creating an entry in the Destructions file..."
+"RTN","PSDESTF",46,0)
+ F  L +^PSD(58.86,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDESTF",47,0)
+ ;5/7/95 Fld 14 added, 7/28/95 Fld 18 added
+"RTN","PSDESTF",48,0)
+FIND S PSDHLD=$P(^PSD(58.86,0),"^",3)+1 I $D(^PSD(58.86,PSDHLD)) S $P(^PSD(58.86,0),"^",3)=PSDHLD G FIND
+"RTN","PSDESTF",49,0)
+ K DA,DIC,DLAYGO S (DIC,DLAYGO)=58.86,DIC(0)="L",(X,DINUM)=PSDHLD D ^DIC K DIC,DINUM,DLAYGO
+"RTN","PSDESTF",50,0)
+ L -^PSD(58.86,0)
+"RTN","PSDESTF",51,0)
+ W !!,"Your Destructions Holding number is ",PSDHLD
+"RTN","PSDESTF",52,0)
+ K DA,DIE,DR S DIE=58.86,DA=PSDHLD,DR="13////"_PSDRN_";2////"_PSD(2)_";3////"_PSDUZ_";5////"_PSDT_";6////"_PSDS_";4////"_$S(+PSD(4):+PSD(4),1:"")_";11////"_+PSD(11)_";12////"_PSD(12)_";14////"_PSDCOMS_";18////"_+PSD(18)
+"RTN","PSDESTF",53,0)
+ D ^DIE K DIE,DA,DR
+"RTN","PSDESTF",54,0)
+ S RQTY=$P($G(^PSD(58.86,PSDHLD,0)),"^",3),PSDRN=$P($G(^(1)),"^")
+"RTN","PSDESTF",55,0)
+ S PSDOK=1
+"RTN","PSDESTF",56,0)
+PRINT ;print 2321
+"RTN","PSDESTF",57,0)
+ W !!,"Number of copies of VA FORM 10-2321? " R NUM:DTIME I '$T!(NUM="^")!(NUM="") W !!,"No copies printed!!",!! Q
+"RTN","PSDESTF",58,0)
+ I NUM'?1N!(NUM=0)  W !!,"Enter a whole number between 1 and 9",! G PRINT
+"RTN","PSDESTF",59,0)
+ S Y=PSDT X ^DD("DD") S PSDYR=$P(Y,",",2),PSDYR=$E(PSDYR,1,4)
+"RTN","PSDESTF",60,0)
+ S PG=0,RECDT=$E(PSDT,4,5)_"/"_$E(PSDT,6,7)_"/"_PSDYR I EXP S (EXP1,EXPD)=$$FMTE^XLFDT(EXP,"5D") S:'$P(EXP1,"/",2) EXPD=$P(EXP1,"/")_"/"_$P(EXP1,"/",3)
+"RTN","PSDESTF",61,0)
+ D ^PSDGSRV2
+"RTN","PSDESTF",62,0)
+END ;kill variables
+"RTN","PSDESTF",63,0)
+ K %,%DT,%H,%I,ALL,CNT,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DLAYGO,DR,DTOUT,DUOUT,EXP,EXP1,EXPD,LN,LOT,MFG,NUM
+"RTN","PSDESTF",64,0)
+ K PG,PSD,PSDANS,PSDCT,PSDCOMS,PSDHLD,PSDOK,PSDOUT,PSDRN,PSDS,PSDSN,PSDT,PSDUZ,PSDYR,RECDT,RPDT,RQTY,X,Y,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,ZTSK
+"RTN","PSDESTF",65,0)
+ Q
+"RTN","PSDESTF",66,0)
+MSG W $C(7),!!,"WARNING: Holding for Destructions entry HAS NOT been created.",!!
+"RTN","PSDESTF",67,0)
+ Q
+"RTN","PSDEVO1")
+0^18^B15537831^B15175785
+"RTN","PSDEVO1",1,0)
+PSDEVO1 ;BIR/JPW - Edit/Cancel a Verified Order (cont'd) ;22 Jun 93
+"RTN","PSDEVO1",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**66,79**;13 Feb 97;Build 20
+"RTN","PSDEVO1",3,0)
+EN ;entry for edit verified order
+"RTN","PSDEVO1",4,0)
+ W !!,?5,"You may edit quantity, manufacturer, lot # and expiration date.",!,?5,"If you wish to edit drug or NAOU, you must cancel this order",!,?5,"and enter a new order.",!!
+"RTN","PSDEVO1",5,0)
+ I $D(NQTY) W !!,"This verified order has been previously edited.",!,"You must cancel this order and re-enter a new one.",!! D MSG S PSDOUT=1 Q
+"RTN","PSDEVO1",6,0)
+ K DA,DIR,DIRUT S DIR(0)="SO^Q:QUANTITY ONLY;M:MFG/LOT#/EXP.DATE ONLY;B:BOTH SETS OF FIELDS"
+"RTN","PSDEVO1",7,0)
+ S DIR("?",1)="Enter 'Q' to edit quantity only,",DIR("?",2)="Enter 'M' to edit mfg/lot #/exp.date only"
+"RTN","PSDEVO1",8,0)
+ S DIR("?")="Enter 'B' to edit both sets of fields or '^' to quit.",DIR("A")="Select fields to edit" D ^DIR K DIR I $D(DIRUT) S PSDOUT=1 D MSG Q
+"RTN","PSDEVO1",9,0)
+ S FIELD=Y
+"RTN","PSDEVO1",10,0)
+UPDATE ;
+"RTN","PSDEVO1",11,0)
+ I FIELD="M" D NOW^%DTC S PSDT=+%,NQTY=QTY,AQTY=0,BAL=+$P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4) G DIE
+"RTN","PSDEVO1",12,0)
+NQ K DA,DIR,DTOUT,DUOUT S DIR(0)="58.81,50O",DIR("A")="NEW QUANTITY DISPENSED ("_NBKU_"/"_NPKG_")"
+"RTN","PSDEVO1",13,0)
+ S DIR("?",1)="Enter new quantity being dispensed or",DIR("?")="or '^' to quit" D ^DIR K DIR
+"RTN","PSDEVO1",14,0)
+ I $D(DTOUT)!($D(DUOUT)) S PSDOUT=1 D MSG Q
+"RTN","PSDEVO1",15,0)
+ S NQTY=+Y I +Y=0 W !!,"Sorry.  You've selected ZERO as the new dispensing balance.",!,"If the new balance is ZERO, please CANCEL this order." S PSDOUT=1 D MSG Q
+"RTN","PSDEVO1",16,0)
+ W !!,"Old Dispensed Quantity: ",QTY,"     New Dispensed Quantity: ",NQTY,! S AQTY=QTY-NQTY
+"RTN","PSDEVO1",17,0)
+ I ($P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4)+AQTY)<0 W !!,"This transaction cannot be processed.",!,"Your vault balance is ",$P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4),"." D MSG Q
+"RTN","PSDEVO1",18,0)
+ K DA,DIR,DIRUT S DIR(0)="YOA",DIR("?",1)="Answer 'YES' to edit this order and adjust",DIR("?")="your vault balance, answer 'NO' or '^' to quit."
+"RTN","PSDEVO1",19,0)
+ S DIR("A")="Are you sure? ",DIR("B")="NO"
+"RTN","PSDEVO1",20,0)
+ D ^DIR K DIR I 'Y!$D(DIRUT) S PSDOUT=1 D MSG Q
+"RTN","PSDEVO1",21,0)
+ W !!,"Accessing your transaction information..."
+"RTN","PSDEVO1",22,0)
+ S BAL=+$P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4)
+"RTN","PSDEVO1",23,0)
+ W !!,"Old Balance: ",BAL,?35,"New Balance: ",BAL+AQTY,!!
+"RTN","PSDEVO1",24,0)
+DIE ;
+"RTN","PSDEVO1",25,0)
+ D NOW^%DTC S PSDT=+%
+"RTN","PSDEVO1",26,0)
+ K DA,DIE,DR S DA=+PSDA,DIE=58.81,DR="53;I FIELD=""Q"" S Y=48;52////1;12;13;14;48////"_PSDT_";49////"_PSDUZ_";50////"_NQTY_";51////"_AQTY_";54////"_BAL
+"RTN","PSDEVO1",27,0)
+ D ^DIE K DA,DIE,DR I $D(Y)!$D(DTOUT)!$D(DUOUT) S PSDOUT=1 D MSG Q
+"RTN","PSDEVO1",28,0)
+ W !,"Updating transaction history..."
+"RTN","PSDEVO1",29,0)
+ F  L +^PSD(58.8,+PSDS,1,+PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDEVO1",30,0)
+ S $P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4)=$P(^PSD(58.8,+PSDS,1,+PSDR,0),"^",4)+AQTY
+"RTN","PSDEVO1",31,0)
+ L -^PSD(58.8,+PSDS,1,+PSDR,0)
+"RTN","PSDEVO1",32,0)
+ S MFG=$P($G(^PSD(58.81,PSDA,0)),"^",13),LOT=$P($G(^(0)),"^",14),EXP=$P($G(^(0)),"^",15)
+"RTN","PSDEVO1",33,0)
+ W !,"Updating Order..."
+"RTN","PSDEVO1",34,0)
+ORDER K DA,DIE,DR S DA(1)=PSDR,DA(2)=NAOU,DA=ORD,DIE="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,"
+"RTN","PSDEVO1",35,0)
+ S DR="7///"_MFG_";8///"_LOT_";9///"_EXP_";19////"_NQTY D ^DIE K DA,DIE,DR
+"RTN","PSDEVO1",36,0)
+ I +$O(^PSD(58.85,"AC",3,NAOU,PSDR,ORD,0)) S WK=+$O(^PSD(58.85,"AC",3,NAOU,PSDR,ORD,0)) I $D(^PSD(58.85,WK,0)) S $P(^(0),"^",17)=NQTY
+"RTN","PSDEVO1",37,0)
+ W "done."
+"RTN","PSDEVO1",38,0)
+REPRT ;
+"RTN","PSDEVO1",39,0)
+ I $D(^PSD(58.81,PSDA,"CS")),+$P(^("CS"),"^",3) W !!,"The VA FORM 10-2321 has been previously printed for this order.",!,"Please use the 'Reprint VA FORM 10-2321' .",!!
+"RTN","PSDEVO1",40,0)
+ Q
+"RTN","PSDEVO1",41,0)
+MSG W !!,"** No action taken. **",!! H 2
+"RTN","PSDEVO1",42,0)
+ Q
+"RTN","PSDEXGS1")
+0^1^B8758642^B8308810
+"RTN","PSDEXGS1",1,0)
+PSDEXGS1 ;BIR/JPW - Enter Existing GS (cont'd) ;22 Jun 93
+"RTN","PSDEXGS1",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**33,66,79**;13 Feb 97;Build 20
+"RTN","PSDEXGS1",3,0)
+ ;Reference to ^PSD(58.8 are covered by DBIA #2711
+"RTN","PSDEXGS1",4,0)
+ ;Reference to ^PSD(58.81 are covered by DBIA #2808
+"RTN","PSDEXGS1",5,0)
+EN ;create order,transaction
+"RTN","PSDEXGS1",6,0)
+ W !!,"Creating entries in the CS files..."
+"RTN","PSDEXGS1",7,0)
+DIE ;create the order request
+"RTN","PSDEXGS1",8,0)
+ F  L +^PSD(58.8,NAOU,1,PSDRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDEXGS1",9,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDRG,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDEXGS1",10,0)
+DIE2 S PSDRN=$P(^PSD(58.8,NAOU,1,PSDRG,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDRG,3,PSDRN)) S $P(^PSD(58.8,NAOU,1,PSDRG,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDRG,3,0),"^",3)+1 G DIE2
+"RTN","PSDEXGS1",11,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDRG_",3,",DA(2)=NAOU,DA(1)=PSDRG,(X,DINUM)=PSDRN D FILE^DICN K DIC
+"RTN","PSDEXGS1",12,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W "processing now..."
+"RTN","PSDEXGS1",13,0)
+ S DA=PSDRN,DA(1)=PSDRG,DA(2)=NAOU
+"RTN","PSDEXGS1",14,0)
+ S DR="2////"_+PSDS_";4////"_PHARM_";5///"_QTY_";6////"_NURS_";7///"_MFG_";8///"_LOT_";9///"_EXP_";14///"_RDATE_";16///"_PSDPN_";19///"_QTY_";20///"_QTY_";10////4" D ^DIE K DIE,DR
+"RTN","PSDEXGS1",15,0)
+ L -^PSD(58.8,NAOU,1,PSDRG,0)
+"RTN","PSDEXGS1",16,0)
+ W "transaction history..."
+"RTN","PSDEXGS1",17,0)
+ADD ;find entry number
+"RTN","PSDEXGS1",18,0)
+ F  L +^PSD(58.81,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDEXGS1",19,0)
+FIND S PSDA=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSDA)) S $P(^PSD(58.81,0),"^",3)=PSDA G FIND
+"RTN","PSDEXGS1",20,0)
+ K DA,DIC,DLAYGO S DIC(0)="L",(DIC,DLAYGO)=58.81,(X,DINUM)=PSDA D ^DIC K DIC,DLAYGO
+"RTN","PSDEXGS1",21,0)
+ L -^PSD(58.81,0)
+"RTN","PSDEXGS1",22,0)
+TRANS ;add trans fields
+"RTN","PSDEXGS1",23,0)
+ W !!,"Still updating..."
+"RTN","PSDEXGS1",24,0)
+ K DA,DIE,DR S DA=PSDA,DIE=58.81
+"RTN","PSDEXGS1",25,0)
+ S DR="1////12;2////"_+PSDS_";4////"_PSDRG_";3///"_PSDT_";Q;5////"_QTY_";12///"_MFG_";13///"_LOT_";14///"_EXP_";16///"_PSDPN_";17////"_NAOU_";18////"_PHARM_";20////"_NURS_";19///"_RDATE_";27////"_QTY_";40////"_PSDRN_";10////4;100////1"
+"RTN","PSDEXGS1",26,0)
+ ;DAVE B (PSD*3*33) Add field 103 to DIE call
+"RTN","PSDEXGS1",27,0)
+ S DR=DR_";103////"_PNT10
+"RTN","PSDEXGS1",28,0)
+ D ^DIE K DA,DIE,DR W "vault activity..."
+"RTN","PSDEXGS1",29,0)
+VAULT ;
+"RTN","PSDEXGS1",30,0)
+ S:'$D(^PSD(58.8,+PSDS,1,PSDRG,4,0)) ^(0)="^58.800119PA^^"
+"RTN","PSDEXGS1",31,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDRG,4,PSDA,0)) K DA,DIC,DD,DO S DIC(0)="L",DIC="^PSD(58.8,"_+PSDS_",1,"_PSDRG_",4,",DA(2)=+PSDS,DA(1)=PSDRG,(X,DINUM)=PSDA D FILE^DICN K DA,DIC
+"RTN","PSDEXGS1",32,0)
+ W "done.",!!
+"RTN","PSDEXGS1",33,0)
+ S $P(^PSD(58.8,NAOU,1,PSDRG,3,PSDRN,0),"^",17)=PSDA
+"RTN","PSDEXGS1",34,0)
+ W !!,"Press <RET> to continue" R X:DTIME W @IOF
+"RTN","PSDEXGS1",35,0)
+ Q
+"RTN","PSDNTT1")
+0^2^B16796985^B16173482
+"RTN","PSDNTT1",1,0)
+PSDNTT1 ;BIR/BJW - Transfer Green Sheet - Receive this NAOU ;17 JUL 97
+"RTN","PSDNTT1",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**1,56,66,79**;13 Feb 97;Build 20
+"RTN","PSDNTT1",3,0)
+ ;rtn chg for nois#:pal-0697-60605,pth-0697-20147,sux-0597-42235
+"RTN","PSDNTT1",4,0)
+COM ;complete order and transaction
+"RTN","PSDNTT1",5,0)
+ S FLAG=0 D NOW^%DTC S PSDT=X,(RECD,Y)=+$E(%,1,12) X ^DD("DD") S RECDT=Y
+"RTN","PSDNTT1",6,0)
+ W !!,"Accessing ",PSDRGN," information...",!!
+"RTN","PSDNTT1",7,0)
+ I '$D(^PSD(58.8,+AOU,1,+PSDRG,0)) D DRUG
+"RTN","PSDNTT1",8,0)
+ W !!,"Updating your records now..."
+"RTN","PSDNTT1",9,0)
+DIE ;create the order request in 58.8
+"RTN","PSDNTT1",10,0)
+ ;7/25/97 inserted line 6 to update order status to "4" or "13"
+"RTN","PSDNTT1",11,0)
+ ;chged line 7 fr 10////4 to 10////_stat 
+"RTN","PSDNTT1",12,0)
+ F  L +^PSD(58.8,AOU,1,PSDRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDNTT1",13,0)
+ S:'$D(^PSD(58.8,AOU,1,PSDRG,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDNTT1",14,0)
+DIE2 S PSDRN=$P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)+1 I $D(^PSD(58.8,AOU,1,PSDRG,3,PSDRN)) S $P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)=$P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)+1 G DIE2
+"RTN","PSDNTT1",15,0)
+ W "order..."
+"RTN","PSDNTT1",16,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_AOU_",1,"_PSDRG_",3,",DA(2)=AOU,DA(1)=PSDRG,(X,DINUM)=PSDRN D FILE^DICN K DIC
+"RTN","PSDNTT1",17,0)
+ S DA=PSDRN,DA(1)=PSDRG,DA(2)=AOU
+"RTN","PSDNTT1",18,0)
+ S STAT=$S(+$P($G(^PSD(58.8,AOU,2)),U,5):13,1:4)
+"RTN","PSDNTT1",19,0)
+ S DR="16////"_PSDPN_";14////"_PSDSP_";15////"_RECD_";2////"_+PSDS_";6////"_PSDUZ_";7////"_MFG_";8////"_LOT_";9////"_EXP_";10////"_STAT_";19////"_QTY_";20////"_RQTY_";22////"_RQTY
+"RTN","PSDNTT1",20,0)
+ D ^DIE K DIE,DR
+"RTN","PSDNTT1",21,0)
+ L -^PSD(58.8,AOU,1,PSDRG,0)
+"RTN","PSDNTT1",22,0)
+ W "transaction..."
+"RTN","PSDNTT1",23,0)
+ADD ;find entry number in 58.81
+"RTN","PSDNTT1",24,0)
+ F  L +^PSD(58.81,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDNTT1",25,0)
+FIND S PSDREC=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSDREC)) S $P(^PSD(58.81,0),"^",3)=PSDREC G FIND
+"RTN","PSDNTT1",26,0)
+ K DIC,DLAYGO S DIC(0)="L",(DIC,DLAYGO)=58.81,(X,DINUM)=PSDREC D ^DIC K DIC,DLAYGO
+"RTN","PSDNTT1",27,0)
+ L -^PSD(58.81,0)
+"RTN","PSDNTT1",28,0)
+EDIT ;edit new transaction in 58.81
+"RTN","PSDNTT1",29,0)
+ ;7/21/97 on line 1 deleted "4" in 11th piece,added stat
+"RTN","PSDNTT1",30,0)
+ ; added lines 1-2 to update order status to a "4" or "13"
+"RTN","PSDNTT1",31,0)
+ ; also added to line 4 to enter a 1 in "CS";4
+"RTN","PSDNTT1",32,0)
+ I $P($G(^PSD(58.81,PSDREC,0)),"^")
+"RTN","PSDNTT1",33,0)
+ S STAT=$S(+$P($G(^PSD(58.8,AOU,2)),U,5):13,1:4)
+"RTN","PSDNTT1",34,0)
+ S ^PSD(58.81,PSDREC,0)=PSDREC_"^5^"_PSDS_"^"_RECD_"^"_PSDRG_"^"_RQTY_"^^^^^"_STAT_"^^"_MFG_"^"_LOT_"^"_EXP_"^^"_PSDPN_"^"_AOU_"^^"_PSDRN
+"RTN","PSDNTT1",35,0)
+ S ^PSD(58.81,PSDREC,1)="^^"_PSDUZ_"^"_RECD_"^^^^"_RQTY
+"RTN","PSDNTT1",36,0)
+ S ^PSD(58.81,PSDREC,7)="^^^^^"_PSDA,^PSD(58.81,PSDREC,9)=PAT
+"RTN","PSDNTT1",37,0)
+ S ^PSD(58.81,PSDREC,"CS")=1,$P(^PSD(58.81,PSDREC,"CS"),"^",4)=1
+"RTN","PSDNTT1",38,0)
+ K DA,DIK S DA=PSDREC,DIK="^PSD(58.81," D IX^DIK K DA,DIK
+"RTN","PSDNTT1",39,0)
+ ;update new order and prev trans #
+"RTN","PSDNTT1",40,0)
+ S $P(^PSD(58.8,AOU,1,PSDRG,3,PSDRN,0),"^",17)=PSDREC
+"RTN","PSDNTT1",41,0)
+ S $P(^PSD(58.81,PSDA,7),"^",4)=RECD,$P(^(7),"^",5)=PSDUZ,$P(^(7),"^",3)=AOU
+"RTN","PSDNTT1",42,0)
+BAL ;update naou to balance
+"RTN","PSDNTT1",43,0)
+ F  L +^PSD(58.8,AOU,1,PSDRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDNTT1",44,0)
+ ;PSD*3*56;REMOVED CHECK FOR PATIENT ID
+"RTN","PSDNTT1",45,0)
+ S $P(^PSD(58.8,AOU,1,PSDRG,0),"^",4)=$P(^PSD(58.8,AOU,1,PSDRG,0),"^",4)+RQTY
+"RTN","PSDNTT1",46,0)
+ L -^PSD(58.8,AOU,1,PSDRG,0)
+"RTN","PSDNTT1",47,0)
+COMP ;completed msg
+"RTN","PSDNTT1",48,0)
+ W "done.",!!
+"RTN","PSDNTT1",49,0)
+ S STAT=$P($G(^PSD(58.81,PSDREC,0)),"^",11)
+"RTN","PSDNTT1",50,0)
+ W ?2,!,"*** The status of your Green Sheet #"_PSDPN_" is now",!,?2,$S($P($G(^PSD(58.82,STAT,0)),"^")]"":$P(^(0),"^"),1:"UNKNOWN")_" ***",!
+"RTN","PSDNTT1",51,0)
+ G:'FLAG END
+"RTN","PSDNTT1",52,0)
+MSG ;send mail message
+"RTN","PSDNTT1",53,0)
+ K XMY,^TMP("PSDNTMSG",$J) S ^TMP("PSDNTMSG",$J,1,0)="CS PHARM Transfer Green Sheet between NAOUs",^TMP("PSDNTMSG",$J,2,0)="Transfer In Date: "_RECDT
+"RTN","PSDNTT1",54,0)
+ S ^TMP("PSDNTMSG",$J,3,0)=""
+"RTN","PSDNTT1",55,0)
+ S ^TMP("PSDNTMSG",$J,4,0)="Drug: "_PSDRGN_"      Green Sheet #"_PSDPN
+"RTN","PSDNTT1",56,0)
+ S ^TMP("PSDNTMSG",$J,5,0)="Transfer to: "_AOUN
+"RTN","PSDNTT1",57,0)
+ S ^TMP("PSDNTMSG",$J,6,0)="",^TMP("PSDNTMSG",$J,7,0)="This drug has been inactivated."
+"RTN","PSDNTT1",58,0)
+ S XMSUB="CS PHARM TRANSFER GREEN SHEET INACTIVATE DRUG",XMTEXT="^TMP(""PSDNTMSG"",$J,",XMDUZ="CONTROLLED SUBSTANCES PHARMACY"
+"RTN","PSDNTT1",59,0)
+ F JJ=0:0 S JJ=$O(^XUSEC("PSDMGR",JJ)) Q:'JJ  S XMY(JJ)=""
+"RTN","PSDNTT1",60,0)
+ S:'$D(XMY) XMY(.5)="" D ^XMD K XMY,^TMP("PSDNTMSG",$J)
+"RTN","PSDNTT1",61,0)
+END Q
+"RTN","PSDNTT1",62,0)
+DRUG ;add drug and inactivate it
+"RTN","PSDNTT1",63,0)
+ S:'$D(^PSD(58.8,AOU,1,0)) ^(0)="^58.8001IP^^"
+"RTN","PSDNTT1",64,0)
+ K DA,DIC,DIE,DD,DO S (DIC,DIE)="^PSD(58.8,"_AOU_",1,",(X,DINUM)=+PSDRG,DA(1)=AOU,DIC(0)="L" D FILE^DICN K DIC I Y<0 S PSDOUT=1 Q
+"RTN","PSDNTT1",65,0)
+ K DA,DR S DA=PSDRG,DA(1)=AOU,DR="13////"_PSDT_";14////O;14.5////TRANSFER FROM ANOTHER NAOU" D ^DIE K DA,DIE,DR
+"RTN","PSDNTT1",66,0)
+ S FLAG=1
+"RTN","PSDNTT1",67,0)
+ Q
+"RTN","PSDNTTP1")
+0^3^B14819177^B14234646
+"RTN","PSDNTTP1",1,0)
+PSDNTTP1 ;BIR/BJW - Transfer Green Sheet - Receive this NAOU ;7/9/07 10:02am
+"RTN","PSDNTTP1",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**64,79**;13 Feb 97;Build 20
+"RTN","PSDNTTP1",3,0)
+COM ;complete order and transaction
+"RTN","PSDNTTP1",4,0)
+ S FLAG=0 D NOW^%DTC S PSDT=X,(RECD,Y)=+$E(%,1,12) X ^DD("DD") S RECDT=Y
+"RTN","PSDNTTP1",5,0)
+ W !!,"Accessing ",PSDRGN," information...",!!
+"RTN","PSDNTTP1",6,0)
+ I '$D(^PSD(58.8,+AOU,1,+PSDRG,0)) D DRUG
+"RTN","PSDNTTP1",7,0)
+ W !!,"Updating your records now..."
+"RTN","PSDNTTP1",8,0)
+DIE ;create the order request in 58.8
+"RTN","PSDNTTP1",9,0)
+ F  L +^PSD(58.8,AOU,1,PSDRG,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDNTTP1",10,0)
+ S:'$D(^PSD(58.8,AOU,1,PSDRG,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDNTTP1",11,0)
+DIE2 S PSDRN=$P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)+1 I $D(^PSD(58.8,AOU,1,PSDRG,3,PSDRN)) S $P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)=$P(^PSD(58.8,AOU,1,PSDRG,3,0),"^",3)+1 G DIE2
+"RTN","PSDNTTP1",12,0)
+ W "order..."
+"RTN","PSDNTTP1",13,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_AOU_",1,"_PSDRG_",3,",DA(2)=AOU,DA(1)=PSDRG,(X,DINUM)=PSDRN D FILE^DICN K DIC
+"RTN","PSDNTTP1",14,0)
+ S DA=PSDRN,DA(1)=PSDRG,DA(2)=AOU
+"RTN","PSDNTTP1",15,0)
+ S STAT=$S(+$P($G(^PSD(58.8,AOU,2)),U,5):13,1:4)
+"RTN","PSDNTTP1",16,0)
+ S DR="16////"_PSDPN_";14////"_PSDSP_";15////"_RECD_";2////"_+PSDS_";6////"_PSDUZ_";7////"_MFG_";8////"_LOT_";9////"_EXP_";10////"_STAT_";19////"_QTY_";20////"_RQTY_";22////"_RQTY
+"RTN","PSDNTTP1",17,0)
+ D ^DIE K DIE,DR
+"RTN","PSDNTTP1",18,0)
+ L -^PSD(58.8,AOU,1,PSDRG,0)
+"RTN","PSDNTTP1",19,0)
+ W "transaction..."
+"RTN","PSDNTTP1",20,0)
+ADD ;find entry number in 58.81
+"RTN","PSDNTTP1",21,0)
+ F  L +^PSD(58.81,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDNTTP1",22,0)
+FIND S PSDREC=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSDREC)) S $P(^PSD(58.81,0),"^",3)=PSDREC G FIND
+"RTN","PSDNTTP1",23,0)
+ K DIC,DLAYGO S DIC(0)="L",(DIC,DLAYGO)=58.81,(X,DINUM)=PSDREC D ^DIC K DIC,DLAYGO
+"RTN","PSDNTTP1",24,0)
+ L -^PSD(58.81,0)
+"RTN","PSDNTTP1",25,0)
+EDIT ;edit new transaction in 58.81
+"RTN","PSDNTTP1",26,0)
+ I $P($G(^PSD(58.81,PSDREC,0)),"^")
+"RTN","PSDNTTP1",27,0)
+ S STAT=$S(+$P($G(^PSD(58.8,AOU,2)),U,5):13,1:4)
+"RTN","PSDNTTP1",28,0)
+ S ^PSD(58.81,PSDREC,0)=PSDREC_"^5^"_PSDS_"^"_RECD_"^"_PSDRG_"^"_RQTY_"^^^^^"_STAT_"^^"_MFG_"^"_LOT_"^"_EXP_"^^"_PSDPN_"^"_AOU_"^^"_PSDRN
+"RTN","PSDNTTP1",29,0)
+ S ^PSD(58.81,PSDREC,1)="^^"_PSDUZ_"^"_RECD_"^^^^"_RQTY
+"RTN","PSDNTTP1",30,0)
+ S ^PSD(58.81,PSDREC,7)="^^^^^"_PSDA,^PSD(58.81,PSDREC,9)=PAT
+"RTN","PSDNTTP1",31,0)
+ S ^PSD(58.81,PSDREC,"CS")=1,$P(^PSD(58.81,PSDREC,"CS"),"^",4)=1
+"RTN","PSDNTTP1",32,0)
+ K DA,DIK S DA=PSDREC,DIK="^PSD(58.81," D IX^DIK K DA,DIK
+"RTN","PSDNTTP1",33,0)
+ ;update new order and prev trans #
+"RTN","PSDNTTP1",34,0)
+ S $P(^PSD(58.8,AOU,1,PSDRG,3,PSDRN,0),"^",17)=PSDREC
+"RTN","PSDNTTP1",35,0)
+ S $P(^PSD(58.81,PSDA,7),"^",4)=RECD,$P(^(7),"^",5)=PSDUZ,$P(^(7),"^",3)=AOU
+"RTN","PSDNTTP1",36,0)
+BAL ;update naou to balance  ; *64 - balance will not change
+"RTN","PSDNTTP1",37,0)
+COMP ;completed msg
+"RTN","PSDNTTP1",38,0)
+ W "done.",!!
+"RTN","PSDNTTP1",39,0)
+ S STAT=$P($G(^PSD(58.81,PSDREC,0)),"^",11)
+"RTN","PSDNTTP1",40,0)
+ W ?2,!,"*** The status of your Green Sheet #"_PSDPN_" is now",!,?2,$S($P($G(^PSD(58.82,STAT,0)),"^")]"":$P(^(0),"^"),1:"UNKNOWN")_" ***",!
+"RTN","PSDNTTP1",41,0)
+ G:'FLAG END
+"RTN","PSDNTTP1",42,0)
+MSG ;send mail message
+"RTN","PSDNTTP1",43,0)
+ K XMY,^TMP("PSDNTMSG",$J) S ^TMP("PSDNTMSG",$J,1,0)="CS PHARM Transfer Green Sheet between NAOUs",^TMP("PSDNTMSG",$J,2,0)="Transfer In Date: "_RECDT
+"RTN","PSDNTTP1",44,0)
+ S ^TMP("PSDNTMSG",$J,3,0)=""
+"RTN","PSDNTTP1",45,0)
+ S ^TMP("PSDNTMSG",$J,4,0)="Drug: "_PSDRGN_"      Green Sheet #"_PSDPN
+"RTN","PSDNTTP1",46,0)
+ S ^TMP("PSDNTMSG",$J,5,0)="Transfer to: "_AOUN
+"RTN","PSDNTTP1",47,0)
+ S ^TMP("PSDNTMSG",$J,6,0)="",^TMP("PSDNTMSG",$J,7,0)="This drug has been inactivated."
+"RTN","PSDNTTP1",48,0)
+ S XMSUB="CS PHARM TRANSFER GREEN SHEET INACTIVATE DRUG",XMTEXT="^TMP(""PSDNTMSG"",$J,",XMDUZ="CONTROLLED SUBSTANCES PHARMACY"
+"RTN","PSDNTTP1",49,0)
+ F JJ=0:0 S JJ=$O(^XUSEC("PSDMGR",JJ)) Q:'JJ  S XMY(JJ)=""
+"RTN","PSDNTTP1",50,0)
+ S:'$D(XMY) XMY(.5)="" D ^XMD K XMY,^TMP("PSDNTMSG",$J)
+"RTN","PSDNTTP1",51,0)
+END Q
+"RTN","PSDNTTP1",52,0)
+DRUG ;add drug and inactivate it
+"RTN","PSDNTTP1",53,0)
+ S:'$D(^PSD(58.8,AOU,1,0)) ^(0)="^58.8001IP^^"
+"RTN","PSDNTTP1",54,0)
+ K DA,DIC,DIE,DD,DO S (DIC,DIE)="^PSD(58.8,"_AOU_",1,",(X,DINUM)=+PSDRG,DA(1)=AOU,DIC(0)="L" D FILE^DICN K DIC I Y<0 S PSDOUT=1 Q
+"RTN","PSDNTTP1",55,0)
+ K DA,DR S DA=PSDRG,DA(1)=AOU,DR="13////"_PSDT_";14////O;14.5////TRANSFER FROM ANOTHER NAOU" D ^DIE K DA,DIE,DR
+"RTN","PSDNTTP1",56,0)
+ S FLAG=1
+"RTN","PSDNTTP1",57,0)
+ Q
+"RTN","PSDOPT")
+0^16^B86544635^B86888301
+"RTN","PSDOPT",1,0)
+PSDOPT ;BIR/JPW,LTL,BJW - Outpatient Rx Entry ;2/5/04 12:15pm
+"RTN","PSDOPT",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES;**10,11,15,21,30,39,48,62,69,71,79**;13 Feb 97;Build 20
+"RTN","PSDOPT",3,0)
+ ;Reference to ^PSDRUG( supported by DBIA #221
+"RTN","PSDOPT",4,0)
+ ;References to ^PSD(58.8 are covered by DBIA #2711
+"RTN","PSDOPT",5,0)
+ ;References to file 58.81 are covered by DBIA #2808
+"RTN","PSDOPT",6,0)
+ ;Reference to PSRX( supported by DBIA #986
+"RTN","PSDOPT",7,0)
+ ;Reference to PSOFUNC supported by DBIA #981
+"RTN","PSDOPT",8,0)
+ ;Line Tag FINAL^PSOLSET supported by DBIA #982
+"RTN","PSDOPT",9,0)
+ ;
+"RTN","PSDOPT",10,0)
+ ;mod.for nois:tua-0498-32173,askp,bc1;ver
+"RTN","PSDOPT",11,0)
+ ;enhancement for Outpat V7 status code of 12,13,14,15 in askp
+"RTN","PSDOPT",12,0)
+ ;
+"RTN","PSDOPT",13,0)
+ ;further modifications related to the deletion of
+"RTN","PSDOPT",14,0)
+ ;refills made in April 1999 
+"RTN","PSDOPT",15,0)
+ ;
+"RTN","PSDOPT",16,0)
+ ;PSD*3*39 Kill all variables
+"RTN","PSDOPT",17,0)
+ D PSDKLL^PSDOPT2
+"RTN","PSDOPT",18,0)
+ I '$D(PSDSITE) D ^PSDSET Q:'$D(PSDSITE)
+"RTN","PSDOPT",19,0)
+ I '$D(^XUSEC("PSJ RPHARM",DUZ)),'$D(^XUSEC("PSD TECH ADV",DUZ)) W !!,"Please contact your Pharmacy Coordinator for access",!,"to log Outpatient Prescriptions. Either the PSJ RPHARM",!,"or PSD TECH ADV security key required.",!! Q
+"RTN","PSDOPT",20,0)
+ I $P($G(^VA(200,DUZ,20)),U,4)']"" N XQH S XQH="PSD ESIG" D EN^XQH G END
+"RTN","PSDOPT",21,0)
+ N X,X1 D SIG^XUSESIG I X1="" G END
+"RTN","PSDOPT",22,0)
+ N LN S (PSDOUT,NEW)=0,PSDUZ=DUZ,$P(LN,"-",80)="",Y=DT
+"RTN","PSDOPT",23,0)
+ X ^DD("DD") S RPDT=Y
+"RTN","PSDOPT",24,0)
+ASKD ;ask disp site
+"RTN","PSDOPT",25,0)
+ S PSDS=$P(PSDSITE,U,3),PSDSN=$P(PSDSITE,U,4)
+"RTN","PSDOPT",26,0)
+ G:$P(PSDSITE,U,5) CHKD
+"RTN","PSDOPT",27,0)
+ K DIC,DA S DIC=58.8,DIC(0)="QEAZ",DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$S($P(^(0),""^"",2)[""M"":1,$P(^(0),""^"",2)[""S"":1,1:0),$S('$D(^(""I"")):1,+^(""I"")>DT:1,'^(""I""):1,1:0)"
+"RTN","PSDOPT",28,0)
+ S DIC("A")="Select Primary Dispensing Site: ",DIC("B")=$P(PSDSITE,U,4)
+"RTN","PSDOPT",29,0)
+ W ! D ^DIC K DIC G:Y<0 END
+"RTN","PSDOPT",30,0)
+ S PSDS=+Y,PSDSN=$P(Y,"^",2),$P(PSDSITE,U,3)=+Y,$P(PSDSITE,U,4)=PSDSN
+"RTN","PSDOPT",31,0)
+CHKD I '$O(^PSD(58.8,PSDS,1,0)) W !!,"There are no stocked drugs for this Pharmacy Vault!!",!! G END
+"RTN","PSDOPT",32,0)
+ASKPH ;ask releasing RPH
+"RTN","PSDOPT",33,0)
+ S DIC="^VA(200,",DIC(0)="QEAM",DIC("S")="I $D(^XUSEC(""PSORPH"",+Y))"
+"RTN","PSDOPT",34,0)
+ S DIC("A")="Please identify Pharmacist for Outpatient Release: "
+"RTN","PSDOPT",35,0)
+ S:$D(^XUSEC("PSORPH",DUZ)) DIC("B")=$P($G(^VA(200,DUZ,0)),U)
+"RTN","PSDOPT",36,0)
+ W ! D ^DIC K DIC G:Y<1 END S PSDRPH=+Y
+"RTN","PSDOPT",37,0)
+ASKP ;ask rx #
+"RTN","PSDOPT",38,0)
+ K PSDSEL,PSDPOST,PSDREL
+"RTN","PSDOPT",39,0)
+ ;PSD*3*30 (Dave Blocker ) Lock the script node
+"RTN","PSDOPT",40,0)
+ I $G(PSDRX)'="" L -^PSRX(PSDRX)
+"RTN","PSDOPT",41,0)
+ W ! K DIR,NEW,PSDRX,PSDRXIN,RXNUM S PSDOUT=0 S DIR("A")="Enter/Wand PRESCRIPTION number"
+"RTN","PSDOPT",42,0)
+ S DIR("?")="^D HELP^PSODISP",DIR(0)="F^1:35" D ^DIR K DIR
+"RTN","PSDOPT",43,0)
+ G:$D(DTOUT)!($D(DUOUT)) END G:X="" ASKPH
+"RTN","PSDOPT",44,0)
+ S X=$$UP^XLFSTR(X)
+"RTN","PSDOPT",45,0)
+ I X'["-" D  S PSDRX=$G(PSDRXIN)
+"RTN","PSDOPT",46,0)
+ .S PSDRX=0 F  S PSDRX=$O(^PSRX("B",X,PSDRX)) Q:'PSDRX  S PSDRXIN=PSDRX D VER
+"RTN","PSDOPT",47,0)
+ I X'["-",'$G(PSDRX)!('$D(^PSRX(+$G(PSDRX),0))) W !,"INVALID PRESCRIPTION NUMBER" G ASKP
+"RTN","PSDOPT",48,0)
+ ;
+"RTN","PSDOPT",49,0)
+ ;PSD*3*30 - lock the script
+"RTN","PSDOPT",50,0)
+ I X'["-" L +^PSRX(PSDRX):5 I '$T W !!,"Sorry, someone else is editing this prescription. Please try again later." K PSDRX G ASKP
+"RTN","PSDOPT",51,0)
+ ;
+"RTN","PSDOPT",52,0)
+ ;DAVE B (PSD*3*15) Show previous postings
+"RTN","PSDOPT",53,0)
+ I X'["-" I $G(PSOVR)=1,$G(PSDSTA)=12!($G(PSDSTA)=13)!($G(PSDSTA)=14)!($G(PSDSTA)=15)!($G(PSDSTA)=11) S PSDXXX=X D CHKRF I $G(PSDNEXT)=1 G ASKP
+"RTN","PSDOPT",54,0)
+ ;<JD *62
+"RTN","PSDOPT",55,0)
+ ;
+"RTN","PSDOPT",56,0)
+ S PSD(1)=X,DIC="^DIC(4,",DR=99,DA=+$P($G(^XMB(1,1,"XUS")),U,17)
+"RTN","PSDOPT",57,0)
+ K DIQ S DIQ="PSD" D EN^DIQ1 S X=PSD(1) K DIC,DR,DIQ
+"RTN","PSDOPT",58,0)
+ I X["-",$P(X,"-")'=PSD(4,DA,99) K DA,PSD W !?7,$C(7),"   INVALID STATION NUMBER !!",! G ASKP
+"RTN","PSDOPT",59,0)
+ K DA,PSD
+"RTN","PSDOPT",60,0)
+ I X["-" S PSDRX=$P(X,"-",2) I (PSDRX'?1N.N.1U) W !?7,$C(7),"   INVALID PRESCRIPTION NUMBER" G ASKP
+"RTN","PSDOPT",61,0)
+ I X["-" I '$D(^PSRX(+$G(PSDRX),0))!($G(PSDRX)']"") W !?7,$C(7),"   NON-EXISTENT PRESCRIPTION" G ASKP
+"RTN","PSDOPT",62,0)
+ ;
+"RTN","PSDOPT",63,0)
+ I X["-",$D(^PSRX(PSDRX,0)) S PSDRXIN=+PSDRX D VER I PSOVR=1,$G(PSDSTA)=12!($G(PSDSTA)=13)!($G(PSDSTA)=14)!($G(PSDSTA)=15) D CHKRF I $G(PSDNEXT)=1 G ASKP
+"RTN","PSDOPT",64,0)
+ I X["-" L +^PSRX(PSDRX):5 I '$T W !!,"Sorry, someone else is editing this prescription. Please try again later." K PSDRX G ASKP
+"RTN","PSDOPT",65,0)
+ ;
+"RTN","PSDOPT",66,0)
+ ; (PSD*3*21) Check for transmission status for barcode entry
+"RTN","PSDOPT",67,0)
+ ;
+"RTN","PSDOPT",68,0)
+ G:$D(^PSRX(PSDRX,0)) BC1
+"RTN","PSDOPT",69,0)
+ W !?7,$C(7),"   IMPROPER BARCODE FORMAT" G ASKP
+"RTN","PSDOPT",70,0)
+BC1 ;
+"RTN","PSDOPT",71,0)
+ S PSDRXIN=+PSDRX D VER
+"RTN","PSDOPT",72,0)
+ I $G(PSDSTA)=13!(+$P($G(^PSRX(+PSDRX,0)),"^",2)=0) W !?7,$C(7),"    PRESCRIPTION HAS BEEN DELETED." G ASKP
+"RTN","PSDOPT",73,0)
+ I $G(PSDSTA),$S($G(PSDSTA)=2:0,$G(PSDSTA)=5:0,$G(PSDSTA)=11:0,$G(PSDSTA)=12:0,$G(PSDSTA)=14:0,$G(PSDSTA)=15:0,1:1) D  K J,RX0,RX2,ST,ST0 G ASKP
+"RTN","PSDOPT",74,0)
+ .S RX0=$G(^PSRX(+PSDRX,0)),RX2=^PSRX(+PSDRX,2),J=PSDRX S $P(RX0,"^",15)=$G(PSDSTA) D ^PSOFUNC
+"RTN","PSDOPT",75,0)
+ .W !!,$C(7),"     Status of ",ST," is not appropriate for selection."
+"RTN","PSDOPT",76,0)
+ K PSDSTA,PSOVR,PSDRXIN
+"RTN","PSDOPT",77,0)
+ S RXNUM=$P($G(^PSRX(+PSDRX,0)),U),PSDR=+$P($G(^(0)),U,6),DFN=+$P($G(^(0)),U,2),QTY=$P($G(^(0)),U,7),PSDRN=$P($G(^PSDRUG(PSDR,0)),"^")
+"RTN","PSDOPT",78,0)
+ N C S Y=DFN,C=$P(^DD(58.81,73,0),U,2) D Y^DIQ S PATN=Y
+"RTN","PSDOPT",79,0)
+ D PID^VADPT6
+"RTN","PSDOPT",80,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) W !!,PSDRN," is not currently stocked in ",PSDSN,".",!!,"** No action taken. **",!! G END
+"RTN","PSDOPT",81,0)
+ I $D(^PSD(58.81,"AOP",PSDRX)) D ^PSDOPT2 I PSDOUT D MSG G END
+"RTN","PSDOPT",82,0)
+ G ^PSDOPT0
+"RTN","PSDOPT",83,0)
+CHK ;displays and checks if ok
+"RTN","PSDOPT",84,0)
+CLLDIR I $D(PSDSEL("OR")) S DIR(0)="S^1:Original;",CNT=1
+"RTN","PSDOPT",85,0)
+ I $D(PSDSEL("RF")) D
+"RTN","PSDOPT",86,0)
+ .S X1=0 F  S X1=$O(PSDSEL("RF",X1)) Q:X1=""  D
+"RTN","PSDOPT",87,0)
+ ..I $D(PSDRET("RF",X1)),(PSDRET("RF",X1)\1)=$P(PSDSEL("RF",X1),"^") D RTSDTC^PSDOPT2 Q
+"RTN","PSDOPT",88,0)
+ ..I $D(PSDRET("RF",X1)),PSDRET("RF",X1)<$P(PSDSEL("RF",X1),"^") D CLLDIR2 Q
+"RTN","PSDOPT",89,0)
+ ..I '$D(PSDRET("RF",X1)) D CLLDIR2 Q
+"RTN","PSDOPT",90,0)
+ ..Q
+"RTN","PSDOPT",91,0)
+ I $D(PSDSEL("PR")) D
+"RTN","PSDOPT",92,0)
+ .S X1=0 F  S X1=$O(PSDSEL("PR",X1)) Q:X1=""  I '$D(PSDRET("PR",X1)) S CNT=$G(CNT)+1,DIR(0)=$S($G(CNT)=1:"S^1:Partial #"_X1,1:DIR(0)_CNT_":Partial #"_X1)_" ("_$P(PSDSEL("PR",X1),"^",2)_");"
+"RTN","PSDOPT",93,0)
+ I $G(DIR(0))'="" D
+"RTN","PSDOPT",94,0)
+ .K PSDERR D ^DIR I $D(DIRUT) S PSDERR=1 Q
+"RTN","PSDOPT",95,0)
+ .S PSDA=$E(Y(0))
+"RTN","PSDOPT",96,0)
+ Q:$D(PSDERR)
+"RTN","PSDOPT",97,0)
+ Q:'$D(Y(0))  I PSDA="O" S DAT=$P($G(^PSRX(PSDRX,2)),U,2),PSDPOST=$P(PSDSEL("OR"),"^",3),PSDREL=$P(PSDSEL("OR"),"^",4) G PROCESS
+"RTN","PSDOPT",98,0)
+ I PSDA="R" S XX=$P(Y(0),"#",2),XXX=$P(XX," ",1),DAT=$P($G(PSDSEL("RF",XXX)),"^",1),QTY=$P(PSDSEL("RF",XXX),U,2),PSDPOST=$P(PSDSEL("RF",XXX),U,3),PSDREL=$P(PSDSEL("RF",XXX),U,4) G PROCESS
+"RTN","PSDOPT",99,0)
+ I PSDA="P" S XX=$P(Y(0),"#",2),XXX=$P(XX," ",1),DAT=$P($G(PSDSEL("PR",XXX)),"^",1),QTY=$P(PSDSEL("PR",XXX),U,2),PSDPOST=$P(PSDSEL("PR",XXX),U,3),PSDREL=$P(PSDSEL("PR",XXX),U,4) G PROCESS
+"RTN","PSDOPT",100,0)
+ W !,"Error somewhere" G ASKP
+"RTN","PSDOPT",101,0)
+PROCESS ;process selection
+"RTN","PSDOPT",102,0)
+ I PSDA'="O" S PSDFLNO=XXX ;fill number
+"RTN","PSDOPT",103,0)
+ I PSDA="O" S NEW=1,(NEW(1),NEW(2))=0 ;Original
+"RTN","PSDOPT",104,0)
+ I PSDA="R" S NEW(1)=XXX,(NEW,NEW(2))=0 ;Refill
+"RTN","PSDOPT",105,0)
+ I PSDA="P" S NEW(2)=XXX,(NEW,NEW(1))=0 ;Partial
+"RTN","PSDOPT",106,0)
+ S X=0 F  S X=$O(^PSRX(PSDRX,4,X)) Q:X'>0  S STATUS=$P($G(^PSRX(PSDRX,4,X,0)),"^",4),NUMBER=$P($G(^PSRX(PSDRX,4,X,0)),"^",3) I $G(STATUS)'=3 D
+"RTN","PSDOPT",107,0)
+ .I NUMBER=0,$G(NEW)=1,$G(NEW(1))=0 D CMOPMSG
+"RTN","PSDOPT",108,0)
+ .I NUMBER=$G(NEW(1)),$G(NEW)=0,PSDA'="P",'$D(PSDRET("RF",NUMBER)) D CMOPMSG
+"RTN","PSDOPT",109,0)
+ I $G(PSDOUT)=1 G ASKP
+"RTN","PSDOPT",110,0)
+ ;
+"RTN","PSDOPT",111,0)
+ D:PSDA="O" PSDORIG^PSDOPT1 D:PSDA="R" PSDRFL^PSDOPT1 D:PSDA="P" PSDPRTL^PSDOPT1
+"RTN","PSDOPT",112,0)
+ I $G(PSDOUT)=1 G ASKP
+"RTN","PSDOPT",113,0)
+ I $G(PSDPOST)=1,$G(PSDREL)="" W !,"This fill has already been posted.",$C(7) G ASKP
+"RTN","PSDOPT",114,0)
+ I $G(PSDREL)'="",$G(PSDPOST)'>0 W !,"This fill has already been released.",$C(7)
+"RTN","PSDOPT",115,0)
+ I $G(PSDREL)'="",$G(PSDPOST)>0 W !,"This fill has already been posted & released, no further action required.",$C(7) G ASKP
+"RTN","PSDOPT",116,0)
+ D DISPLAY G:PSDOUT END
+"RTN","PSDOPT",117,0)
+ K DA,DIR,DIRUT S DIR(0)="YA",DIR("B")="YES",DIR("A")="Is this OK? "
+"RTN","PSDOPT",118,0)
+ S DIR("?",1)="Answer 'YES' to log this RX transaction in your CS vault,",DIR("?")="answer 'NO' to reselect a prescription, or '^' to quit."
+"RTN","PSDOPT",119,0)
+ D ^DIR K DIR I Y<1 D MSG G:$D(DIRUT) END G:Y<1 ASKP
+"RTN","PSDOPT",120,0)
+ D ^PSDOPT1 G ASKP
+"RTN","PSDOPT",121,0)
+END K %,%H,%I,BAL,C,CNT,DA,DAT,DD,DFN,DIC,DIE,DIK,DINUM,DIR,DIROUT,DIRUT,DLAYGO,DO,DR,JJ,LN,NEW,NODE,NODE6 D FINAL^PSOLSET
+"RTN","PSDOPT",122,0)
+ I $G(PSDRX)'="" L -^PSRX(PSDRX)
+"RTN","PSDOPT",123,0)
+ K PATN,PHARM,PHARMN,PRF,PSDA,PSDATE,PSDOUT,PSDR,PSDRN,PSDRPH,PSDRX,PSDS,PSDSN,PSDT,PSDUZ,PSOCSUB,QTY,RF,RPDT,RXNUM,X,Y
+"RTN","PSDOPT",124,0)
+ D KVAR^VADPT K VA("PID"),VA("BID")
+"RTN","PSDOPT",125,0)
+ Q
+"RTN","PSDOPT",126,0)
+CHKEY ;check if user has access
+"RTN","PSDOPT",127,0)
+ I '$D(^XUSEC("PSJ RPHARM",DUZ)) D  S PSDOUT=1
+"RTN","PSDOPT",128,0)
+ .W !!?12,"** You have no access to release this prescription."
+"RTN","PSDOPT",129,0)
+ .W !?15,"The PSJ RPHARM security key is required. **",!
+"RTN","PSDOPT",130,0)
+ Q
+"RTN","PSDOPT",131,0)
+CLLDIR2 S CNT=$G(CNT)+1,DIR(0)=$S($G(CNT)=1:"S^1:Refill #"_X1,1:DIR(0)_CNT_":Refill #"_X1)_";"
+"RTN","PSDOPT",132,0)
+ Q
+"RTN","PSDOPT",133,0)
+DISPLAY ;disp data
+"RTN","PSDOPT",134,0)
+ W !!,?20,"View Controlled Substances Rx # ",RXNUM,!,?28,RPDT,!,LN,!!
+"RTN","PSDOPT",135,0)
+ W "Location: ",?10,PSDSN,?55
+"RTN","PSDOPT",136,0)
+ S PSDRN(1)=$S(NEW:"Original",$G(NEW(1)):"Refill #"_NEW(1),1:"Partial #"_$G(NEW(2))) W PSDRN(1)
+"RTN","PSDOPT",137,0)
+ W !,"Drug: ",?10,PSDRN,?55,"Quantity: ",QTY
+"RTN","PSDOPT",138,0)
+ ;
+"RTN","PSDOPT",139,0)
+ ;DAVE B (PSD*3*15) check for Non-numeric quantity
+"RTN","PSDOPT",140,0)
+ I QTY'?.N W !,"The Quantity is not strictly numeric. This will cause the new balance to be",!,"calculated incorrectly.",!
+"RTN","PSDOPT",141,0)
+ W !,"Patient: ",?10,PATN_"  ("_VA("BID")_")",?55,PSDRN(1)," Date: ",?65,$E(DAT,4,5)_"/"_$E(DAT,6,7)_"/"_$E(DAT,2,3),!
+"RTN","PSDOPT",142,0)
+ S BAL=+$P($G(^PSD(58.8,+PSDS,1,PSDR,0)),"^",4) I QTY>BAL W !!,?5,"Your balance is ",BAL,".",!,?5,"You may not dispense lower than your balance.",!! D MSG S PSDOUT=1 Q
+"RTN","PSDOPT",143,0)
+ W !!,?15,"Old Balance: ",BAL,?40,"New Balance: ",BAL-QTY,!!
+"RTN","PSDOPT",144,0)
+ Q
+"RTN","PSDOPT",145,0)
+MSG W $C(7),!!,"No action taken.  This transaction has not been recorded.",!!
+"RTN","PSDOPT",146,0)
+ Q
+"RTN","PSDOPT",147,0)
+VER ;Current Outpatient Version, and Rx status added 6/17/98
+"RTN","PSDOPT",148,0)
+ K PSDSTA S PSDHOLDX=$G(X) S PSOVR=$$VERSION^XPDUTL("PSO") S X=$G(PSDHOLDX) K PSDHOLDX S PSOVR=$S($G(PSOVR)>6:1,1:0)
+"RTN","PSDOPT",149,0)
+ I $G(PSDRXIN) S PSDSTA=$S(PSOVR:$P($G(^PSRX(PSDRXIN,"STA")),"^"),1:$P($G(^PSRX(PSDRXIN,0)),"^",15))
+"RTN","PSDOPT",150,0)
+ Q
+"RTN","PSDOPT",151,0)
+CHKRF ;Dave B (PSD*3*30) if its deleted, show status.
+"RTN","PSDOPT",152,0)
+ W !,"This RX has a status of '"_$S(PSDSTA=11:"EXPIRED",PSDSTA=12:"DISCONTINUED",PSDSTA=13:"DELETED",PSDSTA=14:"DISCONTINUED BY PROVIDER",PSDSTA=15:"DISCONTINUED (EDIT)",1:"Unknown  Procedure")_$S(PSDSTA=12:"'.",1:"', no action can be taken.")
+"RTN","PSDOPT",153,0)
+ ;< JD*62
+"RTN","PSDOPT",154,0)
+ I $O(^PSRX(PSDRX,"A",0))>0 W !!,"Below is a list of actions taken on the prescription.",!!,"DATE/TIME",?22,"PERSON",?45,"ACTIVITY",! F X=1:1:53 W "=" F X=1:1:(IOM-1) W "="
+"RTN","PSDOPT",155,0)
+ S X3=0 F  S X3=$O(^PSRX(PSDRX,"A",X3)) Q:X3=""  S DATA=$G(^PSRX(PSDRX,"A",X3,0)),Y=$P(DATA,"^",1) X ^DD("DD") S DATE=Y,X=$P(DATA,"^",2) D
+"RTN","PSDOPT",156,0)
+ .I $G(X)'="" S ACTIVITY=$$EXTERNAL^DILFD(52.3,.02,,X)
+"RTN","PSDOPT",157,0)
+ .S DELDUZ=$$EXTERNAL^DILFD(52.3,.03,,$P(DATA,"^",3)) S DELDUZ=$S($G(DELDUZ)="":"Unknown ("_$P(DATA,"^",3)_")",1:DELDUZ)
+"RTN","PSDOPT",158,0)
+ .K DELREAS S DELREAS=$P(DATA,"^",5)
+"RTN","PSDOPT",159,0)
+ .W !,DATE,?22,DELDUZ,?45,ACTIVITY I $G(DELREAS)'="" W !,"Comment: ",$G(DELREAS)
+"RTN","PSDOPT",160,0)
+ I $G(PSDSTA)'=12 S PSDNEXT=1 Q
+"RTN","PSDOPT",161,0)
+ASK12 R !,"Do you wish to continue? NO // ",AN:DTIME S:AN="" AN="N"
+"RTN","PSDOPT",162,0)
+ I "YyNn"'[AN W !,"Answer 'N'o, and you will prompted for another prescription." G ASK12
+"RTN","PSDOPT",163,0)
+ I "nN"[AN S PSDNEXT=1 Q
+"RTN","PSDOPT",164,0)
+ K PSDNEXT
+"RTN","PSDOPT",165,0)
+ Q
+"RTN","PSDOPT",166,0)
+CMOPMSG W !,?10,"This is a CMOP fill and has been transmitted, dispensed or ",!?10,"retransmitted.",! S PSDOUT=1 Q
+"RTN","PSDOPT",167,0)
+KLLALL ;Kill all
+"RTN","PSDOPT0")
+0^15^B87954847^B72940281
+"RTN","PSDOPT0",1,0)
+PSDOPT0 ;BIR/JPW,LTL,BJW - Outpatient Rx Entry (cont'd) ;22 Jun 98
+"RTN","PSDOPT0",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**10,30,37,39,45,48,66,79**;13 Feb 97;Build 20
+"RTN","PSDOPT0",3,0)
+ ;Reference to PS(52.5 supported by DBIA #786
+"RTN","PSDOPT0",4,0)
+ ;Reference to PS(59.7 supported by DBIA #1930
+"RTN","PSDOPT0",5,0)
+ ;References to ^PSD(58.8 are covered by DBIA #2711
+"RTN","PSDOPT0",6,0)
+ ;References to file 58.81 are covered by DBIA #2808
+"RTN","PSDOPT0",7,0)
+ ;Reference to ^PSDRUG( supported by DBIA #221
+"RTN","PSDOPT0",8,0)
+ ;Reference to PSRX( supported by DBIA #986
+"RTN","PSDOPT0",9,0)
+ ;called by ^PSDOPT,mod.for nois#:tua-0498-32173
+"RTN","PSDOPT0",10,0)
+ ;08/02/2004 KAM PSD*3*45 Modification to stop posting of the same 
+"RTN","PSDOPT0",11,0)
+ ;                        partial multiple times
+"RTN","PSDOPT0",12,0)
+LOOP ;loop to find new, refills and partials
+"RTN","PSDOPT0",13,0)
+ W !!,"Accessing the prescription history..."
+"RTN","PSDOPT0",14,0)
+ N PSDOIN,PSDRXFD,PSDSUPN,PSDLBL S PSDOIN=+$P($G(^PS(59.7,1,49.99)),U,2)
+"RTN","PSDOPT0",15,0)
+ ;check for unposted refills not returned to stock and not in suspense
+"RTN","PSDOPT0",16,0)
+ S (RF,DAT)=0 F JJ=0:0 S JJ=$O(^PSRX(PSDRX,1,JJ)) Q:'JJ  I $D(^PSRX(PSDRX,1,JJ,0)),'$P(^(0),U,16),$P($G(^(0)),U)'<PSDOIN D
+"RTN","PSDOPT0",17,0)
+ .;checking for suspense
+"RTN","PSDOPT0",18,0)
+ .S PSDRXFD=$E($P(^PSRX(PSDRX,1,JJ,0),U),1,7)
+"RTN","PSDOPT0",19,0)
+ .S PSDSUPN=$O(^PS(52.5,"B",PSDRX,0))
+"RTN","PSDOPT0",20,0)
+ .I PSDSUPN,$D(^PS(52.5,"C",PSDRXFD,PSDSUPN)),$G(^PS(52.5,PSDSUPN,"P"))'=1 W !!,"Refill #",JJ," suspended." Q
+"RTN","PSDOPT0",21,0)
+ .S RXNUM("RF",JJ)=+^PSRX(PSDRX,1,JJ,0)_U_$P(^(0),U,4),$P(PSDSEL("RF",JJ),"^",1)=$P(RXNUM("RF",JJ),"^",1),$P(PSDSEL("RF",JJ),"^",2)=$P(RXNUM("RF",JJ),"^",2),$P(PSDSEL("RF",JJ),"^",3)=$P($G(PSDRX("RF",JJ)),"^",3) K PSDLBLP
+"RTN","PSDOPT0",22,0)
+ ;
+"RTN","PSDOPT0",23,0)
+ ;check for unposted partials not returned to stock or suspended
+"RTN","PSDOPT0",24,0)
+ ;
+"RTN","PSDOPT0",25,0)
+ S PRF=0 F JJ=0:0 S JJ=$O(^PSRX(PSDRX,"P",JJ)) Q:'JJ  I $D(^PSRX(PSDRX,"P",JJ,0)),'$P(^(0),U,16),$P($G(^(0)),U)'<PSDOIN D
+"RTN","PSDOPT0",26,0)
+ .;check for suspense
+"RTN","PSDOPT0",27,0)
+ .S PSDRXFD=$E($P(^PSRX(PSDRX,"P",JJ,0),U),1,7)
+"RTN","PSDOPT0",28,0)
+ .S PSDSUPN=$O(^PS(52.5,"B",PSDRX,0))
+"RTN","PSDOPT0",29,0)
+ .I PSDSUPN,$D(^PS(52.5,"C",PSDRXFD,PSDSUPN)),$G(^PS(52.5,PSDSUPN,"P"))'=1,($G(JJ)=$P(^PS(52.5,PSDSUPN,0),U,5)) W !!,"Partial #",JJ," suspended." Q
+"RTN","PSDOPT0",30,0)
+ .S RXNUM("PR",JJ)=+^PSRX(PSDRX,"P",JJ,0)_U_$P(^(0),U,4),$P(PSDSEL("PR",JJ),"^",1)=$P(RXNUM("PR",JJ),"^",1),$P(PSDSEL("PR",JJ),"^",2)=$P(RXNUM("PR",JJ),"^",2) K PSDLBL
+"RTN","PSDOPT0",31,0)
+ ;
+"RTN","PSDOPT0",32,0)
+ ;original returned to stock
+"RTN","PSDOPT0",33,0)
+ ;
+"RTN","PSDOPT0",34,0)
+ S:$P($G(^PSRX(+PSDRX,2)),U,15) PSDRX(1)=""
+"RTN","PSDOPT0",35,0)
+ ;Check for suspense
+"RTN","PSDOPT0",36,0)
+ I +$P($G(^PSRX(PSDRX,2)),U,2)'<PSDOIN S PSDRXFD=$P(^(2),U,2) D
+"RTN","PSDOPT0",37,0)
+ .S PSDSUPN=$O(^PS(52.5,"B",PSDRX,0))
+"RTN","PSDOPT0",38,0)
+ .I PSDSUPN,$D(^PS(52.5,"C",PSDRXFD,PSDSUPN)),$G(^PS(52.5,PSDSUPN,"P"))'=1 W !!,"Original suspended." S PSDRX(1)="" Q
+"RTN","PSDOPT0",39,0)
+PSDDAVE ;PSD*3*30 (Major overhaul, Dave B)
+"RTN","PSDOPT0",40,0)
+ ;PSDSEL("RF",#)=refill Date ^ QTY ^ posted (y/n) ^ released date
+"RTN","PSDOPT0",41,0)
+ ;PSDSEL("PR"  ''
+"RTN","PSDOPT0",42,0)
+ ;PSDSEL("OR"  same thing
+"RTN","PSDOPT0",43,0)
+ ;
+"RTN","PSDOPT0",44,0)
+ I '$D(PSDRX(1)) S $P(PSDSEL("OR"),"^",2)=$P(^PSRX(+PSDRX,0),"^",7) ;Quantity
+"RTN","PSDOPT0",45,0)
+ S $P(PSDSEL("OR"),"^",3)=$P($G(PSDRX("OR",0)),"^",3) ;Posted
+"RTN","PSDOPT0",46,0)
+ I $P($G(^PSRX(+PSDRX,2)),"^",13)'="" S Y=$P(^PSRX(+PSDRX,2),"^",13) X ^DD("DD") S $P(PSDSEL("OR"),"^",4)=Y ;released date
+"RTN","PSDOPT0",47,0)
+ I $D(PSDSEL("OR")),$P(PSDSEL("OR"),"^",3)'="",$P(PSDSEL("OR"),"^",4)'="" K PSDSEL("OR"),RXNUM("OR")
+"RTN","PSDOPT0",48,0)
+ S (PSDRF1,PSDPR1)=0
+"RTN","PSDOPT0",49,0)
+RFLCHK ;
+"RTN","PSDOPT0",50,0)
+ S PSDRF1=$O(PSDSEL("RF",PSDRF1)) G PRTLCHK:PSDRF1'>0 S DATA=PSDSEL("RF",PSDRF1)
+"RTN","PSDOPT0",51,0)
+ I $P($G(^PSRX(+PSDRX,1,PSDRF1,0)),"^",18)'="" S Y=$P(^(0),"^",18) X ^DD("DD") S $P(PSDSEL("RF",PSDRF1),"^",4)=Y ;Already released
+"RTN","PSDOPT0",52,0)
+ I $P(PSDSEL("RF",PSDRF1),"^",3)>0,$P(PSDSEL("RF",PSDRF1),"^",4)'="" K PSDSEL("RF",PSDRF1),RXNUM("RF",PSDRF1)
+"RTN","PSDOPT0",53,0)
+ G RFLCHK
+"RTN","PSDOPT0",54,0)
+ ;
+"RTN","PSDOPT0",55,0)
+PRTLCHK S PSDPR1=$O(PSDSEL("PR",PSDPR1)) G CHKALL:PSDPR1'>0
+"RTN","PSDOPT0",56,0)
+ ; 08/02/2004 PSD*3*45 Added next line
+"RTN","PSDOPT0",57,0)
+ I $D(PSDRX("PR",PSDPR1)) S $P(PSDSEL("PR",PSDPR1),"^",3)=1 ;Posted 
+"RTN","PSDOPT0",58,0)
+ I $P($G(^PSRX(+PSDRX,"P",PSDPR1,0)),"^",19)'="" S Y=$P(^(0),"^",19) X ^DD("DD") S $P(PSDSEL("PR",PSDPR1),"^",4)=Y
+"RTN","PSDOPT0",59,0)
+ I $P(PSDSEL("PR",PSDPR1),"^",3)>0,$P(PSDSEL("PR",PSDPR1),"^",4)'="" K PSDSEL("PR",PSDPR1),RXNUM("PR",PSDPR1)
+"RTN","PSDOPT0",60,0)
+ G PRTLCHK
+"RTN","PSDOPT0",61,0)
+ ;
+"RTN","PSDOPT0",62,0)
+CHKALL ;Check to see if any left to post or release
+"RTN","PSDOPT0",63,0)
+ I $G(PSDERR)=1 G ASKP^PSDOPT
+"RTN","PSDOPT0",64,0)
+ I $O(PSDSEL(0))="" W !!,"ALL FILLS FOR THIS PRESCRIPTION HAVE BEEN POSTED AND RELEASED." G ASKP^PSDOPT
+"RTN","PSDOPT0",65,0)
+ ;
+"RTN","PSDOPT0",66,0)
+ ;Check for DIR call
+"RTN","PSDOPT0",67,0)
+ S CNT=0 K DIR
+"RTN","PSDOPT0",68,0)
+ G CHK^PSDOPT
+"RTN","PSDOPT0",69,0)
+ ;
+"RTN","PSDOPT0",70,0)
+PSDRTS(PSDRX,PSDNUM,PSDSITE,PSDQTY) ; API for Outpatient Pharmacy; Patch PSD*3*30
+"RTN","PSDOPT0",71,0)
+ ; This subroutine is called each time an Rx is returned to stock
+"RTN","PSDOPT0",72,0)
+ ; in Outpatient Pharmacy. The code does the following:
+"RTN","PSDOPT0",73,0)
+ ; 1.Check Rx, quit if not a controlled substance.
+"RTN","PSDOPT0",74,0)
+ ; 2.Give the user the option to update the transaction and
+"RTN","PSDOPT0",75,0)
+ ;   balance details
+"RTN","PSDOPT0",76,0)
+ ;PSDCS = 1 is controlled subs/0 for not CS
+"RTN","PSDOPT0",77,0)
+ ;PSDRS = 1 they have key, ok to return to stock, 0 - no key
+"RTN","PSDOPT0",78,0)
+ ;Variables:
+"RTN","PSDOPT0",79,0)
+ ;PSDRX   = Prescription Number IEN
+"RTN","PSDOPT0",80,0)
+ ;PSDNUM  = O^0 = The letter O for original fill and the number0
+"RTN","PSDOPT0",81,0)
+ ;          R^# = The letter R for refill and # equal to refill #
+"RTN","PSDOPT0",82,0)
+ ;          P^# = The letter P for partial and # equal to partial #
+"RTN","PSDOPT0",83,0)
+ ;PSDSITE = Division
+"RTN","PSDOPT0",84,0)
+ ;PSDQTY  = Quantity being returned to stock
+"RTN","PSDOPT0",85,0)
+ ;
+"RTN","PSDOPT0",86,0)
+ ;PSD*3*30 Check for PSDMGR key
+"RTN","PSDOPT0",87,0)
+ S PSDRS=0 I $D(^XUSEC("PSDMGR",DUZ)) S PSDRS=1 ;possess key
+"RTN","PSDOPT0",88,0)
+1 ;begin process
+"RTN","PSDOPT0",89,0)
+ I $D(^PSD(58.81,"AOP",PSDRX)) D RTSCHK G RETERR:$G(PSDERR)>0
+"RTN","PSDOPT0",90,0)
+ S PSDOUT=0,RXNUM=$P($G(^PSRX(+PSDRX,0)),"^") ;Prescription Number
+"RTN","PSDOPT0",91,0)
+ S (RPDT,DAT)=$P($G(^PSRX(+PSDRX,2)),"^",2)
+"RTN","PSDOPT0",92,0)
+ S DFN=+$P($G(^PSRX(+PSDRX,0)),"^",2)
+"RTN","PSDOPT0",93,0)
+ S PSDS=$S($G(PSDSITE)["^":$P(PSDSITE,"^",3),1:PSDSITE)
+"RTN","PSDOPT0",94,0)
+ S PSDR=$P($G(^PSRX(+PSDRX,0)),"^",6) I $G(PSDR)'="" S PSDRN=$P($G(^PSDRUG(PSDR,0)),"^")
+"RTN","PSDOPT0",95,0)
+ ;Setup like balance adjustment
+"RTN","PSDOPT0",96,0)
+ S PSDRN=$S($G(PSDRN)="":"Unknown Drug "_PSDR,1:PSDRN)
+"RTN","PSDOPT0",97,0)
+ I $P($G(^PSDRUG(PSDR,2)),"^",3)'["N" S PSDCS=0 Q
+"RTN","PSDOPT0",98,0)
+ S PSDCS=1
+"RTN","PSDOPT0",99,0)
+ I $G(PSDRS)'>0 W !,"Sorry you do not possess the PSDMGR key" G RETERR
+"RTN","PSDOPT0",100,0)
+ ;
+"RTN","PSDOPT0",101,0)
+POSTED ;check to see if posted
+"RTN","PSDOPT0",102,0)
+ S (JJ,PSDPOST)=0
+"RTN","PSDOPT0",103,0)
+ F  S JJ=$O(^PSD(58.81,"AOP",+PSDRX,JJ)) Q:'JJ  I $D(^PSD(58.81,JJ,6)) D
+"RTN","PSDOPT0",104,0)
+ .S NODE6=$G(^PSD(58.81,JJ,6))
+"RTN","PSDOPT0",105,0)
+ .I $P(PSDNUM,"^",1)="R",$P(NODE6,"^",2)'="",$P(NODE6,"^",2)=$P(PSDNUM,"^",2) S PSDPOST=1 Q
+"RTN","PSDOPT0",106,0)
+ .I $P(PSDNUM,"^",1)="P",$P(NODE6,"^",4)'="",$P(NODE6,"^",4)=$P(PSDNUM,"^",2) S PSDPOST=1 Q
+"RTN","PSDOPT0",107,0)
+ .I $P(PSDNUM,"^",1)="O",$P(NODE6,"^",4)="",$P(NODE6,"^",2)="" S PSDPOST=1 Q
+"RTN","PSDOPT0",108,0)
+ ;
+"RTN","PSDOPT0",109,0)
+ ;now check to see if CMOP
+"RTN","PSDOPT0",110,0)
+ S X1=0 F  S X1=$O(^PSRX(+PSDRX,4,X1)) Q:X1=""  S DATA=$G(^PSRX(+PSDRX,4,X1,0)) D
+"RTN","PSDOPT0",111,0)
+ .I $P(PSDNUM,"^",1)="R",$P(DATA,"^",3)=$P(PSDNUM,"^",2) S PSDPOST=1 Q
+"RTN","PSDOPT0",112,0)
+ .I $P(PSDNUM,"^",1)="P",$P(DATA,"^",3)=$P(PSDNUM,"^",2) S PSDPOST=1 Q
+"RTN","PSDOPT0",113,0)
+ .I $P(PSDNUM,"^",1)="O",$P(DATA,"^",3)=$P(PSDNUM,"^",2) S PSDPOST=1 Q
+"RTN","PSDOPT0",114,0)
+ I $G(PSDPOST)'=1 W !!,"Could not find any posting information in the Controlled Substance package,",!,"balance cannot be updated",!
+"RTN","PSDOPT0",115,0)
+ ;
+"RTN","PSDOPT0",116,0)
+ESIG K X D SIG^XUSESIG I X["^" W !,"No signature code entered, RX not returned to stock." S RETSK=1 Q
+"RTN","PSDOPT0",117,0)
+ I X1="" W !,"An Electronic Signature Code is required to return a Controlled Substance RX to stock.",! G ESIG
+"RTN","PSDOPT0",118,0)
+ASK S DIR(0)="Y",DIR("A")="Do you want "_$G(PSDQTY)_" added to balance in the Narcotic vault",DIR("B")="Yes",DIR("?")="Answer Yes and the amount being returned to stock will be placed in inventory" D ^DIR K DIR I $D(DIRUT) S RETSK=1 G RETERR
+"RTN","PSDOPT0",119,0)
+ I Y=0 S PSDRET=0 D  G RETERR
+"RTN","PSDOPT0",120,0)
+ .I '$D(PSDEL) S PSDMSG="RX RETURNED 0 TO STOCK("_PSDQTY_" TO BE DESTROYED)"
+"RTN","PSDOPT0",121,0)
+ .D NOW^%DTC S PSDS=$$PSDS(PSDRX,PSDNUM),PSDT=+%,PSDQTY=0
+"RTN","PSDOPT0",122,0)
+ .I PSDS,$D(^PSD(58.8,+PSDS,1,PSDR,0)) S BAL=+$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",4) D FND1 Q
+"RTN","PSDOPT0",123,0)
+ .W !,"Nothing updated" G RETERR
+"RTN","PSDOPT0",124,0)
+ S:Y'=0 PSDMSG="RX RETURNED TO STOCK"
+"RTN","PSDOPT0",125,0)
+LOCATION S DIC(0)="QEA",DIC="^PSD(58.8,",DIC("A")="Return Drug to which vault: "
+"RTN","PSDOPT0",126,0)
+ S DIC("S")="I ""MSN""[$P($G(^PSD(58.8,Y,0)),U,2)" D ^DIC K DIC
+"RTN","PSDOPT0",127,0)
+ I $D(DTOUT)!($D(DUOUT)) W !,"No selection made, no balance adjusted." W !!?5,"Prescription Not Returned to Stock!",$C(7),! S RETSK=1 G RETERR
+"RTN","PSDOPT0",128,0)
+ I X="" W !,"The Vault is required. Please, select a valid Vault or '^' to exit.",$C(7),! G LOCATION
+"RTN","PSDOPT0",129,0)
+ I "MSN"'[$P($G(^PSD(58.8,+Y,0)),"^",2) W !,"Sorry, the location type must be a Master Vault, satellite or narcotic location." K Y G LOCATION
+"RTN","PSDOPT0",130,0)
+ S PSDS=+Y I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) W !,"Sorry, the drug is not stocked in this vault." K PSDS G LOCATION
+"RTN","PSDOPT0",131,0)
+ S PSDBAL=$P($G(^PSD(58.8,+PSDS,1,PSDR,0)),"^",4) W !,"Previous Balance: ",$G(PSDBAL)_"    New Balance: "_($G(PSDBAL)+PSDQTY)
+"RTN","PSDOPT0",132,0)
+ ;
+"RTN","PSDOPT0",133,0)
+ W !,"Updating balances"
+"RTN","PSDOPT0",134,0)
+ F  L +^PSD(58.8,+PSDS,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDOPT0",135,0)
+ D NOW^%DTC S PSDT=+%,BAL=+$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",4)
+"RTN","PSDOPT0",136,0)
+ S $P(^PSD(58.8,+PSDS,1,PSDR,0),"^",4)=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",4)+PSDQTY
+"RTN","PSDOPT0",137,0)
+ L -^PSD(58.8,+PSDS,1,PSDR,0) W "."
+"RTN","PSDOPT0",138,0)
+ ;
+"RTN","PSDOPT0",139,0)
+FND1 F  L +^PSD(58.81,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDOPT0",140,0)
+FIND1 S PSDA=$P(^PSD(58.81,0),"^",3)+1 I $D(^PSD(58.81,PSDA)) S $P(^PSD(58.81,0),"^",3)=PSDA G FIND1
+"RTN","PSDOPT0",141,0)
+ K DA,DIC,DLAYGO S (DIC,DLAYGO)=58.81,DIC(0)="L",(X,DINUM)=PSDA D ^DIC K DIC,DLAYGO
+"RTN","PSDOPT0",142,0)
+ L -^PSD(58.81,0)
+"RTN","PSDOPT0",143,0)
+ S PSDNUM1=$P($G(PSDNUM),"^",2)
+"RTN","PSDOPT0",144,0)
+ S ^PSD(58.81,PSDA,0)=PSDA_"^3^"_+PSDS_"^"_PSDT_"^"_PSDR_"^"_PSDQTY_"^"_DUZ_"^^^"_BAL
+"RTN","PSDOPT0",145,0)
+ S ^PSD(58.81,PSDA,3)=PSDT_"^"_PSDQTY_"^"_$G(PSDMSG)
+"RTN","PSDOPT0",146,0)
+ S ^PSD(58.81,PSDA,"CS")=1
+"RTN","PSDOPT0",147,0)
+ S ^PSD(58.81,PSDA,6)=PSDRX_"^"_$S($P(PSDNUM,"^")="R":PSDNUM1,1:"")_"^"_DAT_"^"_$S($P(PSDNUM,"^")="P":PSDNUM1,1:"")_"^"_RXNUM
+"RTN","PSDOPT0",148,0)
+ S DIK="^PSD(58.81,",DA=PSDA D IX^DIK K DA,DIC,DIK
+"RTN","PSDOPT0",149,0)
+DIE I '$D(^PSD(58.8,+PSDS,1,PSDR,4,0)) S ^(0)="^58.800119PA^^"
+"RTN","PSDOPT0",150,0)
+ K DA,DIC,DD,DO S DA(1)=PSDR,DA(2)=+PSDS,(X,DINUM)=PSDA,DIC(0)="L",DIC="^PSD(58.8,"_+PSDS_",1,"_PSDR_",4," D FILE^DICN K DIC,DINUM
+"RTN","PSDOPT0",151,0)
+ ;monthly activity
+"RTN","PSDOPT0",152,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,5,0)) S ^(0)="^58.801A^^"
+"RTN","PSDOPT0",153,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,5,$E(DT,1,5)*100,0)) K DA,DIC S DIC="^PSD(58.8,"_+PSDS_",1,"_PSDR_",5,",DIC(0)="LM",DLAYGO=58.8,(X,DINUM)=$E(DT,1,5)*100,DA(2)=+PSDS,DA(1)=PSDR D ^DIC K DA,DIC,DINUM,DLAYGO
+"RTN","PSDOPT0",154,0)
+ K DA,DIE,DR S DIE="^PSD(58.8,"_+PSDS_",1,"_PSDR_",5,",DA(2)=+PSDS,DA(1)=PSDR,DA=$E(DT,1,5)*100,DR="9////^S X=$P($G(^(0)),""^"",6)+PSDQTY" D ^DIE K DA,DIE,DR,PSDRET
+"RTN","PSDOPT0",155,0)
+RETERR Q
+"RTN","PSDOPT0",156,0)
+RTSCHK ;Check to see if already returned to stock.
+"RTN","PSDOPT0",157,0)
+ D RTSMUL
+"RTN","PSDOPT0",158,0)
+ S PSD1=0
+"RTN","PSDOPT0",159,0)
+ S:$D(PSDXXX) PSD1=PSDXXX-.1
+"RTN","PSDOPT0",160,0)
+ K PSD1MUL,PSDMUL,PSDXXX
+"RTN","PSDOPT0",161,0)
+ S PSDERR=0
+"RTN","PSDOPT0",162,0)
+ F  S PSD1=$O(^PSD(58.81,"AOP",PSDRX,PSD1)) Q:PSD1'>0  S DATA=$G(^PSD(58.81,PSD1,0)),DATA6=$G(^PSD(58.81,PSD1,6)) D
+"RTN","PSDOPT0",163,0)
+ .S PSDFLL=$P(PSDNUM,"^",2)
+"RTN","PSDOPT0",164,0)
+ .I PSDFLL>0,$D(^PSD(58.81,PSD1,6)),$P(^PSD(58.81,PSD1,6),"^",2)=PSDFLL,$D(^PSD(58.81,PSD1,3)) D ERRMSG
+"RTN","PSDOPT0",165,0)
+ .I $D(^PSD(58.81,PSD1,3)),PSDFLL=0,'$D(^PSD(58.81,PSD1,6)) D ERRMSG
+"RTN","PSDOPT0",166,0)
+ Q
+"RTN","PSDOPT0",167,0)
+ERRMSG S Y=$P(^PSD(58.81,PSD1,3),"^") X ^DD("DD") S PSDRTS(1)=Y,PSDUSER=$P(^PSD(58.81,PSD1,0),"^",7),PSDUSER=$P(^VA(200,PSDUSER,0),"^")
+"RTN","PSDOPT0",168,0)
+ W !!?8,"According to the Controlled Substances package, this fill/refill",!?8,"was returned to stock on "_PSDRTS(1)_" by "_$G(PSDUSER)_".",!?16,"Nothing updated in the Controlled Substances package."
+"RTN","PSDOPT0",169,0)
+ S PSDERR=1 Q
+"RTN","PSDOPT0",170,0)
+RTSMUL D RTSMUL^PSDOPT1
+"RTN","PSDOPT0",171,0)
+ Q
+"RTN","PSDOPT0",172,0)
+PSDS(RXIEN,FLNUM) ; Returns the Vault where the fill was last dispensed from or 0 (none)
+"RTN","PSDOPT0",173,0)
+ ;RXIEN = Prescription Number IEN
+"RTN","PSDOPT0",174,0)
+ ;FLNUM = Fill Number:
+"RTN","PSDOPT0",175,0)
+ ;         O^0 = The letter O for original fill and the number 0
+"RTN","PSDOPT0",176,0)
+ ;         R^# = The letter R for refill and # equal to refill #
+"RTN","PSDOPT0",177,0)
+ ;         P^# = The letter P for partial and # equal to partial #
+"RTN","PSDOPT0",178,0)
+ ;
+"RTN","PSDOPT0",179,0)
+ N PSDS,TRX,NODE0,NODE6 S PSDS=0
+"RTN","PSDOPT0",180,0)
+ S TRX=99999999 F  S TRX=$O(^PSD(58.81,"AOP",RXIEN,TRX),-1) Q:'TRX  D  I PSDS Q
+"RTN","PSDOPT0",181,0)
+ . I $$GET1^DIQ(58.81,TRX,1)="RETURNED TO STOCK" Q   ; Not an Outpatient Pharmacy Transaction
+"RTN","PSDOPT0",182,0)
+ . I $$GET1^DIQ(58.81,TRX,34,"I") Q   ; Returned To Stock Transaction
+"RTN","PSDOPT0",183,0)
+ . S NODE0=$G(^PSD(58.81,TRX,0)),NODE6=$G(^PSD(58.81,TRX,6))
+"RTN","PSDOPT0",184,0)
+ . I $P(FLNUM,"^")="O",'$P(NODE6,"^",2) S PSDS=+$P(NODE0,"^",3) Q
+"RTN","PSDOPT0",185,0)
+ . I $P(FLNUM,"^")="R",$P(NODE6,"^",2)=$P(FLNUM,"^",2) S PSDS=$P(NODE0,"^",3) Q
+"RTN","PSDOPT0",186,0)
+ . I $P(FLNUM,"^")="P",$P(NODE6,"^",4)=$P(FLNUM,"^",2) S PSDS=$P(NODE0,"^",3) Q
+"RTN","PSDOPT0",187,0)
+ Q PSDS
+"RTN","PSDOPT2")
+0^17^B20661695^B21217886
+"RTN","PSDOPT2",1,0)
+PSDOPT2 ;BIR/JPW,LTL - Outpatient Rx Entry (cont. from PSDOPT) ;9 Jan 95
+"RTN","PSDOPT2",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**30,39,48,79**;13 Feb 97;Build 20
+"RTN","PSDOPT2",3,0)
+ ;References to ^PSD(58.8 are covered by DBIA #2711
+"RTN","PSDOPT2",4,0)
+ ;References to file 58.81 are covered by DBIA #2808
+"RTN","PSDOPT2",5,0)
+ ;Reference to PSRX( supported by DBIA #986
+"RTN","PSDOPT2",6,0)
+ ;
+"RTN","PSDOPT2",7,0)
+ ;lists posted cs rxs
+"RTN","PSDOPT2",8,0)
+ S (PSDJJ,PSDRET,X)=0 F  S X=$O(^PSD(58.81,"AOP",PSDRX,X)) Q:X'>0  I $D(^PSD(58.81,X,3)),$P(^PSD(58.81,X,3),"^")'="" S PSDRET=1
+"RTN","PSDOPT2",9,0)
+ W !,!!,"Previously posted transactions for Rx #",RXNUM
+"RTN","PSDOPT2",10,0)
+ I $G(PSDRET)=1 W !,"(RTS) - denotes a Returned to Stock Transaction." S PSDRET=0
+"RTN","PSDOPT2",11,0)
+ W !!,"Date Posted:",?22,"Pharmacist:",?54,"Type:",?70,"Quantity:"
+"RTN","PSDOPT2",12,0)
+TRANS S PSDJJ=$O(^PSD(58.81,"AOP",PSDRX,PSDJJ)) G Q:'PSDJJ I '$D(^PSD(58.81,PSDJJ,0)) G TRANS
+"RTN","PSDOPT2",13,0)
+ S NODE=^PSD(58.81,PSDJJ,0),NODE6=^PSD(58.81,PSDJJ,6),NODE3=$G(^PSD(58.81,PSDJJ,3))
+"RTN","PSDOPT2",14,0)
+ S PHARM=+$P(NODE,"^",7),PHARMN="" I PHARM S PHARMN=$P($G(^VA(200,PHARM,0)),"^")
+"RTN","PSDOPT2",15,0)
+ S PSDATE=+$P(NODE,"^",4) I PSDATE S Y=PSDATE X ^DD("DD") S PSDATE=Y
+"RTN","PSDOPT2",16,0)
+ S VAULT=+$P(NODE,"^",3),VAULT=$P($G(^PSD(58.8,VAULT,0)),"^")
+"RTN","PSDOPT2",17,0)
+ W:VAULT'=PSDSN !,"Dispensing Site:  ",VAULT
+"RTN","PSDOPT2",18,0)
+ W !,PSDATE,?22,PHARMN,?54,$S($P(NODE6,U,2):"Refill #"_$P(NODE6,U,2),$P(NODE6,U,4):"Partial #"_$P(NODE6,U,4),1:"Original")
+"RTN","PSDOPT2",19,0)
+RTS ;PSD*3*39 (6JUL02) - Check for returned to stock
+"RTN","PSDOPT2",20,0)
+ S (PSDDATE3,PSDDATE4)=0
+"RTN","PSDOPT2",21,0)
+ S PSDTYPE=$S($P($G(NODE6),"^",2)'="":"RF",$P($G(NODE6),"^",4)'="":"PR",1:"OR")
+"RTN","PSDOPT2",22,0)
+ S PSDTYPE(1)=$S(PSDTYPE="RF":"Refill",PSDTYPE="PR":"Partial",1:"Original")
+"RTN","PSDOPT2",23,0)
+ S PSDRETN=$S(PSDTYPE="RF":$P(NODE6,"^",2),PSDTYPE="PR":$P(NODE6,"^",4),1:0) ;fill #
+"RTN","PSDOPT2",24,0)
+ S PSDDATE3=$P($G(NODE3),"^") S:$G(PSDDATE3)'="" PSDRET(PSDTYPE,PSDRETN)=PSDDATE3,Y=PSDDATE3 X ^DD("DD") S PSDDATE3(1)=Y
+"RTN","PSDOPT2",25,0)
+ I $G(NODE3)'="" W " (RTS)"
+"RTN","PSDOPT2",26,0)
+ I $G(PSDDATE3)="" G QTY
+"RTN","PSDOPT2",27,0)
+ I $G(PSDTYPE)="OR",$P($G(^PSRX(PSDRX,2)),"^",15)="" K PSDRET("OR",PSDRETN) G QTY
+"RTN","PSDOPT2",28,0)
+ I $G(PSDTYPE)="RF",$D(^PSRX(PSDRX,1,PSDRETN,0)) S PSDDATE4=$P(^PSRX(PSDRX,1,PSDRETN,0),"^") I PSDDATE4>PSDDATE3 K PSDRET("RF",PSDRETN) G QTY
+"RTN","PSDOPT2",29,0)
+ I $G(PSDTYPE)="PR",$D(^PSRX(PSDRX,"P",PSDRETN,0)) S PSDDATE4=$P(^PSRX(PSDRX,"P",PSDRETN,0),"^") I PSDDATE4>PSDDATE3 K PSDRET("PR",PSDRETN) G QTY
+"RTN","PSDOPT2",30,0)
+QTY W ?70,$J($P(NODE,U,6),6)
+"RTN","PSDOPT2",31,0)
+ I $P($G(PSDDATE3),".")=$G(PSDDATE4) S PSDRTSE(PSDTYPE,PSDRETN)=""
+"RTN","PSDOPT2",32,0)
+ ;
+"RTN","PSDOPT2",33,0)
+ ;
+"RTN","PSDOPT2",34,0)
+POST ;Check to see if fill has been released/posted
+"RTN","PSDOPT2",35,0)
+ S PSDRX(PSDTYPE,PSDRETN)="^"_$P($G(NODE),"^",6)_"^1"
+"RTN","PSDOPT2",36,0)
+ I $G(NODE3),'$$RXRLDT^PSOBPSUT(PSDRX,PSDRETN) S $P(PSDRX(PSDTYPE,PSDRETN),"^",3)=""
+"RTN","PSDOPT2",37,0)
+ G TRANS
+"RTN","PSDOPT2",38,0)
+Q W ! K DIR,DIRUT S DIR(0)="EA",DIR("A")="Press <RET> to continue " D ^DIR I 'Y S PSDOUT=1
+"RTN","PSDOPT2",39,0)
+ Q
+"RTN","PSDOPT2",40,0)
+PSDRTS ;PSD*3.0*39 ; The next 10 lines are original code commented out for patch PSD*3*45  (this subroutine was duplicated then modified for testing)
+"RTN","PSDOPT2",41,0)
+ ;Fill data matches RTS date
+"RTN","PSDOPT2",42,0)
+ W !,?10,PSDTYPE(1)_$S($G(PSDTYPE)="OR":"",1:(" #"_PSDRETN))_" was returned to stock on "_$G(PSDDATE3(1)),!?10,"The prescription shows it re-issued on"_$G(PSDDATE4(1))
+"RTN","PSDOPT2",43,0)
+ASK W !!,"Was the fill re-issued AFTER being returned to stock? YES// " R AN:DTIME G Q:AN["^" S:AN="" AN="Y" S AN=$E(AN)
+"RTN","PSDOPT2",44,0)
+ I "YyNn"'[AN D  G ASK
+"RTN","PSDOPT2",45,0)
+ .W !!,"The issue date of the fill is the same day as the return to stock date.",!,"The program believes the fill has been re-issued since being returned to stock."
+"RTN","PSDOPT2",46,0)
+ .W !,"Please confirm this.",!
+"RTN","PSDOPT2",47,0)
+ I "nN"[AN W !,$G(PSDTYPE(1))_" will remain marked as returned to stock and unavailable.",! G TRANS
+"RTN","PSDOPT2",48,0)
+ W !,"ok, we'll bypass the returned to stock transaction." K PSDRET(PSDTYPE,PSDRETN) G TRANS
+"RTN","PSDOPT2",49,0)
+ Q
+"RTN","PSDOPT2",50,0)
+RTSDTC ;; PSD*3*48  ADDED LOGIC FOR WHEN AN RTS IS REISSUED ON THE SAMEDAY.
+"RTN","PSDOPT2",51,0)
+ N AN
+"RTN","PSDOPT2",52,0)
+ I (PSDRET("RF",X1)\1)'=DT D CLLDIR2^PSDOPT Q
+"RTN","PSDOPT2",53,0)
+ W !,?10,PSDTYPE(1)_$S($G(PSDTYPE)="OR":"",1:(" #"_PSDRETN))_" was returned to stock on "_$G(PSDDATE3(1)),!?10,"The prescription shows it re-issued today"
+"RTN","PSDOPT2",54,0)
+ W !!,"Was the fill re-issued AFTER being returned to stock? YES// "
+"RTN","PSDOPT2",55,0)
+ R AN:DTIME Q:AN["^"
+"RTN","PSDOPT2",56,0)
+ S:AN="" AN="Y" S AN=$E(AN)
+"RTN","PSDOPT2",57,0)
+ I AN="Y"!(AN="y") D CLLDIR2^PSDOPT
+"RTN","PSDOPT2",58,0)
+ Q
+"RTN","PSDOPT2",59,0)
+PSDKLL ;
+"RTN","PSDOPT2",60,0)
+ K PSD,PSDA,PSDATE,PSDBAL,PSDCS,PSDDATE3,PSDDATE4,PSDERR,PSDFILL,PSDFLNO,PSDHOLDX,PSDJJ,PSDLBL,PSDLBLP,PSDNEXT,PSDNUM
+"RTN","PSDOPT2",61,0)
+ K PSDNUM1,PSDOIN,PSDOUT,PSDPOST,PSDPR1,PSDQTY,PSDR,PSDREL,PSDRET,PSDRETN
+"RTN","PSDOPT2",62,0)
+ K PSDRF1,PSDRN,PSDRPH,PSDRS,PSDRTS,PSDRTSE,PSDRX,PSDRXFD
+"RTN","PSDOPT2",63,0)
+ K PSDRXIN,PSDS,PSDSEL,PSDSITE,PSDSN,PSDSTA,PSDSUPN,PSDT,PSDTYPE,PSDUZ
+"RTN","PSDOPT2",64,0)
+ K PSDXXX,PSOCSUB,PSOVR
+"RTN","PSDOPT2",65,0)
+ K QTY,RETSK,RF,RPDT,RX0,RX2,RXNUM
+"RTN","PSDOPT2",66,0)
+ Q
+"RTN","PSDOR2")
+0^5^B11972172^B11468238
+"RTN","PSDOR2",1,0)
+PSDOR2 ;BIR/LTL - Reg 2 Nurse CS Order Request Entry ;12/14/99  12:44
+"RTN","PSDOR2",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**20,79**;13 Feb 97;Build 20
+"RTN","PSDOR2",3,0)
+ ;
+"RTN","PSDOR2",4,0)
+ ; Reference to PSD(58.8 supported by DBIA # 2711
+"RTN","PSDOR2",5,0)
+ ; Reference to DD("DD" supported by DBIA # 10017
+"RTN","PSDOR2",6,0)
+ ;
+"RTN","PSDOR2",7,0)
+QTY K ORD S (CNT,PSDOUT,PSDR(2))=0
+"RTN","PSDOR2",8,0)
+ S DIR(0)="DA^NOW::AEFT",DIR("A")="Date/time required: "
+"RTN","PSDOR2",9,0)
+ S DIR("?",1)="You are on the verge of creating a priority order."
+"RTN","PSDOR2",10,0)
+ S DIR("?",2)="If this is a mistake, enter ""^"" to create a scheduled order, otherwise,"
+"RTN","PSDOR2",11,0)
+ S DIR("?")="Pharmacy needs to know how soon you need this order."
+"RTN","PSDOR2",12,0)
+ W ! D ^DIR K DIR G:$D(DIRUT) END X ^DD("DD") S PSDT(9)=Y
+"RTN","PSDOR2",13,0)
+ ;Dispensing Site's Maximum Quantity per Order
+"RTN","PSDOR2",14,0)
+ S PSDR(1)=$P($G(^PSD(58.8,+PSDS,1,+PSDR,0)),U,7)
+"RTN","PSDOR2",15,0)
+ ;Ask Quantity
+"RTN","PSDOR2",16,0)
+ S DIR(0)="NA^1:"_$S(PSDR(1):PSDR(1),1:999999)_":0"
+"RTN","PSDOR2",17,0)
+ S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_"): ",DIR("B")=NPKG
+"RTN","PSDOR2",18,0)
+ W:$P($G(^PSD(58.8,+NAOU,1,+PSDR,0)),U,3) !,"Stock Level:  ",$P($G(^(0)),U,3)," ",NBKU,!
+"RTN","PSDOR2",19,0)
+ S:PSDR(1) DIR("A",1)="Maximum quantity per order:  "_PSDR(1)_" "_NBKU,DIR("A",2)=""
+"RTN","PSDOR2",20,0)
+ S DIR("?",1)="Because "_NAOUN_" is keeping a perpetual inventory,"
+"RTN","PSDOR2",21,0)
+ S DIR("?",2)="Pharmacy Service has set "_$S(PSDR(1):"a maximum quantity of "_PSDR(1)_" "_NBKU_" per order",1:"no maximum order quantity")
+"RTN","PSDOR2",22,0)
+ S DIR("?")="for "_PSDRN_"."
+"RTN","PSDOR2",23,0)
+ D ^DIR K DIR G:Y<1 END S PSDQTY=Y
+"RTN","PSDOR2",24,0)
+ ;Quantity ordered is equal to or less than max ord qty
+"RTN","PSDOR2",25,0)
+NOMAX I '(Y#NPKG)&('PSDR(1)!(Y'>PSDR(1))) D DIE,ASK^PSDORN1 G:PSDOUT END K PSDEM G DRUG^PSDORN
+"RTN","PSDOR2",26,0)
+ ;Quantity ordered is not divisible by package size
+"RTN","PSDOR2",27,0)
+ D:(Y#NPKG)  G:$D(DIRUT) END G:Y<1 QTY I 'PSDR(1)!(Y>PSDR(1)) S Y=PSDQTY G QTY
+"RTN","PSDOR2",28,0)
+ .S PSDQTY=Y-(Y#NPKG)
+"RTN","PSDOR2",29,0)
+ .S DIR(0)="S^"_PSDQTY_":"_NBKU_";"_(PSDQTY+NPKG)_":"_NBKU_";*:New Quantity"
+"RTN","PSDOR2",30,0)
+ .S DIR("A",1)="Please order "_PSDRN,DIR("A",3)=""
+"RTN","PSDOR2",31,0)
+ .S DIR("A",2)="in multiples of "_NPKG_" "_NBKU_".",DIR("B")=PSDQTY
+"RTN","PSDOR2",32,0)
+ .S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_")"
+"RTN","PSDOR2",33,0)
+ .S DIR("?")="Enter an adjusted quantity or * to enter a new quantity" D ^DIR K DIR Q:Y<1  S PSDQTY=Y
+"RTN","PSDOR2",34,0)
+ D DIE,ASK^PSDORN1 G:PSDOUT END K PSDEM G DRUG^PSDORN
+"RTN","PSDOR2",35,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDOR2",36,0)
+ K NBKU,NPKG,OK,OKTYP,ORD,PSDA,PSDEM,PSDOUT,PSDQTY,PSDRD,PSDR,PSDRN,PSDT,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDOR2",37,0)
+ Q
+"RTN","PSDOR2",38,0)
+DIE ;create the order request
+"RTN","PSDOR2",39,0)
+ S:$G(ORD)<2 PSDEM=1
+"RTN","PSDOR2",40,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDOR2",41,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDOR2",42,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDOR2",43,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDOR2",44,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDOR2",45,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////1;5////"_PSDQTY_";24////"_$G(PSDEM)_";13" D ^DIE K DIE,DR
+"RTN","PSDOR2",46,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDOR2",47,0)
+ Q
+"RTN","PSDORD")
+0^6^B21419524^B20832774
+"RTN","PSDORD",1,0)
+PSDORD ;BIR/JPW,LTL - Nurse CS Order Request Entry DIR style ;8 Aug 94
+"RTN","PSDORD",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**51,79**;13 Feb 97;Build 20
+"RTN","PSDORD",3,0)
+ ;Any requests not ordered?
+"RTN","PSDORD",4,0)
+ K PSD,PSDA,PSDB S PSD=0
+"RTN","PSDORD",5,0)
+ W !,"Searching for ",$P($G(^VA(200,DUZ,.1)),U,4),"'s pending requests."
+"RTN","PSDORD",6,0)
+ F  S PSD=$O(^PSD(58.8,"AC",.5,+NAOU,PSD)) Q:'PSD  D
+"RTN","PSDORD",7,0)
+ .S PSD(1)=0 F  S PSD(1)=$O(^PSD(58.8,"AC",.5,+NAOU,PSD,PSD(1))) Q:'PSD(1)  W "." S:$P($G(^PSD(58.8,+NAOU,1,+PSD,3,PSD(1),0)),U,4)=DUZ PSDA(PSD,PSD(1))=$G(^(0))
+"RTN","PSDORD",8,0)
+ I $O(PSDA(0)) D ^PSDORD1 G:$G(PSDOUT) END
+"RTN","PSDORD",9,0)
+ W:'$O(PSDA(0)) "  No pending requests.",!
+"RTN","PSDORD",10,0)
+DRUG ;select drug
+"RTN","PSDORD",11,0)
+ S MSG=0 ;; PSD*3*51 - RJS
+"RTN","PSDORD",12,0)
+ K DA,DIC,PSDR S DIC("W")="W:$P(^PSDRUG(Y,0),""^"",9) ""   N/F"" W $S('$G(^PSD(58.8,NAOU,1,Y,0)):"" NOT STOCKED BY ""_NAOUN,$P(^(0),U,14)&($P(^(0),U,14)'>DT):"" INACTIVE on ""_NAOUN,1:"""")"
+"RTN","PSDORD",13,0)
+ S DIC("S")="I '$P($G(^(7)),U,2),$S('$P(^(0),""^"",14):1,+$P(^(0),""^"",14)>DT:1,1:0)"
+"RTN","PSDORD",14,0)
+ S DA(1)=+PSDS,DIC(0)="QEAM",DIC="^PSD(58.8,"_+PSDS_",1,"
+"RTN","PSDORD",15,0)
+ ;one time requests not allowed by dispensing site
+"RTN","PSDORD",16,0)
+ D:'$P($G(^PSD(58.8,+PSDS,0)),U,13)
+"RTN","PSDORD",17,0)
+ .S DIC("W")="W:$P(^PSDRUG(Y,0),U,9) ""  N/F"" I $P(^PSD(58.8,NAOU,1,Y,0),U,14)]"""",$P(^(0),U,14)'>DT W $C(7),""  *** INACTIVE ***"""
+"RTN","PSDORD",18,0)
+ .S DIC("S")="I $S('$P(^(0),U,14):1,+$P(^(0),U,14)>DT:1,1:0)"
+"RTN","PSDORD",19,0)
+ .S DA(1)=+NAOU,DIC="^PSD(58.8,"_NAOU_",1,"
+"RTN","PSDORD",20,0)
+ D ^DIC K DIC G:$D(DTOUT)!($D(DUOUT)) END G:Y<1&($O(PSDA(0))) ^PSDORD1 G:Y<1 END S PSDR=+Y,PSDRN=$S($P(^PSDRUG(PSDR,0),"^")]"":$P(^(0),"^"),1:"DRUG NAME MISSING")
+"RTN","PSDORD",21,0)
+ I $S('$D(^PSD(58.8,NAOU,1,PSDR,0)):1,$P(^(0),U,14)&($P(^(0),U,14)'>DT):1,1:0) D ^PSDORD4 G:$D(DIRUT) END G DRUG
+"RTN","PSDORD",22,0)
+ I '$D(^PSD(58.8,NAOU,1,PSDR,0)) D MSG G END
+"RTN","PSDORD",23,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) S MSG=2 D MSG G END
+"RTN","PSDORD",24,0)
+ S NBKU=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",8),NPKG=+$P(^(0),"^",9)
+"RTN","PSDORD",25,0)
+ I NBKU']"" S MSG1=3 D MSG G END
+"RTN","PSDORD",26,0)
+ I 'NPKG S MSG1=4 D MSG G END
+"RTN","PSDORD",27,0)
+ D LIST^PSDORL
+"RTN","PSDORD",28,0)
+ ;Perpetual?
+"RTN","PSDORD",29,0)
+ G:$P($G(^PSD(58.8,+NAOU,2)),U,5) ^PSDORD3
+"RTN","PSDORD",30,0)
+QTY K ORD S PSDOUT=0 S DIR(0)="58.800118,5A"
+"RTN","PSDORD",31,0)
+ S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_"): ",DIR("B")=NPKG
+"RTN","PSDORD",32,0)
+ D ^DIR K DIR G:$D(DIRUT) END G:Y<1 DRUG
+"RTN","PSDORD",33,0)
+ I Y=NPKG S PSDQTY=Y D DIE W ! G DRUG
+"RTN","PSDORD",34,0)
+ I X["?"!(X'?1.N)!(X#NPKG)!('X) W !!,"Quantity must be "_NPKG_" or a multiple of "_NPKG,! G QTY
+"RTN","PSDORD",35,0)
+ S CNT=X/NPKG W !!,"This will be "_CNT_" separate order requests.  The quantity is "_NPKG_" per request."
+"RTN","PSDORD",36,0)
+ W ! K DA,DIR,DIRUT S DIR(0)="Y",DIR("A")="Do you want me to generate the "_CNT_" separate order requests",DIR("B")="YES",DIR("?",1)="Answer 'YES' to create the multiple order requests,"
+"RTN","PSDORD",37,0)
+ S DIR("?")="Answer 'NO' to edit your comments or '^' to quit." D ^DIR K DIR G:$D(DIRUT) END
+"RTN","PSDORD",38,0)
+ I 'Y W !,"No order request created.  You must edit quantity.",! G QTY
+"RTN","PSDORD",39,0)
+ I Y W !!,"The "_CNT_" requests are being created.",! S PSDQTY=NPKG D  W ! G DRUG
+"RTN","PSDORD",40,0)
+ .F ORD=1:1:CNT W !!,"Creating your order request # "_ORD_" of "_CNT_" for "_PSDRN D DIE S PSDA(+PSDR,PSDA)=$G(^PSD(58.8,+NAOU,1,+PSDR,3,+PSDA,0))
+"RTN","PSDORD",41,0)
+ I '$G(PSDOUT) W ! G DRUG
+"RTN","PSDORD",42,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORD",43,0)
+ K NAOU,NAOUN,NBKU,NPKG,OK,OKTYP,ORD,PSD,PSDA,PSDB,PSDOUT,PSDQTY,PSDRD,PSDR,PSDRN,PSDS,PSDT,PSDUZ,PSDUZN,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDORD",44,0)
+ Q
+"RTN","PSDORD",45,0)
+DIE ;create the order request
+"RTN","PSDORD",46,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORD",47,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORD",48,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORD",49,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORD",50,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORD",51,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////.5;5////"_PSDQTY_";13" D ^DIE K DIE,DR
+"RTN","PSDORD",52,0)
+ S PSDA(+PSDR,+PSDA)=$G(^PSD(58.8,+NAOU,1,+PSDR,3,PSDA,0))
+"RTN","PSDORD",53,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORD",54,0)
+ Q
+"RTN","PSDORD",55,0)
+MSG ;display error message
+"RTN","PSDORD",56,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"Drug")_" is missing "
+"RTN","PSDORD",57,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORD",58,0)
+ Q
+"RTN","PSDORD3")
+0^7^B16937115^B16404681
+"RTN","PSDORD3",1,0)
+PSDORD3 ;BIR/LTL - Reg 2 Nurse CS Order Request Entry (batch) ;6 Jan 95
+"RTN","PSDORD3",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**79**;13 Feb 97;Build 20
+"RTN","PSDORD3",3,0)
+QTY K ORD S (CNT,PSDOUT,PSDR(2))=0
+"RTN","PSDORD3",4,0)
+ ;Dispensing Site's Maximum Quantity per Order
+"RTN","PSDORD3",5,0)
+ S PSDR(1)=$P($G(^PSD(58.8,+PSDS,1,+PSDR,0)),U,7)
+"RTN","PSDORD3",6,0)
+ ;Ask Quantity
+"RTN","PSDORD3",7,0)
+ S DIR(0)="NA^1:999999:0"
+"RTN","PSDORD3",8,0)
+ S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_"): ",DIR("B")=NPKG
+"RTN","PSDORD3",9,0)
+ W:$P($G(^PSD(58.8,+NAOU,1,+PSDR,0)),U,3) !,"Stock Level:  ",$P($G(^(0)),U,3)," ",NBKU,!
+"RTN","PSDORD3",10,0)
+ S:PSDR(1) DIR("A",1)="Maximum quantity per order:  "_PSDR(1)_" "_NBKU,DIR("A",2)=""
+"RTN","PSDORD3",11,0)
+ S DIR("?",1)="Because "_NAOUN_" is keeping a perpetual inventory,"
+"RTN","PSDORD3",12,0)
+ S DIR("?",2)="Pharmacy Service has set "_$S(PSDR(1):"a maximum quantity of "_PSDR(1)_" "_NBKU_" per order",1:"no maximum order quantity")
+"RTN","PSDORD3",13,0)
+ S DIR("?")="for "_PSDRN_"."
+"RTN","PSDORD3",14,0)
+ S:PSDR(1) DIR("?")="If you request more than "_PSDR(1)_" "_NBKU_", multiple orders will be generated.",DIR("?",3)="for "_PSDRN_".",DIR("?",4)=""
+"RTN","PSDORD3",15,0)
+ D ^DIR K DIR G:Y<1 END S PSDQTY=Y
+"RTN","PSDORD3",16,0)
+ ;Quantity ordered is equal to or less than max ord qty
+"RTN","PSDORD3",17,0)
+NOMAX I '(Y#NPKG)&('PSDR(1)!(Y'>PSDR(1))) D DIE G:PSDOUT END G DRUG^PSDORD
+"RTN","PSDORD3",18,0)
+ ;Quantity ordered is not divisible by package size
+"RTN","PSDORD3",19,0)
+ D:(Y#NPKG)  G:$D(DIRUT) END G:Y<1 QTY I 'PSDR(1)!(Y<PSDR(1)) S Y=PSDQTY G NOMAX
+"RTN","PSDORD3",20,0)
+ .S PSDQTY=Y-(Y#NPKG)
+"RTN","PSDORD3",21,0)
+ .S DIR(0)="S^"_PSDQTY_":"_NBKU_";"_(PSDQTY+NPKG)_":"_NBKU_";*:New Quantity"
+"RTN","PSDORD3",22,0)
+ .S DIR("A",1)="Please order "_PSDRN,DIR("A",3)=""
+"RTN","PSDORD3",23,0)
+ .S DIR("A",2)="in multiples of "_NPKG_" "_NBKU_".",DIR("B")=PSDQTY
+"RTN","PSDORD3",24,0)
+ .S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_")"
+"RTN","PSDORD3",25,0)
+ .S DIR("?")="Enter an adjusted quantity or * to enter a new quantity" D ^DIR K DIR Q:Y<1  S PSDQTY=Y
+"RTN","PSDORD3",26,0)
+ S:(PSDQTY#PSDR(1)) CNT=1,PSDR(2)=(PSDQTY#PSDR(1))
+"RTN","PSDORD3",27,0)
+ ;Number of orders to generate
+"RTN","PSDORD3",28,0)
+ S CNT=$G(CNT)+(PSDQTY\PSDR(1))
+"RTN","PSDORD3",29,0)
+ W !!,"This will be "_CNT_" separate order requests,"
+"RTN","PSDORD3",30,0)
+ W:PSDR(2) !!,"One order for ",PSDR(2)," ",NBKU,", and"
+"RTN","PSDORD3",31,0)
+ W !!,(PSDQTY\PSDR(1))," order"
+"RTN","PSDORD3",32,0)
+ W:CNT>2!('PSDR(2)&(CNT=2)) "s"
+"RTN","PSDORD3",33,0)
+ W " for ",PSDR(1)," ",NBKU,"."
+"RTN","PSDORD3",34,0)
+ W ! K DA,DIR,DIRUT S DIR(0)="Y",DIR("A")="Do you want me to generate the "_CNT_" separate order requests",DIR("B")="YES",DIR("?",1)="Answer 'YES' to create the multiple order requests,"
+"RTN","PSDORD3",35,0)
+ S DIR("?")="Answer 'NO' to edit your comments or '^' to quit." D ^DIR K DIR G:$D(DIRUT) END
+"RTN","PSDORD3",36,0)
+ I 'Y W !,"No order request created.  You must edit quantity.",! G QTY
+"RTN","PSDORD3",37,0)
+ I Y W !!,"The "_CNT_" requests are being created.",! S PSDQTY=$S(PSDR(2):PSDR(2),1:PSDR(1)) D  S PSDR(2)=0
+"RTN","PSDORD3",38,0)
+ .F ORD=1:1:CNT W !!,"Creating your order request # "_ORD_" of "_CNT_" for "_PSDRN D DIE S PSDA(+PSDR,PSDA)=$G(^PSD(58.8,+NAOU,1,+PSDR,3,+PSDA,0)),PSDQTY=PSDR(1)
+"RTN","PSDORD3",39,0)
+ G:'PSDOUT DRUG^PSDORD
+"RTN","PSDORD3",40,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORD3",41,0)
+ K NAOU,NAOUN,NBKU,NPKG,OK,OKTYP,ORD,PSDA,PSDOUT,PSDQTY,PSDRD,PSDR,PSDRN,PSDS,PSDT,PSDUZ,PSDUZN,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDORD3",42,0)
+ Q
+"RTN","PSDORD3",43,0)
+DIE ;create the order request
+"RTN","PSDORD3",44,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORD3",45,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORD3",46,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORD3",47,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORD3",48,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORD3",49,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////.5;5////"_PSDQTY_";13" D ^DIE K DIE,DR
+"RTN","PSDORD3",50,0)
+ S PSDA(+PSDR,+PSDA)=$G(^PSD(58.8,+NAOU,1,+PSDR,3,PSDA,0))
+"RTN","PSDORD3",51,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORD3",52,0)
+ Q
+"RTN","PSDORD4")
+0^8^B9420813^B9037751
+"RTN","PSDORD4",1,0)
+PSDORD4 ;BIR/JPW,LTL - Nurse CS Order Request Entry (One time) ;22 May 95
+"RTN","PSDORD4",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**79**;13 Feb 97;Build 20
+"RTN","PSDORD4",3,0)
+ S DIR(0)="Y",DIR("B")="No"
+"RTN","PSDORD4",4,0)
+ S DIR("A",1)="You have selected "_PSDRN
+"RTN","PSDORD4",5,0)
+ S DIR("A",2)="which is "_$S('$G(^PSD(58.8,+NAOU,1,PSDR,0)):"not stocked by ",1:"inactive on ")_NAOUN_"."
+"RTN","PSDORD4",6,0)
+ S DIR("A")="Are you sure you want to create a one time request"
+"RTN","PSDORD4",7,0)
+ S DIR("?")="^N XQH S XQH=""PSD ORDER ENTRY ONE TIME"" D EN^XQH"
+"RTN","PSDORD4",8,0)
+ D ^DIR K DIR Q:Y<1
+"RTN","PSDORD4",9,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) S MSG=2 D MSG G END
+"RTN","PSDORD4",10,0)
+ I '$D(^PSD(58.8,+NAOU,1,+PSDR,0)) S DA(1)=+NAOU,DIC="^PSD(58.8,+NAOU,1,",DIC(0)="L",DLAYGO=58.8,X="`"_PSDR,DIC("DR")="13////"_DT_";14////"_"O"_";14.5////"_"One Time Request",DINUM=PSDR D ^DIC K DIC,DLAYGO
+"RTN","PSDORD4",11,0)
+ S NBKU=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",8),NPKG=+$P(^(0),"^",9)
+"RTN","PSDORD4",12,0)
+ I NBKU']"" S MSG1=3 D MSG G END
+"RTN","PSDORD4",13,0)
+ I 'NPKG S MSG1=4 D MSG G END
+"RTN","PSDORD4",14,0)
+ W !!,"Sending a Mailman message to the Pharmacy Supervisor(s)...",!!
+"RTN","PSDORD4",15,0)
+ D ^PSDORM,LIST^PSDORL
+"RTN","PSDORD4",16,0)
+QTY K ORD S PSDOUT=0 S PSDQTY=NPKG,CNT=0 D DIE G:PSDOUT END
+"RTN","PSDORD4",17,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORD4",18,0)
+ K PSDEM,PSDOUT,X,Y
+"RTN","PSDORD4",19,0)
+ Q
+"RTN","PSDORD4",20,0)
+DIE ;create the order request
+"RTN","PSDORD4",21,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORD4",22,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORD4",23,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORD4",24,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORD4",25,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12)
+"RTN","PSDORD4",26,0)
+ W ?10,!!,"processing one order for ",PSDQTY," now..."
+"RTN","PSDORD4",27,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////1;5////"_PSDQTY_";13" D ^DIE K DIE,DR
+"RTN","PSDORD4",28,0)
+ S PSDA(+PSDR,+PSDA)=$G(^PSD(58.8,+NAOU,1,+PSDR,3,PSDA,0))
+"RTN","PSDORD4",29,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORD4",30,0)
+ Q
+"RTN","PSDORD4",31,0)
+MSG ;display error message
+"RTN","PSDORD4",32,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"Drug")_" is missing "
+"RTN","PSDORD4",33,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORD4",34,0)
+ Q
+"RTN","PSDORN0")
+0^9^B4086421^B3755003
+"RTN","PSDORN0",1,0)
+PSDORN0 ;BIR/JPW,LTL - Nurse CS Order Request Entry (continued) ;16 Feb 95
+"RTN","PSDORN0",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**79**;13 Feb 97;Build 20
+"RTN","PSDORN0",3,0)
+DIE ;create the order request
+"RTN","PSDORN0",4,0)
+ S:$G(ORD)<2 PSDEM=1
+"RTN","PSDORN0",5,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORN0",6,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORN0",7,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORN0",8,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORN0",9,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORN0",10,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORN0",11,0)
+ I $G(PAT),$G(PSD(2)),$O(^PSD(58.81,PSD(2),2,0)),'$G(PSD(4)) S ^PSD(58.8,NAOU,1,PSDR,3,PSDA,1,0)=^PSD(58.81,PSD(2),2,0) D
+"RTN","PSDORN0",12,0)
+ .F WORD=0:0 S WORD=$O(^PSD(58.81,PSD(2),2,WORD)) Q:'WORD  S ^PSD(58.8,NAOU,1,PSDR,3,PSDA,1,WORD,0)=^PSD(58.81,PSD(2),2,WORD,0)
+"RTN","PSDORN0",13,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////1;5////"_PSDQTY_";24////"_$G(PSDEM)_";13//"_$G(PSDR(1)) D ^DIE K DIE,DR,WORD
+"RTN","PSDORN0",14,0)
+ Q
+"RTN","PSDORNO")
+0^10^B12728562^B12280134
+"RTN","PSDORNO",1,0)
+PSDORNO ;BIR/JPW,LTL - Nurse CS Order Request Entry (One time) ;15 Jan 95
+"RTN","PSDORNO",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**20,79**;13 Feb 97;Build 20
+"RTN","PSDORNO",3,0)
+ ;
+"RTN","PSDORNO",4,0)
+ ; Reference to DD("DD" supported by DBIA # 10017
+"RTN","PSDORNO",5,0)
+ ; Reference to PSD(58.8 supported by DBIA # 2711
+"RTN","PSDORNO",6,0)
+ ;
+"RTN","PSDORNO",7,0)
+ S DIR(0)="Y",DIR("B")="No"
+"RTN","PSDORNO",8,0)
+ S DIR("A",1)="You have selected "_PSDRN
+"RTN","PSDORNO",9,0)
+ S DIR("A",2)="which is "_$S('$G(^PSD(58.8,+NAOU,1,PSDR,0)):"not stocked by ",1:"inactive on ")_NAOUN_"."
+"RTN","PSDORNO",10,0)
+ S DIR("A")="Are you sure you want to create a one time request"
+"RTN","PSDORNO",11,0)
+ S DIR("?")="^N XQH S XQH=""PSD ORDER ENTRY ONE TIME"" D EN^XQH"
+"RTN","PSDORNO",12,0)
+ W ! D ^DIR K DIR Q:Y<1
+"RTN","PSDORNO",13,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) S MSG=2 D MSG G END
+"RTN","PSDORNO",14,0)
+ S DIR(0)="DA^NOW::AEFT",DIR("A")="Date/time required: "
+"RTN","PSDORNO",15,0)
+ S DIR("?",1)="You are on the verge of creating a priority order."
+"RTN","PSDORNO",16,0)
+ S DIR("?",2)="If this is a mistake, enter ""^"" to create a scheduled order, otherwise,"
+"RTN","PSDORNO",17,0)
+ S DIR("?")="Pharmacy needs to know how soon you need this order."
+"RTN","PSDORNO",18,0)
+ W ! D ^DIR K DIR G:$D(DIRUT) END X ^DD("DD") S PSDT(9)=Y
+"RTN","PSDORNO",19,0)
+ I '$D(^PSD(58.8,+NAOU,1,+PSDR,0)) S DA(1)=+NAOU,DIC="^PSD(58.8,+NAOU,1,",DIC(0)="L",DLAYGO=58.8,X="`"_PSDR,DIC("DR")="13////"_DT_";14////"_"O"_";14.5////"_"One Time Request",DINUM=PSDR D ^DIC K DIC,DLAYGO I Y<1 W !,"Inactive drug" G END
+"RTN","PSDORNO",20,0)
+ S NBKU=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",8),NPKG=+$P(^(0),"^",9)
+"RTN","PSDORNO",21,0)
+ I NBKU']"" S MSG1=3 D MSG G END
+"RTN","PSDORNO",22,0)
+ I 'NPKG S MSG1=4 D MSG G END
+"RTN","PSDORNO",23,0)
+ W !!,"Sending a Mailman message to the Pharmacy Supervisor(s)...",!!
+"RTN","PSDORNO",24,0)
+ D ^PSDORM,LIST^PSDORL
+"RTN","PSDORNO",25,0)
+QTY K ORD S PSDOUT=0 S PSDQTY=NPKG,CNT=0 D DIE G:PSDOUT END
+"RTN","PSDORNO",26,0)
+ D ASK^PSDORN1 G:PSDOUT END
+"RTN","PSDORNO",27,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORNO",28,0)
+ K PSDEM,PSDOUT,X,Y
+"RTN","PSDORNO",29,0)
+ Q
+"RTN","PSDORNO",30,0)
+DIE ;create the order request
+"RTN","PSDORNO",31,0)
+ Q:'$D(^PSD(58.8,NAOU,1,PSDR,0))
+"RTN","PSDORNO",32,0)
+ S PSDEM=1
+"RTN","PSDORNO",33,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORNO",34,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORNO",35,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORNO",36,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORNO",37,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12)
+"RTN","PSDORNO",38,0)
+ W ?10,!!,"processing one order for ",PSDQTY," now..."
+"RTN","PSDORNO",39,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_+PSDS_";3////"_PSDUZ_";10////1;5////"_PSDQTY_";24////"_$G(PSDEM)_";13" D ^DIE K DIE,DR
+"RTN","PSDORNO",40,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORNO",41,0)
+ Q
+"RTN","PSDORNO",42,0)
+MSG ;display error message
+"RTN","PSDORNO",43,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"Drug")_" is missing "
+"RTN","PSDORNO",44,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORNO",45,0)
+ Q
+"RTN","PSDORP")
+0^11^B23737263^B23089929
+"RTN","PSDORP",1,0)
+PSDORP ;BIR/JPW - Pharm CS Order Request Entry ;8 Aug 94
+"RTN","PSDORP",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**58,62,67,79**;13 Feb 97;Build 20
+"RTN","PSDORP",3,0)
+ W !!,"Controlled Substances Order Entry",!! S PSDUZ=DUZ,PSDUZN=$P($G(^VA(200,PSDUZ,0)),"^"),(MSG,MSG1)=0,Y=DT X ^DD("DD") S REQD=Y
+"RTN","PSDORP",4,0)
+NAOU ;select NAOU to order supplies for
+"RTN","PSDORP",5,0)
+ K ^UTILITY($J,"W")
+"RTN","PSDORP",6,0)
+ N X,DIWL,DIWR,DIWF,PSD S PSD=0,DIWL=1,DIWR=80,DIWF="W"
+"RTN","PSDORP",7,0)
+ F  S PSD=$O(^PSD(58.8,+$P(PSDSITE,U,3),5,PSD)) Q:'PSD  S X=$G(^PSD(58.8,+$P(PSDSITE,U,3),5,PSD,0)) D ^DIWP
+"RTN","PSDORP",8,0)
+ D ^DIWW
+"RTN","PSDORP",9,0)
+ K DA,DIC S DIC=58.8,DIC(0)="QEA",DIC("A")="Select Ordering NAOU: "
+"RTN","PSDORP",10,0)
+ S DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$S('$D(^(""I"")):1,'^(""I""):1,+^(""I"")>DT:1,1:0),$P(^(0),""^"",2)=""N"",'$P(^(0),""^"",7)"
+"RTN","PSDORP",11,0)
+ D ^DIC K DIC G:Y<0 END S NAOU=+Y,NAOUN=$P(Y,"^",2)
+"RTN","PSDORP",12,0)
+ I '$D(^PSD(58.8,NAOU,0)) S MSG=1 D MSG G END
+"RTN","PSDORP",13,0)
+ I '$O(^PSD(58.8,NAOU,1,0)) S MSG=1,MSG1=2 D MSG G END
+"RTN","PSDORP",14,0)
+ S PSDS=+$P(^PSD(58.8,NAOU,0),"^",4) I '+PSDS S (MSG,MSG1)=1 D MSG G END
+"RTN","PSDORP",15,0)
+ I '$D(^PSD(58.8,+PSDS,0)) S MSG=2 D MSG G END
+"RTN","PSDORP",16,0)
+ I '$O(^PSD(58.8,+PSDS,1,0)) S MSG=2,MSG1=2 D MSG G END
+"RTN","PSDORP",17,0)
+ S TYPE=$P(^PSD(58.8,+PSDS,0),"^",2),OKTYP=$S(TYPE="M":1,TYPE="S":1,1:0) I 'OKTYP W !!,"Contact your Pharmacy Coordinator.",!,"The Pharmacy Dispensing Site is invalid for this NAOU." G END
+"RTN","PSDORP",18,0)
+DRUG ;select drug
+"RTN","PSDORP",19,0)
+ K DA,DIC S DIC("W")="W:$P(^PSDRUG(Y,0),""^"",9) ""   N/F"" I $P(^PSD(58.8,NAOU,1,Y,0),""^"",14)]"""",$P(^(0),""^"",14)'>DT W $C(7),""  *** INACTIVE ***"""
+"RTN","PSDORP",20,0)
+ S DA(1)=+NAOU,DIC(0)="QEAM",DIC="^PSD(58.8,"_NAOU_",1,"
+"RTN","PSDORP",21,0)
+ D ^DIC K DIC G:Y<0 NAOU S PSDR=+Y,PSDRN=$S($P(^PSDRUG(PSDR,0),"^")]"":$P(^(0),"^"),1:"DRUG NAME MISSING")
+"RTN","PSDORP",22,0)
+ I '$D(^PSD(58.8,NAOU,1,PSDR,0)) D MSG G END
+"RTN","PSDORP",23,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) S MSG=2 D MSG G END
+"RTN","PSDORP",24,0)
+ S NBKU=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",8),NPKG=+$P(^(0),"^",9)
+"RTN","PSDORP",25,0)
+ I NBKU']"" S MSG1=3 D MSG G END
+"RTN","PSDORP",26,0)
+ I 'NPKG S MSG1=4 D MSG G END
+"RTN","PSDORP",27,0)
+ D LIST^PSDORL
+"RTN","PSDORP",28,0)
+ ;NAOU using perpetual?
+"RTN","PSDORP",29,0)
+ G:$P($G(^PSD(58.8,+NAOU,2)),U,5) ^PSDORP2
+"RTN","PSDORP",30,0)
+QTY K ORD S (CNT,PSDR(2),PSDOUT)=0
+"RTN","PSDORP",31,0)
+ ;DISPLAY STOCK LEVEL
+"RTN","PSDORP",32,0)
+ W:$P($G(^PSD(58.8,+NAOU,1,+PSDR,0)),U,3) !,"Stock Level:  ",$P($G(^(0)),U,3)," ",NBKU,!
+"RTN","PSDORP",33,0)
+ ;ASK QUANTITY
+"RTN","PSDORP",34,0)
+ S DIR(0)="NA^1:999999:0"
+"RTN","PSDORP",35,0)
+ S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_"): ",DIR("B")=NPKG
+"RTN","PSDORP",36,0)
+ D ^DIR K DIR G:Y<1 END S PSDQTY=Y
+"RTN","PSDORP",37,0)
+ I Y=NPKG S PSDQTY=NPKG,CNT=0 D DIE,ASK^PSDORP1 G:PSDOUT END G DRUG
+"RTN","PSDORP",38,0)
+ ;QUANTITY EXCEEDS PACKAGE SIZE, MULTIPLE ORDERS
+"RTN","PSDORP",39,0)
+ S:(PSDQTY#NPKG) CNT=1,PSDR(2)=(PSDQTY#NPKG)
+"RTN","PSDORP",40,0)
+ S CNT=$G(CNT)+(Y\NPKG)
+"RTN","PSDORP",41,0)
+ W !!,"This will be "_CNT_" separate order requests,"
+"RTN","PSDORP",42,0)
+ W:PSDR(2) !!,"One order for ",PSDR(2)," ",NBKU,", and"
+"RTN","PSDORP",43,0)
+ W !!,(PSDQTY\NPKG)," order"
+"RTN","PSDORP",44,0)
+ W:CNT>2!('PSDR(2)&(CNT=2)) "s"
+"RTN","PSDORP",45,0)
+ W " for ",NPKG," ",NBKU,"."
+"RTN","PSDORP",46,0)
+ W ! K DA,DIR,DIRUT S DIR(0)="Y",DIR("A")="Do you want me to generate the "_CNT_" separate order requests",DIR("B")="YES",DIR("?",1)="Answer 'YES' to create the multiple order requests,"
+"RTN","PSDORP",47,0)
+ S DIR("?")="Answer 'NO' to edit your quantity or '^' to quit." D ^DIR K DIR G:$D(DIRUT) END
+"RTN","PSDORP",48,0)
+ I 'Y W !,"No order request created.  You must edit quantity.",! G QTY
+"RTN","PSDORP",49,0)
+ I Y W !!,"The "_CNT_" requests are being created.  You must review every request.",! S PSDQTY=$S(PSDR(2):PSDR(2),1:NPKG) D  D ^PSDORP1 S PSDQTY=NPKG
+"RTN","PSDORP",50,0)
+ .F ORD=1:1:CNT W !!,"Creating your order request # "_ORD_" of "_CNT_" for "_PSDRN D DIE S ORD(ORD)=PSDA
+"RTN","PSDORP",51,0)
+ G:'PSDOUT DRUG
+"RTN","PSDORP",52,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORP",53,0)
+ K NAOU,NAOUN,NBKU,NPKG,OK,OKTYP,ORD,PSDA,PSDOUT,PSDQTY,PSDRD,PSDR,PSDRN,PSDS,PSDT,PSDUZ,PSDUZA,PSDUZN,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDORP",54,0)
+ Q
+"RTN","PSDORP",55,0)
+DIE ;create the order request
+"RTN","PSDORP",56,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORP",57,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORP",58,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORP",59,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORP",60,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORP",61,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_PSDS_";10////1;5////"_PSDQTY_";13;3//^S X=PSDUZN" D ^DIE K DIE,DR
+"RTN","PSDORP",62,0)
+ S PSDUZA=+$P($G(^PSD(58.8,NAOU,1,PSDR,3,PSDA,0)),"^",4)
+"RTN","PSDORP",63,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORP",64,0)
+ Q
+"RTN","PSDORP",65,0)
+MSG ;display error message
+"RTN","PSDORP",66,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"PSDR")_" is missing "
+"RTN","PSDORP",67,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORP",68,0)
+ Q
+"RTN","PSDORP2")
+0^12^B16572981^B16047567
+"RTN","PSDORP2",1,0)
+PSDORP2 ;BIR/JPW,LTL - Pharm CS Order Request Entry ;22 Jun 94
+"RTN","PSDORP2",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**79**;13 Feb 97;Build 20
+"RTN","PSDORP2",3,0)
+QTY K ORD S (CNT,PSDR(2),PSDOUT)=0
+"RTN","PSDORP2",4,0)
+ ;DISPLAY STOCK LEVEL
+"RTN","PSDORP2",5,0)
+ W:$P($G(^PSD(58.8,+NAOU,1,+PSDR,0)),U,3) !,"Stock Level:  ",$P($G(^(0)),U,3)," ",NBKU,!
+"RTN","PSDORP2",6,0)
+ ;Dispensing Sites's Max Qty per order
+"RTN","PSDORP2",7,0)
+ S PSDR(1)=$P($G(^PSD(58.8,+PSDS,1,+PSDR,0)),U,7)
+"RTN","PSDORP2",8,0)
+ ;ASK QUANTITY
+"RTN","PSDORP2",9,0)
+ S DIR(0)="NA^1:999999:0"
+"RTN","PSDORP2",10,0)
+ S DIR("A")="QUANTITY ("_NBKU_"/"_NPKG_"): ",DIR("B")=NPKG
+"RTN","PSDORP2",11,0)
+ S:PSDR(1) DIR("A",1)="Maximum quantity per order:  "_PSDR(1)_" "_NBKU,DIR("A",2)=""
+"RTN","PSDORP2",12,0)
+ S DIR("?",1)="Because "_NAOUN_" is keeping a perpetual inventory,"
+"RTN","PSDORP2",13,0)
+ S DIR("?",2)=$S(PSDR(1):"a maximum quantity of "_PSDR(1)_" "_NBKU_" per order",1:"no maximum order quantity")_" has been set for "_PSDRN_"."
+"RTN","PSDORP2",14,0)
+ S:PSDR(1) DIR("?")="If you request more than "_PSDR(1)_" "_NBKU_", multiple orders will be generated.",DIR("?",3)="for "_PSDRN_".",DIR("?",4)=""
+"RTN","PSDORP2",15,0)
+ D ^DIR K DIR G:Y<1 END S PSDQTY=Y
+"RTN","PSDORP2",16,0)
+ ;quantity ordered is equal to or less than max ord qty
+"RTN","PSDORP2",17,0)
+NOMAX I 'PSDR(1)!(Y'>PSDR(1)) D DIE,ASK^PSDORP1 G:PSDOUT END G DRUG^PSDORP
+"RTN","PSDORP2",18,0)
+ ;QUANTITY EXCEEDS MAX ORD QTY, MULTIPLE ORDERS
+"RTN","PSDORP2",19,0)
+ S:(PSDQTY#PSDR(1)) CNT=1,PSDR(2)=(PSDQTY#PSDR(1))
+"RTN","PSDORP2",20,0)
+ S CNT=$G(CNT)+(Y\PSDR(1))
+"RTN","PSDORP2",21,0)
+ W !!,"This will be "_CNT_" separate order requests,"
+"RTN","PSDORP2",22,0)
+ W:PSDR(2) !!,"One order for ",PSDR(2)," ",NBKU,", and"
+"RTN","PSDORP2",23,0)
+ W !!,(PSDQTY\PSDR(1))," order"
+"RTN","PSDORP2",24,0)
+ W:CNT>2!('PSDR(2)&(CNT=2)) "s"
+"RTN","PSDORP2",25,0)
+ W " for ",PSDR(1)," ",NBKU,"."
+"RTN","PSDORP2",26,0)
+ W ! K DA,DIR,DIRUT S DIR(0)="Y",DIR("A")="Do you want me to generate the "_CNT_" separate order requests",DIR("B")="YES",DIR("?",1)="Answer 'YES' to create the multiple order requests,"
+"RTN","PSDORP2",27,0)
+ S DIR("?")="Answer 'NO' to edit your quantity or '^' to quit." D ^DIR K DIR G:$D(DIRUT) END
+"RTN","PSDORP2",28,0)
+ I 'Y W !,"No order request created.  You must edit quantity.",! G QTY
+"RTN","PSDORP2",29,0)
+ I Y W !!,"The "_CNT_" requests are being created.  You must review every request.",! S PSDQTY=$S(PSDR(2):PSDR(2),1:PSDR(1)) D  D ^PSDORP1 S PSDQTY=PSDR(1)
+"RTN","PSDORP2",30,0)
+ .F ORD=1:1:CNT W !!,"Creating your order request # "_ORD_" of "_CNT_" for "_PSDRN D DIE S ORD(ORD)=PSDA
+"RTN","PSDORP2",31,0)
+ G:'PSDOUT DRUG^PSDORP
+"RTN","PSDORP2",32,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORP2",33,0)
+ K NAOU,NAOUN,NBKU,NPKG,OK,OKTYP,ORD,PSDA,PSDOUT,PSDQTY,PSDRD,PSDR,PSDRN,PSDS,PSDT,PSDUZ,PSDUZA,PSDUZN,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDORP2",34,0)
+ Q
+"RTN","PSDORP2",35,0)
+DIE ;create the order request
+"RTN","PSDORP2",36,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORP2",37,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORP2",38,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORP2",39,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORP2",40,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORP2",41,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_PSDS_";10////1;5////"_PSDQTY_";13;3//^S X=PSDUZN" D ^DIE K DIE,DR
+"RTN","PSDORP2",42,0)
+ S PSDUZA=+$P($G(^PSD(58.8,NAOU,1,PSDR,3,PSDA,0)),"^",4)
+"RTN","PSDORP2",43,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORP2",44,0)
+ Q
+"RTN","PSDORP2",45,0)
+MSG ;display error message
+"RTN","PSDORP2",46,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"PSDR")_" is missing "
+"RTN","PSDORP2",47,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORP2",48,0)
+ Q
+"RTN","PSDORV")
+0^13^B17456680^B16936413
+"RTN","PSDORV",1,0)
+PSDORV ;BIR/JPW - IV Pharm CS Order Request Entry ;8 Aug 94
+"RTN","PSDORV",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES ;**79**;13 Feb 97;Build 20
+"RTN","PSDORV",3,0)
+ I '$D(PSDSITE) D ^PSDSET Q:'$D(PSDSITE)
+"RTN","PSDORV",4,0)
+ S OK=$S($D(^XUSEC("PSJ RPHARM",DUZ)):2,$D(^XUSEC("PSJ PHARM TECH",DUZ)):2,1:0)
+"RTN","PSDORV",5,0)
+ I 'OK W $C(7),!!,?9,"** Please contact your Pharmacy Coordinator for access to order",!,?12,"narcotic supplies.",!!,"PSJ RPHARM or PSJ PHARM TECH security key required.",! K OK Q
+"RTN","PSDORV",6,0)
+ W !!,"Controlled Substances Order Entry",!! S PSDUZ=DUZ,PSDUZN=$P($G(^VA(200,PSDUZ,0)),"^"),(MSG,MSG1)=0,Y=DT X ^DD("DD") S REQD=Y
+"RTN","PSDORV",7,0)
+NAOU ;select NAOU to order supplies for
+"RTN","PSDORV",8,0)
+ K ^UTILITY($J,"W")
+"RTN","PSDORV",9,0)
+ N X,DIWL,DIWR,DIWF,PSD S PSD=0,DIWL=1,DIWR=80,DIWF="W"
+"RTN","PSDORV",10,0)
+ F  S PSD=$O(^PSD(58.8,+$P(PSDSITE,U,3),5,PSD)) Q:'PSD  S X=$G(^PSD(58.8,+$P(PSDSITE,U,3),5,PSD,0)) D ^DIWP
+"RTN","PSDORV",11,0)
+ D ^DIWW
+"RTN","PSDORV",12,0)
+ K DA,DIC S DIC=58.8,DIC(0)="QEA",DIC("A")="Select Ordering NAOU: ",DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$P(^(0),""^"",2)=""N"""
+"RTN","PSDORV",13,0)
+ D ^DIC K DIC G:Y<0 END S NAOU=+Y,NAOUN=$P(Y,"^",2)
+"RTN","PSDORV",14,0)
+ I '$D(^PSD(58.8,NAOU,0)) S MSG=1 D MSG G END
+"RTN","PSDORV",15,0)
+ I '$O(^PSD(58.8,NAOU,1,0)) S MSG=1,MSG1=2 D MSG G END
+"RTN","PSDORV",16,0)
+ S PSDS=+$P(^PSD(58.8,NAOU,0),"^",4) I '+PSDS S (MSG,MSG1)=1 D MSG G END
+"RTN","PSDORV",17,0)
+ I '$D(^PSD(58.8,+PSDS,0)) S MSG=2 D MSG G END
+"RTN","PSDORV",18,0)
+ I '$O(^PSD(58.8,+PSDS,1,0)) S MSG=2,MSG1=2 D MSG G END
+"RTN","PSDORV",19,0)
+ S TYPE=$P(^PSD(58.8,+PSDS,0),"^",2),OKTYP=$S(TYPE="M":1,TYPE="S":1,1:0) I 'OKTYP W !!,"Contact your Pharmacy Coordinator.",!,"The Pharmacy Dispensing Site is invalid for this NAOU." G END
+"RTN","PSDORV",20,0)
+DRUG ;select drug
+"RTN","PSDORV",21,0)
+ K DA,DIC S DIC("W")="W:$P(^PSDRUG(Y,0),""^"",9) ""   N/F"" I $P(^PSD(58.8,NAOU,1,Y,0),""^"",14)]"""",$P(^(0),""^"",14)'>DT W $C(7),""  *** INACTIVE ***"""
+"RTN","PSDORV",22,0)
+ S DA(1)=+NAOU,DIC(0)="QEAM",DIC="^PSD(58.8,"_NAOU_",1," D ^DIC K DIC G:Y<0 END S PSDR=+Y,PSDRN=$S($P(^PSDRUG(PSDR,0),"^")]"":$P(^(0),"^"),1:"DRUG NAME MISSING")
+"RTN","PSDORV",23,0)
+ I '$D(^PSD(58.8,NAOU,1,PSDR,0)) D MSG G END
+"RTN","PSDORV",24,0)
+ I '$D(^PSD(58.8,+PSDS,1,PSDR,0)) S MSG=2 D MSG G END
+"RTN","PSDORV",25,0)
+ S NBKU=$P(^PSD(58.8,+PSDS,1,PSDR,0),"^",8),NPKG=+$P(^(0),"^",9)
+"RTN","PSDORV",26,0)
+ I NBKU']"" S MSG1=3 D MSG G END
+"RTN","PSDORV",27,0)
+ I 'NPKG S MSG1=4 D MSG G END
+"RTN","PSDORV",28,0)
+ D LIST^PSDORL
+"RTN","PSDORV",29,0)
+QTY K ORD S PSDOUT=0 W !!,"QUANTITY ("_NBKU_"/"_NPKG_"): "_NPKG_"// " R X:DTIME I '$T!(X["^") G END
+"RTN","PSDORV",30,0)
+ S:X="" (X,PSDQTY)=NPKG I X["?"!(X'?1.N)!('X)!(X>999999) W !!,"Quantity must be a whole number between 1 and 999999",! G QTY
+"RTN","PSDORV",31,0)
+ S PSDQTY=X,CNT=0 D DIE,ASK^PSDORV1 G:PSDOUT END G DRUG
+"RTN","PSDORV",32,0)
+END K %,%DT,%H,%I,CNT,CNT1,DA,DIC,DIE,DINUM,DIR,DIROUT,DIRUT,DIWF,DIWL,DIWR,DR,DTOUT,DUOUT,LN,MSG,MSG1
+"RTN","PSDORV",33,0)
+ K NAOU,NAOUN,NBKU,NPKG,OK,OKTYP,ORD,PSDA,PSDOUT,PSDQTY,PSDR,PSDRD,PSDRN,PSDS,PSDT,PSDUZ,PSDUZN,REQD,TEXT,TYPE,WORD,X,Y
+"RTN","PSDORV",34,0)
+ Q
+"RTN","PSDORV",35,0)
+DIE ;create the order request
+"RTN","PSDORV",36,0)
+ F  L +^PSD(58.8,NAOU,1,PSDR,0):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I  Q
+"RTN","PSDORV",37,0)
+ S:'$D(^PSD(58.8,NAOU,1,PSDR,3,0)) ^(0)="^58.800118A^^"
+"RTN","PSDORV",38,0)
+DIE2 S PSDA=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 I $D(^PSD(58.8,NAOU,1,PSDR,3,PSDA)) S $P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)=$P(^PSD(58.8,NAOU,1,PSDR,3,0),"^",3)+1 G DIE2
+"RTN","PSDORV",39,0)
+ K DA,DIC,DIE,DD,DR,DO S DIC(0)="L",(DIC,DIE)="^PSD(58.8,"_NAOU_",1,"_PSDR_",3,",DA(2)=NAOU,DA(1)=PSDR,(X,DINUM)=PSDA D FILE^DICN K DIC
+"RTN","PSDORV",40,0)
+ D NOW^%DTC S PSDT=+$E(%,1,12) W ?10,!!,"processing now..."
+"RTN","PSDORV",41,0)
+ S DA=PSDA,DA(1)=PSDR,DA(2)=NAOU,DR="1////"_PSDT_";2////"_PSDS_";3////"_PSDUZ_";10////1;5////"_PSDQTY_";13" D ^DIE K DIE,DR
+"RTN","PSDORV",42,0)
+ L -^PSD(58.8,NAOU,1,PSDR,0)
+"RTN","PSDORV",43,0)
+ Q
+"RTN","PSDORV",44,0)
+MSG ;display error message
+"RTN","PSDORV",45,0)
+ W $C(7),!!,?10,"Contact your Pharmacy Coordinator.",!,?10,"This "_$S(MSG=2:"Dispensing Site",MSG=1:"NAOU",1:"DRUG")_" is missing "
+"RTN","PSDORV",46,0)
+ W $S(MSG1=1:"Primary Disp. Site",MSG1=2:"stocked drugs",MSG1=3:"narcotic breakdown unit",MSG1=4:"narcotic package size",1:"data")_".",!
+"RTN","PSDORV",47,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",9901,6)
+^66
+**END**
+**END**
+

@@ -1,0 +1,470 @@
+ 
+=============================================================================
+Run Date: SEP 08, 2017                     Designation: MAG*3*172
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #139                      Status: Released
+                  Compliance Date: OCT 09, 2017
+=============================================================================
+
+
+Subject: UID Checking
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*162 and before Patch RA*5*119.
+  
+ Subject:  
+ =======
+ HYBRID DIGITAL IMAGING AND COMMUNICATIONS IN MEDICINE (DICOM) IMAGE 
+ GATEWAY (HDIG) DUPLICATED UNIQUE IDENTIFIER (UID) CHECKING OPTION
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ This patch fixes a problem with creating a duplicate when a resend of the 
+ same object has different series or Service Object Pair (SOP) UIDs.  When
+ running a test on Fluoroscopy, the SR object was stored on an initial
+ send, as expected.  The data was verified in the various files.  When it
+ was resent, the Strutureed Report (SR) object was stored again and the
+ imaging RAD dose files were populated again, doubling the radiation dose
+ information erroneously.
+  
+ More in line with the DICOM standard, if the same image/instance UID comes
+ in more than once, it is the same image, and therefore should be rejected.
+  
+ NOTE: This patch must be installed before Patch RA*5*119. 
+ ====
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 172_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch. 
+ MAG3_0P172_README.txt, if present, is an informative file associated
+ with the patch.
+  
+ Software:
+ ========
+ File Name                       Description
+ =========                       ===========
+ MAG3_0P172.KID                  Kernel Installation and Distribution 
+                                 System (KIDS) build for Patch 172
+ MAG3_0P172_HDIG_Setup.msi       Hybrid DICOM Gateway Installation 
+                                 File
+  
+ Documentation:
+ =============
+ This document, MAG3_0172_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1.      Defect 319552 (Trouble Ticket: R12543049FY17) Change How HDIG is 
+ Handling DICOM Objects
+  
+ Problem:  
+ When running a test on Fluoroscopy, the SR object was stored on an 
+ initial send, as expected.  The data was verified in the various files.  
+ When it was resent, the SR object was stored again and the imaging
+ RAD dose files were populated again, doubling the radiation dose
+ information erroneously.
+  
+ More in line with the DICOM standard, if the same image/instance UID 
+ comes in more than once, it is the same image, and therefore should be
+ rejected.
+  
+ Resolution:  
+ On duplicate series or SOP Instance UID reception, the object will not be 
+ stored and the reject message will be sent to the vendor. 
+ If a duplicate Series UID is detected under another patient, order
+ (Accession Number,) or study (Case 1) or if a duplicate Instance UID is
+ received under another patient, order (Accession Number), study, or series
+ (Case 2), then the incoming object will now be rejected (if the
+ rejectDuplicates option is set to "true" instead of generating a new UID).
+ If an object comes in with a duplicate Series UID AND a duplicate Instance
+ UID under the same patient, order (Accession Number), and study, it is a
+ resend, so nothing is stored and the sender receives a "SUCCESS"
+ response.  Case 3 also is possible: If an object comes in with a duplicate
+ Series AND a duplicate Instance UID under another patient, order
+ (Accession Number), and study (Case 1 and 2 combined), it is rejected just
+ like for Case 1.
+  
+ MAG*3.0*172 introduces an HDIG DICOM server configuration flag, 
+ "rejectDuplicates", where if set "true", the HDIG DICOM server rejects
+ (does not store) Series and SOP Instance duplicates without remembering
+ them.  It will still log the findings and reason for rejection.  Without
+ this option turned on, the HDIG behaves like before (since Patch 34); it
+ generates new UIDs for duplicate UID findings, stores the instance with
+ the UIDs and remembers each incident in IMAGING DUPLICATE UID LOG #2005.66
+ Re-send and illegal UID detection is not affected by this change.  If a
+ new "rejectDuplicates" option flag does not exist in the HDIG's
+ DicomServerConfiguration.config file, the HDIG acts like before.  (The
+ default setting is "false".)
+  
+ Test Sites:
+ ========
+ The following sites are test sites for this patch:
+         Fayetteville VA Medical Center
+         VA Heartland East - St. Louis
+         Lexington VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites mayalso 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ==================
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*172 must be installed on both the VistA System and on 64-bit HDIG 
+ servers.  This patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  Installing the MAG*3.0*172 KIDS takes 2-5 minutes.
+  
+ Note:  HDIG will not install on 32-bit machines with a Windows operating 
+ system such as 2003 Server.  There is also a known issue if there are
+ multiple Java versions on the system for HDIG:
+      For a fresh installation, remove all installed Java applications 
+ before the installation of MAG*3.0*172
+      If updating, remove installed Java if it's not version 1.6.0_45
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*172.
+  
+ VistA System (KIDS) Installation Instructions 
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P172.KID) of the 
+ MAG*3.0*172 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A Distribution
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+ option if you want to ensure the integrity of the routines in the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when
+ the patch is installed.  All components (routines, options, and so on) in
+ the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you want
+ to create a backup message of any routines exported with the patch.  It
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*172".
+    c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+ Select Kernel Installation & Distribution System        Option: 
+ INSTALlation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation       Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*172      10/27/16@13:10:35
+      => MAG*3.0*172 1 UPDATED ROUTINE  ;Created on Oct 25, 2016@17:22
+  
+ This Distribution was loaded on Oct 27, 2016@13:10:35 with header of
+    MAG*3.0*172 1 UPDATED ROUTINE  ;Created on Oct 25, 2016@17:22
+    It consisted of the following Install(s):
+     MAG*3.0*172
+ Checking Install for Package MAG*3.0*172
+  
+ Install Questions for MAG*3.0*172
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO// ^
+  
+ MAG*3.0*172 Build will not be installed
+                Oct 27, 2016@13:12:34
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+  
+ Select Installation       Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*172      10/27/16@13:10:35
+      => MAG*3.0*172 1 UPDATED ROUTINE  ;Created on Oct 25, 2016@17:22
+  
+ This Distribution was loaded on Oct 27, 2016@13:10:35 with header of
+    MAG*3.0*172 1 UPDATED ROUTINE  ;Created on Oct 25, 2016@17:22
+    It consisted of the following Install(s):
+     MAG*3.0*172
+ Checking Install for Package MAG*3.0*172
+  
+ Install Questions for MAG*3.0*172
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*172 :
+                Oct 27, 2016@13:12:59
+  
+ Build Distribution Date: Oct 25, 2016
+  
+  Installing Routines:...
+                Oct 27, 2016@13:12:59
+  
+  Installing PACKAGE COMPONENTS:
+  
+  Installing REMOTE PROCEDURE....
+                Oct 27, 2016@13:12:59
+  
+  Running Post-Install Routine: POS^MAGIP172.
+  
+ Post Install Mail Message: Oct 27, 2016@13:12:59
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*172 Installed.
+                Oct 27, 2016@13:12:59
+  
+ Installing and Updating the HDIG
+ ================================
+ For installing, updating, or uninstalling the HDIG, refer to the HDIG 
+ Installation Guide.
+  
+ Post Installation of MAG*3.0*172
+ ================================
+ Once installation is complete, go to the VixConfig folder and make sure 
+ the new rejectDuplicates  flag is in the DicomServerConfiguration.config
+ file and is set to "true".
+ Please ensure that there is no reference to old data in the 2005.632 &
+ 2005.633 files.
+  
+ In Fileman:
+  
+ LEX>D Q^DI
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ Output from what File: PROTOCOL// 2005.632  CT DOSE  (7696 entries)
+ Select CT DOSE ID: ^
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ Output from what File: CT DOSE// 2005.633  PROJECTION X-RAY DOSE
+                                           (117 entries)
+ Select PROJECTION X-RAY DOSE ID:
+  
+ If data exist in these files, log a helpdesk ticket requesting assistance 
+ to clear out the data.  
+  
+ NOTE: This patch must be installed before Patch RA*5*119.
+  
+ Uninstalling MAG*3.0*172
+ ========================
+ If it is necessary to uninstall the MAG*3.0*172 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option,
+ "Backup a Transport Global" (see installation section above, step 4c),
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the
+ "Backup a Transport Global" function.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*172 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains. Those parts that
+ are not routines should be backed up separately if they need to be
+ preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Routine Information:
+ ================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;** [Patch List]**;**;Mar 19, 2002;Build 25
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGVUID         59224341        66333362        118, 138, 172
+ MAGVRD03        18143435        19320380        **138,172**
+ MAGIP172        New             4110404         172
+  
+ Routine MAGIP172 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 22, 2016
+Completed By:                               Date Completed: SEP 07, 2017
+Released By :                               Date Released : SEP 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

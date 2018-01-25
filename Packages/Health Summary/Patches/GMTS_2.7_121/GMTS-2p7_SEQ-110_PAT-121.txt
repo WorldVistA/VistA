@@ -1,0 +1,129 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 06/20/17 at 12:08
+=============================================================================
+Run Date: NOV 01, 2017                     Designation: GMTS*2.7*121
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #110                    Status: Released
+                  Compliance Date: DEC 01, 2017
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*112<<= must be installed BEFORE `GMTS*2.7*121'
+
+Subject: HEALTH SUMMARY REPORT - CONSULT BRIEF INACCURATE RESULTS 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  Patch GMTS*2.7*121 addresses the following issue:
+  
+  1.  Ad Hoc Health Summary Menu [GMTS HS ADHOC] is providing inaccurate
+      results on the occurrence limit.
+   
+  Associated NSR(s): 
+  ==================
+  N/A 
+   
+  Associated CA SDM Ticket(s): 
+  ============================
+  1. I10034954FY16- Component for consult brief is providing inaccurate results
+   
+  
+  Participating Test Sites: 
+  =========================
+  Louis Stokes (CLE)
+  Birmingham
+  
+  CA SDM Ticket Overview:
+  =======================
+  1. I10034954FY16- Component for consult brief is providing inaccurate results
+   
+  Problem:
+  --------
+  An issue with Health Summary where the component for consult brief is
+  providing inaccurate results on the occurrence limit.
+  
+  Resolution:
+  -----------                     
+  Modify the GMTSCNB routine to appropriately honor the occurrence limit.
+   
+  Routine: GMTSCNB
+   
+  Technical
+  =========
+   
+  Before:
+   
+   S:GMTS2>GMTS1 GMTSI=GMTS1,GMTS1=GMTS2,GMTS2=GMTSI SGMTSI=GMTS2-.00000001
+     F  S GMTSI=$O(^GMR(123,"AD",GMTSDFN,GMTSI)) Q:+GMTSI=0!(GMTSI>GMTS1)  
+     D  Q:$D(GMTSQIT)
+   
+  After:
+   
+   S:GMTS2>GMTS1 GMTSI=GMTS1,GMTS1=GMTS2,GMTS2=GMTSI 
+     SGMTSI=GMTS2-.00000001 S GMTSNMC=1
+     F  S GMTSI=$O(^GMR(123,"AD",GMTSDFN,GMTSI)) Q:+GMTSI=0!(GMTSI>GMTS1)  
+     D  Q:$D(GMTSQIT)
+   
+   
+   
+     ==================== Installation Instructions ===================
+   
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users. This patch should take less than 5 minutes
+  to install.
+   
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+  2. From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+   
+  3. From this menu, you may select to use the following options (when
+     prompted for INSTALL NAME, enter GMTS*2.7*121).      
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view
+         the components of the KIDS build.
+   
+  4. Use the Install Package(s) option and select the package GMTS*2.7*121.
+   
+  5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+     respond NO.
+   
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSCNB
+    Before: B49123943   After: B49536568  **46,47,58,90,112,121**
+ 
+Routine list of preceding patches: 112
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 05, 2017
+Completed By:                               Date Completed: NOV 01, 2017
+Released By :                               Date Released : NOV 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

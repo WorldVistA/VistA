@@ -1,0 +1,241 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/19/17 at 10:55
+=============================================================================
+Run Date: NOV 02, 2017                     Designation: TIU*1*312
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #280                      Status: Released
+                  Compliance Date: DEC 03, 2017
+=============================================================================
+
+Associated patches: (v)TIU*1*200   <<= must be installed BEFORE `TIU*1*312'
+
+Subject: BACKGROUND ERROR PROCESSING TIU (TEXT INTEGRATED UTIL.) HL7 MESSAGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address errors encountered during background HL7 
+ processing of incoming TIU Progress Notes (HL7 MDM messages)
+  
+ Associated CA SDM ticket(s):
+ ============================
+ I12407898FY17
+  
+   Duplicates:
+   -----------
+   I12759896FY17
+   I12604651FY17
+   I12410982FY17
+   I11451951FY17
+   R13691154FY17 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Gainesville
+ Lebanon 
+    
+ SDM Ticket Overview:
+ ====================
+ I12407898FY17
+  
+ Problem:
+ ========
+ HL7 processing encountered errors in interactive processing.  HL7 
+ message processing is a background process and is not interactive and 
+ should not enter any interactive process or function.  The errors are 
+ seen in the error log as either FULL+2^VALM1 or HDR+13^PXBUTL. Although 
+ these errors may have occurred, the TIU Progress Note is stored with the 
+ electronic signature applied. Also, for MyHealtheVet Secure Messages, PCE 
+ workload is still captured. It appears the only known negative results of
+ the errors are:
+  
+ 1) Errors are filed in the error trap
+  
+ 2) TIU AUDIT TRAIL file (8925.5) isn't created (8925.5 records can be
+    seen using option "Multiple Patient Documents"->Detailed Display)
+  
+ 3) CREDIT STOP CODE ON COMPLETION field (#.11) is not cleared in TIU 
+    DOCUMENT file (#8925)
+  
+ 4) TIUHL7 Message Manager report (TIUHL7 MSG MGR) shows "unknown" 
+    status for the messages that error out
+  
+  
+ Resolution:
+ ===========
+ This patch will remove code that should not be in the TIUHL7U2 
+ routine which runs as a background job. Field .11 will still be 
+ cleared.
+  
+  
+ PRE-INSTALL:
+ ============
+ Before installing the patch, it is necessary to stop the Incoming and 
+ Outgoing Interfaces:
+  
+ Select OPTION NAME: HL MAIN MENU       HL7 Main Menu
+  
+           Event monitoring menu ...
+           Systems Link Monitor
+           Filer and Link Management Options ...
+           Message Management Options ...
+           Interface Developer Options ...
+           Site Parameter Edit
+  
+ Select HL7 Main Menu <TEST ACCOUNT> Option: FILER and Link Management 
+ Options
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+  
+ Select Filer and Link Management Options <TEST ACCOUNT> Option: FL  
+ Monitor, Start, Stop Filers
+  
+ ** Enter -I to Stop incoming filer
+  
+ (+I) Start incoming filer  (-I) Stop incoming filer  (*I) Delete incoming 
+ filer
+ (+O) Start outgoing filer  (-O) Stop outgoing filer  (*O) Delete outgoing 
+ filer
+  (N) Next 4 lines in list   (B) Back 4 lines in list  (Q) Quit
+  
+ Type selection: -I
+  
+ ** Enter -O to Stop outgoing filer
+  
+ (+I) Start incoming filer  (-I) Stop incoming filer  (*I) Delete incoming 
+ filer
+ (+O) Start outgoing filer  (-O) Stop outgoing filer  (*O) Delete outgoing 
+ filer
+  (N) Next 4 lines in list   (B) Back 4 lines in list  (Q) Quit
+  
+ Type selection: -O
+  
+     ===============INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*312)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package TIU*1.0*312.
+  
+    5. When Prompted "Rebuild Menu Tree Upon Completion: NO//", respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ POST-INSTALL:
+ =============
+ After installing the patch, it is necessary to start the Incoming and 
+ Outgoing Interfaces:
+  
+ Select OPTION NAME: HL MAIN MENU       HL7 Main Menu
+  
+           Event monitoring menu ...
+           Systems Link Monitor
+           Filer and Link Management Options ...
+           Message Management Options ...
+           Interface Developer Options ...
+           Site Parameter Edit
+  
+ Select HL7 Main Menu <TEST ACCOUNT> Option: FILER and Link Management 
+ Options
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+  
+ Select Filer and Link Management Options <TEST ACCOUNT> Option: FL  
+ Monitor, Start, Stop Filers
+  
+ ** Enter +I to Start incoming filer
+  
+ (+I) Start incoming filer  (-I) Stop incoming filer  (*I) Delete incoming 
+ filer
+ (+O) Start outgoing filer  (-O) Stop outgoing filer  (*O) Delete outgoing 
+ filer
+  (N) Next 4 lines in list   (B) Back 4 lines in list  (Q) Quit
+  
+ Type selection: +I
+  
+  
+ ** Enter +O to Start outgoing filer
+  
+ (+I) Start incoming filer  (-I) Stop incoming filer  (*I) Delete incoming 
+ filer
+ (+O) Start outgoing filer  (-O) Stop outgoing filer  (*O) Delete outgoing 
+ filer
+  (N) Next 4 lines in list   (B) Back 4 lines in list  (Q) Quit
+  
+ Type selection: +O
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUHL7U2
+    Before: B27485997   After: B24210461  **200,312**
+ 
+Routine list of preceding patches: 200
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2017
+Completed By:                               Date Completed: NOV 02, 2017
+Released By :                               Date Released : NOV 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

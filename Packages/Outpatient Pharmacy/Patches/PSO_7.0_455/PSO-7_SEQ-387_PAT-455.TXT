@@ -1,0 +1,203 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/06/16 at 13:16
+=============================================================================
+Run Date: OCT 20, 2016                     Designation: PSO*7*455
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #387                      Status: Released
+                  Compliance Date: NOV 20, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*282   <<= must be installed BEFORE `PSO*7*455'
+
+Subject: Calculation of Dosage/Other Language Expansion/HL7 delimiter
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses five issues:
+  
+   1. The calculation of the dosage of a prescription will not populate
+      when creating an order and entering the schedule in all lower case.
+  
+   2. Schedules are not expanding to SPANISH. The labels are not printing
+      in Spanish translated from English as necessary when creating a
+      prescription in outpatient pharmacy.
+  
+   3. In the Computerized Patient Record System (CPRS) Non-VA medications
+      that have a sig longer than 3 words will not display in the meds tab.
+  
+   4. If a Health Level 7 (HL7) delimiter character is inserted into the
+      comment field for Non-VA meds, the escape character is incorrectly
+      stored in the global.
+  
+   5. Modify routine PSONVNEW so only the date is stored for the Non-VA
+      med Start Date.
+  
+  
+  
+ Associated Trouble Tickets:
+ ===========================
+ 1. I6075794FY16 - Calculation of Dosage Issue
+ 2. I6069162FY16 - OTHER LANGUAGE EXPANSION
+ 3. I6377286FY16 - Full sig (directions) does not show for numerous 
+                   non-VA meds.
+ 4. INC000000476962 - HL7 Interface Issue
+    I9914760FY16 (d)
+ 5. INC000001027229 - Non-VA meds not displaying on Meds tab
+    I9915020FY16 (d)     
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Salt Lake City HCS
+ Oklahoma City VAMC
+ Clement Zablocki (Milwaukee) VAMC
+  
+ Ticket Overview:
+ ================
+  
+ 1. I6075794FY16 - Calculation of Dosage Issue
+  
+ Problem:
+ --------
+ The calculation of the dosage of a prescription will not populate when 
+ creating an order and entering the schedule in all lower case. 
+  
+ Resolution:
+ -----------
+ Added logic to routine PSOSIG so that when a user inputs a schedule all 
+ letters are translated into upper case. This will allow the outpatient 
+ pharmacy software to find the correct frequency for that related schedule 
+ thus applying the correct dosage.  
+  
+  
+  
+ 2. I6069162FY16 - OTHER LANGUAGE EXPANSION
+  
+ Problem:
+ --------
+ Schedules are not expanding to SPANISH. The labels aren't printing in 
+ Spanish translated from English as necessary when creating a prescription 
+ in outpatient pharmacy. 
+  
+ Resolution:
+ -----------
+ The outpatient routine PSOSPSIG uses a common sub routine for schedule 
+ expansion which unfortunately does not support the expansion of other 
+ language schedules. The routine will now utilize its own logic to 
+ calculate the expansion of other language schedules.   
+  
+  
+ 3. I6377286FY16 - Full sig (directions) does not show for numerous non-VA 
+                   meds
+  
+ Problem:
+ -----------
+ In the Computerized Patient Record System (CPRS) Non-VA medications that 
+ have a sig longer than 3 words will not display in the meds tab. 
+  
+ Resolution:
+ -----------
+ The routine PSONVNEW was modified to now accept free text entries in the 
+ schedule that are longer than 3 words. 
+  
+  
+ 4. I9914760FY16 - HL7 Interface Issue
+  
+ Problem:
+ --------
+ If a HL7 delimiter character is inserted into the comment field for Non-VA
+ meds (for example &), the escape HL7 character is incorrectly stored in
+ the global (& is stored as \T|).  CPRS displays this correctly on the
+ Orders and Meds tabs since it un-escapes the character.
+  
+ Resolution:
+ -----------
+ Routines PSONVNEW will be modified in two places to call the CPRS code
+ to un-escape the character when storing the comments for Non-VA meds.
+  
+ 5. I9915020FY16  Non-VA meds do not display on Meds tab
+  
+ Problem:
+ --------
+ Non-VA meds do not display on the Meds Tab in CPRS if the Start Date is 
+ set to NOW when creating the Non-VA med.
+  
+ Resolution:
+ -----------
+ Modify routine PSONVNEW so only the date is stored for the Non-VA med
+ Start Date.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than five 
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSO*7.0*455):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+     
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', Respond No.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', Respond No.
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSONVNEW
+    Before: B22533044   After: B29560779  **132,118,203,265,282,455**
+Routine Name: PSOSIG
+    Before: B65537760   After: B65860748  **46,99,114,391,313,282,455**
+Routine Name: PSOSPSIG
+    Before: B53180136   After: B64981310  **117,333,282,455**
+ 
+Routine list of preceding patches: 282
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 17, 2015
+Completed By:                               Date Completed: OCT 20, 2016
+Released By :                               Date Released : OCT 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,312 @@
+
+=============================================================================
+Run Date: OCT 02, 2017                     Designation: ICD*18*90
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #82                     Status: Released
+                  Compliance Date: OCT 16, 2017
+=============================================================================
+
+Associated patches: (v)ICD*18*89   <<= must be installed BEFORE `ICD*18*90'
+
+Subject: FY2017 DRG ANNUAL UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch provides the annual update to the Medicare Severity Diagnosis
+ Related Group (MS-DRG) Grouper version 34.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+ PLEASE NOTE: 
+   Be aware of the shortened compliance date. The dates listed in the patch
+   are accurate as the FY2017 annual patch was delayed.     
+   The changes included in this patch were effective as of 10/1/2016 per the
+   Federal Register Vol. 81, No. 162, dated August 22, 2016.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1) I12466955FY17 - FY2017 ANNUAL DRG GROUPER UPDATE
+    duplicate(s): 
+    I13429319FY17 - Vista problem DRG999 error on ICD DAIG code: K85.90
+    I12519086FY17 - drg 999 ungroupable
+    R15660002FY17 - Coder is having difficulty with DRG code 999. Code is
+                    showing displaying correctly in Clintegrity, but keeps
+                    coming back as 999
+    R10970280FY17 - DRG in Vista is incorrect and Nuance (separate ticket
+                    created for Nuance) Correct DRG 774/Wrong DRG 747 
+ 2) I13432382FY17 - DRG999 Ungroupable message / Vista DRG 999 / Correct
+                    DRG 699 
+   
+ ASSOCIATED NSRs:
+ ================
+ N/A
+  
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Montana HCS
+ VA North Florida/South Georgia HCS
+          
+  
+ TICKEY OVERVIEW:
+ ===============
+ 1) I12466955FY17 - FY2017 ANNUAL DRG GROUPER UPDATE
+   
+    The following changes are published in the Federal Register, Vol. 81,
+    No. 162, dated August 22, 2016 with an effective date of October 1,
+    2016. All page references below are for this annual update and
+    resource documents can be found at https://www.cms.gov/.
+     
+       
+      Changes include:
+       
+      I.   Revised DRGs.
+       
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+   
+    III.   Additional DRG-related data for the new ICD codes introduced by
+           patch LEX*2.0*108 (released October 6, 2016).
+  
+     IV.   DRG Reclassification changes to the Grouper.
+  
+       
+    This is a summary of the additions/changes made:
+       
+      I.   Routine ICD1882X was written to update the DRG file (#80.2).
+  
+           NEW DRGs for FY 2017
+           --------------------
+           n/a
+                      
+  
+           INACTIVATED DRGs for FY 2017
+           ----------------------------
+           MS-DRG 230 ACUTE ISCHEMIC STROKE WITH USE OF THROMBOLYTIC AGENT
+  
+  
+     II.   Routine ICD1890X is used to update the finalized values for DRG
+           relative weights and average length of stay (ALOS).
+    
+    
+    III.   Additional DRG-related values were taken from these Tables:
+      
+                Tables 6A-6M
+                Tables 6P.1a-6P.4k (ICD-10-PCS Code Translations)
+  
+           For a complete description of all tables please visit the Centers
+           for Medicare & Medicaid Services (WWW.CMS.GOV) or use the url
+           below:
+  
+           https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/
+           AcuteInpatientPPS/FY2017-IPPS-Final-Rule-Home-Page.html?DLSort=
+           0&DLEntries=10&DLPage=1&DLSortDir=ascending
+  
+  
+     IV.   DRG RECLASSIFICATION.
+           
+      Changes to other DRGs:
+      ----------------------
+       1. PRE MDC (p.56791)
+          Effective 10/1/2016 ICD-10 procedure codes 02RK0JZ and 02RL0JZ
+          will be assigned as a code cluster to MS-DRGs 001 and 002 
+          (Heart Transplant or Implant of Heart Assist System with and
+          without MCC, respectively).
+  
+       
+       2. MDC 1 (p.56795)
+          Reassignment of ICD-10-CM diagnosis codes T85.610A, T85.620A,
+          T85.630A, and T85.690A from MDC 21 under MS-DRGs 919, 920, and
+          921 to MDC 1 under MS-DRGs 091, 092, and 093. The official code
+          titles for these four codes were revised after publication of the
+          proposed rule as well. Effective October 1, 2016, the revised
+          code titles are reflected in Table 6E associated with this final
+          rule, which is available via the Internet on the CMS Web site.
+   
+  
+       3. MDC 4 (p.56797)
+          Reassignment of ICD-10-CM diagnosis code R22.2 from MDC 4 to MDC
+          9 under MS-DRGs 606 and 607 (Minor Skin Disorders with and without
+          MCC, respectively.)
+   
+  
+       4. MDC 6 (p.56813)
+          Assigned ICD-10-PCS code 06183DY (Bypass portal vein to lower vein
+          with intraluminal device, percutaneous approach) to MDC 7 (Diseases
+          and Disorders of the Hepatobiliary System and Pancreas) under
+          MS-DRGs 405, 406, and 407 (Pancreas Liver and Shunt Procedures with
+          MCC, with CC, and without CC/MCC, respectively).
+       
+  
+       5. MDC 13 (p.56825)
+          Removed the following seven procedure codes currently listed as a
+          "cluster" in MDC 6 under MS-DRGs 332, 333, and 334 effective
+          October 1, 2016. The codes will remain as a cluster in MDC 13
+          under MS-DRGs 734 and 735 (Pelvic Evisceration, Radical
+          Hysterectomy and Radical Vulvectomy with CC/MCC and without
+          CC/MCC, respectively).
+  
+         0TTB0ZZ......................  Resection of bladder, open approach
+         0TTD0ZZ......................  Resection of urethra, open approach
+         0UT20ZZ............  Resection of bilateral ovaries, open approach
+         0UT70ZZ....  Resection of bilateral fallopian tubes, open approach
+         0UT90ZZ.......................  Resection of uterus, open approach
+         0UTC0ZZ.......................  Resection of cervix, open approach
+         0UTG0ZZ.......................  Resection of vagina, open approach
+  
+  
+       6. MDC 19 (p.56826)
+          Modified the title for ICD-10 MS-DRG 884. The new title for MS-DRG
+          884 for Version 34 is MS-DRG 884 Organic Disturbances and
+          Intellectual Disability.
+  
+       
+ 2) I13432382FY17 - DRG999 Ungroupable message / Vista DRG 999 / Correct
+                    DRG 699
+  
+         Problem:
+         ========
+         DRG 699 incorrectly calculating to DRG 999 in VistA.
+          
+         Solution:
+         =========
+         Updated the DRG Grouper from version 33 to version 34.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed during non-peak hours to
+ minimize potential disruption to users.  Additionally, installing during
+ peak hours may lead to an unusually long install time.  Do not interrupt
+ the installation.  Do not Queue this installation. If it is queued, it may
+ hang and not finish installing.
+  
+ Installation can take 40 mins to one (1) hour.
+  
+ Create a backup of the following global file before continuing.  When you
+ are creating a backup of non-subscripted globals, you are saving the entire
+ global.  You should use the utility ^%GO for non-subscripted globals, and
+ when prompted for a global, enter the global root (global name only, no open
+ parenthesis, no file number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICDD            entire ICDD global
+   
+  
+  1.  Retrieve the KIDS distribution host file. This patch will be
+      distributed in a host file due to the amount of data contained in
+      the patch.  The name of the host file is:
+  
+           ICD_18_90.KID
+  
+      Sites can retrieve VistA software from the following SFTP addresses.
+      The preferred method is to SFTP the files from:
+  
+           download.vista.domain.ext
+  
+      This will transmit the files from the first available SFTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+           Hines                   domain.ext
+           Salt Lake City          domain.ext
+  
+      The ICD_18_90.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+  
+  2.  Load the KIDS distribution that is contained in file ICD_18_90.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter ICD*18.0*90):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package ICD*18.0*90:
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+  
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+      DRG Grouper                      [ICD DRG GROUPER]
+      DRG Calculation                  [DG DRG CALCULATION]
+      Load/Edit PTF Data               [DG PTF SCREEN]
+      Claims Tracking Edit             [IBT EDIT TRACKING ENTRY]
+      Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+      DRG Information Report           [DG PTF DRG INFORMATION OUTPUT]
+  
+  
+      When prompted "Enter protocols you wish to mark as "Out of
+      Order":" just press <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1890A
+    Before:       n/a   After: B66183101  **90**
+Routine Name: ICD1890F
+    Before:       n/a   After: B57685162  **90**
+Routine Name: ICD1890G
+    Before:       n/a   After: B62309016  **90**
+Routine Name: ICD1890H
+    Before:       n/a   After: B59088830  **90**
+Routine Name: ICD1890I
+    Before:       n/a   After: B57522747  **90**
+Routine Name: ICD1890J
+    Before:       n/a   After: B59960902  **90**
+Routine Name: ICD1890K
+    Before:       n/a   After: B62933390  **90**
+Routine Name: ICD1890O
+    Before:       n/a   After:  B2924602  **90**
+Routine Name: ICD1890P
+    Before:       n/a   After:  B2839532  **90**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 19, 2017
+Completed By:                               Date Completed: SEP 28, 2017
+Released By :                               Date Released : OCT 02, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

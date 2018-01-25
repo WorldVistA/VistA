@@ -1,0 +1,277 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/31/17 at 16:32
+=============================================================================
+Run Date: OCT 04, 2017                     Designation: PSB*3*99
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #82                      Status: Released
+                  Compliance Date: NOV 04, 2017
+=============================================================================
+
+Associated patches: (v)PSB*3*86    <<= must be installed BEFORE `PSB*3*99'
+                    (v)PSB*3*97    <<= must be installed BEFORE `PSB*3*99'
+
+Subject: BCMA MEDICATION UPDATE ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. The Bar Code Medication Administration (BCMA) GUI does not store the
+    initials of the 2nd user who witnesses a high risk/high alert continuous
+    intravenous (IV) order which has been marked stopped and then marked
+    infusing again.
+  
+ 2. If an IV order is marked as a missing dose, then as held or refused, then
+    infusing, the medication log shows each ingredient of the infusing IV Order
+    to have units of zero.
+  
+ 3. When a multiple dose medication has been edited prior to administration,
+    it will display on the Missed Meds report after administration.
+  
+ 4. A PRN medication requiring a PRN Effectiveness does not display in the
+    BCMA Clinical Reminders section if the patient is discharged and 
+    re-admitted.
+  
+ 5. The unsupported Documenting Backlog PRNs [PSB PRN DOCUMENTING] option
+    needs to be marked out of order, and removed from the Bar Code Medication
+    Administration Manager [PSB MGR] menu option.
+  
+ 6. An error occurs when a site new to BCMA attempts to create their first 
+    order.
+  
+ 7. The patient lookup window sometimes lists the wrong patient when users
+    are doing a search by the ward name and the first part of the ward name
+    matches with a valid date.
+  
+ NEW SERVICE REQUESTS (NSRs):
+ ============================
+ N/A
+   
+ DEFECT TRACKING SYSTEM TICKET(s) & OVERVIEW: 
+ ============================================
+ 1. I9892136FY16 -  2nd Witness Initials not stored
+ 2. I9842129FY16 -  TPN shows 0 units for each ingredient - Med Log
+ 3. I9892810FY16 -  False missed med when Inpatient Pharmacy edits dispense
+                    drug
+ 4. R12817870FY17 - PRN requiring effective is not showing on BCMA Clinical
+                    Reminders
+ 5. I10114492FY16 - Mark Documenting Backlog PRNs option OOO
+ 6. I6216135FY16 -  <UNDEFINED>RESETADM+7^PSBUTL error in BCMA
+ 7. I10181534FY16 - Extra Data populated when pulling by Ward
+  
+  
+ 1. I9892136FY16   - 2nd Witness Initials not stored
+  
+    Problem:
+    --------
+    The second witness' information is not stored in the ADMIN WITNESSED BY
+    (#.29) field of the BCMA MEDICATION LOG (#53.79) file when an IV bag
+    with a high risk/high alert medication is marked stopped and then
+    infusing again.
+    
+    Resolution:
+    -----------
+    Routine PSBML2 was modified to remove the first witness' information
+    and store the second's information in the ADMIN WITNESSED BY (#.29) 
+    field. The first user's information will be preserved in the AUDIT LOG
+    sub-file (#53.799).
+  
+ 2. I9842129FY16  - TPN shows 0 units for each ingredient - Med Log
+  
+    Problem:
+    --------
+    When a missing dose is requested for an IV order, then as held or refused,
+    and then infusing, the Medication History report shows each ingredient of 
+    the infusing IV Order to display units of zero. 
+    
+    Resolution:
+    -----------
+    Routine PSBML2 was modified to store the correct units for each IV bag
+    ingredient in the UNIT OF ADMINISTRATION (#.04) field of both the 
+    ADDITIVES (#53.796) and SOLUTIONS (#53.797) sub-files.
+  
+ 3. I9892810FY16 - False missed med when Inpatient Pharmacy edits dispense
+    drug
+  
+    Problem:
+    --------
+    A multiple dose medication will incorrectly display on the BCMA Missed
+    Medications report when the dosage form of the order was edited after
+    a missing dose request is made on the order.
+  
+    Resolution:
+    -----------
+    Routine PSBML2 was modified to store the correct medication dosages
+    in the DISPENSE DRUG (#53.795) sub-file when the edited order is
+    administered. 
+  
+ 4. R12817870FY17 - PRN requiring effective is not showing on BCMA Clinical
+                    Reminders
+  
+    Problem:
+    --------
+    A PRN medication requiring a PRN Effectiveness does not display on the
+    BCMA Clinical Reminders if the patient is discharged and re-admitted.
+  
+    Resolution:
+    -----------
+    Routine PSBPRN was modified to display the order under the BCMA Clinical 
+    Reminders when the patient is discharged and re-admitted, as long as the
+    order falls within the PRN Documentation parameter.
+  
+ 5. I10114492FY16 - Mark Documenting Backlog PRNs option OOO
+  
+    Problem:
+    --------
+    The unsupported Documenting Backlog PRNs [PSB PRN DOCUMENTING] option
+    needs to be marked out of order and removed from the Bar Code Medication
+    Administration Manager [PSB MGR] menu option. This option runs a version
+    2 routine in BCMA (currently on version 3), and should not be active
+    on a nationally released menu option.
+  
+    Resolution:
+    -----------
+    Post Install routine PSB399P will mark the Documenting Backlog PRNs
+    option [PSB PRN DOCUMENTING] "out of order" and remove the option
+    from the Bar Code Medication Administration Manager [PSB MGR] menu.
+  
+  
+ 6. I6216135FY16 - <UNDEFINED>RESETADM+7^PSBUTL error in BCMA
+  
+    Problem:
+    --------
+    An error occurs the first time an order is administered in BCMA.
+  
+    Resolution:
+    -----------
+    Routine PSBUTL was modified to properly record the first BCMA 
+    medication administration.
+  
+  
+ 7. I10181534FY16 - Extra Data populated when pulling by Ward
+  
+    Problem:
+    --------
+    A BCMA user was attempting to pull data by ward. When data populated
+    it listed patients that are not associated with the ward selected.
+  
+    The problem happened because the ward searched had a name that the first
+    characters were similar to a date (e.g., 8-8, 10-11, etc.). The routine  
+    PSBMLLKU (line tag PTLKUP) used to perform a Fileman lookup using all
+    cross-references in the PATIENT file (#2). This lookup approach
+    sometimes produced wrong entries because it would match with a date from
+    the "E" x-ref (CV DATED EDITED) because for example "8-8" would trigger
+    a match a 08/08/17 (current year) causing such patients to be included
+    in the lookup result.
+   
+    Resolution:
+    -----------
+  
+    The code at the PTLKUP^PSBMLLKU was modified to only include the cross-
+    references that are relevant to the patient lookup popup window (last 
+    name, first name, SSN, ward, room and bed).
+  
+  
+ PARTICIPATING TEST SITES:   
+ =========================
+ West Palm Beach VAMC  
+ Wilkes-Barre VAMC 
+  
+  
+ Patch Installation:
+  
+    Note:
+    -----
+    Routine APSPFUNC called from PSBMLLKU are Indian Health Services (IHS)
+    only routines and will display as an XINDEX error when installing
+    this patch in VA Accounts.  This functionality was introduced by patch
+    PSB*3.0*42. This enhancement is intended to enable the BCMA 
+    application to recognize whether it is operating in the Indian Health
+    Service (IHS) or Veterans Health Administration (VHA) environment, and
+    respond by recognizing and displaying the patient identifier
+    appropriate to the environment. This will enable a single version of
+    BCMA to be maintained by VHA and yet be installed and operate in a
+    "plug and play" fashion in an IHS or Tribal facility running Resource
+    and Patient Management System (RPMS).
+  
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system. Users should remain off the  *
+     *  system for a period of 10 minutes during installation.*
+     *                                                        *
+     *                                                        *
+     *  Suggested time to install: Queued for Non-peak        *
+     *  requirement hours.                                    *
+     **********************************************************
+      
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*99):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*99.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB399P
+    Before:       n/a   After:  B2597638  **99**
+Routine Name: PSBML2
+    Before:B112891914   After:B123475922  **3,18,22,23,13,45,42,70,72,83,99**
+Routine Name: PSBMLLKU
+    Before:B129280348   After:B129432014  **3,9,11,20,13,38,32,56,42,70,
+                                           72,83,99**
+Routine Name: PSBPRN
+    Before: B49031208   After: B49151450  **5,3,13,61,68,70,80,86,99**
+Routine Name: PSBUTL
+    Before:B245001483   After:B246701379  **3,9,13,38,45,46,63,83,97,99**
+ 
+Routine list of preceding patches: 86, 97
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 21, 2017
+Completed By:                               Date Completed: OCT 03, 2017
+Released By :                               Date Released : OCT 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

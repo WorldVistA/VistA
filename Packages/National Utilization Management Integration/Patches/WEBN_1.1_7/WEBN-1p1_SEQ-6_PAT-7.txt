@@ -1,0 +1,134 @@
+
+=============================================================================
+Run Date: OCT 04, 2017                     Designation: WEBN*1.1*7
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #6                    Status: Released
+                  Compliance Date: OCT 05, 2017
+=============================================================================
+
+
+Subject: NATIONAL UTILIZATION MANAGEMENT INTEGRATION (NUMI) Version 1.1.15.3.1 Release.
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch is being released to correct the following defects:
+  Timestamp 24:00 on stays does not sync correctly to NUMI.
+  Users should be able to search patient by their full name.
+  
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+  I10870693fY16: Convert VistA data retrieval from Medical Domain Web 
+  Service (MDWS) to VistA Integration Adaptor (VIA)
+  to end NUMI's dependency on unsecure anonymous access.  This version
+  V.15.3.1 has corrected the following defects:
+    
+  1. i12648434fy17 (RTC Defect 492580): Admissions and movements with the 
+  Timestamp of 24:00 do not 
+  sync or display correctly in NUMI. The 24:00 timestamp from VistA will 
+  display as 
+  00:00 in NUMI and affected observation stays display 24 more hours 
+  of elapsed time than they should.  NUMI 15.3.1 will correctly sync and 
+  calculate length of stay. Admissions and movements that occur with a 
+  2400 timestamp  will be displayed in NUMI as the following day with a 
+  00:00 timestamp.
+   
+  2. i15033411fy17 (RTC Defect 512060): Users should be able to search 
+  patient by their full name, but NUMI only searches by 
+  partial name and other methods such as SSN and last initial + last 4 
+  digits of SSN.  NUMI 15.3.1 will support patient search by full name  
+  except in situations where a name has multiple breaks.
+  
+  In addition an updated version of VIA will retrieve complete Admission, 
+  Discharge and Transfer (ADT) data from VistA.
+  
+  Patch Components:
+  -----------------
+  N/A
+   
+  Files & Fields Associated:
+   
+  File Name (Number)      Field Name (Number)     New/Modified/Deleted
+  ------------------      -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name       File #  New/Modified/Deleted
+  ---------       ------  --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name New/Modified/Deleted
+  --------------- --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name     Type    New/Modified/Deleted
+  -----------     ----    -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name   New/Modified/Deleted
+  -------------   -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name   Type    File Name (Number)  New/Modified/Deleted 
+  -------------   ----    ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  None
+   
+  Participating Test Sites:
+  -------------------------
+  Orlando VAMC
+  Central Plains HCS
+  N. Florida/S. Georgia HSC
+   
+  Software and Documentation Retrieval Instructions:
+  ---------------------------------------------------- 
+  N/A
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 18, 2017
+Completed By:                               Date Completed: SEP 29, 2017
+Released By :                               Date Released : OCT 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

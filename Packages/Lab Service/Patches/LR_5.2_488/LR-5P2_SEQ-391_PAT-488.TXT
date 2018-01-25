@@ -1,0 +1,159 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/18/17 at 17:39
+=============================================================================
+Run Date: SEP 18, 2017                     Designation: LR*5.2*488
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #391                    Status: Released
+                  Compliance Date: OCT 19, 2017
+=============================================================================
+
+Associated patches: (v)LR*5.2*437  <<= must be installed BEFORE `LR*5.2*488'
+                    (v)LR*5.2*458  <<= must be installed BEFORE `LR*5.2*488'
+
+Subject: OVERRIDE REFERENCE RANGE ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) VistA Laboratory issues related to override 
+ reference ranges:
+  
+ 1. Override Reference Ranges Not Displaying on Reports
+ 2. Option LRENTER Prompt Answer of "YES" Treated as "NO"
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated CA-SDM tickets:
+ =========================
+ 1. I14578932FY17: Override Reference Ranges Not Displaying on Reports
+ 2. I14605853FY17: Option LRENTER Prompt Answer of "YES" Treated as "NO"
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*488 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*488 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*488 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ Charlie Norwood VAMC (Augusta, GA)
+ Tuscaloosa VAMC, AL
+  
+ Ticket Overview:
+ ================
+ 1. I14578932FY17: Override Reference Ranges Not Displaying on Reports
+  
+    Problem:
+    -------
+    Override reference ranges entered manually in the option 
+    Enter/verify/modify data (manual) [LRENTER] are not stored in the LAB
+    DATA (#63) file.  Instead, reference ranges from the LABORATORY TEST
+    (#60) file are stored and subsequently displayed on the patient
+    report.  This could cause an incorrect interpretation of the test
+    results.
+  
+    Resolution:
+    ----------
+    Modify routine LRVER4 to not store the values from the LABORATORY TEST
+    (#60) file if override values have been added by the user for this 
+    accession.
+  
+ 2. I14605853FY17: Option LRENTER Prompt Answer of "YES" Treated as "NO"
+  
+    Problem:
+    -------
+    If a user answers "YES" to the prompt "Use these values?", which 
+    pertains to override reference ranges, the option will treat the answer
+    as "NO" and display the additional reference range prompts. Laboratory 
+    personnel must spend additional time returning through prompts which
+    they indicated they did not wish to view, when answering "YES".
+  
+    Resolution:
+    ----------
+    Modify routine LRVER5 to treat the "YES" answer as intended, so that
+    additional reference range prompts are not displayed for user input.
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*488'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRVER4
+    Before: B82283549   After: B82522419  **14,42,112,121,140,171,153,
+                                           188,279,283,286,350,437,488**
+Routine Name: LRVER5
+    Before:B148324560   After:B149265866  **42,153,283,286,350,458,488**
+ 
+Routine list of preceding patches: 437, 458
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2017
+Completed By:                               Date Completed: SEP 13, 2017
+Released By :                               Date Released : SEP 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,216 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 04/21/17 at 16:38
+=============================================================================
+Run Date: SEP 06, 2017                     Designation: PRC*5.1*194
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #175                    Status: Released
+                  Compliance Date: OCT 07, 2017
+=============================================================================
+
+Associated patches: (v)PRC*5.1*184 <<= must be installed BEFORE `PRC*5.1*194'
+
+Subject: PRCHLO CLO PROCUREMENT;NEW YEAR PO ERROR
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. CLO Procurement Reports (CLRS) [PRCHLO CLO PROCUREMENT] maintenance;
+    decommission the Taskman job.
+  
+ 2. Error when entering 2237 in new FY; the check for available entries 
+    fails if the first entry has not been created during initial
+    requisition for new fiscal year purchase orders.
+  
+  
+ ASSOCIATED NSR(s):
+ =================
+ N/A
+  
+  
+ ASSOCIATED TICKET(S):
+ ====================
+ 1. I8406036FY16 - CLRS - Shutdown FTP Process
+  
+ 2. I10927149FY17 - Editing Purchase Order error for first 2237 in FCP for 
+                    new FY  
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ C.W. Bill Young VA Medical Center (Bay Pines)
+ Tomah VA Medical Center 
+  
+  
+ TICKET OVERVIEW:
+ =============== 
+ 1. I8406036FY16 - CLO Procurement Reports (CLRS) [PRCHLO CLO PROCUREMENT] 
+    - Shutdown FTP Process
+  
+    Problem:
+    -------
+    There was a decommissioning of the File Transfer Protocol (FTP)
+    capability for monthly option CLO Procurement Reports (CLRS)
+    [PRCHLO CLO PROCUREMENT]. The FTP feed from the option is no longer
+    needed as Corporate Data Warehouse (CDW) pulls the Generic Inventory
+    Package (GIP) information from VistA.
+  
+    Resolution:
+    ----------
+    Remove from Taskman the option CLO Procurement Reports (CLRS) 
+    [PRCHLO CLO PROCUREMENT] and the same is set to Out of Order in the
+    OPTION File (#19).
+  
+ Routines: PRCTDELA  (new)   pre-install
+ Option: CLO Procurement Reports (CLRS) [PRCHLO CLO PROCUREMENT] set to
+         Out of Order
+  
+ PLEASE NOTE: We still need to run the GIP Job as follows:
+  
+ CLO Procurement Reports (CLRS) [PRCPLO CLO GIP OPTION]
+ > 1st Day of Month - 2.5 to 4 hrs after OPEN BALANCES job 
+   (example 0230, 0400, etc). For example, it might be set up for
+   next month as 09/01/16@0300, etc.
+ > This job should only be scheduled in production; it should NEVER
+   be scheduled in mirror/test.
+  
+ CDW pulls the GIP information for us so we no longer need the FTP 
+ feed coming across. However, the CDW pull relies on the GIP task 
+ running at each station on the 1st of the month (as described in the 
+ option above).
+  
+ 2. I10927149FY17 - Editing Purchase Order error for first 2237 in FCP for 
+                    new fiscal year (FY)
+  
+    Problem:
+    -------
+    When creating the initial requisition for orders, the check for
+    available entries will fail if the first entry for the Fund Control 
+    Point (FCP) has not been created.
+  
+    Resolution:
+    ----------
+    Modify the ordering process for checking available requisition
+    entries for selected FCP to manage the condition of no entries
+    for new fiscal year and continue processing.
+  
+ Routines: PRCHNPOB
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The following files should be downloaded in the binary SFTP mode.
+   
+ Title                         File Name                   
+ -----                         ---------
+ ifcp5_1application_coord.pdf  IFCAP Application Coordinator User's Guide
+ ifcp5_1tech_manual.pdf        IFCAP Technical Manual           
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Pre & Post install routines PRCTDELA will be deleted
+   once the install is complete. If you wish to check the checksum
+   of these routines please use the 'Verify Checksums in Transport
+   Global' under the Installation Menu.
+   *********************************************************************** 
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*194)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*194.
+   
+    5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//", respond YES.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit <Return>.  
+  
+    7. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <Return>. 
+  
+       a. When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option(s):
+  
+        CLO Procurement Reports (CLRS)      [PRCHLO CLO PROCUREMENT]
+        New Detailed Purchase Card Order    [PRCH ENTER DETAILED ORDER]
+        New Simplified Purchase Card Order  [PRCH ENTER SIMPLIFIED ORDER]
+        New Purchase Order                  [PRCHPC PO ADD]
+        Enter Delivery Order                [PRCH ENTER DELIVERY ORDER] 
+        New 1358 Request                    [PRCEC NEW] 
+  
+       b. When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHNPOB
+    Before:  B4314054   After:  B4549497  **184,194**
+Routine Name: PRCTDELA
+    Before:       n/a   After:  B1542365  **194**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2016
+Completed By:                               Date Completed: SEP 01, 2017
+Released By :                               Date Released : SEP 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

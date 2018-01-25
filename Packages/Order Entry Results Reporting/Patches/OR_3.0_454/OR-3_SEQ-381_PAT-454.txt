@@ -1,0 +1,279 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Thursday, 04/20/17 at 14:04
+=============================================================================
+Run Date: OCT 10, 2017                     Designation: OR*3*454
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #381                      Status: Released
+                  Compliance Date: NOV 10, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*420    <<= must be installed BEFORE `OR*3*454'
+
+Subject: PATCH TO A PATCH OR*3.0*420 FIX
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This emergency patch fixes two coding issues found during field testing 
+ of patch OR*3.0*420, as well as two non-coding issues.
+  
+      - Removes code and comments left in routine ORWDPS2 during
+        development that are causing an error in the Bar Code Medication
+        Administration (BCMA) application when using the CPRS MED Order 
+        button.
+  
+      - Resolves an undefined error caused by namespacing the Class III to
+        Class I variables in routine ORWDPLM2. The variables in question
+        were  named ORNODE, when they should have been named ORLNODE to
+        comply with national standards. This patch changes the variable
+        name ORNODE in routine ORWDPLM2 to the name ORLNODE.
+  
+      - Corrects a spelling error in the OR*3.0*420 patch description
+        instructions for setting up a TIU Object, which inserted the
+        following line of code. 
+      
+        S
+        X=$$SL^ORWDLPM2(DFN,$S($G(X0)]"":$P(X0,U),$G(NODE0)]"":$P(NODE0,U),1:""),
+        " ^TMP($J,""ORWDPLM2"")") 
+      
+        The section S X=$$SL^ORWDLPM2 should have been 
+        S X=$$SL^ORWDPLM2. 
+       
+        The corrected whole line of code to be inserted in the
+        TIU Object is: 
+  
+        S
+        X=$$SL^ORWDPLM2(DFN,$S($G(X0)]"":$P(X0,U),$G(NODE0)]"":$P(NODE0,U),1:""),
+        "^TMP($J,""ORWDPLM2"")")
+  
+        NOTE: The TIU object will not work for an Inpatient Medication
+        Quick Order because the VistA Production environment does not
+        maintain the data required to extract and run the object in the
+        Inpatient scenario.
+  
+  
+     -  Changes the result returned if a lab monitor connected to a quick
+        order is deleted from the Drug file. In OR*3.0*420, the code
+        returns "^@@^", which means no results. This can be confusing for
+        the clinician. Code was added to the ORWDPLM2 routine so that a
+        blank result is returned if the lab monitor is not available and
+        there is nothing to print
+  
+  
+     EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3*454 contains
+     changes to a package referenced in ProPath standard titled: BBM Team 
+     Review of VistA Patches. This patch does not alter or modify any VistA
+     Blood Bank software design safeguards or safety critical elements 
+     functions.
+  
+     RISK ANALYSIS: Changes made by patch OR*3*454 have no effect on Blood
+     Bank software functionality, therefore RISK is none.
+  
+  
+  
+ Patch Components
+ ================                                               
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ -----------------------  ------------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #       New/Modified/Deleted
+ ---------                ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20100311  CPRS LAB MONITORING
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ VA Puget Sound Health Care System, Seattle WA
+ Minneapolis VA Health Care System, Minneapolis, MN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ No documentation updates are associated with this emergency patch release.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         OR*3.0*454.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+  
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+  
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+  
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted "Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//," press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.      If prompted "Delay Install (Minutes):  (0 - 60): 0// enter 0.
+  
+ 9.      If prompted "Enter the Device you want to print the Install 
+         messages.  You can queue the install by enter a 'Q' at the device 
+         prompt. Enter a "^" to abort the install.  DEVICE:  HOME//  HOME
+         (CRT)", press <Enter>.
+  
+  
+  
+ Post-Installation Instructions
+ ----
+ N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the OR routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the OR routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch OR*3.0*454 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWDPLM2
+    Before:  B6515628   After:  B6706137  ***420,454***
+Routine Name: ORWDPS2
+    Before: B68354052   After: B66201174  **85,116,125,131,132,148,141,
+                                           195,215,258,243,424,420,454**
+ 
+Routine list of preceding patches: 420
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 06, 2017
+Completed By:                               Date Completed: OCT 06, 2017
+Released By :                               Date Released : OCT 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,178 @@
+Subj: PATCH MAG*3*166 UPDATE - IMPORTANT  [#2600781]
+10 Oct 2017 10:26:43 -0400 (EDT)  179 lines
+-------------------------------------------------------------------------------
+** IMPORTANT **
+===============
+A Health Level 7 (HL7) version compatibility issue was discovered in MAG*3.0*
+166 that may cause the wrong Date of Birth (DOB) to be displayed in the 
+Modality Worklist (MWL) for a patient. If a site is running an incompatible 
+version of HL7, the old version of the MAG7RS routine backed up during the 
+install of MAG*3.0*166 should be loaded immediately after the install of MAG*
+3.0*166.
+
+Note: It is not advisable to upgrade the version of HL7 because of this issue. 
+This solution is a temporary fix until MAG*3.0*183 is released. MAG7RS.RTN 
+will be eliminated in that patch. 
+
+
+PLEASE FOLLOW THE STEPS BELOW - 
+-----------------------------
+1.  Run FileMan Print from #101 Protocol file (steps shown below).
+2.  Review FileMan output to determine if site is running an incompatible 
+version of HL7 (output examples shown below).
+3.  If site is presently at HL7 v2.4 NO FURTHER ACTION IS REQUIRED.
+4.  AFTER THE INSTALLATION OF MAG*3.0*166, if site HL7 version is presently 2.
+1 or 2.3, install MAG*3.0*166 MAG7RS routine BACKUP (steps shown below).   
+Note - If MAG7RS routine was not backed up during installation of MAG*3.0*166 
+please enter a ticket for assistance by contacting the National Service Desk 
+at 1-855-673-4357.
+5.  Confirm Checksum version of MAG7RS routine (steps shown below).
+
+
+* DETAILED INSTRUCTIONS * - 
+
+
+#1 - STEPS TO DETERMINE PRESENT HL7 VERSION
+===========================================
+
+   Select VA FileMan Option: Print File Entries
+                             ------------------
+
+   Output from what File: PROTOCOL
+                          --------
+   Sort by: NAME// SUBSCRIBERS
+                   -----------
+   SUBSCRIBERS SUB-FIELD: SUBSCRIBERS="MAGD SEND ORM"
+                          ---------------------------
+     Within SUBSCRIBERS="MAGD SEND ORM", Sort by: <return>
+                                                  --------
+
+   First Print FIELD: NAME
+                      ----
+   Then Print FIELD: <return>
+                     --------
+   Heading (S/C): PROTOCOL List// <return>
+   START at PAGE: 1// <return>
+   DEVICE:   <return>    Right Margin: 80// <return>
+
+
+#2 - REVIEW FILEMAN OUTPUT
+==========================
+
+   If output equals the listing shown below NO FURTHER ACTION IS REQUIRED.
+      PROTOCOL List
+      NAME
+      ------------------
+      RA REG 2.4
+      RA EXAMINED 2.4
+      RA CANCEL 2.4
+
+
+
+   If output contains one or both of the lists, proceed with install of 
+backup MAG7RS routine.
+      PROTOCOL List
+      NAME
+      RA REG
+      RA CANCEL
+      RA EXAMINED
+
+      RA REG 2.3
+      RA CANCEL 2.3
+      RA EXAMINED 2.3
+
+
+
+#4 - INSTALL MAG7RS BACKUP
+==========================
+Administrators will need to use the PackMan function INSTALL/CHECK MESSAGE. 
+Check your MailMan messages for the backup message sent by the 'Backup a 
+Transport Global' function.
+       1. Select the message shown below:
+               Backup of MAG*3.0*166 install on <mmm dd, yyyy> <user name>
+       2. Select the Xtract PackMan option.
+       3. Select the Install/Check Message option.
+       4. Enter 'Yes' at the prompt.
+       5. Enter 'Yes' at the backup prompt.
+
+ Example - 
+  Enter message action (in IN basket): Ignore// Xtract PackMan
+       Select PackMan function: ?
+               Answer with PackMan function NUMBER, or NAME
+       Choose from:
+               1 ROUTINE LOAD
+               2 GLOBAL LOAD
+               3 PACKAGE LOAD
+               4 SUMMARIZE MESSAGE
+               5 PRINT MESSAGE
+               6 INSTALL/CHECK MESSAGE
+               7 INSTALL SELECTED ROUTINE(S)    <<<----------------
+               8 TEXT PRINT/DISPLAY
+               9 COMPARE MESSAGE
+       Select PackMan function: Select PackMan function: 7 INSTALL SELECTED 
+ROUTINE(S)
+
+Warning:  Installing this message will cause a permanent update of globals 
+and routines.
+  Do you really want to do this? NO// y  YES
+  ROUTINE(S): MAG7RS                           <<<----------------
+  ROUTINE(S): <return>
+
+Routines are the only parts that are backed up.  NO other parts
+are backed up, not even globals.  You may use the 'Summarize Message'
+option of PackMan to see what parts the message contains.
+Those parts that are not routines should be backed up separately
+if they need to be preserved.
+
+
+Shall I preserve the routines on disk in a separate back-up message? YES// <
+return>
+
+Subject: MAG7RS backup
+Send mail to: <user name>
+Select basket to send to: BACKUP//   
+And Send to: <return>
+Building PackMan backup message with subject MAG7RS backup
+
+PackMan backup message [642068] sent.
+Line 2    Message #640074    Unloading Routine   MAG7RS (PACKMAN_BACKUP)
+
+Select PackMan function: <return>
+
+
+
+#5 - VERIFY MAG7RS BACKUP INSTALL -   MAG7RS    value = 54519012
+=================================
+>D CHECK1^XTSUMBLD
+
+New CheckSum CHECK1^XTSUMBLD:
+
+This option determines the current checksum of selected routine(s).
+The Checksum of the routine is determined as follows:
+
+1. Any comment line with a single semi-colon is presumed to be
+   followed by comments and only the line tag will be included.
+
+2. Line 2 will be excluded from the count.
+
+3. The total value of the routine is determined (excluding
+   exceptions noted above) by multiplying the ASCII value of each
+   character by its position on the line and position of the line in 
+   the routine being checked.
+
+     Select one of the following:
+
+          P         Package
+          B         Build
+
+Build from: P  Package
+
+
+All Routines? No => No
+
+Routine: MAG7RS
+Routine: <return>
+1 routine
+
+MAG7RS    value = 54519012
+done 

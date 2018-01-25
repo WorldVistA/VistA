@@ -1,0 +1,212 @@
+ 
+=============================================================================
+Run Date: SEP 08, 2017                     Designation: MAG*3*193
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #140                      Status: Released
+                  Compliance Date: SEP 25, 2017
+=============================================================================
+
+
+Subject: MAG*3.0*170 VIX IMAGE VIEWER Remediation Patch
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ A configuration issue was discovered after MAG*3.0*170 was released that prevented
+ the viewing of images through the VA Mobile Framework application.  In order to 
+ remedy this issue a replacement .xml will need to be loaded on each VIX server. 
+  
+ Also, a VIX caching issue was found impacting image transfer 
+ between sites. In order to remedy this issue a replacement 
+ .jar will need to be loaded on each VIX server. 
+  
+ Associated Patches:  
+ ------------------- 
+ MAG*3.0*170.
+  
+ Patch Components: 
+ -----------------
+ This patch includes the following .zip file:
+ MAG3_0P170_ResourceFiles.zip
+  
+ The .zip file contains the following files: 
+    
+ ImagingServices.xml
+ CacheImpl-0.1.jar
+   
+   
+ Documentation: 
+ --------------
+ This document provides an overview, explains the changes, and outlines the installation for this patch. 
+ MAG3_0P170_PostInstallationInstructions.PDF
+  
+ Files & Fields Associated: 
+   
+ File Name (Number)          Field Name (Number)          New/Modified/Deleted 
+ --------------------------  ---------------------------  --------------------
+ There are no files or fields associated with this patch. 
+  
+ Forms Associated: 
+   
+ Form Name  File #  New/Modified/Deleted
+  ---------------  --------  ---------------------------- 
+ There are no forms associated with this patch.  
+   
+   
+ Mail Groups Associated: 
+  
+ Mail Group Name  New/Modified/Deleted 
+ -----------------------  ---------------------------- 
+ There are no mail groups associated with this patch.  
+  
+ Options Associated: 
+  
+ Option Name  Type  New/Modified/Deleted 
+ -----------------  -------   ----------------------------- 
+ There are no options associated with this patch.  
+  
+ Protocols Associated: 
+  
+ Protocol Name New/Modified/Deleted 
+ ------------------- ---------------------------- 
+ There are no protocols associated with this patch.  
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name 
+ ------------------------- 
+ There are no security keys associated with this patch.  
+  
+  
+ Templates Associated: 
+  
+ Template Name  Type  File Name (Number) New/Modified/Deleted 
+ --------------------  ------  -------------------------   ---------------------------- 
+ There are no templates associated with this patch.  
+  
+ Additional Information: 
+ There is no additional information associated with this patch.  
+  
+ New Service Requests (NSRs): 
+ ----------------------------
+ This project is initiated by Requirement BR 8.0 of the Health Information Exchange
+ Viewer BRD #01-02-03-05-08-003. 
+   
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ There are no patient safety issues associated with this patch. 
+   
+ Defect Tracking System Ticket(s) & Overview: 
+ --------------------------------------------
+ Rational Defect ID: 576131
+ Summary: IVS Viewer services broken in deployed 170 patch .xml configuration
+ Team Area: eHMP/Development/IMAG (CM)
+ Filed Against: Patch 170
+   
+ Rational Defect ID: 583710
+ Summary: VIX cache issue in MAG*3.0*170
+ Team Area: eHMP/Development/IMAG (CM)
+ Filed Against: Patch 170
+  
+ Test Sites: 
+     San Diego, CA
+     Puget Sound, WA 
+     Tucson, AZ
+  
+ Documentation Retrieval Instructions: 
+ ------------------------------------- 
+ See "Software and Documentation Retrieval Instructions"  
+  
+ Software and Documentation Retrieval Instructions: 
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing the new functionality introduced by this patch are available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. This transmits the files from the first available server. Sites may also elect to retrieve files directly from a specific server.  
+  
+ Sites may retrieve the software and/or documentation directly using Secure  
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field Offices: 
+   
+ Hines:  domain.ext  
+ Salt Lake City:  domain.ext 
+   
+ The documentation will be in the form of Adobe Acrobat files. 
+  
+ Documentation can also be found on the VA Software Documentation Library at: 
+ https://www4.domain.ext/vdl/ 
+  
+ Title              File Name                          FTP Mode 
+ -----------------  --------------------------------- ---------------------------
+ MAG*3.0*193 Patch  MAG3_0P193_Patch_Description.pdf             Binary
+     Description      
+               
+ MAG*3.0*193        MAG3_0P170_PostInstallationInstructions.PDF  Binary
+     Installation Guide
+ MAG*3.0*193        MAG3_0P170_ResourceFiles.zip                 Binary
+     Resource Files 
+  
+  
+ Patch Installation: 
+  
+  
+ Pre/Post Installation Overview: 
+ ---------------------
+ N/A (There is no KIDS patch to install)
+  
+  
+ Pre-Installation Instructions: 
+ ----------------------------------- 
+ Verify that the patches listed in the Associated Patch section of this document have been previously installed.  
+  
+ This patch may be installed with users on the system although it is recommended that it be installed during non-peak hours to minimize potential disruption to users.   
+  
+ There are no Menu Options to disable.  
+  
+ Installation Instructions: 
+ -------------------------- 
+ 1.     Unzip the files to a temp location. (C:\temp)
+ 2.     Shut down the Apache Tomcat Service on VIX Server 
+ 3.     Rename C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps
+        \ViewerStudyWebApp\ImagingServices.xml to ImagingServices.xml.old
+ 4.     Copy the attached ImagingServices.xml file to the C:\Program Files
+        \Apache Software Foundation\Tomcat 6.0\webapps
+        \ViewerStudyWebApp folder
+ 5.     Delete C:\Program Files\Apache Software Foundation\Tomcat 6.0\lib\
+        CacheImpl-0.1.jar  
+ 6.     Copy the attached CacheImpl-0.1.jar to C:\Program Files\Apache
+        Software Foundation\Tomcat 6.0\lib\ folder
+ 7.     Restart the Apache Tomcat service
+  
+  
+ KIDS Installation Example 
+ =================== 
+ (There is no KIDS patch to install)
+  
+   
+ Post-Installation Instructions 
+ ------------------------------------ 
+ See VIX Installation Guide 
+  
+ New Routine Information 
+ -------------------------------- 
+ None
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 18, 2017
+Completed By:                               Date Completed: SEP 07, 2017
+Released By :                               Date Released : SEP 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

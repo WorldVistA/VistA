@@ -1,0 +1,261 @@
+$TXT Created by              at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 09/20/17 at 15:35
+=============================================================================
+Run Date: SEP 26, 2017                     Designation: PSD*3*81
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #67                      Status: Released
+                  Compliance Date: OCT 26, 2017
+=============================================================================
+
+Associated patches: (v)PSD*3*65    <<= must be installed BEFORE `PSD*3*81'
+
+Subject: EPIP PSD REMEDIATION 1.0
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSD*3.0*81 modifies the "Receipt of Controlled Substance from 
+ Pharmacy" [PSD REC GS] option to include the dispense unit (ML, TAB, 
+ CAP, etc.) of controlled substance dispense drug being electronically 
+ received into the Narcotic Area of Use (NAOU). This enhancement will 
+ allow pharmacy and nursing staff receiving controlled substance orders to 
+ verify the dispense unit of the controlled substance drug being received.
+  
+ ***Please Note***
+  
+ No changes are made to the Dispensing/Receiving Report (VA FORM 10-2321) 
+ or Green Sheet (VA FORM 10-2638) print template.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                  File #                   New/Modified/Deleted
+ ---------                  ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                Type                     New/Modified/Deleted
+ -----------                ----                     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)  New/Modified/Deleted 
+ -------------       ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20150116 Verify the Correct Quantity of Controlled Substances
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Kansas City VA Medical Center, Kansas City, Missouri
+ South Texas Veterans Health Care System (STVHCS), San Antonio, Texas 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ (VDL) at:
+ http://www4.domain.ext/vdl/.
+  
+  
+ Title                      File Name                       FTP Mode
+ -------------------------  ------------------------------  -----------
+ Nurse's User Manual        psd_3_nurse_um_r0917.pdf        Binary
+ Nurse's User Manual        psd_3_nurse_um_r0917.doc        Binary
+ Pharmacist's User Manual   psd_3_pharm_um_r0917.pdf        Binary
+ Pharmacist's User Manual   psd_3_pharm_um_r0917.doc        Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         PSD*3.0*81.
+  
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+  
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+  
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this
+             patch is installed. It compares all components of this patch
+             (routines, data dictionaries, templates, etc.).
+  
+         d.  Back up a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             back up any other changes such as data dictionaries or
+             templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//', press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', press <Enter>.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', press <Enter>.
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//', press
+         <Enter>.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSD routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSD routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSD*3.0*81 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;13 Feb 97;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDNRGS
+    Before: B25527968   After: B29419423  **56,66,65,81**
+ 
+Routine list of preceding patches: 65
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: SEP 22, 2017
+Released By :                               Date Released : SEP 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

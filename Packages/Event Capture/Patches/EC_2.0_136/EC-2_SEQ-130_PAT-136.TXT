@@ -1,0 +1,108 @@
+
+=============================================================================
+Run Date: SEP 13, 2017                     Designation: EC*2*136
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #130                      Status: Released
+                  Compliance Date: OCT 01, 2017
+=============================================================================
+
+Associated patches: (v)EC*2*135    <<= must be installed BEFORE `EC*2*136'
+
+Subject: FY18 INACTIVE STOP CODE DSS UNIT REVIEW
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  NOTE: Patch SD*5.3*663 (FY18 STOP CODE CHANGES) is being released 
+        along with Patch EC*2.0*136 (FY18 INACTIVE STOP CODE DSS 
+        UNIT REVIEW) in host file: SD53_663_EC20_136.KID.
+  
+  This patch will inactivate any DSS Units in the DSS UNIT file (#724) with
+  the SEND TO PCE field (#13) set to 'Send No Records' and have an
+  inactive/invalid Stop Code.
+   
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED CA SDM TICKET(S):
+  ============================
+  1. I13369965FY17 - FY18 Inactive Stop Code DSS Unit Review 
+       
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Battle Creek VAMC
+  Robley Rex VAMC (Louisville)
+      
+       
+  CA SDM OVERVIEW:
+  ================
+  1. I13369965FY17 - FY18 Inactive Stop Code DSS Unit Review 
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested that DSS Units
+     in the DSS UNIT (#724) file with SEND TO PCE (#13) field set to 
+     'Send No Records' and have an inactive/invalid Stop Code be automatically 
+     inactivated.
+    
+     Resolution:
+     -----------
+     Post install routine EC2P136, in this patch, will queue the call to the
+     CHKDSS^ECUTL3 API to scan the DSS UNIT (#724) file and inactivate 
+     any DSS Units with SEND TO PCE (#13) field set to 'Send No Records' and 
+     have an inactive/invalid Stop Code.   
+  
+     A MailMan message will be sent to the installer of the patch and to 
+     holders of the 'ECMGR' security key. A sample message is below:
+  
+     Subj: DSS Unit send no records review  [#205261] 02/08/17@11:49  8 lines
+     From: EVENT CAPTURE PACKAGE  In 'IN' basket.   Page 1
+     ------------------------------------------------------------------------
+     The check for DSS Units with a Send to PCE setting of 'Send no records'
+     and an invalid/inactive stop code has completed.  Below are the results.
+  
+     The following DSS Units were inactivated:
+  
+     NAME                            DSS IEN
+     ----                            -------
+     AU61 CHRONIC HMLS HCHV          55
+  
+     Enter message action (in IN basket): Ignore//
+  
+    
+  Installation Instructions:
+  ==========================
+     
+ Please see the Patch Description for Patch SD*5.3*663 for installation 
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P136
+    Before:       n/a   After:  B2442618  **136**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: JUL 28, 2017
+Released By :                               Date Released : SEP 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

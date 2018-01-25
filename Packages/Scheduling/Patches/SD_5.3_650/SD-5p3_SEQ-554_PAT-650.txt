@@ -1,0 +1,233 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 07/27/17 at 14:36
+=============================================================================
+Run Date: OCT 05, 2017                     Designation: SD*5.3*650
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #554                    Status: Released
+                  Compliance Date: NOV 04, 2017
+=============================================================================
+
+Associated patches: (v)SD*5.3*517  <<= must be installed BEFORE `SD*5.3*650'
+                    (v)SD*5.3*665  <<= must be installed BEFORE `SD*5.3*650'
+
+Subject: SD LETTERS PRINT BLANK PAGE ISSUE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch release includes three bug fixes:
+  
+ 1. Fixes an issue that will prevent from printing an extra blank page
+    before printing the actual pre-appointment letter when make
+    appointment.
+  
+ 2. Fixes an issue that will prevent from printing an extra blank
+    page before printing the actual cancel appointment letter in the
+    Appointment Management.
+  
+ 3. Fixes some misspelled words on the fields and indexes in the 
+    OUTPATIENT ENCOUNTER file (#409.68).
+  
+  
+ Associated Remedy/CA SDM Tickets:
+ =================================
+ 1. I5525092FY15 -   MAS issue
+    Duplicate:
+    I6330771FY16 -   Printer Issues - Pre appt letter options issue-SD pkg
+  
+ 2. I9859050FY16 -   Blank page printing after cancellation letter
+  
+ 3. R9530130FY16 -   Misspelling Errors in OUTPATIENT ENCOUNTER file
+                    #409.68
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA North Florida / South Georgia VA Health Care System  (Gainesville, 
+ Lake City)
+ Louis A. Johnson VA Medical Center (Clarksburg)
+  
+  
+  
+ Remedy/CA SDM Overview:
+ =======================
+ 1. I5525092FY15  MAS issue
+    Duplicate:
+    I6330771FY16  Printer Issues - Pre appt letter options issue-SD pkg
+  
+    Problem:
+    --------
+    Sites reported their printers print a blank page before printing actual
+    Scheduling pre-appointment letter for a patient immediately after 
+    creation of the appointment and before leaving the Make Appointment 
+    [SDM] or Appointment Management [SDAM APPT MGT] option.
+  
+    Resolution:
+    -----------
+    Routine SDM1A has been modified to prevent from printing an extra blank
+    page.
+  
+ 2. I9859050FY16  Blank page printing after cancellation letter
+  
+    Problem:
+    --------
+    When selecting Cancel Appointment [CA] in the Appointment Management
+    [SDAM APPT MGT], an extra blank page is printed prior to printing an 
+    actual cancellation letter.
+  
+    Resolution:
+    -----------
+    Routine SDCNP1A has been modified to prevent from printing an extra
+    blank page before printing an actual cancellation letter.
+  
+ 3. R9530130FY16  Misspelling Errors in OUTPATIENT ENCOUNTER file #409.68
+  
+    Problem:
+    --------
+    Found several misspelled words on the fields and indexes in the 
+    OUTPATIENT ENCOUNTER file (#409.68).
+  
+    Resolution:
+    -----------
+    Fixes few misspelled words on the fields and indexes in the 
+    OUTPATIENT ENCOUNTER file (#409.68).
+  
+    OUTPATIENT ENCOUNTER file (#409.68)
+  
+    Field .01       DATE  
+         CROSS-REFERENCE:         409.68^AG1^MUMPS
+         In description 'pacakges' replaced by 'package'.
+  
+    Field .05       VISIT FILE ENTRY
+         CROSS-REFERENCE:         409.68^AVCNT^MUMPS
+         In description 'reference' replaced by 'reference'.
+  
+    Field .07       CHECK OUT PROCESS COMPLETION
+         CROSS-REFERENCE:         ^^TRIGGER^409.68^.12
+         In description 'ot' replaced by 'or'.
+  
+    Field .08       ORIGINATING PROCESS TYPE
+         DESCRIPTION:
+         In description 'follwoing' replaced by 'following'.
+  
+    Field .09       EXTENDED REFERENCE
+         DESCRIPTION for 1 - appointments
+         In description 'psuedo' replaced by 'pseudo'.
+  
+    Field .1          APPOINTMENT TYPE
+         DESCRIPTION
+         In description 'assoicated' replaced by 'associated'.
+  
+    Field 201      COMPUTER GENERATED
+         DESCRIPTION     
+         In description 'editied' replaced by 'edited'.
+  
+         CROSS-REFERENCE:         409.68^AG^MUMPS
+         In description 'pacakges' replaced by 'packages'
+  
+  
+ Installation Instructions:
+ ==========================
+ Scheduling users should be off the system when this patch is installed.
+  
+ Install Time - less than 2 minutes.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Startup KIDS
+    ------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution system Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter SD*5.3*650):
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not 
+       backup any other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch (routines,
+       DD's, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch
+       install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//' answer YES.
+  
+    d. When prompted "Enter options you wish to mark as "Out of
+       Order": Appointment Management    [SDAM APPT MGT]
+               Make Appointment          [SDM]
+  
+   e. When prompted "Enter protocols you wish to mark as "Out of
+      Order": Cancel Appointment        [SDAM APPT CANCEL]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCNP1A
+    Before: B29978567   After: B30698444  **167,340,398,478,517,650**
+Routine Name: SDM1A
+    Before:B130744784   After:B131891737  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622,
+                                           627,658,665,650**
+ 
+Routine list of preceding patches: 517, 665
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 21, 2016
+Completed By:                               Date Completed: OCT 05, 2017
+Released By :                               Date Released : OCT 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
