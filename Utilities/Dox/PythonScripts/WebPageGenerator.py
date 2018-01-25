@@ -535,7 +535,6 @@ class WebPageGenerator:
         self._header = []
         self._footer = []
         self._source_header = []
-        self._hasDot = False
         self._dot = ""
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
@@ -553,7 +552,6 @@ class WebPageGenerator:
             self._footer.append(line)
         footer.close()
     def setDot(self, dot):
-        self._hasDot = True
         self._dot = dot
     def __includeHeader__(self, outputFile):
         for line in self._header:
@@ -591,7 +589,7 @@ class WebPageGenerator:
     def generateWebPage(self):
         self.generateIndexHtmlPage()
         self.generatePackageNamespaceGlobalMappingPage()
-        if self._hasDot and self._dot:
+        if self._dot:
             self.generatePackageDependenciesGraph()
             self.generatePackageDependentsGraph()
         self.generateGlobalNameIndexPage()
@@ -1678,7 +1676,7 @@ class WebPageGenerator:
 #===============================================================================
     def generateRoutineRelatedPages(self):
         self.generateRoutineIndexPage()
-        if self._hasDot and self._dot:
+        if self._dot:
             self.generateRoutineCallGraph()
             self.generateRoutineCallerGraph()
         self.generateAllSourceCodePage(not self._includeSource)
@@ -2649,7 +2647,7 @@ def run(args):
                                   args.git,
                                   args.includeSource,
                                   args.rtnJson)
-    if args.hasDot and args.dot:
+    if args.dot:
         webPageGen.setDot(args.dot)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")
@@ -2662,8 +2660,6 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--outdir', required=True,
                         help='Output Web Page directory')
     parser.add_argument('-git', required=True, help='git executable')
-    parser.add_argument('-hd', '--hasDot', required=False, default="False",
-                        action='store_true', help='is Dot installed')
     parser.add_argument('-dot', required=False,
                         help='path to the folder containing dot excecutable')
     parser.add_argument('-is', '--includeSource', required=False,
@@ -2671,9 +2667,10 @@ if __name__ == '__main__':
                         help='generate routine source code page?')
     parser.add_argument('-lf', '--outputLogFileName', required=False,
                         help='the output Logging file')
-    parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
-        'Data file in JSON format')
-    parser.add_argument('-icr','--icrJsonFile', required=True,help='JSON formatted information of DBIA/ICR')
+    parser.add_argument('-rj','--rtnJson', required=True,
+                        help='routine reference in VistA data file in JSON format')
+    parser.add_argument('-icr','--icrJsonFile', required=True,
+                        help='JSON formatted information of DBIA/ICR')
     result = parser.parse_args();
 
     if not result.outputLogFileName:
