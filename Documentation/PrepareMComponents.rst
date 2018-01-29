@@ -7,24 +7,6 @@ Prepare M source for Import into instance
 To acquire the VistA-M source tree, follow the instructions in
 ObtainingVistAMCode_
 
-The following step is only required for InterSystems Caché Single-User or small
-license count licenses:
-
-Edit `ZU.m`_,  located in /Packages/Kernel/Routines/, and comment out the code
-followed by JOBCHK tag by placing a semi-colon (;) right after JOBCHK tag.
-
-.. parsed-literal::
-
-  JOBCHK :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G H
-
-Similarly, edit `ZUONT.m`_, also located in /Packages/Kernel/Routines/, and comment out the following code.
-
-.. parsed-literal::
-
-   :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G HALT
-
-Note: If somehow ZU.m does not exist, it is OK to just make change to ZUONT.m.
-
 Within the VistA-M source tree, there is a Packages folder which contains all of
 the VistA M components divided by package name. Inside each package directory
 lies a 'Routines' directory and a 'Globals' directory. The 'Routines' directory
@@ -53,7 +35,5 @@ the extension \'.zwr\' and write the file location of those globals in a file
 called 'globals.lst'. This 'globals.lst' will be read by the OSEHRA ZGI routine
 during a later import step.
 
-.. _ZUONT.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZUONT.m
-.. _ZU.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZU.m
 .. _`VistA Testing Source Repository`: http://code.osehra.org/VistA.git
 .. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst

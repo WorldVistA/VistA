@@ -85,10 +85,9 @@ OSEHRA VistA
 ++++++++++++
 
 If the desired version of VistA to generate ViViaN and the Dox pages from is
-the OSEHRA version, clone https://github.com/OSEHRA/VistA-M and follow the
-instructions from `PrepareMComponents`_. Next, follow the instructions below
-based upon which type of MUMPS database will be utilized for the VistA
-installation:
+the OSEHRA version, see ObtainingVistAMCode_ to obtain the source code. Next,
+follow the instructions below based upon which type of MUMPS database will be
+utilized for the VistA installation:
 
 Caché
 ~~~~~
@@ -96,14 +95,15 @@ If necessary, OSEHRA has compiled a set of instructions on how to install the
 Caché instance: InstallCache_.
 
 To import the MUMPS code from the OSEHRA VistA-M Repository into a Caché
-instance, see ImportCache_.
+instance, see `Automated VistA Configuration`_.
 
 Instructions for additional configuration of the Caché environment can be
 found here: ConfigureCache_.
 
 GT.M
 ~~~~
-To import the OSEHRA VistA-M code into the GT.M environment, see ImportGTM_.
+To import the OSEHRA VistA-M code into the GT.M environment, see
+`Automated VistA Configuration`_.
 
 Other VistA
 +++++++++++
@@ -111,7 +111,7 @@ Other VistA
 To generate ViViaN and the DOX pages with a different VistA setup, such as a
 FOIA release or release from another vendor, the routines and globals will need
 to be placed into the structure of the VistA-M repository. See
-`Prepare M Repository`_ for instructions on how to populate the VistA-M
+`Populate M Repository`_ for instructions on how to populate the VistA-M
 repository from an installed MUMPS environment.
 
 
@@ -443,12 +443,10 @@ favorite web browser.
 
 .. _WampServer: http://www.wampserver.com/en/
 .. _ICR: http://foia-vista.osehra.org/VistA_Integration_Agreement
-.. _`Prepare M Repository`: ./populateMRepo.rst
-.. _`PrepareMComponents`: PrepareMComponents.rst
+.. _`Populate M Repository`: ./populateMRepo.rst
 .. _InstallCache: InstallCache.rst
-.. _ImportCache: ImportCache.rst
 .. _ConfigureCache: ConfigureCache.rst
-.. _ImportGTM: ImportGTM.rst
+.. _`Automated VistA Configuration`: AutomatedVistAConfiguration.rst
 .. _`M Routine Analyzer`: https://github.com/jasonli2000/rgivistatools/tree/fileman_json
 .. _`google_code_prettify`: https://github.com/google/code-prettify
 .. _xlrd: https://pypi.python.org/pypi/xlrd

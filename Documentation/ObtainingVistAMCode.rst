@@ -5,7 +5,7 @@ Obtaining the VistA-M Source Code
     :class: usertype
 
 We need to retrieve the VistA-M source code (MUMPS code) that will be used to
-populate Caché or GTM  and generally construct the local VistA environment.
+populate Caché or GTM and generally construct the local VistA environment.
 Begin by bringing up a Git Bash terminal from the installed Git system.
 
 .. parsed-literal::
@@ -66,3 +66,29 @@ repository code and "cd" into that directory. Enter the commands
   $ :usertype:`cd VistA-M`
 
 to make a local clone of the remote repository.
+
+
+Modify Source Files
+-------------------
+
+The following step is only required for InterSystems Caché Single-User or small
+license count licenses:
+
+Edit `ZU.m`_,  located in /Packages/Kernel/Routines/, and comment out the code
+followed by JOBCHK tag by placing a semi-colon (;) right after JOBCHK tag.
+
+.. parsed-literal::
+
+  JOBCHK :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G H
+
+Similarly, edit `ZUONT.m`_, also located in /Packages/Kernel/Routines/, and comment out the following code.
+
+.. parsed-literal::
+
+   :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G HALT
+
+Note: If somehow ZU.m does not exist, it is OK to just make change to ZUONT.m.
+
+
+.. _ZUONT.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZUONT.m
+.. _ZU.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZU.m
