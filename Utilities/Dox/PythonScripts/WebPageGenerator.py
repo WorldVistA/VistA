@@ -803,7 +803,7 @@ class WebPageGenerator:
                 self.__includeHeader__(outputFile)
                 icrList = self.queryICRInfo(package.getName().upper(),"GLOBAL", globalName[1:])
                 if icrList:
-                   indexListFileMan.append("DBIA/ICR Connections")
+                   indexListFileMan.append("ICR Entities")
                 # generated the qindex bar
                 if isFileManFile:
                     generateIndexBar(outputFile, indexListFileMan)
@@ -861,7 +861,7 @@ class WebPageGenerator:
                     self.__generateFileManFileDetails__(globalVar, outputFile)
                     writeSectionEnd(outputFile)
                 if icrList:
-                   writeSectionHeader("DBIA/ICR Connections","DBIA/ICR Connections",outputFile)
+                   writeSectionHeader("ICR Entities","ICR Entities",outputFile)
                    self.generateGlobalICRSection(icrList,outputFile)
                    writeSectionEnd(outputFile)
                 # generated the index bar at the bottom
