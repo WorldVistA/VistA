@@ -65,7 +65,7 @@ There are a few ways to customize on how to apply the patches in order:
 1. Specify the number of patches to apply
 
    * just append ``-i -n <number of patches>`` to the above command, the default is just one patch if ``-n`` option is not provided.
-   * ``-i -n "all"`` will apply all the patches
+   * ``-i -n all`` will apply all the patches
 
 2. Apply patches up to specified patch installation name
 
@@ -103,6 +103,7 @@ From PatchSequenceApply output:
 
 Resolution:
 +++++++++++
+
 Download the patch, if available, from foia-vista.osehra.org or another source
 and place it in the directory with the target patch.
 

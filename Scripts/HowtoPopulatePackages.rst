@@ -7,8 +7,9 @@ with new patches.
 Populate Top Level
 ------------------
 
-Copy new VistA patch files (.TXT/.KID) into the ``Packages/`` directory.
-For example, one may move VA patches out of the ``FOIA/`` directory::
+Copy new VistA patch files (.TXT, .KID, .GBL, etc.) into the ``Packages/``
+directory. For example, one may move VA patches out of the ``FOIA/``
+directory::
 
  find FOIA -type f -exec mv -n {} Packages ';'
  find FOIA -type d |sort -r |while read line; do rmdir "$line"; done
@@ -30,6 +31,7 @@ into the directory structure (files with other extensions will not be moved).
 It organizes files by patch and patches by package.
 
 Files not identified as part of a patch will be moved to the
-``Packages/Uncategorized/`` directory.  Manually classify the uncategorized
-files and move them to their respective patch directories.  List every manual
-move in the commit message to make it clear that files were manually placed.
+``Packages/Uncategorized/`` directory. Manually classify the uncategorized
+files and move them to their respective patch directories.
+
+
