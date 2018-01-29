@@ -77,47 +77,104 @@ class PLActions (Actions):
             self.VistA.write('AD')
             self.VistA.wait('Clinic')
             self.VistA.write(prec[pitem]['clinic'].rstrip().lstrip())
-            if slist is not None:  # if there is a SL, the skip it...
-                self.VistA.wait('Select Item')
-                self.VistA.write('AD')
-            probID =[prec[pitem]['icd'].rstrip().lstrip(),prec[pitem]['icd10'].rstrip().lstrip(),prec[pitem]['snomed'].rstrip().lstrip()]
-            valIndex = 0
             while True:
-              index = self.VistA.multiwait(['Ok','PROBLEM'])
-              if index == 1:
-                self.VistA.write(probID[valIndex])
-                valIndex += 1;
-              elif index == 0:
+              index = self.VistA.multiwait(['Select Item','PROBLEM:',"No items available"])
+              if (slist is not None) or (index == 0) :  # if there is a SL, the skip it...
+                  self.VistA.write('AD')
+              else:
+                  self.VistA.write('?')
+              probID =[prec[pitem]['icd'].rstrip().lstrip(),prec[pitem]['icd10'].rstrip().lstrip(),prec[pitem]['snomed'].rstrip().lstrip()]
+              valIndex = 0
+              while True:
+                index = self.VistA.multiwait(['Ok','PROBLEM:'])
+                if index == 1:
+                  self.VistA.write(probID[valIndex])
+                  valIndex += 1;
+                elif index == 0:
+                  break
+                else:
+                  self.VistA.write('?')
+              self.VistA.write('Yes')
+              # if self.acode is not None:
+              #    self.VistA.wait('//'); self.VistA.write('')
+              index = self.VistA.multiwait(['COMMENT','already an ACTIVE problem'])
+              if index == 0:
+                self.VistA.write(prec[pitem]['comment1'].rstrip().lstrip())
+                self.VistA.wait('ANOTHER COMMENT')
+                self.VistA.write(prec[pitem]['comment2'].rstrip().lstrip())
+                self.VistA.wait('DATE OF ONSET')
+                self.VistA.write(prec[pitem]['onsetdate'].rstrip().lstrip())
+                self.VistA.wait('STATUS')
+                self.VistA.write(prec[pitem]['status'].rstrip().lstrip())
+                self.VistA.wait('hronic')
+                self.VistA.write(prec[pitem]['acutechronic'].rstrip().lstrip())
+                rval = self.VistA.multiwait(['service-connected condition',
+                                         'uit w/o saving'])
+                if rval == 0:
+                  self.VistA.write(prec[pitem]['service'].rstrip().lstrip())
+                  self.VistA.wait('uit w/o saving?')
+                  self.VistA.write('Save')
+
+                elif rval == 1:
+                  self.VistA.write('Save')
                 break
               else:
-                self.VistA.write('?')
-            self.VistA.write('Yes')
-            # if self.acode is not None:
-            #    self.VistA.wait('//'); self.VistA.write('')
-            self.VistA.wait('COMMENT');
-            self.VistA.write(prec[pitem]['comment1'].rstrip().lstrip())
-            self.VistA.wait('ANOTHER COMMENT')
-            self.VistA.write(prec[pitem]['comment2'].rstrip().lstrip())
-            self.VistA.wait('DATE OF ONSET')
-            self.VistA.write(prec[pitem]['onsetdate'].rstrip().lstrip())
-            self.VistA.wait('STATUS')
-            self.VistA.write(prec[pitem]['status'].rstrip().lstrip())
-            self.VistA.wait('hronic')
-            self.VistA.write(prec[pitem]['acutechronic'].rstrip().lstrip())
-            rval = self.VistA.multiwait(['service-connected condition',
-                                     'uit w/o saving'])
-            if rval == 0:
-                self.VistA.write(prec[pitem]['service'].rstrip().lstrip())
-                self.VistA.wait('uit w/o saving?')
-                self.VistA.write('Save')
-            elif rval == 1:
-                self.VistA.write('Save')
+                self.VistA.write("")
+                break
             self.VistA.wait('PROBLEM')
             self.VistA.write('')
             self.VistA.wait('Select Action')
             self.VistA.write('QUIT')
             self.VistA.wait('Print a new problem list')
             self.VistA.write('N')
+
+    def addbyprobnum(self, ssn, clinic, comment, onsetdate, status, acutechronic,
+              service, probnum, icd=None,icd10=None,snomed=None, evalue=None, verchknum=None):
+        ''' Add a problem using clinic or user with assigned selection list'''
+        self.VistA.wait('Problem List Mgt Menu')
+        self.VistA.write('Patient Problem List')
+        self.VistA.wait('PATIENT NAME')
+        self.VistA.write(ssn)
+        self.VistA.wait('Select Action')
+        self.VistA.write('AD')
+        self.VistA.wait('Clinic')
+        self.VistA.write(clinic)
+        index = self.VistA.multiwait(["Select I(TEM|tem)","PROBLEM:"])
+        self.VistA.write(probnum)
+        index = self.VistA.multiwait(['COMMENT','already an ACTIVE problem'])
+        if index == 0:
+          self.VistA.write(comment)
+          self.VistA.wait('ANOTHER COMMENT')
+          self.VistA.write('')
+          self.VistA.wait('DATE OF ONSET')
+          self.VistA.write(onsetdate)
+          self.VistA.wait('STATUS')
+          self.VistA.write(status)
+          self.VistA.wait('hronic')
+          self.VistA.write(acutechronic)
+          rval = self.VistA.multiwait(['service-connected condition', 'uit w/o saving'])
+          if rval == 0:
+              self.VistA.write(service)
+              self.VistA.wait('uit w/o saving')
+              self.VistA.write('Save')
+          elif rval == 1:
+              self.VistA.write('Save')
+          #
+        else:
+            self.VistA.write('')
+        self.VistA.multiwait(["PROBLEM:","Select Item"])
+        self.VistA.write('')
+        self.VistA.wait('Select Action')
+        # optionally, check to make sure user entering the data can't also verify it
+        if verchknum is not None:
+            self.VistA.write('$')
+            self.VistA.wait('Select Problem')
+            self.VistA.write(verchknum)
+            self.VistA.wait('does not require verification')
+            self.VistA.wait('Select Action')
+        self.VistA.write('QUIT')
+        self.VistA.wait('Print a new problem list')
+        self.VistA.write('N')
 
     def add(self, ssn, clinic, comment, onsetdate, status, acutechronic,
               service, probnum=None, icd=None,icd10=None,snomed=None, evalue=None, verchknum=None):
@@ -130,58 +187,51 @@ class PLActions (Actions):
         self.VistA.write('AD')
         self.VistA.wait('Clinic')
         self.VistA.write(clinic)
-        if probnum == 'skip':  # SL exists but don't use
-            self.VistA.wait('Select Item')
+        index = self.VistA.multiwait(["Select Item","PROBLEM:"])
+        if (index == 0):
             self.VistA.write('AD')
-            self.VistA.wait('PROBLEM')
-            self.VistA.write(icd)
-        elif probnum is None :  # SL doesn't exist
-            probList = [icd, icd10,snomed]
-            probIndex = 0
-            while True:
-              index = self.VistA.multiwait(['PROBLEM','Ok'])
-              if index==0:
-                self.VistA.write(probList[probIndex])
-                probIndex += 1
-              elif index == 1:
-                break
-              else:
-                self.VistA.write('?')
-
-            self.VistA.write('YES')
-        else :  # Use SL
-            self.VistA.wait('Select Item')
-            self.VistA.write(probnum)
-            # if clinic == '':
-            #    self.VistA.wait(evalue); self.VistA.write('')
-        self.VistA.wait('COMMENT')
-        self.VistA.write(comment)
-        self.VistA.wait('ANOTHER COMMENT')
-        self.VistA.write('')
-        self.VistA.wait('DATE OF ONSET')
-        self.VistA.write(onsetdate)
-        self.VistA.wait('STATUS')
-        self.VistA.write(status)
-        self.VistA.wait('hronic')
-        self.VistA.write(acutechronic)
-        rval = self.VistA.multiwait(['service-connected condition', 'uit w/o saving'])
-        if rval == 0:
-            self.VistA.write(service)
-            self.VistA.wait('uit w/o saving')
-            self.VistA.write('Save')
-        elif rval == 1:
-            self.VistA.write('Save')
-        #
-        if probnum == 'skip':
-            self.VistA.wait('PROBLEM')
-            self.VistA.write('')
-        elif probnum is None:
-            self.VistA.wait('PROBLEM')
-            self.VistA.write('')
+            self.VistA.wait('PROBLEM:')
+        probList = [icd, icd10,snomed]
+        probIndex = 0
+        self.VistA.write('?')
+        while True:
+          index = self.VistA.multiwait(['PROBLEM:','Ok',"Select Item"])
+          if index==0:
+            self.VistA.write(probList[probIndex])
+            probIndex += 1
+          elif index == 1:
+            break
+          elif index == 2:
+            self.VistA.write('AD')
+          else:
+            self.VistA.write('?')
+        self.VistA.write('YES')
+        index = self.VistA.multiwait(['COMMENT','already an ACTIVE problem'])
+        if index == 0:
+          self.VistA.write(comment)
+          self.VistA.wait('ANOTHER COMMENT')
+          self.VistA.write('')
+          self.VistA.wait('DATE OF ONSET')
+          self.VistA.write(onsetdate)
+          self.VistA.wait('STATUS')
+          self.VistA.write(status)
+          self.VistA.wait('hronic')
+          self.VistA.write(acutechronic)
+          rval = self.VistA.multiwait(['service-connected condition', 'uit w/o saving'])
+          if rval == 0:
+              self.VistA.write(service)
+              self.VistA.wait('uit w/o saving')
+              self.VistA.write('Save')
+          elif rval == 1:
+              self.VistA.write('Save')
+          #
         else:
-            self.VistA.wait('Select Item')
             self.VistA.write('')
-        self.VistA.wait('Select Action')
+        while True:
+          index = self.VistA.multiwait(["PROBLEM:","Select Item",'Select Action'])
+          if index == 2:
+            break
+          self.VistA.write('')
         # optionally, check to make sure user entering the data can't also verify it
         if verchknum is not None:
             self.VistA.write('$')
@@ -309,7 +359,7 @@ class PLActions (Actions):
         valIndex=0
         valList = [icd10,snomed]
         while True:
-          rval = self.VistA.multiwait(['Select Item', 'Ok','A suitable term'])
+          rval = self.VistA.multiwait(['Select Item', 'Ok','A suitable term','STOP or Select'])
           if rval == 0:
               self.VistA.write('SC')
               break
@@ -318,6 +368,8 @@ class PLActions (Actions):
           elif rval == 2:
               self.VistA.write(valList[valIndex])
               valIndex +=1
+          elif rval == 3:
+              self.VistA.write('1')
         self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
         self.VistA.wait('Print a new problem list')
@@ -495,6 +547,7 @@ class PLActions (Actions):
 
     def createsellist (self, listname, clinic):
         '''Create a Selection List'''
+        needAssignedToClinic = False
         self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
         self.VistA.wait('Create Problem Selection Lists')
@@ -503,9 +556,25 @@ class PLActions (Actions):
         self.VistA.write(listname)
         self.VistA.wait('new PROBLEM SELECTION LIST')
         self.VistA.write('Yes')
-        self.VistA.wait('PROBLEM SELECTION LIST CLINIC:')
-        self.VistA.write(clinic)
+        index = self.VistA.multiwait(['PROBLEM SELECTION LIST CLINIC:','PROBLEM SELECTION LIST CLASS'])
+        if index == 0:
+          self.VistA.write(clinic)
+        else:
+          needAssignedToClinic = True
+          self.VistA.write("Local")
         self.VistA.wait('Select Action:')
+        # assign to clinic
+        if (needAssignedToClinic) and (clinic):
+          self.VistA.write("SS")
+          self.VistA.wait("Enter selection")
+          self.VistA.write('2')  # Assign to hospital location
+          self.VistA.wait("HOSPITAL LOCATION NAME")
+          self.VistA.write(clinic)
+          self.VistA.wait("Selection List")
+          self.VistA.write(listname)
+          self.VistA.wait("Enter selection")
+          self.VistA.write('')
+          self.VistA.wait('Select Action:')
         self.VistA.write('SV')
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
@@ -524,10 +593,24 @@ class PLActions (Actions):
         self.VistA.write(catname)
         self.VistA.wait('new PROBLEM SELECTION CATEGORY')
         self.VistA.write('Yes')
-        self.VistA.wait('Select Item')
+        index = self.VistA.multiwait(['Select Item','PROBLEM SELECTION CATEGORY CLASS'])
+        if index == 1:
+          self.VistA.write("Local")
+          self.VistA.wait('Select Item')
         self.VistA.write('SV')
         self.VistA.wait('Select Action')
-        self.VistA.write('Quit')
+        self.VistA.write('AD')
+        self.VistA.wait('CATEGORY NAME')
+        self.VistA.write(catname)
+        index = self.VistA.multiwait(['HEADER','part of this list'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('SEQUENCE')
+          self.VistA.write('')
+          self.VistA.wait('CATEGORY NAME')
+        self.VistA.write('')
+        self.VistA.wait('Select Action')
+        self.VistA.write('SV')
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
@@ -577,12 +660,21 @@ class PLActions (Actions):
             self.VistA.write('')
         elif index == 2:
             self.VistA.write(snomed)
-            index = self.VistA.multiwait(['Ok', 'A suitable term'])
+            index = self.VistA.multiwait(['Ok', 'STOP or Select', 'A suitable term'])
             if index == 0:
               self.VistA.write('')
               self.VistA.wait('DISPLAY TEXT')
               self.VistA.write(dtext)
-              self.VistA.wait('... Ok')
+              self.VistA.multiwait(['... Ok','... Yes'])
+              self.VistA.write('Yes')
+              self.VistA.wait('SEQUENCE')
+              self.VistA.write(seqnum)
+              self.VistA.wait('PROBLEM')
+            elif index == 1:
+              self.VistA.write('1')
+              self.VistA.wait('DISPLAY TEXT')
+              self.VistA.write(dtext)
+              self.VistA.multiwait(['... Ok','... Yes'])
               self.VistA.write('Yes')
               self.VistA.wait('SEQUENCE')
               self.VistA.write(seqnum)
@@ -607,11 +699,12 @@ class PLActions (Actions):
         self.VistA.write('AD')
         self.VistA.wait('Select CATEGORY NAME:')
         self.VistA.write(catname)
-        self.VistA.wait('HEADER')
-        self.VistA.write(hdrname)
-        self.VistA.wait('SEQUENCE')
-        self.VistA.write(seqnum)
-        self.VistA.wait('Select CATEGORY NAME')
+        index = self.VistA.multiwait(['HEADER','part of this list'])
+        if index == 0:
+          self.VistA.write(hdrname)
+          self.VistA.wait('SEQUENCE')
+          self.VistA.write(seqnum)
+          self.VistA.wait('Select CATEGORY NAME')
         self.VistA.write('')
         self.VistA.wait('Select Action')
         self.VistA.write('SV')
@@ -647,14 +740,23 @@ class PLActions (Actions):
         self.VistA.write('Create Problem Selection Lists')
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Assign')
-        self.VistA.wait('Select LIST NAME:')
-        self.VistA.write(listname)
-        self.VistA.wait('Select USER')
-        self.VistA.write(username)
-        self.VistA.wait('ANOTHER ONE')
-        self.VistA.write('')
-        self.VistA.wait('Are you ready')
-        self.VistA.write('Yes')
+        index = self.VistA.multiwait(["System",'Enter Selection','Select LIST NAME:'])
+        if index == 0:
+          self.VistA.write("1")
+          self.VistA.wait("NEW PERSON NAME")
+          self.VistA.write(username)
+          self.VistA.wait("Selection List")
+          self.VistA.write(listname)
+          self.VistA.wait("Enter selection")
+          self.VistA.write('')
+        else:
+          self.VistA.write(listname)
+          self.VistA.wait('Select USER')
+          self.VistA.write(username)
+          self.VistA.wait('ANOTHER ONE')
+          self.VistA.write('')
+          self.VistA.wait('Are you ready')
+          self.VistA.write('Yes')
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
@@ -662,16 +764,27 @@ class PLActions (Actions):
         '''De-Assign a Selection List from a User'''
         self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
-        self.VistA.wait('Create Problem Selection Lists')
+        self.VistA.wait('Select Create Problem Selection Lists')
         self.VistA.write('Remove')
-        self.VistA.wait('Select LIST NAME:')
-        self.VistA.write(listname)
-        self.VistA.wait('Select USER')
-        self.VistA.write(username)
-        self.VistA.wait('ANOTHER ONE')
-        self.VistA.write('')
-        self.VistA.wait('Are you ready')
-        self.VistA.write('Yes')
+        index = self.VistA.multiwait(['Select LIST NAME:','Select Create Problem'])
+        if index == 1:
+          self.VistA.write('Assign')
+          self.VistA.wait('Enter selection')
+          self.VistA.write('1')
+          self.VistA.wait('NEW PERSON')
+          self.VistA.write(username)
+          self.VistA.wait('Selection List')
+          self.VistA.write('@')
+          self.VistA.wait('Enter selection')
+          self.VistA.write('')
+        else:
+          self.VistA.write(listname)
+          self.VistA.wait('Select USER')
+          self.VistA.write(username)
+          self.VistA.wait('ANOTHER ONE')
+          self.VistA.write('')
+          self.VistA.wait('Are you ready')
+          self.VistA.write('Yes')
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
@@ -717,17 +830,36 @@ class PLActions (Actions):
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
-    def sellistdl (self, listname):
+    def sellistdl (self, listname, clinic):
         '''Delete a Selection List'''
         self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
         self.VistA.wait('Create Problem Selection Lists')
+        # First remove assignments
+        if clinic:
+          self.VistA.write("ASSIGN")
+          index = self.VistA.multiwait(["Enter selection","Select LIST NAME" ])
+          if index == 0:
+            self.VistA.write('2')  # Assign to hospital location
+            self.VistA.wait("HOSPITAL LOCATION NAME")
+            self.VistA.write(clinic)
+            self.VistA.wait("Selection List")
+            self.VistA.write("@")
+            self.VistA.wait("Enter selection")
+            self.VistA.write('')
+            self.VistA.wait('Create Problem Selection Lists')
+          else:
+            self.VistA.write('')
+            self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('Delete')
         self.VistA.wait('Select LIST NAME:')
         self.VistA.write(listname)
         self.VistA.wait('Are you sure you want to delete this list')
         self.VistA.write('Yes')
-        self.VistA.wait('Create Problem Selection Lists')
+        index = self.VistA.multiwait(['to continue','Create Problem Selection Lists'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
     def createibform (self, clinic, formname, groupname, plist, icd10list):
@@ -824,12 +956,16 @@ class PLActions (Actions):
         self.VistA.write('AD')
         self.VistA.wait('Clinic')
         self.VistA.write(clinic)
+        vlist = ["PROBLEM:"] + vlist
         while True:
             index = self.VistA.multiwait(vlist)
-            if index == len(vlist)-1:
+            if (index == len(vlist)-1):
+                self.VistA.wait('Select Item')
+                self.VistA.write('Quit')
                 break
-        self.VistA.wait('Select Item')
-        self.VistA.write('Quit')
+            if index == 0:
+                self.VistA.write('')
+                break
         self.VistA.wait('Select Action')
         self.VistA.write('Quit')
 
@@ -994,15 +1130,15 @@ class PLActions (Actions):
         self.VistA.write('1')
         self.VistA.wait('SEQUENCE')
         self.VistA.write('3')
-        self.VistA.wait(catnames[1])
-        self.VistA.wait(catnames[0])
+        self.VistA.wait_re(catnames[1])
+        self.VistA.wait_re(catnames[0])
         self.VistA.write('SQ')
         self.VistA.wait('Select Category')
         self.VistA.write('2')
         self.VistA.wait('SEQUENCE')
         self.VistA.write('1')
-        self.VistA.wait(catnames[0])
-        self.VistA.wait(catnames[1])
+        self.VistA.wait_re(catnames[0])
+        self.VistA.wait_re(catnames[1])
         self.VistA.wait('Select Action:')
         self.VistA.write('VW')
         self.VistA.wait('<1>')
@@ -1053,7 +1189,7 @@ class PLActions (Actions):
         self.VistA.write('CL')
         self.VistA.wait('LIST NAME:')
         self.VistA.write(list2)
-        self.VistA.wait(list2)
+        self.VistA.wait_re(list2)
         if category is None:
             self.VistA.wait('No items available.')
         else:
@@ -1147,10 +1283,14 @@ class PLActions (Actions):
         self.VistA.wait('PATIENT NAME')
         self.VistA.write(ssn)
         self.VistA.wait('Select Action')
+
         self.VistA.write('AD')
         self.VistA.wait('Clinic')
         self.VistA.write(clinic)
-        self.VistA.wait('Retrieving list of  problems ...')
-        self.VistA.wait('No items available.  Returning to Problem List ...')
+        index = self.VistA.multiwait(['Retrieving list of  problems ...',"PROBLEM:"])
+        if index == 0:
+          self.VistA.wait('No items available.  Returning to Problem List ...')
+        else:
+          self.VistA.write('')
         self.VistA.wait('Select Action')
         self.VistA.write('Q')

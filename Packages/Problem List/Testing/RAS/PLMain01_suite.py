@@ -190,7 +190,7 @@ def pl_test004(test_suite_details):
                       vlist=['List001', 'cat001', 'Heartburn', '[Cc]hest pain',
                              'Leptospirosis', 'cat002', 'Disturbance',
                              '[Dd]rug withdrawal', '[Dd]rug dependence'])
-        pl.add(ssn='656454321', clinic='VISTA', probnum='1',
+        pl.addbyprobnum(ssn='656454321', clinic='VISTA', probnum='1',
                   comment='this is a test', onsetdate='t', status='Active',
                   acutechronic='A', service='N', evalue='Heartburn')
         pl.verify(ssn='656454321', probnum='1', itemnum='1',
@@ -201,7 +201,8 @@ def pl_test004(test_suite_details):
         pl.catdl(listname='List001', catname='cat001')
         pl.catdl(listname='List001', catname='cat002')
         pl.sellistrfu(listname='List001', username='Alexander')
-        pl.sellistdl(listname='List001')
+        pl.sellistdl(listname='List001', clinic='VISTA')
+        # Even deletion caused this part to fail, more information is needed
         pl.checkRMsellist(ssn='656454321', clinic='VISTA')
         pl.signoff()
 
@@ -247,7 +248,7 @@ def pl_test005(test_suite_details):
                       vlist=['List002', 'cat011', 'Heartburn', '[Cc]hest pain',
                              'Leptospirosis', 'cat022', 'Disturbance',
                              '[Dd]rug withdrawal', '[Dd]rug dependence'])
-        pl2.add(ssn='354623902', clinic='', probnum='1',
+        pl2.addbyprobnum(ssn='354623902', clinic='', probnum='1',
                    comment='this is a test', onsetdate='t',
                    status='Active', acutechronic='A', service='N',
                    evalue='Heartburn')
@@ -259,7 +260,7 @@ def pl_test005(test_suite_details):
         pl1.catdl(listname='List002', catname='cat011')
         pl1.catdl(listname='List002', catname='cat022')
         pl1.sellistrfu(listname='List002', username='Alexander')
-        pl1.sellistdl(listname='List002')
+        pl1.sellistdl(listname='List002', clinic='')
         pl2.signoff()
         pl1.signoff()
 
@@ -286,7 +287,7 @@ def pl_test006 (test_suite_details):
           pl.sellistib('FORM1', 'List003', 'LAB')
           pl.versellist(ssn='345238901', clinic='LAB',
                      vlist=['List003', 'Group1', 'Congestive ', 'Acute myocardial', 'Essential'])
-          pl.add(ssn='345238901', clinic='LAB', probnum='1',
+          pl.addbyprobnum(ssn='345238901', clinic='LAB', probnum='1',
                     comment='this is a test', onsetdate='t', status='Active',
                     acutechronic='A', service='N', evalue='Congestive')
           pl.verify(ssn='345238901', probnum='1', itemnum='1',
@@ -295,7 +296,7 @@ def pl_test006 (test_suite_details):
           pl.sellistrm(listname='List003')
           pl.catdl(listname='List003', catname='Group1')
           pl.sellistrfu(listname='List003', username='Alexander')
-          pl.sellistdl(listname='List003')
+          pl.sellistdl(listname='List003', clinic='LAB')
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
@@ -316,6 +317,10 @@ def pl_test007 (test_suite_details):
         VistA1 = test_driver.connect_VistA(test_suite_details)
         pl = PLActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         pl.signon()
+        pl.createsellist(listname="List002", clinic='')
+        pl.sellistgal(listname="List002", username='Alexander')
+        pl.createcat(listname='List002', catname='cat022')
+        pl.catad(listname='List002', catname='cat022', icd='786.50', snomed= '29857009')
         pl.addcsv(ssn='655447777', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
         pl.addcsv(ssn='543236666', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
         pl.addcsv(ssn='345678233', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
@@ -325,6 +330,10 @@ def pl_test007 (test_suite_details):
             pl.rem('655447777')
             pl.rem('543236666')
             pl.rem('345678233')
+        pl.sellistrm(listname='List002')
+        pl.catdl(listname='List002', catname='cat022')
+        pl.sellistrfu(listname='List002', username='Alexander')
+        pl.sellistdl(listname='List002', clinic='')
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
@@ -465,7 +474,7 @@ def pl_test011(test_suite_details):
         test_driver.try_else_handling(test_suite_details)
     finally:
         test_driver.finally_handling(test_suite_details)
-        
+
 def pl_test012(test_suite_details):
     '''This test performs Problem List Menu Testing (pseudo smoke test)'''
     testname = sys._getframe().f_code.co_name
@@ -555,8 +564,8 @@ def pl_test013(test_suite_details):
         pl.catdl(listname='List001', catname='cat001')
         pl.catdl(listname='List001', catname='cat002')
         pl.sellistrfu(listname='List001', username='Alexander')
-        pl.sellistdl(listname='List001')
-        pl.sellistdl(listname='List002')
+        pl.sellistdl(listname='List001', clinic='VISTA')
+        pl.sellistdl(listname='List002', clinic='VISTA')
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
