@@ -34,18 +34,3 @@ Use exactly the ``wget`` command-line shown.  Vary only the list of URLs.
 If the download fails intermittently the command may be re-run and it will
 skip already-fetched files.
 
-Cleanup
--------
-
-Convert text files to LF-only newlines::
-
- find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|KIDS\|kid\|kids\|TXT\|TXTs\|txt\|txts\)$' -print0 |
- xargs -0 fromdos
-
-Convert large files to content links referencing external data::
-
- python Scripts/ConvertToExternalData.py -i FOIA
-
-Files 1 MiB or larger will be renamed to a ".ExternalData_" staging
-file.
-
