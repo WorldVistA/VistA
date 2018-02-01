@@ -805,12 +805,8 @@ class WebPageGenerator:
                     generateIndexBar(outputFile, indexListFileMan)
                 else:
                     generateIndexBar(outputFile, indexListGlobal)
-                outputFile.write("<title>Global: "+globalName+"</title>")
-                outputFile.write("<div class=\"_header\">\n")
-                outputFile.write("<div class=\"headertitle\">")
-                outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
-                                   % getPackageHyperLinkByName(package.getName())))
-                outputFile.write("<h1>Global: %s</h1>\n</div>\n</div><br/>\n" % globalName)
+                title = "Global: %s" % globalName
+                self.writeTitleBlock(title, title, package, outputFile)
                 outputFile.write(getAccordionHTML())
                 if isFileManFile:
                     writeSectionHeader("Information", "Info", outputFile)
@@ -895,11 +891,7 @@ class WebPageGenerator:
             topDownList.append(fileIter)
         topDownList.reverse()
         package = fileIter.getPackage()
-        outputFile.write("<title>Sub-Field:"+subFile.getFileNo()+"</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
-                           % getPackageHyperLinkByName(package.getName())))
+        title = "Sub-Field: %s" % subFile.getFileNo()
         # generate # link list
         linkHtmlTxt = ""
         index = 0
@@ -911,8 +903,7 @@ class WebPageGenerator:
             if index < len(topDownList) - 1:
                 linkHtmlTxt += "-->"
             index += 1
-        outputFile.write("<h4>%s</h4>\n</div>\n</div><br/>\n" % linkHtmlTxt)
-        outputFile.write("<h1>Sub-Field: %s</h1>\n</div>\n</div><br/>\n" % subFile.getFileNo())
+        self.writeTitleBlock(title, title, package, outputFile, linkHtmlTxt)
         outputFile.write(getAccordionHTML())
         writeSectionHeader("Information", "Info", outputFile)
         infoHeader = ["Parent File", "Name", "Number", "Package"]
@@ -1915,6 +1906,21 @@ class WebPageGenerator:
             outputFile.write("</table></div>\n")
         writeSectionEnd(outputFile)
         outputFile.write("</div>\n")
+
+#===============================================================================
+#
+#===============================================================================
+    def writeTitleBlock(self, pageTitle, title, package, outputFile,
+                        extraHtmlHeader=None):
+        outputFile.write("<title>%s</title>" % pageTitle)
+        outputFile.write("<div class=\"_header\">\n")
+        outputFile.write("<div class=\"headertitle\">")
+        if package is not None:
+            outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
+                               % getPackageHyperLinkByName(package.getName())))
+        if extraHtmlHeader:
+            outputFile.write("<h4>%s</h4>\n</div>\n</div><br/>\n" % extraHtmlHeader)
+        outputFile.write("<h1>%s</h1>\n</div>\n</div><br/>\n" % title)
 #===============================================================================
 # method to generate a tablized representation of data
 #===============================================================================
@@ -1954,10 +1960,11 @@ class WebPageGenerator:
             #write the _header part
             self.__includeHeader__(outputFile)
             generateIndexBar(outputFile, indexList)
-            outputFile.write("<title>Package: "+packageName+"</title>")
-            outputFile.write("<div class=\"_header\">\n")
-            outputFile.write("<div class=\"headertitle\">")
-            outputFile.write("<h1>Package: %s</h1>\n</div>\n</div>" % packageName)
+
+            # Title
+            title = "Package: %s" % packageName
+            self.writeTitleBlock(title, title, None, outputFile)
+
             # Namespace
             outputFile.write(getAccordionHTML())
             writeSectionHeader("Namespace", "Namespace", outputFile)
@@ -2454,14 +2461,13 @@ class WebPageGenerator:
             indexList.append(item['name'])
             idxLst.append(idx)
         generateIndexBar(outputFile, indexList)
-        outputFile.write("<title>Routine: "+routineName+"</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h4>Package: %s</h4>\n</div>\n</div>" % getPackageHyperLinkByName(package.getName()))
-        routineHeader = "Routine: %s " % routineName
+
+        # Title
+        title = "Routine: %s" % routineName
+        routineHeader = title
         if platform:
             routineHeader += "Platform: %s" % platform
-        outputFile.write("<h1>%s</h1>\n</div>\n</div><br/>\n" % routineHeader)
+        self.writeTitleBlock(title, routineHeader, package, outputfile)
         outputFile.write(getAccordionHTML())
         for idx in idxLst:
           sectionGen = sectionGenLst[idx]
@@ -2495,11 +2501,8 @@ class WebPageGenerator:
         self.__includeHeader__(outputFile)
         # generated the qindex bar
         generateIndexBar(outputFile, indexList)
-        outputFile.write("<title>Routine:"+routineName+"</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h4>Package: %s</h4>\n</div>\n</div>" % getPackageHyperLinkByName(package.getName()))
-        outputFile.write("<h1>Routine: %s</h1>\n</div>\n</div><br/>\n" % routineName)
+        title = "Routine: %s" % routineName
+        self.writeTitleBlock(title, title, package, outputFile)
         writeSectionHeader("Platform Dependent Routines", "DepRoutines", outputFile)
         # output the Platform part.
         tableRowList = []
