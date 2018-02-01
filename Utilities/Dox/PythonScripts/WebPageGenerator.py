@@ -472,25 +472,6 @@ def writeTableHeader(headerList, outputFile):
     for header in headerList:
         outputFile.write("<th class=\"IndexKey\">%s</th>\n" % header)
     outputFile.write("</tr>\n")
-def writeTableData(itemRow, outputFile):
-    outputFile.write("<tr>\n")
-    index = 0;
-    for data in itemRow:
-        if index == 0:
-            key = "IndexKey"
-        else:
-            key = "IndexValue"
-        outputFile.write("<td class=\"%s\">%s</td>\n" % (key, data))
-        index += 1
-    outputFile.write("</tr>\n")
-def writeGenericTablizedData(headerList, itemList, outputFile):
-    outputFile.write("<div><table>\n")
-    if headerList and len(headerList) > 0:
-        writeTableHeader(headerList, outputFile)
-    if itemList and len(itemList) > 0:
-        for itemRow in itemList:
-            writeTableData(itemRow, outputFile)
-    outputFile.write("</table></div></div>\n")
 def writeListData(listData, outputFile):
     outputFile.write(generateHtmlListData(listData))
 def generateHtmlListData(listData):
@@ -814,7 +795,7 @@ class WebPageGenerator:
                     itemList = [[globalVar.getFileNo(),
                               globalVar.getFileManName(),
                               getPackageHyperLinkByName(package.getName())]]
-                    writeGenericTablizedData(infoHeader, itemList, outputFile)
+                    self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile)
                     writeSectionHeader("Description", "Desc", outputFile)
                     writeListData(globalVar.getDescription(), outputFile)
                     writeSectionEnd(outputFile)
@@ -915,7 +896,7 @@ class WebPageGenerator:
             parentFileLink =  getFileManSubFileHypeLinkByName(parentFile.getFileNo())
         itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
                   getPackageHyperLinkByName(package.getName())]]
-        writeGenericTablizedData(infoHeader, itemList, outputFile)
+        self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile)
         writeSectionEnd(outputFile)
         writeSectionHeader("Details", "Details", outputFile)
         self.__generateFileManFileDetails__(subFile, outputFile)
@@ -966,7 +947,7 @@ class WebPageGenerator:
             fieldDetails += self.__generateFileManFieldPropsDetailsList__(value)
             fieldRow.append(fieldDetails)
             outputFieldsList.append(fieldRow)
-        writeGenericTablizedData(fieldHeaderList, outputFieldsList, outputFile)
+        self.writeGenericTablizedHtmlData(fieldHeaderList, outputFieldsList, outputFile)
 #===============================================================================
 #
 #===============================================================================
@@ -1038,7 +1019,7 @@ class WebPageGenerator:
                 index += 1
             itemRow.append(globalData)
             itemList.append(itemRow)
-        writeGenericTablizedData(infoHeader, itemList, outputFile)
+        self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile)
 #===============================================================================
 #
 #===============================================================================
@@ -1067,7 +1048,7 @@ class WebPageGenerator:
                 index += 1
             itemRow.append(routineData)
             itemList.append(itemRow)
-        writeGenericTablizedData(infoHeader, itemList, outputFile)
+        self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile)
 #===============================================================================
 #method to generate the interactive detail list page between any two packages
 #===============================================================================
@@ -1082,19 +1063,19 @@ class WebPageGenerator:
         for (key, value) in packDepDict.iteritems():
             self.generatePackageInteractionDetailPage(key, value[0], value[1])
 
-    def generateGlobalICRSection(self, icrInfo,outfile):
-      icrString = "<table style='max-width:80%;'><tbody>"
-      icrString += "<tr><th class='IndexKey'>ICR LINK</th><th class='IndexKey'>Subscribing Package(s)</th><th class='IndexKey'>Fields Referenced</th><th class='IndexKey'>Description</th></th></tr>"
+    def generateGlobalICRSection(self, icrInfo, outfile):
+      headerList = ["ICR LINK", "Subscribing Package(s)",
+                    "Fields Referenced", "Description"]
+      icrTable = []
       for entry in icrInfo:
-        icrString += "<tr><td class='IndexValue'><a href='%s'>ICR #%s</a></td>" % (getICRHtmlFileName(entry),entry["NUMBER"])
-        icrString += "<td class='IndexValue'>"
+        row = []
+        icrLink = "<a href='%s'>ICR #%s</a>" % (getICRHtmlFileName(entry), entry["NUMBER"])
+        subscribingPackage = ""
         if "SUBSCRIBING PACKAGE" in entry:
           for value in entry["SUBSCRIBING PACKAGE"]:
             pkgName = value["SUBSCRIBING PACKAGE"][0] if type(value["SUBSCRIBING PACKAGE"]) is list else value["SUBSCRIBING PACKAGE"]
-            icrString += "<li>"+getPackageHyperLinkByName(pkgName)+"</li>"
-        icrString += "</td>"
-
-        icrString += "<td class='IndexValue'>"
+            subscribingPackage += "<li>" + getPackageHyperLinkByName(pkgName) + "</li>"
+        fieldsReferenced = ""
         if ("GLOBAL REFERENCE" in entry):
           for reference in entry["GLOBAL REFERENCE"]:
             if "FIELD NUMBER" in reference:
@@ -1102,19 +1083,21 @@ class WebPageGenerator:
                 name = value["FIELD NAME"] if "FIELD NAME" in value else ""
                 num = value["FIELD NUMBER"] if "FIELD NUMBER" in value else ""
                 accessString = value["ACCESS"] if "ACCESS" in value else ""
-                icrString += "%s (<a href='#%s'>%s</a>). <br/> <b>Access:</b> %s" % (name ,num,num,accessString)
-                icrString += "<br/><br/>"
-        icrString += "</td>"
-        icrString += "<td class='IndexValue'>"
+                fieldsReferenced += "%s (<a href='#%s'>%s</a>). <br/> <b>Access:</b> %s" % (name, num, num, accessString)
+                fieldsReferenced += "<br/><br/>"
+        description = ""
         if ("GLOBAL REFERENCE" in entry):
           for reference in entry["GLOBAL REFERENCE"]:
             if "GLOBAL DESCRIPTION" in reference:
               for value in reference["GLOBAL DESCRIPTION"]:
-                icrString += value
-        icrString += "</td>"
+                description += value
+        row.append(icrLink)
+        row.append(subscribingPackage)
+        row.append(fieldsReferenced)
+        row.append(description)
+        icrTable.append(row)
+      self.writeGenericTablizedHtmlData(headerList, icrTable, outfile)
 
-      icrString += "<tr></tbody></table>"
-      outfile.write(icrString)
     def _updatePackageDepDict(self, package, depDict, packDepDict):
         for depPack in depDict.iterkeys():
             fileName = getPackageDependencyHtmlFile(package.getName(),
@@ -1947,6 +1930,24 @@ class WebPageGenerator:
         else:
             outputFile.write("<div>\n</div>\n")
 #===============================================================================
+#
+#===============================================================================
+    def writeGenericTablizedHtmlData(self, headerList, itemList, outputFile):
+        outputFile.write("<div><table>\n")
+        if headerList and len(headerList) > 0:
+            outputFile.write("<tr>\n")
+            for header in headerList:
+                outputFile.write("<th class=\"IndexKey\">%s</th>\n" % header)
+            outputFile.write("</tr>\n")
+        if itemList and len(itemList) > 0:
+            for itemRow in itemList:
+                outputFile.write("<tr>\n")
+                for data in itemRow:
+                    outputFile.write("<td class=\"IndexValue\">%s</td>\n" % data)
+                outputFile.write("</tr>\n")
+        outputFile.write("</table></div></div>\n")  # the second </div> closes the accordion
+
+#===============================================================================
 # method to generate individual package page
 #===============================================================================
     def generateIndividualPackagePage(self):
@@ -2177,22 +2178,21 @@ class WebPageGenerator:
         if header == "Local Variables":
             outputFile.write(XINDEXLegend)
         outputList = convFunc(data)
-        writeGenericTablizedData(tableHeader, outputList, outputFile)
+        self.writeGenericTablizedHtmlData(tableHeader, outputList, outputFile)
 
     """ Read through all available ICR information and generate links for each found within it"""
     def __writeICRInformation__(self, icrVals):
-      icrString = "<td class='indexvalue'>"
+      icrString = ""
       for icrEntry in icrVals:
         icrString += "<li><a href='%s'>ICR #%s</a></li>" % (getICRHtmlFileName(icrEntry),icrEntry["NUMBER"])
         if "STATUS" in icrEntry:
           icrString +="<ul><li>Status: %s</li></ul>" % (icrEntry["STATUS"])
         if "USAGE" in icrEntry:
           icrString +="<ul><li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
-      icrString += "</td>"
       return icrString
 
     def __writeInteractionCommandHTML__(self, entry):
-      outstring = "<td class='indexvalue'><ul>"
+      outstring = "<ul>"
       entryDict = {
                   "formatting": "Formatting:",
                   "string": "Prompt:",
@@ -2204,58 +2204,53 @@ class WebPageGenerator:
       for key in entryDict:
         if key in entry:
           outstring += "<li>%s %s</li>" % (entryDict[key],entry[key])
-      outstring +=  "</td></ul>"
+      outstring +=  "</ul>"
       return outstring
     """ Write the HTML for the Entry Point section"""
-    def __writeEntryPointSection__ (self, routine,data,header,link,outputFile, tableHeader):
+    def __writeEntryPointSection__ (self, routine, data, header, link, outputFile, tableHeader):
         writeSectionHeader("Entry Points", "Routine Entry Points", outputFile)
-        routineName = routine.getName()
-        packageName = routine.getPackage().getName()
-        outputFile.write("<div><table>\n")
-        writeTableHeader(tableHeader, outputFile)
         entryPoints = routine.getEntryPoints()
+        tableData = []
         for entry in entryPoints:
-          comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
-          icrNum = entryPoints[entry]["icr"] if entryPoints[entry]["icr"] else ""
-          """ Build table string"""
-          outString = "<tr><td class='indexkey'>"+entry +"</td>"
-          outString += "<td class='indexvalue'>"
-          for line in comments:
-            outString += line+'<br/>'
-          outString += "</td>"
-          outString += self.__writeICRInformation__(entryPoints[entry]["icr"])
-          outString += "</tr>\n"
-          outputFile.write(outString)
-        outputFile.write("</table></div>\n")
+            row = []
+            comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
+            # Build table row
+            row.append(entry)
+            val = ""
+            for line in comments:
+                val += line + '<br/>'
+            row.append(val)
+            row.append(self.__writeICRInformation__(entryPoints[entry]["icr"]))
+            tableData.append(row)
+        self.writeGenericTablizedHtmlData(tableHeader, tableData, outputFile)
     def __writeInteractionSection__ (self, routine,data,header,link,outputFile, tableHeader):
         writeSectionHeader("Interaction Calls", "Interaction Calls", outputFile)
-        routineName = routine.getName()
-        packageName = routine.getPackage().getName()
-        outputFile.write("<table>\n")
-        writeTableHeader(tableHeader, outputFile)
         calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS','DIALOG','DIALOGU'])
+        tableData = []
         for entry in data:  # R and W commands
-          outString = "<tr><td class='indexkey'>Function Call: %s</td>" % entry['type']
-          outString += self.__writeInteractionCommandHTML__(entry)
-          outString += "</tr>\n"
-          outputFile.write(outString)
+          row = []
+          row.append("Function Call: %s" % entry['type'])
+          row.append(self.__writeInteractionCommandHTML__(entry))
+          tableData.append(row)
         # Write out the entries that are "interaction" routines
         for entry in calledRtns:
-          outString = "<tr><td class='indexkey'>Routine Call</td>"
-          outString += "<td class='indexvalue'><ul>"
-          outString += "<li>"+entry[0]+"</li>"
+          row = []
+          row.append("Routine Call")
+          val = "<ul>"
+          val += "<li>"+entry[0]+"</li>"
           # Nicely show the ENTRYPOINT+OFFSET values for location
           if type(calledRtns[entry]) is list:
-            outString += "<li>Line Location:</li>"
-            outString += "<ul>"
+            val += "<li>Line Location:</li>"
+            val += "<ul>"
             for location in calledRtns[entry]:
-              outString += "<li>"+location+"</li>"
-            outString += "</ul>"
+              val += "<li>"+location+"</li>"
+            val += "</ul>"
           else:
-            outString += "<li>"+str(calledRtns[entry])+"</li>"
-          outString += "</ul></td></tr>\n"
-          outputFile.write(outString)
-        outputFile.write("</table>\n")
+            val += "<li>"+str(calledRtns[entry])+"</li>"
+          val += "</ul>"
+          row.append(val)
+          tableData.append(row)
+        self.writeGenericTablizedHtmlData(tableHeader, tableData, outputFile)
     def __writeRoutineDepGraphSection__(self, routine, data, header, link,
                                         outputFile, isDependency=True):
         writeSectionHeader(header, link, outputFile)
@@ -2286,12 +2281,9 @@ class WebPageGenerator:
           totalNum = routine.getTotalCalled()
       else:
           totalNum = routine.getTotalCaller()
-      writeSubSectionHeader("%s Total: %d" % (header, totalNum),
-                         outputFile)
-      outputFile.write("<table>\n")
-      outputFile.write("<tr><th class=\"indexkey\">Package</th>")
-      outputFile.write("<th class=\"indexvalue\">Total</th>")
-      outputFile.write("<th class=\"indexvalue\">%s</th></tr>\n" % header)
+      writeSubSectionHeader("%s Total: %d" % (header, totalNum), outputFile)
+      tableHeader = ["Package", "Total", header]
+      tableData = []
       # sort the key by Total # of routines
       sortedDepRoutines = sorted(sorted(data.keys()),
                                key=lambda item: len(data[item]),
@@ -2323,9 +2315,13 @@ class WebPageGenerator:
               if (index + 1) % 8 == 0:
                   routineNameLink += "<BR>"
               index += 1
-          outputFile.write("<tr><td class=\"indexkey\">%s</td><td class=\"indexvalue\">%d</td><td class=\"indexvalue\">%s</td></tr>\n"
-                     % (routinePackageLink, len(data[depPackage]), routineNameLink))
-      outputFile.write("</table>\n</div>\n")
+          row = []
+          row.append(routinePackageLink)
+          row.append("%d" % len(data[depPackage]))
+          row.append(routineNameLink)
+          tableData.append(row)
+      self.writeGenericTablizedHtmlData(tableHeader, tableData, outputFile)
+
     def __generateIndividualRoutinePage__(self, routine, platform=None):
         assert routine
         routineName = routine.getName()
@@ -2508,7 +2504,7 @@ class WebPageGenerator:
         tableRowList = []
         for routineInfo in platformDepRoutines.itervalues():
             tableRowList.append([getRoutineHypeLinkByName(routineInfo[0].getName()), routineInfo[1]])
-        writeGenericTablizedData(["Routine", "Platform"], tableRowList, outputFile)
+        self.writeGenericTablizedHtmlData(["Routine", "Platform"], tableRowList, outputFile)
         self.generateRoutineDependencySection(genericRoutine, outputFile, False)
         outputFile.write("<br/>\n")
         # generated the index bar at the bottom
