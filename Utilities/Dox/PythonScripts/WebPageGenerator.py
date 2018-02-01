@@ -514,8 +514,6 @@ def listDataToCommaSeperatorString(listData):
 def writeSectionHeader(headerName, archName, outputFile):
     outputFile.write("<div class='accordion %s'><h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n" % (archName.split(" ")[0], archName,
                                                                        headerName))
-    if headerName == "Local Variables":
-      outputFile.write(XINDEXLegend)
 def writeSectionEnd(outputFile):
     outputFile.write("</div>")
 def writeSubSectionHeader(headerName, outputFile):
@@ -2059,14 +2057,7 @@ class WebPageGenerator:
                                             sectionListHeader,
                                             sectionListHeader,
                                             outputFile, dependencyList)
-#===============================================================================
-# Method to generate routine variables sections such as Local Variables, Global Variables
-#===============================================================================
-    def generateRoutineVariableSection(self, outputFile, sectionTitle, headerList, variables,
-                                       converFunc):
-        writeSectionHeader(sectionTitle, sectionTitle, outputFile)
-        outputList = converFunc(variables)
-        writeGenericTablizedData(headerList, outputList, outputFile)
+
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
       return ("https://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
             ien))
@@ -2175,8 +2166,12 @@ class WebPageGenerator:
                           routine.getOriginalName()))
     def __writeRoutineVariableSection__(self, routine, data, header, link,
                                         outputFile, tableHeader, convFunc):
-        self.generateRoutineVariableSection(outputFile, header,
-                                            tableHeader, data, convFunc)
+        writeSectionHeader(header, header, outputFile)
+        if header == "Local Variables":
+            outputFile.write(XINDEXLegend)
+        outputList = convFunc(data)
+        writeGenericTablizedData(tableHeader, outputList, outputFile)
+
     """ Read through all available ICR information and generate links for each found within it"""
     def __writeICRInformation__(self, icrVals):
       icrString = "<td class='indexvalue'>"
