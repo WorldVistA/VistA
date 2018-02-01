@@ -53,7 +53,7 @@ class ICRFileToJson(object):
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 self._curLineNo +=1
-                """ get rid of lines that are ignored """
+                # get rid of lines that are ignored
                 if self.isIgnoredLine(line):
                     continue
                 match = INTEGRATION_REFERENCES_LIST.match(line)

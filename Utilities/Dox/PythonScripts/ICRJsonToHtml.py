@@ -121,7 +121,7 @@ def getRoutineHRefLink(rtnName, icrEntry, **kargs):
             # addToPackageMap(icrEntry, routine.getPackage().getName())
             return '<a href=\"%s%s\">%s</a>' % (dox_url, getRoutineHtmlFileName(routine.getName()), rtnName)
         else:
-            logger.debug('Can not find routine [%s]', rtnName)
+            logger.debug('Cannot find routine [%s]', rtnName)
             logger.debug('After Categorization: routine: [%s], info: [%s]', rtnName, crossRef.categorizeRoutineByNamespace(rtnName))
     return rtnName
 
@@ -188,8 +188,6 @@ class ICRJsonToHtml(object):
                 summaryInfo[idx] = id[2](summaryInfo[idx], icrEntry, crossRef=self._crossRef)
         return summaryInfo
 
-    """ Summary page will contain summary information
-    """
     def _generateICRSummaryPage(self, inputJson, date):
         pkgJson = {} # group by package
         allpgkJson = []
@@ -342,7 +340,7 @@ class ICRJsonToHtml(object):
             output.write("</div>\n")
             output.write ("</body></html>\n")
 
-    """ This is to generate a web page for each individual ICR entry """
+    # This is to generate a web page for each individual ICR entry
     def _generateICRIndividualPage(self, icrJson, date):
         ien = icrJson['NUMBER']
         outIcrFile = os.path.join(self._outDir, 'ICR-' + ien + '.html')
@@ -354,7 +352,7 @@ class ICRJsonToHtml(object):
             output.write("""<div id="container" style="width:80%">""")
             output.write ("<h1>%s &nbsp;&nbsp;  %s (%s)</h1>\n" % (icrJson['NAME'], 'ICR', ien))
             outputFileEntryTableList(output, tName)
-            """ table body """
+            # table body
             self._icrDataEntryToHtml(output, icrJson)
             output.write("</tbody>\n")
             output.write("</table>\n")
@@ -367,9 +365,8 @@ class ICRJsonToHtml(object):
 
     def _icrDataEntryToHtml(self, output, icrJson):
         fieldList = ICR_FILE_KEYWORDS_LIST
-        """ As we do not have a real schema to define the field order,
-             we will have to guess the order here
-        """
+        # As we do not have a real schema to define the field order,
+        # we will have to guess the order here
         for field in fieldList:
             if field in icrJson: # we have this field
                 value = icrJson[field]
@@ -391,6 +388,7 @@ class ICRJsonToHtml(object):
 
     def _icrSubFileToHtml(self, output, icrJson, subFile):
         logger.debug('subFile is %s', subFile)
+        # TODO: Is 'icrJson' the correct name for this variable?
         logger.debug('icrJson is %s', icrJson)
         fieldList = SUBFILE_FIELDS[subFile]
         if subFile not in fieldList:

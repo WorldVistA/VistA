@@ -585,7 +585,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         dataDictionaryLogFiles = os.path.join(dirName, pattern)
         allFiles = glob.glob(dataDictionaryLogFiles)
         for logFileName in allFiles:
-            logger.info("Start paring log file [%s]" % logFileName)
+            logger.info("Start parsing log file [%s]" % logFileName)
             self.__parseDataDictionaryLogFile__(logFileName)
 
     def __parseDataDictionaryLogFile__(self, logFileName):
