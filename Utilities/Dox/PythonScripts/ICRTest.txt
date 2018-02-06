@@ -1233,6 +1233,40 @@ KEYWORDS: GET PREF
 SUBSCRIBING PACKAGE: MENTAL HEALTH
   DATE ACTIVATED: SEP 25, 2009
 
+NUMBER: 6730                            IA #: 6730
+  FILE NUMBER: 130                      GLOBAL ROOT: SRF(
+  DATE CREATED: JAN 26, 2017            CUSTODIAL PACKAGE: SURGERY
+  USAGE: Private                        TYPE: File
+  DBIC APPROVAL STATUS: APPROVED        NAME: VIAB SRGY RPTLIST
+  ID: SRF(                              CREATOR: MORRISON,JENNIFER
+GLOBAL REFERENCE: SRF(D0,0)
+FIELD NUMBER: .04                       FIELD NAME: SURGERY SPECIALTY
+  LOCATION: 0;4                         ACCESS: Read w/Fileman
+GLOBAL REFERENCE: SRF(D0,9,0)
+FIELD NUMBER: 49                        FIELD NAME: SPECIMENS
+  LOCATION: 9;0                         ACCESS: Read w/Fileman
+ GENERAL DESCRIPTION:   VIA needs to read a number of fields from Surgery File
+ #130 for VIAB SRGY RPTLIST RPC.  
+  STATUS: Active
+KEYWORDS: SURGERY
+KEYWORDS: REPORT
+KEYWORDS: LIST
+KEYWORDS: VIA
+SUBSCRIBING PACKAGE: VISTA INTEGRATION ADAPTOR
+ DBA Comments:   3/9/2017-DC Activated the ICR for VIAB*1*9 and VIAB SRGY
+ RPTLIST RPC service name for RPC maybe: GET SURGERY REPORT.  
+  
+ Recommendations from Alan Monosky is as follows: Concerning ICR #6730, the
+ DATE/TIME OF DICTATION field (#15) and the DATE OF TRANSCRIPTION field (#39)
+ are not part of the current dictation/transcription process through TIU.
+ Therefore, those two fields will not be populated and should not be part of
+ the ICR.  
+  
+ Discussions with Mike Montoli and VIA resulted in removing the PLANNED PRIN
+ PROCEDURE CODE (27) from the ICR request.  
+  DATE ACTIVATED: MAR 09, 2017
+DATE/TIME EDITED: MAR 09, 2017@12:58    ACTION: APPROVED
+  AT THE REQUEST OF: ROSS,RICK          WITH CONCURRENCE OF: MONTALI,MIKE
 
 NUMBER: 10155                           IA #: 10155
   FILE NUMBER: 0                        GLOBAL ROOT: DD(file,field,0)
