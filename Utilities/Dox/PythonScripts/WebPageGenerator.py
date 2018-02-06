@@ -279,8 +279,6 @@ find the routine/global via
 <br/>
 """
 
-PDF_DIR = "PDF"
-
 def writePDFCustomization(outputFile, titleList):
   outputFile.write("<script>initTitleList="+titleList+"\n")
   outputFile.write(" initTitleList.forEach(function(obj) {\n")
@@ -479,7 +477,9 @@ def generateIndexBar(outputFile, inputList, archList=None, isIndex=False,
       outputFile.write("<div class=\"qindex\">\n")
       outputFile.write("<a onclick=\"startWritePDF(event)\" class=\"qindex printPage\" href=\"#Print\">Print Page as PDF</a>")
       if packageName:
-        pdfZipFilename = PDF_DIR + "/" + normalizePackageName(packageName) + ".zip"
+        # Note: Do NOT use os.path.join, want a "/" even if path is generated on Windows
+        # TODO: This is hardcoded to the path (currently) set in CMakeLists
+        pdfZipFilename = "PDF/" + normalizePackageName(packageName) + ".zip"
         outputFile.write("&nbsp;|&nbsp;")
         outputFile.write("<a onclick=\"startDownloadPDFBundle('" + pdfZipFilename + "')\" \
                         class=\"qindex printAll\" href=\"#PrintAll\">Print All `" + packageName + "` Pages as PDF</a>")
@@ -650,14 +650,14 @@ def writeSectionHeader(headerName, archName, outputFile, pdf):
 ###############################################################################
 # class to generate the web page based on input
 class WebPageGenerator:
-    def __init__(self, crossReference, outDir, repDir, docRepDir, git,
+    def __init__(self, crossReference, outDir, pdfOutDir, repDir, docRepDir, git,
                  includeSource=False, rtnJson=None):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
         self._allGlobals = crossReference.getAllGlobals()
         self._outDir = outDir
-        self._pdfOutDir = os.path.join(outDir, PDF_DIR)
+        self._pdfOutDir = pdfOutDir
         if not os.path.exists(self._pdfOutDir):
             os.mkdir(self._pdfOutDir)
         self._repDir = repDir
@@ -696,7 +696,7 @@ class WebPageGenerator:
             outputFile.write(line)
 
     def __getPDFDirectory__(self, packageName):
-        dir = self._pdfOutDir + "/" + normalizePackageName(packageName)
+        dir = os.path.join(self._pdfOutDir, normalizePackageName(packageName))
         if not os.path.exists(dir):
             os.mkdir(dir)
         return dir
@@ -3408,6 +3408,7 @@ def run(args):
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
                                   args.outdir,
+                                  args.pdfOutdir,
                                   args.MRepositDir,
                                   doxDir,
                                   args.git,
@@ -3425,6 +3426,8 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-o', '--outdir', required=True,
                         help='Output Web Page directory')
+    parser.add_argument('-pdf', '--pdfOutdir', required=True,
+                        help='Output PDF directory')
     parser.add_argument('-git', required=True, help='git executable')
     parser.add_argument('-dot', required=False,
                         help='path to the folder containing dot excecutable')

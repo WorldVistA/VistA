@@ -7,12 +7,21 @@ import cgi
 import logging
 import pprint
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus import KeepTogether, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import landscape, letter, inch
+from reportlab.lib import colors
+import io
+
 from LogManager import logger, initConsoleLogging
+from ICRParser import ICR_DIR
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS
 from ICRSchema import isSubFile, isWordProcessingField
 from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
 from WebPageGenerator import getRoutineHtmlFileName
-from WebPageGenerator import pkgMap
+from WebPageGenerator import pkgMap, normalizePackageName
+from WebPageGenerator import generatePDFTableHeader
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
@@ -20,6 +29,9 @@ from DataTableHtml import outputFileEntryTableList, safeElementId
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
 from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
+
+# PDF stylesheet
+styles = getSampleStyleSheet()
 
 def normalizeName(name):
     return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
@@ -160,23 +172,26 @@ field_convert_map = {
 }
 
 class ICRJsonToHtml(object):
-
-    def __init__(self, crossRef, outDir):
+    def __init__(self, crossRef, outDir, pdfDir):
         self._crossRef = crossRef
-        self._outDir = outDir
-    """
-    This is the entry point to convert JSON to html web pages
+        self._outDir = os.path.join(outDir, ICR_DIR)
+        if not os.path.exists(self._outDir):
+            os.mkdir(self._outDir)
+        self._pdfOutDir = pdfDir
+        if not os.path.exists(self._pdfOutDir):
+            os.mkdir(self._pdfOutDir)
 
-    It will generate a total ICR summary page as well individual pages for each package.
-    It will also generate the pages for each individual ICR details
+    # This is the entry point to convert JSON to html web pages
 
-    """
+    # It will generate a total ICR summary page as well individual pages for
+    # each package. It will also generate the pages for each individual ICR
+    # details.
     def convertJsonToHtml(self, inputJsonFile, date):
         with open(inputJsonFile, 'r') as inputFile:
             inputJson = json.load(inputFile)
             self._generateICRSummaryPage(inputJson, date)
 
-    """ Utility function to convert icrEntry to summary info """
+    # Utility function to convert icrEntry to summary info
     def _convertICREntryToSummaryInfo(self, icrEntry):
         summaryInfo = [""]*len(summary_list_fields)
         for idx, id in enumerate(summary_list_fields):
@@ -189,10 +204,12 @@ class ICRJsonToHtml(object):
         return summaryInfo
 
     def _generateICRSummaryPage(self, inputJson, date):
+        self.failures = []
         pkgJson = {} # group by package
         allpgkJson = []
         for icrEntry in inputJson:
             self._generateICRIndividualPage(icrEntry, date)
+            self._generateICRIndividualPagePDF(icrEntry, date)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -203,6 +220,7 @@ class ICRJsonToHtml(object):
         logger.warn('Total # entry in pkgMap is [%s]', len(pkgMap))
         logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
         self._generatePkgDepSummaryPage(inputJson, date)
+        # TODO: Log failures
 
     def _generatePkgDepSummaryPage(self, inputJson, date):
         outDep = {}
@@ -230,8 +248,7 @@ class ICRJsonToHtml(object):
                               curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
                               curDep.setdefault(subPkgName, []).append(curIaNum)
         """ Convert outDep to html page """
-        outDir = self._outDir
-        outFilename = "%s/ICR-PackageDep.html" % outDir
+        outFilename = "%s/ICR-PackageDep.html" % self._outDir
         with open(outFilename, 'w+') as output:
             output.write("<html>\n")
             tName = safeElementId("%s-%s" % ('ICR', 'PackageDep'))
@@ -357,11 +374,51 @@ class ICRJsonToHtml(object):
             output.write("</tbody>\n")
             output.write("</table>\n")
             if date is not None:
+                # TODO: Add to PDF?
                 link = "https://foia-vista.osehra.org/VistA_Integration_Agreement/"
                 output.write("<a href=\"%s\">Generated from %s IA Listing Descriptions</a>" % (link, date))
             output.write("</div>\n")
             output.write("</div>\n")
             output.write ("</body></html>")
+
+    # This is to generate a pdf for each individual ICR entry
+    def _generateICRIndividualPagePDF(self, icrJson, date):
+        ien = icrJson['NUMBER']
+        if 'CUSTODIAL PACKAGE' in icrJson:
+            packageName = icrJson['CUSTODIAL PACKAGE']
+            pdfOutDir = os.path.join(self._pdfOutDir, normalizePackageName(packageName))
+            if not os.path.exists(pdfOutDir):
+                os.mkdir(pdfOutDir)
+        else:
+           # TODO: PDF will not be included in a package bundle and will not be
+           #       accessible from the Dox pages
+            pdfOutDir = self._pdfOutDir
+        pdfFile = os.path.join(pdfOutDir, 'ICR-' + ien + '.pdf')
+
+        # Setup the pdf document
+        buf = io.BytesIO()
+        self.doc = SimpleDocTemplate(
+            buf,
+            rightMargin=inch/2,
+            leftMargin=inch/2,
+            topMargin=inch/2,
+            bottomMargin=inch/2,
+            pagesize=letter,
+        )
+        pdf = []
+        # Title
+        pdf.append(Paragraph("%s %s (%s)" % (icrJson['NAME'], 'ICR', ien),
+                             styles['Heading1']))
+
+        # Table
+        self._icrDataEntryToPDF(pdf, icrJson)
+
+        try:
+            self.doc.build(pdf)
+            with open(pdfFile, 'w') as fd:
+                fd.write(buf.getvalue())
+        except:
+          self.failures.append(pdfFile)
 
     def _icrDataEntryToHtml(self, output, icrJson):
         fieldList = ICR_FILE_KEYWORDS_LIST
@@ -385,6 +442,155 @@ class ICRJsonToHtml(object):
                 output.write ("<td>%s</td>\n" % field)
                 output.write ("<td>%s</td>\n" % value)
                 output.write ("</tr>\n")
+
+    def _icrDataEntryToPDF(self, pdf, icrJson):
+        # Write the ICR data as a document (list) instead of
+        # a table. Otherwise, the rows can become taller than
+        # a page and reportlab will fail to create the pdf.
+
+        fieldList = ICR_FILE_KEYWORDS_LIST
+        # As we do not have a real schema to define the field order,
+        # we will have to guess the order here
+        description = ""
+        globalReferenceSections = []
+        for field in fieldList:
+            if field in icrJson: # we have this field
+                value = icrJson[field]
+                if "GLOBAL REFERENCE" == field:
+                    self._parseGlobalReference(value, pdf)
+                    continue
+                #########################################################
+                if "COMPONENT/ENTRY POINT" == field:
+                    self._parseComponentEntryPoint(value, pdf)
+                    continue
+                ###############################################################
+                if "GENERAL DESCRIPTION" == field:
+                    description = []
+                    description.append(Paragraph('GENERAL DESCRIPTION', styles['Heading3']))
+                    if type(value) is list:
+                        for line in value:
+                          description.append(Paragraph(cgi.escape(line), styles['Normal']))
+                    else:
+                        description.append(Paragraph(cgi.escape(value), styles['Normal']))
+                    if description:
+                        pdf.append(KeepTogether(description))
+                    continue
+                ###############################################################
+                if isSubFile(field):
+                    pdf.append(Paragraph(field, styles['Heading3']))
+                    self._icrSubFileToPDF(pdf, value, field)
+                    continue
+                #####################################################
+                value = self._convertIndividualFieldValuePDF(field, value)
+                row = []
+                row.append(Paragraph(field, styles['Heading3']))
+                row.append(value)
+                pdf.append(KeepTogether(row))
+
+    def _parseGlobalReference(self, section, pdf):
+      for globalReference in section:
+        globalReferenceSection = []
+        name = globalReference["GLOBAL REFERENCE"]
+        globalReferenceSection.append(Paragraph("%s : %s" % ("globalReference", name), styles['Heading3']))
+        if 'GLOBAL DESCRIPTION' in globalReference:
+            # TODO: Each line should be its own Paragraph
+            description = globalReference["GLOBAL DESCRIPTION"]
+            globalReferenceSection.append(self._convertIndividualFieldValuePDF('GLOBAL DESCRIPTION', " ".join(description), True))
+            globalReferenceSection.append(Spacer(1, 20))
+        if 'FIELD NUMBER' in globalReference:
+            fieldNumber = globalReference["FIELD NUMBER"]
+            table = []
+            fieldList = SUBFILE_FIELDS['FIELD NUMBER']
+            if 'FIELD NUMBER' in fieldList: # TODO: How does this happen?
+              fieldList.remove('FIELD NUMBER')
+            header = ["FIELD #"] + SUBFILE_FIELDS['FIELD NUMBER']
+            header = [x if x != "LOCATION" else "LOC." for x in header]
+            table.append(generatePDFTableHeader(header))
+            for f in fieldNumber:
+                if type(f) is dict:
+                    row =[]
+                    row.append(self._convertIndividualFieldValuePDF('FIELD NUMBER', f['FIELD NUMBER'], False))
+                    for field in SUBFILE_FIELDS['FIELD NUMBER']:
+                        if field in f:
+                            row.append(self._convertIndividualFieldValuePDF(field, f[field], False, False))
+                        else:
+                            row.append(Paragraph("", styles['Normal']))
+                    table.append(row)
+            columns = 12
+            columnWidth = self.doc.width/columns
+            t = Table(table,
+                      colWidths=[columnWidth, columnWidth*2, columnWidth*2, columnWidth*6, columnWidth])
+            t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                                  ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                                  ]))
+            globalReferenceSection.append(t)
+            pdf.append(KeepTogether(globalReferenceSection))
+
+    def _parseComponentEntryPoint(self, section, pdf):
+      for component in section:
+        componentSection = []
+        name = component["COMPONENT/ENTRY POINT"]
+        componentSection.append(Paragraph("%s : %s" % ("COMPONENT/ENTRY POINT", name), styles['Heading3']))
+        if 'COMPONENT DESCRIPTION' in component:
+            # TODO: Each line should be its own Paragraph
+            description = component["COMPONENT DESCRIPTION"]
+            if type(description) is list:
+                description = " ".join(description)
+            componentSection.append(self._convertIndividualFieldValuePDF('COMPONENT DESCRIPTION', description, True))
+            componentSection.append(Spacer(1, 20))
+        if 'VARIABLES' in component:
+            variables = component["VARIABLES"]
+            table = []
+            table.append(generatePDFTableHeader(["VARIABLES", "TYPE", "VARIABLES DESCRIPTION"]))
+            for variable in variables:
+                if type(variable) is dict:
+                    row =[]
+                    _variables = variable['VARIABLES']
+                    if type(_variables) is list:
+                        _variables = _variables[0]
+                        if "-" in _variables:
+                            # TODO: This is a workaround for an error in original
+                            # file, see ICR-639. This does not create an error
+                            # when creating the html file, but the formating is
+                            # incorrect.
+                            variable['VARIABLES'] = _variables.split("-")[0]
+                            variable['VARIABLES DESCRIPTION'] = _variables.split("-")[1]
+                        else:
+                            # TODO: ICR-5317 VARIABLES are not
+                            # parsed correctly. Skip them for now.
+                            variable['VARIABLES'] = ""
+                    row.append(self._convertIndividualFieldValuePDF('VARIABLES', variable['VARIABLES'], False))
+                    if 'TYPE' in variable:
+                        if type(variable['TYPE']) is list:
+                            # TODO: ICR-6551 VARIABLES are not
+                            # parsed correctly. Skip them for now.
+                            variable['TYPE'] = ""
+                        row.append(self._convertIndividualFieldValuePDF('TYPE', variable['TYPE'], False, False))
+                    else:
+                        row.append(Paragraph("", styles['Normal']))
+                    if 'VARIABLES DESCRIPTION' in variable:
+                        description = variable['VARIABLES DESCRIPTION']
+                        if type(description) is list:
+                            description = " ".join(description)
+                            if len(description) > 1000:
+                                # TODO: Skipping long descriptions for now
+                                # See ICR-2916, ICR-3486, etc.
+                                description = ""
+                        row.append(self._convertIndividualFieldValuePDF('VARIABLES DESCRIPTION', description, False, False))
+                    else:
+                        row.append(Paragraph("", styles['Normal']))
+                    table.append(row)
+                else:
+                    # TODO: Parsing error! See ICR-28
+                    pass
+            columns = 10
+            columnWidth = self.doc.width/columns
+            t = Table(table, colWidths=[columnWidth*2, columnWidth, columnWidth*7])
+            t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                                  ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                                  ]))
+            componentSection.append(t)
+        pdf.append(KeepTogether(componentSection))
 
     def _icrSubFileToHtml(self, output, icrJson, subFile):
         logger.debug('subFile is %s', subFile)
@@ -412,6 +618,19 @@ class ICRJsonToHtml(object):
                     output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (field, value))
             output.write ("</li>\n")
 
+    def _icrSubFileToPDF(self, pdf, icrJson, subFile):
+        fieldList = SUBFILE_FIELDS[subFile]
+        if subFile not in fieldList:
+            fieldList.append(subFile)
+        for icrEntry in icrJson:
+            for field in fieldList:
+                if field in icrEntry: # we have this field
+                    value = icrEntry[field]
+                    if isSubFile(field) and field != subFile: # avoid recursive subfile for now
+                        self._icrSubFileToPDF(pdf, value, field)
+                        continue
+                    pdf.append(self._convertIndividualFieldValuePDF(field, value, True))
+
     def _convertIndividualFieldValue(self, field, icrEntry, value):
         if isWordProcessingField(field):
             if type(value) is list:
@@ -425,10 +644,43 @@ class ICRJsonToHtml(object):
             value = field_convert_map[field](value, icrEntry, crossRef=self._crossRef)
             return value
         return value
-    """ This function will read all entries in RPC file file# 8994 and return a mapping
-        of RPC Name => IEN.
-    """
 
+    def _convertIndividualFieldValuePDF(self, field, value, writeField=False, keepTogether=True):
+        if isWordProcessingField(field):
+            if type(value) is list:
+                cell = []
+                for item in value:
+                    text = cgi.escape(item)
+                    if writeField:
+                      text = "%s : %s" % (field, text)
+                    # TODO: "Field:" should not be styled as 'Code'
+                    cell.append(Paragraph(text, styles['Normal']))
+                if keepTogether:
+                    return KeepTogether(cell)
+                else:
+                    return cell
+            else:
+                text = cgi.escape(value)
+                if writeField:
+                  text = "%s : %s" % (field, text)
+                # TODO: "Field:" should not be styled as 'Code'
+                return Paragraph(text, styles['Normal'])
+        if type(value) is list:
+            cell = []
+            for item in value:
+                text = item
+                if writeField:
+                  text = "%s : %s" % (field, text)
+                cell.append(Paragraph(text, styles['Normal']))
+            if keepTogether:
+                return KeepTogether(cell)
+            else:
+                return cell
+        else:
+            text = value
+            if writeField:
+                text = "%s : %s" % (field, text)
+            return Paragraph(text, styles['Normal'])
 
 def createArgParser():
     initParser = createInitialCrossRefGenArgParser()
@@ -451,7 +703,7 @@ def run(args):
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
-    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir)
+    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir, args.pdfOutdir)
     if args.local:
       dox_url = "../dox/"
     if hasattr(args, 'date'):

@@ -350,8 +350,8 @@ Each test and corresponding Python script is described below.
 
 5. The **ICRParser** test runs the ICRParser script from VistA's
    ``Utilities/Dox/PythonScripts`` directory. This script parses and converts
-   the FOIA released ICR_ text file to JSON (used by DOX) and HTML (used by
-   ViViaN).
+   the FOIA released ICR_ text file to JSON (used by DOX), HTML (used by
+   ViViaN) and PDF (used by DOX package download).
 
 6. The **GeneratePackageDep** test runs the CrossReferenceBuilder file which
    reads the Schema and Callergraph log files and generates the ``pkgdep.json``
@@ -360,6 +360,8 @@ Each test and corresponding Python script is described below.
 7. The **WebPageGenerator** test runs a Python script of the same name from the
    ``Utilities/Dox/PythonScripts`` directory in the VistA repository. This
    script uses output from the previous test to generate the html DOX pages.
+   This script also generates PDF package bundles that can be downloaded from
+   the DOX package pages.
 
 8. The **RequirementsParser** test runs a Python script of the same name from
    the ``Utilities/Dox/PythonScripts`` directory in the VistA repository. This
