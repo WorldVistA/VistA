@@ -385,9 +385,9 @@ def outputCustomDataTableHeader(output, name_list, tName):
   output.write("<table id=\"%s\" class=\"display\">\n" % tName)
   output.write("<thead>\n")
   for name in name_list:
-    output.write("<tr>\n")
+    output.write("<th>\n")
     output.write("%s\n" % name)
-    output.write("</tr>\n")
+    output.write("</th>\n")
   output.write("</thead>\n")
 
 def writeTableListInfo(output, tName):

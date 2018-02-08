@@ -172,4 +172,8 @@ if(GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RequirementsParser.cmake.in ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake @ONLY)
   add_test(RequirementsParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake)
 
+# 10. Run a task to generate the DataTables display of the name and numberspace information
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/NameNumberspaceGen.cmake.in ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake @ONLY)
+  add_test(GenerateNameNumberDisplay ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake)
+
 endif()
