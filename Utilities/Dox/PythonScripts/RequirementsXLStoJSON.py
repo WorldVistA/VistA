@@ -41,7 +41,6 @@ def test_sheet(test_xls):
 
 rootNode = {}
 rootNode["None"] = []
-curDate = '1'
 
 typeDict = {
   xlrd.XL_CELL_NUMBER: "Number",
@@ -121,7 +120,7 @@ RequirementsFieldsConvert = {
   "Associated BFF(s)":"BFFlink"
 }
 
-def checkReqForUpdate(curNode,pastJSONObj):
+def checkReqForUpdate(curNode,pastJSONObj,curDate):
   diffFlag=False
   foundDate = curDate
   noHistory=False;
@@ -169,7 +168,7 @@ def RequirementsFieldsConvertFunc(x):
     return RequirementsFieldsConvert[x]
   return x
 
-def convertExcelToJson(input, output,pastData):
+def convertExcelToJson(input, output,pastData,curDate):
   pastJSONObj={}
   if pastData:
     with open(pastData,"r") as pastJSON:
@@ -199,13 +198,12 @@ def convertExcelToJson(input, output,pastData):
       if not cValue:
         continue
       curNode[fields[col_index]] = cValue
-    checkReqForUpdate(curNode,pastJSONObj)
+    checkReqForUpdate(curNode,pastJSONObj,curDate)
 
   with open(output, "w") as outputJson:
     json.dump(rootNode, outputJson)
 
 def main():
-  global curDate
   import argparse
   parser = argparse.ArgumentParser("Convert Requirements Excel SpreadSheet to JSON")
   parser.add_argument('input', help='input Requirements excel spreadsheet')
@@ -214,7 +212,7 @@ def main():
   parser.add_argument('-d','--curDate',help="The date to use as the information for the updated files", required=True)
   result = parser.parse_args()
   curDate = result.curDate
-  convertExcelToJson(result.input, result.output, result.pastData)
+  convertExcelToJson(result.input, result.output, result.pastData, curDate)
 
 if __name__ == '__main__':
   main()
