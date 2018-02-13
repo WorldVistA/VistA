@@ -1,4 +1,4 @@
-ZZRGUTCM ;RGI/CBR - Unit Tests - Common functions ;3/7/2013
+ZZRGUTCM ;RGI/CBR - Unit Tests - Common functions ;2018-02-20  9:44 AM
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1;
 NEWPAT ;
  N PAT,PATU,PATDFN,ERR
@@ -182,7 +182,9 @@ NEWLST(LNAME,LOC)
  ;
 NEWCAT(HDR) ; Create new group entries in #125.1 and #125.11
  N DIC,DD,DO,X,Y,DIK,ITEM,DLAYGO
- S DIC="^GMPL(125.11,",DIC(0)="L",DIC("DR")="1////"_DT,DLAYGO=125.11
+ I $$PATCH^XPDUTL("GMPL*2.0*49") S DIC("DR")=".02///"_DT_";.03///L"
+ E  S DIC("DR")="1////"_DT
+ S DIC="^GMPL(125.11,",DIC(0)="L",DLAYGO=125.11
  I $L(HDR),'$D(^GMPL(125.11,"B",$$UP^XLFSTR(HDR))) S X=$$UP^XLFSTR(HDR)
  D FILE^DICN G:Y'>0 NGQ
 NGQ S Y=$P(Y,U,1,2)
