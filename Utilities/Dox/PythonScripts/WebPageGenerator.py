@@ -578,7 +578,12 @@ class WebPageGenerator:
         self.generatePackageIndexPage()
         self.generatePackagePackageInteractionDetail()
         self.generateIndividualPackagePage()
-        self.generateRoutineRelatedPages()
+        self.generateRoutineIndexPage()
+        if self._dot:
+            self.generateRoutineCallGraph()
+            self.generateRoutineCallerGraph()
+        self.generateAllSourceCodePage(not self._includeSource)
+        self.generateAllIndividualRoutinePage()
         self.copyFilesToOutputDir()
 #===============================================================================
 # Method to generate the index.html page
@@ -1643,16 +1648,6 @@ class WebPageGenerator:
             edgeStyle = "solid"
         return (edgeLabel, edgeToolTip, edgeStyle)
 
-#===============================================================================
-#
-#===============================================================================
-    def generateRoutineRelatedPages(self):
-        self.generateRoutineIndexPage()
-        if self._dot:
-            self.generateRoutineCallGraph()
-            self.generateRoutineCallerGraph()
-        self.generateAllSourceCodePage(not self._includeSource)
-        self.generateAllIndividualRoutinePage()
 #===============================================================================
 #
 #===============================================================================
