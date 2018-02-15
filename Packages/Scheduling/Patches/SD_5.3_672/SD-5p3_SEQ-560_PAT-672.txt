@@ -1,0 +1,442 @@
+$TXT Created by                  DEVVVV.DOMAIN.EXT  (KIDS) on Tuesday, 09/26/17 at 15:54
+=============================================================================
+Run Date: JAN 12, 2018                     Designation: SD*5.3*672
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #560                    Status: Released
+                  Compliance Date: FEB 08, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*671  <<= must be installed BEFORE `SD*5.3*672'
+
+Subject: VISTA SCHEDULING GRAPHICAL USER INTERFACE SUSTAINMENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1.  I10959194FY17 - Clinic Group would not display for second patient without
+                     searching for a different clinic group first.
+ 2.  I11259063FY17 - Unable to disposition Wait List from RM Grid.
+ 3.  I12362398FY17 - Scheduling Grid continues to display OVERBOOK capability
+                     (TEAL color) when a FULL DAY cancelation has been entered.
+ 4.  I12487403FY17 - An Unhandled Exception occurs in VS GUI when attempting to
+                     use drag and drop for a consult appointment.
+ 5.  I12529073FY17 - In VS GUI, Slots in the Grid and the Available Slot
+                     Numbers Change Depending on Where I Clicked on the Grid.
+ 6.  I12602010FY17 - Patient with a Date of Death can add a new Appointment
+                     Request.
+ 7.  I12748395FY17 - Cancel by clinic in VS GUI allows the CID/Preferred date
+                     to be changed.
+ 8.  I12871937FY17 - VS GUI Audit Report has conflicting counts when displaying
+                     by user vs displaying ALL users.
+ 9.  I13212697FY17 - Appointments scheduled in VS GUI with past date do not
+                     display in CPRS coversheet.
+ 10. I13233499FY17 - Issue in VS GUI when selecting 'Follow-up Needed' when
+                     checking out an appointment.
+ 11. R14380532FY17 - SDRR CLINIC LETTER REPORT option will not run properly due
+                     to bad data.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)               Field Name (#)           New/Modified/Deleted
+ -------------               --------------           --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File #                   New/Modified/Deleted
+ ---------                   ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                      New/Modified/Deleted
+ ---------------                                      --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type                    New/Modified/Deleted
+ -----------                  ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                        New/Modified/Deleted
+ -------------                                        --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name           Type     File Name (Number)  New/Modified/Deleted
+ -------------           ----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I10959194FY17 - Clinic Group would not display for second patient without
+                    searching for a different clinic group first.
+  
+   Problem:
+   -------
+   In the VistA Scheduling Graphical User Interface (VS GUI), after searching
+   for a Clinic Group for a patient, then selecting a new patient and searching
+   for the same Clinic Group, it did not display until the user searched for a
+   different clinic group, and searched again for the 1st clinic group.
+  
+   Resolution:
+   ----------
+   The code managing Clinic, Provider and Clinic Group schedules has been
+   corrected so that when the control gets focus, any existing text is not
+   removed.
+   When a Clinic, Provider or Clinic Group has been previously selected the
+   user can press the enter key when the control has focus and the schedule for
+   the selected item will be open.
+  
+ 2. I11259063FY17 - Unable to disposition Wait List from RM Grid.
+  
+   Problem:
+   -------
+   A Wait List Request continues to be displayed in the VS GUI RM Grid even
+   though the status in VistA reflects it is closed.
+  
+   Resolution:
+   ----------
+   The VS GUI Client has been corrected to correctly use the disposition return
+   piece of the SDEC WLGET remote procedure.
+  
+ 3. I12362398FY17 - Scheduling Grid continues to display OVERBOOK capability
+                    (TEAL color) when a FULL DAY cancelation has been entered.
+  
+   Problem:
+   -------
+   Scheduling Grid in VS GUI continues to display OVERBOOK capability
+   (TEAL color) when a FULL DAY cancelation has been entered. A message needs
+   to display to the user indicating this is an Overbook.
+  
+   Resolution:
+   ----------
+   Added message to user when attempting to book appointment on cancelled
+   clinic availability.
+  
+ 4. I12487403FY17 - An Unhandled Exception occurs in VS GUI when attempting to
+                    use drag and drop for a consult appointment.
+  
+   Problem:
+   -------
+   When attempting to use drag and drop for a consult appointment, an unhandled
+   exception occurs.
+  
+   Resolution:
+   ----------
+   This error occurred when dropping the appointment on an 'unavailable'
+   position. The VS GUI client has been corrected to not allow this to
+   happen.
+  
+ 5. I12529073FY17 - In VS GUI, Slots in the Grid and the Available Slot Numbers
+   Change Depending on Where I Clicked on the Grid.
+  
+   Problem:
+   -------
+   I noticed that the available slots in the grid and the available slot
+   numbers changed depending on where I clicked on the grid.
+   First I opened ash/dermatology md1:
+     Clicked on the date of the appt in the calendar 1/30: 60 min appt
+      scheduled shows 10:00 slot (0), 10:30 slot (1)
+     Clicked on 1/10 in calendar, then came back to 1/30 by clicking date on
+      calendar: Now same 60min appt shows availability at 10:00 (0) and blank
+      at 10:30.
+     I then clicked on 1/31 grid and availability for the 1/30 appt changed
+      back to 10:00 (0) and 10:30 (1)
+   In addition, I found that when I clicked on 1/27, 1/28 or 1/29
+   (days with no availability) the slots on the weekdays moved around.
+   The slot count is showing (1) at 9:15, should be a (0).
+  
+   Resolution:
+   ----------
+   The VS GUI Client has been corrected to keep the slot counts aligned with
+   the correct slot (line).
+  
+ 6. I12602010FY17 - Patient with a Date of Death can add a new Appointment
+                    Request.
+  
+   Problem:
+   -------
+   When adding a new appointment request in the VistA Scheduling Graphical User
+   Interface (VS GUI), the user should be given a message and the system should
+   not allow a new appointment request to be added if the patient has a Date of
+   Death defined.
+  
+   Resolution:
+   ----------
+   The VS GUI client has been corrected to recognize the Date of Death
+   definition when adding a new appointment request.
+  
+ 7. I12748395FY17 - Cancel by clinic in VS GUI allows the CID/Preferred date to
+                    be changed.
+  
+   Problem:
+   -------
+   User is able to change CID/preferred date on appointment by selecting:
+    Cancelled by patient
+    Changed the CID/preferred date from e.g. 4/12/17 to 6/16/17
+    Select Cancelled by clinic - new CID/preferred is retained
+  
+   Resolution:
+   ----------
+   The VS GUI client has been correct to insure the CID\Preferred Date displays
+   correctly and cannot be modified for Cancelled by Clinic and Cancelled by
+   Patient.
+  
+ 8. I12871937FY17 - VS GUI Audit Report has conflicting counts when displaying
+                    by user vs displaying ALL users.
+  
+   Problem:
+   -------
+   Audit Report count is changing when using ALL versus selecting an individual
+   scheduler.  The date range used is not changed so the count should be the
+   same.
+  
+   Resolution:
+   ----------
+   These counts have been corrected in the SDEC SUMMGET remote procedure.
+  
+ 9. I13212697FY17 - Appointments scheduled in VS GUI with past date do not
+   display in CPRS coversheet.
+  
+   Problem:
+   -------
+   Appointments that have been scheduled via VS GUI, have reached a PAST status
+   and are not in checked out, cancelled, or no-show status do not display in
+   CPRS in the Encounter pane or on Cover Sheet.
+  
+   Resolution:
+   ----------
+   After the appointment has been filed, SDAM will make an evaluation to
+   determine if the checkin and/or checkout prompt needs to display.
+   Even if the user does not checkin or checkout, an entry is added to the
+   OUTPATIENT ENCOUNTER file (#409.68).
+   This similar logic has been added to the SDEC APPADD remote procedure so
+   that the OUTPATIENT ENCOUNTER file is updated and the encounter will display
+   in CPRS.
+  
+ 10. I13233499FY17 - Issue in VS GUI when selecting 'Follow-up Needed' when
+                     checking out an appointment.
+  
+   Problem:
+   -------
+   When user selects Follow-Up Needed in the Check Out dialog, selects a date,
+   and then clicks OK.  An APPT Request is not displaying so the user can
+   create request for follow up appointment.
+  
+   Resolution:
+   ----------
+   The VS GUI client has been corrected by fixing a logic error preventing the
+   new request dialog from displaying after a Checkout with Follow-up.
+  
+ 11. R14380532FY17 - SDRR CLINIC LETTER REPORT option will not run properly due
+                     to bad data.
+  
+   Problem:
+   -------
+   If there is an entry in the RECALL REMINDERS file (#403.5) that is missing a
+   patient ID, RECALL DATE, CLINIC ID, or if the Clinic record does not contain
+   a name, the SDRR CLINIC LETTER REPORT option will throw an error.
+   The specific error reported happened because the RECALL REMINDERS entry did
+   not contain a patient ID:
+    Walla Walla error trap:$ZE= <SUBSCRIPT>SORT+9^SDRRREP ^DPT("")
+    S SSN=$E($P(^DPT(DFN,0),"^",9),6,9) S:SSN="" SSN=0
+  
+   Resolution:
+   ----------
+   The SDRR CLINIC LETTER REPORT option has been updated to catch and skip
+   records that contain missing required data.
+  
+  
+  
+ Test Sites:
+ ----------
+ Tomah VA Medical Center
+ VA Salt Lake City Health Care System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                       File Name                             FTP Mode
+ --------------------------------------------------------------------------
+ VistA Scheduling Enhancements GUI User Guide   VSE_VA_GUI_UG.PDF  Binary
+ VistA Scheduling Enhancements Technical Manual VSE_TM.PDF         Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains no PRE Installation processing.
+ This patch contains no POST Installation processing.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch should not be installed with VistA Scheduling GUI users on the
+ system and it is recommended that it be installed during non-peak hours to
+ minimize potential disruption to other users. This patch should take less
+ than 5 minutes to install.
+  
+ The following options should be disabled to ensure that no processing takes
+ place during the install:
+   Clinical Scheduling Procedure Calls [SDECRPC]
+   Scheduling Manager's Menu           [SDMGR]
+   Supervisor Menu                     [SDSUP]
+   Scheduling Menu                     [SDUSER]
+   Clinic Letter Report                [SDRR CLINIC LETTER REPORT]
+  
+  
+ Installation Instructions:
+ --------------------------
+ This installation will update routines that support VistA Scheduling GUI 
+ Application Programming Interfaces (APIs).
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch #
+    SD*5.3*672:
+   a. Backup a Transport Global - This option will create a backup message
+         of any routines exported with this patch. It will not backup any other
+         changes such as DDs or templates.
+   b. Compare Transport Global to Current System - This option will allow
+         you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' 
+       Respond with 'NO'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       Respond with 'NO'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' 
+       Respond with 'YES'
+       Options to mark as out of order:
+          Clinical Scheduling Procedure Calls [SDECRPC]
+          Scheduling Manager's Menu           [SDMGR]
+          Supervisor Menu                     [SDSUP]
+          Scheduling Menu                     [SDUSER]
+          Clinic Letter Report                [SDRR CLINIC LETTER REPORT]
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC
+    Before:B129056425   After:B129523309  **627,643,642,651,658,665,672**
+Routine Name: SDEC01A
+    Before:B116433919   After:B123678452  **627,642,658,665,672**
+Routine Name: SDEC02
+    Before: B53389862   After: B68680067  **627,642,658,672**
+Routine Name: SDEC07
+    Before:B187944035   After:B193088585  **627,642,651,658,665,669,671,672**
+Routine Name: SDEC32
+    Before:B103453639   After:B114220847  **627,643,642,658,665,672**
+Routine Name: SDEC50
+    Before: B97773017   After:B102324779  **627,658,665,672**
+Routine Name: SDEC54A
+    Before: B83794184   After: B86091542  **627,642,658,665,672**
+Routine Name: SDEC56
+    Before: B59961693   After: B65059855  **627,642,651,665,672**
+Routine Name: SDECWL
+    Before: B99990256   After:B102048711  **627,642,665,672**
+Routine Name: SDRRREP
+    Before:  B9249872   After: B11839336  **643,672**
+ 
+Routine list of preceding patches: 671
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 25, 2017
+Completed By:                               Date Completed: JAN 10, 2018
+Released By :                               Date Released : JAN 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

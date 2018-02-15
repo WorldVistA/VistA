@@ -1,0 +1,119 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 05/02/17 at 13:13
+=============================================================================
+Run Date: DEC 07, 2017                     Designation: FH*5.5*44
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #42                    Status: Released
+                  Compliance Date: JAN 07, 2018
+=============================================================================
+
+Associated patches: (v)FH*5.5*42   <<= must be installed BEFORE `FH*5.5*44'
+
+Subject: FHSELA2 UPDATE FOR NEW FOOD ALLERGY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+ 1. Adding Food, Drug/Food allergies BEAN SPROUTS to routine FHSELA2.
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ 1. South Texas HCS - San Antonio 
+ 2. HON: Pacific Islands HCS VAMC 
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================
+ 1. R11398800FY17 - Add new Food, Drug/Food allergy to routine FHSELA2.
+  
+  
+ Problem:
+ --------
+ he New Term Rapid Turnaround (NTRT) Allergy team has recently added 
+ BEAN SPROUTS as a food allergy allergies to the GMR ALLERGIES file 
+ (#120.82). This new food allergy must be added to the routine FHSELA2
+ in order to be mapped as allergy type food preference dislikes in the 
+ Dietetics package.
+  
+ Resolution:
+ -----------
+ Routine FHSELA2 has a hard coded list of food allergies. It uses
+ this hard coded list to present to the user for adding a food 
+ allergy preference dislike to the FOOD PREFERENCES file (#115.2) 
+ and then map it to a matching record in the GMR ALLERGIES file 
+ (#120.82). BEAN SPROUTS will be added to the hard coded list of
+ food allergies in routine FHSELA2 so it may be presented to
+ the user.
+  
+ Installation Instructions:
+ --------------------------
+ Installation will take less than 2 minutes.  Users may be on the system.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu. From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the
+    patch FH*5.5*44:
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DDs or templates.
+  
+    b. Compare Transport Global to Current System - This option will
+       (allow you to view all changes that will be made when this
+       patch is installed. It compares all components of this patch
+       routines, DDs, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow
+       you  to ensure the integrity of the routines that are in the
+       transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+    respond 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//' respond 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B133567646   After:B134944560  **8,13,23,25,28,35,37,39,40,
+                                           41,42,44**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2017
+Completed By:                               Date Completed: DEC 06, 2017
+Released By :                               Date Released : DEC 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

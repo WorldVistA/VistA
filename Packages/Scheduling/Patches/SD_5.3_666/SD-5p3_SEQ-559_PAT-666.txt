@@ -1,0 +1,249 @@
+$TXT Created by                   at MNTVUU.DOMAIN.EXT  (KIDS) on Thursday, 07/06/17 at 20:25
+=============================================================================
+Run Date: DEC 05, 2017                     Designation: SD*5.3*666
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #559                    Status: Released
+                  Compliance Date: JAN 04, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*177  <<= must be installed BEFORE `SD*5.3*666'
+                    (v)SD*5.3*204  <<= must be installed BEFORE `SD*5.3*666'
+                    (v)SD*5.3*504  <<= must be installed BEFORE `SD*5.3*666'
+
+Subject: PCMM VISTA API DEFECTS FOR SECURE MESSAGING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct one defect in several Patient-Centered Management
+ Module (PCMM) VistA Application Program Interface (API)s used by 
+ MyHealtheVet (MHV) Secure Messaging (SM).
+  
+ Software Changes:
+ =================
+  
+ Entry point TPPR^SCAPMC12 was modified to fix a function call where an 
+ array was not passed by reference.
+  
+ Entry point INIT^SCAPMCU1 was modified to default to current date/time 
+ rather than just current date.
+  
+ Entry point DTCHK^SCAPU1 was modified to fix several date compare defects.
+  
+  
+ RTC defect 333486 was logged by MHV Secure Messaging.
+ Secure Messaging team is supporting PCMMR team with the release of this 
+ VistA patch.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ CA-SDM Ticket(s):
+ ----------------------------
+ 1. RTC 333486 Defect - PCMM Provider not showing in SM Admin Query. 
+ Problem:
+ When Secure Messaging (SM) Primary Care providers (PCP) are associated to 
+ teams in PCMM Web (PCMM-R) as PRIMARY CARE PROVIDER or 
+ PHISICIAN-ATTENDING roles, they should be available to be selected as PCP 
+ in SM Triage Groups that enable the secure communication between the 
+ patients and their PCP team.
+ After the PCP association with the PCMM-R team is synced in VistA, the 
+ new provider association is not showing until the next calendar day which 
+ results in a delay of a maximum of 24 hours. During this period the 
+ provider is unavailable to be selected in the SM Triage Group for 
+ receiving/sending emails to his/her patients.
+ This issue is caused by the VistA Scheduling APIs that MHV SM is using 
+ (Integration Agreement #5250) to extract the VistA provider association. 
+ This results in the PCP flags not being retrieved correctly from the 
+ VistA Team Position Assignment and History files.
+  
+ Resolution:
+ The code was changed to correct the API calls for Integration Agreement 
+ #5250. The code was changed to use the Date/Time stamps (vs. just the 
+ date) to compare the time of the PCP associations to PCMM-R teams. This 
+ makes the data available for the API queries to pull the data from VistA 
+ immediately after PCMM-R VistA sync jobs have run to update the team
+ information in VistA.
+  
+  
+ Test Sites:
+ ----------
+ Erie VA Medical Center - (Station #562)
+ Cincinnati VA Medical Center - (Station #539)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to SFTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available SFTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre-installation steps for this patch.
+ There are no post-installation steps for this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no pre-installation steps for this patch.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no Menu Options to disable.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # SD*5.3*666:
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will list the contents of
+         of the transport global (what was loaded from the KIDS file).
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates. This step is 
+         required for patch back-out processing.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  respond NO
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'   respond NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no post-installation steps for this patch.
+  
+  
+ Backout and Rollback Procedure:
+ ===============================
+ This patch consists of routines. During the VistA Installation Procedure 
+ of the KIDS build, the installer should back up the modified routines 
+ using the 'Backup a Transport Global' action (step 3d in the Installation 
+ Instructions above).
+   
+ If rollback/backout is required, the installer may restore the routines 
+ using the MailMan message that was saved prior to installing the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCAPMC12
+    Before:  B6077287   After:  B6118369  **41,204,666**
+Routine Name: SCAPMCU1
+    Before: B35098425   After: B35880589  **41,45,48,177,666**
+Routine Name: SCAPU1
+    Before:  B5697016   After:  B7363438  **41,504,666**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 31, 2017
+Completed By:                               Date Completed: DEC 01, 2017
+Released By :                               Date Released : DEC 05, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

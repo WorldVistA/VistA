@@ -1,0 +1,114 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/27/17 at 16:28
+=============================================================================
+Run Date: JAN 09, 2018                     Designation: OR*3*459
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #389                      Status: Released
+                  Compliance Date: FEB 09, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*391    <<= must be installed BEFORE `OR*3*459'
+
+Subject: ANTI-COAGULATION SHOW RATE ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch OR*3.0*459 addresses the following one (1) issue:
+  
+ 1. I10993318FY17 - Anti-Coagulation Show Rate not displaying correct 
+ information
+  
+  
+ Defect Tracking System Tickets(s) & Overview:
+ ---------------------------------------------
+  
+ 1. I10993318FY17(CA SDM) -  Anticoagulation Tool field discrepancy
+  
+  
+ Problem:
+ --------
+ Patient enrolled in Anticoag lists 2 missed appointments of 21 visits, 
+ but Show Rate in anti-coagulator tool displays 52.3%. Second patient 
+ lists 1 missed appointment of 5 visits, but Show Rate displays as 0%.
+  
+ Solution:
+ ---------
+ Routine ORAM2 currently reviews the last comment line to count visits.  
+ Routine will be modified to check second to last comment line and count
+ the visit accordingly. In addition it will be modified to detect deleted 
+ visits.
+  
+ Routine: ORAM2
+  
+ Please note, during testing of OR*3*459, two additional issues with show 
+ rate were identified. These are being researched and will be addressed in 
+ a future patch - OR*3*451.
+  
+ Test Sites:
+ -----------
+ Boise VAMC
+ Denver VAMC
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter OR*3.0*459).      
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+     d. Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package OR*3.0*459.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM2
+    Before: B58023259   After: B63964344  **307,339,354,361,391,459**
+ 
+Routine list of preceding patches: 391
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2017
+Completed By:                               Date Completed: JAN 09, 2018
+Released By :                               Date Released : JAN 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

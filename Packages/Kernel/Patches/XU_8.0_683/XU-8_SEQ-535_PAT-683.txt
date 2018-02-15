@@ -1,0 +1,301 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 08/14/17 at 09:02
+=============================================================================
+Run Date: JAN 24, 2018                     Designation: XU*8*683
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #535                      Status: Released
+                  Compliance Date: FEB 24, 2018
+=============================================================================
+
+
+Subject: SUPPORT PAYERS DOMAIN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ ***************************** ATTENTION **********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Payers Domain enhancement includes 3 patches
+ that must be installed in the following order:
+  
+      1.  XU*8.0*683
+      2.  HDI*1.0*20
+      3.  IB*2.0*585
+  
+ Sites not running all of VISTA:
+  
+ This patch includes a new entry MASTER TYPE OF PLAN to the MASTER FILE 
+ PARAMETERS file (#4.001).  The entry added in this field references a 
+ file which may be added by a separate product's release.  For those sites 
+ not running all of VISTA, the added entry in the MASTER FILE PARAMETERS 
+ file (#4.001) will display the file number is (#355.99) instead of the 
+ file name MASTER TYPE OF PLAN if the other application is not installed 
+ and maintained. This is not an issue.
+  
+ **************************************************************************
+  
+  
+                         XU*8*683
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Updates the MASTER FILE PARAMETERS file (#4.001) with a new
+    entry Plans(#355.99):
+  
+ NUMBER: 355.99                          MASTER FILE: 355.99
+   MFI CODE: Plans                       MASTER FILE IDENTIFIER: Plans
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   COLUMN LENGTH: 99                     SEQUENCE: 1
+ COLUMN DESCRIPTION: VistA_External_Code
+   FIELD NUMBER: 1                       COLUMN LENGTH: 8
+   SEQUENCE: 2
+ COLUMN DESCRIPTION: vista_parent        FIELD NUMBER: 2
+   VUID PREFIX: VUID                     SEQUENCE: 3
+ COLUMN DESCRIPTION: vista_replaced_by   FIELD NUMBER: 99.97
+   VUID PREFIX: VUID                     SEQUENCE: 4
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   SUBFILE NUMBER: 355.9901              COLUMN LENGTH: 1
+   SEQUENCE: 5
+  
+ 2) Updates the MD5 Signature file(#4.005) with a new entry
+   Plans(#355.99):
+  
+ NUMBER: 355.99                          MD5 CODE SYSTEM: Plans
+ FILE/SUBFILE NUMBER: 355.99
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 1                         SEQUENCE: 30
+ FIELD NUMBER: 2                         SEQUENCE: 40
+   VUID FROM FILE: 355.99
+ FIELD NUMBER: 99.97                     SEQUENCE: 50
+   VUID FROM FILE: 355.99
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+  
+ Patch Components:
+  
+ -----------------
+  
+ Files & Entry Associated:
+  
+ File Name (Number)             Entry Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ MASTER FILE PARAMETERS file (#4.001) Plans(#355.99)             New
+ MD5 Signature file(#4.005)           Plans(#355.99)             New  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ Altoona, PA VAMC
+ Manchester, NH VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.
+ There's no updated Documentation being released with this patch. 
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 6/21/17
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*683 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*683 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF683, and XUMF683P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*683     Loaded from Distribution    
+ 06/29/17@06:52: 51
+      => XU*8.0*683 06/29/17
+  
+ This Distribution was loaded on JUN 29, 2017@06:52:51 with header of 
+    XU*8.0*683 06/29/17
+    It consisted of the following Install(s):
+      XU*8.0*683
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*683     JUN 29 2017 6:52 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF683   value = 19981970
+ XUMF683P  value = 2648613
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*683:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of a new database definition. If assistance is needed 
+ to rollback/backout the patch please, log a CA Service Desk Manager (SDM)
+ ticket so the development team can assist in this process.
+  
+ This patch creates a new entry Plans in the MASTER FILE PARAMETERS file 
+ (#4.001), and the new entry Plans  MD5 Signature file(#4.005).
+  
+ To back out this patch, we can use FileMan to delete the entries:
+  
+ Select VA FileMan <TEST ACCOUNT> Option: enter or Edit File Entries
+ Input to what File: MASTER FILE PARAMETERS//   (22 entries)
+ EDIT WHICH FIELD: ALL// 
+ Select MASTER FILE PARAMETERS: Plans  355.99
+ MASTER FILE: 355.99// @
+    SURE YOU WANT TO DELETE THE ENTIRE MASTER FILE PARAMETERS?  Y
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF683
+    Before:       n/a   After: B19981970  **683**
+Routine Name: XUMF683P
+    Before:       n/a   After:  B2648613  **683**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2017
+Completed By:                               Date Completed: JAN 23, 2018
+Released By :                               Date Released : JAN 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

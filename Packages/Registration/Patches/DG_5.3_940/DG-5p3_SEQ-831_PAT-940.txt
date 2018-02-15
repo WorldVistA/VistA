@@ -1,0 +1,531 @@
+$TXT Created by                  at DEVVOO.DOMAIN.EXT  (KIDS) on Friday, 08/18/17 at 17:24
+=============================================================================
+Run Date: DEC 06, 2017                     Designation: DG*5.3*940
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #831                    Status: Released
+                  Compliance Date: JAN 06, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*909  <<= must be installed BEFORE `DG*5.3*940'
+                    (v)DG*5.3*934  <<= must be installed BEFORE `DG*5.3*940'
+                    (v)DG*5.3*936  <<= must be installed BEFORE `DG*5.3*940'
+
+Subject: PERMANENT & TOTAL DISABLED DISPLAY/REASON FOR CLOSED APPLICATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch DG*5.3*940 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which 
+ supports Enrollment System Community Care (ESCC).
+  
+ DG*5.3*940 is also being released in support of the Enrollment System (ES)
+ 4.7.0 release. Refer to Informational Patch EAS*1*153 (Enrollment
+ Application System) for additional details regarding the ES release.
+  
+ Listing of Updates:
+ ===================
+ This patch makes the following enhancements to the Veterans Health
+ Information Systems and Technology Architecture (VistA):
+  
+ 1.  The "Permanent & Total Disabled" (P&T) field will be added to the 
+     VistA Patient Inquiry screen in the menu option Patient Inquiry [DG
+     PATIENT INQUIRY]. 
+     Routine DGRPD was modified to include the display of the P&T field
+     within the "Other Eligibilities" section.  Any updates to the P&T
+     field will be displayed in the field labeled "Permanent & Total
+     Disabled" in the following options:
+  
+ Register a Patient                    [DG REGISTER PATIENT]
+ Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+ Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+ Display Screen from Menu Option Patient Inquiry [DG PATIENT INQUIRY]:
+  
+ BEGIN SCREEN CAPTURE 1*
+  
+ Select OPTION NAME:    DG PATIENT INQUIRY     Patient Inquiry
+  
+ Select PATIENT NAME: DGREGISTER,TEST
+ DGREGISTER,TEST                                                   APR 5,1933
+ =============================================================================
+  
+  
+     POS: OTHER FEDERAL - DEPENDENT        Claim #: UNSPECIFIED
+   Relig: CHRISTIAN (NON-SPECIFIC)             Birth Sex: MALE
+    Race: UNANSWERED                     Ethnicity: UNANSWERED
+  
+ Language Date/Time: MAR 16,2017@17:57
+  Preferred Language: ENGLISH
+  
+   Combat Vet Status: NOT ELIGIBLE
+ Primary Eligibility: OTHER FEDERAL AGENCY (VERIFIED)
+ Other Eligibilities: 
+       Unemployable: NO
+       Permanent & Total Disabled: NO
+  
+ Type <Enter>to continue or '^' to exit:
+  
+ END SCREEN CAPTURE 1*
+  
+ 2.  Computerized Patient Record System (CPRS) Patient Inquiry screen will be 
+     updated with the "Permanent & Total Disabled" field with the change 
+     indicated in item #1.
+  
+ Display Screen from Menu CPRS Patient Inquiry:
+  
+ BEGIN SCREEN CAPTURE 2*
+  
+ DGREG,PATIENT ONE                                                 MAY 1,1960
+ =============================================================================
+  Permanent Mailing Address:             Temporary Mailing Address: 
+          111 STREET DR                          NO TEMPORARY MAILING
+          PITTSBURGH,PA 15238
+          UNITED STATES
+   County: ALLEGHENY (003)                 From/To: NOT APPLICABLE
+    Phone: 412-222-1111                      Phone: NOT APPLICABLE
+   Office: 412-222-1111
+     Cell: UNSPECIFIED
+   E-mail: UNSPECIFIED
+ Bad Addr: 
+  
+  Confidential Address:                      Confidential Address Categories:
+          NO CONFIDENTIAL ADDRESS
+  From/To: NOT APPLICABLE
+  
+ Language Date/Time: UNANSWERED
+  Preferred Language: UNANSWERED
+  
+   Combat Vet Status: NOT ELIGIBLE
+ Primary Eligibility: NSC (VERIFIED)
+ Other Eligibilities: 
+       Unemployable: NO
+       Permanent & Total Disabled: NO
+ Medication Copayment Exemption Status: NON-EXEMPT
+ There is insufficient income data on file for the prior year.
+ Last Rx Copay Exemption date: FEB 02, 2017
+  
+ Status      : PATIENT HAS NO INPATIENT OR LODGER ACTIVITY IN THE COMPUTER
+  
+ Future Appointments: NONE
+  
+ Remarks: 
+  
+ Date of Death Information
+      Date of Death: 
+      Source of Notification: 
+      Updated Date/Time: 
+      Last Edited By: 
+  
+ Emergency Contact Information:
+      E-Cont.: E,NAME
+ Relationship: 
+        Phone: UNSPECIFIED
+   Work Phone: UNSPECIFIED
+  
+ Health Benefit Plans Currently Assigned to Veteran:
+    Veteran Plan - VC Unusual and Excessive Burden
+    Veteran Plan - Veterans Choice Air, Boat, or Ferry
+  
+ Health Insurance Information:
+    Insurance   COB Subscriber ID     Group       Holder  Effective  Expires
+    ===========================================================================
+     No Insurance Information
+  
+  
+ Service Connection/Rated Disabilities:
+  
+   Service Connected: NO
+  Rated Disabilities: NONE STATED
+  
+ END SCREEN CAPTURE 2*
+  
+ 3.  VistA will receive, store, and display the enrollment status "CLOSED 
+     APPLICATION" with "ABANDONED APPLICATION" as the reason for closed   
+     application. 
+  
+ 4. Updated the ENROLLMENT STATUS file (#27.15) with a new entry called   
+    "CLOSED APPLICATION".
+  
+ 5. A new REASON FOR CLOSED APPLICATION field (#.13) has been added to 
+    the PATIENT ENROLLMENT file (#27.11).
+    a.  The new REASON FOR CLOSED APPLICATION field (#.13) is a set of codes 
+        with current value of either null or 1 for "ABANDONED APPLICATION".
+  
+ 6. The new REASON FOR CLOSED APPLICATION field (#.13) will be displayed 
+    for those entries with an ENROLLMENT STATUS of "CLOSED APPLICATION" 
+    on the following VistA menu options:
+  
+ Patient Enrollment     [DGEN PATIENT ENROLLMENT]
+  
+ The following is a sample screen capture of the Patient Enrollment option:
+  
+ BEGIN SCREEN CAPTURE 3* 
+  
+ Patient Enrollment          Jun 12, 2017@10:21:04          Page:    1 of    8 
+ Patient: DGREGPATIENT,ONE                                  SC VETERAN           
+ Preferred Facility: FORT COLLINS                           Current Enrollment   
+ Preferred Facility Source: VISTA
+                                                                                 
+                               Enrollment                                        
+           Enrollment Date: 
+       Enrollment End Date:                                                      
+          Application Date:
+      Source of Enrollment: HEC                                                  
+       Enrollment Category: NOT ENROLLED                                
+         Enrollment Status: CLOSED APPLICATION
+ Reason for Closed Application: ABANDONED APPLICATION            
+       Enrollment Priority:                                                 
+            Effective Date:                                          
+  Reason Canceled/Declined:                                                      
+ Canceled/Declined Remarks:                                                      
+  
+                Entered By: POSTMASTER                                           
+ +         Query:                     Notify:                                    
+ EP  (Enroll Patient)      QS  (Check Query Status)  SP  Select Patient
+ PF  Preferred Facility    SQ  Send Query            AU  View Upload Audit
+ EH  Expand History        CD  Catastrophic Disab.   PZ  Print 1010EZ/EZR
+ Select Action: Next Screen// EH
+  
+    a.  The action (Protocol) Expand History (EH) will also display the new 
+        status entry and new field.
+  
+ Patient Enrollment            May 29, 2017@17:34:18       Page:  1 of  4
+ Patient: DGREGPATIENT,ONE                               SC  VETERAN
+ Preferred Facility: FORT COLLINS                        Current Enrollment
+ Preferred Facility Source: VISTA
+                                                                                 
+                               Enrollment History
+      Effective Date     Status              Priority    Date/Time Entered       
+ ============================================================================= 
+ 1   DEC 18, 2014        UNVERIFIED          8c          DEC 18, 2014@13:34:19   
+ 2   DEC 17, 2014        CLOSED APPLICATION  8c          DEC 17, 2014@21:52:42   
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+  
+ Select Enrollment(s):  (1-2):2
+ Patient Enrollment History    Jun 12, 2017@10:23:22        Page:    1 of    8 
+ Patient: DGREGPATIENT,ONE                                  SC VETERAN           
+ Preferred Facility: FORT COLLINS                           Prior Enrollment     
+ Preferred Facility Source: VISTA
+                                                                                 
+                               Enrollment                                        
+           Enrollment Date:                                          
+       Enrollment End Date:                                                      
+          Application Date:                                         
+      Source of Enrollment: HEC                                                  
+       Enrollment Category: NOT ENROLLED                                     
+         Enrollment Status: CLOSED APPLICATION 
+ Reason for Closed Application: ABANDONED APPLICATION                   
+       Enrollment Priority:                                                     
+            Effective Date: JUN 02, 2012                                         
+  Reason Canceled/Declined:                                                      
+ Canceled/Declined Remarks:                                                      
+  
+                Entered By: POSTMASTER                                           
+ +         Enter ?? for more actions                                             
+  
+ Select Action: Next Screen// 
+  
+ END SCREEN CAPTURE 3*
+  
+ 7. VistA will receive reason for closed application from the Enrollment
+    System in the ZEN segment of ORF/ORU Z11 Health Level 7 (HL7) messages
+    and store the value in the PATIENT ENROLLMENT file - (#27.11) REASON
+    FOR CLOSED APPLICATION field (#.13).
+    a.  New sequence number 15 has been added to the ZEN segment to 
+        accommodate the new field.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ PATIENT ENROLLMENT     REASON FOR CLOSED       NEW
+   (#27.11)               APPLICATION (#.13)
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ A new entry has been added to the ENROLLMENT STATUS file (#27.15) in
+ support of this patch.  A new status "CLOSED APPLICATION" has been added
+ as #24 within this file.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Fargo VA Health Care System (HCS) (Fargo, ND)
+ James E Van Zandt VA Medical Center (VAMC) (Altoona, PA)
+ Jesse Brown VA Medical Center (VAMC) (Chicago, IL)
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                         DG_5_3_940_RN.PDF       (binary)
+ User Manual - Registration Menu       DG_5_3_940_REG_UM.PDF   (binary)
+ IVM Technical Manual                  IVM_2_TM_RCA.PDF        (binary)
+  
+ CPRS User Guide: GUI Version updates associated with this patch will be 
+ included in the CPRS v31a release.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running.
+  
+ 1.  The HL7 incoming/outgoing filers should be stopped. Stop All
+     Messaging Background Processes by using the [HL STOP ALL] option
+     on the Filer and Link Management Options [HL MENU FILER LINK MGT] menu
+     on the HL7 Main Menu [HL MAIN MENU].
+  
+ 2. Use Global Output Function to backup the following global files before 
+    continuing:
+  
+         Patient Enrollment Data Dictionary File     #27.11    ^DD(27.11
+         Enrollment Status File                      #27.15    ^DGEN(27.15
+  
+ Run the command below (be sure to enter "V" for the parameters).You will
+ need to specify a local directory and file name for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]dg_53_940_backup.gbl
+ Parameters? ("V") => V
+ Global ^DD(27.11 -- NOTE: translation in effect
+ Global ^DGEN(27.15 -- NOTE: translation in effect
+ Global ^ 
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility, GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/dg_53_940_backup.gbl
+ Parameters? ("V") => V
+ Global ^DD(27.11 -- NOTE: translation in effect
+ Global ^DGEN(27.15 -- NOTE: translation in effect
+ Global ^ 
+ DEVISC1A2:DEVVOO>
+  
+ where "xxx" is the site designation, then follow the 
+ instructions above for entering the globals to save.
+  
+ 3.  The following options should be disabled during installation:
+  
+     Patient Inquiry                       [DG PATIENT INQUIRY] 
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+     Patient Enrollment                    [DGEN PATIENT ENROLLMENT]       
+  
+ 4.  This patch may be installed with users on the system. However, because
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours. This patch should take less than 5 
+     minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch #
+    (ex. DG*5.3*940):
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DDs or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is
+       installed.  It compares all components of this patch (routines, DDs,
+       templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//'respond YES.
+   
+ 7.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+      Enter the following options:
+  
+     Patient Inquiry                       [DG PATIENT INQUIRY] 
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+     Patient Enrollment                    [DGEN PATIENT ENROLLMENT]       
+  
+ 8. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     press <enter>.
+  
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+     respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The HL7 incoming/outgoing filers should be restarted. Use the  
+ Restart/Start All Links and Filers [HL TASK RESTART] option on the
+ Filer and Link Management Options [HL MENU FILER LINK MGT] menu on the
+ HL7 Main Menu [HL MAIN MENU].  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA
+    Before: B24665348   After: B26339818  **121,122,147,232,314,564,672,
+                                           659,653,688,841,909,940**
+Routine Name: DGENA1A
+    Before: B18101095   After: B20462776  **121,147,232,314,564,672,659,
+                                           653,688,841,909,940**
+Routine Name: DGENA6
+    Before: B20843063   After: B21685346  **232,327,417,491,513,672,940**
+Routine Name: DGENL1
+    Before: B71896061   After: B75564196  **121,147,232,266,343,564,672,
+                                           659,653,688,838,841,909,940**
+Routine Name: DGENU
+    Before: B47398135   After: B48629112  **121,122,147,232,314,564,624,
+                                           672,659,653,688,536,838,841,
+                                           909,940**
+Routine Name: DGENUPL2
+    Before: B81902835   After: B83311291  **147,222,232,310,314,367,397,
+                                           677,631,675,672,673,716,653,
+                                           688,838,842,894,934,940**
+Routine Name: DGENUPL8
+    Before: B13177328   After: B19283363  **232,266,327,314,365,417,514,
+                                           688,940**
+Routine Name: DGRPD
+    Before: B77747984   After: B79894914  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907,925,936,940**
+ 
+Routine list of preceding patches: 909, 934, 936
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2017
+Completed By:                               Date Completed: DEC 05, 2017
+Released By :                               Date Released : DEC 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

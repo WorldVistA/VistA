@@ -1,0 +1,59 @@
+
+=============================================================================
+Run Date: DEC 11, 2017                     Designation: GMTS*2.7*113
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #112                    Status: Released
+                  Compliance Date: JAN 20, 2018
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*89 <<= must be installed BEFORE `GMTS*2.7*113'
+                    (v)PXRM*2*47   <<= must be installed BEFORE `GMTS*2.7*113'
+
+Subject: CLINICAL REMINDERS OUTPUT STANDARDIZATION
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ The build for this patch is being released as part of the multi-package
+ build named CLINICAL REMINDERS ICD-10 FOLLOWUP 1.0. This multi-package
+ build contains: PXRM*2.0*47 and GMTS*2.7*113. The name of the host file
+ is: CR_ICD-10_FOLLOWUP.KID.
+ 
+ Installation instructions and release notes are in the Clinical
+ Reminders ICD-10 Follow-up Installation Guide (PXRM_2_0_47_IG.PDF). This
+ document can be obtained from the VistA Documentation Library or one of
+ the anonymous SFTP servers:
+ 
+ Hines            ftp.domain.ext   <sftp ftp.domain.ext>
+ Salt Lake City   ftp.domain.ext     <sftp ftp.domain.ext>
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 47
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSPXHR
+    Before: B19343196   After: B21877798  **8,22,23,28,34,56,63,75,82,89,113**
+ 
+Routine list of preceding patches: 89
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 27, 2015
+Completed By:                               Date Completed: DEC 06, 2017
+Released By :                               Date Released : DEC 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

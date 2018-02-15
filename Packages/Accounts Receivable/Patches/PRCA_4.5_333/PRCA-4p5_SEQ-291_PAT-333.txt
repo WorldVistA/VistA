@@ -1,0 +1,132 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/21/17 at 12:48
+=============================================================================
+Run Date: JAN 25, 2018                     Designation: PRCA*4.5*333
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #291                    Status: Released
+                  Compliance Date: JAN 31, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*169<<= must be installed BEFORE `PRCA*4.5*333'
+
+Subject: MODIFY TOP BILLS FOREIGN ADDRESS HANDLING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Modify TOP bills foreign address handling
+  
+  
+  
+ Associated CA Ticket:
+ =====================
+ 1)  I16074905FY17 - Upstate NY TOP Veteran with foreign address not going
+                     to TOP
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VISN 2 VA Healthcare Network Upstate New York
+ VA Montana Health Care System 
+  
+  
+  
+ CA Ticket Overview:
+ =================== 
+ 1)  I16074905FY17 - Upstate NY TOP Veteran with foreign address not going
+                     to TOP
+  
+  
+ Problem:
+ --------
+ First Party foreign addresses are not passing over to traditional TOP 
+ due to a hard set that overrides the foreign address code and will
+ default to US address form. This causes the account to reject. 
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the TOP  batch run to ensure
+ that the correct country, state and zip code are set when a 
+ veteran address is outside the United States.  The majority of these 
+ address issues deal with Canadian border VA sites (Upstate NY &
+ Fort Harrison).
+  
+  
+  Routines: RCTOP2
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*333)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PRCA*4.5*333.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", hit ENTER.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTOP2
+    Before:  B2571201   After: B42211745  **141,169,333**
+ 
+Routine list of preceding patches: 169
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2017
+Completed By:                               Date Completed: JAN 25, 2018
+Released By :                               Date Released : JAN 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

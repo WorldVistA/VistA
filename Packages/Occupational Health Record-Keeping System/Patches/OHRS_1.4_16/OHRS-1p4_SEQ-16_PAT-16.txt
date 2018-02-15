@@ -1,0 +1,190 @@
+
+=============================================================================
+Run Date: DEC 18, 2017                     Designation: OHRS*1.4*16
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #16                    Status: Released
+                  Compliance Date: JAN 18, 2018
+=============================================================================
+
+
+Subject: OHRS 1.4.16 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Occupational Health Record-Keeping
+ System (OHRS) version 1.4.16. No additional action is necessary for sites
+ except to communicate the below modifications of OHRS 1.4.16 to users. 
+  
+ The new OHRS 1.4.16 version addresses the following corrections: 
+     * Correct the footer version information from 1.4.14 to 1.4.16
+     * Remove references to VA Service Desk (VASD); correct the 
+       telephone number to 1-855-673-HELP (4357) for VA Enterprise Service Desk
+       (ESD), remove reference to Remedy and update to CA Service Desk
+       Manager (SDM)
+     * Correct the VSS query to fix problem on Voluntary Service System 
+       (VSS) data feed
+     * Correct full names not being displayed on the screen when adding
+       a user. 
+ 
+ There are no new enhancements done on this release. This build updates the
+ labels and dates within the OHRS application and replaces Occupational Health
+ Record-Keeping System (OHRS) version 1.4.15.
+  
+ Templates Associated:
+ ---------------------
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. CA SDM Ticket # I16527050FY17 - Defect#-588507:
+    OHRS application no longer has the user's Last, First, Middle Name 
+    displayed in the database when managing a system user.
+    
+ Problem:
+ --------
+ During 2FA changes for version 1.4.15, the source code to retrieve first,
+ middle and last name information from Active Directory (LDAP) was mistakenly
+ removed. This introduced an issue within the OHRS application when adding a new
+ user or viewing an existing user.  
+ 
+ The user's full name was not displayed on the OHRS screen and was instead
+ replaced by the User's Id.
+  
+ Resolution:
+ -----------    
+ Code from the previous release (OHRS version 1.4.14) was restored to enable
+ retrieval of user information from Active Directory (LDAP).
+  
+ 2.Task-590256:
+   Voluntary Service System (VSS) data feed and broken batch job in OHRS
+  
+ Problem:
+ -------
+ Voluntary Service System (VSS) data feed and broken batch job in OHRS
+  
+ Resolution:
+ -----------
+ In order to fix VSS data feed during the execution of the batch process, new
+ code was written in. This code would read the filter date from the properties
+ file and use this filter date to compose the new filter date for the VSS query.
+ 
+ Note: A deployment strategy was put in place for VSS batch load processing due
+ to configuration differences in lower environment; by agreement, testing in
+ production.       
+  
+ 3.  Fix Footer with correct Version Information (OHRS)
+  
+ Problem:
+ --------
+ OHRS main page footer is not updated; the footer needs to displays the
+ updated/current version information. 
+ 
+ Resolution:
+ -----------
+ Modified the code and the properties file to implement the new version, which
+ is 1.4.16.
+  
+ 4.  Fix Footer with correct Version Information (CISS)
+  
+ Problem:
+ --------
+ CISS main page footer is not updated; the footer needs to displays the
+ updated/current version information. 
+  
+ Resolution:
+ -----------
+ Modified the code and the properties file to implement the new version which is
+ 1.4.16
+  
+ 5.  Remove references to Remedy (CISS)
+    
+ Problem:
+ --------
+ On the CISS-OHRS portal, reference to Remedy Tickets needs to be removed and
+ updated to CA Service Desk Manager (SDM), Enterprise Service Desk (ESD)
+ information and telephone number needs to be corrected. 
+ 
+ Resolution:
+ -----------
+ Modified code and JSP / FLEX / Properties files to change the Enterprise
+ Service Desk (ESD) information.
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ The VBA Business Office
+ Memphis VA Medical Center (TN)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The User Guide is available on VA Documentation Library (VDL) at:
+ http://www.domain.ext/vdl/ in the HealtheVet section.
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Replace CIS-OHRS ear 1.4.15 files with the new version which is 1.4.16.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+    
+   1) Stop CISS WebLogic portal server and un-deploy the old ciss.ear.
+   2) Stop OHRS WebLogic portal server and un-deploy the old ohrs.ear and
+      ohrsUnattended.ear
+   
+ Installation Instructions:
+ --------------------------
+   1) Redeploy the new ciss.ear
+   2) Redeploy the new ohrs.ear and ohrsUnattended.ear
+    
+ Post-Installation Instructions:
+ -------------------------------
+   1) Start CISS WebLogic portal server and once that is done, start the 
+      OHRS WebLogic portal server.
+   2) Make sure that the WebLogic portal servers for CISS and OHRS are running.
+   3) Check if ciss.ear, ohrs.ear and ohrsUnattended.ear are in the Active stage.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ Problems associated with the OHRS application should be reported via CA Service
+ Desk by contacting the National Service Desk (NSD) at 1-855-673-4357 and
+ logging a CA SDM Ticket.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2017
+Completed By:                               Date Completed: DEC 14, 2017
+Released By :                               Date Released : DEC 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

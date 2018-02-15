@@ -1,0 +1,21 @@
+Subj: PATCH MAG*3*180 COMPLIANCE DATE CHANGE  [#2605427]
+3 Jan 2018 14:05:55 -0500 (EST)  14 lines
+-------------------------------------------------------------------------------
+The Compliance Date has been edited for a "IMAGING" patch.
+ 
+Patch:   MAG*3*180
+Patch Subject:  VistA Updates
+Patch Priority: MANDATORY
+
+The Compliance Date for patch MAG*3*180 has been changed to APR 06, 2018
+
+
+An issue was found with reading interfacility consults (IFC) using the Telereader application.
+
+If you have installed this patch, you do NOT need to uninstall unless you are seeing the error <SUBSCRIPT>PHONE+11^MAGDHOW3 ^VA(200,"") in the VistA error trap.
+
+Reason for Change:
+Do NOT install if your site uses an IFC for Telereader. MAG*3*203 will 
+correct the issue.  If you have installed this patch AND you use an IFC, 
+patch 180 needs backed out.  Submit CA Ticket to NTL SUP Clin3 for 
+assistance.

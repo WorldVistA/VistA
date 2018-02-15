@@ -1,0 +1,170 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 07/13/17 at 12:11
+=============================================================================
+Run Date: JAN 23, 2018                     Designation: HDI*1*18
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*18'
+                    (v)XU*8*677    <<= must be installed BEFORE `HDI*1*18'
+
+Subject: HDI PROVIDERS DOMAIN INCLUSION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ In the post-initialization routine this patch will add data for the 
+ File/Fields being standardized for PERSON CLASS to the HDIS File/Field
+ file (#7115.6). These entries are being added to the files for VHA
+ Unique Identifier (VUID) Seeding which is part of standardizing the
+ PERSON CLASS file (#8932.1).
+  
+ Remedy Tickets addressed by this patch:
+ ======================================
+ NA
+  
+  
+ Test Sites:
+ ----------
+ VA Pittsburgh Healthcare System, Station #646
+ Lebanon VAMC, v04, Station #595
+  
+ Pre/Post Installation Overview:
+  
+  
+ Pre-Installation Instructions:
+ ==============================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install.  It is not necessary to disable any options.
+  
+ In order to support a back out methodology step 'a' of the
+ Installation Instructions below must be performed.
+  
+  Note: The following is a list of REQUIRED builds for HDI*1.0*18.
+        KIDS will not allow the installation of this patch
+        without the prior installation of them.
+  
+            HDI*1.0*6
+            XU*8.0*677
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch #(ex. HDI*1.0*18):
+  
+ a.      Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//' 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+  
+ ***************************************************************************
+ * NOTE: Due to the complexity of this patch, based on its association to  *
+ * patches XU*8.0*671 and XU*8.0*677, it is not recommended for back-out.  *
+ * However, in the event that a site decides to back-out this patch, the   *
+ * site should contact the National Service Desk (NSD) to submit a CA SDM  *
+ * ticket; the development team will assist with the process.              *
+ *                                                                         *
+ * The back-out should only be done in the event that the local facility   *
+ * management determines that the patch XU*8.0*671 is not appropriate for  *
+ * that facility, and should only be done as a last resort.                *
+ ***************************************************************************
+  
+ Backout Plan:
+ =============
+  
+ Pre-Implementation work that will be required for the Backout Plan
+ ------------------------------------------------------------------
+ Step (a) of the Installation instructions must be done. Record the
+ Subject line of the backup message and the basket that it was sent
+ to.
+  
+ Backout:
+ --------
+ Log in and go to MAILMAN.
+ Enter 'RML'
+ Enter 'Classic'
+ Enter the basket that the backup message was saved to.
+ Enter '?' to display the messages in the basket.
+ Select the message whose subject line is the same as the backup
+ subject line.
+ Enter '^' at the (Type <Enter> to continue or '^' to exit:) prompt.
+ Enter 'X' at the (Enter message action (in LAB basket): Ignore)
+ prompt.
+ Enter '6' at the (Select PackMan function:) prompt.
+ Enter 'YES' at the (Do you really want to do this? NO) prompt
+ Enter 'NO' at the (Shall I preserve the routines on disk in a separate
+ back-up message? YES) prompt.
+ The system will display an unloading message for each routine that is
+ in the PACKMAN Backup.
+ Once the routines are restored:
+ Enter '^' at the (Enter message action (in LAB basket): Ignore) prompt.
+ Exit Mailman.
+ End of Backout Instructions.
+ --------
+ Post-Installation Instructions:
+ ===============================
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1018A
+    Before:       n/a   After:  B5374443  **18**
+Routine Name: HDISVCMR
+    Before:  B8749465   After: B10067220  **1,2,18**
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2016
+Completed By:                               Date Completed: DEC 20, 2017
+Released By :                               Date Released : JAN 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

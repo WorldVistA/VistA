@@ -1,0 +1,286 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 11/24/17 at 17:14
+=============================================================================
+Run Date: JAN 04, 2018                     Designation: LR*5.2*497
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #396                    Status: Released
+                  Compliance Date: FEB 04, 2018
+=============================================================================
+
+
+Subject: Interim Report Option Description and Laboratory Manual Updates
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ This patch addresses one (1) VistA Laboratory issue requiring two Interim 
+ Report option description updates and corresponding documentation updates
+ to the VistA Laboratory User Manual and the VistA Laboratory Planning 
+ Implementation Guide.
+  
+  
+ Options Associated:
+  
+ Option                           Type          New/Modified/Deleted
+ ------------------------------   -----------  ---------------------
+ Interim reports by location      run routine   Modified
+ Interim reports for 1 location   run routine   Modified
+  
+  
+ Documentation Updates
+ ----------------------
+  
+ The Laboratory User Manual Version 5.2 and the Laboratory Planning 
+ Implementation Guide Version 5.2 have been updated in the section
+ titled "Interim Reports By Location".
+  
+ The manuals are located in the VA Document Library (VDL) at:
+  
+ https://www.domain.ext/vdl/application.asp?appid=71
+  
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ None
+  
+  
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*497 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*497 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*497 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Participating Test Sites:
+ =========================
+ Puget Sound (663 Seattle VA Medical Center)
+  
+ Minneapolis
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ R15083145FY17: Interim Report Option Description and User Manual Updates
+  
+ Problem:
+ -------
+   
+ This ticket addresses options "Interim reports by location (manual queue)"
+ and "Interim reports for 1 location (manual queue)". When one or more 
+ ordering locations are specified for the report, all verified results
+ ordered under all locations for the patients that have had orders placed
+ under the specified locations will print. It was determined that this is
+ a desired outcome.  However, the option descriptions and VistA Laboratory
+ documentation should be updated to clarify the contents of the interim
+ reports when invoking these two options.
+    
+ Resolution: 
+ ----------
+  
+ Add clarification to the option descriptions for the options "Interim 
+ reports by location (manual queue)" and "Interim reports for 1 location 
+ (manual queue)". Add corresponding clarifications also to the VistA
+ Laboratory User Manual Version 5.2 and to the VistA Laboratory Planning 
+ Implementation Guide Version 5.2.
+  
+ Before install versions of option descriptions:
+ ----------------------------------------------
+  
+ NUMBER: 8324                            NAME: LRRS
+   MENU TEXT: Interim reports by location (manual queue)
+   TYPE: run routine                     
+   PACKAGE: LAB SERVICE
+  DESCRIPTION:   Detailed report format for all data for one day sorted by
+  location.  This option is an alternative to having the Interim report 
+  tasked to the taskmanager.  For tasking, see option LRTASK DAILY INTERIM
+  1.  If no results are available for a location, the option will print out
+  the location heading followed by the next location heading.  This option
+  will only print verified results, is not part of the cumulative report
+  and should not be charted.  The date chosen for this report is the
+  collection date.  If a test is ordered on one day and verified on the
+  next day, you must select the order date to see the report with this
+  option.  The report prints site codes for tests.  You will be asked if
+  you would like to print an address page.  The address page prints on a
+  separate page(s) at the end of the report and lists the performing lab
+  name, address and site code.  
+   ROUTINE: LRRS12
+   UPPERCASE MENU TEXT: INTERIM REPORTS BY LOCATION (M
+  
+ NUMBER: 8421                            NAME: LRRS BY LOC
+   MENU TEXT: Interim reports for 1 location (manual queue)
+   TYPE: run routine                    
+   PACKAGE: LAB SERVICE
+  DESCRIPTION:   This option reports all verified results from one 
+  location for one day.  The user will request the date and location.  This
+  option will only print verified results.  This option is to be used for
+  information only and should not be charted.  The report prints site codes
+  for tests.  You will be asked if you would like to print an address
+  page.  The address page prints on a separate page(s) at the end of the
+  report and lists the performing lab name, address and site code.
+   ROUTINE: SINGLE^LRRS
+   UPPERCASE MENU TEXT: INTERIM REPORTS FOR 1 LOCATION
+  
+ After install versions of option descriptions:
+ ----------------------------------------------
+  
+ NUMBER: 1305                            NAME: LRRS
+   MENU TEXT: Interim reports by location (manual queue)
+   TYPE: run routine                    
+   PACKAGE: LAB SERVICE
+  DESCRIPTION:   Detailed report format of all verified results for 
+  specified collection dates and ordering locations sorted by location. The
+  report prints according to the ordering location, not the patient's
+  current location.  
+   
+  Each patient's verified results for orders placed under the specified 
+  location(s) as well as for orders placed under other locations on the 
+  specified collection date(s) will print so as to provide complete 
+  laboratory information on the patient. (Patients who do not have orders
+  placed under the specified location(s) will not be printed.) The date
+  chosen for this report is the collection date.  If a test is collected on
+  one day and verified on the next day, you must select the collection
+  date.  
+   
+  The report prints site codes for tests.  You will be asked if you would 
+  like to print an address page.  The address page prints on a separate
+  page at the end of the report and lists the performing lab name, address
+  and site code.
+   
+  This option is an alternative to having the Interim report tasked.  For 
+  tasking, see option LRTASK DAILY INTERIM 1. If no results are available 
+  for a location, the option will print out the location heading followed
+  by the next location heading. This option is not part of the cumulative
+  report and should not be charted.
+   ROUTINE: LRRS12                      
+   UPPERCASE MENU TEXT: INTERIM REPORTS BY LOCATION (M
+  
+ NUMBER: 1416                            NAME: LRRS BY LOC
+   MENU TEXT: Interim reports for 1 location (manual queue)
+   TYPE: run routine                    
+   PACKAGE: LAB SERVICE
+  DESCRIPTION:   This option reports all verified results from one ordering
+  location for one collection date. The report prints according to the 
+  ordering location, not the patient's current location. The user will
+  request the collection date and ordering location.
+   
+  Each patient's verified results for orders placed under the specified 
+  Location as well as for orders placed under other locations on the 
+  specified Collection date will print so as to provide complete laboratory
+  information on the patient. (Patients who do not have orders placed under
+  the selected ordering locations will not be printed.) If a test is
+  collected on one day and verified on the next day, you must select the
+  collection date. 
+   
+  This option is to be used for information only and should not be 
+  charted.  The report prints site codes for tests.  You will be asked if
+  you would like to print an address page.  The address page prints on a
+  separate page at the end of the report and lists the performing lab name,
+  address and site code.
+   ROUTINE: SINGLE^LRRS                
+   UPPERCASE MENU TEXT: INTERIM REPORTS FOR 1 LOCATION
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:       domain.ext  
+ Salt Lake City:       domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                       File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ VistA Laboratory User       lab5_2um.pdf                    BINARY
+ Manual Version 5.2
+ VistA Laboratory Planning   lab5_2pi.pdf                    BINARY
+ Implementation Guide Version 5.2
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*497'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+  
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2017
+Completed By:                             H Date Completed: JAN 03, 2018
+Released By :                               Date Released : JAN 04, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

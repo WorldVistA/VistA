@@ -1,0 +1,210 @@
+$TXT Created by                at ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 10/31/17 at 13:30
+=============================================================================
+Run Date: DEC 14, 2017                     Designation: PX*1*219
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #165                      Status: Released
+                  Compliance Date: JAN 14, 2018
+=============================================================================
+
+Associated patches: (v)PX*1*161    <<= must be installed BEFORE `PX*1*219'
+
+Subject: START DATE AFTER END DATE SWAP FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address two issues:
+  
+  1. A user can select an end date prior to a start date within various 
+ PXCE Options and gives no indication to the user.
+  
+  2. PCE\SD Debugging Utilities [PXQ PCE/SD DEBUGGING UTILITIES] was removed
+  from the documentation although the option remains active. The documentation
+  needs to be restored.
+  
+        
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED CA SDM TICKET(S):
+  ============================
+  R16254145FY17 - User is allowed to use an earlier date as the End date
+  
+  R11885765FY17 - User requests to have the user manual updated for the 
+                  Patient Care Encounter (PCE) VistA application to add the 
+                  option PCE\SD Debugging Utilities [PXQ PCE/SD DEBUGGING 
+                  UTILITIES] back into the document.
+  
+           
+  PARTICIPATING TEST SITES:
+  =========================
+  Chillicothe VAMC
+  Coatesville VAMC
+    
+     
+  CA SDM OVERVIEW:
+  ================
+   
+  1. R16254145FY17 - User is allowed to use an earlier date as the End date
+   
+     Problem:
+     --------
+     A user can enter an End Date that is prior to the Start Date and the
+     application will switch the dates for the range and gives no   
+     indication to the user the dates were switched. This issue issue 
+     occurs in the following PXCE options:
+  
+     PCE Encounter Data Entry [PXCE ENCOUNTER DATA ENTRY]
+     PCE Encounter Data Entry and Delete [PXCE ENCOUNTER ENTRY & DELETE]
+     PCE Encounter Data Entry without Delete [PXCE ENCOUNTER ENTRY NO
+     DELETE]
+     PCE Encounter Data Entry - Supervisor [PXCE ENCOUNTER ENTRY SUPER]
+     PCE Encounter Viewer [PXCE ENCOUNTER VIEWER]
+  
+     Resolution:
+     -----------
+     Use the RANGE^VALM11 Utility to verify the date range input is correct
+     and in logical order. If the date range is not in logical order the
+     user is prompted to re-enter the date range values.
+  
+    
+  2. R11885765FY17 - User requests to have the user manual updated for the 
+                     Patient Care Encounter (PCE) VistA application to add the 
+                     option PCE\SD Debugging Utilities [PXQ PCE/SD DEBUGGING 
+                     UTILITIES] back into the document.
+     
+     Problem:
+     --------
+     PCE\SD Debugging Utilities [PXQ PCE/SD DEBUGGING UTILITIES] was removed
+     from the documentation although the option remains active. The 
+     documentation needs to be restored.
+  
+    
+     Resolution:
+     -----------
+     Updated the Patient Care Encounter Technical Manual to include the 
+     following information regarding the PCE/SD Debugging Utilities [PXQ
+     PCE/SD DEBUGGING UTILITIES]:
+       -The revision year was updated on the front page.
+       -Updated the table of contents (pg. ii).
+       -In the Implementation and Maintenance section, the PCE IRM Main
+        Menu options was updated (pg. 5) and a PCE/SD Debugging [PXQ PCE/SD
+        DEBUGGING UTILITIES] description was added (pg. 7). 
+       -In the Maintenance section a PCE/SD Debugging Utilities [PXQ PCE/SD
+        DEBUGGING UTILITIES] section was added (pg. 22).
+       -The menu options in the Menu Assignment section was updated to
+        include PCE/SD Debugging Utilities [PXQ PCE/SD DEBUGGING UTILITIES]
+        (pg. 83).
+  
+     Updated the Patient Care Encounter User Manual to include the
+     following information regarding the PCE/SD Debugging Utilities [PXQ
+     PCE/SD DEBUGGING UTILITIES]:
+       -The revision year was updated on the front page.
+       -Updated the table of contents (pg. vi).
+       -Added the PCE/SD Debugging Utilities [PXQ PCE/SD DEBUGGING
+        UTILITIES] to the PCE Menus and Options section (pg. 50).
+       -Also added relevant PCE/SD Debugging Utilities [PXQ PCE/SD
+        DEBUGGING UTILITIES] sections (pg. 61).
+   
+   
+  Documentation Retrieval Instructions:
+  ====================================
+     Updated documentation describing functionality added by this 
+     patch is available.
+   
+     The preferred method is to retrieve files from download.vista.domain.ext. 
+     This transmits the files from the first available server. Sites may also 
+     elect to retrieve files directly from a specific server. 
+   
+     The documentation will be in the form of Adobe Acrobat files.
+   
+     The following files should be downloaded in the binary SFTP mode.
+   
+     Filename                      Description
+     --------                      -----------
+     pxtm.pdf                      Patient Care Encounter Technical Manual
+     pxum.pdf                      Patient Care Encounter User Manual
+  
+     Once released, documentation may be retrieved from VISTA Documentation 
+     Library (VDL) on the Internet at the following address: 
+     http://www.domain.ext/vdl.
+    
+   
+  Installation Instructions:
+  ==========================
+    
+     This patch may be installed with users on the system although it should 
+     be installed during non-peak hours to minimize potential disruption to
+     users.  This patch should take less than 2 minutes to install.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PX*1.0*219)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PX*1.0*219.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//" respond YES.
+  
+         When prompted 'Enter options you wish to mark as 'Out Of
+         Order':', enter the following:
+   
+         PCE Encounter Data Entry [PXCE ENCOUNTER DATA ENTRY]
+         PCE Encounter Data Entry and Delete [PXCE ENCOUNTER ENTRY & DELETE]
+         PCE Encounter Data Entry without Delete [PXCE ENCOUNTER ENTRY NO DELETE]
+         PCE Encounter Data Entry - Supervisor [PXCE ENCOUNTER ENTRY SUPER]
+         PCE Encounter Viewer [PXCE ENCOUNTER VIEWER]
+  
+      7. Review the installation message for notifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXCEDATE
+    Before:  B2790458   After:  B4353374  **47,161,219**
+ 
+Routine list of preceding patches: 161
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 08, 2017
+Completed By:                               Date Completed: DEC 14, 2017
+Released By :                               Date Released : DEC 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

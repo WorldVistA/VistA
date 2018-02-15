@@ -1,0 +1,140 @@
+$TXT Created by             MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/30/17 at 15:54
+=============================================================================
+Run Date: DEC 14, 2017                     Designation: IB*2*575
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #549                      Status: Released
+                  Compliance Date: JAN 12, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*435    <<= must be installed BEFORE `IB*2*575'
+
+Subject: USER CANNOT CLEAR NEEDS SC DETERMINATION RNB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses one (1) issue:
+  
+ 1. Electronic Claims Management Engine (ECME) won't submit a claim with
+    a Service-Connected (SC) issue, even after the user indicates that the
+    issue has been resolved.  Same issue is reset again and again, with 
+    Reason Not Billed (RNB), message of "Needs SC Determination".  This
+    occurs with any of the possible SC conditions.
+  
+  
+ Associated Ticket(s):
+ =====================
+ 1.  I9937559FY16 - User Cannot Clear Needs SC Determination RNB
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Durham VAMC
+ Robley Rex VAMC (Louisville)
+  
+  
+ Ticket Overview:
+ ================
+ 1.  I9937559FY16 - User Cannot Clear Needs SC Determination RNB
+  
+ Problem:
+ ========
+ Whenever a Pharmacy Prescription needs to be billed to a 3rd Party 
+ payer, VistA refuses to submit it to ECME, and returns the reason as 
+ "Needs SC Determination". The user cannot successfully tell VistA that 
+ the SC issue has been resolved and get it to submit the claim.  No
+ matter how many times they try, it keeps responding with a RNB of
+ "Needs SC Determination", and fails to submit the claim to ECME. Analysis 
+ of the code involved reveals that the flag (IBQ) intended to 
+ indicate that the SC Determination had been resolved was also used in an 
+ earlier check for ROI (Release of Information). If the ROI value was 
+ zero(0), it would quit before getting to the SC check code. So if it 
+ continued past the ROI Check, IBQ would always have a non-zero value,
+ since the code never reset it to zero(0). The result was that if the SC 
+ Check was performed, it would always quit due to the value set in the 
+ ROI code, even if the user told VistA that the SC issue was resolved.
+  
+ Resolution:
+ ===========
+ Routine IBNCPBB has been modified to reset the IBQ flag to zero (0)
+ after the ROI Check, so the SC Check results will reflect the actual
+ findings for SC.
+  
+ Routines: IBNCPBB
+  
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    can be installed when Pharmacy and Integrated Billing users are on 
+    the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the 
+       Following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior
+       to installation, you should use the 'Backup a Transport Global' 
+       option at this time. You may also compare the routines in your 
+       production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' 
+       Menu and select the package 'IB*2.0*575'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//, choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       And Protocols? YES//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBNCPBB
+    Before: B95588054   After: B95799702  **276,347,384,435,575**
+ 
+Routine list of preceding patches: 435
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 22, 2016
+Completed By:                               Date Completed: DEC 12, 2017
+Released By :                               Date Released : DEC 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

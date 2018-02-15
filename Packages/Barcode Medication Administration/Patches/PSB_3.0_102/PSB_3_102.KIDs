@@ -1,0 +1,1944 @@
+KIDS Distribution saved on Jan 04, 2018@08:11:56
+PSB*3*102
+**KIDS**:PSB*3.0*102^
+
+**INSTALL NAME**
+PSB*3.0*102
+"BLD",10712,0)
+PSB*3.0*102^BAR CODE MED ADMIN^0^3180104^y
+"BLD",10712,1,0)
+^^87^87^3171129^^^
+"BLD",10712,1,1,0)
+This patch will resolve the following issues.
+"BLD",10712,1,2,0)
+ 
+"BLD",10712,1,3,0)
+1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+"BLD",10712,1,4,0)
+                  database
+"BLD",10712,1,5,0)
+2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+"BLD",10712,1,6,0)
+                  Links Array Med-Log
+"BLD",10712,1,7,0)
+3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+"BLD",10712,1,8,0)
+   I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+"BLD",10712,1,9,0)
+  
+"BLD",10712,1,10,0)
+  
+"BLD",10712,1,11,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10712,1,12,0)
+--------------------------------------------
+"BLD",10712,1,13,0)
+1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+"BLD",10712,1,14,0)
+                  database
+"BLD",10712,1,15,0)
+   
+"BLD",10712,1,16,0)
+Problem: 
+"BLD",10712,1,17,0)
+--------
+"BLD",10712,1,18,0)
+Frequently, BCMA users are not able to access the BCBU database. This result
+"BLD",10712,1,19,0)
+in local IT support spending time to resolve what should be a minor issue.
+"BLD",10712,1,20,0)
+However, the fix is not always simple or straight forward. Typically, the
+"BLD",10712,1,21,0)
+problem is that the user has had a Verify Code change since they last
+"BLD",10712,1,22,0)
+accessed a contingency. Normally, doing a User Initialization does not
+"BLD",10712,1,23,0)
+resolve the issue and IT support has to either replace the database or
+"BLD",10712,1,24,0)
+manually give the user a new Verify code on the contingency computer.
+"BLD",10712,1,25,0)
+  
+"BLD",10712,1,26,0)
+Resolution:
+"BLD",10712,1,27,0)
+-----------
+"BLD",10712,1,28,0)
+Modified the routines ALPBGEN, ALPBGEN1 and ALPBGEN2 to remove some
+"BLD",10712,1,29,0)
+unnecessary restrictions for sending a user update over to the BCBU
+"BLD",10712,1,30,0)
+workstation. For example, if a user was terminated in the main VistA System
+"BLD",10712,1,31,0)
+it would not be sent to the BCBU workstation. This caused terminated users
+"BLD",10712,1,32,0)
+in the main VistA System to remain active in the BCBU workstation.
+"BLD",10712,1,33,0)
+  
+"BLD",10712,1,34,0)
+ 
+"BLD",10712,1,35,0)
+2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+"BLD",10712,1,36,0)
+                  Links Array Med-Log
+"BLD",10712,1,37,0)
+ 
+"BLD",10712,1,38,0)
+Problem: 
+"BLD",10712,1,39,0)
+--------
+"BLD",10712,1,40,0)
+In a multi-divisional BCBU configuration all Divisions are required to have
+"BLD",10712,1,41,0)
+an HL7 Logical Link associated. When a division is missing the association an
+"BLD",10712,1,42,0)
+alert is generated for every transaction that is supposed to go to the BCBU
+"BLD",10712,1,43,0)
+workstation for that division. The problem is that the Alert does not identify
+"BLD",10712,1,44,0)
+which division is missing the Logical Link, which makes it hard for the users
+"BLD",10712,1,45,0)
+to identify the source of the problem and resolve it. Furthermore, the fact 
+"BLD",10712,1,46,0)
+that the Alert does not identify which patient was being processed when the 
+"BLD",10712,1,47,0)
+issue happened makes it hard to troubleshoot and fix the problem as well.
+"BLD",10712,1,48,0)
+  
+"BLD",10712,1,49,0)
+Resolution:
+"BLD",10712,1,50,0)
+-----------
+"BLD",10712,1,51,0)
+Modified the routine ALPBCBU to include the site number and the patient DFN
+"BLD",10712,1,52,0)
+number in the Alert subject. This way users will know exactly which division
+"BLD",10712,1,53,0)
+and the patient that was being processed when a BCBU Alert is generated due to
+"BLD",10712,1,54,0)
+an error. 
+"BLD",10712,1,55,0)
+  
+"BLD",10712,1,56,0)
+Here is how the Alert text will be modified:
+"BLD",10712,1,57,0)
+  
+"BLD",10712,1,58,0)
+ Before: BCBU Contingency Error
+"BLD",10712,1,59,0)
+         Missing HLL Links Array Med-Log
+"BLD",10712,1,60,0)
+ 
+"BLD",10712,1,61,0)
+ After:  BCBU Contingency Error / Site: 442 / DFN: 1930382
+"BLD",10712,1,62,0)
+         Missing HLL Links Array Med-Log
+"BLD",10712,1,63,0)
+ 
+"BLD",10712,1,64,0)
+ 
+"BLD",10712,1,65,0)
+3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+"BLD",10712,1,66,0)
+   I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+"BLD",10712,1,67,0)
+ 
+"BLD",10712,1,68,0)
+Problem: 
+"BLD",10712,1,69,0)
+-------- 
+"BLD",10712,1,70,0)
+When an HL7 message is received from an Income Verification Match (IVM) Center
+"BLD",10712,1,71,0)
+containing demographics data for a patient that includes a date of death the
+"BLD",10712,1,72,0)
+BCBU application is automatically invoked if such patient has active inpatient
+"BLD",10712,1,73,0)
+orders. Many other subscribing applications are automatically invoked by the 
+"BLD",10712,1,74,0)
+same process and they all share the same local variables from the invoking
+"BLD",10712,1,75,0)
+process. The routine ALPBINP was incorrectly killing HL7 local variables such
+"BLD",10712,1,76,0)
+as HL, HLA, HLCS, HLCTR and HLFS, which were being used by other applications
+"BLD",10712,1,77,0)
+and in these two specific incidents reported caused the Income Verification
+"BLD",10712,1,78,0)
+Match (IVM) and Registration applications to error out.
+"BLD",10712,1,79,0)
+ 
+"BLD",10712,1,80,0)
+Resolution:
+"BLD",10712,1,81,0)
+-----------
+"BLD",10712,1,82,0)
+Modified the routine ALPBCBU to NEW the variables HL, HLA, HLECH and HLQ and
+"BLD",10712,1,83,0)
+also modified the routine ALPBINP to no longer kill the HL7 variables HLCS, 
+"BLD",10712,1,84,0)
+HLCTR and HLFS.
+"BLD",10712,1,85,0)
+ 
+"BLD",10712,1,86,0)
+NOTE: This fix could not be tested in a development or an SQA environments
+"BLD",10712,1,87,0)
+      because it requires an incoming HL7 message from an external entity.
+"BLD",10712,4,0)
+^9.64PA^^
+"BLD",10712,6.3)
+14
+"BLD",10712,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10712,"KRN",.4,0)
+.4
+"BLD",10712,"KRN",.401,0)
+.401
+"BLD",10712,"KRN",.402,0)
+.402
+"BLD",10712,"KRN",.403,0)
+.403
+"BLD",10712,"KRN",.5,0)
+.5
+"BLD",10712,"KRN",.84,0)
+.84
+"BLD",10712,"KRN",3.6,0)
+3.6
+"BLD",10712,"KRN",3.8,0)
+3.8
+"BLD",10712,"KRN",9.2,0)
+9.2
+"BLD",10712,"KRN",9.8,0)
+9.8
+"BLD",10712,"KRN",9.8,"NM",0)
+^9.68A^5^5
+"BLD",10712,"KRN",9.8,"NM",1,0)
+ALPBGEN^^0^B38508427
+"BLD",10712,"KRN",9.8,"NM",2,0)
+ALPBGEN1^^0^B23958647
+"BLD",10712,"KRN",9.8,"NM",3,0)
+ALPBGEN2^^0^B4591477
+"BLD",10712,"KRN",9.8,"NM",4,0)
+ALPBCBU^^0^B7545532
+"BLD",10712,"KRN",9.8,"NM",5,0)
+ALPBINP^^0^B97531509
+"BLD",10712,"KRN",9.8,"NM","B","ALPBCBU",4)
+
+"BLD",10712,"KRN",9.8,"NM","B","ALPBGEN",1)
+
+"BLD",10712,"KRN",9.8,"NM","B","ALPBGEN1",2)
+
+"BLD",10712,"KRN",9.8,"NM","B","ALPBGEN2",3)
+
+"BLD",10712,"KRN",9.8,"NM","B","ALPBINP",5)
+
+"BLD",10712,"KRN",19,0)
+19
+"BLD",10712,"KRN",19.1,0)
+19.1
+"BLD",10712,"KRN",101,0)
+101
+"BLD",10712,"KRN",409.61,0)
+409.61
+"BLD",10712,"KRN",771,0)
+771
+"BLD",10712,"KRN",779.2,0)
+779.2
+"BLD",10712,"KRN",870,0)
+870
+"BLD",10712,"KRN",8989.51,0)
+8989.51
+"BLD",10712,"KRN",8989.52,0)
+8989.52
+"BLD",10712,"KRN",8994,0)
+8994
+"BLD",10712,"KRN","B",.4,.4)
+
+"BLD",10712,"KRN","B",.401,.401)
+
+"BLD",10712,"KRN","B",.402,.402)
+
+"BLD",10712,"KRN","B",.403,.403)
+
+"BLD",10712,"KRN","B",.5,.5)
+
+"BLD",10712,"KRN","B",.84,.84)
+
+"BLD",10712,"KRN","B",3.6,3.6)
+
+"BLD",10712,"KRN","B",3.8,3.8)
+
+"BLD",10712,"KRN","B",9.2,9.2)
+
+"BLD",10712,"KRN","B",9.8,9.8)
+
+"BLD",10712,"KRN","B",19,19)
+
+"BLD",10712,"KRN","B",19.1,19.1)
+
+"BLD",10712,"KRN","B",101,101)
+
+"BLD",10712,"KRN","B",409.61,409.61)
+
+"BLD",10712,"KRN","B",771,771)
+
+"BLD",10712,"KRN","B",779.2,779.2)
+
+"BLD",10712,"KRN","B",870,870)
+
+"BLD",10712,"KRN","B",8989.51,8989.51)
+
+"BLD",10712,"KRN","B",8989.52,8989.52)
+
+"BLD",10712,"KRN","B",8994,8994)
+
+"BLD",10712,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10712,"QUES",0)
+^9.62^^
+"BLD",10712,"REQB",0)
+^9.611^1^1
+"BLD",10712,"REQB",1,0)
+PSB*3.0*87^2
+"BLD",10712,"REQB","B","PSB*3.0*87",1)
+
+"MBREQ")
+0
+"PKG",550,-1)
+1^1
+"PKG",550,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",550,20,0)
+^9.402P^^
+"PKG",550,22,0)
+^9.49I^1^1
+"PKG",550,22,1,0)
+3.0^3040224^3040311^66481
+"PKG",550,22,1,"PAH",1,0)
+102^3180104
+"PKG",550,22,1,"PAH",1,1,0)
+^^87^87^3180104
+"PKG",550,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues.
+"PKG",550,22,1,"PAH",1,1,2,0)
+ 
+"PKG",550,22,1,"PAH",1,1,3,0)
+1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+"PKG",550,22,1,"PAH",1,1,4,0)
+                  database
+"PKG",550,22,1,"PAH",1,1,5,0)
+2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+"PKG",550,22,1,"PAH",1,1,6,0)
+                  Links Array Med-Log
+"PKG",550,22,1,"PAH",1,1,7,0)
+3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+"PKG",550,22,1,"PAH",1,1,8,0)
+   I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+"PKG",550,22,1,"PAH",1,1,9,0)
+  
+"PKG",550,22,1,"PAH",1,1,10,0)
+  
+"PKG",550,22,1,"PAH",1,1,11,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",550,22,1,"PAH",1,1,12,0)
+--------------------------------------------
+"PKG",550,22,1,"PAH",1,1,13,0)
+1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+"PKG",550,22,1,"PAH",1,1,14,0)
+                  database
+"PKG",550,22,1,"PAH",1,1,15,0)
+   
+"PKG",550,22,1,"PAH",1,1,16,0)
+Problem: 
+"PKG",550,22,1,"PAH",1,1,17,0)
+--------
+"PKG",550,22,1,"PAH",1,1,18,0)
+Frequently, BCMA users are not able to access the BCBU database. This result
+"PKG",550,22,1,"PAH",1,1,19,0)
+in local IT support spending time to resolve what should be a minor issue.
+"PKG",550,22,1,"PAH",1,1,20,0)
+However, the fix is not always simple or straight forward. Typically, the
+"PKG",550,22,1,"PAH",1,1,21,0)
+problem is that the user has had a Verify Code change since they last
+"PKG",550,22,1,"PAH",1,1,22,0)
+accessed a contingency. Normally, doing a User Initialization does not
+"PKG",550,22,1,"PAH",1,1,23,0)
+resolve the issue and IT support has to either replace the database or
+"PKG",550,22,1,"PAH",1,1,24,0)
+manually give the user a new Verify code on the contingency computer.
+"PKG",550,22,1,"PAH",1,1,25,0)
+  
+"PKG",550,22,1,"PAH",1,1,26,0)
+Resolution:
+"PKG",550,22,1,"PAH",1,1,27,0)
+-----------
+"PKG",550,22,1,"PAH",1,1,28,0)
+Modified the routines ALPBGEN, ALPBGEN1 and ALPBGEN2 to remove some
+"PKG",550,22,1,"PAH",1,1,29,0)
+unnecessary restrictions for sending a user update over to the BCBU
+"PKG",550,22,1,"PAH",1,1,30,0)
+workstation. For example, if a user was terminated in the main VistA System
+"PKG",550,22,1,"PAH",1,1,31,0)
+it would not be sent to the BCBU workstation. This caused terminated users
+"PKG",550,22,1,"PAH",1,1,32,0)
+in the main VistA System to remain active in the BCBU workstation.
+"PKG",550,22,1,"PAH",1,1,33,0)
+  
+"PKG",550,22,1,"PAH",1,1,34,0)
+ 
+"PKG",550,22,1,"PAH",1,1,35,0)
+2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+"PKG",550,22,1,"PAH",1,1,36,0)
+                  Links Array Med-Log
+"PKG",550,22,1,"PAH",1,1,37,0)
+ 
+"PKG",550,22,1,"PAH",1,1,38,0)
+Problem: 
+"PKG",550,22,1,"PAH",1,1,39,0)
+--------
+"PKG",550,22,1,"PAH",1,1,40,0)
+In a multi-divisional BCBU configuration all Divisions are required to have
+"PKG",550,22,1,"PAH",1,1,41,0)
+an HL7 Logical Link associated. When a division is missing the association an
+"PKG",550,22,1,"PAH",1,1,42,0)
+alert is generated for every transaction that is supposed to go to the BCBU
+"PKG",550,22,1,"PAH",1,1,43,0)
+workstation for that division. The problem is that the Alert does not identify
+"PKG",550,22,1,"PAH",1,1,44,0)
+which division is missing the Logical Link, which makes it hard for the users
+"PKG",550,22,1,"PAH",1,1,45,0)
+to identify the source of the problem and resolve it. Furthermore, the fact 
+"PKG",550,22,1,"PAH",1,1,46,0)
+that the Alert does not identify which patient was being processed when the 
+"PKG",550,22,1,"PAH",1,1,47,0)
+issue happened makes it hard to troubleshoot and fix the problem as well.
+"PKG",550,22,1,"PAH",1,1,48,0)
+  
+"PKG",550,22,1,"PAH",1,1,49,0)
+Resolution:
+"PKG",550,22,1,"PAH",1,1,50,0)
+-----------
+"PKG",550,22,1,"PAH",1,1,51,0)
+Modified the routine ALPBCBU to include the site number and the patient DFN
+"PKG",550,22,1,"PAH",1,1,52,0)
+number in the Alert subject. This way users will know exactly which division
+"PKG",550,22,1,"PAH",1,1,53,0)
+and the patient that was being processed when a BCBU Alert is generated due to
+"PKG",550,22,1,"PAH",1,1,54,0)
+an error. 
+"PKG",550,22,1,"PAH",1,1,55,0)
+  
+"PKG",550,22,1,"PAH",1,1,56,0)
+Here is how the Alert text will be modified:
+"PKG",550,22,1,"PAH",1,1,57,0)
+  
+"PKG",550,22,1,"PAH",1,1,58,0)
+ Before: BCBU Contingency Error
+"PKG",550,22,1,"PAH",1,1,59,0)
+         Missing HLL Links Array Med-Log
+"PKG",550,22,1,"PAH",1,1,60,0)
+ 
+"PKG",550,22,1,"PAH",1,1,61,0)
+ After:  BCBU Contingency Error / Site: 442 / DFN: 1930382
+"PKG",550,22,1,"PAH",1,1,62,0)
+         Missing HLL Links Array Med-Log
+"PKG",550,22,1,"PAH",1,1,63,0)
+ 
+"PKG",550,22,1,"PAH",1,1,64,0)
+ 
+"PKG",550,22,1,"PAH",1,1,65,0)
+3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+"PKG",550,22,1,"PAH",1,1,66,0)
+   I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+"PKG",550,22,1,"PAH",1,1,67,0)
+ 
+"PKG",550,22,1,"PAH",1,1,68,0)
+Problem: 
+"PKG",550,22,1,"PAH",1,1,69,0)
+-------- 
+"PKG",550,22,1,"PAH",1,1,70,0)
+When an HL7 message is received from an Income Verification Match (IVM) Center
+"PKG",550,22,1,"PAH",1,1,71,0)
+containing demographics data for a patient that includes a date of death the
+"PKG",550,22,1,"PAH",1,1,72,0)
+BCBU application is automatically invoked if such patient has active inpatient
+"PKG",550,22,1,"PAH",1,1,73,0)
+orders. Many other subscribing applications are automatically invoked by the 
+"PKG",550,22,1,"PAH",1,1,74,0)
+same process and they all share the same local variables from the invoking
+"PKG",550,22,1,"PAH",1,1,75,0)
+process. The routine ALPBINP was incorrectly killing HL7 local variables such
+"PKG",550,22,1,"PAH",1,1,76,0)
+as HL, HLA, HLCS, HLCTR and HLFS, which were being used by other applications
+"PKG",550,22,1,"PAH",1,1,77,0)
+and in these two specific incidents reported caused the Income Verification
+"PKG",550,22,1,"PAH",1,1,78,0)
+Match (IVM) and Registration applications to error out.
+"PKG",550,22,1,"PAH",1,1,79,0)
+ 
+"PKG",550,22,1,"PAH",1,1,80,0)
+Resolution:
+"PKG",550,22,1,"PAH",1,1,81,0)
+-----------
+"PKG",550,22,1,"PAH",1,1,82,0)
+Modified the routine ALPBCBU to NEW the variables HL, HLA, HLECH and HLQ and
+"PKG",550,22,1,"PAH",1,1,83,0)
+also modified the routine ALPBINP to no longer kill the HL7 variables HLCS, 
+"PKG",550,22,1,"PAH",1,1,84,0)
+HLCTR and HLFS.
+"PKG",550,22,1,"PAH",1,1,85,0)
+ 
+"PKG",550,22,1,"PAH",1,1,86,0)
+NOTE: This fix could not be tested in a development or an SQA environments
+"PKG",550,22,1,"PAH",1,1,87,0)
+      because it requires an incoming HL7 message from an external entity.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","ALPBCBU")
+0^4^B7545532
+"RTN","ALPBCBU",1,0)
+ALPBCBU ;OIFO-DALLAS/SED/KC/MW  BCMA-BCBU INPT TO HL7 ;5/2/2002
+"RTN","ALPBCBU",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,102**;Mar 2004;Build 14
+"RTN","ALPBCBU",3,0)
+ ;This is the main routine for the BCBU software.
+"RTN","ALPBCBU",4,0)
+ ;It handles all the entries points for the BCBU software. 
+"RTN","ALPBCBU",5,0)
+ ;It also handles error checking.
+"RTN","ALPBCBU",6,0)
+IPH(ALPMSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBCBU",7,0)
+ N ALPRSLT,HL,HLA,HLECH,HLQ
+"RTN","ALPBCBU",8,0)
+ Q:'$D(ALPMSG)
+"RTN","ALPBCBU",9,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",10,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",11,0)
+ S ALPRSLT=$$IPH^ALPBINP(.ALPMSG)
+"RTN","ALPBCBU",12,0)
+ ;I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",13,0)
+ Q
+"RTN","ALPBCBU",14,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBCBU",15,0)
+ N ALPRSLT
+"RTN","ALPBCBU",16,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBCBU",17,0)
+ Q:'$D(ALPML)
+"RTN","ALPBCBU",18,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",19,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",20,0)
+ S ALPRSLT=$$MEDL^ALPBINP(ALPML)
+"RTN","ALPBCBU",21,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",22,0)
+ Q
+"RTN","ALPBCBU",23,0)
+NURV(ALDFN,ALPORD) ;Use this entry to send verifying nursing.
+"RTN","ALPBCBU",24,0)
+ N ALPRSLT
+"RTN","ALPBCBU",25,0)
+ ;ALDFN is the IEN of the patient
+"RTN","ALPBCBU",26,0)
+ ;ALPORDR is the order number
+"RTN","ALPBCBU",27,0)
+ Q:'$D(ALDFN)
+"RTN","ALPBCBU",28,0)
+ Q:'$D(ALPORD)
+"RTN","ALPBCBU",29,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",30,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",31,0)
+ K ALPB
+"RTN","ALPBCBU",32,0)
+ D EN^PSJBCBU(ALDFN,ALPORD,.ALPB)
+"RTN","ALPBCBU",33,0)
+ S ALPBI=0
+"RTN","ALPBCBU",34,0)
+ F  S ALPBI=$O(ALPB(ALPBI)) Q:ALPBI'>0  D
+"RTN","ALPBCBU",35,0)
+ . I $E(ALPB(ALPBI),1,3)="MSH" S MSH=ALPBI
+"RTN","ALPBCBU",36,0)
+ . I $E(ALPB(ALPBI),1,3)="PID" S PID=ALPBI
+"RTN","ALPBCBU",37,0)
+ . I $E(ALPB(ALPBI),1,3)="PV1" S PV1=ALPBI
+"RTN","ALPBCBU",38,0)
+ . I $E(ALPB(ALPBI),1,3)="ORC" S ORC=ALPBI
+"RTN","ALPBCBU",39,0)
+ I +$G(MSH)'>0 Q   ;MISSING MSH SEGMENT BAD MESSAGE
+"RTN","ALPBCBU",40,0)
+ S MSCTR=$E(ALPB(MSH),4,8)
+"RTN","ALPBCBU",41,0)
+ S ALPRSLT=$$INI^ALPBINP()
+"RTN","ALPBCBU",42,0)
+ K ALPB,ALPBI
+"RTN","ALPBCBU",43,0)
+ Q
+"RTN","ALPBCBU",44,0)
+PMOV ;Entry Point to send patient movement
+"RTN","ALPBCBU",45,0)
+ N ALPRSLT
+"RTN","ALPBCBU",46,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",47,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",48,0)
+ Q:'$D(DFN)!'$D(DGPMTYP)!'$D(DGPMUC)
+"RTN","ALPBCBU",49,0)
+ ;Screen out Lodgers
+"RTN","ALPBCBU",50,0)
+ Q:DGPMUC["LODGER"
+"RTN","ALPBCBU",51,0)
+ S ALPRSLT=$$PMOV^ALPBINP(DFN,DGPMTYP,DGPMUC,$P($G(DGPMA),U))
+"RTN","ALPBCBU",52,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",53,0)
+ Q
+"RTN","ALPBCBU",54,0)
+ERRLG ;Error Log Message
+"RTN","ALPBCBU",55,0)
+ ; Retrieving the Patient's division name to include on the alert
+"RTN","ALPBCBU",56,0)
+ N ALPDFN,ALPDIV,ALPDIVST,ALPINST
+"RTN","ALPBCBU",57,0)
+ S ALPDIVST=""
+"RTN","ALPBCBU",58,0)
+ S ALPDFN=+$P($G(^PSB(53.79,+$G(ALPML),0)),U,1)
+"RTN","ALPBCBU",59,0)
+ I ALPDFN>0 D
+"RTN","ALPBCBU",60,0)
+ . S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,0)
+"RTN","ALPBCBU",61,0)
+ . I 'ALPDIV,$G(ALPML) S ALPDIV=$$CDIV^ALPBINP(ALPML)
+"RTN","ALPBCBU",62,0)
+ . S ALPDIVST=$$GET1^DIQ(40.8,ALPDIV,1)
+"RTN","ALPBCBU",63,0)
+ I ALPDIVST="" S ALPINST=+$$GET1^DIQ(53.79,+$G(ALPML),.03,"I"),ALPDIVST=$$GET1^DIQ(4,ALPINST,99)
+"RTN","ALPBCBU",64,0)
+ ;Alert
+"RTN","ALPBCBU",65,0)
+ K XQA,XQAMSG,XQAOPT,XQAROU,XQAID,XQADATA,XQAFLAG
+"RTN","ALPBCBU",66,0)
+ S XQA("G.PSB BCBU ERRORS")=""
+"RTN","ALPBCBU",67,0)
+ S XQAMSG="BCBU Contingency Error"_$S(ALPDIVST:" / Site: "_ALPDIVST,1:"")_$S(ALPDFN:" / DFN: "_ALPDFN,1:"")
+"RTN","ALPBCBU",68,0)
+ S XQADATA=ALPRSLT
+"RTN","ALPBCBU",69,0)
+ S XQAROU="PERR^ALPBCBU"
+"RTN","ALPBCBU",70,0)
+ D SETUP^XQALERT
+"RTN","ALPBCBU",71,0)
+ Q
+"RTN","ALPBCBU",72,0)
+PERR ;Process the error
+"RTN","ALPBCBU",73,0)
+ W @IOF,!,"PSB BCBU Contingency Error",!
+"RTN","ALPBCBU",74,0)
+ W ?10,$P(XQADATA,U,2)_" / "_$P(XQADATA,U,3)
+"RTN","ALPBCBU",75,0)
+ Q
+"RTN","ALPBGEN")
+0^1^B38508427
+"RTN","ALPBGEN",1,0)
+ALPBGEN ;SFVAMC/JC - Build HL7 PMU messages ;03/11/2004  15:54
+"RTN","ALPBGEN",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**7,8,102**;March 2004;Build 14
+"RTN","ALPBGEN",3,0)
+HL7(XUIEN,XUFLG,XUSR) ;GENERATE MESSAGE - For Subscriber to XUSER DATA REQUEST (BCBU PMU MESSAGE BUILDER)
+"RTN","ALPBGEN",4,0)
+ ;Build HL7 PMU~B01 or B02 message from array XUSR() and XUNAME()
+"RTN","ALPBGEN",5,0)
+ ;B01=Personnel Add/Create event type
+"RTN","ALPBGEN",6,0)
+ ;B02=Personnel Update event type
+"RTN","ALPBGEN",7,0)
+ ;
+"RTN","ALPBGEN",8,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBGEN",9,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBGEN",10,0)
+ Q:'$D(XUSR)  ;Array of user data from Kernel
+"RTN","ALPBGEN",11,0)
+ Q:'$D(XUIEN)  ;Internal entry of user required
+"RTN","ALPBGEN",12,0)
+ ;
+"RTN","ALPBGEN",13,0)
+ ;SFVAMC/JC - 10/8/03 ADD CHECK FOR BCMA USER STATUS
+"RTN","ALPBGEN",14,0)
+ I '$G(XUSR("TERMINATION DATE")),'$G(XUSR("DISUSER")),$$ISBCMA^ALPBGEN2(XUIEN)<1 Q
+"RTN","ALPBGEN",15,0)
+ ;
+"RTN","ALPBGEN",16,0)
+ N ALPBEVN,MT,FS,EC,CS,RS,ESC,SS,N,ALERR,ALPBDIV,ALPBRCV,ECS,EEC,EFS,ERS,ESS,HLA,HLMTIENS,HLNEXT,HLNODE,HLQUIT,ZTDESC,ZTIO,ZTRTN,ZTSAVE,ZTSK
+"RTN","ALPBGEN",17,0)
+ S ALPBEVN=$S(XUFLG=1:"PSB BCBU PMU_B01 EVENT",1:"PSB BCBU PMU_B02 EVENT")
+"RTN","ALPBGEN",18,0)
+ S ALPBRCV=$S(XUFLG=1:"PSB BCBU PMU_B01 RECV",1:"PSB BCBU PMU_B02 RECV")
+"RTN","ALPBGEN",19,0)
+ K HL D INIT^HLFNC2(ALPBEVN,.HL)
+"RTN","ALPBGEN",20,0)
+ I +$G(HL) W !,HL Q  ;SETUP ERROR or no subscribers.
+"RTN","ALPBGEN",21,0)
+ S N=0
+"RTN","ALPBGEN",22,0)
+ S MT=$S(XUFLG=1:"B01",1:"B02")
+"RTN","ALPBGEN",23,0)
+ S FS=$G(HL("FS")) Q:FS=""  ;Field separator
+"RTN","ALPBGEN",24,0)
+ S EC=$G(HL("ECH")) Q:EC=""  ;Encoding Characters
+"RTN","ALPBGEN",25,0)
+ S CS=$E(EC) ;Component separator
+"RTN","ALPBGEN",26,0)
+ S RS=$E(EC,2) ;Repetition separator
+"RTN","ALPBGEN",27,0)
+ S ESC=$E(EC,3) ;Escape character
+"RTN","ALPBGEN",28,0)
+ S SS=$E(EC,4) ;Subcomponent separator
+"RTN","ALPBGEN",29,0)
+ S EEC=ESC_"E"_ESC ;escaped escape character
+"RTN","ALPBGEN",30,0)
+ S EFS=ESC_"F"_ESC ;escaped field separator
+"RTN","ALPBGEN",31,0)
+ S ECS=ESC_"S"_ESC ;escaped component separator
+"RTN","ALPBGEN",32,0)
+ S ERS=ESC_"R"_ESC ; escaped Repetition separator
+"RTN","ALPBGEN",33,0)
+ S ESS=ESC_"T"_ESC ;escaped subcomponent separator
+"RTN","ALPBGEN",34,0)
+EVN ;EVN segment
+"RTN","ALPBGEN",35,0)
+ S N=N+1
+"RTN","ALPBGEN",36,0)
+ S HLA("HLS",N)="EVN"_FS_MT_FS_$$FMTHL7^XLFDT($$NOW^XLFDT)
+"RTN","ALPBGEN",37,0)
+GSTF ;Generate Staff Detail Segment
+"RTN","ALPBGEN",38,0)
+ N ALPBSSN,STF S STF="STF"
+"RTN","ALPBGEN",39,0)
+ S $P(STF,FS,2)=XUIEN_CS_200_CS_"VISTA" ;Primary Key
+"RTN","ALPBGEN",40,0)
+ ;Staff ID Code
+"RTN","ALPBGEN",41,0)
+ ;SSN Incorrect variable reference before transmit to workstation
+"RTN","ALPBGEN",42,0)
+ ;also don't plus SSN
+"RTN","ALPBGEN",43,0)
+ ;S ALPBSSN=$TR($G(XUSR("ALPBSSN")),"-","") S:+ALPBSSN ALPBSSN=$$M10^HLFNC(ALPBSSN,EC) S:'+ALPBSSN ALPBSSN=ALPBSSN_CS_""_CS_"LOCAL"
+"RTN","ALPBGEN",44,0)
+ S ALPBSSN=$TR($G(XUSR("SSN")),"-","") Q:$L(ALPBSSN)'=9  S ALPBSSN=$$M10^HLFNC(ALPBSSN,EC)
+"RTN","ALPBGEN",45,0)
+ S $P(STF,FS,3)=ALPBSSN_CS_"USSSA"_CS_"SS"_RS_$$ESC($G(XUSR("ACCESS CODE")))_RS_$$ESC($G(XUSR("VERIFY CODE")))
+"RTN","ALPBGEN",46,0)
+GSTNM ;Staff Name
+"RTN","ALPBGEN",47,0)
+ N SN S SN=""
+"RTN","ALPBGEN",48,0)
+ I $D(XUSR("HL7NAME")) D
+"RTN","ALPBGEN",49,0)
+ . S XUSR("HL7NAME")=$TR(XUSR("HL7NAME"),"~",CS)
+"RTN","ALPBGEN",50,0)
+ . S SN=XUSR("HL7NAME")
+"RTN","ALPBGEN",51,0)
+ I '$D(XUSR("HL7NAME")),$D(XUSR("NAME")) D
+"RTN","ALPBGEN",52,0)
+ . S SN=$TR(XUSR("NAME"),",",CS)
+"RTN","ALPBGEN",53,0)
+ S $P(STF,FS,4)=SN
+"RTN","ALPBGEN",54,0)
+ ;Active/Inactive (Disuser=1 or 0 or null)
+"RTN","ALPBGEN",55,0)
+ S $P(STF,FS,8)=$S(XUSR("DISUSER")=1:"I",1:"A")
+"RTN","ALPBGEN",56,0)
+ ;Termination Date
+"RTN","ALPBGEN",57,0)
+ I XUSR("TERMINATION DATE")]"" S $P(STF,FS,14)=$$FMTHL7^XLFDT(XUSR("TERMINATION DATE"))
+"RTN","ALPBGEN",58,0)
+ ;Add to HL7 array
+"RTN","ALPBGEN",59,0)
+ S N=N+1,HLA("HLS",N)=STF
+"RTN","ALPBGEN",60,0)
+ ;Send the message
+"RTN","ALPBGEN",61,0)
+ Q:'$D(HLA)
+"RTN","ALPBGEN",62,0)
+ ;Check user's divisions
+"RTN","ALPBGEN",63,0)
+SEND K HLL S ALPBDIV="" F  S ALPBDIV=$O(XUSR("DIV",ALPBDIV)) Q:ALPBDIV=""  D
+"RTN","ALPBGEN",64,0)
+ . K DIC,D,X,Y
+"RTN","ALPBGEN",65,0)
+ . S DIC="^DG(40.8,",D="AD",X=ALPBDIV,DIC(0)="XN"
+"RTN","ALPBGEN",66,0)
+ . D IX^DIC
+"RTN","ALPBGEN",67,0)
+ . Q:+Y'>0
+"RTN","ALPBGEN",68,0)
+ . S ALPBDIV1=+Y
+"RTN","ALPBGEN",69,0)
+ . K DIC,D,X,Y,ALPHLL
+"RTN","ALPBGEN",70,0)
+ . D GET^ALPBPARM(.ALPHLL,ALPBDIV1)
+"RTN","ALPBGEN",71,0)
+ . I $D(ALPHLL) S I=0 F  S I=$O(ALPHLL("LINKS",I)) Q:I<1  D
+"RTN","ALPBGEN",72,0)
+ . . S $P(ALPHLL("LINKS",I),"^",1)=ALPBRCV
+"RTN","ALPBGEN",73,0)
+ . . S HLL("LINKS",($O(HLL("LINKS",999999),-1)+1))=ALPHLL("LINKS",I)
+"RTN","ALPBGEN",74,0)
+ K ALPHLL
+"RTN","ALPBGEN",75,0)
+ ;If no division assoc. use defaults
+"RTN","ALPBGEN",76,0)
+ I $O(XUSR("DIV",0))=""!('$D(HLL)) D GET^ALPBPARM(.HLL,"","",ALPBRCV)
+"RTN","ALPBGEN",77,0)
+ K MYRESULT
+"RTN","ALPBGEN",78,0)
+ I '$D(HLL) S MYRESULT="1-No subscribers" Q
+"RTN","ALPBGEN",79,0)
+ D GENERATE^HLMA(ALPBEVN,"LM",1,.MYRESULT)
+"RTN","ALPBGEN",80,0)
+ I $P(MYRESULT,U,2)]"" S ALERR=MYRESULT D SERR
+"RTN","ALPBGEN",81,0)
+ Q
+"RTN","ALPBGEN",82,0)
+ ;
+"RTN","ALPBGEN",83,0)
+ESC(ST,PR) ;Translate reserved characters to escape sequences in Access/Verify
+"RTN","ALPBGEN",84,0)
+ ;ST=String to translate
+"RTN","ALPBGEN",85,0)
+ ;PR=Event Protocol to set up HL array variables (optional)
+"RTN","ALPBGEN",86,0)
+ ;First, do the escape character
+"RTN","ALPBGEN",87,0)
+ I $G(ST)']"" Q ""
+"RTN","ALPBGEN",88,0)
+ S PR=$G(PR) I PR]"" D INIT^HLFNC2(PR,.HL)
+"RTN","ALPBGEN",89,0)
+ I '$D(HL) D
+"RTN","ALPBGEN",90,0)
+ . S HL("FS")="^"
+"RTN","ALPBGEN",91,0)
+ . S HL("ECH")="~|\&"
+"RTN","ALPBGEN",92,0)
+ S FS=$G(HL("FS")) I FS="" Q "" ;Field separator
+"RTN","ALPBGEN",93,0)
+ S EC=$G(HL("ECH")) I EC="" Q ""  ;Encoding Charaters
+"RTN","ALPBGEN",94,0)
+ S CS=$E(EC) ;Component separator
+"RTN","ALPBGEN",95,0)
+ S RS=$E(EC,2) ;Repitition separator
+"RTN","ALPBGEN",96,0)
+ S ESC=$E(EC,3) ;Escape character
+"RTN","ALPBGEN",97,0)
+ S SS=$E(EC,4) ;Subcomponent separator
+"RTN","ALPBGEN",98,0)
+ S EEC=ESC_"E"_ESC ;escaped escape character
+"RTN","ALPBGEN",99,0)
+ S EFS=ESC_"F"_ESC ;escaped field sep
+"RTN","ALPBGEN",100,0)
+ S ECS=ESC_"S"_ESC ;escaped component sep
+"RTN","ALPBGEN",101,0)
+ S ERS=ESC_"R"_ESC ; escaped repitition sep
+"RTN","ALPBGEN",102,0)
+ S ESS=ESC_"T"_ESC ;escaped subcomponent separator
+"RTN","ALPBGEN",103,0)
+ F I=1:1:$L(ST) S J=$E(ST,I),^TMP($J,I)=J D
+"RTN","ALPBGEN",104,0)
+ . S:J=ESC ^TMP($J,I)=EEC
+"RTN","ALPBGEN",105,0)
+ . S:J=FS ^TMP($J,I)=EFS
+"RTN","ALPBGEN",106,0)
+ . S:J=CS ^TMP($J,I)=ECS
+"RTN","ALPBGEN",107,0)
+ . S:J=RS ^TMP($J,I)=ERS
+"RTN","ALPBGEN",108,0)
+ . S:J=SS ^TMP($J,I)=ESS
+"RTN","ALPBGEN",109,0)
+ S I=0,ST="" F  S I=$O(^TMP($J,I)) Q:I<1  S ST=ST_^TMP($J,I)
+"RTN","ALPBGEN",110,0)
+ K ^TMP($J)
+"RTN","ALPBGEN",111,0)
+ Q ST
+"RTN","ALPBGEN",112,0)
+UNESC(ST,PR) ;Unescape string from message
+"RTN","ALPBGEN",113,0)
+ ;ST=String to translate
+"RTN","ALPBGEN",114,0)
+ ;PR=Event Protocol to set up HL array variables (optional)
+"RTN","ALPBGEN",115,0)
+ ;First, do the escape character
+"RTN","ALPBGEN",116,0)
+ I $G(ST)="" Q ""
+"RTN","ALPBGEN",117,0)
+ S PR=$G(PR) I PR]"" D INIT^HLFNC2(PR,.HL)
+"RTN","ALPBGEN",118,0)
+ I '$D(HL) D
+"RTN","ALPBGEN",119,0)
+ . S HL("FS")="^"
+"RTN","ALPBGEN",120,0)
+ . S HL("ECH")="~|\&"
+"RTN","ALPBGEN",121,0)
+ S FS=$G(HL("FS")) I FS="" Q "" ;Field separator
+"RTN","ALPBGEN",122,0)
+ S EC=$G(HL("ECH")) I EC="" Q ""  ;Encoding Charaters
+"RTN","ALPBGEN",123,0)
+ S CS=$E(EC) ;Component separator
+"RTN","ALPBGEN",124,0)
+ S RS=$E(EC,2) ;Repitition separator
+"RTN","ALPBGEN",125,0)
+ S ESC=$E(EC,3) ;Escape character
+"RTN","ALPBGEN",126,0)
+ S SS=$E(EC,4) ;Subcomponent separator
+"RTN","ALPBGEN",127,0)
+ S EEC=ESC_"E"_ESC ;escaped escape character
+"RTN","ALPBGEN",128,0)
+ S EFS=ESC_"F"_ESC ;escaped field sep
+"RTN","ALPBGEN",129,0)
+ S ECS=ESC_"S"_ESC ;escaped component sep
+"RTN","ALPBGEN",130,0)
+ S ERS=ESC_"R"_ESC ; escaped repitition sep
+"RTN","ALPBGEN",131,0)
+ S ESS=ESC_"T"_ESC ;escaped subcomponent separator
+"RTN","ALPBGEN",132,0)
+ K I,J,K,L,X F  S X=$F(ST,EEC) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K($G(I)+1)=ST Q:'X
+"RTN","ALPBGEN",133,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[EEC K(I)=$P(K(I),EEC)_ESC S L=$G(L)_K(I)
+"RTN","ALPBGEN",134,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN",135,0)
+ ;
+"RTN","ALPBGEN",136,0)
+ K I,J,K,L,X F  S X=$F(ST,EFS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K($G(I)+1)=ST Q:'X
+"RTN","ALPBGEN",137,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[EFS K(I)=$P(K(I),EFS)_FS S L=$G(L)_K(I)
+"RTN","ALPBGEN",138,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN",139,0)
+ ;
+"RTN","ALPBGEN",140,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ECS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN",141,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ECS K(I)=$P(K(I),ECS)_CS S L=$G(L)_K(I)
+"RTN","ALPBGEN",142,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN",143,0)
+ ;
+"RTN","ALPBGEN",144,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ERS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN",145,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ERS K(I)=$P(K(I),ERS)_RS S L=$G(L)_K(I)
+"RTN","ALPBGEN",146,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN",147,0)
+ ;
+"RTN","ALPBGEN",148,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ESS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN",149,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ESS K(I)=$P(K(I),ESS)_SS S L=$G(L)_K(I)
+"RTN","ALPBGEN",150,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN",151,0)
+ K I,J,K,L,X
+"RTN","ALPBGEN",152,0)
+ Q ST
+"RTN","ALPBGEN",153,0)
+ ;
+"RTN","ALPBGEN",154,0)
+SERR ;SEND ERRORS
+"RTN","ALPBGEN",155,0)
+ K XQA,XQAMSG,XQAOPT,XQAROU,XQAID,XQADATA,XQAFLAG
+"RTN","ALPBGEN",156,0)
+ S XQA("G.PSB BCBU ERRORS")=""
+"RTN","ALPBGEN",157,0)
+ S XQAMSG="Error sending HL7 message "_$G(HL("MID"))_". Header in HLMA("_$G(HLMTIENS)_"Error: "_ALERR
+"RTN","ALPBGEN",158,0)
+ D SETUP^XQALERT
+"RTN","ALPBGEN",159,0)
+ Q
+"RTN","ALPBGEN1")
+0^2^B23958647
+"RTN","ALPBGEN1",1,0)
+ALPBGEN1 ;SFVAMC/JC - Parse and File HL7 PMU messages ;05/10/07
+"RTN","ALPBGEN1",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,37,102**;Mar 2004;Build 14
+"RTN","ALPBGEN1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBGEN1",4,0)
+ Q
+"RTN","ALPBGEN1",5,0)
+ ;
+"RTN","ALPBGEN1",6,0)
+PARSIT ;PARSE MESSAGE ON RECEIVING SIDE
+"RTN","ALPBGEN1",7,0)
+ N FS,EC,CS,RS,ESC,SS,EEC,EFS,ECS,ERS,ESS,ALPBID,ALPBKY,ALPBMENU,ALPBMT,ALPBVC,DATE,DIK,DLAYGO,STF
+"RTN","ALPBGEN1",8,0)
+ S FS=$G(HL("FS")) I FS="" W !,"NO SEPARATOR" Q:FS=""  ;Field separator
+"RTN","ALPBGEN1",9,0)
+ S EC=$G(HL("ECH")) Q:EC=""  ;Encoding Charaters
+"RTN","ALPBGEN1",10,0)
+ S CS=$E(EC) ;Component separator
+"RTN","ALPBGEN1",11,0)
+ S RS=$E(EC,2) ;Repitition separator
+"RTN","ALPBGEN1",12,0)
+ S ESC=$E(EC,3) ;Escape character
+"RTN","ALPBGEN1",13,0)
+ S SS=$E(EC,4) ;Subcomponent separator
+"RTN","ALPBGEN1",14,0)
+ S EEC=ESC_"E"_ESC ;escaped escape character
+"RTN","ALPBGEN1",15,0)
+ S EFS=ESC_"F"_ESC ;escaped field sep
+"RTN","ALPBGEN1",16,0)
+ S ECS=ESC_"S"_ESC ;escaped component sep
+"RTN","ALPBGEN1",17,0)
+ S ERS=ESC_"R"_ESC ; escaped repitition sep
+"RTN","ALPBGEN1",18,0)
+ S ESS=ESC_"T"_ESC ;escaped subcomponent separator
+"RTN","ALPBGEN1",19,0)
+ N ALPBI,ALBPJ,ALPBX,ALPBAC,ACLPVC,ALPBSSN,ALPBERR,ALPBNAM,ALPBTRM
+"RTN","ALPBGEN1",20,0)
+ F  X HLNEXT Q:$G(HLQUIT)'>0  D
+"RTN","ALPBGEN1",21,0)
+ . I $E(HLNODE,1,3)="EVN" S ALPBMT=$P(HLNODE,2)
+"RTN","ALPBGEN1",22,0)
+ . I $E(HLNODE,1,3)="STF" S STF=$E(HLNODE,5,9999) D PSTF
+"RTN","ALPBGEN1",23,0)
+ Q
+"RTN","ALPBGEN1",24,0)
+PSTF ;Process STF segment
+"RTN","ALPBGEN1",25,0)
+ S ALPBKY=$P(STF,FS,1) Q:ALPBKY'[200_CS_"VISTA"
+"RTN","ALPBGEN1",26,0)
+ S ALPBID=$P(STF,FS,2) S ALPBSSN=$E(ALPBID,1,9),ALPBAC=$P(ALPBID,RS,2),ALPBVC=$P(ALPBID,RS,3) D
+"RTN","ALPBGEN1",27,0)
+ . S ALPBSSN=$TR(ALPBSSN,"-","")
+"RTN","ALPBGEN1",28,0)
+ . I ALPBAC']"" S ALERR("ACCESS")="MISSING ACCESS CODE"
+"RTN","ALPBGEN1",29,0)
+ . ;Unescape Access Code
+"RTN","ALPBGEN1",30,0)
+ . S ALPBAC=$$UNESC(ALPBAC)
+"RTN","ALPBGEN1",31,0)
+ . ;Unescape Verify Code
+"RTN","ALPBGEN1",32,0)
+ . S ALPBVC=$$UNESC(ALPBVC)
+"RTN","ALPBGEN1",33,0)
+ S ALPBNAM=$P(STF,FS,3),ALPBNAM=$P(ALPBNAM,CS,1)_","_$P(ALPBNAM,CS,2)_" "_$P(ALPBNAM,CS,3)_" "_$P(ALPBNAM,CS,4)
+"RTN","ALPBGEN1",34,0)
+ I ALPBNAM["  " S ALPBNAM=$TR(ALPBNAM," ","") I ALPBNAM']"" S ALERR("NAME")="MISSING NAME"
+"RTN","ALPBGEN1",35,0)
+ I $D(ALERR) G PERR
+"RTN","ALPBGEN1",36,0)
+ S ALPBDIS=$S($P(STF,FS,7)="I":1,1:0)
+"RTN","ALPBGEN1",37,0)
+ I $P(STF,FS,13)]"" S ALPBTRM=$$HL7TFM^XLFDT($P(STF,FS,13),"L")
+"RTN","ALPBGEN1",38,0)
+FILE ;Store File 200 data on backup system
+"RTN","ALPBGEN1",39,0)
+ N Y,DIC,DIE,DA,DR
+"RTN","ALPBGEN1",40,0)
+ Q:'$D(ALPBNAM)
+"RTN","ALPBGEN1",41,0)
+ Q:$L(ALPBSSN)'=9
+"RTN","ALPBGEN1",42,0)
+ ;Try exact SSn lookup first
+"RTN","ALPBGEN1",43,0)
+ K Y S DIC="^VA(200,",DIC(0)="X",X=ALPBSSN,D="SSN" D IX^DIC
+"RTN","ALPBGEN1",44,0)
+ ;
+"RTN","ALPBGEN1",45,0)
+ ;If SSN lookup fails, try name lookup and add User only if it does not have a Termination Date or DIUSER
+"RTN","ALPBGEN1",46,0)
+ I +Y<1,'$G(ALPBTRM),'$G(ALPBDIS) S DLAYGO=200,DIC="^VA(200,",DIC(0)="LM",X=ALPBNAM D ^DIC K DIC,DA,DR
+"RTN","ALPBGEN1",47,0)
+ I +Y>0 S (ALPBDA,DA)=+Y S ALPBMENU=$O(^DIC(19,"B","PSB BCBU WRKSTN MAIN",0)) D
+"RTN","ALPBGEN1",48,0)
+ . ;Update name too
+"RTN","ALPBGEN1",49,0)
+ . S DIE="^VA(200,",DR=".01////"_ALPBNAM
+"RTN","ALPBGEN1",50,0)
+ . S DR=DR_";7////"_$S('$G(ALPBDIS):"@",1:ALPBDIS)
+"RTN","ALPBGEN1",51,0)
+ . I ALPBSSN]"",$L(ALPBSSN)=9 S DR=DR_";9////"_ALPBSSN
+"RTN","ALPBGEN1",52,0)
+ . I +ALPBMENU S DR=DR_";201////"_ALPBMENU
+"RTN","ALPBGEN1",53,0)
+ . S DR=DR_";9.2////"_$S('$G(ALPBTRM):"@",1:ALPBTRM)
+"RTN","ALPBGEN1",54,0)
+ . I $G(DR)]"" D ^DIE K DIC,DA,DR S DIK=DIE,DA=ALPBDA
+"RTN","ALPBGEN1",55,0)
+ . D IX1^DIK
+"RTN","ALPBGEN1",56,0)
+ . ; Direct set used for the ACCESS and VERIFY CODE fields because they may contain semi-colon (;), which affects the DIE call
+"RTN","ALPBGEN1",57,0)
+ . I $D(^VA(200,ALPBDA,0)) D
+"RTN","ALPBGEN1",58,0)
+ . . S $P(^VA(200,ALPBDA,0),"^",3)=ALPBAC
+"RTN","ALPBGEN1",59,0)
+ . . S $P(^VA(200,ALPBDA,.1),"^",2)=$S($G(ALPBDIS)!$G(ALPBTRM):"",1:ALPBVC)
+"RTN","ALPBGEN1",60,0)
+ . . S $P(^VA(200,ALPBDA,.1),"^",1)=$H
+"RTN","ALPBGEN1",61,0)
+ K ALPBDA,HL,ALPBDIS,ALPBI,ALBPJ,ALPBX,ALPBAC,ACLPVC,ALPBSSN,ALERR,ALPBNAM,ALPBTRM
+"RTN","ALPBGEN1",62,0)
+ Q
+"RTN","ALPBGEN1",63,0)
+UNESC(ST,PR) ;Unescape string from message
+"RTN","ALPBGEN1",64,0)
+ ;ST=String to translate
+"RTN","ALPBGEN1",65,0)
+ ;PR=Event Protocol to set up HL array variables (optional)
+"RTN","ALPBGEN1",66,0)
+ ;First, do the escape character
+"RTN","ALPBGEN1",67,0)
+ I $G(ST)="" Q ""
+"RTN","ALPBGEN1",68,0)
+ S PR=$G(PR) I PR]"" D INIT^HLFNC2(PR,.HL)
+"RTN","ALPBGEN1",69,0)
+ I '$D(HL) D
+"RTN","ALPBGEN1",70,0)
+ . S HL("FS")="^"
+"RTN","ALPBGEN1",71,0)
+ . S HL("ECH")="~|\&"
+"RTN","ALPBGEN1",72,0)
+ S FS=$G(HL("FS")) I FS="" Q "" ;Field separator
+"RTN","ALPBGEN1",73,0)
+ S EC=$G(HL("ECH")) I EC="" Q ""  ;Encoding Charaters
+"RTN","ALPBGEN1",74,0)
+ S CS=$E(EC) ;Component separator
+"RTN","ALPBGEN1",75,0)
+ S RS=$E(EC,2) ;Repitition separator
+"RTN","ALPBGEN1",76,0)
+ S ESC=$E(EC,3) ;Escape character
+"RTN","ALPBGEN1",77,0)
+ S SS=$E(EC,4) ;Subcomponent separator
+"RTN","ALPBGEN1",78,0)
+ S EEC=ESC_"E"_ESC ;escaped escape character
+"RTN","ALPBGEN1",79,0)
+ S EFS=ESC_"F"_ESC ;escaped field sep
+"RTN","ALPBGEN1",80,0)
+ S ECS=ESC_"S"_ESC ;escaped component sep
+"RTN","ALPBGEN1",81,0)
+ S ERS=ESC_"R"_ESC ; escaped repitition sep
+"RTN","ALPBGEN1",82,0)
+ S ESS=ESC_"T"_ESC ;escaped subcomponent separator
+"RTN","ALPBGEN1",83,0)
+ K I,J,K,L,X F  S X=$F(ST,EEC) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K($G(I)+1)=ST Q:'X
+"RTN","ALPBGEN1",84,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[EEC K(I)=$P(K(I),EEC)_ESC S L=$G(L)_K(I)
+"RTN","ALPBGEN1",85,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN1",86,0)
+ ;
+"RTN","ALPBGEN1",87,0)
+ K I,J,K,L,X F  S X=$F(ST,EFS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K($G(I)+1)=ST Q:'X
+"RTN","ALPBGEN1",88,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[EFS K(I)=$P(K(I),EFS)_FS S L=$G(L)_K(I)
+"RTN","ALPBGEN1",89,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN1",90,0)
+ ;
+"RTN","ALPBGEN1",91,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ECS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN1",92,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ECS K(I)=$P(K(I),ECS)_CS S L=$G(L)_K(I)
+"RTN","ALPBGEN1",93,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN1",94,0)
+ ;
+"RTN","ALPBGEN1",95,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ERS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN1",96,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ERS K(I)=$P(K(I),ERS)_RS S L=$G(L)_K(I)
+"RTN","ALPBGEN1",97,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN1",98,0)
+ ;
+"RTN","ALPBGEN1",99,0)
+ K I,J,K,L,X S I=0 F  S X=$F(ST,ESS) S:X I=$G(I)+1,K(I)=$E(ST,1,X-1),ST=$E(ST,X,999) S:'X K(I+1)=ST Q:'X
+"RTN","ALPBGEN1",100,0)
+ S I=0 F  S I=$O(K(I)) Q:I<1  S:K(I)[ESS K(I)=$P(K(I),ESS)_SS S L=$G(L)_K(I)
+"RTN","ALPBGEN1",101,0)
+ I $G(L)]"" S ST=L
+"RTN","ALPBGEN1",102,0)
+ K I,J,K,L,X
+"RTN","ALPBGEN1",103,0)
+ Q ST
+"RTN","ALPBGEN1",104,0)
+PERR ;PROCESSING ERRORS
+"RTN","ALPBGEN1",105,0)
+ H 1 S DATE=$$NOW^XLFDT M ^TMP("BCBU",$J,$S($G(ALPBSSN)'="":ALPBSSN,1:0),DATE)=ALERR
+"RTN","ALPBGEN1",106,0)
+ K ALERR
+"RTN","ALPBGEN1",107,0)
+ Q
+"RTN","ALPBGEN2")
+0^3^B4591477
+"RTN","ALPBGEN2",1,0)
+ALPBGEN2 ;SFVAMC/JC - Init New Person Data on Workstations ;05/12/2003  07:40
+"RTN","ALPBGEN2",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,102**;Mar 2004;Build 14
+"RTN","ALPBGEN2",3,0)
+ ;
+"RTN","ALPBGEN2",4,0)
+ ; Reference/IA
+"RTN","ALPBGEN2",5,0)
+ ; DEQUE^XUSERP/4511
+"RTN","ALPBGEN2",6,0)
+ ; 
+"RTN","ALPBGEN2",7,0)
+INIT ;Initial Load
+"RTN","ALPBGEN2",8,0)
+ N DIR,DTOUT,DUOUT,X,Y,ZTDESC,ZTIO,ZTRTN,ZTSAVE,ZTSK
+"RTN","ALPBGEN2",9,0)
+ ;Populate workstations with Vista New Person data
+"RTN","ALPBGEN2",10,0)
+ W !,"This option searches for users that hold the option, 'PSB GUI CONTEXT - USER'"
+"RTN","ALPBGEN2",11,0)
+ W !,"and if they are active users, transmits the information to your BCMA Backup Workstations."
+"RTN","ALPBGEN2",12,0)
+ W !,"NOTE that you must have completed the step of assigning workstations to either a"
+"RTN","ALPBGEN2",13,0)
+ W !,"single default group or by division."
+"RTN","ALPBGEN2",14,0)
+ W !!,"Do you wish to continue?" S DIR(0)="YA",DIR("B")="YES" D ^DIR
+"RTN","ALPBGEN2",15,0)
+ Q:Y<1!($D(DTOUT))!($D(DUOUT))
+"RTN","ALPBGEN2",16,0)
+ W !!,"Do you wish to queue this init?" S DIR(0)="YA",DIR("B")="YES" D ^DIR
+"RTN","ALPBGEN2",17,0)
+ Q:($D(DTOUT))!($D(DUOUT))
+"RTN","ALPBGEN2",18,0)
+ I Y D  Q
+"RTN","ALPBGEN2",19,0)
+ . S ZTRTN="Q^ALPBGEN2",ZTDESC="BCBU New Person Init",ZTSAVE("*")="",ZTIO=""
+"RTN","ALPBGEN2",20,0)
+ . D ^%ZTLOAD I $D(ZTSK) W !,"TASK #: ",ZTSK
+"RTN","ALPBGEN2",21,0)
+Q ;
+"RTN","ALPBGEN2",22,0)
+ N ALPBI,ALPBJ,ALPBK
+"RTN","ALPBGEN2",23,0)
+ S DTS=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBGEN2",24,0)
+ S (ALPBK)=0,ALPBJ="" F  S ALPBJ=$O(^VA(200,ALPBJ)) Q:ALPBJ=""  D
+"RTN","ALPBGEN2",25,0)
+ . Q:+ALPBJ<1
+"RTN","ALPBGEN2",26,0)
+ . I $$ISBCMA(ALPBJ)>0 D
+"RTN","ALPBGEN2",27,0)
+ . . I '$D(ZTSK) W !,ALPBJ_" "_$P(^VA(200,ALPBJ,0),U)
+"RTN","ALPBGEN2",28,0)
+ . . D DEQUE^XUSERP(ALPBJ,1)
+"RTN","ALPBGEN2",29,0)
+ . . K HLA,HL
+"RTN","ALPBGEN2",30,0)
+ . . S ALPBK=$G(ALPBK)+1
+"RTN","ALPBGEN2",31,0)
+ K XQA,XQAMSG
+"RTN","ALPBGEN2",32,0)
+ S DTE=$$FMTE^XLFDT($$NOW^XLFDT)
+"RTN","ALPBGEN2",33,0)
+ S XQA(DUZ)=""
+"RTN","ALPBGEN2",34,0)
+ S XQAMSG="BCBU INIT Start:"_DTS_" Finish:"_DTE_". "_ALPBK_" users sent."
+"RTN","ALPBGEN2",35,0)
+ D SETUP^XQALERT
+"RTN","ALPBGEN2",36,0)
+ K DTS,DTE,ALPBK
+"RTN","ALPBGEN2",37,0)
+ Q
+"RTN","ALPBGEN2",38,0)
+ISBCMA(USER) ;Does this person have BCMA access?
+"RTN","ALPBGEN2",39,0)
+ ;Returns 0 if no such user
+"RTN","ALPBGEN2",40,0)
+ ;user terminated or no access code
+"RTN","ALPBGEN2",41,0)
+ ;no option in file
+"RTN","ALPBGEN2",42,0)
+ ;no access due to locks
+"RTN","ALPBGEN2",43,0)
+ ;Returns 1 if user has the PSB GUI CONTEXT - USER option
+"RTN","ALPBGEN2",44,0)
+ N OPT
+"RTN","ALPBGEN2",45,0)
+ S DIC="^DIC(19,",DIC(0)="MX",X="PSB GUI CONTEXT - USER"
+"RTN","ALPBGEN2",46,0)
+ D ^DIC K DIC,DA,DR
+"RTN","ALPBGEN2",47,0)
+ I +Y<1 Q 0
+"RTN","ALPBGEN2",48,0)
+ S OPT=+Y
+"RTN","ALPBGEN2",49,0)
+ Q $$ACCESS^XQCHK(USER,OPT)
+"RTN","ALPBINP")
+0^5^B97531509
+"RTN","ALPBINP",1,0)
+ALPBINP ;OIFO-DALLAS/SED/KC/MW  BCMA - BCBU INPT TO HL7 ;07/06/16 7:06am
+"RTN","ALPBINP",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,37,73,87,102**;May 2007;Build 14
+"RTN","ALPBINP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBINP",4,0)
+ ;This routine will intercept the HL7 message that it sent from Pharmacy
+"RTN","ALPBINP",5,0)
+ ;to CPRS to update order information. The message is then parsed and 
+"RTN","ALPBINP",6,0)
+ ;repackage so it can be sent to the BCBU workstation.
+"RTN","ALPBINP",7,0)
+ ;
+"RTN","ALPBINP",8,0)
+ ; Reference/IA
+"RTN","ALPBINP",9,0)
+ ; EN^PSJBCBU/3876
+"RTN","ALPBINP",10,0)
+ ; $$EN^VAFHLPID/263
+"RTN","ALPBINP",11,0)
+ ; $$EN^VAFHAPV1/4512
+"RTN","ALPBINP",12,0)
+ ; EN1^GMRADPT/10099
+"RTN","ALPBINP",13,0)
+ ; EN^PSJBCMA1/2829
+"RTN","ALPBINP",14,0)
+ ;
+"RTN","ALPBINP",15,0)
+ ;*87 - add ability to send two HL7 msgs for a Remove/Give scenario.  
+"RTN","ALPBINP",16,0)
+ ;      Sends the associated Give first then the Remove Medlog trans.
+"RTN","ALPBINP",17,0)
+ ;
+"RTN","ALPBINP",18,0)
+IPH(MSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBINP",19,0)
+ N VAIN,ALPMSG
+"RTN","ALPBINP",20,0)
+ S ALPMSG=$S($L($G(MSG)):MSG,1:"MSG")
+"RTN","ALPBINP",21,0)
+ I '$O(@ALPMSG@(0)) Q "0^MSG^Missing Message Array"
+"RTN","ALPBINP",22,0)
+ S MSH=0
+"RTN","ALPBINP",23,0)
+ F  S MSH=$O(@ALPMSG@(MSH)) Q:MSH'>0  Q:$E(@ALPMSG@(MSH),1,3)="MSH"
+"RTN","ALPBINP",24,0)
+ I +MSH'>0 Q "0^MSG^Missing MSH Segment Bad Message"
+"RTN","ALPBINP",25,0)
+ S MSFS=$E(@ALPMSG@(MSH),4,4)
+"RTN","ALPBINP",26,0)
+ S MSCS=$E(@ALPMSG@(MSH),5,5)
+"RTN","ALPBINP",27,0)
+ S MSCH=$E(@ALPMSG@(MSH),6,6)
+"RTN","ALPBINP",28,0)
+ S MSCTR=$E(@ALPMSG@(MSH),4,8)
+"RTN","ALPBINP",29,0)
+ ;The message is confirmed to be a Pharmacy message
+"RTN","ALPBINP",30,0)
+ I $P(@ALPMSG@(MSH),MSFS,3)'="PHARMACY" Q "1^^Not a Pharmacy Message"
+"RTN","ALPBINP",31,0)
+ ;A PID and PV1 segment is required for this message
+"RTN","ALPBINP",32,0)
+ S PID=0
+"RTN","ALPBINP",33,0)
+ F  S PID=$O(@ALPMSG@(PID)) Q:PID'>0  Q:$E(@ALPMSG@(PID),1,3)="PID"
+"RTN","ALPBINP",34,0)
+ I +PID'>0 Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",35,0)
+ ;Also the patient must have an inpatient status
+"RTN","ALPBINP",36,0)
+ S PV1=0
+"RTN","ALPBINP",37,0)
+ F  S PV1=$O(@ALPMSG@(PV1)) Q:PV1'>0  Q:$E(@ALPMSG@(PV1),1,3)="PV1"
+"RTN","ALPBINP",38,0)
+ I +PV1'>0 Q "0^MSG^Missing PV1 Segment Bad Message"
+"RTN","ALPBINP",39,0)
+ I $P(@ALPMSG@(PV1),MSFS,3)'="I" Q "1^^Not an Inpatient Pharmacy Message"
+"RTN","ALPBINP",40,0)
+ S ORC=0
+"RTN","ALPBINP",41,0)
+ F  S ORC=$O(@ALPMSG@(ORC)) Q:ORC'>0  Q:$E(@ALPMSG@(ORC),1,3)="ORC"
+"RTN","ALPBINP",42,0)
+ I +ORC'>0 Q "0^MSG^Missing ORC Segment Bad Message"
+"RTN","ALPBINP",43,0)
+ ;RE-BUILDING THE MESSAGE FOR BCBU
+"RTN","ALPBINP",44,0)
+ S ALPDFN=$P(@ALPMSG@(PID),MSFS,4)
+"RTN","ALPBINP",45,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",46,0)
+ S ALPORD=$P($P(@ALPMSG@(ORC),MSFS,4),MSCS,1)
+"RTN","ALPBINP",47,0)
+ I ALPORD="" Q "0^MSG^Invalid or Missing Order Number - ORC"
+"RTN","ALPBINP",48,0)
+ K ALPB
+"RTN","ALPBINP",49,0)
+ D EN^PSJBCBU(ALPDFN,ALPORD,.ALPB)
+"RTN","ALPBINP",50,0)
+SEED ;Entry point for ^ALPBIND
+"RTN","ALPBINP",51,0)
+ N VAIN
+"RTN","ALPBINP",52,0)
+ D INIT
+"RTN","ALPBINP",53,0)
+ S SUB=0 F  S SUB=$O(ALPB(SUB)) Q:'SUB  D
+"RTN","ALPBINP",54,0)
+ . ;convert and move the message to the HLA array for transport
+"RTN","ALPBINP",55,0)
+ . S HLA("HLS",SUB)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB))
+"RTN","ALPBINP",56,0)
+ . ;Now check for continuations 
+"RTN","ALPBINP",57,0)
+ . S SUB1=0
+"RTN","ALPBINP",58,0)
+ . F  S SUB1=$O(ALPB(SUB,SUB1)) Q:'SUB1  D
+"RTN","ALPBINP",59,0)
+ . . S HLA("HLS",SUB,SUB1)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB,SUB1))
+"RTN","ALPBINP",60,0)
+ . I $E(HLA("HLS",SUB),1,3)="RXE" S RXE=SUB
+"RTN","ALPBINP",61,0)
+ . I $E(HLA("HLS",SUB),1,3)="PID" S PID=SUB
+"RTN","ALPBINP",62,0)
+ . I $E(HLA("HLS",SUB),1,3)="PV1" S PV1=SUB
+"RTN","ALPBINP",63,0)
+ K HLA("HLS",MSH)
+"RTN","ALPBINP",64,0)
+ I '$D(HLA("HLS",PID)) Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",65,0)
+ S ALPDFN=$P($P(HLA("HLS",PID),HLFS,4),HLCS,1)
+"RTN","ALPBINP",66,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",67,0)
+ S HLA("HLS",PID)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",68,0)
+ ;Fix RXE segement for Administration Type
+"RTN","ALPBINP",69,0)
+ D RXE
+"RTN","ALPBINP",70,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",71,0)
+ D PDIV
+"RTN","ALPBINP",72,0)
+ ;Override Ward Division with Clinic Division if present           *87
+"RTN","ALPBINP",73,0)
+ N ALPCLDIV
+"RTN","ALPBINP",74,0)
+ D:$G(ALPORD)
+"RTN","ALPBINP",75,0)
+ . S ALPCLDIV=$$CDIVOR(ALPDFN,ALPORD)  ;If Clin Ord, then returns DIV
+"RTN","ALPBINP",76,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",77,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",78,0)
+ ;
+"RTN","ALPBINP",79,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",80,0)
+ I '$D(HLL("LINKS")) Q "0^HL7^Missing HLL Links Array Division # "_ALPDIV
+"RTN","ALPBINP",81,0)
+ ;SET NEW PV1
+"RTN","ALPBINP",82,0)
+ D NOW^%DTC
+"RTN","ALPBINP",83,0)
+ S STRING=$$EN^VAFHAPV1(ALPDFN,%,"2,3,7,18")
+"RTN","ALPBINP",84,0)
+ S HLA("HLS",PV1)=STRING
+"RTN","ALPBINP",85,0)
+ I +ORC>0 D
+"RTN","ALPBINP",86,0)
+ . S ALPST=$$STAT^ALPBUTL1($P(HLA("HLS",ORC),HLFS,6))
+"RTN","ALPBINP",87,0)
+ . Q:ALPST=""
+"RTN","ALPBINP",88,0)
+ . S $P(HLA("HLS",ORC),HLFS,6)=$P(HLA("HLS",ORC),HLFS,6)_HLCS_ALPST
+"RTN","ALPBINP",89,0)
+ D AL1
+"RTN","ALPBINP",90,0)
+ ;Capture message to review for testing before sending
+"RTN","ALPBINP",91,0)
+ D SEND
+"RTN","ALPBINP",92,0)
+EXIT ;EXIT and kill
+"RTN","ALPBINP",93,0)
+ K HLA,SUB,SUB1,STRING,ALPLOC,MSCH,MSCS,MSCTR
+"RTN","ALPBINP",94,0)
+ K MSH,ORC,PID,PV1,RXE,RXR,ALPB,ALPBY,ALPBYN,ALPC,ALPDATA,ALPDFN
+"RTN","ALPBINP",95,0)
+ K ALPDT,ALPI,ALPII,ALPIV,ALPOPTS,ALPOR,ALPORD,ALPST
+"RTN","ALPBINP",96,0)
+ K ALPSTN,ALPSYM,EVENT,GMRA,GMRAL
+"RTN","ALPBINP",97,0)
+ Q ALPRSLT
+"RTN","ALPBINP",98,0)
+INI() ;INTIAL SET UP ENTRY
+"RTN","ALPBINP",99,0)
+ G SEED
+"RTN","ALPBINP",100,0)
+INIT ;CALL HL7 TO INITIALIZE MESSAGE VARIABLES
+"RTN","ALPBINP",101,0)
+ ;SET UP ENVIRONMENT FOR MESSAGE
+"RTN","ALPBINP",102,0)
+ K HL,HLA,HLECH,HLQ,ALPRSLT,ALPOPTS
+"RTN","ALPBINP",103,0)
+ S EVENT="PSB BCBU ORM SEND"
+"RTN","ALPBINP",104,0)
+ D INIT^HLFNC2(EVENT,.HL,1)
+"RTN","ALPBINP",105,0)
+ S HLCS=$E(HL("ECH")),HLCTR=HLFS_HL("ECH")
+"RTN","ALPBINP",106,0)
+ Q
+"RTN","ALPBINP",107,0)
+SEND ;CALL HL7 TO TRANSMIT SINGLE MESSAGE
+"RTN","ALPBINP",108,0)
+ K ALPRSLT,ALPOPTS
+"RTN","ALPBINP",109,0)
+ D GENERATE^HLMA(EVENT,"LM",1,.ALPRSLT,"",.ALPOPTS)
+"RTN","ALPBINP",110,0)
+ Q
+"RTN","ALPBINP",111,0)
+AL1 ;ALLERGY SEGMENT BUILD
+"RTN","ALPBINP",112,0)
+ ;The will build the ALP segment with the curent allergies
+"RTN","ALPBINP",113,0)
+ ;for the patient to be added to the message
+"RTN","ALPBINP",114,0)
+ N DFN
+"RTN","ALPBINP",115,0)
+ Q:+ALPDFN'>0
+"RTN","ALPBINP",116,0)
+ K GMRAL
+"RTN","ALPBINP",117,0)
+ S DFN=ALPDFN
+"RTN","ALPBINP",118,0)
+ S GMRA="0^0^111"  ;DEFINES WHAT ALLERGIES TO RETURN
+"RTN","ALPBINP",119,0)
+ D EN1^GMRADPT
+"RTN","ALPBINP",120,0)
+ Q:'$D(GMRAL)
+"RTN","ALPBINP",121,0)
+ S ALPI=0,ALPC=1,ALPSYM=""
+"RTN","ALPBINP",122,0)
+ F  S ALPI=$O(GMRAL(ALPI)) Q:+ALPI'>0  D
+"RTN","ALPBINP",123,0)
+ . S ALPADR=""
+"RTN","ALPBINP",124,0)
+ . I $P($P(GMRAL(ALPI),U,8),";",2)="P" S ALPADR="**ADR** "
+"RTN","ALPBINP",125,0)
+ . S ALPDATA="AL1"_HLFS_ALPC_HLFS_$P(GMRAL(ALPI),U,7)
+"RTN","ALPBINP",126,0)
+ . S ALPDATA=ALPDATA_HLFS_ALPI_HLCS_ALPADR_$E($P(GMRAL(ALPI),U,2),1,25)_HLCS_"VA120.8"
+"RTN","ALPBINP",127,0)
+ . S HLA("HLS",$O(HLA("HLS",9999999),-1)+1)=ALPDATA
+"RTN","ALPBINP",128,0)
+ . S ALPC=ALPC+1
+"RTN","ALPBINP",129,0)
+ K GMRAL
+"RTN","ALPBINP",130,0)
+ Q
+"RTN","ALPBINP",131,0)
+RXE ;
+"RTN","ALPBINP",132,0)
+ Q:+$G(RXE)'>0
+"RTN","ALPBINP",133,0)
+ K ^TMP("PSJ1",$J)
+"RTN","ALPBINP",134,0)
+ Q:'$D(HLA("HLS",RXE))
+"RTN","ALPBINP",135,0)
+ S DATA=HLA("HLS",RXE)
+"RTN","ALPBINP",136,0)
+ D EN^PSJBCMA1(ALPDFN,ALPORD,1)
+"RTN","ALPBINP",137,0)
+ S TYP=$P($G(^TMP("PSJ1",$J,4)),U,2)
+"RTN","ALPBINP",138,0)
+ Q:TYP="CONTINUOUS"
+"RTN","ALPBINP",139,0)
+ Q:TYP="FILL ON REQUEST"
+"RTN","ALPBINP",140,0)
+ S ALP1=$P(DATA,HLFS,2),ALP2=$P(ALP1,HLCS,2)
+"RTN","ALPBINP",141,0)
+ I ALP1[TYP Q
+"RTN","ALPBINP",142,0)
+ I ALP2[TYP Q
+"RTN","ALPBINP",143,0)
+ S $P(ALP2,"&",1)=$P(ALP2,"&",1)_" "_TYP
+"RTN","ALPBINP",144,0)
+ S $P(ALP1,HLCS,2)=ALP2,$P(DATA,HLFS,2)=ALP1
+"RTN","ALPBINP",145,0)
+ S HLA("HLS",RXE)=DATA
+"RTN","ALPBINP",146,0)
+ K TYP,ALP1,ALP2,^TMP("PSJ1",$J)
+"RTN","ALPBINP",147,0)
+ Q
+"RTN","ALPBINP",148,0)
+PDIV ;PATIENT DIVISION
+"RTN","ALPBINP",149,0)
+ ;Check ALPBMDT Variable
+"RTN","ALPBINP",150,0)
+ S:+$G(ALPBMDT)'>0 ALPBMDT=0
+"RTN","ALPBINP",151,0)
+ S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,ALPBMDT)
+"RTN","ALPBINP",152,0)
+ ;Screen Dom
+"RTN","ALPBINP",153,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q
+"RTN","ALPBINP",154,0)
+ ;Now do I send the Message or not Based of Division
+"RTN","ALPBINP",155,0)
+ I $D(ALPHLL("LINKS")) M HLL("LINKS")=ALPHLL("LINKS")
+"RTN","ALPBINP",156,0)
+ I '$D(HLL("LINKS")) D GET^ALPBPARM(.HLL,ALPDIV)
+"RTN","ALPBINP",157,0)
+ Q
+"RTN","ALPBINP",158,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBINP",159,0)
+ N VAIN
+"RTN","ALPBINP",160,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBINP",161,0)
+ I '$D(ALPML) Q "0^ALPML^No Med-Log Number"
+"RTN","ALPBINP",162,0)
+ I '$D(^PSB(53.79,ALPML,0)) Q "0^"_ALPML_"^Med - Log Number Invalid"
+"RTN","ALPBINP",163,0)
+ ;First get the required HL7 Variables
+"RTN","ALPBINP",164,0)
+ D INIT
+"RTN","ALPBINP",165,0)
+ ;Need to build the PID, PV1 and ORC segments
+"RTN","ALPBINP",166,0)
+ S ALPDFN=+$P($G(^PSB(53.79,ALPML,0)),U,1)
+"RTN","ALPBINP",167,0)
+ I +ALPDFN'>0 Q "0^"_ALPML_"^Invalid or Missing Patient - Med-Log"
+"RTN","ALPBINP",168,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",169,0)
+ D PDIV
+"RTN","ALPBINP",170,0)
+ I ALPDIV="",$G(ALPML) S ALPDIV=$$CDIV(ALPML)
+"RTN","ALPBINP",171,0)
+ ;Override Ward Division with Clinic Division if present *87
+"RTN","ALPBINP",172,0)
+ N ALPCLDIV
+"RTN","ALPBINP",173,0)
+ D:$G(ALPML)
+"RTN","ALPBINP",174,0)
+ . S ALPCLDIV=$$CDIV(ALPML)   ;If Clinic, then will return a DIV
+"RTN","ALPBINP",175,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",176,0)
+ ;Quit if a specific Div was selected & Not = user selection     *87
+"RTN","ALPBINP",177,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",178,0)
+ ;
+"RTN","ALPBINP",179,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",180,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPML_"^Missing HLL Links Array Med-Log"
+"RTN","ALPBINP",181,0)
+ S ALPST=$P($G(^PSB(53.79,ALPML,0)),U,9)
+"RTN","ALPBINP",182,0)
+ S ALPBY=$P($G(^PSB(53.79,ALPML,0)),U,7)
+"RTN","ALPBINP",183,0)
+ S ALPDT=$P($G(^PSB(53.79,ALPML,0)),U,6)
+"RTN","ALPBINP",184,0)
+ S ALPOR=$P($G(^PSB(53.79,ALPML,.1)),U,1)
+"RTN","ALPBINP",185,0)
+ S ALPBYN=$P($G(^VA(200,ALPBY,0)),U,1)
+"RTN","ALPBINP",186,0)
+ S ALPSTN=$S($D(ALPST):$$EXTERNAL^DILFD(53.79,".09",,ALPST),1:"Non")
+"RTN","ALPBINP",187,0)
+ I '$D(ALPOR) Q "0^"_ALPML_"^Invalid or Missing Pharmacy Order Number Med-Log"
+"RTN","ALPBINP",188,0)
+ S PID=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",189,0)
+ I '$D(PID) Q "0^"_ALPML_"^Invalid or Missing Patient - PID Med-Log"
+"RTN","ALPBINP",190,0)
+ S PV1=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",191,0)
+ I '$D(PV1) Q "0^"_ALPML_"^Invalid or Missing Patient Location - PV1 Med-Log"
+"RTN","ALPBINP",192,0)
+ S HLA("HLS",1)=PID
+"RTN","ALPBINP",193,0)
+ S HLA("HLS",2)=PV1
+"RTN","ALPBINP",194,0)
+ ;BUILD ORC SEGMENT
+"RTN","ALPBINP",195,0)
+ S ORC="ORC"_HLFS_"ML"_HLFS_ALPML_HLCS_"ML"_HLFS_ALPOR_HLCS_"PS"_HLFS
+"RTN","ALPBINP",196,0)
+ S ORC=ORC_HLFS_ALPST_HLCS_ALPSTN_HLFS_HLFS_HLFS_HLFS
+"RTN","ALPBINP",197,0)
+ S ORC=ORC_$$HLDATE^HLFNC(ALPDT,"TS")_HLFS_ALPBY_HLCS_ALPBYN
+"RTN","ALPBINP",198,0)
+ S HLA("HLS",3)=ORC
+"RTN","ALPBINP",199,0)
+ ;The Message is ready to send                                     *87
+"RTN","ALPBINP",200,0)
+ ; If this Medlog entry is Removed, then save HLA array and find the
+"RTN","ALPBINP",201,0)
+ ; associated Give and alter the ORC seg in the HLA array and send the
+"RTN","ALPBINP",202,0)
+ ; Removed 2nd.
+"RTN","ALPBINP",203,0)
+ I $P(HLA("HLS",3),HLFS,6)["REMOVED" D
+"RTN","ALPBINP",204,0)
+ . N SAVHLA,SAVHLL
+"RTN","ALPBINP",205,0)
+ . M SAVHLA=HLA,SAVHLL=HLL
+"RTN","ALPBINP",206,0)
+ . N GIVSTR,GIVDT,GIVBY,GIVBY,GIVBYN
+"RTN","ALPBINP",207,0)
+ . S GIVSTR=$$FINDGIVE(ALPML)
+"RTN","ALPBINP",208,0)
+ . S GIVDT=$P(GIVSTR,U,1),GIVBY=$P(GIVSTR,U,5)
+"RTN","ALPBINP",209,0)
+ . S $P(HLA("HLS",3),HLFS,6)="G"_HLCS_"GIVEN"
+"RTN","ALPBINP",210,0)
+ . S $P(HLA("HLS",3),HLFS,10)=$$HLDATE^HLFNC(GIVDT,"TS")
+"RTN","ALPBINP",211,0)
+ . S GIVBYN=$$GET1^DIQ(200,GIVBY,"NAME")
+"RTN","ALPBINP",212,0)
+ . S $P(HLA("HLS",3),HLFS,11)=GIVBY_HLCS_GIVBYN
+"RTN","ALPBINP",213,0)
+ . D SEND        ;send assoc Medlog Give per a Removed trans
+"RTN","ALPBINP",214,0)
+ . D INIT
+"RTN","ALPBINP",215,0)
+ . M HLA=SAVHLA,HLL=SAVHLL
+"RTN","ALPBINP",216,0)
+ ;
+"RTN","ALPBINP",217,0)
+ D SEND     ;send current Medlog trans
+"RTN","ALPBINP",218,0)
+ Q ALPRSLT
+"RTN","ALPBINP",219,0)
+ ;
+"RTN","ALPBINP",220,0)
+ADMQ ;Need to que a single patient init for admissions
+"RTN","ALPBINP",221,0)
+ S ALDFN=ALPDFN
+"RTN","ALPBINP",222,0)
+ S ZTDTH=$$NOW^XLFDT
+"RTN","ALPBINP",223,0)
+ S ZTRTN="PAT^ALPBIND("""")"                    ;pass null Div par *87
+"RTN","ALPBINP",224,0)
+ S ZTDESC="PSB - Initialize Single Patient on Admission Contingency Workstation"
+"RTN","ALPBINP",225,0)
+ S ZTIO="",ZTSAVE("ALDFN")=""
+"RTN","ALPBINP",226,0)
+ D ^%ZTLOAD
+"RTN","ALPBINP",227,0)
+ K ZTIO,ZTDESC,ZTRTN,ZTSK
+"RTN","ALPBINP",228,0)
+ Q
+"RTN","ALPBINP",229,0)
+PMOV(ALPDFN,ALPTYP,ALPTT,ALPBMDT) ;Entry Point to send patient movement
+"RTN","ALPBINP",230,0)
+ N VAIN
+"RTN","ALPBINP",231,0)
+ I +$G(ALPDFN)'>0 Q "0^^Missing Patient ID"
+"RTN","ALPBINP",232,0)
+ D INIT
+"RTN","ALPBINP",233,0)
+ ;Check Movement type. If not a discharge then don't pass date and time
+"RTN","ALPBINP",234,0)
+ S:$G(ALPTT)'="DISCHARGE" ALPBMDT=0
+"RTN","ALPBINP",235,0)
+ ;Get the Division that the patient is associated with
+"RTN","ALPBINP",236,0)
+ D PDIV
+"RTN","ALPBINP",237,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",238,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPDFN_"^Missing HLL Links Array Pat-Move / DFN: "_ALPDFN
+"RTN","ALPBINP",239,0)
+ S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",240,0)
+ S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",241,0)
+ S:$G(ALPTT)="DISCHARGE" $P(HLA("HLS",2),HLFS,37)=$G(ALPTYP)
+"RTN","ALPBINP",242,0)
+ D SEND
+"RTN","ALPBINP",243,0)
+ I ALPTYP=14!(ALPTYP=41) S ALPTT="ADMISSION" ;FOR RETURN FROM ASIH
+"RTN","ALPBINP",244,0)
+ I $G(ALPTT)="ADMISSION" D ADMQ
+"RTN","ALPBINP",245,0)
+ ;SEND A DISCHARGE TO DIV SENDING ASIH
+"RTN","ALPBINP",246,0)
+ I $G(ALPTYP)[13!($G(ALPTYP)[40) D
+"RTN","ALPBINP",247,0)
+ .D INIT
+"RTN","ALPBINP",248,0)
+ .S ALPWRD=$P($G(DGPMVI(5)),U,1) ;LAST WARD
+"RTN","ALPBINP",249,0)
+ .I +ALPWRD'>0 S ALPRSLT="0^^Screen - No Ward" Q  ;NO WARD
+"RTN","ALPBINP",250,0)
+ .S ALPBDIV=$P($G(^DIC(42,ALPWRD,0)),U,11)
+"RTN","ALPBINP",251,0)
+ .D GET^ALPBPARM(.HLL,ALPBDIV)
+"RTN","ALPBINP",252,0)
+ .S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",253,0)
+ .S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",254,0)
+ .S $P(HLA("HLS",2),HLFS,37)="ASIH"
+"RTN","ALPBINP",255,0)
+ .D SEND
+"RTN","ALPBINP",256,0)
+ Q ALPRSLT
+"RTN","ALPBINP",257,0)
+ ;
+"RTN","ALPBINP",258,0)
+CDIV(ML) ; Return DIVISION associated with input CLINIC
+"RTN","ALPBINP",259,0)
+ Q:'$G(ML) ""
+"RTN","ALPBINP",260,0)
+ N MLDATA,CLINICE,CLINICI,DIVE,DIVI S MLDATA=$G(^PSB(53.79,+ML,0))
+"RTN","ALPBINP",261,0)
+ S CLINICE=$P(MLDATA,"^",2),CLINICI=$O(^SC("B",CLINICE,0))
+"RTN","ALPBINP",262,0)
+ I 'CLINICI Q "" I '$D(^SC(CLINICI,0)) Q ""
+"RTN","ALPBINP",263,0)
+ S DIVI=$P($G(^SC(CLINICI,0)),"^",15),DIVE=$P($G(^DG(40.8,+DIVI,0)),"^")
+"RTN","ALPBINP",264,0)
+ D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",265,0)
+ Q $P(^SC(CLINICI,0),"^",15)
+"RTN","ALPBINP",266,0)
+ ;
+"RTN","ALPBINP",267,0)
+CDIVOR(DFN,ORDER) ; Return DIVISION associated with input ORDER
+"RTN","ALPBINP",268,0)
+ Q:'$G(ORDER) "" Q:'$G(DFN) ""
+"RTN","ALPBINP",269,0)
+ N CLINICI,DIVI,DIVE
+"RTN","ALPBINP",270,0)
+ S CLINICI=$S(ORDER["P":+$G(^PS(53.1,+ORDER,"DSS")),ORDER["U":+$G(^PS(55,DFN,5,+ORDER,8)),ORDER["V":+$G(^PS(55,DFN,"IV",+ORDER,"DSS")),1:"")
+"RTN","ALPBINP",271,0)
+ I 'CLINICI Q "" I '$D(^SC(CLINICI,0)) Q ""
+"RTN","ALPBINP",272,0)
+ S DIVI=$P($G(^SC(CLINICI,0)),"^",15),DIVE=$P($G(^DG(40.8,+DIVI,0)),"^")
+"RTN","ALPBINP",273,0)
+ D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",274,0)
+ Q $P(^SC(CLINICI,0),"^",15)
+"RTN","ALPBINP",275,0)
+ ;
+"RTN","ALPBINP",276,0)
+FINDGIVE(IEN) ;Finds the last Give date/time in the Audit log              *87
+"RTN","ALPBINP",277,0)
+ ;   When a Remove action occurs and saved to 53.79, the Give Action
+"RTN","ALPBINP",278,0)
+ ;   Status & Action Date/Time are overwritten. This Function will
+"RTN","ALPBINP",279,0)
+ ;   retrieve that Give info.
+"RTN","ALPBINP",280,0)
+ ;
+"RTN","ALPBINP",281,0)
+ ; Function returns - string formatted as the MAH report uses
+"RTN","ALPBINP",282,0)
+ ;  date/time ^ by initials ^ action code ^ ien of 53.79 file ^ by DUZ
+"RTN","ALPBINP",283,0)
+ ;
+"RTN","ALPBINP",284,0)
+ N DA,STR
+"RTN","ALPBINP",285,0)
+ S STR=""
+"RTN","ALPBINP",286,0)
+ F DA=99999:0 S DA=$O(^PSB(53.79,IEN,.9,DA),-1) Q:'DA  D  Q:$P(STR,U,4)
+"RTN","ALPBINP",287,0)
+ .D:^PSB(53.79,IEN,.9,DA,0)["ACTION STATUS Set to 'GIVEN'"
+"RTN","ALPBINP",288,0)
+ ..S $P(STR,U,1)=$P(^PSB(53.79,IEN,.9,DA,0),U)
+"RTN","ALPBINP",289,0)
+ ..S $P(STR,U,2)=$P(^PSB(53.79,IEN,.9,DA,0),"'",4)
+"RTN","ALPBINP",290,0)
+ ..S $P(STR,U,3)="G"
+"RTN","ALPBINP",291,0)
+ ..S $P(STR,U,4)=IEN
+"RTN","ALPBINP",292,0)
+ ..S $P(STR,U,5)=$P(^PSB(53.79,IEN,.9,DA,0),U,5)
+"RTN","ALPBINP",293,0)
+ Q STR
+"VER")
+8.0^22.2
+**END**
+**END**

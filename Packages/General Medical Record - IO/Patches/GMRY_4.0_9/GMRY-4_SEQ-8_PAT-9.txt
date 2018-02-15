@@ -1,0 +1,126 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/24/17 at 21:10
+=============================================================================
+Run Date: JAN 03, 2018                     Designation: GMRY*4*9
+Package : GMRY - GEN. MED. REC. - I/O         Priority: Mandatory
+Version : 4         SEQ #8                      Status: Released
+                  Compliance Date: FEB 03, 2018
+=============================================================================
+
+
+Subject: SERVICE POSITION ISSUE ON ITEMIZED SHIFT REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) VistA Intake/Output issue related to how the 
+ service position is listed on the 24 Hours Itemized Shift Report.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated CA-SDM ticket:
+ =========================
+  
+ I7154779FY16 - Incorrect Service Position on Itemized Shift Report 
+  
+ Blood Bank Review:
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Milwaukee, Wisconsin
+  
+ Ticket Overview:
+ ================
+  
+ I7154779FY16 - Incorrect Service Position on Itemized Shift Report
+  
+ Problem:
+ -------
+  
+ If a nurse has changed service positions (for example: from Licensed 
+ Practical Nurse to Registered Nurse), the former service position might
+ be listed on the Intake/Output 24 Hours Itemized Shift Report.  This issue
+ will occur when the previous service position for a nurse is filed at a
+ lower internal entry number (IEN) than the current service position's IEN
+ in the NURSE POSITION CONTROL (#211.8) file.
+  
+ Resolution: 
+ ----------
+  
+ Modify routines GMRYSE1 and GMRYSE3 to list the service position held by 
+ the nurse at the time the intake/output entry was logged for the patient.
+     
+ Routines: GMRYSE1 and GMRYSE3
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'GMRY*4.0*9'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Intake/Output;**[Patch List]**;Apr 25, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRYSE1
+    Before: B11629239   After: B15440992  **9**
+Routine Name: GMRYSE3
+    Before: B25518795   After: B24860032  **9**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2017
+Completed By:                             H Date Completed: JAN 03, 2018
+Released By :                               Date Released : JAN 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,153 @@
+$TXT Created by                  at CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 09/12/17 at 08:54
+=============================================================================
+Run Date: DEC 14, 2017                     Designation: OR*3*456
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #386                      Status: Released
+                  Compliance Date: JAN 14, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*456'
+
+Subject: FLAGGED ORDER SURROGATE NOTIFICATION ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the CPRS package:
+ The "FLAG ORDER FOR CLARIFICATION" notification/alert is
+ inappropriately being removed when a surrogate
+ selects the alert after surrogacy period ends but before the original 
+ recipient ordering provider has signed onto vista
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO #2529 (I10051814FY16)
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ I10051814FY16 - OERR - Notifications:
+  
+ Problem:
+ --------
+ When a surrogate tries to process "FLAG ORDER FOR CLARIFICATION" 
+ notification after the surrogacy period has ended but before the original
+ provider logs back in, the surrogate get a blank order view and the
+ notification is deleted even though it was not processed.
+  
+ Resolution:
+ -----------
+ The surrogate will now no longer get a blank order view and can process 
+ the notification as normal
+  
+ Routine ORWORR1 has been modified to no longer filter out the flagged 
+ order if the user has a notification that is associated with that order. 
+  
+  
+ Test Sites:
+ ----------
+ Puget Sound HCS
+ Salem - VA Medical Center
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No pre-install or post-install routines
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ # OR*3.0*456:
+ a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates.
+ b.      Compare Transport Global to Current System - This option will 
+ (allow you to view all changes that will be made when this patch        
+ is installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+ c.      Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+ 4.       From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//NO 
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//NO
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no post-installation instructions.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+  decision to back-out the patch.
+   
+  It is imperative that you have performed a backup of the routine 
+ included 
+  in this patch prior to installation.
+  It is imperative that you have performed a backup of the routine 
+ included 
+  in this patch prior to installation.
+  
+  The back-out plan is to restore the routine from the backup created.
+  
+  No data was modified by this patch installation and, therefore, no 
+  rollback strategy is required.
+  
+  To verify the back-out completed successfully, ensure the checksum 
+  matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWORR1
+    Before:  B7659282   After:  B9884468  **141,243,456**
+ 
+Routine list of preceding patches: 243
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 19, 2017
+Completed By:                               Date Completed: DEC 13, 2017
+Released By :                               Date Released : DEC 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

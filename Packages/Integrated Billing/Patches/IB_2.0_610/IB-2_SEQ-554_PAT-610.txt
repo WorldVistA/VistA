@@ -1,0 +1,205 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/11/17 at 09:24
+=============================================================================
+Run Date: JAN 19, 2018                     Designation: IB*2*610
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #554                      Status: Released
+                  Compliance Date: FEB 19, 2018
+=============================================================================
+
+
+Subject: PHARMACY ADMINISTRATIVE FEE UPDATE FOR CY2018
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the administrative charge based on different rate 
+ types with new dispensing fees for third party pharmacy prescription
+ claims with an effective date of January 1st, 2018.
+   
+   
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R16532421FY17 Pharmacy Administrative Fee for CY2018
+ 2. R16533051FY17 TRICARE RX Administrative Fee Update for CY2018
+   
+   
+ ASSOCIATED NSR's:
+ =================
+ N/A
+    
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Michael E. DeBakey VA Medical Center - Houston, Texas
+ Jack C. Montgomery VA Medical Center - Muskogee, Oklahoma  
+  
+  
+ OVERVIEW:
+ =========
+ 1. R16532421FY17 Pharmacy Administrative Fee for CY2018
+   
+ Problem:
+ --------
+ The Office of Community Care has requested an update to the administrative 
+ charge for third party pharmacy prescription with an effective date of 
+ January 1st, 2018. 
+   
+    Rate Type             Dispensing Fee
+    -------------------   --------------
+    HUMANITARIAN          16.64
+    INELIGIBLE            16.64
+    INTERAGENCY           16.64
+    NO FAULT INS.         16.64
+    REIMBURSABLE INS.     16.64
+    TORT FEASOR           16.64
+    WORKERS' COMP.        16.64
+  
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P610 inactivates rate schedules containing the RX 
+ COST charge set for rate types: Reimbursable Insurance, No Fault Insurance, 
+ Tort Feasor, Humanitarian, Ineligible, Interagency, and Workers' 
+ Compensation with an inactive date of December 31, 2017. It also updates
+ the adjustments for those rate types with the new dispensing fee ($16.64) 
+ effective January 1st, 2018 in the RATE  SCHEDULE (#363) file.
+  
+   
+ 2. R16533051FY17 TRICARE RX Administrative Fee Update for CY2018
+   
+ Problem:
+ --------
+ The Office of Community Care has requested an update of the pharmacy 
+ administrative fee for the Tricare and Tricare Reimbursement Insurance 
+ rate types with an effective date of January 1st, 2018.
+   
+    Rate Type             Dispensing Fee
+    -------------------   --------------
+    TRICARE REIMB. INS.   13.91
+    TRICARE               13.91
+  
+  
+ Resolution:
+ -----------
+ The post-init routine IB20P610 inactivates the rate schedules containing 
+ the RX COST charge set for the TRICARE and TRICARE REIMB. INS. rate types 
+ with an inactive date of December 31, 2017. It also adds the updated rate 
+ schedules with the dispensing fee ($13.91) effective January 1st, 2018 in 
+ the RATE SCHEDULE (#363) file.
+   
+ ******* 
+ Note : This patch will NOT update any Rate Schedules if any Rate Types are
+ currently set to INACTIVE.  Please verify with Facility Revenue Manager(s)
+ and local VistA support to ACTIVATE any Rate Types as needed.
+ *******
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+   
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   START UP KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]: 
+      
+              Edits and Distribution ...  
+              Utilities ... 
+              Installation ...
+      Select Kernel Installation & Distribution System Option: Installation 
+                                                                  ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution
+              Backup a Transport Global 
+     
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  (When prompted for the INSTALL NAME, enter IB*2.0*610)
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+    
+ 4.   Select Installation Option: Install Package(s)
+      ----------------------------------------------
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P610.
+   
+ 6.   Example of successful installation.
+      -----------------------------------
+      Note: if results show otherwise, please check the settings of the
+      rate schedules for the rate types in file (#363) or log a ticket 
+      with The Enterprise Service Desk for assistance.
+   
+ Patch IB*2.0*610 Post-Install starts...
+   
+   >>>Effect. JAN 01, 2018 of RX Rate Schedule Adjustment for the Rate Type:
+        HUMANITARIAN added
+        INELIGIBLE added
+        INTERAGENCY added
+        NO FAULT INS. added
+        REIMBURSABLE INS. added
+        TORT FEASOR added
+        WORKERS' COMP. added
+        TRICARE REIMB. INS. added
+        TRICARE added
+   
+      Total 9 entries added to the RATE SCHEDULE file (#363)
+   
+ Patch IB*2.0*610 Post-Install is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P610
+    Before:       n/a   After:  B7444938  **610**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2017
+Completed By:                               Date Completed: JAN 18, 2018
+Released By :                               Date Released : JAN 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

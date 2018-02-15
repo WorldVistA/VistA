@@ -1,0 +1,372 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 10/19/17 at 11:57
+=============================================================================
+Run Date: JAN 23, 2018                     Designation: XU*8*671
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #534                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+Associated patches: (v)HDI*1*18    <<= must be installed BEFORE `XU*8*671'
+                    (v)XU*8*677    <<= must be installed BEFORE `XU*8*671'
+
+Subject: PERSON CLASS FILE LOCKDOWN
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) Interagency Program Office (IPO)
+ and the Department of Defense (DoD) is tasked by its charter with
+ leading the Departments' efforts "to implement national health data
+ standards for interoperability and [be] responsible for establishing,
+ monitoring, and approving the clinical and technical standards profile
+ and processes to ensure a seamless [exchange] of health data." This task
+ of Native Domain standardization is aligned with achieving the goals
+ outlined in the 2014 National Defense Authorization Act (NDAA) requiring
+ that the Departments' "healthcare data [are] computable in real-time and
+ [comply] with existing national data standards" and that the "data [are]
+ standardized as national standards continue to evolve."
+  
+ This patch (XU*8.0*671) in conjunction with patches XU*8.0*677 and
+ HDI*1.0*18 moves the updating and deployment of the PERSON CLASS
+ file (#8932.1) from the Kernel team to the Standards & Terminology
+ Services (STS) team.
+ The PERSON CLASS file(#8932.1) will remain within the KERNEL name/
+ number space.
+  
+ *************************************************************************
+ * NOTE:                                                                 *
+ * When STS deploys an update to the PERSON CLASS file (#8932.1) a       *
+ * message is sent to the NTRT_NOTIFICATION-L listserv.                  *
+ *************************************************************************
+  
+ The following message will be sent in the Post install Routine XU671PO
+  
+ *************************************************************************
+ * NOTE: FOR MEMBERS OF THE PERSON CLASS UPDATE MAIL GROUP               *
+ *                                                                       *
+ * PLEASE NOTE: The Kernel Team will no longer be deploying the updates  *
+ * to the PERSON CLASS File (#8932.1). The deployment of the file has    *
+ * been transitioned to the Standards & Terminology Services Team (STS). *
+ *                                                                       *
+ * The Standards & Terminology Services Team (STS) will use an automated *
+ * e-mail delivery "listserv" to notify users of updates to the PERSON   *
+ * CLASS File (#8932.1).                                                 *
+ * All personnel that maintain associations between users and the Person *
+ * Class file MUST subscribe to the NTRT_NOTIFICATION-L listserv (       *
+ * detailed below) to receive communications about deployments of the    *
+ * PERSON CLASS File (#8932.1).                                          *
+ * (Note: STS will not use the Kernel Teams G.PERSON CLASS UPDATE mail  *
+ * group for updates.)                                                   *
+ *                                                                       *
+ * The responsible person will initially need to run the following       *
+ * options twice.                                                        *
+ * The options will need to be run whenever an update                    *
+ * deployment of the PERSON CLASS File (#8932.1) has been sent.          *
+ *                                                                       *
+ * Once when the patch has been installed and has received this          *
+ * notification. The second time when notified by the NTRT_NOTIFICATION-L*
+ * listserv that the PERSON CLASS File (#8932.1) has been deployed.      *
+ * The purpose of the first is to set the baseline of which users are    *
+ * associated to inactive Person Class entries and allows the facility   * 
+ * to associate those users to active Person Class entries.              *
+ * The second allows the facility to identify users who are associated   *
+ * to newly inactivated Person Class entries and associate them to active*
+ * Person Class entries.                                                 * 
+ *                                                                       *
+ *OPTIONS:                                                               *
+ * Use the 'List Inactive Person Class Users' [XU-INACTIVE PERSON CLASS  *
+ * USERS] option to list all users who currently have inactive person    *
+ * classes assigned.                                                     *
+ *                                                                       *
+ * Use the 'Person Class Edit' [XU-PERSON CLASS EDIT] option to assign   *
+ * an active Person Class to the users that are associated to inactive   *
+ * Person Classes.                                                       *
+ * Do NOT use FM Enter/Edit the edit a users person class.               *
+ *                                                                       *
+ * If you do not have access to either of these options, please follow   *
+ * your local facility's guidelines for requesting access to additional  *
+ * menu options.                                                         *
+ *                                                                       *
+ *                                                                       *
+ * When STS deploys an update to the PERSON CLASS file (#8932.1) a       *
+ * message is sent to the NTRT_NOTIFICATION-L listserv.                  *
+ *                                                                       *
+ *                                                                       *
+ * SUBSCRIBE TO THE LISTSERV                                             *
+ * The VA's listserv is an e-mail list and e-mail delivery solution to   *
+ * manage electronic newsletters, discussion groups, and direct e-mail.  *
+ *                                                                       *
+ * lISTSERV: NTRT_NOTIFICATION-L                                         *
+ * The personnel at the facility who are responsible for entering        *
+ * or editing 'Persons' associations to the PERSON CLASS file (#8932.1)  *
+ * shall subscribe to this list using the following web site:            *
+ *                                                                       *
+ * http://vaww.listserv.domain.ext/scripts/wa.exe.                           *
+ *                                                                       *
+ * The STS group does not own the List Serve application. The List Serve *
+ * is a VA service.                                                      *
+ * The responsible personnel will need to create an account using a      *
+ * username and password that does NOT synchronize with their VA network *
+ * account.                                                              *
+ *************************************************************************
+  
+ Patch Components:
+ -----------------
+ Routine
+ File
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ PERSON CLASS (#8932.1)  PROVIDER TYPE (.01)             Modified
+                         CLASSIFICATION (1)              Modified
+                         AREA OF SPECIALIZATION (2)      Modified
+                         VA CODE (5)                     Modified
+                         SPECIALTY CODE (8)              Modified
+                         REPLACED BY VHA STANDARD TERM
+                                        (99.97)          New
+                         MASTER ENTRY FOR VUID
+                                        (99.98)          New
+                         VUID           (99.99)          New
+                         EFFECTIVE DATE/TIME
+                                        (99.991;.01)     New
+                         STATUS         (99.991:.02)     New
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Pittsburgh Healthcare System, Station #646
+ Lebanon VAMC, v04, Station #595
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.
+ Documentation describing the new functionality introduced by this patch
+ are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:     domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title     File Name     FTP Mode
+ --------------------------------
+ XU_8_671 Deployment, Installation,
+ Back-Out, and Rollback Guide          XU_8_0_671_ig.pdf  Binary
+ Kernel Technical Manual               krn8_0tm.pdf       Binary
+ Assigning Person Class to Providers
+ User Guide Patch Supplement: 
+ XU*8.0*27, 377, 531, and 671          xu_8_0p671sp.pdf   Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that a Local Patch Backup is created that can
+ be re-installed in the event patch XU*8*671 must be backed out.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (XU_8_671_ig.pdf) for complete installation instructions.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ ******************************************************************
+ * NOTE:                                                          *
+ *                                                                *
+ * Prior to installing this patch (XU*8.0*671) the following      *
+ * report should be run and sent to the G.PERSON CLASS UPDATE     *
+ * group.                                                         *
+ *                                                                *
+ * To ensure that 'Persons' are not associated to inactive Person *
+ * Class entries Please use the 'List Inactive Person Class Users'*
+ * [XU-INACTIVE PERSON CLASS USERS] option to list all users      *
+ * who currently have inactive Person Classes assigned.           *
+ *                                                                *
+ * This needs to be done prior to the install of the patch so that*
+ * the personnel responsible will know which users are associated *
+ * to inactive person classes before the PERSON CLASS File        *
+ * (#8932.1) is updated.                                          *
+ ******************************************************************
+  
+ The back-out plan has pre-installation actions.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ The installation of this patch will add the VUID related fields and will
+ lock down the PERSON CLASS file (#8932.1).  Prior to the installation of
+ this patch it is recommended that the pre-installation instructions of
+ the back-out plan be performed.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (XU_8_671_ig.pdf) for complete installation instructions.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select
+        the Installation Menu.  From this menu, you may elect to use the
+        following options. When prompted for the INSTALL NAME enter the
+        patch # ex. XU*8.0*671):
+ a.     Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+ b.     Compare Transport Global to Current System - This option will
+        (allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.).
+ c.     Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+ 4.     From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' 
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' 
+  
+ 8.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post Installation Overview:
+ --------------------------
+ As part of the Post Install actions routine XU671PO will 'save' a data
+ image of THE PERSON CLASS File (#8932.1) for historical purposes into
+ ^XTMP("XU PATCH 671 SAVE OF FILE 8932-1" with an expiration date of 90 days
+ post install.
+   
+ Post-Installation Instructions:
+ -------------------------------
+  
+ In the event a site determines that this patch should be backed out,
+ the site should submit a CA SDM ticket with the NSD for assistance
+ with the procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (XU_8_671_ig.pdf) for complete installation instructions.
+  
+  
+ Please refer to the 'Assigning Person Class to Providers User Guide Patch
+ Supplement: XU*8.0*27, 377, 531, and 671'located at
+ https://www4.domain.ext/VDL/documents/Infrastructure/Kernel/xu_8_0p671sp.pdf
+ for a listing of PERSON CLASS File entries that are inactive with this
+ patch.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;JUL 03, 1995;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU671PO
+    Before:       n/a   After: B85035735  **671**
+Routine Name: XUPC991
+    Before:       n/a   After:  B3537010  **671**
+Routine Name: XUPCZRT
+    Before:       n/a   After: B43372715  **671**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 31, 2016
+Completed By:                               Date Completed: DEC 28, 2017
+Released By :                               Date Released : JAN 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

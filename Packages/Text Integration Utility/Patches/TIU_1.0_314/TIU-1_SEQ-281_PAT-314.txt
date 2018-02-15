@@ -1,0 +1,120 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/24/17 at 11:36
+=============================================================================
+Run Date: DEC 19, 2017                     Designation: TIU*1*314
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #281                      Status: Released
+                  Compliance Date: JAN 19, 2018
+=============================================================================
+
+Associated patches: (v)TIU*1*295   <<= must be installed BEFORE `TIU*1*314'
+
+Subject: EDIT DESTINATION ENCOUNTER REASSIGNING A VISIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration
+ Utilities (TIU) package:
+  
+ 1) Not prompted to edit destination encounter Reassigning a visit
+  
+  
+  
+ ASSOCIATED TICKETS:
+ ===================
+ I7104621FY16 (RTC Defect 515762)
+  
+ TICKET OVERVIEW:
+ ================
+ I7104621FY16 
+  
+  
+ Participating Test Sites:
+ =========================
+ Washington DC VAMC
+ East Colorado HCS
+  
+  
+   Problem:
+   --------
+   Re-assigning a TIU document doesn't prompt the user to edit destination 
+   encounter in some situations. When the document being reassigned has 
+   the TIU Document Parameter 'ASK DX/CPT ON ALL OPT VISITS' set to YES 
+   & the VISIT TYPE is A, I, or T (VISIT TYPE=SERVICE CATEGORY of the 
+   VISIT; A=AMBULATORY, I=IN HOSPITAL, T=TELECOMMUNICATIONS) and the 
+   document is not set to CREDIT STOP CODE ON COMPLETION, the user is not
+   prompted to edit the DESTINATION encounter.
+  
+   Resolution:
+   -----------
+   Modify the logic in QUE^TIUPXAP1 so that when it is called from the
+   Reassign function (REASSIGO^TIURD3), the DEFER logic is executed and
+   processing continues instead of exiting out of the routine. This will
+   ensure that field .11 is set and the user will be prompted to edit the 
+   DESTINATION encounter.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch during non-peak processing hours. It should take less than 1
+ minute to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+   3. From this menu, you may select to use the following options: 
+      (when prompted for INSTALL NAME, enter TIU*1.0*314)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System-This option will
+             allow you to view all changes that will be made when this patch
+             is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package TIU*1.0*314.
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+      NO//", respond NO.  
+   
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUPXAP1
+    Before: B33744423   After: B34127243  **15,29,20,89,82,107,117,126,
+                                           124,149,179,205,295,314**
+ 
+Routine list of preceding patches: 295
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 22, 2017
+Completed By:                               Date Completed: DEC 15, 2017
+Released By :                               Date Released : DEC 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

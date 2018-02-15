@@ -1,0 +1,386 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 09/01/17 at 16:13
+=============================================================================
+Run Date: JAN 24, 2018                     Designation: IB*2*585
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #555                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*528    <<= must be installed BEFORE `IB*2*585'
+                    (v)HDI*1*20    <<= must be installed BEFORE `IB*2*585'
+
+Subject: IB NATIVE DOMAIN STANDARDIZATION
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ***************************** ATTENTION **********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Payers Domain enhancement includes 3 patches
+ that must be installed in the following order:
+  
+      1.  XU*8.0*683 (This patch is a required pre install for HDI*1.0*20)
+      2.  HDI*1.0*20
+      3.  IB*2.0*585
+ **************************************************************************
+  
+ The VA has established a process for implementing standard 
+ terminology/terminologies within individual clinical domains for the 
+ exchange of data. The intent of this effort is to provide the detailed 
+ groundwork necessary for industry-wide interoperability. The objective 
+ of this process is to enable the most user friendly interface as 
+ possible in the implementation of the native standardization along with
+ all of the activities required to operationalize the change within the 
+ VistA environment and the associated terminology consuming applications.
+  
+ This patch implements Payers domain changes required by the
+ Collaborative Terminology Tooling & Data Management (CTT & DM) Native
+ Domain Standardization (NDS) project. This patch adds a new MASTER TYPE 
+ OF PLAN (#355.99) file, and a new MASTER TYPE OF PLAN (#15) field in the 
+ TYPE OF PLAN (#355.1) file pointing to the new MASTER TYPE OF PLAN 
+ (#355.99) file.
+  
+ The new MASTER TYPE OF PLAN (#355.99) file contains the Public Health 
+ Data Standards Consortium (PHDSC) Source of Payment code set. The new
+ MASTER TYPE OF PLAN (#15) field in the TYPE OF PLAN (#355.1) file points 
+ to the MASTER TYPE OF PLAN (#355.99) file, and provides a method of 
+ associating TYPE OF PLAN (#355.1) file entries to the national PHDSC 
+ standard code set.
+  
+  
+ Master Type of Plan Association [IBMTOP ASSN]
+ ---------------------------------------------
+  TYPE OF PLAN file (#355.1) entries may be associated with the MASTER 
+  TYPE OF PLAN file (#355.99) via the Master Type of Plan Association
+  [IBMTOP ASSN] option, at the following menu path:
+  
+   - Billing Supervisor Menu [IB BILLING SUPERVISOR MENU]
+    -  MCCR System Definition Menu [MCCR SYSTEM DEFINITION MENU]
+      - Master Type of Plan Menu [IBMTOP MNU]
+       -  Master Type of Plan Association [IBMTOP ASSN]
+  
+  This option prompts the user to select an entry from the TYPE OF PLAN 
+  file (#355.1), displays information about the Type of Plan including 
+  whether it is associated with a MASTER TYPE OF PLAN file (#355.99) entry,
+  and then prompts the user to select a MASTER TYPE OF PLAN to associate 
+  with the TYPE OF PLAN.
+  
+  Example, Master Type of Plan Association:
+  
+   Select Master Type of Plan Menu Option: ASSN  Master Type of Plan
+    Association
+  
+     This option allows VA TYPE OF PLAN file entries to be associated with
+     MASTER TYPE OF PLAN file entries to enhance interoperability. MASTER
+     TYPE OF PLAN file entries represent the Source of Payment Typology
+     developed by the Public Health Data Standards Consortium (PHDSC).
+  
+  
+   Select TYPE OF PLAN NAME: MEDICARE
+       1   MEDICARE (M)       MEDICARE
+       2   MEDICARE ADVANTAGE       MEDICARE
+       3   MEDICARE SECONDARY (B EXC)       MAJOR MEDICAL
+       4   MEDICARE SECONDARY (NO B EXC)       MAJOR MEDICAL
+       5   MEDICARE SUPPLEMENTAL       MAJOR MEDICAL
+   Press <Enter> to see more, '^' to exit this list,  OR
+   CHOOSE 1-5: 1  MEDICARE (M)     MEDICARE
+  
+   Type of Plan: MEDICARE (M)
+   Abbreviation: MR              Status: ACTIVE
+      Category: MEDICARE
+   Mapped to Master Type of Plan (MTOP): NO
+   MASTER TYPE OF PLAN: MEDIC
+       1   Medicare       1
+       2   Medicare (Managed Care)       11
+       3   Medicare (Non-Managed Cre)       12
+       4   Medicare Drug Benefit       122
+       5   Medicare FFS       121 
+   Press <Enter> to see more, '^' to exit this list,  OR
+   CHOOSE 1-5: 1  Medicare     1
+  
+   Type of Plan: MEDICARE (M)
+   Mapped to Master Type of Plan (MTOP): YES
+     MTOP Name: Medicare
+  
+   OK to Continue? :  (Y/N): YES// 
+  
+  
+ Master Type of Plan Report [IBMTOP RPT]
+ ---------------------------------------
+ New option Master Type of Plan Report [IBMTOP RPT] has been created to
+ report the association of entries from the TYPE OF PLAN (#355.1) file to
+ the MASTER TYPE OF PLAN (#355.99) file. The report is available at the 
+ following menu path:
+   - Billing Supervisor Menu [IB BILLING SUPERVISOR MENU]
+    -  MCCR System Definition Menu [MCCR SYSTEM DEFINITION MENU]
+      -  Master Type of Plan Menu [IBMTOP MNU]
+        -  Master Type of Plan Report [IBMTOP RPT]
+  
+ The report may be run as a summary or a detailed report, both of which may
+ be run for (A)ll TYPE OF PLAN (#355.1) entries, only entries that are
+ (M)apped to the MASTER TYPE OF PLAN (#355.99) file, or only entries that
+ are (U)nmapped. Both summary and detailed reports may also be printed in
+ delimited output format, which can be captured via terminal log and loaded
+ into a spreadsheet or other tabular document.
+  
+ The summary report prints the Type of Plan name, the mapping status 
+ (i.e., whether or not the Type of Plan is associated with a Master Type 
+ of Plan), and the Master Type of Plan name if an association exists.
+  
+ Example output, Master Type of Plan Report Summary:
+  
+    Type of Plan: MANAGED CARE SYSTEM (MCS)
+    Mapped to Master Type of Plan (MTOP): NO
+  
+    Type of Plan: MEDICAID
+    Mapped to Master Type of Plan (MTOP): YES
+       MTOP Name: Medicare Test
+  
+ The detailed report prints the information from the summary report, as 
+ well as details about both the Type of Plan and the Master Type of Plan 
+ if an association exists.
+  
+ Example output, Master Type of Plan Report, Detailed:
+  
+    Type of Plan: MEDICAID
+    Abbreviation: MD              Status: ACTIVE
+        Category: MEDICAIDE
+    Mapped to Master Type of Plan (MTOP): YES
+       MTOP Name: Medicare Test
+     MTOP Status: ACTIVE
+     MTOP Parent: HMO
+    MTOP Replaced By: Medicare HMO
+  
+    Type of Plan: MEDI-CAL
+    Abbreviation: MCAL            Status: ACTIVE
+        Category: MEDICAIDE
+    Mapped to Master Type of Plan (MTOP): NO
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+                                                             New/Modified
+ File Name (Number)     Field Name (Number)                   /Deleted
+ ------------------     -------------------------           -------------
+ TYPE OF PLAN (#355.1)  MASTER TYPE OF PLAN (#15)                New
+  
+ MASTER TYPE OF PLAN    All fields (see below)                   New
+ (#355.99)               PLAN NAME (#.01)                        New
+                         PHDSC SOURCE OF PAYMENT (#1)            New
+                         CODE (#1)                               New
+                         PARENT (#2)                             New
+                         REPLACED BY VHA STANDARD TERM (#99.97)  New
+                         MASTER ENTRY FOR VUID
+                          (#99.98)                               New
+                         VUID (#99.99)                           New
+                         EFFECTIVE DATE/TIME
+         
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                      Type         New/Modified/Deleted
+ -----------                      -------      -------------------- 
+ MASTER TYPE OF PLAN REPORT  
+ [IBMTOP RPT]                     Routine      New
+ MASTER TYPE OF PLAN ASSOCIATION
+ [IBMTOP ASSN]                    Routine      New
+ MASTER TYPE OF PLAN Menu
+ [IBMTOP MNU]                     Menu         New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)    New/Modified/Deleted
+ -------------     ----     ------------------    --------------------
+ IB TOPM           INPUT    TYPE OF PLAN (355.1)         New 
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Altoona, PA VAMC
+ Manchester, NH VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is being released as a FORUM patch. Documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.
+ vista.domain.ext. This transmits the files from the first available
+ server. Sites may also elect to retrieve files directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:            domain.ext 
+ Salt Lake City:   domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                  File Name            FTP Mode
+ ----------------------------------------------------------------------
+ Integrated Billing (IB)            
+ V. 2.0 Technical Manual           ib_2_0_tm.doc        Binary
+                                   ib_2_0_tm.pdf        Binary
+  
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide      ib_2_0_585_ig.doc    Binary
+                                   ib_2_0_585_ig.pdf    Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Pre-Installation Instructions:
+ ------------------------------
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (ib_2_0_585_ig.pdf) for complete pre-installation instructions.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (ib_2_0_585_ig.pdf) for complete installation instructions.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From Kernel Installation and Distribution System Menu, select the 
+    Installation Menu. From this menu, you may elect to use the following 
+    options.  When prompted for the INSTALL NAME, enter the patch
+    IB*2.0*585:
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup other changes such as DDs or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch's 
+          routines, DDs, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes): (0 - 60): 0//' respond 0.
+    
+  
+ Post-Installation Instructions
+ ------------------------------
+ In the event  a site determines that this patch should be backed out, the 
+ site should submit a CA SDM ticket with the NSD for assistance with the 
+ procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (ib_2_0_585_ig.pdf) for complete post-installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 68
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBE585PO
+    Before:       n/a   After: B25508579  **585**
+Routine Name: IBENDS
+    Before:       n/a   After: B13732020  **585**
+Routine Name: IBENDS1
+    Before:       n/a   After: B88591296  **585**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2016
+Completed By:                               Date Completed: JAN 23, 2018
+Released By :                               Date Released : JAN 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

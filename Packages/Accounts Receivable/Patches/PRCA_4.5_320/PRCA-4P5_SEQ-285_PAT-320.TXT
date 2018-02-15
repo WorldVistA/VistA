@@ -1,0 +1,234 @@
+$TXT Created by                at DEVESR.DOMAIN.EXT  (KIDS) on Thursday, 07/13/17 at 12:16
+=============================================================================
+Run Date: AUG 14, 2017                     Designation: PRCA*4.5*320
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #285                    Status: Released
+                  Compliance Date: AUG 18, 2017
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*239<<= must be installed BEFORE `PRCA*4.5*320'
+
+Subject: TROR AGING CHANGES FOR THE DATA ACT/ARDC REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch is part of an enhancement effort related to the Medical Care
+  Cost Recovery National Database (MCCR NDB)Treasury reports and new
+  requirements related to The Digital Accountability and Transparency Act
+  (DATA Act). This patch updates the software component in each Veterans
+  Health Information Systems and Technology Architecture (VistA)
+  system that compiles and transmits the needed information to the
+  National Database (NDB)  for submission to the Treasury. This
+  information is sent to the central server on a monthly basis.
+   
+  This patch provides three enhancements:
+   
+  (1) For the NDB Accounts under 25.00 Report, the software will now 
+  provide a count of debtors who have active bills that are older than 120
+  days (a change from 180 days) where the balance of those bills is less
+  than 25 dollars. Related data on delinquency shall also be based on 120
+  days.
+   
+  (2) For the MCCR NDB Treasury S9 Report, the software will now report 
+  receivables in more specific delinquent debt aging buckets, per the 
+  mandate of the DATA Act. This patch will -
+   
+    Remove buckets for:                         Add buckets for:
+   
+    o 91-180 Days (+) and                       o  91 - 120 Days (+)
+    o Over 1 Year (+)                           o 121 - 150 Days (+)
+                                                o 151 - 180 Days (+)
+                                                o 1 - 2 Years (+)
+                                                o 2 - 6 Years (+)
+                                                o 6 - 10 Years (+), and
+                                                o Over 10 Years (+)
+   
+  (3) This patch also includes an enhancement related to the Accounts
+  Receivable Data Collector (ARDC) Report. The Mailman message/bulletin,
+  "ARDC Detail Report for MON/YYYY" will be discontinued and replaced. A 
+  new report option ARDC Detail Report [PRCA ARDC REPORT] option is located
+  in Reconciliation Reports [PRCAD RECONCILE MENU] option. The report will
+  contain the same information as the discontinued ARDC Detail Report
+  bulletin with the following changes:
+   
+    o The report shall include current status bills (New Bill, Active, 
+      Returned for Amendment, Amended Bill, Open, and Suspended bills) 
+      only.
+   
+    o The report shall include a column for the Fund number associated 
+      with each line item on the report.
+   
+    o The report shall include a column for the Revenue Source Code (RSC)
+      associated with each line item on the report.
+   
+  The patch has a shortened timeframe (*5 days*) for installation due to
+  the strict timing required (in between reporting cycles) for patch
+  installation. There is a small window of time for all sites to install
+  the patch.
+  
+  Patch Components:
+  -----------------
+  N/A 
+  
+  Files & Fields Associated:
+  N/A
+  
+  Forms Associated:
+  N/A
+  
+  Mail Groups Associated:
+  N/A
+  
+  Options Associated:
+  
+  Option Name        Type        New/Modified/Deleted
+  -----------        ----        -------------------- 
+  PRCA ARDC REPORT   Option      New
+  
+  
+  Protocols Associated:
+  N/A
+  
+  Security Keys Associated:
+  N/A
+  
+  Templates Associated:
+  N/A 
+  
+  Software and Documentation Retrieval Instructions:
+  --------------------------------------------------
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+  OI Field Offices:
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+    
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+  
+  Title                          File Name               Transfer Mode
+  ----------------------------------------------------------------------
+  
+  Release Notes                  prca_4_5_p320_rn.pdf    Binary
+  Installation Guide             prca_4_5_p320_ig.pdf    Binary
+  Technical/Security Manual      prca_4_5_p320_tm.pdf    Binary
+  
+  
+  Pre/Post Installation Overview:
+  -------------------------------
+  A post-installation routine (PRCA320P) will run upon patch installation
+  to place the new ARDC Detail Report [PRCA ARDC REPORT] in the 
+  Reconciliation Reports menu [PRCAD RECONCILE MENU]. It will also check 
+  the accuracy of the "AC" cross-reference in file #430. 
+  If you receive a note during the post install noting that the "AC"
+  cross reference needs to be reindexed, it can be done at a later date, 
+  but it should be completed before the [PRCA ARDC REPORT] option is ran.  
+  
+  
+  Installation Instructions:
+  ---------------------------
+   
+   1.  Choose the PackMan message containing this patch.
+    
+   2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+   3.  From the Kernel Installation and Distribution System Menu, select
+       the Installation Menu.  From this menu, you may elect to use the
+       following option. When prompted for the INSTALL enter the patch #
+       (example: PRCA*4.5*320):
+    
+       a.  Print Transport Global - This option lets you print the contents
+           of a Transport Global that is currently loaded in the ^XTMP
+           global.
+       b.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+       c.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DDs, templates, etc.).
+       d.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        
+   4.  From the Installation Menu, select the Install Package(s) option and
+       choose the patch to install.
+    
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO// ***' answer "" (NO).  
+  
+    ***DO NOT ANSWER YES TO REBUILD MENU OPTIONS, IF YOU DO YOU WILL NEED
+    TO MANUALLY REBUILD THE MENU "PRCAD RECONCILE MENU".
+    
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer "NO".
+    
+   7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer "NO".
+    
+   8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+       "60" or "Q" (to queue the output to a printer).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCA320P
+    Before:       n/a   After:  B4254559  **320**
+ Description of Changes:
+  Used to place the new ARDC Detail Report [PRCA ARDC REPORT] in the 
+  Reconciliation Reports menu [PRCAD RECONCILE MENU]. It will also check 
+  the accuracy of the "AC" cross-reference in file #430.
+
+Routine Name: RCRJRCO1
+    Before: B19648667   After: B23580968  **68,96,101,120,103,153,156,
+                                           170,182,203,320**
+ Description of Changes:
+  Changed aging buckets for extract.
+
+Routine Name: RCRJRCO2
+    Before: B27661034   After: B28536633  **96,152,156,174,191,320**
+Routine Name: RCRJRCOB
+    Before: B21130967   After: B22183979  **68,96,103,153,156,320**
+ Description of Changes:
+  Changed aging buckets for extract.
+
+Routine Name: RCRJRCOL
+    Before: B31058106   After: B32936346  **68,96,101,103,170,176,191,320**
+ Description of Changes:
+  Changed aging buckets for extract.
+
+Routine Name: RCRJRCOR
+    Before: B67290990   After: B66919784  **68,96,139,103,156,170,174,
+                                           191,220,138,239,320**
+Routine Name: RCRJRCOU
+    Before:  B4781316   After: B76712573  **103,320**
+ Description of Changes:
+  Modified the routine to stop generating an automatically generated 
+  and emailed ARDC report.  It now can be ran at any time, from a menu 
+  option with date selection and selectable status types.
+
+ 
+Routine list of preceding patches: 203, 239
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 16, 2016
+Completed By:                               Date Completed: AUG 10, 2017
+Released By :                               Date Released : AUG 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

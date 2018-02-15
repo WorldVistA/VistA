@@ -1,0 +1,152 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/13/17 at 18:44
+=============================================================================
+Run Date: DEC 11, 2017                     Designation: PSO*7*462
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #413                      Status: Released
+                  Compliance Date: JAN 11, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*264   <<= must be installed BEFORE `PSO*7*462'
+                    (v)PSO*7*426   <<= must be installed BEFORE `PSO*7*462'
+
+Subject: LABELS NOT PRINTED WITH MANUAL CMOP/DELAYED CS RX AUTO DC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses the following issues:
+  
+ 1. When processing several window prescriptions and setting one as
+    mail-out using manual, CM, for Consolidated Mail Outpatient Pharmacy
+    (CMOP), none of the window labels printed.
+  
+ 2. When a delayed order is placed for a controlled substance and then gets
+    released to pharmacy on a day different than the day it was signed, 
+    the prescription is getting auto-discontinued.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Associated CA SDM Ticket(s):
+ ============================
+  
+ 1. I9843052FY16 - OTHER LABEL NOT PRINTED WITH MANUAL CMOP
+  
+ 2. I9850972FY16 - SIGN NOT VERIFIED
+    
+  
+ Participating Test Sites:
+ ========================
+ Hines VAMC
+ Puget Sound HCS
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1. I9843052FY16-OTHER LABEL NOT PRINTED WITH MANUAL CMOP
+  
+ Problem:
+ =======
+ While user was processing several window Rx's and setting one as
+ mail-out using manual "CM" for CMOP in Medical Profile screen,
+ none of the window labels printed after queuing, requiring the
+ reprint of labels.
+  
+ Resolution:
+ ==========
+ Code in routine OS^PSORESUS modified to remove value of package 
+ references list after it sends RX to be suspended to CMOP. 
+ If value of list does not exist after exit from OS^PSORESUS 
+ then it will be restored by other code and will contain all
+ package references allowing the process to queue other RXs 
+ for label printing.
+  
+ Routine: PSORESUS
+  
+ 2. I9850972FY16-SIGN NOT VERIFIED
+  
+ Problem:
+ =======
+ When a delayed order is placed for a controlled substance
+ and then gets released to the pharmacy package on a day different 
+ than the day it was signed, the pharmacy package is creating the 
+ message hash for comparison using the release date. The original
+ hash created for comparison was built using the signing date.
+ The result is that the system thinks the prescription has been
+ tampered with and it causes an auto-discontinue.
+  
+ Resolution:
+ ==========
+ Modified signature verification process at VERIFY^PSOPKIV1
+ code to use signature date instead of release date.
+  
+ Routine: PSOPKIV1
+  
+    ================INSTALLATION INSTRUCTIONS =================
+  
+ Pharmacy users should not be processing prescriptions while patch is 
+ being installed. It should take less than 5 minutes to install this
+ patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSO*7.0*462)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        is installed (routines, DD's, templates, etc.).  
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSO*7.0*462.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOPKIV1
+    Before: B99524853   After:B102421557  **131,146,223,148,249,391,426,462**
+Routine Name: PSORESUS
+    Before: B14351152   After: B14444472  **264,462**
+ 
+Routine list of preceding patches: 264, 426
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2016
+Completed By:                               Date Completed: DEC 08, 2017
+Released By :                               Date Released : DEC 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

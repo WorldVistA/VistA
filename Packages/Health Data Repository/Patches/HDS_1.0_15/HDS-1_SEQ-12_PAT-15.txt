@@ -1,0 +1,76 @@
+
+=============================================================================
+Run Date: DEC 20, 2017                     Designation: HDS*1*15
+Package : HDS - HEALTH DATA REPOSITORY        Priority: Mandatory
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: JAN 20, 2018
+=============================================================================
+
+
+Subject: HDR 3.19, VIP Build 5.0 Enhancement Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ HDR Release 3.19, VIP Build 5.0 includes the following enhancements:
+   Support for Census Activity Reports for the Home Telehealth (HTH) 
+         client
+   Support for Patient Satisfaction Surveys (version 2.0) in 
+         distribution of surveys reports and survey trends for the HTH 
+         client 
+   Support for OneVA Pharmacy reads to improve Read response times 
+   Support for Identity Access Management / Single Sign-on Internal 
+         (IAM/SSOi) Phase II on HDR service interfaces with expansion to 
+         CDS, FPDS and pathways services that directly read from VistA
+   Support for additional Read access for the VAMC Call Center 
+         Modernization (VCCM) client
+   Support for implementing Fast Healthcare Interoperability Resource 
+         (FHIR) payload format limited to clinical domains for 
+         Appointments and Allergies (Intolerance Conditions and 
+         Assessments) reads
+   Support for Vital Signs writes from HTH to the HDR database
+  
+ The HTH client supports the Veterans in their homes with biometric  
+  
+ monitoring and measurement technologies to help maintain their 
+ independent living capability, reduce hospital admissions, and improve 
+ health outcomes and writes results to the HDR database.
+  
+ The OneVA Pharmacy client uses the HDR Clinical Data Service (CDS) to 
+ read outpatient pharmacy medications in the HDR, through the VA 
+ Enterprise Service Bus (VA ESB). 
+  
+ IAM/SSOi provides the first phase capability to verify the Secure 
+ Assertion Markup Language (SAML 2.0) token against VistA through HDRDAT.
+  
+ The VCCM client reads VistA and DoD data via HDR services. HDR supports 
+ the VCCM client by providing access to multiple VCCM-desired domains via 
+ HDR services to their user interface. 
+  
+ FHIR is being implemented as an additional option as a VA enterprise-
+ supported data format. FHIR will be accommodated only as transformation 
+ of VIM payload when a flag requesting FHIR payload is specified on the 
+ existing CDS interface.
+  
+ The deployment date for HDR 3.19 is scheduled December 19, 2017 by the 
+ AITC. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2017
+Completed By:                               Date Completed: DEC 20, 2017
+Released By :                               Date Released : DEC 20, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

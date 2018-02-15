@@ -1,0 +1,434 @@
+
+=============================================================================
+Run Date: DEC 11, 2017                     Designation: PXRM*2*47
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #51                      Status: Released
+                  Compliance Date: JAN 20, 2018
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*47'
+                    (v)PX*1*201    <<= must be installed BEFORE `PXRM*2*47'
+                    (v)PXRM*2*53   <<= must be installed BEFORE `PXRM*2*47'
+                    (v)XU*8*657    <<= must be installed BEFORE `PXRM*2*47'
+
+Subject: CLINICAL REMINDERS ICD-10 FOLLOW-UP
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ General Overview:
+ =================
+ This patch is the follow-up to PXRM*2*26.  It removes the options,
+ protocols, routines, and taxonomy fields made obsolete by PXRM*2*26,
+ adds the taxonomy editor actions that could not be completed for the
+ release of PXRM*2*26, and fixes some bugs.
+ 
+ For detailed information and installation instructions, please see the
+ Clinical Reminders Patch 47 Installation Guide. Instructions on how to
+ obtain a copy can be found below.
+ 
+ PXRM*2.0*47 and GMTS*2.7*113 are distributed in a multi-package build
+ named: CLINICAL REMINDERS ICD-10 FOLLOWUP 1.0. Because this is a
+ multi-package build, it can only be distributed as a host file; no
+ builds are included in the patch messages. The name of the host file is:
+ CR_ICD-10_FOLLOWUP.KID; it can be obtained from one of the anonymous ftp
+ directories.
+  
+ Remedy Tickets:
+  ==============
+  1048387
+  1050587
+  1065893
+  1080058
+  1081395
+  1108509
+  1117255
+  1118584
+  1202814
+  1224812
+  I5761038FY15
+  I9369463FY16 
+  I11279169FY17
+ 
+ Test Sites:
+ ===========
+  Orlando
+  Indianapolis
+  Puget Sound
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ The software for this set of patches is not being distributed through
+ the  National Patch Module. There is a multi-package build named
+ CLINICAL REMINDERS ICD-10 FOLLOW 1.0 which contains the following KIDS
+ builds: PXRM*2.0*47 and GMTS*2.7*113. The associated host file is named
+ CR_ICD-10_FOLLOWUP.KID.
+  
+ The documentation for this build is:
+ PXRM_2_0_47_IG.PDF  Clinical Reminders Patch 47 Installation Guide
+ PXRM_2_MM.PDF       Clinical Reminders Manager's Manual
+  
+ The preferred method for obtaining these files is to use Secure File
+ Transfer Protocol (SFTP) to download them from the anonymous SFTP server:
+ sftp download.vista.domain.ext.
+  
+ This transmits the files from the first available SFTP server. 
+ Sites may also elect to retrieve the files directly from a specific 
+ server as follows:
+  
+ Hines           ftp.domain.ext  <sftp ftp.domain.ext>
+ 
+ Salt Lake City  ftp.domain.ext    <sftp ftp.domain.ext>
+  
+ 
+ Title                         File Name                    SFTP Mode
+ ----------------------------------------------------------------------- 
+ CLINICAL REMINDERS ICD-10 FOLLOWUP 1.0
+                               CR_ICD-10-FOLLOWUP.KID         ASCII
+ Clinical Reminders Patch 47 Installation Guide
+                               PXRM_2_0_47_IG.PDF             Binary
+ Clinical Reminders Manager's Manual
+                               PXRM_2_MM.PDF                  Binary
+ 
+ Documentation can also be found on the VistA Documentation Library
+ (VDL) at: http://www.domain.ext/vdl/
+ 
+ 
+ Build Components:
+ =================
+ 
+  Data Dictionary:
+  ================
+ 
+ FILE #       NAME
+ -------------------------------------------------------------------------------
+ 802.1       NLM VALUE SET CODING SYSTEMS
+ 802.2       NLM VALUE SETS
+ 802.3       NLM QUALITY MEASURE GROUPS
+ 811.2       REMINDER TAXONOMY
+ 811.4       REMINDER COMPUTED FINDINGS
+ 811.9       REMINDER DEFINITION
+ 
+  Print Template:
+  ===============
+  PXRM TAXONOMY DIALOG       FILE #811.2    DELETE AT SITE
+  PXRM TAXONOMY INQUIRY      FILE #811.2    DELETE AT SITE
+  PXRM TAXONOMY LIST         FILE #811.2    DELETE AT SITE
+  PXRM TAXONOMY LIST HEADER  FILE #811.2    DELETE AT SITE
+ 
+  FORM:
+  =====
+  PXRM DIALOG TAXONOMY EDIT  FILE #811.2    SEND TO SITE
+  PXRM TAXONOMY CHANGE LOG   FILE #811.2    SEND TO SITE
+  PXRM TAXONOMY EDIT         FILE #811.2    SEND TO SITE
+ 
+ 
+  Option:
+  =======
+  PXRM DISABLE/ENABLE EVALUATION  SEND TO SITE
+  PXRM MANAGERS MENU              USE AS LINK FOR MENU/ITEM/SUBSCRIBERS
+  PXRM NLM CQM MENU               SEND TO SITE
+  PXRM NLM VALUE SET MENU         SEND TO SITE
+  PXRM TAX SELECTED CODES REPAIR  DELETE AT SITE
+  PXRM TAXONOMY CODE SEARCH       DELETE AT SITE
+  PXRM TAXONOMY COPY              DELETE AT SITE
+  PXRM TAXONOMY EDIT              DELETE AT SITE
+  PXRM TAXONOMY EXPANSION         DELETE AT SITE
+  PXRM TAXONOMY EXPANSION ALL     DELETE AT SITE
+  PXRM TAXONOMY EXPANSION VERIFY  DELETE AT SITE
+  PXRM TAXONOMY INQUIRY           DELETE AT SITE
+  PXRM TAXONOMY LIST              DELETE AT SITE
+  PXRM TAXONOMY MANAGEMENT (OLD)  DELETE AT SITE
+  
+ 
+  Protocol:
+  =========
+  PXRM CQM INQUIRE                     SEND TO SITE
+  PXRM CQM MENU                        SEND TO SITE
+  PXRM CQM SELECT ENTRY                SEND TO SITE
+  PXRM DIALOG ADD                      DELETE AT SITE
+  PXRM DIALOG EXIT                     SEND TO SITE
+  PXRM DIALOG HISTORY                  SEND TO SITE
+  PXRM DIALOG LINK                     SEND TO SITE
+  PXRM LEXICON REMOVE FROM DIALOG      SEND TO SITE
+  PXRM LEXICON VIEW                    DELETE AT SITE
+  PXRM TAXONOMY ADD                    SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED ADD       SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED EXIT      SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED MENU      SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED RFD       SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED RFT       SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED SAVE      SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED SELECT    SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED UID       SEND TO SITE
+  PXRM TAXONOMY ALL SELECTED UID EDIT  SEND TO SITE
+  PXRM TAXONOMY CHANGE LOG             SEND TO SITE
+  PXRM TAXONOMY CODE SEARCH            SEND TO SITE
+  PXRM TAXONOMY COPY                   SEND TO SITE
+  PXRM TAXONOMY EDIT                   SEND TO SITE
+  PXRM TAXONOMY IMPORT                 SEND TO SITE
+  PXRM TAXONOMY INQUIRE                SEND TO SITE
+  PXRM TAXONOMY MENU                   SEND TO SITE
+  PXRM TAXONOMY OLD INQUIRE            DELETE AT SITE
+  PXRM TAXONOMY UID EDIT               SEND TO SITE
+  PXRM TAXONOMY UID REPORT             SEND TO SITE
+  PXRM TAXONOMY UIDE EXIT              SEND TO SITE
+  PXRM TAXONOMY UIDE SAVE              SEND TO SITE
+  PXRM TAXONOMY UIDE SELECT ENTRY      SEND TO SITE
+  PXRM TAXONOMY VALUE SET COMPARE      SEND TO SITE
+  PXRM VS CODE SEARCH                  SEND TO SITE
+  PXRM VS CREATE TAXONOMY              SEND TO SITE
+  PXRM VS INQUIRE                      SEND TO SITE
+  PXRM VS MENU                         SEND TO SITE
+  PXRM VS SELECT ENTRY                 SEND TO SITE
+                                       
+  List Template:
+  ==============
+  PXRM CQM MENU               SEND TO SITE
+  PXRM EX MAIN HELP           DELETE AT SITE
+  PXRM TAXONOMY ALL SELECTED  SEND TO SITE
+  PXRM TAXONOMY UID EDIT      SEND TO SITE
+  PXRM VS MENU                SEND TO SITE
+ 
+ 
+ Installation:
+ =============
+ This patch can be loaded with users on the system, but it should be done
+ during off-hours. Estimated installation time is less than 5 minutes.
+ 
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in CR_ICD-10-FOLLOWUP.KID
+ 
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+ 
+ 3. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    option to install the patch:
+        Install Package(s) (CLINICAL REMINDERS ICD-10 FOLLOWUP 1.0)
+ 
+ 4. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+    NO// respond 'NO'.
+ 
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+ 
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+ 
+ 7. The init routine PXRMP47I may be deleted once the installation has
+    successfully completed.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 291
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRM
+    Before: B54398070   After: B47307370  **4,11,12,16,18,24,26,47**
+Routine Name: PXRMASL
+    Before:       n/a   After:  B4451968  **47**
+Routine Name: PXRMBXTL
+    Before: B28912703   After:    Delete  
+Routine Name: PXRMCDEF
+    Before:  B2371303   After:  B4852404  **4,18,24,26,47**
+Routine Name: PXRMCOND
+    Before: B44445875   After: B44611363  **6,47**
+Routine Name: PXRMCQIN
+    Before:       n/a   After: B24112852  **47**
+Routine Name: PXRMCQLM
+    Before:       n/a   After: B20001822  **47**
+Routine Name: PXRMCSD
+    Before: B79166791   After:    Delete  
+Routine Name: PXRMCSSC
+    Before:  B5002819   After:    Delete  
+Routine Name: PXRMCSTX
+    Before:  B2261498   After:  B2714904  **9,12,17,18,26,47**
+Routine Name: PXRMCSU
+    Before:  B6965282   After:    Delete  
+Routine Name: PXRMDATE
+    Before: B70140007   After: B72754452  **4,6,12,17,18,24,26,47**
+Routine Name: PXRMDBLD
+    Before: B96104442   After: B54628364  **12,47**
+Routine Name: PXRMDEV
+    Before: B78755601   After: B53641052  **4,6,11,16,18,24,26,47**
+Routine Name: PXRMDIEV
+    Before: B68563179   After: B75240155  **26,47**
+Routine Name: PXRMDLL
+    Before:B137187250   After:B147254046  **10,6,12,17,18,26,47**
+Routine Name: PXRMDLLB
+    Before: B33584430   After: B36248685  **6,12,16,26,47**
+Routine Name: PXRMDRUG
+    Before: B62235689   After: B62235689  **4,6,12,18,47**
+Routine Name: PXRMDTAX
+    Before:B200174205   After:B198889216  **26,47**
+Routine Name: PXRMERRH
+    Before: B20920805   After: B21386013  **4,17,18,47**
+Routine Name: PXRMETXR
+    Before: B76497570   After: B76063275  **4,6,26,47**
+Routine Name: PXRMEXCC
+    Before:       n/a   After: B14643642  **47**
+Routine Name: PXRMEXCO
+    Before: B26491168   After: B26994015  **12,47**
+Routine Name: PXRMEXCS
+    Before: B15773333   After: B16682539  **6,12,26,47**
+Routine Name: PXRMEXFI
+    Before: B55982418   After: B59766502  **6,12,18,24,26,47**
+Routine Name: PXRMEXIC
+    Before: B84313734   After: B87332423  **6,12,17,16,18,22,24,26,47**
+Routine Name: PXRMEXIU
+    Before: B68841657   After: B86717543  **4,6,12,17,18,24,26,47**
+Routine Name: PXRMEXLM
+    Before: B52621060   After: B51322537  **6,12,17,24,26,47**
+Routine Name: PXRMEXMH
+    Before: B10764722   After: B10558717  **26,47**
+Routine Name: PXRMEXU0
+    Before: B23209797   After: B29114606  **4,12,18,26,47**
+Routine Name: PXRMEXWB
+    Before:  B1609378   After:  B1606210  **26,47**
+Routine Name: PXRMFF
+    Before: B72420410   After: B75070206  **4,6,11,18,22,24,26,47**
+Routine Name: PXRMFF0
+    Before: B16903444   After: B19175056  **4,6,12,18,47**
+Routine Name: PXRMFIND
+    Before: B12973780   After: B14402705  **47**
+Routine Name: PXRMFMTO
+    Before:       n/a   After: B10636061  **47**
+Routine Name: PXRMFNFT
+    Before: B58241703   After: B58123785  **4,12,16,47**
+Routine Name: PXRMHVET
+    Before:  B2048851   After:  B1748161  **47**
+Routine Name: PXRMICHK
+    Before:B191422911   After:B238423274  **18,24,26,47**
+Routine Name: PXRMLDR
+    Before: B15240412   After: B18348692  **18,26,47**
+Routine Name: PXRMLEX
+    Before: B35438125   After:  B8264453  **17,18,26,47**
+Routine Name: PXRMLEXL
+    Before:B240921269   After:B190120643  **26,47**
+Routine Name: PXRMLOCF
+    Before: B95753792   After: B97441474  **4,6,11,12,18,24,47**
+Routine Name: PXRMLOCL
+    Before: B26781951   After: B28870554  **4,6,11,18,47**
+Routine Name: PXRMLOG
+    Before: B65785719   After: B66402903  **4,6,12,17,18,26,47**
+Routine Name: PXRMMSG
+    Before:  B4362273   After:  B5151324  **17,18,53,47**
+Routine Name: PXRMORCH
+    Before: B34974913   After: B53534150  **16,22,26,47**
+Routine Name: PXRMOUTC
+    Before: B38949930   After: B38936387  **4,6,17,26,47**
+Routine Name: PXRMOUTD
+    Before: B14911015   After: B15041011  **4,17,47**
+Routine Name: PXRMOUTM
+    Before: B28898508   After: B29787683  **4,6,17,47**
+Routine Name: PXRMOUTU
+    Before: B17168118   After: B18283584  **17,18,26,47**
+Routine Name: PXRMP47I
+    Before:       n/a   After: B30350491  **47**
+Routine Name: PXRMPDEM
+    Before: B65842415   After: B65842415  **5,4,11,12,17,18,24,47**
+Routine Name: PXRMPDR
+    Before: B52722382   After: B52184470  **4,6,12,47**
+Routine Name: PXRMPDRP
+    Before: B99170461   After:B100715785  **4,6,12,18,47**
+Routine Name: PXRMPRF
+    Before: B14561968   After: B15497099  **17,18,47**
+Routine Name: PXRMPTTX
+    Before: B39642269   After:    Delete  
+Routine Name: PXRMRCUR
+    Before:       n/a   After: B13247111  **47**
+Routine Name: PXRMREDF
+    Before: B84708461   After: B84791298  **4,6,12,26,47**
+Routine Name: PXRMREDT
+    Before: B70699612   After: B70476581  **4,6,12,18,26,47**
+Routine Name: PXRMRPCA
+    Before: B64569743   After: B57506116  **12,16,47**
+Routine Name: PXRMRUL1
+    Before: B49947013   After: B49947013  **4,6,26,47**
+Routine Name: PXRMSXRM
+    Before: B51532846   After: B98450970  **6,17,26,47**
+Routine Name: PXRMTAXD
+    Before: B68009180   After: B79799584  **26,47**
+Routine Name: PXRMTAXL
+    Before: B59845028   After: B80891432  **26,47**
+Routine Name: PXRMTAXS
+    Before:  B5899083   After:    Delete  
+Routine Name: PXRMTDUP
+    Before:   B793289   After:    Delete  
+Routine Name: PXRMTECK
+    Before: B18791089   After:    Delete  
+Routine Name: PXRMTEDT
+    Before:  B4554623   After:    Delete  
+Routine Name: PXRMTERM
+    Before: B55315672   After: B55250159  **4,6,11,18,26,47**
+Routine Name: PXRMTEXT
+    Before: B38412758   After: B44027439  **6,12,47**
+Routine Name: PXRMTXCR
+    Before: B74745189   After: B23196731  **26,47**
+Routine Name: PXRMTXDL
+    Before:  B1299916   After:  B1372560  **26,47**
+Routine Name: PXRMTXIM
+    Before:B193866629   After:B196801557  **26,47**
+Routine Name: PXRMTXIN
+    Before: B68427938   After: B62837955  **26,47**
+Routine Name: PXRMTXLS
+    Before:       n/a   After:B150968479  **26,47**
+Routine Name: PXRMTXSM
+    Before: B41443129   After: B56360268  **26,47**
+Routine Name: PXRMUIDE
+    Before:       n/a   After: B17671178  **26,47**
+Routine Name: PXRMUTIL
+    Before:B128848927   After:B164856611  **4,6,11,12,17,18,24,26,47**
+Routine Name: PXRMVAL
+    Before: B18423492   After:    Delete  
+Routine Name: PXRMVALC
+    Before: B64415082   After:    Delete  
+Routine Name: PXRMVALU
+    Before: B17713005   After:    Delete  
+Routine Name: PXRMVCPT
+    Before: B51805382   After: B52602127  **4,26,47**
+Routine Name: PXRMVPOV
+    Before: B51874901   After: B51972823  **4,26,47**
+Routine Name: PXRMVSCS
+    Before:       n/a   After:  B6081007  **47**
+Routine Name: PXRMVSIN
+    Before:       n/a   After: B48824341  **47**
+Routine Name: PXRMVSLM
+    Before:       n/a   After: B26634140  **47**
+Routine Name: PXRMVSTX
+    Before:       n/a   After: B61497746  **47**
+Routine Name: PXRMXEVL
+    Before:  B1989772   After:  B1513078  **4,12,26,47**
+Routine Name: PXRMXSE1
+    Before: B30616308   After: B30585167  **4,6,12,26,47**
+ 
+Routine list of preceding patches: 26, 53
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 28, 2014
+Completed By:                               Date Completed: DEC 06, 2017
+Released By :                               Date Released : DEC 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

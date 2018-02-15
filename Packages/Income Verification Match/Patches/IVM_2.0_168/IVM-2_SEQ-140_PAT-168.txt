@@ -1,0 +1,222 @@
+$TXT Created by                    R at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/27/17 at 06:31
+=============================================================================
+Run Date: JAN 16, 2018                     Designation: IVM*2*168
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #140                      Status: Released
+                  Compliance Date: FEB 16, 2018
+=============================================================================
+
+Associated patches: (v)IVM*2*152   <<= must be installed BEFORE `IVM*2*168'
+                    (v)IVM*2*161   <<= must be installed BEFORE `IVM*2*168'
+
+Subject: FIX Z07 FOR IMPRECISE RETIREMENT DATE / FORMAT PHONE NUMBER FOR Z05
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch, IVM*2*168, will allow for processing of information from the
+ PATIENT (#2) file, DATE OF RETIREMENT (#.31116) and SPOUSE'S RETIREMENT
+ DATE (#.2516) fields as imprecise dates when they are passed to the 
+ Enrollment System (ES) now that the ES system is capable of accepting the
+ information in these two fields. It will also stop unconditional 
+ stripping of format characters for PHONE NUMBER [CELLULAR] (#.134) and
+ PAGER NUMBER (#.135) in the same file when received from ORU-Z05 
+ transmissions. Due to a user entry error, the original ticket mentioned
+ work phone number, but that is not processed in the same manner as the 
+ cell phone and pager numbers.  Only the cell phone and pager numbers are 
+ formatted in this manner prior to input.
+  
+  
+ Associated ticket:
+ =================
+ 1. I9917097FY16 - Veteran's and Spouse's Retirement Date does not accept 
+ an imprecise date.
+  
+ 2. I15474705FY17 - Work Phone, Cell Phone, and Pager not filing in 
+ correct format when received on ORU-Z05 from ESR.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Captain James A. Lovell Federal Health Care Center (Chicago)
+ Clement J. Zablocki Veterans Affairs Medical Center (Milwaukee)
+  
+  
+ Ticket Overview:
+ ===============
+ 1. I9917097FY16 - Veteran's and Spouse's Retirement Date does not accept 
+ an imprecise date.
+  
+  Problem:
+  -------
+  The Enrollment System Release ESR 3.1 added sharing and filing of the
+  veteran's and spouse's retirement date. The Enrollment System (ES)
+  rejects the Z07 record when the veteran's or spouse's retirement date is
+  imprecise.
+  
+  Resolution:
+  ----------
+  Updated routine IVMPTRN8, adding a new parameter value to allow
+  imprecise dates to be accepted.
+  
+  Technical:
+  ---------
+  Routine BUILD^IVMPTRN8 has been modified to set a "9" parameter value 
+  into the call for the ZEM segment build.
+  
+ S IVMCT=IVMCT+1,^TMP("HLS",$J,IVMCT)=$$EN^VAFHLZEM(DFN,"1,2,3,4,5,6,7,9")
+ S IVMCT=IVMCT+1,^TMP("HLS",$J,IVMCT)=$$EN^VAFHLZEM(DFN,"1,2,3,4,5,6,7,9",
+ 2,2)
+  
+  This allows VAFHLZEM to process the retirement date, which was previously
+  removed to prevent errors in the ES system.
+  
+  
+ 2. I15474705FY17 - Work Phone, Cell Phone, and Pager not filing in 
+ correct format when received on ORU-Z05 from ESR.
+  
+   Problem:
+   -------
+   When filing inbound ORU-Z05 the patient's work phone, cell phone, and 
+   pager do not format correctly. Format should be (###)###-####. 
+   Currently the numbers are filing as ##########.
+  
+   Resolution:
+   ----------
+   Updated routine CONVPH^IVMPREC8 so that it pattern-matches the passed
+   in number currently for cell phone and pager only to see if it is in the
+   correct format. If it matches, it quits. If it doesn't, it strips using
+   the old logic and then rechecks to see if the number is a 10 digit
+   numeric and reformats it properly. Otherwise, it stores the numbers
+   according to the pre-existing logic.
+  
+   Technical:
+   ---------
+   For current processing of cell phone and pager numbers only.
+   
+   Previous logic just quit and returned a stripped string with:
+   Q $TR(PH," )(/#\-","")
+  
+   New logic will check and quit if ok:
+   Q:PH?1"(".3N.1")".3N.1"-".4N PH
+  
+   Then strip if not:
+   S PH=$TR(PH," )(/#\-","")
+  
+   If stripping results in anything other than 10 digit numeric it quits 
+   and returns stripped string as done previously:
+   Q:PH'?10N PH
+  
+   If the string is a 10 digit numeric then we know what we have and can 
+   format according to requirement and return formatted string:
+   Q "("_$E(PH,1,3)_")"_$E(PH,4,6)_"-"_$E(PH,7,10)
+  
+  
+ Pre-Installation Instructions:
+ =============================
+  1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+      Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+      TaskMan Management [XUTM MGR] menu. 
+      NOTE: Document the date/time the job was originally scheduled 
+      when scheduling to run again after patch install.
+   
+  2.  The HL7 incoming/outgoing filers should be stopped. Use the  
+      Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+      and Link Management Options [HL MENU FILER LINK MGT] menu on the 
+      HL7 Main Menu [HL MAIN MENU].
+    
+ Installation Instructions:
+ =========================
+ This patch may be installed with users on the system.
+ Install Time - less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: 
+      Installation                                                         
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "IVM*2.0*168"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option 6 and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+  
+ Post-Installation Instructions:
+ ==============================
+  1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be re-scheduled.
+      Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+      TaskMan Management [XUTM MGR] menu.
+      NOTE: Use the date/time the job was originally scheduled; documented 
+      during pre-installation steps.
+  2.  The HL7 incoming/outgoing filers should be restarted. Use the  
+      Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+      and Link Management Options [HL MENU FILER LINK MGT] menu on the 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC8
+    Before:B230918624   After:B233047174  **5,6,12,58,73,79,102,115,121,
+                                           148,151,152,168**
+Routine Name: IVMPTRN8
+    Before: B78004542   After: B79090653  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151,141,150,160,161,
+                                           168**
+ 
+Routine list of preceding patches: 152, 161
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2017
+Completed By:                               Date Completed: JAN 12, 2018
+Released By :                               Date Released : JAN 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

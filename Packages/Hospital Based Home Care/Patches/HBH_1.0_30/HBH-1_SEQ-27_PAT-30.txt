@@ -1,0 +1,149 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/19/17 at 14:03
+=============================================================================
+Run Date: DEC 04, 2017                     Designation: HBH*1*30
+Package : HBH - HOSPITAL BASED HOME CARE      Priority: Mandatory
+Version : 1        SEQ #27                      Status: Released
+                  Compliance Date: JAN 04, 2018
+=============================================================================
+
+Associated patches: (v)HBH*1*29    <<= must be installed BEFORE `HBH*1*30'
+
+Subject: HBHC MEDICAL FOSTER HOME FILE, CAREGIVER DOB CORRECTION
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ Patch HBH*1*30 addresses the following issue:
+  
+ 1.      HBHC Medical Foster Home File (#633.2), Caregiver Date of Birth 
+         Field (#26) is hard coded to only accept dates between 1/1/20-4/30/87.
+  
+  
+  
+ Associated Service Desk Ticket(s): 
+ ==================================
+ 1. I13038749FY17- HBPC Coin Report problem
+  
+  
+ Associated NSR(s): 
+ ==================
+ N/A
+  
+ Participating Test Sites: 
+ =========================
+ Boise 
+ Bay Pines 
+  
+  
+ Service Desk Ticket Overview:
+ =============================
+  
+ 1. I13038749FY17 HBPC Coin Report problem
+  
+ Problem:
+ --------
+ User is unable to enter Care giver date of birth because it is outside of 
+ the range in Vista.
+  
+ Solution:
+ ---------                     
+ The CAREGIVER DATE OF BIRTH Field (#26) in the HBHC MEDICAL FOSTER HOME 
+ File (#633.2) is being modified to accept all dates and verify that 
+ caregiver's are 21 years of age or older.
+  
+ Routine: N/A (DD)
+  
+ Technical
+ =========
+  
+ Before:
+  
+ 633.2,26      CAREGIVER DATE OF BIRTH 0;16 DATE
+  
+               INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y 
+                                 K:2870430<X!(2200101>X X
+               LAST EDITED:      APR 29, 2008 
+               HELP-PROMPT:      Answer with Caregiver Date of Birth.  
+                                 Caregiver 
+                                 Date of Birth must between 1/1/1920 & 
+                                 4/30/1987. 
+               DESCRIPTION:      This field represents the Caregiver Date 
+                                 of Birth.  Date must be between 1/1/1920 &
+                                 4/30/1987.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY 
+                                 PROGRAMMER
+  
+  
+  
+ After:
+  
+ 633.2,26      CAREGIVER DATE OF BIRTH 0;16 DATE
+  
+               INPUT TRANSFORM:  S %DT="EX" D ^%DT S DOB21=DT-210000 S X=Y
+                                  K:X>DOB21&(X'=DOB21) X  K:Y=-1 X
+               LAST EDITED:      OCT 19, 2017 
+               HELP-PROMPT:      Answer with Caregiver Date of Birth. Caregiver 
+                                 must be 21 years of age or older. 
+               DESCRIPTION:      This field represents the Caregiver Date of
+                                 Birth.  Caregiver must be over 21 years of age
+                                 or older.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+   
+  
+  
+    ==================== Installation Instructions ===================
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter HBH*1.0*30).      
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+     d. Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package HBH*1*30.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2017
+Completed By:                               Date Completed: NOV 30, 2017
+Released By :                               Date Released : DEC 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

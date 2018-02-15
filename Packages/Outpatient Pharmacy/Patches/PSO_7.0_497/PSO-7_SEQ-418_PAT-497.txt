@@ -1,0 +1,447 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 12/12/17 at 13:54
+=============================================================================
+Run Date: JAN 23, 2018                     Designation: PSO*7*497
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #418                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*497'
+                    (v)PSO*7*475   <<= must be installed BEFORE `PSO*7*497'
+                    (v)PSO*7*479   <<= must be installed BEFORE `PSO*7*497'
+                    (v)PSO*7*488   <<= must be installed BEFORE `PSO*7*497'
+
+Subject: ONEVA PHARMACY CRITICAL DEFECTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ The PSO*7.0*497 patch addresses the MPDU OneVA Pharmacy critical defects. 
+ This patch resolves critical defects for the following items:
+ 1.) Auto-suspend
+ 2.) Blocking prescriptions that contain a trade name
+ 3.) Blocking refills for titration prescriptions
+ 4.) Access controls - check to ensure the user has the PSORPH key in 
+     order to remotely refill or partial fill prescription.
+ 5.) Movement of the OneVA pharmacy flag from file 59 (Outpatient 
+     site) to file 59.7 (Pharmacy Site). This includes updates to the logic
+     that checks the status of the flag for remote prescription processing.
+  
+  
+ --------------------------------------------------------------------------
+                              ***IMPORTANT***
+  
+ In order to manage the technical nature of implementing the OneVA 
+ Pharmacy, patches PSO*7*497 and PSS*1*212 will install the software in a 
+ dormant state.
+  
+ Patch PSO*7*497 does not address all of the reasons why the OneVA 
+ Pharmacy software is currently disabled at your facility.  Sites are 
+ instructed to INSTALL this patch by the listed compliance date.  Do NOT 
+ turn the OneVA Pharmacy functionality on until given explicit instruction 
+ to do so.
+  
+ ***** The OneVA Pharmacy Implementation Team will manage an activation 
+ schedule. *****
+  
+  
+ --------------------------------------------------------------------------
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PHARMACY SYSTEM (#59.7)    ONEVA PHARMACY FLAG             New
+                            (#101)
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ List Templates Associated:
+ --------------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               -------------------- 
+ PSO LM REFILL REMOTE ORDER      Modified
+ PSO LM REMOTE ORDER MENU        Modified
+ PSO LM REMOTE PARTIAL           Modified
+  
+ Remote Procedure Calls:
+ -----------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ 1. I12092772FY17 - ONEVA PHARMACY FILL -- INITIATED BY USER WITHOUT PSORPH
+  
+ Problem: 
+ --------
+ The system allowed a pharmacy student (w/o PSORPH) to fill a OneVa refill 
+ from another site. The system is allowing a non-pharmacist to make a
+ determination about what drug from the local drug file will be dispensed
+ to satisfy the remote rx (i.e a clinical decision). Also, we are concerned
+ that all resulting displays (and the File Manager field labels in the
+ underlying data) list this user as "the pharmacist" who completed the
+ activity.
+  
+ Resolution: 
+ -----------
+ The action protocols for refilling and partially filling remote 
+ prescriptions have been modified to include screening logic that checks
+ will inactivate the action if the user does not have the PSORPH key. Add
+ screening logic to the associated menu protocol so the action protocols
+ will activate.
+     
+ Technical Resolution: 
+ ---------------------
+ Screening logic added to PSO LM REFILL REMOTE ORDER and PSO LM REMOTE 
+ PARTIAL:
+  
+ I $$PSORPH^PSORRX2(DUZ)
+  
+ Screening logic added to PSO LM REMOTE ORDER MENU to activate screening 
+ logic on action protocols:
+  
+ I 1 X:$D(^ORD(101,+$P(^ORD(101,DA(1),10,DA,0),"""^""",1),24)) ^(24)
+  
+  
+ 2. I12204814FY17 - OneVA Prescription - Blank Activity, Suspended Refill 
+                    Request
+   
+ Problem: 
+ --------
+ Finding blank activity and a suspense action on a refill requested from
+ another site via OneVA software. Please refer to associated tickets 
+ R12129538FY17, I12150112FY17 , and I12125069FY17.
+  
+ Scenario:
+ 1.) A prescription is originally filled at a 'host' site.
+ 2.) Some gap in time that exceeds the days supply.
+ 3.) The prescription is refilled again at the 'host' site.
+ 4.) A subsequent 'remote' refill is attempted by a dispensing site other
+     than the 'host' site.
+ 5.) This causes the prescription at the 'host' site to be placed in
+     suspense due to the current algorithm not stopping the prescription
+     from being filled.
+  
+ It has been identified that logic associated with the correct check for a
+ 'fill too soon' scenario (i.e auto-suspend) was writing results to the
+ screen in a background processing scenario. Instead, the logic should
+ have built a return message and quit processing. This message should
+ have then been sent back to the remote site trying to refill the host
+ site prescription.
+  
+  
+ Resolution: 
+ -----------
+ Routine PSORREF0 has been modified to correctly check for the auto-suspend
+ Scenario. If the requested fill date is less than the next possible fill
+ date on the prescription, a message is created and the prescription refill
+ process stops.
+     
+ Technical Resolution: 
+ ---------------------
+ Modification at EDATE+7^PSORREF0. Commented out checks that do not apply 
+ and modified the final check so we are not checking the "EAOK" (Early 
+ fill allowed/ok) parameter or the auto-suspend parameter. The EAOK and
+ auto-suspend parameters do not apply to OneVA pharmacy. Commented code is
+ being left in place for reference by future Developers/support.
+  
+ ; PSO*7*497 - removing this check, as it is not needed.
+ ;I 
+ '$P(PSOPAR,"^",6),'$D(PSOREF("EAOK")),$P(PSOREF("RX3"),"^",2)>PSOREF("FILL
+ DATE") D
+ ;. S PSOX1=(PSOREF("NUMBER")+1)*PSOREF("DAYS SUPPLY")-10
+ ;. ; PSO*7*497 - replacing line below with one that follows 
+ (auto-suspend defect - do not allow bypass)
+ ;. ;W !?5,$C(7),"LESS THAN ",PSOX1," DAYS FOR ",PSOREF("NUMBER")+1," 
+ FILLS",! D DIR K PSOX1
+ ;. S PSORMSG(1)="LESS THAN "_PSOX1_" DAYS FOR "_PSOREF("NUMBER")+1_" 
+ FILLS" S (PSOREF("DFLG"),PSOMHV)=1 K PSOX1
+ ; PSO(7*497 - replacing line below with the one that follows - EAOK 
+ check and auto-suspend flag are irrelevant for oneva pharmacy
+ ;I 
+ '$P(PSOPAR,"^",6),$G(PSOREF("EAOK"))=0,$P(PSOREF("RX3"),"^",2)>PSOREF("FIL
+ L DATE") D
+ I $P(PSOREF("RX3"),"^",2)>PSOREF("FILL DATE") D
+ . ; PSO*7*497 - replacing line below with one that follows (auto-suspend 
+ defect)
+ . ;S Y=$P(PSOREF("RX3"),"^",2) D DD^%DT W !!,$C(7),"Cannot be refilled 
+ until "_Y_"." S (PSOREF("DFLG"),PSOMHV)=1 K Y
+ . S Y=$P(PSOREF("RX3"),"^",2) D DD^%DT S PSORMSG(1)="Cannot be refilled 
+ until "_Y_"." S (PSOREF("DFLG"),PSOMHV)=1 K Y
+  
+  
+ 3. I12239583FY17 - OneVA and Drug TRADE NAME usage
+  
+ Problem: 
+ --------
+ The OneVA pharmacy software cannot properly handle the TRADE NAME field 
+ associated with a prescription.
+  
+  
+ Resolution: 
+ -----------
+ Routine PSORREF has been modified to block prescriptions that contain a 
+ trade name from being refilled by a non-host site pharmacy (i.e.
+ dispensing or remote pharmacy). When a prescription containing a trade
+ name is blocked, a message is sent to the dispensing pharmacy indicating
+ the drug cannot be refilled or partially filled because it contains a
+ trade name.
+     
+ Technical Resolution: 
+ ---------------------
+ REMREF+15-19^PSORREF:
+  
+  ; PSO*7*497 - trade name block/titration block
+  I $$GET1^DIQ(52,RRXIEN,6.5,"E")]"" D  Q
+  .D RET0
+  .S RET(1)="This prescription cannot be refilled or partial filled 
+   because it has a value"
+  .S RET(2)="entered in the Rx trade name field.  Please follow local
+   policy for obtaining"
+  .S RET(3)="a new prescription."
+  
+ PAR+19^PSORRPA1
+  
+  ; PSO*7*497 - trade name block
+  I $$GET1^DIQ(52,RRXIEN,6.5,"E")]"" D  Q
+  .S VALMSG(1)="This prescription cannot be refilled or partial filled be
+   cause it has a value"
+  .S VALMSG(2)="entered in the Rx trade name field.  Please follow local
+   policy for obtaining"
+  .S VALMSG(3)="a new prescription."
+  ; PSO*7*497 - end trade name block
+  
+  
+ 4.) TITRATION
+  
+ Problem: 
+ --------
+ Prescriptions that are a 'titration' type of prescription can be refilled 
+ by a Non-host (remote/dispensing) facility. Only partial fills should be
+ allowed for The 'titration' prescription.
+  
+ Resolution: 
+ -----------
+ Routine PSORREF has been modified to block the refill of a titration type
+ Prescription and inform the user to issue a partial fill request.
+     
+ Technical Resolution: 
+ ---------------------
+ REMREF+20^PSORREF:
+  
+ I $$TITRX^PSOUTL(RRXIEN)="t" S RET(1)="Cannot refill prescription - type 
+ is Titration. You may request a partial fill." D RET0 Q
+  
+ 5.) - Moving the OneVA Pharmacy Flag
+  
+ Problem:
+ --------
+ It has been requested that the OneVA Pharmacy flag be moved from the 
+ OUTPATIENT SITE file (#59) to the PHARMACY SYSTEM file (#59.7). It has
+ also been requested that the Pharmacy Systems Parameter Edit [PSS SYS
+ EDIT] option be modified to include the new ONEVA PHARMACY FLAG field in
+ the prompting sequence for users. The new location is in the Pharmacy
+ System file (#59.7), and is stored in the ONEVA PHARMACY FLAG field
+ (#101).
+  
+ Resolution:
+ -----------
+ PSORX1,PSORRPA1, and PSORREF have been modified to look at the new 
+ location for the OneVA pharmacy flag. 
+  
+ Technical Resolution:
+ ---------------------
+ OERR+25^PSORX1
+  
+ .I '$$GET1^DIQ(59.7,1,101,"I") D  Q
+  
+  
+ PAR+5^PSORRPA1
+  
+ I '$$GET1^DIQ(59.7,1,101,"I") D  Q
+  
+ REMREF+10^PSORREF
+  
+ I '$$GET1^DIQ(59.7,1,101,"I") D  Q
+  
+  
+ Test Sites:
+ ----------
+ OMAHA
+ HINES
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Outpatient Pharmacy V.7.0 Pharmacist User Manual
+                                PSO_7_0_P497_PHARM_UM.PDF       Binary
+  
+ Outpatient Pharmacy V.7.0 Technical Manual/Security Guide
+                                PSO_7_0_P497_TM.PDF             Binary
+  
+ Outpatient Pharmacy V.7.0 Deployment, Installation, Back-Out, and 
+ Rollback Guide
+                                PSO_7_0_P497_IG.PDF             Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre-post installation instructions for this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSO*7.0*497):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'YES'.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORREF
+    Before: B44094138   After: B49315727  **454,475,497**
+Routine Name: PSORREF0
+    Before: B46515290   After: B42566799  **454,497**
+Routine Name: PSORRPA1
+    Before: B75343267   After: B80588571  **454,475,497**
+Routine Name: PSORRX2
+    Before: B34725424   After: B35129325  **454,479,497**
+Routine Name: PSORX1
+    Before: B83034701   After: B82991230  **7,22,23,57,62,46,74,71,90,
+                                           95,115,117,146,139,135,182,195,
+                                           233,268,300,170,320,326,324,
+                                           334,251,454,488,497**
+ 
+Routine list of preceding patches: 475, 479, 488
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 01, 2017
+Completed By:                               Date Completed: JAN 23, 2018
+Released By :                               Date Released : JAN 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

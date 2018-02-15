@@ -1,0 +1,169 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/07/17 at 11:59
+=============================================================================
+Run Date: DEC 11, 2017                     Designation: HL*1.6*168
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #133                    Status: Released
+                  Compliance Date: JAN 11, 2018
+=============================================================================
+
+Associated patches: (v)HL*1.6*142  <<= must be installed BEFORE `HL*1.6*168'
+
+Subject: HL7 DYNAMIC ADDRESSING CLEANUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Resolves issue with HL7 dynamic addressing so that bad data identified
+ during processing does not affect subsequent calls.
+  
+  
+ Associated tickets:
+ ========================
+ 1) I9109218FY16 WAS: CPRS some TAS orders not crossing from CPRS to 
+ VBECS. 
+  
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Montana HCS
+ Washington D.C. VAMC
+  
+  
+ TICKET OVERVIEW:
+ ===============
+ 1) I9109218FY16 WAS: CPRS some TAS orders not crossing from CPRS to VBECS.
+  
+  
+ Problem: 
+ --------
+ While using dynamic addressing in HL7, if the HLL("LINKS") array 
+ is set to a bad value it is not properly cleaned up. If the Application 
+ Program Interface (API) encounters an error with the HLL("LINKS") array 
+ it should clean it up prior to exiting.
+  
+    
+ Resolution:
+ ----------
+ When an error is encountered the HLL("LINKS") should be killed before 
+ exiting. When this is done the subsequent API calls will not encounter 
+ the bad HLL("LINKS") value. Added the HLL array to the EXIT tag so the 
+ array is cleaned up appropriately upon exit when an error occurs.
+  
+  
+ Routine: HLMA
+  
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+ Installation should take less than 10 minutes.
+ Note: only experienced installer should attempt the install.
+  
+   1.  Users are allowed to be on the system during the installation. It 
+       is highly recommended to install the patch during off-hours.
+  
+   2.  Disable the HL7 TCPIP services for the multi-listeners running on 
+       all nodes in the cluster, for example, at the VMS prompt:
+  
+         ISC6A1> TCPIP
+         TCPIP> DISABLE SERVICE BAY_HLSP
+         Note: BAY is the 3 letter site designation for Bay Pines.
+  
+       ****For Linux***
+  
+       Disable the Linux xinetd HL7 service from the Linux OS prompt:
+       # rdp_ip_service bay hls disable
+       Note: BAY is the 3 letter site designation for Bay Pines.
+         
+   3.  Shutdown all Logical Links, incoming and outgoing filers using
+       the Filer and Link Management options listed below:
+  
+         Stop All Messaging Background Processes [HL STOP ALL]
+  
+   4.  Shutdown the Link Manager using the Filer and Link Management
+       option listed below:
+  
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   4a.  Wait until all Single Threaded Listeners  (Device Type =SS) are 
+        in SHUTDOWN state as seen in the Systems Link Monitor OR 10 
+        minutes have passed - whichever comes first.
+  
+   5.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+       option will load the KIDS package onto your system.
+  
+   6.  This patch is now loaded into a transport global on your system.
+       The next step is to use KIDS to install the Transport global.  On
+       the KIDS menu, under the 'Installation' menu, use the following
+       options:
+  
+          Verify Checksums in Transport Global
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Backup a Transport Global
+          Install Package(s) 
+  
+       When using the Install Package(s) menu option to install the 
+       patch build, you will be asked several questions.  The questions,
+       and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*168>
+   
+        Want KIDS to INHIBIT LOGONS during the install? NO// <NO>
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO// <NO>
+  
+   7.  Start up all Logical Links and incoming and outgoing filers using
+       the Filer and Link Management Option's 'Restart/Start All Links
+       and Filers [HL TASK RESTART]' menu option.
+       (Note those links that do not have "autostart" enabled will need
+       to be restarted manually.)
+   
+   8.  Restart the Link Manager, that was shutdown in step 4, using the
+       Filer and Link Management option listed below:
+  
+         TCP Link Manager Start/Stop [HL START/STOP LINK MANAGER]
+  
+   9. Enable the HL7 TCPIP services for the multi-listeners, for example, 
+      at the VMS prompt:
+  
+         ISC6A1> TCPIP
+         TCPIP> ENABLE SERVICE BAY_HLSP
+         Note: BAY is the 3 letter site designation for Bay Pines.
+  
+      ****For Linux***
+  
+      Enable the Linux xinetd HL7 service from the Linux OS prompt:
+      # rdp_ip_service bay hls enable
+      Note: BAY is the 3 letter site designation for Bay Pines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLMA
+    Before: B53088927   After: B53206753  **19,43,58,63,66,82,91,109,115,
+                                           133,132,122,140,142,168**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 19, 2017
+Completed By:                               Date Completed: DEC 08, 2017
+Released By :                               Date Released : DEC 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

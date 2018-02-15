@@ -1,0 +1,31 @@
+Subj: HEADS UP PATCH LR*5.2*492  *** DO NOT INSTALL ***  [#100365]
+8 Dec 2017 13:26:30 -0500 (EST)  24 lines
+-------------------------------------------------------------------------------
+HEADS UP ON LR*5.2*492   **** DO NOT INSTALL ****
+ 
+There has been a problem identified with VistA patch LR*5.2*492.  After 
+installing this patch, some sites have reported a problem with the Lab 
+Collection List not building correctly.  The list gets "stuck" in the 
+building state, and when trying to print the list, users see a message of 
+"Collection list is STILL BUILDING."
+ 
+If your site has recently installed LR*5.2*492 and are now experiencing 
+random collection lists not building, please have your local/regional 
+OI&T staff check your error trap.  If an error is seen in LRPHSET2 log a 
+CA SDM ticket to NTL SUP CLIN2.   The error would like something like 
+this:
+ 
+<UNDEFINED>SCAN60^LRPHSET2
+-       OR -
+<UNDEFINED>LP+15^LRPHSET2
+ 
+We are researching this with the developers and a work around is 
+available. 
+ 
+If your site has NOT installed LR*5.2*492, please do NOT install.  The 
+current compliance date for this patch is December 14, 2017, but will 
+most likely be extended depending on what our research finds. 
+
+
+
+

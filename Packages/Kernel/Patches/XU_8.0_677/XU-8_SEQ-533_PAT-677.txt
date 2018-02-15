@@ -1,0 +1,320 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 09/26/17 at 05:36
+=============================================================================
+Run Date: JAN 23, 2018                     Designation: XU*8*677
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #533                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+
+Subject: MFS PARAMETERS FOR PERSON CLASS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ***************************** ATTENTION **********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Payers Domain enhancement includes 3 patches
+ that must be installed in the following order:
+  
+      1.  XU*8.0*677
+      2.  HDI*1.0*18
+      3.  XU*8.0*671
+ **************************************************************************
+  
+  
+                         XU*8*677
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Updates the MASTER FILE PARAMETERS file (#4.001) with a new
+    entry Person Class(#8932.1):
+  
+ NUMBER: 8932.1                          MASTER FILE: PERSON CLASS
+   MFI CODE: Person Class                MASTER FILE IDENTIFIER: Person 
+ Class
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   COLUMN LENGTH: 62                     SEQUENCE: 1
+ COLUMN DESCRIPTION: VistA_VA_Code       FIELD NUMBER: 5
+   COLUMN LENGTH: 7                      SEQUENCE: 2
+ COLUMN DESCRIPTION: VistA_ASC_X12_Code  FIELD NUMBER: 6
+   COLUMN LENGTH: 10                     SEQUENCE: 3
+ COLUMN DESCRIPTION: VistA_Area_Of_Specialization
+   FIELD NUMBER: 2                       COLUMN LENGTH: 75
+   SEQUENCE: 4
+ COLUMN DESCRIPTION: VistA_Class         FIELD NUMBER: 1
+   COLUMN LENGTH: 65                     SEQUENCE: 5
+ COLUMN DESCRIPTION: VistA_Individual_Flag
+   FIELD NUMBER: 90002                   COLUMN LENGTH: 1
+   SEQUENCE: 6
+ COLUMN DESCRIPTION: VistA_Specialty_Code
+   FIELD NUMBER: 8                       COLUMN LENGTH: 2
+   SEQUENCE: 7
+ COLUMN DESCRIPTION: VistA_Textual_Definition
+   FIELD NUMBER: 11                      SUBFILE NUMBER: 8932.111
+   SEQUENCE: 8                           WP FIELD: YES
+ COLUMN DESCRIPTION: vista_replaced_by   FIELD NUMBER: 99.97
+   VUID PREFIX: VUID                     SEQUENCE: 9
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   SUBFILE NUMBER: 8932.199              COLUMN LENGTH: 1
+   SEQUENCE: 10
+   ZRT-PROCESSING LOGIC: D ZRT^XUPCZRT
+   POST-PROCESSING LOGIC: D P89321^XUPCZRT
+   ZRT-DISCOVERY LOGIC: D D89321^XUPCZRT
+  
+ 2) Updates the MD5 Signature file(#4.005) with a new entry
+   Person Class(#8932.1):
+  
+ NUMBER: 8932.1                          MD5 CODE SYSTEM: Person Class
+ FILE/SUBFILE NUMBER: 8932.1
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 1                         SEQUENCE: 60
+ FIELD NUMBER: 2                         SEQUENCE: 50
+ FIELD NUMBER: 5                         SEQUENCE: 30
+ FIELD NUMBER: 6                         SEQUENCE: 40
+ FIELD NUMBER: 8                         SEQUENCE: 70
+ FIELD NUMBER: 11                        SEQUENCE: 80
+ FIELD NUMBER: 99.97                     SEQUENCE: 90
+   VUID FROM FILE: 8932.1
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+ FIELD NUMBER: 90002                     SEQUENCE: 65
+   External/Internal: INTERNAL
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ N/A
+  
+ Files & Entries Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ MASTER FILE PARAMETERS (#4.001) Person Class(#8932.1) New
+ MD5 Signature file(#4.005)      Person Class(#8932.1) New
+  
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ LEBANON, PA VAMC
+ PITTSBURGH HCS
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.
+ There's no updated Documentation being released with this patch.
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 03/29/17
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*677 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*677 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF677, and XUMF677P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*677     Loaded from Distribution    
+ 03/29/17@06:52: 51
+      => XU*8.0*677 03/29/17
+  
+ This Distribution was loaded on MAR 29, 2017@06:52:51 with header of 
+    XU*8.0*677 03/29/17
+    It consisted of the following Install(s):
+      XU*8.0*677
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*677     MAR 29 2017 6:52 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF677   value = 21220576
+ XUMF677P  value = 3482261
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*677:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of a new database definition. If assistance is needed 
+ to rollback/backout the patch please, log a CA Service Desk Manager (SDM)
+ ticket so the development team can assist in this process.
+  
+   In the event a site determines that this patch should be backed out, the
+   site should use FileMan to delete the new entry PERSON CLASS in the
+   MASTER FILE PARAMETERS file (#4.001), and the new entry Person Class in 
+   the MD5 Signature file(#4.005):
+  
+ A) Select OPTION: ENTER OR EDIT FILE ENTRIES  
+    Input to what File: MASTER FILE PARAMETERS//   (22 entries)
+    EDIT WHICH FIELD: ALL// 
+    Select MASTER FILE PARAMETERS: PERSON CLASS  
+          ...OK? Yes//   (Yes)
+   MASTER FILE: PERSON CLASS// @
+   SURE YOU WANT TO DELETE THE ENTIRE MASTER FILE PARAMETERS? y  (Yes)
+  
+ B) Select OPTION: ENTER OR EDIT FILE ENTRIES
+    Input to what File: MD5 Signature//       (22 entries)
+    EDIT WHICH FIELD: ALL// 
+    Select MD5 Signature MD5 CODE SYSTEM:    Person Class
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF677
+    Before:       n/a   After: B21220576  **677**
+Routine Name: XUMF677P
+    Before:       n/a   After:  B3482261  **677**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2016
+Completed By:                               Date Completed: DEC 20, 2017
+Released By :                               Date Released : JAN 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

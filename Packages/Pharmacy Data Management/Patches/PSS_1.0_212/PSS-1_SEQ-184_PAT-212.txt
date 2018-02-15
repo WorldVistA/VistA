@@ -1,0 +1,248 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 01/16/18 at 08:35
+=============================================================================
+Run Date: JAN 23, 2018                     Designation: PSS*1*212
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #184                      Status: Released
+                  Compliance Date: FEB 23, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*159   <<= must be installed BEFORE `PSS*1*212'
+                    (v)PSO*7*497   <<= must be installed BEFORE `PSS*1*212'
+
+Subject: ONEVA PHARMACY FLAG UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ PSS*1.0*212 patch addresses the movement of the OneVA pharmacy flag.
+  
+ Patch PSO*7*497 adds a new field (#101) ONEVA PHARMACY FLAG to the 
+ PHARMACY SYSTEM file (#59.7). This patch will edit the functionality of 
+ the Pharmacy System Parameters Edit [PSS SYS EDIT] option to include the
+ ONEVA PHARMACY FLAG as one of the fields the user will be prompted for.
+  
+  
+ --------------------------------------------------------------------------
+                              ***IMPORTANT***
+  
+ In order to manage the technical nature of implementing the OneVA 
+ Pharmacy, patches PSO*7*497 and PSS*1*212 will install the software in a 
+ dormant state.
+  
+ Patch PSO*7*497 does not address all of the reasons why the OneVA 
+ Pharmacy software is currently disabled at your facility.  Sites are 
+ instructed to INSTALL this patch by the listed compliance date.  Do NOT 
+ turn the OneVA Pharmacy functionality on until given explicit instruction 
+ to do so.
+  
+ ***** The OneVA Pharmacy Implementation Team will manage an activation 
+ schedule. *****
+  
+  
+ --------------------------------------------------------------------------
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ List Templates Associated:
+ --------------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+ Options Associated:
+ -------------------
+ Option Name                       Type         New/Modified/Deleted
+ -----------                       -------      --------------------
+ Pharmacy System Parameters Edit  Run Routine        Modified
+  
+  
+ Protocols Associated:
+ ---------------------
+ Protocol Name               New/Modified/Deleted
+ -------------               -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls:
+ -----------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ --------
+ It has been requested that the OneVA Pharmacy flag be moved from the 
+ OUTPATIENT SITE file (#59) to the PHARMACY SYSTEM file (#59.7). It has
+ also been requested that the Pharmacy System Parameters Edit [PSS SYS
+ EDIT] option be modified to include the new ONEVA PHARMACY FLAG field #101
+ in the prompting sequence for users.
+  
+ Resolution:
+ -----------
+ PSSYSP has been modified to include the new field (#101 - ONEVA PHARMACY 
+ FLAG) in the prompt to the user.
+  
+ PSSYSP+3 - added ;101 to include the ONEVA PHARMACY FLAG in the prompting
+            Sequence presented by the ^DIE call.
+  
+  W ! S DIE="^PS(59.7,",DR="13;14;16;16.1;16.2;40.16;101",DA=1 D ^DIE
+  
+ Test Sites:
+ ----------
+ OMAHA
+ HINES
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                     FTP Mode
+ -----------------------------------------------------------------------
+ Pharmacy Data Management V.1.0  PSS_1_0_P212_IG.PDF           Binary
+ Deployment, Installation, Back-out, and Rollback Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no pre-post installation instructions for this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSS*1.0*212):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'YES'.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSYSP
+    Before:   B143904   After:   B158704  **20,38,87,120,137,140,159,212**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2017
+Completed By:                               Date Completed: JAN 23, 2018
+Released By :                               Date Released : JAN 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
