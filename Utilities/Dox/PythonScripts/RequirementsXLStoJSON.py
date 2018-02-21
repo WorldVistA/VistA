@@ -124,6 +124,7 @@ RequirementsFieldsConvert = {
 def checkReqForUpdate(curNode,pastJSONObj):
   diffFlag=False
   foundDate = curDate
+  noHistory=False;
   BFFList = []
   if type(curNode['BFFlink']) is list:
     for BFFlink in curNode['BFFlink']:
@@ -135,27 +136,31 @@ def checkReqForUpdate(curNode,pastJSONObj):
   for BFFEntry in BFFList:
     if pastJSONObj:
       diffFlag=False;
+      noHistory=False;
       if BFFEntry in pastJSONObj:
         ret = filter(lambda x: x['name'] == curNode['name'] , pastJSONObj[BFFEntry])
-        for entry in ret:
-          diffFlag=False
-          if "dateUpdated" in entry:
-            foundDate=entry["dateUpdated"]
-          for val in curNode.keys():
-            if val in ["recentUpdate","dateUpdated"]:
-              continue
-            oldVal = entry[val] if (val in entry) else None
-            newVal = curNode[val]
-            if type(oldVal) == list:
-              oldVal.sort()
-              newVal.sort()
-            if not (oldVal == newVal):
-              diffFlag= True
+        if len(ret):
+          for entry in ret:
+            diffFlag=False
+            if "dateUpdated" in entry:
+              foundDate=entry["dateUpdated"]
+            for val in curNode.keys():
+              if val in ["recentUpdate","dateUpdated"]:
+                continue
+              oldVal = entry[val] if (val in entry) else None
+              newVal = curNode[val]
+              if type(oldVal) == list:
+                oldVal.sort()
+                newVal.sort()
+              if not (oldVal == newVal):
+                diffFlag= True
+          else:
+            noHistory = True
     if diffFlag:
-      curNode['recentUpdate'] = True
+      curNode['recentUpdate'] = "Update"
       curNode['dateUpdated']  = curDate
     else:
-      curNode['recentUpdate'] = False
+      curNode['recentUpdate'] = "None" if (noHistory) else "New Requirement"
       curNode['dateUpdated']= foundDate
     rootNode[BFFEntry].append(curNode)
 
