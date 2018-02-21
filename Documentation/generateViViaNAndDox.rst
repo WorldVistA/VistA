@@ -359,6 +359,13 @@ Each test and corresponding Python script is described below.
    ``Utilities/Dox/PythonScripts`` directory in the VistA repository. This
    script uses output from the previous test to generate the html DOX pages.
 
+8. The **RequirementsParser** test runs a Python script of the same name from
+   the ``Utilities/Dox/PythonScripts`` directory in the VistA repository. This
+   script uses an Excel spreadsheet of "unfulfilled requirements" information
+   to generate a JSON listing of information and pages summarizing the
+   requirements.  These output pages are utilized by the BFF & Requirements
+   page.
+
 **NOTE:** After running tests, CTest automatically creates the
 ``Testing/Temporary`` subfolder in the binary directory. This folder contains
 two files: ``LastTest.log`` (test output) and ``LastTestsFailed.log`` (list of
