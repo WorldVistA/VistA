@@ -352,9 +352,7 @@ class ICRJsonToHtml(object):
             outputDataRecordTableHeader(output, tName)
             output.write("<body id=\"dt_example\">")
             output.write("""<div id="container" style="width:80%">""")
-            output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (icrJson['NAME'], ien,
-                                                              'ICR',
-                                                              ien))
+            output.write ("<h1>%s &nbsp;&nbsp;  %s (%s)</h1>\n" % (icrJson['NAME'], 'ICR', ien))
             outputFileEntryTableList(output, tName)
             """ table body """
             self._icrDataEntryToHtml(output, icrJson)
