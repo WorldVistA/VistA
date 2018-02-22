@@ -95,10 +95,10 @@ class ICRFileToJson(object):
                         if self._curField == fieldName:
                             self._appendWordsFieldLine(line)
                         else:
+                            # Starting to process general description
                             self._curField = fieldName
-                            name = match.group('name') # this is the name part
-                            restOfLine = line[match.end():]
-                            self._curRecord[name] = restOfLine.strip()
+                            self._rewindStack();
+                            self._findKeyValueInLine(match, line, self._curRecord)
                     elif isSubFile(fieldName):
                         self._curField = fieldName
                         self._startOfSubFile(match, line)

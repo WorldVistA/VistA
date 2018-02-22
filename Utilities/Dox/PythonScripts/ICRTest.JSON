@@ -883,18 +883,6 @@
                     {
                         "ACCESS": "Both R/W w/Fileman", 
                         "FIELD NUMBER": "2", 
-                        "GENERAL DESCRIPTION": [
-                            "", 
-                            "NAME: LRHY GET SITES                    TAG: GETSITES", 
-                            "ROUTINE: LRHYRP01                     RETURN VALUE", 
-                            "TYPE: ARRAY", 
-                            "DESCRIPTION:", 
-                            "This RPC will return all Howdy Sites", 
-                            "USAGE: Controlled Subscri  ENTERED: SEP 23,2014", 
-                            "STATUS: Pending             EXPIRES:", 
-                            "DURATION:                     VERSION:", 
-                            "DESCRIPTION:                        TYPE: Remote Procedure"
-                        ], 
                         "FIELD NAME": "LAB TEST (TO EXCLUDE)"
                     }
                 ], 
@@ -906,7 +894,19 @@
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "LRHY(69.86", 
         "ID": "LRHY(69.86", 
-        "FILE NUMBER": "69.86"
+        "FILE NUMBER": "69.86", 
+        "GENERAL DESCRIPTION": [
+            "", 
+            "NAME: LRHY GET SITES                    TAG: GETSITES", 
+            "ROUTINE: LRHYRP01                     RETURN VALUE", 
+            "TYPE: ARRAY", 
+            "DESCRIPTION:", 
+            "This RPC will return all Howdy Sites", 
+            "USAGE: Controlled Subscri  ENTERED: SEP 23,2014", 
+            "STATUS: Pending             EXPIRES:", 
+            "DURATION:                     VERSION:", 
+            "DESCRIPTION:                        TYPE: Remote Procedure"
+        ]
     }, 
     {
         "DATE CREATED": "2006/04/20", 
@@ -1235,7 +1235,6 @@
             }, 
             {
                 "GLOBAL DESCRIPTION": "Used to access data.", 
-                "GENERAL DESCRIPTION": "Surgery file (130).", 
                 "GLOBAL REFERENCE": "SRF('B',"
             }
         ], 
@@ -1244,7 +1243,8 @@
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "SRF(", 
         "ID": "SRF(", 
-        "FILE NUMBER": "130"
+        "FILE NUMBER": "130", 
+        "GENERAL DESCRIPTION": "Surgery file (130)."
     }, 
     {
         "DATE CREATED": "2004/10/29", 
@@ -1687,6 +1687,90 @@
         ]
     }, 
     {
+        "DATE CREATED": "2017/01/26", 
+        "STATUS": "Active", 
+        "DBA Comments": [
+            "3/9/2017-DC Activated the ICR for VIAB*1*9 and VIAB SRGY", 
+            "RPTLIST RPC service name for RPC maybe: GET SURGERY REPORT.", 
+            "", 
+            "Recommendations from Alan Monosky is as follows: Concerning ICR #6730, the", 
+            "DATE/TIME OF DICTATION field (#15) and the DATE OF TRANSCRIPTION field (#39)", 
+            "are not part of the current dictation/transcription process through TIU.", 
+            "Therefore, those two fields will not be populated and should not be part of", 
+            "the ICR.", 
+            "", 
+            "Discussions with Mike Montoli and VIA resulted in removing the PLANNED PRIN", 
+            "PROCEDURE CODE (27) from the ICR request."
+        ], 
+        "NAME": "VIAB SRGY RPTLIST", 
+        "CREATOR": "MORRISON,JENNIFER", 
+        "DATE/TIME EDITED": [
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "MONTALI,MIKE", 
+                "AT THE REQUEST OF": "ROSS,RICK", 
+                "DATE/TIME EDITED": "2017/03/09 12:58"
+            }
+        ], 
+        "TYPE": "File", 
+        "NUMBER": "6730", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "SUBSCRIBING PACKAGE": "VISTA INTEGRATION ADAPTOR"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "SURGERY", 
+        "KEYWORDS": [
+            {
+                "KEYWORDS": "SURGERY"
+            }, 
+            {
+                "KEYWORDS": "REPORT"
+            }, 
+            {
+                "KEYWORDS": "LIST"
+            }, 
+            {
+                "KEYWORDS": "VIA"
+            }
+        ], 
+        "IA #": "6730", 
+        "GLOBAL REFERENCE": [
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".04", 
+                        "LOCATION": "0;4", 
+                        "FIELD NAME": "SURGERY SPECIALTY"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "SRF(D0,0)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": "49", 
+                        "LOCATION": "9;0", 
+                        "FIELD NAME": "SPECIMENS"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "SRF(D0,9,0)"
+            }
+        ], 
+        "DATE ACTIVATED": "2017/03/09", 
+        "USAGE": "Private", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "GLOBAL ROOT": "SRF(", 
+        "ID": "SRF(", 
+        "FILE NUMBER": "130", 
+        "GENERAL DESCRIPTION": [
+            "VIA needs to read a number of fields from Surgery File", 
+            "#130 for VIAB SRGY RPTLIST RPC."
+        ]
+    }, 
+    {
         "DATE CREATED": "1998/02/03", 
         "STATUS": "Active", 
         "NAME": "SET OF CODES", 
@@ -1697,11 +1781,6 @@
         "IA #": "10155", 
         "GLOBAL REFERENCE": [
             {
-                "GENERAL DESCRIPTION": [
-                    "The 3rd piece of ^DD(filenumber,fieldnumber,0) is used", 
-                    "in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to", 
-                    "return this field for input to the supported call Y^DIQ."
-                ], 
                 "GLOBAL REFERENCE": "piece 3"
             }
         ], 
@@ -1709,7 +1788,12 @@
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "DD(file,field,0)", 
         "ID": "DD(file,field,0)", 
-        "FILE NUMBER": "0"
+        "FILE NUMBER": "0", 
+        "GENERAL DESCRIPTION": [
+            "The 3rd piece of ^DD(filenumber,fieldnumber,0) is used", 
+            "in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to", 
+            "return this field for input to the supported call Y^DIQ."
+        ]
     }, 
     {
         "DATE CREATED": "2006/05/31", 
