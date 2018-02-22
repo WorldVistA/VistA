@@ -28,7 +28,7 @@ def run(args):
       xlsfileName = args.localReq
     else:
       # First, acquire pages from http://code.osehra.org
-      xlsfileName="Open Needs_Epics with BFFs (for Open Source)_July2017.xls"
+      xlsfileName="Open Needs_Epics with BFFs (for Open Source)_Feb2018.xlsx"
       print "Downloading %s from http://code.osehra.org" % xlsfileName
       quotedURL = urllib.quote("code.osehra.org/files/requirements/"+xlsfileName)
       urllib.urlretrieve("http://%s" % quotedURL,xlsfileName)
@@ -36,13 +36,13 @@ def run(args):
       print "Using local pastData file: %s" % args.localPast
       pastDataFileName = args.localPast
     else:
-      pastDataURL= "code.osehra.org/files/requirements/requirements_oldest/requirements.json"
+      pastDataURL= "code.osehra.org/files/requirements/requirements_July_2017/Requirements.json"
       print "Downloading %s" % pastDataURL
       quotedURL = urllib.quote(pastDataURL)
       urllib.urlretrieve("http://%s" % quotedURL,"oldRequirements.json")
       pastDataFileName = "oldRequirements.json"
 
-    args.ReqJsonFile = os.path.join(args.outdir, "Requirements.json")
+    args.ReqJsonFile = os.path.join(args.outdir, "requirements.json")
     filename = os.path.basename(xlsfileName)[:-5] # Remove '.txt'
     curDate = filename[filename.rfind("_")+1:]
     RequirementsXLStoJSON.convertExcelToJson(xlsfileName, args.ReqJsonFile, pastDataFileName, curDate)
