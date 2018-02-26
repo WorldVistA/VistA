@@ -557,7 +557,7 @@ class WebPageGenerator:
     def __includeFooter__(self, outputFile):
         for line in self._footer:
             outputFile.write(line)
-    def __inlcudeSourceHeader__(self, outputFile):
+    def __includeSourceHeader__(self, outputFile):
         for line in self._source_header:
             outputFile.write(line)
 
@@ -1335,7 +1335,7 @@ class WebPageGenerator:
         if not justComment:
             outputFile = open(os.path.join(self._outDir,
                                          getRoutineSourceHtmlFileNameUnquoted(sourceCodeName)), 'wb')
-            self.__inlcudeSourceHeader__(outputFile)
+            self.__includeSourceHeader__(outputFile)
             outputFile.write("<title>Routine: "+sourceCodeName+"</title>")
             outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
             outputFile.write("<div id='pageCommands' style='position:fixed; top:55; background: white;'>")
