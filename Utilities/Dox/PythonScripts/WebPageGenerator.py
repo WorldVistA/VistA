@@ -2467,7 +2467,7 @@ class WebPageGenerator:
         routineHeader = title
         if platform:
             routineHeader += "Platform: %s" % platform
-        self.writeTitleBlock(title, routineHeader, package, outputfile)
+        self.writeTitleBlock(title, routineHeader, package, outputFile)
         outputFile.write(getAccordionHTML())
         for idx in idxLst:
           sectionGen = sectionGenLst[idx]
