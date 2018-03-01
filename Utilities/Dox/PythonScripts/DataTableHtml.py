@@ -31,10 +31,14 @@ data_table_reference = """
 <link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="../../datatable/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
 <script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
 <script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 
 <!-- Google Analytics -->
 <script>
@@ -48,6 +52,27 @@ data_table_reference = """
 </script>
 """
 
+downloadButtons = """
+          {
+              extend: 'csv',
+              title: '${downloadTitle}',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdf',
+              title: '${downloadTitle}',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          }
+"""
+
 data_table_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
@@ -56,7 +81,10 @@ data_table_list_init_setup = Template("""
         iDisplayLength: 25,
         pagingType: "full_numbers",
         bStateSave: true,
-        bAutoWidth: false
+        bAutoWidth: false,
+        buttons: [
+""" + downloadButtons + """
+        ]
       });
 }); </script>
 """)
@@ -87,7 +115,7 @@ data_table_list_with_columns_init_setup = Template("""
             action: function ( e, dt, node, conf ) {
               clearFilters();
             }
-          }
+          },""" + downloadButtons + """
         ]
     });
 
@@ -146,7 +174,10 @@ data_table_large_list_init_setup = Template("""
         iDisplayLength: 10,
         pagingType: "full_numbers",
         bDeferRender: true,
-        sAjaxSource: "${ajaxSrc}"
+        sAjaxSource: "${ajaxSrc}",
+        buttons: [
+""" + downloadButtons + """
+        ]
       });
 }); </script>
 """)
@@ -178,7 +209,8 @@ data_table_large_list_with_columns_init_setup = Template("""
             action: function ( e, dt, node, conf ) {
               clearFilters();
             }
-          }
+          },
+""" + downloadButtons + """
         ],
         fnInitComplete: function(oSettings, json) {
           var table = $("#${tableName}").DataTable();
@@ -261,7 +293,7 @@ def outputDataListTableHeader(output, tName, columns=None,
                               searchColumnNames=None, hideColumnNames=None):
   output.write("%s\n" % data_table_reference)
   if columns is None:
-    initSet = data_table_list_init_setup.substitute(tableName=tName)
+    initSet = data_table_list_init_setup.substitute(tableName=tName,downloadTitle=tName)
   else:
     columnNames = []
     for col in columns:
@@ -280,7 +312,8 @@ def outputDataListTableHeader(output, tName, columns=None,
     initSet = data_table_list_with_columns_init_setup.safe_substitute(tableName=tName,
                                                                       columnNames=",".join(columnNames),
                                                                       searchColumns="||".join(searchColumns),
-                                                                      hideColumns=hideColumnsStr)
+                                                                      hideColumns=hideColumnsStr
+                                                                      ,downloadTitle=tName)
   output.write("%s\n" % initSet)
 
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
@@ -291,7 +324,8 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
   output.write("%s\n" % data_table_reference)
   if columns is None and searchColumnNames is None and hideColumnNames is None:
     initSet = data_table_large_list_init_setup.substitute(ajaxSrc=src,
-                                                          tableName=tName)
+                                                          tableName=tName
+                                                          ,downloadTitle=tName)
   else:
     columnNames = []
     for col in columns:
@@ -306,7 +340,8 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
                                                                             tableName=tName,
                                                                             columnNames=",".join(columnNames),
                                                                             searchColumns="||".join(searchColumns),
-                                                                            hideColumns="||".join(hideColumns))
+                                                                            hideColumns="||".join(hideColumns)
+                                                                            ,downloadTitle=tName)
   output.write("%s\n" % initSet)
 
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
@@ -314,7 +349,7 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
 
 def outputDataRecordTableHeader(output, tName):
   output.write("%s\n" % data_table_reference)
-  initSet = data_table_record_init_setup.substitute(tableName=tName)
+  initSet = data_table_record_init_setup.substitute(tableName=tName,downloadTitle=tName)
   output.write("%s\n" % initSet)
 
 def outputDataTableHeader(output, name_list, tName):
