@@ -1305,6 +1305,25 @@ def addTemplatePermission(VistA,init):
   VistA.wait('Option')
   VistA.write('\r')
 
+def setNonExpiringCodes(VistA, nameArray):
+  startFileman(VistA)
+  VistA.write('ENTER')
+  VistA.wait('Input to what File')
+  VistA.write('NEW PERSON')
+  VistA.wait_re('EDIT WHICH FIELD')
+  VistA.write('7.2')
+  VistA.wait('THEN EDIT')
+  VistA.write('')
+  for name in nameArray:
+    VistA.wait("NEW PERSON NAME")
+    VistA.write(name)
+    VistA.wait('VERIFY CODE never expires')
+    VistA.write('Y')
+  VistA.wait("NEW PERSON NAME")
+  VistA.write('')
+  VistA.wait_re('Select OPTION')
+  VistA.write('')
+
 def createClinic(VistA,name,abbrv,service):
   # Add clinic via the XUP menu to allow scheduling
   # Clinic Information:

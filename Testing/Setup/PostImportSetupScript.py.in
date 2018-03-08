@@ -151,6 +151,17 @@ OSEHRASetup.addAllergiesPermission(VistA)
 #Give Mary Smith permission to create shared templates
 OSEHRASetup.addTemplatePermission(VistA,"MS")
 
+# Turn off expiration of Access/Verify codes
+VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImportVerifyCodes.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
+OSEHRASetup.setNonExpiringCodes(VistA,["ALEXANDER,ROBERT", 'SMITH,MARY',"CLERK,JOE"])
+
 time.sleep(10)
 #Set up the Doctors electronic signature
 VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImportSignature.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
