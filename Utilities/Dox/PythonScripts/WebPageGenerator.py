@@ -664,11 +664,11 @@ class WebPageGenerator:
     def __getGitRepositLatestSha1Key__(self):
         gitCommand = "\"" + self._git + "\"" + " rev-parse --verify HEAD"
         os.chdir(self._repDir)
-        logger.debug("git Command is %s" % gitCommand)
-        result = subprocess.check_output(gitCommand, shell=True)
-        return result.strip()
-
-    ###########################################################################
+        if os.path.exists(os.path.join(self._repDir,'.git')):
+          logger.debug("git Command is %s" % gitCommand)
+          result = subprocess.check_output(gitCommand, shell=True)
+          return result.strip()
+        return ""
     def __generateHtmlPageHeader__(self, isSource = False):
         if isSource:
             output = self._source_header

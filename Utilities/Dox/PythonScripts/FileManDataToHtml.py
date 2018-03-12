@@ -379,8 +379,8 @@ class FileManDataToHtml(object):
         """ generate all option list """
         if not os.path.exists(outDir+"/19"):
           os.mkdir(outDir+"/19")
-        if not os.path.exists(outDir+"/menus"):
-          os.mkdir(outDir+"/menus")
+        if not os.path.exists(outDir+"/Menus"):
+          os.mkdir(outDir+"/Menus")
         allOptionList = []
         allMenuList = []
         serverMenuList = []

@@ -28,8 +28,10 @@ def __generateGitRepositoryKey__(git, mDir, outputFile):
 def __getGitRepositLatestSha1Key__(git, mDir):
     gitCommand = "\"" + git + "\"" + " rev-parse --verify HEAD"
     os.chdir(mDir)
-    result = subprocess.check_output(gitCommand, shell=True)
-    return result.strip()
+    if os.path.exists(os.path.join(mDir,'.git')):
+      result = subprocess.check_output(gitCommand, shell=True)
+      return result.strip()
+    return "Non-Git Directory"
 
 def run(result):
     outputFile = open(os.path.join(result.outdir, "filesInfo.json"), 'wb')
