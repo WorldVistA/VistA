@@ -1132,18 +1132,6 @@ class WebPageGenerator:
             if fileName not in packDepDict:
                 packDepDict[fileName] = (package, depPack)
 #===============================================================================
-# method to generate caller/called routine detail dict
-#===============================================================================
-    def generatePackageRoutineDetailDict(self, package, depPackage, depDict):
-        depRoutinesDict = dict()
-        for routine in depDict[depPackage]:
-            details = routine.getCalledRoutines()[depPackage]
-            for depRoutine in details.iterkeys():
-                if depRoutine not in depRoutinesDict:
-                    depRoutinesDict[depRoutine] = []
-                depRoutinesDict[depRoutine].append(routine)
-        return depRoutinesDict
-#===============================================================================
 # method to generate the detail of package
 #===============================================================================
     def generatePackageRoutineDependencyDetailPage(self, package, depPackage, outputFile,titleIndex):
