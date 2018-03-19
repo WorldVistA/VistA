@@ -139,7 +139,7 @@ if (GENERATE_DOX)
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/WebPageGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake @ONLY)
   add_test(WebPageGenerator ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake)
-  set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 7200)
+  set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 21600)
 endif()
 
 if(GENERATE_VIVIAN)
