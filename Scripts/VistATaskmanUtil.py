@@ -116,21 +116,24 @@ class VistATaskmanUtil(object):
                   shutdownActJobs=True):
     connection = vistAClient.getConnection()
     menuUtil = VistAMenuUtil(duz=1)
-    menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
-    connection.send("Stop Task Manager\r")
-    connection.expect("Are you sure you want to stop TaskMan\? ")
-    connection.send("YES\r")
-    connection.expect("Should active submanagers shut down after finishing their current tasks\? ")
-    if shutdownSubMgrs:
-      connection.send("YES\r")
-    else:
-      connection.send("NO\r")
-    connection.expect("Should active jobs be signaled to stop\? ")
-    if shutdownActJobs:
-      connection.send("YES\r")
-    else:
-      connection.send("NO\r")
-    menuUtil.exitTaskmanMgrUtilMenu(vistAClient)
+    connection.send('D GROUP^ZTMKU("SSUB(NODE)")\n')
+    vistAClient.waitForPrompt()
+    connection.send('D GROUP^ZTMKU("SMAN(NODE)")\n')
+    # menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
+    # connection.send("Stop Task Manager\r")
+    # connection.expect("Are you sure you want to stop TaskMan\? ")
+    # connection.send("YES\r")
+    # connection.expect("Should active submanagers shut down after finishing their current tasks\? ")
+    # if shutdownSubMgrs:
+      # connection.send("YES\r")
+    # else:
+      # connection.send("NO\r")
+    # connection.expect("Should active jobs be signaled to stop\? ")
+    # if shutdownActJobs:
+      # connection.send("YES\r")
+    # else:
+      # connection.send("NO\r")
+    # menuUtil.exitTaskmanMgrUtilMenu(vistAClient)
     logger.info("Wait 30 seconds for Taskman to stop")
     time.sleep(30)
 
@@ -164,24 +167,20 @@ class VistATaskmanUtil(object):
 
   def stopMailManBackgroundFiler(self, vistAClient):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
-    menuUtil.gotoMailmanLocalDeliveryMgrMenu(vistAClient)
-    connection.send("STOP background filer\r")
+    connection.send("D STOP^XMKPL\n")
     connection.expect("Are you sure you want the Background Filers to stop delivering mail\? ")
     connection.send("YES\r")
-    menuUtil.exitMailmanLocalDeliveryMgrMenu(vistAClient)
-    logger.info("Wait 30 seconds for Mailman backgroud filer to stop")
+    vistAClient.waitForPrompt()
+    logger.info("Wait 30 seconds for Mailman background filer to stop")
     time.sleep(30)
 
   def stopHL7BackgroundFiler(self, vistAClient):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
-    menuUtil.gotoHL7FilerLinkMgrMenu(vistAClient)
-    connection.send("Stop All Messaging Background Processes\r")
-    connection.expect("Okay to shut down all Links and Filers\? ")
-    connection.send("Yes\r")
-    menuUtil.exitHL7FilerLinkMgrMenu(vistAClient)
-    logger.info("Wait 30 seconds for HL7 backgroud filer to stop")
+    connection.send("D LLP^HLCS2(1)\n")
+    vistAClient.waitForPrompt()
+    connection.send("D STOPLM^HLCSLM\n")
+    vistAClient.waitForPrompt()
+    logger.info("Wait 30 seconds for HL7 background filer to stop")
     time.sleep(30)
 
   """ Start taskman, it will not restart taskman if it is already started """
