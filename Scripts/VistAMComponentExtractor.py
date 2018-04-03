@@ -101,6 +101,11 @@ class VistADataExtractor:
                                  DEFAULT_LOGGING_FILENAME))
 
   def __stopTaskman__(self, vistATestClient):
+    connection = vistATestClient.getConnection()
+    connection.send("S DUZ=.5 D ^XUP\n")
+    connection.expect("OPTION")
+    connection.send("\n")
+    vistATestClient.waitForPrompt()
     taskmanUtil = VistATaskmanUtil()
     taskmanUtil.shutdownAllTasks(vistATestClient)
 
