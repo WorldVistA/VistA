@@ -850,7 +850,7 @@ def test_getMumpsRoutineHtmlLink():
     'D ACKMSG^DGHTHLAA',
     'S XQORM(0)="1A",XQORM("??")="D HSTS^ORPRS01(X)"',
     'I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
-    'S DUZ=1 K ^XUTL(0)',
+    'S DUZ=.5 K ^XUTL(0)',
     """W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
     """W "This is a Test",$$TM^ZTLOAD()""",
     """D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",

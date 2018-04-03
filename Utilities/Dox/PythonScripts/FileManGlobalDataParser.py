@@ -111,7 +111,7 @@ def test_getMumpsRoutine():
        ('%INDX','ENG',29)
      ]
     ),
-    ('S DUZ=1 K ^XUTL(0)', None),
+    ('S DUZ=.5 K ^XUTL(0)', None),
     ("""W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
      [('%ZTLOAD','TM',8)]
     ),

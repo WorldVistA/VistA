@@ -113,7 +113,7 @@ class ConnectMUMPS(object):
       self.boxvol = self.connection.after
 
   def IEN(self, file, objectname):
-    self.write('S DUZ=1 D Q^DI')
+    self.write('S DUZ=.5 D Q^DI')
     self.wait('OPTION')
     self.write('5')
     self.wait_re('FILE:')

@@ -48,7 +48,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   """ The test won't accept a name of "URINE" when creating the entry, change it afterwards from
   the temp name of "URINCE CYTOLOGY" """
   def addSNOMEDCode(self,connection,name,code):
-     connection.send('S DUZ=1,LRFMERTS=1,LRFMERTS("STS","STAT")="NEW",LRFMERTS("STS","PROC")="REFLAB" D Q^DI\r')
+     connection.send('S DUZ=.5,LRFMERTS=1,LRFMERTS("STS","STAT")="NEW",LRFMERTS("STS","PROC")="REFLAB" D Q^DI\r')
      connection.expect("Select OPTION")
      connection.send("1\r")
      connection.expect(inputRegEx)
@@ -75,7 +75,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   """ The LABORATORY TEST and ORDERABLE ITEM files won't accept a name of "URINE" when creating the entry, change it afterwards from
   the temp name of "URINCE CYTOLOGY" """
   def fixUrineTest(self,connection):
-     connection.send("S DUZ=1 D Q^DI\r")
+     connection.send("S DUZ=.5 D Q^DI\r")
      connection.expect("Select OPTION")
      connection.send("1\r")
      connection.expect(inputRegEx)
@@ -117,7 +117,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
      connection.send("\r")
 
   def addLabTest(self, connection, name,subscript):
-     connection.send("S DUZ=1 D Q^DI\r")
+     connection.send("S DUZ=.5 D Q^DI\r")
      connection.expect("Select OPTION")
      connection.send("1\r")
      connection.expect(inputRegEx)
@@ -164,7 +164,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def addOrderableItemConnection(self, connection, name):
      # First find the IEN of the given Lab test
      ien=''
-     connection.send("S DUZ=1 D Q^DI\r")
+     connection.send("S DUZ=.5 D Q^DI\r")
      connection.expect("Select OPTION")
      connection.send("5\r")
      connection.expect(outputRegEx)
@@ -220,7 +220,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
      connection.send("\r")
   def editDisplayGroup(self,connection):
      groups = ["SURGICAL PATHOLOGY","CYTOLOGY","ELECTRON MICROSCOPY"]
-     connection.send("S DUZ=1 D Q^DI\r")
+     connection.send("S DUZ=.5 D Q^DI\r")
      connection.expect("Select OPTION")
      connection.send("1\r")
      connection.expect(inputRegEx)
@@ -262,7 +262,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
      connection.send('\r')
 
   def addAPSpecimen(self, connection):
-     connection.send("S DUZ=1 D Q^DI\r")
+     connection.send("S DUZ=.5 D Q^DI\r")
      connection.expect("Select OPTION")
      connection.send("1\r")
      connection.expect(inputRegEx)
