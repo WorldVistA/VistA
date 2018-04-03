@@ -586,7 +586,7 @@ def getPersonNameByDuz(inputDuz, vistAClient):
   logger.info ("inputDuz is %s" % inputDuz)
   """ user Kernel User API """
   connection = vistAClient.getConnection()
-  menuUtil = VistAMenuUtil(duz=1)
+  menuUtil = VistAMenuUtil(duz=.5)
   menuUtil.gotoSystemMenu(vistAClient)
   connection.send('Prog\r')
   connection.expect('Select Programmer Options')
@@ -606,7 +606,7 @@ def addPackagePatchHistory(packageName, version, seqNo,
   logger.info("Adding %s, %s, %s, %s to Package Patch history" %
               (packageName, version, seqNo, patchNo))
   connection = vistAClient.getConnection()
-  menuUtil = VistAMenuUtil(duz=1)
+  menuUtil = VistAMenuUtil(duz=.5)
   menuUtil.gotoFileManEditEnterEntryMenu(vistAClient)
   connection.send("9.4\r") # package file
   connection.expect("EDIT WHICH FIELD: ")

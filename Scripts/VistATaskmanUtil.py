@@ -49,7 +49,7 @@ class VistATaskmanUtil(object):
   def verifyTaskmanSiteParameter(self, vistAClient, autoFix=True):
     retValue = True
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     boxVolPair = getBoxVolPair(vistAClient)
     logger.debug("Box:Vol Pair is [%s] " % boxVolPair)
     menuUtil.gotoTaskmanEditParamMenu(vistAClient)
@@ -75,7 +75,7 @@ class VistATaskmanUtil(object):
 
   def getTaskmanStatus(self, vistAClient):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("MTM\r") #  Monitor Taskman
     curStatus = self.__getTaskmanStatus__(connection)
@@ -96,7 +96,7 @@ class VistATaskmanUtil(object):
     MaxRetry = timeOut/DEFAULT_POLL_INTERVAL
     startRetry = 0
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("MTM\r") #  Monitor Taskman
     while startRetry < MaxRetry:
@@ -115,7 +115,7 @@ class VistATaskmanUtil(object):
   def stopTaskman(self, vistAClient, shutdownSubMgrs=True,
                   shutdownActJobs=True):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     connection.send('D GROUP^ZTMKU("SSUB(NODE)")\n')
     vistAClient.waitForPrompt()
     connection.send('D GROUP^ZTMKU("SMAN(NODE)")\n')
@@ -139,7 +139,7 @@ class VistATaskmanUtil(object):
 
   def placeTaskmanToWait(self, vistAClient, shutdownSubMgrs=True):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("Place Taskman in a WAIT State\r")
     connection.expect("Should active submanagers shut down after finishing their current tasks\? ")
@@ -153,7 +153,7 @@ class VistATaskmanUtil(object):
 
   def removeTaskmanFromWait(self, vistAClient):
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("Remove Taskman from WAIT State\r")
     menuUtil.exitTaskmanMgrUtilMenu(vistAClient)
@@ -187,7 +187,7 @@ class VistATaskmanUtil(object):
   def startTaskman(self, vistAClient, waitToCurrent=True):
     self.verifyTaskmanSiteParameter(vistAClient)
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil = VistAMenuUtil(DUZ=.5)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("Restart Task Manager\r")
     index = connection.expect(["ARE YOU SURE YOU WANT TO RESTART ANOTHER TASKMAN\?",
