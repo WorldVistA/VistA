@@ -14,10 +14,16 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 message(STATUS "Gathering FileMan information...")
-
-if(NOT EXISTS "@CMAKE_BINARY_DIR@/globals.lst")
+file(WRITE "@CMAKE_BINARY_DIR@/globals.lst" "")
+if(NOT EXISTS "@DOCUMENT_VISTA_M_DIR@/.git")
+  file(GLOB_RECURSE ZWR_LIST "@DOCUMENT_VISTA_M_DIR@/*.zwr")
+  foreach(path ${ZWR_LIST})
+    file(APPEND "@CMAKE_BINARY_DIR@/globals.lst" "${path}\n")
+  endforeach()
+else()
   execute_process(COMMAND "@GIT_EXECUTABLE@" ls-files "*.zwr" WORKING_DIRECTORY @DOCUMENT_VISTA_M_DIR@ OUTPUT_FILE @CMAKE_BINARY_DIR@/globals.lst RESULT_VARIABLE return )
 endif()
+
 file(STRINGS "@CMAKE_BINARY_DIR@/globals.lst" FilemanFileList)
 set(masterfilelist "")
 foreach(files ${FilemanFileList})
