@@ -148,6 +148,7 @@ GLOBALS ; [Private] Collect all Globals except the temp ones
 STARTJOBS  ; [Private] Start child workers
  N CORES
  I +$SY=0 X "S CORES=$SYSTEM.Util.NumberOfCPUs()"
+ I $L($SY,":")=2 X "S CORES=$SYSTEM.Util.NumberOfCPUs()"
  I +$SY=47 D
  . I $ZV["Linux" o "p":(shell="/bin/sh":comm="nproc")::"pipe" u "p" r CORES c "p"
  . I $ZV["Darwin" o "p":(shell="/bin/sh":comm="sysctl -n hw.ncpu")::"pipe" u "p" r CORES c "p"
@@ -155,11 +156,14 @@ STARTJOBS  ; [Private] Start child workers
  N JOBPAR
  N CACHENULL S CACHENULL="/dev/null"
  I +$SY=0,$ZV["Windows" S CACHENULL="//./nul"
+ I $L($SY,":")=2,$ZV["Windows" S CACHENULL="//./nul"
  N OUTCACHE S OUTCACHE=$$DEFDIR^%ZISH_"worklist.log"
  I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
  I +$SY=0 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
+ I $L($SY,":")=2 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
  N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S(+$SY=0:$ZCHILD,1:$ZJOB)
  I +$SY=0 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
+ I $L($SY,":")=2 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
  QUIT
  ;
 RUNJOBS ; [Private] Run child workers
@@ -198,6 +202,9 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. n fDev s fDev=$$OPENFILE(fileRef)
  .. I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
  .. I +$SY=0 d  ; On Cache, ZWRITE is really slow
+ ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
+ ... d DUMP(fDev,fileGlobal)
+ .. I $L($SY,":")=2  ; On Cache, ZWRITE is really slow
  ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
  ... d DUMP(fDev,fileGlobal)
  .. d CLOSE(fDev)
@@ -249,6 +256,7 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  . n gNode s gNode=G_"("_fullSubs_")"
  . I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
  . I +$SY=0 D WRITE(gDev,gNode)
+ . I $L($SY,":")=2 D WRITE(gDev,gNode)
  D CLOSE(gDev)
  quit
  ;
