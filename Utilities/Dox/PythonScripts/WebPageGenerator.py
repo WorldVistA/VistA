@@ -2297,24 +2297,21 @@ class WebPageGenerator:
         paragraphs = []
         writeSectionHeader(sectionGraphHeader, sectionGraphHeader, outputFile,
                            paragraphs if totalPackages > 0 else None)
-        outputFile.write("<div>\n")
+        outputFile.write("<div class=\"contents\">\n")
         try:
             # write the image of the dependency graph
             fileNamePrefix = normalizePackageName(packageName) + packageSuffix
             cmapFile = open(os.path.join(self._outDir, packageName + "/" + fileNamePrefix + ".cmapx"), 'r')
-            outputFile.write("<div class=\"contents\">\n")
             imageFileName = packageName + "/" + fileNamePrefix + ".png"
             outputFile.write("<img id=\"package%sGraph\" src=\"%s\" border=\"0\" alt=\"Call Graph\" usemap=\"#%s\"/>\n"
                        % (packageSuffix, imageFileName, fileNamePrefix))
             if totalPackages > 0:
                 self.__writeImageToPDF__(imageFileName, paragraphs)
-
             # append the content of map outputFile
             for line in cmapFile:
                 outputFile.write(line)
                 if totalPackages > 0: # TODO: Need this check here?
                     paragraphs.append(generateParagraph(line))
-            outputFile.write("</div>\n")
         except IOError:
             pass
         total = "%s Total: %d " % (sectionListHeader, totalPackages)
@@ -2330,7 +2327,7 @@ class WebPageGenerator:
             paragraphs.append(generateParagraph(key))
             paragraphs.append(Spacer(1, 10))
 
-            outputFile.write("<div class=\"contents\"><table>\n")
+            outputFile.write("<div><table>\n")
             numOfCol = 6
             numOfRow = totalPackages / numOfCol + 1
             data = []
@@ -2563,8 +2560,7 @@ class WebPageGenerator:
                 globalNamespace = "Additional Global Namespace: %s" % listDataToCommaSeperatorString(globalNamespaces)
                 outputFile.write("<div><p><h4 id=\"packageNamespace\">" + globalNamespace + "</h4></div>")
                 pdf.append(generateParagraph(globalNamespace))
-            else:
-                outputFile.write("</h4></div>")
+            outputFile.write("</div>")
             writeSectionEnd(outputFile)
 
             # Link to VA documentation
