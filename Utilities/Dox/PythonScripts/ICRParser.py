@@ -5,11 +5,11 @@ import argparse
 import os
 
 from LogManager import initConsoleLogging
+ICR_DIR = "ICR"
 
 def run(args):
     filename = os.path.basename(args.icrfile)[:-4] # Remove '.txt'
     args.icrJsonFile = os.path.join(args.outdir, filename + ".JSON")
-
     ICRFileToJson.run(args)
 
     args.date = ICRFileToJson.date
@@ -34,7 +34,9 @@ if __name__ == '__main__':
     parser.add_argument('-pr', '--patchRepositDir', required=True,
                           help="VistA Git Repository Directory")
     parser.add_argument('icrfile', help='path to the VistA ICR file')
+    parser.add_argument('icrJsonFile', help='path to the output JSON file')
     parser.add_argument('outdir', help='path to the output web page directory')
+    parser.add_argument('pdfOutdir', help='path to the output PDF directory')
     parser.add_argument('-html', action='store_true',
                           help='generate html')
     parser.add_argument('-local', action='store_true',

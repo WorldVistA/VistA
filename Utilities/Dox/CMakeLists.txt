@@ -39,7 +39,15 @@ endif()
 set(ICR_FILE "" CACHE FILEPATH "ICR File from http://foia-vista.osehra.org/VistA_Integration_Agreement/")
 if(NOT EXISTS ${ICR_FILE})
   message(WARNING "ICR_FILE is required.")
+else()
+  # Get file name without directory or longest extension
+  get_filename_component(ICR_JSON_FILE ${ICR_FILE} NAME_WE)
+  set(ICR_JSON_FILE "${DOCUMENT_VISTA_OUTPUT_DIR}/${ICR_JSON_FILE}.JSON")
 endif()
+
+
+set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
+set(DOCUMENT_VISTA_PDF_OUTPUT_DIR "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}/PDF")
 
 set(PYTHONSCRIPTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/PythonScripts")
 set(LOCAL_DOX_LINKS "FALSE" CACHE BOOL "Use a local links for DOX page connections")
@@ -112,10 +120,8 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
 endif()
 
 # 5. Run ICR Parser Script to parse and convert the downloaded ICR text file
-# to json (DOX) and html (ViViaN)
+# to json (DOX), html (ViViaN) and pdf (DOX)
 if (GENERATE_DOX OR GENERATE_VIVIAN)
-  set(DOCUMENT_VISTA_ICR_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/ICR")
-  file(MAKE_DIRECTORY "${DOCUMENT_VISTA_ICR_OUTPUT_DIR}")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ICRParser.cmake.in ${SCRIPT_OUTPUT_DIR}/ICRParser.cmake @ONLY)
   add_test(ICRParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/ICRParser.cmake)
 endif()
@@ -126,15 +132,10 @@ if (GENERATE_VIVIAN)
   add_test(GenerateRepoInfo ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake)
 endif()
 
-# 7. Run the Web Page Generator script to create DOX pages
+# 7. Run the Web Page Generator script to create DOX pages and PDF bundles
 if (GENERATE_DOX)
   set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
   file(MAKE_DIRECTORY "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
-  if(NOT "${ICR_FILE}" STREQUAL "")
-    # Get file name without directory or longest extension
-    get_filename_component(ICR_JSON_FILE ${ICR_FILE} NAME_WE)
-    set(ICR_JSON_FILE "${DOCUMENT_VISTA_ICR_OUTPUT_DIR}/${ICR_JSON_FILE}.JSON")
-  endif()
   set(ROUTINEREF_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/Routine-Ref.json")
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/WebPageGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake @ONLY)
@@ -143,15 +144,15 @@ if (GENERATE_DOX)
 endif()
 
 if(GENERATE_VIVIAN)
-  # 7. Run Cross Reference Builder
+  # 8. Run Cross Reference Builder
   # Generates PackageDependency file used in ViViaN
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/pkgdep.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GeneratePackageDep.cmake.in ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake @ONLY)
   add_test(GeneratePackageDep ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake)
   set_tests_properties(GeneratePackageDep PROPERTIES TIMEOUT 7200)
 
-# 9. Run Requirements parser to generate the data needed for the BFF & Requirements page
-# to json and html (ViViaN)
+  # 9. Run Requirements parser to generate the data needed for the BFF & Requirements page
+  # to json and html (ViViaN)
   set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}")
   file(MAKE_DIRECTORY "${DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR}/requirements")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RequirementsParser.cmake.in ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake @ONLY)
