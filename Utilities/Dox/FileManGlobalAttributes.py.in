@@ -63,7 +63,8 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
                             'Start with field:',
                             'DEVICE:',
                             'HOST FILE NAME:',
-                            'PARAMETERS'])
+                            'PARAMETERS',
+                            'Select DATA DICTIONARY UTILITY OPTION:'])
       if index == 0:
         VistA.write('No')
         continue
@@ -106,6 +107,9 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
           VistA.write('')
         else:
           VistA.write('NEWVERSION:NOREADONLY:VARIABLE')
+        break
+      elif index == 5:
+        VistA.write("?")
         break
     while True:
       index = VistA.multiwait(['Select DATA DICTIONARY UTILITY OPTION:',
