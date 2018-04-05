@@ -353,3 +353,7 @@ function writePDF(event) {
     })
   })
 }
+
+function startDownloadPDFBundle(filename) {
+  window.open(filename, '_blank');
+}
