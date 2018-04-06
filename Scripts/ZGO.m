@@ -91,8 +91,8 @@ SLASH(DIR) ; Check for an ending slash
  E  U $P W "Output directory must end in a slash!" Q 0
 WRITEHDR(VAL) ; Writes out the date/time in the header
  N Y
- I VAL=47 Q $ZDATE($HOROLOG,"DD-MON-YEAR 12:60:SS")
- I VAL=0 D  Q Y ; Cache date time
+ I +VAL=47 Q $ZDATE($HOROLOG,"DD-MON-YEAR 12:60:SS")
+ I $L(VAL,":")=2 D  Q Y ; Cache date time
  . N MLIST S MLIST=" JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC"
  . S Y=$TR($ZDATE($HOROLOG,2,MLIST)," ","-")_" "_$ZTIME($P($HOROLOG,",",2))
  Q 0
@@ -147,7 +147,6 @@ GLOBALS ; [Private] Collect all Globals except the temp ones
  Q
 STARTJOBS  ; [Private] Start child workers
  N CORES
- I +$SY=0 X "S CORES=$SYSTEM.Util.NumberOfCPUs()"
  I $L($SY,":")=2 X "S CORES=$SYSTEM.Util.NumberOfCPUs()"
  I +$SY=47 D
  . I $ZV["Linux" o "p":(shell="/bin/sh":comm="nproc")::"pipe" u "p" r CORES c "p"
@@ -155,14 +154,11 @@ STARTJOBS  ; [Private] Start child workers
  I 'CORES S CORES=8
  N JOBPAR
  N CACHENULL S CACHENULL="/dev/null"
- I +$SY=0,$ZV["Windows" S CACHENULL="//./nul"
  I $L($SY,":")=2,$ZV["Windows" S CACHENULL="//./nul"
  N OUTCACHE S OUTCACHE=$$DEFDIR^%ZISH_"worklist.log"
  I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
- I +$SY=0 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
  I $L($SY,":")=2 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
- N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S(+$SY=0:$ZCHILD,1:$ZJOB)
- I +$SY=0 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
+ N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S($L($SY,":")=2:$ZCHILD,1:$ZJOB)
  I $L($SY,":")=2 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
  QUIT
  ;
@@ -201,10 +197,7 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. s tracker(fileGlobal)=""
  .. n fDev s fDev=$$OPENFILE(fileRef)
  .. I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
- .. I +$SY=0 d  ; On Cache, ZWRITE is really slow
- ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
- ... d DUMP(fDev,fileGlobal)
- .. I $L($SY,":")=2  ; On Cache, ZWRITE is really slow
+ .. I $L($SY,":")=2 d  ; On Cache, ZWRITE is really slow
  ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
  ... d DUMP(fDev,fileGlobal)
  .. d CLOSE(fDev)
@@ -255,7 +248,6 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  . s $e(fullSubs,$l(fullSubs))=""
  . n gNode s gNode=G_"("_fullSubs_")"
  . I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
- . I +$SY=0 D WRITE(gDev,gNode)
  . I $L($SY,":")=2 D WRITE(gDev,gNode)
  D CLOSE(gDev)
  quit
@@ -277,13 +269,13 @@ OPENGBL(G) ;
  N IO S IO=$$HOSTPATH($E(G,2,$L(G)))
  U $P W IO,!
  D OPEN(IO)
- U IO W "OSEHRA ZGO Export: "_G,!,$$WRITEHDR(+$SY)_" ZWR",!
+ U IO W "OSEHRA ZGO Export: "_G,!,$$WRITEHDR($SY)_" ZWR",!
  Q IO
 OPENFILE(F) ;
  N IO S IO=$$HOSTFILE(F)
  U $P W IO,!
  D OPEN(IO)
- U IO W "OSEHRA ZGO Export: "_$$FILENAME(@F),!,$$WRITEHDR(+$SY)_" ZWR",!
+ U IO W "OSEHRA ZGO Export: "_$$FILENAME(@F),!,$$WRITEHDR($SY)_" ZWR",!
  Q IO
 OPEN(IO) ;
  ;U $P W "OPEN ",IO,!
