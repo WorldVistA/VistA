@@ -87,6 +87,8 @@ def main():
         files.extend([a.rstrip() for a in sys.stdin])
 
     for f in files:
+        if "DD.zwr" in f:
+            continue
         if f[-4:].lower() != '.zwr':
             sys.stderr.write('Skipping non-.zwr file: %s\n' % f)
             continue
