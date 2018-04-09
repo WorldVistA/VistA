@@ -77,8 +77,15 @@ def runXindexForRoutine(connection, routineName):
 def runXindexForPackage(connection, packageName,namespace_list,fileNo_list):
   VistA.write('K ^XUTL("XQ",$J)')
   connection.write("D ^XINDEX")
-  connection.wait("Routine")
-  connection.write("")
+  while True:
+    index = connection.multiwait(["All Routines?",
+                                  "Routine"])
+    if index == 0:
+      connection.write("NO")
+      continue
+    else:
+      connection.write("")
+      break
   selectionList = ['Select BUILD NAME:',
                    'Select INSTALL NAME:',
                    'Select PACKAGE NAME:']
