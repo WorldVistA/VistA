@@ -4,6 +4,9 @@ Instructions for Generating ViViaN and Visual Cross Reference Documentation
 
 .. sectnum::
 
+
+Introduction
+-------------
 This document describes the steps required to generate the Visualizing VistA
 and Namespace (ViViaN) tool and the Visual Cross Reference Documentation (DOX)
 pages.
@@ -15,6 +18,20 @@ The document comprises 5 sections:
 3. `Generate ViViaN Data and DOX`_
 4. `Format Data`_
 5. `Review the Results`_
+
+
+
+Automated Generation
+********************
+
+
+**Cache Systems Only**
+
+OSEHRA has generated a  set of scripts to be run by Docker to automatically
+generate the ViViaN and DOX pages.  To see the documentation and setup required
+for that process, see `Docker and ViViaN`_
+
+
 
 Install and Setup Required Components
 -------------------------------------
@@ -455,6 +472,7 @@ favorite web browser.
 .. _WampServer: http://www.wampserver.com/en/
 .. _ICR: http://foia-vista.osehra.org/VistA_Integration_Agreement
 .. _`Populate M Repository`: ./populateMRepo.rst
+.. _`Docker and ViViaN`: ./generateDockerViViaNAndDox.rst
 .. _InstallCache: InstallCache.rst
 .. _ConfigureCache: ConfigureCache.rst
 .. _`Automated VistA Configuration`: AutomatedVistAConfiguration.rst
