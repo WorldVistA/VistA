@@ -266,6 +266,7 @@ XINDEXLegend = """
       </tbody>
     </table>
     <br/>
+  </div>
 """
 
 PCLegend = """
@@ -654,14 +655,7 @@ def writeTableData(itemRow, outputFile):
         outputFile.write("<td class=\"%s\">%s</td>\n" % (key, data))
         index += 1
     outputFile.write("</tr>\n")
-def writeGenericTablizedData(headerList, itemList, outputFile):
-    outputFile.write("<div><table>\n")
-    if headerList and len(headerList) > 0:
-        writeTableHeader(headerList, outputFile)
-    if itemList and len(itemList) > 0:
-        for itemRow in itemList:
-            writeTableData(itemRow, outputFile)
-    outputFile.write("</table></div>\n")
+
 def writeListData(listData, outputFile, classid=""):
     outputFile.write(generateHtmlListData(listData, classid))
 
@@ -2636,8 +2630,6 @@ class WebPageGenerator:
             # append the content of map outputFile
             for line in cmapFile:
                 outputFile.write(line)
-                if totalPackages > 0: # TODO: Need this check here?
-                    paragraphs.append(generateParagraph(line))
         except IOError:
             pass
         total = "%s Total: %d " % (sectionListHeader, totalPackages)
@@ -2695,7 +2687,7 @@ class WebPageGenerator:
                 outputFile.write("</tr>\n")
             outputFile.write("</table></div>\n")
 
-            t = self.__generatePDFTable__(data,6)
+            t = self.__generatePDFTable__(data, numOfCol)
             paragraphs.append(t)
         if totalPackages > 0:
             pdf.append(KeepTogether(paragraphs))
@@ -2776,6 +2768,7 @@ class WebPageGenerator:
 #===============================================================================
     def __generatePDFTable__(self, data, columnWidths=None):
         if columnWidths is None:
+            # Auto-generated columns
             t = Table(data)
         elif type(columnWidths) is not list:
             # Evenly spaced columns
@@ -2806,6 +2799,29 @@ class WebPageGenerator:
                                 im.width * r, im.height * r))
         else:
             pdf.append(Image(os.path.join(self._outDir, imageFileName)))
+
+    # TODO: Copy + paste from writeLegends()
+    def __writePDFLegends__(self, pdf):
+        pdf.append(Paragraph("Legends:", styles['Heading3']))
+        # No color legend in PDFs
+        # TODO: Copy + paste from PCLegend
+        table = []
+        for key in componentTypeDict.keys():
+              table.append([key, componentTypeDict[key]])
+        # TODO: Columns to fit contents + left aligned
+        self.__writeGenericTablizedPDFData__(["Package Component", "Superscript"],
+                                             table, pdf)
+
+   # TODO: Copy + paste XINDEXLegend
+    def __writePDFXIndexLegend__(self, pdf):
+        # TODO: Align left
+        pdf.append(Paragraph("Legend:", styles['Heading3']))
+        table = []
+        table.append([">>", "Not killed explicitly"])
+        table.append(["*", "Changed"])
+        table.append(["!", "Killed"])
+        table.append(["~", "Newed"])
+        pdf.append(self.__generatePDFTable__(table))
 
 #===============================================================================
 #
@@ -3003,9 +3019,10 @@ class WebPageGenerator:
                 pdf.append(KeepTogether(allRoutines))
             writeSectionEnd(outputFile)
 
-            # footer
-
+            # Legends
             writeLegends(self._outDir, outputFile)
+            pdf.append(Spacer(1, 10))
+            self.__writePDFLegends__(pdf)
 
             # Package Components
             for keyVal in sectionLinkObj.keys():
@@ -3029,7 +3046,7 @@ class WebPageGenerator:
                                 keyVal = keyVal,
                                 classid = keyVal+"_data")
               if data:
-                table = self.__generatePDFTable__(data)
+                table = self.__generatePDFTable__(data, 8)
                 pdfComponents.append(table)
                 pdf.append(KeepTogether(pdfComponents))
               writeSectionEnd(outputFile)
@@ -3092,7 +3109,7 @@ class WebPageGenerator:
                                        converFunc):
         writeSectionHeader(sectionTitle, sectionTitle, outputFile)
         outputList = converFunc(variables, routine=routine)
-        writeGenericTablizedData(headerList, outputList, outputFile)
+        writeGenericTablizedHtmlData(headerList, outputList, outputFile)
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
       return ("https://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
             ien))
@@ -3234,8 +3251,14 @@ class WebPageGenerator:
                                         convFunc, classid=""):
         section = []
         writeSectionHeader(header, header, outputFile, section)
+        outputFile.write("<div class=\"contents\">\n")
+        if header == "Local Variables":
+            outputFile.write(XINDEXLegend)
+            self.__writePDFXIndexLegend__(section)
+            section.append(Spacer(1, 10))
         outputList = convFunc(data)
         self.writeGenericTablizedHtmlData(tableHeader, outputList, outputFile, classid)
+        outputFile.write("</div>\n")
         # 'Line Occurrences' column can be really long
         columns = 4
         columnWidth = self.doc.width/columns
@@ -3395,6 +3418,8 @@ class WebPageGenerator:
         if os.path.exists(fileName):
           if not isDependency:
             writeLegends(self._outDir,outputFile)
+            self.__writePDFLegends__(section)
+            section.append(Spacer(1, 10))
           outputFile.write("<div class=\"contents\">\n")
           imageFileName = packageName + "/" + fileNamePrefix + ".png"
           outputFile.write("<img id=\"img%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
@@ -3407,7 +3432,6 @@ class WebPageGenerator:
           with open(fileName, 'r') as cmapFile:
             for line in cmapFile:
                 outputFile.write(line)
-                section.append(generateParagraph((line)))
         self.__writeRoutineDepListSection__(routine, data, header, link,
                                             outputFile, section, isDependency, classid=classid)
         pdf.append(KeepTogether(section))
@@ -3642,9 +3666,6 @@ class WebPageGenerator:
           sectionGen['generator'](routine, data, header, link, outputFile, pdf, classid=classid,
                                   *geneargs)
           writeSectionEnd(outputFile)
-          if header == "Local Variables":
-            # TODO: ?
-            outputFile.write("</div>\n")
         if not existingOutFile:
         # generated the index bar at the bottom
           generateIndexBar(outputFile, indexList)
