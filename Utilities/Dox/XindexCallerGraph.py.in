@@ -137,12 +137,12 @@ def runXindexForPackage(connection, packageName,namespace_list,fileNo_list):
   connection.write(";99999;99999")
   while True:
     try:
-      index = connection.multiwait(["Press return to continue:","[;,.]+","INDEX OF",
+      index = connection.multiwait(["Press return to continue:","INDEX OF",
                                     "--- END ---",],15)
       if index == 0:
         connection.write("")
         continue
-      elif index == 3:
+      elif index == 2:
         break
     except IndexError, error:
       print ("Caught IndexError %s" % error)
