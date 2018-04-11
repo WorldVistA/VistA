@@ -530,6 +530,8 @@ class FileManDataToHtml(object):
         if menuData and menuData.dataEntries:
           for subIen in menuData.dataEntries:
             subEntry = menuData.dataEntries[subIen]
+            if not ".01" in subEntry.fields:
+              continue
             value = subEntry.name
             childIen = value.split('^')[1]
             if '2' in subEntry.fields:
