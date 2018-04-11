@@ -97,7 +97,7 @@ if (GENERATE_DOX)
 
       # Creates the command that will be called for the Test
       add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
-      set_tests_properties(CALLERGRAPH_${package_file_name} PROPERTIES TIMEOUT 2500)
+      set_tests_properties(CALLERGRAPH_${package_file_name} PROPERTIES TIMEOUT 5000)
     endif()
   endforeach()
 endif()
