@@ -516,6 +516,8 @@ def getPackageHyperLinkByName(packageName):
 
 # Note: This function is called from other scripts
 def normalizePackageName(packageName):
+    if packageName in pkgMap:
+       packageName = pkgMap[packageName]
     newName = packageName.replace(' ', '_')
     return newName.replace('-', "_").replace('.', '_').replace('/', '_')
 
