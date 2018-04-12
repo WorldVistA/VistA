@@ -67,18 +67,11 @@ def test_sub():
   print data_table_list_init_setup.substitute(tableName="Test")
   print data_table_record_init_setup.substitute(tableName="Test")
 
-def getDataEntryHtmlFile(dataEntry, ien, fileNo):
-  entryName = str(dataEntry.name)
-  return getDataEntryHtmlFileByName(entryName, ien, fileNo)
-
-def getDataEntryHtmlFileByName(entryName, ien, fileNo):
-  entryName = entryName[:20] # max 20 chars
+def getDataEntryHtmlFile(ien, fileNo):
   return ("%s-%s" % (fileNo, ien)) + ".html"
 
 def getFileHtmlLink(dataEntry, value, **kargs):
-  entryName = str(value)
-  htmlFile = getDataEntryHtmlFileByName(entryName, dataEntry.ien,
-                                        dataEntry.fileNo)
+  htmlFile = getDataEntryHtmlFile(dataEntry.ien, dataEntry.fileNo)
   return "<a href=\"../%s/%s\">%s</a>" % (dataEntry.fileNo.replace(".","_"),htmlFile, value)
 
 def getRoutineName(inputString):
@@ -107,19 +100,13 @@ def getPackageHRefLink(pkgName):
   return value
 
 def getWordProcessingDataBrief(dataEntry, value, **kargs):
-  return getWordProcessingData(value, False)
-
-def getWordProcessingData(value, isList=True):
-  outValue = " ".join(value)
-  if isList:
-    outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
-  return outValue
+  return " ".join(value)
 
 def getFileManFilePointerLink(dataEntry, value, **kargs):
   if value:
     fields = value.split('^')
     if len(fields) == 3: # fileNo, ien, name
-      refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
+      refFile = getDataEntryHtmlFile(fields[1], fields[0])
       value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"),refFile, fields[-1])
     elif len(fields) == 2:
       value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -171,7 +158,7 @@ rpc_list_fields = (
        ("Tag", '.02', None), # Tag
        ("Routine", '.03', getRoutineHRefLink), # Routine
        ("Availability", '.05', None),# Availability
-       #("Description", '1', getWordProcessingDataBrief),# Description
+       ("Description", '1', getWordProcessingDataBrief),# Description
    )
 
 """
@@ -212,7 +199,7 @@ protocol_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Type", '4', None), # Type
        ("Lock", '3', None), # Type
-       ("Description", '3.5', None), # Type
+       ("Description", '3.5', getWordProcessingDataBrief), # Type
        ("Entry Action", '20', None), # Type
        ("Exit Action", '15', None), # Type
    )
@@ -295,7 +282,7 @@ def convertFilePointerToHtml(inputValue):
   name = inputValue
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
-    refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
+    refFile = getDataEntryHtmlFile(fields[1], fields[0])
     value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"),refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
@@ -440,7 +427,7 @@ class FileManDataToHtml(object):
       with open(os.path.join(self.outDir,"dox","%s.json" % fileNo.replace('.','_')), 'w') as output:
                 logging.info("Generate File: %s" % output.name)
                 json.dump(outJSON, output,ensure_ascii=False,cls=OSEHRAEncoder)
-      self._generateDataTableHtml(fileManData, fileNo)
+      self._generateDataTableHtml(fileManData, fileNo)  # Data List
       self._convertFileManDataToHtml(fileManData)
 
   def _generateServerMenu(self, allMenuList,allOptionList, serverMenuList):
@@ -606,10 +593,11 @@ class FileManDataToHtml(object):
       @TODO move the logic to a specific file
     """
     columnNames = [x[0] for x in rpc_list_fields]
-    searchColumnNames = ["Name", "Tag", "Routine"]
-    return self._generateDataListByPackage(dataEntryLst,
-                                     pkgName, rpc_list_fields, "RPC",
-                                     columnNames, searchColumnNames, fileNo)
+    searchColumnNames = ["Name", "Tag", "Routine", "Description"]
+    retval = self._generateDataListByPackage(dataEntryLst, pkgName,
+                                            rpc_list_fields, "RPC",
+                                            columnNames, searchColumnNames, fileNo)
+    return retval
 
   def _generateHL7ListByPackage(self, dataEntryLst, pkgName, fileNo):
     """
@@ -653,7 +641,7 @@ class FileManDataToHtml(object):
     outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
     with open("%s/%s-%s.html" % (outDir, pkgName, listName), 'w+') as output:
       output.write("<html>\n")
-      tName = safeElementId("%s-%s" % (listName, pkgName))
+      tName = normalizePackageName(pkgName)
       outputDataListTableHeader(output, tName, columnNames, searchColumnNames)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
@@ -681,12 +669,13 @@ class FileManDataToHtml(object):
           # If value has / in it, we take the first value as usual
           # but assume the information is a "multiple" field and
           # attempt to find the second bit of information within it
-          idVal,multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1],None)
+          idVal, multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1],None)
           if idVal in allFields:
             value = allFields[idVal].value
             if multval:  # and (multval in value.dataEntries["1"].fields)
-              value = self.findSubValue(dataEntry, value,multval,id);
-            if type(value) is list:
+              value = self.findSubValue(dataEntry, value,multval,id)
+            if type(value) is list and id[0] != "Description":
+              # Don't write out descriptions as lists
               tmpValue="<ul>"
               for entry in value:
                 if id[-1]:
@@ -743,8 +732,9 @@ class FileManDataToHtml(object):
           name = dataEntry.name
           if isFilePointerType(dataEntry):
             link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                    name)
+          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
+                                                          getDataEntryHtmlFile(ien, fileNo),
+                                                          name)
           tableRow = [dataHtmlLink, dataEntry.ien]
           output.write("<tr>\n")
           """ table body """
@@ -771,7 +761,7 @@ class FileManDataToHtml(object):
           if isFilePointerType(dataEntry):
             link, name = convertFilePointerToHtml(dataEntry.name)
           dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
-                                                          getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                          getDataEntryHtmlFile(ien, fileNo),
                                                           str(name).replace("\xa0", ""))
           outArray.append([dataHtmlLink, ien])
         json.dump(outJson, output)
@@ -779,7 +769,7 @@ class FileManDataToHtml(object):
   def _convertFileManDataToHtml(self, fileManData):
     for ien in getKeys(fileManData.dataEntries.keys(), float):
       outDir = self.outDir
-      tName = safeElementId("%s-%s" % (fileManData.fileNo, ien))
+      tName = "%s-%s" % (fileManData.fileNo.replace(".","_"), ien)
       dataEntry = fileManData.dataEntries[ien]
       if not dataEntry.name:
         logging.warn("no name for %s" % dataEntry)
@@ -791,7 +781,7 @@ class FileManDataToHtml(object):
           os.mkdir(outDir)
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(dataEntry.name)
-      outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
+      outHtmlFileName = getDataEntryHtmlFile(ien, fileManData.fileNo)
       with open("%s/%s" % (outDir, outHtmlFileName), 'w') as output:
         output.write ("<html>")
         outputDataRecordTableHeader(output, tName)
