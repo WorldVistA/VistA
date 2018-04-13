@@ -1,5 +1,5 @@
 ===========================================================================
-Instructions for using Docker to generate ViViaN and DOX
+Instructions for Using Docker to Generate ViViaN and DOX
 ===========================================================================
 
 .. sectnum::
@@ -17,8 +17,11 @@ The scripts will
 * Install Apache web server
 * Clone ViViaN repository and set up data for viewing
 
-Required Tools
+Prerequisites
 **************
+
+Required Tools
+--------------
 
 +-----------------------------+---------------------------------------------------------------+
 |    Tools                    |                        Web Link                               |
@@ -29,7 +32,7 @@ Required Tools
 +-----------------------------+---------------------------------------------------------------+
 
 Source Files
-************
+------------
 
 The scripts expect three files to be supplied in order to set up the environment:
 
@@ -47,7 +50,7 @@ The scripts expect three files to be supplied in order to set up the environment
 +--------------------------------+---------------------------------------------------------------+
 
 
-Docker Set up
+Docker Set Up
 --------------
 
 OSEHRA recommends that the settings of the default Docker container be updated prior to executing these scripts.  The testing machines were built with the following settings:
@@ -69,8 +72,11 @@ For information on how to set these parameters, see the following URL:
 or access the "Advanced" section from the "Settings" on Docker for Windows.
 
 
+Tool Generation
+***************
+
 OSEHRA Source Repository
-************************
+------------------------
 
 +-----------------+--------------------------------------------------------+
 |   Code Bases    |   Web Link                                             |
@@ -88,8 +94,8 @@ Use Git to make a local clone of the docker-vista repository.
   .
   .
 
-Place source files
-******************
+Place Source files
+------------------
 
 Now that the repository has been cloned, copy the three Cache source files from the above table into the ``docker-vista/cache-files`` directory.
 
@@ -102,8 +108,8 @@ The testing instances used had the following ``cache-files`` directory:
     cache.key
     cache-2016.1.0.656.0lnxrhx64.tar.gz
 
-Execute Docker build
-********************
+Execute Docker Build
+--------------------
 
 **This process will take several hours and should not require the user to interact with the process.**
 
@@ -160,7 +166,7 @@ The script will describe each step as the Docker process runs and will print a l
 
 When the command returns, after the 23rd step, the image has been built and can be started in a Docker container with the next command.
 
-Start Docker container
+Start Docker Container
 **********************
 
 To run the recently built image in a Docker container, we execute a command in the ``docker-vista`` directory again. This command forwards a series of ports on the host machine to ports on the running container. This is done to allow:
