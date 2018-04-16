@@ -44,7 +44,7 @@ def startFileman(VistA):
   # change information in Kernel files
   # Starts at the VistA Prompt
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=.5 S XUMF=1 D Q^DI')
+  VistA.write('S DUZ=1 S XUMF=1 D Q^DI')
   VistA.wait('Select OPTION:')
 
 def signonZU(VistA,acc_code,ver_code):
@@ -351,7 +351,7 @@ def scheduleOption(VistA,optionName):
   # If using Cache as the M environment, Schedule a task to start the
   # XWB Listener Starter on the start up of TaskMan
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   VistA.wait('Select OPTION NAME')
   VistA.write('EVE\r1')
   VistA.wait('Systems Manager Menu')
@@ -373,7 +373,7 @@ def restartTaskMan(VistA):
   # Restarts the TaskMan instance via the Taskman Management Utilities Menu.
 
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   VistA.wait('Select OPTION NAME')
   VistA.write('EVE\r1')
   VistA.wait('Systems Manager Menu')
@@ -397,7 +397,7 @@ def addSystemManager(VistA):
   # Add the super user System Manager via the User Management Menu
   # Set basic information about the user: Name,SSN, Sex ....
   VistA.wait(PROMPT,60)
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   VistA.wait('Select OPTION NAME')
   VistA.write('EVE\r1')
   VistA.wait('Systems Manager Menu')
@@ -521,7 +521,7 @@ def setupWard(VistA, division, institution, ward_name, clinic_name, order, speci
   # Set up an inpatient ward for lodging of users and inpatient medication prescription
   # taken from the ADTActions script of Registration Roll-And-Scroll testing
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   VistA.wait('OPTION NAME:')
   # DEFINE THE WARD
   VistA.write('WARD DEFINITION ENTRY')
@@ -573,7 +573,7 @@ def setupWard(VistA, division, institution, ward_name, clinic_name, order, speci
 
 def addBedsToWard(VistA, ward_name, bed_array):
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   # SETUP BEDS
   VistA.wait('OPTION NAME:')
   VistA.write('ADT SYSTEM')
@@ -1341,7 +1341,7 @@ def createClinic(VistA,name,abbrv,service):
   VistA.wait(PROMPT)
   VistA.write('W $$NOSEND^VAFHUTL')
   VistA.wait('0')
-  VistA.write('S DUZ=.5 D ^XUP')
+  VistA.write('S DUZ=1 D ^XUP')
   VistA.wait('OPTION NAME:')
   VistA.write('SDBUILD')
   VistA.wait('CLINIC NAME:')
@@ -1449,7 +1449,7 @@ def addPatient(VistA,pfile):
     preader = TestHelper.CSVFileReader()
     prec = preader.getfiledata(pfile, 'key')
     for pitem in prec:
-      VistA.write('S DUZ=.5 D ^XUP')
+      VistA.write('S DUZ=1 D ^XUP')
       VistA.wait('Select OPTION NAME')
       VistA.write('Core Applications\r')
       VistA.wait("Select Core Applications")

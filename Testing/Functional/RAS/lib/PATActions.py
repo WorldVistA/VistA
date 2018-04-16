@@ -47,7 +47,7 @@ class PATActions (Actions):
 
     def signon (self):
         '''Signon via XUP'''
-        self.VistA.write('S DUZ=.5 D ^XUP')
+        self.VistA.write('S DUZ=1 D ^XUP')
 
     def signoff (self):
         '''Signoff and halt'''

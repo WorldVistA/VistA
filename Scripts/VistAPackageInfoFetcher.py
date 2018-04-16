@@ -43,7 +43,7 @@ class VistAPackageInfoFetcher(object):
     self._packageMapping.clear()
     connection = self._testClient.getConnection()
     result = None
-    menuUtil = VistAMenuUtil(duz=1) # set duz as .5
+    menuUtil = VistAMenuUtil(duz=1) # set duz as 1
     menuUtil.gotoFileManPrintFileEntryMenu(self._testClient)
     # print file entry
     connection.send("9.4\r") # Package file with fileman #9.4
@@ -86,7 +86,7 @@ class VistAPackageInfoFetcher(object):
       self.createAllPackageMapping()
     connection = self._testClient.getConnection()
     result = None
-    menuUtil = VistAMenuUtil(duz=1) # set duz as .5
+    menuUtil = VistAMenuUtil(duz=1) # set duz as 1
     menuUtil.gotoKidsUtilMenu(self._testClient)
     connection.send("Display\r")
     connection.expect("Select PACKAGE NAME:")

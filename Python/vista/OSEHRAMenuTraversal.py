@@ -18,7 +18,7 @@ import sys,os,re,time
 import TestHelper
 
 def printMenuParentPairs(VistA,outputFile):
-  VistA.write("S DUZ=.5 D ^XUP")
+  VistA.write("S DUZ=1 D ^XUP")
   VistA.wait('Select OPTION NAME')
   VistA.write("Systems Manager Menu")
   VistA.wait("Systems Manager Menu")
@@ -42,7 +42,7 @@ def printMenuParentPairs(VistA,outputFile):
   VistA.write("^")
 
 def printMenuTextPairs(VistA,outputFile):
-  VistA.write("S DUZ=.5 D Q^DI")
+  VistA.write("S DUZ=1 D Q^DI")
   VistA.wait('Select OPTION')
   VistA.write("PRINT FILE ENTRIES")
   VistA.wait_re("OUTPUT FROM WHAT FILE")
@@ -207,7 +207,7 @@ def goToOption(VistA,targetmenuname,menuPrint,accesscode='',SToption=False):
       VistA.wait('Access Code')
       VistA.write(accesscode)
     else:
-      VistA.write('S DUZ=.5,XUMF=1 D ^XUP')
+      VistA.write('S DUZ=1,XUMF=1 D ^XUP')
     VistA.wait('Select OPTION NAME')
   for menuname in menutextresult:
     menufound = False

@@ -42,7 +42,7 @@ class PLActions (Actions):
     def signon (self):
         ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
-            self.VistA.write('S DUZ=.5,DUZ(0)="@" D ^XUP')
+            self.VistA.write('S DUZ=1,DUZ(0)="@" D ^XUP')
             self.VistA.wait('OPTION NAME:')
             self.VistA.write('GMPL MGT MENU')
         else:
