@@ -3258,7 +3258,7 @@ class WebPageGenerator:
             outputFile.write(XINDEXLegend)
             self.__writePDFXIndexLegend__(section)
             section.append(Spacer(1, 10))
-        outputList = convFunc(data)
+        outputList = convFunc(data, routine)
         self.writeGenericTablizedHtmlData(tableHeader, outputList, outputFile, classid)
         outputFile.write("</div>\n")
         # 'Line Occurrences' column can be really long
