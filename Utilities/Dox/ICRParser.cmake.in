@@ -26,6 +26,12 @@ else()
   set(GENERATE_HTML "")
 endif()
 
+if(@GENERATE_PDF_BUNDLE@)
+  set(GENERATE_PDF "-pdf")
+else()
+  set(GENERATE_PDF "")
+endif()
+
 if(@LOCAL_DOX_LINKS@)
   set(GENERATE_LOCAL_LINKS "-local")
 else()
@@ -44,6 +50,7 @@ execute_process(COMMAND
   @DOCUMENT_VISTA_OUTPUT_DIR@
   @DOCUMENT_VISTA_PDF_OUTPUT_DIR@
   ${GENERATE_HTML}
+  ${GENERATE_PDF}
   ${GENERATE_LOCAL_LINKS}
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
