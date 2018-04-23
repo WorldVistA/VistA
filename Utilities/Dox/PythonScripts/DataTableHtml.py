@@ -309,14 +309,13 @@ def outputDataListTableHeader(output, tName, columns=None,
       hideColumnsStr = "||".join(hideColumns)
     else:
       hideColumnsStr = "false"
-    initSet = data_table_list_with_columns_init_setup.safe_substitute(tableName=tName,
+    initSet = data_table_list_with_columns_init_setup.safe_substitute(tableName=tName.replace(" ", ""),
                                                                       columnNames=",".join(columnNames),
                                                                       searchColumns="||".join(searchColumns),
                                                                       hideColumns=hideColumnsStr
                                                                       ,downloadTitle=tName)
   output.write("%s\n" % initSet)
-
-  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
+  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName.replace(" ", ""))
   output.write("%s\n" % clear_filters)
 
 def outputLargeDataListTableHeader(output, src, tName, columns=None,
@@ -337,14 +336,14 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
     for name in hideColumnNames:
       hideColumns.append("name == '" + name +"'")
     initSet = data_table_large_list_with_columns_init_setup.safe_substitute(ajaxSrc=src,
-                                                                            tableName=tName,
+                                                                            tableName=tName.replace(" ", ""),
                                                                             columnNames=",".join(columnNames),
                                                                             searchColumns="||".join(searchColumns),
                                                                             hideColumns="||".join(hideColumns)
                                                                             ,downloadTitle=tName)
   output.write("%s\n" % initSet)
 
-  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName)
+  clear_filters = data_table_clear_filters.safe_substitute(tableName=tName.replace(" ", ""))
   output.write("%s\n" % clear_filters)
 
 def outputDataRecordTableHeader(output, tName):
@@ -354,7 +353,7 @@ def outputDataRecordTableHeader(output, tName):
 
 def outputDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in name_list:
@@ -372,7 +371,7 @@ def outputDataTableFooter(output, name_list, tName):
 
 def outputFileEntryTableList(output, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in ("Name", "Value"):
@@ -383,7 +382,7 @@ def outputFileEntryTableList(output, tName):
 # This function expects a list of header names
 def outputCustomDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
   output.write("<thead>\n")
   for name in name_list:
     output.write("<th>\n")
@@ -394,7 +393,7 @@ def outputCustomDataTableHeader(output, name_list, tName):
 # This function expects a list of header rows
 def outputCustomDataTableHeaderRows(output, rows, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
   output.write("<thead>\n")
   for row in rows:
     output.write("<tr>\n")
@@ -404,7 +403,7 @@ def outputCustomDataTableHeaderRows(output, rows, tName):
 
 def writeTableListInfo(output, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in ("Name", "IEN"):

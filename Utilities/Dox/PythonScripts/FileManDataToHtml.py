@@ -641,7 +641,10 @@ class FileManDataToHtml(object):
     outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
     with open("%s/%s-%s.html" % (outDir, pkgName, listName), 'w+') as output:
       output.write("<html>\n")
-      tName = normalizePackageName(pkgName)
+      if pkgName == "All":
+        tName = "%s %s List" % (normalizePackageName(pkgName), listName)
+      else:
+        tName = normalizePackageName(pkgName)
       outputDataListTableHeader(output, tName, columnNames, searchColumnNames)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
