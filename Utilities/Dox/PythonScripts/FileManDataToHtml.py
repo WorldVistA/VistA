@@ -38,7 +38,7 @@ from WebPageGenerator import getPackageHtmlFileName
 from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
 from DataTableHtml import data_table_list_init_setup
 from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
-from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader, outputDataTableFooter
+from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeaderRows, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
@@ -657,7 +657,7 @@ class FileManDataToHtml(object):
         outputDataTableHeader(output, columnNames, tName)
         outputDataTableFooter(output, columnNames, tName)
       else:
-        outputCustomDataTableHeader(output, custom_header, tName)
+        outputCustomDataTableHeaderRows(output, custom_header, tName)
         outputDataTableFooter(output, columnNames, tName)
       """ table body """
       output.write("<tbody>\n")

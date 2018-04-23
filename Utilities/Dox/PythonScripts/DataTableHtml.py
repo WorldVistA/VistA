@@ -380,6 +380,7 @@ def outputFileEntryTableList(output, tName):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
+# This function expects a list of header names
 def outputCustomDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
   output.write("<table id=\"%s\" class=\"display\">\n" % tName)
@@ -388,6 +389,17 @@ def outputCustomDataTableHeader(output, name_list, tName):
     output.write("<th>\n")
     output.write("%s\n" % name)
     output.write("</th>\n")
+  output.write("</thead>\n")
+
+# This function expects a list of header rows
+def outputCustomDataTableHeaderRows(output, rows, tName):
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<thead>\n")
+  for row in rows:
+    output.write("<tr>\n")
+    output.write("%s\n" % row)
+    output.write("</tr>\n")
   output.write("</thead>\n")
 
 def writeTableListInfo(output, tName):
