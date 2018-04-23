@@ -505,11 +505,12 @@ class FileManGlobalDataParser(object):
 
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
+    outJSON = {}
     for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
       protocolEntry = protocol.dataEntries[ien]
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
-        if (type != 'event driver' and type != 'subscriber') and (not re.search("[Mm]enu", type)):
+        if (type != 'event driver' and type != 'subscriber'):
           logging.info("Adding Protocol Entry of type: %s" % (type))
           entryName = protocolEntry.name
           namespace, package = \

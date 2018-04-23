@@ -341,12 +341,22 @@ class FileManDataToHtml(object):
           if allRpcs:
             self._generateRPCListHtml(allRpcs, "All",fileNo)
       elif fileNo == '101':
+        fileManData = fileManDataMap[fileNo]
+        allProtoMenuList = []
         if not os.path.exists(outDir+"/101"):
           os.mkdir(outDir+"/101")
+        if not os.path.exists(outDir+"/menus/101"):
+          os.mkdir(outDir+"/menus/101")
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHl7s = []
           allProtocols = []
+          for ien in getKeys(fileManData.dataEntries.keys(), float):
+            dataEntry = fileManData.dataEntries[ien]
+            allProtocols.append(dataEntry)
+            if '4' in dataEntry.fields:
+              if dataEntry.fields['4'].value == 'menu':
+                allProtoMenuList.append(dataEntry)
           for package in allPackages.itervalues():
             if package.hl7:
               logging.info("generating HL7 list for package: %s"
@@ -357,11 +367,11 @@ class FileManDataToHtml(object):
               logging.info("generating Protocol list for package: %s"
                            % package.getName())
               self._generateProtocolListByPackage(package.protocol, package.getName(), fileNo)
-              allProtocols.extend(package.protocol)
           if allHl7s:
             self._generateHL7ListByPackage(allHl7s, "All",fileNo)
           if allProtocols:
             self._generateProtocolListByPackage(allProtocols, "All",fileNo)
+        self._generateMenuDependency(allProtoMenuList, allProtocols, outDir+"/menus/101")
       elif fileNo== '779.2':
         if not os.path.exists(outDir+"/779_2"):
           os.mkdir(outDir+"/779_2")
@@ -380,8 +390,8 @@ class FileManDataToHtml(object):
         """ generate all option list """
         if not os.path.exists(outDir+"/19"):
           os.mkdir(outDir+"/19")
-        if not os.path.exists(outDir+"/Menus"):
-          os.mkdir(outDir+"/Menus")
+        if not os.path.exists(outDir+"/menus/19"):
+          os.mkdir(outDir+"/menus/19")
         allOptionList = []
         allMenuList = []
         serverMenuList = []
@@ -409,7 +419,7 @@ class FileManDataToHtml(object):
 
 
         self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
-        self._generateMenuDependency(allMenuList, allOptionList)
+        self._generateMenuDependency(allMenuList, allOptionList, outDir+"/menus/19")
 
       if not os.path.exists(self.outDir+"/%s" % fileNo.replace('.','_')):
         os.mkdir(self.outDir+"/%s" % fileNo.replace('.','_'))
@@ -508,7 +518,7 @@ class FileManDataToHtml(object):
     serverMenuEntry.addField(FileManDataField('10', 5, 'MENU', test))
     allMenuList.append(serverMenuEntry)
 
-  def _generateMenuDependency(self, allMenuList, allOptionList):
+  def _generateMenuDependency(self, allMenuList, allOptionList,outDir):
     menuDict = dict((x.ien, x) for x in allOptionList)
     menuDepDict = dict((x, set()) for x in allMenuList)
     for dataEntry in allMenuList:
@@ -549,19 +559,19 @@ class FileManDataToHtml(object):
     for item in rootSet:
       outJson = {}
       outJson['name'] = item.name
+      outJson['option'] = item.name
       outJson['ien'] = item.ien
       # Explicitly exclude the ZZSERVERMENU from having a link generated for it.
       outJson['hasLink'] = False if item.name == "ZZSERVERMENU" else True
       if '1' in item.fields:
         outJson['name'] = item.fields['1'].value
-        outJson['option'] = item.name
       if '3' in item.fields:
         outJson['lock'] = item.fields['3'].value
       if '4' in item.fields:
         outJson['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson, item)
-      with open(os.path.join(self.outDir+"/Menus", "VistAMenu-%s.json" % item.ien), 'w') as output:
+      with open(os.path.join(outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(outJson, output)
 
