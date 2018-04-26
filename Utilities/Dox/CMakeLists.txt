@@ -57,6 +57,8 @@ mark_as_advanced(GENERATE_DOX)
 set(GENERATE_VIVIAN "TRUE" CACHE BOOL "Generate ViViaN data")
 mark_as_advanced(GENERATE_VIVIAN)
 
+set(GENERATE_PDF_BUNDLE "FALSE" CACHE BOOL "Generate PDF bundle")
+
 if (NOT GENERATE_DOX AND NOT GENERATE_VIVIAN)
   message(ERROR "Must select GENERATE_DOX and/or GENERATE_VIVIAN.")
 endif()

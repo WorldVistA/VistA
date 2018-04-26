@@ -185,6 +185,12 @@ to be adjusted or set for each specific system. To aid in the configuration
 process, variables have a tooltip which explains in greater detail what the
 variable should contain.
 
+If set, the `GENERATE_PDF_BUNDLE` variable creates a PDF version of all the
+Package, Routine, Global, Sub-File and ICR pages. The PDFs are be organized by
+package and are available to download from a link on the DOX Package pages.
+This option increases the generation time significantly, and, therefore is not
+selected by default.
+
 The following variables are required for both Cache and GT.M environments.
 
 +---------------------------+---------------------------------------------------------------+
@@ -238,6 +244,7 @@ These variables are Cache- or GT.M- specific.
 +------------------------+------------------------------------+------------------------------------+
 
 **NOTE:** The VISTA_CACHE_PASSWORD is stored and used in plain-text form.
+
 
 Once the options are set, press \"Configure\" again and then \"Generate\".
 
@@ -400,6 +407,9 @@ ViViaN backend data. After following the instructions in `Configure Scripts`_,
 uncheck either the `GENERATE_DOX` or `GENERATE_VIVIAN` variable under the
 \"Advanced\" section in the CMake-GUI. Select \"Configure\" again and then
 \"Generate\".
+
+**NOTE:** PDF bundles are only generated if `GENERATE_DOX` and
+`GENERATE_PDF_BUNDLE` are both selected.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/138DF2-buildViViaNOnly.png
    :align: center

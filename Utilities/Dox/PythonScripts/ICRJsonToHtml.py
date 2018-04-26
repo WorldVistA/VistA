@@ -172,14 +172,16 @@ field_convert_map = {
 }
 
 class ICRJsonToHtml(object):
-    def __init__(self, crossRef, outDir, pdfDir):
+    def __init__(self, crossRef, outDir, pdfDir, generatePDF):
         self._crossRef = crossRef
         self._outDir = os.path.join(outDir, ICR_DIR)
         if not os.path.exists(self._outDir):
             os.mkdir(self._outDir)
-        self._pdfOutDir = pdfDir
-        if not os.path.exists(self._pdfOutDir):
-            os.mkdir(self._pdfOutDir)
+        self._generatePDF = generatePDF
+        if self._generatePDF:
+            self._pdfOutDir = pdfDir
+            if not os.path.exists(self._pdfOutDir):
+                os.mkdir(self._pdfOutDir)
 
     # This is the entry point to convert JSON to html web pages
 
@@ -209,7 +211,8 @@ class ICRJsonToHtml(object):
         allpgkJson = []
         for icrEntry in inputJson:
             self._generateICRIndividualPage(icrEntry, date)
-            self._generateICRIndividualPagePDF(icrEntry, date)
+            if self._generatePDF:
+                self._generateICRIndividualPagePDF(icrEntry, date)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -457,11 +460,11 @@ class ICRJsonToHtml(object):
             if field in icrJson: # we have this field
                 value = icrJson[field]
                 if "GLOBAL REFERENCE" == field:
-                    self._parseGlobalReference(value, pdf)
+                    self._writeGlobalReferenceToPDF(value, pdf)
                     continue
-                #########################################################
+                ###############################################################
                 if "COMPONENT/ENTRY POINT" == field:
-                    self._parseComponentEntryPoint(value, pdf)
+                    self._writeComponentEntryPointToPDF(value, pdf)
                     continue
                 ###############################################################
                 if "GENERAL DESCRIPTION" == field:
@@ -487,7 +490,7 @@ class ICRJsonToHtml(object):
                 row.append(value)
                 pdf.append(KeepTogether(row))
 
-    def _parseGlobalReference(self, section, pdf):
+    def _writeGlobalReferenceToPDF(self, section, pdf):
       for globalReference in section:
         globalReferenceSection = []
         name = globalReference["GLOBAL REFERENCE"]
@@ -526,7 +529,7 @@ class ICRJsonToHtml(object):
             globalReferenceSection.append(t)
             pdf.append(KeepTogether(globalReferenceSection))
 
-    def _parseComponentEntryPoint(self, section, pdf):
+    def _writeComponentEntryPointToPDF(self, section, pdf):
       for component in section:
         componentSection = []
         name = component["COMPONENT/ENTRY POINT"]
@@ -687,6 +690,8 @@ def createArgParser():
     parser = argparse.ArgumentParser(description='VistA ICR JSON to Html',
                                      parents=[initParser])
     parser.add_argument('icrJsonFile', help='path to the VistA ICR JSON file')
+    parser.add_argument('-pdf', action='store_true',
+                          help='generate html')
     parser.add_argument('-local', action='store_true',
                       help='Use links to local DOX pages')
     parser.add_argument('outdir', help='path to the output web page directory')
@@ -703,7 +708,7 @@ def run(args):
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
-    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir, args.pdfOutdir)
+    icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir, args.pdfOutdir, args.pdf)
     if args.local:
       dox_url = "../dox/"
     if hasattr(args, 'date'):
