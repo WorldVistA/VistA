@@ -346,7 +346,7 @@ class FileManDataToHtml(object):
         if not os.path.exists(outDir+"/101"):
           os.mkdir(outDir+"/101")
         if not os.path.exists(outDir+"/menus/101"):
-          os.mkdir(outDir+"/menus/101")
+          os.makedirs(outDir+"/menus/101")
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHl7s = []
@@ -391,7 +391,7 @@ class FileManDataToHtml(object):
         if not os.path.exists(outDir+"/19"):
           os.mkdir(outDir+"/19")
         if not os.path.exists(outDir+"/menus/19"):
-          os.mkdir(outDir+"/menus/19")
+          os.makedirs(outDir+"/menus/19")
         allOptionList = []
         allMenuList = []
         serverMenuList = []
