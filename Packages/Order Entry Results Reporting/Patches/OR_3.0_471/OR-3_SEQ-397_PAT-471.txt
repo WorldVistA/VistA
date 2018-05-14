@@ -1,0 +1,186 @@
+$TXT Created by                  at CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 10/18/17 at 13:15
+=============================================================================
+Run Date: MAR 19, 2018                     Designation: OR*3*471
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #397                      Status: Released
+                  Compliance Date: APR 19, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*471'
+                    (v)OR*3*361    <<= must be installed BEFORE `OR*3*471'
+
+Subject: ORDER DETAILS, DRUG RESTRICTION, & RENEWED ORDER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the CPRS package:
+  
+ 1. Order details are displaying the wrong text on orders discontinued due
+    to edit
+ 2. Editing the drug and going through the IV package deletes the 
+    restrictions set in file 101.43.
+ 3. Renewed orders are not being discontinued from the Meds tab.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ VA Long Beach Heathcare System, CA
+ VA New York Harbor Health Care System 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. CA SDM I12064550FY17 / RTC 553100 BL: Order Detail View Anomaly on 
+    Discontinue Due to Edit Orders
+  
+ Problem:
+ -------
+ The order details for inpatient IV orders with multiple discontinues due
+ to edits, display the incorrect text. It displays the text from order
+ action #1 regardless which action is passed in.
+  
+ Resolution:
+ ----------
+ Modified the routine ORQ2 to check if the action was passed in with the 
+ order number, if so return the text from the action passed in.
+  
+ 2. CA SDM I10764386FY16 / RTC 538586 BL: Problems with Pharmacy 
+    Software
+  
+ Problem:
+ -------
+ If a quick order restriction has been defined for an IV additive or 
+ solution orderable item, and if changes are made to the IV additive 
+ or solution using the Drug Enter/Edit option [PSS DRUG ENTER/EDIT], the
+ quick order restriction is removed from the orderable item. This issue 
+ occurs when the IV additive or solution is marked for "IV" only (not Ward 
+ Stock, Outpatient, etc. also).
+  
+ Resolution:
+ ----------
+ Modified routine ORMFN to not overlay a quick order restriction on an 
+ orderable item after updates are made to a dispense drug using the 
+ Drug Enter/Edit option [PSS DRUG ENTER/EDIT].
+  
+ 3. CA SDM I9836752FY16 / RTC 541977 Outpatient Pharmacy - Issue
+    Discontinuing Orders
+  
+ Problem:
+ --------
+ When discontinuing a pending medication renewal order in CPRS, users are
+ shown a window giving the option to also discontinue the original order.
+ If the user selects this option in the Meds tab, the original order is not
+ discontinued. The option does work correctly when selected in the Orders 
+ tab.
+      
+ Resolution:
+ -----------
+ Modify ORWORR so that the ORWORR GETBYIFN remote procedure call correctly
+ identifies the original order.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No special pre or post install steps just install as normal.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the 
+    patch # OR*3.0*471:
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ No special pre or post install steps, just install as normal.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMFN
+    Before: B42446020   After: B53240029  **26,97,94,176,215,243,280,350,471**
+Routine Name: ORQ2
+    Before: B60457146   After: B62428335  **12,56,75,94,141,213,195,243,
+                                           282,293,280,346,361,471**
+Routine Name: ORWORR
+    Before: B76813647   After: B81663175  **10,92,116,110,132,141,163,
+                                           189,195,215,243,280,306,471**
+ 
+Routine list of preceding patches: 306, 350, 361
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 05, 2017
+Completed By:                               Date Completed: MAR 16, 2018
+Released By :                               Date Released : MAR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

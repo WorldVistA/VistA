@@ -1,0 +1,132 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 11/17/17 at 10:42
+=============================================================================
+Run Date: FEB 28, 2018                     Designation: PRC*5.1*201
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #178                    Status: Released
+                  Compliance Date: MAR 31, 2018
+=============================================================================
+
+Associated patches: (v)PRC*5.1*76  <<= must be installed BEFORE `PRC*5.1*201'
+
+Subject: FIX EXIT IN PRCB FCP USER COPY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Resolves one issue:
+  
+  
+ 1) When the user enters a double carat, "^^", into Copy Control Point
+ User and Profiles [PRCB FCP USER COPY] option to exit out and then enters
+ a carat, "^", an error occurs.
+  
+  
+ Associated tickets:
+ ========================
+ 1) R17277139FY18 ERROR TRAP <UNDEFINED>FROM+4^PRCB1A4 *Y 
+  
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Central Texas VHCS
+ Altoona VAMC 
+  
+  
+ CA SDM TICKET OVERVIEW:
+ =======================
+ 1) R17277139FY18 ERROR TRAP <UNDEFINED>FROM+4^PRCB1A4 *Y  
+  
+ Problem: 
+ ========
+ When a user is using the Copy Control Point User and Profiles [PRCB FCP
+ USER COPY] menu option and tries to exit out, by entering double 
+ carats, "^^", it will prompt them with "Select FCP to copy FROM:" again.
+ After this prompt they attempt to exit by entering a carat, "^", an
+ undefined error occurs.
+    
+  
+ Resolution:
+ ----------
+ If a user decides to exit out of the option Copy Control Point User and 
+ Profiles [PRCB FCP USER COPY] it will now accept "^", "^^", and a 
+ timeout. The code has been modified incase this is bypassed and will do
+ the correct action.
+  
+  
+ Installation Instructions: 
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*201)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*201.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+           Copy Control Point User and Profiles [PRCB FCP USER COPY] 
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCB1A4
+    Before: B18973292   After: B18983576  **76,201**
+ 
+Routine list of preceding patches: 76
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 29, 2017
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : FEB 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

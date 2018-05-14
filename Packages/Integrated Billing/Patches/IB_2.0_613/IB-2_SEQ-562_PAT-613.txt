@@ -1,0 +1,286 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/16/18 at 12:18
+=============================================================================
+Run Date: APR 12, 2018                     Designation: IB*2*613
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #562                      Status: Released
+                  Compliance Date: MAY 12, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*511    <<= must be installed BEFORE `IB*2*613'
+
+Subject: UNDEFINED ERROR IN TPJI OPTION; MCCR UTILITY FILE UPDATE FOR 2018
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues.
+  
+ 1. Fix an undefined error occurred at line MRA2+40^IBJTBA1 in the Third 
+    Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option.
+  
+ 2. Update to Condition/Occurrence/Value codes of the MCCR UTILITY 
+    (#399.1) file for 2018.
+  
+  
+ Patch Components:
+ -----------------
+ NA
+    
+    
+ Files & Fields Associated:
+    
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ NA                     NA                      NA
+    
+   
+ Forms Associated:
+    
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ NA
+    
+    
+ Mail Groups Associated:
+    
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ NA
+    
+   
+ Options Associated:
+    
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ NA
+   
+    
+ Protocols Associated:
+    
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ NA
+   
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ NA
+   
+   
+ Templates Associated:
+   
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ NA
+   
+   
+ Additional Information:
+ NA
+   
+   
+ New Service Requests (NSRs):
+ ----------------------------  
+ NA
+   
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ NA
+   
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. 16724867FY17 VistA - Non-VRAM User--Error Occuring in VISTA
+  
+    Problem:
+    --------
+    An undefined error occurs when site user is trying to view bill charges 
+    on a claim in the Third Party Joint Inquiry [IBJ THIRD PARTY JOINT
+    INQUIRY] option.
+  
+    Resolution:
+    -----------
+    Routine IBJTBA1 was modified to avoid the undefined error in the display
+    of bill charges on a claim when there was no trace # sent from the 835
+    claim transaction for the explanation of benefits results.
+  
+  
+ 2. R17760432FY18 2018 Update - Value, Occurrence, Occurrence Span and 
+                  Condition Code
+    
+    Problem:
+    --------
+    The Community Care Office (OCC) has requested the following updates to 
+    Condition & Occurrence & Value codes of the MCCR UTILITY (#399.1) file
+    for 2018.
+  
+  
+     Condition Codes
+     30  QUALIFY CLINICAL TRIALS (update)
+     A7  RZD FOR NATIONAL ASSIGNMENT (remove)
+     A8  RZD FOR NATIONAL ASSIGNMENT (remove)
+     M3  SNF 3 DAY STAY BYPASS FOR NG/PIONEER ACD WAIVER (new)
+     MG  GRANDFATHERED TRIBAL FQHC (MEDICARE ONLY CODE) (new)
+  
+     Occurrence Code
+     56  ORIGINAL HOSPICE ELECTION OR REVOCATION DATE (update)
+  
+     Value Codes
+     62  HHA VISITS - PART A (new)
+     63  HHA VISITS - PART B (new)
+     64  HHA REIMBURSEMENT - PART A (new)
+     65  HHA REIMBURSEMENT - PART B (new)
+  
+    Resolution:
+    -----------
+    A post-init routine IB20P613 was created to update the MCCR UTILITY
+    file (#399.1) with codes on above list.  It also removes the pointer of
+    condition codes A7 & A8 on bills if they exist in the BILL/CLAIMS file
+    (#399).
+    
+  
+ Test Sites:
+ ----------
+ Boston HCS 
+ Lebanon VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ NA
+  
+  
+ Title   File Name     FTP Mode
+ -----------------------------------------------------------------------
+ NA
+   
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Optional - Once this patch has been successfully installed you may 
+ delete the post-init routine: IB20P613.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+   
+ Installation will take less than 20 minutes, but will vary from site to site
+ depending on the size of the BILL/CLAIMS file (#399) which is searched for
+ the condition codes A7 & A8 of bills to update in the post-init routine.
+  
+  
+ No Menu Options require disabling. 
+     
+   
+ Installation Instructions:
+ --------------------------
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+    
+    2.   From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+    
+    3.   From this menu, you may select to use the following options: (when
+         prompted for INSTALL NAME, enter IB*2.0*620).
+    
+            a.   Verify Checksums in Transport Global - This option will
+                 allow you to ensure the integrity of the routines that
+                 are in the transport global.
+            b.   Print Transport Global - This option will allow you to 
+                 view the components of the KIDS build.
+            c.   Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of 
+                 this patch (routines, DD's, templates, etc.).
+            d.   Backup a Transport Global - This option will create a 
+                 backup message of any routines exported with this patch. 
+                 It will not backup any other changes such as DD's or 
+                 templates.
+     
+    4.   Use the Install Package(s) option and select the package 
+         IB*2.0*613.
+     
+    5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install?  
+         NO//", respond NO.
+      
+    6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+      
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+     
+         When prompted, 'Enter protocols you wish to mark as 'Out of 
+         Order':', enter: <ENTER>.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Use the 'Install File Print' option to review the updates and ensure that
+ the install has been completed. For example:
+   
+     IB*2.0*613 Post-Install starts .....
+   
+  >>>Condition Code
+     #30 QUALIFY CLINICAL TRIALS updated
+     #A7 RZD FOR NATIONAL ASSIGNMENT removed
+     #A8 RZD FOR NATIONAL ASSIGNMENT removed
+     #M3 SNF 3 DAY STAY BYPASS FOR NG/PIONEER ACD WAIVER added
+     #MG GRANDFATHERED TRIBAL FQHC (MEDICARE ONLY CODE) added
+     Note: #A7 or #A8 removed on total 3 bills of the BILL/CLAIMS (#399) file
+   
+    
+  >>>Occurrence Code
+     #56 ORIGINAL HOSPICE ELECTION OR REVOCATION DATE updated
+    
+  >>>Value Code
+     #62 HHA VISITS - PART A added
+     #63 HHA VISITS - PART B added
+     #64 HHA REIMBURSEMENT - PART A added
+     #65 HHA REIMBURSEMENT - PART B added
+ Total 10 codes updated in the MCCR UTILITY (#399.1) file
+    
+     IB*2.0*613 Post-Install is complete.
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P613
+    Before:       n/a   After: B17280727  **613**
+Routine Name: IBJTBA1
+    Before: B75349267   After: B76025375  **135,265,155,349,417,451,488,
+                                           511,613**
+ 
+Routine list of preceding patches: 511
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2017
+Completed By:                               Date Completed: APR 11, 2018
+Released By :                               Date Released : APR 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

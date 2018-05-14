@@ -1,0 +1,179 @@
+$TXT Created by                 at TAS-EBIL-DEV.AAC.DOMAIN.EXT  (KIDS) on Monday, 06/19/17 at 19:02
+=============================================================================
+Run Date: APR 30, 2018                     Designation: MBAA*1*5
+Package : MBAA - MOBILE SCHEDULING APPLICATIO Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: MAY 31, 2018
+=============================================================================
+
+Associated patches: (v)MBAA*1*1        install with patch       `MBAA*1*5'
+                    (v)MBAA*1*4        install with patch       `MBAA*1*5'
+
+Subject: MOBILE SCHEDULING APPLICATION FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch release includes bug fixes for issues with the remote procedure
+ calls used by the Mobile Device Web Service (MDWS) interface to retrieve
+ scheduling data for Veteran Appointment Request (VAR) and Scheduling
+ Manager (SM) web applications:
+   
+ 1. Available appointment slots for clinics with appointment lengths of 10
+ minutes or 20 minutes were being retrieved incorrectly. This issue is
+ corrected by this patch.
+   
+ 2. Cancellation of appointments for clinics with 10 minutes or 20 minute
+ appointment lengths were releasing the wrong slots in VistA. This issue
+ is corrected by this patch.
+  
+ 3. Cancellation of variable length appointments using multiple slots was
+ Only releasing the first appointment slot in VistA. This issue is 
+ Corrected by this patch.
+  
+ 4. Make appointments allowed a new appointment to be made when the patient
+ already had an appointment for the same time at another clinic. This is 
+ corrected by this release to now return an APTPAHA error if an appointment
+ for this patient at the same time exists at any clinic.
+  
+ 5. Cancellation of appointments was incorrectly allowed on some
+ appointments including those with checkout date and clinics which
+ required privileged user access.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+ Test Sites: 
+ ----------- 
+ SAN DIEGO HEALTHCARE SYSTEM 
+ BALTIMORE VA MEDICAL CENTER 
+ CARL VINSON VA MEDICAL CENTER
+ PALO ALTO HEALTHCARE SYSTEM
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  
+  
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,     mbaa_1_0_p5_ig.pdf              Binary
+  Back-out/Rollback Guide (MBAA*1.0*5) 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.  This installation may be queued.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     MBAA*1.0*5):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' respond NO    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' respond NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' respond NO
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Scheduling Calendar View;**[Patch List]**;May 5, 2015;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MBAAMAP2
+    Before: B79362552   After: B80917578  **1,4,5**
+Routine Name: MBAAMDA1
+    Before: B66171145   After: B68118160  **1,5**
+Routine Name: MBAAMDA2
+    Before: B17922124   After: B19055571  **1,5**
+Routine Name: MBAARPC2
+    Before: B83536861   After: B83940049  **1,4,5**
+ 
+Routine list of preceding patches: 4
+
+=============================================================================
+User Information:
+Entered By  :                HRISTOPHER     Date Entered  : JUN 01, 2017
+Completed By:                               Date Completed: APR 30, 2018
+Released By :                               Date Released : APR 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

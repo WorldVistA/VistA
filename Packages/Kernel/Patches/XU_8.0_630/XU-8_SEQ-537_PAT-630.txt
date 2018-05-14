@@ -1,0 +1,319 @@
+$TXT Created by                  KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 07/05/17 at 11:25
+=============================================================================
+Run Date: MAR 13, 2018                     Designation: XU*8*630
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #537                      Status: Released
+                  Compliance Date: APR 13, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*659    <<= must be installed BEFORE `XU*8*630'
+
+Subject: KERNEL SECURITY AND BUG FIXES
+
+Category: 
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ VistA Kernel patch XU*8*630 provides the following security and bug fixes:
+  
+ 1. On OpenVMS systems, 2-factor authentication sometimes fails when a
+    Cache 2014.1 call to an operating system API to validate a digital 
+    signature generates an error, even though the digital signature 
+    processing completes as it should. The effect is that the error stack
+    is "frozen", and a subsequent process that relies on a value in that
+    stack erroneously errors out. This patch resets the error stack when
+    this particular error occurs so that user authentication can continue.
+  
+ 2. Joint Legacy Viewer (JLV) is a joint VA and DoD graphical web based
+    application that is used by both VA providers as well as DoD providers.
+    The JLV web based application displays clinical information on a
+    patient from VA and DoD sources.
+    a. This patch enables Broker Security Enhancement (BSE) authentication
+       for JLV by adding a "JLV BSE" entry in the REMOTE APPLICATION file
+       (#8994.5). This entry will allow a user to authenticate with
+       2-factor authentication in one VistA system (home), and visit 
+       another VistA system (remote) using a BSE token. This is done in 
+       accordance with instructions on the use of the Broker Security 
+       Enhancement (BSE) as provided by RPC Broker software documentation.
+       VistA Kernel is the custodian for the REMOTE APPLICATION file
+       (#8994.5).
+    b. This patch enhances 2-factor authentication into VistA to support
+       non-VA users (Department of Defense and non-VA providers) accessing
+       VistA through the JLV application using National Health Information
+       Network (NHIN) Security Assertion Markup Language (SAML) standards
+       for user identification. A "JLV NHIN" entry is added to the REMOTE
+       APPLICATION file (#8994.5) to provide role-based access and to
+       identify JLV 2-factor authentication in the SIGN-ON LOG file
+       (#3.081).
+    c. A menu option "JLV GUI Menu Option" [JLV WEB SERVICES] is added to
+       the OPTION file (#19) which contains the Remote Procedure Calls
+       (RPCs) for the JLV application. This menu option will provide
+       role-based access for BSE (item a, above) and 2-factor
+       authentication (item b, above).
+  
+ 3. The SIGN-ON LOG file (#3.081) includes a REMOTE APP field (#18) that
+    contains a pointer to the REMOTE APPLICATION file (#8994.5). When a 
+    user authenticates with BSE or with 2-factor authentication, this field
+    is updated to show the client application if the application has a
+    valid entry in the REMOTE APPLICATION file (#8994.5). This patch
+    updates the print template for the Sign-On Log report to display this
+    information.
+  
+ 4. When the Identity and Access Management (IAM) "Link My Accounts" 
+    application sends a request to VistA containing null data, an error is 
+    trapped in VistA. The "Link My Accounts" application has already been 
+    remediated to prevent sending null data, but this patch contains a fix
+    on the VistA side that will prevent the error occurring should the
+    problem be reintroduced in a future version of the application.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - <08/04/17>
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*630 contains 
+ changes to a package referenced in ProPath standard titled BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*630 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)             New/Modified/Deleted
+ ------------------   -------------------             --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    Type                  New/Modified/Deleted
+ ---------                    ----                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ "JLV GUI Menu Option"
+ [JLV WEB SERVICES]     B:Broker (Client/Server)  New
+  
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ XUSEC LIST          print   SIGN-ON LOG (#3.081) Modified
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                    Type           New/Modified/Deleted
+ --------                    ----           --------------------
+ XUS BSE TOKEN               SINGLE VALUE   Modified (description) 
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ INC000000831246 JLV - Security/Logon Issue
+ I13662874FY17 <UNDEFINED>IAMBU+16^XUESSO4
+  
+ 1. INC000000831246 JLV - Security/Logon Issue
+  
+ Problem:
+ -------
+ The Joint Legacy Viewer (JLV) uses a deprecated form of access to VistA 
+ that does not securely authenticate or accurately identify the user
+ accessing clinical records. This is a HIPAA violation that must be
+ remediated using 2-factor authentication and unique identification of
+ users.
+  
+ Resolution:
+ ----------
+ This patch will create an entry in the REMOTE APPLICATION file (#8994.5) 
+ for the JLV application. The Broker Security Enhancement (BSE) enables
+ Remote Procedure Call (RPC) based applications to make remote user/visitor
+ connections in a more secure manner.  BSE is used to authenticate a valid
+ VistA user at one site (the home site) and subsequently access data and
+ another site (the remote site).  BSE adds a step to the signon process to
+ authenticate the connecting application.  This requires passing a secret
+ encoded phrase that will be authenticated on the remote VistA system by
+ looking up the entry in the REMOTE APPLICATION file (#8994.5).  The REMOTE
+ APPLICATION file (#8994.5) is updated by Kernel patch and KIDS build.
+  
+ 2. I13662874FY17 <UNDEFINED>IAMBU+16^XUESSO4
+  
+ Problem:
+ -------
+ When the Identity and Access Management (IAM) "Link My Accounts" 
+ application calls the "XUS IAM BIND USER" RPC without passing the 
+ required SECID parameter, VistA traps an <UNDEFINED> error.
+  
+ Resolution:
+ ----------
+ Routine ^XUESSO4 was modified to return an error message to the "Link My 
+ Accounts" application when a required parameter is missing, and no longer 
+ trap an error in VistA.
+  
+  
+ Test Sites: (Patch Tracking Message #85247772)
+ ----------
+ Central Arkansas Veterans HCS, Little Rock, AR (Large, Station 598)
+ Lebanon VA Medical Center, Lebanon PA (595 - Large)
+ VA Central Alabama HCS, Montgomery AL (619 - Integrated)
+ VA Heartland East, St Louis MO (657 - Integrated)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The Kernel 8.0 and Kernel Tookit 7.3 Systems Management Guide has been 
+ updated as a result of this patch. The most up-to-date VA Kernel
+ documentation is available on the VHA Software Document Library (VDL) at
+ the following Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  There are no menu options or protocols that need to be 
+ disabled.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 1 minute to install. It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*630):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global. 
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post-installation routine XU8PS630 will run automatically in the
+ background to add JLV entries to the REMOTE APPLICATION file (#8994.5). 
+ The routine will be automatically deleted after patch installation, as it 
+ is intended to be run only once per site.
+  
+ Back out Instructions:
+ ---------------------
+  
+    a.  Open the VistA MailMan message created during the "Backup a 
+        Transport Global" step of the patch installation process (i.e.,
+        Kernel and Kernel Toolkit Systems Management Guide, Section 23.7.8,
+        "Backing Up Transport Globals").
+    b.  Follow the installation sequence (i.e., Kernel and Kernel Toolkit
+        Systems Management Guide, Section 23.7.1, "Installation Sequence")
+        to load and install a patch from a PackMan message. This
+        installation restores the original (pre-patch) VistA routine.
+    c.  The backup patch will only restore pre-existing routines with their
+        original version. It will not restore the modified print template 
+        or RPC description, nor will it delete newly added data from the
+        OPTION file (#19) or REMOTE APPLICATION file (#8994.5).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8PS630
+    Before:       n/a   After: B20353233  **630**
+Routine Name: XUESSO2
+    Before:B117714262   After:B120490166  **655,659,630**
+Routine Name: XUESSO4
+    Before: B61505269   After: B62316901  **659,630**
+Routine Name: XUSAML
+    Before: B87822485   After:B106243736  **655,659,630**
+Routine Name: XUSBSE1
+    Before:B158984065   After:B155496043  **404,439,523,595,522,638,659,630**
+ 
+Routine list of preceding patches: 659
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2013
+Completed By:                               Date Completed: MAR 06, 2018
+Released By :                               Date Released : MAR 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

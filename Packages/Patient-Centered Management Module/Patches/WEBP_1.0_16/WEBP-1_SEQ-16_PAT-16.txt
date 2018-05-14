@@ -1,0 +1,303 @@
+
+=============================================================================
+Run Date: FEB 09, 2018                     Designation: WEBP*1*16
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: MAR 12, 2018
+=============================================================================
+
+
+Subject: PCMM WEB V1.16 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*16 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ 1. RTC 646433 - The CPRS Window displays the staff name of the PACT 
+ Clinical Pharmacist correctly but displays the PACT Clinical Pharmacist 
+ staff name in the Surrogate Care Manager's team role instead of 
+ displaying the Surrogate Care Manager's staff name. The CPRS Window 
+ template [PCMM].[PCM_STD_TEMPLATE] was updated in the DB to show correct 
+ staff name for the Surrogate Care Manager. 
+ NOTE: This is documenting the DB change to the CPRS Window template that 
+ has already been implemented in production.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 2. RTC 639349 - During a position reassignment when writing a patient's 
+ position assignment back to VistA for a primary care team assignment that 
+ was migrated in from VistA but the position assignment was not part of 
+ the migration but created in PCMM Web after migration, the Primary Care 
+ flag in VistA does not correctly calculate the field (#.05) for PC ROLE 
+ in the Patient Team Position Assignment file (#404.43). The Java code was 
+ changed to calculate the Primary Care flag value if the position 
+ assignment date is after the sites migration date.
+ CA-SDM Ticket: I9863622FY16
+  
+ 3. RTC 650678 - Primary Care - Home Based Primary Care (PC-HBPC) team 
+ assignments with explicit patient assignments to certain team roles 
+ causes CPRS Window to display "PCMM is Unavailable." with cached data, if 
+ available, to the users when trying to open the CPRS Window for 
+ assignment details. Any assignment to the following team roles on HBPC 
+ teams will result in the CPRS window errors:
+ Medical Director
+ MH Provider
+ Registered Dietician
+ Rehabilitation Therapist
+ Social Worker
+ Surrogate Medical Director
+ Work around - unassign patients from these team positions and CPRS Window 
+ should display correctly. The Java code was changed where the data 
+ structures are calculated in the PatientSunnaryBuilderImpl.java to avoid 
+ a nullpointerexception.
+ CA-SDM Ticket: 
+ I17978523FY18   I18153962FY18   I18153999FY18   I18385975FY18
+  
+ 4. RTC 652251 - Need to remove CANCELED Primary Care assignments from the 
+ criteria for the validator that checks for duplicate assignments to the 
+ same team. Users receive a validation error that the patient cannot be 
+ assigned to the same team even if the patient is not actively assigned 
+ but had a previously CANCELED PENDING PACT assignment to that same team. 
+ This validator validates duplicate ACTIVE and PENDING assignments but 
+ also included CANCELED assignments. Removed CANCELED assignments from the 
+ validation criteria for the PatientAssignmentServiceImpl.java validator.
+ NOTE: Validation error received by users - "The patient "xxx" is assigned 
+ to the team "xxx" more than once for the same time range."
+  
+ CA-SDM Ticket: 
+ R18154373FY18   R18132559FY18   I18006100FY18   I17978312FY18 
+ I18004366FY18   I18132597FY18   R18202014FY18   I18232339FY18 
+ R18171840FY18   R18343753FY18   I18068258FY18   I18386708FY18
+ I18414193FY18   I18483059FY18
+  
+  
+ 5. RTC 662329 - The system needs to properly display the parent|child 
+ station names for primary care assignments in the CPRS header. The code 
+ was updated that calculates local station display to use proper station 
+ relationships.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 6. RTC 652288 - On the PCMM Web Home page, the user of a screen reading 
+ software application hears "Department of Veterans Affairs logo" instead 
+ of "Department of Veterans Affairs seal". The wording was changed in the 
+ ciss_header.jsp file to read Seal instead of Logo.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+ NOTE: This is Issue #3 from Section 508 ID tracking number of 23605.
+  
+ 7. RTC 652298 - In the PCMM Web application on the List all Teams screen, 
+ the screen reader does not recognize the individual filter categories.  
+ The user of a screen reading software hears "Combo box all" instead of 
+ "Care Type Combo box all" or "Focus Combo box all".etc. The filter (all) 
+ item was changed to read and display the column heading for clarity in 
+ the commonJavascript.js file.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+ NOTE: This is Issue #6 from Section 508 ID tracking number of 23605.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*16 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ 1.  I9863622FY16 - PCMM Issue assigned as Non-Primary Care (Memphis 614)
+     
+ Problem:
+ During a position reassignment when writing a patient's position 
+ assignment back to VistA for a primary care team assignment that was 
+ migrated in from VistA but the position assignment was not part of the 
+ migration but created in PCMM Web after migration, the Primary Care flag 
+ in VistA does not correctly calculate the field (#.05) for PC ROLE in the 
+ Patient Team Position Assignment file (#404.43). 
+  
+ Resolution:
+ The Java code was changed to calculate the Primary Care flag value if the 
+ position assignment date is after the sites migration date.
+  
+ 2. I17978523FY18 - PCMM Web / PCMM-CPRS Header Issues / St. Cloud VA HCS 
+    Station 656
+    I18153962FY18 - PCMM Web ticket
+    I18153999FY18 - Ticket Category: NTL.APP.HealtheVet Vista.PCMM Web
+    I18385975FY18 - Staff assignments listed in PCMM are not carrying over 
+    to CPRS
+  
+ Problem:
+ Primary Care - Home Based Primary Care (PC-HBPC) team assignments with 
+ explicit patient assignments to certain team roles causes CPRS Window to 
+ display "PCMM is Unavailable." with cached data, if available, to the 
+ users when trying to open the CPRS Window for assignment details. 
+  
+ Resolution:
+ The Java code was changed where the data structures are calculated in the 
+ PatientSunnaryBuilderImpl.java to avoid a nullpointerexception.
+  
+ 3. R18154373FY18 - Patient assignment issue in PCMM
+    R18132559FY18 - Validation error code
+    I18006100FY18 - PCMM Web / Patients cannot be assigned more than once 
+    / Puget Sound 663
+    I17978312FY18 - PCMM Web / issue when assigning MH provider / Oklahoma 
+    635
+    I18004366FY18 - PAL - PCMM Error Message (see attached email)
+    I18132597FY18 - PCMM WEB NOT UPDATING ASSIGNMENTS
+    R18202014FY18 - Mistakenly Unassigned A Patient But Cannot ReAssign 
+    the Same Patient
+    I18232339FY18 - PCMM Web / issue with reassigning a veteran in PCMM / 
+    Oklahoma 635
+    R18171840FY18 - PCMM Web issue
+    R18343753FY18 - PCMM WEB REMEDY TICKET - 519 WEST TX VA HCS
+    I18068258FY18 - PCMM assignments not flipping
+    I18386708FY18 - Unable to assign patient to team, receiving validation 
+    error
+    I18414193FY18 - Errors in PCMM WEB
+    I18483059FY18 - 757 - Columbus - PCMM Web user unable to assign a 
+    patient
+  
+ Problem:
+ Need to remove CANCELED Primary Care assignments from the criteria for 
+ the validator that checks for duplicate assignments to the same team. 
+ Users receive a validation error that the patient cannot be assigned to 
+ the same team even if the patient is not actively assigned but had a 
+ previously CANCELED PENDING PACT assignment to that same team. This 
+ validator validates duplicate ACTIVE and PENDING assignments but also 
+ included CANCELED assignments. 
+  
+ Resolution:
+ Removed CANCELED assignments from the validation criteria for the 
+ PatientAssignmentServiceImpl.java validator.
+  
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 626 - Nashville VAMC
+  
+ Documentation:
+ ==============
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM WEB VDD WEBP_1_16.DOCX    BINARY
+ Module (PCMM) Web Version 
+ Description Document
+  
+ Patient-Centered Management   PCMMR_POM.DOCX                 BINARY
+ Module (PCMM) Web Project
+ Operations Manual 
+  
+ Patient-Centered Management   PCMM_WEB_USER_GUIDE.DOCX       BINARY
+ Module (PCMM) Web User Guide
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category: 
+ NTL.APP.HealtheVet VistA.PCMM Web.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2018
+Completed By:                               Date Completed: FEB 05, 2018
+Released By :                               Date Released : FEB 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

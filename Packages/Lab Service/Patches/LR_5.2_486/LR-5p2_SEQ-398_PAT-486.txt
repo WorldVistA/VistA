@@ -1,0 +1,196 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/27/17 at 14:30
+=============================================================================
+Run Date: FEB 05, 2018                     Designation: LR*5.2*486
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #398                    Status: Released
+                  Compliance Date: MAR 08, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*416  <<= must be installed BEFORE `LR*5.2*486'
+
+Subject: ENDLESS LOOP AND ADD TEST ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) VistA Laboratory issues:
+  
+ 1)  LEDI Microbiology Results Endless Loop Issue
+ 2)  Lapsed/Canceled Orders and Added Test Issue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated CA-SDM tickets:
+ =========================
+ 1.  I9655774FY16 - LEDI Microbiology Results Endless Loop Issue
+ 2.  I11471766FY17 - Lapsed/Canceled Orders and Added Test Issue
+  
+ Blood Bank Review:
+ =================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*486 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*486 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*486 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ Central Alabama Health Care System
+  
+ Las Vegas
+  
+ Ticket Overview:
+ ================
+ 1. I9655774FY16 - LEDI Microbiology Results Endless Loop Issue 
+  
+    Problem:
+    -------
+  
+    An endless loop may occur during Laboratory Electronic Data Interchange
+    (LEDI) processing of Microbiology. In this situation, the results have
+    been received at a collecting site from the host site which performed
+    the testing.  However, an issue exists with the results preventing the
+    results from being merged to the collecting site's patient files.  
+    Normally, an error file is set containing details about the problem.
+    If that error file was not set, an endless loop will occur.  This will
+    result in other tasked jobs hanging and waiting for files locked by
+    LEDI such as the nightly Lab Rollover process.  This situation has
+    occurred at one site, and potentially could occur at other sites which
+    use LEDI for Microbiology tests.
+  
+    Resolution:
+    -----------
+    Modify routine LRVRMI0 to check for the existence of the error array
+    before entering the line of code which could cause an endless loop.
+  
+    Routine: LRVRMI0
+  
+ 2. I11471766FY17 - Lapsed/Canceled Orders and Added Test Issue 
+  
+    Problem:
+    -------
+    If all tests on an order have been lapsed/canceled and if a user adds 
+    another test, the CPRS Orders Tab has a confusing display which makes
+    it difficult for physicians and other users to determine which are
+    active or completed orders vs canceled orders. For workflow and other
+    reasons, tests should not be added to orders which have been completely
+    canceled. (Note: This ticket was submitted because tests were sometimes
+    being added to orders that were more than 30-60 days old and had been
+    automatically canceled by the Lapsed Order process.)
+  
+    Resolution:
+    -----------
+    Modify routine LRCE to not allow the adding of a test to an order which
+    is completely canceled.  Display a message to the user that the test
+    should be ordered with a new order number. The message will appear like
+    this:
+  
+           This order has been canceled.
+           Tests WILL NOT be added.  A new order must be placed.
+  
+    Routine: LRCE 
+  
+ Components:
+ ===========
+ N/A
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*486'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+  
+       Protocols? NO//', choose 'NO'.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCE
+    Before: B67329261   After: B75653138  **28,76,103,121,153,210,202,
+                                           263,350,416,486**
+Routine Name: LRVRMI0
+    Before:  B2697549   After:  B2796746  **350,486**
+ 
+Routine list of preceding patches: 416
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 04, 2017
+Completed By:                               Date Completed: FEB 05, 2018
+Released By :                               Date Released : FEB 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

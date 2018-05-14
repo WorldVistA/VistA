@@ -37,12 +37,17 @@ class VistAMenuUtil(object):
   def gotoSystemMenu(self, vistAClient):
     connection = vistAClient.getConnection()
     vistAClient.waitForPrompt()
+    connection.send("K  \r")
+    vistAClient.waitForPrompt()
     connection.send("S DUZ=%s D ^XUP\r" % self._duz)
     connection.expect("Select OPTION NAME: ")
     connection.send("EVE\r")
     connection.expect("CHOOSE 1-")
     connection.send("1\r")
-    connection.expect("Select Systems Manager Menu ")
+    index = connection.expect(["Select Systems Manager Menu ", "to continue"])
+    if index == 1:
+      connection.send("1\r")
+      connection.expect("Select Systems Manager Menu ")
 
   def exitSystemMenu(self, vistAClient):
     connection = vistAClient.getConnection()

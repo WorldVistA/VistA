@@ -1,0 +1,177 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/17/17 at 12:13
+=============================================================================
+Run Date: MAR 12, 2018                     Designation: LR*5.2*471
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #402                    Status: Released
+                  Compliance Date: APR 11, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*471'
+                    (v)LR*5.2*438  <<= must be installed BEFORE `LR*5.2*471'
+
+Subject: LIST MANAGER CPRS RESULTS, IMPROPER PARAMETERS IN DID CALL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses two (2) issues:
+  
+ 1.   When the legacy CPRS List Manager option CPRS Ward Clerk
+      Menu [OR OE/RR MENU WARD CLERK] is used to call Lab 
+      package routines (SET1^LRGEN) to display Lab Results by 
+      Test, a program error (UNDEFINED) is encountered.
+  
+ 2.   The VistA routine ^LRX performs a FileMan database server
+      call ($$GET1^DID) to retrieve a global reference.  The 
+      parameters used in the call are improper. 
+  
+ Associated ticket(s):
+ =====================
+ 1.      I9697620FY16 - List Manager CPRS Error
+  
+ 2.      I12671125FY17 - Improper Parameters in DID Call
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*471 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*471 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*471 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ Grand Junction VAMC
+ West Palm Beach VAMC
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.      I9697620FY16 - List Manager CPRS Error
+  
+ Problem:
+ --------
+ When the legacy CPRS List Manager option CPRS Ward Clerk Menu 
+ [OR OR/RR MENU WARD CLERK] is used to call Lab package routines
+ (SET1^LRGEN) to display Lab Results by Test, a program error 
+ (UNDEFINED) is encountered.
+  
+ Resolution:
+ -----------
+ The patch modifies code in routine LRGEN1 to assure that the 
+ undefined variable (LRIOM) is initialized.
+  
+ Routines: LRGEN1
+  
+ 2.      I12671125FY17 - Improper Parameters in DID Call
+  
+ Problem:
+ --------
+ The VistA routine ^LRX performs a FileMan database server call 
+ ($$GET1^DID) to retrieve a global reference.  The parameters used
+ in the call are improper.  In particular, the routine passes the 
+ parameter as the literal "1" (1,+LRDPF) rather than the file number
+ as described in the FileMan Developer's Guide.
+  
+ Until the Laboratory Package is patched, FileMan has been modified
+ to provide compatibility with this improper code by setting the 
+ passed arguments properly if the first parameter is a literal "1".
+ This patch will eliminate the need for that special code.
+  
+ Resolution:
+ -----------
+ The patch modifies code in routine LRX to assure that the ^DID
+ call is correct.
+  
+ Routines: LRX
+  
+ Pre-Installation Instructions:
+ ==============================
+    The install time for this patch is less than 2 minutes. This patch 
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ ==========================
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch LR*5.2*471:
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will (allow
+       you to view all changes that will be made when this patch is 
+       installed.  It compares all components of this patch routines, DDs, 
+       templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+    choose 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' choose 'NO'.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRGEN1
+    Before: B24124923   After: B24272635  **201,221,438,471**
+Routine Name: LRX
+    Before: B71828345   After: B71830646  **65,153,201,217,290,360,350,471**
+ 
+Routine list of preceding patches: 350, 438
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 12, 2016
+Completed By:                               Date Completed: MAR 09, 2018
+Released By :                               Date Released : MAR 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

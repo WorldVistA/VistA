@@ -1,0 +1,162 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/26/17 at 10:14
+=============================================================================
+Run Date: FEB 20, 2018                     Designation: PRC*5.1*202
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #177                    Status: Released
+                  Compliance Date: MAR 23, 2018
+=============================================================================
+
+Associated patches: (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*202'
+                    (v)PRC*5.1*107 <<= must be installed BEFORE `PRC*5.1*202'
+
+Subject: CLEARS ACT,POA,PRJ MSGS;REC REPORT STAT CHANGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1) When a Receiving Report is deleted the default status is not a valid
+    entry, so when it times out the status is set to an invalid status.
+  
+ 2) A message is served for POA, PRJ, and ACT the ISMS/FMS TRANS (#423.6) 
+    file is not cleared.
+  
+  
+ Associated tickets:
+ ========================
+ 1) I12358642FY17 - IFCAP - Requesting Status change on order and reporting
+                    IFCAP Issue - St Cloud 
+  
+ 2) I9421126FY16  - IFCAP - What clears out ACT,POA,PRJ msgs in 423.6
+  
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ St. Cloud VAMC
+ Bay Pines VA HCS 
+  
+  
+ TICKET OVERVIEW:
+ ===============
+ 1) I12358642FY17 - IFCAP - Requesting Status change on order and reporting
+                    IFCAP Issue - St Cloud 
+  
+    Problem: 
+    --------
+    When a Receiving Report is being deleted the user is asked to update 
+    the status. The default status is going to be what the status was 
+    prior to it being deleted. The default status will not be a valid 
+    input since the report has been deleted. If the input times out, the 
+    Receiving Report will be deleted and the status will stay as the
+    default.
+  
+   
+    Resolution:
+    -----------
+    When a user is prompted to delete the Receiving Report, before
+    the Receiving Report is deleted the user will be asked to Update 
+    the SUPPLY STATUS with a valid option. The default status will be the
+    current status of the Receiving Report, and the user will be asked to
+    enter a valid status. If the input timeout the status of the Receiving
+    Report will default to the same status and the Receiving Report will
+    not be deleted. If the user enters a valid status then the Receiving
+    Report will be deleted and the status will be updated.
+  
+  
+ 2) I9421126FY16 - IFCAP - What clears out ACT,POA,PRJ msgs in 423.6
+  
+    Problem: 
+    -------- 
+    When a transaction is made in POA, ACT, and PRJ the messages are 
+    not cleared out in the ISMS/FMS TRANS (#423.6) file. 
+  
+    Resolution:
+    ----------- 
+    Routines PRCOACT, and PROESE have been modified so that the POA, 
+    ACT, and PRJ messages are cleared out once they have been served. 
+  
+  
+ Installation Instructions: 
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*202)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*202.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+           Delete a Receiving Report [PRCHPM PO DEL REC] 
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCHEF
+    Before:  B8847630   After:  B5804888  **107,202**
+Routine Name: PRCHREC2
+    Before: B21606846   After: B29401256  **81,202**
+Routine Name: PRCOACT
+    Before: B45194026   After: B45529406  **202**
+Routine Name: PRCOESE
+    Before: B47352791   After: B47704760  **202**
+ 
+Routine list of preceding patches: 81, 107
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 01, 2017
+Completed By:                               Date Completed: FEB 20, 2018
+Released By :                               Date Released : FEB 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

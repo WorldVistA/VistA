@@ -1,0 +1,218 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/30/18 at 12:18
+=============================================================================
+Run Date: APR 11, 2018                     Designation: PRS*4*154
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #143                      Status: Released
+                  Compliance Date: MAY 12, 2018
+=============================================================================
+
+Associated patches: (v)PRS*4*46    <<= must be installed BEFORE `PRS*4*154'
+
+Subject: PAID EXPENDITURES REPORT NOT WORKING AFTER VATAS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects one issue:
+ 1. The Personnel and Accounting Integrated Data (PAID) Expenditure
+    Report will not work after site migration to the Veterans Affairs Time
+    and Attendance System (VATAS).
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I17956679FY18 - PAID - Expenditure Report Issue
+  
+ Problem:
+ --------
+ When a site transitions to VATAS, they do not utilize
+ the TIME & ATTENDANCE RECORDS (#458) file. The 'Expenditures' 
+ [PRSRSU-EXP] [PRSRFI-EXP] reports use the T&L Unit component of the
+ '8B Record' (#102) field located in the TIME & ATTENDANCE RECORDS 
+ (#458) file to sort the results, which are no longer populated.
+  
+ Resolution:
+ -----------
+ Routine PRSROSOR has been modified to use the T&L Unit (#12) 
+ field of the PAID PAYRUN DATA (#459) file which is still
+ used after transition to VATAS.
+   
+ Test Sites:
+ -----------
+ C.W. Bill Young VA Medical Center (Bay Pines)
+ Central Arkansas Veterans Healthcare System (Little Rock)
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Title                   File Name                     FTP Mode
+ --------------------------------------------------------------
+ Technical Manual        PAID_4_P154_TM.pdf            Binary
+ User Manual             PAID_4_P154_UM.pdf            Binary
+  
+ Documentation can also be found on the System Design and Development Web 
+ page at: http://www.domain.ext/vdl/
+  
+ Title                   File Name  
+ -----------------------------------
+ Technical Manual        paid_tm.doc        
+ Technical Manual        paid_tm.pdf                         
+ User Manual             paid_um.doc             
+ User Manual             paid_um.pdf             
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 1 minute
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch PRS*4.0*154:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install, PRS*4.0*154.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? YES//" respond YES.
+         Enter menu options you wish to mark as 'Out Of Order':
+                Expenditures    [PRSRSU-EXP]
+                Expenditures    [PRSRFI-EXP]
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSROSOR
+    Before:  B8218642   After:  B7951045  **2,26,46,154**
+ 
+Routine list of preceding patches: 46
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 29, 2018
+Completed By:                               Date Completed: APR 10, 2018
+Released By :                               Date Released : APR 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

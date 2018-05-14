@@ -1,0 +1,245 @@
+$TXT Created by                   DOSP.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 01/31/18 at 13:51
+=============================================================================
+Run Date: FEB 27, 2018                     Designation: PSO*7*515
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #424                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*500   <<= must be installed BEFORE `PSO*7*515'
+
+Subject: MOCHA 2.1B FOLLOW ON ISSUES
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+  
+                               * * * Notice * * *
+                    This patch MUST BE installed immediately 
+                        following successful installation 
+                        of the MOCHA 2.1B group of builds.
+                       See the PSO*7.0*402 and PSO*7.0*500    
+                         patch descriptions for details.
+                                * * * Notice * * *  
+  
+  
+ This patch will correct 2 hard errors that are present in PSO*7.0*500, 
+ which is part of the MOCHA 2.1B group of builds and is due for national 
+ release at the same time.
+  
+ The following two errors have been addressed in this patch:
+  
+ <UNDEFINED>SCH+3^PSOORED3 *SCHEX
+ <UNDEFINED>SCH+3^PSOORED4 *SCHEX
+  
+ The functions where the errors occur are:     
+ - Editing the Schedule while finishing a Pending order from CPRS      
+ - Editing a Schedule of an existing prescription      
+ - Editing a Schedule while Verifying a Non-verified Prescription using 
+   either the ListMan verification action or the  'Rx Verification by     
+   Clerk' option
+ - Editing a Schedule while using the 'Process Order Checks' option      
+  
+ This patch will also correct an issue presented with the release version 
+ of PSO*7.0*500 where multiple word schedule expansions are not echoed to 
+ the screen during schedule entry/edit.  This defect does not affect the 
+ patient sig section where multiple word schedules continue to be expanded 
+ appropriately, only the immediate echo response functionality at the time 
+ of schedule entry/edit.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ -------------------------
+ N/A
+  
+  
+ Forms Associated:
+ ----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ ----------------------
+ N/A
+  
+  
+ Options Associated: 
+ ------------------
+ N/A 
+  
+  
+ Protocols Associated:
+ --------------------
+ N/A  
+  
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Templates Associated:
+ -------------------- 
+ N/A
+  
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ---------------------------
+ N/A
+  
+  
+ Blood Bank Clearance:
+ --------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Charleston VAMC
+ Denver VAMC
+ Heartland West VAMC
+ Tennessee Valley VAMC
+ West Palm VAMC
+  
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ N/A
+  
+  
+ Patch Installation:
+ ==================
+  
+  Installation of this patch should take no longer than 5 minutes. 
+   
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+  2. From the Kernel Installation & Distribution System menu, select the
+     Installation menu.
+   
+  3. From this menu, you may select to use the following options:
+     (when prompted for INSTALL NAME, enter PSO*7.0*515)
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+  4. Use the Install Package(s) option and select the package PSO*7.0*515.
+   
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? YES//"
+     respond NO.
+   
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//" respond NO. 
+   
+  7. When prompted "Device: Home//" respond with the correct device and DO 
+     NOT queue this to P-Message.
+  
+ Post-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include KIDS notice of incompletion or hard errors) resulting from the 
+ installation of this patch. You must have concurrence from  Health 
+ Product Support before a rollback can occur. Enter a CA helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*515 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*515 in 
+ the patch list section on line 2.
+  
+  
+ ****************************** NOTE ************************************
+ The 'Before' checksum values for all routines in this patch will appear
+ incorrect.  This is because they are components of the preceding
+ PSO*7.0*402 and PSO*7.0*500 patches which are part of the MOCHA 2.1B group
+ of builds, which this patch immediately follows. The FORUM Patch Module
+ uses released checksum values to populate the 'Before' fields below.  
+ Since PSO*7.0*402 and PSO*7.0*500 will be released at the same time as
+ this patch the FORUM Patch Module does not have access to the actual
+ 'Before' checksum values.
+ ****************************** NOTE *************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORED3
+    Before: B66487001   After: B66908103  **46,78,99,117,133,148,249,251,
+                                           379,378,372,416,313,444,402,
+                                           515**
+Routine Name: PSOORED4
+    Before: B57603808   After: B57964531  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416,313,437,
+                                           282,402,515**
+Routine Name: PSOSIG
+    Before: B96478034   After: B95915445  **46,99,114,391,313,282,455,
+                                           446,402,500,515**
+ 
+Routine list of preceding patches: 500
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 18, 2018
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : FEB 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

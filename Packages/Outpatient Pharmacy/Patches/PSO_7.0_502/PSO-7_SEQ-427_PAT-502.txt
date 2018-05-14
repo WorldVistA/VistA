@@ -1,0 +1,296 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 12/20/17 at 19:11
+=============================================================================
+Run Date: APR 05, 2018                     Designation: PSO*7*502
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #427                      Status: Released
+                  Compliance Date: MAY 05, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*326   <<= must be installed BEFORE `PSO*7*502'
+                    (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*502'
+                    (v)PSO*7*442   <<= must be installed BEFORE `PSO*7*502'
+                    (v)PSS*1*217   <<= must be installed BEFORE `PSO*7*502'
+
+Subject: SCRIPTALK ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch makes enhancements to the ScripTalk 'talking' prescription 
+ label functionality. The current ScripTalk label, released in 2003, has a
+ 2K memory capacity, which limits the amount of prescription data that can
+ be audibly read to the blind or low-vision Veteran using the system. New
+ ScripTalk labels with 10K capacity are now available, and this patch takes
+ advantage of that capacity by sending more prescription data, including 
+ Drug Warnings, to the ScripTalk label.
+  
+ The data sent to the ScripTalk label (either 2K or 10K), will now be 
+ controlled by one of two new parameters, depending on how your ScripTalk
+ device definitions are set up. If they are set up at the system level
+ using a mapped device, the dataset will be controlled by the new SCPIPTALK
+ PRINTER TYPE SubField (#.03) in the SCRIPTALK PRINT DEVICE MAPPING SubFile
+ (#59.747) of the PHARMACY SYSTEM File (#59.7), which patch PSS*1.0*217 
+ introduces. If your ScripTalk device definition is set at the Outpatient
+ Site level,the dataset will be controlled by the new SCRIPTRALK PRINTER
+ TYPE Field (#107.2) in the OUTPATIENT SITE File (#59), which this patch 
+ introduces. Neither of these new fields will be populated upon patch
+ install, and the software assumes a 2k dataset when either parameter is
+ null.
+  
+ The new ScripTalk 10K printers and labels are backward compatible with the
+ current 2K dataset. So when a site upgrades to the new 10K equipment, once
+ the hardware is set up and ready for implementation of the new 10K 
+ dataset, simply set the applicable parameter to 10K.
+  
+ In addition, sites will now be able to control whether or not the 
+ non-ScripTalk label prints as voided or not voided. This will be in the
+ OUTPATIENT SITE File (#59) and will be by division (outpatient site).
+  
+ Updated documentation describing the new functionality introduced 
+ by this patch is available.  Please see the Outpatient Pharmacy Technical
+ manual for more information regarding the new 10K dataset.
+  
+ Please Note: The change for the PHARMACY SYSTEM File (#59.7) is being 
+ released in patch PSS*1.0*217.  Patch PSS*1.0*217 must be installed 
+ before PSS*7.0*502.
+  
+ Also Please Note:  Make sure that the device is set up to use a Print 
+ Queue.  If it is not then the 10k labels will not print.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ OUTPATIENT SITE (#59)   SCRIPTALK PRINTER TYPE  New 
+                         (#107.2)
+                         VOID OTHER LABELS       New
+                         (#107.3)
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type    New/Modified/Deleted
+ -----------                      ----    -------------------- 
+ PSO SCRIPTALK VOID LABEL DEF'N   Run     New
+ PSO SCRIPTALK MAIN MENU          Menu    Modified 
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSR):
+ ---------------------------
+ 20170521
+  
+  
+ Patient Safety Issues (PSOs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+                                                      
+ Test Sites:
+ -----------
+ VA Connecticut HCS
+ New Jersey HCS
+ Edward Hines Jr. VA Hospital
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ are available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve files directly from a
+ specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software 
+ Documentation Library at:
+ https://www.domain.ext/vdl/
+  
+ Below is a list of the files related to this patch that will 
+ be needed and available via the FTP sites listed above.
+  
+ Title                                   File Name                FTP Mode
+ -------------------------------------------------------------------------
+ Outpatient Pharmacy Technical Manual/   PSO_7_tm_r0418.PDF       Binary
+ Security Guide                                                 
+ Outpatient Pharmacy Manager's           PSO_7_man_um_r0418.PDF   Binary
+ User Manual
+ Outpatient Pharmacy Pharmacist's        PSO_7_phar_um_r0418.PDF  Binary
+ User Manual
+ Outpatient Pharmacy Technician's        PSO_7_tech_um_r0418.PDF  Binary
+ User Manual
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ PSS*1.0*217 is a required patch for PSO*7.0*502.  Please install 
+ PSS*1.0*217 prior to installing PSO*7.0*502.
+  
+ Please Note: Make sure that the device is set up to use a Print 
+ Queue.  If it is not then the 10k labels will not print. 
+  
+ This is a setup that must be done by the IT personnel that deal with 
+ defining devices, not just in the DEVICE and TERMINAL TYPE file, but also 
+ at the physical setup and the operating system level.
+  
+ It is recommended that you verify whether or not your ScripTalk printers
+ are setup to use print queues BEFORE installing PSS*1.0*217 and
+ PSO*7.0*502.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is imperative that you perform a backup of the routines distributed 
+ with this patch before installation. 
+  
+  
+ Installation Instructions:
+ -------------------------- 
+ It is recommended that this patch be installed after normal business hours
+ while no Outpatient Pharmacy users are processing orders, particularly
+ anything that can potentially generate a label. It should also be
+ installed when no Outpatient Pharmacy background jobs are running that can
+ potentially generate a label, namely 'PRINT LABELS FROM SUSPENSE', 
+ 'REPRINT LABELS FROM SUSPENSE', 'Outpatient Pharmacy SUSPENSE LABELS 
+ OUTPUT ROUTINE' and 'Outpatient Pharmacy LABELS OUTPUT ROUTINE'.
+  
+  
+  Installation will take about 5 minutes.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSO*7.0*502)
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+    4. Use the Install Package(s) option and select the package PSO*7.0*502
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+  
+    6. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//' 
+  
+    7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ If you have a 10k printer currently installed on your system, you must 
+ change the ScripTalk device setup to indicate it is 10k. Otherwise, you 
+ will only get the 2k output. Additional information is included in the 
+ release notes as well as the technical manual.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Data dictionary changes were included with this patch. However, those 
+ changes were to add additional fields. At this time, it is not necessary 
+ to rollback those changes if the decision is made to back out the patch.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBING1
+    Before: B55582853   After: B63701322  **5,28,56,135,244,268,357,385,502**
+Routine Name: PSOTALK
+    Before: B83851636   After:B177380845  **135,182,211,200,249,297,326,502**
+Routine Name: PSOTALK1
+    Before:  B5211959   After:  B5507505  **135,318,282,442,502**
+Routine Name: PSOTALK3
+    Before: B21440926   After: B23477900  **135,200,268,502**
+ 
+Routine list of preceding patches: 326, 385, 442
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2017
+Completed By:                               Date Completed: APR 04, 2018
+Released By :                               Date Released : APR 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

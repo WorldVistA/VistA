@@ -1,0 +1,358 @@
+$TXT Created by              at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 11/27/17 at 13:24
+=============================================================================
+Run Date: MAR 08, 2018                     Designation: GMRC*3*89
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #81                      Status: Released
+                  Compliance Date: APR 08, 2018
+=============================================================================
+
+Associated patches: (v)GMRC*3*28   <<= must be installed BEFORE `GMRC*3*89'
+                    (v)GMRC*3*82   <<= must be installed BEFORE `GMRC*3*89'
+
+Subject: EPIP GMRC REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Print Template
+  - Other
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ GMRC*3.0*89 provides the following enhancements to VistA:
+  
+ - Improves the process of managing pending consults by providing a 
+ Consult Closure Tool that identifies consult requests that are 
+ incorrectly left in Pending status and efficiently closes out those 
+ consults. Current VistA tools provide lists of patients with pending 
+ consults, but do not provide the ability to act on those lists directly. 
+ The use of non-consult class Text Integration Utility (TIU) notes, 
+ duplicate consult requests, and other workaround options to close out 
+ consult requests leads to errors in consult completion rates and creates 
+ redundant work during consult clean-up actions. Currently, the 
+ 'administrative completion' option in the Computerized Patient Record 
+ System (CPRS) is the only method for closing out completed consults with 
+ incorrect note titles. 
+  
+ This modification adds a new option [GMRC CONSULT CLOSURE TOOL] to
+ the VistA Consult Management [GMRC MGR] menu. The Consult Closure Tool
+ menu provides Edit Configuration and Run Configuration options.
+  
+ The Edit Configuration option is used to create or edit a consult closure 
+ Configuration for a specified CPRS Team. The Configuration consists of 
+ search parameters-including Clinic, Procedure, Service, and Order Item-to 
+ be used in finding pending consults, as well as a list of existing TIU 
+ notes to be used to close out the consults. The Run Configuration option 
+ can then be used to: 1.) generate a printed list of patients 
+ with pending consults that meet the parameters specified in the 
+ Configuration and populate the Team list in CPRS, or 2.) immediately 
+ resolve and close each of the pending consults by selecting a TIU note to 
+ associate with it.
+  
+ - Provides a veteran's cell phone number and age (from the PATIENT file 
+ (#2)) on the Consultation Form (SF-513) in CPRS. Many veterans do not 
+ have a home phone number, so a cell phone number is vital information if 
+ it is the primary contact number. Printing a veteran's age on the form 
+ eliminates the chance of a math error being made by the provider when 
+ considering treatment options that are reliant on age.
+  
+ -Enables a Consultation Form (SF-513) to be simultaneously printed to 
+ printers at two different locations by adding a SECONDARY PRINTER field 
+ (#689) to the REQUEST SERVICES file (#123.5) using the input template 
+ [GMRC SETUP REQUEST SERVICE]. The modification allows both services to be 
+ notified of a new consult at the same time, allowing representatives at 
+ both locations to begin their reviews concurrently.
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)            New/Modified/Deleted
+ ------------------     -------------------            --------------------
+ REQUEST SERVICES       SECONDARY PRINTER (689)              NEW
+           (123.5)
+  
+ GMRC  CONSULT MAPPING  NAME  (.01)                          NEW
+           (123.033)    INACTIVE( .02)                       NEW
+                        CPRS TEAM (.03 )                     NEW
+                        DAYS CONS->APPT (.04)                NEW
+                        DAYS APPT->NOTE (.05)                NEW
+                        STOP CODE (.06)                      NEW
+                        CONSULTS SERVICE (MULTIPLE) (1000)   NEW
+                        CONSULTS PROCEDURE (MULTIPLE) (2000) NEW
+                        CONSULTS ORDER ITEM (MULTIPLE)(3000) NEW
+                        CONSULTS CLIN PROC (MULTIPLE)(4000)  NEW 
+                        CLINICS (MULTIPLE)(5000)             NEW
+                        CONSULTS TITLES (MULTIPLE)(6000)     NEW
+  
+ Forms Associated:               
+  
+ Form Name                     File #           New/Modified/Deleted
+ ---------                     ------           --------------------
+ GMRC MAIN                     123.033                NEW
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A                    N/A
+  
+ Options Associated
+  
+ Option Name                      TYPE  New/Modified/Deleted   
+ -----------                      ----  --------------------
+ GMRC CONSULT CLOSURE TOOL        MENU          NEW 
+ GMRC CONSULT CLOSE TOOL EDT      MENU          NEW
+ GMRC CONSULT CLOSE TOOL INQ      MENU          NEW
+ GMRC CONSULT CLOSE TOOL RUN      MENU          NEW
+  
+ Protocols Associated:
+  
+ Protocol Name          New/Modified/Deleted
+ -------------          -------------------- 
+ N/A              
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name          Type    File Name (Number)     New/Modified/Deleted 
+ -------------          ----    ------------------     --------------------
+ GMRC CONSULT MAPPING   PRINT   GMRC CONSULT MAPPING       NEW 
+                                        (123.033)
+ GMRC SETUP REQUEST     INPUT   REQUEST SERVICES           MODIFIED
+ SERVICE                                 (123.5)
+  
+ Additional Information:
+ --------------------------- 
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20080312       Post-HOC Consult/Closure Note Association Tool
+ NSR20151005       Print Veterans Cell Phone Number and Age on Consult Form
+ NSR20151002       Secondary Consult Service Printers
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ---------- 
+ Michael E. DeBakey VA Medical Center, Houston, Texas (VAMC)
+ Milwaukee VA Medical Center, Milwaukee, Wisconsin (VAMC)
+ San Francisco VA Health Care System, San Francisco, California (VAHCS)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+  
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.  
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/.
+  
+ Title                                                 File Name   FTP Mode
+ --------------------------------------------------------------------------
+ Consult/Request Tracking Technical Manual             constm.doc  Binary
+ Consult/Request Tracking Technical Manual             constm.pdf  Binary
+ Consult/Request Tracking User Manual                  consum.doc  Binary
+ Consult/Request Tracking User Manual                  consum.pdf  Binary
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number GMRC*3.0*89.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', press <Enter>.
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+           N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ To back out the patch:
+  
+ 1.      Restore the GMRCP5D and GMRCUTL1 routines using the Transport 
+ Global Backup message created in the Installation Instructions section, 
+ step 3.d.
+  
+ 2.      Delete the following new .INT routines: GMRCCA, GMRCCB, GMRCCC, 
+ GMRCCD, GMRCCX, GMRCCY, and GMRCUTL2.
+  
+ 3.      Delete the new SECONDARY PRINTER field (#689) in the REQUEST 
+ SERVICES file (#123.5). 
+  
+ 4.      Delete the new GMRC CONSULT MAPPING file (#123.033).
+  
+ 5.      Delete the new form GMRC MAIN from file #123.033.
+  
+ 6.      Delete the menu option GMRC CONSULT CLOSURE TOOL.
+  
+ 7.      Delete the menu option GMRC CONSULT CLOSE TOOL EDT.
+  
+ 8.      Delete the menu option GMRC CONSULT CLOSE TOOL INQ.
+  
+ 9.      Delete the menu option GMRC CONSULT CLOSE TOOL RUN.
+  
+ 10.     Delete Print template GMRC CONSULT MAPPING.
+  
+ 11.     Remove SECONDARY PRINTER from Input template GMRC SETUP REQUEST 
+ SERVICE in file #123.5.
+  
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the GMRC routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the GMRC routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch GMRC*3.0*89 on line 2 in the patch list section.
+  
+ To ensure complete backout of the patch:
+  
+ 1.      Inquire into the REQUEST SERVICES file (#123.5) to verify that 
+ the SECONDARY PRINTER field (#689) does not exist. Inquire into the GMRC 
+ CONSULT MAPPING file (#123.033) to verify the file does not exist.
+  
+ 2.      Attempt to run all the GMRC CONSULT OPTIONS to verify that they 
+ do not exist.
+  
+ 3.      Attempt to edit the Print template GMRC CONSULT MAPPING to verify 
+ that it does not exist.
+  
+ 4.      View the GMRC SETUP REQUEST SERVICE Input template in file #123.5 
+ to verify that the SECONDARY PRINTER field is not available.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 62
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCCA
+    Before:       n/a   After: B44932985  **89**
+Routine Name: GMRCCB
+    Before:       n/a   After: B82765732  **89**
+Routine Name: GMRCCC
+    Before:       n/a   After: B65555262  **89**
+Routine Name: GMRCCD
+    Before:       n/a   After: B84857854  **89**
+Routine Name: GMRCCX
+    Before:       n/a   After:  B8358463  **89**
+Routine Name: GMRCCY
+    Before:       n/a   After: B68601290  **89**
+Routine Name: GMRCP5D
+    Before: B71343010   After: B75434506  **4,12,15,22,29,35,38,61,65,
+                                           66,82,89**
+Routine Name: GMRCUTL1
+    Before: B13626178   After: B14006176  **1,4,12,15,21,17,28,89**
+Routine Name: GMRCUTL2
+    Before:       n/a   After:  B1531525  **89**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: MAR 08, 2018
+Released By :                               Date Released : MAR 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

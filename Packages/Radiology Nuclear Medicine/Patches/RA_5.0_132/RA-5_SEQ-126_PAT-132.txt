@@ -1,0 +1,270 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Friday, 01/19/18 at 09:52
+=============================================================================
+Run Date: MAR 14, 2018                     Designation: RA*5*132
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #126                      Status: Released
+                  Compliance Date: APR 16, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*21     <<= must be installed BEFORE `RA*5*132'
+                    (v)RA*5*123    <<= must be installed BEFORE `RA*5*132'
+
+Subject: ADD HEIGHT AND WEIGHT TO RADIOLOGY EXAM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ RA*5.0*132 modifies the VistA Radiology package to display a patient's 
+ height and weight when scheduling exams. It is important for a provider to
+ know a patient's height and weight prior to a Radiology procedure; 
+ however, that data is not currently available in the VistA Radiology 
+ package when scheduling exams. This patch adds the height and weight from 
+ the GMRV VITAL MEASUREMENT (#120.5) file to the patient demographics that 
+ display when using the Print Selected Requests by Patient [RA 
+ ORDERPRINTPAT], Register Patient for Exams [RA REG], and Add Exams to Last
+ Visit [RA ADDEXAM] options in VistA. This patch also adds the height to
+ the existing weight displayed when using the Print Rad/Nuc Med Requests by
+ Date [RA ORDERPRINTS] option.
+  
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Parameters Associated:
+  
+  
+ Parameter Name: New/Modified/Deleted
+ --------------- -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20160706     Add Height and Weight to Radiology Exam
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Kansas City VA Medical Center, Kansas City, MO
+ San Francisco VA Health Care System, San Francisco, CA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ http://www.domain.ext/vdl/.
+  
+  
+ Title                                          File Name          FTP Mode
+ -----------------------------------------------------------------------
+ Radiology/Nuclear Medicine User Manual         ra5_0_um_p132.doc   Binary
+ Radiology/Nuclear Medicine User Manual         ra5_0_um_p132.pdf   Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number RA*5.0*132.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', press <Enter>.
+  
+ 7.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8.      If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option. The message containing the
+ backed up routines can be loaded with the "Xtract PackMan" function at the
+ Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is then
+ used to install the backed up routines onto the VistA system.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the RA routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the RA routines have been backed
+ out, the first two lines of the routines will no longer contain the
+ designation of patch RA*5.0*132 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADEM2
+    Before:  B6794496   After:  B8852959  **31,132**
+Routine Name: RAORD5
+    Before: B30588485   After: B32521230  **8,10,15,31,45,75,123,132**
+Routine Name: RAORD6
+    Before: B60840367   After: B62955625  **5,10,15,18,27,45,41,75,85,
+                                           99,123,132**
+Routine Name: RAORDS
+    Before: B41332744   After: B46087861  **15,21,132**
+ 
+Routine list of preceding patches: 21, 123
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: MAR 13, 2018
+Released By :                               Date Released : MAR 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

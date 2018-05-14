@@ -1,0 +1,180 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/27/17 at 16:36
+=============================================================================
+Run Date: FEB 21, 2018                     Designation: OR*3*450
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #393                      Status: Released
+                  Compliance Date: MAR 24, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*423    <<= must be installed BEFORE `OR*3*450'
+
+Subject: FLAGGED OI EXPIRING - INPT ALERT, CPRS TECH MANUAL UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch OR*3.0*450 will address the following two (2) issues:
+  
+ 1. Flagged Orderable Item Alert not processing all inpatient items in an 
+    order
+ 2. CPRS Technical Manual update required 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. I10023446FY16 Flagged Orderable Item Notification
+  
+    Problem:
+    --------
+    Flagged Orderable Item notifications for expiring orders do not fire 
+    for an orderable item that is selected as an additive of an IV order.
+  
+    Solution:
+    ---------
+  
+    Routine ORB3TIM2 is being modified to review all orderable items listed
+    to check against the flagged setting. ORB3SPEC has been modified to 
+    generate the recipients for the expiring flagged orderable item 
+    notifications.
+  
+  
+ 2. I6875400FY16 CPRS Inquiry
+  
+    Problem:
+    -------
+    CPRS Technical Manual: GUI version, page 169 under the "Other" section 
+    needs additional text for clarification. 
+  
+    Solution:
+    --------
+    The manual is being updated to show, page 172: The "other" selection 
+    for these items is available for any lab test with the "MI"
+    (microbiology) subscript, for all users.  Additionally, for users
+    holding the LRLAB key, the "other" selection is available for all
+    lab tests, regardless of subscript.
+  
+ Test Sites:
+ ===========
+ Palo Alto
+ Augusta
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================  
+ The documentation changes introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                               File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ CPRS Technical Manual: GUI Version  cprsguitm.pdf               Binary
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions:
+ ============================== 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ ========================== 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the 
+ Installation Menu.  From this menu, you may elect to use the following 
+ options. When prompted for the INSTALL NAME enter OR*3.0*450:
+ a. Backup a Transport Global - This option will create a backup message 
+ of any routines exported with this patch. It will not backup any other 
+ changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will (allow 
+ you to view all changes that will be made when this patch       is 
+ installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+ c. Verify Checksums in Transport Global - This option will allow you to 
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+ respond NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//' respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ =============================== 
+ The Updated Technical Manual can be downloaded here:
+ https://www.domain.ext/vdl/documents/Clinical/Comp_Patient_Recrd_Sys_(CPRS)/cp
+ rsguitm.pdf
+      
+ Backout/Rollback Strategy:
+ ==========================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+  decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+      
+  The back-out plan is to restore the routine from the backup created.
+      
+  No data was modified by this patch installation and, therefore, no 
+  rollback strategy is required.
+      
+  To verify the back-out completed successfully, ensure the checksum 
+  matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3SPEC
+    Before: B95914098   After:B104096377  **139,220,215,280,348,423,450**
+Routine Name: ORB3TIM2
+    Before: B43382102   After: B48303565  **102,215,251,265,356,350,450**
+ 
+Routine list of preceding patches: 350, 423
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2017
+Completed By:                               Date Completed: FEB 16, 2018
+Released By :                               Date Released : FEB 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

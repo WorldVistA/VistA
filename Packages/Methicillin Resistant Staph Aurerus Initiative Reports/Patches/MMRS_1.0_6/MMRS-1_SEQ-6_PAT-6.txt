@@ -1,0 +1,131 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/19/17 at 12:28
+=============================================================================
+Run Date: FEB 28, 2018                     Designation: MMRS*1*6
+Package : MMRS - MRSA INITIATIVE REPORTS      Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: MAR 31, 2018
+=============================================================================
+
+Associated patches: (v)MMRS*1*5    <<= must be installed BEFORE `MMRS*1*6'
+
+Subject: SLOW MMRS CDI REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses one (1) issue:
+  
+ 1.   Many facilities report that the Multi-Drug Resistant Organism (MDRO)
+      Tool Clostridium Difficile Infection (CDI) Report is running very
+      slowly.  This is occurring because the report is examining a large
+      set of microbiology results for every patient including those that
+      fall outside of the date range specified at report run time.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.      I16266869FY17 - Slow MMRS CDI Report
+  
+ Problem:
+ --------
+ The report is examining a large set of microbiology results 
+ for every patient including those that fall outside of the
+ date range specified at report run time.
+  
+ Resolution:
+ -----------
+ The patch modifies code in routine MMRSCDI1 to limit the results 
+ examined for the report to the date range specified by the user 
+ at run time.  Before the change (when search for microbiology 
+ result candidates), the routine searched up to the current date 
+ rather than the user specified end date.  The report run time may
+ or may not be reduced because of the more limited number of 
+ results searched.
+  
+ Routines: MMRSCDI1
+  
+ Test Sites:
+ ===========
+ Northern Arizona HCS
+ Lexington VAMC
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select
+       the Installation Menu.  From this menu, you may elect to use the 
+       following options. When prompted for the INSTALL NAME enter the
+       patch, MMRS*1.0*6:
+          a. Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DDs or templates.
+          b. Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this
+             patch is installed.  It compares all components of this patch
+             routines, DDs, templates, etc.
+          c. Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+    4. From the Installation Menu, select the Install Package(s) option
+       and choose the patch to install, MMRS*1.0*6.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', enter No.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//' enter No. 
+  
+    7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MDRO TOOLS REPORTS MENU;**[Patch List]**;Mar 22, 2009;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MMRSCDI1
+    Before: B42768912   After: B42850422  **4,5,6**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 26, 2017
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : FEB 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

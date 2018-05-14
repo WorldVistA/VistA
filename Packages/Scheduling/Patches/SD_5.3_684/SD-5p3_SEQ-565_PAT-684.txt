@@ -1,0 +1,200 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/08/18 at 11:55
+=============================================================================
+Run Date: APR 24, 2018                     Designation: SD*5.3*684
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #565                    Status: Released
+                  Compliance Date: MAY 25, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*684'
+
+Subject: CLINIC AVAILABILITY INADVERTENTLY RESTORED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will address 1 issue:
+  1. Canceling clinic availability for a date that has previously been
+     removed from availability will incorrectly restore availability for
+     that date.
+     
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. R18206898FY18 - Identified an error in SDBuild in production - 
+     Availability is restored in error
+   
+     Problem:
+     --------
+     When canceling a date through the Cancel Clinic Availability 
+     [SDCANCEL] option that has previously been removed from availability
+     through the Set up a Clinic [SDBUILD] option, the availability for
+     that date will inadvertently be restored with the day's default 
+     pattern if indefinite availability is enabled. This occurs because
+     the Cancel Clinic Availability [SDCANCEL] option deletes the 
+     PATTERN (#44.005) sub-file of the HOSPITAL LOCATION (#44) file if
+     the CURRENT AVAILABILITY (#44.005,1) sub-field pattern has no open
+     slots.
+    
+     Resolution:
+     -----------
+     Routine SDC has been updated to remove the KILL command on the PATTERN
+     (#44.005) sub-file of the HOSPITAL LOCATION (#44) file. This prevents
+     the availability grid from recreating the PATTERN (#44.005) sub-file
+     with the default availability pattern.
+  
+ TEST SITES:
+ -----------
+ Asheville VA Medical Center
+ VA Connecticut Health Care System    
+    
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch SD*5.3*684.
+           a.  Verify Checksums in Transport Global - This option will
+               allow you to ensure the integrity of the routines that are
+               in the transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option
+               will allow you to view all changes that will be made when
+               this patch is installed. It compares all components of 
+               this patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will
+               not backup any other changes such as DD's or templates.
+     
+     4. From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install, SD*5.3*684.
+    
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+     
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//" respond YES.
+        When prompted 'Enter options you wish to mark as 'Out Of
+        Order':', enter the following:
+   
+           Cancel Clinic Availability [SDCANCEL]
+  
+     7. During install, verify that the patch was installed successfully.
+        If an error is displayed, please create a ticket.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDC
+    Before: B27637649   After: B27776469  **15,32,79,132,167,478,487,523,
+                                           545,627,684**
+ 
+Routine list of preceding patches: 627
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2018
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

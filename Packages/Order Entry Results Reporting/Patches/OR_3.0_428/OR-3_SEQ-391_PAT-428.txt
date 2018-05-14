@@ -1,0 +1,168 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/04/17 at 15:50
+=============================================================================
+Run Date: FEB 16, 2018                     Designation: OR*3*428
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #391                      Status: Released
+                  Compliance Date: MAR 19, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*424    <<= must be installed BEFORE `OR*3*428'
+
+Subject: UNDEFINED ERROR AT ALL MEDICATIONS REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch OR*3.0*428 addresses the following two issues:
+  
+ 1. Undefined error at IN+27^ORDV06B when running the All Medications 
+    Report in CPRS for Inpatient orders
+  
+ 2. Undefined error at IN+41^ORDV06B when running the All Medications 
+    Report in CPRS for Discontinued Outpatient or Non-VA orders
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ PRESCRIPTION (#52)
+ PHARMACY PATIENT (#55)
+ ORDER (#100)
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I10071896FY16 - All Medications Report Sort Date produces M error 
+                    IN+28^ORDV06B
+  
+ Problem:
+ --------
+ An Undefined error is encountered when there is no date returned from the 
+ PHARMACY PATIENT file (#55) and the Order # is non-zero and references
+ an order that does not exist in the ORDER file (#100).
+  
+ Solution:
+ ---------
+ Routine ORDV06 has been modified to not create the undefined error and 
+ handle the missing data by returning Null if the data is not present in 
+ the ORDER file (#100)
+  
+ 2. I8957206FY16 - All Medications Report Stop Date produces M error 
+                   IN+41^ORDV06B
+  
+ Problem:
+ --------
+ An Undefined error is encountered when there is no date returned from the 
+ PRESCRIPTION file (#52), if the prescription is Discontinued and the type
+ is Outpatient or Non-VA, the stop date is pulled from the ORDER file 
+ (#100).  The error is encountered when the Order # is non-zero and
+ references an order that does not exist in the ORDER file (#100).
+  
+ Solution:
+ ---------
+ Routine ORDV06 has been modified to not create the undefined error and 
+ handle the missing data by returning Null if the data is not present in 
+ the ORDER file (#100).
+  
+ Test Sites:
+ ----------
+ Altoona - James E. Van Zandt VA Medical Center, PA
+ VA Portland HealthCare System, OR
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter OR*3.0*428).      
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+     d. Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package OR*3.0*428.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDV06B
+    Before: B43977169   After: B45001391  **312,350,424,428**
+ 
+Routine list of preceding patches: 424
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 11, 2016
+Completed By:                               Date Completed: FEB 15, 2018
+Released By :                               Date Released : FEB 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

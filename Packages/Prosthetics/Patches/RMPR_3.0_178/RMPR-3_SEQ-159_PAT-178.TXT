@@ -1,0 +1,252 @@
+$TXT Created by                  DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 08/02/16 at 11:50
+=============================================================================
+Run Date: OCT 14, 2016                     Designation: RMPR*3*178
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #159                      Status: Released
+                  Compliance Date: NOV 14, 2016
+=============================================================================
+
+Associated patches: (v)RMPR*3*41   <<= must be installed BEFORE `RMPR*3*178'
+                    (v)RMPR*3*45   <<= must be installed BEFORE `RMPR*3*178'
+
+Subject: RMPR*3*178 NSR20140206: USE OF GIP IN PROSTHETICS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ The NSR20140206 (Use of GIP in Prosthetics) intake requests the use of the 
+ Generic Inventory Package (GIP) functionality in VistA to track Prosthetic 
+ inventory.  This patch provides enhanced features to the 
+ Prosthetics package so that the Prosthetics Department can use the Generic 
+ Inventory Package (GIP) instead of the Prosthetic Inventory 
+ Package (PIP) to track prosthetics inventory.
+  
+ VA sites that make the transition to GIP prosthetics tracking 
+ will be able to use a new stock posting option that will 
+ automatically suppress the posting of a prosthetic issuance in 
+ GIP, depending on whether the site is using a Point-Of-Use 
+ (POU) or other system outside of VistA to update the inventory. 
+  
+ EXCEPTION:
+  Sites using DynaMed will be required to continue to use
+ Prosthetics Inventory Package and not transition prosthetics inventory to 
+ GIP until a solution is implemented that supports GIP and DynaMed.
+  
+ Note:  This patch does NOT provide instructions to sites for transitioning 
+ inventory from PIP to GIP.
+  
+ This patch includes the following to support sites in implementing the use 
+ of GIP for prosthetic inventory tracking.
+  
+   1. new option, Generic Inventory (GIP) Stock Issues--[RMPR GIP STOCK]
+   2. modifications to existing routines RMPKSTK and RMPRSTL
+   3. a post-install routine RMPR178P
+   4. use of a new Database Integration Agreement (DBIA) #6374
+   5. use of an existing DBIA #10085
+   6. use of existing Prosthetics Site Parameter [AUTOMATED INVENTORY[GIP)]
+  
+ The new option--Generic Inventory (GIP) Stock Issues--[RMPR GIP STOCK], 
+ provides the capability to issue prosthetics stock that
+ is maintained by the IFCAP Generic Inventory Package (GIP).  This option 
+ will automatically update inventory in IFCAP GIP.  However, when the items 
+ issued are from an INVENTORY POINT that is linked to a Point of Use (POU) 
+ supply cabinet then this option does not update the inventory, since these 
+ are special cabinets that automatically update GIP inventory balances, via 
+ HL7 messaging, when stock is removed.  This option will also check the 
+ DynaMed System Parameter flag to determine if the site is running DynaMed, 
+ and if so this option will abort.  Sites using DynaMed should continue to 
+ use PIP until a solution is implemented for DynaMed and GIP.
+  
+ The new option, RMPR GIP STOCK, is exported as a Menu Option on the 
+ Purchasing menu [RMPR PURCHASING MENU] which is descendent both the RMPR 
+ CLERK menu and the RMPR OFFICIAL menu.
+  
+   RMPR CLERK       Prosthetic Clerk's Menu
+      Purchasing ... [RMPR PURCHASING MENU]
+         GIP Stock Issues [RMPR GIP STOCK]
+  
+   RMPR OFFICIAL       Prosthetic Official's Menu
+      Purchasing ... [RMPR PURCHASING MENU]
+         GIP Stock Issues [RMPR GIP STOCK]
+  
+  
+ The requirements for this NSR are: 
+ * VHBAO: NEED3315 Provide the ability for Prosthetics to automatically 
+          update a patient's record with the provided prosthetic device. 
+ * VHBAO: NEED3316 Provide the ability for Prosthetics to update the 
+          Inventory for the prosthetic device.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ RMPR GIP STOCK       run routine          New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20130206   Use of GIP in Prosthetics
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  LONG BEACH, CA
+  SHERIDAN, WY
+  TOGUS, ME
+  MANCHESTER, NH
+  WESTERN NEW YORK HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Documentation and Training:
+ --------------------------- 
+ Sites may retrieve the release notes for this from the VistA Documentation
+ Library (VDL) on the Internet at the following address,
+      http://www.domain.ext/vdl.
+  
+  
+  The documentation distribution includes:
+  
+     FILE NAME                             DESCRIPTION
+     ---------------------------------------------------------------------
+  
+     RMPR_3_178_RN.DOC                 Patch 178 Release Notes
+     Prosthetics Basic User Manual     Prosthetics Basic User Manual
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch includes a post-install routine, RMPR178P, that checks for the 
+ existence of a Kernel System Parameter for the Prosthetics package.  Some 
+ sites may have received instructions to create this parameter in 
+ preparation for this patch.  However, the parameter is not necessary and 
+ the post-install routine will remove the parameter if it exists.  The 
+ post-install routine RMPR178P can be deleted after installation.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         RMPR*3.0*178.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// Press <Enter>
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? YES// Press <Enter>
+  
+ 8.      When prompted "Enter options you wish to mark as 'Out of Order':",
+         please enter the following options:
+  
+             Prosthetic Clerk's Menu [RMPR CLERK]
+             Prosthetic Official's Menu [RMPR OFFICIAL]
+             Purchasing [RMPR PURCHASING MENU]
+             Stock Issues ... [RMPR STOCK ISS]
+  
+ 9.      When prompted "Enter protocols you wish to mark as 'Out of         
+  
+ Order':", press <return>.
+  
+ 10.     If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Sites currently running PIP for prosthetics inventory will need to 
+ coordinate the conversion to GIP for prosthetics inventory.  Sites using 
+ DynaMed will not be able to use GIP for Prosthetics inventory at this 
+ time.  The post-install routine RMPR178P can be deleted after 
+ installation.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Prosthetics;**[Patch List]**;13/27/08;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR178P
+    Before:       n/a   After: B12159958  **178**
+Routine Name: RMPRSTK
+    Before: B48665872   After: B62842699  **12,13,16,19,21,26,28,33,41,45,178**
+Routine Name: RMPRSTL
+    Before: B22270638   After: B24867541  **14,28,33,41,178**
+ Description of Changes:
+  A new function is added to this routine that determines whether an inventory
+  point is linked to an automated supply station (Point of Use Cabinet).  This
+  function is supported by DBIA with IFCAP (DBIA 6374 to read IFCAP GIP files). 
+  Additionally, logic is added to call existing DBIA to update GIP inventory when
+  inventory point is not POU.  When inventory point is POU inventory is not
+  updated since this is done through HL7 messaging from the POU inventory
+  functionality, when stock is removed.
+  
+
+ 
+Routine list of preceding patches: 45
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 30, 2015
+Completed By:                               Date Completed: OCT 04, 2016
+Released By :                               Date Released : OCT 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,162 @@
+
+=============================================================================
+Run Date: MAR 26, 2018                     Designation: EAS*1*160
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1       SEQ #131                      Status: Released
+                  Compliance Date: MAR 28, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.1.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the 
+ Enrollment System (ES) 5.1.1. This release, developed in Java technology, 
+ contains Enrollment System Modernization (ESM) maintenance defect repairs.
+  
+ The following functionality is updated in this ES 5.1.1 release:
+  
+ Sustainment: 
+  
+ Update hibernate configuration for  HistoryAddress and GeoCodeTransmit 
+ tables and set them immutable. This will correct an intermittent 
+ application failure when updating a person's record that includes 
+ eligibility data, enrollment data, military service, address and date 
+ of death.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                 New/Modified/Deleted
+ ---------------                 --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type            New/Modified/Deleted
+ -----------             ----            -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                           New/Modified/Deleted
+ -------------                           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name           Type    File Name (Number)    New/Modified/Deleted
+ -------------           ----    ------------------    --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Service Desk Manager (SDM):
+  
+ Ticket #        Overview
+ -------------   -------------------
+ I19330691FY18   Description: ES has an invalid city error in the ORUZ05.  
+                              When user attempts to update the address, an
+                              application error occurs.
+  
+ I19350907FY18   Description: User attempted to execute a cancel/decline 
+                              and received an application error.
+  
+ Rational Team Concert (RTC):
+  
+ RTC #   Problem/Resolution:
+ ------  -------------------
+ 702231  Problem: PROD :  Oracle insufficient privileges errors on address 
+                  update.
+         Resolution: Update hibernate configuration for HistoryAddress and
+                     GeoCodeTransmit tables and set them immutable.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ No downloadable documentation or VistA software is required for this 
+ defect repair.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2018
+Completed By:                               Date Completed: MAR 23, 2018
+Released By :                               Date Released : MAR 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

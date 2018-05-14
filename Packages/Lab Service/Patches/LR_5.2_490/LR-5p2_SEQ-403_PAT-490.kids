@@ -1,0 +1,1075 @@
+Released LR*5.2*490 SEQ #403
+Extracted from mail message
+**KIDS**:LR*5.2*490^
+
+**INSTALL NAME**
+LR*5.2*490
+"BLD",10578,0)
+LR*5.2*490^LAB SERVICE^0^3170608^y
+"BLD",10578,1,0)
+^^11^11^3170530^
+"BLD",10578,1,1,0)
+The patch addresses two (2) issues:
+"BLD",10578,1,2,0)
+ 
+"BLD",10578,1,3,0)
+1.   When a user goes to the Multipurpose accessioning option [LRQUICK] 
+"BLD",10578,1,4,0)
+     in the Accessioning menu option [LR IN], the variable LRORDR may 
+"BLD",10578,1,5,0)
+     still be set and causes the accessioning routine to erroneously 
+"BLD",10578,1,6,0)
+     assume that specimen collection will be by Ward Collect.
+"BLD",10578,1,7,0)
+ 
+"BLD",10578,1,8,0)
+2.   When Anatomic Pathology Electronic Signatures are turned off and 
+"BLD",10578,1,9,0)
+     the Verify/release reports, anat path [LRAPR] option is selected to
+"BLD",10578,1,10,0)
+     unrelease a verified provisional report, the prompt to "Unrelease
+"BLD",10578,1,11,0)
+     Report" is not displayed.
+"BLD",10578,4,0)
+^9.64PA^^
+"BLD",10578,6.3)
+2
+"BLD",10578,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10578,"KRN",.4,0)
+.4
+"BLD",10578,"KRN",.401,0)
+.401
+"BLD",10578,"KRN",.402,0)
+.402
+"BLD",10578,"KRN",.403,0)
+.403
+"BLD",10578,"KRN",.5,0)
+.5
+"BLD",10578,"KRN",.84,0)
+.84
+"BLD",10578,"KRN",3.6,0)
+3.6
+"BLD",10578,"KRN",3.8,0)
+3.8
+"BLD",10578,"KRN",9.2,0)
+9.2
+"BLD",10578,"KRN",9.8,0)
+9.8
+"BLD",10578,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10578,"KRN",9.8,"NM",1,0)
+LRAPLG^^0^B12481409
+"BLD",10578,"KRN",9.8,"NM",2,0)
+LRAPR^^0^B102103047
+"BLD",10578,"KRN",9.8,"NM","B","LRAPLG",1)
+
+"BLD",10578,"KRN",9.8,"NM","B","LRAPR",2)
+
+"BLD",10578,"KRN",19,0)
+19
+"BLD",10578,"KRN",19.1,0)
+19.1
+"BLD",10578,"KRN",101,0)
+101
+"BLD",10578,"KRN",409.61,0)
+409.61
+"BLD",10578,"KRN",771,0)
+771
+"BLD",10578,"KRN",779.2,0)
+779.2
+"BLD",10578,"KRN",870,0)
+870
+"BLD",10578,"KRN",8989.51,0)
+8989.51
+"BLD",10578,"KRN",8989.52,0)
+8989.52
+"BLD",10578,"KRN",8994,0)
+8994
+"BLD",10578,"KRN","B",.4,.4)
+
+"BLD",10578,"KRN","B",.401,.401)
+
+"BLD",10578,"KRN","B",.402,.402)
+
+"BLD",10578,"KRN","B",.403,.403)
+
+"BLD",10578,"KRN","B",.5,.5)
+
+"BLD",10578,"KRN","B",.84,.84)
+
+"BLD",10578,"KRN","B",3.6,3.6)
+
+"BLD",10578,"KRN","B",3.8,3.8)
+
+"BLD",10578,"KRN","B",9.2,9.2)
+
+"BLD",10578,"KRN","B",9.8,9.8)
+
+"BLD",10578,"KRN","B",19,19)
+
+"BLD",10578,"KRN","B",19.1,19.1)
+
+"BLD",10578,"KRN","B",101,101)
+
+"BLD",10578,"KRN","B",409.61,409.61)
+
+"BLD",10578,"KRN","B",771,771)
+
+"BLD",10578,"KRN","B",779.2,779.2)
+
+"BLD",10578,"KRN","B",870,870)
+
+"BLD",10578,"KRN","B",8989.51,8989.51)
+
+"BLD",10578,"KRN","B",8989.52,8989.52)
+
+"BLD",10578,"KRN","B",8994,8994)
+
+"BLD",10578,"QUES",0)
+^9.62^^
+"BLD",10578,"REQB",0)
+^9.611^2^2
+"BLD",10578,"REQB",1,0)
+LR*5.2*350^1
+"BLD",10578,"REQB",2,0)
+LR*5.2*479^1
+"BLD",10578,"REQB","B","LR*5.2*350",1)
+
+"BLD",10578,"REQB","B","LR*5.2*479",2)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",26,22,1,"PAH",1,0)
+490^3170608
+"PKG",26,22,1,"PAH",1,1,0)
+^^11^11^3170608
+"PKG",26,22,1,"PAH",1,1,1,0)
+The patch addresses two (2) issues:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1.   When a user goes to the Multipurpose accessioning option [LRQUICK] 
+"PKG",26,22,1,"PAH",1,1,4,0)
+     in the Accessioning menu option [LR IN], the variable LRORDR may 
+"PKG",26,22,1,"PAH",1,1,5,0)
+     still be set and causes the accessioning routine to erroneously 
+"PKG",26,22,1,"PAH",1,1,6,0)
+     assume that specimen collection will be by Ward Collect.
+"PKG",26,22,1,"PAH",1,1,7,0)
+ 
+"PKG",26,22,1,"PAH",1,1,8,0)
+2.   When Anatomic Pathology Electronic Signatures are turned off and 
+"PKG",26,22,1,"PAH",1,1,9,0)
+     the Verify/release reports, anat path [LRAPR] option is selected to
+"PKG",26,22,1,"PAH",1,1,10,0)
+     unrelease a verified provisional report, the prompt to "Unrelease
+"PKG",26,22,1,"PAH",1,1,11,0)
+     Report" is not displayed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LRAPLG")
+0^1^B12481409^B12446427
+"RTN","LRAPLG",1,0)
+LRAPLG ;AVAMC/REG/WTY - AP LOG-IN ;01/23/17  03:16
+"RTN","LRAPLG",2,0)
+ ;;5.2;LAB SERVICE;**72,201,259,462,479,490**;Sep 27, 1994;Build 2
+"RTN","LRAPLG",3,0)
+EN ;
+"RTN","LRAPLG",4,0)
+ ;;*
+"RTN","LRAPLG",5,0)
+ D END
+"RTN","LRAPLG",6,0)
+ N LREND,D0,DD S LREND=0
+"RTN","LRAPLG",7,0)
+ ;
+"RTN","LRAPLG",8,0)
+ N LRADD
+"RTN","LRAPLG",9,0)
+ N LRAPLGX,DOD,FDAIEN,H8,LR6802,LRACC,LRCDT,LRCNT,LREAL,LRORDR
+"RTN","LRAPLG",10,0)
+ N LRFDA,LRIENLOC,LRNLT,LRNT,LROT,LRPCEVSO,LRPROVL,LRSAMP
+"RTN","LRAPLG",11,0)
+ N LRSF515,LRSPEC,LRSPTOP,LRTSORU,LRTST,LRUID,ORGMDATZ
+"RTN","LRAPLG",12,0)
+ N ORIFN,SS,TEST,X,X11,Y,OCXSEG,LRLWC
+"RTN","LRAPLG",13,0)
+ S LRAPLGX=1,(LRORDR,LRLWC)="WC"
+"RTN","LRAPLG",14,0)
+ ;
+"RTN","LRAPLG",15,0)
+ D:$G(^LAB(69.9,1,21661)) EN1^LRAPKOE
+"RTN","LRAPLG",16,0)
+ I $G(LRAPDIAL) K LRAPDIAL D END G EN
+"RTN","LRAPLG",17,0)
+ D ^LRAP I '$D(Y) D END Q
+"RTN","LRAPLG",18,0)
+ ;;;*
+"RTN","LRAPLG",19,0)
+ S LR("L")=LRSS_"^LRAP" I LRCAPA,"AUSP"[LRSS S X=$S(LRSS="SP":"H & E STAIN",1:"AUTOPSY H & E") D X^LRUWK G:'$D(X) END S LRW("H&E")=LRT K LRT
+"RTN","LRAPLG",20,0)
+ I LRCAPA,LRSS="EM" S X="THICK SECTION EM" D X^LRUWK G:'$D(X) END S X=11 D SET S LRW("SS")=LRT_U_X S X="GRID EM" D X^LRUWK G:'$D(X) END S X=12 D SET S LRW("G")=LRT_U_X K LRT
+"RTN","LRAPLG",21,0)
+ I LRCAPA D @(LRSS_"^LRAPSWK") G:'$D(X) END
+"RTN","LRAPLG",22,0)
+ D:"SPEMCY"[LRSS A^LRAPWU W !!,"Log-In for ",LRH(0)," " S %=1 D YN^LRU Q:%<1  S LRAA(3)=1 D XR^LRU
+"RTN","LRAPLG",23,0)
+ I %=2 S %DT="AE",%DT(0)="-N",%DT("A")="Enter YEAR: " D ^%DT K %DT Q:Y<1  S LRAD=$E(Y,1,3)_"0000",Y=LRAD D D^LRU S LRH(0)=Y
+"RTN","LRAPLG",24,0)
+ S LRH(2)=$E(LRAD,1,3),LRWHN=$E(LRAD,2,3)
+"RTN","LRAPLG",25,0)
+ S:'$D(^LRO(68,LRAA,1,0)) ^(0)="^68.01DA^^0"
+"RTN","LRAPLG",26,0)
+ S:'$D(^LRO(68,LRAA,1,LRAD,0)) ^(0)=LRAD,^LRO(68,LRAA,1,0)=$P(^LRO(68,LRAA,1,0),"^",1,2)_"^"_LRAD_"^"_($P(^(0),"^",4)+1)
+"RTN","LRAPLG",27,0)
+ S:'$D(^LRO(68,LRAA,1,LRAD,1,0)) ^(0)="^68.02PA^^"
+"RTN","LRAPLG",28,0)
+ S %DT="",X="T-4" D ^%DT S LRDTI=9999999-Y
+"RTN","LRAPLG",29,0)
+GETP W ! S LRSIT="",LRDPAF=1 K DIC
+"RTN","LRAPLG",30,0)
+ D ^LRDPA G:LRDFN<1 END
+"RTN","LRAPLG",31,0)
+ S:'+$G(LRPRAC) LRPRAC(1)=""
+"RTN","LRAPLG",32,0)
+ I +$G(LRPRAC) S X=LRPRAC D D^LRUA S LRPRAC(1)=X
+"RTN","LRAPLG",33,0)
+ I LRSS="SP" S X=0 F  S X=$O(^LR(LRDFN,LRSS,X)) Q:'X!(X>LRDTI)  D
+"RTN","LRAPLG",34,0)
+ .S Y=^LR(LRDFN,LRSS,X,0)
+"RTN","LRAPLG",35,0)
+ .W $C(7),!?6,"Accession number assigned for ",$$FMTE^XLFDT(Y,"D")
+"RTN","LRAPLG",36,0)
+ .W " is: ",$P(Y,"^",6)
+"RTN","LRAPLG",37,0)
+ ;
+"RTN","LRAPLG",38,0)
+ I LRSS="SP" S X="SROSPLG" X ^%ZOSF("TEST") I $T D ^SROSPLG
+"RTN","LRAPLG",39,0)
+ ;
+"RTN","LRAPLG",40,0)
+ D ADD G GETP
+"RTN","LRAPLG",41,0)
+ADD I LRSS="AU",'$D(LREXP) W $C(7),!!,"NO DATE DIED ENTERED IN ",LRFNAM," FILE",! Q:+LRDPF=2  S DIE=+LRDPF,DA=DFN,DR=.351 D ^DIE Q:$D(Y)  S LREXP=X
+"RTN","LRAPLG",42,0)
+ I LRSS="AU",$D(^LR(LRDFN,"AU")),$P(^("AU"),U,6) S Y=^("AU"),X=+$P(Y,U,6),Y(1)=$E(Y,1,3)_"0000" W !,"Yr:",1700+$E(Y,1,3)," Acc#:",X," IN LAB FILE FOR ",$P(@(LRPF_DFN_",0)"),U)," SSN:",$P(^(0),U,9) D CK Q
+"RTN","LRAPLG",43,0)
+ D:LRPF="^DPT(" ^LRAPPOW ; for AFIP studies
+"RTN","LRAPLG",44,0)
+ D ^LRAPLG1 K LRMD,DIC,DIE,DR,LRAPDIAL Q
+"RTN","LRAPLG",45,0)
+CK I +$G(^LRO(68,LRAA,1,Y(1),1,X,0))=LRDFN W $C(7),!!?20,"Also in accession file" Q
+"RTN","LRAPLG",46,0)
+ W !,"Enter in Accession File " S %=2 D YN^LRU D:%=1 ^LRAPLG2 Q
+"RTN","LRAPLG",47,0)
+SET S X=$P($G(^LRO(69.2,LRAA,0)),"^",X) S:'X X=1 Q
+"RTN","LRAPLG",48,0)
+END D V^LRU
+"RTN","LRAPLG",49,0)
+ ;;*
+"RTN","LRAPLG",50,0)
+ K LRAPLGX,DOD,FDAIEN,H8,LR6802,LRACC,LRCDT,LRCNT,LREAL
+"RTN","LRAPLG",51,0)
+ K LRFDA,LRIENLOC,LRNLT,LRNT,LROT,LRPCEVSO,LRPROVL,LRSAMP
+"RTN","LRAPLG",52,0)
+ K LRSF515,LRSPEC,LRSPTOP,LRTSORU,LRTST,LRUID,ORGMDAT
+"RTN","LRAPLG",53,0)
+ K ORIFN,SS,TEST,X,X11,Y
+"RTN","LRAPLG",54,0)
+ K DA,DFN,DIC,DIE,DR,LR,LRAA,LRAD,LRAPDIAL,LRCAPA,LRDFN,LRDPAF
+"RTN","LRAPLG",55,0)
+ K LRDPF,LRDTI,LREXP,LRFNAM,LRH,LRMD,LRPF,LRPRAC
+"RTN","LRAPLG",56,0)
+ K LRSIT,LRSS,LRT,LRW,LRWHN
+"RTN","LRAPLG",57,0)
+ ;;;*
+"RTN","LRAPLG",58,0)
+ Q
+"RTN","LRAPR")
+0^2^B102103047^B102075847
+"RTN","LRAPR",1,0)
+LRAPR ;DALOI/STAFF - ANAT RELEASE REPORTS ;12/09/11  10:20
+"RTN","LRAPR",2,0)
+ ;;5.2;LAB SERVICE;**72,248,259,317,365,350,490**;Sep 27, 1994;Build 2
+"RTN","LRAPR",3,0)
+ ;
+"RTN","LRAPR",4,0)
+ N LRESSW,LRX,%,X,Y
+"RTN","LRAPR",5,0)
+ D SWITCH
+"RTN","LRAPR",6,0)
+ I +LRESSW D  Q
+"RTN","LRAPR",7,0)
+ . D ^LRAPRES
+"RTN","LRAPR",8,0)
+ . D END
+"RTN","LRAPR",9,0)
+ W !!?27,"Release Pathology Reports",!!
+"RTN","LRAPR",10,0)
+ D A
+"RTN","LRAPR",11,0)
+ I '$D(LRSS) D END Q
+"RTN","LRAPR",12,0)
+ I LRCAPA D  G:'$D(X) END
+"RTN","LRAPR",13,0)
+ . S X=$S(LRSS="CY":"CYTOLOGY REPORTING",LRSS="SP":"SURGICAL PATH REPORTING",1:"")
+"RTN","LRAPR",14,0)
+ . D:X]"" X^LRUWK
+"RTN","LRAPR",15,0)
+ I LRSS="AU" D B Q
+"RTN","LRAPR",16,0)
+ ;
+"RTN","LRAPR",17,0)
+ S LRSOP="Z"
+"RTN","LRAPR",18,0)
+ S DR="S LRX=^LR(LRDFN,LRSS,LRI,0),LRZ=$P(LRX,U,3),LRZ(1)=$P(LRX,U,13),"
+"RTN","LRAPR",19,0)
+ S DR=DR_"LRZ(2)=$P(LRX,U,11),LRZ(3)=$P(LRX,U,2);"
+"RTN","LRAPR",20,0)
+ S DR=DR_"I 'LRZ W $C(7),!,""No date report completed.   "
+"RTN","LRAPR",21,0)
+ S DR=DR_"Cannot release."" S Y=0;"
+"RTN","LRAPR",22,0)
+ S DR=DR_"I 'LRZ(2) D NMPATH^LRAPR;"
+"RTN","LRAPR",23,0)
+ S DR=DR_"I LRZ(2) D RINFO^LRAPR S Y=0;"
+"RTN","LRAPR",24,0)
+ ;
+"RTN","LRAPR",25,0)
+ ; Perform supp edit regardless if date rept released since supp rpt is added to released report
+"RTN","LRAPR",26,0)
+ S DR=DR_"D SUPCHK^LRAPR;"
+"RTN","LRAPR",27,0)
+ S DR=DR_"S DIR(0)=""YA"",DIR(""A"")=""Release report? """
+"RTN","LRAPR",28,0)
+ S DR=DR_",DIR(""B"")=""NO"" D ^DIR K:Y Y S:$D(Y) Y=0;"
+"RTN","LRAPR",29,0)
+ S DR=DR_".11////^S X=$$NOW^XLFDT;.13////^S X=DUZ;"
+"RTN","LRAPR",30,0)
+ S DR=DR_"S LRELSD=1 W !!,""Report released..."""
+"RTN","LRAPR",31,0)
+ D ^LRAPDA
+"RTN","LRAPR",32,0)
+ D END
+"RTN","LRAPR",33,0)
+ Q
+"RTN","LRAPR",34,0)
+ ;
+"RTN","LRAPR",35,0)
+ ;
+"RTN","LRAPR",36,0)
+B ; Autopsy
+"RTN","LRAPR",37,0)
+ S LRSOP="Z"
+"RTN","LRAPR",38,0)
+ S DR="S LRX=$G(^LR(LRDFN,""AU"")) I LRX="""" S Y=0;"
+"RTN","LRAPR",39,0)
+ S DR=DR_"S LRZ=$P(LRX,U,3),LRZ(1)=$P(LRX,U,16),LRZ(2)=$P(LRX,U,15),"
+"RTN","LRAPR",40,0)
+ ;
+"RTN","LRAPR",41,0)
+ ; KLL-LRZ(3)=SR PATHOLOGIST,LRZ(4)=PROVISIONAL DATE
+"RTN","LRAPR",42,0)
+ S DR=DR_"LRZ(3)=$P(LRX,U,10),LRZ(4)=$P(LRX,U,17);"
+"RTN","LRAPR",43,0)
+ ;
+"RTN","LRAPR",44,0)
+ ; KLL-PROVISIONAL OR DATE REPORT COMPLETED IS REQUIRED
+"RTN","LRAPR",45,0)
+ S DR=DR_"I 'LRZ(4),'LRZ W $C(7),!,""Provisional date or date report completed required.   "
+"RTN","LRAPR",46,0)
+ S DR=DR_"Cannot release."" S Y=0;"
+"RTN","LRAPR",47,0)
+ S DR=DR_"I 'LRZ(2) D NMPATH^LRAPR;"
+"RTN","LRAPR",48,0)
+ S DR=DR_"I LRZ(2) D RINFO^LRAPR S:LRZ Y=0;"
+"RTN","LRAPR",49,0)
+ ; Perform supp edit regardless if date rept released since supp rpt is added to released report
+"RTN","LRAPR",50,0)
+ S DR=DR_"D SUPCHK^LRAPR;"
+"RTN","LRAPR",51,0)
+ S DR=DR_"D RELEASE^LRAPR;"
+"RTN","LRAPR",52,0)
+ S DR=DR_"S LRDTE=$$NOW^XLFDT;"
+"RTN","LRAPR",53,0)
+ S DR=DR_"14.7////^S X=$S(LRZ(2):""@"",1:LRDTE);"
+"RTN","LRAPR",54,0)
+ S DR=DR_"14.8////^S X=$S(LRZ(2):""@"",1:DUZ);"
+"RTN","LRAPR",55,0)
+ S DR=DR_"S:'LRZ(2) LRELSD=1 "
+"RTN","LRAPR",56,0)
+ S DR=DR_"W !!,""Report "" W:LRZ(2) ""un"" W ""released..."";K LRDTE"
+"RTN","LRAPR",57,0)
+ D ^LRAPDA
+"RTN","LRAPR",58,0)
+ D END
+"RTN","LRAPR",59,0)
+ Q
+"RTN","LRAPR",60,0)
+ ;
+"RTN","LRAPR",61,0)
+ ;
+"RTN","LRAPR",62,0)
+EN ; Supplementary Report Entry Point
+"RTN","LRAPR",63,0)
+ N LRESSW
+"RTN","LRAPR",64,0)
+ D SWITCH
+"RTN","LRAPR",65,0)
+ W !!?20,"Release Supplementary Pathology Reports",!
+"RTN","LRAPR",66,0)
+ ;D A
+"RTN","LRAPR",67,0)
+ ; Section prompt replaces the line above
+"RTN","LRAPR",68,0)
+ S LRQUIT=0,LRDATA=0
+"RTN","LRAPR",69,0)
+ D SECTION^LRAPRES
+"RTN","LRAPR",70,0)
+ I '$D(LRSS) D END Q
+"RTN","LRAPR",71,0)
+ ; Verify User ID has access to release supp. reports
+"RTN","LRAPR",72,0)
+ S LREND=0
+"RTN","LRAPR",73,0)
+ I LRESSW D CLSSCHK^LRAPRES1(DUZ,.LREND)
+"RTN","LRAPR",74,0)
+ Q:LREND
+"RTN","LRAPR",75,0)
+ ;
+"RTN","LRAPR",76,0)
+ N DIR,DIRUT,Y
+"RTN","LRAPR",77,0)
+ W !!
+"RTN","LRAPR",78,0)
+ S DIR(0)="Y",DIR("A")="Data entry for "_LRH(0)_" "
+"RTN","LRAPR",79,0)
+ S DIR("B")="Yes"
+"RTN","LRAPR",80,0)
+ D ^DIR K DIR
+"RTN","LRAPR",81,0)
+ G:$G(DIRUT) END
+"RTN","LRAPR",82,0)
+ I Y=0 D  G:Y<1 END
+"RTN","LRAPR",83,0)
+ . N DIR
+"RTN","LRAPR",84,0)
+ . S DIR(0)="D0^:DT:E"
+"RTN","LRAPR",85,0)
+ . D ^DIR
+"RTN","LRAPR",86,0)
+ . Q:Y<1
+"RTN","LRAPR",87,0)
+ . S LRAD=$E(Y,1,3)_"0000",LRH(0)=$E(Y,1,3)+1700
+"RTN","LRAPR",88,0)
+ ;
+"RTN","LRAPR",89,0)
+ I '$D(^LRO(68,LRAA,1,LRAD,0)) D  Q
+"RTN","LRAPR",90,0)
+ . W $C(7),!!,"NO ",LRAA(1)," ACCESSIONS IN FILE FOR ",LRH(0),!!
+"RTN","LRAPR",91,0)
+ ;
+"RTN","LRAPR",92,0)
+W K X,Y,LR("CK")
+"RTN","LRAPR",93,0)
+ D LOOKUP^LRAPUTL(.LRDATA,LRH(0),LRO(68),LRSS,LRAD,LRAA)
+"RTN","LRAPR",94,0)
+ I LRDATA=-1!('$G(LRSEL))!('$D(LRI)) S LREND=1 G END
+"RTN","LRAPR",95,0)
+ S LRIDT=LRI
+"RTN","LRAPR",96,0)
+ I LRSEL=3 D DIE
+"RTN","LRAPR",97,0)
+ D REST
+"RTN","LRAPR",98,0)
+ G W
+"RTN","LRAPR",99,0)
+ ;
+"RTN","LRAPR",100,0)
+ ;
+"RTN","LRAPR",101,0)
+REST W "  for ",LRH(0)
+"RTN","LRAPR",102,0)
+ I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0)) D  Q
+"RTN","LRAPR",103,0)
+ . W $C(7),!!,"Accession # ",LRAN," for ",LRH(0)
+"RTN","LRAPR",104,0)
+ . W " not in ACCESSION file",!!
+"RTN","LRAPR",105,0)
+ S X=^LRO(68,LRAA,1,LRAD,1,LRAN,0),LRLLOC=$P(X,"^",7),LRDFN=+X,LRODT=$P(X,"^",4),LRSN=$P(X,"^",5)
+"RTN","LRAPR",106,0)
+ Q:'$D(^LR(LRDFN,0))  S X=^(0) D ^LRUP
+"RTN","LRAPR",107,0)
+ ;W !,LRP,"  ID: ",SSN
+"RTN","LRAPR",108,0)
+ ;I LRSS'="AU" D
+"RTN","LRAPR",109,0)
+ ;.S LRI=$P(^LRO(68,LRAA,1,LRAD,1,LRAN,3),"^",5)
+"RTN","LRAPR",110,0)
+ ;.W !,"Specimen(s):"
+"RTN","LRAPR",111,0)
+ ;.S X=0 F  S X=$O(^LR(LRDFN,LRSS,LRI,.1,X)) Q:'X  D
+"RTN","LRAPR",112,0)
+ ;..I $D(^LR(LRDFN,LRSS,LRI,.1,X,0)),$L(^(0)) W !,^(0)
+"RTN","LRAPR",113,0)
+ ;
+"RTN","LRAPR",114,0)
+ ;
+"RTN","LRAPR",115,0)
+DIE ; Define default supplementary report
+"RTN","LRAPR",116,0)
+ N LRFILE,LRIENS,LRIENS1,LRX,LRRLS,LRFDA,LRLKFL,LRDA,LRQUIT,LRNOSP
+"RTN","LRAPR",117,0)
+ N LRMSG,LRSRFL,LRFDA2,LRSRMD,LRRLM
+"RTN","LRAPR",118,0)
+ S DIC("B")="",LRNOSP=0
+"RTN","LRAPR",119,0)
+ I LRSS'="AU" D
+"RTN","LRAPR",120,0)
+ . S LRFILE=+$$GET1^DID(LRSF,1.2,"","SPECIFIER")
+"RTN","LRAPR",121,0)
+ . S LRIENS1=LRI_","_LRDFN_","
+"RTN","LRAPR",122,0)
+ . I '+$P($G(^LR(LRDFN,LRSS,LRI,1.2,0)),"^",4) S LRNOSP=1 Q
+"RTN","LRAPR",123,0)
+ . S LRX=0 F  S LRX=$O(^LR(LRDFN,LRSS,LRI,1.2,LRX)) Q:'LRX  D
+"RTN","LRAPR",124,0)
+ . . S LRIENS=LRX_","_LRIENS1
+"RTN","LRAPR",125,0)
+ . . S LRSRFL=$$GET1^DIQ(LRFILE,LRIENS,.02,"I")
+"RTN","LRAPR",126,0)
+ . . ; LRSRMD-set to 1 if supp rpt modified and requires release
+"RTN","LRAPR",127,0)
+ . . S LRSRMD=$$GET1^DIQ(LRFILE,LRIENS,.03,"I")
+"RTN","LRAPR",128,0)
+ . . Q:LRSRFL&('LRSRMD)
+"RTN","LRAPR",129,0)
+ . . S DIC("B")=$$GET1^DIQ(LRFILE,LRIENS,.01,"I")
+"RTN","LRAPR",130,0)
+ I LRSS="AU" D
+"RTN","LRAPR",131,0)
+ . S LRFILE=63.324,LRIENS1=LRDFN_","
+"RTN","LRAPR",132,0)
+ . I '+$P($G(^LR(LRDFN,84,0)),"^",4) S LRNOSP=1 Q
+"RTN","LRAPR",133,0)
+ . S LRX=0 F  S LRX=$O(^LR(LRDFN,84,LRX)) Q:'LRX  D
+"RTN","LRAPR",134,0)
+ . . S LRIENS=LRX_","_LRIENS1
+"RTN","LRAPR",135,0)
+ . . S LRSRFL=$$GET1^DIQ(LRFILE,LRIENS,.02,"I")
+"RTN","LRAPR",136,0)
+ . . ; LRSRMD-set to 1 if supp rpt modified and requires release
+"RTN","LRAPR",137,0)
+ . . S LRSRMD=$$GET1^DIQ(LRFILE,LRIENS,.03,"I")
+"RTN","LRAPR",138,0)
+ . . Q:LRSRFL&('LRSRMD)
+"RTN","LRAPR",139,0)
+ . . S DIC("B")=$$GET1^DIQ(LRFILE,LRIENS,.01,"I")
+"RTN","LRAPR",140,0)
+ I LRNOSP D  Q
+"RTN","LRAPR",141,0)
+ . K LRMSG
+"RTN","LRAPR",142,0)
+ . S LRMSG=$C(7)_"No supplementary reports exist for this accession."
+"RTN","LRAPR",143,0)
+ . D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPR",144,0)
+ I '$G(DIC("B")) D  Q
+"RTN","LRAPR",145,0)
+ . K LRMSG
+"RTN","LRAPR",146,0)
+ . S LRMSG=$C(7)_"All supplementary reports have been released."
+"RTN","LRAPR",147,0)
+ . D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPR",148,0)
+ ;
+"RTN","LRAPR",149,0)
+DIE1 ;
+"RTN","LRAPR",150,0)
+ S (LRQUIT,LRRLM)=0
+"RTN","LRAPR",151,0)
+ F  D  Q:LRQUIT
+"RTN","LRAPR",152,0)
+ . W !
+"RTN","LRAPR",153,0)
+ . N DIC,DIR,DIRUT,DIROUT,DTOUT,X,Y
+"RTN","LRAPR",154,0)
+ . S:LRSS="AU" (LRLKFL,DIC)="^LR(LRDFN,84,"
+"RTN","LRAPR",155,0)
+ . S:LRSS'="AU" (LRLKFL,DIC)="^LR(LRDFN,LRSS,LRI,1.2,"
+"RTN","LRAPR",156,0)
+ . S DIC("A")="Select SUPPLEMENTARY REPORT DATE: "
+"RTN","LRAPR",157,0)
+ . S DIC(0)="AEQM"
+"RTN","LRAPR",158,0)
+ . D ^DIC K DIC
+"RTN","LRAPR",159,0)
+ . I Y<1 S LRQUIT=1 Q
+"RTN","LRAPR",160,0)
+ . S LRDA=+Y
+"RTN","LRAPR",161,0)
+ . S LRIENS=LRDA_","_LRIENS1
+"RTN","LRAPR",162,0)
+ . S LRRLS=+$$GET1^DIQ(LRFILE,LRIENS,.02,"I")
+"RTN","LRAPR",163,0)
+ . ; If E-Sign OFF, must check LRRLM.  LRRLM=1 if supp rpt has been modified and requires release
+"RTN","LRAPR",164,0)
+ . S LRRLM=+$$GET1^DIQ(LRFILE,LRIENS,.03,"I")
+"RTN","LRAPR",165,0)
+ . I LRESSW,LRRLS D  Q
+"RTN","LRAPR",166,0)
+ . . W !!,"This supplementary report has already been released.",!
+"RTN","LRAPR",167,0)
+ . I 'LRESSW,LRRLS D  Q:'LRRLM
+"RTN","LRAPR",168,0)
+ . . I 'LRRLM W !!,"This supplementary report has already been released.",!
+"RTN","LRAPR",169,0)
+ . W !
+"RTN","LRAPR",170,0)
+ . I LRESSW D  Q
+"RTN","LRAPR",171,0)
+ . . N DIR,DIRUT,DIROUT,DTOUT,X,Y
+"RTN","LRAPR",172,0)
+ . . D ESIG Q:LRQUIT
+"RTN","LRAPR",173,0)
+ . . D UPDATE
+"RTN","LRAPR",174,0)
+ . S DIR("A")="Release supplementary report",DIR(0)="Y",DIR("B")="NO"
+"RTN","LRAPR",175,0)
+ . D ^DIR K DIR
+"RTN","LRAPR",176,0)
+ . I $D(DIRUT) S LRQUIT=1 Q
+"RTN","LRAPR",177,0)
+ . I Y'=1 Q
+"RTN","LRAPR",178,0)
+ . D UPDATE
+"RTN","LRAPR",179,0)
+ . ; If E-sign switch OFF and orig report released, must verify all supp reports released before release main report.
+"RTN","LRAPR",180,0)
+ . I LRCKREL,'LRESSW D CHKSUP^LRAPR1
+"RTN","LRAPR",181,0)
+ Q
+"RTN","LRAPR",182,0)
+ ;
+"RTN","LRAPR",183,0)
+ ;
+"RTN","LRAPR",184,0)
+A D ^LRAP G:'$D(Y) END
+"RTN","LRAPR",185,0)
+ Q
+"RTN","LRAPR",186,0)
+ ;
+"RTN","LRAPR",187,0)
+ ;
+"RTN","LRAPR",188,0)
+C ;
+"RTN","LRAPR",189,0)
+ S LRDICS="SPCYEM" D ^LRAP
+"RTN","LRAPR",190,0)
+ G:'$D(Y) END
+"RTN","LRAPR",191,0)
+ Q
+"RTN","LRAPR",192,0)
+ ;
+"RTN","LRAPR",193,0)
+ ;
+"RTN","LRAPR",194,0)
+S ; from LRAPDA
+"RTN","LRAPR",195,0)
+ S LRK=$P(^LR(LRDFN,LRSS,LRI,0),"^",11) Q:'LRK  S:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN,4,0)) ^(0)="^68.04PA^^"
+"RTN","LRAPR",196,0)
+ Q:$D(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,0))
+"RTN","LRAPR",197,0)
+ S ^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,0)=LRT_"^50^^"_DUZ_"^"_LRK
+"RTN","LRAPR",198,0)
+ S X=^LRO(68,LRAA,1,LRAD,1,LRAN,4,0),^(0)=$P(X,"^",1,2)_"^"_LRT_"^"_($P(X,"^",4)+1)
+"RTN","LRAPR",199,0)
+ S:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,1,0)) ^(0)="^68.14P^^"
+"RTN","LRAPR",200,0)
+ S C=0 F  S C=$O(LRT(C)) Q:'C  D CAP
+"RTN","LRAPR",201,0)
+ S ^LRO(68,"AA",LRAA_"|"_LRAD_"|"_LRAN_"|"_LRT)=""
+"RTN","LRAPR",202,0)
+ Q
+"RTN","LRAPR",203,0)
+ ;
+"RTN","LRAPR",204,0)
+ ;
+"RTN","LRAPR",205,0)
+CAP ; Store workload
+"RTN","LRAPR",206,0)
+ S ^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,1,C,0)=C_"^1^0^0^^"_LRK_"^"_DUZ_"^"_DUZ(2)_"^"_LRAA_"^"_LRAA_"^"_LRAA
+"RTN","LRAPR",207,0)
+ S X=^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,1,0),^(0)=$P(X,"^",1,2)_"^"_C_"^"_($P(X,"^",4)+1)
+"RTN","LRAPR",208,0)
+ Q
+"RTN","LRAPR",209,0)
+ ;
+"RTN","LRAPR",210,0)
+ ;
+"RTN","LRAPR",211,0)
+SWITCH ; Check to see if electronic signature is enabled
+"RTN","LRAPR",212,0)
+ D GETDATA^LRAPESON(.LRESSW)
+"RTN","LRAPR",213,0)
+ Q
+"RTN","LRAPR",214,0)
+ ;
+"RTN","LRAPR",215,0)
+ ;
+"RTN","LRAPR",216,0)
+ESIG ; Prompt for electronic signature
+"RTN","LRAPR",217,0)
+ S LRQUIT=0
+"RTN","LRAPR",218,0)
+ D SIG^XUSESIG
+"RTN","LRAPR",219,0)
+ I X1="" D
+"RTN","LRAPR",220,0)
+ . W "  SIGNATURE NOT VERIFIED"
+"RTN","LRAPR",221,0)
+ . S LRQUIT=1
+"RTN","LRAPR",222,0)
+ Q
+"RTN","LRAPR",223,0)
+ ;
+"RTN","LRAPR",224,0)
+ ;
+"RTN","LRAPR",225,0)
+UPDATE ;
+"RTN","LRAPR",226,0)
+ S LRLKFL=LRLKFL_LRDA_",0)"
+"RTN","LRAPR",227,0)
+ L +@(LRLKFL):DILOCKTM I '$T D  Q
+"RTN","LRAPR",228,0)
+ . S LRMSG="This record is locked by another user.  Please wait and try again."
+"RTN","LRAPR",229,0)
+ . D EN^DDIOL(LRMSG,"","!!")
+"RTN","LRAPR",230,0)
+ S LRFDA(LRFILE,LRIENS,.02)=1
+"RTN","LRAPR",231,0)
+ S LRFDA2(LRFILE,LRIENS,.02)="@" ;Set but don't file unless unrel needed
+"RTN","LRAPR",232,0)
+ ;
+"RTN","LRAPR",233,0)
+ ; File signer ID and Date/time of released supp report
+"RTN","LRAPR",234,0)
+ D CKSIGNR^LRAPR1
+"RTN","LRAPR",235,0)
+ D FILE^DIE("","LRFDA")
+"RTN","LRAPR",236,0)
+ W "...Released"
+"RTN","LRAPR",237,0)
+ L -@(LRLKFL)
+"RTN","LRAPR",238,0)
+ ;
+"RTN","LRAPR",239,0)
+ I LRSS="AU" S LRA=^LR(LRDFN,"AU"),LRAC=$$GET1^DIQ(63,LRDFN_",",14,"I"),LRI=$P(LRA,U)
+"RTN","LRAPR",240,0)
+ ;
+"RTN","LRAPR",241,0)
+ I LRSS'="AU" S LRA=^LR(LRDFN,LRSS,LRI,0),LRAC=$$GET1^DIQ(LRSF,LRIENS,.06,"I")
+"RTN","LRAPR",242,0)
+ ;
+"RTN","LRAPR",243,0)
+ D MAIN^LRAPRES1(LRDFN,LRSS,LRI,LRSF,LRP,LRAC)
+"RTN","LRAPR",244,0)
+ ;
+"RTN","LRAPR",245,0)
+ ; If all supp reports released, and E-Sign switch is ON, proceed to release main report
+"RTN","LRAPR",246,0)
+ S LRCKREL=0
+"RTN","LRAPR",247,0)
+ S:LRSS'="AU" LRCKREL=$P(^LR(LRDFN,LRSS,LRI,0),"^",11)
+"RTN","LRAPR",248,0)
+ S:LRSS="AU" LRCKREL=$P(^LR(LRDFN,LRSS),"^",15)
+"RTN","LRAPR",249,0)
+ ;
+"RTN","LRAPR",250,0)
+ I LRCKREL,LRESSW D RELMN Q
+"RTN","LRAPR",251,0)
+ ;
+"RTN","LRAPR",252,0)
+ ; Check and send LEDI report back to submitting (collecting) site.
+"RTN","LRAPR",253,0)
+ ; If RELMN called above then LEDI checked performed during that call, calls RELEASE^LRAPRES.
+"RTN","LRAPR",254,0)
+ I LRSS'="AU" D LEDI^LRVR0
+"RTN","LRAPR",255,0)
+ ;
+"RTN","LRAPR",256,0)
+ Q
+"RTN","LRAPR",257,0)
+ ;
+"RTN","LRAPR",258,0)
+ ;
+"RTN","LRAPR",259,0)
+SUPCHK ; Check for unreleased supplementary reports
+"RTN","LRAPR",260,0)
+ N LRSR,LRSR1,LRSR2
+"RTN","LRAPR",261,0)
+ S LRSR=0,LRSR1=1
+"RTN","LRAPR",262,0)
+ I LRSS'="AU" D
+"RTN","LRAPR",263,0)
+ . Q:'+$P($G(^LR(LRDFN,LRSS,LRI,1.2,0)),U,4)
+"RTN","LRAPR",264,0)
+ . F  S LRSR=$O(^LR(LRDFN,LRSS,LRI,1.2,LRSR)) Q:LRSR'>0!('LRSR1)  D
+"RTN","LRAPR",265,0)
+ . . S LRSR1=+$P(^LR(LRDFN,LRSS,LRI,1.2,LRSR,0),U,2)
+"RTN","LRAPR",266,0)
+ . . I 'LRSR1 D
+"RTN","LRAPR",267,0)
+ . . . S Y=+$P(^LR(LRDFN,LRSS,LRI,1.2,LRSR,0),U)
+"RTN","LRAPR",268,0)
+ . . . S LRSR2=$$FMTE^XLFDT(Y,1)
+"RTN","LRAPR",269,0)
+ I LRSS="AU" D
+"RTN","LRAPR",270,0)
+ . Q:'+$P($G(^LR(LRDFN,84,0)),U,4)
+"RTN","LRAPR",271,0)
+ . F  S LRSR=$O(^LR(LRDFN,84,LRSR)) Q:LRSR'>0!('LRSR1)  D
+"RTN","LRAPR",272,0)
+ . . S LRSR1=+$P(^LR(LRDFN,84,LRSR,0),U,2)
+"RTN","LRAPR",273,0)
+ . . I 'LRSR1 D
+"RTN","LRAPR",274,0)
+ . . . S Y=+$P(^LR(LRDFN,84,LRSR,0),U)
+"RTN","LRAPR",275,0)
+ . . . S LRSR2=$$FMTE^XLFDT(Y,1)
+"RTN","LRAPR",276,0)
+ I 'LRSR1 D
+"RTN","LRAPR",277,0)
+ . W $C(7),!,"Supplementary report "_LRSR2_" has not been released.  "
+"RTN","LRAPR",278,0)
+ . W "Cannot release."
+"RTN","LRAPR",279,0)
+ . S Y=0
+"RTN","LRAPR",280,0)
+ Q
+"RTN","LRAPR",281,0)
+ ;
+"RTN","LRAPR",282,0)
+ ;
+"RTN","LRAPR",283,0)
+RINFO ; Display release information
+"RTN","LRAPR",284,0)
+ W $C(7),!,"Report "
+"RTN","LRAPR",285,0)
+ W:LRZ(2)=1 "has already been "
+"RTN","LRAPR",286,0)
+ W "released "
+"RTN","LRAPR",287,0)
+ W:LRZ(2)>1 $$FMTE^XLFDT(LRZ(2),1)
+"RTN","LRAPR",288,0)
+ W:LRZ(1)'="" " by "_$P($G(^VA(200,LRZ(1),0)),U)
+"RTN","LRAPR",289,0)
+ Q
+"RTN","LRAPR",290,0)
+ ;
+"RTN","LRAPR",291,0)
+ ;
+"RTN","LRAPR",292,0)
+NMPATH ; Check for missing pathologist name
+"RTN","LRAPR",293,0)
+ I 'LRZ(3) D
+"RTN","LRAPR",294,0)
+ . W $C(7),!,"Pathologist name missing.  Cannot release."
+"RTN","LRAPR",295,0)
+ . S Y=0
+"RTN","LRAPR",296,0)
+ Q
+"RTN","LRAPR",297,0)
+ ;
+"RTN","LRAPR",298,0)
+ ;
+"RTN","LRAPR",299,0)
+RELEASE ; Prompt for release/unrelease
+"RTN","LRAPR",300,0)
+ N DIR
+"RTN","LRAPR",301,0)
+ W ! S DIR(0)="YA",DIR("B")="NO"
+"RTN","LRAPR",302,0)
+ S:LRZ(2) DIR("A")="Unrelease report? "
+"RTN","LRAPR",303,0)
+ S:'LRZ(2) DIR("A")="Release report? "
+"RTN","LRAPR",304,0)
+ D ^DIR
+"RTN","LRAPR",305,0)
+ K:Y Y
+"RTN","LRAPR",306,0)
+ I $D(Y) S Y=0
+"RTN","LRAPR",307,0)
+ Q
+"RTN","LRAPR",308,0)
+ ;
+"RTN","LRAPR",309,0)
+ ;
+"RTN","LRAPR",310,0)
+RELMN ; Allow release of main report as long as all supp reports are released, and signer is same person for main and supp report(s)
+"RTN","LRAPR",311,0)
+ ; Make sure all supp reports signed out
+"RTN","LRAPR",312,0)
+ S LRQT=0
+"RTN","LRAPR",313,0)
+ D RELCHK^LRAPR1
+"RTN","LRAPR",314,0)
+ Q:LRQT
+"RTN","LRAPR",315,0)
+ ;
+"RTN","LRAPR",316,0)
+ ; Continue with electronic signature and storage in TIU
+"RTN","LRAPR",317,0)
+ S LRAU=$S(LRSS="AU":1,1:0)
+"RTN","LRAPR",318,0)
+ I 'LRAU D
+"RTN","LRAPR",319,0)
+ . S LRPAT=+$$GET1^DIQ(LRSF,LRIENS1,.02,"I")
+"RTN","LRAPR",320,0)
+ . S LRZ=$$GET1^DIQ(LRSF,LRIENS1,.03,"I")
+"RTN","LRAPR",321,0)
+ . S LRZ(1)=$$GET1^DIQ(LRSF,LRIENS1,.13,"I")
+"RTN","LRAPR",322,0)
+ . S LRZ(1.1)=$$GET1^DIQ(LRSF,LRIENS1,.13)
+"RTN","LRAPR",323,0)
+ . S LRZ(2)=$$GET1^DIQ(LRSF,LRIENS1,.11,"I")
+"RTN","LRAPR",324,0)
+ I LRAU D
+"RTN","LRAPR",325,0)
+ . S LRPAT=+$$GET1^DIQ(63,LRDFN_",",13.6,"I")
+"RTN","LRAPR",326,0)
+ . S LRZ=$$GET1^DIQ(63,LRDFN_",",13,"I")
+"RTN","LRAPR",327,0)
+ . S LRZ(1)=$$GET1^DIQ(63,LRDFN_",",14.8,"I")
+"RTN","LRAPR",328,0)
+ . S LRZ(1.1)=$$GET1^DIQ(63,LRDFN_",",14.8)
+"RTN","LRAPR",329,0)
+ . S LRZ(2)=$$GET1^DIQ(63,LRDFN_",",14.7,"I")
+"RTN","LRAPR",330,0)
+ . S LRI=""
+"RTN","LRAPR",331,0)
+ W !!,?25,"*** Main Report Release ***",!
+"RTN","LRAPR",332,0)
+ S LRNTIME=$$NOW^XLFDT
+"RTN","LRAPR",333,0)
+ D TIUPREP^LRAPRES
+"RTN","LRAPR",334,0)
+ D STORE^LRAPRES
+"RTN","LRAPR",335,0)
+ I LRQUIT D FILE^DIE("","LRFDA2") Q
+"RTN","LRAPR",336,0)
+ D UNRLSE^LRAPR1
+"RTN","LRAPR",337,0)
+ D RELEASE^LRAPRES
+"RTN","LRAPR",338,0)
+ I LRQUIT D FILE^DIE("","LRFDA2") Q
+"RTN","LRAPR",339,0)
+ D OERR^LR7OB63D
+"RTN","LRAPR",340,0)
+ S LRQUIT=1
+"RTN","LRAPR",341,0)
+ Q
+"RTN","LRAPR",342,0)
+ ;
+"RTN","LRAPR",343,0)
+ ;
+"RTN","LRAPR",344,0)
+END ;
+"RTN","LRAPR",345,0)
+ D V^LRU
+"RTN","LRAPR",346,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10578,6)
+^403
+**END**
+**END**
+

@@ -1,0 +1,451 @@
+
+=============================================================================
+Run Date: FEB 09, 2018                     Designation: MAG*3*192
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #147                      Status: Released
+                  Compliance Date: MAR 12, 2018
+=============================================================================
+
+
+Subject: Duplicate Rad Order Issue
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  
+ ===================
+ This patch must be installed after MAG*3.0*172.
+  
+ Subject:  DUPLICATE RAD ORDER ISSUE IN HDIG
+ ========
+  
+ Category:  OTHER
+ =========
+  
+ Description:
+ ============
+ This patch, MAG*3.0*192, fixes the Duplicate Rad Order Issue in HDIG. 
+ This issue occurred when Importer was utilized to create an order and
+ passed the order to HDIG for processing. The HDIG processed the work item,
+ but the status of the work item did not change to 'complete' but rather
+ remained in the "importing" status. This caused HDIG to generate multiple
+ orders/exams for the same date/time. In some cases, the system created
+ thousands of duplicate orders and/or exams. 
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P192_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch.
+ MAG3_0P192_README.txt, if present, is an informative file associated with
+ the patch.
+  
+ Software:
+ =========
+ File Name                             Description
+ =========                             ============
+ MAG3_0P192.KID                        Kernel Installation and Distribution
+                                       System (KIDS) build for Patch 192
+ MAG3_0P192_HDIG_Setup.msi             Hybrid DICOM Gateway Installation 
+                                       File
+  
+ Documentation:
+ ==============
+ This document, MAG3_0192_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.      Defect 490301 (Trouble Ticket: I11176234FY17, I14454850FY17, 
+ I14216566FY17, I14989714FY17, I12544448FY17, I12233266FY17, R15213704FY17,
+ I15448096FY17, R14988401FY17, I15448096FY17, and R15332796FY17) Duplicate
+ Rad Order Issue
+  
+ Problem:  
+ When the Importer application is used to create an order and import 
+ images, a work item is created containing information on images, study,
+ provider, etc. The Importer puts the work item into the queue and the HDIG
+ processes it. After the work item is successfully processed, the HDIG
+ changes the status to "Complete" and moves on to the next work item to be
+ processed. If there is no work item in the queue, then the HDIG will go
+ dormant.
+  
+ The Radiology package in VistA is designed to limit creation of
+ orders/exams for the same work item to 10 times. After trying for 10 times
+ without success, the system should generate the following error message:
+  (-29`Too many registered exams with almost the same date/time.^LOCKDT
+ +46~RAMAG03D^W). After the error, the HDIG should then stop processing 
+ the work item and mark the status of the work item as "FailedImport." 
+  
+ In the duplicate Rad order issue, when the HDIG processed the work item,
+ the status of the work item did not change to "Complete" but instead
+ remained in the Importing status. The HDIG would then go dormant for 60
+ seconds. At that time, the HDIG would wake up and process the same work
+ item again (with the same study time for the same patient), far exceeding
+ the 10 attempts limit before giving the error. 
+  
+ The HDIG would keep processing the same work item and creating 
+ orders/exams. The number of times HDIG processed the same work items was
+ not consistent. As a result, some users were seeing thousands of duplicate
+ Radiology orders/exams when using the Importer to import an image.
+  
+ Resolution:  
+ The duplicateRadOrderLimit field was added to the
+ DicomServerConfiguration.config to limit the number of duplicates
+ allowed.  The entry will default to two duplicates.
+  
+ The work item will continue to be processed every 60 seconds.  If a 
+ duplicate with the same study date and time is found with the same
+ patient, it will only allow creation of duplicates based on the
+ configuration setting of the DicomServerConfiguration.config file. If
+ the duplicates reach the maximum number of duplicates, the work item will 
+ be set to "FailedImport."  There will be an entry added to the
+ FailedImport List in the Importer with the following error message:
+  
+ "Too many orders with almost the same date/time - Please submit ticket 
+ with the National Help Desk to request assistance from Clin 3. 3 Orders
+ are created for the same Study Date: YYYYMMDD and Study Time: 000000".
+  
+ An email message will be generated stating that the import failed. An 
+ example of the email text is given below:
+ "Importer item with IEN '123' failed processing.  Please navigate to 
+ Failed Imports in the Administration area of the Importer GUI for more
+ details.  * Study 1: 1 image failed to process.  Submitted by: Thu Sep 28
+ 14:18:38 CDT 2017"  
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+   North Texas Health Care System
+   Southern Nevada Healthcare System (Las Vegas)
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ===================
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*192 must be installed on both the VistA System and on 64-bit HDIG 
+ servers.  This patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active
+ and users are on the system.Installingsystem. Installing the MAG*3.0*192
+ KIDS takes 2-5 minutes.
+  
+ Note:  
+ =====
+ HDIG will not install on 32-bit machines with a Windows operating system 
+ such as 2003 Server.  There is also a known issue if there are multiple
+ Java versions on the system for HDIG:
+   For a fresh installation, remove all installed Java applications before 
+ the installation of MAG*3.0*192
+   If updating, remove installed Java if it's not version 1.6.0_45
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ VistA System (KIDS) Installation Instructions
+ ============================================= 
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P192.KID) of the 
+ MAG*3.0*192 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A 
+ Distribution OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the
+ patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when
+ the patch is installed.  All components (routines, options, and so on) in
+ the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*192".
+    c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+ INstallation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\MAG3_0P192.KID
+  
+ KIDS Distribution saved on Oct 18, 2017@12:05:47
+ Comment: VistA Imaging 3.0 - P192
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*192
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*192
+ Use INSTALL NAME: MAG*3.0*192 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*192      10/19/17@08:17:25
+      => VistA Imaging 3.0 - P192T1  ;Created on Oct 18, 2017@12:05:47
+  
+ This Distribution was loaded on Oct 19, 2017@08:17:25 with header of
+    VistA Imaging 3.0 - P192T1  ;Created on Oct 18, 2017@12:05:47
+    It consisted of the following Install(s):
+     MAG*3.0*192
+ Checking Install for Package MAG*3.0*192
+  
+ Install Questions for MAG*3.0*192
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*192 :
+                Oct 19, 2017@08:17:49
+  
+ Build Distribution Date: Oct 18, 2017
+  
+  Installing Routines:..
+                Oct 19, 2017@08:17:49
+  
+  Running Post-Install Routine: POS^MAGIP192.
+  
+ Post Install Mail Message: Oct 19, 2017@08:17:49
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+ Installing and Updating the HDIG
+ ================================
+ For installing, updating, or uninstalling the HDIG, refer to the HDIG 
+ Installation Guide.
+  
+ Uninstalling MAG*3.0*192
+ ========================
+ If it is necessary to uninstall the MAG*3.0*192 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option,
+ "Backup a Transport Global" (see installation section above, step 4c),
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the
+ "Backup a Transport Global" function.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*192 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;** [Patch List]**;**;Mar 19, 2002;Build 25
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum                Checksum        Patch List
+                 Before                  After
+ MAGIP192        New                     4110420         ***192***
+  
+ Routine MAGIP192 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 13, 2017
+Completed By:                               Date Completed: JAN 30, 2018
+Released By :                               Date Released : FEB 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

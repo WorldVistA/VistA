@@ -1,0 +1,172 @@
+$TXT Created by              at ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 12/14/17 at 10:25
+=============================================================================
+Run Date: MAR 29, 2018                     Designation: SD*5.3*680
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #564                    Status: Released
+                  Compliance Date: APR 29, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*641  <<= must be installed BEFORE `SD*5.3*680'
+                    (v)SD*5.3*665  <<= must be installed BEFORE `SD*5.3*680'
+
+Subject: SCHEDULING LETTERS' SALUTATION CORRECTION
+
+Category: 
+  - Print Template
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+ The Scheduling salutation letters currently display "Dear Ms. [NAME]" 
+ or "Dear Mr. [NAME]".
+  
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================  
+ 1) I16592426FY17 - Self Identified Gender
+  
+ ASSOCIATED NSR'S:
+ ================
+ N/A 
+   
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Erie VA Medical Center
+ West Palm Beach VA Medical Center
+  
+  
+   
+ CA SDM OVERVIEW:
+ ================
+  
+ 1) I16592426FY17 - Self Identified Gender
+    Problem:
+    ========
+    The Scheduling salutation letters currently display "Dear Ms. 
+    [NAME]" or "Dear Mr. [NAME]".
+  
+    Resolution:
+    ===========
+    Routines SDEC40, SDECU, and SDLT were modified to the print template, 
+    "SDL-PREAPPOINTMENT LETTERS", so that the salutations of scheduling 
+    letters will now read, "Dear [Name]".
+  
+ ***************************PLEASE NOTE**********************************
+ *                                                                      *
+ *   Be aware this patch, SD*5.3*680, does modify the salutation(s)     *
+ *  of Scheduling Letters.  Sites with bulk-mail or PRN Postcard        *
+ *  auto-printing may need to adjust the programming of the downstream  *
+ *  processing program to accommodate the change, especially if the     *
+ *  downstream system is looking for "Dear Mr./Ms." to find the         *
+ *  beginning of the veteran's name.                                    *
+ *                                                                      *
+ ************************************************************************
+  
+  
+ Components:
+ =========== 
+ To Be Modified:
+ PRINT TEMPLATE:                                  ACTION:
+   SDL--PREAPPOINTMENT LETTERS    FILE #2         SEND TO SITE
+  
+ Software and Documentation Distribution:
+ ========================================
+ Sites may retrieve the documentation directly via Secure File Transfer 
+ Protocol (SFTP). The preferred method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Filename        Description
+ =======         ========================================================
+ supv.pdf        PIMS V. 5.3 Scheduling Module User Manual Supervisor Menu
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+       transfer mode. 
+  
+ The complete and updated User Manual will be posted to the 
+ VA Software Documentation Library (VSL) immediately after the release of
+ the patch at http://www4.domain.ext/vdl/.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system.
+   
+ Installation will take less than 2 minutes.
+    
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     
+        NOTE:  If the required patches are not installed, the transport 
+               global will be removed.  If the transport global is removed
+               you will need to repeat this step.
+     
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+     
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter SD*5.3*680):
+        a.  Compare Transport Global to Current System  - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.  It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+    4.  Use the Install Package(s) option and select the package 
+        SD*5.3*680.
+     
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+     
+    6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDEC40
+    Before: B68854167   After: B69194006  **627,665,680**
+Routine Name: SDECU
+    Before: B23913880   After: B23730358  **627,665,680**
+Routine Name: SDLT
+    Before: B28779463   After: B29114101  **185,213,281,330,398,523,441,
+                                           555,622,641,680**
+ 
+Routine list of preceding patches: 641, 665
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2017
+Completed By:                               Date Completed: MAR 28, 2018
+Released By :                               Date Released : MAR 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

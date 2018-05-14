@@ -1,0 +1,1013 @@
+Released LR*5.2*471 SEQ #402
+Extracted from mail message
+**KIDS**:LR*5.2*471^
+
+**INSTALL NAME**
+LR*5.2*471
+"BLD",10742,0)
+LR*5.2*471^LAB SERVICE^0^3171017^y
+"BLD",10742,1,0)
+^^10^10^3171017^^
+"BLD",10742,1,1,0)
+The patch addresses two (2) issues:
+"BLD",10742,1,2,0)
+ 
+"BLD",10742,1,3,0)
+1.   When the legacy CPRS List Manager option CPRS Ward Clerk
+"BLD",10742,1,4,0)
+     Menu [OR OR/RR MENU WARD CLERK] is used to call Lab 
+"BLD",10742,1,5,0)
+     package routines (SET1^LRGEN) to display Lab Results by 
+"BLD",10742,1,6,0)
+     Test, a program error (UNDEFINED) is encountered.
+"BLD",10742,1,7,0)
+ 
+"BLD",10742,1,8,0)
+2.   The VistA routine ^LRX performs a FileMan database server
+"BLD",10742,1,9,0)
+     call ($$GET1^DID) to retrieve a global reference.  The 
+"BLD",10742,1,10,0)
+     parameters used in the call are improper. 
+"BLD",10742,4,0)
+^9.64PA^^
+"BLD",10742,6.3)
+1
+"BLD",10742,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10742,"KRN",.4,0)
+.4
+"BLD",10742,"KRN",.401,0)
+.401
+"BLD",10742,"KRN",.402,0)
+.402
+"BLD",10742,"KRN",.403,0)
+.403
+"BLD",10742,"KRN",.5,0)
+.5
+"BLD",10742,"KRN",.84,0)
+.84
+"BLD",10742,"KRN",3.6,0)
+3.6
+"BLD",10742,"KRN",3.8,0)
+3.8
+"BLD",10742,"KRN",9.2,0)
+9.2
+"BLD",10742,"KRN",9.8,0)
+9.8
+"BLD",10742,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10742,"KRN",9.8,"NM",1,0)
+LRGEN1^^0^B24272635
+"BLD",10742,"KRN",9.8,"NM",2,0)
+LRX^^0^B71830646
+"BLD",10742,"KRN",9.8,"NM","B","LRGEN1",1)
+
+"BLD",10742,"KRN",9.8,"NM","B","LRX",2)
+
+"BLD",10742,"KRN",19,0)
+19
+"BLD",10742,"KRN",19.1,0)
+19.1
+"BLD",10742,"KRN",101,0)
+101
+"BLD",10742,"KRN",409.61,0)
+409.61
+"BLD",10742,"KRN",771,0)
+771
+"BLD",10742,"KRN",779.2,0)
+779.2
+"BLD",10742,"KRN",870,0)
+870
+"BLD",10742,"KRN",8989.51,0)
+8989.51
+"BLD",10742,"KRN",8989.52,0)
+8989.52
+"BLD",10742,"KRN",8994,0)
+8994
+"BLD",10742,"KRN","B",.4,.4)
+
+"BLD",10742,"KRN","B",.401,.401)
+
+"BLD",10742,"KRN","B",.402,.402)
+
+"BLD",10742,"KRN","B",.403,.403)
+
+"BLD",10742,"KRN","B",.5,.5)
+
+"BLD",10742,"KRN","B",.84,.84)
+
+"BLD",10742,"KRN","B",3.6,3.6)
+
+"BLD",10742,"KRN","B",3.8,3.8)
+
+"BLD",10742,"KRN","B",9.2,9.2)
+
+"BLD",10742,"KRN","B",9.8,9.8)
+
+"BLD",10742,"KRN","B",19,19)
+
+"BLD",10742,"KRN","B",19.1,19.1)
+
+"BLD",10742,"KRN","B",101,101)
+
+"BLD",10742,"KRN","B",409.61,409.61)
+
+"BLD",10742,"KRN","B",771,771)
+
+"BLD",10742,"KRN","B",779.2,779.2)
+
+"BLD",10742,"KRN","B",870,870)
+
+"BLD",10742,"KRN","B",8989.51,8989.51)
+
+"BLD",10742,"KRN","B",8989.52,8989.52)
+
+"BLD",10742,"KRN","B",8994,8994)
+
+"BLD",10742,"QUES",0)
+^9.62^^
+"BLD",10742,"REQB",0)
+^9.611^2^2
+"BLD",10742,"REQB",1,0)
+LR*5.2*350^2
+"BLD",10742,"REQB",2,0)
+LR*5.2*438^2
+"BLD",10742,"REQB","B","LR*5.2*350",1)
+
+"BLD",10742,"REQB","B","LR*5.2*438",2)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",26,22,1,"PAH",1,0)
+471^3171017
+"PKG",26,22,1,"PAH",1,1,0)
+^^10^10^3171017
+"PKG",26,22,1,"PAH",1,1,1,0)
+The patch addresses two (2) issues:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1.   When the legacy CPRS List Manager option CPRS Ward Clerk
+"PKG",26,22,1,"PAH",1,1,4,0)
+     Menu [OR OR/RR MENU WARD CLERK] is used to call Lab 
+"PKG",26,22,1,"PAH",1,1,5,0)
+     package routines (SET1^LRGEN) to display Lab Results by 
+"PKG",26,22,1,"PAH",1,1,6,0)
+     Test, a program error (UNDEFINED) is encountered.
+"PKG",26,22,1,"PAH",1,1,7,0)
+ 
+"PKG",26,22,1,"PAH",1,1,8,0)
+2.   The VistA routine ^LRX performs a FileMan database server
+"PKG",26,22,1,"PAH",1,1,9,0)
+     call ($$GET1^DID) to retrieve a global reference.  The 
+"PKG",26,22,1,"PAH",1,1,10,0)
+     parameters used in the call are improper. 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LRGEN1")
+0^1^B24272635^B24124923
+"RTN","LRGEN1",1,0)
+LRGEN1 ;SLC/RWF-GENERAL DATA DISPLAY ;2/19/91  10:35
+"RTN","LRGEN1",2,0)
+ ;;5.2;LAB SERVICE;**201,221,438,471**;Sep 27, 1994;Build 1
+"RTN","LRGEN1",3,0)
+DQ ;dequeued from LRGEN
+"RTN","LRGEN1",4,0)
+ N LRPDT,LRPTF,LRPAGE
+"RTN","LRGEN1",5,0)
+ S LRPDT=$$FMTE^XLFDT($$NOW^XLFDT,"5MZ")
+"RTN","LRGEN1",6,0)
+ S LRPRTF="Report Range  [ "_$$FMTE^XLFDT($P(LRSDT,"."),"5MZ")_" - "_$$FMTE^XLFDT(9999999-$P(LREDT,"."),"5MZ")_" ]"
+"RTN","LRGEN1",7,0)
+ K LRNOTE,LRSV S (LRPAGE,LRNOTE,LREND)=0,LRIOM=80
+"RTN","LRGEN1",8,0)
+ S:'$G(LRIDT) LRIDT=1 W:$E(IOST,1,2)="C-" @IOF
+"RTN","LRGEN1",9,0)
+ S $P(LRDASH,"-",(LRIOM-1))="",$P(LREQUAL,"=",(LRIOM-1))=""
+"RTN","LRGEN1",10,0)
+ S LRWPL=IOSL-(3*LRIX)/LRIX
+"RTN","LRGEN1",11,0)
+ S:$D(ZTQUEUED) ZTREQ="@" U IO
+"RTN","LRGEN1",12,0)
+ S LRCW=LRCW-3,LRDPF=$P(^LR(LRDFN,0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRGEN1",13,0)
+ S LREDT=$$AEDT(LRDFN,LRSUB,LRIDT,LREDT,LRTP)
+"RTN","LRGEN1",14,0)
+ D DT^LRX,PT^LRX,HEAD
+"RTN","LRGEN1",15,0)
+ F  D NX Q:LREND!(LRIDT<1)!(LRIDT>LREDT)
+"RTN","LRGEN1",16,0)
+ D WRTLN
+"RTN","LRGEN1",17,0)
+ K LRDASH,LREQUAL,LRAGE,LRRB,LRTREAT,LRUNKNOW,SEX,AGE,LRLAST,LRIOM
+"RTN","LRGEN1",18,0)
+ D KVAR^VADPT
+"RTN","LRGEN1",19,0)
+ Q
+"RTN","LRGEN1",20,0)
+WRTLN W ! W:$E(IOST,1,2)="P-" @IOF D ^%ZISC Q
+"RTN","LRGEN1",21,0)
+AEDT(LRD,LRS,LRI,LRE,LRT) ;return Actual End DaTe
+"RTN","LRGEN1",22,0)
+    ;(DFN,SUB{e.g.: "CH"},entered start date,entered end date,type)
+"RTN","LRGEN1",23,0)
+    N LREA,LRX,LRZ,LRN,LRR S (LREA,LRX)=LRI
+"RTN","LRGEN1",24,0)
+    F  S LRX=$O(^LR(LRD,LRS,LRX)) Q:LRX<1!(LRX>LRE)  D
+"RTN","LRGEN1",25,0)
+    . S LRZ=$S($D(^LR(LRD,LRS,LRX,0)):^(0),1:"") Q:'$P(LRZ,U,3)  I LRT,LRT'=$P(LRZ,U,5) Q
+"RTN","LRGEN1",26,0)
+    . S LRN=1,LRR=0 F  S LRR=+$O(LRND(LRR)) Q:LRR<1  S:$D(^LR(LRD,LRS,LRX,LRND(LRR))) LRN=0
+"RTN","LRGEN1",27,0)
+    . Q:LRN  S LREA=LRX
+"RTN","LRGEN1",28,0)
+    Q LREA  ;return last qualifying LRIDT
+"RTN","LRGEN1",29,0)
+NX I LRY'<LRWPL D BOT:LRSC=LRIX,HEAD:'LREND Q:LREND  I LRSC>1,LRSUB(LRSC)=LRSUB(LRSC-1) D NSET Q
+"RTN","LRGEN1",30,0)
+ I LRIDT>1,$S(+$O(^LR(LRDFN,LRSUB,LRIDT))<1:1,+$O(^(LRIDT))>LREDT:1,1:0),LRSC<LRIX S LRY=LRWPL Q
+"RTN","LRGEN1",31,0)
+ S:LRIDT>1 LRIDT=+$O(^LR(LRDFN,LRSUB,LRIDT)) I LRIDT<1!(LRIDT>LREDT) D  Q
+"RTN","LRGEN1",32,0)
+ . I LRSC>1,LRSUB(LRSC)=LRSUB(LRSC-1) D NSET
+"RTN","LRGEN1",33,0)
+ . S LRY=LRWPL D BOT,LAST
+"RTN","LRGEN1",34,0)
+ S Z=$S($D(^LR(LRDFN,LRSUB,LRIDT,0)):^(0),1:"") Q:'$P(Z,U,3)  I LRTP,LRTP'=$P(Z,U,5) Q
+"RTN","LRGEN1",35,0)
+ S LRNOP=1,II=0 F  S II=+$O(LRND(II)) Q:II<1  S:$D(^LR(LRDFN,LRSUB,LRIDT,LRND(II))) LRNOP=0
+"RTN","LRGEN1",36,0)
+ Q:LRNOP  I $D(LRSUB(LRSC+1)),LRSUB(LRSC+1)=LRSUB(LRSC) S LRSV(LRY)=LRIDT
+"RTN","LRGEN1",37,0)
+ D LRPR
+"RTN","LRGEN1",38,0)
+ Q
+"RTN","LRGEN1",39,0)
+NSET S LRSSP=0 F  S LRSSP=+$O(LRSV(LRSSP)) Q:LRSSP<1  S LRIDT=LRSV(LRSSP),Z=^LR(LRDFN,LRSUB,LRIDT,0) D LRPR
+"RTN","LRGEN1",40,0)
+ S LRIDT=LRIDT(LRSC-1),LRY=LRWPL
+"RTN","LRGEN1",41,0)
+ Q
+"RTN","LRGEN1",42,0)
+LRPR N LRSAMP
+"RTN","LRGEN1",43,0)
+ S X=+Z,LRTN=$P(Z,U,5),LRSAMP="?" S:LRTN'="" LRSAMP=$S($D(^LAB(61,LRTN,0)):$E(^(0),1,3),1:"?")
+"RTN","LRGEN1",44,0)
+ S LRDAT=$$FMTE^XLFDT(X,"5MZ")
+"RTN","LRGEN1",45,0)
+ S T="      "
+"RTN","LRGEN1",46,0)
+ S:X["." T=" "_$E(X_"00000",9,10)_":"_$E(X_"0000",11,12)_" "
+"RTN","LRGEN1",47,0)
+ S LRFOOT=" "
+"RTN","LRGEN1",48,0)
+ I $O(^LR(LRDFN,LRSUB,LRIDT,1,0))>0 D
+"RTN","LRGEN1",49,0)
+ . S:'$D(LRNOTE(-1,LRIDT)) LRNOTE=$G(LRNOTE)+1,LRNOTE(LRNOTE)=LRIDT,LRNOTE(-1,LRIDT)=LRNOTE S LRFOOT=$C(LRNOTE(-1,LRIDT)+64)
+"RTN","LRGEN1",50,0)
+ W !,LRFOOT," ",LRDAT S LRY=LRY+1
+"RTN","LRGEN1",51,0)
+ W !,?13,LRSAMP,?20 S X=$D(^LR(LRDFN,LRSUB,LRIDT,0)),LRX=$X,LRY=LRY+1
+"RTN","LRGEN1",52,0)
+ F I=S1:1:S2 D
+"RTN","LRGEN1",53,0)
+ . S X=$S($D(^LR(LRDFN,LRSUB,LRIDT,LRND(I))):^(LRND(I)),1:""),LRFFLG=$P(X,U,2),X=$P(X,U)
+"RTN","LRGEN1",54,0)
+ . W ?LRX,@$S(X'=""&$D(LRPR(I)):LRPR(I),1:"$J(X,LRCW)")," ",LRFFLG
+"RTN","LRGEN1",55,0)
+ . S LRX=LRX+3+LRCW
+"RTN","LRGEN1",56,0)
+ Q
+"RTN","LRGEN1",57,0)
+HEAD Q:'$G(LRIDT)!($G(LREND))  I '$D(LRIOM) S LRIOM=80
+"RTN","LRGEN1",58,0)
+ S:'$G(LRY) LRY=2 S:'$D(LRPRTF) $P(LRPRTF," ",20)=""
+"RTN","LRGEN1",59,0)
+ S $P(LRDASH,"-",(LRIOM-1))="",$P(LREQUAL,"=",(LRIOM-1))=""
+"RTN","LRGEN1",60,0)
+ S LREND=0 I '$G(LRBOT) F  Q:LREND  D HD1 Q:'(LRIDT<1!(LRIDT>LREDT))  S LREND=1 F II=1:1:LRIX I LRIDT(II)>0,LRIDT(II)<LREDT S LREND=0 Q
+"RTN","LRGEN1",61,0)
+ Q:$G(LREND)
+"RTN","LRGEN1",62,0)
+ S:'$D(LRPDT) LRPDT=$$FMTE^XLFDT($$NOW^XLFDT,"5MZ")
+"RTN","LRGEN1",63,0)
+ I $G(LRSC)=1 D
+"RTN","LRGEN1",64,0)
+ . S LRPAGE=$G(LRPAGE)+1,LRY=2 W @IOF
+"RTN","LRGEN1",65,0)
+ . W !,"WORK COPY: ",PNM,"  ",SSN,"  Age:",AGE," ",?50,"Prt Date:",LRPDT
+"RTN","LRGEN1",66,0)
+ . W !,$$CJ^XLFSTR(LRPRTF_"     Pg:"_LRPAGE,LRIOM) S LRY=LRY+1
+"RTN","LRGEN1",67,0)
+ S X=9999999-$O(^LR(LRDFN,"CH",LRIDT)) W !! W:'$L($G(LRHDR(LRSC,1))) ?13,"SPEC" W ?20,LRHDR(LRSC) S LRY=LRY+2
+"RTN","LRGEN1",68,0)
+ I $L(LRHDR(LRSC,2)) W !,$S($D(LRTHER):" Ther.",1:"  Ref")," Range",?17,LRHDR(LRSC,2) S LRY=LRY+1
+"RTN","LRGEN1",69,0)
+ I $L(LRHDR(LRSC,1)) W !,?13,"SPEC",?20,LRHDR(LRSC,1) S LRY=LRY+1
+"RTN","LRGEN1",70,0)
+ W !,LREQUAL S LRY=LRY+1
+"RTN","LRGEN1",71,0)
+ Q
+"RTN","LRGEN1",72,0)
+HD1 Q:$G(LREND)
+"RTN","LRGEN1",73,0)
+ S LRIDT(LRSC)=LRIDT,LRSC=$S(LRSC<LRIX:LRSC+1,1:1),LRIDT=$G(LRIDT(LRSC)) Q:'LRIDT  S S1=LRIX(LRSC)+1,S2=LRIX(LRSC+1)
+"RTN","LRGEN1",74,0)
+ I LRSC=1 K LRNOTE,LRSV S LRNOTE=0
+"RTN","LRGEN1",75,0)
+ I LRSUB'=LRSUB(LRSC) S LRSUB=LRSUB(LRSC) K LRSV
+"RTN","LRGEN1",76,0)
+ Q
+"RTN","LRGEN1",77,0)
+LAST Q:$G(LRLAST)  W !,$$CJ^XLFSTR("[  *** End Of Report ***  ]",LRIOM),!
+"RTN","LRGEN1",78,0)
+ S LREND=1,LRLAST=1 D B2
+"RTN","LRGEN1",79,0)
+ Q
+"RTN","LRGEN1",80,0)
+BOT ;D KEYCOM^LRX:$E(IOST,1,2)'="C-"
+"RTN","LRGEN1",81,0)
+ I $E(IOST,1,2)'="C-" D
+"RTN","LRGEN1",82,0)
+ . W !,LREQUAL
+"RTN","LRGEN1",83,0)
+ . W !!,"  ------------------------------  COMMENTS  ------------------------------"
+"RTN","LRGEN1",84,0)
+ . W !,"  Key:  'L' = reference Low,  'H' = reference Hi, '*' = critical range"
+"RTN","LRGEN1",85,0)
+ N II
+"RTN","LRGEN1",86,0)
+ W !,LRDASH
+"RTN","LRGEN1",87,0)
+ I $G(LRNOTE) F II=1:1:LRNOTE  S LRIDT1=LRNOTE(II) D
+"RTN","LRGEN1",88,0)
+ . ;I LRY'<LRWPL D B1 Q:$G(LREND)  S LRBOT=1 D HEAD K LRBOT
+"RTN","LRGEN1",89,0)
+ . W !,$C(II+64) S J=0 F  S J=$O(^LR(LRDFN,LRSUB,LRIDT1,1,J)) Q:J<1  D
+"RTN","LRGEN1",90,0)
+ . . W ?5,^(J,0) W:$O(^LR(LRDFN,LRSUB,LRIDT1,1,J)) !
+"RTN","LRGEN1",91,0)
+ K LRNOTE S LRNOTE=0
+"RTN","LRGEN1",92,0)
+ S LREND=$S(+$O(^LR(LRDFN,LRSUB,LRIDT))<1:1,+$O(^(LRIDT))>LREDT:1,1:0) I LREND D LAST Q
+"RTN","LRGEN1",93,0)
+B1 W !,"WORK COPY - DO NOT FILE   ",PNM,?60,SSN S LRY=2
+"RTN","LRGEN1",94,0)
+ I $E(IOST,1,2)="C-" W !?20," PRESS '^' TO STOP REPORT " R X:DTIME S:X="" X=1 S LREND=".^"[X Q:$G(LREND)
+"RTN","LRGEN1",95,0)
+ Q
+"RTN","LRGEN1",96,0)
+B2 ;Return to menu
+"RTN","LRGEN1",97,0)
+ I $E(IOST,1,2)="C-" W !?20," PRESS 'Enter' TO RETURN TO THE MENU " R X:DTIME
+"RTN","LRGEN1",98,0)
+ Q
+"RTN","LRX")
+0^2^B71830646^B71828345
+"RTN","LRX",1,0)
+LRX ;DALOI/STAFF - UTILITY ROUTINES -- PREVIOUSLY ^LAB("X","...") ;03/31/09  11:39
+"RTN","LRX",2,0)
+ ;;5.2;LAB SERVICE;**65,153,201,217,290,360,350,471**;Sep 27, 1994;Build 1
+"RTN","LRX",3,0)
+ ;
+"RTN","LRX",4,0)
+ ;
+"RTN","LRX",5,0)
+PT ; Patient info
+"RTN","LRX",6,0)
+ ;
+"RTN","LRX",7,0)
+ N X,I,N,Y
+"RTN","LRX",8,0)
+ D KVAR^VADPT
+"RTN","LRX",9,0)
+ K LRTREA,LRWRD,AGE
+"RTN","LRX",10,0)
+ S (AGE,AGE(2),PNM,SEX,DOB,DOD,SSN,VA200,LRWRD,LRRB,LRTREA,VA("PID"),VA("BID"))=""
+"RTN","LRX",11,0)
+ I $G(LRDFN),'$G(LRDPF),$G(^LR(LRDFN,0)) S LRDPF=$P(^(0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRX",12,0)
+ S LREND=0
+"RTN","LRX",13,0)
+ S:$G(DFN)<1!('$G(LRDPF)) LREND=1 Q:$G(LREND)
+"RTN","LRX",14,0)
+ ;
+"RTN","LRX",15,0)
+ I +$G(LRDPF)'=2 D
+"RTN","LRX",16,0)
+ . S X=$$GET1^DID(+LRDPF,"","","GLOBAL NAME","ANS","ANS1")
+"RTN","LRX",17,0)
+ . S X=X_DFN_",0)",X=$S($D(@X):@X,1:""),LRWRD=$S($D(^(.1)):$P(^(.1),U),1:0),LRRB=$S($D(^(.101)):$P(^(.101),U),1:""),DOD=$S($D(^(.35)):$P(^(.35),U),1:"")
+"RTN","LRX",18,0)
+ . S PNM=$P(X,U),SSN=$P(X,U,9)
+"RTN","LRX",19,0)
+ . I +$G(LRDPF)=62.3 Q
+"RTN","LRX",20,0)
+ . S SEX=$P(X,U,2),SEX=$S(SEX="":"M",1:SEX)
+"RTN","LRX",21,0)
+ . S DOB=$P(X,U,3)
+"RTN","LRX",22,0)
+ . S AGE=$S($D(DT)&(DOB?1(7N,7N1".".6N)):DT-DOB\10000,1:"??")
+"RTN","LRX",23,0)
+ . S AGE(2)=$$AGE2(DOB,$G(LRCDT)) ;Age of the patient when the specimen was collected (default =99Yr if no valid DOB present)
+"RTN","LRX",24,0)
+ . ;Default for LRCDT (collection date) is DT
+"RTN","LRX",25,0)
+ ;
+"RTN","LRX",26,0)
+ I +$G(LRDPF)=2 D
+"RTN","LRX",27,0)
+ . N I,X,N,Y
+"RTN","LRX",28,0)
+ . D OERR^VADPT Q:VAERR
+"RTN","LRX",29,0)
+ . S PNM=VADM(1)
+"RTN","LRX",30,0)
+ . S SEX=$P(VADM(5),U),DOB=$P(VADM(3),U),DOD=$P(VADM(6),U)
+"RTN","LRX",31,0)
+ . S AGE=VADM(4),AGE(2)=$$AGE2(DOB,$G(LRCDT))
+"RTN","LRX",32,0)
+ . S SSN=VA("PID"),SSN(1)=VA("BID"),LRWRD=$P(VAIN(4),U,2)
+"RTN","LRX",33,0)
+ . S LRWRD(1)=+VAIN(4),LRRB=VAIN(5),LRPRAC=+VAIN(2)
+"RTN","LRX",34,0)
+ . S:VAIN(3) LRTREA=+VAIN(3)
+"RTN","LRX",35,0)
+ ;
+"RTN","LRX",36,0)
+ D SSNFM^LRU
+"RTN","LRX",37,0)
+ Q
+"RTN","LRX",38,0)
+ ;
+"RTN","LRX",39,0)
+ ;
+"RTN","LRX",40,0)
+DEM ; Call DEM^VADPT instead of OERR used above
+"RTN","LRX",41,0)
+ N X,I,N,Y
+"RTN","LRX",42,0)
+ D KVAR^VADPT
+"RTN","LRX",43,0)
+ K LRTREA,LRWRD,AGE
+"RTN","LRX",44,0)
+ S (AGE,AGE(2),PNM,SEX,DOB,DOD,SSN,VA200,LRWRD,LRRB,LRTREA,VA("PID"),VA("BID"))=""
+"RTN","LRX",45,0)
+ I $G(LRDFN),'$G(LRDPF),$G(^LR(LRDFN,0)) S LRDPF=$P(^(0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRX",46,0)
+ S LREND=0 S:$G(DFN)<1!('$G(LRDPF)) LREND=1 Q:$G(LREND)
+"RTN","LRX",47,0)
+ ;
+"RTN","LRX",48,0)
+ I +$G(LRDPF)'=2 D
+"RTN","LRX",49,0)
+ . S X=^DIC(+LRDPF,0,"GL")_DFN_",0)",X=$S($D(@X):@X,1:""),LRWRD=$S($D(^(.1)):$P(^(.1),U),1:0),LRRB=$S($D(^(.101)):$P(^(.101),U),1:"")
+"RTN","LRX",50,0)
+ . S PNM=$P(X,U),SSN=$P(X,U,9)
+"RTN","LRX",51,0)
+ . I +$G(LRDPF)=62.3 Q
+"RTN","LRX",52,0)
+ . S SEX=$P(X,U,2),SEX=$S(SEX="":"M",1:SEX),DOB=$P(X,U,3)
+"RTN","LRX",53,0)
+ . S AGE=$S($D(DT)&(DOB?1(7N,7N1".".6N)):DT-DOB\10000,1:"??")
+"RTN","LRX",54,0)
+ . S AGE(2)=$$AGE2(DOB,$G(LRCDT))
+"RTN","LRX",55,0)
+ ;
+"RTN","LRX",56,0)
+ I +$G(LRDPF)=2 N I,X,N,Y D
+"RTN","LRX",57,0)
+ . D DEM^VADPT Q:VAERR
+"RTN","LRX",58,0)
+ . S PNM=VADM(1),SEX=$P(VADM(5),U),DOD=$P(VADM(6),U)
+"RTN","LRX",59,0)
+ . S DOB=$P(VADM(3),U),SSN=VA("PID"),SSN(1)=VA("BID")
+"RTN","LRX",60,0)
+ . S AGE=VADM(4),AGE(2)=$$AGE2(DOB,$G(LRCDT))
+"RTN","LRX",61,0)
+ ;
+"RTN","LRX",62,0)
+ D SSNFM^LRU
+"RTN","LRX",63,0)
+ Q
+"RTN","LRX",64,0)
+ ;
+"RTN","LRX",65,0)
+ ;
+"RTN","LRX",66,0)
+DD ;date/time format
+"RTN","LRX",67,0)
+ S Y=$$FMTE^XLFDT(Y,"5Z")
+"RTN","LRX",68,0)
+ S Y=$P(Y,"@")_" "_$P($P(Y,"@",2),":",1,2)
+"RTN","LRX",69,0)
+ Q
+"RTN","LRX",70,0)
+ ;
+"RTN","LRX",71,0)
+ ;
+"RTN","LRX",72,0)
+DDOLD ;OLD
+"RTN","LRX",73,0)
+ I $E(Y,4,7)="0000" S Y=$S($E(Y)=2:"19"_$E(Y,2,3),1:"20"_$E(Y,2,3)) Q
+"RTN","LRX",74,0)
+ S Y=$E(Y,4,5)_"/"_$E(Y,6,7)_"/"_$E(Y,2,3)_$S(Y#1:" "_$E(Y_0,9,10)_":"_$E(Y_"000",11,12),1:"")
+"RTN","LRX",75,0)
+ Q
+"RTN","LRX",76,0)
+ ;
+"RTN","LRX",77,0)
+ ;
+"RTN","LRX",78,0)
+DT ;current date format is LRDT0
+"RTN","LRX",79,0)
+ N X,DIK,DIC,%I,DICS,%DT
+"RTN","LRX",80,0)
+ D DT^DICRW
+"RTN","LRX",81,0)
+ S Y=$$FMTE^XLFDT(DT,"5D")
+"RTN","LRX",82,0)
+ S LRDT0=Y
+"RTN","LRX",83,0)
+ Q
+"RTN","LRX",84,0)
+ ;
+"RTN","LRX",85,0)
+ ;
+"RTN","LRX",86,0)
+DTOLD ;2-DIGIT
+"RTN","LRX",87,0)
+ ;current date format is LRDT0
+"RTN","LRX",88,0)
+ N X,DIK,DIC,%I,DICS,%DT
+"RTN","LRX",89,0)
+ D DT^DICRW
+"RTN","LRX",90,0)
+ S Y=$P(DT,".") D DDOLD S LRDTO=Y
+"RTN","LRX",91,0)
+ Q
+"RTN","LRX",92,0)
+ ;
+"RTN","LRX",93,0)
+ ;
+"RTN","LRX",94,0)
+DASH ;line of dashes
+"RTN","LRX",95,0)
+ W !,$E("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",1,IOM-1)
+"RTN","LRX",96,0)
+ Q
+"RTN","LRX",97,0)
+ ;
+"RTN","LRX",98,0)
+ ;
+"RTN","LRX",99,0)
+EQUALS ;line of equals
+"RTN","LRX",100,0)
+ W !,$E("====================================================================================================================================================================================================================",1,IOM-1)
+"RTN","LRX",101,0)
+ Q
+"RTN","LRX",102,0)
+ ;
+"RTN","LRX",103,0)
+ ;
+"RTN","LRX",104,0)
+DUZ ;user info
+"RTN","LRX",105,0)
+ S (LRUSNM,LRUSI)="" Q:'$D(X)  Q:'$D(^VA(200,+X,0))  S LRUSNM=$P(^(0),"^"),LRUSI=$P(^(0),"^",2)
+"RTN","LRX",106,0)
+ Q
+"RTN","LRX",107,0)
+ ;
+"RTN","LRX",108,0)
+ ;
+"RTN","LRX",109,0)
+DOC ;provider info
+"RTN","LRX",110,0)
+ I $L(X),'X S LRDOC=X Q
+"RTN","LRX",111,0)
+ S LRDOC=$P($G(^VA(200,+X,0)),U)
+"RTN","LRX",112,0)
+ S:LRDOC="" LRDOC="Unknown"
+"RTN","LRX",113,0)
+ Q
+"RTN","LRX",114,0)
+ ;
+"RTN","LRX",115,0)
+ ;
+"RTN","LRX",116,0)
+PRAC(X) ;prac info
+"RTN","LRX",117,0)
+ N Y
+"RTN","LRX",118,0)
+ I $L(X),'X Q X
+"RTN","LRX",119,0)
+ S Y=$P($G(^VA(200,+X,0)),U)
+"RTN","LRX",120,0)
+ S:Y="" Y="Unknown"
+"RTN","LRX",121,0)
+ Q Y
+"RTN","LRX",122,0)
+ ;
+"RTN","LRX",123,0)
+ ;
+"RTN","LRX",124,0)
+YMD ;year/month/date
+"RTN","LRX",125,0)
+ S %=%H>21549+%H-.1,%Y=%\365.25+141,%=%#365.25\1,%D=%+306#(%Y#4=0+365)#153#61#31+1,%M=%-%D\29+1,X=%Y_"00"+%M_"00"+%D K %Y,%D,%M,%
+"RTN","LRX",126,0)
+ Q
+"RTN","LRX",127,0)
+ ;
+"RTN","LRX",128,0)
+ ;
+"RTN","LRX",129,0)
+STAMP ;time stamp
+"RTN","LRX",130,0)
+ S X="N",%DT="ET" D ^%DT
+"RTN","LRX",131,0)
+ Q
+"RTN","LRX",132,0)
+ ;
+"RTN","LRX",133,0)
+ ;
+"RTN","LRX",134,0)
+KEYCOM ;key to result flags
+"RTN","LRX",135,0)
+ D EQUALS W !!,"  ------------------------------  COMMENTS  ------------------------------",!,"  Key:  'L' = reference Low,  'H' = reference Hi, '*' = critical range"
+"RTN","LRX",136,0)
+ Q
+"RTN","LRX",137,0)
+ ;
+"RTN","LRX",138,0)
+ ;
+"RTN","LRX",139,0)
+URG ;urgencies
+"RTN","LRX",140,0)
+ K LRURG S LRURG(0)="ROUTINE" S I=0 F  S I=$O(^LAB(62.05,I)) Q:I<1  I $D(^(I,0)) S:'$P(^(0),U,3) LRURG(I)=$P(^(0),U)
+"RTN","LRX",141,0)
+ Q
+"RTN","LRX",142,0)
+ ;
+"RTN","LRX",143,0)
+ ;
+"RTN","LRX",144,0)
+ADD ;date format
+"RTN","LRX",145,0)
+ S Y=$E("JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC",$E(Y,4,5)*3-2,$E(Y,4,5)*3)_" "_$S(Y#100:$J(Y#100\1,2)_", ",1:"")_(Y\10000+1700)_$S(Y#1:"  "_$E(Y_0,9,10)_":"_$E(Y_"000",11,12),1:"")
+"RTN","LRX",146,0)
+ Q
+"RTN","LRX",147,0)
+ ;
+"RTN","LRX",148,0)
+ ;
+"RTN","LRX",149,0)
+INF ;Display Infectious Warning
+"RTN","LRX",150,0)
+ I $L($G(IO)),$D(^LR(LRDFN,.091)),$L(^(.091)),'$G(LRQUIET) W !,$C(7)," Pat Info: ",^(.091) Q
+"RTN","LRX",151,0)
+ Q
+"RTN","LRX",152,0)
+ ;
+"RTN","LRX",153,0)
+ ;
+"RTN","LRX",154,0)
+LRGLIN ;
+"RTN","LRX",155,0)
+ N HZ
+"RTN","LRX",156,0)
+ D GSET^%ZISS W IOG1
+"RTN","LRX",157,0)
+ F HZ=1:1:79 W IOHL
+"RTN","LRX",158,0)
+ W IOG0 D GKILL^%ZISS
+"RTN","LRX",159,0)
+ W !
+"RTN","LRX",160,0)
+ Q
+"RTN","LRX",161,0)
+ ;
+"RTN","LRX",162,0)
+ ;
+"RTN","LRX",163,0)
+LRUID(LRAA,LRAD,LRAN) ;Extrinsic function call to create a unique
+"RTN","LRX",164,0)
+ ;accession identifier for an accession number.  See description
+"RTN","LRX",165,0)
+ ;of field .092 in file 68 for a full explanation of this number.
+"RTN","LRX",166,0)
+ ;This function returns a value equal to the unique ID generated.
+"RTN","LRX",167,0)
+ ;LRAA=ien in file 68, accession area
+"RTN","LRX",168,0)
+ ;LRAD=ien for accession date in field 68.01
+"RTN","LRX",169,0)
+ ;LRAN=ien for accession number in field 68.02
+"RTN","LRX",170,0)
+ Q:$S('$G(LRAA):1,'$D(^LRO(68,LRAA,.4)):1,1:0) 0
+"RTN","LRX",171,0)
+ N DA,DIE,DLAYGO,DR,LRMNTH,LRUID,LRQTR,LRTYPE,LRYR1,LRYR2,LRJUL
+"RTN","LRX",172,0)
+ S LRUID=$P($G(^LRO(68,LRAA,.4)),"^") ;start building LRUID
+"RTN","LRX",173,0)
+ S:$L(LRUID)'=2 LRUID="0"_LRUID
+"RTN","LRX",174,0)
+ S LRTYPE=$P($G(^LRO(68,LRAA,0)),"^",3)
+"RTN","LRX",175,0)
+ S LRYR1=$E(LRAD,3)
+"RTN","LRX",176,0)
+ S LRYR2=$E(LRAD,2,3)
+"RTN","LRX",177,0)
+ S LRMNTH=$E(LRAD,4,5)
+"RTN","LRX",178,0)
+ S LRQTR=0_(LRMNTH\3.1+1)
+"RTN","LRX",179,0)
+ I "DW"[LRTYPE D
+"RTN","LRX",180,0)
+ . S X1=LRAD,X2=$E(LRAD,1,3)_"0101" D ^%DTC
+"RTN","LRX",181,0)
+ . S X=X+1,LRJUL=$E("000",1,3-$L(X))_X
+"RTN","LRX",182,0)
+ . S LRUID=LRUID_LRYR1_LRJUL
+"RTN","LRX",183,0)
+ . S LRUID=LRUID_$E("0000",1,4-$L(LRAN))_LRAN
+"RTN","LRX",184,0)
+ I LRTYPE="Y" D
+"RTN","LRX",185,0)
+ . S LRUID=LRUID_LRYR2_$E("000000",1,6-$L(LRAN))_LRAN
+"RTN","LRX",186,0)
+ I LRTYPE="Q" D
+"RTN","LRX",187,0)
+ . S LRUID=LRUID_LRYR1_LRQTR
+"RTN","LRX",188,0)
+ . S LRUID=LRUID_$E("00000",1,5-$L(LRAN))_LRAN
+"RTN","LRX",189,0)
+ I LRTYPE="M" D
+"RTN","LRX",190,0)
+ . S LRUID=LRUID_LRYR1_LRMNTH_$E("00000",1,5-$L(LRAN))_LRAN
+"RTN","LRX",191,0)
+ L +^LRO(68,"C"):99999
+"RTN","LRX",192,0)
+ I $D(^LRO(68,"C",LRUID)),'$D(^LRO(68,"C",LRUID,LRAA,LRAD,LRAN)) D
+"RTN","LRX",193,0)
+ . N X
+"RTN","LRX",194,0)
+ . S X=$E(LRUID,3,10)
+"RTN","LRX",195,0)
+ . F  S LRUID="00"_X Q:'$D(^LRO(68,"C",LRUID))  S X=X+1 S:X>99999999 X=11111111
+"RTN","LRX",196,0)
+ I $G(LRORDRR)="NSR" Q LRUID ;Special trigger for NSR AP merge
+"RTN","LRX",197,0)
+ ;The following fields are also set in rtn LROLOVER
+"RTN","LRX",198,0)
+SET3 I $G(LRORDRR)'="R" S DR="16////"_LRUID
+"RTN","LRX",199,0)
+ I $G(LRORDRR)="R" D
+"RTN","LRX",200,0)
+ . S DR=";16.1////"_+$G(LRRSITE("RSITE"))_";16.2////"_+$G(LRRSITE("RPSITE"))_";16.3////"_LRUID_";16.4////"_LRSD("RUID")
+"RTN","LRX",201,0)
+ . I '$G(LRRSITE("IDTYPE")),'$D(^LRO(68,"C",LRSD("RUID"))) S LRUID=LRSD("RUID") ; Use sender's UID, unless previously used.
+"RTN","LRX",202,0)
+ . S DR="16////"_LRUID_DR
+"RTN","LRX",203,0)
+ S DA=LRAN,DA(1)=LRAD,DA(2)=LRAA,DIE="^LRO(68,"_DA(2)_",1,"_DA(1)_",1,",DLAYGO=68
+"RTN","LRX",204,0)
+ D ^DIE
+"RTN","LRX",205,0)
+ L -^LRO(68,"C")
+"RTN","LRX",206,0)
+ S LRORU3=$G(^LRO(68,LRAA,1,LRAD,1,LRAN,.3))
+"RTN","LRX",207,0)
+ Q LRUID
+"RTN","LRX",208,0)
+ ;
+"RTN","LRX",209,0)
+KVAR ;Kill laboratory/VADPT patient demographics
+"RTN","LRX",210,0)
+ K LRTREA,LRWRD,PNM,SEX,DOB,DOD,SSN,LRWRD,LRRB,LRTREA,VA,LRDFN,LRDPF,LREND,VAERR
+"RTN","LRX",211,0)
+ D KVA^VADPT
+"RTN","LRX",212,0)
+ Q
+"RTN","LRX",213,0)
+ADDPT ;Returns VAPA( Patient data
+"RTN","LRX",214,0)
+ N X,I,N,Y D ADD^VADPT Q
+"RTN","LRX",215,0)
+OPDPT ;Returns VAPD( Patient data
+"RTN","LRX",216,0)
+ N X,I,N,Y D OPD^VADPT Q
+"RTN","LRX",217,0)
+SVCPT ;Returns VASV( Patient data
+"RTN","LRX",218,0)
+ N X,I,N,Y D SVC^VADPT Q
+"RTN","LRX",219,0)
+OADPT ;Returns VAOA( Patient data
+"RTN","LRX",220,0)
+ N X,I,N,Y D OAD^VADPT Q
+"RTN","LRX",221,0)
+INPPT ;Returns VAIN( Patient data
+"RTN","LRX",222,0)
+ N X,I,N,Y D INP^VADPT Q
+"RTN","LRX",223,0)
+IN5PT ;Returns VAIP( Patient data
+"RTN","LRX",224,0)
+ N X,I,N,Y D IN5^VADPT Q
+"RTN","LRX",225,0)
+PIDPT ;Returns VA("PID") and VA("BID") Patient Identifier
+"RTN","LRX",226,0)
+ N X,I,N,Y D PID^VADPT Q
+"RTN","LRX",227,0)
+ ;
+"RTN","LRX",228,0)
+ ;
+"RTN","LRX",229,0)
+ QUIT
+"RTN","LRX",230,0)
+Y2K(X,LRYR) ;   --> used to convert 2digit year to 4digit century and year
+"RTN","LRX",231,0)
+ ; 1/1/91 TO 1/1/1991
+"RTN","LRX",232,0)
+ ;
+"RTN","LRX",233,0)
+ ;S X=$P(X,".") ;--> Date only. Not time
+"RTN","LRX",234,0)
+ S LRYR=$G(LRYR,"5S")
+"RTN","LRX",235,0)
+ N YR
+"RTN","LRX",236,0)
+ S Y=$$FMTE^XLFDT(X,LRYR)
+"RTN","LRX",237,0)
+ I $L($P(Y,"/"))=1 S $P(Y,"/")="0"_$P(Y,"/") ;--> pad for 2digit day
+"RTN","LRX",238,0)
+ I $L($P(Y,"/",2))=1 S $P(Y,"/",2)="0"_$P(Y,"/",2) ;--> for 2digit month
+"RTN","LRX",239,0)
+ Q Y
+"RTN","LRX",240,0)
+ ;
+"RTN","LRX",241,0)
+ QUIT
+"RTN","LRX",242,0)
+RD ;DIR read
+"RTN","LRX",243,0)
+ N Y,X
+"RTN","LRX",244,0)
+ K LRANSY,LRANSX
+"RTN","LRX",245,0)
+ S LREND=0 W !
+"RTN","LRX",246,0)
+ D ^DIR I $D(DTOUT)!($D(DUOUT))!($D(DIRUT))!($D(DIROUT)) S LREND=1
+"RTN","LRX",247,0)
+ S LRANSY=$G(Y),LRANSX=$G(X)
+"RTN","LRX",248,0)
+ Q
+"RTN","LRX",249,0)
+AGE2(DOB,LRCDT) ;Entry point if passing only a valid Date without patient
+"RTN","LRX",250,0)
+ ;   DOB, LRCDT must be defined in VA FileManager internal format
+"RTN","LRX",251,0)
+ ; Date error will return 99yr
+"RTN","LRX",252,0)
+ N X,Y,%DT
+"RTN","LRX",253,0)
+ I '$G(LRCDT) S LRCDT=$$DT^XLFDT
+"RTN","LRX",254,0)
+ I '$G(DOB) Q "99yr"  ;no DOB passed
+"RTN","LRX",255,0)
+ S DOB=$P(DOB,".")
+"RTN","LRX",256,0)
+ S X=DOB,LRCDT=$P(LRCDT,".")
+"RTN","LRX",257,0)
+ I $S(DOB'=+DOB:1,LRCDT'=+LRCDT:1,1:0) Q "99yr"
+"RTN","LRX",258,0)
+ I $S(DOB'?7N.NE:1,LRCDT'?7N.NE:1,1:0) Q "99yr"
+"RTN","LRX",259,0)
+ D ^%DT I Y'>0 Q "99yr"  ;invalid date
+"RTN","LRX",260,0)
+ S X=LRCDT
+"RTN","LRX",261,0)
+ K %DT D ^%DT I Y'>0 Q "99yr"  ;invalid date
+"RTN","LRX",262,0)
+ ;
+"RTN","LRX",263,0)
+CALC ;Calculate timeframe based on difference between DOB and collection
+"RTN","LRX",264,0)
+ ; date. Time is stripped off.
+"RTN","LRX",265,0)
+ ; .0001-24 hour = dy
+"RTN","LRX",266,0)
+ ; 0-29 days = dy
+"RTN","LRX",267,0)
+ ; 30-730 dy = mo
+"RTN","LRX",268,0)
+ ; >24 mo = yr
+"RTN","LRX",269,0)
+ ;
+"RTN","LRX",270,0)
+ I DOB>LRCDT Q "99yr"  ;DOB in future
+"RTN","LRX",271,0)
+ I DOB=LRCDT Q "1dy"  ;same dates---pass 1 day old
+"RTN","LRX",272,0)
+ S X=$E(LRCDT,1,3)-$E(DOB,1,3)-($E(LRCDT,4,7)<$E(DOB,4,7))
+"RTN","LRX",273,0)
+ I X>1 S X=+X_"yr" Q X   ;age 2 years or more---pass in years
+"RTN","LRX",274,0)
+ S X=$$FMDIFF^XLFDT(LRCDT,DOB,1)
+"RTN","LRX",275,0)
+ I X>30 S X=X\30_"mo" Q X  ;over 30 days---pass in months
+"RTN","LRX",276,0)
+ E  S X=X_"dy" Q X  ;under 31 days---pass in days
+"RTN","LRX",277,0)
+ Q "99yr"
+"VER")
+8.0^22.2
+"BLD",10742,6)
+^402
+**END**
+**END**
+

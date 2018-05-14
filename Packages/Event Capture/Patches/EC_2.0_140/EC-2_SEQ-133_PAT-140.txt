@@ -1,0 +1,194 @@
+
+=============================================================================
+Run Date: MAR 19, 2018                     Designation: EC*2*140
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #133                      Status: Released
+                  Compliance Date: APR 01, 2018
+=============================================================================
+
+Associated patches: (v)EC*2*136    <<= must be installed BEFORE `EC*2*140'
+
+Subject: MID-FY18 INACTIVE STOP CODE DSS UNIT REVIEW
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ NOTE: Patch SD*5.3*677 (MID-FY18 STOP CODE UPDATE) is being released
+ along with patch EC*2.0*140 (MID-FY18 INACTIVE STOP CODE DSS UNIT 
+ REVIEW) in host file: SD53_677_EC20_140.KID.
+  
+ This patch will inactivate any DSS Units in the DSS UNIT file (#724) with
+ the SEND TO PCE field (#13) set to 'Send No Records' and have an
+ inactive/invalid Stop Code.  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I17773839FY18-Mid-FY18 Inactive Stop Code DSS Unit Review 
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested that DSS Units
+     in the DSS UNIT (#724) file with SEND TO PCE (#13) field set to 
+     'Send No Records' and have an inactive/invalid Stop Code be automatically 
+     inactivated.
+    
+     Resolution:
+     -----------
+     Post install routine EC2P140, in this patch, will queue the call to the
+     CHKDSS^ECUTL3 API to scan the DSS UNIT (#724) file and inactivate 
+     any DSS Units with SEND TO PCE (#13) field set to 'Send No Records' and 
+     have an inactive/invalid Stop Code.   
+  
+     A MailMan message will be sent to the installer of the patch and to 
+     holders of the 'ECMGR' security key. A sample message is below:
+  
+     Subj: DSS Unit send no records review  [#205261] 02/08/17@11:49  8 lines
+     From: EVENT CAPTURE PACKAGE  In 'IN' basket.   Page 1
+     ------------------------------------------------------------------------
+     The check for DSS Units with a Send to PCE setting of 'Send no records'
+     and an invalid/inactive stop code has completed.  Below are the results.
+  
+     The following DSS Units were inactivated:
+  
+     NAME                            DSS IEN
+     ----                            -------
+     AU61 CHRONIC HMLS HCHV          55
+  
+     Enter message action (in IN basket): Ignore//
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VAMC
+ Robley Rex VAMC (Louisville)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Patch Description for patch SD*5.3*677 for installation 
+ instructions. 
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ Please see the Patch Description for patch SD*5.3*677 for back-out 
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P140
+    Before:       n/a   After:  B2443322  **140**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 04, 2017
+Completed By:                               Date Completed: MAR 16, 2018
+Released By :                               Date Released : MAR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

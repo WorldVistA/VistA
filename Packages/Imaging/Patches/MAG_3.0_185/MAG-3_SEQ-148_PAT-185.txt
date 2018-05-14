@@ -1,0 +1,477 @@
+One routine included
+=============================================================================
+Run Date: MAR 16, 2018                     Designation: MAG*3*185
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #148                      Status: Released
+                  Compliance Date: APR 16, 2018
+=============================================================================
+
+
+Subject: VIX Image Viewer 1.5 
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ Description:
+ This document describes MAG*3.0*185, the VIX Image Viewer 1.5 patch.
+ This patch adds enhancements to the Zero footprint HTML5 based image viewer.
+ MAG*3.0*177 KIDS must be installed before installing MAG*3.0*185 KIDS
+   
+ * Annotations
+ o Show annotations
+ o Ability to delete images without annotations
+ o Ability to delete image groups without annotations
+ o Display annotations created with Group 6000 overlays 
+ o Hide annotations
+ o View VistA Imaging annotated images at remote sites 
+ * Annotations may look different between programs showing different
+ fonts and colors, functionality to save preferences will be included
+ in a future patch. There is no impact to annotation positions. 
+  
+ * Image Improvements 
+ o Scroll simultaneously through linked stacks
+ o Link multiple image stacks 
+ o Print images
+ o View annotated images at remote sites
+ o Mark an image or image group as sensitive
+ o Navigate through cross sectional images 
+ o Copy an image
+ o Provide stores image artifacts to Study/Image services
+  
+ * Viewer Improvements 
+ o Toolbar within the viewer
+ o Patient context change closes Image Viewer
+ o Save user preferences
+  
+ * Display 
+ o Display HL7 CDA documents
+  
+ * MAG*3.0*200
+ o MAG*3.0*200 provices a modification to the VIX to correct an issue, where
+ the Ordering Provider list presented to the user in the Importer when
+ importing a study is different than the list of providers the HDIG
+ verifies against causing the import to fail. 
+  
+ * Newly supported SOP classes in MAG*3.0*185, as indicated in the table 
+ included in this document
+   
+ Patch Components:
+   
+ This patch includes the following files:
+ File Name                              Description
+ MAG3_0P185.KID                         KIDS (Kernel Installation 
+                                        & Distribution System)
+                                        package to be installed on the VistA 
+                                        System.
+ MAG3_0P185_VIX_Setup.msi               Installation file for the VIX 
+                                        software.
+ MAG3_0P185_Patch_Description           This document
+ _Document.pdf
+ MAG3_0P185_VIX_Installation_Guide    VIX Installation Guide for this  
+                                        patch.
+ MAG3_0P185_User_Guide.pdf              User Guide for this patch.
+ VIX_Admin_Guide.pdf                        VIX Administrator's Guide
+   
+   
+ This patch installs the following versions: 
+ Apache Tomcat: 8.0.45
+ Java: 1.8.0_121
+   
+ Documentation:
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+   
+ Files & Fields Associated:
+ File Name (Number)    Field Name (Number)     New/Modified/Deleted
+ IMAGING STUDY           2005.003                New
+ ANNOTATION                         
+   
+ Forms Associated:
+ Form Name             File#                   New/Modified/Deleted
+ There are no forms associated with this patch. 
+   
+ Mail Groups Associated:
+ Mail Group Name       New Modified/Deleted
+ There are no mail groups associated with this patch. 
+   
+ Options Associated:
+ Option Name           Type                    New/Modified/Deleted
+ There are no options associated with this patch. 
+   
+ Protocols Associated:
+ Protocol Name         New/Modified/Deleted
+ There are no protocols associated with this patch. 
+   
+ Security Keys Associated:
+ Security Key Name
+ There are no security keys associated with this patch. 
+   
+ Templates Associated:
+ Template Name        Type           File Name (Number)  New/Modified/Deleted
+ There are no templates associated with this patch. 
+   
+ Additional Information:
+ There is no additional information associated with this patch. 
+   
+   
+ New Service Requests (NSRs):
+ This project is initiated by Requirement BR 8.0 of the Health Information 
+ Exchange Viewer BRD #01-02-03-05-08-003.
+  
+ Patient Safety Issues (PSIs):
+ There are no patient safety issues associated with this patch.
+  
+ Supported SOP Classes 
+  
+ The following table includes the newly supported SOP classes in MAG*3.0*185.
+ The HDIG validates the objects associated with these classes and stores
+ them in the new database.
+  
+ Each SOP class must be enabled individually to be stored. The patch 
+ is distributed with all SOP classes disabled as the default. To enable
+ the storage of SOP classes, please enter a CA ticket, or contact
+ the National Help Desk to request assistance from the CLIN3 support team.
+  
+ NOTE: Supported SOP Classes are not currently viewable with Clinical Display 
+ or VISTA RAD. 
+  
+ SOP Classes Newly Supported in MAG*3.0*185
+ SOP Class Name                           SOP Class UID
+ Enhanced CT Image Storage                1.2.840.10008.5.1.4.1.1.2.1
+ Enhanced MR Image Storage                1.2.840.10008.5.1.4.1.1.4.1
+ Hemodynamic Waveform Storage             1.2.840.10008.5.1.4.1.1.9.2.1
+  
+ Defect Tracking System Ticket(s) & Overview:
+ 1. Rational Defect 651417: Incorrect Value Setting in VIX.Viewer.config file
+ Problem:
+ A defect for the new Image Viewer has been identified during testing with 
+ JLV. The value of Security.EnablePromiscuousMode was enabled by default in
+ MAG*3.0*177. This is a security defect in that if a user copies and
+ manually shares the image viewer URL, any other user is able to display the
+ patient image/exam with that URL, bypassing JLV and any other user specific
+ authentication. 
+ Resolution: 
+ Correct value was set in MAG*3.0*185 release. 
+ (<add name="Security.EnablePromiscuousMode" value="false" />)
+  
+ 2. Rational Defect 608576: Image Viewer Unresponsive due to SQL Timeout
+ Problem: 
+ Users experience query time outs because image caches were full.
+ Resolution: 
+ A power shell script that empties the cache was implemented in this build 
+ and executes automatically based on the file size. 
+  
+ Test Sites:
+ Puget Sound, WA
+ San Diego, CA
+   
+ Software and Documentation Retrieval Instructions:
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines: domain.ext 
+ Salt Lake City: domain.ext
+    
+   
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+   
+  
+ Title                         File Name                           FTP Mode
+ MAG*3.0*185 KIDS              MAG3_0P185.KID                      ASCII
+ MAG*3.0*185 VIX Setup         MAG3_0P185_VIX_Setup.msi            Binary
+ MAG*3.0*185 Patch Description MAG3_0P185_Patch_Description        Binary
+                               _Document.pdf
+ MAG*3.0*185 VIX Installation.pdf  MAG3_0P185_VIX_Installation       Binary
+ Guide                         
+    
+ A readme file with additional installation instructions may also be 
+ available on the FTP site. 
+   
+   
+ Patch Installation:
+   
+ Pre/Post Installation Overview:
+ See VIX installation guide for additional information. 
+   
+ Pre-Installation Instructions:
+ Verify that the patches listed in the Associated Patched section of this 
+ document have been previously installed. 
+   
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  
+   
+ There are no Menu Options to disable. 
+  
+ Installation Instructions:
+ This patch contains a VIX installation and a KIDS installation. Installation 
+ instructions for the VIX install of this patch can be found in the VIX  
+ Installation Guide. The KIDS build is to be installed on the VistA System  
+ and the VIX client executable (.msi) should be installed on the VIX server.
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+    
+ NOTE: All sites running VistA Imaging 3.0 must install both the KIDS portion  
+ as well as the VIX portion of this patch. 
+    
+ This patch may be loaded while VistA Imaging System is active.   
+ All sites must install the KIDS build of this patch. The MAG*3.0*185 KIDS 
+ can be loaded while the VistA Imaging System is active. Installing the KIDS  
+ will take less than one minute.
+ After the KIDS portion of this patch is installed, sites will need to update
+ their VIX. For detailed information, refer to the VIX Installation Guide.
+ Installation Prerequisites
+ Before installing this patch, you will need to download the MAG*3.0*185  
+ files from the Imaging SFTP site to a local storage location.
+ Verify that required patches and any optional patches that suppt desired or 
+ or needed features have been installed.
+   
+ KIDS Installation
+ All sites must install the KIDS portion of this patch.
+ Installing the KIDS Package
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps.
+ a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load the  
+  KIDS distribution.
+ b. When prompted, enter the path and file name (MAG3_0P185.KID) of the  
+  MAG*3.0*185 KIDS file that you downloaded from the Imaging FTP server.
+ c. When prompted to continue with the load, enter YES. A Distribution OK!  
+  message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options if you need to  
+  verify the contents of the patch and to back up any affected routines. 
+  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - run this option  
+  to ensure the integrity of the routines in the patch. Compare Transport  
+  Global to Current System [XPD COMPARE TO SYSTEM] - run this option to view  
+  all changes that will be made when the patch is installed. All components 
+  (routines, options, and so on) in the patch will be compared. Backup a  
+  Transport Global [XPS BACKUP] - run this option to create a backup message  
+  of any routines exported with the patch. It will NOT back up any of the 
+  other changes.
+ 5. After performing the load and any optional verification steps, perform 
+    the following steps to install the KIDS file:
+ a. Run the Install Package(s) option [XPD INSTALL BUILD].
+ b. When prompted for the install name, enter MAG*3.0*185
+ c. Answer NO to the following prompts:
+ i. Want KIDS to INHIBIT LOGONs during the install? No//NO
+ ii. Want to DISABLE Scheduled Options, Menu Options, and Protocols? //NO
+ 6. When installation has finished, an Install Complete message will be 
+ displayed. 
+  
+  
+ Sample KIDS Installation
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+  
+ Select Installation <TEST ACCOUNT> Option: install Package(s)
+ Select INSTALL NAME:    MAG*3.0*185    10/16/17@18:05:59
+  
+ => VistA Imaging V3.0 Patch 185 - VIX Viewer v2.0 - 10/16/2017 03:03PM  ;
+  
+ This Distribution was loaded on Oct 16, 2017@18:05:59 with header of
+    VistA Imaging V3.0 Patch 185 - VIX Viewer v2.0 - 10/16/2017 03:03PM  ;Created
+  on Oct 16, 2017@15:03:09
+    It consisted of the following Install(s):
+     MAG*3.0*185
+ Checking Install for Package MAG*3.0*185
+  
+ Install Questions for MAG*3.0*185
+  
+ Incoming Files:
+  
+  
+    2005.003  IMAGING STUDY ANNOTATION
+ Note:  You already have the 'IMAGING STUDY ANNOTATION' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? YES// NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// ;P-OTHER;999999  TELNET PORT
+  
+  
+  Install Started for MAG*3.0*185 :
+                Oct 16, 2017@18:07:35
+    
+ Build Distribution Date: Oct 16, 2017
+  
+  Installing Routines:.....................
+                Oct 16, 2017@18:07:35
+  
+  Installing Data Dictionaries: ..
+                Oct 16, 2017@18:07:35
+  
+  Installing PACKAGE COMPONENTS:
+  
+  Installing REMOTE PROCEDURE..............
+  
+  Installing PARAMETER DEFINITION..
+                Oct 16, 2017@18:07:36
+  
+  Running Post-Install Routine: POS^MAGIP185..
+  
+    Attaching RPCs to the 'MAG WINDOWS' option...
+    MAGN ANNOT GET IMAGE ANNOT
+    MAGN ANNOT GET PSTATE
+    MAGN ANNOT GET STUDY
+    MAGN ANNOT STORE STUDY
+    MAGN DELETE IMAGES BY IEN
+    MAGN IMAGE EXIST BY CONTEXT
+    MAGN LOG IMAGE ACCESS BY IEN
+    MAGN PARAM GET LIST
+    MAGN PARAM GET VALUE
+    MAGN PARAM SET LIST
+    MAGN PATIENT IMAGE LIST
+    MAGN SET IMAGES PROPS BY IEN
+    MAGVA GET ALL NETWORK LOCATION
+    RPCs have been successfully attached.
+  
+ Post Install Mail Message: Oct 16, 2017@18:07:36
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*185 Installed.
+                Oct 16, 2017@18:07:36
+  
+  Not a VA primary domain
+  
+  NO Install Message sent
+    
+  Install Completed
+ Post-Installation Instructions
+ See VIX Installation Guide
+  
+ New Routine Information
+   
+ Routine Name   Old Checksum     Checksum
+ MAGIP185       N/A              7630518
+ MAGGTSYS       11574384         14702469
+ MAGNAN01       N/A              23870147
+ MAGNAN02       N/A              15238181     
+ MAGNAN03       N/A              67374239
+ MAGNAU03       N/A              23753647
+ MAGNID01       N/A              5509538
+ MAGNILOG       N/A              4853922
+ MAGNISET       N/A              4965992
+ MAGNPARM       N/A              14479373
+ MAGNTRAI       76381648         82064307
+ MAGNU001       N/A              14211594
+ MAGNU002       N/A              5805654
+ MAGNU003       N/A              39650764
+ MAGNVQ01       N/A              109845219
+ MAGNVQ02       N/A              21293638
+ MAGNVQ03       N/A              37899553
+ MAGNVQ04       N/A              18123604
+ MAGNVQ05       N/A              6884375
+ MAGNVQ06       N/A              45830251
+ MAGVAG05       N/A              3394973
+ MAGVIM08       11155831         23870020
+ Description of Changes: KID post install routine only.       
+   
+ Routine MAGIP185 is an installation routine that is automatically deleted 
+ after the KIDS installation. 
+  
+ Back-out or Uninstalling MAG*3.0*185
+  
+ If it is necessary to uninstall the MAG*3.0*185 VIX service, use the
+ Uninstall option from Windows Control Panel to uninstall: "VIX Service
+ Installation Wizard 30.185.8.6060".
+  
+ Then install the previous version of VIX which was included in MAG*3.0*170
+ or 177. To back-out the VIX and replace it with prior version, please see
+ the MAG*3.0*185 VIX Installation Guide for more detail. 
+  
+ However, if it is necessary to uninstall the MAG*3.0*185 Vist KIDS, you
+ need to select the "Kernall Installation & Distribution System" menu
+ option, "Backup a Transport Global" (see KID installation section above, 
+ step 4), before you uninstall the patch. 
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK MESSAGE.
+ Check your VistA MailMan messages for the backup message sent by the
+ "Backup a Transport Global" function by following these steps. 
+  
+ 1. Select the inbox message shown below. 
+  
+ Backup of MAG*3.0*185 install on <mm dd,yyyy>   <user name>
+  
+ 2. Select the Xtract PackMan option. 
+ 3. Select the Install/Check Message option
+ 4. Enter "Yes" at the prompt. 
+ 5. Enter "No" at the backup prompt. There is no need to back up the backup.
+  
+ Enter message action (in IN basket): Ignore/Xtract PackMan
+ Select PackMAn function:  ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1          ROUTINE LOAD
+   2          GLOBAL LOAD
+   3          PACKAGE LOAD
+   4          SUMMARIZE MESSAGE
+   5          PRINT MESSAGE
+   6          INSTALL/CHECK MESSAGE
+   7          INSTALL SELECTED ROUTINE(S)
+   8          TEXT PRINT/DISPLAY
+   9          COMPARE MESSAGE
+ Select PackMan function: Select PackMan function: 6   INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+ and routines. 
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts are backed 
+ up, not even globals. You may use the 'Summarize Message' option of
+ PackMan to see what parts the message contains. Those parts that are not
+ routines should be backed up separately if they need to be preserved. 
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built. 
+  
+ Line 2   Message #42925    Unloading Routine   MAGxxxx (PACKMAN_BACKUP)
+  
+ Select PackMan function: <Enter> 
+  
+ ...
+
+Routine Information:
+====================
+Routine Name: MAGGTSYS
+    Checksum:
+  14702469
+Routine Name: MAGIP185
+ Description of Changes:
+  POST INSTALL ROUTINE only - MAGIP185
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 30, 2017
+Completed By:                               Date Completed: MAR 16, 2018
+Released By :                               Date Released : MAR 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

@@ -1,0 +1,419 @@
+
+=============================================================================
+Run Date: MAR 19, 2018                     Designation: EAS*1*158
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #130                      Status: Released
+                  Compliance Date: APR 19, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.1. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development and upgrade 
+ efforts, including enhancements to support Community Care (CC) and ES 
+ Sustainment.
+  
+ The following functionality is updated in this ES 5.1 release:
+  
+ ESM:
+ - eMIS Phase 2
+ - SDS in ES
+ - 653/654 Reminder Letters
+ - DOD - Document Short File Name
+ - Enrollment Application Date validation on undoing Cancel or Close
+   Application status
+ - Defect 637447  Cancel/Decline -reapplication from VistA
+ - TR defect (637830) - Pending App CSV report
+  
+ ESCC:
+ - CCN person trait changes (name, gender, birthdate)
+ - HBP Name Change
+ - 604296 - CC history events
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ I16930870FY18  Problem: Demographic Tab returns an Applicaton Error
+                Resolution: See Resolution for RTC #607215
+  
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 191490  Problem: Remove "Placeholder" verbiage from Combat Service 
+                  Location header on MS screen.
+         Resolution: Removed "Placeholder" text.
+ 437471  Problem: eMIS: Military Service Data Sharing (MSDS) Query Status
+                  stays in 'Queried - Pending Response' if record has 
+                  no Electronic Data Interchange Personal Identifier
+                  (EDIPI).
+         Resolution: The Clock process batch job that runs 72 hours after 
+                     the processing of the query cleans up this error.
+ 497690  Problem: SDM I12450497FY17: ES should not upload Member Service
+                  Episode (MSE) from eMIS if all periods are guard/reserve
+                  with ADT.
+         Resolution: Code change to add a check in the episodes loop to
+                     only store the episode data if at least one non ADT
+                     Guard Reserve Service Period is found.
+ 509411  Problem: Section 508: Informative Message windows are generated 
+                  but do not receive focus and are not voiced
+                  instantaneously.
+         Resolution: Updated informationMessage.jsp file to get focus when
+                     success message display.
+ 514005  Problem: Health Benefit Plan description needs to display full
+                  description on Active HBP.
+         Resolution: Updated JSP file to display the full content of
+                     description when click on the plan name.
+ 516020  Problem:  Address with Address Line 1 and Address 2 information 
+                   is being changed after Coding Accuracy Support System
+                   (CASS) validation.
+         Resolution: SQA re-tested this defect and it was working properly.
+                     No code changes were needed.
+ 516036  Problem: P.O. Box is entered on Address Line 1 (After the valid 
+                  street address information) is getting changed after
+                  Coding Accuracy Support System (CASS) validation.
+         Resolution: This was an issue with Electronic Contact Information
+                     Service (eCIS), which has since been fixed once ES
+                     points to the new eCIS version.
+ 516076  Problem: Edit/Add Residential Address in ES is triggering an ORU 
+                  Z05.
+         Resolution: Code changes to enabling Z05 to be generated when a 
+                     residential address is processed.
+ 521866  Problem: User has to refresh/reopen the record in order to see 
+                  the CASS certified status updated.
+         Resolution: Moved the logic in the code to reload the person once
+                     an address is updated.
+ 533303  Problem: ESM 3.0_MP:  Pending Applications Scheduled Report 
+                  displays an Application Error when entering an invalid
+                  Day value.
+         Resolution: Updated Validation code to validate day of month.
+ 541162  Problem: If eCIS did not send back the result to ES after 
+                  the retry.  CASS Status should set to Not Check.
+         Resolution: This was an issue with eCIS, which has since been
+                     fixed once ES points to the new eCIS version.
+ 544575  Problem: MOH - ES should not allow to Save Source of Change as
+                  "VADIR" or "WebHINQ" from UI.
+         Resolution: Updated JavaScript parameter to display message if 
+                     user selects VADIR or WEBHINQ as source of change.
+ 555414  Problem: ESCC 3.0_508_Comminity Care Override Confirmation 
+                  messages do not receive focus and are not voiced
+                  instantaneously.
+         Resolution: Updated informationMessage.jsp file to get focus when
+                     success message displays.
+ 556053  Problem: Use Station Name provided by Planning System 
+                  Support Group (PSSG).
+         Resolution: The ES and Extract, Transform and Load (ETL) code were
+                     changed to show the actual Station name from PSSG.
+ 556256  Problem: Station Name from CDW is different than in SDS 
+                  table.
+         Resolution: Implemented Data Base changes to add CDW_STATION_NAME
+                     column to WQAITTIME table.
+ 560831  Problem: Missing 'Total Dependents' field in Financials for IY2014
+                  and older.
+         Resolution: Updated JSP file to display total dependents in 
+                     current financial assessment.
+ 567215  Problem: ESM 3.0 - ES Future Discharge Date (FDD) is not cleared
+                  in ES after the broker is queried and did not return the 
+                  FDD.
+         Resolution: Code changes to include checks on FDD overlaps.
+ 570280  Problem: UI Esoteric Issue -CC Determination Page - Nearest VACAA
+                  Facility needs a blue box.
+         Resolution: Updated the "vcDetermination.jsp" to fix display Blue
+                     box in front of VACAA Facility, Fix borders and change
+                     blue asterisks.
+ 570284  Problem: UI Esoteric Issue - CC Determination Page, boxes and
+                  borders need to be cleaned up.
+         Resolution: Updated the "vcDetermination.jsp" to fix display Blue
+                     box in front of VACAA Facility, Fix borders and change
+                     blue asterisks.
+ 570608  Problem: UI Esoteric Issue:  CC Determination Screen:  Need blue
+                  asterisks for Required Fields.
+         Resolution: Updated vcDetermination.jsp to fix display Blue box
+                     In front of VACAA Facility, Fix borders and change 
+                     blue asterisks.
+ 574493  Problem: Strip out special characters from CITY field on addresses
+         Resolution: Updated addressform.java class to replace special
+                     characters.
+ 574518  Problem: DOD_ES should not allow to add or modify Date of Death 
+                  prior to Application Date.
+         Resolution: Update demographicValidation.irl to validate Date Of
+                     Death cannot be before Enrollment Application Date.
+ 587735  Problem: Missing Label of the Health Benefit Plan in HBP 
+                  historical Page.
+         Resolution: Changed "label.planName" to show "Health Benefit 
+                     Plan".
+ 598870  Problem: On the CCN_Daily file the temporary phone number shows up
+                  when Active Permanent Mailing Address is on the file.
+         Resolution: Code changes to add a conditional to the query in
+                     "batchprocess.hbm.xml" to check and only insert temp
+                     phone number in file when temp address is active. This
+                     prevents the temporary phone number from showing up
+                     when the active permanent mailing address on the file.
+ 598873  Problem: When user add/update Temporary Mailing Address from
+                  Vista, ES no trigger message to Community Care Network
+                  (CCN).
+         Resolution: The External Events (in this case Z07/VOA) are
+                     captured and the Person is marked to be sent to CCN.
+ 600705  Problem: CCN 4.0 SQA Edit CCN Contractors capability 
+                  permission - When permission is not selected, all user
+                  should be able to view Manage CCN Contractors screen.
+         Resolution: Enabled functionality that was previously dormant and
+                     this issue was successfully validated.
+ 603768  Problem: When process the record for geocoded data from Planning
+                  System Support Group (PSSG), the time is one hour behind.
+         Resolution: Code changes to replace DATEADD with just the GETDATE.
+ 604296  Problem: Community Care (CC) history page needs to show those
+                  changes were associated with a new determination was made
+                  on the same history page.
+         Resolution: Code changes to load history from VCELIGIBILITY_H
+                     instead of PERSON_H table.
+ 605308  Problem: Letter 901 trigger twice when VCE change close to the
+                  900/901 batch process scheduled time.
+         Resolution: Updated the code logic to pick up the records 
+                     preventing it from triggering of the Letter 901 twice.
+ 607215  Problem: SDM#I16930870FY18 - Application Error on Demographics
+                  page when Temporary address has imprecise date.
+         Resolution: Code changes to handle the year and year/month 
+                     variations on start and end dates on confidential and
+                     temporary address entries which were causing the
+                     errors reported.
+ 631000  Problem: Updating Temporary Mailing Address start/end date does 
+                  not trigger ORUZ05.
+         Resolution: Updated ContactInformationInputParameter.java to check
+                     Temporary address change for start and end date.
+ 632112  Problem: When temporary mailing address has an imprecise date then
+                  user cannot open demographics tab.
+         Resolution: Code changes to handle the year and year/month 
+                     variations on start and end dates on confidential and
+                     temporary address entries which were causing the
+                     errors reported.
+ 636210  Problem: When users change the name, birthdate or gender on the CC
+                  record, the record should send to Third Party
+                  Administrator (TPA).
+         Resolution: Updated the Person Traits event to mark the Veteran to
+                     be sent to TPA.
+ 636923  Problem: PSSG ignores the record for geocoding if there is a
+                  duplicate record.
+         Resolution: The Extract, Transform and Load (ETL) code is changed
+                     to check for duplicates and update instead of insert
+                     for the existing Person.
+ 637181  Problem: TR - Manage CCN Contractor/Manage States/Regions - error
+                  message displayed after Update button is clicked.
+         Resolution: Implemented code changes so the update happens only in
+                     one session.
+ 637447  Problem: ES is not processing the re-enrollment action coming from
+                  VistA-REE when a Veteran has Cancel/Decline status.
+         Resolution: Code changes to include processing the incoming reason
+                     and received enrollment data from VistA-REE when a
+                     Veteran has Cancel/Decline status.
+ 637830  Problem: TR_5.0 Pending Application CSV Report does not display
+                  the leading zeros.
+         Resolution: Added single quotes to the Social Security Number
+                     (SSN) for both Total Closed Application and Pending
+                     Application report to display leading zeros.
+ 638492  Problem: TR: Manage CCN Contractor/CCN Contractor detail screen -
+                  User without Edit CCN Contractor permission - changes 
+                  needed for the current screen.
+         Resolution: Made the fields read only if the permission is not 
+                     available, created a link to say "Return to CCn
+                     Contractors" in place of the "Cancel" button and
+                     changed the tile of the screen to say "View CCN
+                     Contractors" if the "Edit Contractors" permission is 
+                     not available.
+ 643062  Problem: Prod TR: small % of eCIS requests failing for illegal 
+                  escape.
+         Resolution: Added handling of illegal escape char in eCIS request
+                     JSON, so that an "Invalid"("F") type of eCIS response 
+                     is sent back as if it was failed address validation
+                     and will be handled by the Inbound process properly.
+ 652772  Problem: ES sending address validation request to eCIS with 
+                  changes only in audit fields.
+         Resolution: Code Updates to change the object comparison method to
+                     use "SimpleAddress.compareTo" so that only required
+                     fields are checked.
+ 661826  Problem: Clocks not always starting after being scheduled.
+         Resolution: Code changed of the API call to 
+                     "this.scheduler.scheduleJob(jobDetail,trigger)" to
+                     start the clock after being scheduled.
+ 670947  Problem: Merge Fortify Fixes of ES Mars Dev code version to ES 
+                  Pluto Dev version build 6 stream.
+         Resolution: Encode by using the "ESAPI" encode method as per the
+                     Fortify scan findings.  Resolve the "Unreleased
+                     Resource Database finding", the "Null Dereference"
+                     finding. Code changes to not log SQL with the 
+                     confidential info and validate file name before using
+                     it to resolve the "Fortify Path Manipulation finding".
+ 679314  Problem: Throwing Application error while scheduling a report.
+         Resolution: Code changes for the durable parameter which is set to
+                     true for the quartz scheduler to add a new job.
+ 679409  Problem: IRS ACA corrections for income year 2017 are failing 
+                  due to IRS change in annual indicator.
+         Resolution: Removed unnecessary checks for coverage annual
+                     indicator that was removed previously from the bulk
+                     submission original payload data.
+ 680709  Problem: 508 - TS 164873 Manage CCN Contractor/Add CCN Contractor 
+                  date fields do not follow format with 'mm/dd/yyyy'
+                  listed.
+         Resolution: Added hint label "(mm/dd/yyyy)", on both start date
+                     and end date fields.
+ 684233  Problem: ES is uploading data from Enterprise Military Information
+                  Service (eMIS), but displaying a "No response" in eMIS 
+                  Messages search screen.
+         Resolution: This issue was resolved with the fix to the eMIS
+                     client interface to display the "Successful" status.
+ 691230  Problem: Fix SSN issue with ZDP in Z10 message.
+         Resolution: Updated the 
+                     "ECMS_framework/src/gov/va/med/fw/hl7/segment/ZDP.java"
+                     file to prevent the Z10 message from failing when
+                     processed by VistA.
+  
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Host File and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.1 User Guide                ES_5_1_User_Guide.pdf         binary
+ ES 5.1 Release Notes             ES_5_1_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 20, 2018
+Completed By:                               Date Completed: MAR 19, 2018
+Released By :                               Date Released : MAR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,449 @@
+
+=============================================================================
+Run Date: MAR 19, 2018                     Designation: SD*5.3*677
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #563                    Status: Released
+                  Compliance Date: APR 01, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*663  <<= must be installed BEFORE `SD*5.3*677'
+
+Subject: MID-FY18 STOP CODE UPDATE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ NOTE:   Patch SD*5.3*677 (MID-FY18 STOP CODE UPDATE) is being released
+ along with patch EC*2.0*140 (MID-FY18 INACTIVE STOP CODE DSS UNIT REVIEW) 
+ in host file: SD53_677_EC20_140.KID.
+  
+ Patch SD*5.3*677 provides Fiscal Year 2018 Mid-Year updates to the
+ CLINIC STOP (#40.7) file as requested by the Office of Finance,
+ Managerial Cost Accounting Office (MCAO). 
+  
+ Patch EC*2.0*140 inactivates any DSS Units in Event Capture set to 
+ Send No Records to PCE with an associated Stop Code being inactivated
+ by patch SD*5.3*677. 
+  
+  
+                          *** IMPORTANT NOTE ***
+ **************************************************************************
+ *  These patches are being released with a compliance date of April 1,   *
+ *  2018 and should be installed as close to Close of Business (COB) on   *
+ *  Saturday, March 31, 2018 as possible, but not after Sunday, April 1,  *
+ *  2018.  Early installation of this patch could result in transmission  *
+ *  of incorrect Stop Codes that will result in errors from Austin.       *
+ *  Coordination with the MAS (Medical Administration Service) PAS        *
+ *  (Program Application Specialist)/ADPAC (Automated Data Processing     *
+ *  Application Coordinator) is imperative as patch SD*5.3*677 will cause *
+ *  changes to the CLINIC STOP (#40.7) file.  Testing can be done in a    *
+ *  site's mirror account before installation in production to verify     *
+ *  changes. Patch SD*5.3*677 inactivates and creates Stop Codes          *
+ *  effective April 1, 2018; therefore installing early may modify        *
+ *  certain Stop Codes that may currently be in use at your site. It is   *
+ *  advised that clinics with Stop Codes assigned that will incur         *
+ *  restriction date/type changes should be corrected as soon as possible *
+ *  after installation.  Please keep in mind that new Stop Codes should   *
+ *  not be assigned in MAS/Scheduling until April 1, 2018 as the Patient  *
+ *  Care Encounter (PCE) encounters bearing FY18 Mid Year Stop Codes will *
+ *  not be accepted in Austin until that date. All other MAS Stop Code    *
+ *  changes should be made as early as possible on April 1, 2018.         *
+ **************************************************************************
+  
+ Instructions for the FY18 Mid-Year Stop Code Patch:
+  
+ Patch SD*5.3*677 makes additions and changes to the CLINIC STOP (#40.7)
+ file as of April 1, 2018.  Patch EC*2.0*140 inactivates any DSS Units
+ in Event Capture set to Send No Records to PCE with an associated Stop
+ Code being inactivated by patch SD*5.3*677. 
+  
+ No clinic can be created using any new Stop Codes contained in the patch
+ until after this patch is implemented.  Any clinic using a Stop Code
+ inactivated by patch SD*5.3*677 should be replaced with a new clinic
+ using an active Stop Code. This can be accomplished prior to patch
+ implementation if desired.
+  
+ MCA Site Teams, Scheduling and IRM should coordinate to perform the 
+ following sequence:
+  
+ 1. From the menu, Setup for DSS Clinic Information [ECX SETUP CLINIC], run
+    the DSS worksheet Option 2:  Create DSS Clinic Stop Code File
+    [ECXSCLOAD].  Then, make any necessary adjustments before approval so
+    all clinics on the worksheet have setups applicable for the month of
+    March 2018.
+  
+ 2. IRM installs the patch late on March 31 or early on April 1, 2018.
+  
+ 3. Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE REP]
+    to list those clinics that need changes in the HOSPITAL LOCATION (#44)
+    file for FY18 Mid Year.
+  
+    Scheduling staff: Make changes in the HOSPITAL LOCATION (#44) 
+    file so that the clinics will have the correct Stop Codes in place 
+    for April 1st clinic appointments.
+  
+ 4. MCA staff: DO NOT make changes for April clinics using Option 4: 
+    Enter/Edit Clinic Parameters [ECXSCEDIT] for the CLINICS AND STOP CODES
+    (#728.44) file at this time.  Follow normal procedures to run the DSS 
+    CLI Extract for March 2018.  It is the edit, not the "approve", that
+    changes the values included in the CLI extract.  Perform normal AUDITS
+    for the CLI Extract.
+  
+ 5. Do not edit DSS Unit Setup Screens in Event Capture for April prior to 
+    running the March ECS Extract. 
+  
+ 6. After auditing and receiving confirmation of successful deblocking of
+    the transmitted March CLI Extract, proceed with FY18 Mid-Year Stop Code
+    changes to the DSS Clinics and Stop Codes Worksheet clinics and in any
+    DSS Units set to Send No Records to PCE.
+  
+ 7. For FY18 Mid-Year:
+  
+    a. Queue Option 2:  Create DSS Clinic Stop Code File [ECXSCLOAD] to run
+       on April 1, 2018.  This option creates local entries in the CLINICS
+       AND STOP CODES (#728.44) file and compares this file to the HOSPITAL
+       LOCATION (#44) file to see if there are any differences since the
+       last time the file was reviewed.
+  
+    b. After Option 2 has completed, use the Option 3:  Clinics and DSS
+       Stop Codes Print [ECXSCLIST].  This option produces a worksheet of
+       (A) All Clinics, (C) All Active Clinics, (D) Duplicate Clinics,
+       (I) All Inactive Clinics, (U) Unreviewed Clinics that are
+       awaiting approval and (X) Export to Text File for Spreadsheet Use.
+  
+    c. Run Option 7:  Clinic & Stop Codes Validity Report [ECX STOP CODE
+       VALIDITY].  This step will check that all Stop Codes conform.  
+       Note:  a 'blank' output indicates there are no problems with Stop
+       Code and credit stop validity.
+  
+    d. Update for FY18 Mid-Year as needed using Option 4:  Enter/Edit 
+       Clinic Parameters [ECXSCEDIT] option.
+  
+    e. Approve changes using Option 5:  Approve Reviewed DSS Clinic
+       Worksheet [ECXSCAPPROV] option.  Finalize all Stop Code changes on
+       the worksheet to be ready to run the April DSS CLI Extract.
+  
+    f. Make needed Stop Code changes in Event Capture to DSS Units set to 
+       Send No Records to PCE.
+  
+    g. MCA teams with questions, please log a WonderDesk ticket through
+       http://vaww.dss.domain.ext/helpdsktckt.asp or by sending an
+       Outlook message to the VHA MCAO CSHD mail group.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Group Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ I17797663FY18   FY18 Mid-Year Stop Code Changes
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested Fiscal Year 2018 Mid-Year updates to the CLINIC STOP (#40.7) 
+ file.
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2018 Mid-Year updates were submitted by the 
+ MCAO to be implemented effective April 1, 2018.  Post-init routine 
+ SD53MY18 updates the CLINIC STOP (#40.7) file by adding two (2) stop
+ codes, inactivating four (4) stop codes, changing the names for eight (8)
+ stop codes and changing one (1) restriction type and date.
+  
+ Listed below are the applicable stop code updates:
+  
+ New Stop Code being added: (will take effect when the patch is installed.)
+  
+ Stop Code   Name/Description          Restriction Type   Restriction Date
+  
+    241      WHEELCHAIR & ADVAN MOBILITY      E
+    499      ENVIRON HEALTH REG EXAM          S               4/1/2018
+  
+ Stop Code being inactivated: (Inactivation Date: 4/1/2018)
+  
+    306      DIABETES
+    547      INTNSE SUB USE DSRDER GRP
+    548      INTNSE SUB USE DSRDER IND
+    610      CONTRACT DIALYSIS
+  
+ Stop Code with Name Change only: (will take effect when the patch is 
+ installed.)
+  
+    142      Old Name: ENTEROSTOMAL WOUND/SKIN CARE
+             New Name: WOUND TREAT & OSTOMY CARE
+  
+    185      Old Name: PHYS EXTND NP (NRS PRCNR) 2ND
+             New Name: NURSE PRACTITIONER
+  
+    186      Old Name: PHYS EXTND PA (PHYS ASST)2ND
+             New Name: PHYSICIAN ASSISTANT
+  
+    187      Old Name: PHYS EXTND CNS (CLNRN SPC)2ND
+             New Name: CLINICAL NURSE SPECIALIST
+  
+    201      Old Name: PHYSICAL MED & REHAB SVC
+             New Name: PM&RS PHYSICIAN
+  
+    305      Old Name: ENDO/METAB (EXCEPT DIABETES)
+             New Name: ENDOCRINOLOGY
+  
+    692      Old Name: RT CLIN VD TH PRV SITE(SAMSTA)
+             New Name: CVT PRV SITE SAME DIV/STA
+  
+    699      Old Name: CVT SAME STA SERVICES
+             New Name: CVT EMERGENCY CONSULT
+  
+ Stop Code with Restriction Type and Date Change only: (will take effect 
+ when the patch is installed.)
+  
+    142    Old Restriction Type: P        Old Restriction Date: 10/1/2005
+           New Restriction Type: E        New Restriction Date:
+  
+ NOTE: Since this is a combined patch, for information regarding Mid-FY18
+       Inactive Stop Code DSS Unit Review, please see Event Capture patch
+       EC*2.0*140.
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VAMC
+ Robley Rex VAMC (Louisville)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file introduced by this patch are
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+ OI Field Offices:
+  
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ Patch SD*5.3*677 and patch EC*2.0*140 are combined in host file:
+ SD53_677_EC20_140.KID.
+  
+ Installation of this host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+      Host File          File Name                 SFTP Mode
+      ------------------------------------------------------
+      Data Host File     SD53_677_EC20_140.KID     ASCII
+  
+  
+ Patch Instruction:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ ***************************** IMPORTANT NOTE ****************************
+ *** This Scheduling patch, SD*5.3*677, will be released in            ***
+ *** conjunction with an Event Capture patch, EC*2.0*140.              ***
+ ***                                                                   ***
+ *** These patches should be installed as close to COB on              ***
+ *** Saturday, 3/31/2018 as possible, but not after Sunday, 4/1/2018.  ***
+ ***                                                                   ***
+ ***                                                                   ***
+ *** Patch EC*2.0*140 will queue the inactivation of any DSS Units,    ***
+ *** that are set to send no records and have an inactive/invalid      ***
+ *** stop code, for 4/1/2018 at 1:00 AM. If this patch is installed    ***
+ *** after that time, the post-install will queue immediately.         ***
+ ************************************************************************* 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The installation may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Prior to install this patch, backup file ^DIC(40.7) using your site's 
+ policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^DIC(40.7
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+   1. Obtain the host file SD53_677_EC20_140.KID.
+  
+   2. From the Kernel Installation & Distribution System Menu, select the
+      Installation menu.
+  
+      a. Select the 'Load a Distribution' option and enter the directory
+         into which you downloaded the host file, followed by the host 
+         file name: [directory]SD53_677_EC20_140.KID
+      
+         NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter SD*5.3*677):
+  
+      b. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+   
+      c. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch (routines,
+         DD's, templates, etc.).
+  
+      d. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+   3. From the Installation Menu, select the Install Package(s) option and 
+      choose the patch to install.
+  
+   4. When prompted 'Want KIDS to Rebuild Menu Trees Upon 
+      completion of Install? NO//', answer NO.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//', answer NO.
+  
+   7. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+   1. Details of the changes applied by this patch are provided during the
+      installation and may also be reviewed with the Install File Print
+      option on the Utilities menu on the Kernel Installation and 
+      Distribution System menu.
+  
+   2. It is important to check the CLINIC STOP (#40.7) file post 
+      installation to make sure that all of the updates are correctly 
+      reflected in the CLINIC STOP (#40.7) file. If any discrepancies
+      are found, you should enter a CA SDM ticket.
+  
+   3. Routine SD53MY18 may be manually deleted after patch is installed.
+  
+  
+ Back-Out Plan:
+ --------------
+  
+ Please use %GIGEN for restoring the CLINIC STOP file (#40.7) if needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^DIC(40.7
+    7. At the To global ^DIC(40.7=>, enter ^DIC(40.7
+    8. At the OK to transfer? Yes=> prompt, select Yes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53MY18
+    Before:       n/a   After:B101891660  **677**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2017
+Completed By:                               Date Completed: MAR 16, 2018
+Released By :                               Date Released : MAR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,324 @@
+$TXT Created by                    at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Friday, 03/16/18 at 16:51
+=============================================================================
+Run Date: APR 23, 2018                     Designation: PSGW*2.3*19
+Package : PSGW - AUTO REPLENISHMENT/WARD STOC Priority: Mandatory
+Version : 2.3        SEQ #19                    Status: Released
+                  Compliance Date: MAY 24, 2018
+=============================================================================
+
+Associated patches: (v)PSGW*2.3*11 <<= must be installed BEFORE `PSGW*2.3*19'
+                    (v)PSGW*2.3*15 <<= must be installed BEFORE `PSGW*2.3*19'
+                    (v)PSGW*2.3*18 <<= must be installed BEFORE `PSGW*2.3*19'
+
+Subject: EPIP PSGW REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ PSGW*2.3*19 provides the following enhancements to VistA: 
+  
+ - Displays the maximum allowed ward stock level when using the Enter/Edit 
+ Nurses' On-Demand Request (80 column) [PSGW ON-DEMAND NURSING EDIT] option
+ in the Auto Replenishment/Ward Stock Nurses' Menu [PSGW RN]. Since the
+ Pharmacy will fill an order for no more than the allowed stock level,
+ nurses need to know the amount of stock that they can receive at one time.
+ Currently, the allowed stock level displays only when a request is placed
+ for more than double the allowed amount. This modification always displays
+ the allowed stock level, thus preventing delays and frustration when
+ trying to reorder stock.
+  
+ This modification also displays the maximum allowed ward stock level when 
+ using the Print an On-Demand Request Report by Date/AOU (80 column) [PSGW
+ ON-DEMAND PRINT] option. This option is used by Pharmacy staff to review
+ nurses' ward stock requests. The allowed stock level is not currently
+ displayed on the report, so Pharmacy staff must look up this information
+ to determine whether a request exceeds the allowed amount. This
+ modification always displays the allowed stock level on the report, which
+ allows Pharmacy staff to easily compare the allowed and requested amounts.
+  
+ This patch adds a system-level parameter WARD STOCK LEVEL 
+ DISPLAY ON [PSGW_WS_LVL_ON] in the PARAMETER DEFINITION file (#8989.51) to
+ turn the display functionality On/Off. Initially, this parameter is set to
+ OFF (No). A user that holds the PSGWMGR security key at each site will
+ need to set this parameter to ON (Yes) to activate this functionality at
+ the site. To set the parameter, select the new AR/WS Package-wide
+ Parameter Edit [PSGW PACKAGE PARAMETERS] option from the Set Up AR/WS
+ (Build Files) [PSGW SETUP] menu. At the "WARD STOCK LEVEL:" prompt, enter
+ "Y" or "N."
+  
+ - Adds the ability to automatically print requested ward stock medications
+ on a designated printer within a pharmacy when a request is entered 
+ using the Enter/Edit Nurses' On-Demand Request (80 column) [PSGW 
+ 0N-DEMAND NURSING EDIT] option. The pharmacy manager determines whether to
+ use this functionality and which pharmacy printer should be designated as
+ the default printer. This enhancement provides a new DEFAULT WS REQUESTS
+ PRINTER field (#32) in the INPATIENT SITE file (#59.4). If a default
+ printer is requested by the pharmacy manager, a VistA user with access to
+ the Site Parameters [PSGW SITE] option must populate this field with a
+ printer from the DEVICE file (#3.5) to activate the auto-print
+ functionality. If the DEFAULT WS REQUESTS PRINTER field contains a
+ printer, then the Nurse's Ward Stock request will automatically print to
+ the designated printer. If the field is not populated with a printer, then
+ the auto-print functionality is effectively turned off. For sites with
+ multiple location entries in the INPATIENT SITE file, managers can
+ designate a default printer for each location.
+  
+ Patch Components: 
+ ----------------- 
+  
+ Files & Fields Associated: 
+  
+ File Name (Number)      Field Name (Number)          New/Modified/Deleted 
+ ------------------      -------------------          -------------------- 
+ INPATIENT SITE (#59.4)  DEFAULT WS REQUESTS PRINTER  New 
+                         (#32)
+  
+ Forms Associated: 
+  
+ Form Name File # New/Modified/Deleted 
+ --------- ------ -------------------- 
+ N/A
+  
+ Mail Groups Associated: 
+  
+ Mail Group Name  New/Modified/Deleted 
+ ---------------  -------------------- 
+ N/A 
+  
+ Options Associated: 
+  
+ Option Name                      Type        New/Modified/Deleted 
+ ----------------------           ----        --------------------- 
+ PSGW PACKAGE PARAMETERS          Action      New
+ PSGW SETUP                       Menu        Modified
+  
+ Protocols Associated: 
+  
+ Protocol Name New/Modified/Deleted 
+ ------------- -------------------- 
+ N/A 
+  
+ Parameters Associated: 
+  
+ Parameter Name          New/Modified/Deleted 
+ ---------------         -------------------- 
+ PSGW_WS_LVL_ON               New
+  
+ Security Keys Associated: 
+  
+ Security Key Name 
+ ----------------- 
+ N/A 
+  
+ Templates Associated: 
+  
+ Template Name Type File Name (Number)  New/Modified/Deleted 
+ ------------- ---- ------------------  -------------------- 
+ PSGW PKG PAR  N/A  PARAMETER TEMPLATE  New 
+                    (#8989.52)  
+  
+ Additional Information: 
+                       
+ N/A 
+  
+ New Service Requests (NSRs): 
+ ---------------------------- 
+ NSR20170308 Add Stock Level to On-Demand Reports 
+ NSR20170314 Auto Print Ward Stock Requests on Designated Pharmacy Printer 
+  
+ Patient Safety Issues (PSIs): 
+ ----------------------------- 
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview: 
+ -------------------------------------------- 
+ N/A 
+  
+ Problem: 
+ ------- 
+ N/A 
+  
+ Resolution: 
+ ---------- 
+ N/A 
+  
+ Test Sites: 
+ ---------- 
+ Jesse Brown VA Medical Center, Chicago, IL
+ San Francisco VA Health Care System, San Francisco, CA 
+  
+ Software and Documentation Retrieval Instructions: 
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:                  domain.ext 
+ Salt Lake City:         domain.ext 
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at: https://www.domain.ext/vdl/. 
+                                
+ Title                                          File Name         FTP Mode
+ -------------------------------------------------------------------------
+ Inpatient Pharmacy Automatic Replenishment/    wstech.doc        Binary
+    Ward Stock Module Technical Manual
+  
+ Inpatient Pharmacy Automatic Replenishment/    wstech.pdf        Binary
+    Ward Stock Module Technical Manual
+  
+ Inpatient Pharmacy Automatic                   wsuser.doc        Binary
+ Replenishment/Ward Stock Module
+ User Manual     
+  
+ Inpatient Pharmacy Automatic                   wsuser.pdf        Binary
+ Replenishment/Ward Stock Module
+ User Manual
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview: 
+ ------------------------------- 
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch. 
+  
+ Pre-Installation Instructions: 
+ ------------------------------ 
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Installation Instructions: 
+ ------------------------------ 
+ To install the patch: 
+  
+ 1. Choose the PackMan message containing this patch. 
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number PSGW*2.3*19. 
+  
+ a. Verify Checksums in Transport Global - This option will help ensure 
+ the integrity of the routines that are in the transport global. 
+  
+  
+ b. Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c. Compare Transport Global to Current System - This option will enable 
+ viewing all changes that will be made when this patch is installed. It
+ compares all components of this patch (routines, data dictionaries,
+ templates, etc.). 
+  
+ d. Back up a Transport Global - This option will create a backup message 
+ of any routines exported with this patch. It will not back up any other
+ changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install. 
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>. 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>. 
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>. 
+  
+ 8. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>. 
+  
+ 9. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME// HOME (CRT)', press <Enter>. 
+  
+ Post-Installation Instructions: 
+ ------------------------------- 
+ NSR20170308 Switch activation:
+ A user that holds the PSGWMGR security key must go to the Set Up AR/WS
+ (Build Files) [PSGW SETUP] menu and select AR/WS Package-wide Parameter 
+ Edit [PSGW PACKAGE PARAMETERS] to set parameter PSGW_WS_LVL_ON to a value
+ of "Yes". This will allow the new functionality to be accessed.
+  
+ NSR20170314 Default pharmacy printer setup:
+ The site will need to run option PSGW SITE and enter the default pharmacy
+ printer from the DEVICE file (#3.5) for each area in the DEFAULT WS 
+ REQUESTS PRINTER field (#32) in the INPATIENT SITE file (#59.4) that will
+ be using the new auto-print functionality.
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch (because of the data 
+ dictionary, option, and parameter changes), it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a CA Technologies Service Desk Manager (CA SDM) ticket. The development 
+ team will then assist with the backout process.
+  
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSGW routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSGW routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSGW*2.3*19 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that data dictionary and option 
+ changes have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.3;Automatic Replenishment/Ward Stock;**[Patch List]**;4 JAN 94;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGWEE
+    Before:  B1293437   After:  B1509044  **19**
+Routine Name: PSGWODP
+    Before: B13201999   After: B15881610  **18,19**
+Routine Name: PSGWODPR
+    Before:  B8623684   After:  B9162387  **15,19**
+Routine Name: PSGWODRN
+    Before: B21066215   After: B25652280  **11,19**
+ 
+Routine list of preceding patches: 11, 15, 18
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 24, 2017
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

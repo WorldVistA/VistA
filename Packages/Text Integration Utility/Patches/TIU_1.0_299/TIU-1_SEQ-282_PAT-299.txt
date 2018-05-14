@@ -1,0 +1,189 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/04/16 at 14:39
+=============================================================================
+Run Date: APR 11, 2018                     Designation: TIU*1*299
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #282                      Status: Released
+                  Compliance Date: MAY 12, 2018
+=============================================================================
+
+Associated patches: (v)TIU*1*89    <<= must be installed BEFORE `TIU*1*299'
+                    (v)TIU*1*153   <<= must be installed BEFORE `TIU*1*299'
+
+Subject: TIU [TEXT INTEGRATION UTILITIES] INDEX DELETION ISSUES 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues in the TIU package:
+  
+ 1. When a transcriber changes an author for a note, some indexes are 
+    incorrectly deleted, and the note will not display in custom views.
+ 2. Invalid unsaved document messages appear in Vista because only the 
+    oldest index is deleted, instead of all indexes for the current user.
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1. I9950239FY16 -(was INC000000069592) - Custom view shows transcriber
+                   for unsigned notes.
+    Duplicates: 
+    INC000000070005 - Addendum showing unsigned for transcriptionist 
+                      on notes tab.
+          
+  
+ 2. I9951499FY16 -(was INC000000474971) - Issues with entering a TIU
+                   document.
+    Duplicates:
+    I9952732FY16 -(was INC000000998485) - Chief of Staff cannot addend a
+                   completed C&P exam.
+  
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ Milwaukee
+ Black Hills/Hot Springs
+  
+  
+ TICKET OVERVIEW:
+ ================
+ 1. INC000000069592 - Custom view shows transcriber for unsigned notes
+    Duplicate: 
+    INC000000070005 - Addendum showing unsigned for transcriptionist
+                      on notes tab
+    I9950239FY16    - Custom view shows transcriber for unsigned notes 
+  
+ Problem 1:
+ ----------
+ All notes for a transcriber are not displaying in a custom view of 
+ unsigned notes after the author is changed using the change button.  
+ When entering a note, if the author is edited using the CHANGE button in
+ CPRS [Computerized Patient Record System] the original author is removed
+ from the index before creating a new index for the new author.  
+  
+ Resolution 1:
+ -------------
+ Modify routine TIUDD01 so that the ACLAU index for the note is not 
+ deleted when the value in the index matches the value in the ENTERED BY
+ (#1302) field.
+  
+ 2.  INC000000474971 - Issues with entering a TIU document
+     Duplicate: 
+     INC000000998485 - Chief of Staff cannot addend a completed C&P exam
+  
+ Problem 2:
+ ----------
+ Customer reports always receiving 'unsaved document' messages when 
+ accessing some TIU (VistA Roll/Scroll) options.  The message reads:
+  
+      You have an unsaved document in your buffer.
+      Depending on your preferred editor, you may
+      have lost some of the text.
+      Would you like to resume editing now? YES// 
+  
+ When the user answers YES, they received the message:
+  
+      You may not edit uncosigned or completed documents.
+  
+ The user is prompted to add an addendum and after responding NO, is then 
+ returned to the previous menu and they receive the message:
+  
+      Okay. You can catch up with it later!
+  
+ This is due to an issue removing the ASAVE index when signing documents 
+ in CPRS.
+  
+ Resolution 2:
+ -------------
+ Modify TIUEDI2 so that all unnecessary ASAVE indexes for the user are 
+ deleted without any messages or prompts.  This will use the exact same 
+ logic that currently exists in TIUEDI2 but reviews all of the ASAVE 
+ indexes for the user instead of just the oldest.
+    
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*299)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*299.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+      
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+      
+ The back-out plan is to restore the routine from the backup created.
+      
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+      
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUDD01
+    Before: B45653011   After: B46890631  **65,153,299**
+Routine Name: TIUEDI2
+    Before:  B7898634   After:  B9724371  **1,89,299**
+ 
+Routine list of preceding patches: 89, 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 03, 2015
+Completed By:                               Date Completed: APR 10, 2018
+Released By :                               Date Released : APR 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

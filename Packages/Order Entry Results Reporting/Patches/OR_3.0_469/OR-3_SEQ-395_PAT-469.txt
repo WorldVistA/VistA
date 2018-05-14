@@ -1,0 +1,173 @@
+$TXT Created by              at DOSP.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 01/30/18 at 07:45
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: OR*3*469
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #395                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*269    <<= must be installed BEFORE `OR*3*469'
+                    (v)OR*3*382    <<= must be installed BEFORE `OR*3*469'
+                    (v)OR*3*457    <<= must be installed BEFORE `OR*3*469'
+
+Subject: MOCHA 2.1 Follow-up
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ OR*3*469 is a part of the MOCHA v2.1b FOLLOW UP COMBINED BUILD. This 
+ patch brings in the following changes:
+  
+ 1. Eliminates the Duplicate Drug Order Check in CPRS for medications. The 
+ Duplicate Drug Order Check will only be performed for supply items in 
+ CPRS. No changes have been made in backdoor Outpatient Pharmacy.
+  
+ 2. Duplicate Therapy Order Checks will be performed against specific 
+ types of orders.  A summary table of this logic can be found in the 
+ release notes document for this patch.  No changes were made in backdoor 
+ Pharmacy applications.
+  
+ 3. Duplicate drug therapy order checks are not displaying for certain
+ IV orders against outpatient medications that are a duplicate drug 
+ therapy to either the solution or additive of the IV order.
+  
+ ASSOCIATED NSR(s):
+ =================
+ N/A
+  
+ ASSOCIATED REMEDY:
+ =================
+ 1. I9836258FY16 - Duplicate drug therapy order check not displaying
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  New Service Requests (NSRs)
+  ----------------------------  
+  N/A
+   
+  Patient Safety Issues (PSIs)
+  -----------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overview
+  ---------------------------
+ 1. I9836258FY16 - Duplicate drug therapy order check not displaying
+  
+    Problem:
+    -------
+    Duplicate drug therapy order checks are not displaying for certain
+    IV orders against outpatient medications that are a duplicate 
+    drug therapy to either the solution or additive of the IV order. 
+  
+    Resolution:
+    ----------
+    The duplicate therapy check for IV orders will include checks of
+    both the solutions and additives of the IV order against outpatient
+    medication orders.  
+  
+    Technical Details:
+    -----------------
+    The routine ORKPS is modified to write both the solution and the 
+    additive of an IV order to internal array ORKDRUGA which is used 
+    later in the order checking process to check for duplicate drug 
+    therapies.
+   
+  Test Sites:
+  ----------
+  -CHARLESTON, SC 
+  -EASTERN COLORADO HCS
+  -HEARTLAND-WEST HCS
+  -TENNESSEE VALLEY HCS 
+  -WEST PALM BEACH, FL
+   
+   
+  Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+ Please refer to the MOCHA 2.1B Deployment, Installation, Back-Out and 
+ Rollback Guide for installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORKCHK6
+    Before: B28204591   After: B28136818  **6,32,74,87,94,123,162,190,
+                                           249,280,272,346,345,269,469**
+Routine Name: ORKPS
+    Before:B115111476   After:B104632974  **6,32,74,94,123,141,190,232,
+                                           316,272,346,345,382,469**
+Routine Name: ORKPS1
+    Before: B86882851   After:B108794510  **232,272,346,352,345,311,402,
+                                           457,469**
+Routine Name: ORWDXC
+    Before: B72504942   After: B77488724  **10,141,221,243,280,346,345,
+                                           311,395,269,469**
+ 
+Routine list of preceding patches: 269, 382, 457
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2017
+Completed By:                               Date Completed: FEB 26, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

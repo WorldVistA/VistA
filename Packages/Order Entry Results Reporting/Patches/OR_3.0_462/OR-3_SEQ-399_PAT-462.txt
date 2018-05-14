@@ -1,0 +1,236 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/22/18 at 09:37
+=============================================================================
+Run Date: APR 24, 2018                     Designation: OR*3*462
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #399                      Status: Released
+                  Compliance Date: MAY 25, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*462'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*462'
+                    (v)OR*3*467    <<= must be installed BEFORE `OR*3*462'
+
+Subject: REGULAR DIET QUICK ORDERS, FLAGGED MED ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch OR*3.0*462 addresses these 2 issues:
+  
+ 1. If a user edits an existing diet Quick Order using the Enter/Edit 
+ quick orders option [ORCM QUICK ORDERS], the system allows a REGULAR/NPO
+ diet to be ordered with another diet.
+  
+ 2.  Medication orders flagged by a pharmacist that are then 
+ updated by the pharmacists cannot then be un-flagged in CPRS or the 
+ Inpatient Order Entry option [PSJ OE].
+  
+  
+ Associated NSR(s) 
+ ================== 
+ N/A
+  
+ Test Sites:
+ ===========
+ Ann Arbor VAMC
+ Northampton VAMC 
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I10009975FY16 - QO allows regular diet to ordered with another diet on 
+                    edit.
+ 2. I10480945FY16 - NORTHAMPTON: CPRS issues - FLAGGED MED ORDER
+  
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+  
+ 1. I10009975FY16 - QO allows regular diet to ordered with another diet on 
+                    edit.
+  
+ Problem:
+ --------
+ If a user edits an existing diet Quick order using the Enter/Edit quick 
+ orders option [ORCM QUICK ORDERS], the system allows a REGULAR/NPO diet to
+ be ordered with another diet.
+  
+ Resolution:
+ -----------
+ The validation logic has been changed to not allow REGULAR/NPO diet 
+ orders to be ordered with other diets.
+  
+ Routine ORCDFH1 has been modified to set the TOTAL variable properly on 
+ an edit. ORCDFH1 has also been modified to check if the current diet is 
+ regular, and if so, to not allow other diets to be ordered with it.
+  
+ Created a post-install routine, ORY462, to identify existing Quick Orders 
+ that have both a regular diet and another diet. This routine will send a 
+ mailman message to the user letting them know that the quick order needs 
+ to be manually corrected. The format of the message is as follows:
+  
+ Subj: OR*3.0*386 install routine has completed [#149762]
+ 03/19/14@15:10 5 lines
+ From: ORDER ENTRY/RESULTS REPORTING PACKAGE In 'IN' basket. Page 1
+ *New*
+ ---------------------------------------------------------------
+  
+ OR*3.0*462 install routine has completed.
+  
+ The following Diet Quick orders have both a Regular/NPO and another
+ diet.
+  
+ They must be manually edited.
+  
+ (1st quick order here) IEN - (internal entry# here)
+ (2nd quick order here) IEN - (internal entry# here)
+ (And so on...)
+  
+ <OR if no such Quick Orders are found>
+ "None Found." 
+  
+  
+ 2. I10480945FY16 - NORTHAMPTON: CPRS issues - FLAGGED MED ORDER
+  
+ Problem:
+ --------
+ Inpatient medication orders accepted and flagged by a pharmacist that are 
+ then updated by the pharmacists (for example: editing Special 
+ Instructions) no longer show as flagged in CPRS and cannot then be 
+ un-flagged in CPRS or the Inpatient Order Entry option [PSJ OE].
+  
+ Resolution:
+ -----------
+ When the order is updated in the backdoor (for example: after the 
+ pharmacist edits the Special Instructions), an active flag attached to 
+ the existing order action record is copied forward into the new order.
+  
+ After the replacement order is created (RO^ORMPS2), the ORDER file is 
+ checked to see if the previous order action has an active flag. If so, 
+ this flag is copied to the new order action.
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OR*3.0*462)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OR*3.0*462.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first
+ 2 lines of the routines contained in the patch. The second line
+ will contain the patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;DEC 1997;Build 349 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] 
+ can be run to compare the routine checksums to what is documented
+ in the patch description.
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation
+ of development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision
+ between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the
+ Backup a Transport Global [XPD BACKUP] menu option (this is done at
+ time of install). The message containing the backed up routines can
+ be loaded with the "Xtract PackMan" function at the Message Action
+ prompt. The Packman function "INSTALL/CHECK MESSAGE" is then used
+ to install the backed up routines onto the VistA System. 
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2
+ lines of the PSO Routines contained in this patch using the option
+ First Line Routine Print [XU FIRST LINE PRINT]. Once the routines
+ contained in the OR*3*462 patch have been rolled back, the first
+ two lines of the Routines will no longer contain the designation
+ of patch OR*3*462 in the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDFH1
+    Before: B22101872   After: B27580275  **73,95,243,462**
+Routine Name: ORMPS2
+    Before: B48612384   After: B52865592  **94,116,129,134,186,190,195,
+                                           215,265,243,280,363,350,462**
+Routine Name: ORY462
+    Before:       n/a   After:  B6324087  **462**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2017
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,427 @@
+Released NUR*4*46 SEQ #45
+Extracted from mail message
+**KIDS**:NUR*4.0*46^
+
+**INSTALL NAME**
+NUR*4.0*46
+"BLD",10662,0)
+NUR*4.0*46^NURSING SERVICE^0^3170718^y
+"BLD",10662,1,0)
+^^17^17^3170718^
+"BLD",10662,1,1,0)
+The patch addresses two (2) issues:
+"BLD",10662,1,2,0)
+ 
+"BLD",10662,1,3,0)
+1.   When using the Service Position File, Edit option [NURAFL-SPO]
+"BLD",10662,1,4,0)
+     in the Administrative Site File Functions option [NURSFL-MENU];
+"BLD",10662,1,5,0)
+     the prompt for the Service Position abbreviation requires an
+"BLD",10662,1,6,0)
+     entry of 10 characters or less.  When a new abbreviation is
+"BLD",10662,1,7,0)
+     correctly entered, the application adds it as a new NURS SERVICE
+"BLD",10662,1,8,0)
+     POSITION.  After entering the abbreviation, the application pops
+"BLD",10662,1,9,0)
+     a ScreenMan Form that allows the abbreviation to be re-entered.
+"BLD",10662,1,10,0)
+     If the abbreviation is re-entered with a value with a length
+"BLD",10662,1,11,0)
+     greater than 10 characters, a program error occurs (UNDEFINED)
+"BLD",10662,1,12,0)
+     and the typical user VistA session is terminated.
+"BLD",10662,1,13,0)
+ 
+"BLD",10662,1,14,0)
+2.   When a patient is admitted/transferred to a new ward and there
+"BLD",10662,1,15,0)
+     is no corresponding entry in the NURS LOCATION file (#211.4),
+"BLD",10662,1,16,0)
+     the user gets an erroneous message that Queueing is not allowed
+"BLD",10662,1,17,0)
+     that is displayed after the "Patient Transferred" message.
+"BLD",10662,4,0)
+^9.64PA^^
+"BLD",10662,6.3)
+1
+"BLD",10662,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10662,"KRN",.4,0)
+.4
+"BLD",10662,"KRN",.401,0)
+.401
+"BLD",10662,"KRN",.402,0)
+.402
+"BLD",10662,"KRN",.403,0)
+.403
+"BLD",10662,"KRN",.403,"NM",0)
+^9.68A^1^1
+"BLD",10662,"KRN",.403,"NM",1,0)
+NURA-I-SERVICE    FILE #211.3^211.3^0
+"BLD",10662,"KRN",.403,"NM","B","NURA-I-SERVICE    FILE #211.3",1)
+
+"BLD",10662,"KRN",.5,0)
+.5
+"BLD",10662,"KRN",.84,0)
+.84
+"BLD",10662,"KRN",3.6,0)
+3.6
+"BLD",10662,"KRN",3.8,0)
+3.8
+"BLD",10662,"KRN",9.2,0)
+9.2
+"BLD",10662,"KRN",9.8,0)
+9.8
+"BLD",10662,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10662,"KRN",9.8,"NM",1,0)
+NURSAMSG^^0^B8871087
+"BLD",10662,"KRN",9.8,"NM","B","NURSAMSG",1)
+
+"BLD",10662,"KRN",19,0)
+19
+"BLD",10662,"KRN",19.1,0)
+19.1
+"BLD",10662,"KRN",101,0)
+101
+"BLD",10662,"KRN",409.61,0)
+409.61
+"BLD",10662,"KRN",771,0)
+771
+"BLD",10662,"KRN",779.2,0)
+779.2
+"BLD",10662,"KRN",870,0)
+870
+"BLD",10662,"KRN",8989.51,0)
+8989.51
+"BLD",10662,"KRN",8989.52,0)
+8989.52
+"BLD",10662,"KRN",8994,0)
+8994
+"BLD",10662,"KRN","B",.4,.4)
+
+"BLD",10662,"KRN","B",.401,.401)
+
+"BLD",10662,"KRN","B",.402,.402)
+
+"BLD",10662,"KRN","B",.403,.403)
+
+"BLD",10662,"KRN","B",.5,.5)
+
+"BLD",10662,"KRN","B",.84,.84)
+
+"BLD",10662,"KRN","B",3.6,3.6)
+
+"BLD",10662,"KRN","B",3.8,3.8)
+
+"BLD",10662,"KRN","B",9.2,9.2)
+
+"BLD",10662,"KRN","B",9.8,9.8)
+
+"BLD",10662,"KRN","B",19,19)
+
+"BLD",10662,"KRN","B",19.1,19.1)
+
+"BLD",10662,"KRN","B",101,101)
+
+"BLD",10662,"KRN","B",409.61,409.61)
+
+"BLD",10662,"KRN","B",771,771)
+
+"BLD",10662,"KRN","B",779.2,779.2)
+
+"BLD",10662,"KRN","B",870,870)
+
+"BLD",10662,"KRN","B",8989.51,8989.51)
+
+"BLD",10662,"KRN","B",8989.52,8989.52)
+
+"BLD",10662,"KRN","B",8994,8994)
+
+"BLD",10662,"QUES",0)
+^9.62^^
+"BLD",10662,"REQB",0)
+^9.611^^
+"KRN",.403,59,-1)
+0^1
+"KRN",.403,59,0)
+NURA-I-SERVICE^@^@^^2960624.1217^^^211.3^0^0^1
+"KRN",.403,59,40,0)
+^.4031I^3^3
+"KRN",.403,59,40,1,0)
+1^^1,1
+"KRN",.403,59,40,1,1)
+Page 1
+"KRN",.403,59,40,1,11)
+N NURAPROD S NURAPROD=($$EN7^NURSAFU0()="Y") D PUT^DDSVAL(211.3,.DA,6,"NURSING"):$$GET^DDSVAL(211.3,.DA,6)=""!'NURAPROD,UNED^DDSUTL("PRODUCT LINE",1,1,1):'NURAPROD
+"KRN",.403,59,40,1,12)
+D REQD^NURSAFU0
+"KRN",.403,59,40,1,40,0)
+^.4032IP^214^1
+"KRN",.403,59,40,1,40,214,0)
+NURA SERVICE POS ENTER/EDIT^1^1,1^e
+"KRN",.403,59,40,2,0)
+1.1^^13,10^^^1^17,75
+"KRN",.403,59,40,2,1)
+Page 1.1
+"KRN",.403,59,40,2,40,0)
+^.4032IP^215^1
+"KRN",.403,59,40,2,40,215,0)
+NURA OTHER SC^1^2,3^e
+"KRN",.403,59,40,3,0)
+1.2^^13,10^^^1^17,75
+"KRN",.403,59,40,3,1)
+Page 1.2
+"KRN",.403,59,40,3,40,0)
+^.4032IP^216^1
+"KRN",.403,59,40,3,40,216,0)
+NURA AMIS POSITION^1^2,2^e
+"KRN",.404,214,0)
+NURA SERVICE POS ENTER/EDIT^211.3
+"KRN",.404,214,15,0)
+^^1^1^2960624^
+"KRN",.404,214,15,1,0)
+This block allows users to enter/edit Service Position file entries.
+"KRN",.404,214,40,0)
+^.4044I^4^5
+"KRN",.404,214,40,1,0)
+1^ABBREVIATION^3
+"KRN",.404,214,40,1,1)
+.01
+"KRN",.404,214,40,1,2)
+3,21^10^3,7
+"KRN",.404,214,40,1,4)
+1^^^1
+"KRN",.404,214,40,2,0)
+2^NAME^3
+"KRN",.404,214,40,2,1)
+1
+"KRN",.404,214,40,2,2)
+5,21^30^5,15
+"KRN",.404,214,40,2,4)
+1
+"KRN",.404,214,40,3,0)
+3^PRIORITY SEQUENCE^3
+"KRN",.404,214,40,3,1)
+2
+"KRN",.404,214,40,3,2)
+7,21^7^7,2
+"KRN",.404,214,40,3,4)
+1
+"KRN",.404,214,40,4,0)
+4^PRODUCT LINE^3
+"KRN",.404,214,40,4,1)
+6
+"KRN",.404,214,40,4,2)
+9,21^30^9,7
+"KRN",.404,214,40,4,4)
+1
+"KRN",.404,214,40,4,12)
+S NURSWT=0 S:DDSEXT="NURSING" NURSWT=1
+"KRN",.404,214,40,5,0)
+5^SERVICE CATEGORY^3
+"KRN",.404,214,40,5,1)
+4
+"KRN",.404,214,40,5,2)
+11,21^24^11,3
+"KRN",.404,214,40,5,4)
+1
+"KRN",.404,214,40,5,10)
+S:X="R" DDSSTACK="1.2" S:X="O"&'($G(NURSWT)) DDSSTACK="1.1"
+"KRN",.404,214,40,5,13)
+D:"^R^O^"[(U_DDSOLD_U) PUT^DDSVAL(211.3,.DA,$S(DDSOLD="R":3,1:5),"@")
+"KRN",.404,215,0)
+NURA OTHER SC^211.3
+"KRN",.404,215,40,0)
+^.4044I^1^1
+"KRN",.404,215,40,1,0)
+1^OTHER SERVICE CATEGORY^3
+"KRN",.404,215,40,1,1)
+5
+"KRN",.404,215,40,1,2)
+2,25^30^2,1
+"KRN",.404,216,0)
+NURA AMIS POSITION^211.3
+"KRN",.404,216,40,0)
+^.4044I^1^1
+"KRN",.404,216,40,1,0)
+1^AMIS POSITION^3
+"KRN",.404,216,40,1,1)
+3
+"KRN",.404,216,40,1,2)
+2,18^30^2,3
+"MBREQ")
+0
+"ORD",8,.403)
+.403;8;;;EDEOUT^DIFROMSO(.403,DA,"",XPDA);FPRE^DIFROMSI(.403,"",XPDA);EPRE^DIFROMSI(.403,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.403,DA,"",XPDA);DEL^DIFROMSK(.403,"",%)
+"ORD",8,.403,0)
+FORM
+"PKG",525,-1)
+1^1
+"PKG",525,0)
+NURSING SERVICE^NUR^Nursing Service General Module
+"PKG",525,20,0)
+^9.402P^^
+"PKG",525,22,0)
+^9.49I^1^1
+"PKG",525,22,1,0)
+4.0^2970509^2990722^66481
+"PKG",525,22,1,"PAH",1,0)
+46^3170718
+"PKG",525,22,1,"PAH",1,1,0)
+^^17^17^3170718
+"PKG",525,22,1,"PAH",1,1,1,0)
+The patch addresses two (2) issues:
+"PKG",525,22,1,"PAH",1,1,2,0)
+ 
+"PKG",525,22,1,"PAH",1,1,3,0)
+1.   When using the Service Position File, Edit option [NURAFL-SPO]
+"PKG",525,22,1,"PAH",1,1,4,0)
+     in the Administrative Site File Functions option [NURSFL-MENU];
+"PKG",525,22,1,"PAH",1,1,5,0)
+     the prompt for the Service Position abbreviation requires an
+"PKG",525,22,1,"PAH",1,1,6,0)
+     entry of 10 characters or less.  When a new abbreviation is
+"PKG",525,22,1,"PAH",1,1,7,0)
+     correctly entered, the application adds it as a new NURS SERVICE
+"PKG",525,22,1,"PAH",1,1,8,0)
+     POSITION.  After entering the abbreviation, the application pops
+"PKG",525,22,1,"PAH",1,1,9,0)
+     a ScreenMan Form that allows the abbreviation to be re-entered.
+"PKG",525,22,1,"PAH",1,1,10,0)
+     If the abbreviation is re-entered with a value with a length
+"PKG",525,22,1,"PAH",1,1,11,0)
+     greater than 10 characters, a program error occurs (UNDEFINED)
+"PKG",525,22,1,"PAH",1,1,12,0)
+     and the typical user VistA session is terminated.
+"PKG",525,22,1,"PAH",1,1,13,0)
+ 
+"PKG",525,22,1,"PAH",1,1,14,0)
+2.   When a patient is admitted/transferred to a new ward and there
+"PKG",525,22,1,"PAH",1,1,15,0)
+     is no corresponding entry in the NURS LOCATION file (#211.4),
+"PKG",525,22,1,"PAH",1,1,16,0)
+     the user gets an erroneous message that Queueing is not allowed
+"PKG",525,22,1,"PAH",1,1,17,0)
+     that is displayed after the "Patient Transferred" message.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","NURSAMSG")
+0^1^B8871087^B8827385
+"RTN","NURSAMSG",1,0)
+NURSAMSG ;HIRMFO/RM,FPT-QUEUED MESSAGES TO THE CENT. NURS. OFFICE ;6/18/96  16:27
+"RTN","NURSAMSG",2,0)
+ ;;4.0;NURSING SERVICE;**46**;Apr 25, 1997;Build 1
+"RTN","NURSAMSG",3,0)
+EN1 ; CALLED BY THE NURSAWCK AND NURSCPL ROUTINES IF A PATIENT IS NOT 
+"RTN","NURSAMSG",4,0)
+ ; ADMITTED INTO THE NURSING SERVICE, BUT IS ADMITTED IN MAS
+"RTN","NURSAMSG",5,0)
+ G BADPARAM:'$D(^DIC(213.9,1,0)),BADPARAM:$P(^DIC(213.9,1,0),"^",2)=""
+"RTN","NURSAMSG",6,0)
+ S NURSX=X,IOP=$P(^DIC(213.9,1,0),"^",2),IOP="`"_IOP
+"RTN","NURSAMSG",7,0)
+ S %ZIS="NQ" D ^%ZIS K IOP S ZTRTN="NOADM^NURSAMSG",ZTIO=ION,ZTDTH=$H,ZTNOP=1,ZTDESC="Patient not entered into Nursing database" F G="DA","IOF","NURSX" S ZTSAVE(G)=""
+"RTN","NURSAMSG",8,0)
+ D ^%ZTLOAD,CLOSE^NURSUT1 ;,^NURSKILL
+"RTN","NURSAMSG",9,0)
+ K %ZIS,NUROUT,POP,ZTDTH,ZTIO,ZTNOP,ZTRTN,ZTSK
+"RTN","NURSAMSG",10,0)
+ Q
+"RTN","NURSAMSG",11,0)
+NOADM ; THIS MESSAGE SENT TO CNO IF PATIENT NOT ADMITTED AND VALID 
+"RTN","NURSAMSG",12,0)
+ ; SITE PARAMETERS EXIST
+"RTN","NURSAMSG",13,0)
+ S DFN=DA D DEM^VADPT W @IOF,!!,VADM(1)," has not been admitted into the NURSING SYSTEM by MAS, because ",!,NURSX," (MAS ward) does not have a corresponding NURSING",!,"Unit."
+"RTN","NURSAMSG",14,0)
+ W !!,"To admit the patient: ",!,"     1.  Validate ",NURSX," the MAS Ward by giving it a",!,"         NURSING Unit by running option Nursing Location File, Edit",!,"         (NURSFL-LOC), by choosing the appropriate NURSING Unit,"
+"RTN","NURSAMSG",15,0)
+ W !,"         and adding the appropriate MAS Location.",!!,"     2.  Then run the option NURS PATIENT File Update (Admit patient)",!,"         (NURSPT-ACT) to admit the patient into the NURSING SERVICE.",@IOF
+"RTN","NURSAMSG",16,0)
+ Q
+"RTN","NURSAMSG",17,0)
+BADPARAM ; ERROR IF NURSING SITE PARAMETERS HAVE NOT BEEN ADDED
+"RTN","NURSAMSG",18,0)
+ W !!,*7,*7,"Notify NURSING ADP Coordinator and Site Manager that this patient was not",!,"admitted into the NURSING Service because NURSING Site parameters were not",!,"updated."
+"RTN","NURSAMSG",19,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10662,6)
+^45
+**END**
+**END**
+

@@ -1,0 +1,165 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/04/18 at 09:46
+=============================================================================
+Run Date: FEB 08, 2018                     Designation: FH*5.5*45
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #43                    Status: Released
+                  Compliance Date: MAR 12, 2018
+=============================================================================
+
+Associated patches: (v)FH*5.5*44   <<= must be installed BEFORE `FH*5.5*45'
+
+Subject: ADD ARROWROOT FOOD ALLERGY DISLIKE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the addition of a new food allergy by adding it 
+ into the mapping capability for food dislikes.
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 1380
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  R18073816FY18 - New Food Allergy
+  
+ Problem:
+ -------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added 
+ ARROWROOT as a food allergy allergies to the GMR ALLERGIES file 
+ (#120.82). This new food allergy must be added to the routine FHSELA2 in 
+ order to be mapped as allergy type food preference dislikes in the 
+ Dietetics package.
+  
+ Resolution:
+ ----------
+ Routine FHSELA2 has a hard coded list of food allergies. It uses this 
+ hard coded list to present to the user for adding a food allergy 
+ preference dislike to the FOOD PREFERENCES file (#115.2) and then map it 
+ to a matching record in the GMR ALLERGIES file (#120.82). ARROWROOT will 
+ be added to the hard coded list of food allergies in routine FHSELA2 so 
+ it may be presented to the user.
+  
+ Test Sites:
+ ----------
+ William S. Middleton Memorial Veterans Hospital (Madison) 
+ VA Western New York HCS
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ #FH*5.5*45:
+ a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates.
+ b.      Compare Transport Global to Current System - This option will 
+ (allow you to view all changes that will be made when this patch        
+ is installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+ c.      Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+  
+ 4.   From the Installation Menu, select the Install Package(s) option 
+      and choose the patch to install.
+  
+ 5.   When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond NO.
+  
+ 6.   When prompted 'Want to DISABLE Scheduled Options, Menu
+      Options, and Protocols? NO//', respond NO.
+  
+ 7.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no post-installation instructions.
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation
+ of development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision
+ between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the
+ Backup a Transport Global [XPD BACKUP] menu option (this is done at
+ time of install). The message containing the backed up routines can
+ be loaded with the "Xtract PackMan" function at the Message Action
+ prompt. The Packman function "INSTALL/CHECK MESSAGE" is then used
+ to install the backed up routines onto the VistA System. 
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2
+ lines of the FH Routine contained in this patch using the option
+ First Line Routine Print [XU FIRST LINE PRINT]. Once the routines
+ contained in the FH*5.5*45 patch have been rolled back, the first
+ two lines of the Routine will no longer contain the designation
+ of patch FH*5.5*45 in the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B134944560   After:B136191846  **8,13,23,25,28,35,37,39,40,
+                                           41,42,44,45**
+ 
+Routine list of preceding patches: 44
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 29, 2017
+Completed By:                               Date Completed: FEB 08, 2018
+Released By :                               Date Released : FEB 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

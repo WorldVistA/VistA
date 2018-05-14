@@ -1,0 +1,164 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/16/18 at 15:00
+=============================================================================
+Run Date: MAR 02, 2018                     Designation: MD*1*56
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #40                      Status: Released
+                  Compliance Date: APR 02, 2018
+=============================================================================
+
+Associated patches: (v)MD*1*50     <<= must be installed BEFORE `MD*1*56'
+
+Subject: CP HEMO SELECT GRID SORT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch fixes a defect in CP Hemodialysis.
+  
+ 1. I15834349FY17 - LOM - Function missing in HEMODIALYSIS  00:08:33
+                    In CP Hemodialysis, the patient selection grid lost the
+                    ability to sort the included information after the
+                    previous patch.
+  
+ Patch Components:
+ -----------------
+ Patch MD*1.0*56 includes a new GUI executable for CP Hemodialysis.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Wilkes-Barre VA Medical Center, PA
+ Jerry L. Pettis Memorial VA Medical Center (Loma Linda), CA
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I15834349FY17 - LOM - Function missing in HEMODIALYSIS  00:08:33
+  
+    Problem:
+    --------
+    In CP Hemodialysis, the patient selection grid lost the ability to sort
+    the included information after the previous patch. Specifically, the
+    user used to be able to click on the header for a column to sort the
+    grid by that column.
+  
+    Resolution:
+    -----------
+    The option to allow the expected behavior was reactivated.
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interface (GUI). Files and documentation
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Flowsheets & CP Hemodialysis (MD*1.0*56) 
+ Installation Guide" for installation and set-up information. This 
+ document is available on the VA Software Document Library (VDL).
+  
+ Title                                  File Name          FTP Mode
+ -------------------------------------------------------------------
+ CP Hemodialysis (MD*1.0*56)            MD_1_56_IG.doc     Binary
+ Installation Guide
+  
+ MD*1.0*56 GUI MSI Install files        MD_1_56.zip        Binary
+ (CP Hemodialysis)
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Clinical Procedures users should be off the system when this patch is 
+ installed. Installation will take less than 5 minutes. This patch should 
+ be installed during non-peak requirement hours.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter MD*1.0*56).      
+  
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch 
+       is installed
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+    d. Print Transport Global - this option will allow you to view
+       the components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package: MD*1.0*56.
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Post-installation routine MDPOST56 is provided which updates Clinical
+ Procedures with the expected version number for CP Hemodialysis.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ Please reference the CP Hemodialysis MD*1.0*56 Installation Guide for 
+ back-out/rollback instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST56
+    Before:       n/a   After:  B1254732  **56**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 09, 2017
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : MAR 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

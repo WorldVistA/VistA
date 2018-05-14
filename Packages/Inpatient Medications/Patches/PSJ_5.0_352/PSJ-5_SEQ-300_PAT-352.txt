@@ -1,0 +1,165 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/08/17 at 12:47
+=============================================================================
+Run Date: FEB 02, 2018                     Designation: PSJ*5*352
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #300                      Status: Released
+                  Compliance Date: MAR 05, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*338   <<= must be installed BEFORE `PSJ*5*352'
+
+Subject: UNDEFINED ERROR WHEN COPYING A UD ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) issue:
+  
+ 1)  Copy of an active unit dose order when Orderable Item is changed may
+     receive an <UNDEFINED> error at line 109+1^PSGOE9.  This error will
+     prevent the user from continuing in the application.
+  
+ New Service Requests NSR(s):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1)  CA-SDM I17211369FY18    RTC DEFECT - 617278   
+  
+ Copy of an active unit dose order when Orderable Item is changed may
+ receive an undefined error.
+  
+  
+ Problem: 
+ --------
+ When a user copies an active unit dose order, changes the Orderable Item
+ (#1) and chooses a different Orderable Item that has more than one
+ dispense drug associated with it, an undefined error will occur at the
+ UNITS PER DOSE prompt - <UNDEFINED>109+1^PSGOE9.  This hard error will
+ force the user out of the application.
+  
+ Resolution:
+ -----------
+ A modification was made to routine PSGOE9 to handle this issue.
+  
+ Test Sites:
+ -----------
+ CENTRAL TEXAS HCS
+ UPSTATE NEW YORK HCS
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------  
+ It is not necessary to disable any options to install this patch.
+ This patch may be installed with users on the system, although
+ it is recommended that it be installed during non-peak hours to 
+ minimalize potential disruption to users.  This patch should take
+ less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        # (ex. PSJ*5.0*352):
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes, such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch:
+        routines, DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond NO.
+  
+ 6.     When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", respond NO.
+  
+ 7.     If prompted 'Delay Install (Minutes):  (0-60): 0//'
+        respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Installation Verification:
+ ------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE9
+    Before: B46523279   After: B46578663  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269,315,338,352**
+ 
+Routine list of preceding patches: 338
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 03, 2017
+Completed By:                               Date Completed: FEB 02, 2018
+Released By :                               Date Released : FEB 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

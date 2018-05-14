@@ -1,0 +1,156 @@
+
+=============================================================================
+Run Date: FEB 06, 2018                     Designation: WEBN*1.1*6
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #7                    Status: Released
+                  Compliance Date: FEB 06, 2018
+=============================================================================
+
+
+Subject: NUMI Application 15.4
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch WEBN*1.1*6 addresses issues with the CERME scrollbar and error 
+ pop-ups with certain subsets, wording changes to the generic NUMI error 
+ message, inactivating BH review types, and a new warning if a user 
+ selects a review type that will cause observation (OBS) hours to 
+ accumulate on a non-observation treating specialty. It also includes 
+ handling of page styling issues caused by CERME upgrade to Review Manager 
+ (RM) 16.1 and InterQual (IQ) 2017.2.
+  
+ Associated CA SDM tickets:
+ ==========================
+ I13594028FY17 - Update NUMI CERMe Criteria.  
+    Duplicates:
+    R13459509FY17 - Need CERMe 2017 IQ/CERMe 16.0 Update
+    I14063899FY17 - NUMI IE Pages 
+    I11762745FY17 - Error Number Received
+    I11883381FY17 - error with certain subsets
+    R14708399FY17 - cannot scroll in NUMI Extended Stay (CERMe scroll bar 
+ missing)
+    I15038430FY17 - CERMe Scrolling issue, dup of ticket R14708399FY17
+  
+ I13792734FY17 - Obs review Type Table modification
+    Duplicates: 
+    R15787027FY17 - Modify NUMI Review Types
+  
+ I10622124FY16 - Bad NUMI error message.
+ I11598251FY17 - Accidently clicked on BH continued stay on a review.
+ I13115557FY17 - NUMI and VISTA Concerns
+    Duplicates: 
+    I11857877FY17 - Obs clock accumulating on a NON-Obs pt
+    I8057578FY16  - Hi Intensity Psy pt displayed as OBS
+    I9590302FY16  - Acute pt is displayed as Obs
+    R11255963FY17 - OBS hours accumulating for 90 days 
+    R12152017FY17 - patient keeps showing as an obs but is not 
+    R8838580FY16 - obs clock on non-obs patient 
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Bay Pines VAMC
+ Gainesville (NFSG)
+  
+  
+ CA Service Desk Overview:
+ ================
+ 1.      I13594028FY17 - Update NUMI CERME Criteria.
+  
+ Problem: The current NUMI production version has errors when selecting 
+ certain subsets. McKesson fixed these issues in their new RM 16 release.
+  
+ Resolution: Sequentially upgraded CERME to RM 16 and IQ 2017, then RM 
+ 16.1 and IQ 2017.1, and finally IQ 2017.2, and loaded custom datasets.
+  
+ 2.      I13792734FY17 - OBS review Type Table modification.
+  
+ Problem: Request to remove certain behavioral health (BH) review type 
+ selections and merge associated care level types.
+  
+ Resolution: The NUMI database and code have been updated to remove BH 
+ review type selections.  The BH Admission review type has been merged 
+ into Admission.  The BH Continued Stay review type has been merged into 
+ Continued Stay.  And, NUMI code will now allow reviewers to edit 
+ previously saved BH Admission and BH Continued Stay reviews and change 
+ the review type to either Admission or Continued Stay.
+  
+  
+ 3.      I10622124FY16 - Bad NUMI error message.
+  
+ Problem: Request to update generic NUMI error message wording.
+  
+ Resolution: Updated generic NUMI error message text on Error.aspx file as 
+ per request.
+  
+   
+ 4.      I11598251FY17 - Accidently clicked on BH continued stay on a 
+ review.
+  
+ Problem: Users were unable to edit review types on saved reviews.
+  
+ Resolution: Updated NUMI code to handle review type selection change when 
+ editing previously saved reviews.
+  
+  
+ 5.      I13115557FY17 - NUMI and VISTA Concerns
+  
+ Problem: Admissions with non-observation treating specialties are 
+ accumulating observation hours. This issue results from users selecting an
+ observation review type for admissions with a non-observation treating
+ specialty.
+  
+ Resolution: Added a warning message when observation review is selected 
+ for non-observation admissions on Primary Review screen. Users will still 
+ be allowed to select an observation review type if necessary. However,
+ if an observation review type is selected in spite of the warning, the 
+ system will assume the user is correct and will keep adding observation 
+ hours and listing the stay as an observation stay on the Patient 
+ Selection/Worklist.
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation is available.
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at: 
+ http://www.domain.ext/vdl/application.asp?appid=184
+    
+ Filename                           Description                     
+  ----------------------------------------------------------------------
+ numi_15_4_ug.pdf                   NUMI User Guide v15.4  
+ numi_15_4_serversetupguide.pdf     NUMI Server Setup Guide v15.4  
+ numi_15_4_sysmgmtguide.pdf         NUMI System Management Guide v15.4  
+  
+ Installation Instructions:
+ --------------------------
+ NUMI is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 10, 2017
+Completed By:                               Date Completed: JAN 29, 2018
+Released By :                               Date Released : FEB 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,1233 @@
+Released PRC*5.1*202 SEQ #177
+Extracted from mail message
+**KIDS**:PRC*5.1*202^
+
+**INSTALL NAME**
+PRC*5.1*202
+"BLD",10728,0)
+PRC*5.1*202^IFCAP^0^3171226^y
+"BLD",10728,1,0)
+^^7^7^3171117^
+"BLD",10728,1,1,0)
+This patch will fix two issues:
+"BLD",10728,1,2,0)
+ 
+"BLD",10728,1,3,0)
+1) When a Receiving Report is deleted the default status is not a valid
+"BLD",10728,1,4,0)
+entry, so when it times out the status is set to an invalid status
+"BLD",10728,1,5,0)
+ 
+"BLD",10728,1,6,0)
+2) A message is served for POA, PRJ, and ACT the ISMS/FMS TRANS (#423.6) 
+"BLD",10728,1,7,0)
+   file is not cleared
+"BLD",10728,4,0)
+^9.64PA^^
+"BLD",10728,6)
+4^
+"BLD",10728,6.3)
+27
+"BLD",10728,"ABPKG")
+n
+"BLD",10728,"INID")
+n^n^n
+"BLD",10728,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10728,"KRN",.4,0)
+.4
+"BLD",10728,"KRN",.401,0)
+.401
+"BLD",10728,"KRN",.402,0)
+.402
+"BLD",10728,"KRN",.403,0)
+.403
+"BLD",10728,"KRN",.5,0)
+.5
+"BLD",10728,"KRN",.84,0)
+.84
+"BLD",10728,"KRN",3.6,0)
+3.6
+"BLD",10728,"KRN",3.8,0)
+3.8
+"BLD",10728,"KRN",9.2,0)
+9.2
+"BLD",10728,"KRN",9.8,0)
+9.8
+"BLD",10728,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",10728,"KRN",9.8,"NM",1,0)
+PRCHEF^^0^B5804888
+"BLD",10728,"KRN",9.8,"NM",2,0)
+PRCOESE^^0^B47704760
+"BLD",10728,"KRN",9.8,"NM",3,0)
+PRCOACT^^0^B45529406
+"BLD",10728,"KRN",9.8,"NM",4,0)
+PRCHREC2^^0^B29401256
+"BLD",10728,"KRN",9.8,"NM","B","PRCHEF",1)
+
+"BLD",10728,"KRN",9.8,"NM","B","PRCHREC2",4)
+
+"BLD",10728,"KRN",9.8,"NM","B","PRCOACT",3)
+
+"BLD",10728,"KRN",9.8,"NM","B","PRCOESE",2)
+
+"BLD",10728,"KRN",19,0)
+19
+"BLD",10728,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10728,"KRN",19.1,0)
+19.1
+"BLD",10728,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",10728,"KRN",101,0)
+101
+"BLD",10728,"KRN",409.61,0)
+409.61
+"BLD",10728,"KRN",771,0)
+771
+"BLD",10728,"KRN",779.2,0)
+779.2
+"BLD",10728,"KRN",870,0)
+870
+"BLD",10728,"KRN",8989.51,0)
+8989.51
+"BLD",10728,"KRN",8989.52,0)
+8989.52
+"BLD",10728,"KRN",8994,0)
+8994
+"BLD",10728,"KRN","B",.4,.4)
+
+"BLD",10728,"KRN","B",.401,.401)
+
+"BLD",10728,"KRN","B",.402,.402)
+
+"BLD",10728,"KRN","B",.403,.403)
+
+"BLD",10728,"KRN","B",.5,.5)
+
+"BLD",10728,"KRN","B",.84,.84)
+
+"BLD",10728,"KRN","B",3.6,3.6)
+
+"BLD",10728,"KRN","B",3.8,3.8)
+
+"BLD",10728,"KRN","B",9.2,9.2)
+
+"BLD",10728,"KRN","B",9.8,9.8)
+
+"BLD",10728,"KRN","B",19,19)
+
+"BLD",10728,"KRN","B",19.1,19.1)
+
+"BLD",10728,"KRN","B",101,101)
+
+"BLD",10728,"KRN","B",409.61,409.61)
+
+"BLD",10728,"KRN","B",771,771)
+
+"BLD",10728,"KRN","B",779.2,779.2)
+
+"BLD",10728,"KRN","B",870,870)
+
+"BLD",10728,"KRN","B",8989.51,8989.51)
+
+"BLD",10728,"KRN","B",8989.52,8989.52)
+
+"BLD",10728,"KRN","B",8994,8994)
+
+"BLD",10728,"QDEF")
+^^^^^^^^^^YES
+"BLD",10728,"QUES",0)
+^9.62^^
+"BLD",10728,"REQB",0)
+^9.611^2^2
+"BLD",10728,"REQB",1,0)
+PRC*5.1*107^2
+"BLD",10728,"REQB",2,0)
+PRC*5.1*81^2
+"BLD",10728,"REQB","B","PRC*5.1*107",1)
+
+"BLD",10728,"REQB","B","PRC*5.1*81",2)
+
+"MBREQ")
+0
+"PKG",455,-1)
+1^1
+"PKG",455,0)
+IFCAP^PRC^IFCAP System Files
+"PKG",455,20,0)
+^9.402P^^
+"PKG",455,22,0)
+^9.49I^1^1
+"PKG",455,22,1,0)
+5.1
+"PKG",455,22,1,"PAH",1,0)
+202^3171226^1321
+"PKG",455,22,1,"PAH",1,1,0)
+^^7^7^3171226
+"PKG",455,22,1,"PAH",1,1,1,0)
+This patch will fix two issues:
+"PKG",455,22,1,"PAH",1,1,2,0)
+ 
+"PKG",455,22,1,"PAH",1,1,3,0)
+1) When a Receiving Report is deleted the default status is not a valid
+"PKG",455,22,1,"PAH",1,1,4,0)
+entry, so when it times out the status is set to an invalid status
+"PKG",455,22,1,"PAH",1,1,5,0)
+ 
+"PKG",455,22,1,"PAH",1,1,6,0)
+2) A message is served for POA, PRJ, and ACT the ISMS/FMS TRANS (#423.6) 
+"PKG",455,22,1,"PAH",1,1,7,0)
+   file is not cleared
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PRCHEF")
+0^1^B5804888^B8847630
+"RTN","PRCHEF",1,0)
+PRCHEF ;ID/RSD,SF-ISC/TKW-EDIT ROUTINES FOR SUPPLY SYSTEM ;6/10/97 9:34
+"RTN","PRCHEF",2,0)
+V ;;5.1;IFCAP;**107,202**;Oct 20, 2000;Build 27
+"RTN","PRCHEF",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCHEF",4,0)
+ ;
+"RTN","PRCHEF",5,0)
+EN80 ;DELETE A RECEIVING REPORT (CONT.FROM PRCHE)
+"RTN","PRCHEF",6,0)
+ K PRCHNRQ D PO^PRCHE G:'$D(PRCHPO) Q^PRCHE
+"RTN","PRCHEF",7,0)
+ I $P($G(^PRC(442,PRCHPO,23)),U,11)="S"!($P($G(^(23)),U,11)="P") W !!,?5,"Please create an adjustment voucher to delete",!,?5,"receiving reports for purchase card orders.",! G EN80
+"RTN","PRCHEF",8,0)
+ I $P($G(^PRC(442,PRCHPO,23)),U,11)="D" W !!,?5,"Please create an adjustment voucher to delete",!,?5,"receiving reports for delivery orders.",! G EN80
+"RTN","PRCHEF",9,0)
+ I X<25!(X>33) W $C(7)," Receiving Report cannot be deleted, please create an adjustment voucher." G EN80
+"RTN","PRCHEF",10,0)
+ I '$O(^PRC(442,PRCHPO,11,0)) W !?3,"Order has no Receiving Reports !",$C(7) G EN80
+"RTN","PRCHEF",11,0)
+ D LCK1^PRCHE G:'$D(DA) EN80 S:$P(^PRC(442,PRCHPO,0),U,2)=8 PRCHNRQ=1
+"RTN","PRCHEF",12,0)
+ S DIC="^PRC(442,PRCHPO,11,",DIC(0)="QEANZ" D ^DIC I Y<0 L  G EN80
+"RTN","PRCHEF",13,0)
+ I $P(Y(0),U,6)="Y" W !?3,"Receiving Report has already been processed by Fiscal.",!?3,"You must create an Adjustment Voucher to edit this Receiving Report.",! L  G EN80
+"RTN","PRCHEF",14,0)
+ S (PRCHRPT,PRCHDPT)=+Y,(PRCHRD,PRCHDRD)=$P(Y(0),U,1),(PRCHRDEL,PRCHDTP)=1,PRCHEX=$P(Y(0),U,3)+$P(Y(0),U,5)
+"RTN","PRCHEF",15,0)
+ D ^PRCHDP3,DEL^PRCHREC2 K PRCHRDEL I $D(PRCHRD) L  D Q^PRCHE G EN80
+"RTN","PRCHEF",16,0)
+ ;S PRCHREC=$S($O(^PRC(442,PRCHPO,11,0)):1,1:0),X=$S($D(^PRC(442,PRCHPO,7)):$P(^(7),U,2),1:"")
+"RTN","PRCHEF",17,0)
+ ;THE SUPPLY STATUS CODE HAS BEEN MOVED TO PRCHREC2 AS OF PRC*5.1*202
+"RTN","PRCHEF",18,0)
+ G EN80
+"RTN","PRCHREC2")
+0^4^B29401256^B21606846
+"RTN","PRCHREC2",1,0)
+PRCHREC2 ;ID/RSD,SF/TKW-CONT. OF RECEIVING ;1/25/93  13:17
+"RTN","PRCHREC2",2,0)
+V ;;5.1;IFCAP;**81,202**;Oct 20, 2000;Build 27
+"RTN","PRCHREC2",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCHREC2",4,0)
+ ;
+"RTN","PRCHREC2",5,0)
+TM K I F I=0:0 S I=$O(^PRC(442,PRCHPO,5,I)) Q:'I  I +^(I,0)>0 S I(100-^(0))=^(0)
+"RTN","PRCHREC2",6,0)
+ S:$O(I(0)) PRCHRT0=I($O(I(0))),PRCHRT=+PRCHRT0/100,PRCHRT0=$P(PRCHRT0,U,1)_"%"_$P(PRCHRT0,U,2)
+"RTN","PRCHREC2",7,0)
+ I $P(^PRC(442,PRCHPO,0),U,19)=2 S PRCHRT=0
+"RTN","PRCHREC2",8,0)
+ Q
+"RTN","PRCHREC2",9,0)
+ ;
+"RTN","PRCHREC2",10,0)
+MULT S I=1 F Y=Y+.12:.01 Q:'$D(^PRC(442,PRCHPO,2,"AB",Y))  S I=I+1
+"RTN","PRCHREC2",11,0)
+ W !?3,I," receiving report(s) for ",X," already exist.",$C(7) S %A="     Do you want to continue ",%B="",%=2 D ^PRCFYN K:%'=1 X,Y
+"RTN","PRCHREC2",12,0)
+ Q
+"RTN","PRCHREC2",13,0)
+ ;
+"RTN","PRCHREC2",14,0)
+WP Q:'$D(^PRC(442,PRCHPO,2,+PRCHRIT,1,0))  K ^UTILITY($J,"W") S DIWL=1,DIWR=65,DIWF="" F PRCHI=0:0 S PRCHI=$O(^PRC(442,PRCHPO,2,+PRCHRIT,1,PRCHI)) Q:'PRCHI  S X=^(PRCHI,0) N Y D DIWP^PRCUTL($G(DA))
+"RTN","PRCHREC2",15,0)
+ F I=0:0 S I=$O(^UTILITY($J,"W",DIWL,I)) Q:'I  W !?5,^(I,0)
+"RTN","PRCHREC2",16,0)
+ K PRCHI,DIWL,DIWR,DIWF,^UTILITY($J,"W")
+"RTN","PRCHREC2",17,0)
+ Q
+"RTN","PRCHREC2",18,0)
+ ;
+"RTN","PRCHREC2",19,0)
+DEL S %A="   Are you sure you want to delete this Receiving Report ",%B="",%=2 D ^PRCFYN I %'=1 G:'$D(PRCHRDEL) ES Q
+"RTN","PRCHREC2",20,0)
+ ;
+"RTN","PRCHREC2",21,0)
+ Q:'$$CHGSTAT()  ;Force Supply status update prior to deleting receiving report - PRC*5.1*202
+"RTN","PRCHREC2",22,0)
+ ; PRC*5.1*81 - if site runs DynaMed, may need to build update txn
+"RTN","PRCHREC2",23,0)
+ I $$GET^XPAR("SYS","PRCV COTS INVENTORY",1,"Q")=1 D REC^PRCV442A(PRCHPO,PRCHRPT,2)
+"RTN","PRCHREC2",24,0)
+ ;
+"RTN","PRCHREC2",25,0)
+DELP D WAIT^DICD K ^PRC(442,PRCHPO,11,PRCHRPT) S $P(^(0),U,3,4)="0^"_($P(^(0),U,4)-1)
+"RTN","PRCHREC2",26,0)
+ F PRCHRIT=0:0 S PRCHRIT=$O(^PRC(442,PRCHPO,2,"AB",PRCHRD,PRCHRIT)) Q:'PRCHRIT  S PRCHRI=$O(^(PRCHRIT,0)),DA=PRCHRI,DA(1)=PRCHRIT,DA(2)=PRCHPO,DIK="^PRC(442,PRCHPO,2,PRCHRIT,3," D ^DIK
+"RTN","PRCHREC2",27,0)
+ F PRCHRIT=0:0 S PRCHRIT=$O(^PRC(442,PRCHPO,2,PRCHRIT)) Q:'PRCHRIT  I $D(^(PRCHRIT,0)) S X=+^(0),Y=$P(^(0),"^",2),Z=0 S:$D(^(2)) Z=$P(^(2),"^",8) I Z<Y S ^PRC(442,PRCHPO,2,"C",X,PRCHRIT)=""
+"RTN","PRCHREC2",28,0)
+ W !!?5,"Receiving Report Deleted ",$C(7) K PRCHRD,PRCHRPT,PRCHRI,PRCHRIT,DIK,DA G:'$D(PRCHRDEL) Q^PRCHREC
+"RTN","PRCHREC2",29,0)
+ Q
+"RTN","PRCHREC2",30,0)
+ ;
+"RTN","PRCHREC2",31,0)
+DEL1 S DIK="^PRC(442,PRCHPO,2,+PRCHRIT,3,",DA=PRCHRDY,DA(1)=+PRCHRIT,DA(2)=PRCHPO D ^DIK K DIK W "   <DELETED> ",$C(7),!
+"RTN","PRCHREC2",32,0)
+ Q
+"RTN","PRCHREC2",33,0)
+ ;
+"RTN","PRCHREC2",34,0)
+SUB S PRCHRIT=$O(^PRC(442,PRCHPO,2,"AB",PRCHRD,+PRCHRIT)) Q:'PRCHRIT  S PRCHRI=+$O(^(PRCHRIT,0))
+"RTN","PRCHREC2",35,0)
+ G:'$D(^PRC(442,PRCHPO,2,PRCHRIT,3,PRCHRI,0)) SUB S Y=^(0),PRCHRAM=$P(Y,U,3),PRCHRDA=$P(Y,U,5),$P(Y,U,4)=PRCHRPT,^(0)=Y,PRCHLC=PRCHLC+1
+"RTN","PRCHREC2",36,0)
+ I $P(^PRC(442,PRCHPO,0),U,6)]"" S PRCHRS=$S($P(^PRC(442,PRCHPO,2,PRCHRIT,2),U,7)]"":$P(^(2),U,7),1:"**")
+"RTN","PRCHREC2",37,0)
+ I $P(^PRC(442,PRCHPO,0),U,6)="" S PRCHRS="**"
+"RTN","PRCHREC2",38,0)
+ S PRCHRQ1=$P(^PRC(442,PRCHPO,2,PRCHRIT,0),U,2),PRCHRIT=PRCHRIT_U_$P(^(0),U,1),PRCHRQ2=$P(^(2),U,8) S:'$D(PRCHR("SA",PRCHRS)) PRCHR("SA",PRCHRS)=0
+"RTN","PRCHREC2",39,0)
+ S PRCHR("SA",PRCHRS)=PRCHR("SA",PRCHRS)+PRCHRAM-PRCHRDA,^PRC(442,PRCHPO,2,+PRCHRIT,3,"AC",PRCHRPT,PRCHRI)=""
+"RTN","PRCHREC2",40,0)
+ I 'PRCHRFIN K:PRCHRQ1'>PRCHRQ2 ^PRC(442,PRCHPO,2,"C",$P(PRCHRIT,U,2))
+"RTN","PRCHREC2",41,0)
+ G SUB
+"RTN","PRCHREC2",42,0)
+ ;
+"RTN","PRCHREC2",43,0)
+ES W ! I $G(PRCHRFIN) W $C(7) S %A="Is this Receiving Report the FINAL for this ESTIMATED Purchase Order ",%B="",%=2,PRCHRFIN=0 D ^PRCFYN S:%=1 PRCHRFIN=1
+"RTN","PRCHREC2",44,0)
+ N RRCHK S RRCHK=$P($G(^PRC(411,PRC("SITE"),0)),"^",8)
+"RTN","PRCHREC2",45,0)
+ N MOPCHK S MOPCHK=$P($G(^PRC(442,PRCHPO,0)),"^",2) S:MOPCHK=25 RRCHK="N"
+"RTN","PRCHREC2",46,0)
+ I '$D(PRCHPOO) S %A="   Approve this receiving report "_$S($D(PRCHIMP):"and complete the P.O.",((RRCHK="Y")&('$P($G(^PRC(442,PRCHPO,24)),U))):"and print in Receiving ",1:""),%B="",%=1
+"RTN","PRCHREC2",47,0)
+ I '$D(PRCHPOO) D ^PRCFYN G:%'=1&($D(PRCHIMP)) DEL G:%'=1 ED
+"RTN","PRCHREC2",48,0)
+ S DA=PRCHPO,P=+PRC("PER") I $D(PRCHPOO) S X=$P(PRC("PER"),"^",2),PRCHNM=X G EN3^PRCHREC
+"RTN","PRCHREC2",49,0)
+ S PRCSIG="" D ESIG^PRCUESIG(+DUZ,.PRCSIG) S ROUTINE="PRCUESIG" G:PRCSIG'=1 QQ
+"RTN","PRCHREC2",50,0)
+ G EN3^PRCHREC
+"RTN","PRCHREC2",51,0)
+ ;
+"RTN","PRCHREC2",52,0)
+ED S %A="   Edit this receiving report ",%B="",%=1 D ^PRCFYN G:%'=1 DEL
+"RTN","PRCHREC2",53,0)
+ D ENTD^PRCHREC4 G:PRCHDLVD["^" DEL
+"RTN","PRCHREC2",54,0)
+ F I=0:0 S I=$O(^PRC(442,PRCHPO,2,"AB",PRCHRD,I)) Q:'I  I $D(^PRC(442,PRCHPO,2,I,0)) S ^PRC(442,PRCHPO,2,"C",+^(0),I)=""
+"RTN","PRCHREC2",55,0)
+ K PRCHR,^PRC(442,PRCHPO,11,PRCHRPT) S $P(^(0),U,3,4)="0^"_($P(^(0),U,4)-1) W !
+"RTN","PRCHREC2",56,0)
+ G LI^PRCHREC1
+"RTN","PRCHREC2",57,0)
+ ;
+"RTN","PRCHREC2",58,0)
+QQ S:'$D(ROUTINE) ROUTINE=$T(+0) W !!,$$ERR^PRCHQQ(ROUTINE,PRCSIG) W:PRCSIG=0!(PRCSIG=-3) !,"Notify Application Coordinator!",$C(7) S DIR(0)="EAO",DIR("A")="Press <return> to continue" D ^DIR K ROUTINE
+"RTN","PRCHREC2",59,0)
+ G DEL
+"RTN","PRCHREC2",60,0)
+CHGSTAT() ;Update supply status
+"RTN","PRCHREC2",61,0)
+ I '$G(PRCHRDEL) Q 1 ;Only update Supply Status if using the Delete a Receiving Report option
+"RTN","PRCHREC2",62,0)
+ N PRCHREC,PRCHX,PRCHQ,DIC,DIE,DA,DR
+"RTN","PRCHREC2",63,0)
+ S PRCHREC=$S($O(^PRC(442,PRCHPO,11,PRCHRPT))>0:1,$O(^PRC(442,PRCHPO,11,PRCHRPT),-1)>0:1,1:0),X=$P($G(^PRC(442,PRCHPO,7)),U,2)
+"RTN","PRCHREC2",64,0)
+ I PRCHREC S Y=$S(X=30:"25,30",X=31:"26,31",X=33:"28,33",1:X)
+"RTN","PRCHREC2",65,0)
+ I 'PRCHREC S Y=$S(X=25:"22,20",X=27:22,X=30:"20,22",X=26:"23,21",X=31:"23,21",X=28:10,X=33:10,1:X)
+"RTN","PRCHREC2",66,0)
+ W !!
+"RTN","PRCHREC2",67,0)
+ K DIC S DIC("S")="I "_""""_Y_""""_"[($P(^(0),U,2)),$L($P(^(0),U,2))=""2"""
+"RTN","PRCHREC2",68,0)
+ F  S DIC="^PRCD(442.3,",DIC(0)="AEQMZ",DIC("A")="Update SUPPLY STATUS: " D ^DIC S PRCHX=+Y S PRCHQ=0 Q:Y>0  S PRCHQ=1 Q:$G(DTOUT)!($G(DUOUT))  W "??",!,$C(7)
+"RTN","PRCHREC2",69,0)
+ I $G(PRCHQ) W !,"A valid status is required to delete receiving report. Receiving report will not be deleted." Q 0
+"RTN","PRCHREC2",70,0)
+ S X=$P(^PRC(442,PRCHPO,0),U,17),X=X-PRCHEX,$P(^(0),U,17)=X,DR=".5////"_PRCHX,DIE="^PRC(442,",DA=PRCHPO D ^DIE,Q^PRCHE
+"RTN","PRCHREC2",71,0)
+ Q 1
+"RTN","PRCOACT")
+0^3^B45529406^B45194026
+"RTN","PRCOACT",1,0)
+PRCOACT ;WISC/DJM-"ACT" & "PRJ" TRANSACTIONS FROM AUSTIN ;7/21/96  21:45
+"RTN","PRCOACT",2,0)
+V ;;5.1;IFCAP;**202**;Oct 20, 2000;Build 27
+"RTN","PRCOACT",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCOACT",4,0)
+ ;
+"RTN","PRCOACT",5,0)
+START ;THIS ROUTINE WILL SAVE THE INCOMMING "ACT" OR "PRJ" TRANSACTION
+"RTN","PRCOACT",6,0)
+ ;IN THE "EDI STATUS" FILE (#443.75) WITHIN AN EXISTING RECORD.  THIS
+"RTN","PRCOACT",7,0)
+ ;ROUTINE WILL START UP WHEN AN "ACT" OR "PRJ" TRANSACTION ARRIVES
+"RTN","PRCOACT",8,0)
+ ;FROM AUSTIN AND IS SAVED IN FILE 423.6.  AFTER SAVING IN 423.6 THE
+"RTN","PRCOACT",9,0)
+ ;SERVER WILL START UP A BACKGROUND TASK THAT CALLS THIS ROUTINE.
+"RTN","PRCOACT",10,0)
+ ;
+"RTN","PRCOACT",11,0)
+ ;THE BACKGROUND TASK WILL SET UP **PRCDA**, THE INTERNAL ENTRY
+"RTN","PRCOACT",12,0)
+ ;NUMBER FROM FILE 423.6.  THE RECORD AT **PRCDA** CONTAINS THE DATA
+"RTN","PRCOACT",13,0)
+ ;FROM THE "ACT" OR "PRJ" TRANSACTION THAT 'ARRIVED' FROM AUSTIN.
+"RTN","PRCOACT",14,0)
+ ;
+"RTN","PRCOACT",15,0)
+ N COUNT,COUNTER,I,LINE,MGP,PONO,PRC,PRCMG,PRCTC,PRCTT,PRCXM,RFQ,RECORD,ERRCNT
+"RTN","PRCOACT",16,0)
+ N RRC,SEGT,STATION,STCK,TEXT,VENDOR,X,X1,X2
+"RTN","PRCOACT",17,0)
+ ;
+"RTN","PRCOACT",18,0)
+ ;NOW LETS VERIFY THAT THE TRANSACTION BELONGS TO THIS SITE.
+"RTN","PRCOACT",19,0)
+ ;
+"RTN","PRCOACT",20,0)
+ S LINE=$G(^PRCF(423.6,PRCDA,1,10000,0))
+"RTN","PRCOACT",21,0)
+ S MGP=$O(^PRCF(423.5,"B",$P(LINE,U)_"-"_$P(LINE,U,4),0))
+"RTN","PRCOACT",22,0)
+ I MGP="" S PRCXM(1)=$P($T(ERROR+8),";;",2)_$P(LINE,U)_"-"_$P(LINE,U,4)_"." G EXIT
+"RTN","PRCOACT",23,0)
+ S MGP=$G(^PRCF(423.5,MGP,0))
+"RTN","PRCOACT",24,0)
+ I MGP="" S PRCXM(1)=$P($T(ERROR+9),";;",2) G EXIT
+"RTN","PRCOACT",25,0)
+ I $P(MGP,U,2)="" S PRCXM(1)=$P($T(ERROR+10),";;",2) G EXIT
+"RTN","PRCOACT",26,0)
+ I $P(MGP,U,2)]"" S PRCMG=$P($G(^XMB(3.8,$P(MGP,U,2),0)),U)
+"RTN","PRCOACT",27,0)
+ I PRCMG="" S PRCXM(1)=$P($T(ERROR+11),";;",2) G EXIT
+"RTN","PRCOACT",28,0)
+ D  I $D(PRCXM(1)) G EXIT
+"RTN","PRCOACT",29,0)
+ .  I ",ACT,PRJ,"'[","_$P(LINE,U,4)_"," S PRCXM(1)=$P($T(ERROR+1),";;",2)_$P(LINE,U,4)_"." Q
+"RTN","PRCOACT",30,0)
+ .  S STATION=$P(LINE,U,3) I STATION="" S PRCXM(1)=$P($T(ERROR+4),";;",2)_$G(PRCDA)_"." Q
+"RTN","PRCOACT",31,0)
+ .  S STCK=$O(^PRC(411,"B",STATION,0)) I STCK'>0 S PRCXM(1)=$P($T(ERROR+2),";;",2)_$G(STATION)_"." Q
+"RTN","PRCOACT",32,0)
+ .  Q
+"RTN","PRCOACT",33,0)
+ S PRCTC=$P(LINE,U,4)
+"RTN","PRCOACT",34,0)
+ ;
+"RTN","PRCOACT",35,0)
+ ;GATHER THE DATA FROM THE 'AT' SEGMENT OF THE TRANSACTION.
+"RTN","PRCOACT",36,0)
+ ;
+"RTN","PRCOACT",37,0)
+ S LINE=$G(^PRCF(423.6,PRCDA,1,10001,0))
+"RTN","PRCOACT",38,0)
+ I $P(LINE,U,1)'="AT" S PRCXM(1)=$P($T(ERROR+3),";;",2)_$P($G(LINE),U)_"." G EXIT
+"RTN","PRCOACT",39,0)
+ S PRCTT=$P(LINE,U,2)
+"RTN","PRCOACT",40,0)
+ I PRCTT="" S PRCXM(1)=$P($T(ERROR+13),";;",2)_$G(PRCDA)_"." G EXIT
+"RTN","PRCOACT",41,0)
+ S COUNT=+$P(LINE,U,3)
+"RTN","PRCOACT",42,0)
+ ;
+"RTN","PRCOACT",43,0)
+ ;NOW GET THE DATA FROM EACH 'TR' OR 'RJ' SEGMENT.
+"RTN","PRCOACT",44,0)
+ ;
+"RTN","PRCOACT",45,0)
+ S I=10001
+"RTN","PRCOACT",46,0)
+ S COUNTER=0,ERRCNT=1
+"RTN","PRCOACT",47,0)
+ K PRCXM
+"RTN","PRCOACT",48,0)
+ F  S I=$O(^PRCF(423.6,PRCDA,1,I)) Q:I'>0  D  D:$O(PRCXM(0)) PERROR^PRCOACT0 Q:LINE["$"
+"RTN","PRCOACT",49,0)
+ .  K PRC
+"RTN","PRCOACT",50,0)
+ .  S LINE=$G(^PRCF(423.6,PRCDA,1,I,0))
+"RTN","PRCOACT",51,0)
+ .  Q:$E(LINE,1)="$"
+"RTN","PRCOACT",52,0)
+ .  S SEGT=$P(LINE,U)
+"RTN","PRCOACT",53,0)
+ .  Q:",TR,RJ,"'[","_SEGT_","
+"RTN","PRCOACT",54,0)
+ .  S PRC(1,443.75,"?+1,",9)=PRCTC
+"RTN","PRCOACT",55,0)
+ .  S PRC(1,443.75,"?+1,",21)=COUNT
+"RTN","PRCOACT",56,0)
+ .  S PONO=$P(LINE,U,2)
+"RTN","PRCOACT",57,0)
+ .  I PRCTT="PHA" D
+"RTN","PRCOACT",58,0)
+ .  .  F  Q:$A(PONO,$L(PONO))'=32  S PONO=$E(PONO,1,$L(PONO)-1)
+"RTN","PRCOACT",59,0)
+ .  .  S PONO=$E(PONO,1,3)_"-"_$E(PONO,4,$L(PONO))
+"RTN","PRCOACT",60,0)
+ .  .  Q
+"RTN","PRCOACT",61,0)
+ .  S X1=$E($P(LINE,U,5),1,4)-1700_"0101"
+"RTN","PRCOACT",62,0)
+ .  S X2=$E($P(LINE,U,5),5,7)-1
+"RTN","PRCOACT",63,0)
+ .  D C^%DTC
+"RTN","PRCOACT",64,0)
+ .  S PRC(1,443.75,"?+1,",10)=X_"."_$P(LINE,U,6)
+"RTN","PRCOACT",65,0)
+ .  S PRC(1,443.75,"?+1,",22)=$S(PRCTC="ACT":$P(LINE,U,7),1:$P(LINE,U,14))
+"RTN","PRCOACT",66,0)
+ .  S VENDOR=$P(LINE,U,3)
+"RTN","PRCOACT",67,0)
+ .  S:PRCTT="RFQ" RFQ=$S(PRCTC="ACT":$P(LINE,U,8),1:$P(LINE,U,16))
+"RTN","PRCOACT",68,0)
+ .  S:PRCTT="TXT" TEXT=$P(LINE,U,4)
+"RTN","PRCOACT",69,0)
+ .  I PONO="" S PRCXM(ERRCNT)=$P($T(ERROR+14),";;",2)_$G(PRCDA)_"." D ERRCNT Q
+"RTN","PRCOACT",70,0)
+ .  I PRCTT'="PHA",VENDOR="" S PRCXM(ERRCNT)=$P($T(ERROR+15),";;",2)_$G(PRCDA)_"." D ERRCNT Q
+"RTN","PRCOACT",71,0)
+ .  I PRCTT="RFQ",RFQ="" S PRCXM(ERRCNT)=$P($T(ERROR+16),";;",2)_$G(PRCDA)_"." D ERRCNT Q
+"RTN","PRCOACT",72,0)
+ .  I PRCTT="TXT",TEXT="" S PRCXM(ERRCNT)=$P($T(ERROR+17),";;",2)_$G(PRCDA)_"." D ERRCNT Q
+"RTN","PRCOACT",73,0)
+ .  S RECORD=""
+"RTN","PRCOACT",74,0)
+ .  I PRCTT="PHA" D  Q:$O(PRCXM(0))
+"RTN","PRCOACT",75,0)
+ . . I VENDOR]"" S RECORD=$O(^PRC(443.75,"AO",PRCTT,PONO,VENDOR,0))
+"RTN","PRCOACT",76,0)
+ . . I 'RECORD D  I 'RECORD S PRCXM(ERRCNT)=$P($T(ERROR+19),";;",2)_$G(PRCDA)_"." D ERRCNT Q
+"RTN","PRCOACT",77,0)
+ . . . S RECORD=$O(^PRC(443.75,"AR",PONO,0))
+"RTN","PRCOACT",78,0)
+ . . Q:$O(PRCXM(0))
+"RTN","PRCOACT",79,0)
+ . . S VENDOR(1)=$P($G(^PRC(443.75,+$G(RECORD),0)),U,6)
+"RTN","PRCOACT",80,0)
+ . . I VENDOR]"",VENDOR(1)]""&(VENDOR'=VENDOR(1)) S PRCXM(ERRCNT)=$P($T(ERROR+20),";;",2)_$G(RECORD)_"." D ERRCNT Q
+"RTN","PRCOACT",81,0)
+ .  S:PRCTT="RFQ" RECORD=$O(^PRC(443.75,"AC",PRCTT,PONO,VENDOR,RFQ,0))
+"RTN","PRCOACT",82,0)
+ .  S:PRCTT="TXT" RECORD=$O(^PRC(443.75,"AF",PRCTT,PONO,VENDOR,TEXT,0))
+"RTN","PRCOACT",83,0)
+ .  I $G(^PRC(443.75,+$G(RECORD),0))']"" S PRCXM(ERRCNT)=$P($T(ERROR+12),";;",2)_$G(PONO)_"." D ERRCNT Q
+"RTN","PRCOACT",84,0)
+ .  L +^PRC(443.75,RECORD):180 E  S PRCXM(ERRCNT)=$P($T(ERROR+18),";;",2)_$G(RECORD)_"." D ERRCNT Q
+"RTN","PRCOACT",85,0)
+ . ;
+"RTN","PRCOACT",86,0)
+ .  I SEGT="RJ" D
+"RTN","PRCOACT",87,0)
+ .  .  S PRC(1,443.75,"?+1,",11)=$P(LINE,U,7)
+"RTN","PRCOACT",88,0)
+ .  .  S PRC(1,443.75,"?+1,",12)=$P(LINE,U,8)
+"RTN","PRCOACT",89,0)
+ .  .  S PRC(1,443.75,"?+1,",13)=$P(LINE,U,9)
+"RTN","PRCOACT",90,0)
+ .  .  S:$P(LINE,U,12)]"" PRC(1,443.75,"?+1,",17)=$P(LINE,U,12)
+"RTN","PRCOACT",91,0)
+ .  .  S:$P(LINE,U,13)]"" PRC(1,443.75,"?+1,",18)=$P(LINE,U,13)
+"RTN","PRCOACT",92,0)
+ .  .  S:$P(LINE,U,10)]"" PRC(1,443.75,"?+1,",14)=$P(LINE,U,10)
+"RTN","PRCOACT",93,0)
+ .  .  S RRC=$$EXTRL^PRCOACT0($P(LINE,U,15),1)
+"RTN","PRCOACT",94,0)
+ .  .  I RRC']"" S PRCXM(ERRCNT)=$P($T(ERROR+5),";;",2)_$G(PRCDA)_"." D ERRCNT
+"RTN","PRCOACT",95,0)
+ .  .  I RRC']"" S PRC(1,443.75,"?+1,",19)="E"
+"RTN","PRCOACT",96,0)
+ .  .  I RRC']"" S PRC(1,443.75,"?+1,",20)=$P($T(ERROR+5),";;",3) Q
+"RTN","PRCOACT",97,0)
+ .  .  S RRC=$O(^PRC(443.76,"B",RRC,0))
+"RTN","PRCOACT",98,0)
+ .  .  I RRC'>0 S PRCXM(ERRCNT)=$P($T(ERROR+6),";;",2)_$G(PRCDA)_" (Error Code is "_$$EXTRL^PRCOACT0($P(LINE,U,15),1)_")." D ERRCNT
+"RTN","PRCOACT",99,0)
+ .  .  I RRC'>0 S PRC(1,443.75,"?+1,",19)="E"
+"RTN","PRCOACT",100,0)
+ .  .  I RRC'>0 S PRC(1,443.75,"?+1,",20)=$P($T(ERROR+6),";;",3) Q
+"RTN","PRCOACT",101,0)
+ .  .  S PRC(1,443.75,"?+1,",15)=RRC
+"RTN","PRCOACT",102,0)
+ .  .  Q
+"RTN","PRCOACT",103,0)
+ .  S PRC(1,443.75,"?+1,",.01)=+$P($G(^PRC(443.75,RECORD,0)),U)
+"RTN","PRCOACT",104,0)
+ .  D UPDATE^DIE("","PRC(1)")
+"RTN","PRCOACT",105,0)
+ .  S COUNTER=COUNTER+1
+"RTN","PRCOACT",106,0)
+STOP .  L:$G(RECORD) -^PRC(443.75,RECORD)
+"RTN","PRCOACT",107,0)
+ .  Q
+"RTN","PRCOACT",108,0)
+ I $G(RECORD),COUNTER'=COUNT S PRCXM(ERRCNT)=$P($T(ERROR+7),";;",2)_$G(PRCDA)_"." D ERRCNT
+"RTN","PRCOACT",109,0)
+ ;
+"RTN","PRCOACT",110,0)
+EXIT I $O(PRCXM(0)) D PERROR^PRCOACT0 Q
+"RTN","PRCOACT",111,0)
+ D KILL^PRCOSRV3(PRCDA)
+"RTN","PRCOACT",112,0)
+ Q
+"RTN","PRCOACT",113,0)
+ERRCNT ;increment counter for multiple errors within RJ,TR processing
+"RTN","PRCOACT",114,0)
+ S ERRCNT=ERRCNT+1
+"RTN","PRCOACT",115,0)
+ Q
+"RTN","PRCOACT",116,0)
+ ;
+"RTN","PRCOACT",117,0)
+ERROR ;HERE IS THE LIST OF ERROR MESSAGES
+"RTN","PRCOACT",118,0)
+ ;;Expected an ACT or a PRJ transaction.  Received a ;;A1
+"RTN","PRCOACT",119,0)
+ ;;The STATION number sent from EDI can not be found. The number is ;;A2
+"RTN","PRCOACT",120,0)
+ ;;The second segment is not the expected AT segment. It was a ;;A3
+"RTN","PRCOACT",121,0)
+ ;;There is no STATION number sent from EDI.  IEN for 423.6 is ;;A4
+"RTN","PRCOACT",122,0)
+ ;;No REJECT REASON CODE from EDI. The record IEN in 423.6 is ;;A5
+"RTN","PRCOACT",123,0)
+ ;;The ERROR CODE can not be found in the EDI ERROR CODES file. The record IEN in 423.6 is ;;A6
+"RTN","PRCOACT",124,0)
+ ;;There is a difference in the number of TR or RJ segments expected and how many found. File 423.6 entry is ;;A7
+"RTN","PRCOACT",125,0)
+ ;;There is no "B" cross-reference entry for this transaction in file 423.5. The entry is ;;A8
+"RTN","PRCOACT",126,0)
+ ;;There is a "B" cross-reference entry for this transaction but no record.;;A9
+"RTN","PRCOACT",127,0)
+ ;;There is a record for this transaction but no mail group pointer is listed.;;A10
+"RTN","PRCOACT",128,0)
+ ;;The mail group entered in the record in file 423.5 can not be found in the mail group file.;;A11
+"RTN","PRCOACT",129,0)
+ ;;The incoming record can't be found in file 443.75.  The RFQ/PO# is ;;A12
+"RTN","PRCOACT",130,0)
+ ;;Required field TYPE OF TRANSACTION is blank. IEN for file 423.6 is ;;A13
+"RTN","PRCOACT",131,0)
+ ;;Required field REF NUMBER is blank. IEN for file 423.6 is ;;A14
+"RTN","PRCOACT",132,0)
+ ;;Required field VENDOR ID NUMBER is blank. IEN for file 423.6 is ;;A15
+"RTN","PRCOACT",133,0)
+ ;;Required field TYPE OF RFQ is blank. IEN for file 423.6 is ;;A16
+"RTN","PRCOACT",134,0)
+ ;;Required field TXT MESSAGE NUMBER is blank. IEN for file 423.6 is ;;A17
+"RTN","PRCOACT",135,0)
+ ;;Unable to access record in file 443.75. IEN is ;;A18
+"RTN","PRCOACT",136,0)
+ ;;Unable to locate entry in file 443.75. IEN for file 423.6 is ;;A19
+"RTN","PRCOACT",137,0)
+ ;;VENDOR ID on transmission does not match 443.75 entry.  The IEN is ;;A20
+"RTN","PRCOESE")
+0^2^B47704760^B47352791
+"RTN","PRCOESE",1,0)
+PRCOESE ;WISC/DJM-IFCAP EDI POA Server Interface ; [8/31/98 1:55pm]
+"RTN","PRCOESE",2,0)
+V ;;5.1;IFCAP;**202**;Oct 20, 2000;Build 27
+"RTN","PRCOESE",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCOESE",4,0)
+SERV N A,AA,AC,ACD,B,CC,CU,CU1,CU2,C1L,DA,DC,DIE,DR,EE,ERR,FOB,G,G1,I,IT
+"RTN","PRCOESE",5,0)
+ N KD,KP,L,LINE,LN,MPN,M1,N,N1,N1L,N2,N2L,N3,N3L,PC,PN,PO,PO1,PPM,PPT
+"RTN","PRCOESE",6,0)
+ N PRC,PRCNO,PRCOI,PU,QT,QTFLG,RP,S1,UC,UC1,UC2,UNIT,UP,UPN,VP,V1,V2
+"RTN","PRCOESE",7,0)
+ N X,X1,X2,PRCTC,PRCX,RECORD,STATION,STCK,VENDOR
+"RTN","PRCOESE",8,0)
+ K ERR
+"RTN","PRCOESE",9,0)
+ ;
+"RTN","PRCOESE",10,0)
+ ;If QTFLG=1, processing stops because the error is serious
+"RTN","PRCOESE",11,0)
+ ;
+"RTN","PRCOESE",12,0)
+ S (QTFLG,LN)=0
+"RTN","PRCOESE",13,0)
+ F  S LN=$O(^PRCF(423.6,PRCDA,1,LN)) QUIT:'LN  G:QTFLG>0 S1 D MAIN
+"RTN","PRCOESE",14,0)
+ ;
+"RTN","PRCOESE",15,0)
+ D KILL^PRCOSRV3(PRCDA)
+"RTN","PRCOESE",16,0)
+ QUIT
+"RTN","PRCOESE",17,0)
+ ;
+"RTN","PRCOESE",18,0)
+MAIN ;Start processing the POA segments
+"RTN","PRCOESE",19,0)
+ ;
+"RTN","PRCOESE",20,0)
+ S LINE=^(LN,0)
+"RTN","PRCOESE",21,0)
+ I LINE["$" D S1 QUIT  ;End of this record. Stop and process any errors.
+"RTN","PRCOESE",22,0)
+ ;
+"RTN","PRCOESE",23,0)
+ S A=$P(LINE,U)
+"RTN","PRCOESE",24,0)
+ S AA="SEG"_$S(A="ISM":"1",A="HE":"2",A="VE":"3",A="AC":"4",A="ST":"5",A="IT":"6",A="DE":"7",A="AK":"8",A="CO":"9",1:"10")
+"RTN","PRCOESE",25,0)
+ ;
+"RTN","PRCOESE",26,0)
+ D @AA ;Process segment
+"RTN","PRCOESE",27,0)
+ ;
+"RTN","PRCOESE",28,0)
+ QUIT
+"RTN","PRCOESE",29,0)
+ ;
+"RTN","PRCOESE",30,0)
+SEG1 S B=$P(LINE,U,4)
+"RTN","PRCOESE",31,0)
+ G:B'="POA" SEG10
+"RTN","PRCOESE",32,0)
+ S CC=$P(LINE,U,7)
+"RTN","PRCOESE",33,0)
+ F  Q:$A(CC,$L(CC))'=32  S CC=$E(CC,1,$L(CC)-1)
+"RTN","PRCOESE",34,0)
+ S CC=$E(CC,1,3)_"-"_$E(CC,4,$L(CC))
+"RTN","PRCOESE",35,0)
+ S ERR(CC,0)=""
+"RTN","PRCOESE",36,0)
+ S STATION=$P(LINE,U,3)
+"RTN","PRCOESE",37,0)
+ S STCK=$O(^PRC(411,"B",STATION,0))
+"RTN","PRCOESE",38,0)
+ I STCK'>0 S ERR("STATION")=STATION,QTFLG=1 Q
+"RTN","PRCOESE",39,0)
+ S PO=$O(^PRC(442,"B",CC,0))
+"RTN","PRCOESE",40,0)
+ S:PO="" ERR(CC,0)="*",QTFLG=1
+"RTN","PRCOESE",41,0)
+ Q:QTFLG>0
+"RTN","PRCOESE",42,0)
+ S PO1=$G(^PRC(442,PO,1))
+"RTN","PRCOESE",43,0)
+ S:PO1="" ERR(CC,0)="*",QTFLG=1
+"RTN","PRCOESE",44,0)
+ Q:QTFLG>0
+"RTN","PRCOESE",45,0)
+ S PPM=$P(PO1,U,10)
+"RTN","PRCOESE",46,0)
+ D BUL^PRCOESE1
+"RTN","PRCOESE",47,0)
+ ;
+"RTN","PRCOESE",48,0)
+ ; GATHER DATA FROM CONTROL SEGMENT.
+"RTN","PRCOESE",49,0)
+ ;
+"RTN","PRCOESE",50,0)
+ S PRCTC=$P(LINE,U,4)
+"RTN","PRCOESE",51,0)
+ S X1=$E($P(LINE,U,5),1,4)-1700_"0101"
+"RTN","PRCOESE",52,0)
+ S X2=$E($P(LINE,U,5),5,7)-1
+"RTN","PRCOESE",53,0)
+ D C^%DTC
+"RTN","PRCOESE",54,0)
+ S PRCX=X_"."_$P(LINE,U,6)
+"RTN","PRCOESE",55,0)
+ ;
+"RTN","PRCOESE",56,0)
+ QUIT  ;Exit the SEG1 sub routine
+"RTN","PRCOESE",57,0)
+ ;
+"RTN","PRCOESE",58,0)
+SEG2 QUIT
+"RTN","PRCOESE",59,0)
+ ;
+"RTN","PRCOESE",60,0)
+SEG3 ; GET DATA FROM "VE" SEGMENT.
+"RTN","PRCOESE",61,0)
+ S VENDOR=$P(LINE,U,2)
+"RTN","PRCOESE",62,0)
+ ;
+"RTN","PRCOESE",63,0)
+ ; NOW LETS FIND THE PROPER RECORD IN FILE 443.75.
+"RTN","PRCOESE",64,0)
+ ;
+"RTN","PRCOESE",65,0)
+ ;Austin did not provide the Vendor_Id.  Use the PO to get it.
+"RTN","PRCOESE",66,0)
+ I VENDOR="" D  QUIT:QTFLG=1
+"RTN","PRCOESE",67,0)
+ . N PO,IEN
+"RTN","PRCOESE",68,0)
+ . S PO=CC                                  ;PO number
+"RTN","PRCOESE",69,0)
+ . S IEN=$O(^PRC(442,"B",PO,""))            ;Get IEN
+"RTN","PRCOESE",70,0)
+ . S VENDOR=$P($G(^PRC(442,IEN,1)),U)       ;Internal_Vendor_Number
+"RTN","PRCOESE",71,0)
+ . S VENDOR=$P($G(^PRC(440,VENDOR,3)),U,3)  ;Vendor_Id
+"RTN","PRCOESE",72,0)
+ . I VENDOR'="" QUIT                        ;Vendor_Id (yes) 
+"RTN","PRCOESE",73,0)
+ . S $P(ERR("VENDOR"),U)="*",QTFLG=1        ;Vendor_Id (no)
+"RTN","PRCOESE",74,0)
+ .  ;
+"RTN","PRCOESE",75,0)
+ S RECORD=$O(^PRC(443.75,"AO","PHA",CC,VENDOR,0))
+"RTN","PRCOESE",76,0)
+ I RECORD="" S $P(ERR("RECORD"),U)="*",QTFLG=1
+"RTN","PRCOESE",77,0)
+ ;
+"RTN","PRCOESE",78,0)
+ QUIT  ;Exit the SEG3 sub routine
+"RTN","PRCOESE",79,0)
+ ;
+"RTN","PRCOESE",80,0)
+SEG4 S ERR(CC,"AC")=""
+"RTN","PRCOESE",81,0)
+ I $P(LINE,U,3)]"" D  ;
+"RTN","PRCOESE",82,0)
+ .  S FOB=$G(^PRC(442,PO,1))
+"RTN","PRCOESE",83,0)
+ .  S:FOB="" ERR(CC,"AC")="*"
+"RTN","PRCOESE",84,0)
+ .  S:$P(FOB,U,6)="" ERR(CC,"AC")="*"
+"RTN","PRCOESE",85,0)
+ .  I $P(FOB,U,6)'=$P(LINE,U,3) S $P(ERR(CC,"AC"),U,2)="*"
+"RTN","PRCOESE",86,0)
+ .  Q
+"RTN","PRCOESE",87,0)
+ .  ;
+"RTN","PRCOESE",88,0)
+ I $P(LINE,U,3)="" D  ;
+"RTN","PRCOESE",89,0)
+ .  S FOB=$G(^PRC(442,PO,1))
+"RTN","PRCOESE",90,0)
+ .  S:$P(FOB,U,6)'="" $P(ERR(CC,"AC"),U,3)="*"
+"RTN","PRCOESE",91,0)
+ .  Q
+"RTN","PRCOESE",92,0)
+ .  ;
+"RTN","PRCOESE",93,0)
+ S KP=$P(LINE,U,5)
+"RTN","PRCOESE",94,0)
+ S KD=$P(LINE,U,6)
+"RTN","PRCOESE",95,0)
+ S (EE,G1,PC)=""
+"RTN","PRCOESE",96,0)
+ S AC=$G(^PRC(442,PO,5,0))
+"RTN","PRCOESE",97,0)
+ S:AC="" $P(ERR(CC,"AC"),U,4)="*"
+"RTN","PRCOESE",98,0)
+ S:$P(AC,U,4)'>0 $P(ERR(CC,"AC"),U,4)="*"
+"RTN","PRCOESE",99,0)
+ Q:$P(ERR(CC,"AC"),U,4)]""
+"RTN","PRCOESE",100,0)
+ F ACD=1:1:$P(AC,U,4) D  ;
+"RTN","PRCOESE",101,0)
+ .  S PPT(ACD)=$G(^PRC(442,PO,5,ACD,0))
+"RTN","PRCOESE",102,0)
+ .  I +$P(PPT(ACD),U)=$P(PPT(ACD),U) S EE=$S(EE]"":EE_"^"_ACD,1:ACD)
+"RTN","PRCOESE",103,0)
+ .  Q
+"RTN","PRCOESE",104,0)
+ .  ;
+"RTN","PRCOESE",105,0)
+ I EE]"" D  ;
+"RTN","PRCOESE",106,0)
+ .  S G=$P(EE,U)
+"RTN","PRCOESE",107,0)
+ .  S PC=$P(PPT(ACD),U)/100
+"RTN","PRCOESE",108,0)
+ .  S G1=$P(PPT(ACD),U,2)
+"RTN","PRCOESE",109,0)
+ .  Q
+"RTN","PRCOESE",110,0)
+ .  ;
+"RTN","PRCOESE",111,0)
+ I KP]"",PC'>0 S $P(ERR(CC,"AC"),U,7)="*"
+"RTN","PRCOESE",112,0)
+ I EE]"",KP]"",KP'=PC S $P(ERR(CC,"AC"),U,5)="*"
+"RTN","PRCOESE",113,0)
+ I KD]"",G1="" S $P(ERR(CC,"AC"),U,8)="*"
+"RTN","PRCOESE",114,0)
+ I EE]"",KD]"",KD'=G1 S $P(ERR(CC,"AC"),U,6)="*"
+"RTN","PRCOESE",115,0)
+ I KP="",PC>0 S $P(ERR(CC,"AC"),U,9)="*"
+"RTN","PRCOESE",116,0)
+ I KD="",G1>0 S $P(ERR(CC,"AC"),U,10)="*"
+"RTN","PRCOESE",117,0)
+ ;
+"RTN","PRCOESE",118,0)
+ QUIT  ;Exit the SEG4 sub routine
+"RTN","PRCOESE",119,0)
+ ;
+"RTN","PRCOESE",120,0)
+SEG5 QUIT
+"RTN","PRCOESE",121,0)
+ ;
+"RTN","PRCOESE",122,0)
+SEG6 ;Process the "IT" segment from Austin
+"RTN","PRCOESE",123,0)
+ S B=$P(LINE,U,2)    ;item line number  
+"RTN","PRCOESE",124,0)
+ I B'>0 S $P(ERR(CC,.5),U,13)="*" Q
+"RTN","PRCOESE",125,0)
+ S ERR(CC,B)=""
+"RTN","PRCOESE",126,0)
+ S IT=$O(^PRC(442,PO,2,"B",B,0))
+"RTN","PRCOESE",127,0)
+ S:IT="" $P(ERR(CC,B),U,2)="*"
+"RTN","PRCOESE",128,0)
+ Q:IT=""
+"RTN","PRCOESE",129,0)
+ S IT=$G(^PRC(442,PO,2,IT,0))
+"RTN","PRCOESE",130,0)
+ S:IT="" $P(ERR(CC,B),U,2)="*"
+"RTN","PRCOESE",131,0)
+ Q:IT=""
+"RTN","PRCOESE",132,0)
+ S VP=$P(IT,U,6)
+"RTN","PRCOESE",133,0)
+ S:VP="" $P(ERR(CC,B),U,3)="*"
+"RTN","PRCOESE",134,0)
+ S:$E(VP,1)="#" VP=$E(VP,2,99)
+"RTN","PRCOESE",135,0)
+ S:VP'=$P(LINE,U,5) $P(ERR(CC,B),U,9)="*"
+"RTN","PRCOESE",136,0)
+ S QT=$P(IT,U,2)
+"RTN","PRCOESE",137,0)
+ S:QT="" $P(ERR(CC,B),U,5)="*"
+"RTN","PRCOESE",138,0)
+ S QT=QT\1+(QT#1>0)_"00"
+"RTN","PRCOESE",139,0)
+ S:QT'=$P(LINE,U,8) $P(ERR(CC,B),U,10)="*"
+"RTN","PRCOESE",140,0)
+ S PN=$P(LINE,U,6) ;Product number
+"RTN","PRCOESE",141,0)
+ I PN]"" D  ;
+"RTN","PRCOESE",142,0)
+ .  S RP=$P(IT,U,5)
+"RTN","PRCOESE",143,0)
+ .  S:RP="" $P(ERR(CC,B),U,8)="*"
+"RTN","PRCOESE",144,0)
+ .  I RP]"" D  ;
+"RTN","PRCOESE",145,0)
+ .  .  S MPN=$G(^PRC(441,RP,3))
+"RTN","PRCOESE",146,0)
+ .  .  S:MPN="" $P(ERR(CC,B),U,8)="*"
+"RTN","PRCOESE",147,0)
+ .  .  I MPN]"" D  ;
+"RTN","PRCOESE",148,0)
+ .  .  .  S MPN=$P(MPN,U,5)
+"RTN","PRCOESE",149,0)
+ .  .  .  S:$E(MPN,1)="#" MPN=$E(MPN,2,99)
+"RTN","PRCOESE",150,0)
+ .  .  .  S:MPN'=PN $P(ERR(CC,B),U,8)="*"
+"RTN","PRCOESE",151,0)
+ .  .  .  Q
+"RTN","PRCOESE",152,0)
+ .  .  Q
+"RTN","PRCOESE",153,0)
+ .  Q
+"RTN","PRCOESE",154,0)
+ .  ;
+"RTN","PRCOESE",155,0)
+ S DC=$P(LINE,U,7) ;Get the National drug code
+"RTN","PRCOESE",156,0)
+ I DC]"" D
+"RTN","PRCOESE",157,0)
+ .  S N=$P(IT,U,15)
+"RTN","PRCOESE",158,0)
+ .  S:N="" $P(ERR(CC,B),U,4)="*"
+"RTN","PRCOESE",159,0)
+ .  I N]"" D
+"RTN","PRCOESE",160,0)
+ .  .  S N1=$P(N,"-")
+"RTN","PRCOESE",161,0)
+ .  .  S N2=$P(N,"-",2)
+"RTN","PRCOESE",162,0)
+ .  .  S N3=$P(N,"-",3)
+"RTN","PRCOESE",163,0)
+ .  .  S N1="000000"_N1
+"RTN","PRCOESE",164,0)
+ .  .  S N1L=$L(N1)
+"RTN","PRCOESE",165,0)
+ .  .  S N1=$E(N1,N1L-5,N1L)
+"RTN","PRCOESE",166,0)
+ .  .  S N2="0000"_N2
+"RTN","PRCOESE",167,0)
+ .  .  S N2L=$L(N2)
+"RTN","PRCOESE",168,0)
+ .  .  S N2=$E(N2,N2L-3,N2L)
+"RTN","PRCOESE",169,0)
+ .  .  S N3="00"_N3
+"RTN","PRCOESE",170,0)
+ .  .  S N3L=$L(N3)
+"RTN","PRCOESE",171,0)
+ .  .  S N3=$E(N3,N3L-1,N3L)
+"RTN","PRCOESE",172,0)
+ .  .  S N=N1_N2_N3
+"RTN","PRCOESE",173,0)
+ .  .  S:N'=DC $P(ERR(CC,B),U,4)="*"
+"RTN","PRCOESE",174,0)
+ .  .  Q
+"RTN","PRCOESE",175,0)
+ .  Q
+"RTN","PRCOESE",176,0)
+ .  ;
+"RTN","PRCOESE",177,0)
+ S UC=$P(LINE,U,10) ;Get the unit cost
+"RTN","PRCOESE",178,0)
+ S UC1=$E(UC,1,$L(UC)-4)
+"RTN","PRCOESE",179,0)
+ S UC2=$E(UC,$L(UC)-3,99)
+"RTN","PRCOESE",180,0)
+ S UC1=$E(UC1+1000000,2,7)
+"RTN","PRCOESE",181,0)
+ I UC2="0000" S UC=UC1_UC2 G S6B
+"RTN","PRCOESE",182,0)
+ S UC2="."_UC2
+"RTN","PRCOESE",183,0)
+ S UC2=$E($E(UC2+.005,2,3)_"0000",1,4)
+"RTN","PRCOESE",184,0)
+ S UC=UC1_UC2
+"RTN","PRCOESE",185,0)
+S6B S CU=$P(IT,U,9)
+"RTN","PRCOESE",186,0)
+ S:CU="" $P(ERR(CC,B),U,7)="*"
+"RTN","PRCOESE",187,0)
+ G:CU="" S6A
+"RTN","PRCOESE",188,0)
+ I CU]"",CU="N/C" D  G S6A
+"RTN","PRCOESE",189,0)
+ .  S CU="0000000000"
+"RTN","PRCOESE",190,0)
+ .  S:UC'=CU $P(ERR(CC,B),U,12)="*"
+"RTN","PRCOESE",191,0)
+ .  Q
+"RTN","PRCOESE",192,0)
+ .  ;
+"RTN","PRCOESE",193,0)
+ S CU1=$P(CU,".")
+"RTN","PRCOESE",194,0)
+ S CU2=$P(CU,".",2)
+"RTN","PRCOESE",195,0)
+ S CU1="000000"_CU1
+"RTN","PRCOESE",196,0)
+ S C1L=$L(CU1)
+"RTN","PRCOESE",197,0)
+ S CU1=$E(CU1,C1L-5,C1L)
+"RTN","PRCOESE",198,0)
+ S CU2=CU2_"0000"
+"RTN","PRCOESE",199,0)
+ S CU2=$E(CU2,1,4)
+"RTN","PRCOESE",200,0)
+ S CU=CU1_CU2
+"RTN","PRCOESE",201,0)
+ S:UC'=CU $P(ERR(CC,B),U,12)="*"
+"RTN","PRCOESE",202,0)
+S6A S PU=$P(LINE,U,9) ;Get the unit of purchase
+"RTN","PRCOESE",203,0)
+ S UP=$P(IT,U,3)
+"RTN","PRCOESE",204,0)
+ S:UP="" $P(ERR(CC,B),U,6)="*"
+"RTN","PRCOESE",205,0)
+ I UP]"" D  ;
+"RTN","PRCOESE",206,0)
+ .  S UPN=$G(^PRCD(420.5,UP,0))
+"RTN","PRCOESE",207,0)
+ .  S:UPN="" $P(ERR(CC,B),U,6)="*"
+"RTN","PRCOESE",208,0)
+ .  I UPN]"" S UNIT=$P(UPN,U) S:UNIT'=PU $P(ERR(CC,B),U,11)="*"
+"RTN","PRCOESE",209,0)
+ .  Q
+"RTN","PRCOESE",210,0)
+ .  ;
+"RTN","PRCOESE",211,0)
+ S DA(1)=PO
+"RTN","PRCOESE",212,0)
+ S DIE="^PRC(442,DA(1),2,"
+"RTN","PRCOESE",213,0)
+ S DR="12///@;12.5///@;13///@;13.5///@"
+"RTN","PRCOESE",214,0)
+ S DA=B
+"RTN","PRCOESE",215,0)
+ D ^DIE
+"RTN","PRCOESE",216,0)
+ S PRC(1,443.75,"?+1,",.01)=$P($G(^PRC(443.75,RECORD,0)),U)
+"RTN","PRCOESE",217,0)
+ S PRC(1,443.75,"?+1,",23)=PRCTC
+"RTN","PRCOESE",218,0)
+ S PRC(1,443.75,"?+1,",24)=PRCX
+"RTN","PRCOESE",219,0)
+ I $G(ERR(CC,B))]"" D  ;
+"RTN","PRCOESE",220,0)
+ .  S PRC(1,443.75,"?+1,",19)="E"
+"RTN","PRCOESE",221,0)
+ .  S PRC(1,443.75,"?+1,",20)=ERR(CC,B)
+"RTN","PRCOESE",222,0)
+ .  Q
+"RTN","PRCOESE",223,0)
+ .  ;
+"RTN","PRCOESE",224,0)
+ D UPDATE^DIE("","PRC(1)")
+"RTN","PRCOESE",225,0)
+ ;
+"RTN","PRCOESE",226,0)
+ QUIT  ;Exit the SEG6 sub routine
+"RTN","PRCOESE",227,0)
+ ;
+"RTN","PRCOESE",228,0)
+SEG7 QUIT
+"RTN","PRCOESE",229,0)
+ ;
+"RTN","PRCOESE",230,0)
+SEG8 K DIE,DA,DR
+"RTN","PRCOESE",231,0)
+ S B=$P(LINE,U,2)
+"RTN","PRCOESE",232,0)
+ I B'>0 S $P(ERR(CC,.5),U,13)="*" Q
+"RTN","PRCOESE",233,0)
+ S B=$O(^PRC(442,PO,2,"B",B,0))
+"RTN","PRCOESE",234,0)
+ I B'>0 S $P(ERR(CC,B),U,2)="*" Q
+"RTN","PRCOESE",235,0)
+ S DA(1)=PO
+"RTN","PRCOESE",236,0)
+ S DA=B
+"RTN","PRCOESE",237,0)
+ S DIE="^PRC(442,DA(1),2,"
+"RTN","PRCOESE",238,0)
+ I $P($G(ERR(CC,B)),U,2)="" D  ;
+"RTN","PRCOESE",239,0)
+ .  S V1=$P(LINE,U,3)
+"RTN","PRCOESE",240,0)
+ .  S V2=$P(LINE,U,4)
+"RTN","PRCOESE",241,0)
+ .  S:$P(^PRC(442,PO,2,B,2),U,9)="" DR="12///^S X=V1;12.5///^S X=V2"
+"RTN","PRCOESE",242,0)
+ .  S:'$D(DR) DR="13///^S X=V1;13.5///^S X=V2"
+"RTN","PRCOESE",243,0)
+ .  D ^DIE
+"RTN","PRCOESE",244,0)
+ .  Q
+"RTN","PRCOESE",245,0)
+ .  ;
+"RTN","PRCOESE",246,0)
+ QUIT  ;Exit the SEG8 sub routine
+"RTN","PRCOESE",247,0)
+ ;
+"RTN","PRCOESE",248,0)
+SEG9 QUIT
+"RTN","PRCOESE",249,0)
+ ;
+"RTN","PRCOESE",250,0)
+SEG10 S ERR("SEG")=A,QTFLG=1
+"RTN","PRCOESE",251,0)
+ ;
+"RTN","PRCOESE",252,0)
+ QUIT  ;Exit the SEG10 sub routine
+"RTN","PRCOESE",253,0)
+ ;
+"RTN","PRCOESE",254,0)
+S1 D ^PRCOESE1
+"RTN","PRCOESE",255,0)
+ ;
+"RTN","PRCOESE",256,0)
+ QUIT
+"VER")
+8.0^22.2
+"BLD",10728,6)
+^177
+**END**
+**END**
+

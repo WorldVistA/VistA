@@ -1,0 +1,130 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/21/17 at 08:35
+=============================================================================
+Run Date: FEB 22, 2018                     Designation: PSB*3*104
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #84                      Status: Released
+                  Compliance Date: MAR 25, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*99    <<= must be installed BEFORE `PSB*3*104'
+
+Subject: BROKER TIMEOUT - MISSED MEDICATIONS REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ 1. R16686630FY17 - Ward 9C keeps getting this error (Timeout) intermittently
+                    when trying to run the Missed Medications Report  
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R16686630FY17 - Ward 9C keeps getting this error (Timeout) intermittently
+                    when trying to run the Missed Medications Report  
+    
+ Problem: 
+ --------
+ Milwaukee VAMC reported getting a RPC Broker Timeout error when running the
+ BCMA Missed Medications Report for one specific ward (9C). The reason they
+ were getting this error is because Ward 9C has quite a few long term care
+ patients and the report retrieves information for every single order with
+ medication that requires removal (e.g., patches) for all patients in that
+ ward before deciding whether the order should be in the report or not.
+    
+ Resolution:
+ -----------
+ Modified the routine PSBUTL at the REMOVES line tag and moved the 
+ screening filters up before the call to D PSJ1^PSBVT.  This change will
+ have no impact whatsoever on the output of the report and it will
+ considerably decrease the amount of time it takes to run it.
+  
+    
+     
+ Test Sites:
+ -----------
+ Milwaukee VAMC
+ Minneapolis HCS   
+   
+  
+ Installation Instructions:
+ -------------------------- 
+ The Pharmacy Benefits Management (PBM) users should not be running the AMIS
+ Report while this patch is being installed. It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select the
+       Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSB*3.0*104:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', enter No.
+    
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', enter No. 
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBUTL
+    Before:B246701379   After:B253039260  **3,9,13,38,45,46,63,83,97,99,104**
+ 
+Routine list of preceding patches: 99
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 14, 2017
+Completed By:                               Date Completed: FEB 21, 2018
+Released By :                               Date Released : FEB 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

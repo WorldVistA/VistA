@@ -1,0 +1,318 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 01/08/18 at 13:50
+=============================================================================
+Run Date: FEB 15, 2018                     Designation: LR*5.2*495
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #399                    Status: Released
+                  Compliance Date: MAR 18, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*468  <<= must be installed BEFORE `LR*5.2*495'
+
+Subject: NDS ENHANCEMENT FOR ETIOLOGY FILE (#61.2)
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*495 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*495 does not
+ alter or modify any software design safeguards or safety critical
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*495 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+ made, no specific validation requirements exist as a result of
+ installation of this patch.
+  
+ Description:
+ NDS enhancement for the ETIOLGY file (#61.2) to add INACTIVE DATE and
+ change the SNOMED extract to include the new INACTIVE DATE. Add two options
+ that will allow the LIM and the Microbiology Supervisor to populate the new
+ INACTIVE DATE field. Modify the deployment method for SNOMED updates from
+ a patch FTP methodology to utilizing the standing Laboratory MailMan Server
+ functions for files: TOPOGRAPHY FIELD File (#61), ETIOLOGY FIELD File
+ (#61.2), and COLLECTION SAMPLE File (#62).
+  
+ The addition of the INACTIVE DATE field to the ETIOLOGY FIELD File (#61.2)
+ will bring the file into accordance with the TOPOGRAPHY FIELD File (#61)
+ and the COLLECTION SAMPLE File (#62), which already have an INACTIVE DATE
+ field.
+ By adding options to update the INACTIVE DATE field by the LIM and
+ Microbiology Supervisor, the ETIOLOGY FIELD File (#61.2) will be
+ positioned for future efforts to screen out inactive entries.
+  
+ There are two new VistA options exported with the patch. Both are locked 
+ with the LRSUPER security key. These options have been added to the LIM 
+ NDS MENU and to the Microbiology menu:
+  
+ Edit Inactive DT Multiple - ETIOLOGY File [LRMI EDIT INACT DT MULTI 61.2]
+ Edit Inactive DT Single - ETIOLOGY File   [LRMI EDIT INACT DT SINGLE 61.2]
+  
+  
+ The Edit Inactive DT Multiple-ETIOLOGY File allows the LIM or Microbiology
+ Supervisor to enter the INACTIVE DATE for items that are now inactive. The
+ Option will allow the person to select an IDENTIFER. If others had 
+ previously reviewed entries for the selected IDENTIFIER, the option will ask
+ the person if they wish to continue or to start over. If it is the first
+ time, or if starting over, the option will start with the oldest entry working
+ towards the newest entry. The option will display entries that do not have
+ an INACTIVE date and are associated to the IDENTIFIER selected.
+  
+ The Edit Inactive DT Single-ETIOLOGY File allows the LIM or Microbiology
+ Supervisor to enter, edit, or remove the INACTIVE DATE for the item that was
+ Selected for edit.
+  
+ The current SNOMED extract will be modified to include the ETIOLOGY FIELD
+ File (#61.2) INACTIVE DATE field. This will be in line with the TOPOGRAPHY
+ FIELD File (#61) and the COLLECTION SAMPLE File (#62) which already report
+ their respective INACTIVE DATEs.
+ The current process for send SNOMED updates for the TOPOGRAPHY FIELD (#61),
+ ETIOLOGY FIELD (#61.2), and COLLECTION SAMPLE (#62) files uses a patch
+ process with the facilities having to FTP the SNOMED update file for
+ processing. This has proven to be cumbersome and slow in deploying updates.
+ By changing the method to use the standing Laboratory MailMan server side
+ functions to send the SNOMED update file to the facilities the turn around
+ time for the updates will be faster and more consistent. Once the update has
+ been loaded at the facility a mailman message will be sent the facility's
+ local G.LMI mailman group that the file has been loaded and is ready for
+ processing.
+  
+  
+ Patch Components:
+ Files and Fields
+ Mailman Group
+ Input Templates
+ Options
+ Routines
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)               New/Modified/Deleted
+ ------------------   -------------------               --------------------
+ ETIOLOGY FIELD File  (#61.2)                           Modified
+                      INACTIVE DATE (#64.9102)          New
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name  New/Modified/Deleted
+ ---------------  --------------------
+ LMI                Modified
+ LAB MAPPING        Modified
+  
+  
+ Templates Associated:
+ ---------------------
+  
+ Template Name         Type  File Name (Number)         New/Modified/Deleted 
+ -------------         ----- ------------------         --------------------
+ LRMIETI INACTIVE DATE INPUT ETIOLOGY FIELD File(#61.2) Modified
+  
+  
+ Options Associated:
+  
+ Option Name                             Type           New/Modified/Deleted
+ -----------                             ----           -------------------- 
+ LRMI EDIT INACT DT MULTI 61.2           INPUT          New
+ LRMI EDIT INACT DT SINGLE 61.2          INPUT          New
+  
+  
+ Routines Associated:
+  
+ Routine Name:
+ --------------
+ LRMIEDIM            New
+ LRMIEDIS            New
+ LRSRVR              Modified
+ LRSRVR6             Modified
+ LRSRVR9B            New
+  
+  
+ Test Sites:
+ ----------
+  
+ Central Plains (Iowa City) (Station 636A8)
+ Boston                     (Station 523)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ The software for this patch is being released as a FORUM patch.
+ Documentation describing the new functionality introduced by this patch
+ are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:           domain.ext  
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                                 File Name            FTP Mode
+ -----------------------------------------------------------------------
+ LR_52_495 Deployment, Installation,
+ Back-Out, and Rollback Guide          lr_5-2_495_ig.doc      BINARY
+ LR_52_495 Deployment, Installation,
+ Back-Out, and Rollback Guide          lr_5-2_495_ig.pdf      BINARY
+ Laboratory NDS LIM User Manual
+ LR*5.2*468                            la1_1_um.dox           BINARY
+ Laboratory NDS LIM User Manual
+ LR*5.2*468                            la1_1_um.pdf           BINARY
+ Laboratory User Manual Version 5.2    lab5_2um.docx          BINARY
+ Laboratory User Manual Version 5.2    lab5_2um.pdf           BINARY
+ Laboratory Technical Manual
+ Version 5.2                           lab5_2tm.docx          BINARY
+ Laboratory Technical Manual
+ Version 5.2                           lab5_2tm.pdf           BINARY
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+  
+ It is recommended that a Local Patch Backup is created that can
+ be re-installed in the event patch LR*5.2*495 must be backed out.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (lr_5-2_495_ig.pdf) for complete installation instructions.
+  
+ Pre-Installation Actions:
+ =========================
+  
+ It is recommended that the LIM's Name be recorded for inclusion in the
+ existing LMI and LAB MAPPING groups.
+  
+  
+ Pre-Installation Instructions:
+ ==============================
+ The back-out plan has pre-installation actions. See the LR_52_495
+ Deployment, Installation, Back-Out, and Rollback Guide for details.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (lr_5-2_495_ig.pdf) for complete installation instructions.
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu.  From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch #(ex. LR*5.2*495):
+  
+ a.      Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.      Verify/enter the proper name(s) of the Mail Group coordinators for
+         G.LMI and G.LAB MAPPING when prompted.
+  
+ 6.      When prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// 
+  
+ 7.      When prompted Want KIDS to INHIBIT LOGONs during the install?
+         NO//
+  
+ 8.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO// 
+  
+ 9.      If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+  
+ Post-Installation Overview:
+ --------------------------
+ As part of the Post Install actions routine LR495PO will 'save' a data
+ image of files 61, 61.2, 62, and 95.4 for historical purposes's into
+ ^XTEMP("LR SAVE OF 61,61.2,62,95.4" with an expiration date of one year
+ post install.
+   
+ Post-Installation Instructions:
+ -------------------------------
+  
+ In the event a site determines that this patch should be backed out,
+ the site should submit a CA SDM ticket with the NSD for assistance
+ with the procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (lr_5-2_495_ig.pdf) for complete installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR495PO
+    Before:       n/a   After:  B2398805  **495**
+Routine Name: LRMIEDIM
+    Before:       n/a   After: B15196739  **495**
+Routine Name: LRMIEDIS
+    Before:       n/a   After:  B4897577  **495**
+Routine Name: LRSRVR
+    Before: B19202402   After: B20098567  **232,303,346,350,468,495**
+Routine Name: LRSRVR6
+    Before: B37896776   After: B41247527  **346,378,350,425,460,495**
+Routine Name: LRSRVR8
+    Before:B248084471   After:B259906666  **350,495**
+Routine Name: LRSRVR9B
+    Before:       n/a   After: B47147933  **495**
+ 
+Routine list of preceding patches: 460, 468
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2017
+Completed By:                               Date Completed: FEB 14, 2018
+Released By :                               Date Released : FEB 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

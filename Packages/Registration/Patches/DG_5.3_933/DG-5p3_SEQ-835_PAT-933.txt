@@ -1,0 +1,340 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/11/17 at 13:22
+=============================================================================
+Run Date: FEB 12, 2018                     Designation: DG*5.3*933
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #835                    Status: Released
+                  Compliance Date: MAR 15, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*782  <<= must be installed BEFORE `DG*5.3*933'
+                    (v)HDI*1*19    <<= must be installed BEFORE `DG*5.3*933'
+
+Subject: REGISTRATION NATIVE DOMAIN STANDARDIZATION
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Demographics Domain enhancement includes
+ 3 patches that must be installed in the following order:
+  
+      1.  XU*8.0*682
+      2.  HDI*1.0*19
+      3.  DG*5.3*933
+  
+ **************************************************************************
+  
+ *************************************************************************
+ *                                                                       *
+ * IMPORTANT TECHNICAL NOTE regarding this patch, DG*5.3*933, and XINDEX *
+ *                                                                       *
+ * XINDEX will report the following unfounded error AFTER patch          *
+ * installation.   This error can be ignored.                            *
+ *                                                                       *
+ * DGZRT    * *  139 Lines,  6922 Bytes, Checksum: B36061811             *
+ *          ..Q:'@($Q(ZZZ(99999999999),-1))   ; Ignore "Invalid or       *
+ *          wrong number of  arguments to a function" XINDEX warning.    *
+ * POST+65      F - Invalid or wrong number of arguments to a function.  *
+ *                                                                       *
+ *************************************************************************
+  
+ The Department of Veterans Affairs (VA) has established a process for
+ implementing standard terminology/terminologies within individual clinical
+ domains for the exchange of data. The intent of this effort is to provide
+ the detailed groundwork necessary for industry-wide interoperability. The
+ objective of this process is to enable the most user friendly interface as
+ possible in the implementation of the native standardization along with
+ all of the activities required to operationalize the change within the 
+ VistA environment and the associated terminology consuming applications.
+  
+ This patch implements Demographics domain changes required by the
+ Collaborative Terminology Tooling & Data Management (CTT & DM) Native
+ Domain Standardization (NDS) project. This patch adds the following new
+ 'Master' files containing standard sets of concepts from the 
+ Health Level Seven (HL7) Standards Development Organization (SDO): 
+ RACE MASTER (#10.99), MASTER MARITAL STATUS (#11.99), and MASTER RELIGION 
+ (#13.99). New fields have also been added to the RACE (#10), MARITAL
+ STATUS (#11), and RELIGION (#13) files pointing to the corresponding 
+ master file for the purpose of interoperability, by allowing each VA 
+ concept (Race, Marital Status, Religion) to be associated with a standard,
+ interoperable, concept.
+  
+ The RACE MASTER (#10.99), MASTER MARITAL STATUS (#11.99), and MASTER 
+ RELIGION (#13.99) files have been 'locked down' to prevent local changes
+ to the contents of the file, as each of these files contain entries 
+ representing the sets of concept names and codes from the respective
+ Standards Development Organizations, and a VA Unique Identifier (VUID) 
+ identifying the standard SDO concept across the VHA enterprise.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)          New/Modified/Deleted
+ ------------------     -------------- -----        --------------------
+ RACE (#10)             RACE MASTER  (#90)                  New
+  
+ RACE MASTER (#10.99)   REPLACED BY VHA STANDARD            New
+                         TERM (#99.97)
+ RACE MASTER (#10.99)   MASTER ENTRY FOR VUID (#99.98)      New
+ RACE MASTER (#10.99)   VUID (#99.99)                       New
+ RACE MASTER (#10.99)   EFFECTIVE DATE/TIME (#99.991)       New
+ EFFECTIVE DATE/TIME    EFFECTIVE DATE/TIME (#.01)          New
+  (sub-file #10.9901)
+ EFFECTIVE DATE/TIME    STATUS (.02)                        New
+  (sub-file #10.9901)  
+  
+ MARITAL STATUS (#11)   MASTER MARITAL STATUS (#90)         New
+  
+ MASTER MARITAL STATUS  REPLACED BY VHA STANDARD            New
+  (#11.99)               TERM (#99.97)
+ MASTER MARITAL STATUS  MASTER ENTRY FOR VUID (#99.98)      New
+  (#11.99)
+ MASTER MARITAL STATUS  VUID (#99.99)                       New
+  (#11.99) 
+ MASTER MARITAL STATUS  EFFECTIVE DATE/TIME (#99.991)       New
+  (#11.99)
+ EFFECTIVE DATE/TIME    EFFECTIVE DATE/TIME (#.01)          New
+  (sub-file #11.9901)
+ EFFECTIVE DATE/TIME    STATUS (.02)                        New
+  (sub-file #11.9901)  
+  
+ RELIGION (#13)         MASTER RELIGION (#13.99)            New
+  
+ MASTER RELIGION        REPLACED BY VHA STANDARD            New
+  (#13.99)               TERM (#99.97)
+ MASTER RELIGION        MASTER ENTRY FOR VUID (#99.98)      New
+  (#13.99)
+ MASTER RELIGION        VUID (#99.99)                       New
+  (#13.99)
+ RELIGION (#13)         EFFECTIVE DATE/TIME (#99.991)       New
+  (#13.99)
+ EFFECTIVE DATE/TIME    EFFECTIVE DATE/TIME (#.01)          New
+  (sub-file #13.9901)
+ EFFECTIVE DATE/TIME    STATUS (.01)                        New
+  (sub-file #13.9901)  
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                Type      New/Modified/Deleted
+ -----------                ----      -------------------- 
+ DG SYSTEM DEFINITION MENU  Menu          Modified
+ DGMF AMAIN                 Run Routine   New
+ DGMF MENU                  Menu          New
+ DGMF RMAIN                 Run Routine   New
+   
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  N/A
+  
+ Templates Associated:
+  
+ Template Name    Type    File Name (Number)    New/Modified/Deleted
+ -------------    ----    ------------------    --------------------
+ DGMF AMREL       INPUT   RACE (#10)              New
+ DGMF AMSTAT      INPUT   MARITAL STATUS (#11)    New
+ DGMF ARACE       INPUT   RELIGION (#13)          New
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ CENTRAL PLAINS HCS (IOWA CITY, IA, Station 636)
+ MADISON VAMC (MADISON, WI, Station 607)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is being released as a FORUM patch. Documentation
+ describing the new functionality introduced by this patch are
+ available.
+  
+ The preferred method is to retrieve files from download.
+ vista.domain.ext. This transmits the files from the first available
+ server. Sites may also elect to retrieve files directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:            domain.ext 
+ Salt Lake City:   domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                     File Name            FTP Mode
+ ----------------------------------------------------------------------
+ PIMS Technical Manual                pimstm.pdf           Binary
+ PIMS Technical Manual                pimstm.doc           NA
+  
+ Deployment, Installation, Back-Out,  
+ and Rollback Guide                   dg_5_3_933_ig.pdf    Binary
+ Deployment, Installation, Back-Out,
+ and Rollback Guide                   dg_5_3_933_ig.doc    NA
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Pre-Installation Instructions:
+ ------------------------------
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (dg_5_3_933_ig.doc) for complete installation instructions.
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (dg_5_3_933_ig.doc) for complete installation instructions.
+  
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu. From this menu, you may elect to use the
+ following options. When prompted for the INSTALL NAME enter the patch
+ :DG*5.3*933
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will allow
+ you to view all changes that will be made when this patch is installed.
+ It compares all components of this patch routines, DDs, templates,
+ etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO//'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//'
+   
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In the event  a site determines that this patch should be backed out, the 
+ site should submit a CA SDM ticket with the NSD for assistance with the 
+ procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (dg_5_3_933_ig.doc) for complete installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG933PO
+    Before:       n/a   After: B27885525  **933**
+Routine Name: DGMFA10
+    Before:       n/a   After: B14104060  **933**
+Routine Name: DGMFA11
+    Before:       n/a   After: B14590448  **933**
+Routine Name: DGMFA13
+    Before:       n/a   After: B13906961  **933**
+Routine Name: DGMFASS
+    Before:       n/a   After:  B3776607  **933**
+Routine Name: DGMFR10
+    Before:       n/a   After: B72687376  **933**
+Routine Name: DGMFR11
+    Before:       n/a   After: B68721321  **933**
+Routine Name: DGMFR13
+    Before:       n/a   After: B62970443  **933**
+Routine Name: DGMFRPT
+    Before:       n/a   After:  B3969553  **933**
+Routine Name: DGNDSU
+    Before:       n/a   After: B33380048  **933**
+Routine Name: DGZRT
+    Before:       n/a   After: B36061811  **933**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2016
+Completed By:                               Date Completed: FEB 12, 2018
+Released By :                               Date Released : FEB 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

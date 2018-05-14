@@ -1,0 +1,156 @@
+$TXT Created by                    R at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/25/17 at 15:38
+=============================================================================
+Run Date: FEB 12, 2018                     Designation: EAS*1*152
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #129                      Status: Released
+                  Compliance Date: MAR 15, 2018
+=============================================================================
+
+Associated patches: (v)EAS*1*96    <<= must be installed BEFORE `EAS*1*152'
+
+Subject: ALLOW ORU-Z10 TRANSACTION TO PROCESS FOR SAME INCOME YEAR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch, EAS*1.0*152, will enable the ORU~Z10 HL7 message to process
+ when the previous means test on file was a converted means test and the
+ means test on the ORU~Z10 message is for an income year after the
+ converted means test.
+  
+ Associated tickets:
+ ===================
+ I9941275FY16 - Means Test/Copay Test not transmitting.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Richard L. Roudebush VA Medical Center (Indianapolis) 
+ VA Maryland Health Care System (Baltimore, Loch Raven, Perry Point)
+  
+ Ticket Overview:
+ ================
+ I9941275FY16 - Means Test/Copay Test not transmitting.
+  
+ Problem:
+ ========
+ The Income Match Verification System does not updating the patient income 
+ data when an unsolicited ORU-Z10 record is transmitted. This record is 
+ transmitted when the Veteran's income status is updated at another VAMC.
+  
+ Resolution:
+ ===========
+ Updated routine MT^EASCM to look for current income year and allow process
+ to proceed if it is not the same year as the last means test. Previously
+ this would simply quit processing.
+  
+  
+ Technical Section:
+ ==================
+ Routine MT^EASCM has been modified to set the IVMLAST variable to a null 
+ string if the income year is not the same. This will prevent rejection
+ later when the dates are checked.
+  
+  
+ Pre-Installation Instructions:
+ ==============================
+  1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+      Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+      TaskMan Management [XUTM MGR] menu.
+      NOTE: Document the date/time the job was originally scheduled 
+      when scheduling to run again after patch install.
+   
+  2.  The HL7 incoming/outgoing filers should be stopped. Use the  
+      Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+      and Link Management Options [HL MENU FILER LINK MGT] menu on the 
+      HL7 Main Menu [HL MAIN MENU].
+    
+ Installation Instructions:
+ ==========================
+ This patch may be installed with users on the system.
+ Installation time - less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: 
+      Installation                                                         
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "EAS*1.0*152"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option 6 and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+  1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be re-scheduled.
+      Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+      TaskMan Management [XUTM MGR] menu.
+      NOTE: Use the date/time the job was originally scheduled; documented 
+      during pre-installation steps.
+  
+  2.  The HL7 incoming/outgoing filers should be restarted. Use the  
+      Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+      and Link Management Options [HL MENU FILER LINK MGT] menu on the 
+      HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**; 15-MAR-01;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASCM
+    Before: B80540897   After: B82492158  **71,96,152**
+ 
+Routine list of preceding patches: 96
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2017
+Completed By:                               Date Completed: FEB 12, 2018
+Released By :                               Date Released : FEB 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

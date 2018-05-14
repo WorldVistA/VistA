@@ -1,0 +1,382 @@
+$TXT Created by                       at DEVFEY.DOMAIN.EXT  (KIDS) on Friday, 07/14/17 at 16:19
+=============================================================================
+Run Date: APR 09, 2018                     Designation: FB*3.5*175
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #151                    Status: Released
+                  Compliance Date: MAY 09, 2018
+=============================================================================
+
+
+Subject: PURCHASED CARE CLAIMS COMPLIANCE PHASE 4
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This effort is focused on providing Other Health Insurance (OHI) to users 
+ of VistA Fee. This will be facilitated through a collaboration with DSS, 
+ Inc. to transmit data from the central server located at the Health 
+ Administration Center (HAC) through Fee Basis Claims System (FBCS) and 
+ into the local facility VistA Fee.
+  
+ The new database fields introduced by the patch are going to be used by 
+ FBCS application that will be modified by DSS. New FBCS functionality will
+ make OHI data available for VA users on its Graphical User Interface (GUI)
+ screens.
+  
+ This patch implements the MUMPS database portion of the project.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ ----------------------------  ----------------------  --------------------
+ Subfile SERVICE PROVIDED
+ (#162.03)  
+                               OHI OTHER SUBSCRIBER INFO (#70)          New
+                               OHI SERVICE LINE INFO (#71)              New
+  
+ Subfile OHI OTHER SUBSCRIBER 
+ INFO (#162.09) 
+                               PAYER RESP SEQUENCE CODE (#.01)          New
+                               INDIVIDUAL RELATIONSHIP CODE (#.02)      New
+                               INSURED GROUP OR POL NUMBER (#.03)       New
+                               OTHER INSUR GROUP NAME (#.04)            New
+                               INSURANCE TYPE CODE (#.05)               New
+                               CLAIM FILING INDICATOR CODE (#.06)       New
+                               CLAIM LEVEL ADJUSTMENTS (#1)             New
+                               COB PAYER PAID AMT QUAL CODE (#2.01)     New
+                               COB PAYER PAID AMOUNT (#2.02)            New
+                               REMAIN PAT LIAB AMT QUAL CODE (#3.01)    New
+                               REMAIN PAT LIAB AMOUNT (#3.02)           New
+                               COB TOT NON-COV AMT QUAL CODE (#4.01)    New
+                               COB TOT NON-COV AMOUNT (#4.02)           New
+                               OTH INS BENEF ASSIGN CERT INFO (#5.01)   New
+                               OTH INS PAT SIGNAT SOURCE CODE (#5.02)   New
+                               OTH INS ROI CODE (#5.03)                 New
+                               INP ADJ QUANT COV DAYS VIS CNT (#6.01)   New
+                               INP ADJ LIFETIME PSYCH CNT (#6.02)       New
+                               INP ADJ REM PAT LIAB AMOUNT (#6.03)      New
+                               INP ADJ REF ID-REM CODE MIA05 (#6.04)    New
+                               INP ADJ AMT-CLM DISPR SHARE (#6.05)      New
+                               INP ADJ AMT-CLM MSP PASS (#6.06)         New
+                               INP ADJ AMT-CLM PPS CAPITAL (#6.07)      New
+                               INP ADJ AMT-PPS CAP FSP DRG (#6.08)      New
+                               INP ADJ AMT-PPS CAP HSP DRG (#7.01)      New
+                               INP ADJ AMT-PPS CAP DSH DRG (#7.02)      New
+                               INP ADJ AMT-OLD CAPITAL AMN (#7.03)      New
+                               INP ADJ AMT-PPS CAPIT IME AMT (#7.04)    New
+                               INP ADJ AMT-PPS OPER HOSP DRG (#7.05)    New
+                               INP ADJ COST REPORT DAY COUNT (#7.06)    New
+                               INP ADJ AMT-PPS OP FED SPE DRG (#7.07)   New
+                               INP ADJ AMT-CLM PPS CAPIT OUTL (#7.08)   New
+                               INP ADJ AMT-CLM INDIR TEACHING (#7.09)   New
+                               INP ADJ AMT-NON-PAY PROF BILLD (#7.1)    New
+                               INP ADJ REF ID-REM CODE MIA20 (#8.01)    New
+                               INP ADJ REF ID-REM CODE MIA21 (#8.02)    New
+                               INP ADJ REF ID-REM CODE MIA22 (#8.03)    New
+                               INP ADJ REF ID-REM CODE MIA23 (#8.04)    New
+                               INP ADJ AMT-PPS CAPITAL EXCEPT (#8.05)   New
+                               OUTP ADJ REIMBURSE RATE (#9.01)          New
+                               OUTP ADJ HCPCS PAYABLE AMT (#9.02)       New
+                               OUTP ADJ REF ID-REM COD MOA03 (#9.03)    New
+                               OUTP ADJ REF ID-REM COD MOA04 (#9.04)    New
+                               OUTP ADJ REF ID-REM COD MOA05 (#10.01)   New
+                               OUTP ADJ REF ID-REM COD MOA06 (#10.02)   New
+                               OUTP ADJ REF ID-REM COD MOA07 (#10.03)   New
+                               OUTP ADJ ESRD PAYM AMT (#10.04)          New
+                               OUTP ADJ NON PAY PROF BILLED (#10.05)    New
+                               OTH SUB ENTITY ID CODE (#11.01)          New
+                               OTH SUB ENTITY TYPE QUAL (#11.02)        New
+                               OTH SUB LAST NAME (#11.03)               New
+                               OTH SUB FIRST NAME (#11.04)              New
+                               OTH SUB MIDDLE NAME (#11.05)             New
+                               OTH SUB NAME SUFFIX (#11.06)             New
+                               OTH SUB ID CODE QUAL (#11.07)            New
+                               OTH SUB INSURED ID (#11.08)              New
+                               OTH SUB ADDR LINE 1 (#12.01)             New
+                               OTH SUB ADDR LINE 2 (#12.02)             New
+                               OTH SUB CITY NAME (#12.03)               New
+                               OTH SUB STATE CODE (#12.04)              New
+                               OTH SUB POSTAL ZIP (#12.05)              New
+                               OTH SUB COUNTRY CODE (#12.06)            New
+                               OTH SUB COUNTRY SUBDIV CODE (#12.07)     New
+                               OTH SUB 2ND ID REF QUAL 1 (#13.01)       New
+                               OTH SUB 2ND ID-ADDTNL ID 1 (#13.02)      New
+                               OTH SUB 2ND ID REF QUAL 2 (#13.03)       New
+                               OTH SUB 2ND ID-ADDTNL ID 2 (#13.04)      New
+                               OTH PAYER ENTITY ID CODE (#14.01)        New
+                               OTH PAYER ENTITY TYPE QUAL (#14.02)      New
+                               OTH PAYER LAST OR ORG NAME (#14.03)      New
+                               OTH PAYER ID CODE QUALIFIER (#14.04)     New
+                               OTH PAYER PRIMARY IDENTIFIER (#14.05)    New
+                               OTH PAYER ADDR LINE 1 (#15.01)           New
+                               OTH PAYER ADDR LINE 2 (#15.02)           New
+                               OTH PAYER CITY NAME (#15.03)             New
+                               OTH PAYER STATE CODE (#15.04)            New
+                               OTH PAYER POSTAL ZIP (#15.05)            New
+                               OTH PAYER COUNTRY CODE (#15.06)          New
+                               OTH PAYER COUNTRY SUBDIV CODE (#15.07)   New
+                               OTH PAYER DATE TIME QUAL (#16.01)        New
+                               OTH PAYER DTIME PER FORM QUAL (#16.02)   New
+                               OTH PAYER ADJ OR PAYMENT DATE (#16.03)   New
+                               OTH PAYER 2ND REF ID QUAL 1 (#17.01)     New
+                               OTH PAYER 2NDARY ID 1 (#17.02)           New
+                               OTH PAYER 2ND REF ID QUAL 2 (#17.03)     New
+                               OTH PAYER 2NDARY ID 2 (#17.04)           New
+                               OTH PAYER PR AUTH REF ID QUAL (#17.05)   New
+                               OTH PAYER PRIOR AUTH NUM (#17.06)        New
+                               OTH PAYER REFFERL REF ID QUAL (#17.07)   New
+                               OTH PAYER REFFERAL NUMBER (#17.08)       New
+                               OTH PAYER CLM ADJ REF ID QUAL (#18.01)   New
+                               OTH PAYER CLAIM ADJ INDICATOR (#18.02)   New
+                               OTH PAYER CLM CTRL REF ID QUAL (#18.03)  New
+                               OTH PAYER CLAIM CTRL NUMBER (#18.04)     New
+  
+ Subfile CLAIM LEVEL 
+ ADJUSTMENTS  (#162.13) 
+                               CLAIM ADJUSTMENT GROUP CODE (#.01)       New
+                               ADJ REASON CODE 1 (#1.01)                New
+                               ADJ REASON CODE 2 (#1.02)                New
+                               ADJ REASON CODE 3 (#1.03)                New
+                               ADJ REASON CODE 4 (#1.04)                New
+                               ADJ REASON CODE 5 (#1.05)                New
+                               ADJ REASON CODE 6 (#1.06)                New
+                               ADJ AMOUNT 1 (#2.01)                     New
+                               ADJ AMOUNT 2 (#2.02)                     New
+                               ADJ AMOUNT 3 (#2.03)                     New
+                               ADJ AMOUNT 4 (#2.04)                     New
+                               ADJ AMOUNT 5 (#2.05)                     New
+                               ADJ AMOUNT 6 (#2.06)                     New
+                               ADJ QUANTITY 1 (#3.01)                   New
+                               ADJ QUANTITY 2 (#3.02)                   New
+                               ADJ QUANTITY 3 (#3.03)                   New
+                               ADJ QUANTITY 4 (#3.04)                   New
+                               ADJ QUANTITY 5 (#3.05)                   New
+                               ADJ QUANTITY 6 (#3.06)                   New
+  
+ Subfile OHI SERVICE LINE INFO
+ (#162.371) 
+                               SERVICE LINE NUMBER (#.01)               New
+                               LINE ADJUDICATION INFORMATION (#1)       New
+  
+ Subfile LINE ADJUDICATION 
+ INFORMATION (#162.3711) 
+                               OTHER PRIMARY PAYER ID (#.01)            New
+                               SERVICE LINE PAID AMT (#.02)             New
+                               PROD OR SERV ID QUAL (#1.01)             New
+                               PROCEDURE CODE (#1.02)                   New
+                               PROC MODIF SVD03-3 (#1.03)               New
+                               PROC MODIF SVD03-4 (#1.04)               New
+                               PROC MODIF SVD03-5 (#1.05)               New
+                               PROC MODIF SVD03-6 (#1.06)               New
+                               PROC CODE DESCRIPTION (#1.07)            New
+                               PRODUCT OR SERV ID (#1.08)               New
+                               PAID SERV UNIT CNT (#1.09)               New
+                               BUNDL OR UNBUNDL LINE NUM (#1.1)         New
+                               LINE ADJUSTMENT (#2)                     New
+                               LN CHK DATE TIME QUALIFIER (#3.01)       New
+                               LN CHK DATE TIME PER FORM QUAL (#3.02)   New
+                               LN CHK ADJ OR PAYMENT DATE (#3.03)       New
+                               REMAIN PAT LIAB AMT QUAL CODE (#4.01)    New
+                               REMAIN PAT LIABILITY AMOUNT (#4.02)      New
+  
+ Subfile LINE ADJUSTMENT 
+ (#162.37112) 
+                               CLAIM ADJUSTMENT GROUP CODE (#.01)       New
+                               ADJ REASON CODE 1 (#1.01)                New
+                               ADJ REASON CODE 2 (#1.02)                New
+                               ADJ REASON CODE 3 (#1.03)                New
+                               ADJ REASON CODE 4 (#1.04)                New
+                               ADJ REASON CODE 5 (#1.05)                New
+                               ADJ REASON CODE 6 (#1.06)                New
+                               ADJ AMOUNT 1 (#2.01)                     New
+                               ADJ AMOUNT 2 (#2.02)                     New
+                               ADJ AMOUNT 3 (#2.03)                     New
+                               ADJ AMOUNT 4 (#2.04)                     New
+                               ADJ AMOUNT 5 (#2.05)                     New
+                               ADJ AMOUNT 6 (#2.06)                     New
+                               ADJ QUANTITY 1 (#3.01)                   New
+                               ADJ QUANTITY 2 (#3.02)                   New
+                               ADJ QUANTITY 3 (#3.03)                   New
+                               ADJ QUANTITY 4 (#3.04)                   New
+                               ADJ QUANTITY 5 (#3.05)                   New
+                               ADJ QUANTITY 6 (#3.06)                   New
+  
+  
+  
+ Forms Associated:
+  
+ Form Name   File #    New/Modified/Deleted
+ ---------    ------    --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+ Options Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name    New/Modified/Deleted
+ -------------    --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name    Type    File Name (Number)  New/Modified/Deleted
+ -------------    ----     ------------------ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ New Orleans
+ Minneapolis
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------
+ The software is distributed in the PackMan message generated from the
+ National Patch Module on Forum. Documentation describing new 
+ functionality introduced by this patch is available.
+  
+ Sites may retrieve documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following 
+ OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Title                                     File Name             FTP Mode
+ ------------------------------------------------------------------------
+ FB*3.5*175 Release Notes                  FB_3_5_P175_RN.pdf    binary
+ FB*3.5*175 Deployment, Installation,      FB_3_5_P175_IG.pdf    binary
+ Back-Out, and Rollback Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ There are no Pre/Post installation routine processes.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 
+ 5 minutes to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, use the
+     following option. When prompted for the INSTALL enter the patch #
+     (FB*3.5*175):
+  
+     a. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter FB*3.5*175.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of  
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ -------------------
+ See FB_3_5_P175_IG install guide for detailed Back-Out instructions.
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2017
+Completed By:                               Date Completed: APR 04, 2018
+Released By :                               Date Released : APR 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

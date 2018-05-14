@@ -1,0 +1,149 @@
+$TXT Created by                     CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 10/02/17 at 10:05
+=============================================================================
+Run Date: FEB 20, 2018                     Designation: GMRV*5*36
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #28                      Status: Released
+                  Compliance Date: MAR 23, 2018
+=============================================================================
+
+
+Subject: FIX LOADING HELP VIA NETWORK INSTALL
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issues in the Vitals and Vitals 
+ Manager applications:
+ - Help file will not load on a network install of the GUI
+ - Ability to select self in patient selection
+ - Prevent entering Vitals for a future date
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I16167260FY17 - 31a Production Site Vitals Help files not opening 
+ Problem:
+ -------
+ The new update to vitals help will not open and is creating an error
+ when the user(s) try to open it. The network share use requires a patch
+ that may have not been added previously for a known issue related to the
+ .HLP files security permissions on the network. 
+  
+ Resolution:
+ ----------
+ This did not have to do with CPRS 31a but has been an issue in the Vitals
+ and Vitals Manager application since the move to Windows 7. The
+ applications will now check if the application is running on a network 
+ install and if so, it will download/update the help file to the local 
+ machine (as needed) and then make reference to this file instead of the 
+ network instance.
+  
+ 2. I9882201FY16 - Ability to select self as a patient
+ Problem:
+ -------
+ The user is allowed to select themselves as a patient in Vitals GUI. This
+ causes a side effect in CPRS via CCOW and then allows CPRS to
+ bypass the same user/patient selection prevention.
+  
+ Resolution:
+ ----------
+ Correct the Vitals GUI so that this check prevents the selection of the
+ same user/patient.
+  
+ 3. I16439040FY17 - Editing issues in Vitals GUI through CPRS 
+ Problem:
+ -------
+ A nursing Assistant entered a Vital sign for a future time and you are 
+ not supposed to be able to do this. Tried to do it on a test patient 
+ and get a message - Vitals cannot be entered in the future.
+  
+ Resolution:
+ ----------
+ Ensured that a future time is not selectable.
+  
+ Test Sites:
+ ----------
+ Salt Lake City
+ Tuscaloosa
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ NOTE:  Post-Init routine GMV36PST will automatically be deleted when the 
+ installation process completes.  If you wish to verify the checksums, 
+ please use option  2 [Verify Checksums in Transport Global] before 
+ installing the patch.
+  
+ Please refer to the Vitals / Measurements (GMRV*5.0*36) Installation
+ Guide: GMRV_5_36_IG.docx for file names and installation instructions.
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interfaces (GUI). Files and documentation 
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ Vitals / Measurements (GMRV*5.0*36) Installation Guide
+                           GMRV_5_36_IG.PDF    Binary
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV36PST
+    Before:       n/a   After:  B1348376  **36**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 29, 2017
+Completed By:                               Date Completed: FEB 16, 2018
+Released By :                               Date Released : FEB 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

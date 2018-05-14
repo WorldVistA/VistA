@@ -1,0 +1,290 @@
+$TXT Created by              at DEVCUR.DOMAIN.EXT  (KIDS) on Tuesday, 10/10/17 at 12:31
+=============================================================================
+Run Date: FEB 07, 2018                     Designation: LEX*2*114
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2       SEQ #107                      Status: Released
+                  Compliance Date: FEB 15, 2018
+=============================================================================
+
+Associated patches: (v)LEX*2*103   <<= must be installed BEFORE `LEX*2*114'
+                    (v)LEX*2*113   <<= must be installed BEFORE `LEX*2*114'
+
+Subject: LEXICON DEFECT PATCH OCT 2017
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch includes fixes for two defects found during SQA required for
+  testing quarterly data and two defects found by developers when uploading
+  quarterly ICD/CPT data into the Lexicon, CPT and ICD files.
+                                         
+  While these defects need to be fixed to function correctly and to 
+  maintain the code set versioning data set, none of these defects 
+  affect the general operation of VistA.
+                                         
+  PATCH COMPONENTS:
+  ================
+                                         
+    Files & Fields Associated:                       N/A
+    Forms Associated:                                N/A
+    Mail Groups Associated:                          N/A
+    Options Associated:                              N/A
+    Protocols Associated:                            N/A
+    Security Keys Associated:                        N/A
+    Templates Associated:                            N/A
+                                         
+  ADDITIONAL INFORMATION:
+  ======================
+                                         
+    New Service Requests (NSRs):                     N/A
+    Patient Safety Issues (PSIs):                    N/A
+                                         
+    Defects:
+                                         
+      1)  ICD Diagnosis Query
+          -------------------
+                                         
+              Problem:   Unable to display information about future 
+                         activated ICD Diagnosis code (pending) when the 
+                         "Assumed Date of Service" is equal to or greater
+                         than the initial activation effective date.
+                                         
+              Cause:     The lookup evokes a special lookup routine which
+                         is versioned.  Since the code is not active yet,
+                         it will fail the output transformation and the
+                         query will quit.  
+                                         
+              Solution:  Create a new un-versioned lookup that searches
+                         for ICD Diagnosis codes past, present and future.
+  
+              Called by: LEX CSV ICD QUERY
+                         ICD Diagnosis Code Set Query
+  
+              Routines:  LEXQID and LEXQIL
+  
+                                         
+      2)  ICD Procedure Query 
+          ------------------- 
+                                         
+              Problem:   Unable to display information about future 
+                         activated ICD Procedure code (pending) when the 
+                         "Assumed Date of Service" is equal to or greater
+                         than the initial activation effective date.
+                                         
+              Cause:     The lookup evokes a special lookup routine which
+                         is versioned.  Since the code is not active yet,
+                         it will fail the output transformation and the
+                         query will quit.  
+                                         
+              Solution:  Create a new un-versioned lookup that searches
+                         for ICD Procedure codes past, present and future.
+  
+              Called by: LEX CSV ICP QUERY
+                         ICD Procedure Code Set Query
+              
+              Routines:  LEXQIP and LEXQIL
+                                                
+      3)  Control Characters
+          ------------------
+                                         
+              Problem:   The software incorrectly strips out curved 
+                         single quote marks. (extended ASCII codes 
+                         #145 and #146)
+                                         
+                         Patient's becomes Patients
+                                         
+              Cause:     The curved single quote marks (extended ASCII
+                         codes #145 and #146) were not previously 
+                         identified for replacement. All control 
+                         characters and extended ASCII codes not 
+                         identified for replacement were removed.
+                                         
+              Solution:  Replace the curved single quote (extended 
+                         ASCII codes $145 and #146) with the straight 
+                         single quote (ASCII code #39). (sub-routine
+                         CTL^LEXXMC)
+                                         
+                         Patient's remains Patient's
+                                         
+              Routine:   LEXXMC
+  
+      4)  Mixed Case
+          ----------
+                                         
+              Problem:   When a term contains more than one sentence 
+                         the software incorrectly identifies the case 
+                         of the leading word of the second sentence.
+                                         
+                         X="this is one. that is two",Y=$$MIX^LEXXMC(X)
+                         Y="This is one. that is two"
+                                         
+              Cause:     It had not been previously anticipated that a 
+                         single clinical term would contain multiple 
+                         sentences.  As a result the software does not 
+                         look for multiple sentences nor apply case rules
+                         to the second (or following) sentence.
+                                         
+              Solution:  Add a new sub-routine that checks a term for 
+                         multiple sentences and applies case logic to 
+                         the second or following sentence. (sub-routine
+                         PS^LEXXMC)
+                                         
+                         X="this is one. that is two",Y=$$MIX^LEXXMC(X)
+                         Y="This is one. That is two"
+  
+              Routine:   LEXXMC
+                                         
+  TICKETS:
+  =======
+  
+    JAZZ Tickets:
+  
+       590620   Mixed Case for Multiple Sentence Terms
+       590633   Control Character for Curved Single Quotes
+       590646   ICD-10-CM Query failed to display future codes
+       590647   ICD-10-PCS Query failed to display future codes
+  
+    CA SDM Tickets:
+  
+       None
+  
+  TEST SITES:
+  ==========
+  
+    Montana HCS (Fort Harrison, MT)
+    Northern Florida HCS (Gainesville, FL)
+                                         
+  SOFTWARE RETRIEVAL:
+  ==================
+                                         
+    This patch is distributed by a PackMan message from the National Patch
+    Module on FORUM.  There are no additional document or host files.
+  
+    If you do not have a copy of the PackMan message containing the patch
+    then log on to FORUM, select the Patch User Menu, then select the menu 
+    item 'Forward a Released Patch message.'  At the 'Select PATCH to 
+    forward:' prompt enter the patch LEX*2.0*114.  Forward the PackMan 
+    message to yourself in the account where it is to be installed.
+                                         
+  INSTALLATION INSTRUCTIONS:
+  =========================
+                                         
+     1)  Users may be on the system during the install of LEX*2.0*114.
+         This patch can be installed at any time (It is not necessary
+         to install during non-peak hours).  This patch should take 
+         less than a minute to install.
+                                         
+     3)  Create a backup of the following routines before continuing:
+                                         
+            LEXXMC
+            LEXQID
+            LEXQIDA
+            LEXQIP
+            LEXQIPA
+                                         
+         This backup file may get as large as 58 kilobytes.  It should
+         take less than 1 minute to create the backup file.
+                                         
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+                                         
+     5)  Distribution Load:
+                                         
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+                                         
+     6)  Distribution Checks (optional/recommended):
+                                         
+         Using the Kernel Installation and Distribution System Menu, 
+         select the Installation Menu.  From this menu, you may elect
+         to use the following options. When prompted for the INSTALL
+         NAME enter the patch LEX*2.0*114.
+                                         
+           a.  Backup a Transport Global - This option will create a 
+               backup message of any routines exported with this patch. 
+                                         
+           b.  Compare Transport Global to Current System - This option
+               will allow you to view all changes that will be made by
+               this patch when it is installed.  It compares all 
+               components of this patch to the environment.
+                                         
+           c.  Verify Checksums in Transport Global - This option will 
+               compare the routine checksums listed in the transport global
+               to the routines contained in the transport global.  It will
+               report whether the listed checksums passed or failed.
+                                         
+     7)  KIDS Installation:
+                                         
+         Using the Kernel Installation and Distribution System Menu,
+         select the Installation Menu.  From this menu, select the menu
+         item Install Package(s).
+                                         
+            When prompted for the INSTALL NAME enter the patch LEX*2.0*114.
+                                         
+            At the "INHIBIT LOGONs during the install" prompt accept the
+            default "NO"
+                                         
+            At the "DISABLE Scheduled Options, Menu Options, and Protocols"
+            prompt accept the default "NO             
+                                         
+         The KIDS installation should take less than a minute.
+                                         
+     8)  Post-Install:
+                                         
+         The Environment Check routine LEX2114 should be deleted using the 
+         KERNEL option 'Delete Routines' [XTRDEL] upon completion of the 
+         installation.
+                                         
+     9)  Back-out Plan:
+                                         
+         Use the ^%RI utility and load the routines from the backup file
+         created in step #3.  Compare the environment checksums to the 
+         "before" checksums listed in this patch to see if they match.
+         If they match then the account has been restored to its previous
+         state and LEX*2.0*114 has been backed out.
+                                         
+     10) Patch Verification:
+                                         
+         Kernel Installation & Distribution System-> Utilities-> Install
+         File Print option can be used to check for any errors plus the
+         status of the install being completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2114
+    Before:       n/a   After: B43529314  **114**
+Routine Name: LEXQID
+    Before: B62789436   After: B63365392  **62,73,80,103,114**
+Routine Name: LEXQIDA
+    Before: B52951726   After: B53902820  **62,80,103,114**
+Routine Name: LEXQIL
+    Before:       n/a   After: B98232990  **114**
+Routine Name: LEXQIP
+    Before: B96505280   After: B97355385  **62,73,80,86,103,114**
+Routine Name: LEXQIPA
+    Before:  B4552153   After:  B5203203  **62,80,103,114**
+Routine Name: LEXXMC
+    Before:B200466634   After:B208378117  **103,114**
+ 
+Routine list of preceding patches: 103
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 07, 2017
+Completed By:                               Date Completed: FEB 06, 2018
+Released By :                               Date Released : FEB 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

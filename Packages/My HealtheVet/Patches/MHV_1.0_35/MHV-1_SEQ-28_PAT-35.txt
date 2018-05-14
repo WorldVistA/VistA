@@ -1,0 +1,298 @@
+
+=============================================================================
+Run Date: MAR 08, 2018                     Designation: MHV*1*35
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #28                      Status: Released
+                  Compliance Date: APR 09, 2018
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2018.2.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The March Quarterly MyHealtheVet Release MHV_2018.2.0.0 will be promoted 
+ to the MHV Production environment on Saturday, March 10th, 2018 starting 
+ at 10:00 PM EST.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY/NATIONAL PORTAL REDESIGN SM ENHANCEMENTS 
+  
+ JAZZ 652335     SM Redesign:  Compose Message Page - Required Fields
+ JAZZ 652357     SM Redesign:  508 Compliance for Read/Unread Messages in 
+ folder
+ JAZZ 652343     SM Redesign:  Turn On/Off Email Preferences
+ JAZZ 652337     SM Redesign:  Email Synchronization between SM and MHV
+ JAZZ 626356     SM Patient - Add Error Handling for All Users
+ JAZZ 664460     Attachments - Instructions text added when user attaches 
+ a file - Legacy has a view instructions link - takes them to a separate 
+ page - Business needs that content to be displayed
+ JAZZ 155384     MHV Patient Application should be sending only user 
+ treatment facilities to SM API
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ 639471     Delegation Phase 2 - Implementation
+ JAZZ 654563     Delegation Phase 2 - Implement changes in all Pharmacy 
+ Pages for Delegate to Access All Pages in "Read Only" mode
+ JAZZ 654565     Delegation Phase 2 - Implement changes in all PHR Module 
+ Pages for Delegate to Access all Pages in "Read Only" mode
+ JAZZ 654548     Delegation Phase 2 - Implement Healthcare Proxy "Read" 
+ Access (HPRA)
+ JAZZ 654558     Delegation Phase 2 - Implement changes for Delegator to 
+ view AAL and Access IAM Delegation tool
+ JAZZ 655295     Delegation Phase 2 - Implement changes in all Blue Button 
+ (BB) Module pages for Delegate to access all pages in "Read Only" mode
+ JAZZ 493979     Meds-by-Mail - Integration work with MHV National Portal 
+ - CHAMP VA Beneficiaries Can Refill Rx in MHV (not VA patients) 
+ JAZZ 668452     Meds-by-Mail - ChampVA Integration work - Analysis, 
+ Development and Testing for Admin Portal IPA Match button
+ JAZZ 486715     Meds- by-Mail - ChampVA Integration work - Analysis, 
+ Development and Testing for Pharmacy
+ JAZZ 663164     Med-by-Mail - ChampVA Integration work - Analysis, 
+ Development and Testing - Profile Update
+ JAZZ 663160     Meds-by-Mail - ChampVA Integration work - Analysis, 
+ Development and Testing for Registration
+ JAZZ 672176     Meds-by-Mail - Content  changes for 18.2
+ JAZZ 658776     PROD Defect:  Wording on Pharmacy pages showing the wrong 
+ information
+ JAZZ 636201     (Fortify HIGH) - Insecure Randomness from 18.1 scans
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+  
+ JAZZ 655297     Delegation Phase 2 - Implement Help Desk changes in MVH 
+ Admin Portal
+ JAZZ 636021     (Fortify HIGH) - Admin Portal -  Null Dereference from 
+ 18.1 scans  
+ JAZZ 636066     (Fortify HIGH) - Admin Portal - Cross site Scripting 
+ Reflected from 18.1 scans
+ JAZZ 636150     (Fortify HIGH) - Admin Portal - Portability Flaw:  Locale 
+ Dependent Comparison from 18.1 scans
+ JAZZ 635526     (Fortify HIGH) - Admin Portal - Log Forging
+  
+ MHV NATIONAL PORTAL DEFECTS
+     
+ JAZZ 681068     Defect (Prod):   Admin Portal IPA - SM Welcome email 
+ notification links are broken
+ JAZZ 635349     (Fortify HIGH) - Admin Portal - LDAP Injection (Input 
+ Validation and Representation, Data Flow)
+  
+ DATABASE ENHANCEMENTS:
+  
+ JAZZ 654558 Delegation Phase 2 - Implement changes for Delegator to view 
+ AAL and Access IAM Delegation tool
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ 639209 VA Health Summary - Import CCDA - Previous CCDA should be 
+ displayed and able to send if new CCDA is not available
+ JAZZ 639684 VA Health Summary - Import CCDA - Changes to Send Health 
+ Summary Link behavior
+ JAZZ 664129 VA Health Summary - Import CCDA - User ability to send old or 
+ new CCDA
+ JAZZ 639688 VA Health Summary - Import CCDA - Quick link update to change 
+ hyperlink to what's in the VA Health Summary
+ JAZZ 652137 VA Health Summary - Import CCDA - New View of XML rendered in 
+ Master Style Sheet enables Veterans to view VA Health Summary online with 
+ enhanced navigation, add user interface enhancements
+ JAZZ 542036     Automated Deactivation Batch Job Refactoring (Out of 
+ cycle release - post 18.2 release - March 2018)
+ JAZZ 639384     ID.me Credential Accepted on MHV
+ JAZZ 658490     Temporary Password Enhancements - Change Password - 
+ Congratulatory Message - When the congratulatory message displays, the 
+ change password box will not show.  This is for the temporary password 
+ change and the normal password change.
+ JAZZ 629287     MHV to Veterans Health Benefit Handbook SSO Support - All 
+ Premium Users have access to VHBH
+ JAZZ 671299     Show/Hide Password Box - 1) Provide option for users to 
+ see the letters being typed when entering a password. Change will be 
+ anywhere that the password can be entered:  Registration, Change 
+ Password, Forgot Password and  2) Password content to show can't used 
+ last 3 passwords.
+ JAZZ 645020     MHV/VHB SSO Implementation
+ JAZZ 639377     MRP Batch Job
+ JAZZ 487464     Patient Statement Enhancements (Redesign) - Add Icon and 
+ Landing page to MHV for Patient Statements.  NOTE:  Will be deployed with 
+ 18.2 but will not be turned on until 18.2.1
+  
+ MHV NATIONAL PORTAL DEFECTS
+ JAZZ 687072 UAT BB:  System shall NOT display informational message about 
+ DoD Military Service for Advanced Patient user accounts.
+ JAZZ 682948 UAT SM Redesign Syst: Correct the text on the attachment 
+ error message
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+  
+ JAZZ 639364 Admin Portal Enhancements:  US03 - Profile Update
+ JAZZ 679463 Admin Portal Enhancements:  US05 - Edit Email Address 
+ JAZZ 670970 Admin Portal Enhancements:  US06 - Add New User Role
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ 645037 MHV / VHB SSO INTB Configuration / Documentation
+ JAZZ 663531 Admin Portal Enhancements Development: Edit email address
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ 628090     VA Medical Images and Reports Enhancements
+ JAZZ 628093     VA Medical Images and Report US01:  In Pilot View BBMI 
+ Imaging Report without downloading
+ JAZZ 628096     VA Medical Images and Report - US02 :  BBMI Merge VPR and 
+ CVIX Data
+  
+ JAZZ 676383     BBMI Change the animated progress bar style while images 
+ are being retrieved
+ JAZZ 642801     BB US01 - Enhancements - Status of Data refresh, Content 
+ and Pagination
+ JAZZ 645214     On My Download Results, Display Status Message Only for 
+ Data Classes Selected
+ JAZZ 645203     When the Data Refresh is Initiated, the Status Message 
+ will not be Displayed to the User on the Page
+ JAZZ 645195     Change Blue Button Landing Page to Use Cards to Select 
+ Report
+ JAZZ 645102     Blue Button Data Table Header Changes
+ JAZZ 645093     Move the Actionable Table Below the Status Update Message 
+ JAZZ 645130     Changes to the Blue Button Download Results page will be 
+ made to the content that will appear below the table
+ JAZZ 644758     If a User Changes Start or End Date, MHV System will 
+ Automatically Update the Radio Button Selection to 'Custom'
+ JAZZ 644745     Visual Steps Added to the Page to Help the User
+ JAZZ 653528     Return User to Page Accessed When not Logged On, When 
+ Directed to Log On
+ JAZZ 671040     Remove VIA Field Test Group Procedure and Jobs from 
+ Database
+  
+ MHV NATIONAL PORTAL DEFECTS
+  
+ JAZZ 504242     RSS Feed has systematic problems
+ JAZZ 658791     Fix the Entries and the Code that Sets the AAL Dates to 
+ the Future
+  
+ NATIONAL PORTAL REDESIGN SM ENHANCEMENTS 
+  
+ JAZZ 417252     SM Patient Component Re-engineering/Redesign
+ JAZZ 626366     SM Patient - Reply to Message Support
+ JAZZ 626320     SM Patient - Email Search
+ JAZZ 626339     SM Patient - Scroll Past Header Throughout (#breadcrumb)
+ JAZZ 628540     SM Patient - API Updates for Enhanced User Experience
+ JAZZ 626344     SM Patient - Add Attachments Support
+ JAZZ 626367     SM Redesign: SM Patient - Draft (Save/Update/Send) Support
+ JAZZ 636730     SM Redesign: SM Patient - Download Attachments wherever 
+ Attachment Links are Available (View Messages, etc.)
+ JAZZ 636804     SM Redesign: SM Patient - Message Auto Save as Draft 
+ Every "X" Minutes, Add Functionality to Compose/Drafts/Reply Message Flow
+ JAZZ 626334     SM Redesign: SM Patient - Compose Screen Form Validation
+ JAZZ 626345     SM Redesign: SM Patient - Printing Support
+ JAZZ 641975     SM Redesign: SM Patient  -  Add Client-Side JavaScript 
+ Form Validation on All Forms
+ JAZZ 652334     SM Redesign: SM Login Date/Time now Displayed in GUI
+ JAZZ 664453     SM Redesign: "Reply" link needs to display on the Top and 
+ Bottom
+ JAZZ 664463     SM Redesign: Default text for "Search" bar for folder
+ JAZZ 664450     SM Redesign: Close "X" was replaced to a "Close" button
+ JAZZ 664456     SM Redesign: View/Reply - Content box position needs to 
+ be moved
+ JAZZ 649137     SM Redesign: Update the SM Help Content
+ JAZZ 671014     SM Patient - Create New Instructions to Attach a File 
+ Help Page
+ JAZZ 664460     SM Patient - Attachments - Need Instructions Text
+ JAZZ 664019     SM Patient - SM Account Activity Entries
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ 617384 SM Patient Redesign Create Portlet
+ JAZZ 671040 Remove VIA field test group procedure and jobs from database
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS
+  
+ JAZZ 665592 SM - Remediate Mass Assignment: Sensitive Field Exposure 
+ (High 1)
+ JAZZ 674894 SM - Remediate XML External Entity Injection Critical(1)
+ JAZZ 674895 SM - Remediate Unreleased Database Resource High(29)
+ JAZZ 680918 SM - Resolve Unleased Resource: Stream finding (High 1)
+ JAZZ 681968 SM - Missing group name throwing 500 Error from Edit Triage 
+ Group
+ JAZZ 683822 SM - Fix JSP errors to resolve Fortify missing file problem 
+ in SM Admin Portal
+ JAZZ 690586 SM - API: WLC: submit workload credit call is returning an 
+ error
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ 233659 Remove 2 Hint Questions from Users Options for new accounts:  
+ Town of Birth and Favorite Food
+ JAZZ 388401 SRE - Error message displayed when system is down needs to 
+ not reference 'System Administrator'
+ JAZZ 534868 SQA:  Track Health INR graph titles overlap--see attached 
+ image
+ JAZZ 582787 UAT Treatment Locations:  (IN PROD)  Multiple entries display 
+ the home icon when adding "home location" to and existing entry
+ JAZZ 616113 Blood Pressure: (IN PROD) Success Message remains on the 
+ screen when another error is displayed on the add new screen
+ JAZZ 616124 Blood Sugar: (IN PROD) Success Message remains on the screen 
+ when another error is displayed on the add new screen
+ JAZZ 659186 Resolve medium Fortify findings in Mhv_integration module
+ JAZZ 666426 Ensure that all outgoing and incoming Hl7 messages are logged 
+ inside MHV DB inside the MESSAGE_TRACE_LOG table
+ JAZZ 666460 Testing sometimes shows error message when entering a new or 
+ editing an existing Vital Blood Pressure entry
+ JAZZ 671446 Resolve medium Fortify issues in the Mhv_Vitals module
+ JAZZ 671460 Resolve medium Fortify issues in the Mhv_user module
+ JAZZ 674877 Expand validation in a Raw Prescription for dates
+ JAZZ 679465 SysTest Only - Export function of the Get Care Health 
+ Calendar does not work
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+  
+ JAZZ 658817 MHV System thinks an account already exists preventing a 
+ Upgrade to Advance
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ 632235 Add treatment facility 741MM to MHV tables
+ JAZZ 665195 Enhance error messages caused by sms_facility_sync problems
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+  Documentation Retrieval Instructions:
+ ------------------------------------- 
+  MHV Documentation can be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 05, 2018
+Completed By:                               Date Completed: MAR 07, 2018
+Released By :                               Date Released : MAR 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,336 @@
+$TXT Created by              TAS-EINS-HFD.AAC.DOMAIN.EXT  (KIDS) on Thursday, 02/01/18 at 09:30
+=============================================================================
+Run Date: MAR 27, 2018                     Designation: IB*2*601
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #560                      Status: Released
+                  Compliance Date: APR 11, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*516    <<= must be installed BEFORE `IB*2*601'
+                    (v)IB*2*550    <<= must be installed BEFORE `IB*2*601'
+                    (v)IB*2*593    <<= must be installed BEFORE `IB*2*601'
+
+Subject: MCCF EDI TAS EINSURANCE BUILD 4
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+    
+ **************************************************************************
+                     PLEASE NOTE - THIS PATCH HAS A SHORTENED
+                            COMPLIANCE DATE OF 15 DAYS 
+ **************************************************************************
+  
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 1 project.
+  
+ This Integrated Billing (IB) patch introduces changes to VistA's 
+ Electronic Claims processing to meet the Committee on Operating 
+ Rules for Information Exchange (CORE) Operating Rules.
+  
+ Complete List of patch items:
+  
+ 1. Modified VistA to use the proper subscriber's Date of Birth (DOB) 
+    field, "INSURED'S DOB" (#2.312, 3.01), when creating the Health Level 7
+    (HL7) inquiry to facilitate electronic Insurance Verification (eIV) 
+    auto-update. Populate the 270 inquiry with the DOB from the Patient 
+    Insurance sub-file, "INSURED'S DOB" (#2.312, 3.01), so that eligibility
+    inquiries will be sent with this subscriber's DOB and the subsequent
+    271 response will be returned and auto-update successfully.
+  
+  
+ 2. When processing master file add (MAD) and master file update (MUP) 
+    table update messages from the Financial Services Center (FSC) 
+    Development, implement acknowledgement (ACK) and negative 
+    acknowledgement (NAK) messages for table additions and table updates to
+    improve VistA control and consistency.
+  
+  
+ 3. Populate the outbound HL7 message with the 'Source of Information' 
+    Code (#2.312, 1.09) from each Insurance Verification Processor (buffer)
+    (#355.12) entry to FSC, facilitating VistA data analysis.
+  
+ 4. Two new entries were added to the IIV STATUS TABLE (#365.15): "M1"
+    and "U3".
+  
+ 5. Remove the hard stop for a valid Health Insurance Claim Number (HICN) 
+    format on claims to allow for use of MBI.
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                            New/Modified/
+   Sub-file Name (#)          Field Name (#)                 Deleted
+ -------------------          --------------------------  -------------
+ IB SITE PARAMETERS (#350.9)  [XXX] PAYER (#51.3)         New
+  
+ IIV STATUS TABLE (#365.15)   Entries Added               Entries Added
+   Sending whole table
+   (25 entries)
+  
+ IIV TRANSMISSION QUEUE       SOURCE OF INFORMATION       New
+ (#365.1)                     (#3.02)                    
+  
+  
+ Forms Associated:
+                                                          New/Modified/
+ Form Name                    File Name (#)                  Deleted    
+ ---------                    ------------------          -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                          New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                          -------------
+  
+  
+ Options Associated:
+                                                          New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                        -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                          New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                            -------------
+ IBCNE REVERIFY INSURANCE MENU                            Modified
+ IBCNE FAST EXIT                                          Modified
+ IBCNE [XXX] REQUEST                                      New
+  
+  
+ Security Keys Associated:
+                                                          New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                        -------------
+ N/A
+  
+  
+ Templates Associated: 
+  
+                                                          New/Modified/
+ Template Name      Type      File Name (#)                  Deleted    
+ -------------      ----      ------------------          -------------
+ IBEDIT INS CO1     Input     INSURANCE COMPANY (#36)     Modified
+  
+  
+ Additional Information: 
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ 1. 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ CHARLESTON, SC
+ FAYETTEVILLE, AR
+ HEARTLAND-EAST HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+   
+ Hines:            domain.ext  
+ Salt Lake City:   domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                       SFTP Mode
+ -------------------------------------------------------------------------
+ Electronic Insurance            IB_2_0_P601_EIV_UM.PDF          Binary
+ Verification (eIV) User Guide
+  
+ Electronic Insurance            IB_2_0_P601_EIV_TM.PDF          Binary
+ Verification (eIV)
+ Technical Manual/Security Guide
+  
+ Deployment, Installation,       IB_2_0_P601_IG.PDF              Binary
+ Back-out, and Rollback Guide
+ (IB*2.0*601) 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ ** No options need to be disabled
+  
+ Installation Instructions
+ -------------------------
+ Install Time: Less than 5 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     IB*2.0*601:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global. 
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Answer NO
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBLA
+    Before: B68621473   After: B69810751  **82,149,153,184,271,416,506,601**
+Routine Name: IBCNBLE1
+    Before: B32419797   After: B41302582  **184,271,416,435,467,516,601**
+Routine Name: IBCNBLL
+    Before:B147621313   After:B148784052  **82,149,153,183,184,271,345,
+                                           416,438,435,506,519,528,549,
+                                           601**
+Routine Name: IBCNEDE1
+    Before: B49194842   After: B50422313  **184,271,416,438,435,467,497,
+                                           528,549,601**
+Routine Name: IBCNEDE7
+    Before: B27880444   After: B28965288  **271,416,438,497,601**
+Routine Name: IBCNEDEP
+    Before: B91001263   After: B94374860  **184,271,300,416,438,506,533,
+                                           549,601**
+Routine Name: IBCNEDEQ
+    Before: B28120431   After: B29176147  **184,271,300,416,438,601**
+Routine Name: IBCNEHL1
+    Before:B188076625   After:B155699201  **300,345,416,444,438,497,506,
+                                           549,593,601**
+Routine Name: IBCNEHL6
+    Before:       n/a   After:  B6767366  **601**
+Routine Name: IBCNEHLI
+    Before:  B7817332   After:  B8125280  **184,252,251,271,300,416,550,601**
+Routine Name: IBCNEHLK
+    Before:   B906841   After:  B5561054  **184,300,601**
+Routine Name: IBCNEHLM
+    Before: B23803518   After: B23949973  **184,251,300,416,438,497,506,
+                                           549,601**
+Routine Name: IBCNEHLQ
+    Before: B49920378   After: B60954828  **184,271,300,361,416,438,467,
+                                           497,533,516,601**
+Routine Name: IBCNEHLT
+    Before: B93743672   After: B94982650  **184,251,271,300,416,438,506,
+                                           549,582,601**
+Routine Name: IBCNEPM
+    Before: B14696239   After: B15040845  **184,601**
+Routine Name: IBCNEQU
+    Before:B126768253   After:B176017271  **184,271,416,438,497,582,601**
+Routine Name: IBCNERTQ
+    Before: B47060813   After: B48024033  **438,467,497,549,582,593,601**
+Routine Name: IBCNETST
+    Before:       n/a   After: B33658501  **601**
+Routine Name: IBCNEUT1
+    Before: B44078437   After: B44735114  **184,497,506,601**
+Routine Name: IBCNEUT3
+    Before: B56842259   After: B57983863  **184,252,271,416,601**
+Routine Name: IBCNEUT4
+    Before: B50266196   After: B51389763  **184,271,345,416,497,601**
+Routine Name: IBCNEUT7
+    Before: B82015033   After: B37109575  **184,549,579,582,601**
+Routine Name: IBCNSMM
+    Before: B21594622   After: B21854403  **103,133,184,516,601**
+Routine Name: IBJPI
+    Before: B42432107   After: B43418759  **184,271,316,416,438,479,506,
+                                           528,549,601**
+Routine Name: IBY601PO
+    Before:       n/a   After:  B4376494  **601**
+ 
+Routine list of preceding patches: 516, 550, 593
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 17, 2017
+Completed By:                               Date Completed: MAR 26, 2018
+Released By :                               Date Released : MAR 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

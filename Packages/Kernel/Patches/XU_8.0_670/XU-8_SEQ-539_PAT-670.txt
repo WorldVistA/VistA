@@ -1,0 +1,371 @@
+
+=============================================================================
+Run Date: APR 18, 2018                     Designation: XU*8*670
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #539                      Status: Released
+                  Compliance Date: MAY 19, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*568    <<= must be installed BEFORE `XU*8*670'
+
+Subject: KMP BUSINESS EVENT MONITOR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ NOTE: This patch must be installed via the documented KIDS FILE.
+  
+ This patch supports Kernel level functionality to enable the VistA
+ Business Event Monitor to collect Cache level metrics on a per event
+ basis.  The related Capacity Management patch is KMP*4.0*0. Please see
+ related patch descriptions for details.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*670 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches. Patch
+ XU*8.0*670 does not alter or modify any software designs, safeguards or
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*670 have no effect on Blood 
+ Bank Software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exists as a result of 
+ installation of this patch. 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)   New/Modified/Deleted
+ ------------------        -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name         File #         New/Modified/Deleted
+ ---------         ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name          Type        New/Modified/Deleted
+ -----------          ----        --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----     ------------------   --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues(PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ No associated Remedy Tickets
+  
+  
+ Problem 1:
+ ----------
+ Currently the Runtime Utilization Monitor (RUM) collects cache metrics on 
+ business events (Menu Option, TaskMan Job and Remote Procedure Calls) and
+ rolls the data up to weekly totals. This is not useful in today's
+ capacity planning world. This data needs to be aggregated to much smaller
+ time frames.
+  
+ Resolution 1:
+ -------------
+ The VistA Business Event Monitor will collect Cache specific metrics for 
+ individual business events in such a way that they can be correlated with
+ other tools gathering operating system level metrics. Combined this will
+ provide the ability to plan future deployments based on current business
+ workloads and to derive requirements for new capabilities.
+  
+ Problem 2:
+ ----------
+ The VistA Timed Collection Monitor collects data by reading directly from 
+ an InterSystems system global. InterSystems has provided APIs that can be 
+ used for this purpose.
+  
+ Resolution 2:
+ -------------
+ Modified collection functions to utilize InterSystems provided APIs
+  
+ Problem 3:
+ ----------
+ Additional data is needed to enhance reporting capabilities.
+  
+  
+ Resolution 3:
+ -------------
+         1) Added 3 letter site code to returned data.
+         2) Added Instance Name to returned data.
+         3) Added Block Collisions metric to timed collections.
+  
+ Problem 4:
+ ----------
+ There is currently no way to collect inbound/outbound message counts for 
+ VistA systems nor the ability to collect and store metrics on the message 
+ routing.
+  
+ Resolution 4:
+ -------------
+ The VistA Message Count Monitor will collect HL7 and HLO message counts 
+ at a regularly scheduled interval. The VistA HL7 Monitor will collect 
+ metrics on the messages themselves.
+  
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System
+ Edward Hines Jr. VA Hospital (Hines)
+ Captain James A. Lovell Federal Health Care Center (N. Chicago) 
+  
+  
+ Software/Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software being released as a host file and documentation describing the 
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+  Hines             domain.ext
+  Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ KIDS Build                    XU_8_670.KID                    ASCII
+  
+ There are no changes to Kernel documentation. Please see Vista System
+ Monitor (VSM) and Resource Utilization Monitor (RUM) documentation
+ on the VistA Document Library for changes to respective packages.
+  
+  
+ Patch Installation:
+  
+ Note:  Patches XU*8.0*670 and KMP*4*0 will be installed as part of
+ host file XU_8_670.KID. Installation instructions below are inclusive of
+ all patches, though it is recommended that installer read all related
+ patch descriptions for awareness of changes.
+  
+  
+ Pre/Post Installation Overview:
+ ------------------------------- 
+ Patches XU*8.0*670 and KMP*4.0*0 each have a post install routine that 
+ will run after patch installation. Post install routines will remain in 
+ the case they are needed. However, they can be deleted if desired once 
+ patch has been verified.
+  
+ The post installation routine ZOSVKSP2 (with patch XU*8.0*670) will save
+ routines ZOSVKSD and ZOSVKRO as %ZOSVKSD and %ZOSVKR respectively with
+ a call to MOVE^%ZTMGRSET.
+  
+ The post installation routine KMPVPST2 (with patch KMP*4.0*0) will set 
+ the proper values into the VSM CONFIGURATION and VSM MONITOR DEFAULT 
+ files and start the VistA Business Event Monitor.
+  
+ NOTE:  The VistA Business Event Monitor and the VistA Message Count 
+        Monitor will not start automatically on test systems. If desired
+        set field "ALLOW TEST" to "yes" in the VSM MANAGEMENT menu and then
+        start monitor.               
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ This installation can be queued.
+  
+  
+ Installation Instructions: 
+ --------------------------
+  
+ 1. Retrieve the host file from the ANONYMOUS.SOFTWARE directory at one of
+    the OI Field Offices.  The preferred method is to SFTP the file from
+    DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+    available server.  Alternatively, sites may elect to retrieve the file
+    from a specific OI Field Office.
+  
+    OI FIELD OFFICE     SFTP ADDRESS                    DIRECTORY
+    Hines               DOMAIN.EXT        
+    Salt Lake City      DOMAIN.EXT          
+  
+    The software distribution includes:
+  
+  FILE NAME             DESCRIPTION             FORMAT
+  ---------             ------------            ------
+  XU_8_670.KID           KIDS Build Host File   ASCII  
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, select the option Load a 
+    Distribution and select XU_8_670.KID. KIDS will load all patches
+    from the host file.  
+  
+ 3. If prompted 'This patch is for Version 4, you are running Version 1
+    Want to continue installing this build? NO//  enter "YES"
+         NOTE: The version jump is to consolidate all KMPx child packages 
+         a single KMP version.
+  
+  
+ 4. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch XU*8.0*670:
+                                          
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install, XU*8.0*670.
+  
+ 6.  If prompted 'This Patch is for Version 4, you are running Version 1
+     Want to continue installing this build? NO//  enter 'YES'
+         NOTE: The version jump is to consolidate all KMP child packages 
+         a single KMP version.
+  
+ 7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' enter 'NO'.     
+  
+ 8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter 'NO'.
+  
+ 9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  enter 'NO'.
+  
+         Options, menu options, or protocols  do not need to be disabled.
+  
+ 10.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ NOTES: 
+    1) If this is being installed in a test system, and if testing will be 
+ done on the test system, please send a Mailman Message to
+ G.CPE-CP-SUPPORT@VISTA.CPE.DOMAIN.EXT providing the domain name and I.P. 
+ address of the test system. This will allow acknowledgements to be sent 
+ back to the site.
+  
+    2) Once the software has been installed on the production system it is 
+ recommended to turn all VSM monitors OFF in the test system as 
+ they are not needed. Use the VSM Management option to stop the monitors 
+ in the test system. By default the VSM monitors will not run on test 
+ systems.
+  
+  Patch Backout Plan
+ ==================
+ If patches XU*8.0*670 and KMP*4.0*0 need to backed out, please contact 
+ Capacity and Performance Engineering. A patch will be provided for
+ file and code restoration. This patch does not affect any clinical or 
+ financial functionality within VistA.
+  
+  
+  
+  
+  
+ Checksum and 2nd Line Information:
+ ----------------------------------
+  
+ The second lines of the routines should be as follows:
+  
+ ZOSVKRO
+      ;;8.0;KERNEL;**90,94,107,122,143,186,550,568,670**;3/1/2018;Build 45
+ ZOSVKSD
+      ;;8.0;KERNEL;**121,197,268,456,568,670**;3/1/2018;Build 45
+ ZOSVKSP2
+      ;;8.0;KERNEL;**670**;3/1/2018;Build 45
+  
+  
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+  
+ Routine Name: ZOSVKRO
+     Before:       B32829782    After:B32258746
+ Routine Name: ZOSVKSD
+     Before:       B10781494    After:B19282396
+ Routine Name: ZOSVKSP2
+     Before:       N/A          After:B1286573
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2016
+Completed By:                               Date Completed: APR 16, 2018
+Released By :                               Date Released : APR 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

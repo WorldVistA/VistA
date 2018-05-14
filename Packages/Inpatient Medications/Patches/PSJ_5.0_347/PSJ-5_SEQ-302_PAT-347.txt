@@ -1,0 +1,337 @@
+
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: PSJ*5*347
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #302                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*256   <<= must be installed BEFORE `PSJ*5*347'
+                    (v)PSJ*5*337   <<= must be installed BEFORE `PSJ*5*347'
+                    (v)PSJ*5*338   <<= must be installed BEFORE `PSJ*5*347'
+                    (v)PSJ*5*346   <<= must be installed BEFORE `PSJ*5*347'
+
+Subject: MOCHA 2.1B FOLLOW UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of the MOCHA Enhancements 2.1B group of builds and is a
+ component of the last build to be installed. Multiple package host files
+ were created where possible to simplify installation at Veterans Health
+ Administration (VHA) facilities. The combined build host file
+ MOCHA_2_1_PSO_OR_PSJ.KID contains OR*3.0*382, PSJ*5.0*256 and PSO*7.0*402.
+ The combined follow up host file MOCHA_2_1_FOLLOW_UP_PSO_OR_PSJ.KID
+ contains this patch as well as PSO*7.0*500 and OR*3.0*469.  In addition,
+ there are standalone Pharmacy Data Management patches, PSS*1.0*178 and
+ PSS*1.0*206, which must be installed in conjunction with the other builds.
+  
+                               * * * Notice * * *
+                   This group of patches should not be installed 
+                       until the follow on patch PSO*7.0*515
+            has been released and is ready to be immediately installed. 
+                PSO*7.0*515 must be installed immediately after the
+                  successful installation of this group of builds.
+               See the PSO*7.0*515 patch description for details.
+                               * * * Notice * * *  
+   
+ MOCHA v2.1B will provide the following enhancements:
+ ===================================================
+  
+ 1. The CPRS user should see only one warning message when the text in the 
+ warning messages for the Maximum Single Dose Order Check and the Max 
+ Daily Dose Order Check is identical.
+  
+ 2. Incorporate routines (PSGOD & PSGOER) from PSJ*5*338 into PSJ*5*347.
+  
+ 3. Correct the display text when verifying a non-verified Unit Dose order 
+ which contains an Old Schedule Name through backdoor options, the user 
+ shall be informed that the schedule name has been changed and of the new 
+ schedule name.
+  
+ 4. Resolves a limited issue when there are multiple entries with the same
+ name existing in the Standard Administration Schedule file making it so
+ the user cannot finish the Inpatient Med Unit Dose has been resolved.
+  
+ 5. Resolves a limited issue when users could not finish a continuous IV
+ order as an IV Piggyback.
+  
+ 6. The DBIAs GETDATA^GMRAOR (#4847), GETDATA^GMRAOR(#4848), 
+ ORCHK^GMRAOR(#2378) are no longer used. Remove the reference to these DBIAs in 
+ PSGSICHK and PSJGMRA routines.
+  
+ 7. Delete PSJDGAL routine as it's no longer used.
+  
+ 8. When a patient has a pending clinic order, any pending unit dose(UD) 
+ or IV orders will not be included in the order checks. The same for when 
+ the clinic order is active, any active orders (UD for UD clinic, IV for 
+ IV clinic) with the same stop date/time as the clinic order will not be 
+ included in the order checks. This patch will correct this.
+  
+ 9. Fix a subscript error at OTPRN+7^PSJBCMA3 enter a new inpatient unit
+ dose order with a schedule " PRN" is entered. This schedule is not defined
+ in the Standard Administration Schedule file.  
+  
+ 10. Replace 2.2 with 2.2046226 for the weight conversion for the PADE HL7 
+ ADT message.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ ---------------------- 
+ N/A
+  
+  
+ Options Associated: 
+ ------------------ 
+ N/A 
+  
+  
+ Protocols Associated:
+ -------------------- 
+ N/A  
+  
+  
+ Security Keys Associated:
+ ------------------------ 
+ N/A
+  
+  
+ Templates Associated:
+ -------------------- 
+ N/A
+  
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ I5589877FY15 - Make Metric Conversions for Patient Weight Consistent
+                across VistA Packages      
+  
+   Problem:
+   --------
+   In order to display the patient's weight in Kilograms (Kgs) the current
+   conversion from Pounds (Lbs) to Kgs is being done by dividing the 
+   patient weight on file by 2.2. 
+  
+   Resolution:
+   -----------
+   The weight calculation conversion from Lbs to Kgs is being modified to
+   increase the precision of the patient weight in Kgs by dividing it by
+   2.2046226 instead. This change will make the Outpatient Pharmacy
+   consistent with Computerized Patient Record System (CPRS).
+  
+   Technical Resolution:
+   ---------------------
+   Modify routines to calculate from pounds to kilograms to use 2.2046226 
+   lbs/kg instead of 2.2 lbs/kg.
+   OBX+10^PSJPDCL
+  
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                        File Name        SFTP Mode
+ -----------------------------------------------------------------------
+ MOCHA Enhancements 2.1B            PSS_1_PSO_7_PSJ_5_         binary
+  Release Notes                     RN_R0218.PDF
+  
+ MOCHA 2.1B Combined Builds         MOCHA_21B_PSO_OR_PSJ_      binary
+  Deployment, Installation,         PSS_CB_IG.PDF
+   Back-Out and Rollback Guide                                           
+                                          
+ Inpatient Medications Nurse's      PSJ_5_NURSE_UM_R0218.PDF   binary   
+  User Manual v5.0
+  
+ Inpatient Medications              PSJ_5_PHAR_UM_R0218.PDF    binary
+  Pharmacist's User Manual v5.0                                          
+                                            
+ Inpatient Medications              PSJ_5_SUPR_UM_R0218.PDF    binary
+  Supervisor's User Manual v5.0
+  
+ Inpatient Medications Technical    PSJ_5_TM_R0218.PDF         binary
+  Manual/Security Guide v5.0
+   
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ PSS*1.0*178, the combined build, and PSS*1.0*206 should be installed 
+ before installation of the combined follow up build.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+  
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The MOCHA 2.1b ENHANCEMENTS software distribution includes:
+  
+    File Name               Contents                  Retrieval Format
+    ---------------------   ----------------          ----------------
+    PSS_1_178.KID           PSS*1.0*178               ASCII
+  
+    MOCHA_2_1_PSO_OR_       PSJ*5.0*256               ASCII
+      PSJ_BUILD.KID         PSO*7.0*402
+                            OR*3.0*382
+  
+    PSS_1_206.KID           PSS*1.0*206               ASCII
+  
+    MOCHA_2_1_FOLLOW_       PSO*7.0*500               ASCII
+      UP_PSO_OR_PSJ.KID     OR*3.0*469
+                            PSJ*5.0*347
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ Please refer to the MOCHA 2.1B Combined Builds Deployment, Installation,
+ Back-Out and Rollback Guide for installation instructions.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ ****************************** NOTE ************************************
+ The 'Before' checksum values for routines PSGOD, PSGOER, PSGOEV, PSGS0,
+ PSGSICHK, PSIVOCDS, PSIVSP, PSJLIFNI, and PSJOCDSD in this patch will
+ appear incorrect.  This is because they are components of the preceding  
+ patch PSJ*5.0*256 which is also part of the MOCHA 2.1B group of builds.  
+ The FORUM Patch Module uses released checksum values to populate the
+ 'Before' fields below.  Since PSJ*5.0*256 will be released at the same
+ time as this patch the FORUM Patch Module does not have access to the
+ actual 'Before' checksum values.
+ ****************************** NOTE *************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOD
+    Before: B27720964   After: B30203742  **67,58,111,133,181,286,281,
+                                           315,338,256,347**
+Routine Name: PSGOER
+    Before: B90452395   After: B90786181  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281,
+                                           315,338,256,347**
+Routine Name: PSGOEV
+    Before: B95475344   After: B95461290  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288,199,281,256,347**
+Routine Name: PSGS0
+    Before: B78819959   After: B79536208  **12,25,26,50,63,74,83,116,110,
+                                           111,133,138,174,134,213,207,
+                                           190,113,245,227,256,347**
+Routine Name: PSGSICHK
+    Before: B81963876   After: B36513168  **3,9,26,29,44,49,59,110,139,
+                                           146,160,175,201,185,181,256,
+                                           347**
+Routine Name: PSIVOCDS
+    Before:B137929887   After:B140874598  **181,252,257,256,347**
+Routine Name: PSIVSP
+    Before: B44907043   After: B45290793  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229,279,305,331,
+                                           256,347**
+Routine Name: PSJBCMA3
+    Before:  B4449607   After:  B4491132  **58,91,190,347**
+Routine Name: PSJBLDOC
+    Before: B59046189   After: B59663394  **181,263,260,295,252,257,299,
+                                           281,347**
+Routine Name: PSJDGAL
+    Before:  B4359681   After:    Delete  
+Routine Name: PSJGMRA
+    Before: B45646088   After: B19012302  **181,270,260,252,257,281,347**
+Routine Name: PSJLIACT
+    Before: B21381210   After: B59558968  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257,299,
+                                           281,346,256,347**
+Routine Name: PSJLIFNI
+    Before: B12733374   After: B13554613  **1,29,34,37,50,94,116,110,111,
+                                           181,261,256,347**
+Routine Name: PSJOCDSD
+    Before: B35364232   After: B35960175  **181,252,281,256,347**
+Routine Name: PSJPDCL
+    Before: B59208324   After: B59283748  **317,337,347**
+ 
+Routine list of preceding patches: 256, 337
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2017
+Completed By:                               Date Completed: FEB 23, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

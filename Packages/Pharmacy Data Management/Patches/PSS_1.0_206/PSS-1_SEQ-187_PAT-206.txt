@@ -1,0 +1,307 @@
+
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: PSS*1*206
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #187                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*178   <<= must be installed BEFORE `PSS*1*206'
+                    (v)PSS*1*195   <<= must be installed BEFORE `PSS*1*206'
+
+Subject: MOCHA 2.1B FOLLOW UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of the MOCHA Enhancements 2.1B group of builds and must
+ be the third of the group installed. Multiple package host files were
+ created where possible to simplify installation at Veterans Health
+ Administration (VHA) facilities for the other portions. The combined host
+ file MOCHA_2_1_PSO_OR_PSJ.KID contains OR*3.0*382, PSJ*5.0*256 and
+ PSO*7.0*402.  The combined follow up host file
+ MOCHA_2_1_FOLLOW_UP_PSO_OR_PSJ.KID contains PSO*7.0*500, PSJ*5.0*347 and
+ OR*3.0*469.  In addition, there is another standalone Pharmacy Data 
+ Management patch, PSS*1.0*178, which must be installed in conjunction with
+ the other builds.
+  
+                               * * * Notice * * *
+                   This group of patches should not be installed 
+                       until the follow on patch PSO*7.0*515
+            has been released and is ready to be immediately installed. 
+                PSO*7.0*515 must be installed immediately after the
+                  successful installation of this group of builds.
+               See the PSO*7.0*515 patch description for details.
+                               * * * Notice * * * 
+  
+ MOCHA v2.1B will provide the following enhancements:
+ ===================================================
+  
+ Implement Dose Range Checking with a Max Daily Dose limit for 
+ simple medication orders entered through Outpatient Pharmacy, Inpatient 
+ Medications and CPRS applications.
+  
+ Display a generic error message when the Max Daily Dose Order 
+ Check cannot be performed in CPRS.
+  
+ Display an error message when the Max Daily Dose Order Check 
+ cannot be performed in CPRS with a detailed reason when height and/or 
+ weight is required, but does not exist in the Vitals application for the 
+ patient.
+  
+ Display an error message when the Max Daily Dose Order Check 
+ cannot be performed in Pharmacy with a detailed reason.
+  
+ Correct all daily dose errors due to frequency failure.
+  
+ Resolve miscellaneous frequency issues with incorporation of new 
+ dosing check frequency fields.
+  
+ Apply Daily Dose Check exclusion for schedule to medication 
+ orders entered through Outpatient Pharmacy, Inpatient Medications and 
+ CPRS.
+  
+ Apply advisory note to high dose warnings and General Dosing 
+ Guidelines for medication administered through eye, ear or nose.
+  
+ Create a customized frequency message.
+  
+ Create a general dosing information message.
+  
+ Create a Max Daily Dose Warning message for the calculated Daily Dose.
+  
+ Add FDB data elements from Dosing Order Check call to VistA side of
+ interface.
+  
+ Display one warning if Maximum Single Dose and Max Daily Dose
+ Order Check warning texts are identical.
+  
+ Adjustment to the Daily Dose if a Single Dose Adjustment is made for an IV
+ order when performing Dosing Order Checks.
+  
+ Modify entries to the DOSE UNITS file (#51.24).
+  
+ Modify entries to the DOSE UNIT CONVERSION file (#51.25).
+  
+ Update Check PEPS Services Setup [PSS CHECK PEPS SERVICES SETUP] option 
+ to perform the Max Daily Dose Order Check instead of the Daily Dose Range 
+ Order Check.
+  
+ Calculate the frequency with the consideration for the admin times if an 
+ incorrect frequency is used for dosing check when a unit dose order is 
+ entered in CPRS with duration less than 24 hours. 
+  
+ Correct the subscript error at MULTSCH+18^PSSSCHMS
+  
+ Fix the frequency calculation for the schedule with "PRN" that resulted 
+ in invalid/undefined frequency error.
+  
+ Patch Components:
+ ================
+  
+ Files & Fields Associated:
+ -------------------------
+ N/A
+  
+ Forms Associated:
+ ----------------
+ N/A
+  
+ Mail Groups Associated:
+ ----------------------
+ N/A
+  
+ Options Associated:
+ ------------------
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Associated New Service Request(s):
+ =================================
+ N/A
+  
+  
+ Patient Safety Issues (PSI)s:
+ ============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+  
+ Blood Bank Clearance:
+ ====================
+ N/A
+  
+ Test Sites:
+ ==========
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                  File Name              SFTP Mode
+ -----------------------------------------------------------------------
+  
+ MOCHA Enhancements 2.1B                PSS_1_PSO_7_PSJ_5_     binary
+  Release Notes                         RN_R0218.PDF
+  
+ Pharmacy Data Management               PSS_1_UM_R0218.PDF     binary
+  User Manual v1.0
+  
+ Pharmacy Data Management               PSS_1_TM_R0218.PDF     binary
+  Technical Manual v 1.0
+  
+ MOCHA 2.1B Combined Builds             MOCHA_21B_PSO_OR_PSJ_  binary
+  Deployment, Installation,             PSS_CB_IG.PDF
+   Back-Out and Rollback Guide
+  
+ Pharmacy Data Management Dosing        PSS_1_DOSING_ORD_CK_   binary
+  Order Check User Manual               UM_R0218.PDF
+  
+ Vista to MOCHA v2.0                    PSS_1_VistA_to_        binary
+  Interface Document                    MOCHA_ID.PDF
+   
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch must be installed after PSS*1.0*178 and the combined build.
+ The combined follow up build must be installed after this patch.
+  
+  
+ Pre-Installation Instructions
+ =============================
+  
+ This patch must be obtained from the ANONYMOUS.SOFTWARE directory at one 
+ of the OI Field Offices.  The preferred method is to SFTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT 
+  
+ The MOCHA 2.1b ENHANCEMENTS software distribution includes:
+  
+    File Name               Contents                  Retrieval Format
+    ---------------------   ----------------          ----------------
+    PSS_1_178.KID           PSS*1.0*178               ASCII
+  
+    MOCHA_2_1_PSO_OR_       PSJ*5.0*256               ASCII
+      PSJ_BUILD.KID         PSO*7.0*402
+                            OR*3.0*382
+  
+    PSS_1_206.KID           PSS*1.0*206               ASCII
+  
+    MOCHA_2_1_FOLLOW_       PSO*7.0*500               ASCII   
+      UP_PSO_OR_PSJ.KID     OR*3.0*469
+                            PSJ*5.0*347 
+  
+  
+  
+ Installation Instructions
+ =========================
+  
+ Please refer to the MOCHA 2.1B Combined Builds Deployment, Installation,
+ Back-Out and Rollback Guide for installation instructions.
+  
+ Post Installation Instructions
+ ==============================
+ N/A
+  
+ ****************************** NOTE ************************************
+ The 'Before' checksum values for ALL routines in this patch will appear
+ incorrect.  This is because they are components of the preceding patch
+ PSS*1.0*178 which is also part of the MOCHA 2.1B group of builds.  The
+ FORUM Patch Module uses released checksum values to populate the 
+ 'Before' fields below.  Since PSS*1.0*178 will be released at the same
+ time as this patch the FORUM Patch Module does not have access to the
+ actual 'Before' checksum values. 
+ ****************************** NOTE *************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDRDOS
+    Before:B158735197   After:B159075348  **160,173,195,178,206**
+Routine Name: PSSDSAPD
+    Before:B185681379   After:B154210974  **117,160,173,201,178,206**
+Routine Name: PSSDSAPI
+    Before:B201957555   After:B210956246  **117,160,173,178,206**
+Routine Name: PSSDSEXC
+    Before:B205518936   After:B205557716  **117,160,178,206**
+Routine Name: PSSDSEXD
+    Before:B194531746   After:B178609917  **178,206**
+Routine Name: PSSDSEXE
+    Before: B89355466   After:B173941412  **178,206**
+Routine Name: PSSDSUTL
+    Before:B122545264   After:B123713572  **201,178,206**
+Routine Name: PSSHRQ23
+    Before:B265225897   After:B265224277  **136,178,206**
+Routine Name: PSSHRQ24
+    Before: B63136929   After: B64768164  **178,206**
+Routine Name: PSSSCHMS
+    Before: B72248048   After:B127350691  **178,206**
+ 
+Routine list of preceding patches: 178
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 08, 2016
+Completed By:                               Date Completed: FEB 23, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

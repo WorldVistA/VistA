@@ -1,0 +1,139 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/22/18 at 07:44
+=============================================================================
+Run Date: APR 05, 2018                     Designation: PSJ*5*356
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #304                      Status: Released
+                  Compliance Date: MAY 06, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*317   <<= must be installed BEFORE `PSJ*5*356'
+
+Subject: FRAMESTACK ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ 1.      I17870223FY18 - FRAMESTACK error
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.      I17870223FY18 - FRAMESTACK error
+  
+         Duplicate: R18254657FY18 
+         Duplicate: I18450448FY18
+         Duplicate: I17870223FY18
+  
+ Problem: 
+ --------
+ When processing transactions from a PADE system, the user received
+ a FRAMESTACK error due to the Dispensing Device being named the same
+ as a Ward Group on another Dispensing Device.
+  
+ Resolution:
+ -----------
+ Modify the system so the Dispensing Device files correctly if it
+ does not already exist in the PADE DISPENSING DEVICE file (#58.63).
+  
+ Modify routines PSJPADIT, PSJPADIU (new routine), PSJPAD70, PSJPAD7I
+ to fix FileMan calls.
+  
+ Test Sites:
+ -----------
+ Albany Stratton VAMC
+ West Palm Beach VAMC
+ Southeast Louisiana HCS 
+  
+ Installation Instructions:
+ --------------------------
+  
+ Patients should not be processing transactions from the PADE system
+ while the patch is being installed.  It should take less than 2 minutes
+ to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSJ*5.0*356:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPAD70
+    Before:B193106268   After:B196235756  **317,356**
+Routine Name: PSJPAD7I
+    Before: B91877682   After: B94307166  **317,356**
+Routine Name: PSJPADIT
+    Before:B218833371   After:B210594395  **317,356**
+Routine Name: PSJPADIU
+    Before:       n/a   After:  B4945715  **356**
+ 
+Routine list of preceding patches: 317
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 04, 2018
+Completed By:                               Date Completed: APR 04, 2018
+Released By :                               Date Released : APR 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

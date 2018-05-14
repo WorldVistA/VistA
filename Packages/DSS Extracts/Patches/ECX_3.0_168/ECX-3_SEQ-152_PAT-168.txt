@@ -1,0 +1,230 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 11/13/17 at 11:26
+=============================================================================
+Run Date: MAR 28, 2018                     Designation: ECX*3*168
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #152                      Status: Released
+                  Compliance Date: APR 01, 2018
+=============================================================================
+
+Associated patches: (v)ECX*3*167   <<= must be installed BEFORE `ECX*3*168'
+
+Subject: MID-FY18 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*168 updates the SHORT DESCRIPTION (#1) field of 19 existing 
+ entries in the NATIONAL CLINIC (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed as close to 4/1/2018 as possible. Sites will need the updates 
+ for Mid Fiscal Year (FY) 18.
+ *************************************************************************
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I18184396FY18 - MID-FY18 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC 
+                    (#728.441) FILE
+  
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION (#1) field of 19 existing entries in the 
+    NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Routine ECX3P168 has been created to update the NATIONAL CLINIC 
+    (#728.441) file by modifying the SHORT DESCRIPTION (#1) field of 
+    19 existing entries effective 4/1/2018.
+  
+    The descriptions of the following entries have changed:
+  
+     Existing Code       New Short Description
+    ---------------    -------------------------
+        CBHT            CHAR4 COUNCIL
+        DEMC            CHAR4 COUNCIL
+        DMDC            V-IMPACT Psychologist
+        DMEC            V-IMPACT Social Worker
+        DMFC            V-IMPACT RN/LPN
+        DMGC            V-IMPACT Nurse Practitioner
+        DMJC            V-IMPACT Pharmacist
+        DMKC            V-IMPACT MD/DO
+        DMLC            V-IMPACT PA
+        DMPC            V-IMPACT Contract MD/DO
+        DMQC            V-IMPACT Contract NP
+        DMRC            V-IMPACT Spoke (Patient) Side
+        DMSC            V-IMPACT Other
+        HDQC            Homeless Vets Street Outreach
+        HTSC            HURRICANE IRMA CVT SERVICES
+        HTUC            HURRICANE HARVEY CVT SERVICES
+        PNJC            Open Access
+        RHVC            Traveling Vets Coordinator
+        WCEC            Whole Health Education Group
+  
+  
+ Test Sites:
+ -----------
+ VA Central California Health Care System (Fresno)
+ Providence VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch ECX*3.0*168:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//" respond NO.
+  
+   ** 7. During install, verify that all entries were added successfully.
+         If an error is displayed, please create a ticket.  
+   
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine ECX3P168 from your production system after the 
+ patch has been successfully verified.
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P168
+    Before:       n/a   After:  B6143616  **168**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2017
+Completed By:                               Date Completed: MAR 02, 2018
+Released By :                               Date Released : MAR 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

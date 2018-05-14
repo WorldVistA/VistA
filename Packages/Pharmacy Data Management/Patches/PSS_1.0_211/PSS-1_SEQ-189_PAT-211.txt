@@ -1,0 +1,311 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 12/22/17 at 14:49
+=============================================================================
+Run Date: MAR 22, 2018                     Designation: PSS*1*211
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #189                      Status: Released
+                  Compliance Date: APR 22, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*48    <<= must be installed BEFORE `PSS*1*211'
+                    (v)HDI*1*21    <<= must be installed BEFORE `PSS*1*211'
+                    (v)XU*8*686    <<= must be installed BEFORE `PSS*1*211'
+
+Subject: NDS MEDICATIONS DOSAGE FORM
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ***************************** ATTENTION **********************************
+  
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Medications Dosage Form Domain enhancement 
+ includes 3 patches that must be installed in the following order:
+  
+      1.  XU*8.0*686
+      2.  HDI*1.0*21
+      3.  PSS*1.0*211
+  
+ **************************************************************************
+  
+ The VA has established a process for implementing standard 
+ terminology/terminologies within individual clinical domains for the 
+ exchange of data. The intent of this effort is to provide the detailed 
+ groundwork necessary for industry-wide interoperability. The objective 
+ of this process is to enable the most user friendly interface as 
+ possible in the implementation of the native standardization along with
+ all of the activities required to operationalize the change within the 
+ VistA environment and the associated terminology consuming applications.
+  
+ This patch implements Medications Dosage Form domain changes required 
+ by the Collaborative Terminology Tooling & Data Management (CTT & DM) 
+ Native Domain Standardization (NDS) project. This patch adds a new 
+ MASTER DOSAGE FORM file (#50.60699), and a new MASTER DOSAGE FORM field
+ (#90) in the DOSAGE FORM file (#50.606) pointing to the new MASTER 
+ DOSAGE FORM file (#50.60699).
+  
+ The new MASTER DOSAGE FORM file (#50.60699) contains the RxNorm Dosage
+ Form value set. The new MASTER DOSAGE FORM field (#90) in the DOSAGE
+ FORM file (#50.606) points to the MASTER DOSAGE FORM file (#50.60699),
+ and provides a method of associating VA VistA DOSAGE FORM file (#50.606)
+ file entries to the RxNorm standard code set.
+  
+ In addition to the new file and field described above, the following two
+ Functional changes are included in this patch:
+  
+ 1) The RxNorm Dosage Form name has been added to the Noun/Dosage Form 
+    Report [PSS DOSE FORM/NOUN REPORT], for DOSAGE FORM file (#50.606) 
+    entries that are associated to an RxNorm dosage form in the MASTER 
+    DOSAGE FORM file (#50.60699). 
+  
+    Example, Noun/Dosage Form Report [PSS DOSE FORM/NOUN REPORT]
+    ----------------------------------------------------------------
+     Dosage Form [RxNorm Name]     Dispense Units per Dose      PAGE: 53
+       Noun(s)                 Package-->Local Possible Dosage
+     --------------------------------------------------------------------
+  
+      TAB,SA [Extended Release Oral Tablet]                     (1,2)
+        (No Nouns)
+  
+      TAB,SA,24HR [24 Hour Extended Release Tablet]             (1,2)
+        (No Nouns)
+  
+      TAB,SOLUBLE                                               (1,2)
+        TABLET(S)                                        IO--> 1 TABLET
+                                                         IO--> 2 TABLETS
+  
+ 2) The RxNorm Dosage Form name has been added as an identifier to
+    lookups Into the DOSAGE FORM file (#50.606), for DOSAGE FORM file 
+    (#50.606) entries that are associated to an RxNorm dosage form in 
+    the MASTER DOSAGE FORM file (#50.60699). 
+  
+    Example, RxNorm Identifier in the DOSAGE FORM file (#50.606)
+    ----------------------------------------------------------------
+      Select DOSAGE FORM NAME: TAB,SA
+          1   TAB,SA    
+          2   TAB,SA  [EXTENDED RELEASE]   
+          3   TAB,SA,24HR  [EXTENDED RELEASE]   
+      CHOOSE 1-3: 
+  
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ **********************************************************************
+ * NOTE: A new file, MASTER DOSAGE FORM (#50.60699) has been created. *
+ * This file ^PSMDF(50.60699)  is of minimal size (less than 400k)    *
+ * with a low growth expectation. Please provide this information to  *
+ * your facility VistA System Administrator for their awareness.      *
+ **********************************************************************
+  
+ File Name (Number)   Field Name (Number)             New/Modified/Delete
+ ------------------   ----------------------          -------------------
+ DOSAGE FORM          MASTER DOSAGE FORM (#90)                New
+  (#50.606)
+  
+ MASTER DOSAGE FORM   ALL FIELDS:                             New
+  (#50.60699)          RXNORM NAME (#.01)                     New
+                       RXCUI CODE (#1)
+                       TERM TYPE (#2)                         New
+                       ASSOCIATED VA DOSAGE FORMS (#99)       New
+                       REPLACED BY VHA STANDARD TERM (#99.97) New
+                       MASTER ENTRY FOR VUID (#99.98)         New
+                       VUID (#99.99)                          New
+                       EFFECTIVE DATE/TIME (#99.991)          New
+                        Sub-file (#50.6069901):
+                          EFFECTIVE DATE/TIME (#.01)          New
+                          STATUS (#.02)                       New
+                          
+  
+ Forms Associated:
+ -----------------
+ None.
+  
+ Mail Groups Associated:
+ -----------------------
+ None.
+  
+ Options Associated: 
+ -------------------
+ None.
+  
+ Protocols Associated:
+ ---------------------
+ None.  
+  
+ Security Keys Associated:
+ -------------------------
+ None.
+  
+ Templates Associated:
+ ---------------------
+ None.
+  
+ Additional Information:
+ -----------------------
+ None.
+  
+ New Service Requests (NSRs)
+ --------------------------- 
+ None.
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ None.
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Associated Change Requests: 
+ ---------------------------
+ There are no Change Requests associated with this patch.
+  
+ Test Sites:
+ -----------
+ Oklahoma City, OK - VAMC
+ PROVIDENCE, RI - VAMC
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Documentation describing the new functionality introduced by these patches
+ are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                        FTP Mode
+ ------------------------------------------------------------------------
+  
+ Pharmacy Data Management User Manual
+                                pss_1_um_r0318.docx             BINARY
+                                pss_1_um_r0318.pdf              BINARY
+  
+ Pharmacy Data Management Technical Manual
+                                pss_1_tm_r0318.docx             BINARY
+                                pss_1_tm_r0318.pdf              BINARY
+  
+ Deployment, Installation, Back-Out,
+ and Rollback Guide             pss_1_p211_ig.docx              BINARY
+                                pss_1_p211_ig.pdf               BINARY
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Please note that this patch is released in conjunction with HDI*1.0*21 
+ and XU*8.0*686, and all three patches should be installed at or around
+ the same time. This patch should be installed during non-peak requirement
+ hours. Install Time - less than 5 minutes
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it should be
+ installed during non-peak hours to minimize potential disruption to
+ users. This patch should take less than 5 minutes to install.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (pss_1_p211_ig.doc) for complete installation instructions.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation and Distribution System Menu, select the
+      Installation menu.
+    
+   3. From this menu, you may elect to use the following options (when 
+      prompted for INSTALL NAME, enter PSS*1.0*211):
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+    
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+    
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+    
+   4. Use the Install Package(s) options and select the package PSS*1.0*211
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONS during install? YES//',
+      respond "NO".
+    
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options and 
+      Protocols? YES//', respond "NO".
+  
+ ***********************************************************************
+ * The installer should see at least one of the following informational*
+ * messages displayed on their screen by the post install routine. If  *
+ * the installer does not see one of these messages Please contact the *
+ * CTT&DM NDS Team for consultation.                                   *
+ *                                                                     *
+ * Example Informational message if the 50.60699 has already been      *
+ * seeded at the facility.                                             *
+ *                                                                     *
+ * File: 50.60699 Has already been seeded. Status is: 4                *
+ * **** Post-installation of Patch PSS*5.3*211 HDIS 'seeding' has been *
+ * halted.                                                             *
+ * **** Please contact Enterprise VistA Support.                       *
+ *                                                                     *
+ *                                                                     *
+ * Example Informational message that seeding is complete and that STS *
+ * has been notified.                                                  *
+ *                                                                     *
+ * File: 50.60699 Has been 'seeded'. Message Number:                   *
+ * **** Post-installation of Patch PSS*1.0*211 HDIS 'seeding' MASTER   *
+ * DOSAGE FORM file (#50.60699) has Completed.                         *
+ * **** An update message has been sent to Enterprise VistA Support.   *
+ ***********************************************************************
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (pss_1_p211_ig.doc) for complete installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;09/30/97;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS211PO
+    Before:       n/a   After: B22029589  **211**
+Routine Name: PSSNDSU
+    Before:       n/a   After: B27691663  **211**
+Routine Name: PSSNOUNR
+    Before: B13687213   After: B15263848  **34,48,211**
+ 
+Routine list of preceding patches: 48
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2017
+Completed By:                               Date Completed: MAR 20, 2018
+Released By :                               Date Released : MAR 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,219 @@
+
+=============================================================================
+Run Date: APR 23, 2018                     Designation: EAS*1*161
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #133                      Status: Released
+                  Compliance Date: MAY 24, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.2.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.2.1. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development and upgrade 
+ efforts, including enhancements to support Community Care (CC) and ES 
+ Sustainment.
+  
+ The following functionality is updated in this ES 5.2.1 release:
+  
+ ESM:
+ - The Enrollment System (ES) allows user to manually enter a Future 
+   Discharge Date for a specific Veteran or service member.
+  
+ ES Sustainment defect fixes:
+ - ES is not setting the Change Effective Date properly if the Temporary
+   address inactivated by the site.
+ - Preferred Facility and Date of Death batch jobs do not save updates.
+ - Deleting line 2 and/or line 3 of Residential address does not trigger
+   ORUZ05.        
+         
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3661 - ES is not setting the Change Effective Date properly if 
+ Temporary Mailing Address inactivated by site, resulting in other sites 
+ of record not deactivating the Temporary Mailing Address.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+  
+ R16901844FY18  Problem: Temporary address at site when removed is still
+                         active at other facilities
+                Resolution: Made code changes to the 'processaddress' rule,
+                         to update Change Effective Date if the Temporary
+                         Address is inactivated by the site.
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 661639  Problem: ES is not setting the Change Effective Date properly if 
+         the Temporary Address is inactivated by the site.
+         Resolution: Made code changes to the 'processaddress' rule, to
+         update Change Effective Date if the Temporary Address is
+         inactivated by the site.
+  
+ 701641  Problem: Preferred Facility and Date of Death batch jobs do not 
+         save updates.        
+         Resolution: Updated transaction properties and changed the save
+         function to the "genericDAO" operations in the batch job. Updated
+         the Preferred Facility job to also save the separate entry in the
+         person table so that the most recent facility box is checked on
+         the Facility tab.
+  
+ 708647  Problem: ES displays incorrect error message "Future Discharge 
+         Date cannot be more than 730 days in the future".
+         Resolution: Updated the "MilitaryServiceMessages.properties" file
+         to display the following error, "Future Discharge Date cannot be
+         more than 2 years in the future".
+  
+ 710351  Problem: Deleting line 2 and/or line 3 of Residential Address 
+         does not trigger ORUZ05.        
+         Resolution: Modified the contact information rule flow and the
+         trigger of the eCIS/VET360 CASS certification to always send out
+         Z05 when processing.
+  
+ 712051  Problem: eCIS did not respond and the Z05 message was not 
+         triggered after the "Add a Person" (AAP) with 3 Lines is populated
+         for the Permanent Address.
+         Resolution: Made code changes to check for a null address before
+         the merge is executed and to trigger a Z05 message when a response
+         from eCIS is received.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Host File and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.2.1 User Guide                ES_5_2_1_User_Guide.pdf         binary
+ ES 5.2.1 Release Notes             ES_5_2_1_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 06, 2018
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

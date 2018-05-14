@@ -1,0 +1,246 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/08/18 at 08:04
+=============================================================================
+Run Date: APR 26, 2018                     Designation: IB*2*620
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #563                      Status: Released
+                  Compliance Date: MAY 25, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*611    <<= must be installed BEFORE `IB*2*620'
+
+Subject: RE-INSTATE 2017 THRESHOLD VALUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1.  This patch re-instates the 2017 BILLING THRESHOLDS file (#354.3)
+ values.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                       File #          New/Modified/Deleted
+ ---------                       ------          --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                     N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A                     N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I15687910FY17 - When eligibility staff is updating MT or SC there is
+                    an auto decrease that is taking place
+  
+ PROBLEM: 
+ --------
+ The 2017 BILLING THRESHOLDS file (#354.3) values need to be re-instated.
+  
+ RESOLUTION:
+ -----------
+ Post Install routine IB20P620 will update the new pension threshold 
+ values. The Technical section below contains a list of the rates, 
+ which may also be found in VHA FACT SHEET titled MEANS TEST AND 
+ GEOGRAPHIC-BASED MEANS TEST AND MAXIMUM ANNUAL RATES OF PENSION FOR
+ CALENDAR YEAR 2017. If a site has already entered the values manually,
+ the record will be overwritten with the national update.
+  
+ The new pension rates for Calendar Year 2017 (with an effective date of
+ 12/1/16) are defined in VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-
+ BASED MEANS TEST AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 
+ 2017 as:
+   
+  *   $ 12,907 for a single veteran without dependents
+  *   $ 16,902 for a veteran with 1 dependent
+  *   An additional $ 2,205 for each additional dependent beyond 1 
+      dependent
+   
+  
+ TECHNICAL:
+ ---------- 
+ File BILLING THRESHOLDS (#354.3) is updated with a new record.  The 
+ values are as follows: 
+   .01  DATE                        = 3161201 (internal form for 12/01/2016)
+   .02  TYPE                        = 1       (for BASIC PENSION)
+   .03  BASE RATE FOR VETERAN       = 12907
+   .04  BASE RATE WITH 1 DEPENDENT  = 16902
+   .05  BASE RATE WITH 2 DEPENDENTS = 19107
+   .06  BASE RATE WITH 3 DEPENDENTS = 21312
+   .07  BASE RATE WITH 4 DEPENDENTS = 23517
+   .08  BASE RATE WITH 5 DEPENDENTS = 25722
+   .09  BASE RATE WITH 6 DEPENDENTS = 27927
+   .1   BASE RATE WITH 7 DEPENDENTS = 30132
+   .11  BASE RATE WITH 8 DEPENDENTS = 32337
+   .12  ADDITIONAL DEPENDENT AMOUNT = 2205
+  
+  
+ Test Sites:
+ -----------
+ Robley Rex VAMC (Louisville)
+ West Palm Beach VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ N/A
+  
+  
+ Title                           File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is not necessary to disable any options. You may install this patch at 
+ any time without interruption to users. It should take less than 2 
+ minutes to install this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+  
+    2.   From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+  
+    3.   From this menu, you may select to use the following options: (when
+         prompted for INSTALL NAME, enter IB*2.0*620).
+  
+            a.   Verify Checksums in Transport Global - This option will
+                 allow you to ensure the integrity of the routines that
+                 are in the transport global.
+            b.   Print Transport Global - This option will allow you to 
+                 view the components of the KIDS build.
+            c.   Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of 
+                 this patch (routines, DD's, templates, etc.).
+            d.   Backup a Transport Global - This option will create a 
+                 backup message of any routines exported with this patch. 
+                 It will not backup any other changes such as DD's or 
+                 templates.
+  
+    4.   Use the Install Package(s) option and select the package 
+         IB*2.0*620.
+  
+    5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install?  
+         NO//", respond NO.
+  
+    6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out of 
+         Order':', enter: <ENTER>.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out deleting the 2017 Billing Threshold (#354.3)
+ file entry.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P620
+    Before:       n/a   After: B12733125  **620**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 08, 2018
+Completed By:                               Date Completed: APR 25, 2018
+Released By :                               Date Released : APR 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

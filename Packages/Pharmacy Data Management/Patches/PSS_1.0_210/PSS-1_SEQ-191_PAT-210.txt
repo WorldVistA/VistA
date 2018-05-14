@@ -1,0 +1,238 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/15/18 at 17:04
+=============================================================================
+Run Date: APR 18, 2018                     Designation: PSS*1*210
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #191                      Status: Released
+                  Compliance Date: MAY 19, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*201   <<= must be installed BEFORE `PSS*1*210'
+                    (v)PSS*1*204   <<= must be installed BEFORE `PSS*1*210'
+
+Subject: ADMIN SCHEDULE FILE CHANGES/ORDERABLE ITEM 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) issues:
+  
+ 1.  Free text is accepted in the NAME field (#.01) of the 
+     ADMINISTRATION SCHEDULE file (#51.1) when the TYPE OF
+     SCHEDULE field (#5) is set to D (Day of the Week).
+                             
+ 2.  Changes made to the NAME field (#.01) of the 
+     PHARMACY ORDERABLE ITEMS file (#50.7) via the Edit 
+     Orderable Items [PSS EDIT ORDERABLE ITEMS] option are   
+     not always reflected in the ORDERABLE ITEMS file 
+     (#101.43).
+                
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I9862869FY16
+  
+ Problem:
+ --------
+ Free text is accepted in NAME field (#.01) of the 
+ ADMINISTRATION SCHEDULE file (#51.1) when the TYPE 
+ OF SCHEDULE field (#5) is set to D (Day of the Week).
+  
+ Resolution:
+ -----------
+ Routines ^PSSJSV and ^PSSJEEU require modifications  
+ in order to eliminate the entry of free text if the 
+ TYPE OF SCHEDULE field (#5) is set to D.
+  
+ Post-installation routine ^PSS1P210 will loop through
+ the ADMINISTRATION SCHEDULE file (#51.1) and provide
+ a report detailing schedule names that need to be
+ changed due to a Day of the Week Schedule Type.
+  
+ 2. I9863047FY16
+  
+ Problem:
+ --------
+ Changes made to the PRINT NAME field (#.01) of 
+ the PHARMACY ORDERABLE ITEMS file (#50.7) via the Edit 
+ Orderable Items [PSS EDIT ORDERABLE ITEMS] option are   
+ not always reflected in the ORDERABLE ITEMS file 
+ (#101.43).
+  
+ Resolution:
+ -----------
+ Issue occurs when ^ is used to exit the screen at
+ the OI DRUG TEXT ENTRY prompt. The PHARMACY ORDERABLE
+ ITEMS NAME field on the screen does not message  
+ changes to the ORDERABLE ITEMS file (#101.43),  
+ but subsequent fields do. Modification to subroutine 
+ SYN^PSSPOIMO will eliminate this problem and update  
+ the name change data.
+  
+ Test Sites:
+ ----------
+ Charleston VAMC
+ Valley Coastal Bend HCS
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Post-installation routine ^PSS1P210 will loop through the 
+ ADMINISTRATION SCHEDULE file (#51.1) and provide a report 
+ detailing schedule names that need to be changed, due to a 
+ Day of the Week Schedule Type.
+  
+ The installer will receive an email when the post-installation
+ is complete.  Run time should be minimal.
+  
+ The post-installation report will be sent to those with the 
+ following Security Keys:  PSA ORDERS, PSAMGR, PSDMGR, PSNMGR 
+  
+ Installation Instructions:
+ --------------------------
+  
+ It is not necessary to disable any options.  
+  
+ Users may be on the system, but this patch should be installed during
+ non-peak hours.
+  
+ It should take less than 2 minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan Option.
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSS*1.0*210)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select package PSS*1.0*210.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+ Post Installation Instructions:
+ -------------------------------
+ The post installation PRICE PER DISPENSE UNIT clean-up routine, 
+ ^PSS1P210, is not automatically deleted as part of the installation 
+ process. You may delete it after installation if you desire.
+  
+  
+ Example: 
+ VISTAS1:VISTA>D ^%RDELETE
+  
+ Delete routines/INCLUDE files.
+ WARNING: When <rtn>.MAC.0 is deleted, the latest backup is moved
+          to <rtn>.MAC.0, UNCOMPILED.
+  
+ Routine(s): PSS1P210     
+  
+ Post-installation Report:
+  
+ Once the post installation routine has run to completion, the installer
+ and users with Security Keys PSA ORDERS, PSAMGR, PSDMGR and PSNMGR
+ will receive a MailMan message that includes a report of Day of the 
+ Week Schedule Types with Names that contain free text.  These Schedule
+ Names should be changed, due to upstream issues with CPRS and BCMA.
+  
+ Example of Post-installation Report:
+  
+ Subj: PSS*1*210 Post-Install ADMINISTRATION SCHEDULE Report
+ 10/09/17@15:03  9 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ -----------------------------------------------------------
+  Patch PSS*1.0*210 post-installation routine has identified
+  2 Day of the Week ADMINISTRATION SCHEDULES with free
+  text in the NAME field.  Please review.
+  
+ Schedule Name
+ ======== ====
+  
+ MO-WE (WARFARIN)
+ MO-WE@0900 (INSULIN)
+  
+ Enter message action (in IN basket): Ignore// 
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and
+ participation of development team and appropriate VA site/region
+ personnel. The decision to back-out or rollback software will be a joint
+ decision between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure:
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSS*1.0*210 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSS*1.0*210 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS1P210
+    Before:       n/a   After: B20795612  **210**
+Routine Name: PSSJEEU
+    Before: B14040872   After: B14262573  **24,47,160,184,201,210**
+Routine Name: PSSJSV
+    Before:B148569138   After:B157152089  **20,38,56,59,110,121,143,149,
+                                           146,189,201,210**
+Routine Name: PSSPOIMO
+    Before:B142972365   After:B143564555  **29,32,38,47,68,102,125,141,
+                                           153,159,166,172,191,189,204,
+                                           210**
+ 
+Routine list of preceding patches: 201, 204
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2017
+Completed By:                               Date Completed: APR 18, 2018
+Released By :                               Date Released : APR 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

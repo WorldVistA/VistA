@@ -1,0 +1,631 @@
+Released PRS*4*151 SEQ #142
+Extracted from mail message
+**KIDS**:PRS*4.0*151^
+
+**INSTALL NAME**
+PRS*4.0*151
+"BLD",10666,0)
+PRS*4.0*151^PAID^0^3170721^y
+"BLD",10666,1,0)
+^^8^8^3170720^
+"BLD",10666,1,1,0)
+ This patch will address two issues:
+"BLD",10666,1,2,0)
+ 
+"BLD",10666,1,3,0)
+ 1. An Electronic Subsidiary Record (ESR) cannot be approved for
+"BLD",10666,1,4,0)
+    an employee name with multiple Internal Entry Numbers (IENs)
+"BLD",10666,1,5,0)
+    in the PAID EMPLOYEE (#450) file.
+"BLD",10666,1,6,0)
+  
+"BLD",10666,1,7,0)
+ 2. Timekeepers cannot ENTER Overtime for a T&L when an inactive
+"BLD",10666,1,8,0)
+    T&L shares the same number.
+"BLD",10666,4,0)
+^9.64PA^^
+"BLD",10666,6.3)
+2
+"BLD",10666,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10666,"KRN",.4,0)
+.4
+"BLD",10666,"KRN",.401,0)
+.401
+"BLD",10666,"KRN",.402,0)
+.402
+"BLD",10666,"KRN",.403,0)
+.403
+"BLD",10666,"KRN",.5,0)
+.5
+"BLD",10666,"KRN",.84,0)
+.84
+"BLD",10666,"KRN",3.6,0)
+3.6
+"BLD",10666,"KRN",3.8,0)
+3.8
+"BLD",10666,"KRN",9.2,0)
+9.2
+"BLD",10666,"KRN",9.8,0)
+9.8
+"BLD",10666,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10666,"KRN",9.8,"NM",1,0)
+PRSAOTR^^0^B6774599
+"BLD",10666,"KRN",9.8,"NM",2,0)
+PRSPSAP^^0^B46068708
+"BLD",10666,"KRN",9.8,"NM","B","PRSAOTR",1)
+
+"BLD",10666,"KRN",9.8,"NM","B","PRSPSAP",2)
+
+"BLD",10666,"KRN",19,0)
+19
+"BLD",10666,"KRN",19.1,0)
+19.1
+"BLD",10666,"KRN",101,0)
+101
+"BLD",10666,"KRN",409.61,0)
+409.61
+"BLD",10666,"KRN",771,0)
+771
+"BLD",10666,"KRN",779.2,0)
+779.2
+"BLD",10666,"KRN",870,0)
+870
+"BLD",10666,"KRN",8989.51,0)
+8989.51
+"BLD",10666,"KRN",8989.52,0)
+8989.52
+"BLD",10666,"KRN",8994,0)
+8994
+"BLD",10666,"KRN","B",.4,.4)
+
+"BLD",10666,"KRN","B",.401,.401)
+
+"BLD",10666,"KRN","B",.402,.402)
+
+"BLD",10666,"KRN","B",.403,.403)
+
+"BLD",10666,"KRN","B",.5,.5)
+
+"BLD",10666,"KRN","B",.84,.84)
+
+"BLD",10666,"KRN","B",3.6,3.6)
+
+"BLD",10666,"KRN","B",3.8,3.8)
+
+"BLD",10666,"KRN","B",9.2,9.2)
+
+"BLD",10666,"KRN","B",9.8,9.8)
+
+"BLD",10666,"KRN","B",19,19)
+
+"BLD",10666,"KRN","B",19.1,19.1)
+
+"BLD",10666,"KRN","B",101,101)
+
+"BLD",10666,"KRN","B",409.61,409.61)
+
+"BLD",10666,"KRN","B",771,771)
+
+"BLD",10666,"KRN","B",779.2,779.2)
+
+"BLD",10666,"KRN","B",870,870)
+
+"BLD",10666,"KRN","B",8989.51,8989.51)
+
+"BLD",10666,"KRN","B",8989.52,8989.52)
+
+"BLD",10666,"KRN","B",8994,8994)
+
+"BLD",10666,"QDEF")
+^^^^^^^^^^YES
+"BLD",10666,"QUES",0)
+^9.62^^
+"BLD",10666,"REQB",0)
+^9.611^2^2
+"BLD",10666,"REQB",1,0)
+PRS*4.0*93^2
+"BLD",10666,"REQB",2,0)
+PRS*4.0*61^2
+"BLD",10666,"REQB","B","PRS*4.0*61",2)
+
+"BLD",10666,"REQB","B","PRS*4.0*93",1)
+
+"MBREQ")
+0
+"PKG",408,-1)
+1^1
+"PKG",408,0)
+PAID^PRS^PAID
+"PKG",408,20,0)
+^9.402P^^
+"PKG",408,22,0)
+^9.49I^1^1
+"PKG",408,22,1,0)
+4.0^2950912^2960130
+"PKG",408,22,1,"PAH",1,0)
+151^3170721
+"PKG",408,22,1,"PAH",1,1,0)
+^^8^8^3170721
+"PKG",408,22,1,"PAH",1,1,1,0)
+ This patch will address two issues:
+"PKG",408,22,1,"PAH",1,1,2,0)
+ 
+"PKG",408,22,1,"PAH",1,1,3,0)
+ 1. An Electronic Subsidiary Record (ESR) cannot be approved for
+"PKG",408,22,1,"PAH",1,1,4,0)
+    an employee name with multiple Internal Entry Numbers (IENs)
+"PKG",408,22,1,"PAH",1,1,5,0)
+    in the PAID EMPLOYEE (#450) file.
+"PKG",408,22,1,"PAH",1,1,6,0)
+  
+"PKG",408,22,1,"PAH",1,1,7,0)
+ 2. Timekeepers cannot ENTER Overtime for a T&L when an inactive
+"PKG",408,22,1,"PAH",1,1,8,0)
+    T&L shares the same number.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PRSAOTR")
+0^1^B6774599^B6073084
+"RTN","PRSAOTR",1,0)
+PRSAOTR ;HISC/REL-OT/CT Request/Cancel ;12-SEP-00
+"RTN","PRSAOTR",2,0)
+ ;;4.0;PAID;**2,34,61,151**;Sep 21, 1995;Build 2
+"RTN","PRSAOTR",3,0)
+ ;Per VA Directive 6402, this routine should not be modified
+"RTN","PRSAOTR",4,0)
+ S PRSTLV=2 D ^PRSAUTL G:TLI<1 EX
+"RTN","PRSAOTR",5,0)
+O1 K DIC S DIC("A")="Select EMPLOYEE: ",DIC("S")="I $P(^(0),""^"",8)=TLE",DIC(0)="AEQM",DIC="^PRSPC(",D="ATL"_TLE W ! D IX^DIC S DFN=+Y K DIC G:DFN<1 EX
+"RTN","PRSAOTR",6,0)
+ D ^PRSAENT S ZENT=$S($E(ENT,12):"OT",1:"")_" "_$S($E(ENT,28):"CT",1:"")
+"RTN","PRSAOTR",7,0)
+ I ZENT=" " W !!?5,"This Employee is Not Entitled to Either OT or CT/CH" G O1
+"RTN","PRSAOTR",8,0)
+O2 L +^PRST(458.2,0):$G(DILOCKTM,3) K DDSFILE,DA,DR
+"RTN","PRSAOTR",9,0)
+N1 S DA=$P(^PRST(458.2,0),"^",3)+1 I $D(^PRST(458.2,DA)) S $P(^PRST(458.2,0),"^",3)=DA G N1
+"RTN","PRSAOTR",10,0)
+ S $P(^PRST(458.2,0),"^",3)=DA,$P(^(0),"^",4)=$P(^(0),"^",4)+1 L -^PRST(458.2,0)
+"RTN","PRSAOTR",11,0)
+  S ^PRST(458.2,DA,0)=DA_"^"_DFN_"^^^^^^^"_TLE,^PRST(458.2,"B",DA,DA)="",^PRST(458.2,"C",DFN,DA)="" ;Pass T&L Unit Into ScreenMan API, PRS*4*151
+"RTN","PRSAOTR",12,0)
+ S DDSFILE=458.2,DR="[PRSA OT REQ]" D ^DDS K DS
+"RTN","PRSAOTR",13,0)
+ S %=$P(^PRST(458.2,DA,0),"^",3) I '% S DIK="^PRST(458.2," D ^DIK K DIK G EX
+"RTN","PRSAOTR",14,0)
+ D NOW^%DTC S $P(^PRST(458.2,DA,0),"^",8)="R",$P(^(0),"^",11,12)=DUZ_"^"_%,^PRST(458.2,"AR",DFN,DA)=""
+"RTN","PRSAOTR",15,0)
+ S X=$P($G(^PRSPC(DFN,0)),"^",29) I X S:X>100 X=X/2080 S $P(^PRST(458.2,DA,0),"^",10)=+$J(X*1.5*$P(^PRST(458.2,DA,0),"^",6),0,2)
+"RTN","PRSAOTR",16,0)
+ D UPD^PRSASAL G O1
+"RTN","PRSAOTR",17,0)
+CAN ; Cancel OT Request
+"RTN","PRSAOTR",18,0)
+ S PRSTLV=2 D ^PRSAUTL G:TLI<1 EX
+"RTN","PRSAOTR",19,0)
+ K DIC S DIC("A")="Select EMPLOYEE: ",DIC("S")="I $P(^(0),""^"",8)=TLE",DIC(0)="AEQM",DIC="^PRSPC(",D="ATL"_TLE W ! D IX^DIC S DFN=+Y K DIC
+"RTN","PRSAOTR",20,0)
+ I DFN<1 G EX
+"RTN","PRSAOTR",21,0)
+ D HDR^PRSAOTS
+"RTN","PRSAOTR",22,0)
+ K %DT S %DT="AEFX",%DT("A")="Begin with Date: ",%DT("B")="T" W ! D ^%DT K %DT S:$D(DTOUT) Y=0 G:Y<1 EX S DTI=Y
+"RTN","PRSAOTR",23,0)
+ S NUM=1 D DISP^PRSAOTS
+"RTN","PRSAOTR",24,0)
+ G:'CNT EX
+"RTN","PRSAOTR",25,0)
+X1 R !!,"Cancel Which Request #? ",X:DTIME G:'$T!("^"[X) EX I X'?1N.N!(X<1)!(X>CNT) W *7," Enter # of Request to Cancel" G X1
+"RTN","PRSAOTR",26,0)
+ S X=+X,DA=R(X),$P(^PRST(458.2,DA,0),"^",8)="X" K ^PRST(458.2,"AR",DFN,DA),^PRST(458.2,"AS",DFN,DA)
+"RTN","PRSAOTR",27,0)
+ D UPD^PRSASAL W "  ... done"
+"RTN","PRSAOTR",28,0)
+EX G KILL^XUSCLEAN
+"RTN","PRSPSAP")
+0^2^B46068708^B45637052
+"RTN","PRSPSAP",1,0)
+PRSPSAP ;WOIFO/JAH - part time physician, supervisory approvals ;10/22/04
+"RTN","PRSPSAP",2,0)
+ ;;4.0;PAID;**93,151**;Sep 21, 1995;Build 2
+"RTN","PRSPSAP",3,0)
+ ;Per VA Directive 6402, this routine should not be modified
+"RTN","PRSPSAP",4,0)
+ Q
+"RTN","PRSPSAP",5,0)
+ ; T&A supervisor of PTP employee is required to review and take
+"RTN","PRSPSAP",6,0)
+ ; one of the following actions on each signed day of the PTP's ESR:
+"RTN","PRSPSAP",7,0)
+ ; 1. approve, 2. request resubmission or 3. bypass.
+"RTN","PRSPSAP",8,0)
+ ; When the T&A Supervisor approves a signed day we attempt to
+"RTN","PRSPSAP",9,0)
+ ; update the PTP's timecard for that day.  Updates to the
+"RTN","PRSPSAP",10,0)
+ ; timecard will be screened based on the status of the timecard
+"RTN","PRSPSAP",11,0)
+ ; and the effect of any potential update.
+"RTN","PRSPSAP",12,0)
+ ;
+"RTN","PRSPSAP",13,0)
+ ; MAIN entry point called from option Approve Signed ESRs. 
+"RTN","PRSPSAP",14,0)
+ ;
+"RTN","PRSPSAP",15,0)
+MAIN ;
+"RTN","PRSPSAP",16,0)
+ K ^TMP($J,"PRSPSAP")
+"RTN","PRSPSAP",17,0)
+ N PRSTLV,TLI,TLE,PRSIEN,ANYACT,AVAIL,OUT,DCNT,APRWHO
+"RTN","PRSPSAP",18,0)
+ ; Make sure we have a signature code before continuing
+"RTN","PRSPSAP",19,0)
+ I '$$ESIGC^PRSPUT2(1) W !! S OUT=$$ASK^PRSLIB00(1) Q
+"RTN","PRSPSAP",20,0)
+ D HDROPT^PRSPSAP1
+"RTN","PRSPSAP",21,0)
+ ; Prompt supervisor to pick one T&L unit for which they are assigned.
+"RTN","PRSPSAP",22,0)
+ S PRSTLV=3
+"RTN","PRSPSAP",23,0)
+ D ^PRSAUTL
+"RTN","PRSPSAP",24,0)
+ Q:TLI<1
+"RTN","PRSPSAP",25,0)
+ ;
+"RTN","PRSPSAP",26,0)
+ ; Check if they only want to look at one employee
+"RTN","PRSPSAP",27,0)
+ S APRWHO=$$ONEPTP^PRSPSAPU(TLE)
+"RTN","PRSPSAP",28,0)
+ Q:APRWHO<0
+"RTN","PRSPSAP",29,0)
+ ;     ---------------------------------------------------
+"RTN","PRSPSAP",30,0)
+ I APRWHO>0 D
+"RTN","PRSPSAP",31,0)
+ .  S NN=$P($G(^PRSPC(APRWHO,0)),U)
+"RTN","PRSPSAP",32,0)
+ .  D BLDLST(.OUT,TLE,NN)
+"RTN","PRSPSAP",33,0)
+ E  D
+"RTN","PRSPSAP",34,0)
+ .;   Loop thru supervisor's selected T&L
+"RTN","PRSPSAP",35,0)
+ .  S NN=""
+"RTN","PRSPSAP",36,0)
+ .  F  S NN=$O(^PRSPC("ATL"_TLE,NN)) Q:NN=""!($G(OUT)>0)  D
+"RTN","PRSPSAP",37,0)
+ ..   D BLDLST(.OUT,TLE,NN)
+"RTN","PRSPSAP",38,0)
+ ;
+"RTN","PRSPSAP",39,0)
+ ; display all the ASA records for action.
+"RTN","PRSPSAP",40,0)
+ S OUT=0
+"RTN","PRSPSAP",41,0)
+ D ASALIST^PRSPSAP1(.OUT)
+"RTN","PRSPSAP",42,0)
+ ; check if there are any updates and then prompt for signature
+"RTN","PRSPSAP",43,0)
+ ;
+"RTN","PRSPSAP",44,0)
+ D ANYACT^PRSPSAP1(.ANYACT)
+"RTN","PRSPSAP",45,0)
+ I ANYACT>0 D
+"RTN","PRSPSAP",46,0)
+ . D SUMMARY(.ANYACT)
+"RTN","PRSPSAP",47,0)
+ . D SIG^XUSESIG
+"RTN","PRSPSAP",48,0)
+ .; update the timecard and ESR status for all actions when
+"RTN","PRSPSAP",49,0)
+ .; a valid signature is applied
+"RTN","PRSPSAP",50,0)
+ . I X1="" D
+"RTN","PRSPSAP",51,0)
+ ..   W @IOF,!!!,?10,"TIMECARD AND ESR WERE NOT UPDATED."
+"RTN","PRSPSAP",52,0)
+ .E  D
+"RTN","PRSPSAP",53,0)
+ ..   D TRANSACT^PRSPSAP2
+"RTN","PRSPSAP",54,0)
+ ; remove any remaining PTP timecard locks held in this option
+"RTN","PRSPSAP",55,0)
+ ; D EX^PRSASR
+"RTN","PRSPSAP",56,0)
+ K ^TMP($J,"PRSPSAP")
+"RTN","PRSPSAP",57,0)
+ Q
+"RTN","PRSPSAP",58,0)
+ ;
+"RTN","PRSPSAP",59,0)
+BLDLST(OUT,TLE,NN) ; BUILD LIST OF ALL APPROVAL ACTIONS FOR SINGLE EMPLOYEE
+"RTN","PRSPSAP",60,0)
+ N PRSIEN,PPE,PPI,AVAIL,DCNT,PRSD,GLOB,DFN
+"RTN","PRSPSAP",61,0)
+ S PRSIEN=0
+"RTN","PRSPSAP",62,0)
+ F  S PRSIEN=$O(^PRSPC("ATL"_TLE,NN,PRSIEN)) Q:PRSIEN<1!($G(OUT)>0)  D  ;Loop through IENs for a single name, PRS*4.0*151
+"RTN","PRSPSAP",63,0)
+ .    S PPE=""
+"RTN","PRSPSAP",64,0)
+ .    F  S PPE=$O(^PRST(458,"ASA",PRSIEN,PPE)) Q:PPE=""!($G(OUT)>0)  D
+"RTN","PRSPSAP",65,0)
+ ..     S PPI=$O(^PRST(458,"B",PPE,0))
+"RTN","PRSPSAP",66,0)
+ ..; get lock for PTP's entire PP, then add record (PUSH) that 
+"RTN","PRSPSAP",67,0)
+ ..; requires supervisor action to the list
+"RTN","PRSPSAP",68,0)
+ ..    S DFN=PRSIEN
+"RTN","PRSPSAP",69,0)
+ ..;
+"RTN","PRSPSAP",70,0)
+ ..; $$availrec() locks PTP ESR node.
+"RTN","PRSPSAP",71,0)
+ ..;  unlock if supervisor bybasses unlock otherwise they 
+"RTN","PRSPSAP",72,0)
+ ..;  are not unlocked until they are processed thru temp global
+"RTN","PRSPSAP",73,0)
+ ..;  & their status' are updated.
+"RTN","PRSPSAP",74,0)
+ ..    S AVAIL=$$AVAILREC^PRSLIB00("",.GLOB,.OUT)
+"RTN","PRSPSAP",75,0)
+ ..    Q:'AVAIL
+"RTN","PRSPSAP",76,0)
+ ..    ;
+"RTN","PRSPSAP",77,0)
+ ..;  add item to list and set up a day cross ref with count of days
+"RTN","PRSPSAP",78,0)
+ ..     S (DCNT,PRSD)=0
+"RTN","PRSPSAP",79,0)
+ ..     F  S PRSD=$O(^PRST(458,"ASA",PRSIEN,PPE,PRSD)) Q:PRSD'>0  D
+"RTN","PRSPSAP",80,0)
+ ...       S DCNT=DCNT+1
+"RTN","PRSPSAP",81,0)
+ ...       D PUSH^PRSPSAP1(PPI,PRSIEN,PRSD,DCNT)
+"RTN","PRSPSAP",82,0)
+ ;
+"RTN","PRSPSAP",83,0)
+ Q
+"RTN","PRSPSAP",84,0)
+ ;
+"RTN","PRSPSAP",85,0)
+SUMMARY(AA) ;
+"RTN","PRSPSAP",86,0)
+ W @IOF,!!!,"Supervisory Action Summary"
+"RTN","PRSPSAP",87,0)
+ W !!,$J(AA,6)," actions require your electronic signature before being"
+"RTN","PRSPSAP",88,0)
+ W !,?(6-$L(AA)),"  committed to the database."
+"RTN","PRSPSAP",89,0)
+ I AA("A")>0 W !,$J(AA("A"),6)," ESR record marked for approval. (signature required)"
+"RTN","PRSPSAP",90,0)
+ I AA("R")>0 W !,$J(AA("R"),6)," ESR records marked for resubmission. (signature required)"
+"RTN","PRSPSAP",91,0)
+ I AA("B")>0 W !,$J(AA("B"),6)," ESR records explicitly bypassed."
+"RTN","PRSPSAP",92,0)
+ I AA("N")>0 W !,$J(AA("N"),6)," ESR records with no action."
+"RTN","PRSPSAP",93,0)
+ Q
+"RTN","PRSPSAP",94,0)
+GETACT(ESRDTS,PRSIEN,PPI) ; return user choice of # (1-ACTCNT) or action
+"RTN","PRSPSAP",95,0)
+ ; return 0 for ^ at first action prompt
+"RTN","PRSPSAP",96,0)
+ ; return null for no response (user hit return)
+"RTN","PRSPSAP",97,0)
+ ; return -1 if ^ at 2nd prompt (action on single day prompt)
+"RTN","PRSPSAP",98,0)
+ N DIR,DIRUT,ACT,CT,NUMS
+"RTN","PRSPSAP",99,0)
+ ;
+"RTN","PRSPSAP",100,0)
+ ; get total items + marked items CT CT(1)
+"RTN","PRSPSAP",101,0)
+ D MARKCNT^PRSPSAP1(.CT,PRSIEN,PPI)
+"RTN","PRSPSAP",102,0)
+ I CT>1 D
+"RTN","PRSPSAP",103,0)
+ .  S NUMS=";"
+"RTN","PRSPSAP",104,0)
+ .  F I=1:1:CT D
+"RTN","PRSPSAP",105,0)
+ ..    S NUMS=NUMS_I_":"_$P(ESRDTS(I),U,2)_";"
+"RTN","PRSPSAP",106,0)
+ ;
+"RTN","PRSPSAP",107,0)
+ ; status already marked on all days
+"RTN","PRSPSAP",108,0)
+ I (CT>1)&(CT=CT(1)) D
+"RTN","PRSPSAP",109,0)
+ .  S DIR(0)="SAO^"_NUMS
+"RTN","PRSPSAP",110,0)
+ .  S DIR("A")="Select an item #: "
+"RTN","PRSPSAP",111,0)
+ .  S DIR("?",1)="Enter an item from the left column to change status for that day"
+"RTN","PRSPSAP",112,0)
+ E  D
+"RTN","PRSPSAP",113,0)
+ .; if all days don't have a superV action (marked) then prompt for
+"RTN","PRSPSAP",114,0)
+ .; action on remaining days or pick a day (item)
+"RTN","PRSPSAP",115,0)
+ .  I CT>1 D
+"RTN","PRSPSAP",116,0)
+ ..  S DIR(0)="SAO^A:Approve;B:Bypass;R:Resubmit"_NUMS
+"RTN","PRSPSAP",117,0)
+ ..  S DIR("A")="(A)pprove, (B)ypass, (R)esubmit or enter an item #: "
+"RTN","PRSPSAP",118,0)
+ ..  S DIR("?",1)="Enter an action for all records without a status or enter an item #"
+"RTN","PRSPSAP",119,0)
+ ..  S DIR("?",2)="to then pick an action for that day."
+"RTN","PRSPSAP",120,0)
+ ..  S DIR("?",3)="  Type R for Resubmit when the part-time physician needs to correct an ESR day."
+"RTN","PRSPSAP",121,0)
+ ..  S DIR("?",4)="  Type B for Bypass to skip the day(s) for now and approve at a later time."
+"RTN","PRSPSAP",122,0)
+ ..  S DIR("?",5)="  Type A for Approve when the ESR day(s) appears correct."
+"RTN","PRSPSAP",123,0)
+ .E  D
+"RTN","PRSPSAP",124,0)
+ ..; if only one item to pick, don't ask for item #
+"RTN","PRSPSAP",125,0)
+ ..  S DIR(0)="SAO^A:Approve;B:Bypass;R:Resubmit"
+"RTN","PRSPSAP",126,0)
+ ..  S DIR("A")="(A)pprove, (B)ypass, (R)esubmit: "
+"RTN","PRSPSAP",127,0)
+ ..  S DIR("?",1)="Enter an action for all records without a status"
+"RTN","PRSPSAP",128,0)
+ ..  S DIR("?",2)="  Type R for Resubmit when the part-time physician needs to correct an ESR day."
+"RTN","PRSPSAP",129,0)
+ ..  S DIR("?",3)="  Type B for Bypass to skip the day(s) for now and approve at a later time."
+"RTN","PRSPSAP",130,0)
+ ..  S DIR("?",4)="  Type A for Approve when the ESR day(s) appears correct."
+"RTN","PRSPSAP",131,0)
+ ;
+"RTN","PRSPSAP",132,0)
+ S DIR("?")="  Press [enter] to move to the next part time physician."
+"RTN","PRSPSAP",133,0)
+ D ^DIR
+"RTN","PRSPSAP",134,0)
+ S PICK=$G(Y)
+"RTN","PRSPSAP",135,0)
+ I $G(Y)="" Q ""
+"RTN","PRSPSAP",136,0)
+ ; if there was only one item then set pick to 1 plus action
+"RTN","PRSPSAP",137,0)
+ I CT=1 S PICK=PICK_"^1"
+"RTN","PRSPSAP",138,0)
+ I $G(DIRUT) S PICK=0
+"RTN","PRSPSAP",139,0)
+ ;
+"RTN","PRSPSAP",140,0)
+ ; item was picked
+"RTN","PRSPSAP",141,0)
+ I PICK>0,(PICK<(CT+1)) D
+"RTN","PRSPSAP",142,0)
+ .  N DAYLNS,DIR,DIRUT,ESR,HPL
+"RTN","PRSPSAP",143,0)
+ .  D GETESR^PRSPSAP1(.ESR,PPI,PRSIEN,+ESRDTS(PICK))
+"RTN","PRSPSAP",144,0)
+ .  N COUNT S COUNT=PICK,COUNT(1)=0
+"RTN","PRSPSAP",145,0)
+ .  W ! D DAY^PRSPSAPU(.DAYLNS,ESRDTS(COUNT),.ESR,PRSIEN,PPI)
+"RTN","PRSPSAP",146,0)
+ .  S ACT=PICK
+"RTN","PRSPSAP",147,0)
+ .  S DIR(0)="SA^A:Approve;B:Bypass;R:Resubmit"
+"RTN","PRSPSAP",148,0)
+ .  S DIR("A")="(A)pprove, (B)ypass, (R)esubmit: "
+"RTN","PRSPSAP",149,0)
+ .  S DIR("?")="Select an action for the ESR day above."
+"RTN","PRSPSAP",150,0)
+ .  S DIR("?",1)="  Type R for Resubmit when the part-time physician needs to correct an ESR day."
+"RTN","PRSPSAP",151,0)
+ .  S DIR("?",2)="  Type B for Bypass to skip the day(s) for now and approve at a later time."
+"RTN","PRSPSAP",152,0)
+ .  S DIR("?",3)="  Type A for Approve when the ESR day(s) appears correct."
+"RTN","PRSPSAP",153,0)
+ .  S DIR("?",4)="  Type ^ to redisplay the current part time physician."
+"RTN","PRSPSAP",154,0)
+ .  D GETDAY^PRSPSAPU(.DAYLNS,.ESRDTS,.ESR,PICK,PRSIEN,PPI)
+"RTN","PRSPSAP",155,0)
+ .  S HPL=0
+"RTN","PRSPSAP",156,0)
+ .  F  S HPL=$O(DAYLNS(HPL)) Q:HPL'>0  D
+"RTN","PRSPSAP",157,0)
+ ..    S DIR("?",HPL+4)=$G(DAYLNS(HPL))
+"RTN","PRSPSAP",158,0)
+ .  D ^DIR
+"RTN","PRSPSAP",159,0)
+ .  S PICK=$G(Y)_"^"_ACT
+"RTN","PRSPSAP",160,0)
+ .  I $G(DIRUT) S PICK=-1
+"RTN","PRSPSAP",161,0)
+ Q PICK
+"RTN","PRSPSAP",162,0)
+ ;
+"VER")
+8.0^22.2
+"BLD",10666,6)
+^142
+**END**
+**END**
+

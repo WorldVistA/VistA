@@ -1,0 +1,260 @@
+$TXT Created by                  at DEVVII.DOMAIN.EXT  (KIDS) on Monday, 12/18/17 at 09:37
+=============================================================================
+Run Date: FEB 14, 2018                     Designation: PRCA*4.5*335
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #292                    Status: Released
+                  Compliance Date: FEB 21, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*270<<= must be installed BEFORE `PRCA*4.5*335'
+                    (v)PRCA*4.5*320<<= must be installed BEFORE `PRCA*4.5*335'
+                    (v)PRCA*4.5*334<<= must be installed BEFORE `PRCA*4.5*335'
+
+Subject: ARDC MONTHLY RECONCILIATION REPORT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ ************************************NOTICE************************************
+ *                                                                            * 
+ * This patch is being released a with a shortened compliance date of 2/21/18.*
+ *                                                                            *
+ ******************************************************************************
+  
+  
+  
+ This patch is part of an enhancement effort related to the Medical Care 
+ Cost Recovery National Database (MCCR NDB) Treasury reports and new 
+ requirements related to The Digital Accountability and Transparency Act 
+ (DATA Act). This patch enhances the software component in each Veterans 
+ Health Information Systems and Technology Architecture (VistA) system 
+ that compiles and transmits the needed information to FMS to capture 
+ current receivable attributes at time of transmission. This information 
+ is sent in summary form to the central server on a monthly basis.
+   
+ This patch provides the following enhancements:
+  
+ (1) When the monthly AR1 data report is running, detail of the FMS 
+     documents will be stored in the new AR DEBT COLLECTOR (#430.7) file.
+  
+ (2) When the OIG collector is running through the same monthly cycle, 
+     detail of the receivables if not already stored in the new AR DEBT 
+     COLLECTOR (#430.7) will also be stored if their status is Active or 
+     Suspended.
+  
+ (3) A new report option ARDC Monthly Reconciliation [PRCA ARDC MONTHLY 
+     REPORT] will be added to both the AR - Accounts Receivable Menu [PRCAT
+     USER] and the Reconciliation Reports [PRCAD RECONCILE MENU] menus.
+  
+     o The report shall include current status bills.
+   
+     o The report shall include a column for the Fund number associated
+       with each line item on the report.
+   
+     o The report shall include a column for the Revenue Source Code (RSC) 
+       associated with each line item on the report.
+  
+     o The report will offer an option to print in Excel format.  It will 
+       use the ^ character as a field separator.
+  
+ (4) The collection of historical ARDC data will be retained for the 
+     current month and two prior months only.  After that it will be 
+     automatically purged once the next AR accounting month starts
+     processing,
+  
+   
+ The existing ARDC Detail Report [PRCA ARDC REPORT] is being updated to 
+ resolve the following issues:
+  
+ (1) Issue: During UFT testing it was found that the report included bills
+            that were a day before the requested date.
+     Resolution: A modification to RCRJRCOU is included to no longer
+                 subtract 1 day from the beginning search of bills.  It
+                 will now start on the requested bill date.
+  
+ (2) Issue: It was found on an SQA checklist that some variables were not 
+            Newed or Killed.
+     Resolution: Added Newing of the variables RCSTDT and RCBILL.
+  
+  
+ The patch has a shortened timeframe (*7 days*) for installation due to 
+ the strict timing required (in between reporting cycles) for patch 
+ installation. There is a small window of time for all sites to install 
+ the patch.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ 430.7       AR DEBT COLLECTOR DATA (new)
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+  
+ Option Name              Type      New/Modified/Deleted
+ -----------              ----      -------------------- 
+ PRCA ARDC MONTHLY REPORT Option    New
+ PRCAD RECONCILE MENU     Menu      Modified-Link for menu item
+ PRCAT USER               Menu      Modified-Link for menu item
+  
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A 
+  
+  
+ Participating Test Sites:
+ -------------------------
+ Central Alabama HCS
+ Durham
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI 
+ Field Offices:
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                          File Name               Transfer Mode
+ ----------------------------------------------------------------------
+ Technical/Security Manual    prca_4_5_p335_tm.pdf        Binary
+ Clerk Part 2 User Manual     prca_4_5_p335_5clerk2.pdf   Binary
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ A pre-installation routine (PRCAP335) will run upon patch installation to 
+ check the site does not have an old file #430.7 from Accounts Receivable 
+ version 3.7.  If the old, no longer used file, exists it will be 
+ automatically removed prior to installation.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+   
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. 
+  
+  
+ Installation Instructions:
+ ---------------------------
+ This patch may be run with users on the system, but not when the Accounts
+ Receivable Background job is running (usually around 1AM).  Installation 
+ should take less than 5 minutes.
+   
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch #
+      (example: PRCA*4.5*335):
+    
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+        
+  4.  INSTALL THE PATCH:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for the PRCA*4.5*335 patch.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter PRCA*4.5*335.
+      c.  If prompted:
+        '430.7     AR DEBT COLLECTOR DATA
+ *BUT YOU ALREADY HAVE 'AR BILLING ERROR HANDLING' AS FILE #430.7!
+ Shall I write over your AR BILLING ERROR HANDLING File? YES//'
+      Answer "YES".
+      d.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+            of Install?" NO//  enter YES.
+      e.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//"  enter NO.
+      f.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//"  enter YES.
+      g.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+       ARDC Detail Report [PRCA ARDC REPORT]
+       Monthly NDB, SV and WR Regenerate [PRCA FMS NDB,SV,WR REGEN]
+       Accounts Receivable Nightly Process Background Job [PRCA NIGHTLY PROCESS]
+   
+      h.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      i.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      j.  When prompted "Device: Home//"  respond with the correct device. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAP335
+    Before:       n/a   After:  B2959437  **335**
+Routine Name: RCRJRCOC
+    Before: B59180713   After: B61570527  **156,170,182,203,220,138,239,
+                                           272,273,334,335**
+Routine Name: RCRJRCOU
+    Before: B76712573   After:B133028607  **103,320,335**
+Routine Name: RCRJROIG
+    Before: B25716906   After: B27320049  **103,174,203,205,220,270,335**
+ 
+Routine list of preceding patches: 270, 320, 334
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 01, 2017
+Completed By:                               Date Completed: FEB 13, 2018
+Released By :                               Date Released : FEB 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

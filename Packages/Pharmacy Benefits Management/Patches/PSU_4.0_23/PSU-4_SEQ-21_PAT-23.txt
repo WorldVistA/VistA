@@ -1,0 +1,182 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 11/02/17 at 16:41
+=============================================================================
+Run Date: MAR 07, 2018                     Designation: PSU*4*23
+Package : PSU - PHARMACY BENEFITS MANAGEMENT  Priority: Mandatory
+Version : 4        SEQ #21                      Status: Released
+                  Compliance Date: APR 06, 2018
+=============================================================================
+
+Associated patches: (v)PSU*4*3     <<= must be installed BEFORE `PSU*4*23'
+
+Subject: UPDATE HL LOGICAL LINK WITH CORRECT DNS DOMAIN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ 1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+  
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+   
+ Problem: 
+ --------
+ The CMOP-Nat VistA system migrated to the Region 1 Denver Data Center on 
+ July 29, 2017. During the migration a problem was identified with the HL 
+ Logical Link "PSU SEND". It was discovered that the HL Logical Link entry 
+ on all VAMC VistA systems was set with an invalid DNS DOMAIN of 
+ "CMOP-NAT.DOMAIN.EXT". The Region 1 Denver Data Center migration team along
+ with the National VistA Migration Team requested that a national software 
+ patch be created and released to update the "PSU SEND" entry in the HL 
+ Logical Link file to use the correct DNS DOMAIN "HL7.CMOP-NAT.DOMAIN.EXT". 
+ This change is required so that when there are hardware changes to the 
+ CMOP-Nat VistA system, VistA HL7's DNS-aware functionality will automatically
+ update the link's IP address without requiring individual, manual updates at
+ each site. During the migration as a work-around, "CMOP-NAT.DOMAIN.EXT" and
+ its associated IP were broadcasted nationally so there would be no disruption
+ to message traffic being sent by the VAMCs, but "HL7.CMOP-NAT.DOMAIN.EXT" is
+ the preferred and best long-term solution. The PSU SEND logical link was 
+ created during the pre-install steps of PSU*4*3 (PBM EXTRACT ENHANCEMENT
+ III).
+  
+ Resolution:
+ -----------
+ A post-install routine (PSO23PI) will be executed following the installation
+ of this patch and will perform the following update if necessary:
+  
+  1. Loop through all the records in the HL LOGICAL LINK file (#870) and
+     retrieve the value for the  DNS DOMAIN field (#.08)
+  2. If the DNS DOMAIN value (converted to uppercase) is different than
+     "CMOP-NAT.DOMAIN.EXT", skip the record (no update)
+  3. If the DNS DOMAIN uppercase value is equal to "CMOP-NAT.DOMAIN.EXT", 
+     update it to "HL7.CMOP-NAT.DOMAIN.EXT"
+  
+ Once the patch PSU*4*23 successfully installs a Mailman message will be sent
+ to the PSU MAIL group and the person who installed the patch with the 
+ following information:
+  
+   Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737116]
+   From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+   --------------------------------------------------------------------------
+   The post-install routine performed the following updates:
+  
+   HL LOGICAL LINK       DNS DOMAIN (Before Patch)   DNS DOMAIN (After Patch)
+   --------------------- -------------------------   ------------------------
+   PSU SEND              CMOP-NAT.DOMAIN.EXT         HL7.CMOP-NAT.DOMAIN.EXT
+  
+   Enter message action (in IN basket): Ignore//  
+  
+ In case the post-install routine does not find any entries in the HL LOGICAL 
+ LINK file that needs to be updated it will instead send this message:
+   
+    Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737114] 
+    From: POSTMASTER  In 'IN' basket.   Page 1
+    -------------------------------------------------------------------------
+    The post-install routine found no records in the HL LOGICAL LINK file 
+    (#870) with the DNS DOMAIN field (#.08) set to 'CMOP-NAT.DOMAIN.EXT'.
+    No updates performed.
+  
+    Enter message action (in IN basket): Ignore// 
+  
+ Note: Non-production accounts usually have the DNS DOMAIN field (#.08) in
+       HL LOGICAL LINK file (#870) set to null/blank and for this reason this
+       patch will make no update in most of these accounts.
+  
+       
+ Test Sites:
+ -----------
+ Bedford VAMC
+ Cheyenne VAMC   
+   
+    
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the patch
+ number in the [PATCH LIST] section.
+   
+ 4.0;PHARMACY BENEFITS MANAGEMENT;**[PATCH LIST]**;MARCH, 2005
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run to
+ compare the routine checksums to what is documented in the patch description.
+   
+   
+ Back-out Procedures
+ -------------------
+ Since this patch only contains a post-install routine there is absolutely no
+ components that would need to be rolled back. 
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ N/A
+  
+    
+ Installation Instructions:
+ -------------------------- 
+ The Pharmacy Benefits Management (PBM) users should not be using the 
+ application while this patch is being installed. It should take less than
+ 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select the
+       Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSU*4.0*23:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PHARMACY BENEFITS MANAGEMENT;**[Patch List]**;MAR 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSU23PI
+    Before:       n/a   After:  B6432356  **23**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 30, 2017
+Completed By:                               Date Completed: MAR 07, 2018
+Released By :                               Date Released : MAR 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
