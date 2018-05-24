@@ -26,11 +26,14 @@ class VistAGlobalExport(object):
     pass
 
   """ export all Globals using ZGO routine """
-  def exportAllGlobals(self, vistATestClient, outputDir, timeout=3600):
+  def exportAllGlobals(self, vistATestClient, outputDir,serialExport, timeout=3600):
     assert os.path.exists(outputDir)
     connection = vistATestClient.getConnection()
     nativeDir = os.path.normpath(outputDir)
     vistATestClient.waitForPrompt()
+    if serialExport:
+      connection.send("S ZGODEBUG=1\r")
+      vistATestClient.waitForPrompt()
     connection.send("D SAVEALL^ZGO(\"%s%s\")\r" % (nativeDir, os.sep))
     vistATestClient.waitForPrompt(timeout)
     connection.send('\r') # make sure the next one can expect prompt
