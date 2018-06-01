@@ -18,10 +18,12 @@ message(STATUS "Generating Name/Number space pages...")
 execute_process(COMMAND
   "@PYTHON_EXECUTABLE@"
   "@PYTHONSCRIPTS_DIR@/GenerateNameNumberPages.py"
+  -mr @DOCUMENT_VISTA_M_DIR@
+  -pr @VISTA_SOURCE_DIR@
   -o @DOCUMENT_VISTA_OUTPUT_DIR@
   -nn @CMAKE_CURRENT_SOURCE_DIR@/Data
-
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
+
 if(NOT retValue EQUAL 0)
   message(FATAL_ERROR "Error running GenerateNameNumberspace:\n\n${output}")
 endif()

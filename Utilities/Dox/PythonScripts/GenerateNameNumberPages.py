@@ -29,6 +29,10 @@ FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
+crossRef = None
+from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser, parseCrossRefGeneratorWithArgs
+from CrossReference import CrossReference
+from WebPageGenerator import getPackageHtmlFileName
 from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader, outputDataTableFooter
 from DataTableHtml import outputDataListTableHeader
 
@@ -48,8 +52,20 @@ def generateListingPage(outDir, pageData, dataType):
         object.pop(0)
         output.write("<tr>\n")
         # """ table body """
-        for item in object:
-           output.write("<td>%s</td>\n" % item)
+        for idx, item in enumerate(object):
+          pageObject = item
+          if idx in [0, 5]:  # Col 0 in Namespace table is namespace, Col 5 in Numberspace table is namespace
+            pageObject=""
+            allnmsp = item.split(",")
+            for nmsp in allnmsp:
+              result = crossRef.__categorizeVariableNameByNamespace__(nmsp.strip())
+              if result[0] != None:
+                pageObject += """<a href='../dox/%s'>%s</a></br> """ % (getPackageHtmlFileName(result[1].getName()),nmsp)
+              else:
+                pageObject += nmsp + "</br>"
+            output.write("<td>%s</td>\n" % pageObject)
+          else:
+                output.write("<td>%s</td>\n" % item)
         output.write("</tr>\n")
       output.write("</tbody>\n")
       output.write("</table>\n")
@@ -57,8 +73,11 @@ def generateListingPage(outDir, pageData, dataType):
       output.write("</div>\n")
       output.write ("</body></html>\n")
 if __name__ == '__main__':
+
+  initParser = createInitialCrossRefGenArgParser()
   parser = argparse.ArgumentParser(
-        description='VistA Visual Namespace and Numberspace Generator')
+        description='VistA Visual Namespace and Numberspace Generator',
+        parents=[initParser])
   parser.add_argument('-o', '--outdir', required=True,
                       help='Output Web Page directory')
   parser.add_argument('-nn','--NameNumberdir', required=True, help='Path to directory with Name/Numberspace listing')
@@ -68,4 +87,5 @@ if __name__ == '__main__':
     dataType = jsonData["headers"][0]
     if "Number" in dataType:
       dataType = "Numberspace"
+    crossRef = parseCrossRefGeneratorWithArgs(result)
     generateListingPage(result.outdir,jsonData,dataType)
