@@ -71,8 +71,9 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
   add_test(XINDEX_Install ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/XINDEXInstall.cmake)
 endif()
 
-# 1. Generate XINDEX based cross reference output used by WebPageGenerator (DOX)
-if (GENERATE_DOX)
+# 1. Generate XINDEX based cross reference output used by:
+#    GeneratePackageDep (ViViaN) and WebPageGenerator (DOX)
+if (GENERATE_DOX OR GENERATE_VIVIAN)
   FindPackages(${VISTA_SOURCE_DIR})
   set(CALLER_GRAPH_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
   file(MAKE_DIRECTORY "${CALLER_GRAPH_LOG_DIR}")
@@ -104,8 +105,9 @@ if (GENERATE_DOX)
   endforeach()
 endif()
 
-# 2. Generate Fileman Schema used by WebPageGenerator (DOX)
-if (GENERATE_DOX)
+# 2. Generate Fileman Schema used by:
+#    GeneratePackageDep (ViViaN) and WebPageGenerator (DOX)
+if (GENERATE_DOX OR GENERATE_VIVIAN)
   set(FILEMAN_SCHEMA_DIR "${CMAKE_BINARY_DIR}/Docs/Schema")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FileManGlobalAttributes.py.in ${SCRIPT_OUTPUT_DIR}/FilemanGlobalAttributes.py)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GetFilemanSchema.cmake.in ${SCRIPT_OUTPUT_DIR}/GetFilemanSchema.cmake @ONLY)
@@ -177,5 +179,4 @@ if(GENERATE_VIVIAN)
 # 10. Run a task to generate the DataTables display of the name and numberspace information
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/NameNumberspaceGen.cmake.in ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake @ONLY)
   add_test(GenerateNameNumberDisplay ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake)
-
 endif()
