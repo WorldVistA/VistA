@@ -146,10 +146,17 @@ if (GENERATE_VIVIAN)
   add_test(GenerateRepoInfo ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake)
 endif()
 
-# 7. Run the Web Page Generator script to create DOX pages and PDF bundles
 if (GENERATE_DOX)
   set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
   file(MAKE_DIRECTORY "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
+
+# 7. Run the Graph Generator script
+# Uses 'dot' to generate graphs and legends for the WebPageGenerator (DOX)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GraphGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/GraphGenerator.cmake @ONLY)
+  add_test(GraphGenerator ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GraphGenerator.cmake)
+  set_tests_properties(GraphGenerator PROPERTIES TIMEOUT 7200)
+
+# 8. Run the Web Page Generator script to create DOX pages and PDF bundles
   set(ROUTINEREF_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/Routine-Ref.json")
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/WebPageGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake @ONLY)
@@ -158,14 +165,14 @@ if (GENERATE_DOX)
 endif()
 
 if(GENERATE_VIVIAN)
-  # 8. Run Cross Reference Builder
+  # 9. Run Cross Reference Builder
   # Generates PackageDependency file used in ViViaN
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/pkgdep.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GeneratePackageDep.cmake.in ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake @ONLY)
   add_test(GeneratePackageDep ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake)
   set_tests_properties(GeneratePackageDep PROPERTIES TIMEOUT 7200)
 
-  # 9. Run Requirements parser to generate the data needed for the BFF & Requirements page
+  # 10. Run Requirements parser to generate the data needed for the BFF & Requirements page
   # to json and html (ViViaN)
   set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}")
   set(DOCUMENT_VISTA_REQUIREMENTS_INPUT CACHE FILEPATH "")
@@ -176,7 +183,7 @@ if(GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RequirementsParser.cmake.in ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake @ONLY)
   add_test(RequirementsParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake)
 
-# 10. Run a task to generate the DataTables display of the name and numberspace information
+# 11. Run a task to generate the DataTables display of the name and numberspace information
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/NameNumberspaceGen.cmake.in ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake @ONLY)
   add_test(GenerateNameNumberDisplay ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake)
 endif()

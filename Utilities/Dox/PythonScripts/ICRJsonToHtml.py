@@ -18,10 +18,10 @@ from LogManager import logger, initConsoleLogging
 from ICRParser import ICR_DIR
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS
 from ICRSchema import isSubFile, isWordProcessingField
-from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
-from WebPageGenerator import getRoutineHtmlFileName
-from WebPageGenerator import pkgMap, normalizePackageName
-from WebPageGenerator import generatePDFTableHeader
+from UtilityFunctions import getPackageHtmlFileName, getGlobalHtmlFileNameByName
+from UtilityFunctions import getRoutineHtmlFileName
+from UtilityFunctions import pkgMap, normalizePackageName
+from UtilityFunctions import generatePDFTableHeader
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader

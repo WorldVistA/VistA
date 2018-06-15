@@ -32,7 +32,7 @@ if SCRIPTS_DIR not in sys.path:
 crossRef = None
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser, parseCrossRefGeneratorWithArgs
 from CrossReference import CrossReference
-from WebPageGenerator import getPackageHtmlFileName
+from UtilityFunctions import getPackageHtmlFileName
 from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader, outputDataTableFooter
 from DataTableHtml import outputDataListTableHeader
 
