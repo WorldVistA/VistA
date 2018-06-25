@@ -54,7 +54,8 @@ ROUTINE_EXTRACT_EXCEPTION_LIST = (
 class VistADataExtractor:
   def __init__(self, vistARepoDir, outputResultDir,
                outputLogDir, routineOutDir=None,
-               gitBranch=None, generateReadMe=False):
+               gitBranch=None, generateReadMe=False,
+               serialExport=False):
     assert os.path.exists(vistARepoDir)
     assert os.path.exists(outputResultDir)
     assert os.path.exists(outputLogDir)
@@ -75,6 +76,7 @@ class VistADataExtractor:
     self._routineOutDir = routineOutDir
     self._generateReadMe = generateReadMe
     self._gitBranch = gitBranch
+    self._serialExport = serialExport
   def extractData(self, vistATestClient):
     self.__setupLogging__(vistATestClient)
     self.__switchBranch__()
@@ -139,7 +141,7 @@ class VistADataExtractor:
       os.remove(file)
     logger.info("Exporting all globals from VistA instance")
     vistAGlobalExport = VistAGlobalExport()
-    vistAGlobalExport.exportAllGlobals(vistATestClient, self._globalOutputDir)
+    vistAGlobalExport.exportAllGlobals(vistATestClient, self._globalOutputDir, self._serialExport)
 
   def __removePackagesTree__(self):
     logger.info("Removing all files under %s" % self._packagesDir)
@@ -234,6 +236,8 @@ def main():
                       help='path to the top directory to store the log files')
   parser.add_argument('-ro', '--routineOutDir', default=None,
                 help='path to the directory where GT. M stores routines')
+  parser.add_argument('-sx', '--serialize', default=False, action="store_true",
+                      help = 'export the globals serially (Needed on on single-user Cache instace)')
   result = parser.parse_args();
   print (result)
   outputDir = result.outputDir
@@ -246,7 +250,8 @@ def main():
     vistADataExtractor = VistADataExtractor(result.vistARepo,
                                             outputDir,
                                             result.logDir,
-                                            result.routineOutDir)
+                                            result.routineOutDir,
+                                            serialExport = result.serialize)
     vistADataExtractor.extractData(testClient)
 
 def test1():
