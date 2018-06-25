@@ -16,6 +16,7 @@
 import sys
 import os
 import time
+import datetime
 import TestHelper
 from OSEHRAHelper import PROMPT
 
@@ -26,14 +27,21 @@ introText = """**************************************************
   * Use the following credentials for Robert Alexander
   *   Access:  fakedoc1
   *   Verify:  1Doc!@#$
+  *   Electronic Signature: ROBA123
   *
   * Use the following credentials for Mary Smith (Nurse)
   *   Access:  fakenurse1
   *   Verify:  1Nur!@#$
+  *   Electronic Signature: MARYS123
   *
   * Use the following credentials for Joe Clerk (Clerk)
   *   Access:  fakeclerk1
   *   Verify:  1Cle!@#$
+  *   Electronic Signature: CLERKJ123
+  *
+  *
+  * This instance was built from a VistA-M repository from
+  * %s built on %s
   *
   * If you have any issue, please email your question to admin@osehra.org
   **************************************************
@@ -130,7 +138,7 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   VistA.wait('Select OPTION:')
   VistA.write('')
 
-def setupIntroText(VistA):
+def setupIntroText(VistA, introTextSHA):
   # Set up the introduction text for the VistA system
   #
   # Normally, is displayed on CPRS and other GUIs
@@ -159,7 +167,7 @@ def setupIntroText(VistA):
     VistA.wait('EDIT Option')
     VistA.write("A")
     VistA.wait('Add lines')
-  VistA.write(introText+'\r')
+  VistA.write((introText % (introTextSHA, datetime.date.today() )) +'\r')
   VistA.wait("EDIT Option")
   VistA.write("")
   VistA.wait("DOMAIN NAME")
