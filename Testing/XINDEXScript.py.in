@@ -47,19 +47,25 @@ for prefix in pkgPrefixLst:
   VistA.write(prefix + '*')
 VistA.wait('Routine:')
 VistA.write('')
-selectionList = ['Select BUILD NAME:',
+selectionList = [VistA.prompt,
+                 'Select BUILD NAME:',
                  'Select INSTALL NAME:',
-                 'Select PACKAGE NAME:']
+                 'Select PACKAGE NAME:',
+                 "NAMESPACE:",
+                 "FILE:",
+                 "Print more than compiled errors and warnings?",
+                 ]
 while True:
   index = VistA.multiwait(selectionList)
-  VistA.write('')
+  if index == 0:
+    sys.exit(0)
   if index == len(selectionList) - 1:
+    VistA.write('No')
     break
-index = VistA.multiwait(['warnings?',VistA.prompt])
+  VistA.write('')
+index = VistA.multiwait(['routines?',VistA.prompt])
 if index==1:
   sys.exit(0)
-VistA.write('No')
-VistA.wait('routines?')
 VistA.write('NO')
 VistA.wait('DEVICE:')
 VistA.write(';;9999')
