@@ -19,9 +19,7 @@
 
 import argparse
 import bisect
-import csv
 import json
-import logging
 import os
 import os.path
 import re
@@ -47,8 +45,13 @@ from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
+from UtilityFunctions import *
+
 # PDF stylesheet
 styles = getSampleStyleSheet()
+
+# constants
+DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
 
 componentTypeDict = {
   "action" : "A",
@@ -67,75 +70,7 @@ componentTypeDict = {
   "screenman":"SM",
   "inquire":"I"
 }
-sectionLinkObj = {
-    "Option":{"number":"19", "color":"color=orangered"},
-    "Function":{"number":".5", "color":"color=royalblue"},
-    "List_Manager_Templates":{"number":"409.61", "color":"color=saddlebrown"},
-    "Dialog":{"number":".84", "color":"color=turquoise"},
-    "Key":{"number":"19.1", "color":"color=limegreen"},
-    "Remote_Procedure":{"number":"8994", "color":"color=firebrick"},
-    "Protocol":{"number":"101", "color":"color=indigo"},
-    "Help_Frame":{"number":"9.2", "color":"color=moccasin"},
-    "Form":{"number":".403", "color":"color=cadetblue"},
-    "Sort_Template":{"number":".401", "color":"color=salmon"},
-    "HL7_APPLICATION_PARAMETER":{"number":"771", "color":"color=violetred"},
-    "Input_Template": {"number":".402","color":"color=skyblue"},
-    "Print_Template": {"number":".4","color":"color=yellowgreen"},
-    }
 
-# Note: Other scripts depend on the pkgMap
-pkgMap = {
-    'AUTOMATED INFO COLLECTION SYS': 'Automated Information Collection System',
-    'AUTOMATED MED INFO EXCHANGE': 'Automated Medical Information Exchange',
-    'BAR CODE MED ADMIN': 'Barcode Medication Administration',
-    'CLINICAL INFO RESOURCE NETWORK': 'Clinical Information Resource Network',
-    #  u'DEVICE HANDLER',
-    #  u'DISCHARGE SUMMARY',
-    'E CLAIMS MGMT ENGINE': 'E Claims Management Engine',
-    #  u'EDUCATION TRACKING',
-    'EMERGENCY DEPARTMENT': 'Emergency Department Integration Software',
-    #  u'EXTENSIBLE EDITOR',
-    #  u'EXTERNAL PEER REVIEW',
-    'FEE BASIS CLAIMS SYSTEM' : 'Fee Basis',
-    'GEN. MED. REC. - GENERATOR': 'General Medical Record - Generator',
-    'GEN. MED. REC. - I/O' : 'General Medical Record - IO',
-    'GEN. MED. REC. - VITALS' : 'General Medical Record - Vitals',
-    #  u'GRECC',
-    #  u'HEALTH MANAGEMENT PLATFORM',
-    #  u'INDIAN HEALTH SERVICE',
-    #  u'INSURANCE CAPTURE BUFFER',
-    #  u'IV PHARMACY',
-    'MASTER PATIENT INDEX': 'Master Patient Index VistA',
-    'MCCR BACKBILLING' : 'MCCR National Database - Field',
-    #  u'MINIMAL PATIENT DATASET',
-    #  u'MOBILE SCHEDULING APPLICATIONS SUITE',
-    #  u'Missing Patient Register',
-    'MYHEALTHEVET': 'My HealtheVet',
-    'NATIONAL HEALTH INFO NETWORK' : 'National Health Information Network',
-    #  u'NEW PERSON',
-    #  u'PATIENT ASSESSMENT DOCUM',
-    #  u'PATIENT FILE',
-    #  u'PROGRESS NOTES',
-    #  u'QUALITY ASSURANCE',
-    #  u'QUALITY IMPROVEMENT CHECKLIST',
-    #  u'REAL TIME LOCATION SYSTEM',
-    'TEXT INTEGRATION UTILITIES' : 'Text Integration Utility',
-    #  u'UNIT DOSE PHARMACY',
-    'VA POINT OF SERVICE (KIOSKS)' : 'VA Point of Service',
-    #  u'VDEM',
-    'VISTA INTEGRATION ADAPTOR' : 'VistA Integration Adapter',
-    'VENDOR - DOCUMENT STORAGE SYS' : 'Vendor - Document Storage Systems'
-    #  u'VETERANS ADMINISTRATION',
-    #  u'VOLUNTARY SERVICE SYSTEM',
-    #  u'VPFS',
-    #  u'cds',
-    #  u'person.demographics',
-    #  u'person.lookup',
-    #  u'term',
-    #  u'term.access'])
-} # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
-
-MAX_DEPENDENCY_LIST_SIZE = 30 # Do not generate the graph if have more than 30 nodes
 PROGRESS_METER = 1000
 
 GLOBAL_VARIABLE_SECTION_HEADER_LIST = [
@@ -387,10 +322,6 @@ def findRelevantIndex(sectionGenLst, existingOutFile):
       idxLst.append(idx)
   return indexList,idxLst
 
-# Note: This function is called from other scripts
-def getGlobalHtmlFileNameByName(globalName):
-    return ("Global_%s.html" %
-                        normalizeGlobalName(globalName))
 def getGlobalPDFFileNameByName(globalName):
     return ("Global_%s.pdf" %
                         normalizeGlobalName(globalName))
@@ -468,36 +399,10 @@ def getFileManSubFileHypeLinkWithName(subFile):
     return ("<a href=\"%s\">%s</a>" %
             (getFileManSubFileHtmlFileName(subFile),
                                       subFile.getFileManName()))
-# Note: This function is called from other scripts
-def getRoutineHtmlFileName(routineName, title=""):
-    return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
-def getRoutineHtmlFileNameUnquoted(routineName, title=""):
-    return "Routine_%s.html" % routineName
+
 def getRoutinePdfFileNameUnquoted(routineName):
     return "Routine_%s.pdf" % routineName
-def getPackageObjHtmlFileNameUnquoted(optionName, title=""):
-    title = "Routine"
-    if "getObjectType" in dir(optionName):
-      title = optionName.getObjectType()
-    elif "Global" in str(type(optionName)):
-      return getGlobalHtmlFileNameByName(optionName.getName())
-    if not isinstance(optionName,basestring):
-      optionName = optionName.getName()
-    return "%s_%s.html" % (title, re.sub("[ /.*?&<>:]",'_',optionName))
-def findDotColor(object, title=""):
-    color = "color=black"
-    if "getObjectType" in dir(object):
-      color = sectionLinkObj[object.getObjectType()]["color"]
-    elif "Global" in str(type(object)):
-      color = "color=magenta"
-    return color
-def getPackageObjHtmlFileName(FunctionName, title=""):
-    return urllib.quote(getPackageObjHtmlFileNameUnquoted(FunctionName, title))
 
-# Note: This function is called from other scripts
-def getPackageHtmlFileName(packageName):
-    return urllib.quote("Package_%s.html" %
-                        normalizePackageName(packageName))
 def getPackagePdfFileName(packageName):
     return urllib.quote("Package_%s.pdf" %
                         normalizePackageName(packageName))
@@ -514,17 +419,6 @@ def getPackageHyperLinkByName(packageName):
       packageName = pkgMap[packageName]
     return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
                                       packageName)
-
-# Note: This function is called from other scripts
-def normalizePackageName(packageName):
-    if packageName in pkgMap:
-       packageName = pkgMap[packageName]
-    newName = packageName.replace(' ', '_')
-    return newName.replace('-', "_").replace('.', '_').replace('/', '_')
-
-def normalizeGlobalName(globalName):
-    import base64
-    return base64.urlsafe_b64encode(globalName)
 
 def getRoutineSourceCodeFileByName(routineName, packageName, sourceDir):
     return os.path.join(sourceDir, "Packages" +
@@ -579,14 +473,7 @@ def generateIndexedGlobalTableRow(outputFile, inputList,
     generateIndexedTableRow(outputFile, inputList, getGlobalHtmlFileNameByName,
                             nameFunc, indexSet)
 
-def getPackageDependencyHtmlFile(packageName, depPackageName):
-    firstName = normalizePackageName(packageName)
-    secondName = normalizePackageName(depPackageName)
-    if firstName < secondName:
-        temp = firstName
-        firstName = secondName
-        secondName = temp
-    return "Package_%s-%s_detail.html" % (firstName, secondName)
+
 
 def getPackagePackageDependencyHyperLink(packageName, depPackageName, name,
                                          tooltip, dependency):
@@ -681,20 +568,6 @@ def generateParagraph(text):
         logger.warning(e)
         return Paragraph(unicode(text, errors='ignore'), styles['Heading6'])
 
-def generatePDFTableHeader(headerList, splitHeader=True):
-    row = []
-    for header in headerList:
-        cell = []
-        if splitHeader:
-            # TODO: There is an extra line between words
-            words = header.split(" ")
-            for word in words:
-                cell.append(Paragraph(word, styles['Heading4']))
-        else:
-            cell.append(Paragraph(header, styles['Heading4']))
-        row.append(cell)
-    return row
-
 def generatePDFListData(listData):
     if not listData:
         return generateParagraph("")
@@ -731,7 +604,6 @@ class WebPageGenerator:
         self._git = git
         self._header = [] # TODO: Not used? header.html is in repo and __includeHeader__ is called.. a lot
         self._footer = []
-        self._dot = ""
         self._source_header = []  # TODO: Not used?
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
@@ -748,9 +620,6 @@ class WebPageGenerator:
         for line in footer:
             self._footer.append(line)
         footer.close()
-
-    def setDot(self, dot):
-        self._dot = dot
 
     def __includeHeader__(self, outputFile, indexList=""):
         for line in (self._header):
@@ -863,20 +732,13 @@ class WebPageGenerator:
     def generateWebPage(self):
         self.failures = []
         self.generateIndexHtmlPage()
-        self.generateColorLegend()
         self.generatePackageNamespaceGlobalMappingPage()
-        if self._dot:
-            self.generatePackageDependenciesGraph()
-            self.generatePackageDependentsGraph()
         self.generateGlobalNameIndexPage()
         self.generateIndividualGlobalPage()
         self.generateGlobalFileNoIndexPage()
         self.generateFileManSubFileIndexPage()
         self.generatePackageIndexPage()
         self.generateRoutineIndexPage()
-        if self._dot:
-            self.generateRoutineCallGraph()
-            self.generateRoutineCallerGraph()
         self.generateAllSourceCodePage(not self._includeSource)
         self.generateAllIndividualRoutinePage()
         self.generatePackagePackageInteractionDetail()
@@ -2224,232 +2086,6 @@ class WebPageGenerator:
         self.__includeFooter__(outputFile)
         outputFile.close()
 
-    #===============================================================================
-    # Return a dict with package as key, a list of 6 as value
-    #===============================================================================
-    def __mergePackageDependenciesList__(self, package, isDependencies=True):
-        packageDepDict = dict()
-        if isDependencies:
-            routineDeps = package.getPackageRoutineDependencies()
-            globalDeps = package.getPackageGlobalDependencies()
-            globalRtnDeps = package.getPackageGlobalRoutineDependencies()
-            globalGblDeps = package.getPackageGlobalGlobalDependencies()
-            fileManDeps = package.getPackageFileManFileDependencies()
-            dbCallDeps = package.getPackageFileManDbCallDependencies()
-            optionDeps = package.getPackageComponentDependencies()
-        else:
-            routineDeps = package.getPackageRoutineDependents()
-            globalDeps = package.getPackageGlobalDependents()
-            globalRtnDeps = package.getPackageGlobalRoutineDependendents()
-            globalGblDeps = package.getPackageGlobalGlobalDependents()
-            fileManDeps = package.getPackageFileManFileDependents()
-            dbCallDeps = package.getPackageFileManDbCallDependents()
-            optionDeps = {}
-        for (package, depTuple) in routineDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][0] = len(depTuple[0])
-            packageDepDict[package][1] = len(depTuple[1])
-        for (package, depTuple) in globalDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][2] = len(depTuple[0])
-            packageDepDict[package][3] = len(depTuple[1])
-        for (package, depTuple) in fileManDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][4] = len(depTuple[0])
-            packageDepDict[package][5] = len(depTuple[1])
-        for (package, depTuple) in dbCallDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][6] = len(depTuple[0])
-            packageDepDict[package][7] = len(depTuple[1])
-        for (package, depTuple) in optionDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][8] = len(depTuple[0])
-            packageDepDict[package][9] = len(depTuple[1])
-        for (package, depTuple) in globalRtnDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][10] = len(depTuple[0])
-            packageDepDict[package][11] = len(depTuple[1])
-        for (package, depTuple) in globalGblDeps.iteritems():
-            if package not in packageDepDict:
-                packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            packageDepDict[package][12] = len(depTuple[0])
-            packageDepDict[package][13] = len(depTuple[1])
-        return packageDepDict
-
-    #===============================================================================
-    ## Method to generate merge and sorted Dependeny list by Package
-    #===============================================================================
-    def __mergeAndSortDependencyListByPackage__(self, package, isDependencyList):
-        depPackageMerged = self.__mergePackageDependenciesList__(package, isDependencyList)
-        # sort by the sum of the total # of routines
-        depPackages = sorted(depPackageMerged.keys(),
-                           key=lambda item: sum(depPackageMerged[item][0:7:2]),
-                           reverse=True)
-        return (depPackages, depPackageMerged)
-
-    #===============================================================================
-    ## Method to generate the package dependency/dependent graph
-    #===============================================================================
-    def generatePackageDependencyGraph(self, package, dependencyList=True):
-        # merge the routine and package list
-        depPackages, depPackageMerged = self.__mergeAndSortDependencyListByPackage__(
-                                                                      package,
-                                                                      dependencyList)
-        if dependencyList:
-            packageSuffix = "_dependency"
-        else:
-            packageSuffix = "_dependent"
-        packageName = package.getName()
-        normalizedName = normalizePackageName(packageName)
-        totalPackage = len(depPackageMerged)
-        if  (totalPackage == 0) or (totalPackage > MAX_DEPENDENCY_LIST_SIZE):
-            logger.info("Nothing to do exiting... Package: %s Total: %d " %
-                         (packageName, totalPackage))
-            return
-        try:
-            dirName = os.path.join(self._outDir, packageName)
-            if not os.path.exists(dirName):
-                os.makedirs(dirName)
-        except OSError, e:
-            logger.error("Error making dir %s : Error: %s" % (dirName, e))
-            return
-        output = open(os.path.join(dirName, normalizedName + packageSuffix + ".dot"), 'w')
-        output.write("digraph %s {\n" % (normalizedName + packageSuffix))
-        output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
-        output.write("\tnodesep=0.35;\n") # set the node sep to be 0.35
-        output.write("\transsep=0.55;\n") # set the rank sep to be 0.75
-        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
-        output.write("\t%s [style=filled fillcolor=orange label=\"%s\"];\n" % (normalizedName,
-                                                                               packageName))
-        for depPackage in depPackages:
-            depPackageName = depPackage.getName()
-            normalizedDepPackName = normalizePackageName(depPackageName)
-            output.write("\t%s [label=\"%s\" URL=\"%s\"];\n" % (normalizedDepPackName,
-                                                                depPackageName,
-                                                                getPackageHtmlFileName(depPackageName)))
-    #            output.write("\t%s->%s [label=\"depends\"];\n" % (normalizedName, normalizePackageName(depPackageName.getName())))
-            depMetricsList = depPackageMerged[depPackage]
-            edgeWeight = sum(depMetricsList[0:7:2])
-            edgeLinkURL = getPackageDependencyHtmlFile(normalizedName, normalizedDepPackName)
-            edgeStartNode = normalizedName
-            edgeEndNode = normalizedDepPackName
-            edgeLinkArch = packageName
-            toolTipStartPackage = packageName
-            toolTipEndPackage = depPackageName
-            if not dependencyList:
-                edgeStartNode = normalizedDepPackName
-                edgeEndNode = normalizedName
-                edgeLinkArch = depPackageName
-                toolTipStartPackage = depPackageName
-                toolTipEndPackage = packageName
-            (edgeLabel, edgeToolTip, edgeStyle) = self.__getPackageGraphEdgePropsByMetrics__(depMetricsList,
-                                                                                             toolTipStartPackage,
-                                                                                             toolTipEndPackage)
-            output.write("\t%s->%s [label=\"%s\" weight=%d URL=\"%s#%s\" style=\"%s\" labeltooltip=\"%s\" edgetooltip=\"%s\"];\n" % (edgeStartNode,
-                                                     edgeEndNode,
-                                                     edgeLabel,
-                                                     edgeWeight,
-                                                     edgeLinkURL,
-                                                     edgeLinkArch,
-                                                     edgeStyle,
-                                                     edgeToolTip,
-                                                     edgeToolTip))
-        output.write("}\n")
-        output.close()
-        # use dot tools to generated the image and client side mapping
-        outputName = os.path.join(dirName, normalizedName + packageSuffix + ".png")
-        outputmap = os.path.join(dirName, normalizedName + packageSuffix + ".cmapx")
-        inputName = os.path.join(dirName, normalizedName + packageSuffix + ".dot")
-        # this is to generated the image in gif format and also cmapx (client side map) to make sure link
-        # embeded in the graph is clickable
-        command = "\"%s\" -Tpng -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (self._dot,
-                                                               outputName,
-                                                               outputmap,
-                                                               inputName)
-        logger.debug("command is %s" % command)
-        retCode = subprocess.call(command, shell=True)
-        if retCode != 0:
-            logger.error("calling dot with command[%s] returns %d" % (command, retCode))
-
-#===============================================================================
-#  return a tuple of Edge Label, Edge ToolTip, Edge Style
-#===============================================================================
-    def __getPackageGraphEdgePropsByMetrics__(self, depMetricsList,
-                                              toolTipStartPackage,
-                                              toolTipEndPackage,
-                                              isEdgeLabel=True):
-        assert(len(depMetricsList) >= 8)
-        # default for routine only
-        toolTip =("Total %d routine(s) in %s called total %d routine(s) in %s" % (depMetricsList[0],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[1],
-                                                                     toolTipEndPackage),
-                  "Total %d routine(s) in %s accessed total %d global(s) in %s" % (depMetricsList[2],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[3],
-                                                                     toolTipEndPackage),
-                  "Total %d fileman file(s) in %s pointed to total %d fileman file(s) in %s" % (depMetricsList[4],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[5],
-                                                                     toolTipEndPackage),
-                  "Total %d routines(s) in %s accessed via fileman db calls to total %d fileman file(s) in %s" % (depMetricsList[6],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[7],
-                                                                     toolTipEndPackage),
-                  "Total %d Package Component(s) in %s accessed total %d Routine(s) in %s" % (depMetricsList[8],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[9],
-                                                                     toolTipEndPackage),
-                  "Total %d Global(s) in %s accessed total %d Routines(s) in %s" % (depMetricsList[10],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[11],
-                                                                     toolTipEndPackage),
-                  "Total %d Global(s) in %s accessed total %d Routines(s) in %s" % (depMetricsList[12],
-                                                                     toolTipStartPackage,
-                                                                     depMetricsList[13],
-                                                                     toolTipEndPackage)
-                  )
-        labelText =("%s(R)->(R)%s" % (depMetricsList[0],depMetricsList[1]),
-                    "%s(R)->(G)%s" % (depMetricsList[2],depMetricsList[3]),
-                    "%s(F)->(F)%s" % (depMetricsList[4],depMetricsList[5]),
-                    "%s(R)->(F)%s" % (depMetricsList[6],depMetricsList[7]),
-                    "%s(PC)->(R)%s" % (depMetricsList[8],depMetricsList[9]),
-                    "%s(G)->(R)%s" % (depMetricsList[10],depMetricsList[11]),
-                    "%s(G)->(G)%s" % (depMetricsList[12],depMetricsList[13])
-                    )
-
-        metricValue = 0
-        (edgeLabel, edgeToolTip, edgeStyle) = ("","","")
-        metricValue = 0
-        for i in range(0,7):
-            if depMetricsList[i*2] > 0:
-                if len(edgeLabel) == 0:
-                  edgeLabel = labelText[i]
-                elif isEdgeLabel:
-                  edgeLabel = "%s\\n%s" % (edgeLabel, labelText[i])
-                else:
-                  edgeLabel = "%s:%s" % (edgeLabel, labelText[i])
-                if len(edgeToolTip) > 0:
-                  edgeToolTip = "%s. %s" % (edgeToolTip, toolTip[i])
-                else:
-                  edgeToolTip = toolTip[i]
-                metricValue += 1 * 2**i
-        if metricValue >= 7:
-            edgeStyle = "bold"
-        elif metricValue == 2:
-            edgeStyle = "dashed"
-        elif metricValue == 4:
-            edgeStyle = "dotted"
-        else:
-            edgeStyle = "solid"
-        return (edgeLabel, edgeToolTip, edgeStyle)
-
 #===============================================================================
 #
 #===============================================================================
@@ -2474,146 +2110,6 @@ class WebPageGenerator:
         for dir in toZip[1:]: # Don't zip top-level directory
             shutil.make_archive(dir, 'zip', dir)
         # TODO: Delete non-zipped directories?
-
-#===============================================================================
-#  Generate Color legend image
-#===============================================================================
-    def generateColorLegend(self, isCalled=True):
-        command = "\"%s\" -Tpng -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (self._dot,
-                                                    os.path.join(self._outDir,"colorLegend.png"),
-                                                    os.path.join(self._outDir,"colorLegend.cmapx"),
-                                                    os.path.join(self._docRepDir,'callerGraph_color_legend.dot'))
-        logger.debug("command is %s" % command)
-        retCode = subprocess.call(command, shell=True)
-        if retCode != 0:
-            logger.error("calling dot with command[%s] returns %d" % (command, retCode))
-#===============================================================================
-#
-#===============================================================================
-    def generateRoutineCallGraph(self, isCalled=True):
-        logger.info("Start Routine generating call graph......")
-        for package in self._allPackages.itervalues():
-            routines = package.getAllRoutines()
-            for routine in routines.itervalues():
-                isPlatformGenericRoutine = self._crossRef.isPlatformGenericRoutineByName(routine.getName())
-                if isCalled and isPlatformGenericRoutine:
-                    self.generatePlatformGenericDependencyGraph(routine, isCalled)
-                else:
-                    self.generateRoutineDependencyGraph(routine, isCalled)
-        logger.info("End of generating call graph......")
-
-#===============================================================================
-# Method to generate routine caller graph for platform dependent routines
-#===============================================================================
-    def generatePlatformGenericDependencyGraph(self, genericRoutine, isDependency):
-        assert genericRoutine
-        assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
-        if not isDependency:
-            return
-        platformRoutines = genericRoutine.getAllPlatformDepRoutines()
-        for routineInfo in platformRoutines.itervalues():
-            self.generateRoutineDependencyGraph(routineInfo[0], isDependency)
-
-#===============================================================================
-#
-#===============================================================================
-    def generateRoutineCallerGraph(self):
-        self.generateRoutineCallGraph(False)
-
-#===============================================================================
-## generate all dot file and use dot to generated the image file format
-#===============================================================================
-    def generateRoutineDependencyGraph(self, routine, isDependency=True):
-        if not routine.getPackage():
-            return
-        routineName = routine.getName()
-        packageName = routine.getPackage().getName()
-        if isDependency:
-            depRoutines = routine.getCalledRoutines()
-            routineSuffix = "_called"
-            totalDep = routine.getTotalCalled()
-        else:
-            depRoutines = routine.getCallerRoutines()
-            routineSuffix = "_caller"
-            totalDep = routine.getTotalCaller()
-        #do not generate graph if no dep routines, totalDep routines > max_dependency_list
-        if (not depRoutines
-            or len(depRoutines) == 0
-            or  totalDep > MAX_DEPENDENCY_LIST_SIZE):
-            logger.debug("No called Routines found! for routine:%s package:%s" % (routineName, packageName))
-            return
-        try:
-            dirName = os.path.join(self._outDir, packageName)
-            if not os.path.exists(dirName):
-                os.makedirs(dirName)
-        except OSError, e:
-            logger.error("Error making dir %s : Error: %s" % (dirName, e))
-            return
-        output = open(os.path.join(dirName, routineName + routineSuffix + ".dot"), 'wb')
-        output.write("digraph \"%s\" {\n" % (routineName + routineSuffix))
-        output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
-        output.write("\tnodesep=0.45;\n") # set the node sep to be 0.15
-        output.write("\transsep=0.45;\n") # set the rank sep to be 0.75
-#        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
-        if routine.getPackage() not in depRoutines:
-            output.write("\tsubgraph \"cluster_%s\"{\n" % (routine.getPackage()))
-            output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
-            output.write("\t}\n")
-        for (package, callDict) in depRoutines.iteritems():
-            output.write("\tsubgraph \"cluster_%s\"{\n" % (package))
-            for routine in callDict.keys():
-                output.write("\t\t\"%s\" [penwidth=2 %s URL=\"%s\" tooltip=\"%s\"];\n" % (routine,
-                                                         findDotColor(routine),
-                                                         getPackageObjHtmlFileName(routine),
-                                                         getPackageObjHtmlFileName(routine)
-                                                        ))
-                if str(package) == packageName:
-                    output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
-            output.write("\t\tlabel=\"%s\";\n" % package)
-            output.write("\t}\n")
-            for (routine, tags) in callDict.iteritems():
-                if isDependency:
-                    output.write("\t\t\"%s\"->\"%s\"" % (routineName, routine))
-                else:
-                    output.write("\t\t\"%s\"->\"%s\"" % (routine, routineName))
-                output.write(";\n")
-        output.write("}\n")
-        output.close()
-        outputName = os.path.join(dirName, routineName + routineSuffix + ".png")
-        outputmap = os.path.join(dirName, routineName + routineSuffix + ".cmapx")
-        inputName = os.path.join(dirName, routineName + routineSuffix + ".dot")
-        # this is to generated the image in png format and also cmapx (client side map) to make sure link
-        # embeded in the graph is clickable
-        # @TODO this should be able to run in parallel
-        command = "\"%s\" -Tpng -o\"%s\" -Tcmapx -o\"%s\" \"%s\"" % (self._dot,
-                                                               outputName,
-                                                               outputmap,
-                                                               inputName)
-        logger.debug("command is %s" % command)
-        retCode = subprocess.call(command, shell=True)
-        if retCode != 0:
-            logger.error("calling dot with command[%s] returns %d" % (command, retCode))
-
-#===============================================================================
-#
-#===============================================================================
-    def generatePackageDependenciesGraph(self, isDependency=True):
-        # generate all dot file and use dot to generated the image file format
-        if isDependency:
-            name = "dependencies"
-        else:
-            name = "dependents"
-        logger.info("Start generating package %s......" % name)
-        logger.info("Total Packages: %d" % len(self._allPackages))
-        for package in self._allPackages.values():
-            self.generatePackageDependencyGraph(package, isDependency)
-        logger.info("End of generating package %s......" % name)
-
-#===============================================================================
-#
-#===============================================================================
-    def generatePackageDependentsGraph(self):
-        self.generatePackageDependenciesGraph(False)
 
 #===============================================================================
 #
@@ -2664,7 +2160,7 @@ class WebPageGenerator:
             packageSuffix = "_dependent"
         package = self._allPackages[packageName]
         depPackages, depPackagesMerged = \
-          self.__mergeAndSortDependencyListByPackage__(package, isDependencyList)
+          mergeAndSortDependencyListByPackage(package, isDependencyList)
         totalPackages = 0
         if depPackages:
             totalPackages = len(depPackages)
@@ -2728,7 +2224,7 @@ class WebPageGenerator:
                             toolTipStartPackage = depPackageName
                             toolTipEndPackage = packageName
                         depMetricsList = depPackagesMerged[depPackage]
-                        linkName, tooltip, edgeStyle = self.__getPackageGraphEdgePropsByMetrics__(
+                        linkName, tooltip, edgeStyle = getPackageGraphEdgePropsByMetrics(
                                                          depMetricsList,
                                                          toolTipStartPackage,
                                                          toolTipEndPackage,
@@ -4170,85 +3666,13 @@ $( document ).ready(function() {
 
         logger.info("End of generating individual routines......")
 
-###############################################################################
-# Logging
 
-# constants
-DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
-
-import tempfile
-def getTempLogFile():
-    return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
-
-def initLogging(outputFileName):
-    logger.setLevel(logging.DEBUG)
-    fileHandle = logging.FileHandler(outputFileName, 'w')
-    fileHandle.setLevel(logging.DEBUG)
-    formatStr = '%(asctime)s %(message)s'
-    formatter = logging.Formatter(formatStr)
-    fileHandle.setFormatter(formatter)
-    #set up the stream handle (console)
-    consoleHandle = logging.StreamHandler(sys.stdout)
-    consoleHandle.setLevel(logging.INFO)
-    consoleFormatter = logging.Formatter(formatStr)
-    consoleHandle.setFormatter(consoleFormatter)
-    logger.addHandler(fileHandle)
-    logger.addHandler(consoleHandle)
-
-def readIntoDictionary(infileName):
-    values = {}
-    with open(infileName,"r") as templateData:
-      sniffer = csv.Sniffer()
-      dialect = sniffer.sniff(templateData.read(1024))
-      templateData.seek(0)
-      hasHeader = sniffer.has_header(templateData.read(1024))
-      logger.info ("hasHeader: %s" % hasHeader)
-      templateData.seek(0)
-      for index, line in enumerate(csv.reader(templateData,dialect)):
-        if index == 0:
-          continue
-        if line[1] not in values.keys():
-          values[line[1]] = []
-        values[line[1]].append(line)
-    return values
 #===============================================================================
 # main
 #===============================================================================
 def run(args):
-    # Reads in the ICR JSON file and generates
-    # a dictionary that consists of only the routine information
-    #
-    # Each key is a routine and it points to a list of all of the entries
-    # that have that routine marked as a "ROUTINE" field.
-    #
-    if args.icrJsonFile:
-      icrJson = os.path.abspath(args.icrJsonFile)
-    parsedICRJSON= {}
-    with open(icrJson, 'r') as icrFile:
-      icrEntries =  json.load(icrFile)
-      for entry in icrEntries:
-        if 'CUSTODIAL PACKAGE' in entry:
-          # Finding a Custodial Package means the entry should belong somewhere, for now
-          # we ignore those that don't have one
-          if not (entry['CUSTODIAL PACKAGE'] in parsedICRJSON):
-            # First time we come across a package, add dictionaries for the used types
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']] = {}
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"] = {}
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"] = {}
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"] = {}
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"] = []
-          if "ROUTINE" in entry:
-            if not (entry["ROUTINE"] in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"]):
-              parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]] = []
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]].append(entry)
-          elif "GLOBAL ROOT" in entry:
-            globalRoot = entry['GLOBAL ROOT'].replace(',','')
-            if not (globalRoot in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"]):
-              parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot] = []
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot].append(entry)
-          else:
-            # Take all other entries into "OTHER", so that they can be shown on the package page
-            parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
+    icrJsonFile = os.path.abspath(args.icrJsonFile)
+    parsedICRJSON = parseICRJson(icrJsonFile)
     crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args, pkgDepJson=None, icrJson=parsedICRJSON,
                                                                    inputTemplateDeps=readIntoDictionary(args.inputTemplateDep),
                                                                    sortTemplateDeps=readIntoDictionary(args.sortTemplateDep),
@@ -4256,7 +3680,6 @@ def run(args):
                                                                    )
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
-
     webPageGen = WebPageGenerator(crossRef,
                                   args.outdir,
                                   args.pdfOutdir,
@@ -4266,8 +3689,6 @@ def run(args):
                                   args.includeSource,
                                   args.rtnJson,
                                   args.pdf)
-    if args.dot:
-        webPageGen.setDot(args.dot)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")
 
@@ -4281,8 +3702,6 @@ if __name__ == '__main__':
     parser.add_argument('-po', '--pdfOutdir', required=True,
                         help='Output PDF directory')
     parser.add_argument('-git', required=True, help='git executable')
-    parser.add_argument('-dot', required=False,
-                        help='path to the folder containing dot excecutable')
     parser.add_argument('-is', '--includeSource', required=False,
                         default=False, action='store_true',
                         help='generate routine source code page?')
@@ -4300,7 +3719,7 @@ if __name__ == '__main__':
     result = parser.parse_args();
 
     if not result.outputLogFileName:
-      outputLogFile = getTempLogFile()
+      outputLogFile = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
     else:
       outputLogFile = result.outputLogFileName
     initLogging(outputLogFile)

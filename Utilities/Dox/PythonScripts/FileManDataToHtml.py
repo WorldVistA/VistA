@@ -33,8 +33,8 @@ from ZWRGlobalParser import getKeys
 from json import JSONEncoder
 from CrossReference import FileManField
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
-from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
-from WebPageGenerator import getPackageHtmlFileName
+from UtilityFunctions import getRoutineHtmlFileName
+from UtilityFunctions import getPackageHtmlFileName, normalizePackageName
 from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
 from DataTableHtml import data_table_list_init_setup
 from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
