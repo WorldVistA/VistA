@@ -1,0 +1,429 @@
+
+=============================================================================
+Run Date: DEC 21, 2017                     Designation: MAG*3*180
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #145                      Status: Released
+                  Compliance Date: JAN 25, 2018
+=============================================================================
+
+
+Subject: VistA Updates
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ================
+ This patch must be installed after MAG*3.0*166.
+  
+ Subject:  VistA Imaging Updates
+ ========
+  
+ Category:  OTHER
+ =========
+  
+ Description:
+ ============
+ Patch  MAG*3.0*180 addresses the following issues with VistA Imaging:   
+  Cachi Shadowing data-synchronization issue 
+  The Modality Worklist (MWL) was not being updated when a user added a  
+  new note to a closed consult.
+  Some consults were not being added to the MWL.
+  
+ Patch Components: 
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 180_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P180_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ File Name            Description
+ MAG3_0P180.KID       Kernel Installation and Distribution System (KIDS)
+                      build for Patch 180
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P180_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ 1.      Defect 541286 (Ticket R12992774FY17) Cachi Shadowing Issue
+ Problem: 
+ The National VistA Support (NVS) Shadow Compare Utility is used to ensure 
+ data-synchronization between Production VistA Cachi databases and their 
+ shadowed counterparts.  NVS has been finding ^MAGDOUTP(2006.574) nodes on 
+ shadows that are not on the source (Production) systems at several sites.
+  
+ Resolution: 
+ Global locks and global lock checks were added to the routines (MAGDRPC4, 
+ MAGDRPC9, and MAGDRPC3) that modify the ^MAGDOUTP(2006.574) global.
+  
+ 2.      Defect 560333 (Ticket I14676743FY17) New Worklist Entry on a 
+ Closed Consult
+ Problem: 
+ When a note is added to a "Closed Consult" in the Computerized Patient 
+ Record System (CPRS) and the consult is saved without a signature, the
+ system does not generate an entry on the Modality Worklist (MWL).  In the 
+ previous version of VistA Imaging, users were able to add a note to a 
+ closed consult and this would generate an entry on the MWL.
+  
+ Resolution: 
+ The modality worklist routine was modified so that when an unsigned note 
+ is added to a closed consult, the entry appears on the MWL.   
+  
+ 3.      Defect 468447 (Ticket I12518848FY17) Consults not added to the 
+ Modality Worklist 
+ Problem: 
+ Some consults are not being added to the MWL.  Consults from a specific 
+ provider were not being added to the modality worklist. This particular 
+ provider has 11 entries in the VISITED FROM field in the New Person (#200)
+ file in VistA with "NO PHONE" as the phone number for many of the
+ entries.  VistA Imaging pulls all the Visited From locations and phone 
+ numbers for a provider when creating the HL7 message.  The number of 
+ entries is causing the Observation Request (OBR) segment of the HL7
+ message to be too long, causing it to be rejected.
+  
+ Resolution: 
+ Routine MAGDHOW3 was modified to ignore phone numbers with the "NO PHONE" 
+ entry and to truncate to allow only the first three phone numbers in the 
+ segment. 
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  Gulf Coast Veterans Health Care System (HCS) (Biloxi) 
+  Boise VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Additional  documentation  may be found also be found on the VA Software 
+ Documentation Library at: http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ===================
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*180 must be installed on the VistA System.  This patch must be 
+ installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*180 KIDS only takes 
+ 2-3 minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this
+ document have been previously installed.
+  
+ Note:  
+ =====
+ Before installing KIDS - Please Stop all DICOM processes on all gateways 
+ - to include all Image, Text and Routing processing. Also stop all HDIG 
+ Tomcat services and all BP processing. 
+  All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*180.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a.Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+    b.When prompted, enter the path and file name (MAG3_0P180.KID) of the 
+ MAG*3.0*180 KIDS file.
+    c.When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the 
+ patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in 
+ the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you 
+ want to create a backup message of any routines exported with the patch.  
+ It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*180".
+    c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ XPD INSTALLATION MENU Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\MAG3_0P180.KID
+  
+ KIDS Distribution saved on Oct 02, 2017@17:24:38
+ Comment: VistA Imaging V3.0 - Patch 180
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MAG*3.0*180 has been loaded before, here is when:
+       MAG*3.0*180   Install Completed
+                     was loaded on Sep 20, 2017@15:01:10
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*180
+ Use INSTALL NAME: MAG*3.0*180 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*180      10/10/17@12:31:22
+      => VistA Imaging V3.0 - Patch 180  ;Created on Oct 02, 2017@17:24:38
+  
+ This Distribution was loaded on Oct 10, 2017@12:31:22 with header of
+    VistA Imaging V3.0 - Patch 180  ;Created on Oct 02, 2017@17:24:38
+    It consisted of the following Install(s):
+     MAG*3.0*180
+ Checking Install for Package MAG*3.0*180
+  
+ Install Questions for MAG*3.0*180
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*180 :
+                Oct 10, 2017@12:31:39
+  
+ Build Distribution Date: Oct 02, 2017
+  
+  Installing Routines:........
+                Oct 10, 2017@12:31:39
+  
+  Running Post-Install Routine: POS^MAGIP180.
+  
+ Post Install Mail Message: Oct 10, 2017@12:31:39
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+ Uninstalling MAG*3.0*180
+ ========================
+ If it is necessary to uninstall the MAG*3.0*180 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE.  Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*180 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 11
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGDHOW1        28177499        28635180        **138,174,180**
+  
+ MAGDHOW3        27085242        29400987        **138,180** 
+  
+ MAGDRPC3        65697385        66319666        **11,30,51,50,85,54,
+                                                 49,123,138,180**
+  
+ MAGDRPC4        99627815        106996677       **11,30,51,50,54,49,
+                                                 138,156,180**
+  
+ MAGDRPC9        97645794        94046476        **50,54,53,49,123,
+                                                 118,138,180**
+  
+ MAGIP180        New             4110394         **180**
+  
+ Routine MAGIP180 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2017
+Completed By:                               Date Completed: DEC 20, 2017
+Released By :                               Date Released : DEC 21, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

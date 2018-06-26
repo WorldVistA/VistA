@@ -1,0 +1,223 @@
+No routines or KID included
+=============================================================================
+Run Date: APR 19, 2018                     Designation: MAG*3*171
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #151                      Status: Released
+                  Compliance Date: MAY 21, 2018
+=============================================================================
+
+
+Subject: eHMP CVIX Data Access Service (DAS) Realignment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Associated Patches: 
+   
+ MAG 3*0*165 CVIX 
+   
+   
+ Description:
+ MAG*3.0*171 is installed at VA enterprise datacenters and is not
+ distributed to VHA sites. No action is required by VistA Imaging
+ field support staff with the release of this informational patch.
+  
+ This document describes MAG*3.0*171, the CVIX DAS realigned patch. This
+ patch replaces the BHIE/BIA Exchange and HAIMS/XCA interface based CVIX
+ with the DAS MIX/AX/DX interface based CVIX. 
+  
+  
+ Major changes for this patch are summarized below. 
+   
+  
+   
+ MAG*3.0*171 contains the following new features: 
+   
+   Authentication and access with DAS 
+   CVIX to utilize DAS for communication to/from the DOD 
+     o Find and fetch DOD Studies and documents by VA Patient ID (ICN) 
+     o CVIX to respond to DAS patient study and document data requests by ICN 
+     o CVIX to access DOD documents, images, and form through DAS by ICN 
+   Interfaces for imaging exchange with DAS standardized 
+   
+  
+ Patch Components: 
+  
+ This patch includes the following files: 
+  
+ File Name                             Description 
+ ------------------------------------  ---------------------------------------- 
+ MAG3_0P171_CVIX_Setup.msi             Installation file for the CVIX software. 
+ MAG3_0P171_Patch_Description.pdf      This document 
+ MAG3_0P171_CVIX_Installation_Guide.pdf MAG*3.0*171 CVIX Installation Guide 
+    
+   
+ This patch requires the following versions: 
+  
+ Apache Tomcat: 8.0.45 
+ Java: 1.8.0_121 
+  
+ Documentation: 
+  
+ This document provides an overview, explains the changes, and outlines the 
+  
+ installation for this patch. 
+  
+ Files & Fields Associated: 
+  
+ File Name (Number)     Field Name (Number)      New/Modified/Deleted 
+ There are no files or fields associated with this patch. 
+  
+ Forms Associated: 
+  
+ Form Name              File #                   New/Modified/Deleted 
+ There are no forms associated with this patch. 
+  
+  
+ Mail Groups Associated: 
+   
+ Mail Group Name        New/Modified/Deleted 
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+   
+ Option Name           Type                      New/Modified/Deleted 
+ There are no options associated with this patch. 
+   
+  
+ Protocols Associated: 
+  
+ Protocol Name         New/Modified/Deleted 
+ There are no protocols associated with this patch. 
+  
+  
+ Security Keys Associated: 
+   
+ Security Key Name 
+ There are no security keys associated with this patch. 
+   
+   
+ Templates Associated: 
+   
+ Template Name         Type     File Name (Number)    New/Modified/Deleted 
+ There are no templates associated with this patch. 
+   
+     
+ Additional Information: 
+   
+ There is no additional information associated with this patch. 
+   
+   
+ New Service Requests (NSRs): 
+   
+ This project is initiated by Requirement BR 8.0 of the Health Information 
+   
+ Exchange Viewer BRD #01-02-03-05-08-003. 
+   
+    
+ Patient Safety Issues (PSIs): 
+   
+ There are no patient safety issues associated with this patch.
+   
+   
+ Defect Tracking System Ticket(s) & Overview: 
+   
+ N/A 
+  
+ Test Sites: 
+   
+ Paticipating Test Sites 
+    
+ The requirements planned for the Image Viewer Version 1.5 Sprints 25-28 were 
+ verified and validated during the Development Independent Testing (DIT) phase of 
+ testing and System Integration Testing (SIT). All requirements mapped to the 
+ test scripts. The scripts are designed to be end-to-end functional tests of the 
+ system to evaluate all the technical requirements including the testing of 
+ external interfaces where appropriate. 
+   
+ The DIT cycle consisted of line of sight testing and the formal DIT. Before 
+ starting the DIT cycle, a CVIX baseline is installed on the 
+ system. Tests are then run against this software baseline. Any issues 
+ found and potential resolutions are assessed for possible inclusion in the 
+ software baseline. 
+   
+ The SIT cycle consisted of smoke testing and the formal SIT. Before 
+ starting the SIT cycle, an updated CVIX baseline is installed on the 
+ system. Tests are then run against this software baseline. Any issues 
+ found and potential resolutions are assessed for possible inclusion in the 
+ software baseline. 
+   
+ During SIT, the test team validated the requirements provided in the RTM 
+ using the test scripts and the test cases. Any issues encountered is 
+ recorded as a defect in Rational Quality Manager. 
+   
+   
+ CLIN3 IOC Production Testing 
+   
+   
+ Documentation Retrieval Instructions: 
+   
+ See "Software and Documentation Retrieval Instructions" 
+   
+    
+ Software and Documentation Retrieval Instructions: 
+   
+ MAG*3.0*171 is installed at VA enterprise datacenters and is not
+ distributed to VHA sites. MAG*3.0*171 binary files are made available
+ to AITC/PITC datacenter staff and the VA Clin 3 team. 
+ Patch Installation: 
+   
+ Pre/Post Installation Overview: 
+   
+ N/A 
+   
+    
+ Pre-Installation Instructions: 
+   
+ Verify that the patches listed in the Associated Patched section of this document have been 
+ previously installed. 
+   
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. 
+   
+  
+ There are no Menu Options to disable. 
+  
+  
+ Installation Instructions: 
+   
+   
+ This patch contains a CVIX installation appropriate to be installed at
+ VA Enterprise Datacenters such as AITC and PITC. 
+  
+ For detailed installation steps, please refer to the 
+ MAG3_0P171_CVIX_Installation_Guide.pdf
+  
+ Backout Plan 
+   
+ 1. Using programs/features, uninstall the VIX Service Installation Wizard 
+ 2. Install the previous version of the CVIX (e.g.:P165)
+ 3. Follow the steps in the Patch Description Document provided by the previous version 
+   
+  
+  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2016
+Completed By:                               Date Completed: APR 19, 2018
+Released By :                               Date Released : APR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

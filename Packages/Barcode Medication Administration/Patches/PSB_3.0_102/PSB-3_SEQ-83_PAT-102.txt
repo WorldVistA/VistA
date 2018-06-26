@@ -1,0 +1,254 @@
+
+=============================================================================
+Run Date: JAN 25, 2018                     Designation: PSB*3*102
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #83                      Status: Released
+                  Compliance Date: FEB 25, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*87    <<= must be installed BEFORE `PSB*3*102'
+
+Subject: BCBU USER UPDATE, ALERTS AND <UNDEFINED> ERROR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+                   database
+ 2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+                   Links Array Med-Log
+ 3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+    I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+   
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I9592038FY16 - Frequently, BCMA users are not able to access the BCBU
+                   database
+    
+ Problem: 
+ --------
+ Frequently, BCMA users are not able to access the BCBU database. This result
+ in local IT support spending time to resolve what should be a minor issue.
+ However, the fix is not always simple or straight forward. Typically, the
+ problem is that the user has had a Verify Code change since they last
+ accessed a contingency. Normally, doing a User Initialization does not
+ resolve the issue and IT support has to either replace the database or
+ manually give the user a new Verify code on the contingency computer.
+   
+ Resolution:
+ -----------
+ Modified the routines ALPBGEN, ALPBGEN1 and ALPBGEN2 to remove some
+ unnecessary restrictions for sending a user update over to the BCBU
+ workstation. For example, if a user was terminated in the main VistA System
+ it would not be sent to the BCBU workstation. This caused terminated users
+ in the main VistA System to remain active in the BCBU workstation.
+   
+  
+ 2. I8652828FY16 - Getting ALERT BCBU Contingency Error 46364090 / Missing HLL
+                   Links Array Med-Log
+  
+ Problem: 
+ --------
+ In a multi-divisional BCBU configuration all Divisions are required to have
+ an HL7 Logical Link associated. When a division is missing the association an
+ alert is generated for every transaction that is supposed to go to the BCBU
+ workstation for that division. The problem is that the Alert does not identify
+ which division is missing the Logical Link, which makes it hard for the users
+ to identify the source of the problem and resolve it. Furthermore, the fact 
+ that the Alert does not identify which patient was being processed when the 
+ issue happened makes it hard to troubleshoot and fix the problem as well.
+   
+ Resolution:
+ -----------
+ Modified the routine ALPBCBU to include the site number and the patient DFN
+ number in the Alert subject. This way users will know exactly which division
+ and the patient that was being processed when a BCBU Alert is generated due to
+ an error. 
+   
+ Here is how the Alert text will be modified:
+   
+  Before: BCBU Contingency Error
+          Missing HLL Links Array Med-Log
+  
+  After:  BCBU Contingency Error / Site: 442 / DFN: 1930382
+          Missing HLL Links Array Med-Log
+  
+  
+ 3. I6161931FY16 - Received the error $ZE= <UNDEFINED>ZPD+5^IVMPREC8 *HLFS
+    I16851052FY18 - Undefined: GENACK+10^RGADTP *HL("MID") 
+  
+ Problem: 
+ -------- 
+ When an HL7 message is received from an Income Verification Match (IVM) Center
+ containing demographics data for a patient that includes a date of death the
+ BCBU application is automatically invoked if such patient has active inpatient
+ orders. Many other subscribing applications are automatically invoked by the 
+ same process and they all share the same local variables from the invoking
+ process. The routine ALPBINP was incorrectly killing HL7 local variables such
+ as HL, HLA, HLCS, HLCTR and HLFS, which were being used by other applications
+ and in these two specific incidents reported caused the Income Verification
+ Match (IVM) and Registration applications to error out.
+  
+ Resolution:
+ -----------
+ Modified the routine ALPBCBU to initialize the variables HL, HLA, HLECH
+ and HLQ and also modified the routine ALPBINP to no longer kill the HL7
+ variables HLCS, HLCTR and HLFS.
+  
+ NOTE: This fix could not be tested in a development or an SQA environments
+       because it requires an incoming HL7 message from an external entity.
+     
+ Test Sites:
+ -----------
+ Kansas City VAMC
+ Upstate NY HCS   
+   
+  
+ Pre-Installation Overview
+ ------------------------------
+ This patch required Fileman v22.2 to be installed before this patch can be
+ installed. Therefore it is important that the BCBU workstations where the
+ this patch will be installed already have been updated with the latest
+ version of Fileman (v22.2).
+  
+   
+ Patch retrieval Instructions: 
+ ----------------------------
+ 1. Retrieve the KIDS distribution host file. This patch will be
+    distributed in a host file. The name of the host file is:
+  
+         PSB_3_102.KID
+     
+     Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+     the OI Field Offices. The preferred method is to retrieve the file
+     using Secure File Transfer Protocol (SFTP) from
+     DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+     available server. Alternatively, sites may elect to retrieve the file
+     from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Installation Instructions:
+ -------------------------- 
+ The BAR CODE MED ADMIN (BCMA) users should not be using the application
+ while this patch is being installed. It should take less than 2 minutes
+ to install this patch.
+   
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select the
+       Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSB*3.0*102:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the patch
+ number in the [PATCH LIST] section.
+   
+ 3.0;BAR CODE MED ADMIN;**[PATCH LIST]**;MARCH, 2004
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run to
+ compare the routine checksums to what is documented in the patch description.
+  
+  
+ Post-Installation Overview
+ --------------------------
+ None. 
+  
+   
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of install).
+ The message containing the backed up routines can be loaded with the "Xtract
+ PackMan" function at the Message Action prompt. The Packman function
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines onto
+ the VistA System. 
+  
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of the
+ PSO Routines contained in this patch using the option First Line Routine
+ Print [XU FIRST LINE PRINT]. Once the routines contained in the PSB*3.0*102
+ patch have been rolled back, the first two lines of the Routines will no
+ longer contain the designation of patch PSB*3.0*102 in the patch list section
+ on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBCBU
+    Before:  B4937131   After:  B7545532  **8,102**
+Routine Name: ALPBGEN
+    Before: B38839587   After: B38508427  **7,8,102**
+Routine Name: ALPBGEN1
+    Before: B22399656   After: B23958647  **8,37,102**
+Routine Name: ALPBGEN2
+    Before:  B4591477   After:  B4591477  **8,102**
+Routine Name: ALPBINP
+    Before: B99838805   After: B97531509  **8,37,73,87,102**
+ 
+Routine list of preceding patches: 87
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 11, 2017
+Completed By:                               Date Completed: JAN 24, 2018
+Released By :                               Date Released : JAN 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

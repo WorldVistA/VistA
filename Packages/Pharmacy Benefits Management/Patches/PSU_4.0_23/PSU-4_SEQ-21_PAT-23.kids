@@ -1,0 +1,561 @@
+Released PSU*4*23 SEQ #21
+Extracted from mail message
+**KIDS**:PSU*4.0*23^
+
+**INSTALL NAME**
+PSU*4.0*23
+"BLD",10754,0)
+PSU*4.0*23^PHARMACY BENEFITS MANAGEMENT^0^3171102^y
+"BLD",10754,1,0)
+^^72^72^3171102^^^^
+"BLD",10754,1,1,0)
+This patch will resolve the following issue:
+"BLD",10754,1,2,0)
+ 
+"BLD",10754,1,3,0)
+1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+"BLD",10754,1,4,0)
+ 
+"BLD",10754,1,5,0)
+  
+"BLD",10754,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10754,1,7,0)
+--------------------------------------------
+"BLD",10754,1,8,0)
+ 
+"BLD",10754,1,9,0)
+1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+"BLD",10754,1,10,0)
+  
+"BLD",10754,1,11,0)
+Problem: 
+"BLD",10754,1,12,0)
+--------
+"BLD",10754,1,13,0)
+The CMOP-Nat VistA system migrated to the Region 1 Denver Data Center on 
+"BLD",10754,1,14,0)
+July 29, 2017. During the migration a problem was identified with the HL 
+"BLD",10754,1,15,0)
+Logical Link "PSU SEND". It was discovered that the HL Logical Link entry 
+"BLD",10754,1,16,0)
+on all VAMC VistA systems was set with an invalid DNS DOMAIN of 
+"BLD",10754,1,17,0)
+"CMOP-NAT.DOMAIN.EXT". The Region 1 Denver Data Center migration team along
+"BLD",10754,1,18,0)
+with the National VistA Migration Team requested that a national software 
+"BLD",10754,1,19,0)
+patch be created and released to update the "PSU SEND" entry in the HL 
+"BLD",10754,1,20,0)
+Logical Link file to use the correct DNS DOMAIN "HL7.CMOP-NAT.DOMAIN.EXT". 
+"BLD",10754,1,21,0)
+This change is required so that when there are hardware changes to the 
+"BLD",10754,1,22,0)
+CMOP-Nat VistA system, VistA HL7's DNS-aware functionality will automatically
+"BLD",10754,1,23,0)
+update the link's IP address without requiring individual, manual updates at
+"BLD",10754,1,24,0)
+each site. During the migration as a work-around, "CMOP-NAT.DOMAIN.EXT" and
+"BLD",10754,1,25,0)
+its associated IP were broadcasted nationally so there would be no disruption
+"BLD",10754,1,26,0)
+to message traffic being sent by the VAMCs, but "HL7.CMOP-NAT.DOMAIN.EXT" is
+"BLD",10754,1,27,0)
+the preferred and best long-term solution. The PSU SEND logical link was 
+"BLD",10754,1,28,0)
+created during the pre-install steps of PSU*4*3 (PBM EXTRACT ENHANCEMENT
+"BLD",10754,1,29,0)
+III).
+"BLD",10754,1,30,0)
+ 
+"BLD",10754,1,31,0)
+Resolution:
+"BLD",10754,1,32,0)
+-----------
+"BLD",10754,1,33,0)
+A post-install routine (PSO23PI) will be executed following the installation
+"BLD",10754,1,34,0)
+of this patch and will perform the following update if necessary:
+"BLD",10754,1,35,0)
+ 
+"BLD",10754,1,36,0)
+ 1. Loop through all the records in the HL LOGICAL LINK file (#870) and
+"BLD",10754,1,37,0)
+    retrieve the value for the  DNS DOMAIN field (#.08)
+"BLD",10754,1,38,0)
+ 2. If the DNS DOMAIN value (converted to uppercase) is different than
+"BLD",10754,1,39,0)
+    "CMOP-NAT.DOMAIN.EXT", skip the record (no update)
+"BLD",10754,1,40,0)
+ 3. If the DNS DOMAIN uppercase value is equal to "CMOP-NAT.DOMAIN.EXT", 
+"BLD",10754,1,41,0)
+    update it to "HL7.CMOP-NAT.DOMAIN.EXT"
+"BLD",10754,1,42,0)
+ 
+"BLD",10754,1,43,0)
+Once the patch PSU*4*23 successfully installs a Mailman message will be sent
+"BLD",10754,1,44,0)
+to the PSU MAIL group and the person who installed the patch with the 
+"BLD",10754,1,45,0)
+following information:
+"BLD",10754,1,46,0)
+ 
+"BLD",10754,1,47,0)
+  Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737116]
+"BLD",10754,1,48,0)
+  From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+"BLD",10754,1,49,0)
+  --------------------------------------------------------------------------
+"BLD",10754,1,50,0)
+  The post-install routine performed the following updates:
+"BLD",10754,1,51,0)
+ 
+"BLD",10754,1,52,0)
+  HL LOGICAL LINK       DNS DOMAIN (Before Patch)   DNS DOMAIN (After Patch)
+"BLD",10754,1,53,0)
+  --------------------- -------------------------   ------------------------
+"BLD",10754,1,54,0)
+  PSU SEND              CMOP-NAT.DOMAIN.EXT         HL7.CMOP-NAT.DOMAIN.EXT
+"BLD",10754,1,55,0)
+ 
+"BLD",10754,1,56,0)
+  Enter message action (in IN basket): Ignore//  
+"BLD",10754,1,57,0)
+ 
+"BLD",10754,1,58,0)
+In case the post-install routine does not find any entries in the HL LOGICAL 
+"BLD",10754,1,59,0)
+LINK file that needs to be updated it will instead send this message:
+"BLD",10754,1,60,0)
+  
+"BLD",10754,1,61,0)
+   Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737114] 
+"BLD",10754,1,62,0)
+   From: POSTMASTER  In 'IN' basket.   Page 1
+"BLD",10754,1,63,0)
+   -------------------------------------------------------------------------
+"BLD",10754,1,64,0)
+   The post-install routine found no records in the HL LOGICAL LINK file 
+"BLD",10754,1,65,0)
+   (#870) with the DNS DOMAIN field (#.08) set to 'CMOP-NAT.DOMAIN.EXT'.
+"BLD",10754,1,66,0)
+   No updates performed.
+"BLD",10754,1,67,0)
+ 
+"BLD",10754,1,68,0)
+   Enter message action (in IN basket): Ignore// 
+"BLD",10754,1,69,0)
+ 
+"BLD",10754,1,70,0)
+Note: Non-production accounts usually have the DNS DOMAIN field (#.08) in
+"BLD",10754,1,71,0)
+      HL LOGICAL LINK file (#870) set to null/blank and for this reason this
+"BLD",10754,1,72,0)
+      patch will make no update in most of these accounts.
+"BLD",10754,4,0)
+^9.64PA^^
+"BLD",10754,6.3)
+3
+"BLD",10754,"ABPKG")
+n
+"BLD",10754,"INID")
+^n
+"BLD",10754,"INIT")
+EN^PSU23PI
+"BLD",10754,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10754,"KRN",.4,0)
+.4
+"BLD",10754,"KRN",.401,0)
+.401
+"BLD",10754,"KRN",.402,0)
+.402
+"BLD",10754,"KRN",.403,0)
+.403
+"BLD",10754,"KRN",.5,0)
+.5
+"BLD",10754,"KRN",.84,0)
+.84
+"BLD",10754,"KRN",3.6,0)
+3.6
+"BLD",10754,"KRN",3.8,0)
+3.8
+"BLD",10754,"KRN",9.2,0)
+9.2
+"BLD",10754,"KRN",9.8,0)
+9.8
+"BLD",10754,"KRN",19,0)
+19
+"BLD",10754,"KRN",19.1,0)
+19.1
+"BLD",10754,"KRN",101,0)
+101
+"BLD",10754,"KRN",409.61,0)
+409.61
+"BLD",10754,"KRN",771,0)
+771
+"BLD",10754,"KRN",779.2,0)
+779.2
+"BLD",10754,"KRN",870,0)
+870
+"BLD",10754,"KRN",8989.51,0)
+8989.51
+"BLD",10754,"KRN",8989.52,0)
+8989.52
+"BLD",10754,"KRN",8994,0)
+8994
+"BLD",10754,"KRN","B",.4,.4)
+
+"BLD",10754,"KRN","B",.401,.401)
+
+"BLD",10754,"KRN","B",.402,.402)
+
+"BLD",10754,"KRN","B",.403,.403)
+
+"BLD",10754,"KRN","B",.5,.5)
+
+"BLD",10754,"KRN","B",.84,.84)
+
+"BLD",10754,"KRN","B",3.6,3.6)
+
+"BLD",10754,"KRN","B",3.8,3.8)
+
+"BLD",10754,"KRN","B",9.2,9.2)
+
+"BLD",10754,"KRN","B",9.8,9.8)
+
+"BLD",10754,"KRN","B",19,19)
+
+"BLD",10754,"KRN","B",19.1,19.1)
+
+"BLD",10754,"KRN","B",101,101)
+
+"BLD",10754,"KRN","B",409.61,409.61)
+
+"BLD",10754,"KRN","B",771,771)
+
+"BLD",10754,"KRN","B",779.2,779.2)
+
+"BLD",10754,"KRN","B",870,870)
+
+"BLD",10754,"KRN","B",8989.51,8989.51)
+
+"BLD",10754,"KRN","B",8989.52,8989.52)
+
+"BLD",10754,"KRN","B",8994,8994)
+
+"BLD",10754,"QUES",0)
+^9.62^^
+"BLD",10754,"REQB",0)
+^9.611^1^1
+"BLD",10754,"REQB",1,0)
+PSU*4.0*3^2
+"BLD",10754,"REQB","B","PSU*4.0*3",1)
+
+"INIT")
+EN^PSU23PI
+"MBREQ")
+0
+"PKG",541,-1)
+1^1
+"PKG",541,0)
+PHARMACY BENEFITS MANAGEMENT^PSU^PHARMACY BENEFITS MANAGEMENT
+"PKG",541,20,0)
+^9.402P^^
+"PKG",541,22,0)
+^9.49I^1^1
+"PKG",541,22,1,0)
+4.0^3050622^3050826^66481
+"PKG",541,22,1,"PAH",1,0)
+23^3171102
+"PKG",541,22,1,"PAH",1,1,0)
+^^72^72^3171102
+"PKG",541,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue:
+"PKG",541,22,1,"PAH",1,1,2,0)
+ 
+"PKG",541,22,1,"PAH",1,1,3,0)
+1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+"PKG",541,22,1,"PAH",1,1,4,0)
+ 
+"PKG",541,22,1,"PAH",1,1,5,0)
+  
+"PKG",541,22,1,"PAH",1,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",541,22,1,"PAH",1,1,7,0)
+--------------------------------------------
+"PKG",541,22,1,"PAH",1,1,8,0)
+ 
+"PKG",541,22,1,"PAH",1,1,9,0)
+1. I16082026FY17 - PSU SEND has incorrect DNS DOMAIN
+"PKG",541,22,1,"PAH",1,1,10,0)
+  
+"PKG",541,22,1,"PAH",1,1,11,0)
+Problem: 
+"PKG",541,22,1,"PAH",1,1,12,0)
+--------
+"PKG",541,22,1,"PAH",1,1,13,0)
+The CMOP-Nat VistA system migrated to the Region 1 Denver Data Center on 
+"PKG",541,22,1,"PAH",1,1,14,0)
+July 29, 2017. During the migration a problem was identified with the HL 
+"PKG",541,22,1,"PAH",1,1,15,0)
+Logical Link "PSU SEND". It was discovered that the HL Logical Link entry 
+"PKG",541,22,1,"PAH",1,1,16,0)
+on all VAMC VistA systems was set with an invalid DNS DOMAIN of 
+"PKG",541,22,1,"PAH",1,1,17,0)
+"CMOP-NAT.DOMAIN.EXT". The Region 1 Denver Data Center migration team along
+"PKG",541,22,1,"PAH",1,1,18,0)
+with the National VistA Migration Team requested that a national software 
+"PKG",541,22,1,"PAH",1,1,19,0)
+patch be created and released to update the "PSU SEND" entry in the HL 
+"PKG",541,22,1,"PAH",1,1,20,0)
+Logical Link file to use the correct DNS DOMAIN "HL7.CMOP-NAT.DOMAIN.EXT". 
+"PKG",541,22,1,"PAH",1,1,21,0)
+This change is required so that when there are hardware changes to the 
+"PKG",541,22,1,"PAH",1,1,22,0)
+CMOP-Nat VistA system, VistA HL7's DNS-aware functionality will automatically
+"PKG",541,22,1,"PAH",1,1,23,0)
+update the link's IP address without requiring individual, manual updates at
+"PKG",541,22,1,"PAH",1,1,24,0)
+each site. During the migration as a work-around, "CMOP-NAT.DOMAIN.EXT" and
+"PKG",541,22,1,"PAH",1,1,25,0)
+its associated IP were broadcasted nationally so there would be no disruption
+"PKG",541,22,1,"PAH",1,1,26,0)
+to message traffic being sent by the VAMCs, but "HL7.CMOP-NAT.DOMAIN.EXT" is
+"PKG",541,22,1,"PAH",1,1,27,0)
+the preferred and best long-term solution. The PSU SEND logical link was 
+"PKG",541,22,1,"PAH",1,1,28,0)
+created during the pre-install steps of PSU*4*3 (PBM EXTRACT ENHANCEMENT
+"PKG",541,22,1,"PAH",1,1,29,0)
+III).
+"PKG",541,22,1,"PAH",1,1,30,0)
+ 
+"PKG",541,22,1,"PAH",1,1,31,0)
+Resolution:
+"PKG",541,22,1,"PAH",1,1,32,0)
+-----------
+"PKG",541,22,1,"PAH",1,1,33,0)
+A post-install routine (PSO23PI) will be executed following the installation
+"PKG",541,22,1,"PAH",1,1,34,0)
+of this patch and will perform the following update if necessary:
+"PKG",541,22,1,"PAH",1,1,35,0)
+ 
+"PKG",541,22,1,"PAH",1,1,36,0)
+ 1. Loop through all the records in the HL LOGICAL LINK file (#870) and
+"PKG",541,22,1,"PAH",1,1,37,0)
+    retrieve the value for the  DNS DOMAIN field (#.08)
+"PKG",541,22,1,"PAH",1,1,38,0)
+ 2. If the DNS DOMAIN value (converted to uppercase) is different than
+"PKG",541,22,1,"PAH",1,1,39,0)
+    "CMOP-NAT.DOMAIN.EXT", skip the record (no update)
+"PKG",541,22,1,"PAH",1,1,40,0)
+ 3. If the DNS DOMAIN uppercase value is equal to "CMOP-NAT.DOMAIN.EXT", 
+"PKG",541,22,1,"PAH",1,1,41,0)
+    update it to "HL7.CMOP-NAT.DOMAIN.EXT"
+"PKG",541,22,1,"PAH",1,1,42,0)
+ 
+"PKG",541,22,1,"PAH",1,1,43,0)
+Once the patch PSU*4*23 successfully installs a Mailman message will be sent
+"PKG",541,22,1,"PAH",1,1,44,0)
+to the PSU MAIL group and the person who installed the patch with the 
+"PKG",541,22,1,"PAH",1,1,45,0)
+following information:
+"PKG",541,22,1,"PAH",1,1,46,0)
+ 
+"PKG",541,22,1,"PAH",1,1,47,0)
+  Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737116]
+"PKG",541,22,1,"PAH",1,1,48,0)
+  From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+"PKG",541,22,1,"PAH",1,1,49,0)
+  --------------------------------------------------------------------------
+"PKG",541,22,1,"PAH",1,1,50,0)
+  The post-install routine performed the following updates:
+"PKG",541,22,1,"PAH",1,1,51,0)
+ 
+"PKG",541,22,1,"PAH",1,1,52,0)
+  HL LOGICAL LINK       DNS DOMAIN (Before Patch)   DNS DOMAIN (After Patch)
+"PKG",541,22,1,"PAH",1,1,53,0)
+  --------------------- -------------------------   ------------------------
+"PKG",541,22,1,"PAH",1,1,54,0)
+  PSU SEND              CMOP-NAT.DOMAIN.EXT         HL7.CMOP-NAT.DOMAIN.EXT
+"PKG",541,22,1,"PAH",1,1,55,0)
+ 
+"PKG",541,22,1,"PAH",1,1,56,0)
+  Enter message action (in IN basket): Ignore//  
+"PKG",541,22,1,"PAH",1,1,57,0)
+ 
+"PKG",541,22,1,"PAH",1,1,58,0)
+In case the post-install routine does not find any entries in the HL LOGICAL 
+"PKG",541,22,1,"PAH",1,1,59,0)
+LINK file that needs to be updated it will instead send this message:
+"PKG",541,22,1,"PAH",1,1,60,0)
+  
+"PKG",541,22,1,"PAH",1,1,61,0)
+   Subj: PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update  [#2737114] 
+"PKG",541,22,1,"PAH",1,1,62,0)
+   From: POSTMASTER  In 'IN' basket.   Page 1
+"PKG",541,22,1,"PAH",1,1,63,0)
+   -------------------------------------------------------------------------
+"PKG",541,22,1,"PAH",1,1,64,0)
+   The post-install routine found no records in the HL LOGICAL LINK file 
+"PKG",541,22,1,"PAH",1,1,65,0)
+   (#870) with the DNS DOMAIN field (#.08) set to 'CMOP-NAT.DOMAIN.EXT'.
+"PKG",541,22,1,"PAH",1,1,66,0)
+   No updates performed.
+"PKG",541,22,1,"PAH",1,1,67,0)
+ 
+"PKG",541,22,1,"PAH",1,1,68,0)
+   Enter message action (in IN basket): Ignore// 
+"PKG",541,22,1,"PAH",1,1,69,0)
+ 
+"PKG",541,22,1,"PAH",1,1,70,0)
+Note: Non-production accounts usually have the DNS DOMAIN field (#.08) in
+"PKG",541,22,1,"PAH",1,1,71,0)
+      HL LOGICAL LINK file (#870) set to null/blank and for this reason this
+"PKG",541,22,1,"PAH",1,1,72,0)
+      patch will make no update in most of these accounts.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSU23PI")
+0^^B6432356^n/a
+"RTN","PSU23PI",1,0)
+PSU23PI ;BIR/MFR - Post-Install to update the HL LOGICAL LINK file w/ correct DNS DOMAIN ;30 OCT 2017
+"RTN","PSU23PI",2,0)
+ ;;4.0;PHARMACY BENEFITS MANAGEMENT;**23**;MAR 2005;Build 3
+"RTN","PSU23PI",3,0)
+ ;
+"RTN","PSU23PI",4,0)
+EN ; - Entry Point
+"RTN","PSU23PI",5,0)
+ N HLDNS,HLIEN,DIE,DA,DR,X,Y,FOUND,LIST,LSTIDX
+"RTN","PSU23PI",6,0)
+ S HLDNS="" F  S HLDNS=$O(^HLCS(870,"DNS",HLDNS)) Q:(HLDNS="")  D
+"RTN","PSU23PI",7,0)
+ . I $$UP^XLFSTR(HLDNS)'="CMOP-NAT.DOMAIN.EXT" Q
+"RTN","PSU23PI",8,0)
+ . S HLIEN=0 F  S HLIEN=$O(^HLCS(870,"DNS",HLDNS,HLIEN)) Q:'HLIEN  D
+"RTN","PSU23PI",9,0)
+ . . D BMES^XPDUTL("Updating DNS DOMAIN field (#.08) for the HL LOGICAL LINK entry '"_$$GET1^DIQ(870,HLIEN,.01)_"'")
+"RTN","PSU23PI",10,0)
+ . . S LSTIDX=$G(LSTIDX)+1,LIST(LSTIDX)=$E($$GET1^DIQ(870,HLIEN,.01),1,25)_"^"_HLDNS
+"RTN","PSU23PI",11,0)
+ . . S DIE="^HLCS(870,",DA=HLIEN,DR=".08///HL7.CMOP-NAT.DOMAIN.EXT" D ^DIE
+"RTN","PSU23PI",12,0)
+ . . S $P(LIST(LSTIDX),"^",3)=$$GET1^DIQ(870,HLIEN,.08)
+"RTN","PSU23PI",13,0)
+ . . D BMES^XPDUTL("Done!") S FOUND=1
+"RTN","PSU23PI",14,0)
+ I '$G(FOUND) D
+"RTN","PSU23PI",15,0)
+ . D BMES^XPDUTL("No records found in the HL LOGICAL LINK file (#870) with the DNS DOMAIN field set to 'CMOP-NAT.DOMAIN.EXT'. No updates performed.")
+"RTN","PSU23PI",16,0)
+ ;
+"RTN","PSU23PI",17,0)
+ ; Sends Mailman message about update or no update
+"RTN","PSU23PI",18,0)
+ N XMX,PSOTEXT,XMSUB,XMDUZ,XMTEXT,I
+"RTN","PSU23PI",19,0)
+ S XMDUZ=.5,XMY(DUZ)=DUZ,XMY("G.PSU PBM")=""
+"RTN","PSU23PI",20,0)
+ S XMSUB="PSU*4*23 DNS DOMAIN CMOP-NAT.DOMAIN.EXT Update"
+"RTN","PSU23PI",21,0)
+ I $G(FOUND) D
+"RTN","PSU23PI",22,0)
+ . S PSOTEXT(1)="The post-install routine performed the following updates:"
+"RTN","PSU23PI",23,0)
+ . S PSOTEXT(2)=""
+"RTN","PSU23PI",24,0)
+ . S PSOTEXT(3)="HL LOGICAL LINK          DNS DOMAIN (Before Patch)    DNS DOMAIN (After Patch)"
+"RTN","PSU23PI",25,0)
+ . S PSOTEXT(4)="------------------------ --------------------------   -------------------------"
+"RTN","PSU23PI",26,0)
+ . F I=1:1 Q:'$D(LIST(I))  S PSOTEXT(4+I)=$P(LIST(I),"^"),$E(PSOTEXT(4+I),26)=$P(LIST(I),"^",2),$E(PSOTEXT(4+I),55)=$P(LIST(I),"^",3)
+"RTN","PSU23PI",27,0)
+ E  D
+"RTN","PSU23PI",28,0)
+ . S PSOTEXT(1)="The post-install routine found no records in the HL LOGICAL LINK file (#870)"
+"RTN","PSU23PI",29,0)
+ . S PSOTEXT(2)="with the DNS DOMAIN field (#.08) set to 'CMOP-NAT.DOMAIN.EXT'."
+"RTN","PSU23PI",30,0)
+ . S PSOTEXT(3)="No updates performed."
+"RTN","PSU23PI",31,0)
+ S XMTEXT="PSOTEXT(" N DIFROM D ^XMD
+"RTN","PSU23PI",32,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10754,6)
+^21
+**END**
+**END**
+

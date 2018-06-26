@@ -1,0 +1,209 @@
+
+=============================================================================
+Run Date: OCT 17, 2016                     Designation: FB*3.5*128
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #143                    Status: Released
+                  Compliance Date: NOV 16, 2016
+=============================================================================
+
+Associated patches: (v)FB*3.5*115  <<= must be installed BEFORE `FB*3.5*128'
+
+Subject: UPDATE TWO TABLES: ADJUSTMENT REASON and REMITTANCE REMARK
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch updates the following:
+ - The REMITTANCE REMARK (#161.93) file.
+ - The ADJUSTMENT REASON (#161.91) file.
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1. INC000000484024 - Addition of Remittance Remark Codes 
+                      and Summary Descriptions
+    I9872737FY16(d)
+  
+ 2. INC000000501498 - Update Adjustment Reasons
+    I9872996FY16(d)
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Miami VA Healthcare System
+ VA Pittsburgh Health Care System
+  
+ TICKET OVERVIEW:
+ ================
+ 1. INC000000484024 - Addition of Remittance Remark Codes 
+                      and Summary Descriptions
+    I9872737FY16(d)
+  
+    Problem:
+    --------
+    The REMITTANCE REMARK (#161.93) file needs to be updated.  Per the
+    Chief Business Office Purchased Care (CBOPC), the missing remittance
+    remark codes need to be added, and marked active and applicable for fee
+    use.  
+  
+    Solution:
+    ---------
+    The REMITTANCE REMARK (#161.93) file will be brought into compliance
+    by adding and updating the file with all of the codes on the list 
+    published at the Washington Publishing Company (WPC).  
+  
+    Note: The information we have from this web site is as of March, 2016. 
+    The list of codes can be found at: 
+    http://www.wpc-edi.com/reference/codelists/healthcare/remittance-advice-
+    remark-codes/
+  
+    All of the codes published by the WPC are relevant to the Fee Basis
+    package. There are some codes that are currently active in the Fee
+    Package that are to be inactivated.
+  
+    A list of the codes being inactivated can be found at:
+    http://www.wpc-edi.com/reference/codelists/healthcare/remittance-advice-
+    remark-codes/
+  
+  
+ 2. INC0000000501498 - Update Adjustment Reasons
+    I9872996FY16(d)
+  
+    Problem:
+    --------
+    The ADJUSTMENT REASON (#161.91) file needs to be updated.  Per the
+    CBOPC, additional codes will be added, and several codes will
+    need to be marked for fee use.
+  
+    Solution:
+    ---------
+    The ADJUSTMENT REASON (#161.91) file will be updated with the request 
+    from the CBOPC.    
+  
+    Note: The information we have from this web site is as of March, 2016. 
+    The list of codes can be found at: 
+    http://www.wpc-edi.com/reference/codelists/healthcare/claim-adjustment-
+    reason-codes/
+   
+ TECHNICAL:
+ ==========
+  
+ There are two files included in this patch.  
+  
+ The ADJUSTMENT REASON file (#161.91) and the REMITTANCE REMARK file (#161.93) 
+ are included with this patch.      
+  
+                                            UP    SEND  DATA                USER
+                                            DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS  RIDE
+ -------------------------------------------------------------------------------
+  
+ 161.91      ADJUSTMENT REASON              NO    NO    YES     OVER  NO    NO
+  
+ 161.93      REMITTANCE REMARK              NO    NO    YES     OVER  NO    NO
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users, as it is necessary to disable some menu
+ options when installing this patch. You may queue the install if you
+ wish.  
+  
+ Installation should take under fifteen minutes.
+  
+  1.  Retrieve the KIDS distribution host file. This patch will be
+      distributed in a host file due to the amount of data contained in
+      the patch.  The name of the host file is:
+  
+           FEE3_5P128.KID
+  
+  
+      Sites may retrieve the file directly using Secure File Transfer 
+      Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+      following OI Field Offices:
+    
+           Albany:                 domain.ext
+           Hines:                  domain.ext    
+           Salt Lake City:         domain.ext
+  
+      The FEE3_5P128.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+  
+  2.  Load the KIDS distribution that is contained in file FEE3_5P128.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+      Select Kernel Installation & Distribution System Option:
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter FB*3.5*128):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package FB*3.5*128.
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+         Enter Payment                        [FBAA ENTER PAYMENT]
+         Multiple Payment Entry               [FBAA MULTIPLE PAYMENT ENTRY]
+         Reimbursement Payment Entry          [FBAA MEDICAL REIMBURSEMENT]
+         Edit Payment                         [FBAA EDIT PAYMENT]
+         Ancillary Contract Hosp/CNH Payment  [FBCH ANCILLARY PAYMENT]
+         Multiple Ancillary Payments          [FBCH MULTIPLE PAYMENTS]
+         Patient Reimbursement for Ancillary  [FBCH ANCILLARY REIMBURSEMENT]
+         Services
+         Edit Ancillary Payment               [FBCH EDIT ANCILLARY PAYMENT]
+         Calculate Payment Amount             [FBAA FEE SCHEDULE RATE]
+  
+      c.  When prompted, 'Enter protocols you wish to mark as 'Out Of 
+          Order':', press <ENTER>.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 06, 2011
+Completed By:                               Date Completed: OCT 06, 2016
+Released By :                               Date Released : OCT 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

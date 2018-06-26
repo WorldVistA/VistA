@@ -1,0 +1,365 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 03/29/18 at 12:36
+=============================================================================
+Run Date: APR 26, 2018                     Designation: RA*5*135
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #127                      Status: Released
+                  Compliance Date: MAY 28, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*75     <<= must be installed BEFORE `RA*5*135'
+                    (v)RA*5*130    <<= must be installed BEFORE `RA*5*135'
+
+Subject: VISTA RADIOLOGY DISCONTINUE ORDERS (PENDING/HELD/SCHEDULED)
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ *** RA*5.0*135 is a patch developed in response to the Deputy Under  ***
+ *** Secretary for Health for Operations and Management (10N)         ***
+ *** directive: '7806589 - SD Memo Radiology and Nuclear Medicine     ***
+ *** orders Management' dated September 11, 2017.                     ***
+  
+ Note: RA*5.0*135 (RA5P135) will discontinue older orders in the VistA 
+ Radiology/Nuclear Medicine and CPRS applications. Though every measure 
+ was taken to eliminate the burden on the host system by disabling 
+ radiology notifications, one CPRS notification, DC ORDER (#62), 
+ is beyond our control. Having the DC ORDER notification enabled 
+ has the potential to generate thousands of alerts. Since this particular 
+ CPRS notification was exported nationally as 'Disabled' we believe that
+ the alert will only be generated to individual end users or teams who 
+ have selectively enabled the DC ORDER notification. Because of this,
+ we strongly suggest that the installers or appropriate personnel inform
+ your Radiology and CPRS Clinical Applications Coordinators for awareness. 
+  
+ We are also providing the following fileman sort that can be run 
+ immediately to determine which end users actually have the CPRS 
+ DC ORDER notification enabled and therefore, could possibly receive a 
+ CPRS DC ORDER notification from this patch installation.
+  
+ We suggest you provide the fileman output beforehand to your
+ sites CPRS Clinical Coordinators for their awareness. If, by chance, 
+ after patch installation an end user receives/complains of many 
+ DC ORDER notifications, Clinical Coordinators could offer to quickly 
+ erase just those notifications for the end user using the 
+ Erase Notifications [ORB3 ERASE NOTIFICATIONS] menu option.
+  
+  
+ FILEMAN PRINT TO FIND END USERS WITH DC ORDER NOTIFICATION ENABLED
+ ========================================================================
+  
+ Notes:  
+ 1. Make sure to enter the following fields, including all alpha-numeric
+    characters.  
+ 2. Be sure to use the proper Case because some of these values are 
+    case sensitive.
+ 3. Some of these users may be inactive, based on their last sign on 
+    date/time.
+ 4. Please give the fileman output to your sites clinical application
+    coordinators.
+  
+  
+ Print File Entries
+  
+ Output from what File: PARAMETERS//
+ Sort by: NUMBER// INSTANCE  
+ Start with INSTANCE: FIRST// DC ORDER
+ Go to INSTANCE: LAST// DC ORDER
+   Within INSTANCE, Sort by: VALUE  
+   Start with VALUE: FIRST// Enabled
+   Go to VALUE: LAST// Enabled
+     Within VALUE, Sort by: 
+ STORE IN 'SORT' TEMPLATE: 
+  
+ First Print FIELD: ENTITY  
+ Then Print FIELD: INSTANCE;L8//   
+ Then Print FIELD: VALUE;L8//   
+ Then Print FIELD: .01:200:LAST SIGN-ON DATE/TIME;"LAST SIGN ON" 
+ By '.01', do you mean PARAMETERS  'ENTITY'? Yes// Y  (Yes)
+ By 'LAST SIGN', do you mean NEW PERSON  'LAST SIGN-ON DATE/TIME'? Yes// 
+ Y  (Yes)
+ Then Print FIELD: 
+ Heading (S/C): PARAMETERS List// 
+ STORE PRINT LOGIC IN TEMPLATE: 
+ START at PAGE: 1// 
+ DEVICE: ;;900
+  
+ PARAMETERS List                               MAR 29, 2018@08:05   PAGE 1
+  
+ ENTITY                        INSTANCE  VALUE     LAST SIGN ON
+ --------------------------------------------------------------------------
+  
+ DEVPERSON,KERRY               DC ORDER  Enabled   MAR 29,2018@07:24:10
+ LIFEISGOOD,RICK               DC ORDER  Enabled   FEB 20,1994@14:22:13
+ SUNSHINE,LISA                 DC ORDER  Enabled   DEC 7,2017@07:05:25
+ DEVPERSON,GREG                DC ORDER  Enabled   JUL 12,2017@15:15:02
+  
+  
+ If a user happened to get a lot of DC ORDER notifications after the Auto 
+ Discontinue task completes, your site's Clinical Coordinator could use the
+ Erase Notifications [ORB3 ERASE NOTIFICATIONS] menu option to remove the
+ DC ORDER notifications that the user received, otherwise the user would 
+ need to process the DC Order alert in CPRS like they do with any other
+ alert.
+  
+ Here is an example using the Erase Notifications [ORB3 ERASE 
+ NOTIFICATIONS] menu option to remove all the DC ORDER notifications for a
+ user:
+  
+ Erase Notifications
+  
+     1. Erase all notifications for a User
+     2. Erase all notifications for a Patient
+     3. Erase all instances of a notification (regardless of Patient or 
+        User)
+     4. Erase specific notifications for a User  <<<<<<<<<<<<  THIS ITEM
+     5. Edit Erase All Notifications parameter for a User 
+  
+ Select Erase option:  4   <<<<<
+  
+ This option purges an existing alert/notification for a recipient/user.
+      *** USE WITH CAUTION ***
+ Select NEW PERSON entry for deletion of alerts:  DOCTOR,REBECCA J
+  
+  1. MJBCPRSTE (M4537): [7A GEN MED] New DC order(s) placed.
+  2. ATEST,JOH (A9111): [7A GEN MED] New DC order(s) placed.
+  3. ATEST,JOH (A9111): Lab order canceled: CREATININE RED/GOLD SERUM SP LB
+  4. ATEST,JOH (A9111): Lab order canceled: poc-INR FINGERSTICK BLOOD SP ON
+  5. ATEST,JOH (A9111): UNSIGNED 21 DAY REBECCA Dated 08/10/17 OVERDUE for
+  6. ATEST,JOH (A9111): UNSIGNED 21 DAY REBECCA Dated 08/10/17 OVERDUE for
+  7. AAAHY,FHX (A0549): [7A GEN MED] New DC order(s) placed. 
+  8. FXAHN,ZDJ (F1233): [7A GEN MED] New DC order(s) placed. 
+  9. AAAHY,FHX (A0549): [7A GEN MED] New DC order(s) placed.
+ 10. AAAHY,FHX (A0549): [7A GEN MED] New DC order(s) placed. 
+ 11. ZZOUTPATI (Z9898): [LIN] New order(s) placed.
+  
+ Select from 1 to 11 to DELETE
+           or enter ?, A, or ^ to exit
+           or RETURN to continue: 1,2,7-10  << YOU CAN ENTER A RANGE LIKE 
+                                               THIS. I SELECTED ALL THE New
+                                               DC order(s) placed ALERTS
+  
+  
+  The VistA Radiology/Nuclear Medicine application (RIS) will be 
+ automating the discontinuation of radiology orders that fall within a 
+ specific 'DATE DESIRED (Not guaranteed)' date/time range. All orders 
+ between the date of package inception through May 31st 2015 with request 
+ status values of 'Pending', 'Hold' & 'Scheduled' are in play regarding 
+ discontinuation.
+  
+ This work is based on a Central Office (CO) directive to the RIS 
+ ('ancillary') and the Computerized Patient Record System (CPRS).
+  
+ RA*5.0*135 will take the following approach:
+  
+ Three processes A, B & C will be scheduled to run. Process A consists
+ of two parts.
+  
+ Process A:
+ ----------
+ 1) Index the 'DATE DESIRED (Not guaranteed)' in the "BDD" index for all
+    the records in the RAD/NUC MED ORDERS (#75.1) file. This part will
+    be tasked to run in the background.
+ 2) Process A, part two will re-compile all the impacted compiled input
+    templates for file 75.1 including the 'DATE DESIRED (Not guaranteed)'
+    field. This part will run in real time.
+  
+ Process B:
+ ----------
+    Schedule the RA AUTO DISCONTINUE PROCESS option to run at different
+    times depending on the type of account. If the account is a test 
+    account, the option is scheduled to run one hour in the future. If
+    the account is a production account, the option is scheduled to run the
+    next day at 21:00 hours. Starting at 21:00 hours will minimize user 
+    inconvenience.
+  
+    There are two parameters with the RA AUTO DISCONTINUE PROCESS. The
+    first is that all radiology orders with a DATE DESIRED (not guaranteed)
+    date between the date of package inception and midnight May 31st 2015
+    are orders identified as being discontinued. The second parameter is
+    the REQUEST STATUS (#.05) of the order. This parameter is conditional
+    depending on the REQUEST STATUS value.
+     * All orders with REQUEST STATUS values of 'Pending' or 'Hold' those
+       orders will be assigned a request status of 'Discontinued'.
+     * If an order has a REQUEST STATUS value of 'Scheduled', the SCHEDULED
+       DATE (TIME optional) (#23) field value must be midnight May 31st
+       2015 or earlier to have the order discontinued. 
+  
+    The discontinuation process will be queued for the day after RA*5.0*135
+    is installed, at 21:00 hours. This will give the discontinuation
+    (DC) process enough time to complete in quiet mode (CPRS notifications
+    & RIS bulletins being disabled) before the next day begins.
+  
+    Note: while the discontinue task is being run the following RIS 
+    options will be set 'Out of Order':
+     * Cancel a Request [RA ORDERCANCEL]
+     * Hold a Request [RA ORDERHOLD]
+   
+    RA ORDERCANCEL & RA ORDERHOLD will be set back in order when the 
+    tasked option stops running.
+  
+    An email will be sent to the following recipients: POSTMASTER and
+    members of the RA REQUEST CANCELLED mail group. This email will
+    contain the date/time the DC process started, finished and the number
+    of order records DC'd.
+  
+ Process C
+ ---------
+ This last tasked process will kill off the existing "AS" cross reference 
+ (xref) on the REQUEST STATUS (#5) field of the RAD/NUC MED ORDERS (#75.1) 
+ file. The "AS" xref was last updated in patch RA*5.0*130 but the xref was
+ not rebuilt. As a result, bad data in the "AS" xref will cause a patient
+ to appear in the 'Pending/Hold Rad/Nuc Med Request Log' [RA ORDERPENDING]
+ option.
+  
+  
+ Other actions taken by RA*5.0*135
+ ---------------------------------
+ * Every order discontinued in the RIS will be discontinued in CPRS.
+  
+ * After the discontinuation process has successfully completed, RIS 
+   bulletins and CPRS notifications will be re-enabled.
+  
+ * For all the orders discontinued by RA*5.0*135 a generic cancel reason
+   'OBSOLETE ORDER-P135 (automated)' will be associated with the order.
+  
+ * POSTMASTER will be the "person" who discontinued (DC'd) the orders in
+   both the RIS and CPRS.
+  
+ * The 'OBSOLETE ORDER-P135 (automated)' cancel reason will not be 
+   selectable by the user when exercising the 'Cancel a Request' [RA 
+   ORDERCANCEL] option.
+  
+  
+  
+ Participating Test Sites:
+ =========================
+ West Los Angeles, CA VAMC
+ Cleveland, OH VAMC
+ Dallas, TX VAMC
+ Heartland West (VISN 15)
+  
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than two minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Access the KIDS main menu:
+      --------------------------
+    Start with the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*135):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? YES//', answer NO.
+  
+  
+ Backout/Roll-back strategy
+ ==========================
+ Note: Back-out will be done only with the concurrence and participation 
+ of the development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision between
+ development team, VA site/region personnel and other appropriate VA
+ personnel. A national help desk ticket should be logged before attempting
+ any backout procedure.
+  
+ If the discontinue process is not running use the Taskman Management menu 
+ to run the 'Schedule/Unschedule Options' option
+ to unschedule 'RA AUTO DISCONTINUE PROCESS'
+  
+ If the discontinue process is running use the Taskman Management menu to 
+ run the 'Delete Tasks' option
+ to unschedule 'RA AUTO DISCONTINUE PROCESS'. The task ID will be 
+ available by viewing the installation record for patch RA*5.0*135.
+  
+ Since three of the four routines are new, restore RABUL to its 
+ pre-RA*5.0*135 version and delete routines: RAIPR135, RAIPS135 and 
+ RAUTODC.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RABUL
+    Before:  B5625174   After:  B5711827  **2,15,75,135**
+Routine Name: RAIPR135
+    Before:       n/a   After:  B1362436  **135**
+Routine Name: RAIPS135
+    Before:       n/a   After: B13391098  **135**
+Routine Name: RAUTODC
+    Before:       n/a   After: B64769813  **135**
+ 
+Routine list of preceding patches: 75
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2017
+Completed By:                               Date Completed: APR 26, 2018
+Released By :                               Date Released : APR 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

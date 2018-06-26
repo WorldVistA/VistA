@@ -1,0 +1,302 @@
+
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: PSJ*5*256
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #301                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*227   <<= must be installed BEFORE `PSJ*5*256'
+                    (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*256'
+                    (v)PSJ*5*331   <<= must be installed BEFORE `PSJ*5*256'
+                    (v)PSJ*5*333   <<= must be installed BEFORE `PSJ*5*256'
+
+Subject: MOCHA 2.1B ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications, and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of the MOCHA Enhancements 2.1B group of builds and is a
+ component of the second group installed. Multiple package host files were
+ created where possible to simplify installation at Veterans Health
+ Administration (VHA) facilities. The combined build host file
+ MOCHA_2_1_PSO_OR_PSJ.KID contains this patch as well as OR*3.0*382 and
+ PSO*7.0*402. The combined follow up host file
+ MOCHA_2_1_FOLLOW_UP_PSO_OR_PSJ.KID contains PSO*7.0*500, OR*3.0*469 and
+ PSJ*5.0*347. In addition, there are standalone Pharmacy Data Management
+ patches, PSS*1.0*178 and PSS*1.0*206, which must be installed in
+ conjunction with the other builds.
+  
+                               * * * Notice * * *
+                   This group of patches should not be installed 
+                       until the follow on patch PSO*7.0*515
+            has been released and is ready to be immediately installed. 
+                PSO*7.0*515 must be installed immediately after the
+                  successful installation of this group of builds.
+               See the PSO*7.0*515 patch description for details.
+                               * * * Notice * * *  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                        File Name        SFTP Mode
+ -----------------------------------------------------------------------
+  
+ MOCHA Enhancements 2.1B            PSS_1_PSO_7_PSJ_5_         binary
+  Release Notes                     RN_R0218.PDF
+           
+ MOCHA 2.1B Combined Builds         MOCHA_21B_PSO_OR_PSJ_      binary
+  Deployment, Installation,         PSS_CB_IG.PDF
+   Back-Out and Rollback Guide                                           
+                                          
+ Inpatient Medications Nurse's      PSJ_5_NURSE_UM_R0218.PDF   binary   
+  User Manual v5.0
+  
+ Inpatient Medications              PSJ_5_PHAR_UM_R0218.PDF    binary
+  Pharmacist's User Manual v5.0                                          
+                                            
+ Inpatient Medications              PSJ_5_SUPR_UM_R0218.PDF    binary
+  Supervisor's User Manual v5.0
+  
+ Inpatient Medications Technical    PSJ_5_TM_R0218.PDF         binary
+  Manual/Security Guide v5.0
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch, part of the combined build, must be installed after 
+ PSS*1.0*178.  PSS*1.0*206 and the combined follow up build must be 
+ installed after this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+  
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The MOCHA 2.1b ENHANCEMENTS software distribution includes:
+  
+    File Name               Contents                  Retrieval Format
+    ---------------------   ----------------          ----------------
+    PSS_1_178.KID           PSS*1.0*178               ASCII
+  
+    MOCHA_2_1_PSO_OR_       PSJ*5.0*256               ASCII
+      PSJ_BUILD.KID         PSO*7.0*402
+                            OR*3.0*382
+  
+    PSS_1_206.KID           PSS*1.0*206               ASCII
+  
+    MOCHA_2_1_FOLLOW_       PSO*7.0*500               ASCII
+      UP_PSO_OR_PSJ.KID     OR*3.0*469
+                            PSJ*5.0*347
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the MOCHA 2.1B Combined Builds Deployment, Installation,
+ Back-Out and Rollback Guide for installation instructions.
+  
+ Post Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGCAPP0
+    Before: B10692940   After: B14274534  **8,20,85,169,203,256**
+Routine Name: PSGOD
+    Before: B28187977   After: B27720964  **67,58,111,133,181,286,281,315,256**
+Routine Name: PSGOEF
+    Before:B119034802   After:B125998243  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199,281,315,256**
+Routine Name: PSGOER
+    Before: B87602402   After: B90452395  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281,
+                                           315,256**
+Routine Name: PSGOES
+    Before: B22743395   After: B24088682  **12,22,30,34,50,58,111,181,
+                                           263,309,281,256**
+Routine Name: PSGOEV
+    Before: B91287532   After: B95475344  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288,199,281,256**
+Routine Name: PSGS0
+    Before: B75935708   After: B78819959  **12,25,26,50,63,74,83,116,110,
+                                           111,133,138,174,134,213,207,
+                                           190,113,245,227,256**
+Routine Name: PSGSICHK
+    Before: B80627011   After: B81963876  **3,9,26,29,44,49,59,110,139,
+                                           146,160,175,201,185,181,256**
+Routine Name: PSIV
+    Before: B30874670   After: B31216203  **7,16,29,38,53,56,72,58,110,
+                                           181,267,275,281,256**
+Routine Name: PSIVOCDS
+    Before:B131643526   After:B137929887  **181,252,257,256**
+Routine Name: PSIVOD
+    Before: B14160821   After: B15601975  **110,127,181,281,256**
+Routine Name: PSIVQUI
+    Before: B19673705   After: B21879458  **21,50,65,73,76,93,104,110,275,256**
+Routine Name: PSIVSP
+    Before: B42970489   After: B44907043  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229,279,305,331,
+                                           256**
+Routine Name: PSJAPIDS
+    Before: B34568784   After: B34167201  **181,252,256**
+Routine Name: PSJCLOR2
+    Before:B116946050   After:B129355642  **275,279,315,256**
+Routine Name: PSJHEAD
+    Before: B30136774   After: B32768134  **8,20,85,95,203,260,256**
+Routine Name: PSJLIACT
+    Before: B54174893   After: B58941977  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257,299,
+                                           281,256**
+Routine Name: PSJLIFN
+    Before: B52505954   After: B58490722  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261,252,313,333,
+                                           256**
+Routine Name: PSJLIFNI
+    Before: B11456971   After: B12733374  **1,29,34,37,50,94,116,110,111,
+                                           181,261,256**
+Routine Name: PSJLIVFD
+    Before: B63240013   After: B63243242  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267,
+                                           228,279,305,256**
+Routine Name: PSJLMGUD
+    Before: B31031159   After: B31538493  **25,58,85,116,110,111,267,275,
+                                           315,256**
+Routine Name: PSJLMHED
+    Before: B56836733   After: B63213228  **4,58,85,110,148,181,260,275,
+                                           331,256**
+Routine Name: PSJMISC
+    Before: B44078587   After: B83581332  **181,256**
+Routine Name: PSJMISC2
+    Before: B12038651   After: B25685230  **181,252,256**
+Routine Name: PSJOC
+    Before: B62583664   After: B61350664  **181,260,252,257,281,256**
+Routine Name: PSJOCDS
+    Before: B73617469   After: B89631244  **181,252,257,256**
+Routine Name: PSJOCDSD
+    Before: B40217839   After: B35364232  **181,252,281,256**
+Routine Name: PSJOE
+    Before:B105816972   After:B107308183  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252,281,315,256**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 15, 2011
+Completed By:                               Date Completed: FEB 23, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,165 @@
+$TXT Created by                 ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 11/01/17 at 10:25
+=============================================================================
+Run Date: DEC 06, 2017                     Designation: DG*5.3*942
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #832                    Status: Released
+                  Compliance Date: JAN 05, 2018
+=============================================================================
+
+
+Subject: HOME TELEHEALTH UPDATE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*942 (HOME TELEHEALTH UPDATE) will add two new
+ entries to the HL LOGICAL LINK (#870) file. These entries are
+ for two new vendors: 1VISION (DGHT 200TA) and CARE INNOVATIONS
+ (DGHT 200TB). Also, post-install routine, DG53P942, will modify
+ the DNS DOMAIN for logical link DG HT CC (200T7).
+  
+  
+ ASSOCIATED CA SDM TICKET:
+ ========================= 
+ 1) R13116031FY17 - Home Telehealth VistA application update 
+   
+  
+ ASSOCIATED NSR'S:
+ ================
+ N/A 
+   
+    
+ PARTICIPATING TEST SITES:
+ ========================
+ Robley Rex VAMC - Louisville
+ Salem VAMC 
+  
+   
+ CA SDM OVERVIEW:
+ ================
+ 1) R13116031FY17 - Home Telehealth VistA application update
+    
+    Problem:
+    ========
+    There are two new vendors providing Home Telehealth services, 
+    1VISION and CARE INNOVATIONS. The Home Telehealth Package needs
+    to be updated to support communication with them.  Also, the DNS
+    DOMAIN for logical link, DG HT CC (200T7), will be changed to
+    VAWW.HL7.200T7.CC.DOMAIN.EXT.
+  
+    Solution:
+    =========
+    Add two new logical links: DGHT 200TA for 1VISION and DGHT 200TB for
+    CARE INNOVATIONS.  Modify DNS DOMAIN for DG HT CC (200T7); change to
+    VAWW.HL7.200T7.CC.DOMAIN.EXT.
+  
+   
+   Components:
+   ===========
+   To Be Added:
+     HL LOGICAL LINKS:  DGHT 200TA and DGHT 200TB
+  
+   To Be Modified:
+     HL LOGICAL LINK: DG HT CC
+   
+   The properties for the DGHT 200TA Logical Link are:
+   
+   NODE: DGHT 200TA
+   INSTITUTION: 1VISION                LLP TYPE: TCP
+   DNS DOMAIN: VAWW.HL7.200TA.CC.DOMAIN.EXT
+   QUEUE SIZE: 10                      EXCEED RE-TRANSMIT ACTION: restart
+   TCP/IP PORT: 5121                   TCP/IP SERVICE TYPE: CLIENT (SENDER)
+   PERSISTENT: NO
+   
+   The properties for the DGHT 200TB Logical Link are:
+   
+   NODE: DGHT 200TB
+   INSTITUTION: CARE INNOVATIONS       LLP TYPE: TCP
+   DNS DOMAIN: VAWW.HL7.200TB.CC.DOMAIN.EXT
+   QUEUE SIZE: 10                      EXCEED RE-TRANSMIT ACTION: restart
+   TCP/IP PORT: 5121                   TCP/IP SERVICE TYPE: CLIENT (SENDER)
+   PERSISTENT: NO
+   
+   The updated property for the DG HT CC Logical Link is:
+  
+   DNS DOMAIN: VAWW.HL7.200T7.CC.DOMAIN.EXT
+  
+   The properties for the DG HT CC Logical Link are:
+  
+   NODE: DG HT CC
+   INSTITUTION: MEDTRONIC              LLP TYPE: TCP
+   DNS DOMAIN: VAWW.HL7.200T7.CC.DOMAIN.EXT
+   QUEUE SIZE: 10                      EXCEED RE-TRANSMIT ACTION: restart
+   TCP/IP PORT: 5121                   TCP/IP SERVICE TYPE: CLIENT (SENDER)
+   PERSISTENT: NO
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system.  Post-install routine
+ DG53P942 can be deleted after installation of this patch has completed
+ successfully.
+   
+ Installation will take less than 2 minutes.
+    
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     
+        NOTE:  If the required patches are not installed, the transport 
+               global will be removed.  If the transport global is removed
+               you will need to repeat this step.
+     
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+     
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter DG*5.3*942):
+        a.  Compare Transport Global to Current System  - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.  It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+    4.  Use the Install Package(s) option and select the package 
+        DG*5.3*942.
+     
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond NO.
+     
+    6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P942
+    Before:       n/a   After:  B4340068  **942**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2017
+Completed By:                               Date Completed: DEC 05, 2017
+Released By :                               Date Released : DEC 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

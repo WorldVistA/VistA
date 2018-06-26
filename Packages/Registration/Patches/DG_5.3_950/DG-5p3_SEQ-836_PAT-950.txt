@@ -1,0 +1,480 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 01/23/18 at 10:50
+=============================================================================
+Run Date: FEB 22, 2018                     Designation: DG*5.3*950
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #836                    Status: Released
+                  Compliance Date: MAR 08, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*725  <<= must be installed BEFORE `DG*5.3*950'
+                    (v)DG*5.3*937  <<= must be installed BEFORE `DG*5.3*950'
+                    (v)DG*5.3*944  <<= must be installed BEFORE `DG*5.3*950'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - RELABEL SEX PROMPTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       three VistA namespaces: DG, MPIF and RG.
+       Patches DG*5.3*950, MPIF*1.0*66 and RG*1.0*69 can be installed in
+       any order as there are NO dependencies between these patches
+       (Do NOT install MPIF*1.0*66 or RG*1.0*69 on legacy sites or on the
+        FORUM CLAIMS system). 
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*950 patch. MPIF*1.0*66 and RG*1.0*69 should NOT be
+       installed on legacy sites or on the FORUM CLAIMS system.  
+  
+ DG*5.3*725, DG*5.3*937 and DG*5.3*944 are the required builds for patch
+ DG*5.3*950.
+  
+ Enhancements
+ The following enhancements exported in this patch were requested by the
+ Healthcare Identity Management (HC IdM) business group in support of the
+ Master Veteran Index (MVI) application.
+  
+ Enhancement #1
+ HC IdM has requested that 'EVVE Fact of Death Query' and 'UNDER VA AUSPICES'
+ be added as new entries to the SUPPORTING DOCUMENTATION TYPES file (#47.75).
+ As part of the POST-INSTALL process, the following new entries will be added
+ to the SUPPORTING DOCUMENTATION TYPES file (#47.75):
+  
+     SUPPORTING DOCUMENTATION TYPE (Field #.01): UNDER VA AUSPICES
+                         TYPE CODE (Field #1)  : UVA
+                       DESCRIPTION (Field #50) : UNDER VA AUSPICES
+  
+     SUPPORTING DOCUMENTATION TYPE (Field #.01): EVVE FACT OF DEATH QUERY
+                         TYPE CODE (Field #1)  : EFDQ
+                       DESCRIPTION (Field #50) : EVVE FACT OF DEATH QUERY
+  
+ Enhancement #2
+ HC IdM has also requested that the following additional Date of Death (DOD)
+ business rule combinations be added to the SOURCE OF NOTIFICATION BUSINESS
+ RULES (#47.761) file to allow for additional selections when entering a 
+ patient's death through the Death Entry [DG DEATH ENTRY] menu option:
+  
+     SOURCE OF NOTIFICATION (Field #.01)  : SPOUSE/NOK/OTHER PERSON
+              DOCUMENT TYPE (Field #1..01): UNDER VA AUSPICES
+                    ACTIVE? (Field #1..02): YES
+  
+     SOURCE OF NOTIFICATION (Field #.01)  : EVVE QUERY
+              DOCUMENT TYPE (Field #1..01): EVVE FACT OF DEATH QUERY
+                    ACTIVE? (Field #1..02): YES
+  
+ NOTE: These new active DOCUMENT TYPEs will be added as additional entries
+       to the existing SOURCE OF NOTIFICATION entries in the SOURCE OF
+       NOTIFICATION BUSINESS RULES (#47.761) file during the POST-INSTALL
+       process.
+  
+ Enhancement #3
+ HC IdM has requested that the label text of 'Sex' and/or 'Gender' displayed
+ in any of the Master Veteran Index (MVI) maintained processes be updated to
+ now display 'Birth Sex'. The content for these labels (Sex/Gender) displayed
+ in the following menu option will be updated:
+   
+      -  Patient MPI/PD Data Inquiry [RG EXCEPTION TF INQUIRY]  
+  
+   Note: Any label displayed utilizing the Data Dictionary (DD) field name
+         will NOT be updated as there are no DD changes being made.
+  
+ Issue #1
+ Additional Date of Death (DOD) modifications were required to ensure that
+ all appropriate DOD meta data is removed when the patient is determined
+ to be no longer deceased. Therefore additional DOD fields were added to the
+ list of fields to be updated in routine DGDEATH when it is determined that
+ the patient is no longer deceased. Finally, since the Extended Bed Control
+ [DG BED CONTROL EXTENDED] menu option can discharge a patient due to death,
+ this menu option will be added to the list of supported options in the
+ DGDEATH routine that are capable of processing deceased patients.
+   
+ Issue #2
+ HC IdM has determined that there are a few instances at some sites where
+ the INTEGRATION CONTROL NUMBER (#991.01) and the ICN CHECKSUM (#991.02) do
+ NOT match the FULL ICN (#991.1) value in the PATIENT (#2) file. The 
+ post-install routine DG950PST will perform a check and clean-up if
+ necessary any affected records in the PATIENT (#2) file to ensure that the
+ FULL ICN (#991.1) value reflects the combination of INTEGRATION CONTROL
+ NUMBER (#991.01) and ICN CHECKSUM (#991.02) field data.
+   
+    Note: This check/clean-up will be queued to the background and an email
+          will be generated to the installer and the MVI developers (Only
+          for production systems) indicating the start/completion date/times
+          number of patient records processed and the total number of 
+          patient record entries updated.
+  
+ In addition, a new remote procedure (RPC) [DG FULL ICN SHOW/UPDATE] was
+ created that will allow MVI to do the following remote processes for a
+ specific SITE/DFN (Data File Number) pair:
+  
+      - View the following ICN related fields in the PATIENT File (#2):
+  
+             * INTEGRATION CONTROL NUMBER (#991.01)
+             * ICN CHECKSUM (#991.02)
+             * FULL ICN (#991.1)
+  
+      - Update an incorrect FULL ICN (#991.1) value in the PATIENT File (#2)
+  
+ Issue #3
+ The Blind Rehab application has reported issues where some patient names
+ being retrieved utilizing the Remote Procedure (RPC) [DGRR PATIENT LOOKUP
+ SEARCH] are of mixed case, which is problematic to their system. This RPC
+ returns the name component values as they are stored in the Data Dictionary
+ (DD), even though the DD for the NAME COMPONENTS File (#20) does NOT 
+ support the 'Name' fields being mixed case. Therefore the RPC [DGRR PATIENT
+ LOOKUP SEARCH] has been modified in 'NAMECOMP^DGRRLU0' to ensure that the
+ name component values are always converted to uppercase prior to them being
+ returned in the eXtensible Markup Language (XML) document to the requesting
+ application.
+  
+ Issue #4
+ The Veterans Online Access (VOA) process was updated in patch DG*5.3*944
+ [SEQ #828] to populate the following additional fields when creating a new
+ PATIENT (File #2) record:
+      
+       - FULL ICN (#991.1)
+       - WHO ENTERED PATIENT (#.096)
+       - DATE ENTERED INTO FILE (#.097) 
+  
+ However, many facilities reported experiencing issues where the patient
+ record was created, but then immediately deleted from the PATIENT (#2)
+ file. With consultation from the FILEMAN (FM) Team it was noted that the
+ WHO ENTERED PATIENT (#.096) and DATE ENTERED INTO FILE (#.097) fields have
+ several triggers attached to them with the '^' as the assigned WRITE
+ AUTHORITY security value, which could prevent the record from being
+ successfully added to the PATIENT (#2) file. So per the recommendation
+ from the FM Team, MVI will remove the WHO ENTERED PATIENT (#.096) and DATE
+ ENTERED INTO FILE (#.097) fields from the initial field creation list and
+ then populate these additional fields in a subsequent FM call after the
+ record has already been successfully created, thereby circumventing the
+ potential issue with the WRITE AUTHORITY security values. 
+    
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ DG FULL ICN SHOW/UPDATE           NEW
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ 1. I17314893FY18 - MVI not updating Date of Death correctly.
+   
+ Problem:
+ --------
+ It was reported by the Administrative End User (AEU) that the Extended
+ Bed Control [DG BED CONTROL EXTENDED] and Discharge a Patient
+ [DG DISCHARGE PATIENT] menu options within the Registration (DG) package
+ are NOT appropriately updating the MVI with the Date of Death (DOD). 
+ Ideally this should be done as the changes take place, as Date of Death
+ is being overwritten as a result.
+   
+ Resolution:
+ -----------
+ Routine DGDEATH was modified to ensure that all appropriate DOD meta data
+ is removed when the patient is determined to be no longer deceased. Also
+ the Extended Bed Control [DG BED CONTROL EXTENDED] menu option has been
+ added to the list of supported options that are capable of processing
+ deceased patients.  
+    
+ 2. I17387447FY18 - Errors following DG*944/MPIF*65 patch install.
+  
+    Associated Children Tickets: 
+      
+         I17756189FY18,  I17691581FY18,  I17654060FY18,  I17647774FY18,
+         I17602891FY18,  I17588381FY18,  I17581830FY18,  I17561139FY18,
+         I17534824FY18,  I17534304FY18,  I17526703FY18,  I17512475FY18,
+         I17502092FY18,  I17417643FY18,  R17826859FY18,  R17612098FY18, 
+         R17584525FY18,  R17575307FY18,  R17540137FY18,  R17539639FY18,
+         R17448733FY18
+  
+ Problem:
+ --------
+ Several sites have reported an issue with the creation of PATIENT (#2)
+ file records in VistA through the Veterans Online Access (VOA) process,
+ where the new record was reported as created, but then could NOT be
+ subsequently located in the PATIENT (#2) file at the site. In consultation
+ with the FILEMAN (FM) team, they noted that there are several triggers
+ that attempt to update the WHO ENTERED PATIENT (#.096) and DATE ENTERED
+ INTO FILE (#.097) fields and that the WRITE AUTHORITY security value of
+ these fields is the caret ('^'), which could cause issues during the
+ creation of the patient record.
+   
+ Resolution:
+ -----------
+ Based upon the FM Team's recommendation, MVI will update the logic in 
+ routine VAFCPTAD to remove the WHO ENTERED PATIENT (#.096) and DATE
+ ENTERED INTO FILE (#.097) fields from the initial field creation list.
+ These fields will now be populated in a second subsequent call during
+ the VOA process, which will remove the potential issues with the assigned
+ WRITE AUTHORITY security values, allowing the VOA patient records to be
+ created and NOT immediately deleted.
+  
+   
+ Test Sites:
+ ----------
+ Minneapolis VAMC
+ Richard L. Roudebush (Indianapolis) VAMC
+    
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+     
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+     
+ MPI/PD VistA Documentation can also be found on the VA Software 
+ Documentation Library at: http://www.domain.ext/vdl/application.asp?appid=16
+   
+ Title                                       File Name              FTP Mode
+ ---------------------------------------------------------------------------
+ MPI/PD VISTA User Manual                RG_1_0_P69_UM.PDF          (binary)
+     
+   
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-installation process will accomplish the following items:
+  
+  - Add 'EVVE Fact of Death Query' with a TYPE CODE (#1) of 'EFDQ' and
+    'UNDER VA AUSPICES' with a TYPE CODE (#1) of 'UVA' as new entries to
+    the SUPPORTING DOCUMENTATION TYPES file (#47.75).
+  - Add the active DOCUMENT TYPE (#1..01) 'EVVE FACT OF DEATH QUERY' to
+    the existing SOURCE OF NOTIFICATION (#.01) entry 'EVVE QUERY' in the
+    SOURCE OF NOTIFICATION BUSINESS RULES file(#47.761).
+  - Add the active DOCUMENT TYPE (#1..01) 'UNDER VA AUSPICES' to the
+    existing SOURCE OF NOTIFICATION (#.01) entry 'SPOUSE/NOK/OTHER PERSON'
+    in the SOURCE OF NOTIFICATION BUSINESS RULES file (#47.761).
+  - Loop through the PATIENT (#2) file global (^DPT) to ensure that the
+    FULL ICN (#991.1) reflects the INTEGRATION CONTROL NUMBER (#991.01) and
+    ICN CHECKSUM (#991.02) values. This process will automatically be
+    tasked to run in the background and will generate a Mailman message to
+    the installer displaying the results upon completion. Execution time
+    for this process will vary depending on the number of records stored in
+    the site's PATIENT (#2) file and other processes running on the system,
+    but from past installations it should average between a few minutes to
+    about an hour to complete. 
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system.   
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*950):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU]. Routine DG950PST can be deleted if desired once the
+ patch has been successfully installed.
+  
+ Back-Out Plan
+ -------------
+ The DG back-out procedure would primarily consist of restoring the original
+ routines using the back-up message created during the patch installation.
+ The stand-alone RPC [DG FULL ICN SHOW/UPDATE] utilized by MVI only, can be
+ deleted by the site using FM if desired as it was created as a NEW entry.
+ In addition, MVI can remotely inactivate the Source of Notification
+ Business Rules created during the post-install of this patch to prevent
+ their use if notified of the site's intent of backing out.
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG950PST
+    Before:       n/a   After: B30528159  **950**
+Routine Name: DGDEATH
+    Before: B63218481   After: B66540138  **45,84,101,149,392,545,595,
+                                           568,563,725,772,863,901,926,
+                                           939,944,950**
+Routine Name: DGFLICN
+    Before:       n/a   After:  B2432497  **950**
+Routine Name: DGRRLU0
+    Before: B37459964   After: B39449307  **538,725,950**
+Routine Name: VAFCPDAT
+    Before: B63381582   After: B63787008  **333,414,474,505,707,712,837,
+                                           863,876,902,926,937,950**
+Routine Name: VAFCPTAD
+    Before: B70394677   After: B72347771  **149,800,876,944,950**
+ 
+Routine list of preceding patches: 937, 944
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2017
+Completed By:                               Date Completed: FEB 21, 2018
+Released By :                               Date Released : FEB 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

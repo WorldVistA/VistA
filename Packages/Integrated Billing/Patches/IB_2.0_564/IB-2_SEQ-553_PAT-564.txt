@@ -1,0 +1,283 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/29/17 at 10:38
+=============================================================================
+Run Date: JAN 11, 2018                     Designation: IB*2*564
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #553                      Status: Released
+                  Compliance Date: FEB 10, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*483    <<= must be installed BEFORE `IB*2*564'
+
+Subject: TIMEFRAME OF BILL FIX & AUTO-POPULATE FOR TC MODIFIER 
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses two issues:
+  
+ 1. The first issue involves missing Timeframe of Bill data in the
+ associated display field when 'O NON-PAY/ZERO CLAIM' is selected in the
+ Enter/Edit Billing Information [IB EDIT BILLING INFO] option.
+  
+ 2. The second issue concerns the Technical Component (TC) modifier which
+ doesn't automatically populate to any procedure on an institutional bill
+ if the only professional charge on the procedure is 26 modified in the
+ Enter/Edit Billing Information [IB EDIT BILLING INFO] option.
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1. I10022937FY16 Integrated Billing - Other
+ 2. I10589810FY16 TC Modifier not auto-populate on CPT/HCPCS codes
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut (West Haven)
+ Erie VAMC 
+  
+  
+ OVERVIEW:
+ =========
+ 1. I10022937FY16 - Integrated Billing - Other
+  
+    Problem:
+    --------
+    The Billing Timeframe data doesn't populate to the associated display 
+    field when 'O NON-PAY/ZERO CLAIM' is selected in the option. 
+  
+    Resolution:
+    -----------
+    The set of 'O' letter code for 'NON-PAY/ZERO CLAIM' is replaced with the
+    set of '0' numeric code in the data definition of the 'TIMEFRAME OF BILL'
+    field (#.06) and 'UB - 04 TIMEFRAME OF BILL' field (#.26) in the BILL/
+    CLAIMS file (#399).
+  
+    A post-init routine IB20P564 was created to correct the timeframe data on
+    the billing entry if the set of 'O' letter code exists in the BILL/CLAIMS
+    file (#399).
+  
+    
+ DATA DICTIONARY - BEFORE CHANGE:
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ ----------------------------------------------------------------------------
+ 399,.06       TIMEFRAME OF BILL      0;6 SET (Required)
+  
+               TYPE OF BILL (3RD DIGIT)   
+                                 '1' FOR ADMIT THRU DISCHARGE; 
+                                 '2' FOR INTERIM - FIRST CLAIM; 
+                                 '3' FOR INTERIM - CONTINUING CLAIM; 
+                                 '4' FOR INTERIM - LAST CLAIM; 
+                                 '5' FOR LATE CHARGES ONLY; 
+                                 '6' FOR ADJUSTMENT PRIOR CLAIM; 
+                                 '7' FOR REPLACEMENT PRIOR CLAIM; 
+                                 '8' FOR VOID/CANCEL PRIOR CLAIM; 
+                                 'O' FOR NON-PAY/ZERO CLAIM; 
+               LAST EDITED:      JAN 16, 2007 
+               HELP-PROMPT:      Enter the code which defines the frequency 
+                                 of this bill. 
+               DESCRIPTION:
+                                 This code defines the frequency of this 
+                                 bill.
+  
+  
+ 399,.26       UB-04 TIMEFRAME OF BILL 0;26 SET (Required)
+   
+                                 '1' FOR ADMIT THRU DISCHARGE; 
+                                 '2' FOR INTERIM - 1ST CLAIM; 
+                                 '3' FOR INTERIM - CONTINUING CLAIM; 
+                                 '4' FOR INTERIM - LAST CLAIM; 
+                                 '5' FOR LATE CHARGES ONLY; 
+                                 '6' FOR ADJUSTMENT CLAIM; 
+                                 '7' FOR REPLACEMENT CLAIM; 
+                                 '8' FOR VOID/CANCEL PRIOR CLAIM; 
+                                 'O' FOR NON-PAY/ZERO CLAIM; 
+               LAST EDITED:      FEB 12, 2007 
+               HELP-PROMPT:      Enter the appropriate UB-04 timeframe of
+                                 bill
+               DESCRIPTION:      This field contains the code representing
+                                 the timeframe of the value for the bill.
+                                 This is the 3rd digit of the 3-digit UB-04
+                                 type of bill.
+  
+  
+ DATA DICTIONARY - AFTER CHANGE:
+  
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ ----------------------------------------------------------------------------
+ 399,.06       TIMEFRAME OF BILL      0;6 SET (Required)
+  
+               TYPE OF BILL (3RD DIGIT)   
+                                 '1' FOR ADMIT THRU DISCHARGE; 
+                                 '2' FOR INTERIM - FIRST CLAIM; 
+                                 '3' FOR INTERIM - CONTINUING CLAIM; 
+                                 '4' FOR INTERIM - LAST CLAIM; 
+                                 '5' FOR LATE CHARGES ONLY; 
+                                 '6' FOR ADJUSTMENT PRIOR CLAIM; 
+                                 '7' FOR REPLACEMENT PRIOR CLAIM; 
+                                 '8' FOR VOID/CANCEL PRIOR CLAIM; 
+                                 '0' FOR NON-PAY/ZERO CLAIM; 
+               LAST EDITED:      JUN 27, 2017 
+               HELP-PROMPT:      Enter the code which defines the frequency
+                                 of this bill. 
+               DESCRIPTION:
+                                 This code defines the frequency of this   
+                                 bill.
+  
+  
+ 399,.26       UB-04 TIMEFRAME OF BILL 0;26 SET (Required)
+  
+                                 '1' FOR ADMIT THRU DISCHARGE; 
+                                 '2' FOR INTERIM - 1ST CLAIM; 
+                                 '3' FOR INTERIM - CONTINUING CLAIM; 
+                                 '4' FOR INTERIM - LAST CLAIM; 
+                                 '5' FOR LATE CHARGES ONLY; 
+                                 '6' FOR ADJUSTMENT CLAIM; 
+                                 '7' FOR REPLACEMENT CLAIM; 
+                                 '8' FOR VOID/CANCEL PRIOR CLAIM; 
+                                 '0' FOR NON-PAY/ZERO CLAIM; 
+               LAST EDITED:      JUN 27, 2017 
+               HELP-PROMPT:      Enter the appropriate UB-04 timeframe of
+                                 bill
+               DESCRIPTION:      This field contains the code representing
+                                 the timeframe of the value for the bill.
+                                 This is the 3rd digit of the 3-digit UB-04
+                                 type of bill.
+  
+ 2. I10589810FY16 - TC Modifier not auto-populate on CPT/HCPCS codes
+   
+    Problem:
+    --------
+    The Technical Component (TC) modifier doesn't automatically add to any
+    procedure on institutional bills if the only professional charge on the
+    procedure is 26 modified.
+  
+    Resolution:
+    -----------
+    Routine IBCU7A was modified to automatically add the TC modifier to 
+    any procedure on institutional bills or remove it from any procedure
+    on professional bills if the only professional charge on the procedure
+    is 26 modified.
+  
+                                  ***** NOTE *****
+    The TC modifier can be manually deleted from the linked CPT MODIFIER  
+    SEQUENCE selection on any procedure and the question for applying 
+    procedure updates for charges also needs to be answered as 'NO' where 
+    applicable.
+  
+    Examples within under [4] Code Method in screen <4> or screen <5> of 
+    Enter/Edit Billing Information [IB EDIT BILLING INFO] option:  
+   
+    Select CPT MODIFIER SEQUENCE: 1// @
+       SURE YOU WANT TO DELETE THE ENTIRE '1' CPT MODIFIER SEQUENCE? Y  (Yes)
+   
+    Apply Procedure Updates for Charges? YES// NO
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+  
+ Installation should take less than 10 minutes - but will vary from site to
+ site depending on the size of the BILL/CLAIMS file (#399) which searches
+ for the Timeframe of Bill to update in the post-init routine.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global
+    
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*564):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+     
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P564.
+   
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed. For an example:
+  
+     Timeframe of Bill Fix Post-Install ......
+ >>>>Total 20 bills updated in the Bill/Claims (#399) file
+     Timeframe of Bill Fix Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P564
+    Before:       n/a   After:  B3579589  **564**
+Routine Name: IBCU7A
+    Before: B47720475   After: B49515881  **245,287,483,564**
+ 
+Routine list of preceding patches: 483
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 18, 2016
+Completed By:                               Date Completed: JAN 11, 2018
+Released By :                               Date Released : JAN 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

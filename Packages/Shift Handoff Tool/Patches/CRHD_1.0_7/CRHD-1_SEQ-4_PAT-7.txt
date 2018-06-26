@@ -1,0 +1,189 @@
+$TXT Created by                     CHEY113.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 08/24/17 at 22:47
+=============================================================================
+Run Date: JAN 08, 2018                     Designation: CRHD*1*7
+Package : CRHD - SHIFT CHANGE HANDOFF TOOL    Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: FEB 08, 2018
+=============================================================================
+
+Associated patches: (v)CRHD*1*6    <<= must be installed BEFORE `CRHD*1*7'
+
+Subject: GET1+1 ORWORR1 ERROR,INVALID POINTER,SPECIAL CHAR PROTECTION
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Shift handoff package:
+ - A hard GET1+1^ORWORR1 *ORLIST error occurs sporadically
+ - An invalid Pointer Error that occurs when trying to print the "Default 
+ Patient List selection"
+ -Special Characters pasted into Shift Handoff are causing printing to Hang
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I14314595FY17 New: GET1+1^ORWORR1 *ORLIST (Shift handoff tool errors) 
+ Problem:
+ -------
+ This hard error [GET1+1^ORWORR1 *ORLIST] occurs if the Value "No Patients 
+ Found^0^0^0^40" is passed into the Remote Procedure Call (RPC) "CRHD GET 
+ LABS". How this occurs is that the RPC "CRHD HOT PATIENT LIST" returns
+ "No Patients" in the incorrect piece of the return data if the HOT list 
+ has no patients, then the user clicks the submit button.
+  
+ Resolution:
+ ----------
+ Modified routine CRHD9 to return "No Patients" in the correct piece of 
+ the return data
+  
+ 2. I15927416FY17 New: Invalid Pointer when printing
+  
+ Problem:
+ -------
+ The invalid pointer error occurs when trying to print a patient or group
+ of patients that were loaded via the Default Patient List selection. The
+ patients will load fine but when trying to print or process a print
+ preview. The GUI will error out. The cause for this was that the GUI was 
+ trying to remove an object from memory that no longer existed. This 
+ object was being cleared twice which caused the error on the second 
+ attempt.
+  
+ Resolution:
+ ----------
+ Modifications have been made to prevent this improper cleanup. 
+  
+ 3. I16011239FY17 New: The Nurse Shift Handoff Tool hangs when printing a 
+ unit report.
+                                                                 
+ Problem:
+ -------
+ When trying to print a unit report, the Shift Handoff Tool hangs.
+  
+ Resolution:
+ ----------
+ It was identified that there were special characters being pasted into
+ the custom fields which caused the GUI to go into a never ending loop.
+ Filters have been put into place that will prevent this going forward 
+ and also retroactively correct the problem. Text is now filtered when 
+ loading, saving, and printing. This will ensure that these non-standard
+ characters will not be present in the future as well as correcting any
+ records where these may have been saved.
+  
+ Duplicates:
+  ------------- 
+  I15929648FY17 - AEU states the Shift Hand off Tool will not
+                  print out documents through CPRS
+  I15949251FY17 - LEA - No one at the facility can print
+  I15954070FY17 - having a issue with the shift hand off tool in 
+                  CPRS
+  I15971727FY17 - Users not able to print from CPRS Shift
+                  Handoff Tool - Hospital Wide
+  I16230694FY17 - STX: Unable to print from hand off tool in
+                  CPRS (team B)
+  I16630425FY17 - Unable to print from shift hand off tool  
+  I17546697FY18 - Shift hand off tool issue
+  I17527385FY18 - PRO - Shift Handoff Tool Freezing
+  I18072235FY18 - Problem with health records ap- Hand-off Tool
+  I18072949FY18 - Shift Hand Off Tool print option freezing- Syracuse VA 
+                  Medical Center
+  R15992074FY17 - CPRS printing issue 
+  R15933065FY17 - BHH - Users are not able to print out of shift 
+                  hand off tool
+  
+ Test Sites:
+ ----------
+ Denver
+ Madison
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component and an 
+ updated Graphical User Interface (GUI). Files and documentation pertaining
+ to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ The updated documentation associated with this patch is:
+  
+ File Name                       Contents               
+ ---------                       --------             
+ CRHD_1_7_IG.PDF                 Shift Handoff Tool 
+ Installation Guide
+  
+ Documentation can also be found in the VA Software Document Library:
+  
+ http://www.domain.ext/vdl. 
+  
+ The software distribution includes:
+  
+ File Name              Contents            Retrieval Format
+ ---------              --------            ----------------
+ CRHD_10_7.ZIP          ShiftHandoffTool.EXE   BINARY
+                        CRHD.hlp
+                                                   
+ Patch Installation:
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Please refer to the Shift Handoff Tool (CRHD*1.0*7) Installation Guide 
+ for any specific pre-installation instructions.
+  
+ Installation Instructions
+ -------------------------
+ Please refer to the Shift Handoff Tool (CRHD*1.0*7) Installation Guide: 
+ CRHD_1_7_IG.PDF for file names and installation instructions 
+  
+ Post-Installation Instructions
+ ------------------------------
+ Please refer to the CShift Handoff Tool (CRHD*1.0*7) Installation Guide 
+ for any specific post-installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CRHD;**[Patch List]**;Jan 28, 2008;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: CRHD9
+    Before: B77313307   After: B77778864  **2,7**
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 04, 2017
+Completed By:                               Date Completed: JAN 08, 2018
+Released By :                               Date Released : JAN 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

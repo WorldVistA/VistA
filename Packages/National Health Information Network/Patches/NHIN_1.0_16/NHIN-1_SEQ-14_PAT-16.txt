@@ -1,0 +1,114 @@
+
+=============================================================================
+Run Date: APR 10, 2018                     Designation: NHIN*1*16
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: MAY 11, 2018
+=============================================================================
+
+
+Subject: eHealth Exchange Enhancements Build  5 v8.0.0.7
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Subject:  eHealth Exchange Adapter and Architecture Enhancements Build 5 
+ (v8.0.0.7)
+  
+ Category:  INFORMATIONAL
+  
+ Description:
+ ===========
+  
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the eHealth Exchange 
+ (formerly VLER and formerly NHIN) servers located there using a 
+ pre-approved Request for Change Order and Implementation Plan.  This 
+ Deployment is scheduled to take place on April 10, 2018 from 8:00 PM 
+ EST- 10:00 PM EST.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+  
+ **************************************************************************
+ eHealth Exchange Adapter and Architecture Enhancements
+  
+ Description: This build will deliver customer facing enhancements to the 
+ eHealth Exchange Adapter and eHealth Exchange system Architecture.  The 
+ build will include new and updated enhancements to the way consolidated 
+ clinical documents are displayed to the user and system architecture 
+ optimizations.
+  
+ eHealth Exchange Adapter and Architecture Enhancements Build 5 has the 
+ following features: 
+ 1. Implemented C-CDA CCD R2.1 as a new VA-supported document type.
+ 2. Enhanced C-CDA stylesheet to support the display of the C-CDA CCD R2.1.
+ 3. Resolved MHV C-CDA requests to include Electronically Filed Radiology 
+    Reports, remove list limit on associated encounter notes, and partially
+    revert note de-duplication business rules.
+  
+ Supported several STS/VETS related changes, including:
+ 1. The ability to perform look-ups/translations using the most current 
+    code-set available for the target terminology.
+ 2. Removed the internal deprecated LOINC look-up.
+ 3. Added error handling to allow Adapter to continue the document 
+    generation process when errors are encountered during VETS 
+    look-ups/translations.
+ 4. Secured the eHX Subscription Service and performed integration testing 
+    with DAS.
+ 5. Separated the Data Quality zip file process from the push to Diameter 
+    Health, so that each process can be configured to be turned "on" or
+    "off" independently.
+  
+ Test sites: N/A
+ Internal Application: 
+ JLV
+ Direct 
+ MHV 
+ Vistaweb 
+ VAP
+  
+ The upgraded software will be deployed to a centralized system at AITC.
+ External Partner Test Sites: 
+ DAS
+  
+ External applications:  
+ Epic
+ KP
+ Sentara
+ San Diego
+ Western NY HealtheLINK
+ HealtheCONNECTIONS
+ Keystone
+ Dignity
+ Carolinas
+ Walgreens
+ MedVA
+ Indiana
+         
+ For eHXE enhancements testing SOAP UI Scripts mimics different 
+ partner testing. No real world end-to-end testing was performed.
+ Downstream Dependent System Testing: Testing efforts with eHX Adapter, 
+ VAP, Connect and MVI and downstream systems were successful.
+  
+ CA SDM Tickets: None
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 23, 2018
+Completed By:                               Date Completed: APR 10, 2018
+Released By :                               Date Released : APR 10, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

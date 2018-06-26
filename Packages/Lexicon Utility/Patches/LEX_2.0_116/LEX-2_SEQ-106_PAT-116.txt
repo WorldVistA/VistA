@@ -1,0 +1,448 @@
+$TXT Created by                at CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 11/28/17 at 09:25
+=============================================================================
+Run Date: DEC 27, 2017                     Designation: LEX*2*116
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2       SEQ #106                      Status: Released
+                  Compliance Date: JAN 04, 2018
+=============================================================================
+
+Associated patches: (v)LEX*2*115   <<= must be installed BEFORE `LEX*2*116'
+
+Subject: Code Set FY18 2nd Qtr Update
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+  This patch contains the FY18 2nd Quarter Code Set distribution with
+  568 changes effective Jan 01, 2018.  This patch also contains four
+  changes from FY94 3rd Qtr (effective Jun 01, 1994), two changes from
+  FY17 4th Qtr (effective Jul 01, 2017), 1 projected change for FY18
+  3rd Qtr (effective Apr 01, 2018) and 1 projected change for FY18 4th
+  Qtr (effective Jul 01, 2018).  Additionally, this patch exports 1778
+  changes to the SNOMED CT coding system.  This patch installs the data
+  for the following Informational patch:
+   
+            ICPT*6.0*83
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT COPYRIGHT             #81.2     ^DIC(81.2,   ICR 4491
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+    
+  PATCH COMPONENTS:
+  ================
+    
+    Files & Fields Associated:                       N/A
+    Forms Associated:                                N/A
+    Mail Groups Associated:                          N/A
+    Options Associated:                              N/A
+    Protocols Associated:                            N/A
+    Security Keys Associated:                        N/A
+    Templates Associated:                            N/A
+    
+    
+  ADDITIONAL INFORMATION:
+  ======================
+    
+    New Service Requests (NSRs):                     N/A
+    Patient Safety Issues (PSIs):                    N/A
+    
+    
+  ENHANCEMENTS:
+  ============
+   
+    FY18 2nd Quarter Update
+  
+      CPT Procedure Additions
+      -----------------------
+  
+        Effective Jan 01, 2018                              (145 Codes)
+          00731   00732   00811   00812   00813   0464T   0465T   0466T
+          0467T   0468T   0469T   0470T   0471T   0472T   0473T   0474T
+          0475T   0476T   0477T   0478T   0479T   0480T   0481T   0482T
+          0483T   0484T   0485T   0486T   0487T   0488T   0489T   0490T
+          0491T   0492T   0493T   0494T   0495T   0496T   0497T   0498T
+          0499T   0500T   0501T   0502T   0503T   0504T   15733   19294
+          20939   31241   31253   31257   31259   31298   32994   33927
+          33928   33929   34701   34702   34703   34704   34705   34706
+          34707   34708   34709   34710   34711   34712   34713   34714
+          34715   34716   36465   36466   36482   36483   38222   38573
+          43286   43287   43288   55874   58575   64912   64913   71045
+          71046   71047   71048   74018   74019   74021   81105   81106
+          81107   81108   81109   81110   81111   81112   81120   81121
+          81175   81176   81230   81231   81232   81238   81247   81248
+          81249   81258   81259   81269   81283   81328   81334   81335
+          81346   81361   81362   81363   81364   81448   81520   81521
+          81541   81551   86794   87634   87662   94617   94618   95249
+          96573   96574   97127   97763   99483   99484   99492   99493
+          99494
+  
+      CPT Procedure Inactivations
+      ---------------------------
+  
+        Effective Jan 01, 2018                               (82 Codes)
+          0051T   0052T   0053T   00740   00810   01180   01190   01682
+          0178T   0179T   0180T   0255T   0293T   0294T   0299T   0300T
+          0301T   0302T   0303T   0304T   0305T   0306T   0307T   0309T
+          0310T   0340T   0438T   15732   29582   29583   31320   34800
+          34802   34803   34804   34805   34806   34825   34826   34900
+          36120   36515   55450   64565   69820   69840   71010   71015
+          71020   71021   71022   71023   71030   71034   71035   74000
+          74010   74020   75658   75952   75953   75954   77422   78190
+          83499   84061   86185   86243   86378   86729   86822   87277
+          87470   87477   87515   88154   93982   94620   97532   97762
+          99363   99364
+  
+      CPT Procedures Re-Used
+      ----------------------
+  
+        Effective Jan 01, 2018                                (4 Codes)
+          15730   86008   93792   93793
+  
+      CPT Procedure Revisions
+      -----------------------
+  
+        Effective Jan 01, 2018                               (77 Codes)
+          0100T   01680   0254T   0333T   11403   14302   17250   25000
+          29902   31254   31255   31276   31300   31584   31645   31646
+          32998   3372F   34812   34820   34833   34834   36140   36468
+          36470   36471   36516   36908   38220   38221   4194F   43112
+          57240   57260   57265   62290   62291   62292   64550   76000
+          76098   76881   76882   77423   80305   80306   80307   81257
+          81400   81401   81403   81404   81405   81406   81432   81439
+          81519   82042   82043   82044   86003   86005   90750   90756
+          92602   93355   94621   95250   95251   95930   96567   97760
+          97761   99217   99218   99219   99220
+  
+      HCPCS Procedure Additions
+      -------------------------
+  
+        Effective Jan 01, 2018                              (125 Codes)
+          C9014   C9015   C9016   C9024   C9028   C9029   C9738   C9748
+          G0511   G0512   G0513   G0514   G0515   G0516   G0517   G0518
+          G9890   G9891   G9892   G9893   G9894   G9895   G9896   G9897
+          G9898   G9899   G9900   G9901   G9902   G9903   G9904   G9905
+          G9906   G9907   G9908   G9909   G9910   G9911   G9912   G9913
+          G9914   G9915   G9916   G9917   G9918   G9919   G9920   G9921
+          G9922   G9923   G9924   G9925   G9926   G9927   G9928   G9929
+          G9930   G9931   G9932   G9933   G9934   G9935   G9936   G9937
+          G9938   G9939   G9940   G9941   G9942   G9943   G9944   G9945
+          G9946   G9947   G9948   G9949   G9954   G9955   G9956   G9957
+          G9958   G9959   G9960   G9961   G9962   G9963   G9964   G9965
+          G9966   G9967   G9968   G9969   G9970   G9974   G9975   G9976
+          G9977   J0565   J1428   J1555   J1627   J1726   J1729   J2326
+          J3358   J7210   J7211   J7296   J9022   J9023   J9203   J9285
+          L3761   L7700   L8694   P9073   P9100   Q0477   Q4176   Q4177
+          Q4178   Q4179   Q4180   Q4181   Q4182
+  
+      HCPCS Procedure Inactivations
+      -----------------------------
+  
+        Effective Jan 01, 2018                               (30 Codes)
+          A9599   C9140   C9483   C9484   C9485   C9486   C9489   C9490
+          C9491   C9494   G0202   G0204   G0206   G8696   G8697   G8698
+          G8879   G8947   G8971   G8972   G9381   G9496   J1725   J9300
+          P9072   Q9984   Q9985   Q9986   Q9987   Q9989
+  
+      HCPCS Procedures Re-Used
+      ------------------------
+  
+        Effective Jan 01, 2018                                (6 Codes)
+          E0953   E0954   J2350   J7345   L8625   Q2040
+  
+      HCPCS Procedure Revisions  (76 Codes)
+      -------------------------
+  
+        Effective Jun 01, 1994 (FY94 3rd Qtr)                 (4 Codes)
+          Q0117   Q0121   Q0122   Q0123
+  
+        Effective Jan 01, 2018                               (72 Codes)
+          D6118   D6119   E1639   G8430   G8433   G8442   G8535   G8540
+          G8808   G8869   G8880   G8938   G8939   G8941   G8967   G8968
+          G8969   G9227   G9256   G9257   G9258   G9259   G9260   G9261
+          G9262   G9263   G9313   G9348   G9384   G9504   G9541   G9607
+          G9624   G9637   G9638   G9656   G9716   G9717   G9744   G9745
+          G9758   G9762   G9763   G9764   G9765   G9784   G9785   G9786
+          G9794   G9814   G9815   G9816   G9817   G9840   G9841   G9843
+          J0604   J0606   J2274   J7321   J7328   L3760   L8618   L8624
+          L8691   Q4132   Q4133   Q4148   Q4156   Q4158   Q4162   Q4163
+  
+      CPT Modifier Additions  (10 Codes)
+      ----------------------
+  
+        Effective Jan 01, 2018                                (9 Codes)
+          96      97      FY      TB      X1      X2      X3      X4
+          X5
+  
+        Effective Apr 01, 2018 (projected FY18 3rd Qtr)        (1 Code)
+          VM
+  
+      CPT Modifier Inactivations
+      --------------------------
+  
+        Effective Jan 01, 2018                                (2 Codes)
+          CP      SZ
+  
+      CPT Modifiers Re-Used  (2 Codes)
+      ---------------------
+  
+        Effective Jan 01, 2018                                 (1 Code)
+          JG
+  
+        Effective Jul 01, 2018 (projected FY18 4th Qtr)        (1 Code)
+          QQ
+  
+      CPT Modifier Revisions  (17 Codes)
+      ----------------------
+  
+        Effective Jul 01, 2017 (FY17 4th Qtr)                 (2 Codes)
+          Q5      Q6
+  
+        Effective Jan 01, 2018                               (15 Codes)
+          22      25      27      47      51      52      53      58
+          59      62      63      66      73      76      77
+  
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 1999     *     --     --     --       9      9
+        Effective Jan 01, 2008     *      1     --     --       3      4
+        Effective Jan 01, 2018            9     --     --       1     10
+                                      -----  -----  -----  ------  -----
+          Total                          10     --     --      13     23
+        
+                                   *  update from a previous quarter
+  
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      07/31/2017    395     --     --       5    400
+        SNOMED Terms
+          Concepts                      400      5     --      --    405
+          Synonyms                      552     13     --      --    565
+          Fully Specified               408     --     --      --    408
+                                      -----  -----  -----  ------  -----
+                                       1755     18     --       5   1778
+   
+        SNOMED CT Version ID:  20170901
+   
+  
+  
+  CPT Copyright 
+  ==============
+  
+    CPT (CPT is a registered trademark of the American Medical
+    Association) codes, descriptions and other data are copyright 
+    1966, 1970, 1973, 1977, 1981, 1983-2017 American Medical 
+    Association.
+  
+    CPT is commercial technical data developed exclusively at 
+    private expense by Contractor/Manufacturer American Medical
+    Association, AMA Plaza, 330 N. Wabash Ave., Suite 39300, 
+    Chicago, IL 60611-5885.  The provisions of this Agreement 
+    between AMA and VA prevail, including prohibiting creating 
+    derivative works and providing CPT to any third parties 
+    outside of the Facilities.
+  
+  
+  
+  REQUEST/INCIDENTS:
+  =================
+  
+    R16956922FY18 - Modifier 50 with 76641 and 76642
+  
+  
+  TEST SITES
+  ==========
+  
+    VISN 02 (Buffalo, NY)
+    Montana HCS (Fort Harrison, MT)
+    North Florida HCS (Gainesville, FL)
+  
+  
+  SFTP SOFTWARE RETRIEVAL:
+  =======================
+        
+    Global Host File:                  LEX_2_116.GBL  (ASCII)
+       
+    The host file is 11.1 MB in size and could take up to 4 minutes to 
+    SFTP.  The preferred method is to retrieve the file from:
+       
+        download.vista.domain.ext.
+       
+    This transmits the files from the first available server. Sites may 
+    also elect to retrieve files directly from a specific server. 
+       
+    Sites may retrieve the software directly using Secure File Transfer
+    Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+    following OI Field Offices:
+       
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+  
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  
+     1)  Users may be on the system during the install of LEX*2.0*116.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 22 to 93 minutes to install
+         depending on the system.
+  
+             Create a backup    20-90 minutes
+             Load the Global    less than 1 minute
+             Kids Install       1-2 minutes
+  
+     2)  Size/Disk Space Requirements:
+  
+         The changes to the Lexicon and CPT globals will result 
+         in a combined growth of about 9.56 MB of data.  The import
+         global ^LEXM is about 8.84 MB in size.  Make sure there is
+         sufficient space for the growth to the VistA globals and 
+         the import global before continuing.
+  
+     3)  Create a backup of the following global files before 
+         continuing:
+  
+             CPT                         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Copyright               #81.2       ^DIC(81.2,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+  
+         These backup files may get as large as 2.2 gigabytes.  Make
+         sure space is available before proceeding.  It should take 
+         from 20 to 90 minutes to create the backup files.
+  
+         When you are creating a backup of non-subscripted globals, you
+         are saving the entire global.  You should use the utility ^%GO
+         for non-subscripted globals, and when prompted for a global, 
+         enter the global root (global name only, no open parenthesis, 
+         no file number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+  
+         When you are creating a backup of a subscripted global, you 
+         are saving a partial global (a file within a global).  You 
+         should use the utility ^%GOGEN, and when prompted for a 
+         global, enter the open global reference (as shown below).
+         Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.2,       CPT Copyright
+             ^DIC(81.3,       CPT Modifier
+  
+     4)  Install the data from the global host file LEX_2_116.GBL.  
+         This file contains the Lexicon Utility's import global 
+         ^LEXM.
+  
+         This global is approximately 8.8 megabytes in size.  Make sure
+         there is sufficient space available to load this global on
+         your system.  The loading of the global should take less
+         than a minute.
+  
+         From the Programmer prompt, execute the following routine:
+  
+            >D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_116.GBL
+            Parameters? "RS" => 
+            Globals were saved on 11 Dec 2017   9:13 PM   Cache
+            with description: LEX*2.0*116/ICPT*6.0*83 Data
+            
+            Input option: A
+            ^LEXM
+  
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+     6)  Distribution Load:
+  
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+  
+     7)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*116.
+  
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 1-2 minutes
+  
+     8)  Cleanup
+  
+         The Environment Check routine LEX2116 and the Post-Install 
+         routine LEX2116P should be deleted using the KERNEL option 
+         'Delete Routines' [XTRDEL] upon completion of the
+         installation.
+  
+         NOTE:  The installation of this patch should trigger an
+                update protocol and may spawn background tasks for 
+                the Clinical Reminders or Consult packages.  You 
+                do not need to wait for these background jobs to 
+                complete to delete the Environment Check and 
+                Post-Install routines.
+  
+     9)  Back-out Plan:
+  
+         To back-out data from a production account could cause broken 
+         pointers, <UNDEFINED> errors and hard MUMPS crashes.  The back-out
+         plan for data only patches is to report your findings and wait for
+         a repair patch.  Contact the Enterprise Service Desk to log an 
+         Incident to the NTL.APP.VistA.Clinical Lexicon 2_0 category which 
+         assigns the ticket to the appropriate National Support team.
+  
+    10)  Patch Verification:
+  
+         Kernel Installation & Distribution System-> Utilities-> Install
+         File Print option can be used to check for any errors plus the
+         status of the install being Completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2116
+    Before:       n/a   After: B91629866  **116**
+Routine Name: LEX2116P
+    Before:       n/a   After: B20925588  **116**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 11, 2017
+Completed By:                               Date Completed: DEC 27, 2017
+Released By :                               Date Released : DEC 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

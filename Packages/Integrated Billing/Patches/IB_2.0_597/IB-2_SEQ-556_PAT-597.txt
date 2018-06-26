@@ -1,0 +1,205 @@
+$TXT Created by           at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/09/18 at 10:21
+=============================================================================
+Run Date: FEB 27, 2018                     Designation: IB*2*597
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #556                      Status: Released
+                  Compliance Date: MAR 30, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*488    <<= must be installed BEFORE `IB*2*597'
+                    (v)IB*2*547    <<= must be installed BEFORE `IB*2*597'
+                    (v)IB*2*554    <<= must be installed BEFORE `IB*2*597'
+
+Subject: FIX LOCK ISSUE; THIRD PARTY FOLLOW-UP SUMMARY; UNDEFINED LOCAL ARRAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 3 issues:
+  
+  1. Update the Integrated Billing (IB) option Correct Rejected/Denied Bill
+     [IB CORRECT REJECTED/DENIED] to address a missing lock issue.
+  
+  2. Correct the summary totals of the THIRD PARTY FOLLOW-UP SUMMARY in the
+     View/Print Extracted Reports [IBJD DM VIEW/PRINT EXTRACTS] option.
+  
+  3. The FINDLN+64 and FINDLN+118 undefined errors occur when the IBZDATA(1)
+     variable is undefined which is supposed to hold formatting data for the
+     bill line.
+  
+  
+  Associated NSR(s):
+  ==================
+  N/A 
+  
+  
+  Associated Ticket(s):
+  =====================
+  1. I10582950FY16 - A bug was discovered in the Vista IB package in the 
+                     option Correct Rejected/Denied Bill [IB CORRECT 
+                     REJECTED/DENIED].
+  
+  2. I14387259FY17 - Error in Diagnostic Measures Extract Report
+  
+  3. I15190845FY17 - FINDLN+64^IBCEOB - TRANSMISSION EXCEPTION ERROR
+     I15738436FY17 (duplicate)
+     I15742103FY17 (duplicate) 
+  
+  
+  Participating Test Sites:
+  =========================
+  PITTSBURGH HCS 
+  
+  
+  CA SDM Ticket Overview:
+  =======================
+  1. I10582950FY16 - A bug was discovered in the Vista IB package in the 
+                     option Correct Rejected/Denied Bill [IB CORRECT 
+                     REJECTED/DENIED].
+  
+     Problem: 
+     ========
+     A bug was discovered in the Vista IB package in Correct
+     Rejected/Denied Bill [IB CORRECT REJECTED/DENIED] menu option.
+  
+     Resolution:
+     ===========
+     Routine IBCC needs to be updated to include locking logic once the 
+     user has selected the desired record. This logic will include a 
+     warning message, "Sorry, another user currently editing this 
+     entry. Try again later.", for the user if the record they request is
+     currently locked by another user.
+  
+  2. I14387259FY17 Error in Diagnostic Measures Extract Report
+  
+     Problem:
+     ========
+     A site user reports incorrect summary totals in the THIRD PARTY
+     FOLLOW-UP SUMMARY of DIAGNOSTIC MEASURES SUMMARY EXTRACTIONS reports in
+     View/Print Extracted Reports [IBJD DM VIEW/PRINT EXTRACTS] option.
+  
+     Resolution:
+     ===========
+     The post-init routine IB20P597 was created to correct the value of the
+     input variable used to calculate all inpatient, outpatient, pharmacy,
+     and non-VA types of third party active receivables, instead of non-VA
+     care receivables only.
+  
+     Routine IBJDF2 was also modified to change the array subscripts for all
+     types of summary totals in the THIRD PARTY FOLLOW-UP SUMMARY via the 
+     Diagnostic Measures extraction process on a monthly basis.
+  
+  3. I15190845FY17 - FINDLN+64^IBCEOB - TRANSMISSION EXCEPTION ERROR
+  
+     Problem:
+     ========
+     When the FINDLN^IBCEOB1 line is executed it uses the Internal 
+     Entry Number (IEN) of the EOB record in file EXPLANATION OF BENEFITS
+     (#361.1) to create/fill the IBZDATA array for formatting items for a
+     bill. When the software creates/fills IBZDATA it looks at file IB DATA
+     ELEMENT DEFINITION (#364.5) for data. So, if the IEN from file
+     EXPLANATION OF BENEFITS (#361.1) is not in file IB DATA ELEMENT
+     DEFINITION (#364.5) then IBZDATA is undefined.
+  
+     Resolution:
+     ===========
+     To fix this issue there is now a check before the IBZDATA array is 
+     used for formatting, but after it is retrieved or created. The IBCEOB1
+     routine is modified to have a I $G(IBZDATA(1))="" Q clause which looks
+     at the base of the array to see if it exists.
+  
+  
+  Installation Instructions:
+  ==========================
+  You may install this patch at any time without interruption to users. 
+  It should take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*597)
+    
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*597.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? Yes//", respond YES.
+  
+          a. When Prompted "Enter options you wish to mark as 'Out Of 
+             Order':", enter the following options:
+  
+             Correct Rejected/Denied Bill      [IB CORRECT REJECTED/DENIED]
+             Manually Transmit DM Extract      [IBJD DM MANUAL TRANSMIT]
+             Manually Start DM Extraction      [IBJD DM MANUAL START]
+             EDI Lockbox 3rd Party Exceptions  [RCDPE EXCEPTION PROCESSING]
+  
+          b. When Prompted "Enter protocols you wish to mark as 'Out 
+             Of Order':", Press <ENTER>.
+  
+     7. When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+        appropriate number of minutes to delay the installation in order to
+        give users enough time to exit the disabled options before the
+        installation starts.
+   
+     8. When prompted "Device: Home//"  respond with the correct device.
+  
+     9. Clean up post-init routine: optional - once this patch has been
+        successfully installed you may delete the post-init routine: IB20P597.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P597
+    Before:       n/a   After:  B2837083  **597**
+Routine Name: IBCC
+    Before: B65758578   After: B75296271  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433,
+                                           432,447,516,547,597**
+Routine Name: IBCEOB1
+    Before:B103312053   After:B106424337  **137,135,155,296,356,349,431,
+                                           488,597**
+Routine Name: IBJDF2
+    Before: B67800970   After: B68244751  **69,91,100,118,133,205,554,597**
+ 
+Routine list of preceding patches: 488, 547, 554
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 28, 2017
+Completed By:                               Date Completed: FEB 26, 2018
+Released By :                               Date Released : FEB 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

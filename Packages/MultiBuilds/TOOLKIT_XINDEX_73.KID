@@ -1,0 +1,3164 @@
+KIDS Distribution saved on May 23, 2017@06:04:18
+Patches: XU*8*661 &  XT*7.3*140
+**KIDS**:TOOLKIT XINDEX 7.3^XU*8.0*661^XT*7.3*140^
+
+**INSTALL NAME**
+TOOLKIT XINDEX 7.3
+"BLD",1553,0)
+TOOLKIT XINDEX 7.3^^1^3170523^y
+"BLD",1553,1,0)
+165^9.61A^64^64^3170523^^
+"BLD",1553,1,1,0)
+Description:
+"BLD",1553,1,2,0)
+===========
+"BLD",1553,1,3,0)
+This build deploys changes to XINDEX and the ZOSF routine via 2 patches:
+"BLD",1553,1,4,0)
+  1. Patch XT*7.3*140
+"BLD",1553,1,5,0)
+    a) Contains 2 XINDEX routines
+"BLD",1553,1,6,0)
+    b) Will update the XINDEX utility to support the new changes to the
+"BLD",1553,1,7,0)
+        Standards and Conventions (SAC).  The following changes have been
+"BLD",1553,1,8,0)
+        approved by SAC Committee:
+"BLD",1553,1,9,0)
+           1) Routine name and labels can be 16 uppercase characters
+"BLD",1553,1,10,0)
+           2) Local variable names can be 16 characters. 
+"BLD",1553,1,11,0)
+           3) Namespaced variables must be all uppercase.
+"BLD",1553,1,12,0)
+  2. Patch XU*8*661
+"BLD",1553,1,13,0)
+    a) The ZOSFONT routine
+"BLD",1553,1,14,0)
+    b) 14 fields from 8 files that references a routine or tag  
+"BLD",1553,1,15,0)
+ 
+"BLD",1553,1,16,0)
+Please see the patch's Patch Descriptions to see what each patch 
+"BLD",1553,1,17,0)
+ changes/fixes and for the installation instructions.
+"BLD",1553,1,18,0)
+ 
+"BLD",1553,1,19,0)
+ 
+"BLD",1553,1,20,0)
+Retrieve Files:
+"BLD",1553,1,21,0)
+==============
+"BLD",1553,1,22,0)
+Download TOOLKIT_XINDEX_73.KID from the ftp site.  The preferred method is
+"BLD",1553,1,23,0)
+to SFTP the file from sftp://download.SERVER/.  This transmits the
+"BLD",1553,1,24,0)
+file from the first available SFTP server. Sites may also elect to retrieve
+"BLD",1553,1,25,0)
+software directly from a specific server as follows:
+"BLD",1553,1,26,0)
+ 
+"BLD",1553,1,27,0)
+ ALBANY       ftp.SERVER     
+"BLD",1553,1,28,0)
+ Hines            ftp.SERVER
+"BLD",1553,1,29,0)
+ Salt Lake City   ftp.SERVER     
+"BLD",1553,1,30,0)
+ 
+"BLD",1553,1,31,0)
+The necessary file is TOOLKIT_XINDEX_73.KID, which is an ASCII file.
+"BLD",1553,1,32,0)
+Make a note of the directory name where the file was saved.
+"BLD",1553,1,33,0)
+ 
+"BLD",1553,1,34,0)
+ 
+"BLD",1553,1,35,0)
+Installation Instructions:
+"BLD",1553,1,36,0)
+=========================
+"BLD",1553,1,37,0)
+TaskMan doesn't need to be stopped or paused
+"BLD",1553,1,38,0)
+ 
+"BLD",1553,1,39,0)
+User can be on the system
+"BLD",1553,1,40,0)
+  
+"BLD",1553,1,41,0)
+Installation should take less than a minute.
+"BLD",1553,1,42,0)
+  
+"BLD",1553,1,43,0)
+ 1. From the KIDS menu select Installation Menu.
+"BLD",1553,1,44,0)
+   
+"BLD",1553,1,45,0)
+ 2. Use the Load a Distribution option.
+"BLD",1553,1,46,0)
+    You may need to prepend a directory name.
+"BLD",1553,1,47,0)
+    When prompted for Enter a Host File: , enter TOOLKIT_XINDEX_73.KID
+"BLD",1553,1,48,0)
+  
+"BLD",1553,1,49,0)
+ 3. You may now use the following options:
+"BLD",1553,1,50,0)
+  
+"BLD",1553,1,51,0)
+        Print Transport Global
+"BLD",1553,1,52,0)
+        Compare Transport Global to Current System
+"BLD",1553,1,53,0)
+        Verify Checksums in Transport Global
+"BLD",1553,1,54,0)
+        Backup a Transport Global
+"BLD",1553,1,55,0)
+  
+"BLD",1553,1,56,0)
+ 4. When ready, select the Install Packages option
+"BLD",1553,1,57,0)
+  
+"BLD",1553,1,58,0)
+          Select Installation Option: Install Package(s)
+"BLD",1553,1,59,0)
+          Select INSTALL NAME: TOOLKIT XINDEX 7.3
+"BLD",1553,1,60,0)
+ 
+"BLD",1553,1,61,0)
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+"BLD",1553,1,62,0)
+ 
+"BLD",1553,1,63,0)
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+"BLD",1553,1,64,0)
+ 
+"BLD",1553,6.3)
+13
+"BLD",1553,10,0)
+^9.63^2^2
+"BLD",1553,10,1,0)
+XU*8.0*661^1
+"BLD",1553,10,2,0)
+XT*7.3*140^1
+"BLD",1553,10,"B","XT*7.3*140",2)
+
+"BLD",1553,10,"B","XU*8.0*661",1)
+
+"BLD",1553,"INID")
+^
+"BLD",1553,"INIT")
+
+"BLD",1553,"KRN",0)
+^9.67PA^9002226^22
+"BLD",1553,"KRN",.4,0)
+.4
+"BLD",1553,"KRN",.401,0)
+.401
+"BLD",1553,"KRN",.402,0)
+.402
+"BLD",1553,"KRN",.403,0)
+.403
+"BLD",1553,"KRN",.5,0)
+.5
+"BLD",1553,"KRN",.84,0)
+.84
+"BLD",1553,"KRN",3.6,0)
+3.6
+"BLD",1553,"KRN",3.8,0)
+3.8
+"BLD",1553,"KRN",9.2,0)
+9.2
+"BLD",1553,"KRN",9.8,0)
+9.8
+"BLD",1553,"KRN",19,0)
+19
+"BLD",1553,"KRN",19.1,0)
+19.1
+"BLD",1553,"KRN",101,0)
+101
+"BLD",1553,"KRN",409.61,0)
+409.61
+"BLD",1553,"KRN",771,0)
+771
+"BLD",1553,"KRN",779.2,0)
+779.2
+"BLD",1553,"KRN",870,0)
+870
+"BLD",1553,"KRN",8989.51,0)
+8989.51
+"BLD",1553,"KRN",8989.52,0)
+8989.52
+"BLD",1553,"KRN",8993,0)
+8993
+"BLD",1553,"KRN",8994,0)
+8994
+"BLD",1553,"KRN",9002226,0)
+9002226
+"BLD",1553,"KRN","B",.4,.4)
+
+"BLD",1553,"KRN","B",.401,.401)
+
+"BLD",1553,"KRN","B",.402,.402)
+
+"BLD",1553,"KRN","B",.403,.403)
+
+"BLD",1553,"KRN","B",.5,.5)
+
+"BLD",1553,"KRN","B",.84,.84)
+
+"BLD",1553,"KRN","B",3.6,3.6)
+
+"BLD",1553,"KRN","B",3.8,3.8)
+
+"BLD",1553,"KRN","B",9.2,9.2)
+
+"BLD",1553,"KRN","B",9.8,9.8)
+
+"BLD",1553,"KRN","B",19,19)
+
+"BLD",1553,"KRN","B",19.1,19.1)
+
+"BLD",1553,"KRN","B",101,101)
+
+"BLD",1553,"KRN","B",409.61,409.61)
+
+"BLD",1553,"KRN","B",771,771)
+
+"BLD",1553,"KRN","B",779.2,779.2)
+
+"BLD",1553,"KRN","B",870,870)
+
+"BLD",1553,"KRN","B",8989.51,8989.51)
+
+"BLD",1553,"KRN","B",8989.52,8989.52)
+
+"BLD",1553,"KRN","B",8993,8993)
+
+"BLD",1553,"KRN","B",8994,8994)
+
+"BLD",1553,"KRN","B",9002226,9002226)
+
+"MBREQ")
+0
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"VER")
+8.0^22.2
+**INSTALL NAME**
+XU*8.0*661
+"BLD",1550,0)
+XU*8.0*661^KERNEL^0^3170523^y
+"BLD",1550,1,0)
+^^135^135^3170522^^^^
+"BLD",1550,1,1,0)
+Description:
+"BLD",1550,1,2,0)
+===========
+"BLD",1550,1,3,0)
+This patch supports the change of the SAC for longer Tags and Routine
+"BLD",1550,1,4,0)
+names.  It increases the length from 8 to 16 characters.  
+"BLD",1550,1,5,0)
+ 
+"BLD",1550,1,6,0)
+This patch also makes several changes to the ZOSFONT routine, but only
+"BLD",1550,1,7,0)
+the ^%ZOSF("TEST") node will be set.
+"BLD",1550,1,8,0)
+ 
+"BLD",1550,1,9,0)
+The routine ZOSFONT has the following changes:
+"BLD",1550,1,10,0)
+   1. A new tag, NOASK, allows the setup of the %ZOSF global 
+"BLD",1550,1,11,0)
+      without user interaction.
+"BLD",1550,1,12,0)
+ 
+"BLD",1550,1,13,0)
+   2. A new tag, ONE(X) allows the setup of a single node in 
+"BLD",1550,1,14,0)
+      the %ZOSF global.  This allows this patch to update just
+"BLD",1550,1,15,0)
+      %ZOSF("TEST").
+"BLD",1550,1,16,0)
+ 
+"BLD",1550,1,17,0)
+   3. There is now a short description for each %ZOSF node in 
+"BLD",1550,1,18,0)
+      the text.
+"BLD",1550,1,19,0)
+ 
+"BLD",1550,1,20,0)
+There are 2 changes to the ^%ZOSF global:
+"BLD",1550,1,21,0)
+  1. The node ^%ZOSF("TEST") has changed, the checking of routine pattern
+"BLD",1550,1,22,0)
+     has been removed.  It has changed from:
+"BLD",1550,1,23,0)
+      I X?1(1""%"",1A).7AN,$D(^$ROUTINE(X))  to
+"BLD",1550,1,24,0)
+      I X]"",$D(^$ROUTINE(X)).
+"BLD",1550,1,25,0)
+ The checking of routine pattern has been removed.
+"BLD",1550,1,26,0)
+ 
+"BLD",1550,1,27,0)
+The post install routine XU8661 cleans up the ^%ZOSF global.
+"BLD",1550,1,28,0)
+   1. The node ^%ZOSF("GSEL;Select Globals") is deleted.  This 
+"BLD",1550,1,29,0)
+      node was incorrectly defined in patch XU*8*365.
+"BLD",1550,1,30,0)
+ 
+"BLD",1550,1,31,0)
+   2. Sets ^%ZOSF("TEST")
+"BLD",1550,1,32,0)
+ 
+"BLD",1550,1,33,0)
+ 
+"BLD",1550,1,34,0)
+Blood Bank Clearance
+"BLD",1550,1,35,0)
+====================
+"BLD",1550,1,36,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*661 contains
+"BLD",1550,1,37,0)
+changes to a package referenced in ProPath standard titled: BBM Team 
+"BLD",1550,1,38,0)
+Review
+"BLD",1550,1,39,0)
+of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+"BLD",1550,1,40,0)
+software design safeguards or safety critical elements functions.
+"BLD",1550,1,41,0)
+ 
+"BLD",1550,1,42,0)
+RISK ANALYSIS: Changes made by patch XU*8.0*661 have no effect on Blood 
+"BLD",1550,1,43,0)
+Bank
+"BLD",1550,1,44,0)
+software functionality, therefore RISK is none.
+"BLD",1550,1,45,0)
+ 
+"BLD",1550,1,46,0)
+ 
+"BLD",1550,1,47,0)
+Patch Components
+"BLD",1550,1,48,0)
+================
+"BLD",1550,1,49,0)
+ Files & Fields Associateed:
+"BLD",1550,1,50,0)
+ 
+"BLD",1550,1,51,0)
+ BUILD file #9.6              PRE-TRANSPORTATION ROUTINE   #900
+"BLD",1550,1,52,0)
+                              ENVIRONMENT CHECK ROUTINE    #913
+"BLD",1550,1,53,0)
+                              DEL ENV ROUTINE              #913.1
+"BLD",1550,1,54,0)
+                              POST-INSTALL ROUINTE         #914
+"BLD",1550,1,55,0)
+                              PRE-INSTALL ROUINTE          #916
+"BLD",1550,1,56,0)
+ INSTALL file #9.7            ROUTINES  multiple           #40
+"BLD",1550,1,57,0)
+ ROUTINE file #9.8            NAME                         #.01
+"BLD",1550,1,58,0)
+                              TAG                          #5
+"BLD",1550,1,59,0)
+ TASKS file   #14.4           Entry Point                  #.01
+"BLD",1550,1,60,0)
+                              Routine Name                 #2
+"BLD",1550,1,61,0)
+ OPTION file  #19             ROUTINE                      #25
+"BLD",1550,1,62,0)
+ XQAB ERRORS LOGGED
+"BLD",1550,1,63,0)
+    file 8991.5               ROUTINE                      #.02
+"BLD",1550,1,64,0)
+ ALERT TRACKING file #8992.1  ROUTINE TAG                  #1.03
+"BLD",1550,1,65,0)
+ REMOTE PROCEDURE file #8994  TAG                          #.02
+"BLD",1550,1,66,0)
+                              ROUTINE                      #.03
+"BLD",1550,1,67,0)
+ 
+"BLD",1550,1,68,0)
+Forms Associated:
+"BLD",1550,1,69,0)
+N/A
+"BLD",1550,1,70,0)
+ 
+"BLD",1550,1,71,0)
+Mail Groups Associated:
+"BLD",1550,1,72,0)
+N/A
+"BLD",1550,1,73,0)
+ 
+"BLD",1550,1,74,0)
+Options Associated:
+"BLD",1550,1,75,0)
+N/A
+"BLD",1550,1,76,0)
+ 
+"BLD",1550,1,77,0)
+Protocols Associated:
+"BLD",1550,1,78,0)
+N/A
+"BLD",1550,1,79,0)
+ 
+"BLD",1550,1,80,0)
+Security Keys Associated:
+"BLD",1550,1,81,0)
+N/A
+"BLD",1550,1,82,0)
+ 
+"BLD",1550,1,83,0)
+Templates Associated:
+"BLD",1550,1,84,0)
+N/A
+"BLD",1550,1,85,0)
+ 
+"BLD",1550,1,86,0)
+New Service Requests (NSRs):
+"BLD",1550,1,87,0)
+N/A
+"BLD",1550,1,88,0)
+ 
+"BLD",1550,1,89,0)
+Patient Safety Issues (PSIs):
+"BLD",1550,1,90,0)
+N/A
+"BLD",1550,1,91,0)
+ 
+"BLD",1550,1,92,0)
+Remedy Ticket & Overview:
+"BLD",1550,1,93,0)
+N/A
+"BLD",1550,1,94,0)
+ 
+"BLD",1550,1,95,0)
+Problem:
+"BLD",1550,1,96,0)
+XINDEX utility needs to support routine name and labels to 16 characters
+"BLD",1550,1,97,0)
+ and local variables names to 16 characters
+"BLD",1550,1,98,0)
+ 
+"BLD",1550,1,99,0)
+Resolution:
+"BLD",1550,1,100,0)
+ Change %ZOSF("TEST") to check for 16 characters instead of 8 in routine
+"BLD",1550,1,101,0)
+ ZOSFONT
+"BLD",1550,1,102,0)
+ 
+"BLD",1550,1,103,0)
+ 
+"BLD",1550,1,104,0)
+Thanks to Test Sites 
+"BLD",1550,1,105,0)
+====================
+"BLD",1550,1,106,0)
+TBD
+"BLD",1550,1,107,0)
+ 
+"BLD",1550,1,108,0)
+ 
+"BLD",1550,1,109,0)
+Documentation Retriviel Instructions:
+"BLD",1550,1,110,0)
+=====================================
+"BLD",1550,1,111,0)
+No changes have been made to Kernel documentation as a result of this
+"BLD",1550,1,112,0)
+patch.  However, the most up-to-date VA Kernel documentation is
+"BLD",1550,1,113,0)
+available on the VHA Software Documentation Library (VDL) at the
+"BLD",1550,1,114,0)
+following:
+"BLD",1550,1,115,0)
+http://www.DNS   /vdl/application.asp?appid=10
+"BLD",1550,1,116,0)
+ 
+"BLD",1550,1,117,0)
+Patch Installation:
+"BLD",1550,1,118,0)
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+"BLD",1550,1,119,0)
+ the installation instruction in the TOOLKIT XINDEX 7.3 patch.
+"BLD",1550,1,120,0)
+ 
+"BLD",1550,1,121,0)
+ 
+"BLD",1550,1,122,0)
+Routine Information:
+"BLD",1550,1,123,0)
+====================
+"BLD",1550,1,124,0)
+The second line of each of these routines now looks like:
+"BLD",1550,1,125,0)
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 10
+"BLD",1550,1,126,0)
+ 
+"BLD",1550,1,127,0)
+The checksums below are new checksums, and
+"BLD",1550,1,128,0)
+ can be checked with CHECK1^XTSUMBLD.
+"BLD",1550,1,129,0)
+ 
+"BLD",1550,1,130,0)
+ Routine Name: XU8P661
+"BLD",1550,1,131,0)
+    Before:       n/a   After:   B83899  **661**
+"BLD",1550,1,132,0)
+ Routine Name: ZOSFONT
+"BLD",1550,1,133,0)
+    Before: B19625334   After: B28658128  **34,104,365,661**
+"BLD",1550,1,134,0)
+ 
+"BLD",1550,1,135,0)
+Routine list of preceding patches: 365
+"BLD",1550,4,0)
+^9.64PA^8994^8
+"BLD",1550,4,9.6,0)
+9.6
+"BLD",1550,4,9.6,2,0)
+^9.641^9.6^1
+"BLD",1550,4,9.6,2,9.6,0)
+BUILD  (File-top level)
+"BLD",1550,4,9.6,2,9.6,1,0)
+^9.6411^913.1^5
+"BLD",1550,4,9.6,2,9.6,1,900,0)
+PRE-TRANSPORTATION ROUTINE
+"BLD",1550,4,9.6,2,9.6,1,913,0)
+ENVIRONMENT CHECK ROUTINE
+"BLD",1550,4,9.6,2,9.6,1,913.1,0)
+DELETE ENV ROUTINE
+"BLD",1550,4,9.6,2,9.6,1,914,0)
+POST-INSTALL ROUTINE
+"BLD",1550,4,9.6,2,9.6,1,916,0)
+PRE-INSTALL ROUTINE
+"BLD",1550,4,9.6,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,9.6,224)
+
+"BLD",1550,4,9.7,0)
+9.7
+"BLD",1550,4,9.7,2,0)
+^9.641^9.704^1
+"BLD",1550,4,9.7,2,9.704,0)
+ROUTINES  (sub-file)
+"BLD",1550,4,9.7,2,9.704,1,0)
+^9.6411^^
+"BLD",1550,4,9.7,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,9.7,224)
+
+"BLD",1550,4,9.8,0)
+9.8
+"BLD",1550,4,9.8,2,0)
+^9.641^9.801^2
+"BLD",1550,4,9.8,2,9.8,0)
+ROUTINE  (File-top level)
+"BLD",1550,4,9.8,2,9.8,1,0)
+^9.6411^.01^1
+"BLD",1550,4,9.8,2,9.8,1,.01,0)
+NAME
+"BLD",1550,4,9.8,2,9.801,0)
+TAG  (sub-file)
+"BLD",1550,4,9.8,2,9.801,1,0)
+^9.6411^.01^1
+"BLD",1550,4,9.8,2,9.801,1,.01,0)
+TAG
+"BLD",1550,4,9.8,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,9.8,224)
+
+"BLD",1550,4,14.4,0)
+14.4
+"BLD",1550,4,14.4,2,0)
+^9.641^14.4^1
+"BLD",1550,4,14.4,2,14.4,0)
+TASKS  (File-top level)
+"BLD",1550,4,14.4,2,14.4,1,0)
+^9.6411^2^2
+"BLD",1550,4,14.4,2,14.4,1,.01,0)
+Entry Point
+"BLD",1550,4,14.4,2,14.4,1,2,0)
+Routine Name
+"BLD",1550,4,14.4,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,14.4,224)
+
+"BLD",1550,4,19,0)
+19
+"BLD",1550,4,19,2,0)
+^9.641^19^1
+"BLD",1550,4,19,2,19,0)
+OPTION  (File-top level)
+"BLD",1550,4,19,2,19,1,0)
+^9.6411^25^1
+"BLD",1550,4,19,2,19,1,25,0)
+ROUTINE
+"BLD",1550,4,19,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,19,224)
+
+"BLD",1550,4,8991.5,0)
+8991.5
+"BLD",1550,4,8991.5,2,0)
+^9.641^8991.5^1
+"BLD",1550,4,8991.5,2,8991.5,0)
+XQAB ERRORS LOGGED  (File-top level)
+"BLD",1550,4,8991.5,2,8991.5,1,0)
+^9.6411^.02^1
+"BLD",1550,4,8991.5,2,8991.5,1,.02,0)
+ROUTINE
+"BLD",1550,4,8991.5,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,8991.5,224)
+
+"BLD",1550,4,8992.1,0)
+8992.1
+"BLD",1550,4,8992.1,2,0)
+^9.641^8992.1^1
+"BLD",1550,4,8992.1,2,8992.1,0)
+ALERT TRACKING  (File-top level)
+"BLD",1550,4,8992.1,2,8992.1,1,0)
+^9.6411^1.03^1
+"BLD",1550,4,8992.1,2,8992.1,1,1.03,0)
+ROUTINE TAG
+"BLD",1550,4,8992.1,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,8992.1,224)
+
+"BLD",1550,4,8994,0)
+8994
+"BLD",1550,4,8994,2,0)
+^9.641^8994^1
+"BLD",1550,4,8994,2,8994,0)
+REMOTE PROCEDURE  (File-top level)
+"BLD",1550,4,8994,2,8994,1,0)
+^9.6411^.03^2
+"BLD",1550,4,8994,2,8994,1,.02,0)
+TAG
+"BLD",1550,4,8994,2,8994,1,.03,0)
+ROUTINE
+"BLD",1550,4,8994,222)
+y^n^p^^^^n^^n
+"BLD",1550,4,8994,224)
+
+"BLD",1550,4,"APDD",9.6,9.6)
+
+"BLD",1550,4,"APDD",9.6,9.6,900)
+
+"BLD",1550,4,"APDD",9.6,9.6,913)
+
+"BLD",1550,4,"APDD",9.6,9.6,913.1)
+
+"BLD",1550,4,"APDD",9.6,9.6,914)
+
+"BLD",1550,4,"APDD",9.6,9.6,916)
+
+"BLD",1550,4,"APDD",9.7,9.704)
+
+"BLD",1550,4,"APDD",9.8,9.8)
+
+"BLD",1550,4,"APDD",9.8,9.8,.01)
+
+"BLD",1550,4,"APDD",9.8,9.801)
+
+"BLD",1550,4,"APDD",9.8,9.801,.01)
+
+"BLD",1550,4,"APDD",14.4,14.4)
+
+"BLD",1550,4,"APDD",14.4,14.4,.01)
+
+"BLD",1550,4,"APDD",14.4,14.4,2)
+
+"BLD",1550,4,"APDD",19,19)
+
+"BLD",1550,4,"APDD",19,19,25)
+
+"BLD",1550,4,"APDD",8991.5,8991.5)
+
+"BLD",1550,4,"APDD",8991.5,8991.5,.02)
+
+"BLD",1550,4,"APDD",8992.1,8992.1)
+
+"BLD",1550,4,"APDD",8992.1,8992.1,1.03)
+
+"BLD",1550,4,"APDD",8994,8994)
+
+"BLD",1550,4,"APDD",8994,8994,.02)
+
+"BLD",1550,4,"APDD",8994,8994,.03)
+
+"BLD",1550,4,"B",9.6,9.6)
+
+"BLD",1550,4,"B",9.7,9.7)
+
+"BLD",1550,4,"B",9.8,9.8)
+
+"BLD",1550,4,"B",14.4,14.4)
+
+"BLD",1550,4,"B",19,19)
+
+"BLD",1550,4,"B",8991.5,8991.5)
+
+"BLD",1550,4,"B",8992.1,8992.1)
+
+"BLD",1550,4,"B",8994,8994)
+
+"BLD",1550,6.3)
+15
+"BLD",1550,"INID")
+^y
+"BLD",1550,"INIT")
+XU8P661
+"BLD",1550,"KRN",0)
+^9.67PA^9002226^22
+"BLD",1550,"KRN",.4,0)
+.4
+"BLD",1550,"KRN",.401,0)
+.401
+"BLD",1550,"KRN",.402,0)
+.402
+"BLD",1550,"KRN",.403,0)
+.403
+"BLD",1550,"KRN",.5,0)
+.5
+"BLD",1550,"KRN",.84,0)
+.84
+"BLD",1550,"KRN",3.6,0)
+3.6
+"BLD",1550,"KRN",3.8,0)
+3.8
+"BLD",1550,"KRN",9.2,0)
+9.2
+"BLD",1550,"KRN",9.8,0)
+9.8
+"BLD",1550,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",1550,"KRN",9.8,"NM",1,0)
+ZOSFONT^^0^B28658128
+"BLD",1550,"KRN",9.8,"NM","B","ZOSFONT",1)
+
+"BLD",1550,"KRN",19,0)
+19
+"BLD",1550,"KRN",19.1,0)
+19.1
+"BLD",1550,"KRN",101,0)
+101
+"BLD",1550,"KRN",409.61,0)
+409.61
+"BLD",1550,"KRN",771,0)
+771
+"BLD",1550,"KRN",779.2,0)
+779.2
+"BLD",1550,"KRN",870,0)
+870
+"BLD",1550,"KRN",8989.51,0)
+8989.51
+"BLD",1550,"KRN",8989.52,0)
+8989.52
+"BLD",1550,"KRN",8993,0)
+8993
+"BLD",1550,"KRN",8994,0)
+8994
+"BLD",1550,"KRN",9002226,0)
+9002226
+"BLD",1550,"KRN","B",.4,.4)
+
+"BLD",1550,"KRN","B",.401,.401)
+
+"BLD",1550,"KRN","B",.402,.402)
+
+"BLD",1550,"KRN","B",.403,.403)
+
+"BLD",1550,"KRN","B",.5,.5)
+
+"BLD",1550,"KRN","B",.84,.84)
+
+"BLD",1550,"KRN","B",3.6,3.6)
+
+"BLD",1550,"KRN","B",3.8,3.8)
+
+"BLD",1550,"KRN","B",9.2,9.2)
+
+"BLD",1550,"KRN","B",9.8,9.8)
+
+"BLD",1550,"KRN","B",19,19)
+
+"BLD",1550,"KRN","B",19.1,19.1)
+
+"BLD",1550,"KRN","B",101,101)
+
+"BLD",1550,"KRN","B",409.61,409.61)
+
+"BLD",1550,"KRN","B",771,771)
+
+"BLD",1550,"KRN","B",779.2,779.2)
+
+"BLD",1550,"KRN","B",870,870)
+
+"BLD",1550,"KRN","B",8989.51,8989.51)
+
+"BLD",1550,"KRN","B",8989.52,8989.52)
+
+"BLD",1550,"KRN","B",8993,8993)
+
+"BLD",1550,"KRN","B",8994,8994)
+
+"BLD",1550,"KRN","B",9002226,9002226)
+
+"BLD",1550,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",1550,"QUES",0)
+^9.62^^
+"BLD",1550,"REQB",0)
+^9.611^^
+"FIA",9.6)
+BUILD
+"FIA",9.6,0)
+^XPD(9.6,
+"FIA",9.6,0,0)
+9.6I
+"FIA",9.6,0,1)
+y^n^p^^^^n^^n
+"FIA",9.6,0,10)
+
+"FIA",9.6,0,11)
+
+"FIA",9.6,0,"RLRO")
+
+"FIA",9.6,0,"VR")
+8.0^XU
+"FIA",9.6,9.6)
+1
+"FIA",9.6,9.6,900)
+
+"FIA",9.6,9.6,913)
+
+"FIA",9.6,9.6,913.1)
+
+"FIA",9.6,9.6,914)
+
+"FIA",9.6,9.6,916)
+
+"FIA",9.7)
+INSTALL
+"FIA",9.7,0)
+^XPD(9.7,
+"FIA",9.7,0,0)
+9.7I
+"FIA",9.7,0,1)
+y^n^p^^^^n^^n
+"FIA",9.7,0,10)
+
+"FIA",9.7,0,11)
+
+"FIA",9.7,0,"RLRO")
+
+"FIA",9.7,0,"VR")
+8.0^XU
+"FIA",9.7,9.7)
+1
+"FIA",9.7,9.7,40)
+
+"FIA",9.7,9.704)
+0
+"FIA",9.8)
+ROUTINE
+"FIA",9.8,0)
+^DIC(9.8,
+"FIA",9.8,0,0)
+9.8
+"FIA",9.8,0,1)
+y^n^p^^^^n^^n
+"FIA",9.8,0,10)
+
+"FIA",9.8,0,11)
+
+"FIA",9.8,0,"RLRO")
+
+"FIA",9.8,0,"VR")
+8.0^XU
+"FIA",9.8,9.8)
+1
+"FIA",9.8,9.8,.01)
+
+"FIA",9.8,9.8,5)
+
+"FIA",9.8,9.801)
+1
+"FIA",9.8,9.801,.01)
+
+"FIA",14.4)
+TASKS
+"FIA",14.4,0)
+^%ZTSK(
+"FIA",14.4,0,0)
+14.4
+"FIA",14.4,0,1)
+y^n^p^^^^n^^n
+"FIA",14.4,0,10)
+
+"FIA",14.4,0,11)
+
+"FIA",14.4,0,"RLRO")
+
+"FIA",14.4,0,"VR")
+8.0^XU
+"FIA",14.4,14.4)
+1
+"FIA",14.4,14.4,.01)
+
+"FIA",14.4,14.4,2)
+
+"FIA",19)
+OPTION
+"FIA",19,0)
+^DIC(19,
+"FIA",19,0,0)
+19I
+"FIA",19,0,1)
+y^n^p^^^^n^^n
+"FIA",19,0,10)
+
+"FIA",19,0,11)
+
+"FIA",19,0,"RLRO")
+
+"FIA",19,0,"VR")
+8.0^XU
+"FIA",19,19)
+1
+"FIA",19,19,25)
+
+"FIA",8991.5)
+XQAB ERRORS LOGGED
+"FIA",8991.5,0)
+^XTV(8991.5,
+"FIA",8991.5,0,0)
+8991.5
+"FIA",8991.5,0,1)
+y^n^p^^^^n^^n
+"FIA",8991.5,0,10)
+
+"FIA",8991.5,0,11)
+
+"FIA",8991.5,0,"RLRO")
+
+"FIA",8991.5,0,"VR")
+8.0^XU
+"FIA",8991.5,8991.5)
+1
+"FIA",8991.5,8991.5,.02)
+
+"FIA",8992.1)
+ALERT TRACKING
+"FIA",8992.1,0)
+^XTV(8992.1,
+"FIA",8992.1,0,0)
+8992.1A
+"FIA",8992.1,0,1)
+y^n^p^^^^n^^n
+"FIA",8992.1,0,10)
+
+"FIA",8992.1,0,11)
+
+"FIA",8992.1,0,"RLRO")
+
+"FIA",8992.1,0,"VR")
+8.0^XU
+"FIA",8992.1,8992.1)
+1
+"FIA",8992.1,8992.1,1.03)
+
+"FIA",8994)
+REMOTE PROCEDURE
+"FIA",8994,0)
+^XWB(8994,
+"FIA",8994,0,0)
+8994
+"FIA",8994,0,1)
+y^n^p^^^^n^^n
+"FIA",8994,0,10)
+
+"FIA",8994,0,11)
+
+"FIA",8994,0,"RLRO")
+
+"FIA",8994,0,"VR")
+8.0^XU
+"FIA",8994,8994)
+1
+"FIA",8994,8994,.02)
+
+"FIA",8994,8994,.03)
+
+"INIT")
+XU8P661
+"MBREQ")
+1
+"PKG",3,-1)
+1^1
+"PKG",3,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",3,22,0)
+^9.49I^1^1
+"PKG",3,22,1,0)
+8.0^3090706^3090706^6
+"PKG",3,22,1,"PAH",1,0)
+661^3170523
+"PKG",3,22,1,"PAH",1,1,0)
+^^135^135^3170523
+"PKG",3,22,1,"PAH",1,1,1,0)
+Description:
+"PKG",3,22,1,"PAH",1,1,2,0)
+===========
+"PKG",3,22,1,"PAH",1,1,3,0)
+This patch supports the change of the SAC for longer Tags and Routine
+"PKG",3,22,1,"PAH",1,1,4,0)
+names.  It increases the length from 8 to 16 characters.  
+"PKG",3,22,1,"PAH",1,1,5,0)
+ 
+"PKG",3,22,1,"PAH",1,1,6,0)
+This patch also makes several changes to the ZOSFONT routine, but only
+"PKG",3,22,1,"PAH",1,1,7,0)
+the ^%ZOSF("TEST") node will be set.
+"PKG",3,22,1,"PAH",1,1,8,0)
+ 
+"PKG",3,22,1,"PAH",1,1,9,0)
+The routine ZOSFONT has the following changes:
+"PKG",3,22,1,"PAH",1,1,10,0)
+   1. A new tag, NOASK, allows the setup of the %ZOSF global 
+"PKG",3,22,1,"PAH",1,1,11,0)
+      without user interaction.
+"PKG",3,22,1,"PAH",1,1,12,0)
+ 
+"PKG",3,22,1,"PAH",1,1,13,0)
+   2. A new tag, ONE(X) allows the setup of a single node in 
+"PKG",3,22,1,"PAH",1,1,14,0)
+      the %ZOSF global.  This allows this patch to update just
+"PKG",3,22,1,"PAH",1,1,15,0)
+      %ZOSF("TEST").
+"PKG",3,22,1,"PAH",1,1,16,0)
+ 
+"PKG",3,22,1,"PAH",1,1,17,0)
+   3. There is now a short description for each %ZOSF node in 
+"PKG",3,22,1,"PAH",1,1,18,0)
+      the text.
+"PKG",3,22,1,"PAH",1,1,19,0)
+ 
+"PKG",3,22,1,"PAH",1,1,20,0)
+There are 2 changes to the ^%ZOSF global:
+"PKG",3,22,1,"PAH",1,1,21,0)
+  1. The node ^%ZOSF("TEST") has changed, the checking of routine pattern
+"PKG",3,22,1,"PAH",1,1,22,0)
+     has been removed.  It has changed from:
+"PKG",3,22,1,"PAH",1,1,23,0)
+      I X?1(1""%"",1A).7AN,$D(^$ROUTINE(X))  to
+"PKG",3,22,1,"PAH",1,1,24,0)
+      I X]"",$D(^$ROUTINE(X)).
+"PKG",3,22,1,"PAH",1,1,25,0)
+ The checking of routine pattern has been removed.
+"PKG",3,22,1,"PAH",1,1,26,0)
+ 
+"PKG",3,22,1,"PAH",1,1,27,0)
+The post install routine XU8661 cleans up the ^%ZOSF global.
+"PKG",3,22,1,"PAH",1,1,28,0)
+   1. The node ^%ZOSF("GSEL;Select Globals") is deleted.  This 
+"PKG",3,22,1,"PAH",1,1,29,0)
+      node was incorrectly defined in patch XU*8*365.
+"PKG",3,22,1,"PAH",1,1,30,0)
+ 
+"PKG",3,22,1,"PAH",1,1,31,0)
+   2. Sets ^%ZOSF("TEST")
+"PKG",3,22,1,"PAH",1,1,32,0)
+ 
+"PKG",3,22,1,"PAH",1,1,33,0)
+ 
+"PKG",3,22,1,"PAH",1,1,34,0)
+Blood Bank Clearance
+"PKG",3,22,1,"PAH",1,1,35,0)
+====================
+"PKG",3,22,1,"PAH",1,1,36,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*661 contains
+"PKG",3,22,1,"PAH",1,1,37,0)
+changes to a package referenced in ProPath standard titled: BBM Team 
+"PKG",3,22,1,"PAH",1,1,38,0)
+Review
+"PKG",3,22,1,"PAH",1,1,39,0)
+of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+"PKG",3,22,1,"PAH",1,1,40,0)
+software design safeguards or safety critical elements functions.
+"PKG",3,22,1,"PAH",1,1,41,0)
+ 
+"PKG",3,22,1,"PAH",1,1,42,0)
+RISK ANALYSIS: Changes made by patch XU*8.0*661 have no effect on Blood 
+"PKG",3,22,1,"PAH",1,1,43,0)
+Bank
+"PKG",3,22,1,"PAH",1,1,44,0)
+software functionality, therefore RISK is none.
+"PKG",3,22,1,"PAH",1,1,45,0)
+ 
+"PKG",3,22,1,"PAH",1,1,46,0)
+ 
+"PKG",3,22,1,"PAH",1,1,47,0)
+Patch Components
+"PKG",3,22,1,"PAH",1,1,48,0)
+================
+"PKG",3,22,1,"PAH",1,1,49,0)
+ Files & Fields Associateed:
+"PKG",3,22,1,"PAH",1,1,50,0)
+ 
+"PKG",3,22,1,"PAH",1,1,51,0)
+ BUILD file #9.6              PRE-TRANSPORTATION ROUTINE   #900
+"PKG",3,22,1,"PAH",1,1,52,0)
+                              ENVIRONMENT CHECK ROUTINE    #913
+"PKG",3,22,1,"PAH",1,1,53,0)
+                              DEL ENV ROUTINE              #913.1
+"PKG",3,22,1,"PAH",1,1,54,0)
+                              POST-INSTALL ROUINTE         #914
+"PKG",3,22,1,"PAH",1,1,55,0)
+                              PRE-INSTALL ROUINTE          #916
+"PKG",3,22,1,"PAH",1,1,56,0)
+ INSTALL file #9.7            ROUTINES  multiple           #40
+"PKG",3,22,1,"PAH",1,1,57,0)
+ ROUTINE file #9.8            NAME                         #.01
+"PKG",3,22,1,"PAH",1,1,58,0)
+                              TAG                          #5
+"PKG",3,22,1,"PAH",1,1,59,0)
+ TASKS file   #14.4           Entry Point                  #.01
+"PKG",3,22,1,"PAH",1,1,60,0)
+                              Routine Name                 #2
+"PKG",3,22,1,"PAH",1,1,61,0)
+ OPTION file  #19             ROUTINE                      #25
+"PKG",3,22,1,"PAH",1,1,62,0)
+ XQAB ERRORS LOGGED
+"PKG",3,22,1,"PAH",1,1,63,0)
+    file 8991.5               ROUTINE                      #.02
+"PKG",3,22,1,"PAH",1,1,64,0)
+ ALERT TRACKING file #8992.1  ROUTINE TAG                  #1.03
+"PKG",3,22,1,"PAH",1,1,65,0)
+ REMOTE PROCEDURE file #8994  TAG                          #.02
+"PKG",3,22,1,"PAH",1,1,66,0)
+                              ROUTINE                      #.03
+"PKG",3,22,1,"PAH",1,1,67,0)
+ 
+"PKG",3,22,1,"PAH",1,1,68,0)
+Forms Associated:
+"PKG",3,22,1,"PAH",1,1,69,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,70,0)
+ 
+"PKG",3,22,1,"PAH",1,1,71,0)
+Mail Groups Associated:
+"PKG",3,22,1,"PAH",1,1,72,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,73,0)
+ 
+"PKG",3,22,1,"PAH",1,1,74,0)
+Options Associated:
+"PKG",3,22,1,"PAH",1,1,75,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,76,0)
+ 
+"PKG",3,22,1,"PAH",1,1,77,0)
+Protocols Associated:
+"PKG",3,22,1,"PAH",1,1,78,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,79,0)
+ 
+"PKG",3,22,1,"PAH",1,1,80,0)
+Security Keys Associated:
+"PKG",3,22,1,"PAH",1,1,81,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,82,0)
+ 
+"PKG",3,22,1,"PAH",1,1,83,0)
+Templates Associated:
+"PKG",3,22,1,"PAH",1,1,84,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,85,0)
+ 
+"PKG",3,22,1,"PAH",1,1,86,0)
+New Service Requests (NSRs):
+"PKG",3,22,1,"PAH",1,1,87,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,88,0)
+ 
+"PKG",3,22,1,"PAH",1,1,89,0)
+Patient Safety Issues (PSIs):
+"PKG",3,22,1,"PAH",1,1,90,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,91,0)
+ 
+"PKG",3,22,1,"PAH",1,1,92,0)
+Remedy Ticket & Overview:
+"PKG",3,22,1,"PAH",1,1,93,0)
+N/A
+"PKG",3,22,1,"PAH",1,1,94,0)
+ 
+"PKG",3,22,1,"PAH",1,1,95,0)
+Problem:
+"PKG",3,22,1,"PAH",1,1,96,0)
+XINDEX utility needs to support routine name and labels to 16 characters
+"PKG",3,22,1,"PAH",1,1,97,0)
+ and local variables names to 16 characters
+"PKG",3,22,1,"PAH",1,1,98,0)
+ 
+"PKG",3,22,1,"PAH",1,1,99,0)
+Resolution:
+"PKG",3,22,1,"PAH",1,1,100,0)
+ Change %ZOSF("TEST") to check for 16 characters instead of 8 in routine
+"PKG",3,22,1,"PAH",1,1,101,0)
+ ZOSFONT
+"PKG",3,22,1,"PAH",1,1,102,0)
+ 
+"PKG",3,22,1,"PAH",1,1,103,0)
+ 
+"PKG",3,22,1,"PAH",1,1,104,0)
+Thanks to Test Sites 
+"PKG",3,22,1,"PAH",1,1,105,0)
+====================
+"PKG",3,22,1,"PAH",1,1,106,0)
+TBD
+"PKG",3,22,1,"PAH",1,1,107,0)
+ 
+"PKG",3,22,1,"PAH",1,1,108,0)
+ 
+"PKG",3,22,1,"PAH",1,1,109,0)
+Documentation Retriviel Instructions:
+"PKG",3,22,1,"PAH",1,1,110,0)
+=====================================
+"PKG",3,22,1,"PAH",1,1,111,0)
+No changes have been made to Kernel documentation as a result of this
+"PKG",3,22,1,"PAH",1,1,112,0)
+patch.  However, the most up-to-date VA Kernel documentation is
+"PKG",3,22,1,"PAH",1,1,113,0)
+available on the VHA Software Documentation Library (VDL) at the
+"PKG",3,22,1,"PAH",1,1,114,0)
+following:
+"PKG",3,22,1,"PAH",1,1,115,0)
+http://www.DNS   /vdl/application.asp?appid=10
+"PKG",3,22,1,"PAH",1,1,116,0)
+ 
+"PKG",3,22,1,"PAH",1,1,117,0)
+Patch Installation:
+"PKG",3,22,1,"PAH",1,1,118,0)
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+"PKG",3,22,1,"PAH",1,1,119,0)
+ the installation instruction in the TOOLKIT XINDEX 7.3 patch.
+"PKG",3,22,1,"PAH",1,1,120,0)
+ 
+"PKG",3,22,1,"PAH",1,1,121,0)
+ 
+"PKG",3,22,1,"PAH",1,1,122,0)
+Routine Information:
+"PKG",3,22,1,"PAH",1,1,123,0)
+====================
+"PKG",3,22,1,"PAH",1,1,124,0)
+The second line of each of these routines now looks like:
+"PKG",3,22,1,"PAH",1,1,125,0)
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 10
+"PKG",3,22,1,"PAH",1,1,126,0)
+ 
+"PKG",3,22,1,"PAH",1,1,127,0)
+The checksums below are new checksums, and
+"PKG",3,22,1,"PAH",1,1,128,0)
+ can be checked with CHECK1^XTSUMBLD.
+"PKG",3,22,1,"PAH",1,1,129,0)
+ 
+"PKG",3,22,1,"PAH",1,1,130,0)
+ Routine Name: XU8P661
+"PKG",3,22,1,"PAH",1,1,131,0)
+    Before:       n/a   After:   B83899  **661**
+"PKG",3,22,1,"PAH",1,1,132,0)
+ Routine Name: ZOSFONT
+"PKG",3,22,1,"PAH",1,1,133,0)
+    Before: B19625334   After: B28658128  **34,104,365,661**
+"PKG",3,22,1,"PAH",1,1,134,0)
+ 
+"PKG",3,22,1,"PAH",1,1,135,0)
+Routine list of preceding patches: 365
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","XU8P661")
+0^^B83899
+"RTN","XU8P661",1,0)
+XU8P661 ;OAK/RD - Post install for patch XU*8*661
+"RTN","XU8P661",2,0)
+ ;;8.0;KERNEL;**661**;Jul 10, 1995;Build 15
+"RTN","XU8P661",3,0)
+ ;setup %ZOSF("TEST")
+"RTN","XU8P661",4,0)
+ D ONE^ZOSFONT("TEST")
+"RTN","XU8P661",5,0)
+ ;remove incorrect node that was set in patch 365
+"RTN","XU8P661",6,0)
+ K ^%ZOSF("GSEL;Select Globals")
+"RTN","XU8P661",7,0)
+ Q
+"RTN","ZOSFONT")
+0^1^B28658128
+"RTN","ZOSFONT",1,0)
+ZOSFONT ;SFISC/AC - SETS UP ^%ZOSF for Cache for NT/VMS ;09/29/09  15:35
+"RTN","ZOSFONT",2,0)
+ ;;8.0;KERNEL;**34,104,365,661**;JUL 10, 1995;Build 15
+"RTN","ZOSFONT",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ZOSFONT",4,0)
+ ;For Cache versions 2011 and above
+"RTN","ZOSFONT",5,0)
+ S %Y=1
+"RTN","ZOSFONT",6,0)
+INIT ;
+"RTN","ZOSFONT",7,0)
+ N ZO F I="MGR","PROD","VOL" S:$D(^%ZOSF(I)) ZO(I)=^%ZOSF(I)
+"RTN","ZOSFONT",8,0)
+ F I=1:2 S Z=$P($T(Z+I),";;",2) Q:Z=""  S X=$P($T(Z+1+I),";;",2,99) S ^%ZOSF(Z)=$S($D(ZO(Z)):ZO(Z),1:X)
+"RTN","ZOSFONT",9,0)
+ ;
+"RTN","ZOSFONT",10,0)
+ G:'$G(%Y) OS
+"RTN","ZOSFONT",11,0)
+MGR W !,"NAME OF MANAGER'S NAMESPACE: "_^%ZOSF("MGR")_"// " R X:$S($G(DTIME):DTIME,1:9999) I X]"" X ^("UCICHECK") G MGR:0[Y S ^%ZOSF("MGR")=X
+"RTN","ZOSFONT",12,0)
+PROD W !,"PRODUCTION (SIGN-ON) NAMESPACE: "_^%ZOSF("PROD")_"// " R X:$S($G(DTIME):DTIME,1:9999) I X]"" X ^("UCICHECK") G PROD:0[Y S ^%ZOSF("PROD")=Y
+"RTN","ZOSFONT",13,0)
+VOL W !,"NAME OF THIS CONFIGURATION: "_^%ZOSF("VOL")_"//" R X:$S($G(DTIME):DTIME,1:9999) I X]"" S:X?1.22U ^%ZOSF("VOL")=X I X'?1.22U W "MUST BE 1-22 uppercase characters." G VOL
+"RTN","ZOSFONT",14,0)
+ ;
+"RTN","ZOSFONT",15,0)
+OS S $P(^%ZOSF("OS"),"^",1)="OpenM-NT" S:'$P(^%ZOSF("OS"),"^",2) $P(^%ZOSF("OS"),"^",2)=18
+"RTN","ZOSFONT",16,0)
+ W !!,"ALL SET UP",!!
+"RTN","ZOSFONT",17,0)
+ Q
+"RTN","ZOSFONT",18,0)
+ ;
+"RTN","ZOSFONT",19,0)
+NOASK ;Setup %ZOSF without terminal interaction
+"RTN","ZOSFONT",20,0)
+ S %Y=0
+"RTN","ZOSFONT",21,0)
+ G INIT
+"RTN","ZOSFONT",22,0)
+ ;
+"RTN","ZOSFONT",23,0)
+ONE(X) ;update a single global node
+"RTN","ZOSFONT",24,0)
+ Q:X=""
+"RTN","ZOSFONT",25,0)
+ F I=1:2 S Z=$P($T(Z+I),";;",2) Q:Z=""  I Z=X S Y=$P($T(Z+1+I),";;",2,99),^%ZOSF(X)=Y Q
+"RTN","ZOSFONT",26,0)
+ Q
+"RTN","ZOSFONT",27,0)
+Z ;;
+"RTN","ZOSFONT",28,0)
+ ;;ACTJ;;Active Jobs
+"RTN","ZOSFONT",29,0)
+ ;;S Y=$$ACTJ^%ZOSV()
+"RTN","ZOSFONT",30,0)
+ ;;AVJ;;Available Jobs
+"RTN","ZOSFONT",31,0)
+ ;;S Y=$$AVJ^%ZOSV()
+"RTN","ZOSFONT",32,0)
+ ;;BRK;;Enable Break
+"RTN","ZOSFONT",33,0)
+ ;;U $I:("":"+B")
+"RTN","ZOSFONT",34,0)
+ ;;DEL;;Delete Routine
+"RTN","ZOSFONT",35,0)
+ ;;X "ZR  ZS @X"
+"RTN","ZOSFONT",36,0)
+ ;;EOFF;;Echo off
+"RTN","ZOSFONT",37,0)
+ ;;U $I:("":"+S")
+"RTN","ZOSFONT",38,0)
+ ;;EON;;Echo On
+"RTN","ZOSFONT",39,0)
+ ;;U $I:("":"-S")
+"RTN","ZOSFONT",40,0)
+ ;;EOT;;End of Tape
+"RTN","ZOSFONT",41,0)
+ ;;S Y=$ZA\1024#2
+"RTN","ZOSFONT",42,0)
+ ;;ERRTN;;Error Routine
+"RTN","ZOSFONT",43,0)
+ ;;^%ZTER
+"RTN","ZOSFONT",44,0)
+ ;;ETRP;;obsolete
+"RTN","ZOSFONT",45,0)
+ ;;Q
+"RTN","ZOSFONT",46,0)
+ ;;GD;;Global Directory
+"RTN","ZOSFONT",47,0)
+ ;;D ^%GD
+"RTN","ZOSFONT",48,0)
+ ;;GSEL;;Select Globals
+"RTN","ZOSFONT",49,0)
+ ;;K ^CacheTempJ($J),^UTILITY($J) D ^%SYS.GSET M ^UTILITY($J)=^CacheTempJ($J) K ^CacheTempJ($J)
+"RTN","ZOSFONT",50,0)
+ ;;JOBPARAM;;Local Job
+"RTN","ZOSFONT",51,0)
+ ;;D JOBPAR^%ZOSV
+"RTN","ZOSFONT",52,0)
+ ;;LABOFF;;Special Lab Echo off
+"RTN","ZOSFONT",53,0)
+ ;;U IO:("":"+S+I-T":$C(13,27))
+"RTN","ZOSFONT",54,0)
+ ;;LOAD;;Load Routine
+"RTN","ZOSFONT",55,0)
+ ;;N %,%N S %N=0 X "ZL @X F XCNP=XCNP+1:1 S %N=%N+1,%=$T(+%N) Q:$L(%)=0  S @(DIF_XCNP_"",0)"")=%"
+"RTN","ZOSFONT",56,0)
+ ;;LPC;;Longitudinal Parity Check
+"RTN","ZOSFONT",57,0)
+ ;;S Y=$ZC(X)
+"RTN","ZOSFONT",58,0)
+ ;;MAXSIZ;;Set Partition Size
+"RTN","ZOSFONT",59,0)
+ ;;S $ZS=X+X
+"RTN","ZOSFONT",60,0)
+ ;;MGR
+"RTN","ZOSFONT",61,0)
+ ;;%SYS
+"RTN","ZOSFONT",62,0)
+ ;;MAGTAPE;;Sets magtape functions into %MT
+"RTN","ZOSFONT",63,0)
+ ;;S %MT("BS")="*-1",%MT("FS")="*-2",%MT("WTM")="*-3",%MT("WB")="*-4",%MT("REW")="*-5",%MT("RB")="*-6",%MT("REL")="*-7",%MT("WHL")="*-8",%MT("WEL")="*-9"
+"RTN","ZOSFONT",64,0)
+ ;;MTBOT;;Begining of Tape
+"RTN","ZOSFONT",65,0)
+ ;;S Y=$ZA\32#2
+"RTN","ZOSFONT",66,0)
+ ;;MTONLINE;;Magtape Online
+"RTN","ZOSFONT",67,0)
+ ;;S Y=$ZA\64#2
+"RTN","ZOSFONT",68,0)
+ ;;MTWPROT;;Magtape Write Protected
+"RTN","ZOSFONT",69,0)
+ ;;S Y=$ZA\4#2
+"RTN","ZOSFONT",70,0)
+ ;;MTERR;;Magtape Error
+"RTN","ZOSFONT",71,0)
+ ;;S Y=$ZA\32768#2
+"RTN","ZOSFONT",72,0)
+ ;;NBRK;;No break
+"RTN","ZOSFONT",73,0)
+ ;;U $I:("":"-B")
+"RTN","ZOSFONT",74,0)
+ ;;NO-PASSALL;;Set terminal to normal text mode
+"RTN","ZOSFONT",75,0)
+ ;;U $I:("":"-I+T")
+"RTN","ZOSFONT",76,0)
+ ;;NO-TYPE-AHEAD;;Turn off Type Ahead
+"RTN","ZOSFONT",77,0)
+ ;;U $I:("":"+F":$C(13,27))
+"RTN","ZOSFONT",78,0)
+ ;;PASSALL;;Set terminal to pass all codes
+"RTN","ZOSFONT",79,0)
+ ;;U $I:("":"+I-T")
+"RTN","ZOSFONT",80,0)
+ ;;PRIINQ;;Priority in current queue
+"RTN","ZOSFONT",81,0)
+ ;;N %PRIO D ^%PRIO S Y=$S('%PRIO:5,%PRIO>0:8,1:3)
+"RTN","ZOSFONT",82,0)
+ ;;PRIORITY;;set priority to X (1=low, 10=high)
+"RTN","ZOSFONT",83,0)
+ ;;D @($S(X>7:"NORMAL",X>3:"NORMAL",1:"LOW")_"^%PRIO") ;Don't do HIGH
+"RTN","ZOSFONT",84,0)
+ ;;PROGMODE;;Checks Programmer Mode
+"RTN","ZOSFONT",85,0)
+ ;;S Y=$ZJOB#2
+"RTN","ZOSFONT",86,0)
+ ;;PROD
+"RTN","ZOSFONT",87,0)
+ ;;VAH
+"RTN","ZOSFONT",88,0)
+ ;;RD;;Routine Directory
+"RTN","ZOSFONT",89,0)
+ ;;D ^%RD
+"RTN","ZOSFONT",90,0)
+ ;;RESJOB;;Kill job on local node
+"RTN","ZOSFONT",91,0)
+ ;;N OLD S OLD=$ZNSPACE ZNSPACE "%SYS" D ^RESJOB ZNSPACE OLD Q
+"RTN","ZOSFONT",92,0)
+ ;;RM;;Set Right Margin for terminal
+"RTN","ZOSFONT",93,0)
+ ;;I $G(IOT)["TRM" U $I:X
+"RTN","ZOSFONT",94,0)
+ ;;RSEL;;Routine Select
+"RTN","ZOSFONT",95,0)
+ ;;K ^UTILITY($J) D KERNEL^%RSET K %ST ;Special entry point for VA
+"RTN","ZOSFONT",96,0)
+ ;;RSUM;;Returns Checksum of Routine
+"RTN","ZOSFONT",97,0)
+ ;;N %,%1,%3 ZL @X S Y=0 F %=1,3:1 S %1=$T(+%),%3=$F(%1," ") Q:'%3  S %3=$S($E(%1,%3)'=";":$L(%1),$E(%1,%3+1)=";":$L(%1),1:%3-2) F %2=1:1:%3 S Y=$A(%1,%2)*%2+Y
+"RTN","ZOSFONT",98,0)
+ ;;RSUM1;;Returns new Checksum of Routine
+"RTN","ZOSFONT",99,0)
+ ;;N %,%1,%3 ZL @X S Y=0 F %=1,3:1 S %1=$T(+%),%3=$F(%1," ") Q:'%3  S %3=$S($E(%1,%3)'=";":$L(%1),$E(%1,%3+1)=";":$L(%1),1:%3-2) F %2=1:1:%3 S Y=$A(%1,%2)*(%2+%)+Y
+"RTN","ZOSFONT",100,0)
+ ;;SS;;System Status
+"RTN","ZOSFONT",101,0)
+ ;;D ^%SS
+"RTN","ZOSFONT",102,0)
+ ;;SAVE;;Save Routine
+"RTN","ZOSFONT",103,0)
+ ;;N XCS S XCS="F XCM=1:1 S XCN=$O(@(DIE_XCN_"")"")) Q:+XCN'=XCN  S %=^(XCN,0) Q:$E(%,1)=""$""  I $E(%,1)'="";"" ZI %" X "ZR  X XCS ZS @X"
+"RTN","ZOSFONT",104,0)
+ ;;SIZE;;Routine size in Bytes
+"RTN","ZOSFONT",105,0)
+ ;;S Y=0 F I=1:1 S %=$T(+I) Q:%=""  S Y=Y+$L(%)+2
+"RTN","ZOSFONT",106,0)
+ ;;TEST;;Routine exist
+"RTN","ZOSFONT",107,0)
+ ;;I X]"",$D(^$ROUTINE(X))
+"RTN","ZOSFONT",108,0)
+ ;;TMK;;Magtape Mark
+"RTN","ZOSFONT",109,0)
+ ;;S Y=$ZA\4#2
+"RTN","ZOSFONT",110,0)
+ ;;TRAP;;Sets Error Trap;S X="^%ET",@^%ZOSF("TRAP"); User $ETRAP
+"RTN","ZOSFONT",111,0)
+ ;;$ZT=X
+"RTN","ZOSFONT",112,0)
+ ;;TRMOFF;;Terminators off
+"RTN","ZOSFONT",113,0)
+ ;;U $I:("":"-I-T":$C(13,27))
+"RTN","ZOSFONT",114,0)
+ ;;TRMON;;Terminators on
+"RTN","ZOSFONT",115,0)
+ ;;U $I:("":"+I+T")
+"RTN","ZOSFONT",116,0)
+ ;;TRMRD;;Read Terminator
+"RTN","ZOSFONT",117,0)
+ ;;S Y=$A($ZB),Y=$S(Y<32:Y,Y=127:Y,1:0)
+"RTN","ZOSFONT",118,0)
+ ;;TYPE-AHEAD;;Allows Type-ahead
+"RTN","ZOSFONT",119,0)
+ ;;U $I:("":"-F":$C(13,27))
+"RTN","ZOSFONT",120,0)
+ ;;UCI;;Current UCI
+"RTN","ZOSFONT",121,0)
+ ;;D UCI^%ZOSV
+"RTN","ZOSFONT",122,0)
+ ;;UCICHECK;;UCI Valid
+"RTN","ZOSFONT",123,0)
+ ;;S Y=$$UCICHECK^%ZOSV(X)
+"RTN","ZOSFONT",124,0)
+ ;;UPPERCASE;;Convert Lower case to Upper case
+"RTN","ZOSFONT",125,0)
+ ;;S Y=$TR(X,"abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+"RTN","ZOSFONT",126,0)
+ ;;XY;;Set $X & $Y
+"RTN","ZOSFONT",127,0)
+ ;;S $X=DX,$Y=DY
+"RTN","ZOSFONT",128,0)
+ ;;VOL;;VOLUME SET NAME
+"RTN","ZOSFONT",129,0)
+ ;;ROU
+"RTN","ZOSFONT",130,0)
+ ;;ZD;;$H to external
+"RTN","ZOSFONT",131,0)
+ ;;S Y=$ZD(X)
+"UP",9.7,9.704,-1)
+9.7^RTN
+"UP",9.7,9.704,0)
+9.704
+"UP",9.8,9.801,-1)
+9.8^T
+"UP",9.8,9.801,0)
+9.801
+"VER")
+8.0^22.2
+"^DD",9.6,9.6,900,0)
+PRE-TRANSPORTATION ROUTINE^FJ33X^^PRET;E1,240^K:$L(X)>33!($L(X)<3)!'(X?.1UP.15UN.1"^"1UP.15UN) X
+"^DD",9.6,9.6,900,3)
+Enter a routine, [TAG^]ROUTINE, up to 33 characters.
+"^DD",9.6,9.6,900,21,0)
+^.001^6^6^3160307^^^^
+"^DD",9.6,9.6,900,21,1,0)
+The name of the routine which is run before the Transport Global
+"^DD",9.6,9.6,900,21,2,0)
+is sent. You can use this routine to add nodes to the Transport
+"^DD",9.6,9.6,900,21,3,0)
+Global.  The variable XPDGREF will be defined to a closed global
+"^DD",9.6,9.6,900,21,4,0)
+root that could be used to set the nodes.
+"^DD",9.6,9.6,900,21,5,0)
+ example: S @XPDGREF@("mydata",1,0)="node one of data"
+"^DD",9.6,9.6,900,21,6,0)
+
+"^DD",9.6,9.6,900,"DT")
+3160307
+"^DD",9.6,9.6,913,0)
+ENVIRONMENT CHECK ROUTINE^FXJ16^^PRE;1^K:$L(X)<3!(X'?1U.15UN) X
+"^DD",9.6,9.6,913,.1)
+DEVELOPERS ROUTINE RUN BEFORE 'INIT' QUESTIONS ASKED
+"^DD",9.6,9.6,913,3)
+Enter name of developer's environment check routine (3-16 characters) that runs before any user questions are asked.  This routine should be used for environment check only and should not alter data.
+"^DD",9.6,9.6,913,21,0)
+^.001^8^8^3160307^^^^
+"^DD",9.6,9.6,913,21,1,0)
+The name of the developer's routine which is run at the beginning of
+"^DD",9.6,9.6,913,21,2,0)
+the install process.  This should just check the environment
+"^DD",9.6,9.6,913,21,3,0)
+and should not alter any data, since the user has no way to exit out of
+"^DD",9.6,9.6,913,21,4,0)
+the install process until this program runs to completion.
+"^DD",9.6,9.6,913,21,5,0)
+This routine can interact with the user. If the variable XPDQUIT is set,
+"^DD",9.6,9.6,913,21,6,0)
+the install process will terminate.
+"^DD",9.6,9.6,913,21,7,0)
+ Note: This routine must be self-contained, since it will be the only
+"^DD",9.6,9.6,913,21,8,0)
+routine installed from this package at this time.
+"^DD",9.6,9.6,913,"DT")
+3160307
+"^DD",9.6,9.6,913.1,0)
+DELETE ENV ROUTINE^S^y:Yes;n:No;^INID;1^Q
+"^DD",9.6,9.6,913.1,3)
+Enter 'Yes' if you want the Environment Check Routine deleted at the end of the install.
+"^DD",9.6,9.6,913.1,21,0)
+^.001^3^3^3160307^^^
+"^DD",9.6,9.6,913.1,21,1,0)
+Setting this field to YES will instruct KIDS to delete the Environment
+"^DD",9.6,9.6,913.1,21,2,0)
+Check Routine at the end of the install.
+"^DD",9.6,9.6,913.1,21,3,0)
+
+"^DD",9.6,9.6,913.1,"DT")
+3160307
+"^DD",9.6,9.6,914,0)
+POST-INSTALL ROUTINE^FXJ33^^INIT;E1,240^K:$L(X)>33!(X'?.1UP.15UN.1"^"1UP.15UN) X
+"^DD",9.6,9.6,914,.1)
+
+"^DD",9.6,9.6,914,3)
+Enter the name of the developer's post-initialization [TAG^]ROUTINE, up to 33 characters. 
+"^DD",9.6,9.6,914,21,0)
+^.001^3^3^3160307^^^^
+"^DD",9.6,9.6,914,21,1,0)
+The name of the developer's routine which is run immediately after the
+"^DD",9.6,9.6,914,21,2,0)
+installation of the package.  This routine cannot be interactive with
+"^DD",9.6,9.6,914,21,3,0)
+the user, it might be queued to run at a later time.
+"^DD",9.6,9.6,914,"DT")
+3160307
+"^DD",9.6,9.6,916,0)
+PRE-INSTALL ROUTINE^FXJ33^^INI;E1,240^K:$L(X)>33!(X'?.1UP.15UN.1"^".1UP.15UN) X
+"^DD",9.6,9.6,916,.1)
+
+"^DD",9.6,9.6,916,3)
+Enter name of developer's pre-init [TAG^]ROUTINE, up to 33 characters.
+"^DD",9.6,9.6,916,21,0)
+^^6^6^2940518^^^^
+"^DD",9.6,9.6,916,21,1,0)
+Name of the developer's routine that runs after the user has answered all
+"^DD",9.6,9.6,916,21,2,0)
+of the questions, but before any data or DD has been installed. All of
+"^DD",9.6,9.6,916,21,3,0)
+the routines for this package will already be installed. Used for data
+"^DD",9.6,9.6,916,21,4,0)
+conversions, etc. that the developer needs to do before bringing in new
+"^DD",9.6,9.6,916,21,5,0)
+data.  This routine cannot be interactive with the user, it might
+"^DD",9.6,9.6,916,21,6,0)
+be queued to run at a later time.
+"^DD",9.6,9.6,916,"DT")
+3160307
+"^DD",9.7,9.7,40,0)
+ROUTINES^9.704A^^RTN;0
+"^DD",9.7,9.7,40,21,0)
+^^3^3^2941128^^
+"^DD",9.7,9.7,40,21,1,0)
+This multiple contains a list of all Routines that were installed for
+"^DD",9.7,9.7,40,21,2,0)
+this package.  It also includes routines that were generated during the
+"^DD",9.7,9.7,40,21,3,0)
+install.  The Routines came from calls to DIEZ, DIPZ, and DIKZ.
+"^DD",9.7,9.7,40,"DT")
+2941128
+"^DD",9.7,9.704,0)
+ROUTINES SUB-FIELD^^.01^1
+"^DD",9.7,9.704,0,"DT")
+2950314
+"^DD",9.7,9.704,0,"IX","B",9.704,.01)
+
+"^DD",9.7,9.704,0,"NM","ROUTINES")
+
+"^DD",9.7,9.704,0,"UP")
+9.7
+"^DD",9.7,9.704,.01,0)
+ROUTINES^MFX^^0;1^K:$L(X)>16!($L(X)<3) X
+"^DD",9.7,9.704,.01,1,0)
+^.1
+"^DD",9.7,9.704,.01,1,1,0)
+9.704^B
+"^DD",9.7,9.704,.01,1,1,1)
+S ^XPD(9.7,DA(1),"RTN","B",$E(X,1,30),DA)=""
+"^DD",9.7,9.704,.01,1,1,2)
+K ^XPD(9.7,DA(1),"RTN","B",$E(X,1,30),DA)
+"^DD",9.7,9.704,.01,3)
+Answer must be 3-16 characters in length.
+"^DD",9.7,9.704,.01,21,0)
+^^1^1^2941128^^
+"^DD",9.7,9.704,.01,21,1,0)
+This is the name of a Routine that is part of this Package.
+"^DD",9.7,9.704,.01,"DT")
+3151214
+"^DD",9.8,9.8,.01,0)
+NAME^RX^^0;1^D CHKNAME^XQ5 K:$L(X)>16!($L(X)<1)!'(X?.UN!(X?1"%".UN)) X
+"^DD",9.8,9.8,.01,1,0)
+^.1
+"^DD",9.8,9.8,.01,1,1,0)
+9.8^B
+"^DD",9.8,9.8,.01,1,1,1)
+S ^DIC(9.8,"B",X,DA)=""
+"^DD",9.8,9.8,.01,1,1,2)
+K ^DIC(9.8,"B",X,DA)
+"^DD",9.8,9.8,.01,3)
+Please enter the NAME (1-16 characters), e.g. DIC, XM, ...
+"^DD",9.8,9.8,.01,21,0)
+^.001^1^1^3151201^^^^
+"^DD",9.8,9.8,.01,21,1,0)
+The name of the PACKAGE, ROUTINE, or PROGRAM being documented.
+"^DD",9.8,9.8,.01,"DT")
+2851003
+"^DD",9.8,9.8,5,0)
+TAG^9.801^^T;0
+"^DD",9.8,9.8,5,21,0)
+^.001^2^2^3151214^^^
+"^DD",9.8,9.8,5,21,1,0)
+Any important TAGs or ENTRY POINTs in the program are documented
+"^DD",9.8,9.8,5,21,2,0)
+here.
+"^DD",9.8,9.801,0)
+TAG SUB-FIELD^NL^3^4
+"^DD",9.8,9.801,0,"NM","TAG")
+
+"^DD",9.8,9.801,.01,0)
+TAG^MF^^0;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>16!($L(X)<1) X
+"^DD",9.8,9.801,.01,1,0)
+^.1
+"^DD",9.8,9.801,.01,1,1,0)
+9.801^B
+"^DD",9.8,9.801,.01,1,1,1)
+S ^DIC(9.8,DA(1),"T","B",$E(X,1,30),DA)=""
+"^DD",9.8,9.801,.01,1,1,2)
+K ^DIC(9.8,DA(1),"T","B",$E(X,1,30),DA)
+"^DD",9.8,9.801,.01,3)
+Please enter the name of a line in the program (1-16 characters).
+"^DD",9.8,9.801,.01,21,0)
+^.001^2^2^3151214^^^^
+"^DD",9.8,9.801,.01,21,1,0)
+The name of an important Line Label ("TAG") or Entry Point in
+"^DD",9.8,9.801,.01,21,2,0)
+this routine.
+"^DD",9.8,9.801,.01,"DT")
+3151214
+"^DD",14.4,14.4,.01,0)
+Entry Point^RF^^0;1^K:$L(X)>16!($L(X)<1)!'((X?1A.15AN)) X
+"^DD",14.4,14.4,.01,1,0)
+^.1^^0
+"^DD",14.4,14.4,.01,3)
+Answer must be 1-16 characters in length.
+"^DD",14.4,14.4,.01,9)
+^
+"^DD",14.4,14.4,.01,21,0)
+^.001^1^1^3151214^^
+"^DD",14.4,14.4,.01,21,1,0)
+This is the entry point in the routine to use.
+"^DD",14.4,14.4,.01,"DT")
+3151214
+"^DD",14.4,14.4,2,0)
+Routine Name^RF^^0;2^K:$L(X)>28!($L(X)<1)!'((X?1A.15AN.1"(".E)!(X?1"%".15AN.1"(".E)) X
+"^DD",14.4,14.4,2,3)
+Answer must be 1-28 characters in length.
+"^DD",14.4,14.4,2,9)
+^
+"^DD",14.4,14.4,2,21,0)
+^^2^2^2940630^
+"^DD",14.4,14.4,2,21,1,0)
+This is the ROUTINE that should be run when the scheduled time 
+"^DD",14.4,14.4,2,21,2,0)
+comes.
+"^DD",14.4,14.4,2,"DT")
+3151214
+"^DD",19,19,25,0)
+ROUTINE^FXJ53^^25;E1,245^K:$L(X)>53!(X'?.1ANP.15AN.1"^"1ANP.15AN.1"[".1"(".E) X I $D(X),X["[",'$D(^XUSEC("XUMGR",DUZ)) K X
+"^DD",19,19,25,3)
+Answer must be [TAG^]ROUTINE[(parameters)] to run, 1-53 characters.
+"^DD",19,19,25,21,0)
+^.001^2^2^3160330^^^^
+"^DD",19,19,25,21,1,0)
+Indicate the name of the tag, routine, and parameters. e.g. ROUTINE, or TAG^ROUTINE(parameters).
+"^DD",19,19,25,21,2,0)
+
+"^DD",19,19,25,"DT")
+3160330
+"^DD",8991.5,8991.5,.02,0)
+ROUTINE^FX^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>16!($L(X)<2) X
+"^DD",8991.5,8991.5,.02,1,0)
+^.1
+"^DD",8991.5,8991.5,.02,1,1,0)
+8991.5^ROU
+"^DD",8991.5,8991.5,.02,1,1,1)
+S ^XTV(8991.5,"ROU",$E(X,1,30),DA)=""
+"^DD",8991.5,8991.5,.02,1,1,2)
+K ^XTV(8991.5,"ROU",$E(X,1,30),DA)
+"^DD",8991.5,8991.5,.02,1,1,"%D",0)
+^^2^2^3160307^
+"^DD",8991.5,8991.5,.02,1,1,"%D",1,0)
+This cross reference allows lookup by routine name.
+"^DD",8991.5,8991.5,.02,1,1,"%D",2,0)
+
+"^DD",8991.5,8991.5,.02,1,1,"DT")
+2910926
+"^DD",8991.5,8991.5,.02,3)
+Answer must be 2-16 characters in length.
+"^DD",8991.5,8991.5,.02,21,0)
+^^1^1^3151214^
+"^DD",8991.5,8991.5,.02,21,1,0)
+This is the Routine were the error occurred.
+"^DD",8991.5,8991.5,.02,"DT")
+3151214
+"^DD",8992.1,8992.1,1.03,0)
+ROUTINE TAG^FIX^^1;3^K:$L(X)>16!($L(X)<1) X
+"^DD",8992.1,8992.1,1.03,3)
+Enter the tag for the Routine, 1 to 16 characters.
+"^DD",8992.1,8992.1,1.03,21,0)
+^^2^2^3151214^
+"^DD",8992.1,8992.1,1.03,21,1,0)
+This is the tag indicated for the routine specified for use 
+"^DD",8992.1,8992.1,1.03,21,2,0)
+when the alert is selected.
+"^DD",8992.1,8992.1,1.03,"DT")
+3151214
+"^DD",8994,8994,.02,0)
+TAG^FJ16^^0;2^K:$L(X)>16!($L(X)<1) X
+"^DD",8994,8994,.02,3)
+Enter the TAG to be used as the entry point for the routine, 1-16 characters.  Leave empty if a TAG is not required.
+"^DD",8994,8994,.02,21,0)
+^^2^2^3151214^
+"^DD",8994,8994,.02,21,1,0)
+This is the TAG to be used as the entry point for the ROUTINE. Leave this 
+"^DD",8994,8994,.02,21,2,0)
+field empty if a TAG is not required.
+"^DD",8994,8994,.02,"DT")
+3160308
+"^DD",8994,8994,.03,0)
+ROUTINE^RFXJ16^^0;3^K:$L(X)>16!($L(X)<3)!'(X?1U1.15UN) X
+"^DD",8994,8994,.03,3)
+Enter the name of the Routine, 3 to 16 uppercase characters.
+"^DD",8994,8994,.03,21,0)
+^.001^1^1^3151214^^
+"^DD",8994,8994,.03,21,1,0)
+This is the name of the routine used by this API.
+"^DD",8994,8994,.03,"DT")
+3160330
+**INSTALL NAME**
+XT*7.3*140
+"BLD",1551,0)
+XT*7.3*140^TOOLKIT^0^3170523^y
+"BLD",1551,1,0)
+^^101^101^3160517^
+"BLD",1551,1,1,0)
+Description:
+"BLD",1551,1,2,0)
+===========
+"BLD",1551,1,3,0)
+This patch will update the XINDEX utility to support the new changes to
+"BLD",1551,1,4,0)
+the Standards and Conventions (SAC).  The following changes have been
+"BLD",1551,1,5,0)
+approved by SAC Committee:
+"BLD",1551,1,6,0)
+        1.      Routine name and labels can be 16 uppercase characters
+"BLD",1551,1,7,0)
+        2.      Local variable names can be 16 characters.  Namespaced
+"BLD",1551,1,8,0)
+                variables must be all uppercase.
+"BLD",1551,1,9,0)
+ 
+"BLD",1551,1,10,0)
+These changes are contains in the two routines: XINDX2 and XINDX3
+"BLD",1551,1,11,0)
+ 
+"BLD",1551,1,12,0)
+ 
+"BLD",1551,1,13,0)
+Blood Bank Clearance
+"BLD",1551,1,14,0)
+====================
+"BLD",1551,1,15,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*140 contains
+"BLD",1551,1,16,0)
+changes to a package referenced in ProPath standard titled: BBM Team
+"BLD",1551,1,17,0)
+Review of VistA Patches. This patch does not alter or modify any VistA
+"BLD",1551,1,18,0)
+Blood Bank software design safeguards or safety critical elements
+"BLD",1551,1,19,0)
+functions.
+"BLD",1551,1,20,0)
+ 
+"BLD",1551,1,21,0)
+RISK ANALYSIS: Changes made by patch XT*7.3*140 have no effect on Blood
+"BLD",1551,1,22,0)
+Bank software functionality, therefore RISK is none.
+"BLD",1551,1,23,0)
+ 
+"BLD",1551,1,24,0)
+ 
+"BLD",1551,1,25,0)
+Patch Components
+"BLD",1551,1,26,0)
+================
+"BLD",1551,1,27,0)
+Files & Fields Associateed:
+"BLD",1551,1,28,0)
+N/A
+"BLD",1551,1,29,0)
+ 
+"BLD",1551,1,30,0)
+Forms Associated:
+"BLD",1551,1,31,0)
+N/A
+"BLD",1551,1,32,0)
+ 
+"BLD",1551,1,33,0)
+Forms Associated:
+"BLD",1551,1,34,0)
+N/A
+"BLD",1551,1,35,0)
+ 
+"BLD",1551,1,36,0)
+Mail Groups Associated:
+"BLD",1551,1,37,0)
+N/A
+"BLD",1551,1,38,0)
+ 
+"BLD",1551,1,39,0)
+Options Associated:
+"BLD",1551,1,40,0)
+N/A
+"BLD",1551,1,41,0)
+ 
+"BLD",1551,1,42,0)
+Protocols Associated:
+"BLD",1551,1,43,0)
+N/A
+"BLD",1551,1,44,0)
+ 
+"BLD",1551,1,45,0)
+Security Keys Associated:
+"BLD",1551,1,46,0)
+N/A
+"BLD",1551,1,47,0)
+ 
+"BLD",1551,1,48,0)
+Templates Associated:
+"BLD",1551,1,49,0)
+N/A
+"BLD",1551,1,50,0)
+ 
+"BLD",1551,1,51,0)
+New Service Requests (NSRs):
+"BLD",1551,1,52,0)
+N/A
+"BLD",1551,1,53,0)
+ 
+"BLD",1551,1,54,0)
+Patient Safety Issues (PSIs):
+"BLD",1551,1,55,0)
+N/A
+"BLD",1551,1,56,0)
+ 
+"BLD",1551,1,57,0)
+Remedy Ticket & Overview:
+"BLD",1551,1,58,0)
+N/A
+"BLD",1551,1,59,0)
+ 
+"BLD",1551,1,60,0)
+Problem:
+"BLD",1551,1,61,0)
+XINDEX utility needs to support routine name and labels to 16 characters
+"BLD",1551,1,62,0)
+ and local variables names to 16 characters
+"BLD",1551,1,63,0)
+ 
+"BLD",1551,1,64,0)
+Resolution:
+"BLD",1551,1,65,0)
+ Change XINDX2 and XINDX3
+"BLD",1551,1,66,0)
+ 
+"BLD",1551,1,67,0)
+ 
+"BLD",1551,1,68,0)
+Thanks to Test Sites 
+"BLD",1551,1,69,0)
+====================
+"BLD",1551,1,70,0)
+TBD
+"BLD",1551,1,71,0)
+ 
+"BLD",1551,1,72,0)
+ 
+"BLD",1551,1,73,0)
+Documentation Retriviel Instructions:
+"BLD",1551,1,74,0)
+=====================================
+"BLD",1551,1,75,0)
+No changes have been made to Kernel documentation as a result of this
+"BLD",1551,1,76,0)
+patch.  However, the most up-to-date VA Kernel documentation is
+"BLD",1551,1,77,0)
+available on the VHA Software Documentation Library (VDL) at the
+"BLD",1551,1,78,0)
+following:
+"BLD",1551,1,79,0)
+http://www.DNS   /vdl/application.asp?appid=10
+"BLD",1551,1,80,0)
+ 
+"BLD",1551,1,81,0)
+Patch Installation:
+"BLD",1551,1,82,0)
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+"BLD",1551,1,83,0)
+ the installation instruction in the TOOLKIT XINDEX 7.3 patch.
+"BLD",1551,1,84,0)
+ 
+"BLD",1551,1,85,0)
+ 
+"BLD",1551,1,86,0)
+ Routine Information:
+"BLD",1551,1,87,0)
+====================
+"BLD",1551,1,88,0)
+ 
+"BLD",1551,1,89,0)
+The second line of each of these routines now looks like:
+"BLD",1551,1,90,0)
+;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 10
+"BLD",1551,1,91,0)
+ 
+"BLD",1551,1,92,0)
+The checksums below are new checksums, and
+"BLD",1551,1,93,0)
+ can be checked with CHECK1^XTSUMBLD.
+"BLD",1551,1,94,0)
+ 
+"BLD",1551,1,95,0)
+Routine Name: XINDX2
+"BLD",1551,1,96,0)
+    Before: B28042462   After: B28068226  **20,27,48,110,121,133,140**
+"BLD",1551,1,97,0)
+Routine Name: XINDX3
+"BLD",1551,1,98,0)
+    Before: B15082410   After: B15211078  **20,27,61,68,110,121,128,132,
+"BLD",1551,1,99,0)
+                                           133,140**
+"BLD",1551,1,100,0)
+   
+"BLD",1551,1,101,0)
+Routine list of preceding patches: 133
+"BLD",1551,4,0)
+^9.64PA^^
+"BLD",1551,6.3)
+23
+"BLD",1551,"KRN",0)
+^9.67PA^9002226^22
+"BLD",1551,"KRN",.4,0)
+.4
+"BLD",1551,"KRN",.401,0)
+.401
+"BLD",1551,"KRN",.402,0)
+.402
+"BLD",1551,"KRN",.403,0)
+.403
+"BLD",1551,"KRN",.5,0)
+.5
+"BLD",1551,"KRN",.84,0)
+.84
+"BLD",1551,"KRN",3.6,0)
+3.6
+"BLD",1551,"KRN",3.8,0)
+3.8
+"BLD",1551,"KRN",9.2,0)
+9.2
+"BLD",1551,"KRN",9.8,0)
+9.8
+"BLD",1551,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",1551,"KRN",9.8,"NM",1,0)
+XINDX2^^0^B28068226
+"BLD",1551,"KRN",9.8,"NM",2,0)
+XINDX3^^0^B15211078
+"BLD",1551,"KRN",9.8,"NM","B","XINDX2",1)
+
+"BLD",1551,"KRN",9.8,"NM","B","XINDX3",2)
+
+"BLD",1551,"KRN",19,0)
+19
+"BLD",1551,"KRN",19.1,0)
+19.1
+"BLD",1551,"KRN",101,0)
+101
+"BLD",1551,"KRN",409.61,0)
+409.61
+"BLD",1551,"KRN",771,0)
+771
+"BLD",1551,"KRN",779.2,0)
+779.2
+"BLD",1551,"KRN",870,0)
+870
+"BLD",1551,"KRN",8989.51,0)
+8989.51
+"BLD",1551,"KRN",8989.52,0)
+8989.52
+"BLD",1551,"KRN",8993,0)
+8993
+"BLD",1551,"KRN",8994,0)
+8994
+"BLD",1551,"KRN",9002226,0)
+9002226
+"BLD",1551,"KRN","B",.4,.4)
+
+"BLD",1551,"KRN","B",.401,.401)
+
+"BLD",1551,"KRN","B",.402,.402)
+
+"BLD",1551,"KRN","B",.403,.403)
+
+"BLD",1551,"KRN","B",.5,.5)
+
+"BLD",1551,"KRN","B",.84,.84)
+
+"BLD",1551,"KRN","B",3.6,3.6)
+
+"BLD",1551,"KRN","B",3.8,3.8)
+
+"BLD",1551,"KRN","B",9.2,9.2)
+
+"BLD",1551,"KRN","B",9.8,9.8)
+
+"BLD",1551,"KRN","B",19,19)
+
+"BLD",1551,"KRN","B",19.1,19.1)
+
+"BLD",1551,"KRN","B",101,101)
+
+"BLD",1551,"KRN","B",409.61,409.61)
+
+"BLD",1551,"KRN","B",771,771)
+
+"BLD",1551,"KRN","B",779.2,779.2)
+
+"BLD",1551,"KRN","B",870,870)
+
+"BLD",1551,"KRN","B",8989.51,8989.51)
+
+"BLD",1551,"KRN","B",8989.52,8989.52)
+
+"BLD",1551,"KRN","B",8993,8993)
+
+"BLD",1551,"KRN","B",8994,8994)
+
+"BLD",1551,"KRN","B",9002226,9002226)
+
+"BLD",1551,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",1551,"QUES",0)
+^9.62^^
+"MBREQ")
+1
+"PKG",6,-1)
+1^1
+"PKG",6,0)
+TOOLKIT^XT^PROGRAMMERS OPTIONS, MULTI. TERM LOOKUP^
+"PKG",6,22,0)
+^9.49I^1^1
+"PKG",6,22,1,0)
+7.3^3151102^2970513^2
+"PKG",6,22,1,"PAH",1,0)
+140^3170523
+"PKG",6,22,1,"PAH",1,1,0)
+^^101^101^3170523
+"PKG",6,22,1,"PAH",1,1,1,0)
+Description:
+"PKG",6,22,1,"PAH",1,1,2,0)
+===========
+"PKG",6,22,1,"PAH",1,1,3,0)
+This patch will update the XINDEX utility to support the new changes to
+"PKG",6,22,1,"PAH",1,1,4,0)
+the Standards and Conventions (SAC).  The following changes have been
+"PKG",6,22,1,"PAH",1,1,5,0)
+approved by SAC Committee:
+"PKG",6,22,1,"PAH",1,1,6,0)
+        1.      Routine name and labels can be 16 uppercase characters
+"PKG",6,22,1,"PAH",1,1,7,0)
+        2.      Local variable names can be 16 characters.  Namespaced
+"PKG",6,22,1,"PAH",1,1,8,0)
+                variables must be all uppercase.
+"PKG",6,22,1,"PAH",1,1,9,0)
+ 
+"PKG",6,22,1,"PAH",1,1,10,0)
+These changes are contains in the two routines: XINDX2 and XINDX3
+"PKG",6,22,1,"PAH",1,1,11,0)
+ 
+"PKG",6,22,1,"PAH",1,1,12,0)
+ 
+"PKG",6,22,1,"PAH",1,1,13,0)
+Blood Bank Clearance
+"PKG",6,22,1,"PAH",1,1,14,0)
+====================
+"PKG",6,22,1,"PAH",1,1,15,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*140 contains
+"PKG",6,22,1,"PAH",1,1,16,0)
+changes to a package referenced in ProPath standard titled: BBM Team
+"PKG",6,22,1,"PAH",1,1,17,0)
+Review of VistA Patches. This patch does not alter or modify any VistA
+"PKG",6,22,1,"PAH",1,1,18,0)
+Blood Bank software design safeguards or safety critical elements
+"PKG",6,22,1,"PAH",1,1,19,0)
+functions.
+"PKG",6,22,1,"PAH",1,1,20,0)
+ 
+"PKG",6,22,1,"PAH",1,1,21,0)
+RISK ANALYSIS: Changes made by patch XT*7.3*140 have no effect on Blood
+"PKG",6,22,1,"PAH",1,1,22,0)
+Bank software functionality, therefore RISK is none.
+"PKG",6,22,1,"PAH",1,1,23,0)
+ 
+"PKG",6,22,1,"PAH",1,1,24,0)
+ 
+"PKG",6,22,1,"PAH",1,1,25,0)
+Patch Components
+"PKG",6,22,1,"PAH",1,1,26,0)
+================
+"PKG",6,22,1,"PAH",1,1,27,0)
+Files & Fields Associateed:
+"PKG",6,22,1,"PAH",1,1,28,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,29,0)
+ 
+"PKG",6,22,1,"PAH",1,1,30,0)
+Forms Associated:
+"PKG",6,22,1,"PAH",1,1,31,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,32,0)
+ 
+"PKG",6,22,1,"PAH",1,1,33,0)
+Forms Associated:
+"PKG",6,22,1,"PAH",1,1,34,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,35,0)
+ 
+"PKG",6,22,1,"PAH",1,1,36,0)
+Mail Groups Associated:
+"PKG",6,22,1,"PAH",1,1,37,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,38,0)
+ 
+"PKG",6,22,1,"PAH",1,1,39,0)
+Options Associated:
+"PKG",6,22,1,"PAH",1,1,40,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,41,0)
+ 
+"PKG",6,22,1,"PAH",1,1,42,0)
+Protocols Associated:
+"PKG",6,22,1,"PAH",1,1,43,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,44,0)
+ 
+"PKG",6,22,1,"PAH",1,1,45,0)
+Security Keys Associated:
+"PKG",6,22,1,"PAH",1,1,46,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,47,0)
+ 
+"PKG",6,22,1,"PAH",1,1,48,0)
+Templates Associated:
+"PKG",6,22,1,"PAH",1,1,49,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,50,0)
+ 
+"PKG",6,22,1,"PAH",1,1,51,0)
+New Service Requests (NSRs):
+"PKG",6,22,1,"PAH",1,1,52,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,53,0)
+ 
+"PKG",6,22,1,"PAH",1,1,54,0)
+Patient Safety Issues (PSIs):
+"PKG",6,22,1,"PAH",1,1,55,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,56,0)
+ 
+"PKG",6,22,1,"PAH",1,1,57,0)
+Remedy Ticket & Overview:
+"PKG",6,22,1,"PAH",1,1,58,0)
+N/A
+"PKG",6,22,1,"PAH",1,1,59,0)
+ 
+"PKG",6,22,1,"PAH",1,1,60,0)
+Problem:
+"PKG",6,22,1,"PAH",1,1,61,0)
+XINDEX utility needs to support routine name and labels to 16 characters
+"PKG",6,22,1,"PAH",1,1,62,0)
+ and local variables names to 16 characters
+"PKG",6,22,1,"PAH",1,1,63,0)
+ 
+"PKG",6,22,1,"PAH",1,1,64,0)
+Resolution:
+"PKG",6,22,1,"PAH",1,1,65,0)
+ Change XINDX2 and XINDX3
+"PKG",6,22,1,"PAH",1,1,66,0)
+ 
+"PKG",6,22,1,"PAH",1,1,67,0)
+ 
+"PKG",6,22,1,"PAH",1,1,68,0)
+Thanks to Test Sites 
+"PKG",6,22,1,"PAH",1,1,69,0)
+====================
+"PKG",6,22,1,"PAH",1,1,70,0)
+TBD
+"PKG",6,22,1,"PAH",1,1,71,0)
+ 
+"PKG",6,22,1,"PAH",1,1,72,0)
+ 
+"PKG",6,22,1,"PAH",1,1,73,0)
+Documentation Retriviel Instructions:
+"PKG",6,22,1,"PAH",1,1,74,0)
+=====================================
+"PKG",6,22,1,"PAH",1,1,75,0)
+No changes have been made to Kernel documentation as a result of this
+"PKG",6,22,1,"PAH",1,1,76,0)
+patch.  However, the most up-to-date VA Kernel documentation is
+"PKG",6,22,1,"PAH",1,1,77,0)
+available on the VHA Software Documentation Library (VDL) at the
+"PKG",6,22,1,"PAH",1,1,78,0)
+following:
+"PKG",6,22,1,"PAH",1,1,79,0)
+http://www.DNS   /vdl/application.asp?appid=10
+"PKG",6,22,1,"PAH",1,1,80,0)
+ 
+"PKG",6,22,1,"PAH",1,1,81,0)
+Patch Installation:
+"PKG",6,22,1,"PAH",1,1,82,0)
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+"PKG",6,22,1,"PAH",1,1,83,0)
+ the installation instruction in the TOOLKIT XINDEX 7.3 patch.
+"PKG",6,22,1,"PAH",1,1,84,0)
+ 
+"PKG",6,22,1,"PAH",1,1,85,0)
+ 
+"PKG",6,22,1,"PAH",1,1,86,0)
+ Routine Information:
+"PKG",6,22,1,"PAH",1,1,87,0)
+====================
+"PKG",6,22,1,"PAH",1,1,88,0)
+ 
+"PKG",6,22,1,"PAH",1,1,89,0)
+The second line of each of these routines now looks like:
+"PKG",6,22,1,"PAH",1,1,90,0)
+;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 10
+"PKG",6,22,1,"PAH",1,1,91,0)
+ 
+"PKG",6,22,1,"PAH",1,1,92,0)
+The checksums below are new checksums, and
+"PKG",6,22,1,"PAH",1,1,93,0)
+ can be checked with CHECK1^XTSUMBLD.
+"PKG",6,22,1,"PAH",1,1,94,0)
+ 
+"PKG",6,22,1,"PAH",1,1,95,0)
+Routine Name: XINDX2
+"PKG",6,22,1,"PAH",1,1,96,0)
+    Before: B28042462   After: B28068226  **20,27,48,110,121,133,140**
+"PKG",6,22,1,"PAH",1,1,97,0)
+Routine Name: XINDX3
+"PKG",6,22,1,"PAH",1,1,98,0)
+    Before: B15082410   After: B15211078  **20,27,61,68,110,121,128,132,
+"PKG",6,22,1,"PAH",1,1,99,0)
+                                           133,140**
+"PKG",6,22,1,"PAH",1,1,100,0)
+   
+"PKG",6,22,1,"PAH",1,1,101,0)
+Routine list of preceding patches: 133
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","XINDX2")
+0^1^B28068226
+"RTN","XINDX2",1,0)
+XINDX2 ;ISC/REL,GRK,RWF - PROCESS "GRB" ;4/2/08  16:35
+"RTN","XINDX2",2,0)
+ ;;7.3;TOOLKIT;**20,27,48,110,121,133,140**;Apr 25, 1995;Build 23
+"RTN","XINDX2",3,0)
+ ; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","XINDX2",4,0)
+% S LINE=GRB,(CM,COM)="" F I=0:0 S STR=$P(LINE,$C(9),1),LINE=$P(LINE,$C(9),2,999),NOA=0 D:STR]"" ARGG Q:LINE']""
+"RTN","XINDX2",5,0)
+ Q
+"RTN","XINDX2",6,0)
+ ;Process argument
+"RTN","XINDX2",7,0)
+ARGG D ^XINDX9 S I=0,AC=999 F %=0:0 S %=$O(LV(%)) Q:%'>0  S I(%)=0
+"RTN","XINDX2",8,0)
+ARGS ;Proccess all agruments at this level
+"RTN","XINDX2",9,0)
+ S AC=LI+AC F  Q:AC'>LI  D INC Q:S=""  D ARG
+"RTN","XINDX2",10,0)
+ Q
+"RTN","XINDX2",11,0)
+ ;
+"RTN","XINDX2",12,0)
+ARG ;Process one argument
+"RTN","XINDX2",13,0)
+ I CH="," D PEEK I ","[Y Q:$$OBJF()  D E^XINDX1(21):($$FNC()'="$$") Q  ;if ",," must be function of object method
+"RTN","XINDX2",14,0)
+ Q:CH=Q
+"RTN","XINDX2",15,0)
+ ;Cache Objects;  Package.Class.method or ##class(package.class).method
+"RTN","XINDX2",16,0)
+ I $D(LV(LV,"OBJ",LI)) G OBJ2:CH=".",OBJ1
+"RTN","XINDX2",17,0)
+ I CH="#",$E(S,1,2)="##" D OBJ Q
+"RTN","XINDX2",18,0)
+ I S'[".",(CH?1A)!(CH="%") D LOC Q
+"RTN","XINDX2",19,0)
+ I CH="^" S LOC="G" G NAK:S="^",EXTGLO:S["[",EXTGLO:S["|",GLO Q
+"RTN","XINDX2",20,0)
+ I CH="$" D FUN Q
+"RTN","XINDX2",21,0)
+ I CH="?" D PAT Q
+"RTN","XINDX2",22,0)
+ I CH="(" D INC S NOA=S D DN,INC Q
+"RTN","XINDX2",23,0)
+ Q
+"RTN","XINDX2",24,0)
+ ;
+"RTN","XINDX2",25,0)
+NAK S LOC="N"
+"RTN","XINDX2",26,0)
+ G GLO
+"RTN","XINDX2",27,0)
+ ;
+"RTN","XINDX2",28,0)
+EXTGLO D E^XINDX1(50),EG,INC S S=U_S
+"RTN","XINDX2",29,0)
+ G GLO
+"RTN","XINDX2",30,0)
+ ;
+"RTN","XINDX2",31,0)
+EG N GK,LOC S GK="",LOC="L" ;HANDLE EXTENDED GLOBAL
+"RTN","XINDX2",32,0)
+ F  D INC Q:"]"[CH  Q:"|"[CH  D ARG
+"RTN","XINDX2",33,0)
+ Q
+"RTN","XINDX2",34,0)
+GLO S X=$E(S,2,99) I X]"",S'["^$",X'?1(1U,1"%").7UN D E^XINDX1(12)
+"RTN","XINDX2",35,0)
+ I GK["*",$E(S,1,2)["^%" D E^XINDX1(45)
+"RTN","XINDX2",36,0)
+ I S1="(" S S=S_S1 D PEEKDN S:(Y?1N.NP)!($A(Y)=34)!("^$J^$I^$H^"[(U_Y)) S=S_Y
+"RTN","XINDX2",37,0)
+ D ST(LOC,S) I S1="(" D INC2 S NOA=S D DN,INC
+"RTN","XINDX2",38,0)
+ Q
+"RTN","XINDX2",39,0)
+ ;
+"RTN","XINDX2",40,0)
+LOC S LOC="L" ;Check variables at end. I S'?1.8UN,S'?1"%".7UN,S'?1.8LN,S'?1"%".7LN D E^XINDX1(11)
+"RTN","XINDX2",41,0)
+ I S1="(" S S=S_S1 D PEEKDN S:(Y?1.N)!($A(Y)=34) S=S_Y
+"RTN","XINDX2",42,0)
+ D ST(LOC,S) I S1="(" D INC2 S NOA=S D DN,INC
+"RTN","XINDX2",43,0)
+ Q
+"RTN","XINDX2",44,0)
+OBJ ;Cache Objects within ##class
+"RTN","XINDX2",45,0)
+ S LOC="O"
+"RTN","XINDX2",46,0)
+ I S1'="("  D E^XINDX1(3)
+"RTN","XINDX2",47,0)
+ D PEEKDN S S=Y I S[".",'$$OBJTST(S) D E^XINDX1(64)
+"RTN","XINDX2",48,0)
+ D ST(LOC,S),INC2 S NOA=S D DN,INC
+"RTN","XINDX2",49,0)
+ Q
+"RTN","XINDX2",50,0)
+OBJ1 ;Cache Objects not within ##class, contains "."
+"RTN","XINDX2",51,0)
+ S LOC="O"
+"RTN","XINDX2",52,0)
+ D ST(LOC,S)
+"RTN","XINDX2",53,0)
+ Q
+"RTN","XINDX2",54,0)
+OBJ2 ;Method
+"RTN","XINDX2",55,0)
+ D PEEKDN
+"RTN","XINDX2",56,0)
+ I 'Y D INC2 S NOA=S D DN,INC
+"RTN","XINDX2",57,0)
+ Q
+"RTN","XINDX2",58,0)
+ ;
+"RTN","XINDX2",59,0)
+OBJF() ; return line where object has an open "(" for parameters
+"RTN","XINDX2",60,0)
+ N %
+"RTN","XINDX2",61,0)
+ Q:LV<2 0  ;must be down at least 1 level
+"RTN","XINDX2",62,0)
+ S %=$O(LV(LV-1,"OBJ",""),-1) ;find last object at previous level
+"RTN","XINDX2",63,0)
+ Q $S('%:0,LV(LV-1,%+1)="(":%,1:0) ; returns 0 if can't find object or object has no parameter
+"RTN","XINDX2",64,0)
+ ;
+"RTN","XINDX2",65,0)
+PEEK S Y=$G(LV(LV,LI+1))
+"RTN","XINDX2",66,0)
+ Q
+"RTN","XINDX2",67,0)
+ ;
+"RTN","XINDX2",68,0)
+INC2 S LI=LI+1 ;Drop into INC
+"RTN","XINDX2",69,0)
+INC S LI=LI+1,S=$G(LV(LV,LI)),S1=$G(LV(LV,LI+1)),CH=$E(S) G:$A(S)=10 ERR
+"RTN","XINDX2",70,0)
+ Q
+"RTN","XINDX2",71,0)
+ ;
+"RTN","XINDX2",72,0)
+DN S LI(LV)=LI,LI(LV,1)=AC,LV=LV+1,LI=LI(LV),AC=NOA
+"RTN","XINDX2",73,0)
+ D ARGS,UP
+"RTN","XINDX2",74,0)
+ Q
+"RTN","XINDX2",75,0)
+UP ;Inc LI as we save to skip the $C(10).
+"RTN","XINDX2",76,0)
+ D PEEK D:$A(Y)'=10 ERR S LI(LV)=LI+1,LV=LV-1,LI=LI(LV),AC=LI(LV,1)
+"RTN","XINDX2",77,0)
+ Q
+"RTN","XINDX2",78,0)
+ ;
+"RTN","XINDX2",79,0)
+PEEKDN S Y=$G(LV(LV+1,LI(LV+1)+1))
+"RTN","XINDX2",80,0)
+ Q
+"RTN","XINDX2",81,0)
+ ;
+"RTN","XINDX2",82,0)
+ERR D E^XINDX1(43) S (S,S1,CH)="" Q
+"RTN","XINDX2",83,0)
+ S Z=$P(LV(LV+1),$C(9),LI(LV+1),99),Z=$P(Z,$C(10)) W !,"COUNT=",$L(Z,",")
+"RTN","XINDX2",84,0)
+ ;functions
+"RTN","XINDX2",85,0)
+FUN N FUN S FUN=S G EXT:S["$$",PKG:S["$&",SPV:S1'["(" S NOA=$P(S,"^",2)
+"RTN","XINDX2",86,0)
+ D INC2 I S'>0 D E^XINDX1(43) ;Sit on NOA
+"RTN","XINDX2",87,0)
+ G:FUN["$TE" TEXT
+"RTN","XINDX2",88,0)
+ S Y=1 F Z1=LI(LV+1)+1:1 S X=$G(LV(LV+1,Z1)) Q:$A(X)=10!(X="")  S:X="," Y=Y+1
+"RTN","XINDX2",89,0)
+ I NOA,Y<NOA!(Y>$P(NOA,";",2)) D E^XINDX1(43)
+"RTN","XINDX2",90,0)
+ S NOA=S D DN,INC
+"RTN","XINDX2",91,0)
+ Q
+"RTN","XINDX2",92,0)
+ ;
+"RTN","XINDX2",93,0)
+TEXT ; process $T
+"RTN","XINDX2",94,0)
+ N X1,X2
+"RTN","XINDX2",95,0)
+ S Y=$$ASM^XINDX3(LV+1,LI(LV+1)+1,$C(10)) D ST("MK","$T("_$S($E(Y)'="+":Y,1:""))
+"RTN","XINDX2",96,0)
+ I $$VT(Y) D ST("I",Y) ;internal label
+"RTN","XINDX2",97,0)
+ ;check if external routine
+"RTN","XINDX2",98,0)
+ I Y["^",$$VT($P(Y,"^",2)) S X1=$P(Y,"^"),X2=$P(Y,"^",2),Y=X1 D ST("X",X2_$S($$VT(X1):" "_X1,1:""))
+"RTN","XINDX2",99,0)
+ D FLUSH(LV+1)
+"RTN","XINDX2",100,0)
+ Q
+"RTN","XINDX2",101,0)
+ ;special variables
+"RTN","XINDX2",102,0)
+SPV ;
+"RTN","XINDX2",103,0)
+ I "^$D^$EC^$ES^$ET^$I^$K^$P^$Q^$ST^$SY^"[("^"_X_"^") D ST("MK",X)
+"RTN","XINDX2",104,0)
+ Q
+"RTN","XINDX2",105,0)
+ ;
+"RTN","XINDX2",106,0)
+EXT ;Extrinsic functions
+"RTN","XINDX2",107,0)
+ I $E(S1)="^" S Y=$E(S1,2,99)_" "_S D INC S S=Y ;Build S and fall thru
+"RTN","XINDX2",108,0)
+ D ST($S(S[" ":"X",1:"I"),S) ;Internal, eXternal
+"RTN","XINDX2",109,0)
+ I S1["(" D INC2 S NOA=S D DN,INC ;Process param.
+"RTN","XINDX2",110,0)
+ Q
+"RTN","XINDX2",111,0)
+ ;
+"RTN","XINDX2",112,0)
+PKG ;External Package
+"RTN","XINDX2",113,0)
+ D ST("X",S) ;Record External name
+"RTN","XINDX2",114,0)
+ I S1["(" D INC2 S NOA=S D DN,INC ;Process param.
+"RTN","XINDX2",115,0)
+ Q
+"RTN","XINDX2",116,0)
+ ;
+"RTN","XINDX2",117,0)
+PAT D INC I $E(S)="@" D INC,ARG Q
+"RTN","XINDX2",118,0)
+ F  D REPCNT,PATCODE Q:$E(S)=""
+"RTN","XINDX2",119,0)
+ Q
+"RTN","XINDX2",120,0)
+ ;
+"RTN","XINDX2",121,0)
+REPCNT F I=1:1 Q:("0123456789."'[$E(S,I))!($E(S,I)="")
+"RTN","XINDX2",122,0)
+ S X=$E(S,1,I-1),S=$E(S,I,999) I ('$L(X))!($L(X,".")>2) S S="" D E^XINDX1(16)
+"RTN","XINDX2",123,0)
+ Q
+"RTN","XINDX2",124,0)
+ ;
+"RTN","XINDX2",125,0)
+PATCODE I $E(S)=Q S I=1 D PATQ S S=$E(S,I,999) S:$L(CH)&(",)"[CH) S=$E(S,2,999) Q
+"RTN","XINDX2",126,0)
+ F I=1:1 Q:("ACELNPUacelnpu()"'[$E(S,I))!($E(S,I)="")
+"RTN","XINDX2",127,0)
+ S X=$E(S,1,I-1),S=$E(S,I,999) I I=1 S S="" D E^XINDX1(16)
+"RTN","XINDX2",128,0)
+ I $E(S)="," S S=$E(S,2,999) ;Pull ',' out of alternation
+"RTN","XINDX2",129,0)
+ Q
+"RTN","XINDX2",130,0)
+ ;
+"RTN","XINDX2",131,0)
+PATQ F I=I+1:1 S CH=$E(S,I) Q:CH=""!(CH=Q)
+"RTN","XINDX2",132,0)
+ S I=I+1 D:CH="" E^XINDX1(6) S CH=$E(S,I) G:CH=Q PATQ
+"RTN","XINDX2",133,0)
+ Q
+"RTN","XINDX2",134,0)
+ ;
+"RTN","XINDX2",135,0)
+ST(LOC,S) S:'$D(V(LOC,S)) V(LOC,S)="" I $D(GK),GK]"",V(LOC,S)'[GK S V(LOC,S)=V(LOC,S)_GK
+"RTN","XINDX2",136,0)
+ S GK=""
+"RTN","XINDX2",137,0)
+ Q
+"RTN","XINDX2",138,0)
+ ;
+"RTN","XINDX2",139,0)
+VT(X) ;Check if a valid label
+"RTN","XINDX2",140,0)
+ Q (X?1A.31AN)!(X?1"%".31UN)!(X?1.31N)
+"RTN","XINDX2",141,0)
+ ;
+"RTN","XINDX2",142,0)
+VA(X) ;Check if VA Standard label ;P140
+"RTN","XINDX2",143,0)
+ Q (X?1U.15UN)!(X?1"%".15UN)!(X?1.16N)
+"RTN","XINDX2",144,0)
+ ;
+"RTN","XINDX2",145,0)
+FLUSH(L) ;Flush rest of list with this offset
+"RTN","XINDX2",146,0)
+ N I,CH S I=LI(L)+1 F I=I:1 S CH=$G(LV(L,I)) Q:$C(10)[CH  D:CH="(" FLUSH(L+1)
+"RTN","XINDX2",147,0)
+ S LI(L)=I Q
+"RTN","XINDX2",148,0)
+ ;
+"RTN","XINDX2",149,0)
+FNC(NEW) ;Sets or returns the current function
+"RTN","XINDX2",150,0)
+ I $D(NEW) S LV(LV+1,"FNC",LI)=NEW Q
+"RTN","XINDX2",151,0)
+ N W
+"RTN","XINDX2",152,0)
+ S W=+$S($D(LV(LV,"FNC",LI)):LI,$O(LV(LV,"FNC",LI),-1):$O(LV(LV,"FNC",LI),-1),1:$O(LV(LV,"FNC",LI))) ;patch 119,121
+"RTN","XINDX2",153,0)
+ Q $G(LV(LV,"FNC",W))
+"RTN","XINDX2",154,0)
+ ;
+"RTN","XINDX2",155,0)
+OP(NEW) ;Sets or returns the current operator
+"RTN","XINDX2",156,0)
+ I $D(NEW) S LV(LV,"OP",LI)=NEW Q
+"RTN","XINDX2",157,0)
+ N W S W=+$S($D(LV(LV,"OP",LI)):LI,1:$O(LV(LV,"OP",LI),-1))
+"RTN","XINDX2",158,0)
+ Q $G(LV(LV,"OP",W))
+"RTN","XINDX2",159,0)
+ ;
+"RTN","XINDX2",160,0)
+OBJTST(OBJ) ;test if OBJ exists, returns 1 if exists
+"RTN","XINDX2",161,0)
+ Q:$G(OBJ)="" 0
+"RTN","XINDX2",162,0)
+ Q ##class(%Dictionary.ClassDefinition).%ExistsId(""_OBJ_"")
+"RTN","XINDX2",163,0)
+ ;
+"RTN","XINDX3")
+0^2^B15211078
+"RTN","XINDX3",1,0)
+XINDX3 ;ISC/REL,GRK,RWF - PROCESS MERGE/SET/READ/KILL/NEW/OPEN COMMANDS ;06/24/08  15:44
+"RTN","XINDX3",2,0)
+ ;;7.3;TOOLKIT;**20,27,61,68,110,121,128,132,133,140**;Apr 25, 1995;Build 23
+"RTN","XINDX3",3,0)
+ ; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","XINDX3",4,0)
+PEEK S Y=$G(LV(LV,LI+1)) Q
+"RTN","XINDX3",5,0)
+PEEK2 S Y=$G(LV(LV,LI+2)) Q
+"RTN","XINDX3",6,0)
+INC2 S LI=LI+1 ;Drop into INC
+"RTN","XINDX3",7,0)
+INC S LI=LI+1,S=$G(LV(LV,LI)),S1=$G(LV(LV,LI+1)),CH=$E(S)
+"RTN","XINDX3",8,0)
+ G ERR:$A(S)=10 Q
+"RTN","XINDX3",9,0)
+DN S LI(LV)=LI,LI(LV,1)=AC,LV=LV+1,LI=LI(LV),AC=NOA
+"RTN","XINDX3",10,0)
+ Q
+"RTN","XINDX3",11,0)
+UP ;Inc LI as we save to skip the $C(10).
+"RTN","XINDX3",12,0)
+ D PEEK S:$A(Y)=10 LI=LI+1 S LI(LV)=LI,LV=LV-1,LI=LI(LV),AC=LI(LV,1) Q
+"RTN","XINDX3",13,0)
+PEEKDN S Y=$G(LV(LV+1,LI(LV+1)+1)) Q
+"RTN","XINDX3",14,0)
+FIND F Y=LI:1:AC Q:L[$G(LV(LV,Y))
+"RTN","XINDX3",15,0)
+ERR D E^XINDX1(43) S (S,S1,CH)="" Q
+"RTN","XINDX3",16,0)
+ Q
+"RTN","XINDX3",17,0)
+ Q
+"RTN","XINDX3",18,0)
+S ;Set
+"RTN","XINDX3",19,0)
+ S STR=ARG,ARG="",RHS=0 D ^XINDX9
+"RTN","XINDX3",20,0)
+S2 S GK="" D INC I S="" D:'RHS E^XINDX1(10) Q
+"RTN","XINDX3",21,0)
+ I CH=",","!""#&)*+-,./:;<=?\]_~"[$E(S1),RHS=1 D E^XINDX1(10) G S2 ;patch 121
+"RTN","XINDX3",22,0)
+ I CH="," S RHS=0 G S2
+"RTN","XINDX3",23,0)
+ I CH="=" S RHS=1 I "!#&)*,/:;<=?\]_~"[$E(S1) D:$E(S1,1,2)'="##" E^XINDX1(10) G S2 ;patch 119
+"RTN","XINDX3",24,0)
+ I CH="$",'RHS D  D:% E^XINDX1(10) ;Can't be on left side of set.
+"RTN","XINDX3",25,0)
+ . S %=1
+"RTN","XINDX3",26,0)
+ . I "$E$P$X$Y"[$E(S,1,2) S %=0 Q
+"RTN","XINDX3",27,0)
+ . I "$EC$ET$QS"[$E(S,1,3) S %=0 Q
+"RTN","XINDX3",28,0)
+ . I "$ZE$ZT"[$E(S,1,3) S %=0 Q  ;Pickup in XINDX9
+"RTN","XINDX3",29,0)
+ . Q
+"RTN","XINDX3",30,0)
+ I CH="^" D FL G S2
+"RTN","XINDX3",31,0)
+ I CH="@" S Y=$$ASM(LV,LI,",") S:Y'["=" RHS=1 D INC,ARG^XINDX2 G S2
+"RTN","XINDX3",32,0)
+ I CH="(",$D(LV(LV,"OBJ",LI-1)) D ARG^XINDX2 G S2
+"RTN","XINDX3",33,0)
+ I CH="(" D MULT G S2
+"RTN","XINDX3",34,0)
+ I CH="#",$E(S,1,2)="##" D ARG^XINDX2 G S2 ;Cache Objects
+"RTN","XINDX3",35,0)
+ D FL G S2
+"RTN","XINDX3",36,0)
+ ;NOA=number of arguments
+"RTN","XINDX3",37,0)
+MULT D INC S NOA=S I S'>0 S ERR=5 G ^XINDX1
+"RTN","XINDX3",38,0)
+ D DN S AC=AC+LI F  Q:AC'>LI  S:'RHS GK="*" D INC,ARG^XINDX2
+"RTN","XINDX3",39,0)
+ D UP
+"RTN","XINDX3",40,0)
+ Q
+"RTN","XINDX3",41,0)
+FL ;
+"RTN","XINDX3",42,0)
+ S:'RHS GK="*" D ARG^XINDX2
+"RTN","XINDX3",43,0)
+ Q
+"RTN","XINDX3",44,0)
+VLNF(X) ;Drop into VLN
+"RTN","XINDX3",45,0)
+VLN ;Valid Local Name > Variable
+"RTN","XINDX3",46,0)
+ S ERR=0
+"RTN","XINDX3",47,0)
+ Q:X?1(1U,1"%").15UN
+"RTN","XINDX3",48,0)
+ ;lower/mixed case, can't be namespaced ;p140
+"RTN","XINDX3",49,0)
+ I X?1(1A,1"%").15AN D:$E(RTN,1,2)=$E(X,1,2) E^XINDX1(57) Q
+"RTN","XINDX3",50,0)
+ D E^XINDX1(11) ;Too long or other problem
+"RTN","XINDX3",51,0)
+ Q
+"RTN","XINDX3",52,0)
+VGN ;Valid Global Name
+"RTN","XINDX3",53,0)
+ S ERR=0 I X'?1(1U,1"%").7UN D E^XINDX1(12)
+"RTN","XINDX3",54,0)
+ Q
+"RTN","XINDX3",55,0)
+KL ;Process KILL
+"RTN","XINDX3",56,0)
+ S STR=ARG,ARG(1)=ARG,ARG="" D ^XINDX9
+"RTN","XINDX3",57,0)
+A D INC Q:S=""  G A:CH="," S LOC="L" D @$S(CH="@":"KL1",CH="^":"KL2",CH="(":"KL4",1:"KL3") G A
+"RTN","XINDX3",58,0)
+KL1 D INC,ARG^XINDX2 Q
+"RTN","XINDX3",59,0)
+KL2 S GK="!"
+"RTN","XINDX3",60,0)
+ I S1'="(" S ERR=24 D ^XINDX1
+"RTN","XINDX3",61,0)
+ G ARG^XINDX2
+"RTN","XINDX3",62,0)
+KL3 I "^DT^DTIME^DUZ^IOST^IOM^U^"[("^"_S_"^") S ERR=39,ERR(1)=S D ^XINDX1
+"RTN","XINDX3",63,0)
+ I "IO"=S D:S1="(" PEEKDN S ERR=39,ERR(1)=S_$S(S1["(":S1_Y_")",1:"") D:S1'="(" ^XINDX1 I S1="(",("QC"'[$E(Y,2)) D ^XINDX1
+"RTN","XINDX3",64,0)
+KL5 S GK="!" D ARG^XINDX2 Q  ;KILL SUBS
+"RTN","XINDX3",65,0)
+ Q
+"RTN","XINDX3",66,0)
+KL4 S NOA=S1 D DN,ARGS^XINDX2,UP,INC2 Q
+"RTN","XINDX3",67,0)
+NE ;NEW
+"RTN","XINDX3",68,0)
+ S ERR=$S("("[$E(ARG):26,1:0) I ERR G ^XINDX1 ;look for null or (
+"RTN","XINDX3",69,0)
+ S STR=ARG D ^XINDX9 K ERTX
+"RTN","XINDX3",70,0)
+N2 D INC Q:S=""  G N2:CH=","
+"RTN","XINDX3",71,0)
+ ;I CH?1P,("%@()"'[CH)&("$E"'[$E(S,1,2)) D E^XINDX1(11) G N2
+"RTN","XINDX3",72,0)
+ ;check for "@", functions, special variables, or %variables
+"RTN","XINDX3",73,0)
+ I CH?1P,(CH'=S) D  I $G(ERTX)]"" K ERTX G N2
+"RTN","XINDX3",74,0)
+ . Q:"@("[CH!(CH="%"&($E(S,2,8)?.1A.E))  ;check what's indirected on next pass or
+"RTN","XINDX3",75,0)
+ . ;if not $ET or $ES must use indirection 
+"RTN","XINDX3",76,0)
+ . I "$"[CH Q:$E(S,1,3)="$ET"!($E(S,1,3)="$ES")  I LI>1,(LV(LV,LI-1)="@") Q
+"RTN","XINDX3",77,0)
+ . D E^XINDX1(11)
+"RTN","XINDX3",78,0)
+ . Q
+"RTN","XINDX3",79,0)
+ S GK="~" D ARG^XINDX2
+"RTN","XINDX3",80,0)
+ G N2
+"RTN","XINDX3",81,0)
+ ;
+"RTN","XINDX3",82,0)
+RD S STR=ARG D ^XINDX9 S ARG=""
+"RTN","XINDX3",83,0)
+RD1 D INC Q:S=""
+"RTN","XINDX3",84,0)
+ ;I (CH="!")!(CH=",")!(CH=Q)!(CH="#") G RD1
+"RTN","XINDX3",85,0)
+ ;I CH="^" S ERR=11 D ^XINDX1
+"RTN","XINDX3",86,0)
+ I '((CH="%")!(CH?1A)!(CH="*")) D RD3 G RD1
+"RTN","XINDX3",87,0)
+ S Y=$$ASM(LV,LI,",") I Y'[":" S ERR=33,RDTIME=1 D ^XINDX1
+"RTN","XINDX3",88,0)
+ D RD2 G RD1
+"RTN","XINDX3",89,0)
+RD2 Q:","[CH
+"RTN","XINDX3",90,0)
+ I "*#"[CH D E^XINDX1(41)
+"RTN","XINDX3",91,0)
+ I "#:"[CH D INC,ARG^XINDX2,INC G RD2
+"RTN","XINDX3",92,0)
+ I (CH="%")!(CH?1A) S LOC="L",GK="*" D ARG^XINDX2,INC G RD2
+"RTN","XINDX3",93,0)
+ D INC G RD2
+"RTN","XINDX3",94,0)
+RD3 Q:","[CH  I "!#?"[CH D INC G RD3
+"RTN","XINDX3",95,0)
+ I (CH="%")!(CH?1A)!(CH="@") D ARG^XINDX2,INC G RD3
+"RTN","XINDX3",96,0)
+ Q
+"RTN","XINDX3",97,0)
+O S STR=ARG,AC=99 D ^XINDX9,INC S ARG="" I S["@" D ARGS^XINDX2 Q
+"RTN","XINDX3",98,0)
+ D ARG^XINDX2,INC D  D INC,ARGS^XINDX2 Q
+"RTN","XINDX3",99,0)
+ . F  D INC Q:":"[S
+"RTN","XINDX3",100,0)
+ . Q
+"RTN","XINDX3",101,0)
+ Q
+"RTN","XINDX3",102,0)
+ERRCP S ERR=5 D ^XINDX1 Q
+"RTN","XINDX3",103,0)
+ST ;
+"RTN","XINDX3",104,0)
+ S:'$D(V(LOC,S)) V(LOC,S)="" S:V(LOC,S)'[GK V(LOC,S)=V(LOC,S)_GK,GK="" Q
+"RTN","XINDX3",105,0)
+ Q
+"RTN","XINDX3",106,0)
+ASM(WL,SI,L,SEP) ;assemble line Y from LV array
+"RTN","XINDX3",107,0)
+ N %,CH,Y S SEP=$G(SEP),Y="" F %=SI:1 S CH=$G(LV(WL,%)) Q:L[CH  S Y=Y_SEP_CH
+"RTN","XINDX3",108,0)
+ Q Y
+"VER")
+8.0^22.2
+**END**
+**END**

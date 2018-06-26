@@ -1,0 +1,885 @@
+Released IB*2*598 SEQ #561
+Extracted from mail message
+**KIDS**:IB*2.0*598^
+
+**INSTALL NAME**
+IB*2.0*598
+"BLD",10677,0)
+IB*2.0*598^INTEGRATED BILLING^0^3171005^y
+"BLD",10677,1,0)
+^^12^12^3171005^
+"BLD",10677,1,1,0)
+This patch addresses three issues.
+"BLD",10677,1,2,0)
+ 
+"BLD",10677,1,3,0)
+The first issue is about the Clinical Information header overlapping the
+"BLD",10677,1,4,0)
+the special conditions in the expanded claims tracking entry screen in the
+"BLD",10677,1,5,0)
+the Claims Tracking Edit [IBT EDIT BI TRACKING ENTRY] option.
+"BLD",10677,1,6,0)
+ 
+"BLD",10677,1,7,0)
+The second issue is requested to add the bundled procedures 0295T, 0296T,
+"BLD",10677,1,8,0)
+0297T and 0298T to the procedures split structure.
+"BLD",10677,1,9,0)
+ 
+"BLD",10677,1,10,0)
+The third issue as a post-init routine that will update the MCCR Utility 
+"BLD",10677,1,11,0)
+file (#399.1) and Specialty file (#42.4) to prevent unwanted Hospice and 
+"BLD",10677,1,12,0)
+First Party charges.
+"BLD",10677,4,0)
+^9.64PA^^0
+"BLD",10677,6)
+1^
+"BLD",10677,6.3)
+28
+"BLD",10677,"INIT")
+MAIN^IB20P598
+"BLD",10677,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10677,"KRN",.4,0)
+.4
+"BLD",10677,"KRN",.401,0)
+.401
+"BLD",10677,"KRN",.402,0)
+.402
+"BLD",10677,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",10677,"KRN",.403,0)
+.403
+"BLD",10677,"KRN",.5,0)
+.5
+"BLD",10677,"KRN",.84,0)
+.84
+"BLD",10677,"KRN",3.6,0)
+3.6
+"BLD",10677,"KRN",3.8,0)
+3.8
+"BLD",10677,"KRN",9.2,0)
+9.2
+"BLD",10677,"KRN",9.8,0)
+9.8
+"BLD",10677,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10677,"KRN",9.8,"NM",1,0)
+IBCU7A1^^0^B27922710
+"BLD",10677,"KRN",9.8,"NM",2,0)
+IBTRED0^^0^B24089460
+"BLD",10677,"KRN",9.8,"NM",3,0)
+IB20P598^^0^B7946414
+"BLD",10677,"KRN",9.8,"NM","B","IB20P598",3)
+
+"BLD",10677,"KRN",9.8,"NM","B","IBCU7A1",1)
+
+"BLD",10677,"KRN",9.8,"NM","B","IBTRED0",2)
+
+"BLD",10677,"KRN",19,0)
+19
+"BLD",10677,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",19.1,0)
+19.1
+"BLD",10677,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",101,0)
+101
+"BLD",10677,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",409.61,0)
+409.61
+"BLD",10677,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",771,0)
+771
+"BLD",10677,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",779.2,0)
+779.2
+"BLD",10677,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",10677,"KRN",870,0)
+870
+"BLD",10677,"KRN",8989.51,0)
+8989.51
+"BLD",10677,"KRN",8989.52,0)
+8989.52
+"BLD",10677,"KRN",8994,0)
+8994
+"BLD",10677,"KRN","B",.4,.4)
+
+"BLD",10677,"KRN","B",.401,.401)
+
+"BLD",10677,"KRN","B",.402,.402)
+
+"BLD",10677,"KRN","B",.403,.403)
+
+"BLD",10677,"KRN","B",.5,.5)
+
+"BLD",10677,"KRN","B",.84,.84)
+
+"BLD",10677,"KRN","B",3.6,3.6)
+
+"BLD",10677,"KRN","B",3.8,3.8)
+
+"BLD",10677,"KRN","B",9.2,9.2)
+
+"BLD",10677,"KRN","B",9.8,9.8)
+
+"BLD",10677,"KRN","B",19,19)
+
+"BLD",10677,"KRN","B",19.1,19.1)
+
+"BLD",10677,"KRN","B",101,101)
+
+"BLD",10677,"KRN","B",409.61,409.61)
+
+"BLD",10677,"KRN","B",771,771)
+
+"BLD",10677,"KRN","B",779.2,779.2)
+
+"BLD",10677,"KRN","B",870,870)
+
+"BLD",10677,"KRN","B",8989.51,8989.51)
+
+"BLD",10677,"KRN","B",8989.52,8989.52)
+
+"BLD",10677,"KRN","B",8994,8994)
+
+"BLD",10677,"QDEF")
+^^^^^^^^^^
+"BLD",10677,"QUES",0)
+^9.62^^
+"BLD",10677,"REQB",0)
+^9.611^2^2
+"BLD",10677,"REQB",1,0)
+IB*2.0*270^2
+"BLD",10677,"REQB",2,0)
+IB*2.0*461^2
+"BLD",10677,"REQB","B","IB*2.0*270",1)
+
+"BLD",10677,"REQB","B","IB*2.0*461",2)
+
+"INIT")
+MAIN^IB20P598
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+598^3171005^2447
+"PKG",200,22,1,"PAH",1,1,0)
+^^12^12^3171005
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses three issues.
+"PKG",200,22,1,"PAH",1,1,2,0)
+ 
+"PKG",200,22,1,"PAH",1,1,3,0)
+The first issue is about the Clinical Information header overlapping the
+"PKG",200,22,1,"PAH",1,1,4,0)
+the special conditions in the expanded claims tracking entry screen in the
+"PKG",200,22,1,"PAH",1,1,5,0)
+the Claims Tracking Edit [IBT EDIT BI TRACKING ENTRY] option.
+"PKG",200,22,1,"PAH",1,1,6,0)
+ 
+"PKG",200,22,1,"PAH",1,1,7,0)
+The second issue is requested to add the bundled procedures 0295T, 0296T,
+"PKG",200,22,1,"PAH",1,1,8,0)
+0297T and 0298T to the procedures split structure.
+"PKG",200,22,1,"PAH",1,1,9,0)
+ 
+"PKG",200,22,1,"PAH",1,1,10,0)
+The third issue as a post-init routine that will update the MCCR Utility 
+"PKG",200,22,1,"PAH",1,1,11,0)
+file (#399.1) and Specialty file (#42.4) to prevent unwanted Hospice and 
+"PKG",200,22,1,"PAH",1,1,12,0)
+First Party charges.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IB20P598")
+0^3^B7946414^n/a
+"RTN","IB20P598",1,0)
+IB20P598 ;ALB/MJF - UPDATE MCCR UTILITY /SPECIALTY ;9/22/17
+"RTN","IB20P598",2,0)
+ ;;2.0;INTEGRATED BILLING;**598**;21-MAR-94;Build 28
+"RTN","IB20P598",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P598",4,0)
+ Q
+"RTN","IB20P598",5,0)
+MAIN ;order of operators
+"RTN","IB20P598",6,0)
+ N U S U="^"
+"RTN","IB20P598",7,0)
+ D CREATE,POINT
+"RTN","IB20P598",8,0)
+ Q
+"RTN","IB20P598",9,0)
+ ;
+"RTN","IB20P598",10,0)
+CREATE ;Adds/fills records from RECORDS label to 399.1 file
+"RTN","IB20P598",11,0)
+ N DLAYGO,DIC,DIE,DA,DD,DO,DR,X,Y,IBCOUNT,IBREC,IBNAME,IBCODE,IBABBRE,IBBED,IBIEN
+"RTN","IB20P598",12,0)
+ D MES^XPDUTL("Adding new records to 399.1..")
+"RTN","IB20P598",13,0)
+ F IBCOUNT=1:1 S IBREC=$P($T(RECORDS+IBCOUNT),";;",2) Q:IBREC=""  D
+"RTN","IB20P598",14,0)
+ .;Breaking the record into vars
+"RTN","IB20P598",15,0)
+ .S IBNAME=$P(IBREC,U,1),IBCODE=$P(IBREC,U,2),IBABBRE=$P(IBREC,U,3),IBBED=$P(IBREC,U,4)
+"RTN","IB20P598",16,0)
+ .;check to see if the record exists before adding
+"RTN","IB20P598",17,0)
+ .I IBNAME="" Q 
+"RTN","IB20P598",18,0)
+ .S IBIEN=$O(^DGCR(399.1,"B",IBNAME,""))
+"RTN","IB20P598",19,0)
+ .I IBNAME=$$GET1^DIQ(399.1,IBIEN,.01) D MES^XPDUTL("It appears this record "_IBNAME_" already exists.") Q  ;Quit if this record has already been created
+"RTN","IB20P598",20,0)
+ .;Add the record to 399.1
+"RTN","IB20P598",21,0)
+ .K DD,DO S DLAYGO=399.1,DIC="^DGCR(399.1,",DIC(0)="L",X=IBNAME D FILE^DICN K DIC,DLAYGO I Y<1 K X,Y Q
+"RTN","IB20P598",22,0)
+ .;Stuff the fields               02 code,         03 abbre,         12 bed
+"RTN","IB20P598",23,0)
+ .S DA=+Y,DIE="^DGCR(399.1,",DR=".02///"_IBCODE_";.03///"_IBABBRE_";.12///"_IBBED D ^DIE K DIE,DA,DR,X,Y
+"RTN","IB20P598",24,0)
+ .D MES^XPDUTL("Record "_IBNAME_" updated")
+"RTN","IB20P598",25,0)
+ Q
+"RTN","IB20P598",26,0)
+ ;
+"RTN","IB20P598",27,0)
+POINT ;Adjust pointers in relevant specialty records
+"RTN","IB20P598",28,0)
+ N DA,DIE,DR,X,Y,IBREC,IBCOUNT,IBNAME,IBIEN
+"RTN","IB20P598",29,0)
+ D MES^XPDUTL("Updating NH HOSPICE and HOSPICE FOR ACUTE CARE pointers..")
+"RTN","IB20P598",30,0)
+ ;Getting the relevant specialty records
+"RTN","IB20P598",31,0)
+ F IBCOUNT=1:1 S IBREC=$P($T(RECORDS+IBCOUNT),";;",2) Q:IBREC=""  D
+"RTN","IB20P598",32,0)
+ .;Piece out the name
+"RTN","IB20P598",33,0)
+ .S IBNAME=$P(IBREC,U,1)
+"RTN","IB20P598",34,0)
+ .I IBNAME="" Q
+"RTN","IB20P598",35,0)
+ .;Get the IEN
+"RTN","IB20P598",36,0)
+ .S IBIEN=$O(^DIC(42.4,"B",IBNAME,"")) I IBIEN="" Q
+"RTN","IB20P598",37,0)
+ .;Check the IEN for validation
+"RTN","IB20P598",38,0)
+ .I IBNAME'=$$GET1^DIQ(42.4,IBIEN,.01) D MES^XPDUTL("Record "_IBNAME_" couldn't be verified") Q  ; quit if this record cannot be verified
+"RTN","IB20P598",39,0)
+ .;Set the specialty record's pointers to the new MCCR fields
+"RTN","IB20P598",40,0)
+ .S DA=IBIEN,DIE="^DIC(42.4,",DR="5///"_IBNAME D ^DIE
+"RTN","IB20P598",41,0)
+ .K DIE,DA,DR,X,Y
+"RTN","IB20P598",42,0)
+ .D MES^XPDUTL(IBNAME_" pointer updated")
+"RTN","IB20P598",43,0)
+ Q
+"RTN","IB20P598",44,0)
+ ;
+"RTN","IB20P598",45,0)
+RECORDS ;records to be added name, code, abbreviation, bed
+"RTN","IB20P598",46,0)
+ ;;NH HOSPICE^10^NH HOSPICE^YES
+"RTN","IB20P598",47,0)
+ ;;HOSPICE FOR ACUTE CARE^1^HOSPICE GEN MED^YES
+"RTN","IB20P598",48,0)
+ ;
+"RTN","IBCU7A1")
+0^1^B27922710^B18327775
+"RTN","IBCU7A1",1,0)
+IBCU7A1 ;ALB/ARH - BILL PROCEDURE MANIPULATIONS (BUNDLED) ; 10-OCT-03
+"RTN","IBCU7A1",2,0)
+ ;;2.0;INTEGRATED BILLING;**245,270,598**;21-MAR-94;Build 28
+"RTN","IBCU7A1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCU7A1",4,0)
+ ;
+"RTN","IBCU7A1",5,0)
+ ;
+"RTN","IBCU7A1",6,0)
+BNDL(IBIFN) ; manipulate a bill's CPT codes, replace bundled codes
+"RTN","IBCU7A1",7,0)
+ ; on facility and profesional bills global codes should be billed using their components
+"RTN","IBCU7A1",8,0)
+ ; on freestanding bills component codes should be billed as global
+"RTN","IBCU7A1",9,0)
+ ; - on facility bill, if a global code is found in the clinical data and on the bill then 
+"RTN","IBCU7A1",10,0)
+ ;   replace it on the bill with the institutional components
+"RTN","IBCU7A1",11,0)
+ ; - on professional bill, if the global code is found in the clinical data and the institutional components
+"RTN","IBCU7A1",12,0)
+ ;   are found on the bill then replace the institutional components with the professional components
+"RTN","IBCU7A1",13,0)
+ ; - on a freestanding bill if all institutional and professional components are found then
+"RTN","IBCU7A1",14,0)
+ ;   replace them with the global code
+"RTN","IBCU7A1",15,0)
+ ; maximum of 10 is insurance against infinite loops
+"RTN","IBCU7A1",16,0)
+ N IB0,IBCT,IBDVTY,IBTYPE,IBI,IBJ,IBLN,IBGLB,IBNLN,IBNEW,IBDEL,IBRPL,IBX,IBMSG,IBCHANGE,IB029,IBMCPT S IBCHANGE=0
+"RTN","IBCU7A1",17,0)
+ S IB0=$G(^DGCR(399,+$G(IBIFN),0)) Q:IB0=""
+"RTN","IBCU7A1",18,0)
+ S IBCT=$P(IB0,U,27) Q:'IBCT  S IBDVTY=$P($$RCDV^IBCRU8($P(IB0,U,22)),U,3)
+"RTN","IBCU7A1",19,0)
+ S IBTYPE=$S(IBDVTY=3:3,1:+IBCT)
+"RTN","IBCU7A1",20,0)
+ ;
+"RTN","IBCU7A1",21,0)
+ I +$O(^DGCR(399,+$G(IBIFN),"CP","B","94017;ICPT("),-1)<93000 Q  ; none of the bundled codes on bill
+"RTN","IBCU7A1",22,0)
+ ;
+"RTN","IBCU7A1",23,0)
+ I IBDVTY'=3 D GETSD^IBCU7U(IBIFN) ; for provider based sites global charge should be in clincal data
+"RTN","IBCU7A1",24,0)
+ ;
+"RTN","IBCU7A1",25,0)
+ ; loop through list of bundled procedures and find any on bill
+"RTN","IBCU7A1",26,0)
+ F IBI=1:1 S IBLN=$P($T(IPBI+IBI),";;",2) Q:IBLN=""  D
+"RTN","IBCU7A1",27,0)
+ . S IBGLB=$P(IBLN,":",1),IBCHANGE=0
+"RTN","IBCU7A1",28,0)
+ .
+"RTN","IBCU7A1",29,0)
+ . ; *598 procedures split for 0295T
+"RTN","IBCU7A1",30,0)
+ . S IB029=0
+"RTN","IBCU7A1",31,0)
+ . I IBGLB="0295T" S IB029=1,IBLN=$$IB029A(IBGLB,IBLN),IBGLB=$P(IBLN,":",1)
+"RTN","IBCU7A1",32,0)
+ . ;
+"RTN","IBCU7A1",33,0)
+ . S IBNLN=$$IPB(IBLN,IBTYPE) Q:'IBNLN  S IBNEW=$P(IBNLN,":",2),IBDEL=$P(IBNLN,":",1)
+"RTN","IBCU7A1",34,0)
+ . ;
+"RTN","IBCU7A1",35,0)
+ . I IBDVTY'=3,'$D(^UTILITY($J,"CPT-CLN",+IBGLB)) Q
+"RTN","IBCU7A1",36,0)
+ . ;
+"RTN","IBCU7A1",37,0)
+ . ; search the bill for the list of procedures to be replaced
+"RTN","IBCU7A1",38,0)
+ . F IBJ=1:1 S IBRPL=$$FND(IBIFN,IBDEL) Q:'IBRPL  D  Q:IBJ>10
+"RTN","IBCU7A1",39,0)
+ .. ;
+"RTN","IBCU7A1",40,0)
+ .. I IBDVTY'=3,'$D(^UTILITY($J,"CPT-CLN",+IBGLB,+IBRPL)) Q
+"RTN","IBCU7A1",41,0)
+ .. S IBRPL=$P(IBRPL,U,2,999) I $L(IBRPL,U)'=$L(IBDEL,U) Q
+"RTN","IBCU7A1",42,0)
+ .. ;
+"RTN","IBCU7A1",43,0)
+ .. I +$$RPL(IBIFN,IBNEW,IBRPL) S IBCHANGE=1 ; replace procedures
+"RTN","IBCU7A1",44,0)
+ . ;
+"RTN","IBCU7A1",45,0)
+ . I +IBCHANGE,IB029 S IBDEL=$$IB029C(IBDEL),IBNEW=$$IB029C(IBNEW)
+"RTN","IBCU7A1",46,0)
+ . I +IBCHANGE S IBMSG(IBI)=$TR(IBDEL,"^",",")_" replaced by "_$TR(IBNEW,"^",",")
+"RTN","IBCU7A1",47,0)
+ ;
+"RTN","IBCU7A1",48,0)
+ I '$D(ZTQUEUED),'$G(IBAUTO),+$O(IBMSG(0)) S IBI=0 F  S IBI=$O(IBMSG(IBI)) Q:'IBI  W !,IBMSG(IBI)
+"RTN","IBCU7A1",49,0)
+ Q
+"RTN","IBCU7A1",50,0)
+ ;
+"RTN","IBCU7A1",51,0)
+RPL(IBIFN,NEWCPTS,OLDLIST) ; replace procedures on the bill
+"RTN","IBCU7A1",52,0)
+ ; Input:  NEWCPTS - list of CPT codes to add to the bill
+"RTN","IBCU7A1",53,0)
+ ;         OLDLIST - list of procedure ifn's on the bill to be replaced
+"RTN","IBCU7A1",54,0)
+ ; Output: returns true if changes made
+"RTN","IBCU7A1",55,0)
+ ; the list of new and replaced may not be the same length
+"RTN","IBCU7A1",56,0)
+ ; - if more CPT's to be added than exist then the first existing procedure is copied for the new CPT
+"RTN","IBCU7A1",57,0)
+ ; - if fewer CPT's to be added than exist then the extra entries on the bill are deleted
+"RTN","IBCU7A1",58,0)
+ N IBJ,IBFFN,IBRFN,IBNCPT,IBFND S IBFND=0
+"RTN","IBCU7A1",59,0)
+ ;
+"RTN","IBCU7A1",60,0)
+ S NEWCPTS=$G(NEWCPTS),OLDLIST=$G(OLDLIST),IBFFN=+OLDLIST
+"RTN","IBCU7A1",61,0)
+ ;
+"RTN","IBCU7A1",62,0)
+ F IBJ=1:1 S IBRFN=$P(OLDLIST,U,IBJ),IBNCPT=$P(NEWCPTS,U,IBJ) Q:('IBRFN)&('IBNCPT)  D  Q:'IBFND
+"RTN","IBCU7A1",63,0)
+ . I +IBRFN,'IBNCPT S IBFND=$$DELCPT^IBCU7U(IBIFN,IBRFN) Q
+"RTN","IBCU7A1",64,0)
+ . I 'IBRFN,+IBNCPT S IBFND=$$COPYCPT^IBCU7U(IBIFN,IBFFN,IBNCPT) Q
+"RTN","IBCU7A1",65,0)
+ . I +IBRFN,+IBNCPT D
+"RTN","IBCU7A1",66,0)
+ .. I '$G(IB029) S IBFND=$$EDITCPT^IBCU7U(IBIFN,IBRFN,IBNCPT) Q
+"RTN","IBCU7A1",67,0)
+ .. S IBFND=$$IB029B(IBIFN,IBRFN,IBNCPT)
+"RTN","IBCU7A1",68,0)
+ Q IBFND
+"RTN","IBCU7A1",69,0)
+ ;
+"RTN","IBCU7A1",70,0)
+IB029A(IBGLB,IBLN) ; return ien of cpt code 
+"RTN","IBCU7A1",71,0)
+ ; input: IBGLB = 0295T
+"RTN","IBCU7A1",72,0)
+ ;        IBLN = 0295T:0296T^0297T:0298T 
+"RTN","IBCU7A1",73,0)
+ N IBTXT,IBTCPT S IBTCPT=0
+"RTN","IBCU7A1",74,0)
+ S IBTXT=$P(IBLN,":",2)
+"RTN","IBCU7A1",75,0)
+ S IBTCPT=+$$CPT^ICPTCOD(IBGLB)_":"_+$$CPT^ICPTCOD($P(IBTXT,U,1))_U_+$$CPT^ICPTCOD($P(IBTXT,U,2))_":"_+$$CPT^ICPTCOD($P(IBLN,":",3))
+"RTN","IBCU7A1",76,0)
+ Q IBTCPT
+"RTN","IBCU7A1",77,0)
+ ;
+"RTN","IBCU7A1",78,0)
+IB029B(IBIFN,OLDDA,NEWCPT) ; replace cpt with another
+"RTN","IBCU7A1",79,0)
+ ; input: OLDDA = ien of cpt in bill cpt multiple to be replaced
+"RTN","IBCU7A1",80,0)
+ ;        NEWCPT = ien of cpt code to be added 
+"RTN","IBCU7A1",81,0)
+ N DA,DIE,IBTCPT,IBFND,IBZ,X,Y S IBFND=0,DA(1)=+$G(IBIFN),DA=+$G(OLDDA),NEWCPT=+$G(NEWCPT),IBTCPT=NEWCPT
+"RTN","IBCU7A1",82,0)
+ I NEWCPT,$D(^DGCR(399,DA(1),"CP",DA,0)) D FDA^DILF(399.0304,.DA,.01,,IBTCPT_";ICPT(","IBZ"),FILE^DIE(,"IBZ") S IBFND=1
+"RTN","IBCU7A1",83,0)
+ Q IBFND
+"RTN","IBCU7A1",84,0)
+ ;
+"RTN","IBCU7A1",85,0)
+IB029C(IBMCPT) ; return cpt code(s) for display
+"RTN","IBCU7A1",86,0)
+ ; input: IBMCPT = ien of cpt to be replaced
+"RTN","IBCU7A1",87,0)
+ ; output: IBTCPT = cpt code(s) separated by '^'
+"RTN","IBCU7A1",88,0)
+ N IBZ,IBTXT,IBTCPT S IBTCPT=""
+"RTN","IBCU7A1",89,0)
+ S IBTXT=$P(IBMCPT,U,1),IBTCPT=$P($$CPT^ICPTCOD(IBTXT),U,2)
+"RTN","IBCU7A1",90,0)
+ F IBZ=2:1 S IBTXT=$P(IBMCPT,U,IBZ) Q:IBTXT=""  S IBTCPT=IBTCPT_U_$P($$CPT^ICPTCOD(IBTXT),U,2)
+"RTN","IBCU7A1",91,0)
+ Q IBTCPT
+"RTN","IBCU7A1",92,0)
+ ;
+"RTN","IBCU7A1",93,0)
+FND(IBIFN,LIST) ; find first set of the procedures on the bill to be replaced
+"RTN","IBCU7A1",94,0)
+ ; if all found then returns procedure date followed by 'CP' ifn list
+"RTN","IBCU7A1",95,0)
+ ; Input:  list of CPT's to be replaced separated by '^', internal format
+"RTN","IBCU7A1",96,0)
+ ; Output: procedure date ^ ifn of procedures in bill CP multiple
+"RTN","IBCU7A1",97,0)
+ N IBJ,IBC1,IBC1N,IBC1D,IBC2,IBC2N,IBC2D,IBFND,IBNLIST S (IBFND,IBNLIST)=0 I '$G(LIST) G FNDQ
+"RTN","IBCU7A1",98,0)
+ ;
+"RTN","IBCU7A1",99,0)
+ ; start with the first procedure to be replaced if it is on the bill then search for the rest on same date
+"RTN","IBCU7A1",100,0)
+ S IBC1=$P(LIST,U,1)
+"RTN","IBCU7A1",101,0)
+ S IBC1N=0 F  S IBC1N=$O(^DGCR(399,+$G(IBIFN),"CP","B",IBC1_";ICPT(",IBC1N)) Q:'IBC1N  D  Q:IBFND
+"RTN","IBCU7A1",102,0)
+ . S IBC1D=$P($G(^DGCR(399,IBIFN,"CP",IBC1N,0)),U,2)
+"RTN","IBCU7A1",103,0)
+ . S IBFND=1,IBNLIST=IBC1D_U_IBC1N
+"RTN","IBCU7A1",104,0)
+ . ;
+"RTN","IBCU7A1",105,0)
+ . ; find other procedures to be replaced for same date
+"RTN","IBCU7A1",106,0)
+ . F IBJ=2:1 S IBC2=$P(LIST,U,IBJ) Q:'IBC2  S IBFND=0 D  Q:'IBFND
+"RTN","IBCU7A1",107,0)
+ .. S IBC2N=0 F  S IBC2N=$O(^DGCR(399,IBIFN,"CP","B",IBC2_";ICPT(",IBC2N)) Q:'IBC2N  D  Q:IBFND
+"RTN","IBCU7A1",108,0)
+ ... S IBC2D=$P($G(^DGCR(399,IBIFN,"CP",IBC2N,0)),U,2) I IBC1D'=IBC2D S IBFND=0 Q
+"RTN","IBCU7A1",109,0)
+ ... S IBFND=1,IBNLIST=IBNLIST_U_IBC2N
+"RTN","IBCU7A1",110,0)
+ . ;
+"RTN","IBCU7A1",111,0)
+ . I 'IBFND S IBNLIST=0
+"RTN","IBCU7A1",112,0)
+ ;
+"RTN","IBCU7A1",113,0)
+FNDQ Q IBNLIST
+"RTN","IBCU7A1",114,0)
+ ;
+"RTN","IBCU7A1",115,0)
+CHKIPB(CPT,TYPE) ; return procedures that may replace procedure passed in
+"RTN","IBCU7A1",116,0)
+ ; Input:  TYPE - 1 for institutional, 2 for professional, 3 for Non-Provider Based
+"RTN","IBCU7A1",117,0)
+ ; Output: Procedures to be replaced ':' Procedures they are replaced with
+"RTN","IBCU7A1",118,0)
+ N IBX,IBI,IBLN,IBRPL S IBX="",CPT=$G(CPT),TYPE=+$G(TYPE)
+"RTN","IBCU7A1",119,0)
+ I +TYPE,CPT>92999,CPT<94017 F IBI=1:1 S IBLN=$P($T(IPBI+IBI),";;",2) Q:IBLN=""  D  Q:+IBX
+"RTN","IBCU7A1",120,0)
+ . S IBRPL=$$IPB(IBLN,TYPE) I $P(IBRPL,":",1)[CPT S IBX=IBRPL
+"RTN","IBCU7A1",121,0)
+ Q IBX
+"RTN","IBCU7A1",122,0)
+ ;
+"RTN","IBCU7A1",123,0)
+ ;
+"RTN","IBCU7A1",124,0)
+IPB(LINE,TYPE) ; return procedures to be replaced and those they are replaced by for the type of bill
+"RTN","IBCU7A1",125,0)
+ ; Input:  LINE - line of bundled procedures from IPBI
+"RTN","IBCU7A1",126,0)
+ ;         TYPE - 1 for institutional, 2 for professional, 3 for Non-Provider Based
+"RTN","IBCU7A1",127,0)
+ ; Output: Procedures to be replaced ':' Procedures they are replaced with
+"RTN","IBCU7A1",128,0)
+ ; - institutional type the global is replaced by the technical componentes
+"RTN","IBCU7A1",129,0)
+ ; - professional type: the institutional components are replaced by the professional components
+"RTN","IBCU7A1",130,0)
+ ; - non-provider based: the institutional and professional components are preplaced by the global
+"RTN","IBCU7A1",131,0)
+ ;
+"RTN","IBCU7A1",132,0)
+ N IBNEW,IBDEL,IBX S (IBX,IBDEL,IBNEW)="",TYPE=$G(TYPE),LINE=$G(LINE)
+"RTN","IBCU7A1",133,0)
+ I TYPE=1 S IBNEW=$P(LINE,":",2),IBDEL=$P(LINE,":",1)
+"RTN","IBCU7A1",134,0)
+ I TYPE=2 S IBNEW=$P(LINE,":",3),IBDEL=$P(LINE,":",2)
+"RTN","IBCU7A1",135,0)
+ I TYPE=3 S IBNEW=$P(LINE,":",1),IBDEL=$P(LINE,":",2)_U_$P(LINE,":",3)
+"RTN","IBCU7A1",136,0)
+ S IBX=IBDEL_":"_IBNEW
+"RTN","IBCU7A1",137,0)
+ Q IBX
+"RTN","IBCU7A1",138,0)
+ ;
+"RTN","IBCU7A1",139,0)
+IPBI ; Facility Provider Based Replace Global by Technical Component: global:technical:professional
+"RTN","IBCU7A1",140,0)
+ ;;93000:93005:93010
+"RTN","IBCU7A1",141,0)
+ ;;93015:93017:93016^93018
+"RTN","IBCU7A1",142,0)
+ ;;93040:93041:93042
+"RTN","IBCU7A1",143,0)
+ ;;93224:93225^93226:93227
+"RTN","IBCU7A1",144,0)
+ ;;93230:93231^93232:93233
+"RTN","IBCU7A1",145,0)
+ ;;93235:93236:93237
+"RTN","IBCU7A1",146,0)
+ ;;93268:93270^93271:93272
+"RTN","IBCU7A1",147,0)
+ ;;93720:93721:93722
+"RTN","IBCU7A1",148,0)
+ ;;93784:93786^93788:93790
+"RTN","IBCU7A1",149,0)
+ ;;94014:94015:94016
+"RTN","IBCU7A1",150,0)
+ ;;0295T:0296T^0297T:0298T
+"RTN","IBCU7A1",151,0)
+ ;;
+"RTN","IBTRED0")
+0^2^B24089460^B23857712
+"RTN","IBTRED0",1,0)
+IBTRED0 ;ALB/AAS - EXPAND/EDIT CLAIMS TRACKING ENTRY - CONT. ;01-JUL-1993
+"RTN","IBTRED0",2,0)
+ ;;2.0;INTEGRATED BILLING;**160,210,317,276,458,461,598**;21-MAR-94;Build 28
+"RTN","IBTRED0",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBTRED0",4,0)
+ ;
+"RTN","IBTRED0",5,0)
+% I '$G(IBTRN)!($G(IORVON)="") G ^IBTRED
+"RTN","IBTRED0",6,0)
+ D CLIN,BILL,PRE
+"RTN","IBTRED0",7,0)
+ Q
+"RTN","IBTRED0",8,0)
+ ;
+"RTN","IBTRED0",9,0)
+CLIN ; -- clinical data region
+"RTN","IBTRED0",10,0)
+ N OFFSET,START,IBICD
+"RTN","IBTRED0",11,0)
+ ;S START=7,OFFSET=2 *598 comment out
+"RTN","IBTRED0",12,0)
+ S START=8,OFFSET=2
+"RTN","IBTRED0",13,0)
+ ;
+"RTN","IBTRED0",14,0)
+CLIN1 N IBETYP S IBETYP=$$TRTP^IBTRE1(IBTRN) I 'IBETYP!(IBETYP>2) Q
+"RTN","IBTRED0",15,0)
+ D SET^IBCNSP(START,OFFSET," Clinical Information ",IORVON,IORVOFF)
+"RTN","IBTRED0",16,0)
+ I "12"[IBETYP D @IBETYP
+"RTN","IBTRED0",17,0)
+ Q
+"RTN","IBTRED0",18,0)
+ ;
+"RTN","IBTRED0",19,0)
+1 ; -- inpatient clinical data
+"RTN","IBTRED0",20,0)
+ ;D SET^IBCNSP(START+1,OFFSET,"      Provider: "_$E($P($G(VAIN(2)),"^",2),1,15))
+"RTN","IBTRED0",21,0)
+ D SET^IBCNSP(START+1,OFFSET,"      Provider: "_$E($$APROV^IBTRE6(IBTRN),1,15))
+"RTN","IBTRED0",22,0)
+ D SET^IBCNSP(START+2,OFFSET,"Admitting Diag: "_$E($$ADMDIAG^IBTRE6(IBTRN),1,23))
+"RTN","IBTRED0",23,0)
+ D SET^IBCNSP(START+3,OFFSET,"  Primary Diag: "_$E($$PDIAG^IBTRE6(IBTRN),1,23))
+"RTN","IBTRED0",24,0)
+ D LISTP^IBTRE6(IBTRN,.IBICD)
+"RTN","IBTRED0",25,0)
+ D SET^IBCNSP(START+4,OFFSET," 1st Procedure: "_$E($$PROC^IBTRE6(+$G(IBICD(1)),1),1,23))
+"RTN","IBTRED0",26,0)
+ D SET^IBCNSP(START+5,OFFSET," 2nd Procedure: "_$E($$PROC^IBTRE6(+$G(IBICD(2)),1),1,23))
+"RTN","IBTRED0",27,0)
+ Q
+"RTN","IBTRED0",28,0)
+ ;
+"RTN","IBTRED0",29,0)
+2 ; -- outpatient clinic data
+"RTN","IBTRED0",30,0)
+ N IBDATE ; Date of service for CSV
+"RTN","IBTRED0",31,0)
+ S IBDATE=$$TRNDATE^IBACSV(IBTRN)
+"RTN","IBTRED0",32,0)
+ S IBOE=$P(IBTRND,"^",4)
+"RTN","IBTRED0",33,0)
+ I +IBOE<1 D SET^IBCNSP(START+1,OFFSET,"  No Outpatient Encounter Found") Q
+"RTN","IBTRED0",34,0)
+ N IBSDV,IBSDX D SETSDV^IBTRE6(+IBOE,.IBSDV) S IBPCNT=IBSDV D SETSDX^IBTRE6(+IBOE,.IBSDX) S IBDCNT=IBSDX
+"RTN","IBTRED0",35,0)
+ D SET^IBCNSP(START+1,OFFSET,"      Provider: "_$E($P($G(^VA(200,+$P($G(IBSDV(1)),"^",2),0)),"^"),1,23)) ;sdd(409.44
+"RTN","IBTRED0",36,0)
+ D SET^IBCNSP(START+2,OFFSET,"      Provider: "_$E($P($G(^VA(200,+$P($G(IBSDV(2)),"^",2),0)),"^"),1,23)) ;sdd(409.44
+"RTN","IBTRED0",37,0)
+ D SET^IBCNSP(START+3,OFFSET,"     Diagnosis: "_$E($$DIAG^IBTRE6(+$P($G(IBSDX(1)),"^",2),1,IBDATE),1,23)) ;sdd(409.43
+"RTN","IBTRED0",38,0)
+ D SET^IBCNSP(START+4,OFFSET,"     Diagnosis: "_$E($$DIAG^IBTRE6(+$P($G(IBSDX(2)),"^",2),1,IBDATE),1,23)) ;sdd(409.43
+"RTN","IBTRED0",39,0)
+ D SET^IBCNSP(START+5,OFFSET,"  Special Cond: "_$$ENCL^IBTRED(IBOE))
+"RTN","IBTRED0",40,0)
+ Q
+"RTN","IBTRED0",41,0)
+ ;
+"RTN","IBTRED0",42,0)
+BILL ; -- billing information region
+"RTN","IBTRED0",43,0)
+ N OFFSET,START,IBBIL,IBECME,IBECMEN,IBCOMM
+"RTN","IBTRED0",44,0)
+ S START=15,OFFSET=2
+"RTN","IBTRED0",45,0)
+ S IBBIL=+$P(IBTRND,"^",11)
+"RTN","IBTRED0",46,0)
+ S IBDGCR=$G(^DGCR(399,IBBIL,0)),IBDGCRU1=$G(^("U1"))
+"RTN","IBTRED0",47,0)
+ S IBECMEN=$P($P($G(^DGCR(399,IBBIL,"M1")),U,8),";") ;ecme#
+"RTN","IBTRED0",48,0)
+ S IBECME=''IBECMEN
+"RTN","IBTRED0",49,0)
+ S IBAMNT=$$BILLD^IBTRED1(IBTRN)
+"RTN","IBTRED0",50,0)
+ D SET^IBCNSP(START,OFFSET+20," Billing Information ",IORVON,IORVOFF)
+"RTN","IBTRED0",51,0)
+ D SET^IBCNSP(START+1,OFFSET,"    Episode Billable: "_$S(+$P(IBTRND,"^",19):"NO",1:"YES"))
+"RTN","IBTRED0",52,0)
+ D SET^IBCNSP(START+2,OFFSET," Non-Billable Reason: "_$E($P($G(^IBE(356.8,+$P(IBTRND,"^",19),0)),"^"),1,20))
+"RTN","IBTRED0",53,0)
+ D SET^IBCNSP(START+3,OFFSET,"      Next Bill Date: "_$$DAT1^IBOUTL($P(IBTRND,"^",17)))
+"RTN","IBTRED0",54,0)
+ D SET^IBCNSP(START+4,OFFSET,"Work. Comp/OWCP/Tort: "_$E($$EXPAND^IBTRE(356,.12,$P(IBTRND,"^",12)),1,14))
+"RTN","IBTRED0",55,0)
+ D SET^IBCNSP(START+5,OFFSET,"        Initial Bill: "_$P(IBDGCR,"^")_$S(IBECME:"e",1:""))
+"RTN","IBTRED0",56,0)
+ I IBECME D SET^IBCNSP(START+6,OFFSET,"         ECME Number: "_IBECMEN)
+"RTN","IBTRED0",57,0)
+ D SET^IBCNSP(START+6+IBECME,OFFSET,"         Bill Status: "_$E($$EXPAND^IBTRE(399,.13,$P(IBDGCR,"^",13)),1,14))
+"RTN","IBTRED0",58,0)
+ ;S IBCOMM="" I +$P(IBTRND,"^",19) ; removed 'IF' for displaying the comment
+"RTN","IBTRED0",59,0)
+ S IBCOMM=$E($P(IBTRND1,"^",8),1,60)
+"RTN","IBTRED0",60,0)
+ I IBCOMM'="" D SET^IBCNSP(START+7+IBECME,OFFSET,"  Additional Comment: "_IBCOMM)
+"RTN","IBTRED0",61,0)
+ I $P($G(^IBT(356,IBTRN,3,0)),"^",3) D
+"RTN","IBTRED0",62,0)
+ . N IBX,IBY
+"RTN","IBTRED0",63,0)
+ . S IBY="",IBX=0 F  S IBX=$O(^IBT(356,IBTRN,3,IBX)) Q:'IBX  S IBY($P($G(^IBT(356.85,+$G(^IBT(356,IBTRN,3,IBX,0)),0)),"^"))=""
+"RTN","IBTRED0",64,0)
+ . S IBX="" F  S IBX=$O(IBY(IBX)) Q:IBX=""  S IBY=IBY_$S($L(IBY):", ",1:"")_IBX
+"RTN","IBTRED0",65,0)
+ . D SET^IBCNSP(START+($S(+$P(IBTRND,"^",19):8,1:7)),OFFSET,"   Billable Findings: "_IBY)
+"RTN","IBTRED0",66,0)
+ D BILL1
+"RTN","IBTRED0",67,0)
+ Q
+"RTN","IBTRED0",68,0)
+ ;
+"RTN","IBTRED0",69,0)
+BILL1 ; -- other side of billing info
+"RTN","IBTRED0",70,0)
+ N OFFSET,START
+"RTN","IBTRED0",71,0)
+ S START=15,OFFSET=45
+"RTN","IBTRED0",72,0)
+ D SET^IBCNSP(START+1,OFFSET,"       Total Charges: $ "_$J($P(IBAMNT,"^"),8))
+"RTN","IBTRED0",73,0)
+ D SET^IBCNSP(START+2,OFFSET,"Estimated Recv (Pri): $ "_$J($P(IBTRND,"^",21),8))
+"RTN","IBTRED0",74,0)
+ D SET^IBCNSP(START+3,OFFSET,"Estimated Recv (Sec): $ "_$J($P(IBTRND,"^",22),8))
+"RTN","IBTRED0",75,0)
+ D SET^IBCNSP(START+4,OFFSET,"Estimated Recv (ter): $ "_$J($P(IBTRND,"^",23),8))
+"RTN","IBTRED0",76,0)
+ D SET^IBCNSP(START+5,OFFSET,"  Means Test Charges: $ "_$J($P(IBTRND,"^",28),8))
+"RTN","IBTRED0",77,0)
+ D SET^IBCNSP(START+6,OFFSET,"         Amount Paid: $ "_$J($P(IBAMNT,"^",2),8))
+"RTN","IBTRED0",78,0)
+ Q
+"RTN","IBTRED0",79,0)
+ ;
+"RTN","IBTRED0",80,0)
+PRE ; -- pre-certification region
+"RTN","IBTRED0",81,0)
+ N OFFSET,START,IBTRC,IBTRCD
+"RTN","IBTRED0",82,0)
+ ;S START=15,OFFSET=45
+"RTN","IBTRED0",83,0)
+ S START=1,OFFSET=45
+"RTN","IBTRED0",84,0)
+ D SET^IBCNSP(START,OFFSET," Treatment Authorization Info ",IORVON,IORVOFF)
+"RTN","IBTRED0",85,0)
+ D SET^IBCNSP(START+1,OFFSET,"Authorization #: "_$$PRECRT^IBTRC1(IBTRN,18))
+"RTN","IBTRED0",86,0)
+ D SET^IBCNSP(START+2,OFFSET,"      No. Days Approved: "_$J($$DAY^IBTRE(IBTRN),3))
+"RTN","IBTRED0",87,0)
+ D SET^IBCNSP(START+3,OFFSET,"Second Opinion Required: "_$$EXPAND^IBTRE(356,.14,$P(IBTRND,"^",14)))
+"RTN","IBTRED0",88,0)
+ D SET^IBCNSP(START+4,OFFSET,"Second Opinion Obtained: "_$$EXPAND^IBTRE(356,.15,$P(IBTRND,"^",15)))
+"RTN","IBTRED0",89,0)
+ Q
+"RTN","IBTRED0",90,0)
+ ;
+"RTN","IBTRED0",91,0)
+SPCOND(IBTRN) ; -- see if sc or other special condition for patient
+"RTN","IBTRED0",92,0)
+ ; -- if inpt. look in ptf. if opt look opt encounter file
+"RTN","IBTRED0",93,0)
+ ;
+"RTN","IBTRED0",94,0)
+ Q ""
+"VER")
+8.0^22.2
+"BLD",10677,6)
+^561
+**END**
+**END**
+

@@ -1,0 +1,207 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/05/18 at 16:32
+=============================================================================
+Run Date: APR 24, 2018                     Designation: DG*5.3*954
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #837                    Status: Released
+                  Compliance Date: MAY 25, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*575  <<= must be installed BEFORE `DG*5.3*954'
+
+Subject: CORRECT <SUBSCRIPT>PIVNW+16~VAFHPIVT ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ A timing issue in the VAFHPIVT routine where multiple tasks are trying to 
+ access/update the cross-references that causes 
+ a <SUBSCRIPT>PIVNW+16~VAFHPIVT ~VAT(391.71,"")  error is corrected by 
+ this patch.
+  
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                   N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------                   ------                --------------------
+ N/A                       N/A                     N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.      I16908037FY18 - <SUBSCRIPT>PIVNW^VAFHPIVT ^VAT(391.71,"")
+ Duplicates :
+           I16915862FY18 - CORRECT <SUBSCRIPT>PIVNW+16~VAFHPIVT ERROR
+           R16692449FY17 - CORRECT <SUBSCRIPT>PIVNW+16~VAFHPIVT ERROR
+  
+  
+                    
+ Problem:
+ --------
+ Appears to be a timing issue in the VAFHPIVT routine where multiple tasks 
+ are trying to access/update the cross-references for the same entry at 
+ nearly the same time in the ADT/HL7 PIVOT file. The MPI seeding process
+ has caused this error to pop up a bit more frequently as the DOD entries
+ can fire off several separate updates to the ADT/HL7 PIVOT file at once.
+ Prior to using the cross-reference in question, it validates that it
+ exists, but as a separate process for the same record progresses it
+ deletes the cross-reference before the data (DA) can be extracted thereby
+ causing the <SUBSCRIPT> error.
+  
+  
+ Resolution:
+ -----------
+ Routine VAFHPIVT has been updated to validate the data extract (DA) was 
+ successful prior to using it as a subscript in a subsequent lookup to 
+ avoid any potential subscript errors.
+  
+ Test Sites:
+ ----------
+ Durham VAMC
+ Wilkes - Barre VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter DG*5.3*954).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package DG*5.3*954
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond NO.
+   
+    7. During install, verify that all entries were added successfully.
+       If an error is displayed, please create a ticket. 
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Jun 06, 1996;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VAFHPIVT
+    Before: B21313463   After: B21544775  **91,179,575,954**
+ 
+Routine list of preceding patches: 575
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2018
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

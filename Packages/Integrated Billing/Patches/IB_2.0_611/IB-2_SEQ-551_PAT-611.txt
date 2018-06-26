@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: DEC 28, 2017                     Designation: IB*2*611
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #551                      Status: Released
+                  Compliance Date: DEC 31, 2017
+=============================================================================
+
+Associated patches: (v)IB*2*583    <<= must be installed BEFORE `IB*2*611'
+
+Subject: 2018 RX COPAY THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2018, this      *
+ *  patch MUST be installed AS SOON AS POSSIBLE. The patch is being       *
+ *  released as an Emergency patch together with DG*5.3*949 (2018 Means   *
+ *  Test Thresholds) and EAS*1.0*154 (2018 GMT Thresholds) and may be     *
+ *  installed out of sequence with respect to other released IB patches.  *
+ **************************************************************************
+  
+ This patch, IB*2.0*611, is one of three VistA 2018 threshold patches. It 
+ addresses the annual updates for the Pharmacy Copay Thresholds. Patch 
+ DG*5.3*949 will update the thresholds for the Means Tests and the Maximum
+ Annual Pension Rate. Patch EAS*1.0*154 will address the annual updates for
+ the GMT Thresholds.
+  
+     
+ ASSOCIATED TICKET:
+ ==================
+ I16976201FY18 - 2018 RX COPAY THRESHOLDS 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Chillicothe VAMC
+ West Palm Beach VAMC
+  
+  
+ TICKET OVERVIEW:
+ ================
+ I16976201FY18 - 2018 RX COPAY THRESHOLDS 
+  
+   
+ PROBLEM: 
+ --------
+ Each year, the government sets new values for the Medicare deductible and
+ for the pension threshold rates. These values need to be updated in the
+ associated billing files for accurate and legal billing. The purpose of
+ this patch is to assist sites in the entry of the Basic Pension Threshold
+ rates and the Medicare Deductible value for Calendar Year 2018.
+  
+ RESOLUTION:
+ -----------
+ Post Install routine IB20P611 will the update of the new Medicare and
+ pension threshold values. The Technical section below contains a list
+ of the new rates, which may also be found in VHA FACT SHEET titled
+ MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST AND MAXIMUM ANNUAL RATES OF
+ PENSION FOR CALENDAR YEAR 2018. If a site has already entered the values
+ manually, the record will be overwritten with the national update.
+  
+ The new pension rates for Calendar Year 2018 (with an effective date of
+ 12/1/17) are defined in VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-
+ BASED MEANS TEST AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 
+ 2018 as:
+   
+  *   $ 13,166 for a single veteran without dependents
+  *   $ 17,241 for a veteran with 1 dependent
+  *   An additional $ 2,250 for each additional dependent beyond 1 
+      dependent
+   
+ Medicare deductible rate effective 01/01/2018 is shown as:
+   
+  *   The Medicare deductible:  $ 1,340.
+   
+ TECHNICAL:
+ ========== 
+  
+ IB ACTION CHARGE file (#350.2) -- IB ACTION CHARGE is updated with a new
+ record.  The values are as follows:
+   .01  KEY                 = "MEDICARE DEDUCTIBLE"
+   .02  EFFECTIVE DATE      = 3180101 (internal form for January 01, 2018)
+   .03  IB TRANSACTION TYPE = pointer to "MEDICARE DEDUCTIBLE" in file #350.1
+   .04  UNIT CHARGE, FIXED  =  1340
+   ==========
+    
+ BILLING THRESHOLDS file (#354.3) -- BILLING THRESHOLDS is updated with a
+ new record.  The values are as follows:
+   .01  DATE                        = 3171201 (internal form for 12/01/2017)
+   .02  TYPE                        = 1       (for BASIC PENSION)
+   .03  BASE RATE FOR VETERAN       = 13166
+   .04  BASE RATE WITH 1 DEPENDENT  = 17241
+   .05  BASE RATE WITH 2 DEPENDENTS = 19491
+   .06  BASE RATE WITH 3 DEPENDENTS = 21741
+   .07  BASE RATE WITH 4 DEPENDENTS = 23991
+   .08  BASE RATE WITH 5 DEPENDENTS = 26241
+   .09  BASE RATE WITH 6 DEPENDENTS = 28491
+   .1   BASE RATE WITH 7 DEPENDENTS = 30741
+   .11  BASE RATE WITH 8 DEPENDENTS = 32991
+   .12  ADDITIONAL DEPENDENT AMOUNT = 2250
+   
+ SOFTWARE RETRIEVAL:
+ ===================
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+    
+ Host file name:    DG_53_P949.KID
+   
+ Builds:            DG*5.3*949
+                    EAS*1.0*154
+                    IB*2.0*611
+   
+ Sites may retrieve the software directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+ First Available Server: download.vista.domain.ext
+    
+ The following file will be available:
+    
+       File Name            Description
+       ---------            -----------
+       DG_53_P949.KID       Host File containing KIDS software distribution
+    
+   Note:  Use ASCII mode when transferring the .KID file.
+   
+   
+ Pre/Post Installation Overview:
+ ===============================
+ The IB20E611 pre-init routine will provide prompting during the patch
+ install and may be deleted after install.
+   
+ The IB20P611 post-install routine will update the following files and may 
+ be deleted after install.
+       IB ACTION CHARGE (#350.2)
+       BILLING EXEMPTIONS (#354.1)
+       BILLING THRESHOLDS (#354.3)
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ The components sent with this IB*2.0*611 patch have been included in the 
+ HOST File DG_53_P949.KID.  Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*949.
+    
+ NOTE: Please bear in mind items below for install.
+   
+  1.  During installation, the BILLING EXEMPTIONS file (#354.1) will be
+      checked for medication co-payment exemptions based on prior
+      thresholds. If they exist, the installer will be prompted to
+      UPDATE AND PRINT the exemptions report since the exemption status may
+      change due to the new rates.
+    
+      Press <Enter> to accept the default value of Update & Print. At the
+      DEVICE prompt you must enter a valid print device. An entry is 
+      required and the HOME device is not allowed; neither are the
+      P-Message device or Spooler device (this will abort the install). You
+      MUST choose a valid printer. You need not queue the report since the
+      patch will do so automatically.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20E611
+    Before:       n/a   After:  B2474521  **611**
+Routine Name: IB20P611
+    Before:       n/a   After: B34588675  **611**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 13, 2017
+Completed By:                               Date Completed: DEC 28, 2017
+Released By :                               Date Released : DEC 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

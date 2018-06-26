@@ -1,0 +1,183 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/18/17 at 16:53
+=============================================================================
+Run Date: FEB 08, 2018                     Designation: NUR*4*46
+Package : NUR - NURSING SERVICE               Priority: Mandatory
+Version : 4        SEQ #45                      Status: Released
+                  Compliance Date: MAR 11, 2018
+=============================================================================
+
+
+Subject: NURSING SERVICE POSITION; NURSING %ZIS CALL
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ The patch addresses two (2) issues:
+  
+ 1.   When using the Service Position File, Edit option [NURAFL-SPO]
+      in the Administrative Site File Functions option [NURSFL-MENU];
+      the prompt for the Service Position abbreviation requires an
+      entry of 10 characters or less.  When a new abbreviation is
+      correctly entered, the application adds it as a new NURS SERVICE
+      POSITION.  After entering the abbreviation, the application pops
+      a ScreenMan Form that allows the abbreviation to be re-entered.
+      If the abbreviation is re-entered with a value with a length
+      greater than 10 characters, a program error occurs (UNDEFINED)
+      and the typical user VistA session is terminated.
+  
+ 2.   When a patient is admitted/transferred to a new ward and there
+      is no corresponding entry in the NURS LOCATION file (#211.4),
+      the user gets an erroneous message that Queueing is not allowed
+      that is displayed after the "Patient Transferred" message.  This
+      occurs because the program calls the DEVICE HANDLER (^%ZIS) with
+      variable IOP set to the IEN (Internal Entry Number) of an entry
+      in the DEVICE file (#3.5). When calling ^%ZIS in this manner,
+      the value of IOP must have a grave character (`) as the first
+      character to let ^%ZIS know that it is an IEN.
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1.      I15102538FY17 - Nursing Service Position
+ 2.      R10297758FY16 - Nursing %ZIS Call
+  
+ 1.      I15102538FY17 - Nursing Service Position
+  
+ Problem:
+ --------
+ When using the Service Position File, Edit option [NURAFL-SPO] in
+ the Administrative Site File Functions option [NURSFL-MENU]; the 
+ prompt for the Service Position abbreviation requires an entry of
+ 10 characters or less.  When a new abbreviation is correctly 
+ entered, the application adds it as a new NURS SERVICE POSITION.
+  
+ After entering the abbreviation, the application pops a ScreenMan
+ Form that allows the abbreviation to be re-entered.  If the 
+ abbreviation is re-entered with a value with a length greater than
+ 10 characters, a program error occurs (UNDEFINED) and the typical 
+ user VistA session is terminated.
+  
+ The ScreenMan Form "NURA-I-SERVICE" should not allow the re-entry 
+ of the ABBREVIATION value which (by that time) has already been 
+ added as a new NURS SERVICE POSITION.
+  
+ Resolution:
+ -----------
+ The ScreenMan Form "NURA-I-SERVICE" is modified to disable editing
+ of the ABBREVIATION entry.
+  
+ Routines: NA
+  
+ 2.      R10297758FY16 - Nursing %ZIS Call
+  
+ Problem:
+ --------
+ When a patient is admitted / transferred to a new ward and there 
+ is no corresponding entry in the NURS LOCATION file (#211.4), the
+ user gets an erroneous message that Queueing is not allowed 
+ displayed after the "Patient Transferred" message.  This occurs 
+ because the program calls the DEVICE HANDLER (^%ZIS) with variable
+ IOP set to the IEN (Internal Entry Number) of an entry in the 
+ DEVICE file (#3.5). When calling ^%ZIS in this manner, the value 
+ of IOP must have a grave character (`) as the first character to 
+ let ^%ZIS know that it is an IEN (Kernel 8.0 & Kernel Toolkit 7.3
+ Developer's Guide, page 61). 
+  
+ Resolution:
+ -----------
+ The routine ^NURSAMSG is modified to preface IOP with the grave 
+ character (`).
+  
+ Routines: NURSAMSG
+  
+ Components:
+ ===========
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ Altoona
+ Miami
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    Can be installed when Nursing package users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the 
+       Following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior
+       to installation, you should use the 'Backup a Transport Global' 
+       option at this time. You may also compare the routines in your 
+       production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' 
+       Menu and select the package 'NUR*4.0*46'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//, choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options,
+       And Protocols? YES//', choose 'NO'.
+  
+ Backout/Rollback Plan:
+ ----------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed a
+ backup of the routine included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NURSING SERVICE;**[Patch List]**;Apr 25, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: NURSAMSG
+    Before:  B8827385   After:  B8871087  **46**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 10, 2017
+Completed By:                               Date Completed: FEB 08, 2018
+Released By :                               Date Released : FEB 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

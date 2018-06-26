@@ -323,6 +323,7 @@ class DefaultKIDSBuildInstaller(object):
     KIDS_BUILD_STATUS_ACTION_LIST = [
       ("Running Pre-Install Routine:",self.runPreInstallationRoutine,False),
       ("Running Post-Install Routine:",self.runPostInstallationRoutine,False),
+      ("Begin Post-Install:",None,False),
       ("Starting Menu Rebuild:", None , False),
       ("Installing Routines:",  None , False),
       ("Installing Data:",  None , False),

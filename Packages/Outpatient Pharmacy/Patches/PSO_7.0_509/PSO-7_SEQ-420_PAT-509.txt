@@ -1,0 +1,199 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/11/18 at 08:49
+=============================================================================
+Run Date: FEB 09, 2018                     Designation: PSO*7*509
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #420                      Status: Released
+                  Compliance Date: MAR 11, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*497   <<= must be installed BEFORE `PSO*7*509'
+                    (v)PSO*7*499   <<= must be installed BEFORE `PSO*7*509'
+
+Subject: VIEW RX, PARTIAL/REFILL ISSUE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ 1. I17894075FY18 - Pharmacist not showing up for partial in 
+                    View Prescription; typo in HELP-PROMPT
+  
+ 2. I18165455FY18 - OneVA issue for Refill and Partial
+  
+  
+ Files & Fields Associated: 
+   
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted 
+ --------------------       ---------------------   --------------------
+ PARTIAL DATE (#52.2)       PHARMACIST NAME (#.05)      Modified
+                            
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.       I17894075FY18 - Pharmacist not showing up for partial in 
+                          View Prescription; typo in HELP-PROMPT
+   
+ Problem: 
+ --------
+ For a PARTIAL Rx, the name of the releasing pharmacist is correctly
+ present in the Activity Log under Patient Prescription Processing,
+ but is absent when displaying the same information in View Prescription.
+ Also, there is a typo in the HELP-PROMPT for field PHARMACIST NAME (#.05)
+ Of the PARTIAL DATE sub-file (#52.2) of the PRESCRIPTION file (#52). The 
+ word partial is misspelled.
+  
+ Resolution:
+ -----------
+ Modify the system so the releasing pharmacist correctly displays in
+ View Prescription.
+  
+ Modify PAR+10^PSORXVW1 to pull pharmacist info from the PHARMACIST NAME
+ field (#.05, 0;5) of the PARTIAL DATE sub-file (#52.2) of the 
+ PRESCRIPTION file (#52).
+  
+ Modify the HELP-PROMPT to correct the spelling of the word partial for
+ field PHARMACIST NAME (#.05) of the PARTIAL DATE sub-file (#52.2) of the
+ PRESCRIPTION file (#52).
+  
+  
+ 2. I18165455FY18 - OneVA Issue for Refill and Partial
+  
+ Problem:
+ --------
+ When entering a Refill or Partial for a remote prescription and
+ the user enters NO to the prompt 'Would you like to use this drug?',
+ the system does not acknowledge the NO answer and continues processing
+ as if the user answered YES.
+  
+ Resolution:
+ -----------
+ Modify routine PSORRX1 so if the user answers NO to the question
+ 'Would you like to use this drug?', the system will stop processing.
+  
+ Test Sites:
+ -----------
+ Salt Lake City VAMC
+ G.V. (Sonny) Montgomery VA Medical Center (Jackson)
+  
+  
+ *** Patch PSO*7.0*497 MUST be installed prior to installing this patch. 
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSO*7.0*509:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first
+ 2 lines of the routines contained in the patch. The second line
+ will contain the patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;DEC 1997;Build 349 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] 
+ can be run to compare the routine checksums to what is documented
+ in the patch description.
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation
+ of development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision
+ between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the
+ Backup a Transport Global [XPD BACKUP] menu option (this is done at
+ time of install). The message containing the backed up routines can
+ be loaded with the "Xtract PackMan" function at the Message Action
+ prompt. The Packman function "INSTALL/CHECK MESSAGE" is then used
+ to install the backed up routines onto the VistA System. 
+  
+ While no data was modified by this patch installation there was a 
+ change  to the FileMan Data Dictionary for the Prescription file (#52),
+ Partial sub-file (#52.2), Pharmacist Name field (#.05). It was a minor
+ change to the description and does not require changing back. Therefore,
+ no rollback strategy is required.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2
+ lines of the PSO Routines contained in this patch using the option
+ First Line Routine Print [XU FIRST LINE PRINT]. Once the routines
+ contained in the PSO*7.0*509 patch have been rolled back, the first
+ two lines of the Routines will no longer contain the designation
+ of patch PSO*7.0*509 in the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORRX1
+    Before:B156041804   After:B156896201  **454,499,509**
+Routine Name: PSORXVW1
+    Before: B74497358   After: B74770849  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367,386,408,427,499,509**
+ 
+Routine list of preceding patches: 499
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2017
+Completed By:                               Date Completed: FEB 09, 2018
+Released By :                               Date Released : FEB 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

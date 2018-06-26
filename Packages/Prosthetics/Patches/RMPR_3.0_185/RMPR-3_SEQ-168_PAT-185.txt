@@ -1,0 +1,198 @@
+$TXT Created by                at MILWKPROD.DOMAIN.EXT  (KIDS) on Friday, 12/08/17 at 13:03
+=============================================================================
+Run Date: FEB 12, 2018                     Designation: RMPR*3*185
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #168                      Status: Released
+                  Compliance Date: MAR 15, 2018
+=============================================================================
+
+
+Subject: RECORD ECMS/IFCAP 2237
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch enhances VistA Prosthetics (RMPR) without having any
+ impact on existing Prosthetics Graphical User Interface (GUI) software.
+ This patch restores functionality that was removed from the roll and 
+ scroll (aka command-line interface) by patch RMPR*3.0*130. This 
+ revised option will allow Prosthetics end-users to select an
+ Integrated Funds Control, Accounting, and Procurement (IFCAP) 
+ Purchase Request (form 2237) by its Obligation Number, and post the 
+ individual line items of that request to individual patients' 
+ prosthetics 2319 (record of prosthetics appliance repair) and
+ link them to existing prosthetics suspense record for those patients.
+ Because the Prosthetics GUI interface is not being modified, existing
+ methods for making these purchases will remain and can be used as
+ needed.
+  
+ This patch includes the following to support sites in implementing the 
+ ability to record IFCAP 2237 line items into patient 2319 records.
+  
+   1. added new option, Record eCMS/IFCAP 2237 Purchase to 2319 
+      [RMPR ECMS 2237]
+   2. restoration and modification of routine, RMPR37, previously 
+      removed by patch RMPR*3.0*130.
+   3. modification to existing routine, RMPR37A
+   4. added two new data fields added to RECORD OF PROS APPLIANCE/REPAIR 
+      file [#660],
+         a) (#41) ECMS ACTIONUID [5;2] and
+         b) (#42) UNIQUE ITEM ID [5;3].
+   5. existing ICRs (DBIAs) with IFCAP were maintained. 
+    
+ The new option, RMPR ECMS 2237, is exported as an Option on the 
+ Purchasing menu [RMPR PURCHASING MENU] which is descendent from both the 
+ RMPR CLERK menu and the RMPR OFFICIAL menu.
+  
+      Purchasing ... [RMPR PURCHASING MENU]
+         RE  Record eCMS/IFCAP 2237 Purchase to 2319 [RMPR ECMS 2237]
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ RMPR ECMS 2237       run routine          New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ No NSR.  Project approved via Authority to Opperate (ATO).
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  Milwaukee, WI
+  Providence, RI
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Hines:           domain.ext  
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/ 
+  
+  
+ Title                           File Name                         FTP Mode
+ --------------------------------------------------------------------------
+ RMPR*3*185 Release Notes        rmpr_3_185_rn.pdf                 binary
+ Prosthetics Basic User Manual   prostheticsbasicsusermanual.pdf   binary
+ Prosthetics Technical Manual    rmpr_3_tm.pdf                     binary
+ --------------------------------------------------------------------------
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch does not include pre-install nor post-install routines.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter
+         RMPR*3.0*185.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES// Press <Enter>
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO// Press <Enter>
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO// Press <Enter>
+  
+ 8.     If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ There are no post installation activities.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR37
+    Before:    Delete   After: B31267977  **6,34,35,41,62,130,185**
+Routine Name: RMPR37A
+    Before:  B6408485   After:  B7729999  **185**
+ 
+Routine list of preceding patches: 130
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 11, 2017
+Completed By:                               Date Completed: FEB 09, 2018
+Released By :                               Date Released : FEB 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,184 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/26/17 at 12:49
+=============================================================================
+Run Date: FEB 07, 2018                     Designation: OR*3*465
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #390                      Status: Released
+                  Compliance Date: MAR 10, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*273    <<= must be installed BEFORE `OR*3*465'
+                    (v)OR*3*371    <<= must be installed BEFORE `OR*3*465'
+                    (v)OR*3*423    <<= must be installed BEFORE `OR*3*465'
+
+Subject: ORWPCE4 RPC FIX/MONTHLY CONTROLLED SUBSTANCE REPORT/TEAM LIST
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. The hard error <UNDEFINED>EN+3^LEXAFIL occasionally and sporadically
+    occurs when the user uses a function in the Computerized Patient Record
+    System (CPRS) that calls the Remote Procedure Call (RPC) ORWPCE4 LEX.
+  
+ 2. The automated monthly controlled substance report to providers is 
+    sending the internal id for Prescription instead of the external id.
+  
+ 3. Users can't remove themselves from patient lists of type "Patient 
+    Manual" 
+  
+ NOTE: Routine ORWPCE4 had an incorrect patch list that was corrected in
+ this patch.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1. I8563813FY16  - Lexicon error <><UNDEFINED>EN+3^LEXAFIL in CPRS
+  
+    Problem:
+    --------
+    The hard error <UNDEFINED>EN+3^LEXAFIL occasionally and sporadically
+    occurs when the variable DIC("S") gets left in memory and then the user
+    uses a function in CPRS that calls the RPC ORWPCE4 LEX.
+  
+    Resolution:
+    -----------
+    The routine ORWPCE4 has been modified to "new" the variable DIC prior
+    to executing any other calls.
+  
+ 2. R8469728FY16 - The automated monthly controlled substance report to
+                   providers...
+  
+    Problem:
+    --------
+    The automated monthly controlled substance report to providers is
+    sending the internal id for Prescription instead of the external id.
+  
+    Resolution:
+    -----------   
+    The routine ORDEA02 has been modified to format the Prescription id
+    to the external format.
+  
+ 3. I9832345FY16 - Team List bug
+   
+    Problem:
+    --------
+    When a team list was set as type "patient manual" users were unable to 
+    remove themselves from the team. Currently to use the "remove yourself 
+    from this team"  button the following conditions must be met. Only one 
+    list selected, team list is not of type personal, and the subscribe 
+    field is yes. Since "patient manual" did not have the subscribe field
+    linked to it, it never met the logic.
+      
+    Resolution:
+    -----------
+    Modify ORLP to query for the SUBSCRIBE field (#1.7)in the OE/RR
+    LIST file (#100.21) for "patient manual" lists so that sites can
+    determine if users should be able to remove themselves from the list.
+  
+ Test Sites:
+ ===========
+ Fayetteville HCS
+ Ann Arbor HCS
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      OR*3.0*465:
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ While no data was modified by this patch installation there was a change 
+ to the FileMan Data Dictionary for the OE/RR LIST file (#100.21), 
+ SUBSCRIBE field (#1.7). It was a minor change to the description and does 
+ not require changing back. Therefore, no rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDEA02
+    Before:  B8327482   After: B10300366  **371,465**
+Routine Name: ORLP
+    Before: B83826939   After: B84312710  **47,90,98,243,273,465**
+Routine Name: ORWPCE4
+    Before: B23255140   After: B24454182  **306,361,350,423,465**
+ Description of Changes:
+  ***NOTE***:
+  Routine ORWPCE4 had an incorrect patch list that was corrected in
+  this patch.
+   
+  Before:
+  10,85,116,173,190,195,215,243,295,280,306,361,350,423
+   
+  After:
+  306,361,350,423,465
+
+ 
+Routine list of preceding patches: 273, 371, 423
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 29, 2017
+Completed By:                               Date Completed: FEB 06, 2018
+Released By :                               Date Released : FEB 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,4055 @@
+Released PSO*7*496 SEQ #421
+Extracted from mail message
+**KIDS**:PSO*7.0*496^
+
+**INSTALL NAME**
+PSO*7.0*496
+"BLD",10450,0)
+PSO*7.0*496^OUTPATIENT PHARMACY^0^3180126^y
+"BLD",10450,1,0)
+^^116^116^3180126^^^^
+"BLD",10450,1,1,0)
+This patch will resolve the following issues.
+"BLD",10450,1,2,0)
+ 
+"BLD",10450,1,3,0)
+1. It is possible to suspend a script past the expiration date.
+"BLD",10450,1,4,0)
+ 
+"BLD",10450,1,5,0)
+2. Vista transmits two instances of the same prescription to the external
+"BLD",10450,1,6,0)
+   interface. 
+"BLD",10450,1,7,0)
+    
+"BLD",10450,1,8,0)
+3.  Need assistance with SPMP Patient Address errors  
+"BLD",10450,1,9,0)
+ 
+"BLD",10450,1,10,0)
+ 
+"BLD",10450,1,11,0)
+Associated NSR(s)
+"BLD",10450,1,12,0)
+=================
+"BLD",10450,1,13,0)
+ N/A 
+"BLD",10450,1,14,0)
+ 
+"BLD",10450,1,15,0)
+Test Sites:
+"BLD",10450,1,16,0)
+==========
+"BLD",10450,1,17,0)
+ 
+"BLD",10450,1,18,0)
+Associated CA SDM Ticket(s):
+"BLD",10450,1,19,0)
+============================
+"BLD",10450,1,20,0)
+1. I10127879FY16 - It is possible to suspend a script past the expiration
+"BLD",10450,1,21,0)
+                   date. 
+"BLD",10450,1,22,0)
+2. I16514233FY17 - Vista transmits two instances of the same prescription
+"BLD",10450,1,23,0)
+                   to the external interface. 
+"BLD",10450,1,24,0)
+   R14795402FY17(d) - Vista is sending over prescription data twice for 
+"BLD",10450,1,25,0)
+                      SOME prescriptions, resulting in duplicates showing
+"BLD",10450,1,26,0)
+                      up in ScriptPro
+"BLD",10450,1,27,0)
+3. I11517650FY17 - Need assistance with SPMP Patient Address errors 
+"BLD",10450,1,28,0)
+ 
+"BLD",10450,1,29,0)
+  
+"BLD",10450,1,30,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10450,1,31,0)
+============================================
+"BLD",10450,1,32,0)
+1. I10127879FY16 - It is possible to suspend a script past the expiration
+"BLD",10450,1,33,0)
+                   date.  
+"BLD",10450,1,34,0)
+Problem:
+"BLD",10450,1,35,0)
+--------
+"BLD",10450,1,36,0)
+Currently in Outpatient Pharmacy the users are able to enter a REFILL DATE 
+"BLD",10450,1,37,0)
+that is past the Rx EXPIRATION DATE. The software should not allow a refill
+"BLD",10450,1,38,0)
+date that is past the expiration date because it is an invalid date and the
+"BLD",10450,1,39,0)
+prescription will be expired before it can be dispensed.
+"BLD",10450,1,40,0)
+ 
+"BLD",10450,1,41,0)
+Resolution:
+"BLD",10450,1,42,0)
+-----------
+"BLD",10450,1,43,0)
+The Data Dictionary for the PRESCRIPTION file (#52) was modified to include 
+"BLD",10450,1,44,0)
+restrictions on the following fields: FILL DATE (#22) and REFILL DATE (#.01)
+"BLD",10450,1,45,0)
+in the REFILL sub-file (#52.1). The restrictions will require that the value
+"BLD",10450,1,46,0)
+entered for either one of these two fields cannot be before the Rx ISSUE
+"BLD",10450,1,47,0)
+DATE or after the Rx EXPIRATION DATE.
+"BLD",10450,1,48,0)
+ 
+"BLD",10450,1,49,0)
+Technical Resolution:
+"BLD",10450,1,50,0)
+---------------------
+"BLD",10450,1,51,0)
+Created new INPUT TRANSFORM code (FLDTINTR^PSOUTLA(Fill_Type)) and new 
+"BLD",10450,1,52,0)
+EXECUTABLE HELP code (FLDTHELP^PSOUTLA(Fill_Type)) and modified the fields
+"BLD",10450,1,53,0)
+mentioned above to replace the current M code with calls to these two new
+"BLD",10450,1,54,0)
+entry points in the PSOUTLA routine.
+"BLD",10450,1,55,0)
+ 
+"BLD",10450,1,56,0)
+Files & Fields Associated:
+"BLD",10450,1,57,0)
+------------------------- 
+"BLD",10450,1,58,0)
+File Name (#)      Field Name (#)                         New/Modified/Deleted
+"BLD",10450,1,59,0)
+-----------------  -------------------------------------- --------------------
+"BLD",10450,1,60,0)
+PRESCRIPTION(#52)  FILL DATE (#22)                        Modified 
+"BLD",10450,1,61,0)
+                   REFILL (#52.1)
+"BLD",10450,1,62,0)
+                   -REFILL DATE (#.01)                    Modified
+"BLD",10450,1,63,0)
+  
+"BLD",10450,1,64,0)
+ 
+"BLD",10450,1,65,0)
+2. I16514233FY17 - Vista transmits two instances of the same prescription
+"BLD",10450,1,66,0)
+                   to the external interface. 
+"BLD",10450,1,67,0)
+   R14795402FY17(d) - Vista is sending over prescription data twice for SOME
+"BLD",10450,1,68,0)
+                      prescriptions, resulting in duplicates showing up in
+"BLD",10450,1,69,0)
+                      ScriptPro
+"BLD",10450,1,70,0)
+  
+"BLD",10450,1,71,0)
+Problem: 
+"BLD",10450,1,72,0)
+--------
+"BLD",10450,1,73,0)
+There is at least one scenario in Outpatient Pharmacy that will cause a 
+"BLD",10450,1,74,0)
+prescription fill to be sent twice to the external interface. This happens
+"BLD",10450,1,75,0)
+because sometimes when the user pulls a CMOP prescription from suspense to 
+"BLD",10450,1,76,0)
+print locally it will be sent to the print queue twice and consequently it
+"BLD",10450,1,77,0)
+was also being sent to the external interface twice.
+"BLD",10450,1,78,0)
+  
+"BLD",10450,1,79,0)
+Resolution:
+"BLD",10450,1,80,0)
+-----------
+"BLD",10450,1,81,0)
+Added a check in the routine that handles the pull from suspense to prevent
+"BLD",10450,1,82,0)
+it from adding a prescription to the print queue if the prescription is
+"BLD",10450,1,83,0)
+already on the queue.
+"BLD",10450,1,84,0)
+  
+"BLD",10450,1,85,0)
+Technical Resolution:
+"BLD",10450,1,86,0)
+---------------------
+"BLD",10450,1,87,0)
+Modified the routine PSOSUPOE to prevent it from setting the variable PPL
+"BLD",10450,1,88,0)
+with the same prescription twice.
+"BLD",10450,1,89,0)
+ 
+"BLD",10450,1,90,0)
+ 
+"BLD",10450,1,91,0)
+3. I11517650FY17 - Need assistance with SPMP Patient Address errors    
+"BLD",10450,1,92,0)
+ 
+"BLD",10450,1,93,0)
+Problem: 
+"BLD",10450,1,94,0)
+--------
+"BLD",10450,1,95,0)
+The State Prescription Monitoring Program (SPMP) module did not retrieve the
+"BLD",10450,1,96,0)
+correct State/Province (SPMP field PAT15 - State Address) and Postal Code 
+"BLD",10450,1,97,0)
+(SPMP field PAT16 - ZIP Code Address) for patients that have a foreign
+"BLD",10450,1,98,0)
+address on file. The software was retrieving the US state and Zip Code 
+"BLD",10450,1,99,0)
+fields, which were both blank for such patients. In addition, the Federal
+"BLD",10450,1,100,0)
+Information Processing Standard (FIPS) code for Canada is "CA", however the
+"BLD",10450,1,101,0)
+SPMP standard requires "CN" for Canada. 
+"BLD",10450,1,102,0)
+  
+"BLD",10450,1,103,0)
+Resolution:
+"BLD",10450,1,104,0)
+-----------
+"BLD",10450,1,105,0)
+Changed the retrieval of the patient's state and postal code fields to
+"BLD",10450,1,106,0)
+first check for the country. For foreign countries (non-US) it will
+"BLD",10450,1,107,0)
+retrieve the Province and Postal Codes values returned in the VAPA(23)
+"BLD",10450,1,108,0)
+and VAPA(24) return array from the ADD^VADPT API. Also changed it to send
+"BLD",10450,1,109,0)
+"CN" for PAT22 (Country of Non-US Resident) for Canada.
+"BLD",10450,1,110,0)
+   
+"BLD",10450,1,111,0)
+Technical Resolution:
+"BLD",10450,1,112,0)
+---------------------
+"BLD",10450,1,113,0)
+Modified the routines PSOASAP and PSOASAP0 to check whether the country is
+"BLD",10450,1,114,0)
+non-US (foreign). If so, it will use the value in VAPA(24) and VAPA(23) for
+"BLD",10450,1,115,0)
+the fields PAT15 and PAT16 respectively. Also, changed the line tag PAT22 
+"BLD",10450,1,116,0)
+on the PSOASAP0 routine to return "CN" instead of "CA" for Canada.
+"BLD",10450,4,0)
+^9.64PA^52^1
+"BLD",10450,4,52,0)
+52
+"BLD",10450,4,52,2,0)
+^9.641^52.1^2
+"BLD",10450,4,52,2,52,0)
+PRESCRIPTION  (File-top level)
+"BLD",10450,4,52,2,52,1,0)
+^9.6411^22^1
+"BLD",10450,4,52,2,52,1,22,0)
+FILL DATE
+"BLD",10450,4,52,2,52.1,0)
+REFILL  (sub-file)
+"BLD",10450,4,52,2,52.1,1,0)
+^9.6411^.01^1
+"BLD",10450,4,52,2,52.1,1,.01,0)
+REFILL DATE
+"BLD",10450,4,52,222)
+y^y^p^^^^n^^n
+"BLD",10450,4,52,224)
+
+"BLD",10450,4,"APDD",52,52)
+
+"BLD",10450,4,"APDD",52,52,22)
+
+"BLD",10450,4,"APDD",52,52.1)
+
+"BLD",10450,4,"APDD",52,52.1,.01)
+
+"BLD",10450,4,"B",52,52)
+
+"BLD",10450,6)
+3^
+"BLD",10450,6.3)
+11
+"BLD",10450,"ABPKG")
+n
+"BLD",10450,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10450,"KRN",.4,0)
+.4
+"BLD",10450,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",10450,"KRN",.401,0)
+.401
+"BLD",10450,"KRN",.402,0)
+.402
+"BLD",10450,"KRN",.403,0)
+.403
+"BLD",10450,"KRN",.5,0)
+.5
+"BLD",10450,"KRN",.84,0)
+.84
+"BLD",10450,"KRN",3.6,0)
+3.6
+"BLD",10450,"KRN",3.8,0)
+3.8
+"BLD",10450,"KRN",9.2,0)
+9.2
+"BLD",10450,"KRN",9.8,0)
+9.8
+"BLD",10450,"KRN",9.8,"NM",0)
+^9.68A^16^4
+"BLD",10450,"KRN",9.8,"NM",3,0)
+PSOSUPOE^^0^B81628813
+"BLD",10450,"KRN",9.8,"NM",13,0)
+PSOUTLA^^0^B52204149
+"BLD",10450,"KRN",9.8,"NM",15,0)
+PSOASAP^^0^B85756536
+"BLD",10450,"KRN",9.8,"NM",16,0)
+PSOASAP0^^0^B169084201
+"BLD",10450,"KRN",9.8,"NM","B","PSOASAP",15)
+
+"BLD",10450,"KRN",9.8,"NM","B","PSOASAP0",16)
+
+"BLD",10450,"KRN",9.8,"NM","B","PSOSUPOE",3)
+
+"BLD",10450,"KRN",9.8,"NM","B","PSOUTLA",13)
+
+"BLD",10450,"KRN",19,0)
+19
+"BLD",10450,"KRN",19.1,0)
+19.1
+"BLD",10450,"KRN",101,0)
+101
+"BLD",10450,"KRN",409.61,0)
+409.61
+"BLD",10450,"KRN",771,0)
+771
+"BLD",10450,"KRN",779.2,0)
+779.2
+"BLD",10450,"KRN",870,0)
+870
+"BLD",10450,"KRN",8989.51,0)
+8989.51
+"BLD",10450,"KRN",8989.52,0)
+8989.52
+"BLD",10450,"KRN",8994,0)
+8994
+"BLD",10450,"KRN","B",.4,.4)
+
+"BLD",10450,"KRN","B",.401,.401)
+
+"BLD",10450,"KRN","B",.402,.402)
+
+"BLD",10450,"KRN","B",.403,.403)
+
+"BLD",10450,"KRN","B",.5,.5)
+
+"BLD",10450,"KRN","B",.84,.84)
+
+"BLD",10450,"KRN","B",3.6,3.6)
+
+"BLD",10450,"KRN","B",3.8,3.8)
+
+"BLD",10450,"KRN","B",9.2,9.2)
+
+"BLD",10450,"KRN","B",9.8,9.8)
+
+"BLD",10450,"KRN","B",19,19)
+
+"BLD",10450,"KRN","B",19.1,19.1)
+
+"BLD",10450,"KRN","B",101,101)
+
+"BLD",10450,"KRN","B",409.61,409.61)
+
+"BLD",10450,"KRN","B",771,771)
+
+"BLD",10450,"KRN","B",779.2,779.2)
+
+"BLD",10450,"KRN","B",870,870)
+
+"BLD",10450,"KRN","B",8989.51,8989.51)
+
+"BLD",10450,"KRN","B",8989.52,8989.52)
+
+"BLD",10450,"KRN","B",8994,8994)
+
+"BLD",10450,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10450,"QUES",0)
+^9.62^^
+"BLD",10450,"REQB",0)
+^9.611^5^3
+"BLD",10450,"REQB",2,0)
+PSO*7.0*444^2
+"BLD",10450,"REQB",4,0)
+PSO*7.0*427^2
+"BLD",10450,"REQB",5,0)
+PSO*7.0*451^2
+"BLD",10450,"REQB","B","PSO*7.0*427",4)
+
+"BLD",10450,"REQB","B","PSO*7.0*444",2)
+
+"BLD",10450,"REQB","B","PSO*7.0*451",5)
+
+"FIA",52)
+PRESCRIPTION
+"FIA",52,0)
+^PSRX(
+"FIA",52,0,0)
+52Is
+"FIA",52,0,1)
+y^y^p^^^^n^^n
+"FIA",52,0,10)
+
+"FIA",52,0,11)
+
+"FIA",52,0,"RLRO")
+
+"FIA",52,0,"VR")
+7.0^PSO
+"FIA",52,52)
+1
+"FIA",52,52,22)
+
+"FIA",52,52,52)
+
+"FIA",52,52.1)
+1
+"FIA",52,52.1,.01)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+496^3180126^520824666
+"PKG",170,22,1,"PAH",1,1,0)
+^^116^116^3180126
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues.
+"PKG",170,22,1,"PAH",1,1,2,0)
+ 
+"PKG",170,22,1,"PAH",1,1,3,0)
+1. It is possible to suspend a script past the expiration date.
+"PKG",170,22,1,"PAH",1,1,4,0)
+ 
+"PKG",170,22,1,"PAH",1,1,5,0)
+2. Vista transmits two instances of the same prescription to the external
+"PKG",170,22,1,"PAH",1,1,6,0)
+   interface. 
+"PKG",170,22,1,"PAH",1,1,7,0)
+    
+"PKG",170,22,1,"PAH",1,1,8,0)
+3.  Need assistance with SPMP Patient Address errors  
+"PKG",170,22,1,"PAH",1,1,9,0)
+ 
+"PKG",170,22,1,"PAH",1,1,10,0)
+ 
+"PKG",170,22,1,"PAH",1,1,11,0)
+Associated NSR(s)
+"PKG",170,22,1,"PAH",1,1,12,0)
+=================
+"PKG",170,22,1,"PAH",1,1,13,0)
+ N/A 
+"PKG",170,22,1,"PAH",1,1,14,0)
+ 
+"PKG",170,22,1,"PAH",1,1,15,0)
+Test Sites:
+"PKG",170,22,1,"PAH",1,1,16,0)
+==========
+"PKG",170,22,1,"PAH",1,1,17,0)
+ 
+"PKG",170,22,1,"PAH",1,1,18,0)
+Associated CA SDM Ticket(s):
+"PKG",170,22,1,"PAH",1,1,19,0)
+============================
+"PKG",170,22,1,"PAH",1,1,20,0)
+1. I10127879FY16 - It is possible to suspend a script past the expiration
+"PKG",170,22,1,"PAH",1,1,21,0)
+                   date. 
+"PKG",170,22,1,"PAH",1,1,22,0)
+2. I16514233FY17 - Vista transmits two instances of the same prescription
+"PKG",170,22,1,"PAH",1,1,23,0)
+                   to the external interface. 
+"PKG",170,22,1,"PAH",1,1,24,0)
+   R14795402FY17(d) - Vista is sending over prescription data twice for 
+"PKG",170,22,1,"PAH",1,1,25,0)
+                      SOME prescriptions, resulting in duplicates showing
+"PKG",170,22,1,"PAH",1,1,26,0)
+                      up in ScriptPro
+"PKG",170,22,1,"PAH",1,1,27,0)
+3. I11517650FY17 - Need assistance with SPMP Patient Address errors 
+"PKG",170,22,1,"PAH",1,1,28,0)
+ 
+"PKG",170,22,1,"PAH",1,1,29,0)
+  
+"PKG",170,22,1,"PAH",1,1,30,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",170,22,1,"PAH",1,1,31,0)
+============================================
+"PKG",170,22,1,"PAH",1,1,32,0)
+1. I10127879FY16 - It is possible to suspend a script past the expiration
+"PKG",170,22,1,"PAH",1,1,33,0)
+                   date.  
+"PKG",170,22,1,"PAH",1,1,34,0)
+Problem:
+"PKG",170,22,1,"PAH",1,1,35,0)
+--------
+"PKG",170,22,1,"PAH",1,1,36,0)
+Currently in Outpatient Pharmacy the users are able to enter a REFILL DATE 
+"PKG",170,22,1,"PAH",1,1,37,0)
+that is past the Rx EXPIRATION DATE. The software should not allow a refill
+"PKG",170,22,1,"PAH",1,1,38,0)
+date that is past the expiration date because it is an invalid date and the
+"PKG",170,22,1,"PAH",1,1,39,0)
+prescription will be expired before it can be dispensed.
+"PKG",170,22,1,"PAH",1,1,40,0)
+ 
+"PKG",170,22,1,"PAH",1,1,41,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,42,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,43,0)
+The Data Dictionary for the PRESCRIPTION file (#52) was modified to include 
+"PKG",170,22,1,"PAH",1,1,44,0)
+restrictions on the following fields: FILL DATE (#22) and REFILL DATE (#.01)
+"PKG",170,22,1,"PAH",1,1,45,0)
+in the REFILL sub-file (#52.1). The restrictions will require that the value
+"PKG",170,22,1,"PAH",1,1,46,0)
+entered for either one of these two fields cannot be before the Rx ISSUE
+"PKG",170,22,1,"PAH",1,1,47,0)
+DATE or after the Rx EXPIRATION DATE.
+"PKG",170,22,1,"PAH",1,1,48,0)
+ 
+"PKG",170,22,1,"PAH",1,1,49,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,50,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,51,0)
+Created new INPUT TRANSFORM code (FLDTINTR^PSOUTLA(Fill_Type)) and new 
+"PKG",170,22,1,"PAH",1,1,52,0)
+EXECUTABLE HELP code (FLDTHELP^PSOUTLA(Fill_Type)) and modified the fields
+"PKG",170,22,1,"PAH",1,1,53,0)
+mentioned above to replace the current M code with calls to these two new
+"PKG",170,22,1,"PAH",1,1,54,0)
+entry points in the PSOUTLA routine.
+"PKG",170,22,1,"PAH",1,1,55,0)
+ 
+"PKG",170,22,1,"PAH",1,1,56,0)
+Files & Fields Associated:
+"PKG",170,22,1,"PAH",1,1,57,0)
+------------------------- 
+"PKG",170,22,1,"PAH",1,1,58,0)
+File Name (#)      Field Name (#)                         New/Modified/Deleted
+"PKG",170,22,1,"PAH",1,1,59,0)
+-----------------  -------------------------------------- --------------------
+"PKG",170,22,1,"PAH",1,1,60,0)
+PRESCRIPTION(#52)  FILL DATE (#22)                        Modified 
+"PKG",170,22,1,"PAH",1,1,61,0)
+                   REFILL (#52.1)
+"PKG",170,22,1,"PAH",1,1,62,0)
+                   -REFILL DATE (#.01)                    Modified
+"PKG",170,22,1,"PAH",1,1,63,0)
+  
+"PKG",170,22,1,"PAH",1,1,64,0)
+ 
+"PKG",170,22,1,"PAH",1,1,65,0)
+2. I16514233FY17 - Vista transmits two instances of the same prescription
+"PKG",170,22,1,"PAH",1,1,66,0)
+                   to the external interface. 
+"PKG",170,22,1,"PAH",1,1,67,0)
+   R14795402FY17(d) - Vista is sending over prescription data twice for SOME
+"PKG",170,22,1,"PAH",1,1,68,0)
+                      prescriptions, resulting in duplicates showing up in
+"PKG",170,22,1,"PAH",1,1,69,0)
+                      ScriptPro
+"PKG",170,22,1,"PAH",1,1,70,0)
+  
+"PKG",170,22,1,"PAH",1,1,71,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,72,0)
+--------
+"PKG",170,22,1,"PAH",1,1,73,0)
+There is at least one scenario in Outpatient Pharmacy that will cause a 
+"PKG",170,22,1,"PAH",1,1,74,0)
+prescription fill to be sent twice to the external interface. This happens
+"PKG",170,22,1,"PAH",1,1,75,0)
+because sometimes when the user pulls a CMOP prescription from suspense to 
+"PKG",170,22,1,"PAH",1,1,76,0)
+print locally it will be sent to the print queue twice and consequently it
+"PKG",170,22,1,"PAH",1,1,77,0)
+was also being sent to the external interface twice.
+"PKG",170,22,1,"PAH",1,1,78,0)
+  
+"PKG",170,22,1,"PAH",1,1,79,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,80,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,81,0)
+Added a check in the routine that handles the pull from suspense to prevent
+"PKG",170,22,1,"PAH",1,1,82,0)
+it from adding a prescription to the print queue if the prescription is
+"PKG",170,22,1,"PAH",1,1,83,0)
+already on the queue.
+"PKG",170,22,1,"PAH",1,1,84,0)
+  
+"PKG",170,22,1,"PAH",1,1,85,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,86,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,87,0)
+Modified the routine PSOSUPOE to prevent it from setting the variable PPL
+"PKG",170,22,1,"PAH",1,1,88,0)
+with the same prescription twice.
+"PKG",170,22,1,"PAH",1,1,89,0)
+ 
+"PKG",170,22,1,"PAH",1,1,90,0)
+ 
+"PKG",170,22,1,"PAH",1,1,91,0)
+3. I11517650FY17 - Need assistance with SPMP Patient Address errors    
+"PKG",170,22,1,"PAH",1,1,92,0)
+ 
+"PKG",170,22,1,"PAH",1,1,93,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,94,0)
+--------
+"PKG",170,22,1,"PAH",1,1,95,0)
+The State Prescription Monitoring Program (SPMP) module did not retrieve the
+"PKG",170,22,1,"PAH",1,1,96,0)
+correct State/Province (SPMP field PAT15 - State Address) and Postal Code 
+"PKG",170,22,1,"PAH",1,1,97,0)
+(SPMP field PAT16 - ZIP Code Address) for patients that have a foreign
+"PKG",170,22,1,"PAH",1,1,98,0)
+address on file. The software was retrieving the US state and Zip Code 
+"PKG",170,22,1,"PAH",1,1,99,0)
+fields, which were both blank for such patients. In addition, the Federal
+"PKG",170,22,1,"PAH",1,1,100,0)
+Information Processing Standard (FIPS) code for Canada is "CA", however the
+"PKG",170,22,1,"PAH",1,1,101,0)
+SPMP standard requires "CN" for Canada. 
+"PKG",170,22,1,"PAH",1,1,102,0)
+  
+"PKG",170,22,1,"PAH",1,1,103,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,104,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,105,0)
+Changed the retrieval of the patient's state and postal code fields to
+"PKG",170,22,1,"PAH",1,1,106,0)
+first check for the country. For foreign countries (non-US) it will
+"PKG",170,22,1,"PAH",1,1,107,0)
+retrieve the Province and Postal Codes values returned in the VAPA(23)
+"PKG",170,22,1,"PAH",1,1,108,0)
+and VAPA(24) return array from the ADD^VADPT API. Also changed it to send
+"PKG",170,22,1,"PAH",1,1,109,0)
+"CN" for PAT22 (Country of Non-US Resident) for Canada.
+"PKG",170,22,1,"PAH",1,1,110,0)
+   
+"PKG",170,22,1,"PAH",1,1,111,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,112,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,113,0)
+Modified the routines PSOASAP and PSOASAP0 to check whether the country is
+"PKG",170,22,1,"PAH",1,1,114,0)
+non-US (foreign). If so, it will use the value in VAPA(24) and VAPA(23) for
+"PKG",170,22,1,"PAH",1,1,115,0)
+the fields PAT15 and PAT16 respectively. Also, changed the line tag PAT22 
+"PKG",170,22,1,"PAH",1,1,116,0)
+on the PSOASAP0 routine to return "CN" instead of "CA" for Canada.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PSOASAP")
+0^15^B85756536^B85867649
+"RTN","PSOASAP",1,0)
+PSOASAP ;BIRM/MFR - American Society for Automation in Pharmacy (ASAP) Field Values ;09/30/15
+"RTN","PSOASAP",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**451,496**;DEC 1997;Build 11
+"RTN","PSOASAP",3,0)
+ ;
+"RTN","PSOASAP",4,0)
+ ; *** TH Segment - Transaction Header ***
+"RTN","PSOASAP",5,0)
+TH01() ;ASAP Version (3.0, 4.0, 4.1, 4.2, etc.)
+"RTN","PSOASAP",6,0)
+ Q PSOASVER
+"RTN","PSOASAP",7,0)
+ ;
+"RTN","PSOASAP",8,0)
+TH02() ;ASAP 3.0 : Business Partner Implemetation Version (Not Used)
+"RTN","PSOASAP",9,0)
+ ;      ASAP 4.0+: Transaction Control Number
+"RTN","PSOASAP",10,0)
+ Q $$TH02^PSOASAP0()
+"RTN","PSOASAP",11,0)
+ ;
+"RTN","PSOASAP",12,0)
+TH03() ;ASAP 3.0 : Transaction Control Number
+"RTN","PSOASAP",13,0)
+ ;      ASAP 4.0+: Transaction Type (Always "01" - Send/Request Transaction)
+"RTN","PSOASAP",14,0)
+ Q $$TH03^PSOASAP0()
+"RTN","PSOASAP",15,0)
+ ;
+"RTN","PSOASAP",16,0)
+TH04() ;ASAP 3.0 : Transaction Type (Not Used)
+"RTN","PSOASAP",17,0)
+ ;      ASAP 4.0+: Response ID (Not Used)
+"RTN","PSOASAP",18,0)
+ Q ""
+"RTN","PSOASAP",19,0)
+ ;
+"RTN","PSOASAP",20,0)
+TH05() ;ASAP 3.0 : Message Type (Not Used)
+"RTN","PSOASAP",21,0)
+ ;      ASAP 4.0+: Creation Date (Format: YYYYMMDD)
+"RTN","PSOASAP",22,0)
+ Q $$TH05^PSOASAP0()
+"RTN","PSOASAP",23,0)
+ ;
+"RTN","PSOASAP",24,0)
+TH06() ;ASAP 3.0 : Response ID (Not Used)
+"RTN","PSOASAP",25,0)
+ ;      ASAP 4.0+: Creation Time. Format: HHMMSS or HHMM
+"RTN","PSOASAP",26,0)
+ Q $$TH06^PSOASAP0()
+"RTN","PSOASAP",27,0)
+ ;
+"RTN","PSOASAP",28,0)
+TH07() ;ASAP 3.0 : Project ID (Not Used)
+"RTN","PSOASAP",29,0)
+ ;      ASAP 4.0+: File Type. Returns: "T" - Test or "P" - Production
+"RTN","PSOASAP",30,0)
+ Q $$TH07^PSOASAP0()
+"RTN","PSOASAP",31,0)
+ ;
+"RTN","PSOASAP",32,0)
+TH08() ;ASAP 3.0 : Creation Date (Format: YYYYMMDD)
+"RTN","PSOASAP",33,0)
+ ;      ASAP 4.0 : Composite Element Separator (:)
+"RTN","PSOASAP",34,0)
+ ;      ASAP 4.1+: Routing Number (Real-time transactions only)(Not Used)
+"RTN","PSOASAP",35,0)
+ Q $$TH08^PSOASAP0()
+"RTN","PSOASAP",36,0)
+ ;
+"RTN","PSOASAP",37,0)
+TH09() ;ASAP 3.0 : Creation Time. Format: HHMMSS or HHMM
+"RTN","PSOASAP",38,0)
+ ;      ASAP 4.0+: Segment Terminator Character
+"RTN","PSOASAP",39,0)
+ Q $$TH09^PSOASAP0()
+"RTN","PSOASAP",40,0)
+ ;
+"RTN","PSOASAP",41,0)
+TH10() ;ASAP 3.0 : File Type
+"RTN","PSOASAP",42,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",43,0)
+ Q $$TH10^PSOASAP0()
+"RTN","PSOASAP",44,0)
+ ;
+"RTN","PSOASAP",45,0)
+TH11() ;ASAP 3.0 : Message (Not Used)
+"RTN","PSOASAP",46,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",47,0)
+ Q ""
+"RTN","PSOASAP",48,0)
+ ;
+"RTN","PSOASAP",49,0)
+TH12() ;ASAP 3.0 : Composite Element Separator
+"RTN","PSOASAP",50,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",51,0)
+ Q $$TH12^PSOASAP0()
+"RTN","PSOASAP",52,0)
+ ;
+"RTN","PSOASAP",53,0)
+TH13() ;ASAP 3.0 : Data Segment Terminator Character
+"RTN","PSOASAP",54,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",55,0)
+ Q $$TH13^PSOASAP0()
+"RTN","PSOASAP",56,0)
+ ;
+"RTN","PSOASAP",57,0)
+ ; *** IS Segment - Information Source ***
+"RTN","PSOASAP",58,0)
+IS01() ; Unique Information Source ID
+"RTN","PSOASAP",59,0)
+ Q ("VA"_+$$SITE^VASITE())
+"RTN","PSOASAP",60,0)
+ ;
+"RTN","PSOASAP",61,0)
+IS02() ; Information Source Entity Name
+"RTN","PSOASAP",62,0)
+ Q $$GET1^DIQ(4,+$$SITE^VASITE,100)
+"RTN","PSOASAP",63,0)
+ ;
+"RTN","PSOASAP",64,0)
+IS03() ;ASAP 3.0 : Address Information 1 (Not Used)
+"RTN","PSOASAP",65,0)
+ ;      ASAP 4.0+: Message (Not Used)
+"RTN","PSOASAP",66,0)
+ Q ""
+"RTN","PSOASAP",67,0)
+ ;
+"RTN","PSOASAP",68,0)
+IS04() ;ASAP 3.0 : Address Information 2 (Not Used)
+"RTN","PSOASAP",69,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",70,0)
+ Q ""
+"RTN","PSOASAP",71,0)
+ ;
+"RTN","PSOASAP",72,0)
+IS05() ;ASAP 3.0 : City Address (Not Used)
+"RTN","PSOASAP",73,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",74,0)
+ Q ""
+"RTN","PSOASAP",75,0)
+ ;
+"RTN","PSOASAP",76,0)
+IS06() ;ASAP 3.0 : State Address (Not Used)
+"RTN","PSOASAP",77,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",78,0)
+ Q ""
+"RTN","PSOASAP",79,0)
+ ;
+"RTN","PSOASAP",80,0)
+IS07() ;ASAP 3.0 : Zip code Address (Not Used)
+"RTN","PSOASAP",81,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",82,0)
+ Q ""
+"RTN","PSOASAP",83,0)
+ ;
+"RTN","PSOASAP",84,0)
+IS08() ;ASAP 3.0 : Phone Number (Not Used)
+"RTN","PSOASAP",85,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",86,0)
+ Q ""
+"RTN","PSOASAP",87,0)
+ ;
+"RTN","PSOASAP",88,0)
+IS09() ;ASAP 3.0 : Contact Name (Not Used)
+"RTN","PSOASAP",89,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",90,0)
+ Q ""
+"RTN","PSOASAP",91,0)
+ ;
+"RTN","PSOASAP",92,0)
+IS10() ;ASAP 3.0 : Message (Not Used)
+"RTN","PSOASAP",93,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",94,0)
+ Q ""
+"RTN","PSOASAP",95,0)
+ ;
+"RTN","PSOASAP",96,0)
+IS11() ;ASAP 3.0 : Data Entry Terminal ID (Not Used)
+"RTN","PSOASAP",97,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP",98,0)
+ Q ""
+"RTN","PSOASAP",99,0)
+ ;
+"RTN","PSOASAP",100,0)
+ ; *** IR Segment - Information Receiver (ASAP 3.0 only) ***
+"RTN","PSOASAP",101,0)
+IR01() ; Unique Information Receiver ID
+"RTN","PSOASAP",102,0)
+ Q ("VA"_+$$SITE^VASITE())
+"RTN","PSOASAP",103,0)
+ ;
+"RTN","PSOASAP",104,0)
+IR02() ; Information Receiver Entity Name
+"RTN","PSOASAP",105,0)
+ Q $$GET1^DIQ(5,STATEIEN,.01)_" PMP PROGRAM"
+"RTN","PSOASAP",106,0)
+ ;
+"RTN","PSOASAP",107,0)
+IR03() ;Address Information 1 (Not Used)
+"RTN","PSOASAP",108,0)
+ Q ""
+"RTN","PSOASAP",109,0)
+ ;
+"RTN","PSOASAP",110,0)
+IR04() ;Address Information 2 (Not Used)
+"RTN","PSOASAP",111,0)
+ Q ""
+"RTN","PSOASAP",112,0)
+ ;
+"RTN","PSOASAP",113,0)
+IR05() ;City Address (Not Used)
+"RTN","PSOASAP",114,0)
+ Q ""
+"RTN","PSOASAP",115,0)
+ ;
+"RTN","PSOASAP",116,0)
+IR06() ;State Address (Not Used)
+"RTN","PSOASAP",117,0)
+ Q ""
+"RTN","PSOASAP",118,0)
+ ;
+"RTN","PSOASAP",119,0)
+IR07() ;Zip code Address (Not Used)
+"RTN","PSOASAP",120,0)
+ Q ""
+"RTN","PSOASAP",121,0)
+ ;
+"RTN","PSOASAP",122,0)
+IR08() ;Phone Number (Not Used)
+"RTN","PSOASAP",123,0)
+ Q ""
+"RTN","PSOASAP",124,0)
+ ;
+"RTN","PSOASAP",125,0)
+IR09() ;Contact Name (Not Used)
+"RTN","PSOASAP",126,0)
+ Q ""
+"RTN","PSOASAP",127,0)
+ ;
+"RTN","PSOASAP",128,0)
+IR10() ;Message (Not Used)
+"RTN","PSOASAP",129,0)
+ Q ""
+"RTN","PSOASAP",130,0)
+ ;
+"RTN","PSOASAP",131,0)
+ ; *** PHA Segment - Pharmacy Header ***
+"RTN","PSOASAP",132,0)
+PHA01() ; National Provider Identifier (NPI)
+"RTN","PSOASAP",133,0)
+ Q $$PHA01^PSOASAP0()
+"RTN","PSOASAP",134,0)
+ ;
+"RTN","PSOASAP",135,0)
+PHA02() ;NCPDP/NABP Provider ID
+"RTN","PSOASAP",136,0)
+ Q $$GET1^DIQ(59,SITEIEN,1008)
+"RTN","PSOASAP",137,0)
+ ;
+"RTN","PSOASAP",138,0)
+PHA03() ;Pharmacy DEA Number
+"RTN","PSOASAP",139,0)
+ Q $$PHA03^PSOASAP0()
+"RTN","PSOASAP",140,0)
+ ;
+"RTN","PSOASAP",141,0)
+PHA04() ;Pharmacy Name
+"RTN","PSOASAP",142,0)
+ Q $$GET1^DIQ(59,SITEIEN,.01)
+"RTN","PSOASAP",143,0)
+ ;
+"RTN","PSOASAP",144,0)
+PHA05() ;Pharmacy Address Information - Line 1
+"RTN","PSOASAP",145,0)
+ Q $$TRIM^XLFSTR($$GET1^DIQ(59,SITEIEN,.02))
+"RTN","PSOASAP",146,0)
+ ;
+"RTN","PSOASAP",147,0)
+PHA06() ; Pharmacy Address Information - Line 2 (Not Used)
+"RTN","PSOASAP",148,0)
+ Q ""
+"RTN","PSOASAP",149,0)
+ ;
+"RTN","PSOASAP",150,0)
+PHA07() ;Pharmacy City Address
+"RTN","PSOASAP",151,0)
+ Q $$GET1^DIQ(59,SITEIEN,.07)
+"RTN","PSOASAP",152,0)
+ ;
+"RTN","PSOASAP",153,0)
+PHA08() ;Pharmacy State Address
+"RTN","PSOASAP",154,0)
+ Q $$GET1^DIQ(5,STATEIEN,1)
+"RTN","PSOASAP",155,0)
+ ;
+"RTN","PSOASAP",156,0)
+PHA09() ;Pharmacy ZIP Code
+"RTN","PSOASAP",157,0)
+ Q $$NUMERIC^PSOASAP0($$GET1^DIQ(59,SITEIEN,.05))
+"RTN","PSOASAP",158,0)
+ ;
+"RTN","PSOASAP",159,0)
+PHA10() ;Phone Number
+"RTN","PSOASAP",160,0)
+ Q $$PHA10^PSOASAP0()
+"RTN","PSOASAP",161,0)
+ ;
+"RTN","PSOASAP",162,0)
+PHA11() ;Pharmacy Contact name (Not Used)
+"RTN","PSOASAP",163,0)
+ Q ""
+"RTN","PSOASAP",164,0)
+ ;
+"RTN","PSOASAP",165,0)
+PHA12() ;Pharmacy Chain Site ID (Not Used)
+"RTN","PSOASAP",166,0)
+ Q ""
+"RTN","PSOASAP",167,0)
+ ;
+"RTN","PSOASAP",168,0)
+PHA13() ;Message (Not Used)
+"RTN","PSOASAP",169,0)
+ Q ""
+"RTN","PSOASAP",170,0)
+ ;
+"RTN","PSOASAP",171,0)
+ ; *** PAT Segment - Patient Information ***
+"RTN","PSOASAP",172,0)
+PAT01() ;  ASAP 3.0 : Not Used
+"RTN","PSOASAP",173,0)
+ ;         ASAP 4.0+: ID Qualifier of Patient Identifier (Always "US" - United States)
+"RTN","PSOASAP",174,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP",175,0)
+ Q "US"
+"RTN","PSOASAP",176,0)
+ ;
+"RTN","PSOASAP",177,0)
+PAT02() ;ID Qualifier (Always "07" - Social Security Number)
+"RTN","PSOASAP",178,0)
+ Q "07"
+"RTN","PSOASAP",179,0)
+ ;
+"RTN","PSOASAP",180,0)
+PAT03() ;ASAP 3.0 : Unique System ID - Patient (Not Used)
+"RTN","PSOASAP",181,0)
+ ;       ASAP 4.0+: ID of Patient (SSN)
+"RTN","PSOASAP",182,0)
+ Q $$PAT03^PSOASAP0()
+"RTN","PSOASAP",183,0)
+ ;
+"RTN","PSOASAP",184,0)
+PAT04() ;ASAP 3.0 : SSN
+"RTN","PSOASAP",185,0)
+ ;       ASAP 4.0+: ID Qualifier of Additional Patient Identifier (Not Used)
+"RTN","PSOASAP",186,0)
+ Q $$PAT04^PSOASAP0()
+"RTN","PSOASAP",187,0)
+ ;
+"RTN","PSOASAP",188,0)
+PAT05() ;Additional Patient ID Qualifier (Not Used)
+"RTN","PSOASAP",189,0)
+ Q ""
+"RTN","PSOASAP",190,0)
+ ;
+"RTN","PSOASAP",191,0)
+PAT06() ;Additional ID (Not Used)
+"RTN","PSOASAP",192,0)
+ Q ""
+"RTN","PSOASAP",193,0)
+ ;
+"RTN","PSOASAP",194,0)
+PAT07() ;Patient Last Name
+"RTN","PSOASAP",195,0)
+ Q PSONAME("LAST")
+"RTN","PSOASAP",196,0)
+ ;
+"RTN","PSOASAP",197,0)
+PAT08() ;Patient First Name
+"RTN","PSOASAP",198,0)
+ Q PSONAME("FIRST")
+"RTN","PSOASAP",199,0)
+ ;
+"RTN","PSOASAP",200,0)
+PAT09() ;Patient Middle Name or Initial
+"RTN","PSOASAP",201,0)
+ Q PSONAME("MIDDLE")
+"RTN","PSOASAP",202,0)
+ ;
+"RTN","PSOASAP",203,0)
+PAT10() ;Name Prefix
+"RTN","PSOASAP",204,0)
+ Q PSONAME("PREFIX")
+"RTN","PSOASAP",205,0)
+ ;
+"RTN","PSOASAP",206,0)
+PAT11() ;Name Suffix
+"RTN","PSOASAP",207,0)
+ Q PSONAME("SUFFIX")
+"RTN","PSOASAP",208,0)
+ ;
+"RTN","PSOASAP",209,0)
+PAT12() ;Patient Address Information - Line 1
+"RTN","PSOASAP",210,0)
+ Q $$PAT12^PSOASAP0()
+"RTN","PSOASAP",211,0)
+ ;
+"RTN","PSOASAP",212,0)
+PAT13() ;Patient Address Information - Line 2
+"RTN","PSOASAP",213,0)
+ Q $$PAT13^PSOASAP0()
+"RTN","PSOASAP",214,0)
+ ;
+"RTN","PSOASAP",215,0)
+PAT14() ;Patient City Address
+"RTN","PSOASAP",216,0)
+ Q $P($G(VAPA(4)),"^",1)
+"RTN","PSOASAP",217,0)
+ ;
+"RTN","PSOASAP",218,0)
+PAT15() ;Patient State Address
+"RTN","PSOASAP",219,0)
+ Q $$PAT15^PSOASAP0()
+"RTN","PSOASAP",220,0)
+ ;
+"RTN","PSOASAP",221,0)
+PAT16() ;Patient ZIP Code
+"RTN","PSOASAP",222,0)
+ Q $$PAT16^PSOASAP0()
+"RTN","PSOASAP",223,0)
+ ;
+"RTN","PSOASAP",224,0)
+PAT17() ;Patient Phone Number
+"RTN","PSOASAP",225,0)
+ Q $$PAT17^PSOASAP0()
+"RTN","PSOASAP",226,0)
+ ;
+"RTN","PSOASAP",227,0)
+PAT18() ;ASAP 3.0 : Email Address (Not Used)
+"RTN","PSOASAP",228,0)
+ ;       ASAP 4.0+: Patient DOB
+"RTN","PSOASAP",229,0)
+ Q $$PAT18^PSOASAP0()
+"RTN","PSOASAP",230,0)
+ ;
+"RTN","PSOASAP",231,0)
+PAT19() ;ASAP 3.0 : Patient DOB
+"RTN","PSOASAP",232,0)
+ ;       ASAP 4.0+: Patient Gender Code
+"RTN","PSOASAP",233,0)
+ Q $$PAT19^PSOASAP0()
+"RTN","PSOASAP",234,0)
+ ;
+"RTN","PSOASAP",235,0)
+PAT20() ;ASAP 3.0 : Patient Gender Code
+"RTN","PSOASAP",236,0)
+ ;       ASAP 4.0+: Species Code (Always return "01" for 'Human')
+"RTN","PSOASAP",237,0)
+ Q $$PAT20^PSOASAP0()
+"RTN","PSOASAP",238,0)
+ ;
+"RTN","PSOASAP",239,0)
+PAT21() ;Patient Location Code (Always return "10" for 'Outpatient')
+"RTN","PSOASAP",240,0)
+ Q "10"
+"RTN","PSOASAP",241,0)
+ ;
+"RTN","PSOASAP",242,0)
+PAT22() ;ASAP 3.0 : Primary Prescription Coverage Type (Not Used)
+"RTN","PSOASAP",243,0)
+ ;       ASAP 4.0+:Country of Non-U.S. Resident
+"RTN","PSOASAP",244,0)
+ Q $$PAT22^PSOASAP0()
+"RTN","PSOASAP",245,0)
+ ;
+"RTN","PSOASAP",246,0)
+PAT23() ;ASAP 3.0: Secondary Prescription Coverage Type (Not Used)
+"RTN","PSOASAP",247,0)
+ Q ""
+"RTN","PSOASAP",248,0)
+ ;
+"RTN","PSOASAP",249,0)
+PAT24() ;ASAP 3.0: Language Code (Not Used)
+"RTN","PSOASAP",250,0)
+ Q ""
+"RTN","PSOASAP",251,0)
+ ;
+"RTN","PSOASAP",252,0)
+PAT25() ;ASAP 3.0: Work Phone Number (Not Used)
+"RTN","PSOASAP",253,0)
+ Q ""
+"RTN","PSOASAP",254,0)
+ ;
+"RTN","PSOASAP",255,0)
+PAT26() ;ASAP 3.0: Alternate Phone Number (Not Used)
+"RTN","PSOASAP",256,0)
+ Q ""
+"RTN","PSOASAP",257,0)
+ ;
+"RTN","PSOASAP",258,0)
+PAT27() ;ASAP 3.0: Drivers License Number
+"RTN","PSOASAP",259,0)
+ Q ""
+"RTN","PSOASAP",260,0)
+ ;
+"RTN","PSOASAP",261,0)
+PAT28() ;ASAP 3.0: Facility Code (Not Used)
+"RTN","PSOASAP",262,0)
+ Q ""
+"RTN","PSOASAP",263,0)
+ ;
+"RTN","PSOASAP",264,0)
+PAT29() ;ASAP 3.0: Unit Identifier (Not Used)
+"RTN","PSOASAP",265,0)
+ Q ""
+"RTN","PSOASAP",266,0)
+ ;
+"RTN","PSOASAP",267,0)
+PAT30() ;ASAP 3.0: Room Number (Not Used)
+"RTN","PSOASAP",268,0)
+ Q ""
+"RTN","PSOASAP",269,0)
+ ;
+"RTN","PSOASAP",270,0)
+PAT31() ;ASAP 3.0: Bed (Not Used)
+"RTN","PSOASAP",271,0)
+ Q ""
+"RTN","PSOASAP",272,0)
+ ;
+"RTN","PSOASAP",273,0)
+PAT32() ;ASAP 3.0: Medical Record Number (Not Used)
+"RTN","PSOASAP",274,0)
+ Q ""
+"RTN","PSOASAP",275,0)
+ ;
+"RTN","PSOASAP",276,0)
+PAT33() ;ASAP 3.0: Admission Date (Not Used)
+"RTN","PSOASAP",277,0)
+ Q ""
+"RTN","PSOASAP",278,0)
+ ;
+"RTN","PSOASAP",279,0)
+PAT34() ;ASAP 3.0: Admission Time (Not Used)
+"RTN","PSOASAP",280,0)
+ Q ""
+"RTN","PSOASAP",281,0)
+ ;
+"RTN","PSOASAP",282,0)
+PAT35() ;ASAP 3.0: Discharge Date (Not Used)
+"RTN","PSOASAP",283,0)
+ Q ""
+"RTN","PSOASAP",284,0)
+ ;
+"RTN","PSOASAP",285,0)
+PAT36() ;ASAP 3.0: Discharge Time (Not Used)
+"RTN","PSOASAP",286,0)
+ Q ""
+"RTN","PSOASAP",287,0)
+ ;
+"RTN","PSOASAP",288,0)
+PAT37() ;ASAP 3.0: Primary Coverage Start Date (Not Used)
+"RTN","PSOASAP",289,0)
+ Q ""
+"RTN","PSOASAP",290,0)
+ ;
+"RTN","PSOASAP",291,0)
+PAT38() ;ASAP 3.0: Not Used
+"RTN","PSOASAP",292,0)
+ Q ""
+"RTN","PSOASAP",293,0)
+ ;
+"RTN","PSOASAP",294,0)
+PAT39() ;ASAP 3.0: Secondary Coverage Start Date (Not Used)
+"RTN","PSOASAP",295,0)
+ Q ""
+"RTN","PSOASAP",296,0)
+ ;
+"RTN","PSOASAP",297,0)
+PAT40() ;ASAP 3.0: Secondary Coverage Stop Date (Not Used)
+"RTN","PSOASAP",298,0)
+ Q ""
+"RTN","PSOASAP",299,0)
+ ;
+"RTN","PSOASAP",300,0)
+ ; *** RX Segment - Prescription Order (ASAP 3.0 only) ***
+"RTN","PSOASAP",301,0)
+RX01() ;Reporting Status ("01" - Add / "02" - Change / "03" - Delete)
+"RTN","PSOASAP",302,0)
+ Q $S($G(RECTYPE)="N":"01",$G(RECTYPE)="R":"02",$G(RECTYPE)="V":"03",1:"")
+"RTN","PSOASAP",303,0)
+ ;
+"RTN","PSOASAP",304,0)
+RX02() ;Program Participation Status (Not Used)
+"RTN","PSOASAP",305,0)
+ Q ""
+"RTN","PSOASAP",306,0)
+ ;
+"RTN","PSOASAP",307,0)
+RX03() ;Prescription Number
+"RTN","PSOASAP",308,0)
+ Q $$GET1^DIQ(52,+$G(RXIEN),.01)
+"RTN","PSOASAP",309,0)
+ ;
+"RTN","PSOASAP",310,0)
+RX04() ;Unique System ID() - RPh (Not Used)
+"RTN","PSOASAP",311,0)
+ Q ""
+"RTN","PSOASAP",312,0)
+ ;
+"RTN","PSOASAP",313,0)
+RX05() ;Unique System ID() - Patient (Not Used)
+"RTN","PSOASAP",314,0)
+ Q ""
+"RTN","PSOASAP",315,0)
+ ;
+"RTN","PSOASAP",316,0)
+RX06() ;Unique System ID()  - Prescriber (Not Used)
+"RTN","PSOASAP",317,0)
+ Q ""
+"RTN","PSOASAP",318,0)
+ ;
+"RTN","PSOASAP",319,0)
+RX07() ;Unique System ID()  - Drug (Not Used)
+"RTN","PSOASAP",320,0)
+ Q ""
+"RTN","PSOASAP",321,0)
+ ;
+"RTN","PSOASAP",322,0)
+RX08() ;Date Rx Written (Format: YYYYMMDD)
+"RTN","PSOASAP",323,0)
+ Q $$RX08^PSOASAP0()
+"RTN","PSOASAP",324,0)
+ ;
+"RTN","PSOASAP",325,0)
+RX09() ;RX Start Date (Not Used)
+"RTN","PSOASAP",326,0)
+ Q ""
+"RTN","PSOASAP",327,0)
+ ;
+"RTN","PSOASAP",328,0)
+RX10() ;RX End Date (Not Used)
+"RTN","PSOASAP",329,0)
+ Q ""
+"RTN","PSOASAP",330,0)
+ ;
+"RTN","PSOASAP",331,0)
+RX11() ;Diagnosis Code Qualifier
+"RTN","PSOASAP",332,0)
+ Q ""
+"RTN","PSOASAP",333,0)
+ ;
+"RTN","PSOASAP",334,0)
+RX12() ;Diagnosis Code
+"RTN","PSOASAP",335,0)
+ Q ""
+"RTN","PSOASAP",336,0)
+ ;
+"RTN","PSOASAP",337,0)
+RX13() ;Product ID Qualifier (Always return "01" for 'NDC') 
+"RTN","PSOASAP",338,0)
+ Q "01"
+"RTN","PSOASAP",339,0)
+ ;
+"RTN","PSOASAP",340,0)
+RX14() ;Product ID (NDC - National Drug Code)
+"RTN","PSOASAP",341,0)
+ Q $$RX14^PSOASAP0()
+"RTN","PSOASAP",342,0)
+ ;
+"RTN","PSOASAP",343,0)
+RX15() ;Product Description (Not Used)
+"RTN","PSOASAP",344,0)
+ Q ""
+"RTN","PSOASAP",345,0)
+ ;
+"RTN","PSOASAP",346,0)
+RX16() ;DAW Code (Not Used)
+"RTN","PSOASAP",347,0)
+ Q ""
+"RTN","PSOASAP",348,0)
+ ;
+"RTN","PSOASAP",349,0)
+RX17() ;Quantity Dispensed
+"RTN","PSOASAP",350,0)
+ Q $S(RECTYPE="V":$G(RTSDATA("QTY")),1:$$RXQTY^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP",351,0)
+ ;
+"RTN","PSOASAP",352,0)
+RX18() ;Days Supply
+"RTN","PSOASAP",353,0)
+ Q $S(RECTYPE="V":$G(RTSDATA("DAYSUP")),1:$$RXDAYSUP^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP",354,0)
+ ;
+"RTN","PSOASAP",355,0)
+RX19() ;Basis of Days Supply Determination (Not Used)
+"RTN","PSOASAP",356,0)
+ Q ""
+"RTN","PSOASAP",357,0)
+ ;
+"RTN","PSOASAP",358,0)
+RX20() ;Refills Authorized
+"RTN","PSOASAP",359,0)
+ Q +$$GET1^DIQ(52,+$G(RXIEN),9)
+"RTN","PSOASAP",360,0)
+ ;
+"RTN","PSOASAP",361,0)
+RX21() ;Refills Authorized Through Date (Not Used)
+"RTN","PSOASAP",362,0)
+ Q ""
+"RTN","PSOASAP",363,0)
+ ;
+"RTN","PSOASAP",364,0)
+RX22() ;DEA Schedule (Not Used)
+"RTN","PSOASAP",365,0)
+ Q ""
+"RTN","PSOASAP",366,0)
+ ;
+"RTN","PSOASAP",367,0)
+RX23() ;Unit Dose Indicator (Not Used)
+"RTN","PSOASAP",368,0)
+ Q ""
+"RTN","PSOASAP",369,0)
+ ;
+"RTN","PSOASAP",370,0)
+RX24() ;Compound Indicator (Not Used)
+"RTN","PSOASAP",371,0)
+ Q ""
+"RTN","PSOASAP",372,0)
+ ;
+"RTN","PSOASAP",373,0)
+RX25() ;Origin Code (Not Used)
+"RTN","PSOASAP",374,0)
+ Q ""
+"RTN","PSOASAP",375,0)
+ ;
+"RTN","PSOASAP",376,0)
+RX26() ;Brand Versus Generic Indicator (Not Used)
+"RTN","PSOASAP",377,0)
+ Q ""
+"RTN","PSOASAP",378,0)
+ ;
+"RTN","PSOASAP",379,0)
+RX27() ;Original Fill Date (Not Used)
+"RTN","PSOASAP",380,0)
+ Q ""
+"RTN","PSOASAP",381,0)
+ ;
+"RTN","PSOASAP",382,0)
+RX28() ;AlternateRX Identifier (Not Used)
+"RTN","PSOASAP",383,0)
+ Q ""
+"RTN","PSOASAP",384,0)
+ ;
+"RTN","PSOASAP",385,0)
+RX29() ;Previous RX Number (Not Used)
+"RTN","PSOASAP",386,0)
+ Q ""
+"RTN","PSOASAP",387,0)
+ ;
+"RTN","PSOASAP",388,0)
+ ; *** DSP Segment - Dispensing Record ***
+"RTN","PSOASAP",389,0)
+DSP01() ;ASAP 3.0 : Reporting Status ("01" - Add / "02" - Change / "03" - Delete)
+"RTN","PSOASAP",390,0)
+ ;       ASAP 4.0 : Reporting Status ("" - New / "01" - Revise / "02" - Void)
+"RTN","PSOASAP",391,0)
+ ;       ASAP 4.1+: Reporting Status ("00" - New / "01" - Revise / "02" - Void)
+"RTN","PSOASAP",392,0)
+ Q $$DSP01^PSOASAP0()
+"RTN","PSOASAP",393,0)
+ ;
+"RTN","PSOASAP",394,0)
+DSP02() ;ASAP 3.0 : Program Participation Status (Not Used)
+"RTN","PSOASAP",395,0)
+ ;       ASAP 4.0+: Prescription Number (Not Used by ASAP 3.0)
+"RTN","PSOASAP",396,0)
+ Q $$DSP02^PSOASAP0()
+"RTN","PSOASAP",397,0)
+ ;
+"RTN","PSOASAP",398,0)
+DSP03() ;ASAP 3.0 : Prescription Number
+"RTN","PSOASAP",399,0)
+ ;       ASAP 4.0+: Date Rx Written (Format: YYYYMMDD)
+"RTN","PSOASAP",400,0)
+ Q $$DSP03^PSOASAP0()
+"RTN","PSOASAP",401,0)
+ ;
+"RTN","PSOASAP",402,0)
+DSP04() ;ASAP 3.0 : Refill Number
+"RTN","PSOASAP",403,0)
+ ;       ASAP 4.0+: Refills Authorized
+"RTN","PSOASAP",404,0)
+ Q $$DSP04^PSOASAP0()
+"RTN","PSOASAP",405,0)
+ ;
+"RTN","PSOASAP",406,0)
+DSP05() ;ASAP 3.0 : Unique System ID - RPh (Not Used)
+"RTN","PSOASAP",407,0)
+ ;       ASAP 4.0+: Date Filled (Release Date) (Format: YYYYMMDD)
+"RTN","PSOASAP",408,0)
+ Q $$DSP05^PSOASAP0()
+"RTN","PSOASAP",409,0)
+ ;
+"RTN","PSOASAP",410,0)
+DSP06() ;ASAP 3.0 : ;Unique System ID - Patient (Not Used)
+"RTN","PSOASAP",411,0)
+ ;       ASAP 4.0+: Refill Number (Partials are always "0")
+"RTN","PSOASAP",412,0)
+ Q $$DSP06^PSOASAP0()
+"RTN","PSOASAP",413,0)
+ ;
+"RTN","PSOASAP",414,0)
+DSP07() ;ASAP 3.0 : ;Unique System ID - Prescriber (Not Used)
+"RTN","PSOASAP",415,0)
+ ;       ASAP 4.0+: Product ID Qualifier (Always return "01" for 'NDC')
+"RTN","PSOASAP",416,0)
+ Q $$DSP07^PSOASAP0()
+"RTN","PSOASAP",417,0)
+ ;
+"RTN","PSOASAP",418,0)
+DSP08() ;Product ID (NDC - National Drug Code) (ASAP 3.0: Not Used)
+"RTN","PSOASAP",419,0)
+ Q $$DSP08^PSOASAP0()
+"RTN","PSOASAP",420,0)
+ ;
+"RTN","PSOASAP",421,0)
+DSP09() ;ASAP 3.0: Date Filled
+"RTN","PSOASAP",422,0)
+ ;       ASAP 4.0+: Quantity Dispensed
+"RTN","PSOASAP",423,0)
+ Q $$DSP09^PSOASAP0()
+"RTN","PSOASAP",424,0)
+ ;
+"RTN","PSOASAP",425,0)
+DSP10() ;Days Supply
+"RTN","PSOASAP",426,0)
+ Q $$DSP10^PSOASAP0()
+"RTN","PSOASAP",427,0)
+ ;
+"RTN","PSOASAP",428,0)
+DSP11() ;ASAP 3.0 : Product ID Qualifier (01:NDC)
+"RTN","PSOASAP",429,0)
+ ;       ASAP 4.0+: Drug Dosage Units Code
+"RTN","PSOASAP",430,0)
+ Q $$DSP11^PSOASAP0()
+"RTN","PSOASAP",431,0)
+ ;
+"RTN","PSOASAP",432,0)
+DSP12() ;ASAP 3.0: Product ID (NDC)
+"RTN","PSOASAP",433,0)
+ ;       ASAP 4.0+: Transmission Form of Rx Origin Code (Nature of Order)
+"RTN","PSOASAP",434,0)
+ Q $$DSP12^PSOASAP0()
+"RTN","PSOASAP",435,0)
+ ;
+"RTN","PSOASAP",436,0)
+DSP13() ;ASAP 3.0 : Product Description (Not Used)
+"RTN","PSOASAP",437,0)
+ ;       ASAP 4.0+: Partial Fill Indicator
+"RTN","PSOASAP",438,0)
+ Q $$DSP13^PSOASAP0()
+"RTN","PSOASAP",439,0)
+ ;
+"RTN","PSOASAP",440,0)
+DSP14() ;ASAP 3.0 : Quantity Dispensed
+"RTN","PSOASAP",441,0)
+ ;       ASAP 4.0+: Pharmacist National Provider Identifier (NPI)
+"RTN","PSOASAP",442,0)
+ Q $$DSP14^PSOASAP0()
+"RTN","PSOASAP",443,0)
+ ;
+"RTN","PSOASAP",444,0)
+DSP15() ;ASAP 3.0 : Days Supply
+"RTN","PSOASAP",445,0)
+ ;       ASAP 4.0+: Pharmacist State License Number (Not Used)
+"RTN","PSOASAP",446,0)
+ Q $$DSP15^PSOASAP0()
+"RTN","PSOASAP",447,0)
+ ;
+"RTN","PSOASAP",448,0)
+DSP16() ;ASAP 3.0 : Basis of Days Supply Determiniation (Always "3" for 'As directed by doctor')
+"RTN","PSOASAP",449,0)
+ ;       ASAP 4.0+: Classification Code for Payment Type (Always return "05" for 'Military Installations and VA')
+"RTN","PSOASAP",450,0)
+ Q $$DSP16^PSOASAP0()
+"RTN","PSOASAP",451,0)
+ ;
+"RTN","PSOASAP",452,0)
+DSP17() ;ASAP 3.0 : Refills Remaining (Not Used)
+"RTN","PSOASAP",453,0)
+ ;       ASAP 4.0 : N/A (up to DSP16 only)
+"RTN","PSOASAP",454,0)
+ ;       ASAP 4.1+: Date Sold
+"RTN","PSOASAP",455,0)
+ Q $$DSP17^PSOASAP0()
+"RTN","PSOASAP",456,0)
+ ;
+"RTN","PSOASAP",457,0)
+DSP18() ;ASAP 3.0: Refills Authorized Through Date (Not Used)
+"RTN","PSOASAP",458,0)
+ ;       ASAP 4.1: RxNorm Code (Not Used)
+"RTN","PSOASAP",459,0)
+ ;       ASAP 4.2: RxNorm Product Qualifier (Not Used)
+"RTN","PSOASAP",460,0)
+ Q ""
+"RTN","PSOASAP",461,0)
+ ;
+"RTN","PSOASAP",462,0)
+DSP19() ;ASAP 3.0: Previous Fill Date (Not Used)
+"RTN","PSOASAP",463,0)
+ ;       ASAP 4.1: Electronic Prescription Reference Number (Not Used)
+"RTN","PSOASAP",464,0)
+ ;       ASAP 4.2: RxNorm Code (Not Used)
+"RTN","PSOASAP",465,0)
+ Q ""
+"RTN","PSOASAP",466,0)
+ ;
+"RTN","PSOASAP",467,0)
+DSP20() ;ASAP 3.0: Previous Fill Quantity Dispensed (Not Used)
+"RTN","PSOASAP",468,0)
+ ;       ASAP 4.2: Electronic Prescription Reference Number (Not Used)
+"RTN","PSOASAP",469,0)
+ Q ""
+"RTN","PSOASAP",470,0)
+ ;
+"RTN","PSOASAP",471,0)
+DSP21() ;ASAP 3.0: Level of Service Code (Not Used)
+"RTN","PSOASAP",472,0)
+ ;       ASAP 4.2: Electronic Prescription Order Number (Not Used)
+"RTN","PSOASAP",473,0)
+ Q ""
+"RTN","PSOASAP",474,0)
+ ;
+"RTN","PSOASAP",475,0)
+DSP22() ;ASAP 3.0: Brand or Generic Indicator (Not Used)
+"RTN","PSOASAP",476,0)
+ Q ""
+"RTN","PSOASAP",477,0)
+ ;
+"RTN","PSOASAP",478,0)
+DSP23() ;ASAP 3.0: Patient Advisory Leaflet (Not Used)
+"RTN","PSOASAP",479,0)
+ Q ""
+"RTN","PSOASAP",480,0)
+ ;
+"RTN","PSOASAP",481,0)
+DSP24() ;ASAP 3.0: Warning/Auxiliary Labels (Not Used)
+"RTN","PSOASAP",482,0)
+ Q ""
+"RTN","PSOASAP",483,0)
+ ;
+"RTN","PSOASAP",484,0)
+DSP25() ;ASAP 3.0: Warning/Auxiliary Labels (Not Used)
+"RTN","PSOASAP",485,0)
+ Q ""
+"RTN","PSOASAP",486,0)
+ ;
+"RTN","PSOASAP",487,0)
+DSP26() ;ASAP 3.0: Warning/Auxiliary Labels (Not Used)
+"RTN","PSOASAP",488,0)
+ Q ""
+"RTN","PSOASAP",489,0)
+ ;
+"RTN","PSOASAP",490,0)
+DSP27() ;ASAP 3.0: Warning/Auxiliary Labels (Not Used)
+"RTN","PSOASAP",491,0)
+ Q ""
+"RTN","PSOASAP",492,0)
+ ;
+"RTN","PSOASAP",493,0)
+DSP28() ;ASAP 3.0: Warning/Auxiliary Labels (Not Used)
+"RTN","PSOASAP",494,0)
+ Q ""
+"RTN","PSOASAP",495,0)
+ ;
+"RTN","PSOASAP",496,0)
+DSP29() ;ASAP 3.0: Bar Code on Vial Label (Not Used)
+"RTN","PSOASAP",497,0)
+ Q ""
+"RTN","PSOASAP",498,0)
+ ;
+"RTN","PSOASAP",499,0)
+DSP30() ;ASAP 3.0: Group Identifier (Not Used)
+"RTN","PSOASAP",500,0)
+ Q ""
+"RTN","PSOASAP",501,0)
+ ;
+"RTN","PSOASAP",502,0)
+DSP31() ;ASAP 3.0: Group Rx Count (Not Used)
+"RTN","PSOASAP",503,0)
+ Q ""
+"RTN","PSOASAP",504,0)
+ ;
+"RTN","PSOASAP",505,0)
+DSP32() ;ASAP 3.0: Partial Fill Indicator (Not Used)
+"RTN","PSOASAP",506,0)
+ Q ""
+"RTN","PSOASAP",507,0)
+ ;
+"RTN","PSOASAP",508,0)
+DSP33() ;ASAP 3.0: Priority (Not Used)
+"RTN","PSOASAP",509,0)
+ Q ""
+"RTN","PSOASAP",510,0)
+ ;
+"RTN","PSOASAP",511,0)
+ ; *** PRE Segment - Prescriber Information ***
+"RTN","PSOASAP",512,0)
+PRE01() ;ASAP 3.0 : Not Used
+"RTN","PSOASAP",513,0)
+ ;       ASAP 4.0+: Prescriber National Provider Identifier (NPI)
+"RTN","PSOASAP",514,0)
+ Q $$PRE01^PSOASAP0()
+"RTN","PSOASAP",515,0)
+ ;
+"RTN","PSOASAP",516,0)
+PRE02() ; Prescriber DEA Number
+"RTN","PSOASAP",517,0)
+ Q $$PRE02^PSOASAP0()
+"RTN","PSOASAP",518,0)
+ ;
+"RTN","PSOASAP",519,0)
+PRE03() ;ASAP 3.0 : Prescriber NPI
+"RTN","PSOASAP",520,0)
+ ;       ASAP 4.0+: Prescriber DEA Number Suffix
+"RTN","PSOASAP",521,0)
+ Q $$PRE03^PSOASAP0()
+"RTN","PSOASAP",522,0)
+ ;
+"RTN","PSOASAP",523,0)
+PRE04() ;ASAP 3.0 : Prescriber DEA Number
+"RTN","PSOASAP",524,0)
+ ;       ASAP 4.0+: Prescriber State License Number (Not Used)
+"RTN","PSOASAP",525,0)
+ Q $$PRE04^PSOASAP0()
+"RTN","PSOASAP",526,0)
+ ;
+"RTN","PSOASAP",527,0)
+PRE05() ;ASAP 3.0 : Prescriber DEA Number Suffix
+"RTN","PSOASAP",528,0)
+ ;       ASAP 4.0+: Prescriber Last Name
+"RTN","PSOASAP",529,0)
+ Q $$PRE05^PSOASAP0()
+"RTN","PSOASAP",530,0)
+ ;
+"RTN","PSOASAP",531,0)
+PRE06() ;ASAP 3.0 : Prescriber State Lince Number (Not Used)
+"RTN","PSOASAP",532,0)
+ ;       ASAP 4.0+: Prescriber First Name
+"RTN","PSOASAP",533,0)
+ Q $$PRE06^PSOASAP0()
+"RTN","PSOASAP",534,0)
+ ;
+"RTN","PSOASAP",535,0)
+PRE07() ;ASAP 3.0 : Prescriber Alternate ID (Not Used)
+"RTN","PSOASAP",536,0)
+ ;       ASAP 4.0+: Prescriber Middle Name
+"RTN","PSOASAP",537,0)
+ Q $$PRE07^PSOASAP0()
+"RTN","PSOASAP",538,0)
+ ;
+"RTN","PSOASAP",539,0)
+PRE08() ;ASAP 3.0 : Prescriber's Last Name
+"RTN","PSOASAP",540,0)
+ ;       ASAP 4.0 & 4.1: N/A (Up to PRE07 only)
+"RTN","PSOASAP",541,0)
+ ;       ASAP 4.2: Prescriber's Phone Number
+"RTN","PSOASAP",542,0)
+ Q $$PRE08^PSOASAP0()
+"RTN","PSOASAP",543,0)
+ ;
+"RTN","PSOASAP",544,0)
+PRE09() ;ASAP 3.0: Prescriber' First Name
+"RTN","PSOASAP",545,0)
+ Q $$PRE09^PSOASAP0()
+"RTN","PSOASAP",546,0)
+ ;
+"RTN","PSOASAP",547,0)
+PRE10() ;ASAP 3.0: Prescriber' Middle Name
+"RTN","PSOASAP",548,0)
+ Q $$PRE10^PSOASAP0()
+"RTN","PSOASAP",549,0)
+ ;
+"RTN","PSOASAP",550,0)
+PRE11() ;ASAP 3.0: Name Prefix (Not Used)
+"RTN","PSOASAP",551,0)
+ Q ""
+"RTN","PSOASAP",552,0)
+ ;
+"RTN","PSOASAP",553,0)
+PRE12() ;ASAP 3.0: Name Suffix (Not Used)
+"RTN","PSOASAP",554,0)
+ Q ""
+"RTN","PSOASAP",555,0)
+ ;
+"RTN","PSOASAP",556,0)
+PRE13() ;ASAP 3.0: Address Information - 1 (Not Used)
+"RTN","PSOASAP",557,0)
+ Q ""
+"RTN","PSOASAP",558,0)
+ ;
+"RTN","PSOASAP",559,0)
+PRE14() ;ASAP 3.0: Address Information - 2 (Not Used)
+"RTN","PSOASAP",560,0)
+ Q ""
+"RTN","PSOASAP",561,0)
+ ;
+"RTN","PSOASAP",562,0)
+PRE15() ;ASAP 3.0: City Address (Not Used)
+"RTN","PSOASAP",563,0)
+ Q ""
+"RTN","PSOASAP",564,0)
+ ;
+"RTN","PSOASAP",565,0)
+PRE16() ;ASAP 3.0: State Address (Not Used)
+"RTN","PSOASAP",566,0)
+ Q ""
+"RTN","PSOASAP",567,0)
+ ;
+"RTN","PSOASAP",568,0)
+PRE17() ;ASAP 3.0: Zip Code Address (Not Used)
+"RTN","PSOASAP",569,0)
+ Q ""
+"RTN","PSOASAP",570,0)
+ ;
+"RTN","PSOASAP",571,0)
+PRE18() ;ASAP 3.0: Phone Number (Not Used)
+"RTN","PSOASAP",572,0)
+ Q ""
+"RTN","PSOASAP",573,0)
+ ;
+"RTN","PSOASAP",574,0)
+PRE19() ;ASAP 3.0: Prescriber Specialty (Not Used)
+"RTN","PSOASAP",575,0)
+ Q ""
+"RTN","PSOASAP",576,0)
+ ;
+"RTN","PSOASAP",577,0)
+PRE20() ;ASAP 3.0: Prescriber Fax Number (Not Used)
+"RTN","PSOASAP",578,0)
+ Q ""
+"RTN","PSOASAP",579,0)
+ ;
+"RTN","PSOASAP",580,0)
+ ; *** CDI Segment - Compound Drug Ingredient Detail ***
+"RTN","PSOASAP",581,0)
+CDI01() ;Compound Drug Ingredient Sequence Number (Not Used)
+"RTN","PSOASAP",582,0)
+ Q ""
+"RTN","PSOASAP",583,0)
+ ;
+"RTN","PSOASAP",584,0)
+CDI02() ;Product ID Qualifier (Not Used)
+"RTN","PSOASAP",585,0)
+ Q ""
+"RTN","PSOASAP",586,0)
+ ;
+"RTN","PSOASAP",587,0)
+CDI03() ;Product ID (Not Used)
+"RTN","PSOASAP",588,0)
+ Q ""
+"RTN","PSOASAP",589,0)
+ ;
+"RTN","PSOASAP",590,0)
+CDI04() ;Component Ingredient Product Description (Not Used)
+"RTN","PSOASAP",591,0)
+ Q ""
+"RTN","PSOASAP",592,0)
+ ;
+"RTN","PSOASAP",593,0)
+CDI05() ;Component Ingredient Quantity (Not Used)
+"RTN","PSOASAP",594,0)
+ Q ""
+"RTN","PSOASAP",595,0)
+ ;
+"RTN","PSOASAP",596,0)
+CDI06() ;ASAP 3.0: Component Ingredient Cost (Not Used)
+"RTN","PSOASAP",597,0)
+ Q ""
+"RTN","PSOASAP",598,0)
+ ;
+"RTN","PSOASAP",599,0)
+CDI07() ;ASAP 3.0: Component Ingredient Basis of Cost Determination (Not Used)
+"RTN","PSOASAP",600,0)
+ Q ""
+"RTN","PSOASAP",601,0)
+ ;
+"RTN","PSOASAP",602,0)
+CDI08() ;ASAP 3.0: Compound Drug Dosage Units Code (Not Used)
+"RTN","PSOASAP",603,0)
+ Q ""
+"RTN","PSOASAP",604,0)
+ ;
+"RTN","PSOASAP",605,0)
+ ; *** CSR Segment - Controlled Substance Reporting (ASAP 3.0 only) ***
+"RTN","PSOASAP",606,0)
+CSR01() ;State Issuing Rx Serial Number (Not Used)
+"RTN","PSOASAP",607,0)
+ Q ""
+"RTN","PSOASAP",608,0)
+ ;
+"RTN","PSOASAP",609,0)
+CSR02() ;State Issued Rx Serial Number (Not Used)
+"RTN","PSOASAP",610,0)
+ Q ""
+"RTN","PSOASAP",611,0)
+ ;
+"RTN","PSOASAP",612,0)
+CSR03() ;ID Qualifier (Not Used)
+"RTN","PSOASAP",613,0)
+ Q ""
+"RTN","PSOASAP",614,0)
+ ;
+"RTN","PSOASAP",615,0)
+CSR04() ;ID of Person Picking Up Rx (Not Used)
+"RTN","PSOASAP",616,0)
+ Q ""
+"RTN","PSOASAP",617,0)
+ ;
+"RTN","PSOASAP",618,0)
+CSR05() ;Relationship of Person Picking Up Rx (Not Used)
+"RTN","PSOASAP",619,0)
+ Q ""
+"RTN","PSOASAP",620,0)
+ ;
+"RTN","PSOASAP",621,0)
+CSR06() ;Last Name of Person Picking Up Rx (Not Used)
+"RTN","PSOASAP",622,0)
+ Q ""
+"RTN","PSOASAP",623,0)
+ ;
+"RTN","PSOASAP",624,0)
+CSR07() ;First Name of Person Picking Up Rx (Not Used)
+"RTN","PSOASAP",625,0)
+ Q ""
+"RTN","PSOASAP",626,0)
+ ;
+"RTN","PSOASAP",627,0)
+ ; *** AIR Segment - Additional Information Reporting (Not Used by ASAP 3.0) ***
+"RTN","PSOASAP",628,0)
+AIR01() ;State Issuing Rx Serial Number (Not Used)
+"RTN","PSOASAP",629,0)
+ Q ""
+"RTN","PSOASAP",630,0)
+ ;
+"RTN","PSOASAP",631,0)
+AIR02() ;State Issued Rx Serial Number (Not Used)
+"RTN","PSOASAP",632,0)
+ Q ""
+"RTN","PSOASAP",633,0)
+ ;
+"RTN","PSOASAP",634,0)
+AIR03() ;Issuing Jurisdiction (Not Used)
+"RTN","PSOASAP",635,0)
+ Q ""
+"RTN","PSOASAP",636,0)
+ ;
+"RTN","PSOASAP",637,0)
+AIR04() ;ID Qualifier of Person Dropping Off or Picking Up Rx (Not Used)
+"RTN","PSOASAP",638,0)
+ Q ""
+"RTN","PSOASAP",639,0)
+ ;
+"RTN","PSOASAP",640,0)
+AIR05() ;ID of Person Dropping Off or Picking Up Rx (Not Used)
+"RTN","PSOASAP",641,0)
+ Q ""
+"RTN","PSOASAP",642,0)
+ ;
+"RTN","PSOASAP",643,0)
+AIR06() ;Relationship of Person Dropping Off or Picking Up Rx (Not Used)
+"RTN","PSOASAP",644,0)
+ Q ""
+"RTN","PSOASAP",645,0)
+ ;
+"RTN","PSOASAP",646,0)
+AIR07() ;Last Name of Person Dropping Off or Picking Up Rx (Not Used)
+"RTN","PSOASAP",647,0)
+ Q ""
+"RTN","PSOASAP",648,0)
+ ;
+"RTN","PSOASAP",649,0)
+AIR08() ;First Name of Person Dropping Off or Picking Up Rx (Not Used)
+"RTN","PSOASAP",650,0)
+ Q ""
+"RTN","PSOASAP",651,0)
+ ;
+"RTN","PSOASAP",652,0)
+AIR09() ;Last Name or Initials of Pharmacist (Not Used)
+"RTN","PSOASAP",653,0)
+ Q ""
+"RTN","PSOASAP",654,0)
+ ;
+"RTN","PSOASAP",655,0)
+AIR10() ;First Name of Pharmacist (Not Used)
+"RTN","PSOASAP",656,0)
+ Q ""
+"RTN","PSOASAP",657,0)
+ ;
+"RTN","PSOASAP",658,0)
+AIR11() ;ASAP 4.2: Dropping Off/Picking Up Identifier Qualifier
+"RTN","PSOASAP",659,0)
+ Q ""
+"RTN","PSOASAP",660,0)
+ ;
+"RTN","PSOASAP",661,0)
+ ; *** RPH Segment - Pharmacist Information (ASAP 3.0 Only) ***
+"RTN","PSOASAP",662,0)
+RPH01() ;Reporting Status (Not Used)
+"RTN","PSOASAP",663,0)
+ Q ""
+"RTN","PSOASAP",664,0)
+ ;
+"RTN","PSOASAP",665,0)
+RPH02() ;Unique System ID (Not Used)
+"RTN","PSOASAP",666,0)
+ Q ""
+"RTN","PSOASAP",667,0)
+ ;
+"RTN","PSOASAP",668,0)
+RPH03() ;National Provider Identification (NPI)
+"RTN","PSOASAP",669,0)
+ Q $$RPH03^PSOASAP0()
+"RTN","PSOASAP",670,0)
+ ;
+"RTN","PSOASAP",671,0)
+RPH04() ;Pharmacist State License Number (Not Used)
+"RTN","PSOASAP",672,0)
+ Q ""
+"RTN","PSOASAP",673,0)
+ ;
+"RTN","PSOASAP",674,0)
+RPH05() ;Pharmacist Alternate ID (Not Used)
+"RTN","PSOASAP",675,0)
+ Q ""
+"RTN","PSOASAP",676,0)
+ ;
+"RTN","PSOASAP",677,0)
+RPH06() ;Pharmacist Last Name
+"RTN","PSOASAP",678,0)
+ Q $$RPH06^PSOASAP0()
+"RTN","PSOASAP",679,0)
+ ;
+"RTN","PSOASAP",680,0)
+RPH07() ;Pharmacist First Name
+"RTN","PSOASAP",681,0)
+ Q $$RPH07^PSOASAP0()
+"RTN","PSOASAP",682,0)
+ ;
+"RTN","PSOASAP",683,0)
+RPH08() ;Pharmacist Middle Name
+"RTN","PSOASAP",684,0)
+ Q $$RPH08^PSOASAP0()
+"RTN","PSOASAP",685,0)
+ ;
+"RTN","PSOASAP",686,0)
+RPH09() ;Name Prefix (Not Used)
+"RTN","PSOASAP",687,0)
+ Q ""
+"RTN","PSOASAP",688,0)
+ ;
+"RTN","PSOASAP",689,0)
+RPH10() ;Name Suffix (Not Used)
+"RTN","PSOASAP",690,0)
+ Q ""
+"RTN","PSOASAP",691,0)
+ ;
+"RTN","PSOASAP",692,0)
+RPH11() ;Pharmacist Title (Not Used)
+"RTN","PSOASAP",693,0)
+ Q ""
+"RTN","PSOASAP",694,0)
+ ;
+"RTN","PSOASAP",695,0)
+ ; *** PLN Segment - Third-Party Plan (ASAP 3.0 Only) ***
+"RTN","PSOASAP",696,0)
+PLN01() ;Reporting Status (Not Used)
+"RTN","PSOASAP",697,0)
+ Q ""
+"RTN","PSOASAP",698,0)
+ ;
+"RTN","PSOASAP",699,0)
+PLN02() ;Plan Coverage Status to Patient (Not Used)
+"RTN","PSOASAP",700,0)
+ Q ""
+"RTN","PSOASAP",701,0)
+ ;
+"RTN","PSOASAP",702,0)
+PLN03() ;Unique System ID - Plan (Not Used)
+"RTN","PSOASAP",703,0)
+ Q ""
+"RTN","PSOASAP",704,0)
+ ;
+"RTN","PSOASAP",705,0)
+PLN04() ;Classification Code for Plan Type (Not Used)
+"RTN","PSOASAP",706,0)
+ Q ""
+"RTN","PSOASAP",707,0)
+ ;
+"RTN","PSOASAP",708,0)
+PLN05() ;Plan Name (Not Used)
+"RTN","PSOASAP",709,0)
+ Q ""
+"RTN","PSOASAP",710,0)
+ ;
+"RTN","PSOASAP",711,0)
+PLN06() ;Processor BIN (Not Used)
+"RTN","PSOASAP",712,0)
+ Q ""
+"RTN","PSOASAP",713,0)
+ ;
+"RTN","PSOASAP",714,0)
+PLN07() ;Processor Control Number (Not Used)
+"RTN","PSOASAP",715,0)
+ Q ""
+"RTN","PSOASAP",716,0)
+ ;
+"RTN","PSOASAP",717,0)
+PLN08() ;Plan ID (Not Used)
+"RTN","PSOASAP",718,0)
+ Q ""
+"RTN","PSOASAP",719,0)
+ ;
+"RTN","PSOASAP",720,0)
+PLN09() ;Group Number (Not Used)
+"RTN","PSOASAP",721,0)
+ Q ""
+"RTN","PSOASAP",722,0)
+ ;
+"RTN","PSOASAP",723,0)
+PLN10() ;Cardholder ID (Not Used)
+"RTN","PSOASAP",724,0)
+ Q ""
+"RTN","PSOASAP",725,0)
+ ;
+"RTN","PSOASAP",726,0)
+PLN11() ;Person Code (Not Used)
+"RTN","PSOASAP",727,0)
+ Q ""
+"RTN","PSOASAP",728,0)
+ ;
+"RTN","PSOASAP",729,0)
+PLN12() ;Relationship Code (Not Used)
+"RTN","PSOASAP",730,0)
+ Q ""
+"RTN","PSOASAP",731,0)
+ ;
+"RTN","PSOASAP",732,0)
+ ; *** TP Segment - Pharmacy Trailer ***
+"RTN","PSOASAP",733,0)
+TP01() ;Detail Segment Count
+"RTN","PSOASAP",734,0)
+ Q PSOTPCNT
+"RTN","PSOASAP",735,0)
+ ;
+"RTN","PSOASAP",736,0)
+ ; *** TT Segment - Transaction Set Trailer ***
+"RTN","PSOASAP",737,0)
+TT01() ;Transaction Control Number
+"RTN","PSOASAP",738,0)
+ ;      ASAP 3.0 : Same as TH03
+"RTN","PSOASAP",739,0)
+ ;      ASAP 4.0+: Same as TH02
+"RTN","PSOASAP",740,0)
+ Q $$TT01^PSOASAP0()
+"RTN","PSOASAP",741,0)
+ ;
+"RTN","PSOASAP",742,0)
+TT02() ;Segment Count
+"RTN","PSOASAP",743,0)
+ Q $G(PSOTTCNT)
+"RTN","PSOASAP0")
+0^16^B169084201^B164871797
+"RTN","PSOASAP0",1,0)
+PSOASAP0 ;BIRM/MFR - American Society for Automation in Pharmacy (ASAP) Segments & Fields ;09/07/12
+"RTN","PSOASAP0",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**408,451,496**;DEC 1997;Build 11
+"RTN","PSOASAP0",3,0)
+ ;External reference to $$NATURE^ORUTL3 supported by DBIA 5890
+"RTN","PSOASAP0",4,0)
+ ;External reference to ^ORDEA is supported by DBIA 5709
+"RTN","PSOASAP0",5,0)
+ ;External reference to PATIENT file (#2) supported by DBIA 5597
+"RTN","PSOASAP0",6,0)
+ ;External reference to $$NPI^XUSNPI supported by DBIA 4532
+"RTN","PSOASAP0",7,0)
+ ;External reference to $$DIV4^XUSER supported by DBIA 2533
+"RTN","PSOASAP0",8,0)
+ ;            
+"RTN","PSOASAP0",9,0)
+ ; ******************** ASAP 1995 Version ********************
+"RTN","PSOASAP0",10,0)
+ASAP95(RXIEN,FILL) ;Returns the entire ASAP 1995 record for the Rx/Fill
+"RTN","PSOASAP0",11,0)
+ ;Input: (r) RXIEN - Rx IEN (#52) 
+"RTN","PSOASAP0",12,0)
+ ;       (r) FILL  - Fill #
+"RTN","PSOASAP0",13,0)
+ N ASAP95,RXNUM
+"RTN","PSOASAP0",14,0)
+ S RXNUM=$E(RXIEN+10000000,$L(RXIEN+10000000)-6,$L(RXIEN+10000000))
+"RTN","PSOASAP0",15,0)
+ S $E(ASAP95,1,3)="ASB"                               ;Transmission Type Identifier
+"RTN","PSOASAP0",16,0)
+ S $E(ASAP95,4,9)="VA"_$E(10000+$$SITE^VASITE(),2,5)  ;Bank Identification Number
+"RTN","PSOASAP0",17,0)
+ S $E(ASAP95,10,11)="A2"                              ;ASAP Version (A2 = 1995)
+"RTN","PSOASAP0",18,0)
+ S $E(ASAP95,12,13)="01"                              ;Transaction Code ("01" - Controlled Substance)
+"RTN","PSOASAP0",19,0)
+ S $E(ASAP95,14,25)=$E($$PHA03^PSOASAP(),1,12)        ;Pharmacy DEA# Number
+"RTN","PSOASAP0",20,0)
+ S $E(ASAP95,26,45)=$$PAT03^PSOASAP()                 ;Patient ID (SSN)
+"RTN","PSOASAP0",21,0)
+ S $E(ASAP95,46,48)=$E($$PAT16^PSOASAP(),1,3)         ;Patient's Zip Code (first 3 digits)
+"RTN","PSOASAP0",22,0)
+ S $E(ASAP95,49,56)=$$PAT18^PSOASAP()                 ;Patient's DOB  (Format: YYYYMMDD)
+"RTN","PSOASAP0",23,0)
+ S $E(ASAP95,57,57)=$S($$PAT19^PSOASAP()="M":1,1:"2") ;Patient's Gender
+"RTN","PSOASAP0",24,0)
+ S $E(ASAP95,58,65)=$$DSP05^PSOASAP()                 ;Date Filled (Release/RTS Date) (Format: YYYYMMDD)
+"RTN","PSOASAP0",25,0)
+ S $E(ASAP95,66,72)=RXNUM                             ;Prescription Number (IEN - Because it must be 7-digit numeric )
+"RTN","PSOASAP0",26,0)
+ S $E(ASAP95,73,74)=$E(FILL+100,2,3)                  ;Fill Number
+"RTN","PSOASAP0",27,0)
+ S $E(ASAP95,75,79)=$E(100000+$$DSP09^PSOASAP(),2,6)  ;Quantity
+"RTN","PSOASAP0",28,0)
+ S $E(ASAP95,80,82)=$E(1000+$$DSP10^PSOASAP(),2,4)    ;Days Supply
+"RTN","PSOASAP0",29,0)
+ S $E(ASAP95,83,83)="1"                               ;Compound Flag (1=Not compound)
+"RTN","PSOASAP0",30,0)
+ S $E(ASAP95,84,94)=$E($$DSP08^PSOASAP(),1,11)        ;NDC (Fomart: 99999999999)
+"RTN","PSOASAP0",31,0)
+ S $E(ASAP95,95,104)=$E($$PRE02^PSOASAP(),1,10)       ;Prescriber's DEA #
+"RTN","PSOASAP0",32,0)
+ S $E(ASAP95,105,108)=""                              ;DEA Suffix
+"RTN","PSOASAP0",33,0)
+ S $E(ASAP95,109,116)=$$DSP03^PSOASAP()               ;Date Written (Format: YYYYMMDD)
+"RTN","PSOASAP0",34,0)
+ S $E(ASAP95,117,118)=$E(100+$$DSP04^PSOASAP(),2,3)   ;Refills Authorized
+"RTN","PSOASAP0",35,0)
+ S $E(ASAP95,119,119)=$S(+$$DSP12^PSOASAP()>2:0,1:+$$DSP12^PSOASAP()) ;Rx Origin Code (0:Not Specified/1:Written/2:Telephone)
+"RTN","PSOASAP0",36,0)
+ S $E(ASAP95,120,121)="03"                            ;Customer Location (Always: "03" - Outpatient)
+"RTN","PSOASAP0",37,0)
+ S $E(ASAP95,122,128)=""                              ;DEA Suffix
+"RTN","PSOASAP0",38,0)
+ S $E(ASAP95,129,138)=$E($$PRE03^PSOASAP(),1,10)      ;Alternate Prescriber # (VA #)
+"RTN","PSOASAP0",39,0)
+ S $E(ASAP95,139,153)=$E($$PAT07^PSOASAP(),1,15)      ;Patient's Last Name
+"RTN","PSOASAP0",40,0)
+ S $E(ASAP95,154,168)=$E($$PAT08^PSOASAP(),1,15)      ;Patient's First Name
+"RTN","PSOASAP0",41,0)
+ S $E(ASAP95,169,198)=$E($$PAT12^PSOASAP(),1,30)      ;Patient's Address
+"RTN","PSOASAP0",42,0)
+ S $E(ASAP95,199,200)=$E($$PAT15^PSOASAP(),1,2)       ;Patient's State
+"RTN","PSOASAP0",43,0)
+ S $E(ASAP95,201,209)=$E($$PAT16^PSOASAP(),1,9)       ;Patient's Zip Code
+"RTN","PSOASAP0",44,0)
+ S $E(ASAP95,210,222)=""                              ;Filler
+"RTN","PSOASAP0",45,0)
+ Q ASAP95
+"RTN","PSOASAP0",46,0)
+ ;
+"RTN","PSOASAP0",47,0)
+ ; ******************** ASAP 3.0 and above versions ********************
+"RTN","PSOASAP0",48,0)
+ ; *** TH Segment ***
+"RTN","PSOASAP0",49,0)
+TH02() ;ASAP 3.0 : Business Partner Implemetation Version (Not Used)
+"RTN","PSOASAP0",50,0)
+ ;      ASAP 4.0+: Transaction Control Number
+"RTN","PSOASAP0",51,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",52,0)
+ Q +$$SITE^VASITE()_"-"_+$G(BATCHIEN)
+"RTN","PSOASAP0",53,0)
+ ;
+"RTN","PSOASAP0",54,0)
+TH03() ;ASAP 3.0 : Transaction Control Number
+"RTN","PSOASAP0",55,0)
+ ;      ASAP 4.0+: Transaction Type (Always "01" - Send/Request Transaction)
+"RTN","PSOASAP0",56,0)
+ I PSOASVER="3.0" Q +$$SITE^VASITE()_"-"_+$G(BATCHIEN)
+"RTN","PSOASAP0",57,0)
+ Q "01"
+"RTN","PSOASAP0",58,0)
+ ;
+"RTN","PSOASAP0",59,0)
+TH05() ;ASAP 3.0 : Message Type (Not Used)
+"RTN","PSOASAP0",60,0)
+ ;      ASAP 4.0+: Creation Date (Format: YYYYMMDD)
+"RTN","PSOASAP0",61,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",62,0)
+ Q $$FMTHL7^XLFDT($$HTFM^XLFDT($H)\1)
+"RTN","PSOASAP0",63,0)
+ ;
+"RTN","PSOASAP0",64,0)
+TH06() ;ASAP 3.0 : Response ID (Not Used)
+"RTN","PSOASAP0",65,0)
+ ;      ASAP 4.0+: Creation Time. Format: HHMMSS or HHMM
+"RTN","PSOASAP0",66,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",67,0)
+ Q $E($P($$HTFM^XLFDT($H),".",2)_"000000",1,6)
+"RTN","PSOASAP0",68,0)
+ ;
+"RTN","PSOASAP0",69,0)
+TH07() ;ASAP 3.0 : Project ID (Not Used)
+"RTN","PSOASAP0",70,0)
+ ;      ASAP 4.0+: File Type. Returns: "T" - Test or "P" - Production
+"RTN","PSOASAP0",71,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",72,0)
+ Q $S($$PROD^XUPROD(1):"P",1:"T")
+"RTN","PSOASAP0",73,0)
+ ;
+"RTN","PSOASAP0",74,0)
+TH08() ;ASAP 3.0: Creation Date (Format: YYYYMMDD)
+"RTN","PSOASAP0",75,0)
+ ;      ASAP 4.0: Composite Element Separator (:)
+"RTN","PSOASAP0",76,0)
+ ;      ASAP 4.1+: Routing Number (Real-time transactions only) - Not Used
+"RTN","PSOASAP0",77,0)
+ I PSOASVER="4.0" Q ":"
+"RTN","PSOASAP0",78,0)
+ I PSOASVER'="3.0" Q ""
+"RTN","PSOASAP0",79,0)
+ Q $$FMTHL7^XLFDT($$HTFM^XLFDT($H)\1)
+"RTN","PSOASAP0",80,0)
+ ;
+"RTN","PSOASAP0",81,0)
+TH09() ;ASAP 3.0 : Creation Time. Format: HHMMSS or HHMM
+"RTN","PSOASAP0",82,0)
+ ;      ASAP 4.1+: Segment Terminator Character
+"RTN","PSOASAP0",83,0)
+ I PSOASVER="3.0" Q $E($P($$HTFM^XLFDT($H),".",2)_"000000",1,6)
+"RTN","PSOASAP0",84,0)
+ Q $P($$VERDATA^PSOSPMU0(PSOASVER,"B"),"^",3)
+"RTN","PSOASAP0",85,0)
+ ;
+"RTN","PSOASAP0",86,0)
+TH10() ;ASAP 3.0 : File Type
+"RTN","PSOASAP0",87,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP0",88,0)
+ I PSOASVER="3.0" Q $S($$PROD^XUPROD(1):"P",1:"T")
+"RTN","PSOASAP0",89,0)
+ Q ""
+"RTN","PSOASAP0",90,0)
+ ;
+"RTN","PSOASAP0",91,0)
+TH12() ;ASAP 3.0 : Composite Element Separator
+"RTN","PSOASAP0",92,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP0",93,0)
+ I PSOASVER="3.0" Q ":"
+"RTN","PSOASAP0",94,0)
+ Q ""
+"RTN","PSOASAP0",95,0)
+ ;
+"RTN","PSOASAP0",96,0)
+TH13() ;ASAP 3.0 : Data Segment Terminator Character
+"RTN","PSOASAP0",97,0)
+ ;      ASAP 4.0+: N/A
+"RTN","PSOASAP0",98,0)
+ I PSOASVER'="3.0" Q ""
+"RTN","PSOASAP0",99,0)
+ Q $P($$VERDATA^PSOSPMU0(PSOASVER,"B"),"^",3)
+"RTN","PSOASAP0",100,0)
+ ;
+"RTN","PSOASAP0",101,0)
+ ; *** PHA Segment ***
+"RTN","PSOASAP0",102,0)
+PHA01() ;National Provider Identifier
+"RTN","PSOASAP0",103,0)
+ N NPINST,NPINUM
+"RTN","PSOASAP0",104,0)
+ S NPINST=$$GET1^DIQ(59,SITEIEN,101,"I") I 'NPINST Q ""
+"RTN","PSOASAP0",105,0)
+ S NPINUM=+$$NPI^XUSNPI("Organization_ID",NPINST,DT)
+"RTN","PSOASAP0",106,0)
+ Q $S(NPINUM>0:NPINUM,1:"")
+"RTN","PSOASAP0",107,0)
+ ;
+"RTN","PSOASAP0",108,0)
+PHA03() ;Pharmacy DEA Number
+"RTN","PSOASAP0",109,0)
+ N PHA03,INST
+"RTN","PSOASAP0",110,0)
+ ;Primary source: Pharmacy NPI Institution
+"RTN","PSOASAP0",111,0)
+ S PHA03="",INST=$$GET1^DIQ(59,SITEIEN,101,"I")
+"RTN","PSOASAP0",112,0)
+ I INST S PHA03=$$WHAT^XUAF4(INST,52)
+"RTN","PSOASAP0",113,0)
+ ;Backup source: Pharmacy Related Institution
+"RTN","PSOASAP0",114,0)
+ I PHA03="" D
+"RTN","PSOASAP0",115,0)
+ . S INST=$$GET1^DIQ(59,SITEIEN,100,"I")
+"RTN","PSOASAP0",116,0)
+ . I INST S PHA03=$$WHAT^XUAF4(INST,52)
+"RTN","PSOASAP0",117,0)
+ Q PHA03
+"RTN","PSOASAP0",118,0)
+ ;
+"RTN","PSOASAP0",119,0)
+PHA10() ;Phone Number
+"RTN","PSOASAP0",120,0)
+ Q $$PHONE($$GET1^DIQ(59,SITEIEN,.03)_$$GET1^DIQ(59,SITEIEN,.04))
+"RTN","PSOASAP0",121,0)
+ ;
+"RTN","PSOASAP0",122,0)
+ ; *** PAT Segment ***
+"RTN","PSOASAP0",123,0)
+PAT03() ;ASAP 3.0 : Unique System ID - Patient (Not Used)
+"RTN","PSOASAP0",124,0)
+ ;       ASAP 4.0+: ID of Patient (SSN)
+"RTN","PSOASAP0",125,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",126,0)
+ Q $P($G(VADM(2)),"^",1)
+"RTN","PSOASAP0",127,0)
+ ;
+"RTN","PSOASAP0",128,0)
+PAT04() ;ASAP 3.0 : SSN
+"RTN","PSOASAP0",129,0)
+ ;       ASAP 4.0+: ID Qualifier of Additional Patient Identifier (Not Used)
+"RTN","PSOASAP0",130,0)
+ I PSOASVER="3.0" Q $P($G(VADM(2)),"^",1)
+"RTN","PSOASAP0",131,0)
+ Q ""
+"RTN","PSOASAP0",132,0)
+ ;
+"RTN","PSOASAP0",133,0)
+PAT12() ;Patient Address Information - Line 1
+"RTN","PSOASAP0",134,0)
+ ; ASAP 4.2: Length = 35 characters (All others: 30 characters)
+"RTN","PSOASAP0",135,0)
+ N ADDRESS
+"RTN","PSOASAP0",136,0)
+ I PSOASVER="4.2" D  Q ADDRESS
+"RTN","PSOASAP0",137,0)
+ .  S ADDRESS=$S($G(VAPA(1))'="":VAPA(1),$G(VAPA(11)):"STREET ADDRESS UNKNOWN",1:"")
+"RTN","PSOASAP0",138,0)
+ S ADDRESS=$$TRIM^XLFSTR($G(VAPA(1)))_$S($$TRIM^XLFSTR($G(VAPA(2)))'="":" "_VAPA(2),1:"")_$S($$TRIM^XLFSTR($G(VAPA(3)))'="":" "_VAPA(3),1:"")
+"RTN","PSOASAP0",139,0)
+ I ADDRESS="",$G(VAPA(11)) S ADDRESS="STREET ADDRESS UNKNOWN"
+"RTN","PSOASAP0",140,0)
+ I $E(ADDRESS,1,30)'[" " Q $E(ADDRESS,1,30)
+"RTN","PSOASAP0",141,0)
+ Q $$ADDRESS(ADDRESS,1)
+"RTN","PSOASAP0",142,0)
+ ;
+"RTN","PSOASAP0",143,0)
+PAT13() ;Patient Address Information - Line 2
+"RTN","PSOASAP0",144,0)
+ ; ASAP 4.2: Length = 35 characters (All others: 30 characters)
+"RTN","PSOASAP0",145,0)
+ I PSOASVER="4.2" Q $G(VAPA(2))
+"RTN","PSOASAP0",146,0)
+ N ADDRESS
+"RTN","PSOASAP0",147,0)
+ S ADDRESS=$$TRIM^XLFSTR($G(VAPA(1)))_$S($$TRIM^XLFSTR($G(VAPA(2)))'="":" "_VAPA(2),1:"")_$S($$TRIM^XLFSTR($G(VAPA(3)))'="":" "_VAPA(3),1:"")
+"RTN","PSOASAP0",148,0)
+ I $E(ADDRESS,1,30)'[" " Q $E(ADDRESS,31,999)
+"RTN","PSOASAP0",149,0)
+ Q $$ADDRESS(ADDRESS,2)
+"RTN","PSOASAP0",150,0)
+ ;
+"RTN","PSOASAP0",151,0)
+PAT15() ;Patient State Address
+"RTN","PSOASAP0",152,0)
+ ; US State Abbreviation
+"RTN","PSOASAP0",153,0)
+ I $$PAT22()="" Q $$GET1^DIQ(5,+$G(VAPA(5)),1)
+"RTN","PSOASAP0",154,0)
+ ; International State/Province
+"RTN","PSOASAP0",155,0)
+ Q $P($G(VAPA(23)),"^")
+"RTN","PSOASAP0",156,0)
+ ;
+"RTN","PSOASAP0",157,0)
+PAT16() ;Patient ZIP Code
+"RTN","PSOASAP0",158,0)
+ ; US Zip Code
+"RTN","PSOASAP0",159,0)
+ I $$PAT22()="" Q $TR($P($G(VAPA(11)),"^",1),"-")
+"RTN","PSOASAP0",160,0)
+ ; International Postal Code
+"RTN","PSOASAP0",161,0)
+ Q $P($G(VAPA(24)),"^")
+"RTN","PSOASAP0",162,0)
+ ;
+"RTN","PSOASAP0",163,0)
+PAT17() ;Patient Phone Number
+"RTN","PSOASAP0",164,0)
+ N PAT17
+"RTN","PSOASAP0",165,0)
+ ;PHONE NUMBER [RESIDENCE] (Home)
+"RTN","PSOASAP0",166,0)
+ S PAT17=$$PHONE($P($G(VAPA(8)),"^",1)) I PAT17 Q PAT17
+"RTN","PSOASAP0",167,0)
+ ;PHONE NUMBER [CELLULAR] (Cell)
+"RTN","PSOASAP0",168,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.134)) I PAT17 Q PAT17
+"RTN","PSOASAP0",169,0)
+ ;PHONE NUMBER [WORK] (Work)
+"RTN","PSOASAP0",170,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.132)) I PAT17 Q PAT17
+"RTN","PSOASAP0",171,0)
+ ;K-WORK PHONE NUMBER (Next Of Kin)
+"RTN","PSOASAP0",172,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.21011)) I PAT17 Q PAT17
+"RTN","PSOASAP0",173,0)
+ ;K2-WORK PHONE NUMBER (Secondary Next Of Kin)
+"RTN","PSOASAP0",174,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.211011)) I PAT17 Q PAT17
+"RTN","PSOASAP0",175,0)
+ ;E-WORK PHONE NUMBER (Work Emergency)
+"RTN","PSOASAP0",176,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.33011)) I PAT17 Q PAT17
+"RTN","PSOASAP0",177,0)
+ ;E2-WORK PHONE NUMBER (Secondary Work Emergency)
+"RTN","PSOASAP0",178,0)
+ S PAT17=$$PHONE($$GET1^DIQ(2,PATIEN,.331011)) I PAT17 Q PAT17
+"RTN","PSOASAP0",179,0)
+ ;Last resort: Pharmacy Phone #
+"RTN","PSOASAP0",180,0)
+ Q $$PHA10()
+"RTN","PSOASAP0",181,0)
+ ;
+"RTN","PSOASAP0",182,0)
+PAT18() ;ASAP 3.0 : Email Address (Not Used)
+"RTN","PSOASAP0",183,0)
+ ;       ASAP 4.0+: Patient DOB
+"RTN","PSOASAP0",184,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",185,0)
+ Q $$FMTHL7^XLFDT($P($G(VADM(3)),"^",1))
+"RTN","PSOASAP0",186,0)
+ ;
+"RTN","PSOASAP0",187,0)
+PAT19() ;ASAP 3.0 : Patient DOB
+"RTN","PSOASAP0",188,0)
+ ;       ASAP 4.0+: Patient Gender Code
+"RTN","PSOASAP0",189,0)
+ I PSOASVER="3.0" Q $$FMTHL7^XLFDT($P($G(VADM(3)),"^",1))
+"RTN","PSOASAP0",190,0)
+ Q $S($P($G(VADM(5)),"^",1)'="":$P($G(VADM(5)),"^",1),1:"U")
+"RTN","PSOASAP0",191,0)
+ ;
+"RTN","PSOASAP0",192,0)
+PAT20() ;ASAP 3.0 : Patient Gender Code
+"RTN","PSOASAP0",193,0)
+ ;       ASAP 4.0+: Species Code (Always return "01" for 'Human')
+"RTN","PSOASAP0",194,0)
+ I PSOASVER="3.0" Q $S($P($G(VADM(5)),"^",1)'="":$P($G(VADM(5)),"^",1),1:"U")
+"RTN","PSOASAP0",195,0)
+ Q "01"
+"RTN","PSOASAP0",196,0)
+ ;
+"RTN","PSOASAP0",197,0)
+PAT22() ;ASAP 3.0 : Primary Prescription Coverage Type (Not Used)
+"RTN","PSOASAP0",198,0)
+ ;       ASAP 4.0+:Country of Non-U.S. Resident
+"RTN","PSOASAP0",199,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",200,0)
+ N CNTRYIEN,FIPSCODE
+"RTN","PSOASAP0",201,0)
+ S CNTRYIEN=+$G(VAPA(25)) I 'CNTRYIEN Q ""
+"RTN","PSOASAP0",202,0)
+ S FIPSCODE=$$GET1^DIQ(779.004,CNTRYIEN,1.2)
+"RTN","PSOASAP0",203,0)
+ Q $S(FIPSCODE="US":"",FIPSCODE="CA":"CN",1:FIPSCODE)
+"RTN","PSOASAP0",204,0)
+ ;
+"RTN","PSOASAP0",205,0)
+ ; *** RX Segment (ASAP 3.0 only) ***
+"RTN","PSOASAP0",206,0)
+RX08() ;Date Rx Written (Format: YYYYMMDD)
+"RTN","PSOASAP0",207,0)
+ N RX08
+"RTN","PSOASAP0",208,0)
+ S RX08=$$GET1^DIQ(52,+$G(RXIEN),1,"I")
+"RTN","PSOASAP0",209,0)
+ ; Date Rx Written (ISSUE DATE) cannot be in the future or after Rx Fill Date (Use LOGIN DATE instead)
+"RTN","PSOASAP0",210,0)
+ I RX08>DT!(RX08>$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM)) D
+"RTN","PSOASAP0",211,0)
+ . S RX08=$$GET1^DIQ(52,+$G(RXIEN),21,"I")\1
+"RTN","PSOASAP0",212,0)
+ Q $$FMTHL7^XLFDT(RX08)
+"RTN","PSOASAP0",213,0)
+ ;
+"RTN","PSOASAP0",214,0)
+RX14() ;Product ID (NDC - National Drug Code)
+"RTN","PSOASAP0",215,0)
+ N RX14 S RX14=""
+"RTN","PSOASAP0",216,0)
+ I RECTYPE="V",$G(RTSDATA("NDC"))'="" S RX14=$$NUMERIC(RTSDATA("NDC"))
+"RTN","PSOASAP0",217,0)
+ I 'RX14 S RX14=$$NUMERIC($$GET1^DIQ(50,DRUGIEN,31))
+"RTN","PSOASAP0",218,0)
+ I 'RX14 S RX14=$$NUMERIC($$GETNDC^PSONDCUT(RXIEN,+FILLNUM))
+"RTN","PSOASAP0",219,0)
+ Q RX14
+"RTN","PSOASAP0",220,0)
+ ;
+"RTN","PSOASAP0",221,0)
+ ; *** DSP Segment ***
+"RTN","PSOASAP0",222,0)
+DSP01() ;ASAP 3.0 : Reporting Status ("01" - Add / "02" - Change / "03" - Delete)
+"RTN","PSOASAP0",223,0)
+ ;       ASAP 4.0 : Reporting Status ("" - New / "01" - Revise / "02" - Void)
+"RTN","PSOASAP0",224,0)
+ ;       ASAP 4.1+: Reporting Status ("00" - New / "01" - Revise / "02" - Void)
+"RTN","PSOASAP0",225,0)
+ I PSOASVER="3.0" Q $S($G(RECTYPE)="N":"01",$G(RECTYPE)="R":"02",$G(RECTYPE)="V":"03",1:"")
+"RTN","PSOASAP0",226,0)
+ I PSOASVER="4.0",RECTYPE="N" Q ""
+"RTN","PSOASAP0",227,0)
+ Q $S($G(RECTYPE)="N":"00",$G(RECTYPE)="R":"01",$G(RECTYPE)="V":"02",1:"")
+"RTN","PSOASAP0",228,0)
+ ;
+"RTN","PSOASAP0",229,0)
+DSP02() ;ASAP 3.0 : Program Participation Status (Not Used)
+"RTN","PSOASAP0",230,0)
+ ;       ASAP 4.0+: Prescription Number
+"RTN","PSOASAP0",231,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",232,0)
+ Q $$GET1^DIQ(52,+$G(RXIEN),.01)
+"RTN","PSOASAP0",233,0)
+ ;
+"RTN","PSOASAP0",234,0)
+DSP03() ;ASAP 3.0 : Prescription Number
+"RTN","PSOASAP0",235,0)
+ ;       ASAP 4.0+: Date Rx Written (Format: YYYYMMDD)
+"RTN","PSOASAP0",236,0)
+ I PSOASVER="3.0" Q $$GET1^DIQ(52,+$G(RXIEN),.01)
+"RTN","PSOASAP0",237,0)
+ N DSP03
+"RTN","PSOASAP0",238,0)
+ S DSP03=$$GET1^DIQ(52,+$G(RXIEN),1,"I")
+"RTN","PSOASAP0",239,0)
+ ; Date Rx Written (ISSUE DATE) cannot be in the future or after Rx Fill Date (Use LOGIN DATE instead)
+"RTN","PSOASAP0",240,0)
+ I DSP03>DT!(DSP03>$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM)) D
+"RTN","PSOASAP0",241,0)
+ . S DSP03=$$GET1^DIQ(52,+$G(RXIEN),21,"I")\1
+"RTN","PSOASAP0",242,0)
+ Q $$FMTHL7^XLFDT(DSP03)
+"RTN","PSOASAP0",243,0)
+ ;
+"RTN","PSOASAP0",244,0)
+DSP04() ;ASAP 3.0 : Refill Number
+"RTN","PSOASAP0",245,0)
+ ;       ASAP 4.0+: Refills Authorized
+"RTN","PSOASAP0",246,0)
+ I PSOASVER="3.0" Q +FILLNUM
+"RTN","PSOASAP0",247,0)
+ Q +$$GET1^DIQ(52,+$G(RXIEN),9)
+"RTN","PSOASAP0",248,0)
+ ;
+"RTN","PSOASAP0",249,0)
+DSP05() ;ASAP 3.0 : Unique System ID - RPh (Not Used)
+"RTN","PSOASAP0",250,0)
+ ;       ASAP 4.0+: Date Filled (Release Date) (Format: YYYYMMDD)
+"RTN","PSOASAP0",251,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",252,0)
+ N DSP05
+"RTN","PSOASAP0",253,0)
+ S DSP05=$S(RECTYPE="V":$G(RTSDATA("RELDTTM")),$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM):$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM),1:DT)\1
+"RTN","PSOASAP0",254,0)
+ Q $S(DSP05:$$FMTHL7^XLFDT(DSP05),1:"")
+"RTN","PSOASAP0",255,0)
+ ;
+"RTN","PSOASAP0",256,0)
+DSP06() ;ASAP 3.0 : Unique System ID - Patient (Not Used)
+"RTN","PSOASAP0",257,0)
+ ;       ASAP 4.0+: Refill Number (Partials are always "0")
+"RTN","PSOASAP0",258,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",259,0)
+ Q +FILLNUM
+"RTN","PSOASAP0",260,0)
+ ;
+"RTN","PSOASAP0",261,0)
+DSP07() ;ASAP 3.0 : Unique System ID - Prescriber (Not Used)
+"RTN","PSOASAP0",262,0)
+ ;       ASAP 4.0+: Product ID Qualifier (Always return "01" for 'NDC')
+"RTN","PSOASAP0",263,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",264,0)
+ Q "01"
+"RTN","PSOASAP0",265,0)
+ ;
+"RTN","PSOASAP0",266,0)
+DSP08() ;ASAP 3.0 : Unique System ID - Drug (Not Used)
+"RTN","PSOASAP0",267,0)
+ ;       ASAP 4.0+:Product ID (NDC - National Drug Code)
+"RTN","PSOASAP0",268,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",269,0)
+ N DSP08 S DSP08=""
+"RTN","PSOASAP0",270,0)
+ I RECTYPE="V",$G(RTSDATA("NDC"))'="" S DSP08=$$NUMERIC(RTSDATA("NDC"))
+"RTN","PSOASAP0",271,0)
+ I 'DSP08 S DSP08=$$NUMERIC($$GET1^DIQ(50,DRUGIEN,31))
+"RTN","PSOASAP0",272,0)
+ I 'DSP08 S DSP08=$$NUMERIC($$GETNDC^PSONDCUT(RXIEN,+FILLNUM))
+"RTN","PSOASAP0",273,0)
+ Q DSP08
+"RTN","PSOASAP0",274,0)
+ ;
+"RTN","PSOASAP0",275,0)
+DSP09() ;ASAP 3.0 : Date Filled
+"RTN","PSOASAP0",276,0)
+ ;       ASAP 4.0+: Quantity Dispensed
+"RTN","PSOASAP0",277,0)
+ N DSP09
+"RTN","PSOASAP0",278,0)
+ I PSOASVER="3.0" D  Q DSP09
+"RTN","PSOASAP0",279,0)
+ . S DSP09=$S(RECTYPE="V":$G(RTSDATA("RELDTTM")),$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM):$$RXRLDT^PSOBPSUT(RXIEN,FILLNUM),1:DT)\1
+"RTN","PSOASAP0",280,0)
+ . S DSP09=$S(DSP09'="":$$FMTHL7^XLFDT(DSP09),1:"")
+"RTN","PSOASAP0",281,0)
+ Q $S(RECTYPE="V":$G(RTSDATA("QTY")),1:$$RXQTY^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP0",282,0)
+ ;
+"RTN","PSOASAP0",283,0)
+DSP10() ;ASAP 3.0 : Time Filled (Not Used)
+"RTN","PSOASAP0",284,0)
+ ;       ASAP 4.0+: Days Supply
+"RTN","PSOASAP0",285,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",286,0)
+ Q $S(RECTYPE="V":$G(RTSDATA("DAYSUP")),1:$$RXDAYSUP^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP0",287,0)
+ ;
+"RTN","PSOASAP0",288,0)
+DSP11() ;ASAP 3.0 : Product ID Qualifier (01:NDC)
+"RTN","PSOASAP0",289,0)
+ ;       ASAP 4.0+: Drug Dosage Units Code
+"RTN","PSOASAP0",290,0)
+ I PSOASVER="3.0" Q "01"
+"RTN","PSOASAP0",291,0)
+ N UNIT
+"RTN","PSOASAP0",292,0)
+ S UNIT=$$GET1^DIQ(50,DRUGIEN,82,"I")
+"RTN","PSOASAP0",293,0)
+ Q $S(UNIT="EA":"01",UNIT="ML":"02",UNIT="GM":"03",1:"")
+"RTN","PSOASAP0",294,0)
+ ;
+"RTN","PSOASAP0",295,0)
+DSP12() ;ASAP 3.0 : Product ID (NDC)
+"RTN","PSOASAP0",296,0)
+ ;       ASAP 4.0+: Transmission Form of Rx Origin Code (Nature of Order)
+"RTN","PSOASAP0",297,0)
+ N DSP12 S DSP12=""
+"RTN","PSOASAP0",298,0)
+ I PSOASVER="3.0" D  Q DSP12
+"RTN","PSOASAP0",299,0)
+ . I RECTYPE="V",$G(RTSDATA("NDC"))'="" S DSP12=$$NUMERIC(RTSDATA("NDC"))
+"RTN","PSOASAP0",300,0)
+ . I 'DSP12 S DSP12=$$NUMERIC($$GET1^DIQ(50,DRUGIEN,31))
+"RTN","PSOASAP0",301,0)
+ . I 'DSP12 S DSP12=$$NUMERIC($$GETNDC^PSONDCUT(RXIEN,+FILLNUM))
+"RTN","PSOASAP0",302,0)
+ N NOO,ORDNUM S NOO="W"
+"RTN","PSOASAP0",303,0)
+ S ORDNUM=$$GET1^DIQ(52,RXIEN,39.3,"I")
+"RTN","PSOASAP0",304,0)
+ I $G(ORDNUM) D
+"RTN","PSOASAP0",305,0)
+ . S NOO=$P($$NATURE^ORUTL3(ORDNUM),"^",2)
+"RTN","PSOASAP0",306,0)
+ Q $S(NOO="W":"01",(NOO="V")!(NOO="P"):"02",NOO="E":"05",1:"99")
+"RTN","PSOASAP0",307,0)
+ ;
+"RTN","PSOASAP0",308,0)
+DSP13() ;ASAP 3.0 : Product Description (Not Used)
+"RTN","PSOASAP0",309,0)
+ ;       ASAP 4.0+: Partial Fill Indicator
+"RTN","PSOASAP0",310,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",311,0)
+ I PSOASVER="4.0"!(PSOASVER="4.1") Q $S(FILLNUM["P":"01",1:"02")
+"RTN","PSOASAP0",312,0)
+ Q $S(FILLNUM["P":$E(100+$E(FILLNUM,2,3),2,3),1:"00")
+"RTN","PSOASAP0",313,0)
+ ;
+"RTN","PSOASAP0",314,0)
+DSP14() ;ASAP 3.0 : Quantity Dispensed
+"RTN","PSOASAP0",315,0)
+ ;       ASAP 4.0+: Pharmacist National Provider Identifier (NPI)
+"RTN","PSOASAP0",316,0)
+ I PSOASVER="3.0" Q $S(RECTYPE="V":$G(RTSDATA("QTY")),1:$$RXQTY^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP0",317,0)
+ N NPI
+"RTN","PSOASAP0",318,0)
+ S NPI=+$$NPI^XUSNPI("Individual_ID",RPHIEN,DT)
+"RTN","PSOASAP0",319,0)
+ Q $S(NPI>0:NPI,1:"")
+"RTN","PSOASAP0",320,0)
+ ;
+"RTN","PSOASAP0",321,0)
+DSP15() ;ASAP 3.0 : Days Supply
+"RTN","PSOASAP0",322,0)
+ ;       ASAP 4.0+: Pharmacist State License Number (Not Used)
+"RTN","PSOASAP0",323,0)
+ I PSOASVER="3.0" Q $S(RECTYPE="V":$G(RTSDATA("DAYSUP")),1:$$RXDAYSUP^PSOBPSUT(RXIEN,FILLNUM))
+"RTN","PSOASAP0",324,0)
+ Q ""
+"RTN","PSOASAP0",325,0)
+ ;
+"RTN","PSOASAP0",326,0)
+DSP16() ;ASAP 3.0 : Basis of Days Supply Determiniation (Always "3" for 'As directed by doctor')
+"RTN","PSOASAP0",327,0)
+ ;       ASAP 4.0+: Classification Code for Payment Type (Always return "05" for 'Military Installations and VA')
+"RTN","PSOASAP0",328,0)
+ I PSOASVER="3.0" Q "3"
+"RTN","PSOASAP0",329,0)
+ Q "05"
+"RTN","PSOASAP0",330,0)
+ ;
+"RTN","PSOASAP0",331,0)
+DSP17() ;ASAP 3.0 : Refills Remaining (Not Used)
+"RTN","PSOASAP0",332,0)
+ ;       ASAP 4.0 : N/A
+"RTN","PSOASAP0",333,0)
+ ;       ASAP 4.1+: Date Sold
+"RTN","PSOASAP0",334,0)
+ I PSOASVER="3.0"!(PSOASVER="4.0") Q ""
+"RTN","PSOASAP0",335,0)
+ Q $$DSP05()
+"RTN","PSOASAP0",336,0)
+ ;
+"RTN","PSOASAP0",337,0)
+ ; *** PRE Segment ***
+"RTN","PSOASAP0",338,0)
+PRE01() ;ASAP 3.0 : Not Used
+"RTN","PSOASAP0",339,0)
+ ;       ASAP 4.0+: Prescriber National Provider Identifier (NPI)
+"RTN","PSOASAP0",340,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",341,0)
+ N PRE01
+"RTN","PSOASAP0",342,0)
+ S PRE01=+$$NPI^XUSNPI("Individual_ID",PREIEN)
+"RTN","PSOASAP0",343,0)
+ Q $S(PRE01>0:PRE01,1:"")
+"RTN","PSOASAP0",344,0)
+ ;
+"RTN","PSOASAP0",345,0)
+PRE02() ;Prescriber DEA Number
+"RTN","PSOASAP0",346,0)
+ N PRE02
+"RTN","PSOASAP0",347,0)
+ S PRE02=$$PRVDEA() I PRE02'="" Q $P(PRE02,"-",1)
+"RTN","PSOASAP0",348,0)
+ S PRE02=$P($$DEA^XUSER(0,PREIEN),"-",1)
+"RTN","PSOASAP0",349,0)
+ I (PRE02="")!($P($$DEA^XUSER(0,PREIEN),"-",2,99)'="") S PRE02=$$PHA03()
+"RTN","PSOASAP0",350,0)
+ Q PRE02
+"RTN","PSOASAP0",351,0)
+ ;
+"RTN","PSOASAP0",352,0)
+PRE03() ;ASAP 3.0 : Prescriber NPI
+"RTN","PSOASAP0",353,0)
+ ;       ASAP 4.0+: Prescriber DEA Number Suffix
+"RTN","PSOASAP0",354,0)
+ N PRE03
+"RTN","PSOASAP0",355,0)
+ I PSOASVER="3.0" D  Q PRE03
+"RTN","PSOASAP0",356,0)
+ . S PRE03=+$$NPI^XUSNPI("Individual_ID",PREIEN)
+"RTN","PSOASAP0",357,0)
+ . S PRE03=$S(PRE03>0:PRE03,1:"")
+"RTN","PSOASAP0",358,0)
+ ;
+"RTN","PSOASAP0",359,0)
+ S PRE03=$$PRVDEA() I PRE03'="" Q $P(PRE03,"-",2,99)
+"RTN","PSOASAP0",360,0)
+ S PRE03=$P($$DEA^XUSER(0,PREIEN),"-",2,99)
+"RTN","PSOASAP0",361,0)
+ I $$PRE02()=$$PHA03() S PRE03=$P($$DEA^XUSER(1,PREIEN),"-",1)
+"RTN","PSOASAP0",362,0)
+ Q PRE03
+"RTN","PSOASAP0",363,0)
+ ;
+"RTN","PSOASAP0",364,0)
+PRE04() ;ASAP 3.0 : Prescriber DEA Number
+"RTN","PSOASAP0",365,0)
+ ;       ASAP 4.0+: Prescriber State License Number (Not Used)
+"RTN","PSOASAP0",366,0)
+ I PSOASVER'="3.0" Q ""
+"RTN","PSOASAP0",367,0)
+ ;
+"RTN","PSOASAP0",368,0)
+ N PRE04
+"RTN","PSOASAP0",369,0)
+ S PRE04=$$PRVDEA() I PRE04'="" Q $P(PRE04,"-",1)
+"RTN","PSOASAP0",370,0)
+ S PRE04=$P($$DEA^XUSER(0,PREIEN),"-",1)
+"RTN","PSOASAP0",371,0)
+ I (PRE04="")!($P($$DEA^XUSER(0,PREIEN),"-",2,99)'="") S PRE04=$$PHA03()
+"RTN","PSOASAP0",372,0)
+ Q PRE04
+"RTN","PSOASAP0",373,0)
+ ;
+"RTN","PSOASAP0",374,0)
+PRE05() ;ASAP 3.0 : Prescriber DEA Number Suffix
+"RTN","PSOASAP0",375,0)
+ ;       ASAP 4.0+: Prescriber Last Name
+"RTN","PSOASAP0",376,0)
+ N PRE05
+"RTN","PSOASAP0",377,0)
+ I PSOASVER="3.0" D  Q PRE05
+"RTN","PSOASAP0",378,0)
+ . S PRE05=$$PRVDEA() I PRE05'="" S PRE05=$P(PRE05,"-",2,99) Q
+"RTN","PSOASAP0",379,0)
+ . S PRE05=$P($$DEA^XUSER(0,PREIEN),"-",2,99)
+"RTN","PSOASAP0",380,0)
+ . I $$PRE04()=$$PHA03() S PRE05=$P($$DEA^XUSER(1,PREIEN),"-",1)
+"RTN","PSOASAP0",381,0)
+ ;
+"RTN","PSOASAP0",382,0)
+ Q $P($$GET1^DIQ(200,PREIEN,.01),",",1)
+"RTN","PSOASAP0",383,0)
+ ;
+"RTN","PSOASAP0",384,0)
+PRE06() ;ASAP 3.0 : Prescriber State Lince Number (Not Used)
+"RTN","PSOASAP0",385,0)
+ ;       ASAP 4.0+: Prescriber First Name
+"RTN","PSOASAP0",386,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",387,0)
+ Q $P($P($$GET1^DIQ(200,PREIEN,.01),",",2)," ",1)
+"RTN","PSOASAP0",388,0)
+ ;
+"RTN","PSOASAP0",389,0)
+PRE07() ;ASAP 3.0 : Prescriber Alternate ID (Not Used)
+"RTN","PSOASAP0",390,0)
+ ;       ASAP 4.0+: Prescriber Middle Name
+"RTN","PSOASAP0",391,0)
+ I PSOASVER="3.0" Q ""
+"RTN","PSOASAP0",392,0)
+ Q $P($P($$GET1^DIQ(200,PREIEN,.01),",",2)," ",2)
+"RTN","PSOASAP0",393,0)
+ ;
+"RTN","PSOASAP0",394,0)
+PRE08() ;ASAP 3.0 : Prescriber's Last Name
+"RTN","PSOASAP0",395,0)
+ ;       ASAP 4.0 & 4.1: N/A (up to PRE07 only)
+"RTN","PSOASAP0",396,0)
+ ;       ASAP 4.2: Prescriber's Phone Number
+"RTN","PSOASAP0",397,0)
+ I PSOASVER="3.0" Q $P($$GET1^DIQ(200,PREIEN,.01),",",1)
+"RTN","PSOASAP0",398,0)
+ I PSOASVER="4.0"!(PSOASVER="4.1") Q ""
+"RTN","PSOASAP0",399,0)
+ N PRE08
+"RTN","PSOASAP0",400,0)
+ ;Work Phone #
+"RTN","PSOASAP0",401,0)
+ S PRE08=$$PHONE($$GET1^DIQ(200,PREIEN,.132)) I PRE08 Q PRE08
+"RTN","PSOASAP0",402,0)
+ ;Institution Phone #
+"RTN","PSOASAP0",403,0)
+ N DIV,DIVS,CONTACT,CONTACTS,INSPHONE
+"RTN","PSOASAP0",404,0)
+ I $$DIV4^XUSER(.DIVS,PREIEN) D
+"RTN","PSOASAP0",405,0)
+ . S DIV=0 F  S DIV=$O(DIVS(DIV)) Q:'DIV  D  I PRE08 Q
+"RTN","PSOASAP0",406,0)
+ . . K CONTACTS D GETS^DIQ(4,DIV_",","4*","","CONTACTS") I '$D(CONTACTS) Q
+"RTN","PSOASAP0",407,0)
+ . . S CONTACT="" F  S CONTACT=$O(CONTACTS(4.03,CONTACT)) Q:(CONTACT="")  D  I $G(INSPHONE) Q
+"RTN","PSOASAP0",408,0)
+ . . . I $$PHONE(CONTACTS(4.03,CONTACT,.03))'="" D
+"RTN","PSOASAP0",409,0)
+ . . . . S INSPHONE=$$PHONE(CONTACTS(4.03,CONTACT,.03))
+"RTN","PSOASAP0",410,0)
+ . . ; Default Prescriber Division
+"RTN","PSOASAP0",411,0)
+ . . I +DIVS(DIV),$G(INSPHONE) S PRE08=INSPHONE Q
+"RTN","PSOASAP0",412,0)
+ . . I '$O(DIVS(DIV)),'PRE08,$G(INSPHONE) S PRE08=INSPHONE
+"RTN","PSOASAP0",413,0)
+ I PRE08 Q PRE08
+"RTN","PSOASAP0",414,0)
+ ;Last resort: Pharmacy Phone #
+"RTN","PSOASAP0",415,0)
+ Q $$PHA10()
+"RTN","PSOASAP0",416,0)
+ ;
+"RTN","PSOASAP0",417,0)
+PRE09() ;ASAP 3.0: Prescriber' First Name
+"RTN","PSOASAP0",418,0)
+ I PSOASVER'="3.0" Q ""
+"RTN","PSOASAP0",419,0)
+ Q $P($P($$GET1^DIQ(200,PREIEN,.01),",",2)," ",1)
+"RTN","PSOASAP0",420,0)
+ ;
+"RTN","PSOASAP0",421,0)
+PRE10() ;ASAP 3.0: Prescriber' Middle Name
+"RTN","PSOASAP0",422,0)
+ I PSOASVER'="3.0" Q ""
+"RTN","PSOASAP0",423,0)
+ Q $P($P($$GET1^DIQ(200,PREIEN,.01),",",2)," ",2)
+"RTN","PSOASAP0",424,0)
+ ;
+"RTN","PSOASAP0",425,0)
+ ; *** RPH Pharmacist Information (ASAP 3.0 Only) **
+"RTN","PSOASAP0",426,0)
+RPH03() ;National Provider Identification (NPI)
+"RTN","PSOASAP0",427,0)
+ N RPH03
+"RTN","PSOASAP0",428,0)
+ S RPH03=+$$NPI^XUSNPI("Individual_ID",RPHIEN,DT)
+"RTN","PSOASAP0",429,0)
+ Q $S(RPH03>0:RPH03,1:"")
+"RTN","PSOASAP0",430,0)
+ ;
+"RTN","PSOASAP0",431,0)
+RPH06() ;Pharmacist Last Name
+"RTN","PSOASAP0",432,0)
+ Q $P($$GET1^DIQ(200,RPHIEN,.01),",",1)
+"RTN","PSOASAP0",433,0)
+ ;
+"RTN","PSOASAP0",434,0)
+RPH07() ;Pharmacist First Name
+"RTN","PSOASAP0",435,0)
+ Q $P($P($$GET1^DIQ(200,RPHIEN,.01),",",2)," ",1)
+"RTN","PSOASAP0",436,0)
+ ;
+"RTN","PSOASAP0",437,0)
+RPH08() ;Pharmacist Middle Name
+"RTN","PSOASAP0",438,0)
+ Q $P($P($$GET1^DIQ(200,RPHIEN,.01),",",2)," ",2)
+"RTN","PSOASAP0",439,0)
+ ;
+"RTN","PSOASAP0",440,0)
+TT01() ;Transaction Control Number
+"RTN","PSOASAP0",441,0)
+ ;      ASAP 3.0 : Same as TH03
+"RTN","PSOASAP0",442,0)
+ ;      ASAP 4.0+: Same as TH02
+"RTN","PSOASAP0",443,0)
+ I PSOASVER="3.0" Q $$TH03()
+"RTN","PSOASAP0",444,0)
+ Q $$TH02()
+"RTN","PSOASAP0",445,0)
+ ;
+"RTN","PSOASAP0",446,0)
+PHONE(NUMBER) ;Returns the Phone number (numeric only - max 10 digits)
+"RTN","PSOASAP0",447,0)
+ N PHONE
+"RTN","PSOASAP0",448,0)
+ S PHONE=$$NUMERIC(NUMBER)
+"RTN","PSOASAP0",449,0)
+ I $E(PHONE,1)="1" S $E(PHONE,1)=""
+"RTN","PSOASAP0",450,0)
+ Q $S($L(PHONE)=10:PHONE,1:"")
+"RTN","PSOASAP0",451,0)
+ ;
+"RTN","PSOASAP0",452,0)
+ADDRESS(VALUE,LINE) ;Returns Address Line1 and Line2 (max 30 characters)
+"RTN","PSOASAP0",453,0)
+ N ADDRESS,I,DIWL,DIWR,X
+"RTN","PSOASAP0",454,0)
+ K ^UTILITY($J,"W") S X=$$TRIM^XLFSTR(VALUE),DIWL=1,DIWR=30 D ^DIWP
+"RTN","PSOASAP0",455,0)
+ S ADDRESS=$$TRIM^XLFSTR($G(^UTILITY($J,"W",1,LINE,0)))
+"RTN","PSOASAP0",456,0)
+ K ^UTILITY($J,"W")
+"RTN","PSOASAP0",457,0)
+ Q ADDRESS
+"RTN","PSOASAP0",458,0)
+ ;
+"RTN","PSOASAP0",459,0)
+PRVDEA() ;Returns the Provider DEA #
+"RTN","PSOASAP0",460,0)
+ N PRVDEA,ORDIEN
+"RTN","PSOASAP0",461,0)
+ S ORDIEN=+$$GET1^DIQ(52,RXIEN,39.3,"I")
+"RTN","PSOASAP0",462,0)
+ K ^TMP($J,"ORDEA") D ARCHIVE^ORDEA(ORDIEN) S PRVDEA=$P($G(^TMP($J,"ORDEA",ORDIEN,2)),"^")
+"RTN","PSOASAP0",463,0)
+ Q PRVDEA
+"RTN","PSOASAP0",464,0)
+ ;
+"RTN","PSOASAP0",465,0)
+NUMERIC(VALUE) ;Returns the Numeric Value
+"RTN","PSOASAP0",466,0)
+ N NUMERIC,I
+"RTN","PSOASAP0",467,0)
+ S NUMERIC=""
+"RTN","PSOASAP0",468,0)
+ F I=1:1:$L(VALUE) I $E(VALUE,I)?1N S NUMERIC=NUMERIC_$E(VALUE,I)
+"RTN","PSOASAP0",469,0)
+ Q NUMERIC
+"RTN","PSOSUPOE")
+0^3^B81628813^B81516585
+"RTN","PSOSUPOE",1,0)
+PSOSUPOE ;BIR/RTR - Suspense pull via Listman ;3/1/96
+"RTN","PSOSUPOE",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**8,21,27,34,130,148,281,287,289,358,385,403,427,496**;DEC 1997;Build 11
+"RTN","PSOSUPOE",3,0)
+ ;External references PSOL and PSOUL^PSSLOCK supported by DBIA 2789
+"RTN","PSOSUPOE",4,0)
+SEL I '$G(PSOCNT) S VALMSG="This patient has no Prescriptions!" S VALMBCK="" Q
+"RTN","PSOSUPOE",5,0)
+ N PSOGETF,PSOGET,PSOGETFN,ORD,ORN,MW,PDUZ,PSLST,PSOSQ,PSOSQRTE,PSOSQMTH,PSPOP,PSOX1,PSOX2,RXLTOP,RXREC,SFN,SORD,SORN,VALMCNT
+"RTN","PSOSUPOE",6,0)
+ K DIR,DUOUT,DTOUT S DIR("A")="Select Orders by number",DIR(0)="LO^1:"_PSOCNT D ^DIR K DIR I $D(DTOUT)!($D(DUOUT))!('Y) S VALMSG="Nothing pulled from suspense!",VALMBCK="" Q
+"RTN","PSOSUPOE",7,0)
+ S PSLST=Y
+"RTN","PSOSUPOE",8,0)
+SELQ D FULL^VALM1
+"RTN","PSOSUPOE",9,0)
+ K DIR S DIR("A")="Select routing for Rx(s)",DIR(0)="S^M:MAIL;W:WINDOW",DIR("B")="WINDOW" D ^DIR K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) G END
+"RTN","PSOSUPOE",10,0)
+ S PSOSQRTE=Y I $G(PSOSQRTE)="W",$P(PSOPAR,"^",12) K DIR S DIR(0)="FO^2:60",DIR("A")="METHOD OF PICK-UP" D ^DIR S PSOSQMTH=$G(Y) K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) G END
+"RTN","PSOSUPOE",11,0)
+ W ! K DIR S DIR(0)="Y",DIR("A")="Pull Rx(s) and delete from suspense",DIR("B")="YES" D  D ^DIR K DIR I Y'=1 G END
+"RTN","PSOSUPOE",12,0)
+ .S DIR("?",1)="Enter Yes to pull selected Rx(s) from suspense. Since(Rx(s) pulled early from",DIR("?",2)="suspense are not associated with a printed batch, these Rx(s) cannot be"
+"RTN","PSOSUPOE",13,0)
+ .S DIR("?",3)="reprinted from suspense using the 'Reprint batches from suspense' option.",DIR("?")="Therefore, any Rx(s) pulled early from suspense will be deleted from suspense."
+"RTN","PSOSUPOE",14,0)
+ Q:$G(PULLONE)
+"RTN","PSOSUPOE",15,0)
+ F SORD=1:1:$L(PSLST,",") Q:$P(PSLST,",",SORD)']""  S SORN=$P(PSLST,",",SORD) D:+PSOLST(SORN)=52 BEG
+"RTN","PSOSUPOE",16,0)
+ S VALMBCK="R"
+"RTN","PSOSUPOE",17,0)
+ I '$G(PSOSQ) S VALMSG="No Rx's pulled from suspense!"
+"RTN","PSOSUPOE",18,0)
+ Q
+"RTN","PSOSUPOE",19,0)
+BEG ;
+"RTN","PSOSUPOE",20,0)
+ S RXREC=$P(PSOLST(SORN),"^",2)
+"RTN","PSOSUPOE",21,0)
+BEGQ Q:'$D(^PSRX(+$G(RXREC),0))
+"RTN","PSOSUPOE",22,0)
+ D PSOL^PSSLOCK(RXREC) I '$G(PSOMSG) W !!,$S($P($G(PSOMSG),"^",2)'="":$P($G(PSOMSG),"^",2),1:"Another person is editing Rx "_$P($G(^PSRX(RXREC,0)),"^")),! K PSOMSG D DIR Q
+"RTN","PSOSUPOE",23,0)
+ K PSOMSG I $P($G(^PSRX(RXREC,"STA")),"^")'=5 W !!,"Rx# ",$P(^PSRX(RXREC,0),"^")," is not on Suspense!" D DIR,ULRX Q
+"RTN","PSOSUPOE",24,0)
+ S SFN=$O(^PS(52.5,"B",RXREC,0)) I 'SFN D DIR,ULRX Q
+"RTN","PSOSUPOE",25,0)
+ S PDUZ=DUZ I +$G(^PS(52.5,SFN,"P")) W !,">>> Rx #",$P(^PSRX(+$P(^(0),"^"),0),"^")," ALREADY PRINTED FROM SUSPENSE.",!,?5,"USE THE REPRINT OPTION TO REPRINT LABEL." D DIR,ULRX Q
+"RTN","PSOSUPOE",26,0)
+ I +$P($G(^PSRX(RXREC,2)),"^",6)<DT,+$P($G(^("STA")),"^")<11 D  S DIE=52,DA=RXREC,DR="100///11" D ^DIE S DA=SFN,DIK="^PS(52.5," D ^DIK K DIE,DA,DIK W !,"Rx # "_$P(^PSRX(RXREC,0),"^")_" has expired!" D DIR,ULRX Q
+"RTN","PSOSUPOE",27,0)
+ .N PSCOU,AAA,VVV,QQQ,PSOPRT,PSOEXPI D EX^PSOSUTL
+"RTN","PSOSUPOE",28,0)
+ I $D(RXRP(RXREC)) W !!,"A reprint has already been requested for Rx # ",$P($G(^PSRX(RXREC,0)),"^") D DIR,ULRX Q
+"RTN","PSOSUPOE",29,0)
+ I $D(RXPR(RXREC)) W !!,"A partial has already been requested for Rx # ",$P($G(^PSRX(RXREC,0)),"^") D DIR,ULRX Q
+"RTN","PSOSUPOE",30,0)
+ S PSPOP=0 I $G(PSODIV),$P($G(^PS(52.5,SFN,0)),"^",6)'=$G(PSOSITE) D CKDIV I $G(PSPOP) D DIR,ULRX Q
+"RTN","PSOSUPOE",31,0)
+ ;
+"RTN","PSOSUPOE",32,0)
+ ; PSO*427-Check if Label Log indicates a label was already printed.
+"RTN","PSOSUPOE",33,0)
+ N PRNTED,RFL
+"RTN","PSOSUPOE",34,0)
+ S RFL=$P($G(^PS(52.5,SFN,0)),"^",13)
+"RTN","PSOSUPOE",35,0)
+ S PRNTED=$$PRINTED^PSOSULBL(SFN,RXREC,RFL)
+"RTN","PSOSUPOE",36,0)
+ ; PSO*427-If previously printed, ask user whether to continue.  If NO (0), remove from suspense.  If NO (0) or exit (-1), unlock and quit
+"RTN","PSOSUPOE",37,0)
+ I PRNTED N CONT S CONT=$$PRTQUES^PSOSUPRX(RXREC,RFL) I CONT'=1 D  Q
+"RTN","PSOSUPOE",38,0)
+ . I CONT=0 D REMOVE^PSOSULBL(SFN,RXREC,RFL,DUZ,1,PRNTED)
+"RTN","PSOSUPOE",39,0)
+ . I CONT=-1 W !,"This prescription will not be pulled but will be left on suspense."
+"RTN","PSOSUPOE",40,0)
+ . D DIR,ULRX
+"RTN","PSOSUPOE",41,0)
+ ;
+"RTN","PSOSUPOE",42,0)
+ ; Submitting Rx to ECME for 3rd Party Billing and checking the outcome
+"RTN","PSOSUPOE",43,0)
+ ; If there are unresolved DUR, Refill Too Soon, or TRICARE/CHAMPVA rejects, we will not add the RX to the
+"RTN","PSOSUPOE",44,0)
+ ;   list of RXs that are pulled from suspense
+"RTN","PSOSUPOE",45,0)
+ ; We also need to quit if the user discontinued from the reject notification screen as the RX Suspense record
+"RTN","PSOSUPOE",46,0)
+ ;   is deleted by a discontinue
+"RTN","PSOSUPOE",47,0)
+ N ACTION S ACTION=""
+"RTN","PSOSUPOE",48,0)
+ I '$D(RXPR(RXREC)) D  I ACTION="Q"!(ACTION="D") D ULRX Q
+"RTN","PSOSUPOE",49,0)
+ . N RFL S RFL=$G(RXFL(RXREC)) I RFL="" S RFL=$$LSTRFL^PSOBPSU1(RXREC)
+"RTN","PSOSUPOE",50,0)
+ . D ECMESND^PSOBPSU1(RXREC,RFL,,"PP")
+"RTN","PSOSUPOE",51,0)
+ . ; Quit if there is an unresolved TRICARE/CHAMPVA non-billable reject code, PSO*7*358
+"RTN","PSOSUPOE",52,0)
+ . I $$PSOET^PSOREJP3(RXREC,RFL) S ACTION="Q" W !!,"Pull early cannot be done for non-billable TRICARE/CHAMPVA Rx on the worklist" D DIR Q
+"RTN","PSOSUPOE",53,0)
+ . ; Check for unresolved rejects
+"RTN","PSOSUPOE",54,0)
+ . I $$FIND^PSOREJUT(RXREC,RFL) S ACTION=$$HDLG^PSOREJU1(RXREC,RFL,"79,88","PP","IOQ","Q")
+"RTN","PSOSUPOE",55,0)
+ . ; Check for TRICARE/CHAMPVA that are not complete
+"RTN","PSOSUPOE",56,0)
+ . I $$TRIC^PSOREJP1(RXREC,RFL),$P($$STATUS^PSOBPSUT(RXREC,RFL),U)="IN PROGRESS" S ACTION="Q" W !!,"Pull early cannot be done for IN PROGRESS TRICARE/CHAMPVA Rx" D DIR Q
+"RTN","PSOSUPOE",57,0)
+ ;
+"RTN","PSOSUPOE",58,0)
+ S:$P(^PS(52.5,SFN,0),"^",5) RXPR(RXREC)=$P(^(0),"^",5) S:$P(^PS(52.5,SFN,0),"^",12) RXRP(RXREC)=1
+"RTN","PSOSUPOE",59,0)
+ S RXFL(RXREC)=$P($G(^PS(52.5,SFN,0)),"^",13),RXRS(RXREC)=$G(PSODFN),RXLTOP=1
+"RTN","PSOSUPOE",60,0)
+ S RXRS(RXREC)=$G(RXRS(RXREC))_"^"_$S($P($G(^PS(52.5,SFN,0)),"^",4)="W":"W",1:"M")_"^"_$P($G(^PSRX(RXREC,"MP")),"^") S PSOGET="M" D GETMW
+"RTN","PSOSUPOE",61,0)
+ S RXRS(RXREC)=$G(RXRS(RXREC))_"^"_$G(PSOGETF)_"^"_$G(PSOGETFN)_"^"_$S($G(PSOGET)="W":"W",1:"M")
+"RTN","PSOSUPOE",62,0)
+ S $P(^PS(52.5,SFN,0),"^",4)=$G(PSOSQRTE) S MW=$G(PSOSQRTE) N RR,RFCNT D MAILS^PSOSUPAT I $D(PSOSQMTH) S $P(^PSRX(RXREC,"MP"),"^")=$G(PSOSQMTH)
+"RTN","PSOSUPOE",63,0)
+ S PSOSQ=1
+"RTN","PSOSUPOE",64,0)
+ ;
+"RTN","PSOSUPOE",65,0)
+ D ULRX K PSOGET,PSOGETF
+"RTN","PSOSUPOE",66,0)
+ Q
+"RTN","PSOSUPOE",67,0)
+WIND ;
+"RTN","PSOSUPOE",68,0)
+ N RRT,RRTT,XXXX,JJJJ,PSINTRX,RTETEST,PSOPSO,SSSS
+"RTN","PSOSUPOE",69,0)
+ S PBINGRTE=0,PSINTRX=RXREC
+"RTN","PSOSUPOE",70,0)
+ I $G(RXPR(RXREC)) S RTETEST=$P($G(^PSRX(RXREC,"P",RXPR(PSINTRX),0)),"^",2) S:RTETEST="W" PBINGRTE=1 Q
+"RTN","PSOSUPOE",71,0)
+ S PSOPSO=0 F SSSS=0:0 S SSSS=$O(^PSRX(PSINTRX,1,SSSS)) Q:'SSSS  S PSOPSO=SSSS
+"RTN","PSOSUPOE",72,0)
+ I 'PSOPSO S RTETEST=$P($G(^PSRX(PSINTRX,0)),"^",11) S:RTETEST="W" PBINGRTE=1 Q
+"RTN","PSOSUPOE",73,0)
+ I PSOPSO S RTETEST=$P($G(^PSRX(PSINTRX,1,PSOPSO,0)),"^",2) S:RTETEST="W" PBINGRTE=1 Q
+"RTN","PSOSUPOE",74,0)
+ Q
+"RTN","PSOSUPOE",75,0)
+DIR ;
+"RTN","PSOSUPOE",76,0)
+ W ! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR K DIR Q
+"RTN","PSOSUPOE",77,0)
+END S VALMSG="Nothing pulled from suspense!",VALMBCK="R" S:$G(PULLONE)=1 PULLONE=2 Q
+"RTN","PSOSUPOE",78,0)
+ADD ;Add Rx to SPSORX array
+"RTN","PSOSUPOE",79,0)
+ I $G(SPSORX("PSOL",1))']"" S SPSORX("PSOL",1)=RXREC_"," Q
+"RTN","PSOSUPOE",80,0)
+ F PSOX1=0:0 S PSOX1=$O(SPSORX("PSOL",PSOX1)) Q:'PSOX1  S PSOX2=PSOX1
+"RTN","PSOSUPOE",81,0)
+ I $L(SPSORX("PSOL",PSOX2))+$L(RXREC)<220 S SPSORX("PSOL",PSOX2)=SPSORX("PSOL",PSOX2)_RXREC_"," Q
+"RTN","PSOSUPOE",82,0)
+ S SPSORX("PSOL",PSOX2+1)=RXREC_","
+"RTN","PSOSUPOE",83,0)
+ Q
+"RTN","PSOSUPOE",84,0)
+BBADD ;
+"RTN","PSOSUPOE",85,0)
+ N PSOX1,PSOX2
+"RTN","PSOSUPOE",86,0)
+ I $G(BBRX(1))']"" S BBRX(1)=RXREC_"," Q
+"RTN","PSOSUPOE",87,0)
+ F PSOX1=0:0 S PSOX1=$O(BBRX(PSOX1)) Q:'PSOX1  S PSOX2=PSOX1
+"RTN","PSOSUPOE",88,0)
+ I $L(BBRX(PSOX2))+$L(RXREC)<220 S BBRX(PSOX2)=BBRX(PSOX2)_RXREC_"," Q
+"RTN","PSOSUPOE",89,0)
+ S BBRX(PSOX2+1)=RXREC_","
+"RTN","PSOSUPOE",90,0)
+ Q
+"RTN","PSOSUPOE",91,0)
+PPLADD ;
+"RTN","PSOSUPOE",92,0)
+ ; This function will move entries from the RXRS array (which has RXs that were pulled
+"RTN","PSOSUPOE",93,0)
+ ; from supense via the PP action on the Medication profile) to the list of RXs that
+"RTN","PSOSUPOE",94,0)
+ ; will get a label (PPL variable and possible PSORX array).
+"RTN","PSOSUPOE",95,0)
+ ; Note that arrays RXRS and PSORX and variable PPL are pre-existing
+"RTN","PSOSUPOE",96,0)
+ N SZZ,SPSOX1,SPSOX2,LSFN
+"RTN","PSOSUPOE",97,0)
+ I $G(PPL)'="",$E(PPL,$L(PPL))'="," S PPL=PPL_","
+"RTN","PSOSUPOE",98,0)
+ ;
+"RTN","PSOSUPOE",99,0)
+ ; Loop through entries in the RXRS array and process
+"RTN","PSOSUPOE",100,0)
+ S SZZ=0 F  S SZZ=$O(RXRS(SZZ)) Q:'SZZ  D
+"RTN","PSOSUPOE",101,0)
+ .; If SZZ is already set in the PPL variable do not set it again
+"RTN","PSOSUPOE",102,0)
+ .I $G(PPL)[SZZ Q
+"RTN","PSOSUPOE",103,0)
+ .; Check if label already printed per the RX SUSPENSE file
+"RTN","PSOSUPOE",104,0)
+ .S LSFN=$O(^PS(52.5,"B",SZZ,0))
+"RTN","PSOSUPOE",105,0)
+ .Q:'$G(LSFN)
+"RTN","PSOSUPOE",106,0)
+ .Q:$G(^PS(52.5,LSFN,"P"))
+"RTN","PSOSUPOE",107,0)
+ .; The following function checks for ECME conditions where we do not want a label
+"RTN","PSOSUPOE",108,0)
+ .; This is probably redundant as the RXRS array entry should not have been created if any of these
+"RTN","PSOSUPOE",109,0)
+ .;   conditions existed but things might have changed after the entry was created
+"RTN","PSOSUPOE",110,0)
+ .I $$ECMECHK^PSOREJU3(SZZ) Q
+"RTN","PSOSUPOE",111,0)
+ .; Add to list of RXs that should get a label
+"RTN","PSOSUPOE",112,0)
+ .I $G(PPL)="" S PPL=SZZ_"," Q
+"RTN","PSOSUPOE",113,0)
+ .I $L(PPL)+$L(SZZ)<220 S PPL=PPL_SZZ_"," Q
+"RTN","PSOSUPOE",114,0)
+ .I $G(PSORX("PSOL",2))']"" S PSORX("PSOL",2)=SZZ_"," Q
+"RTN","PSOSUPOE",115,0)
+ .F SPSOX1=1:0 S SPSOX1=$O(PSORX("PSOL",SPSOX1)) Q:'SPSOX1  S SPSOX2=SPSOX1
+"RTN","PSOSUPOE",116,0)
+ .I $L(PSORX("PSOL",SPSOX2))+$L(SZZ)<220 S PSORX("PSOL",SPSOX2)=PSORX("PSOL",SPSOX2)_SZZ_"," Q
+"RTN","PSOSUPOE",117,0)
+ .S PSORX("PSOL",SPSOX2+1)=SZZ_","
+"RTN","PSOSUPOE",118,0)
+ Q
+"RTN","PSOSUPOE",119,0)
+CKDIV ;
+"RTN","PSOSUPOE",120,0)
+ I '$P($G(PSOSYS),"^",2) W !!?10,"Rx # ",$P(^PSRX(RXREC,0),"^")," is not a valid choice (Different Division)" S PSPOP=1 Q
+"RTN","PSOSUPOE",121,0)
+ I $P($G(PSOSYS),"^",3) W !!?10 K DIR S DIR("A")="Rx # "_$P(^PSRX(RXREC,0),"^")_" is from another division. OK to Pull",DIR(0)="Y",DIR("B")="YES" D ^DIR K DIR I $G(DIRUT)!('Y) S PSPOP=1
+"RTN","PSOSUPOE",122,0)
+ Q
+"RTN","PSOSUPOE",123,0)
+SELONE ;Pull one Rx through Listman
+"RTN","PSOSUPOE",124,0)
+ I $G(PSOBEDT) W $C(7),$C(7) S VALMSG="Invalid Action at this time !",VALMBCK="" Q
+"RTN","PSOSUPOE",125,0)
+ N ORD,MW,PDUZ,PSLST,PSOSQ,PSOSQRTE,PSOSQMTH,PSPOP,PSOX1,PSOX2,PULLONE,RXLTOP,RXREC,SFN,SORD,SORN,VALMCNT
+"RTN","PSOSUPOE",126,0)
+ S PULLONE=1
+"RTN","PSOSUPOE",127,0)
+ I +PSOLST(ORN)'=52 S VALMBCK="" Q
+"RTN","PSOSUPOE",128,0)
+ I +PSOLST(ORN)=52,$P($G(^PSRX($P(PSOLST(ORN),"^",2),"STA")),"^")'=5 S VALMSG="Rx is not on Suspense!",VALMBCK="" Q
+"RTN","PSOSUPOE",129,0)
+ I +PSOLST(ORN)=52,$D(RXRS($P(PSOLST(ORN),"^",2))) S VALMSG="Pull early has already been requested!",VALMBCK="" Q
+"RTN","PSOSUPOE",130,0)
+ N EHOLDQ,ESIEN,ERXIEN S ERXIEN=$P(PSOLST(ORN),"^",2),ESIEN="",ESIEN=$O(^PS(52.5,"B",ERXIEN,ESIEN))
+"RTN","PSOSUPOE",131,0)
+ I $G(ESIEN),$$GET1^DIQ(52.5,ESIEN,10)'="" D EHOLD Q:$G(EHOLDQ)
+"RTN","PSOSUPOE",132,0)
+ K EHOLDQ,ESIEN,ERXIEN
+"RTN","PSOSUPOE",133,0)
+ D SELQ I $G(PULLONE)=2 S VALMSG="Rx# "_$P($G(^PSRX($P(PSOLST(ORN),"^",2),0)),"^")_" not pulled from suspense!" Q
+"RTN","PSOSUPOE",134,0)
+ I +PSOLST(ORN)=52 S RXREC=$P(PSOLST(ORN),"^",2)
+"RTN","PSOSUPOE",135,0)
+ D BEGQ S VALMSG="Rx# "_$P($G(^PSRX(+$G(RXREC),0)),"^")_$S($G(PSOSQ):" pulled",1:" not pulled")_" from Suspense!"
+"RTN","PSOSUPOE",136,0)
+ S VALMBCK="R"
+"RTN","PSOSUPOE",137,0)
+ Q
+"RTN","PSOSUPOE",138,0)
+RESET ;
+"RTN","PSOSUPOE",139,0)
+ N RSDA,RXMW,RXMP,RXSP,RXR,DA,RXPSRX,RXFILL,RXFILLN
+"RTN","PSOSUPOE",140,0)
+ F RSDA=0:0 S RSDA=$O(RXRS(RSDA)) Q:'RSDA  D
+"RTN","PSOSUPOE",141,0)
+ .S RXSP=$O(^PS(52.5,"B",RSDA,0)) Q:'RXSP
+"RTN","PSOSUPOE",142,0)
+ .Q:'$D(^PS(52.5,RXSP,0))
+"RTN","PSOSUPOE",143,0)
+ .S RXMW=$S($P($G(RXRS(RSDA)),"^",2)="":"M",1:$P($G(RXRS(RSDA)),"^",2)),RXMP=$P($G(RXRS(RSDA)),"^",3),RXFILL=$P($G(RXRS(RSDA)),"^",4),RXFILLN=$P($G(RXRS(RSDA)),"^",5),RXPSRX=$S($P($G(RXRS(RSDA)),"^",6)="":"M",1:$P($G(RXRS(RSDA)),"^",6))
+"RTN","PSOSUPOE",144,0)
+ .I RXMW'="" S $P(^PS(52.5,RXSP,0),"^",4)=RXMW D
+"RTN","PSOSUPOE",145,0)
+ ..I RXFILL="P" D  Q
+"RTN","PSOSUPOE",146,0)
+ ...I $D(^PSRX(RSDA,"P",+$G(RXFILLN),0)) S $P(^PSRX(RSDA,"P",+$G(RXFILLN),0),"^",2)=$G(RXPSRX),$P(^PSRX(RSDA,"MP"),"^")=RXMP
+"RTN","PSOSUPOE",147,0)
+ ..I RXFILL="R",$G(RXFILLN) S DA(1)=RSDA,DA=RXFILLN,DIE="^PSRX("_DA(1)_",1,",DR="2////"_RXPSRX D ^DIE K DIE
+"RTN","PSOSUPOE",148,0)
+ ..I RXFILL="O" S DA=RSDA,DIE="^PSRX(",DR="11////"_RXPSRX D ^DIE K DIE
+"RTN","PSOSUPOE",149,0)
+ ..S $P(^PSRX(RSDA,"MP"),"^")=RXMP
+"RTN","PSOSUPOE",150,0)
+ Q
+"RTN","PSOSUPOE",151,0)
+GETMW ;
+"RTN","PSOSUPOE",152,0)
+ N GETPAR,GETRX,GETCNT
+"RTN","PSOSUPOE",153,0)
+ S PSOGETF="O",PSOGETFN=""
+"RTN","PSOSUPOE",154,0)
+ S GETPAR=$P($G(^PS(52.5,SFN,0)),"^",5)
+"RTN","PSOSUPOE",155,0)
+ I GETPAR S PSOGET=$P($G(^PSRX(RXREC,"P",GETPAR,0)),"^",2),PSOGETF="P",PSOGETFN=GETPAR Q
+"RTN","PSOSUPOE",156,0)
+ I '$O(^PSRX(RXREC,1,0)) S PSOGET=$P($G(^PSRX(RXREC,0)),"^",11) Q
+"RTN","PSOSUPOE",157,0)
+ S GETRX=0 F GETCNT=0:0 S GETCNT=$O(^PSRX(RXREC,1,GETCNT)) Q:'GETCNT  S GETRX=GETCNT
+"RTN","PSOSUPOE",158,0)
+ S PSOGET=$P($G(^PSRX(RXREC,1,+$G(GETRX),0)),"^",2),PSOGETF="R",PSOGETFN=+$G(GETRX)
+"RTN","PSOSUPOE",159,0)
+ Q
+"RTN","PSOSUPOE",160,0)
+ULRX ;
+"RTN","PSOSUPOE",161,0)
+ I '$G(RXREC) Q
+"RTN","PSOSUPOE",162,0)
+ D PSOUL^PSSLOCK(RXREC)
+"RTN","PSOSUPOE",163,0)
+ Q
+"RTN","PSOSUPOE",164,0)
+EHOLD ;
+"RTN","PSOSUPOE",165,0)
+ Q:'$G(ERXIEN)
+"RTN","PSOSUPOE",166,0)
+ Q:$$GET1^DIQ(52,ERXIEN,86)=""
+"RTN","PSOSUPOE",167,0)
+ D FULL^VALM1
+"RTN","PSOSUPOE",168,0)
+ W !,"This is an ePharmacy billable fill which is Suspended until "_$$GET1^DIQ(52.5,ESIEN,10)_", based"
+"RTN","PSOSUPOE",169,0)
+ W !,"on the 3/4 Days rule.",!
+"RTN","PSOSUPOE",170,0)
+ K DIR S EHOLDQ=0,DIR(0)="YA",DIR("A")="Do you wish to continue? "
+"RTN","PSOSUPOE",171,0)
+ D ^DIR I $D(DIRUT)!('Y) S EHOLDQ=1 K DIR
+"RTN","PSOSUPOE",172,0)
+ S VALMSG="No action taken.",VALMBCK="R"
+"RTN","PSOSUPOE",173,0)
+ Q
+"RTN","PSOSUPOE",174,0)
+ ;
+"RTN","PSOUTLA")
+0^13^B52204149^B37861740
+"RTN","PSOUTLA",1,0)
+PSOUTLA ;BHAM ISC/AMC - pharmacy utility program ;07/24/96  1:13 pm
+"RTN","PSOUTLA",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**1,15,23,56,126,222,354,444,496**;DEC 1997;Build 11
+"RTN","PSOUTLA",3,0)
+ ;External reference ^PS(54 supported by DBIA 2227
+"RTN","PSOUTLA",4,0)
+ ;External reference ^PSDRUG( supported by DBIA 221
+"RTN","PSOUTLA",5,0)
+CHK I '$D(PY(PSPR)) W !?10,$C(7),"  # ",PSPR," is not a valid choice." S PSPOP=1 Q
+"RTN","PSOUTLA",6,0)
+ I $D(PSDUP(PY(PSPR))) W !?10,$C(7),"RX# ",$P(^PSRX(+$P(PY(PSPR),"^"),0),"^")," is a duplicate choice." S PSPOP=1 Q
+"RTN","PSOUTLA",7,0)
+ S PSDUP(PY(PSPR))="" Q:'PSODIV  Q:'$P(^PSRX(+PY(PSPR),2),"^",9)  Q:+$P(^(2),"^",9)=PSOSITE
+"RTN","PSOUTLA",8,0)
+ S PSPRXN=+$P(PY(PSPR),"^")
+"RTN","PSOUTLA",9,0)
+CHK1 I '$P(PSOSYS,"^",2) W !!,$C(7),"RX# "_$P(^PSRX(PSPRXN,0),"^")_" is not a valid choice. (Different Division)",! S PSPOP=1 Q
+"RTN","PSOUTLA",10,0)
+ I $P(PSOSYS,"^",3) K DIR,DUOUT,DTOUT D
+"RTN","PSOUTLA",11,0)
+ .W $C(7) S DIR("A",1)="",DIR("A",2)="RX# "_$P(^PSRX(PSPRXN,0),"^")_" is from another division.",DIR("A")="Continue: (Y/N)",DIR(0)="Y",DIR("?",1)="'Y' FOR YES",DIR("?")="'N' FOR NO"
+"RTN","PSOUTLA",12,0)
+ .S DIR("B")="N" D ^DIR I 'Y!($D(DUOUT))!($D(DTOUT)) S PSPOP=1 W !
+"RTN","PSOUTLA",13,0)
+ K DIR,DUOUT,DTOUT Q
+"RTN","PSOUTLA",14,0)
+ ;
+"RTN","PSOUTLA",15,0)
+ZIPIN ; input transform for ZIP field in file #59 internal format (no '-'s)
+"RTN","PSOUTLA",16,0)
+ ;  Input:  X as user entered value
+"RTN","PSOUTLA",17,0)
+ ; Output:  X as internal value of user input OR
+"RTN","PSOUTLA",18,0)
+ ;            undefined if input from user was invalid
+"RTN","PSOUTLA",19,0)
+ N % I X'?.N F %=1:1:$L(X) I $E(X,%)?1P S X=$E(X,0,%-1)_$E(X,%+1,20),%=%-1
+"RTN","PSOUTLA",20,0)
+ I X'?5N,(X'?9N) K X
+"RTN","PSOUTLA",21,0)
+ Q
+"RTN","PSOUTLA",22,0)
+ ;
+"RTN","PSOUTLA",23,0)
+ZIPOUT ; output transform for ZIP - prints either ZIP or ZIP+4 (in 12345-1234)
+"RTN","PSOUTLA",24,0)
+ ; format.
+"RTN","PSOUTLA",25,0)
+ ; Input:  Y internal value
+"RTN","PSOUTLA",26,0)
+ ; Output:  Y external (12345 or 12345-1234)
+"RTN","PSOUTLA",27,0)
+ S Y=$E(Y,1,5)_$S($E(Y,6,9)]"":"-"_$E(Y,6,9),1:"")
+"RTN","PSOUTLA",28,0)
+ Q
+"RTN","PSOUTLA",29,0)
+YN ;YES/NO PROMPT
+"RTN","PSOUTLA",30,0)
+ W !?5,"'Y' FOR YES",!?5,"'N' FOR NO",!
+"RTN","PSOUTLA",31,0)
+ Q
+"RTN","PSOUTLA",32,0)
+DAYS ;
+"RTN","PSOUTLA",33,0)
+ K PSFMAX S ED=1,PSODEA=$P(^PSDRUG($P(^PSRX(DA,0),"^",6),0),"^",3),PSDAYS=$P(^PSRX(DA,0),"^",8),CS=0
+"RTN","PSOUTLA",34,0)
+ D EDNEW K:ED PSFMAX,ED K:$P(^PSRX(DA,0),"^",9)'>MAX PSMAX
+"RTN","PSOUTLA",35,0)
+ Q
+"RTN","PSOUTLA",36,0)
+EDNEW ;
+"RTN","PSOUTLA",37,0)
+ K PSMAX,PSFMAX
+"RTN","PSOUTLA",38,0)
+ ; Retrieving the Maximum Number of Refills allowed
+"RTN","PSOUTLA",39,0)
+ S PSMAX=$$MAXNUMRF^PSOUTIL(+$P(^PSRX(DA,0),"^",6),PSDAYS,+$P(^PSRX(DA,0),"^",3),.CLOZPAT)
+"RTN","PSOUTLA",40,0)
+ ;
+"RTN","PSOUTLA",41,0)
+ I PSRF>PSMAX D
+"RTN","PSOUTLA",42,0)
+ .W $C(7),!!,PSRF_" refills are not correct for a "_PSDAYS_" day supply.",!,"Please enter correct # of refills for a "_PSDAYS_" day supply. Max refills allowed is "_PSMAX_".",!
+"RTN","PSOUTLA",43,0)
+ K PSTMAX D EDSTAT
+"RTN","PSOUTLA",44,0)
+ Q
+"RTN","PSOUTLA",45,0)
+STATDAY K PSMAX,PSRMAX,PSFMAX,PSTMAX S PSDAYS=$P(^PSRX(DA,0),"^",8),PSRF=$P(^PSRX(DA,0),"^",9),PTST=$P(^PS(53,X,0),"^"),PTDY=$P(^(0),"^",3),PTRF=$P(^(0),"^",4)
+"RTN","PSOUTLA",46,0)
+EDSTAT I PSRF>PTRF D EN^DDIOL(PSRF_" refills are greater than "_PTRF_" allowed for "_$P(PTST,"^")_" Rx Patient Status.","","$C(7),!") D EN^DDIOL(" ","","!")
+"RTN","PSOUTLA",47,0)
+ Q
+"RTN","PSOUTLA",48,0)
+PARKILL S CNT=0 F SUB=0:0 S SUB=$O(^PSRX(DA(1),"A",SUB)) Q:'SUB  S CNT=SUB
+"RTN","PSOUTLA",49,0)
+ I '$G(RESK) D  G:$D(DIRUT) PARKILL
+"RTN","PSOUTLA",50,0)
+ .D EN^DDIOL(" ","","!") K DIR S DIR(0)="FO^10:75",DIR("A",1)="Enter Reason for Edit:",DIR("A")="=>",DIR("?",1)="This is a required response.  No Up-arrowing allowed."
+"RTN","PSOUTLA",51,0)
+ .S DIR("?")="Response must be 10-75 characters in length.",DIR("B")="Entered In Error"
+"RTN","PSOUTLA",52,0)
+ .D ^DIR I $D(DIRUT) D EN^DDIOL("This is a required response.  No Up-arrowing allowed.","","!") Q
+"RTN","PSOUTLA",53,0)
+ .S ACOM=$S($G(Y)]""&('$D(DIRUT)):Y,1:"Partial Entered In Error.")
+"RTN","PSOUTLA",54,0)
+ .S PSOPRZ=$G(PSOPRZ)-1 S:PSOPRZ<0 PSOPRZ=0
+"RTN","PSOUTLA",55,0)
+ S:$G(RESK) ACOM="Partial fill returned to stock."
+"RTN","PSOUTLA",56,0)
+ D NOW^%DTC S CNT=CNT+1 S ^PSRX(DA(1),"A",0)="^52.3DA^"_CNT_"^"_CNT,^PSRX(DA(1),"A",CNT,0)=%_"^D^"_DUZ_"^6^"_ACOM K CNT,SUB,DIR,DTOUT,DUOUT
+"RTN","PSOUTLA",57,0)
+ Q
+"RTN","PSOUTLA",58,0)
+SETUP ;enter/edit clinic sort groups
+"RTN","PSOUTLA",59,0)
+ W ! S (DLAYGO,DIC,DIE)=59.8,DIC("A")="Select Clinic Sort Group: ",DIC(0)="AEQML" D ^DIC G:"^"[$E(X) SETUPX G:Y<1 SETUP S DA=+Y,DR=".01;1" D ^DIE
+"RTN","PSOUTLA",60,0)
+SETUPX K DIE,DIC,DA,DLAYGO,Y,X,DR
+"RTN","PSOUTLA",61,0)
+ Q
+"RTN","PSOUTLA",62,0)
+FSIG(PSOFILE,PSOINTR,PSOLENTH) ;Format front door sig
+"RTN","PSOUTLA",63,0)
+ ;PSOFILE is 'P' if in Pending File, 'R' if in Prescription File
+"RTN","PSOUTLA",64,0)
+ ;PSOINTR is internal number for either file
+"RTN","PSOUTLA",65,0)
+ ;PSOLENTH is length of each line of the Sig
+"RTN","PSOUTLA",66,0)
+ ;returned in the FSIG array
+"RTN","PSOUTLA",67,0)
+ K FSIG I $G(PSOFILE)=""!('$G(PSOINTR))!('$G(PSOLENTH)) G FQUIT
+"RTN","PSOUTLA",68,0)
+ I PSOFILE'="P",PSOFILE'="R" G FQUIT
+"RTN","PSOUTLA",69,0)
+ I PSOFILE="P",'$D(^PS(52.41,+PSOINTR,0)) G FQUIT
+"RTN","PSOUTLA",70,0)
+ I PSOFILE="R",'$D(^PSRX(+PSOINTR,0)) G FQUIT
+"RTN","PSOUTLA",71,0)
+ I PSOFILE="R",'$P($G(^PSRX(+PSOINTR,"SIG")),"^",2) G FQUIT
+"RTN","PSOUTLA",72,0)
+ N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II
+"RTN","PSOUTLA",73,0)
+ I PSOFILE="P" F NNN=0:0 S NNN=$O(^PS(52.41,PSOINTR,"SIG",NNN)) Q:'NNN  S:$G(^(NNN,0))'="" HSIG(NNN)=^(0)
+"RTN","PSOUTLA",74,0)
+ I PSOFILE="P" G:'$O(HSIG(0)) FQUIT G FSTART
+"RTN","PSOUTLA",75,0)
+ ;S HSIG(1)=$P($G(^PSRX(PSOINTR,"SIG")),"^") S FFF=2 F NNN=0:0 S NNN=$O(^PSRX(PSOINTR,"SIG1",NNN)) Q:'NNN  I $G(^(NNN,0))'="" S HSIG(FFF)=$G(^(0)),FFF=FFF+1
+"RTN","PSOUTLA",76,0)
+ S FFF=1 F NNN=0:0 S NNN=$O(^PSRX(PSOINTR,"SIG1",NNN)) Q:'NNN  I $G(^(NNN,0))'="" S HSIG(FFF)=^(0) S FFF=FFF+1
+"RTN","PSOUTLA",77,0)
+ G:'$O(HSIG(0)) FQUIT
+"RTN","PSOUTLA",78,0)
+FSTART S (FVAR,FVAR1)="",II=1
+"RTN","PSOUTLA",79,0)
+ F FFF=0:0 S FFF=$O(HSIG(FFF)) Q:'FFF  S CNT=0 F NNN=1:1:$L(HSIG(FFF)) I $E(HSIG(FFF),NNN)=" "!($L(HSIG(FFF))=NNN) S CNT=CNT+1 D  I $L(FVAR)>PSOLENTH S FSIG(II)=FLIM_" ",II=II+1,FVAR=FVAR1
+"RTN","PSOUTLA",80,0)
+ .S FVAR1=$P(HSIG(FFF)," ",(CNT))
+"RTN","PSOUTLA",81,0)
+ .S FLIM=FVAR
+"RTN","PSOUTLA",82,0)
+ .S FVAR=$S(FVAR="":FVAR1,1:FVAR_" "_FVAR1)
+"RTN","PSOUTLA",83,0)
+ I $G(FVAR)'="" S FSIG(II)=FVAR
+"RTN","PSOUTLA",84,0)
+ I $G(FSIG(1))=""!($G(FSIG(1))=" ") S FSIG(1)=$G(FSIG(2)) K FSIG(2)
+"RTN","PSOUTLA",85,0)
+FQUIT Q
+"RTN","PSOUTLA",86,0)
+DRUGW ;
+"RTN","PSOUTLA",87,0)
+ F Z0=1:1 Q:$P(X,",",Z0,99)=""  S Z1=$P(X,",",Z0) W:$D(^PS(54,Z1,0)) ?35,$P(^(0),"^"),! I '$D(^(0)) W ?35,"NO SUCH WARNING LABEL" K X Q
+"RTN","PSOUTLA",88,0)
+ Q
+"RTN","PSOUTLA",89,0)
+HLNEW ;formats provider instructions in FSIG for front door order
+"RTN","PSOUTLA",90,0)
+ K FSIG N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II,LLP,PSOLENTH
+"RTN","PSOUTLA",91,0)
+ S PSOLENTH=59,LLP=1 F LLL=0:0 S LLL=$O(WPARRAY(7,LLL)) Q:'LLL  S HSIG(LLP)=$G(WPARRAY(7,LLL)),LLP=LLP+1
+"RTN","PSOUTLA",92,0)
+ D FSTART Q
+"RTN","PSOUTLA",93,0)
+HLNEWX ;
+"RTN","PSOUTLA",94,0)
+ K FSIG N FFF,NNN,CNT,FVAR,FVAR1,FLIM,HSIG,II,LLP,PSOLENTH
+"RTN","PSOUTLA",95,0)
+ S PSOLENTH=59,LLP=1 F LLL=0:0 S LLL=$O(WPARRAY(6,LLL)) Q:'LLL  S HSIG(LLP)=$G(WPARRAY(6,LLL)),LLP=LLP+1
+"RTN","PSOUTLA",96,0)
+ D FSTART Q
+"RTN","PSOUTLA",97,0)
+ ;
+"RTN","PSOUTLA",98,0)
+SUSFDS ;
+"RTN","PSOUTLA",99,0)
+ N SUSIEN
+"RTN","PSOUTLA",100,0)
+ Q:$O(^PSRX(DA,1,0))
+"RTN","PSOUTLA",101,0)
+ S SUSIEN=+$O(^PS(52.5,"B",DA,0)) Q:'$G(SUSIEN)
+"RTN","PSOUTLA",102,0)
+ Q:'$D(^PS(52.5,SUSIEN,0))!($G(^PS(52.5,SUSIEN,"P")))
+"RTN","PSOUTLA",103,0)
+ I '$P($G(^PS(52.5,SUSIEN,0)),"^",5),'$P($G(^(0)),"^",13) S $P(^PS(52.5,SUSIEN,0),"^",2)=X,^PS(52.5,"C",X,SUSIEN)="" D
+"RTN","PSOUTLA",104,0)
+ .I $P($G(^PS(52.5,SUSIEN,0)),"^",7)="Q" S ^PS(52.5,"AQ",X,+$P($G(^PS(52.5,SUSIEN,0)),"^",3),SUSIEN)="" D SCMPX^PSOCMOP(SUSIEN,"Q") Q
+"RTN","PSOUTLA",105,0)
+ .S ^PS(52.5,"AC",+$P($G(^PS(52.5,SUSIEN,0)),"^",3),X,SUSIEN)=""
+"RTN","PSOUTLA",106,0)
+ Q
+"RTN","PSOUTLA",107,0)
+SUSFDK ;
+"RTN","PSOUTLA",108,0)
+ N SUSIEN
+"RTN","PSOUTLA",109,0)
+ Q:$O(^PSRX(DA,1,0))
+"RTN","PSOUTLA",110,0)
+ S SUSIEN=+$O(^PS(52.5,"B",DA,0)) Q:'$G(SUSIEN)
+"RTN","PSOUTLA",111,0)
+ Q:'$D(^PS(52.5,SUSIEN,0))!($G(^PS(52.5,SUSIEN,"P")))
+"RTN","PSOUTLA",112,0)
+ I '$P($G(^PS(52.5,SUSIEN,0)),"^",5),'$P($G(^(0)),"^",13) K ^PS(52.5,"C",X,SUSIEN) D
+"RTN","PSOUTLA",113,0)
+ .I $P($G(^PS(52.5,SUSIEN,0)),"^",7)="Q" K ^PS(52.5,"AQ",X,+$P($G(^PS(52.5,SUSIEN,0)),"^",3),SUSIEN) D KCMPX^PSOCMOP(SUSIEN,"Q") Q
+"RTN","PSOUTLA",114,0)
+ .K ^PS(52.5,"AC",+$P($G(^PS(52.5,SUSIEN,0)),"^",3),X,SUSIEN)
+"RTN","PSOUTLA",115,0)
+ Q
+"RTN","PSOUTLA",116,0)
+ADD ;enter/edit automated devices - OPAI
+"RTN","PSOUTLA",117,0)
+ W ! S (DLAYGO,DIC,DIE)=52.53,DIC("A")="Select ADD Name: ",DIC(0)="AEQML" D ^DIC G:"^"[$E(X) ADDX G:Y<1 ADD S DA=+Y,DR=".01;1;2;3" D ^DIE G ADD
+"RTN","PSOUTLA",118,0)
+ADDX K DIE,DIC,DA,Y,X,DR
+"RTN","PSOUTLA",119,0)
+ Q
+"RTN","PSOUTLA",120,0)
+ ;
+"RTN","PSOUTLA",121,0)
+FLDTINTR(FILLTYPE) ; Input Transform for FILL DATE, REFILL DATE and PARTIAL DATE fields in the PRESCRIPTION file (#52)
+"RTN","PSOUTLA",122,0)
+ ;Input Parameter: FILLTYPE - Prescription Fill Type: "O": Original, "R": Refill, "P": Partial
+"RTN","PSOUTLA",123,0)
+ ;Input Variables: X - Fill Date entered / DA/DA(1) - Pointer to the PRESCRIPTION file (#52)
+"RTN","PSOUTLA",124,0)
+ N RXIEN,%DT,Y
+"RTN","PSOUTLA",125,0)
+ I '$D(X) Q
+"RTN","PSOUTLA",126,0)
+ S RXIEN=+$S(FILLTYPE="O":$G(DA),1:$G(DA(1)))
+"RTN","PSOUTLA",127,0)
+ S %DT="EX" D ^%DT S X=Y I Y<1 D EN^DDIOL("INVALID DATE","","$C(7),!!5") K X Q
+"RTN","PSOUTLA",128,0)
+ I '$D(^PSRX(RXIEN,0)) Q
+"RTN","PSOUTLA",129,0)
+ I $P(^PSRX(RXIEN,0),U,13),X<$P(^PSRX(RXIEN,0),U,13) D  K X Q
+"RTN","PSOUTLA",130,0)
+ . D EN^DDIOL($S(FILLTYPE="O":"FILL",FILLTYPE="R":"REFILL",1:"PARTIAL")_" DATE cannot be before ISSUE DATE ("_$$FMTE^XLFDT($P(^PSRX(RXIEN,0),U,13),"2Z")_")","","$C(7),!!?5")
+"RTN","PSOUTLA",131,0)
+ I '$D(^PSRX(RXIEN,2)) Q
+"RTN","PSOUTLA",132,0)
+ I $P(^PSRX(RXIEN,2),U,6),X>$P(^PSRX(RXIEN,2),U,6) D  K X Q
+"RTN","PSOUTLA",133,0)
+ . D EN^DDIOL($S(FILLTYPE="O":"FILL",FILLTYPE="R":"REFILL",1:"PARTIAL")_" DATE cannot be after EXPIRATION DATE ("_$$FMTE^XLFDT($P(^PSRX(RXIEN,2),U,6),"2Z")_")","","$C(7),!!?5")
+"RTN","PSOUTLA",134,0)
+ Q
+"RTN","PSOUTLA",135,0)
+ ;
+"RTN","PSOUTLA",136,0)
+FLDTHELP(FILLTYPE) ; Executable Help for FILL DATE, REFILL DATE and PARTIAL DATE fields in the PRESCRIPTION file (#52)
+"RTN","PSOUTLA",137,0)
+ ;Input Parameter: FILLTYPE - Prescription Fill Type: "O": Original, "R": Refill, "P": Partial
+"RTN","PSOUTLA",138,0)
+ ;Input Variables: DA/DA(1) - Pointer to the PRESCRIPTION file (#52)
+"RTN","PSOUTLA",139,0)
+ N RXIEN
+"RTN","PSOUTLA",140,0)
+ S RXIEN=+$S(FILLTYPE="O":$G(DA),1:$G(DA(1)))
+"RTN","PSOUTLA",141,0)
+ I $P($G(^PSRX(RXIEN,0)),"^",13) D
+"RTN","PSOUTLA",142,0)
+ . D EN^DDIOL("The "_$S(FILLTYPE="O":"FILL",FILLTYPE="R":"REFILL",1:"PARTIAL")_" DATE cannot be before ISSUE DATE ("_$$FMTE^XLFDT($P(^PSRX(RXIEN,0),U,13),"2Z")_")","","!")
+"RTN","PSOUTLA",143,0)
+ I $P($G(^PSRX(RXIEN,2)),"^",6) D
+"RTN","PSOUTLA",144,0)
+ . D EN^DDIOL("The "_$S(FILLTYPE="O":"FILL",FILLTYPE="R":"REFILL",1:"PARTIAL")_" DATE cannot be after EXPIRATION DATE ("_$$FMTE^XLFDT($P(^PSRX(RXIEN,2),U,6),"2Z")_")","","!")
+"RTN","PSOUTLA",145,0)
+ Q
+"UP",52,52.1,-1)
+52^1
+"UP",52,52.1,0)
+52.1
+"VER")
+8.0^22.2
+"^DD",52,52,22,0)
+FILL DATE^DX^^2;2^D FLDTINTR^PSOUTLA("O")
+"^DD",52,52,22,1,0)
+^.1
+"^DD",52,52,22,1,1,0)
+52^AD^MUMPS
+"^DD",52,52,22,1,1,1)
+S ^PSRX("AD",X,DA,0)=""
+"^DD",52,52,22,1,1,2)
+K ^PSRX("AD",X,DA,0)
+"^DD",52,52,22,1,1,"%D",0)
+^^2^2^2971022^^^^
+"^DD",52,52,22,1,1,"%D",1,0)
+This cross reference lists the fill date and the internal entry number.
+"^DD",52,52,22,1,1,"%D",2,0)
+It sets the global ^PSRX("AD",Fill Date,DA,0)="".
+"^DD",52,52,22,1,2,0)
+52^AE^MUMPS
+"^DD",52,52,22,1,2,1)
+I '$O(^PSRX(DA,1,0)) S $P(^PSRX(DA,3),"^")=X
+"^DD",52,52,22,1,2,2)
+Q
+"^DD",52,52,22,1,2,"%D",0)
+^^2^2^2971022^^^
+"^DD",52,52,22,1,2,"%D",1,0)
+This xref is used to update last dispense date field (#101).
+"^DD",52,52,22,1,2,"%D",2,0)
+It sets piece 1 of ^PSRX(DA,3)=Fill date.
+"^DD",52,52,22,1,2,"DT")
+2920417
+"^DD",52,52,22,1,3,0)
+52^ACP^MUMPS
+"^DD",52,52,22,1,3,1)
+S:$P($G(^PSRX(DA,0)),"^",2)&($P($G(^(0)),"^",11)="W")&('$P($G(^(2)),"^",13))&('$P($G(^(2)),"^",15))&(+$G(^("IB"))) ^PSRX("ACP",$P(^PSRX(DA,0),"^",2),X,0,DA)=""
+"^DD",52,52,22,1,3,2)
+K:$P($G(^PSRX(DA,0)),"^",2)&($P($G(^(0)),"^",11)="W")&('$P($G(^(2)),"^",13))&('$P($G(^(2)),"^",15))&('+$G(^("IB"))) ^PSRX("ACP",$P(^PSRX(DA,0),"^",2),X,0,DA)
+"^DD",52,52,22,1,3,3)
+Do Not Delete!
+"^DD",52,52,22,1,3,"%D",0)
+^^3^3^2971022^^^^
+"^DD",52,52,22,1,3,"%D",1,0)
+This cross reference is used to index copay fills that have not been billed
+"^DD",52,52,22,1,3,"%D",2,0)
+through the IB package. It sets the global
+"^DD",52,52,22,1,3,"%D",3,0)
+^PSRX("ACP",Patient,Fill Date,0,DA)="".
+"^DD",52,52,22,1,3,"DT")
+2930729
+"^DD",52,52,22,1,4,0)
+52^AR^MUMPS
+"^DD",52,52,22,1,4,1)
+D SUSFDS^PSOUTLA
+"^DD",52,52,22,1,4,2)
+D SUSFDK^PSOUTLA
+"^DD",52,52,22,1,4,"%D",0)
+^^3^3^2980106^^
+"^DD",52,52,22,1,4,"%D",1,0)
+This cross reference is used to the the suspense date up to date if the
+"^DD",52,52,22,1,4,"%D",2,0)
+Rx is in suspense. It sets piece 2 of ^PS(52.5,DA,0)=Fill Date, sets
+"^DD",52,52,22,1,4,"%D",3,0)
+^PS(52.5,"C",Fill Date,DA)="", and ^PS(52.5,"AC",Patient,Fill Date,DA)="".
+"^DD",52,52,22,1,4,"DT")
+2980106
+"^DD",52,52,22,1,5,0)
+52^ADL^MUMPS
+"^DD",52,52,22,1,5,1)
+I X,$P(^PSRX(DA,0),"^",6) S ^PSRX("ADL",X,$P(^PSRX(DA,0),"^",6),DA)=""
+"^DD",52,52,22,1,5,2)
+I X,$P(^PSRX(DA,0),"^",6) K ^PSRX("ADL",X,$P(^PSRX(DA,0),"^",6),DA)
+"^DD",52,52,22,1,5,3)
+Please do not delete.
+"^DD",52,52,22,1,5,"%D",0)
+^^6^6^2980928^^^^
+"^DD",52,52,22,1,5,"%D",1,0)
+This xref will be used to index Rxs by filldate and drug pointer. This xref
+"^DD",52,52,22,1,5,"%D",2,0)
+will be used to find Rxs with drug whose price have changed in the Drug
+"^DD",52,52,22,1,5,"%D",3,0)
+file (#50) and needs updating in this file.  
+"^DD",52,52,22,1,5,"%D",4,0)
+ 
+"^DD",52,52,22,1,5,"%D",5,0)
+Cross reference will look like the following: 
+"^DD",52,52,22,1,5,"%D",6,0)
+ ^PSRX("ADL",FILLDATE,DRUG POINTER,DA)="" 
+"^DD",52,52,22,1,5,"DT")
+2980928
+"^DD",52,52,22,3)
+Enter the fill date for the prescription.
+"^DD",52,52,22,4)
+D FLDTHELP^PSOUTLA("O")
+"^DD",52,52,22,21,0)
+^^1^1^2970903^^^^
+"^DD",52,52,22,21,1,0)
+The date the prescription was filled.
+"^DD",52,52,22,23,0)
+^^1^1^2970903^^^^
+"^DD",52,52,22,23,1,0)
+Date.
+"^DD",52,52,22,"DT")
+3171016
+"^DD",52,52,52,0)
+REFILL^52.1D^^1;0
+"^DD",52,52,52,2)
+
+"^DD",52,52,52,3)
+
+"^DD",52,52,52,4)
+
+"^DD",52,52,52,7)
+
+"^DD",52,52,52,10)
+VAF 10-2577
+"^DD",52,52,52,21,0)
+^.001^1^1^3170606^^^^
+"^DD",52,52,52,21,1,0)
+This is the date the prescription is refilled.
+"^DD",52,52,52,23,0)
+^.001^1^1^3170606^^^^
+"^DD",52,52,52,23,1,0)
+Date Multiple #52.1 (Add new entry without asking).
+"^DD",52,52,52,"DT")
+3170526
+"^DD",52,52.1,0)
+REFILL SUB-FIELD^NL^20^36
+"^DD",52,52.1,0,"NM","REFILL")
+
+"^DD",52,52.1,.01,0)
+REFILL DATE^DX^^0;1^D FLDTINTR^PSOUTLA("R")
+"^DD",52,52.1,.01,1,0)
+^.1
+"^DD",52,52.1,.01,1,1,0)
+52.1^B
+"^DD",52,52.1,.01,1,1,1)
+S ^PSRX(DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",52,52.1,.01,1,1,2)
+K ^PSRX(DA(1),1,"B",$E(X,1,30),DA)
+"^DD",52,52.1,.01,1,2,0)
+52^AD
+"^DD",52,52.1,.01,1,2,1)
+S ^PSRX("AD",$E(X,1,30),DA(1),DA)=""
+"^DD",52,52.1,.01,1,2,2)
+K ^PSRX("AD",$E(X,1,30),DA(1),DA)
+"^DD",52,52.1,.01,1,3,0)
+52.1^AC^MUMPS
+"^DD",52,52.1,.01,1,3,1)
+I '$O(^PSRX(DA(1),1,0)) S $P(^PSRX(DA(1),3),"^")=X
+"^DD",52,52.1,.01,1,3,2)
+F IK=DA-1:-1 S:IK<1 $P(^(3),"^")=$P(^PSRX(DA(1),2),"^",2) Q:IK<1  I $D(^PSRX(DA(1),1,IK,0)) S $P(^PSRX(DA(1),3),"^")=+^(0) Q
+"^DD",52,52.1,.01,1,3,"%D",0)
+^^2^2^2971029^^^^
+"^DD",52,52.1,.01,1,3,"%D",1,0)
+This cross reference sets the Last Dispensed Date field with the refill
+"^DD",52,52.1,.01,1,3,"%D",2,0)
+date. It sets piece 1 of ^PSRX(DA,3)=Refill Date.
+"^DD",52,52.1,.01,1,4,0)
+52.1^AB^MUMPS
+"^DD",52,52.1,.01,1,4,1)
+D S52^PSOUTL
+"^DD",52,52.1,.01,1,4,2)
+D K52^PSOUTL
+"^DD",52,52.1,.01,1,4,3)
+DO NOT DELETE.
+"^DD",52,52.1,.01,1,4,"%D",0)
+^^3^3^2971029^^^^
+"^DD",52,52.1,.01,1,4,"%D",1,0)
+This cross reference kills the SUSPENSE File record and cross references
+"^DD",52,52.1,.01,1,4,"%D",2,0)
+the SUSPENSE File. It sets piece 2 of ^PS(52.5,DA,0)=Refill Date,
+"^DD",52,52.1,.01,1,4,"%D",3,0)
+^PS(52.5,"C",Refill Date,DA)="",^PS(52.5,"AC",Patient,Refill Date,DA)="".
+"^DD",52,52.1,.01,1,4,"DT")
+2930115
+"^DD",52,52.1,.01,1,5,0)
+52.1^AE^MUMPS
+"^DD",52,52.1,.01,1,5,1)
+D SPR^PSOUTL
+"^DD",52,52.1,.01,1,5,2)
+D KPR^PSOUTL
+"^DD",52,52.1,.01,1,5,"%D",0)
+^^2^2^2971029^^^^
+"^DD",52,52.1,.01,1,5,"%D",1,0)
+This cross reference updates the Prior Fill Date field.
+"^DD",52,52.1,.01,1,5,"%D",2,0)
+It sets piece 4 of ^PSRX(DA,3)=Fill Date.
+"^DD",52,52.1,.01,1,5,"DT")
+2930129
+"^DD",52,52.1,.01,1,6,0)
+52.1^ACP^MUMPS
+"^DD",52,52.1,.01,1,6,1)
+I +$G(^PSRX(DA(1),"IB")) S:$P($G(^PSRX(DA(1),0)),"^",2)&($P($G(^PSRX(DA(1),1,DA,0)),"^",2)="W")&('$P($G(^(0)),"^",16))&('$P($G(^(0)),"^",18))&('$G(^("IB"))) ^PSRX("ACP",$P(^PSRX(DA(1),0),"^",2),X,DA,DA(1))=""
+"^DD",52,52.1,.01,1,6,2)
+I +$G(^PSRX(DA(1),"IB")) K:$P($G(^PSRX(DA(1),0)),"^",2)&($P($G(^PSRX(DA(1),1,DA,0)),"^",2)="W")&('$P($G(^(0)),"^",16))&('$P($G(^(0)),"^",18))&('$G(^("IB"))) ^PSRX("ACP",$P(^PSRX(DA(1),0),"^",2),X,DA,DA(1))
+"^DD",52,52.1,.01,1,6,3)
+Do Not Delete!
+"^DD",52,52.1,.01,1,6,"%D",0)
+^^3^3^2971216^^^^
+"^DD",52,52.1,.01,1,6,"%D",1,0)
+This cross reference is used to index copay refills that have not
+"^DD",52,52.1,.01,1,6,"%D",2,0)
+been billed through the IB package. It sets the global
+"^DD",52,52.1,.01,1,6,"%D",3,0)
+^PSRX("ACP",Patient,Refill Date,Refill Number,DA)="".
+"^DD",52,52.1,.01,1,6,"DT")
+2930730
+"^DD",52,52.1,.01,3)
+Enter the refill date for the prescription refill.
+"^DD",52,52.1,.01,4)
+D FLDTHELP^PSOUTLA("R")
+"^DD",52,52.1,.01,9.2)
+S Z0=0,Z1=+$P(^PSRX(DA(1),0),U,9),Z2=$P(^(0),U,13),I=0 F  S I=$O(^PSRX(DA(1),1,I)) Q:'I  Q:+^(I,0)=X  S Z0=Z0+1 S:+^(0)>Z2 Z2=+^(0)
+"^DD",52,52.1,.01,9.3)
+S (XS,X1)=X,X2=Z2 D ^%DTC K:X<20 X,XS W:'$D(XS) "   LESS THAN 20 DAYS." I $D(XS) S X2=+$P(^PSRX(DA(1),0),U,13),X1=XS D ^%DTC K:X>185 XS,X W:'$D(XS) "  MORE THAN 180 DAYS."
+"^DD",52,52.1,.01,21,0)
+^^1^1^2970402^^^^
+"^DD",52,52.1,.01,21,1,0)
+This is the date the prescription is refilled.
+"^DD",52,52.1,.01,22)
+
+"^DD",52,52.1,.01,23,0)
+^^1^1^2970402^^^^
+"^DD",52,52.1,.01,23,1,0)
+Date.
+"^DD",52,52.1,.01,"DEL",1,0)
+D WARN^PSOCPC I $T
+"^DD",52,52.1,.01,"DEL",2,0)
+D WARN^PSOUTL
+"^DD",52,52.1,.01,"DT")
+3171016
+"BLD",10450,6)
+^421
+**END**
+**END**
+

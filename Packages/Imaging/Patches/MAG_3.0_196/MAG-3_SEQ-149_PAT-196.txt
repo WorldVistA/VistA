@@ -1,0 +1,691 @@
+
+=============================================================================
+Run Date: MAR 29, 2018                     Designation: MAG*3*196
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #149                      Status: Released
+                  Compliance Date: APR 30, 2018
+=============================================================================
+
+
+Subject: Background Processor issues
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ===================
+ This patch must be installed after MAG*3.0*156, MAG*3.0*168, and
+ MAG*3.0*186.
+  
+ Subject:  
+ ========
+ BACKGROUND PROCESSOR (BP) DELPHI UPGRADE AND DEFECT FIXES
+  
+ Category:  OTHER
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*196, a patch that provides fixes to the 
+ Background Processor(BP).  In particular, this patch addresses the
+ following issues:
+         Delphi development environment upgrade from Delphi 7 to Delphi 
+         XE8. 
+         EVAL Queue not decrementing correctly. 
+         Reduce delay when processing JUKEBOX queues.
+         Buttons are not displaying completely on Queue Processor Requeue 
+         window. 
+         Users are unable to edit a VistA Site Service physical reference 
+         in the Background Processor.
+         HTML Log files are not formatted correctly.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document 
+ provides an overview, explains the changes, and outlines the installation
+ for this patch.  MAG3_0P196_README.txt, if present, is an informative file
+ associated with the patch released.
+  
+ Software:
+ =========
+ File Name                                     Description
+ =========                                     =========
+ MAG3_0P196.KID                                Kernel Installation and 
+                                               Distribution System 
+                                               (KIDS) build for Patch 196
+ MAG3_0P196_Background_Processor_Setup.exe     Background Processor 
+                                               client installation file.
+ MAG3_0P196_Patch_Description.pdf              Patch Description for 
+                                               P196 
+ Mag_BP_User_Manual.pdf                        Background Processor User 
+                                               Manual
+ Documentation:
+ ==============
+ This document, MAG3_0P196_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Task 610713:  Adaptive Maintenance: Delphi Upgrade
+ Problem:  
+ This task upgrades the development environment for the 
+ Background Processor from Delphi 7 to Delphi XE8. Per the TRM, the
+ Background Processor was out of compliance with the latest approved
+ version of Delphi.
+  
+ Resolution:  
+ The version of Delphi used to build the BP has been upgraded to Delphi 
+ XE8.
+  
+ 2.  Defect 590807 (Ticket # I15862932FY17) Eval Queue Counter not 
+ Decrementing Correctly
+ Problem:  
+ A site was receiving "VI_BP_Eval_Queue" email alerts related to Routing.  
+ Their EVAL Queue had climbed above 41,000 images.  The IMAGE BACKGROUND
+ QUEUE POINTER file (2006.031) has an individual entry that keeps a running
+ counter of the number of items in the EVAL Queue.  When an EVAL entry is
+ removed from 2006.3, the counter was not being decremented correctly, so
+ the count continued to rise.
+  
+ Resolution: 
+ This fix, introduced by a Clin 3 support specialist, corrected the code 
+ so that the counter increments and decrements properly, which will stop
+ the erroneous emails.
+  
+  
+ 3.  Defect 590810 (Ticket #R16232234FY17) BP Process Delay with JUKEBOX 
+ Queue 
+  
+ Problem: 
+ The Background Processor has a one second delay after processing a 
+ JUKEBOX queue. This delay limits the maximum number of images written per
+ day to 86,400. Gainesville exceeds 100K new images accumulated per day.
+ The Verifier needed to run over the weekend to keep the queue low enough
+ so that the DELETE queue could  be processed.
+  
+ Resolution:  
+ An option has been added to the Background Processor to enable the user 
+ to choose the length of the delay. The option has selectable delay times
+ that are fractions of a second.
+  
+ On the BP Main window, there is a new panel to the left of the Start
+ button.  It shows the time of day.
+  
+ If the user double-clicks on the time of day, a panel with a list of 
+ selectable delays will show. The user will not have to stop the BP. The
+ entries in the list are in milliseconds (ms). When the BP is started, 1000
+ ms is selected.  The user can select a different delay to speed up
+ the processing of queues.        
+  
+ Also, the Delay pane can be shown by clicking on the menu option : Edit | 
+ Set Queue pause (delay)
+  
+ If there are "0" active queues,  the phrase "(0 Active)"  will be 
+ displayed and the delay will change to 3 seconds. When there are active
+ queues, the "(0 Active)" will be hidden, and the delay will change back to
+ what is selected in the Delay drop down list.     
+  
+  
+ Note: 
+ =====
+ The time of day has been added as a visual indicator that the BP is 
+ running and isn't hung or frozen.  The time of day is updated every second
+ (or every 3 seconds if there are 0 active queues).
+  
+ The time of day will switch between being underlined and not underlined 
+ every time the BP checks VistA for queues to process as another visual
+ indicator that the BP is running. The entries in the list of queues will
+ not be highlighted and will not flash anymore as the list is updated.
+  
+  
+ 4.  Defect 590811 (Ticket # R16379827FY17) Queue Processor Requeue Window 
+ is Too Large to Show Buttons
+  
+ Problem:  
+ The buttons on the Queue Processor Requeue window are partially hidden 
+ when the window opens. The users have to scroll up or downto see them.
+ Also, the physical location that is displayed in certain columns is not
+ fully visible and the columns do not resize correctly. Some windows opened
+ from the Edit menu do not show the Apply/Save buttons unless the window is
+ maximized.
+  
+ Resolution:  
+ The Queue Processor Requeue window has been modified so that all buttons 
+ are visible when it opens. Other windows and lists in the BP application
+ have been modified so that all buttons are visible and columns can be
+ resized to show the entire text of the column entry.
+  
+ Examples:
+  
+ The Popup menu enables users to resize all columns to fit the Header or 
+ Text Width.
+ Edit boxes will resize when the window is resized.
+  
+  
+ 5.  Defect 454040 (Ticket # I9406546FY16) Unable to Edit VistA Site 
+ Service Physical Reference in BP
+ Problem:  
+ When the user is attempting to edit the URL for the VistA Site Service in 
+ the BP Network Location Manager, the physical reference entry for the
+ VistA site service is prepended with "C:\xxxx\xxxx" and will not let the
+ user remove it and edit the URL. Also, this error is received when the
+ user attempts to add a URL.  After the user enters the URL and selects
+ save, the Background Processor appends 'C:\xxxxx\xxx" to the beginning of
+ the entry.
+  
+ Resolution:  
+ This has been corrected.  The user can now enter and edit a URL in the 
+ Network Share field for URLs in the Network Location Properties window.
+  
+ 6. Defect 683800 (Ticket R18602766FY18)  BP HTML Log Files are not 
+ formatted correctly, and are hard to review   
+ Problem:
+ The BP applications create many log files, and these files are saved in 
+ HTML format. The HTML tags were incorrect resulting in every data value
+ being written to a new line, instead of written to the appropriate column
+ of the HTML Table.
+  
+ Resolution: 
+ The code that generates the HTML Files was fixed.  Data values are now 
+ displayed in the correct column.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         El Paso VA Health Care System
+         North Florida/South Georgia, VA Health Care System
+         St. Cloud VA Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation: 
+ ===================
+ IMPORTANT:  The client install process for Background Processor Patch 
+ MAG*3.0*196 has changed.
+ Do NOT uninstall MagBPSetup.exe (Patch 135) from the control panel, 
+ because MAG*3.0*196 is not a complete client install.
+ The client install for this patch will install additional executables, 
+ Magbtm196.exe, MagPurge196.exe, MagVerifier196.exe and
+ MagHTMLArchive196.exe in the c:\program files
+ (x86)\vista\imaging\backproc\ folder. 
+ MAG*3.0*135 will remain fully functional after the MAG*3.0*196 install. 
+ After the client install, there will be two client executables in the 
+ c:\program files (x86)\vista \imaging\backproc folder for the Background
+ Processor, Verifier, Purge and HTML Archive applications.  The executables
+ for MAG*3.0*196 have '196' appended to the name.
+  
+ Desktop Icons used in Patch 135 Desktop Icons used in Patch  196        
+ Start Menu Background Processor Items
+  
+ Version control will change when the MAG*3.0*196 KIDS is installed. It 
+ will be possible to open either magbtm.exe (MAG*3.0*135) or magbtm196.exe
+ (MAG*3.0*196) and log onto VistA. This also applies to the Verifier and
+ Purge applications. 
+  
+ NOTE: 
+ =====
+ There will be two Background Processor executables in the \backproc 
+ folder, magbtm.exe and magbtm196.exe. Multiple instances of the BP Queue
+ Processor can be opened at the same time, however, only one can be running
+ at a time with the Start button pressed. 
+ Pressing the Start 
+  
+ Button on two Background Processor applications on the same server will 
+ cause problems.
+  
+ Summary: 
+ ========
+ The BP Client applications have been upgraded to a newer version of 
+ Delphi.  All functions of the BP Queue Processor, Verifier and Purge will
+ work as expected, but version control was changed as a safeguard against
+ unexpected issues. 
+ Version control for the Background Processor has been modified to allow 
+ previous versions to log on. If issues occur while running the new
+ MAG*3.0*196 BP, it will be easy for the user to switch back to the older
+ MAG*3.0*135 BP.
+ In case of issues while 196 is running, simply stop and close the BP, 
+ then open and start the MAG*3.0*135 BP.
+  
+ Note: 
+ =====
+ When a user enters invalid Access/Verify Codes while logging into VistA, 
+ the system gives them an error message.
+  
+ In patch 196, the Error message is hidden under the main Vista Sign-on 
+ window. The user has to move the VistA Sign-on window, then click 'OK' in
+ the Error message window to be able to continue. A fix for this issue is
+ scheduled for a future Background Processor patch.
+  
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*196 KIDS must be installed on the VistA System prior to running 
+ the executables. This patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch may be loaded while the VistA Imaging System is
+ active.  Installation will take less than one minute.
+  
+ Important: 
+ ==========
+ Any Background Processor applications that are running must be stopped 
+ and closed prior to the installation of the KIDS and Client software. Any
+ image capture application (Clinical Capture and DICOM Gateway processing)
+ can continue to run during the installation.
+  
+ Pre-Installation Instructions:
+ ==============================
+ If a previous version of MAG*3.0*196 has been installed on the 
+ workstation, it must be uninstalled before installing the new version.
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.  Any Background Processor task
+ that is running (Queue Processor, Verifier, Purge) must be stopped
+ (applications must be closed) prior to the installation of the KIDS file.
+  
+ However, any image capture application (Clinical Capture and DICOM 
+ Gateway processing) can continue to operate.
+  
+ Note:  
+ =====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*196.
+  
+ VistA System (KIDS) Installation Instructions
+ Installation Steps 
+ 1 On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2 Run the Installation option [XPD INSTALLATION MENU].
+ 3 Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+    b. When prompted, enter the full path and file name (MAG3_0P196.KID) 
+ of the MAG*3.0*196 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A Distribution
+ OK! message will be displayed when the load is complete.
+ 4 After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+ this option if you want to ensure the integrity of the routines in the
+ patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+ - Run this option if you want to view all changes that will be made when
+ the patch is installed.  All components (routines, options, and so on) in
+ the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you want
+ to create a backup message of any routines exported with the patch.  It
+ will NOT back up any of the other changes.
+ 5 After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*196".
+    c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6 When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+  
+ Select Installation <TEST ACCOUNT> Option: LOad a Distribution
+ Enter a Host File: C:\PATCHES\P196\MAG3_0P196.KID
+  
+ KIDS Distribution saved on Nov 14, 2017@11:14:33
+ Comment: VistA Imaging V3 - Patch 196- BP fixes.
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MAG*3.0*196 has been loaded before, here is when:
+       MAG*3.0*196   Install Completed
+                     was loaded on Nov 14, 2017@15:51:08
+       MAG*3.0*196   Install Completed
+                     was loaded on Nov 17, 2017@11:17:38
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*196
+ Use INSTALL NAME: MAG*3.0*196 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*196    11/17/17@11:31:16
+      => VistA Imaging V3 - Patch 196 - BP fixes.  ;Created on Nov 14, 
+ 2017@
+  
+ This Distribution was loaded on Nov 17, 2017@11:31:16 with header of
+    VistA Imaging V3 - Patch 196 - BP fixes.  ;Created on Nov 14, 
+ 2017@11:14:3
+ 3
+    It consisted of the following Install(s):
+     MAG*3.0*196
+ Checking Install for Package MAG*3.0*196
+  
+ Install Questions for MAG*3.0*196
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+  
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Running Pre-Install Routine: PRE^MAGIP196
+  
+  Running Post-Install Routine: POS^MAGIP196
+  
+ Post Install Mail Message: Nov 17, 2017@11:31:23
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*196 Installed.
+                Nov 17, 2017@11:31:23
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Install Completed
+  
+ Installing the Background Processor Client
+ ==========================================
+ The Background Processor client can be installed while the VistA System 
+ is active. Installation takes less than two minutes.
+  
+ Important: 
+ ==========
+ Any Background Processor applications that are running must be stopped 
+ and closed prior to the installation of the KIDS and Client software. Any
+ image capture application (Clinical Capture and DICOM Gateway processing)
+ can continue to run during the installation.
+  
+ For 64 bit OS installs: 
+ =======================
+ Log into the BP Server as an administrator.  For Step 2 below, use the 
+ "Run as Administrator" option when installing BP storage software on a 64
+ bit Windows OS, such as Windows 2012 Server.
+  
+ To install the MAG*3.0*196  Background Processor client:
+ ========================================================
+ 1) DO NOT remove any previously installed versions of the VistA Imaging 
+ Background Processor.  
+  
+ The MAG*3.0*196 client is not a full install of the BP suite of 
+ applications.  
+ MAG*3.0*135 and MAG*3.0*158 must be installed before installing 
+ MAG*3.0*196.
+  
+ If a previous version of MAG*3.0*196 has been installed on the 
+ workstation, it must be uninstalled before installing the new version of
+ MAG*3.0*196.
+ Do not uninstall MagBPSetup (patch 135) and do not uninstall VistA 
+ Imaging Background Processor Utilities (P158)
+  
+ 2) Locate and run the MAG3_0P196Background_Processor_Setup.exe file. Use
+ the "Run as Administrator" option when installing BP storage software on a
+ 64 bit Windows OS, such as Windows 2012 Server.
+  
+ 3) When the InstallShield wizard runs, accept the program defaults and 
+ click "Next" until the Ready to Install the Program dialog is displayed.
+  
+ 4) Click "Install" to proceed with the installation. 
+  
+ 5) When installation completes, click "Finish" to exit the installation 
+ wizard. 
+  
+ 6) Start the Background Processor (Start | Programs | VistA Imaging 
+ Programs | Background Processor | Queue Processor 196). Then, choose Help
+ | About to confirm that the software version is 30.51.196.nn.
+  
+ 7) After installation of MAG*3.0*196, there should be three entries in 
+ Control Panel | Programs for the Background Processor applications:
+  
+ MAG*3.0*135: MagBPSetup                                
+ 30.50.135.10
+ MAG*3.0*158: VistA Imaging Background Processor Utilities 
+ (P158)                30.50.158.5
+ MAG*3.0*196: VistA Imaging Background Processor 196                     
+ 30.51.196.4 
+  
+ New Server Installation
+ =======================
+ If the installation is on a server that does not have a previous version 
+ of the Background Processor, both, MAG*3.0*135 and MAG*3.0*158, must be
+ installed first. Then MAG*3.0*196 can be installed.
+  
+ Desktop shortcuts for the Purge, Verifier and  Background Processor 
+ Queue Processor  are automatically created on the desktop.
+  
+ If installing the BP Queue Processor, BP Verifier, and BP Purge on a 
+ 64-bit operating system such as Windows 2012 Server,  "Run as
+ administrator" must be manually set using the check box in the Advanced
+ Properties window on each of the desktop shortcuts and the menu 
+ options. Do this for all three client applications.
+  
+ If the MAG*3.0*196 Background Processor client is installed before 
+ installing the MAG*3.0*196 KIDS, a message will display when the client is
+ run that says the versions of the Background Processor client and the
+ version of the VistA Imaging host system are not compatible.  The user
+ will be prompted to install compatible versions of the Background 
+ Processor client and the VistA system host software.  If such a message
+ displays, complete the following 
+ steps: 
+  
+ 1)       Shut down the Background Processor client. 
+ 2)       Install the MAG*3.0*196 KIDS. 
+ 3)       Now run the MAG*3.0*196 Background Processor client. 
+  
+  
+ NOTE:  
+ =====
+ Because version checking in this patch allows the previous BP 135 client, 
+ users are able to start BP 135 up prior to the KIDs install.  Remember to
+ stop and close it while the KIDS file is being installed.
+  
+ Post-Installation Instructions:
+ ===============================
+ Restart all Background Processor applications that were stopped for 
+ installation.
+  
+ Installing, Updating and Uninstalling the Background Processor
+ ==============================================================
+ Client Uninstall: 
+ =================
+ Because of the change in version control which enables the previous 
+ version of the Background Processor to run and log onto VistA, it is not
+ necessary to immediately uninstall the 196 client if issues occur.  
+ MAG*3.0*196 BP (magbtm196.exe) can be stopped and closed and the previous
+ Background Processor MAG*3.0*135 (magbtm.exe) can be started and  used.  
+  
+ For additional information on installing, updating, or uninstalling the 
+ Background Processor, refer to the Background Processor User Guide.
+  
+ KIDS Uninstall:
+ ===============
+ Note: 
+ =====
+ The previous KIDS Patch for the Background Processor was MAG*3.0*186. 
+ Patch 186 only included a KIDS install and did not change the client
+ application.  
+ The previous client version of the Background Processor is MAG*3.0*135.
+  
+ If it is necessary to uninstall the MAG*3.0*196 VistA KIDS, select the 
+ "Kernel Installation & Distribution System" menu option, "Backup a
+ Transport Global". (See Installation Steps section, Step 4c; this must be
+ done before the patch is installed).
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the
+ "Backup a Transport Global" function executed prior to the patch install.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*196 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  
+ =======
+ Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2    Message #43934     Unloading Routine   MAGBRTE4 (PACKMAN_BACKUP)
+ Line 249  Message #43934     Unloading Routine   MAGQBUT4 (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ===================
+ VistA KIDS Checksums:
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build nn;mm dd, yyyy
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine                 Checksum        Checksum        Patch List
+                         Before          After
+ MAGIP196                NEW             4237416         **196**
+ MAGBRTE4                74048747        76402670        **11, 30, 51, 85, 
+                                                         54, 39, 156, 196**
+ MAGQBUT4                92803022        97374409        **7, 8, 48, 20,81,
+                                                         39, 121, 135,
+                                                         196**
+  
+ Routine MAGIP196 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2017
+Completed By:                               Date Completed: MAR 28, 2018
+Released By :                               Date Released : MAR 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

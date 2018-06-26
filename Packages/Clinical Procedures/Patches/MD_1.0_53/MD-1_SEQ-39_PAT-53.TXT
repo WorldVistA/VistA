@@ -1,0 +1,225 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 04/20/17 at 13:59
+=============================================================================
+Run Date: AUG 03, 2017                     Designation: MD*1*53
+Package : MD - CLINICAL PROCEDURES            Priority: EMERGENCY
+Version : 1        SEQ #39                      Status: Released
+                  Compliance Date: AUG 07, 2017
+=============================================================================
+
+Associated patches: (v)MD*1*39     <<= must be installed BEFORE `MD*1*53'
+
+Subject: CP TERMINOLOGY CORRECTIONS FOR PATCH MD*1*39
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+  - Other
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+ 1) During the release of Clinical Procedures Patch (CP) MD*1*39, the
+    Terminology Files were corrupted.  This patch is being created to
+    re-create the Terminology files so they include all of the additions
+    and updates that were originally supposed to be in Patch MD*1*39.
+      
+ ASSOCIATED CA-SDM TICKET:
+ ========================
+ 1) R12346958FY17 - Issue with the Released MD*1*39 SEQ #33 patch,
+                    terminologies.
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ Edward Hines Jr. VA Hospital, IL
+ Huntington VA Medical Center, WV
+  
+       
+ CA-SDM TICKET OVERVIEW:
+ =======================
+ 1) R12346958FY17 - Issue with the Released MD*1*39 SEQ #33 patch,
+                    terminologies.
+      
+ Problem:
+ --------
+ The Clinical Procedures Terminology TERM file (#704.101) and the 
+ TERM_TYPE file (#704.102) contain terms used during data entry/display in
+ CP Flowsheets.  The Office of Informatics and Analytics - Applied
+ Informatics Services (AIS) Terminology Review Group submitted a
+ spreadsheet requesting additions or updates.  
+ The Terminology files for patch MD*1*39 were corrupted during the release
+ process and need to be re-created.
+       
+ The following list documents the Terms needing correction:
+      
+ ADI - SPIRITUAL CARE
+ AIRWAY ARTIFICIAL SIZE - MILIMETERS
+ CAUTI Prevention: GU Catheter Discontinued
+ CENTRAL LINE CHANGED
+ CENTRAL LINE DRESSING TYPE
+ CHEST TUBE DRAINAGE CHARACTERISTICS
+ DISCHARGE ACTIVITIES
+ DRAIN DRESSING CHANGE
+ DRAINAGE SYSTEM REPLACED
+ DRESSING CHANGE
+ DVT PROPHYLAXIS
+ EDUCATION - BARRIERS
+ EDUCATION - TOPIC
+ ENTERAL NUTRITION TYPE
+ EPIDURAL: CATHETER SITE
+ ET LOCATION
+ MUCOUS MEMBRANE CONDITION 
+ NECK EVALUATION
+ BLADDER SCAN - DO NOT CHECK TOTAL OR SUBTOTALS
+ OUTPUT - URINE
+ OUTPUT - NASOGASTRIC TUBE
+ PA CATHETER REPOSITIONED/DISCONTINUED
+ PASERO OPIOID - INDUCED SEDATION SCALE (POSS)
+ PREPROCEDURE: DRAINAGE BAG EMPTIED?
+ PREPROCEDURE: PLANNED DISPOSITION POST PROCEDURE
+ PREPROCEDURE: PULMONARY FUNCTION TEST DONE?
+ PREPROCEDURE: SHOWER/BATH W CHLORHEXIDINE SOAP NIGHT BEFORE? 
+ PREPROCEDURE: SHOWER/BATH W CHLORHEXIDINE SOAP THIS AM?
+ PRESSURE ULCER DRAINAGE CHARACTER
+ PULMONARY CARE
+ PULMONARY SECRETION COLOR
+ PULMONARY SUCTIONING SITE
+ PUPIL REACTION
+ PUPIL SIZE
+ RESTRAINT CIRCULATION CHECK
+ RESTRAINT DEVICE TRIAL RELEASE
+ RESTRAINT/SECLUSION DISCONTINUED
+ SEDATION SCALE - RAMSEY
+ STOOL COLOR
+ TONGUE POSITION
+ IV DOSE RATE - UNITS/HOUR
+ IV FLOW RATE - ml/kg/TIME - DO NOT CHECK TOTAL OR SUBTOTALS
+ LOWER LIMB EXTREMITIES STRENGTH
+      
+ Resolution
+ -----------
+ Post-Init routine MDTERMX will reload the addition/updates that were 
+ scheduled to have been made in patch MD*1*39. The above corrections will
+ be made to the CP Terminology TERM File (#704.101) and the TERM_TYPE file
+ (#704.102). The details of each of these terms is in the Clinical
+ Observation (CliO) Terminology Dictionary And Clinical Data Model
+ Documentation that is listed below.
+           
+      
+ DOCUMENTATION: 
+ ============== 
+ Documentation is available for the Clinical Observation (CliO) 
+ Terminology Dictionary And Clinical Data Model Documentation on the
+ ANONYMOUS.SOFTWARE directory at one of the following Office of  
+ Information (OI) Field Offices.
+ Sites will be able to download the documentation in the ".PDF" format.
+       
+ The preferred method is to FTP the files from: Download.vista.domain.ext
+       
+ This transmits files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+       
+       Albany                  ftp.domain.ext
+       Hines                   ftp.domain.ext
+       Salt Lake City          ftp.domain.ext
+       
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P53TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+       
+ Documentation may be found on the System Design and Development Web 
+ page at:  http://www.domain.ext/vdl
+       
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users are off the system.  Other VISTA users
+ will not be affected.
+       
+ Install Time - less than 5 minutes (unless otherwise indicated).
+     
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------    
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*53):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+       
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+       
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', answer NO.
+       
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after it has
+       made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **53**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 23, 2017
+Completed By:                               Date Completed: JUL 31, 2017
+Released By :                               Date Released : AUG 03, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

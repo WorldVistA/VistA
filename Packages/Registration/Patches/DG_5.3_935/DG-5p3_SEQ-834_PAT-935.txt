@@ -1,0 +1,544 @@
+
+=============================================================================
+Run Date: FEB 07, 2018                     Designation: DG*5.3*935
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #834                    Status: Released
+                  Compliance Date: MAR 10, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*863  <<= must be installed BEFORE `DG*5.3*935'
+                    (v)DG*5.3*867  <<= must be installed BEFORE `DG*5.3*935'
+                    (v)DG*5.3*871  <<= must be installed BEFORE `DG*5.3*935'
+                    (v)DG*5.3*909  <<= must be installed BEFORE `DG*5.3*935'
+                    (v)DG*5.3*928  <<= must be installed BEFORE `DG*5.3*935'
+                    (v)DG*5.3*936  <<= must be installed BEFORE `DG*5.3*935'
+
+Subject: MEMBER ID, HEALTH BENEFIT PLAN, FUTURE DISCHARGE DATE UPDATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ Patch DG*5.3*935 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which supports
+ Enrollment System Community Care (ESCC).
+    
+ Patch DG*5.3*935 is being released with the Income Verification Match (IVM) 
+ patch IVM*2*167 in host file DG_53_P935.KID. The changes include the following.
+  
+ The name of a Health Benefit Plan (HBP) is corrected. "Veteran Plan - 
+ Veterans Choice Wait Time" Health Benefit Plan is changed to "Veteran 
+ Plan - Veterans Choice Wait-Time".  A hyphen was added to "Wait-Time".  
+  
+ The Department of Defense (DoD) Electronic Data Interchange Person Identifier
+ (EDIPI) is updated on the Veterans Health Information Systems and Technology
+ Architecture (VistA) system via the Master Veterans Index (MVI). The EDIPI 
+ number is retrieved via the VAFCTFU2 Remote Procedure Call.  The Member 
+ Identifier (ID), also known as EDIPI, will be displayed on the header banner
+ on Registration Screens for the following options.
+ (All menu options below use the same updated header banner)
+   
+       Patient Inquiry                       [DG PATIENT INQUIRY]
+       Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+       Register a Patient                    [DG REGISTER PATIENT]
+       Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+       View Registration Data                [DG REGISTRATION VIEW]
+       Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+  
+    1. The Member Identifier is displayed between the patient name and
+       the patient Social Security Number (SSN).  
+    
+    2. The active Member Identifier is displayed when multiple Member
+       Identifiers are returned from Master Veteran Index (MVI).
+    
+    3. The first inactive Member Identifier returned is displayed when no 
+       active Member Identifier is returned.
+  
+    4. The Member Identifier is displayed when one, and only one Member 
+       Identifier is returned from MVI.
+                                        
+ Display Screen from Menu Option Patient Inquiry [DG PATIENT INQUIRY]
+  
+ * Begin Screen Capture *
+  
+ Select OPTION NAME:    DG PATIENT INQUIRY     Patient Inquiry
+  
+ DGPATIENT,TEST ONE;  1234554321 XXX-XX-XXXX                   AUG 8,1972
+ ============================================================================
+  Permanent Mailing Address:             Temporary Mailing Address: 
+          100 HARVARD                            NO TEMPORARY MAILING
+          ALBANY,NY 12045
+          UNITED STATES
+   County: ALBANY (001)                    From/To: NOT APPLICABLE
+    Phone: 123-4564                          Phone: NOT APPLICABLE
+   Office: UNSPECIFIED
+     Cell: UNSPECIFIED
+   E-mail: UNSPECIFIED
+ Bad Addr: 
+  
+  Confidential Address:                      Confidential Address 
+ Categories:
+          NO CONFIDENTIAL ADDRESS
+  From/To: NOT APPLICABLE
+  
+ Language Date/Time: UNANSWERED
+  Preferred Language: UNANSWERED
+  
+ Type <Enter> to continue or '^' to exit: 
+  
+ * End Screen Capture * 
+  
+ The Military Service Future Discharge Date (FDD) build components include
+ changes to manage, process, and display the FDD record. The record can be
+ manually updated in the Enrollment System (ES) and is read-only in VistA
+ Registration. The FDD record can be received from the military service broker
+ or via an on-line healthcare application. A Veteran can apply for Department 
+ of Veterans Affairs (VA) health benefits enrollment before being discharged
+ from the military. The ES is the VA authoritative system for this 
+ information. VistA will update the military service episode (MSE) list and 
+ the FDD record to match the data provided by ES. The FDD record will not be 
+ transmitted from VistA to ES.
+  
+ 1.  Update VistA to receive the FDD record in the ZMH message segment on the 
+     ORU-Z11 or ORF-Z11 Health Level Seven (HL7) message from ES. The FDD MSE 
+     received from ES is designated with a ZMH segment type of FDD and will 
+     contain the Branch of Service, Service Entry Date, and Future Discharge 
+     Date data components.
+  
+ 2.  Update VistA to store the FDD record received from ES.  
+  
+    a. VistA will store the FDD record in the existing MILITARY SERVICE 
+       EPISODE sub-file (#.3216) of the PATIENT file (#2).  The FDD will be 
+       stored in the FUTURE DISCHARGE DATE field (#.08) in the MILITARY 
+       SERVICE EPISODE sub-file (#.3216) of the PATIENT file (#2).
+   
+    b. The VistA system will remove the military service episode and 
+       associated Future Discharge Date when notified by ES that the Future
+       Discharge Date is expired or deleted. The absence of the FDD record ZMH 
+       segment on the ORU-Z11 or ORF-Z11 HL7 message from ES will result in 
+       the deletion of the FDD record in VistA.
+  
+    c. FDD is an optional field in ES so it will not always be displayed in
+       VistA.
+  
+ 3.  Update VistA to display the Future Discharge Date when the FDD exists.   
+     The FDD will be displayed on the MILITARY SERVICE DATA, SCREEN <6> and
+     MILITARY SERVICE DATA, SCREEN <6.1> screen in the following Menu options.
+  
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+  
+    a. VistA will display the FDD received from ES and will not perform
+       date validation on the FDD.
+  
+ 4.  The user will only see FDD displayed on the MILITARY SERVICE DATA,
+     SCREEN <6.1> when inconsistencies exist for the enrollment information 
+     group for the following Menu option.  The FDD record will display if
+     it exists.
+  
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+ * Begin Screen Capture *
+  
+                        MILITARY SERVICE DATA, SCREEN <6>
+ DGPATIENT,ONE;                                                 NSC VETERAN
+ ==========================================================================
+ [1] Service Branch/Component  Service #    Entered    Separated   Discharge
+     ------------------------  ---------    -------    ---------   ---------
+     ARMY                      UNKNOWN     01/01/2015  UNKNOWN     UNKNOWN
+     Future Discharge Date: 10/11/2017
+  
+ [2]  Conflict Locations: < None Specified >
+ [3] Environment Factors: < None Specified >
+ [4]          POW: NO    From:              To:             War: 
+ [5]       Combat:       From:              To:             Loc: 
+ [6]     Mil Disab Retirement:            Dischrg Due to Disab: 
+ [7]     Dent Inj:                             Teeth Extracted:          
+ [8] Purple Heart:          
+  
+  
+  
+  
+  
+ <RET> to CONTINUE, 1-8 or ALL to EDIT, ^N for screen N or '^' to QUIT:
+  
+ * End Screen Capture *
+  
+ * Begin Screen Capture *
+  
+ Military Service            Oct 05, 2017@16:43:30          Page:    1 of    1 
+                          MILITARY SERVICE DATA, SCREEN <6.1>
+ Patient: DGPATIENT,ONE (0101)                            NSC VETERAN          
+     Service Branch/Component  Service #     Entered    Separated   Discharge
+                                                                                 
+ <1> ARMY                      UNKNOWN       06/01/2015  UNKNOWN     UNKNOWN   
+    Future Discharge Date: 10/25/2017                                            
+ [2] MARINE CORPS/REGULAR      22222         05/05/2010  05/05/2015  HONORABLE 
+ [3] ARMY/REGULAR              11111         01/01/2006  01/01/2010  HONORABLE 
+ [4] ARMY/REGULAR              33333         01/01/2005  12/01/2005  HONORABLE 
+ [5] ARMY/REGULAR              66666         01/01/2004  12/01/2004  HONORABLE 
+ [6] MARINE CORPS/RESERVE      99999         01/01/1990  01/01/1995  HONORABLE 
+           Enter ?? for more actions                                             
+ AD  Add                   DE  Delete
+ ED  Edit                  VH  View History
+ Select Action:Quit// 
+  
+ * End Screen Capture *
+  
+ 5. A VistA user will not be able to add, edit, or delete an FDD record. 
+    When an FDD ZMH record is received from ES, a one (1) is stored in the
+    DATA LOCKED field (#.07) of the MILITARY SERVICE EPISODE sub-file
+    (#.3216) of the PATIENT file (#2). This indicates to VistA that the 
+    data came from ES and cannot be altered.
+  
+ 6. VistA Registration will not send an FDD record to downstream applications. 
+    When an associated Future Discharge Date exists (that is not null), the 
+    VADPT and VAFHLZMH Application Programming Interface (API) calls will not 
+    include the FDD record.
+  
+ 7. When adding an MSE in VistA, if the user enters a Service Entry Date or a
+    Service Separation Date that overlaps with an FDD record, an error message
+    will display, stating that an overlap was entered. A screen shot was added
+    to the User Manual - Registration Menu.
+  
+    Message Text:                  
+    Date overlaps with a record that has a Future Discharge Date.
+   
+ 8. The VADPT Application Programming Interface (API) returns patient-related
+    data. This API was updated to exclude any FDD record. The line tags 
+    for this API are SVC^VADPT, 7^VADPT, and 8^VADPT. The Integration Control
+    Registration (ICR) for VADPT is 10061. More details can be found in
+    FORUM, in the documentation of ICR 10061.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (#2)               MILITARY SERVICE EPISODE  MODIFIED
+                                            (#.3216)
+                                    FUTURE DISCHARGE
+                                          DATE (#.08) NEW
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted 
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+   
+ Test Sites:
+ -----------
+ Clement J. Zablocki VA Medical Center (VAMC) (Milwaukee, WI)
+ Jesse Brown VA Medical Center (VAMC) (Chicago, IL)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Patches for this installation are combined in the following host file for
+ distribution: DG_53_P935.KID. 
+  
+ The host file was created to simplify installation at Veterans
+ Health Administration (VHA) facilities. This file can be obtained from one of
+ the anonymous SFTP directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DG_53_P935.KID                      DG*5.3*935         ASCII
+                                     IVM*2.0*167
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                       DG_5_3_P935_KID_RN.PDF  (binary)
+ User Manual - Registration Menu     DG_5_3_935_REG_UM.PDF   (binary)
+ PIMS Technical Manual               PIMSTM.PDF              (binary)
+                  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This post-install process will run the post install routine DG53P935 
+ to change Veteran Plan - Veterans Choice Wait Time Health Benefit 
+ Plan (HBP) in the HEALTH BENEFIT PLAN file (#25.11) to "Veteran Plan - 
+ Veterans Choice Wait-Time".  A message will be displayed regarding the HBP 
+ name correction. If an error occurs, this message will be displayed:
+ "An Error occurred during updating Plan: (Health Benefit Plan) Please log 
+ CA SDM ticket".
+   
+ The post-installation routine DG53P935 should be manually deleted
+ from your system using the KERNEL option Delete Routines [XTRDEL] upon
+ completion of the installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The following KIDS build DG_53_P935.KID will be installed.
+  
+ These options should be disabled during installation:
+       Patient Inquiry                       [DG PATIENT INQUIRY]
+       Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+       Register a Patient                    [DG REGISTER PATIENT]
+       Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+       View Registration Data                [DG REGISTRATION VIEW]
+       Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+       Demographics Upload                   [IVM UPLOAD DEM]
+  
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running. 
+  
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+ date/time.
+  
+ The HL7 incoming/outgoing filers should be stopped. Stop All
+ Messaging Background Processes by using the [HL STOP ALL] option
+ on the Filer and Link Management Options [HL MENU FILER LINK MGT] menu
+ on the HL7 Main Menu [HL MAIN MENU].
+  
+ Use Global Output Function to backup MILITARY SERVICE EPISODE (MSE) sub- 
+ file (#.3216) and associated data dictionary of the MSE sub-file by 
+ running command below (be sure to enter "V" for the parameters). You
+ will need to specify a local directory and file name for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]dg_53_935_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DD(2.3216 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/dg_53_935_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DD(2.3216 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ where "xxx" is the site designation, then follow the 
+ instructions above for entering the globals to save.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Download DG_53_P935.KID into your local directory.
+  
+ 2. From the Kernel Installation and Distribution System Menu (KIDS), select 
+    the Installation Menu. From this menu, select the 'Load a Distribution'
+    option. You may need to prepend a directory name. When prompted for "Enter 
+    a Host File: ", respond with DG_53_P935.KID
+  
+     Example: USER$:[ABC]DG_53_P935.KID
+  
+ 3.  From the Installation Menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch # 
+     (DG*5.3*935):
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option allows you 
+        to view all changes made when this patch is installed. It compares 
+        all of the components of this patch, such as routines, DDs, templates, 
+        etc.
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. 
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', respond YES.
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options: 
+  
+       Patient Inquiry                       [DG PATIENT INQUIRY]
+       Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+       Register a Patient                    [DG REGISTER PATIENT]
+       Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+       View Registration Data                [DG REGISTRATION VIEW]
+       Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+       Demographics Upload                   [IVM UPLOAD DEM]
+     
+ 9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <enter>.
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].  
+  
+ The post-installation routine DG53P935 should be manually deleted
+ from your system using the KERNEL option Delete Routines [XTRDEL] upon
+ completion of the installation.
+  
+ Verify the SHOW SERVICE SCREEN? (#6) field in the PATIENT TYPE (#391) file is
+ set to "Yes" for Active Duty patients in order for the Future Discharge Date 
+ to display when received from ES.
+  
+ Use the Patient Type Update [DG PATIENT TYPE PARAMETER EDIT] option to verify
+ or set the SHOW SERVICE SCREEN? value.  The value should be set to "Yes". 
+ Example below:
+  
+  Select Supervisor ADT Menu <TEST ACCOUNT> Option: Patient type update
+  
+ Select TYPE OF PATIENT NAME: ACTIVE DUTY  
+ NAME: ACTIVE DUTY//   ('NAME' is UNEDITABLE)
+ VETERAN?: NO// ^SHOW SERVICE SCREEN?  
+ SHOW SERVICE SCREEN?: NO// Y  YES
+ ON SCREEN 7 (ELIGIBILITY STATUS DATA), EDIT SC CONDITIONS PER PATIENT?: YES//
+          // ^
+  
+ Select TYPE OF PATIENT NAME:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 53
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P935
+    Before:       n/a   After:  B4540001  **935**
+Routine Name: DGENUPL1
+    Before: B49545010   After: B54858665  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842,894,
+                                           871,935**
+Routine Name: DGENUPL3
+    Before: B74443455   After: B89567535  **147,230,232,377,404,451,653,
+                                           688,793,797,841,928,935**
+Routine Name: DGMSEUTL
+    Before: B16538229   After: B17883475  **797,935**
+Routine Name: DGNOZMH
+    Before:       n/a   After:  B1893168  **935**
+Routine Name: DGRP61
+    Before: B47311723   After: B57864374  **797,909,935**
+Routine Name: DGRPCF
+    Before: B26163167   After: B26225283  **250,653,786,754,867,935**
+Routine Name: DGRPD1
+    Before:  B7833358   After:  B7682498  **703,730,688,863,935**
+Routine Name: DGRPMS
+    Before: B64725384   After: B68853041  **451,626,646,673,689,688,797,935**
+Routine Name: DGRPU
+    Before: B81808598   After: B88766469  **33,114,489,624,672,689,688,935**
+Routine Name: VADPT4
+    Before: B42853987   After: B43698033  **343,342,528,689,688,790,797,935**
+Routine Name: VAFHLZM2
+    Before: B10489371   After: B11134578  **673,797,935**
+Routine Name: VAFHLZMH
+    Before: B30066508   After: B31266014  **190,314,673,797,935**
+ 
+Routine list of preceding patches: 863, 867, 871, 909, 928
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2016
+Completed By:                               Date Completed: FEB 07, 2018
+Released By :                               Date Released : FEB 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,245 @@
+
+=============================================================================
+Run Date: DEC 14, 2017                     Designation: MHV*1*34
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #27                      Status: Released
+                  Compliance Date: JAN 16, 2018
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2018.1.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The December Quarterly MyHealtheVet Release MHV_2018.1.0.0 will be 
+ promoted to the MHV Production environment on Saturday, December 16th, 
+ 2017 starting at 10:00PM EST.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY SM ENHANCEMENTS 
+ JAZZ    452747  Terms and Conditions for SM - Mandatory Acceptance Period 
+ for Version 3 T&C
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    433943  VA Chemistry Lab Panel Enhancements - Display Lab Test in 
+ Native Test Panel Order (GUI changes)
+ JAZZ    607134  Pharmacy Redesign 01:  Update the links to include "VA" 
+ for the pages
+ JAZZ    607135  Pharmacy Redesign 02:  Add "View Allergies" button to all 
+ Pharmacy pages
+ JAZZ    607169  Pharmacy Redesign 03:  GUI updates for My Medications 
+ List page
+ JAZZ    607259  Pharmacy Redesign 04:  GUI updates for VA Prescription 
+ Tracking page
+ JAZZ    607168  Pharmacy Redesign 05:  GUI updates for Refill 
+ Prescriptions page
+ JAZZ    607258  Pharmacy Redesign 06:  GUI updates for Prescription 
+ History
+ JAZZ    583596  The word "all" should be removed from any text that 
+ references or implies that MHV has all user's medications
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+ JAZZ    616019  Admin Portal - Deactivate and Reactivate for 18.1 Release
+  
+ MHV NATIONAL PORTAL DEFECTS
+ JAZZ    602600   Track Health:  Health History Landing Page shows VA 
+ Allergies -6 Entries instead of 5-like other portlets
+ JAZZ    629242   Fortify (High):  Null Dereference - Fortify security 
+ fixes as part of the MHV Authority to Operate (ATO) Process
+  
+ DATABASE ENHANCEMENTS:
+ JAZZ    433943  Story: VA Chemistry Lab Panel Enhancements (GUI changes)
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    538113  Federated Credentials -  New Account upgrade process - 
+ Remove ROI Form
+ JAZZ    587168  Federated Credentials:  Two Step Authentication (Formally 
+ listed as Two Factor Authentication) - Reset Password/Register for an 
+ Account:  System will send text, email, call with a code.  User would 
+ have to enter a code to continue.   
+ JAZZ    612937  Temporary Password Reset   
+ JAZZ    594497  Upgrade Foresee Library to version 19.5 on PREM version
+  
+ MHV NATIONAL PORTAL DEFECTS
+ JAZZ    589590  Veterans Health Benefits Handbook (VHBH) not accessible 
+ with Microsoft Edge
+ JAZZ    575443  Rx VistA Refresh Job certain partitions stop to process 
+ after encountering an error
+ JAZZ    620677  PROD:  Update CDA style sheet with latest mods from 
+ Danielle Sullivan
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+ JAZZ    587119  Admin Portal Enhancements - Business Rule Changes - US01: 
+ Account Deactivation
+ JAZZ    587119  Admin Portal Enhancements - Business Rule Changes - US02: 
+ Account User Name Synchronization/ User ID Changes
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    618386  Story: Two Factor Authentication Development - upgrade 
+ account
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    598295  Terms and Conditions (T&C) Mandatory Period  NOTE:  Will 
+ turn on in Jan 2018
+ JAZZ    601750  T&C US01:  Administrator enters Mandatory Start Date
+ JAZZ    601753  T&C US02: User Accepts T&C during Mandatory Period
+ JAZZ    601758  T&C US03 User Declines T&C during Mandatory Period
+ JAZZ    601761  T&C US04:  MHV Administrator Views MHV User Profile 
+ after  T&C Mandatory Period
+ JAZZ    601764  T&C US05:  User logs in with Temporary PW and sees T&C 
+ during Mandatory Period
+ JAZZ    601750  T&C US01:  Administrator enters Mandatory Start Date
+ JAZZ    601753  T&C US02: User Accepts T&C during Mandatory Period
+ JAZZ    601758  T&C US03 User Declines T&C during Mandatory Period
+ JAZZ    601761  T&C US04:  MHV Administrator Views MHV User Profile 
+ after  T&C Mandatory Period
+ JAZZ    601764  T&C US05:  User logs in with Temporary PW and sees T&C 
+ during Mandatory Period
+ JAZZ    601765  T&C US06:  User logs in via SSO and sees T&C during 
+ Mandatory Period
+ JAZZ    601769  T&C US07 User logs in during Mandatory Period having 
+ already accepted the T&C during Optional Period
+ JAZZ    618109  T&C US08 API: User declines MHV T&C and continues to use 
+ SM functionality via accepted API T&C of clients
+ JAZZ    619364  T&C US10 MHV System will no longer prompt for Rx T&C
+ JAZZ    538930  Work Load Credit  (WLC) API - includes "save as CPRS note"
+ JAZZ    602478  WLC US01:  Check Work Load Credit Eligibility
+ JAZZ    602439  WLC US02: Work Load Credit -  Get DSS Unit
+ JAZZ    602505  WLC US03:  Work Load Credit - Get Procedure
+ JAZZ    602489  WLC US04:  Work Load Credit - Get Eligibility List
+ JAZZ    602463  WLC US05:  Work Load Credit - Get Problem List
+ JAZZ    602482  WLC US06:  Work Load Credit - Get Diagnosis List
+ JAZZ    602457  WLC US07:  Work Load Credit - Provider List
+ JAZZ    602443  WLC US08: Work Load Credit  (WLC) - Submit WLC to MHV
+ JAZZ    592421  SM API Folder Rename for Patient or Clinician 
+ JAZZ    592424  SM API US01:  Rename a Folder for Patient or Clinician
+ JAZZ    598729  Registration Page Redesign
+ JAZZ    601513  US01:  Registration Page Redesign - Add Newsletter 
+ Subscription to Registration Page - Allow Opt-in feature using 
+ GovDelivery.com API to automate newsletter sub.
+ JAZZ    631052  US01A:  Registration Page Redesign - Remove Newsletter 
+ Subscription from Registration Congratulatory Page
+ JAZZ    601525  US03:  Registration Page - Update Contact Info:  Remove 
+ Mobile, Work, Fax and Pager Phones, Add Type of Phone Dropdown, Edit 
+ Preferred Method of Contact
+ JAZZ    601576  US06:  Registration Page - Remove Entire Section for 
+ Primary Address on the Registration Page
+ JAZZ    612557  US07:  Registration Page - Update Security Questions 
+ Section of the Registration Page
+ JAZZ    614805  US08: API Registration Page API, Primary Address Changing 
+ to optional
+ JAZZ    525055  Blue Button:  BB VA Notes C&P Exam Hold Period  Notes: 
+ 1).  VIA Migration (October) 2).  HIMS has to be ready for it to be 
+ turned on
+ JAZZ    603410  Session AAL Entry 
+ JAZZ    612836  MHV API US01:  Create AAL message for both MHV and SM 
+ session initiation - SM and MHV Session AAL Entry Logs Client, User and 
+ Time
+ JAZZ    615709  VA Medical Images and Reports Content Updates - Content 
+ for BBMI Imaging Pilot.  Note:  Learn more portion went in as content 
+ release around same time as 17.4.2.0 release.
+ JAZZ    615714  US01 BBMI Pilot Content changes:  Radiology study images 
+ are not currently available at certain VA Medical Centers
+ JAZZ    615715  US02 BBMI Pilot Content changes:  Learn More about VA 
+ Medical Images and Reports
+ JAZZ    593892  Migration from MDWS to VIA
+ JAZZ    629270  Create stored procedure to add new users from sites 
+ already added to VIA field test
+ JAZZ    600655  Add first batch of users to the VIA Field Test Group 
+ (users with errors in MDWS)
+ JAZZ    628495  Blue Button  Changes on MHV Dashboard - Update content 
+ from "Medical Reports" to "Blue Button Medical Reports" and replace 
+ Health Records graphic with the Blue Button graphic
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    601513  Story: US01 Registration Page Redesign, Add Newsletter 
+ Subscription to Registration Page
+ JAZZ    601576  Story: US06 Registration Page, Remove entire section for 
+ Primary Address on the Registration Page
+ JAZZ    618111  Story: T&C US09 First time user of Secure Messaging can 
+ use SM
+ JAZZ    628450  Story: Set the T&C date for v3.0 to  "Jan 20 11:59:59PM"
+ JAZZ    629270  Story: Create stored procedure to add new users from 
+ sites already added to VIA field test
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS
+ JAZZ    623314  SM - Remediate Null Dereference (High) for SM & SM Admin 
+ Portal
+ JAZZ    628740  SM - Resolve Log Forging Fortify findings
+ JAZZ    635159  Get error message when changing VISN when reassigning 
+ message to user outside facility
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ    233659  Remove 2 Hint Questions from Users Options for new 
+ accounts:  Town of Birth and Favorite Food
+ JAZZ    583345  Military: (IN PROD) Success Message remains on the screen 
+ when another error is displayed on the add new screen 
+ JAZZ    609171  Logout:  AAL entry is incorrect when user logs out.  AAL 
+ entry currently records "Session Timeout"
+ JAZZ    609227  UAT: Health Calendar - Error message does not display in 
+ field of view             
+ JAZZ    609235  UAT: Health Calendar: The system does not display the 
+ Hour and Minute drop-downs when editing an existing event.
+ JAZZ    615452  Self entered Immunizations:  When adding reactions, the 
+ display does not add a space between multiple reactions.
+ JAZZ    615697  Military Health History:  Colon and asterisk missing on 
+ the "Describe your Military Service" field.  This is a required field.
+ JAZZ    616104  Immunizations: (IN PROD) Success Message remains on the 
+ screen when another error is displayed on the add new screen.
+ JAZZ    617251  Medical Events: (IN PROD) Success Message remains on the 
+ screen when another error is displayed on the add new screen
+ JAZZ    620343  Resolve Medium Fortify issues for the Mhv_bluebutton 
+ module
+ JAZZ    622056  UAT: Health Calendar: User is unable to make click on the 
+ CANCEL button in the edit screen to events if the Start Time is prior to 
+ today's date.  (Existing Event)
+  
+ DATABASE ENHANCEMENTS
+ JAZZ    622351  Update the error block to log exceptions with the correct 
+ Oracle error and the line number in four stored procedures
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+  Documentation Retrieval Instructions:
+ ------------------------------------- 
+  MHV Documentation can be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 06, 2017
+Completed By:                               Date Completed: DEC 13, 2017
+Released By :                               Date Released : DEC 14, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

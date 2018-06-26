@@ -1,0 +1,423 @@
+Original message: "RA*5.0*137T4" [#302281]
+=============================================================================
+Run Date: MAR 02, 2018                     Designation: RA*5*137
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #125                      Status: Released
+                  Compliance Date: APR 02, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*8     <<= must be installed BEFORE `RA*5*137'
+                    (v)RA*5*47     <<= must be installed BEFORE `RA*5*137'
+                    (v)RA*5*90     <<= must be installed BEFORE `RA*5*137'
+                    (v)RA*5*93     <<= must be installed BEFORE `RA*5*137'
+                    (v)RA*5*95     <<= must be installed BEFORE `RA*5*137'
+
+Subject: ADT MESSAGES & PREGNANCY SCREEN MODIFICATIONS
+
+Category: 
+  - Routine
+  - Input Template
+  - Data Dictionary
+  - Print Template
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ Radiology historic patient demographic updates
+ 'Mass Override to Complete' option removal
+ Status Tracking of Exams addition of pregnancy screen prompt
+ Status Tracking of printset exams with SSANs turned on
+ Outside Report Entry/Edit bypass of pregnancy screen requirement
+ Registered Request Printer
+ Images Acquired indicator on radiology reports 
+  
+  
+ Associated Ticket(s):
+ =====================
+ I9879245FY16
+ I16983173FY18
+  
+ Associated NSR(s):
+ ==================
+ Waiver request 376790
+ Waiver request 382559
+  
+ Participating Test Sites:
+ =========================
+ Boston VAMC
+ Richmond VAMC
+ Southern Arizona VA Healthcare System (Tucson)
+ Birmingham VAMC
+  
+  
+ Problem A:
+ ----------
+  
+ Radiology historical demographic updates:
+  
+ If a name change occurs on VistA , it is not communicated to the 
+ departmental imaging system or Picture Archiving and Communication System 
+ (PACS),  then order processing is delayed at the departmental imaging 
+ system because of the name mismatch.  Subsequently, when the images with 
+ the old name sent are back to VistA, processing is delayed because of the 
+ name mismatch.  Radiology PACS sites currently have a backlog of rejected 
+ radiology orders due to unmatched patient identifiers (patient name, date 
+ of birth, gender and social security number).
+  
+  
+ Resolution A:
+ -------------
+  
+ Vista Imaging (VI) patch MAG*3.0*183 will add ADT patient demographic 
+ updates (A08) and patient identifier updates (A47) functionality for VI 
+ and PACS, allowing real time demographic updates.  To address patient 
+ demographic updates that took place prior to the installation of 
+ MAG*3*183, this patch will provide a menu option to send HL7 ADT messages.
+ A new option called 'Send ADT HL7 message to PACS' [RA ADT] will be 
+ created and reside on the 'Radiology HL7 Menu' [RA HL7 MENU]. This option 
+ will allow the application end user to select one or more radiology 
+ patients, and then it will call the VI Application Program Interface 
+ (API) to generate an ADT A08 and, if needed, an ADT A47 message to PACS. 
+ The user must hold the RA MGR key to access this new option.
+  
+ Problem B:
+ ----------
+  
+ Mass Override Exam Status retired:
+  
+ When the 'Mass Override Exam Status'[RA EXAMSTATUS MASS OVERRIDE] option 
+ is used, it does not result in any stop code or CPT crediting.  With the 
+ release of RA*5.0*133, the default value for the fields TRACK REQUEST 
+ STATUS CHANGES (#.119) and TRACK EXAM STATUS CHANGES (.11) of our RAD/NUC 
+ MED DIVISION (#79) file will be set to 'YES' without out the ability to 
+ change from that value of 'YES'. It was discussed and put to a vote and 
+ the Radiology Informatics Committee (RIC) voted that the 'Mass Override 
+ Exam Status' [RA EXAMSTATUS MASS OVERRIDE] option be retired.
+  
+ Resolution B:
+ -------------
+  
+ The menu option 'Mass Override Exam Status'[RA EXAMSTATUS MASS OVERRIDE] 
+ will be removed from sites 'Supervisor Menu' [RA SUPERVISOR] and the 
+ related code in routine RAESO will also be removed.  Note that the 
+ 'Override a Single Exam's Status to 'complete'' [RA OVERRIDE] will still 
+ be functional.
+  
+ Problem C:
+ ----------
+ CA ticket #I9879245FY16 
+ Since the pregnancy screen prompt was introduced with patch RA*5.0*99,
+ there has been a discrepancy between the exam edit menu options('Case No. 
+ Exam Edit'[RA EDITCN] and 'Edit Exam by Patient'[RA EDITPT]) and the 
+ 'Status Tracking of Exams' [RA STATRACK] menu option. All of these 
+ options are used to input the required parameters for the modality 
+ allowing exams to advance through each status until complete.  The 
+ requirement for female patients within the age bracket is that the 
+ pregnancy screen prompt be answered for the exam to reach a completed 
+ status. The pregnancy screen prompt was not added to the 'Status Tracking 
+ of Exams'[RA STATRACK] option, which if used will allow an exam to reach 
+ a completed status without the pregnancy screen being answered, thus not 
+ meeting the requirement to capture the patient's response in the 
+ patient's medical record.
+  
+ Resolution C:
+ -------------
+  
+ Add the pregnancy screen prompt to the 'Status Tracking of Exams option'.
+ The input template [RA STATUS CHANGE] and routine RAUTL8 are modified to 
+ display the pregnancy screen prompt and comment for patients meeting 
+ gender and age requirements.  In order to provide the same functionality 
+ as the exam edit options, the routine RASTREQ is modified to prevent a 
+ study from reaching a completed status if the pregnancy screen prompt is 
+ not answered. Both 'Status Tracking of Exams'[RA STATRACK] and the exam 
+ edit options [RA EDITCN, RA EDITPT] will now present the pregnancy screen 
+ to the user regardless of the report status.
+  
+ Problem D:
+ ----------
+  
+ It was reported that the pregnancy screen prompt is required to be 
+ answered for outside studies (entered through the radiology package) to 
+ reach a completed status.  Since the patient is not examined at the 
+ facility, the person entering the outside report does not know the answer 
+ to the question:       
+ Enter the patient's response to the question of if she is pregnant at the 
+ time of the exam.
+      Choose from:
+         y        Patient answered yes
+         n        Patient answered no
+         u        Patient is unable to answer or is unsure
+ This causes delays in patient care, as the outside report has to be 
+ deleted, then the study cased for this question to be answered, and then 
+ the outside report entered again. 
+  
+ Resolution D:
+ -------------
+  
+ Remove the requirement for the pregnancy prompt to be answered for an 
+ outside report, allowing the study to go to a completed status.  Routine 
+ RASTREQ is modified to insert a 'u' (Patient is unable to answer or is 
+ unsure) in the PREGNANCY SCREEN [#32] field and "OUTSIDE STUDY" in the 
+ PREGNANCY SCREEN COMMENT [#80] field. This is the same functionality 
+ currently in place with outside reports created by the VistA Imaging 
+ Importer. Note that if these fields already contain data, the existing 
+ data values will not be changed.
+  
+ Problem E:
+ ----------
+  
+ The Print Registered Exams to Alternate Printer functionality comes from 
+ waiver request 376790 and is supported by the Radiology Informatics 
+ Committee and the VHA Radiology Program Office.  When using the national 
+ Radiology software to 'Register Patient for Exams', unregistered and 
+ registered requests are printed to the general x-ray printer (Request 
+ Printer).  This causes problems when the printer is not in close 
+ proximity to the radiology technician because they must walk long 
+ distances to obtain their printout, causing them to fall behind in 
+ processing patients.
+  
+ Resolution E:
+ -------------
+  
+ Add a new Registered Request Printer parameter [field #28)] to the 
+ Imaging Locations [#79.1] file. Modify routines RAREG1 and RAREG3 to 
+ check the new printer parameter and if it is defined, the request will 
+ print to that device when the exam registration is complete.  If the 
+ Registered Request Printer is not defined for that location, the request 
+ will not print. The 'Device Specifications for Imaging Locations'[RA 
+ DEVICE] menu will be modified to allow printer assignment for the new 
+ Registered Request Printer. The help text for this menu was also modified 
+ to reflect the new printer. The 'Location Parameter List'[RA SYSLOCLIST] 
+ will be modified to display the new Register Request Printer.
+  
+  
+ Problem F:
+ ----------
+  
+ Images captured indicator
+  
+ The Indicator of images associated with Exams on Radiology Reports comes 
+ from waiver request 382559 and is supported by the Radiology Informatics 
+ Committee and the VHA Radiology Program Office.  When using the 
+ 'Delinquent Status Report'[RA DELINQUENT], or 'Incomplete Exam Report'[RA 
+ INCOMPLETE] options within the nationally released Radiology package, it 
+ is not possible to determine if the exam has an image associated with 
+ it.  Therefore, it is difficult for technologists to ensure that their 
+ exams have transferred successfully to VistA Imaging.
+  
+ Resolution F:
+ -------------
+  
+ The VA Heartland Western Orbit facilities have modified the outputs to 
+ display a letter 'i' after the case number whenever the IMAGE field 
+ (#2005) is populated in the RAD/NUC MED REPORTS file (#74).  This offers 
+ staff a quick reference point to assess image transfer to VistA Imaging.
+  
+ Append the images acquired indicator (i) to the case number in routine 
+ RADLQ1, used for the 'Delinquent Status Report' [RA DELINQUENT] and 
+ 'Incomplete Exam Report' [RA INCOMPLETE].
+  
+ Problem G:
+ ----------
+  
+ I16983173FY18 - Status Tracking of printset exams with SSANs turned on. 
+  
+ Birmingham reported that after turning on Site Specific 
+ Accession Numbers, printsets do not display correctly in the Exam Status 
+ Tracking menu.  This is due to a defect in routine RASTEXT where the 
+ internal case number is not set correctly when doing the SSAN lookup. 
+  
+ Resolution G:
+ -------------
+  
+ Modify routine RASTEXT to set RACNIXX (internal case number) correctly 
+ for lookup with SSANs.
+  
+ OPTIONS AFFECTED:
+ -----------------
+  
+ Send ADT HL7 message to PACS [RA ADT]
+ Radiology HL7 Menu [RA HL7 MENU]
+ Device Specifications for Imaging Locations [RA DEVICE]
+ Mass Override Exam Status [RA EXAMSTATUS MASS OVERRIDE]
+ Supervisor Menu [RA SUPERVISOR]
+ Status Tracking of Exams [RA STATRACK]
+ Outside Report Entry/Edit [RA OUTSIDE RPTENTRY]
+ Delinquent Status Report [RA DELINQUENT]
+ Incomplete Exam Report [RA INCOMPLETE]
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ These are the documentation changes associated with this patch:
+ User Manual
+ Technical Manual
+ ADPAC Guide
+  
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices. These files
+ should be retrieved in binary format.
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to SFTP the files from
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server as follows:
+  
+     Hines                 ftp.domain.ext
+     Salt Lake City        ftp.domain.ext
+  
+ The documentation distribution includes:
+  
+ File Name               Description                     Protocol
+ ---------               -----------                     --------
+ RA5_0_UM_P137           RA Nuclear Medicine User Manual BINARY
+ RA5_0_TM_P137           RA Nuclear Medicine Tech Manual BINARY
+ RA5_0_AG_P137           RA Nuclear Medicine ADPAC Guide BINARY
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than 2 minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Start Up KIDS:
+      --------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*137):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+       ,answer YES unless your site rebuilds menu trees nightly.
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+  
+       Disable the following VistA RIS options:
+       ----------------------------------------
+       Register Patient for Exams                    [RA REG]
+       Status Tracking of Exams                      [RA STATRACK]
+       Override a Single Exam's Status to 'complete' [RA OVERRIDE]
+       Outside Report Entry/Edit                     [RA OUTSIDE RPTENTRY]
+       Radiology HL7 Menu                            [RA HL7 MENU]
+       Delinquent Status Report                      [RA DELINQUENT]
+       Incomplete Exam Report                        [RA INCOMPLETE]
+  
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       order':',press <ENTER>.
+  
+ Backout/Roll-back Strategy:
+ ===========================
+  
+  Back-out will be done only with the concurrence and participation of
+  development team and appropriate VA site/region personnel. The decision 
+  to back-out or rollback software will be a joint decision between 
+  development team, VA site/region personnel and other appropriate VA
+  personnel. A national help desk ticket should be logged before attempting
+  any backout procedures.  
+  
+  Prior to installing an updated KIDS package, the site/region should have
+  saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option (this is done at time of 
+  install). The message containing the backed up routines can be loaded
+  with the "Xtract PackMan" function at the Message Action prompt. The
+  Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+  backed up routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADLQ1
+    Before: B33800278   After: B35197870  **15,97,47,137**
+Routine Name: RAESO
+    Before: B27993971   After: B11039001  **47,137**
+Routine Name: RAHLRS
+    Before: B12807617   After: B27750372  **25,54,60,71,82,95,137**
+Routine Name: RAREG1
+    Before: B30150241   After: B30837568  **7,21,93,137**
+Routine Name: RAREG3
+    Before: B17775791   After: B29955259  **8,137**
+Routine Name: RASITE
+    Before: B12723351   After: B13056737  **137**
+Routine Name: RASTEXT
+    Before: B34738271   After: B35874954  **48,47,137**
+Routine Name: RASTREQ
+    Before: B56283063   After: B63019681  **1,10,23,40,56,99,90,137**
+Routine Name: RAUTL8
+    Before: B73540763   After: B71419275  **45,72,99,90,137**
+ 
+Routine list of preceding patches: 8, 47, 90, 93, 95
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2017
+Completed By:                               Date Completed: MAR 02, 2018
+Released By :                               Date Released : MAR 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

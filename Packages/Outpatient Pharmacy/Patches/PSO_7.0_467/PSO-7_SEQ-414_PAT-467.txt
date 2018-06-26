@@ -1,0 +1,637 @@
+$TXT Created by                W at PREMV.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 10/24/17 at 12:08
+=============================================================================
+Run Date: DEC 13, 2017                     Designation: PSO*7*467
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #414                      Status: Released
+                  Compliance Date: JAN 13, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*467'
+                    (v)PSO*7*446   <<= must be installed BEFORE `PSO*7*467'
+
+Subject: INBOUND ELECTRONIC PRESCRIBING
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ **************************************************************************
+                              ***Important***
+  
+ In order to manage the complex technical nature of implementing Inbound
+ ePrescribing, patch PSO*7*467 will install the software in a dormant
+ state. All VA medical centers will receive the patch simultaneously upon
+ its national release, with an expectation that it will be installed within
+ the standard 30-day compliance period. 
+  
+ When ready to start receiving Inbound eRXs, sites will need to enlist the 
+ assistance of the Inbound eRX Support Team and follow the steps in the 
+ Implementation Guide - Inbound ePrescribing (IEP) Version 2.0. which is 
+ included in the Documentation Retrieval Instructions section of this 
+ patch description and the Vista Documenation Library (vdl). Once training 
+ and initial configuration steps are completed, sites should submit a help 
+ desk ticket to the VA National Service Desk (NSD) at 855-NSD-HELP 
+ (673-4357) and reference "Inbound eRx". 
+  
+ Implementation of Inbound ePrescribing by the eRX Support Team will be 
+ delayed until the release of Emergency patch PSO*7*506 which is currently 
+ under development and being tested.
+ **************************************************************************
+  
+  
+ Veterans Health Administration (VHA), Patient Care Services (PCS) and 
+ Pharmacy Benefits Management (PBM) has requested a new capability as part
+ of the Pharmacy Reengineering (PRE) program to receive inbound electronic
+ prescriptions (e-prescriptions or eRxs) from an external provider (e.g., a
+ doctor not associated with the Department of Veterans Affairs [VA],
+ medical staff at a Department of Defense [DoD] military treatment 
+ facility, etc.). Once received, these prescriptions will be moved into the
+ existing Veterans Health Information Systems and Technology Architecture
+ (VistA) Outpatient Pharmacy (OP) for processing and dispensing.
+  
+ A new list manager interface has been created that provides a list of 
+ inbound electronic prescriptions. This list is commonly called the 'eRx
+ Holding Queue'. Search and sort functionality allows a user to look for
+ specific prescriptions if needed. Once a user selects a prescription, the
+ interface allows the users to validate patient, provider, and drug 
+ information. After the patient, provider, and drug have been validated,
+ the user can then accept the electronic prescription. Once an eRx is
+ accepted it is sent to the PENDING OUTPATIENT ORDERS file (#52.41). Users
+ can then use the existing option Complete Orders from OERR [PSO LMOE
+ FINISH] to finish the prescription.
+  
+ Additional options are also available that allow users to place an 
+ electronic prescription on hold, remove it from hold, reject, print,
+ accept, and remove prescriptions.
+  
+ Enhancements have been made to the functionality that builds the existing
+ medication profile displays in Complete Orders from OERR [PSO LMOE 
+ FINISH] and Patient Prescription Processing [PSO LM BACKDOOR ORDERS]. If a
+ user selects a prescription that was initially accepted from inbound
+ electronic Prescribing, Complete Orders from OERR [PSO LMOE FINISH] and
+ Patient Prescription Processing [PSO LM BACKDOOR ORDERS] will now display
+ information about the original electronic prescription, allowing the user
+ to review and/or make final adjustments. A new hidden action has been
+ created in both Complete Orders from OERR [PSO LMOE FINISH] and Patient
+ Prescription Processing [PSO LM BACKDOOR ORDERS]. The hidden action 
+ Print eRx [PSO ERX OP PRINT] allows the user to print the original
+ electronic prescription information to a hard copy for review.
+  
+ The inbound electronic prescribing patch consists of Data dictionaries, 
+ routines, and Remote Procedure Calls (RPC's) that facilitate the receipt
+ and processing of an incoming eRx. New RPC's allow the eRx Processing Hub
+ to call into Vista to perform actions such as validating a provider or
+ drug.
+  
+ The eRx Processing Hub works in conjunction with the VistA eRx Holding 
+ Queue and associated procedures in multiple VistA OP instances. High-level
+ functions of the eRx Processing Hub are:
+  
+ - Receive, persist, validate, manipulate, and construct/send National
+   Council for Prescription Drug Programs (NCPDP) Extended Markup 
+   Language (XML) messages.
+ - Validate designated pharmacy from NCPDP XML and match to VistA OP 
+   instance.
+ - Perform auto-validation and matching (including patient, 
+   enrollment/registration, provider, drug).
+ - Transform prescription data and send to VistA eRx Holding Queue format.
+ - Maintain processing statuses and perform error/exception handling.
+ - Provide administrative User Interface (UI) to track, enable/disable 
+   transmission, validate eRx and run reports.
+  
+ A new option, Complete Orders from eRx [PSO ERX FINISH] is being added to
+ the Rx (Prescriptions) [PSO RX] menu within the outpatient pharmacy
+ package.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ OUTPATIENT SITE (#59)      DEFAULT ERX CLINIC (#10)       New
+  
+ ERX SERVICE             
+ REASON CODES (#52.45)      NUMBER (#.001)                 New
+                            SERVICE REASON CODE (#.01)     New
+                            BRIEF DESCRIPTION (#.02)       New
+                            CODE TYPE (#.03)               New
+                            FULL DESCRIPTION (#1)          New
+  
+ ERX EXTERNAL
+ PATIENT (#52.46)           NAME (#.01)                    New
+                            LAST NAME (#.02)               New
+                            FIRST NAME(#.03)               New
+                            MIDDLE NAME(#.04)              New
+                            SUFFIX(#.05)                   New
+                            PREFIX(#.06)                   New
+                            GENDER(#.07)                   New
+                            DATE OF BIRTH(#.08)            New
+                            ERX EXTERNAL PHARMACY(#.09)    New
+                            FILE ID(#1.1)                  New
+                            MEDICAL RECORD ID #(#1.2)      New
+                            ACCOUNT NUMBER(#1.3)           New
+                            SSN(#1.4)                      New
+                            LINKED VISTA PATIENT(#1.5)     New
+                            PLACE/LOCATION QUALIFIER(#1.6) New
+                            PATIENT RELATIONSHIP(#1.7)     New
+                            COMMUNICATION(#2)              New
+                            ADDRESS LINE 1(#3.1)           New
+                            ADDRESS LINE 2(#3.2)           New
+                            CITY(#3.3)                     New
+                            STATE(#3.4)                    New
+                            ZIP CODE(#3.5)                 New
+                            IDENTIFICATION(#5)             New
+  
+ ERX EXTERNAL
+ PHARMACY (#52.47)          NAME(#.01)                     New
+                            NCPDP ID(#.02)                 New
+                            NPI(#.03)                      New
+                            DEA NUMBER(#.04)               New
+                            STORE NAME(#.05)               New
+                            ADDRESS LINE 1(#1.1)           New
+                            ADDRESS LINE 2(#1.2)           New
+                            CITY(#1.3)                     New
+                            STATE(#1.4)                    New
+                            ZIP(#1.5)                      New
+                            TYPE(#1.6)                     New
+                            PLACE/LOCATION QUALIFIER(#1.7) New
+                            SPECIALTY(#1.8)                New
+                            IDENTIFICATION(#2)             New
+                            COMMUNICATION(#3)              New
+                            ASSOCIATED ERX PERSON(#4)      New
+  
+  
+ ERX EXTERNAL
+ PERSON (#52.48)
+  
+                            NAME(#.01)                     New
+                            LAST NAME(#.02)                New
+                            FIRST NAME(#.03)               New
+                            MIDDLE NAME(#.04)              New
+                            SUFFIX(#.05)                   New
+                            PREFIX(#.06)                   New
+                            PERSON TYPE(#1.1)              New
+                            SPECIALTY(#1.2)                New
+                            ASSOCIATED ERX PHARMACY(#1.3)  New
+                            NCPDP ID(#1.4)                 New
+                            NPI(#1.5)                      New
+                            DEA #(#1.6)                    New
+                            HIN(#1.7)                      New
+                            STATE LICENSE NUMBER(#1.8)     New
+                            CLINIC NAME(#2.1)              New
+                            PLACE/LOCATION QUALIFIER(#2.2) New
+                            COMMUNICATION(#3)              New
+                            STREET ADDRESS LINE 1(#4.1)    New
+                            ADDRESS LINE 2(#4.2)           New
+                            CITY(#4.3)                     New
+                            STATE(#4.4)                    New
+                            ZIP CODE(#4.5)                 New
+                            AGENT LAST NAME(#5.1)          New
+                            AGENT FIRST NAME(#5.2)         New
+                            AGENT MIDDLE NAME(#5.3)        New
+                            AGENT SUFFIX(#5.4)             New
+                            AGENT PREFIX(#5.5)             New
+                            IDENTIFICATION(#6)             New
+  
+  
+ ERX HOLDING
+ QUEUE (#52.49)
+  
+                            ERX HUB ID(#.01)              New
+                            RELATED OR PARENT MESSAGE
+                            ID(#.02)                      New
+                            MESSAGE DATE/TIME(#.03)       New
+                            EXTERNAL PATIENT
+                            IDENTIFIER(#.04)              New
+                            VISTA PATIENT(#.05)           New
+                            INSTITUTION(#.06)             New
+                            PHARMACY SYSTEM(#.07)         New
+                            MESSAGE TYPE(#.08)            New
+                            EXTERNAL/PROVIDER ORDER
+                            NUMBER(#.09)                  New
+                            VISTA PENDING OUTPATIENT
+                            ORDER(#.1)                    New
+                            OE/RR ORDER NUMBER(#.12)      New
+                            PHARMACY PRESCRIPTION
+                            NUMBER(#.13)                  New
+                            ERX ORDER STATUS(#1)          New
+                            DRUG VALIDATED BY(#1.11)      New
+                            DRUG VALIDATED 
+                            DATE/TIME(#1.12)              New
+                            PATIENT VALIDATED BY(#1.13)   New
+                            PATIENT VALIDATED 
+                            DATE/TIME(#1.14)              New
+                            PROV STAT
+                            (AUTO VALIDATION)( #1.2)      New
+                            PROV STAT
+                            (MANUAL VALIDATION)( #1.3)    New
+                            DRUG STAT
+                            (AUTO VALIDATION)( #1.4)      New
+                            DRUG STAT
+                            (MANUAL VALIDATION)( #1.5)    New
+                            PATIENT STATUS
+                            (AUTO VAL)( #1.6)             New
+                            PATIENT STATUS
+                            (MANUAL VAL)( #1.7)           New
+                            PROVIDER VALIDATED BY(#1.8)   New
+                            PROVIDER VALIDATED
+                            DATE/TIME(#1.9)               New
+                            EXTERNAL PROVIDER(#2.1)       New
+                            EXTERNAL PHARMACIST(#2.2)     New
+                            VA MATCHED PROVIDER(#2.3)     New
+                            TO/FROM QUALIFIER(#2.4)       New
+                            ERX EXTERNAL PHARMACY(#2.5)   New
+                            ERX EXTERNAL SUPERVISOR(#2.6  New
+                            EXTERNAL DRUG/SUPPLY(#3.1)    New
+                            MATCHED DRUG/SUPPLY(#3.2)     New
+                            PRODUCT CODE(#4.1)            New
+                            DRUG DB CODE QUALIFIER(#4.11) New
+                            PRODUCT CODE QUALIFIER(#4.2)  New
+                            STRENGTH(#4.3)                New
+                            DRUG DB CODE(#4.4)            New
+                            FORM SOURCE CODE(#4.5)        New
+                            FORM CODE(#4.6)               New
+                            STRENGTH SOURCE CODE(#4.7)    New
+                            STRENGTH CODE(#4.8)           New
+                            DEA SCHEDULE(#4.9)            New
+                            QUANTITY(#5.1)                New
+                            CODE LIST QUALIFIER(#5.2)     New
+                            UNIT SOURCE CODE(#5.3)        New
+                            POTENCY UNIT CODE(#5.4)       New
+                            DAYS SUPPLY(#5.5)             New
+                            REFILLS(#5.6)                 New
+                            REFILL QUALIFIER(#5.7)        New
+                            SUBSTITUTIONS(#5.8)           New
+                            WRITTEN DATE(#5.9)            New
+                            LAST FILL DATE(#6.1)          New
+                            EXPIRATION DATE(#6.2)         New
+                            EFFECTIVE DATE(#6.3)          New
+                            PERIOD END(#6.4)              New
+                            DELIVERED ON DATE(#6.5)       New
+                            DATE VALIDATED(#6.6)          New
+                            DIRECTIONS(#7)                New
+                            NOTES(#8)                     New
+                            DIAGNOSIS(#9)                 New
+                            PRIOR AUTHORIZATION(#10.2)    New
+                            PRIOR AUTHORIZATION
+                            QUALIFIER(#10.3)              New
+                            PRIOR AUTHORIZATION
+                            STATUS(#10.4)                 New
+                            DO NOT FILL(#10.5)            New
+                            NEEDED NO LATER THAN(#10.6)   New
+                            TIMEZONE(#10.7)               New
+                            TIME ZONE DIFFERENCE
+                            QUANTITY(#10.8)               New
+                            NEEDED NO LATER THAN
+                            REASON(#10.9)                 New
+                            STRUCTURED SIG(#11)           New
+                            ORDER CHECKS(#12)
+                            PATIENT FACILITY UNIT(#13.1)  New
+                            BED(#13.2)                    New
+                            ROOM(#13.3)                   New
+                            OBSERVATION(#14)              New
+                            OBSERVATION NOTES(#15)        New
+                            DRUG USE EVALUATION(#16)      New
+                            EXTERNAL PHARMACY(#17.1)      New
+                            EXTERNAL PHARMACIST(#17.2)    New
+                            TRANSFERRED TO VA
+                            PHARMACY(#17.3)               New
+                            XFER TO EXTERNAL
+                            PHARMACY(#17.4)               New
+                            PAYER INFORMATION(#18)        New
+                            STATUS HISTORY(#19)           New
+                            VISTA QUANTITY(#20.1)         New
+                            VISTA DAYS SUPPLY(#20.2)      New
+                            VISTA VERB(#20.3)             New
+                            VISTA ROUTING(#20.4)          New
+                            VISTA REFILLS(#20.5)          New
+                            VISTA CLINIC(#20.6)           New
+                            QUANTITY/TIMING(#21)          New
+                            FROM(22.1)                    New
+                            FROM QUALIFIER(#22.2)         New
+                            TO(#22.3)                     New
+                            TO QUALIFIER(#22.4)           New
+                            CH SENT DATE/TIME(#22.5)      New
+                            RELATED INSTITUTION(#24.1)    New
+                            DIVISION(24.2)                New
+                            SENDER SECONDARY ID(#24.3     New
+                            SENDER TERTIARY ID(#24.4)     New
+                            RECEIVER SECONDARY ID(#24.5)  New
+                            RECEIVER TERTIARY ID(#24.6)   New
+                            CH MESSAGE ID(25)             New
+                            PENDING OUTPATIENT
+                            ORDER#(#25.2)                 New
+                            VA DISPENSING
+                            INSTRUCTIONS(#26)             New
+                            VA PATIENT INSTRUCTIONS(#27)  New
+                            DRUG COVERAGE STATUS(#28)     New
+                            VA PROVIDER COMMENTS(#30)     New
+                            VA UNEXPANDED SIG(#31)        New
+                            EXTERNAL FORM CODE(#41)       New
+                            EXTERNAL POTENCY UNIT         New
+                            CODE(#42)                     New
+                            EXTERNAL STRENTH CODE(#43)    New
+                            PAYER CARDHOLDER ID
+                            CONVERTED (#44)               New
+                            PROCESSING ERRORS(#100)       New
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ List Templates Associated:
+  
+ List Template Name         New/Modified/Deleted
+ ------------------         --------------------
+ PSO ERX DRUG VALIDATION           New
+ PSO ERX HOLDING QUEUE             New
+ PSO ERX HQ DISPLAY                New
+ PSO ERX PATIENT VALIDATION        New
+ PSO ERX PROVIDER VALIDATION       New
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+  
+ Options Associated:
+  
+ Option Name               Type               New/Modified/Deleted
+ -----------               ----               -------------------- 
+ PSO ERX FINISH            Action                    New
+ PSO WEB SERVICES OPTION   Web Service               New
+ PSO RX                    Menu                    Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               -------------------- 
+ PSO ERX ACCEPT ERX                 New
+ PSO ERX ACCEPT VALIDATION          New
+ PSO ERX DISPLAY MENU               New
+ PSO ERX EDIT                       New
+ PSO ERX HIDDEN ACTIONS             New
+ PSO ERX HOLD                       New
+ PSO ERX HQ MENU                    New
+ PSO ERX HQ SEARCH                  New
+ PSO ERX HQ SELECT                  New
+ PSO ERX HQ SORT                    New
+ PSO ERX OP PRINT                   New
+ PSO ERX PRINT                      New
+ PSO ERX REMOVE                     New
+ PSO ERX REJECT                     New
+ PSO ERX RENEW REQUEST              New
+ PSO ERX SELECT BY NUMBER           New
+ PSO ERX UNHOLD                     New
+ PSO ERX VALIDATE DRUG              New
+ PSO ERX VALIDATE PATIENT           New
+ PSO ERX VALIDATE PROVDIER          New
+ PSO ERX VALIDATION MENU            New
+ PSO HIDDEN ACTIONS               Modified
+ PSO HIDDEN ACTIONS #3            Modified
+  
+ Remote Procedure Calls:
+  
+ Remote Procedure Name:
+ ----------------------
+ PSOERXA0 DRGMTCH - drug matching logic
+ PSOERXA0 PRVMTCH - provider match logic
+ PSOERXA1 INCERX  - read and file incoming eRx (XML)
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ PSO ERX ADV TECH (NEW)
+ PSO ERX TECH (NEW)
+ PSO ERX VIEW (NEW)
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ CENTRAL ALABAMA VETERANS HEALTHCARE SYSTEM
+ VA OMAHA MEDICAL CENTER (CENTRAL PLAINS)
+ SIOUX FALLS VA HEALTHCARE SYSTEM
+ VETERANS HEALTH CARE SYSTEM OF THE OZARKS
+ HEALTH ADMINISTRATION CENTER (MEDS BY MAIL)
+ INDIANAPOLIS VA MEDICAL CENTER 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ User Manual - Inbound
+ ePrescribing (IEP)
+ Version 2.0                   pso_7_0_p467_um.pdf
+  
+ Technical Manual              
+ Outpatient Pharmacy 7.0       pso_7_0_p467_tm.pdf
+  
+ Implementation Guide -
+ Inbound ePrescribing (IEP)
+ Version 2.0                   pso_7_0_p467_img.pdf
+  
+ Installation Guide
+ Inbound ePrescribing (IEP)
+ Version 2.0                   pso_7_0_p467_ig.pdf
+  
+ Release Notes - Inbound 
+ ePrescribing (IEP)
+ Version 2.0                   pso_7_0_p467_rn.pdf
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The user installing this patch must hold the XUMGR security key. This key
+ is needed to ensure the creation of the application proxy user
+ (PSOAPPLICATIONPROXY,PSO) completes properly.
+  
+ Follow post-installation steps to configure the proxy connector and web 
+ service for the Inbound eRx package.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter:  
+     PSO*7.0*467
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ There are additional steps to be completed prior to Implementation and 
+ Go-Live for Inbound eRX. Please refer to the Implementation Guide -Inbound
+ ePrescribing (IEP) Version 2.0 found in the Documentation Retrieval
+ Instructions or on the Vista Documenation Library (vdl) when site is ready
+ to complete final setup.                    
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 153
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO467PI
+    Before:       n/a   After:   B851231  **467**
+Routine Name: PSO467PO
+    Before:       n/a   After: B15790041  **467**
+Routine Name: PSOERX
+    Before:       n/a   After: B62148150  **467**
+Routine Name: PSOERX1
+    Before:       n/a   After: B73483713  **467**
+Routine Name: PSOERX1A
+    Before:       n/a   After:B116223189  **467**
+Routine Name: PSOERX1B
+    Before:       n/a   After:B200406933  **467**
+Routine Name: PSOERX1C
+    Before:       n/a   After: B35864468  **467**
+Routine Name: PSOERXA0
+    Before:       n/a   After: B33077655  **467**
+Routine Name: PSOERXA1
+    Before:       n/a   After:B228588207  **467**
+Routine Name: PSOERXA2
+    Before:       n/a   After: B75232526  **467**
+Routine Name: PSOERXA3
+    Before:       n/a   After: B37438894  **467**
+Routine Name: PSOERXA4
+    Before:       n/a   After: B86435195  **467**
+Routine Name: PSOERXD1
+    Before:       n/a   After:B120565051  **467**
+Routine Name: PSOERXD2
+    Before:       n/a   After:B205678720  **467**
+Routine Name: PSOERXH1
+    Before:       n/a   After: B14280628  **467**
+Routine Name: PSOERXO1
+    Before:       n/a   After: B57309099  **467**
+Routine Name: PSOERXP1
+    Before:       n/a   After: B23837983  **467**
+Routine Name: PSOERXR1
+    Before:       n/a   After: B24483319  **467**
+Routine Name: PSOERXU1
+    Before:       n/a   After: B72865919  **467**
+Routine Name: PSOERXX1
+    Before:       n/a   After: B44864162  **467**
+Routine Name: PSOERXX2
+    Before:       n/a   After:B181162473  **467**
+Routine Name: PSOERXX3
+    Before:       n/a   After: B81556769  **467**
+Routine Name: PSOERXX4
+    Before:       n/a   After: B86144240  **467**
+Routine Name: PSOERXX5
+    Before:       n/a   After:B181218192  **467**
+Routine Name: PSOORFI1
+    Before: B79665537   After: B82061614  **7,15,23,27,32,44,51,46,71,
+                                           90,108,131,152,186,210,222,258,
+                                           260,225,391,408,444,467**
+Routine Name: PSOORNE2
+    Before:B107853949   After:B111459106  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391,
+                                           313,282,427,454,446,467**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 03, 2016
+Completed By:                               Date Completed: DEC 11, 2017
+Released By :                               Date Released : DEC 13, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

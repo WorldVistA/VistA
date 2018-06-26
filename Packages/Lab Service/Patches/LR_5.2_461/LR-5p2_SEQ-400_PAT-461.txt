@@ -1,0 +1,214 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Saturday, 11/04/17 at 21:49
+=============================================================================
+Run Date: FEB 22, 2018                     Designation: LR*5.2*461
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #400                    Status: Released
+                  Compliance Date: MAR 25, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*440  <<= must be installed BEFORE `LR*5.2*461'
+                    (v)LR*5.2*484  <<= must be installed BEFORE `LR*5.2*461'
+
+Subject: CANCELLED TESTS, AP LABELS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) issues:
+  
+ 1. Accessions which have been cancelled (i.e. marked as "not performed" or
+    which have been merged to other accessions) may be resulted
+    nevertheless.
+  
+ 2. Anatomic Pathology labels do not print while using the option 
+    REFERRAL PATIENT MULTI-PURPOSE option for accessioning orders.
+  
+ Associated Ticket(s):
+ =====================
+  
+ 1. I9835956FY16 - Lab Accession Not Performed / Merged Issue
+  
+ 2. I9841929FY16 - Anatomic Pathology Label printing issue
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*461 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*461 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*461 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated NSR(s):
+ ==================
+ N/A 
+  
+ Participating Test Sites:
+ =========================
+ VA Boston HCS
+  
+ Captain James A Lovell FHCC (North Chicago)
+  
+ Ticket Overview:
+ ===============
+ 1. I9835956FY16 - Lab Accession Not Performed /Merged Issue
+    
+    Problem:
+    --------
+    It is possible to have results entered and verified on a cancelled UID 
+    (universal identifier). Furthermore, two different results for the same
+    test on the same specimen may be visible in CPRS.  This can occur if a
+    result is entered on a cancelled UID which was previously merged to
+    another UID, and if a different result is entered on the merged UID.
+  
+    Resolution:
+    -----------
+    Modify result entry and verification routines to not allow results to
+    be entered on an accession which has a cancelled status.  The cancelled
+    status may be due to the accession being marked as "not performed", or
+    it may have merged to another accession.
+    
+    Routines: LRVER1, LRVER3, LRSTUF2, LRMIEDZ4
+  
+ 2. I9841929FY16 - Anatomic Pathology Label printing issue
+  
+    Problem:
+    --------
+    Labels do not print for Anatomic Pathology accessions while executing
+    the option Referral Patient Multi-purpose Accession [REFERRAL PATIENT
+    MULTI-PURPOSE] to accession Laboratory Electronic Data Interchange
+    (LEDI) orders at a host site.
+  
+    Resolution:
+    ------------
+    Modify routine LRWLST11 to not restrict Anatomic Pathology accessions 
+    from label printing functionality.
+  
+    Routine: LRWLST11
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system. You may wish to 
+   install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Startup KIDS
+    ------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution system Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter LR*5.2*461):
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+     a. Choose the Install Package(s) option to start the patch
+        install and select the package LR*5.2*461.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', answer NO.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRMIEDZ4
+    Before:  B2660171   After:  B6108104  **350,461**
+Routine Name: LRSTUF2
+    Before: B21119353   After: B25014917  **121,153,263,347,350,461**
+Routine Name: LRVER1
+    Before: B49802550   After: B51164514  **42,153,201,215,239,240,263,
+                                           232,286,291,350,468,484,461**
+Routine Name: LRVER3
+    Before: B75732733   After: B75852172  **42,100,121,140,171,153,221,
+                                           286,291,406,350,461**
+Routine Name: LRWLST11
+    Before: B73046039   After: B74481362  **121,128,153,202,286,331,375,
+                                           350,440,461**
+ 
+Routine list of preceding patches: 440, 484
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2015
+Completed By:                               Date Completed: FEB 21, 2018
+Released By :                               Date Released : FEB 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

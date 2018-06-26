@@ -1,0 +1,257 @@
+
+=============================================================================
+Run Date: DEC 07, 2017                     Designation: OR*3*429
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #385                      Status: Released
+                  Compliance Date: JAN 16, 2018
+=============================================================================
+
+Associated patches: (v)GMPL*2*49       install with patch       `OR*3*429'
+                    (v)OR*3*385    <<= must be installed BEFORE `OR*3*429'
+
+Subject: Problem Selection List Enhancements for CPRS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch introduces the problem selection list enhancements that are 
+ documented in NSR 20160107: Problem List Diagnosis Menu. In order to 
+ document a problem within the Problems tab, users must use the Lexicon 
+ search to document the problem which often is time consuming and 
+ inefficient for common problems. To alleviate this burden, this request 
+ seeks to provide a list of commonly used diagnoses in SNOMED CT for a 
+ user and/or clinic. A Clinical Application Coordinator (CAC) will have 
+ the capability to assign users and/or clinics to any of the problem 
+ selection lists through the associating menu options.
+  
+ The CPRS changes associated with these enhancements include a new Default 
+ Problem Selection List Display parameter, ORQQPL SELECTION LIST, which 
+ streamlines selection list assignment and management. This parameter 
+ determines which problem selection list the user will be shown when 
+ adding a new patient problem in CPRS.
+  
+ A default selection list may be assigned to the following entities and 
+ their precedence levels:
+  
+      1   User          USR    [choose from NEW PERSON]
+      2   Location      LOC    [choose from HOSPITAL LOCATION]
+      3   Division      DIV    [choose from INSTITUTION]
+      4   System        SYS    [XXXX.XXXX.DOMAIN.EXT]
+  
+ As with all other parameters, an entity at a higher level will take 
+ precedence over an entity at a lower level. So if a particular selection 
+ list is assigned to a user, the default selection list associated with a 
+ selected clinic location will not be displayed to the user. The user's 
+ default list will be displayed instead.
+  
+ A CAC can access and manage the default list settings in several ways: 1) 
+ General Parameter Tools menu, 2) Assign/Remove Problem Selection List 
+ [GMPL ASSIGN LIST] menu option, or 3) through the Assign List menu action 
+ when creating/editing a problem selection list in the List Manager app.
+  
+ Since the related GMPL*2.0*49 patch will export the VA-NATIONAL PROBLEM 
+ SELECTION LIST, this patch will set this as the default selection list at 
+ the system and package levels of the parameter.
+  
+ Additionally, the pre-existing user and clinic list assignments in the 
+ New Person and Problem Selection List files respectively will be migrated 
+ over and managed under this new parameter. Those lists that contain one 
+ or more problems with inactive SNOMED and/or ICD codes will not be 
+ migrated and will require a CAC's review. These lists will be displayed 
+ to the installer during installation.
+  
+ Sample post-installation messages:
+ ----------------------------------
+  
+ Migrating default user Problem Selection list from NEW PERSON File to the
+ ORQQPL SELECTION LIST parameter...
+  
+   The following selection lists could not be migrated to the ORQQPL 
+   SELECTION LIST parameter because it contains one or more problems that
+   have inactive SNOMED and/or ICD codes attached to them.
+  
+           CARDIOLOGY
+           ORTHOPEDIC
+  
+ Migrating default clinic Problem Selection list from PROBLEM SELECTION 
+ LIST File to the ORQQPL SELECTION LIST parameter...
+  
+   The following selection lists could not be migrated to the ORQQPL 
+   SELECTION LIST parameter because it contains one or more problems that
+   have inactive SNOMED and/or ICD codes attached to them.
+  
+           CARDIOLOGY
+           ORTHOPEDIC
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                         Type              New/Modified/Deleted
+ -----------                      -----------          --------------------
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ ORQQPL SELECTION LIST                 New
+  
+ Protocols Associated:
+  
+ Protocol Name                  New/Modified/Deleted
+ -------------                  -------------------- 
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name              New/Modified/Deleted
+ -----------------              --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20160107: Problem List Diagnosis Menu
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Minnesota
+ Orlando
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available. This patch 
+ will be released as part of a combined multi-package build under PROBLEM 
+ SELECTION LIST BUILD 1.0. This combined build consists of the GMPL*2.0*49 
+ and OR*3.0*429 patches.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI&T Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Problem Selection List        GMPL_2_0_49_IG.PDF              Binary
+  Enhancements Deployment,     GMPL_2_0_49_IG.DOCX             Binary
+  Installation, Back-Out,
+  and Rollback Guide 
+ Problem List Release Notes    GMPL_2_0_49_RN.PDF              Binary
+                               GMPL_2_0_49_RN.DOCX             Binary 
+ CPRS User Guide: GUI Version  CPRSGUIUM.PDF                   Binary
+                               CPRSGUIUM.DOC                   Binary
+ CPRS Technical Manual:        CPRSGUITM.PDF                   Binary
+  GUI Version                  CPRSGUITM.DOC                   Binary
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a post-installation routine (ORY429) included. This routine will 
+ be automatically deleted once installation has completed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the Problem Selection List Enhancements Deployment, 
+ Installation, Back-Out, and Rollback Guide for installation instructions.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine will set the VA-NATIONAL PROBLEM SELECTION LIST 
+ as a default list for the system and package level setting of the ORRQPL 
+ SELECTION LIST parameter. It will also automatically migrate the 
+ pre-existing user and clinic list assignments in the New Person and 
+ Problem Selection List files respectively over to this new parameter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQQPL3
+    Before: B77595608   After: B81488349  **10,148,173,243,280,306,361,
+                                           385,429**
+Routine Name: ORY429
+    Before:       n/a   After: B22955937  **429**
+ 
+Routine list of preceding patches: 385
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2016
+Completed By:                               Date Completed: DEC 07, 2017
+Released By :                               Date Released : DEC 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

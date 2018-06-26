@@ -1,0 +1,375 @@
+
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: PSO*7*500
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #423                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*402   <<= must be installed BEFORE `PSO*7*500'
+                    (v)PSO*7*422   <<= must be installed BEFORE `PSO*7*500'
+                    (v)PSO*7*446   <<= must be installed BEFORE `PSO*7*500'
+                    (v)PSO*7*486   <<= must be installed BEFORE `PSO*7*500'
+
+Subject: MOCHA 2.1B FOLLOW UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of the MOCHA Enhancements 2.1B group of builds and is a
+ component of the last group installed. Multiple package host files were
+ created where possible to simplify installation at Veterans Health
+ Administration (VHA) facilities. The combined build host file
+ MOCHA_2_1_PSO_OR_PSJ.KID contains OR*3.0*382, PSJ*5.0*256 and PSO*7.0*402.
+ The combined follow up host file MOCHA_2_1_FOLLOW_UP_PSO_OR_PSJ.KID
+ contains this patch as well as OR*3.0*469 and PSJ*5.0*347. In addition,
+ there are standalone Pharmacy Data Management patches, PSS*1.0*178 and
+ PSS*1.0*206, which must be installed in conjunction with the other builds.
+  
+                               * * * Notice * * *
+                   This group of patches should not be installed 
+                       until the follow on patch PSO*7.0*515
+            has been released and is ready to be immediately installed. 
+                PSO*7.0*515 must be installed immediately after the
+                  successful installation of this group of builds.
+               See the PSO*7.0*515 patch description for details.
+                               * * * Notice * * *  
+  
+ MOCHA v2.1B will provide the following enhancements:
+ ===================================================
+  
+ Implement Dose Range Checking with a Max Daily Dose limit for 
+ simple medication orders entered through Outpatient Pharmacy, Inpatient 
+ Medications applications and CPRS.
+  
+ Display a generic error message when the Max Daily Dose Order 
+ Check cannot be performed in CPRS.
+  
+ Display an error message when the Max Daily Dose Order Check 
+ cannot be performed in CPRS with a detailed reason when height and/or 
+ weight is required, but does not exist in the Vitals application for the 
+ patient.
+  
+ Display an error message when the Max Daily Dose Order Check 
+ cannot be performed in Pharmacy with a detailed reason.
+  
+ Correct identified daily dose errors due to frequency failure.
+  
+ Resolve miscellaneous frequency issues with incorporation of new 
+ dosing check frequency fields.
+  
+ Apply Daily Dose Check exclusion for schedule to medication 
+ orders entered through Outpatient Pharmacy, Inpatient Medications and 
+ CPRS.
+  
+ Apply advisory note to high dose warnings and General Dosing 
+ Guidelines for medication administered through eye, ear, or nose.
+  
+ Create a customized frequency message.
+  
+ Create a general dosing information message.
+  
+ Create a Max Daily Dose Warning message for the calculated Daily Dose.
+  
+ Add FDB data elements from Dosing Order Check call to VistA side of
+ interface.
+  
+ Display one warning if Maximum Single Dose and Max Daily Dose
+ Order Check warning texts are identical.
+  
+ Adjustment to the Daily Dose if a Single Dose Adjustment is made for an IV
+ order when performing Dosing Order Checks.
+  
+ Modify entries to the DOSE UNITS file (#51.24).
+  
+ Modify entries to the DOSE UNIT CONVERSION file (#51.25).
+  
+ Update Check PEPS Services Setup [PSS CHECK PEPS SERVICES SETUP] option 
+ to perform the Max Daily Dose Order Check instead of the Daily Dose Range 
+ Order Check.
+  
+ Increase the precision of the patient weight calculation in Kilograms
+ throughout Outpatient.
+  
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ ---------------------- 
+ N/A
+  
+  
+ Options Associated: 
+ ------------------ 
+ N/A 
+  
+  
+ Protocols Associated:
+ -------------------- 
+ N/A  
+  
+  
+ Security Keys Associated:
+ ------------------------ 
+ N/A
+  
+  
+ Templates Associated:
+ -------------------- 
+ N/A
+  
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ I5589877FY15 - Make Metric Conversions for Patient Weight Consistent
+                across VistA Packages      
+  
+   Problem:
+   --------
+   In order to display the patient's weight in Kilograms (Kgs) the current
+   conversion from Pounds (Lbs) to Kgs is being done by dividing the 
+   patient weight on file by 2.2. 
+  
+   Resolution:
+   -----------
+   The weight calculation conversion from Lbs to Kgs is being modified to
+   increase the precision of the patient weight in Kgs by dividing it by
+   2.2046226 instead. This change will make the Outpatient Pharmacy
+   consistent with Computerized Patient Record System (CPRS).
+  
+   Technical Resolution:
+   ---------------------
+   Modify routines to calculate from pounds to kilograms to use 2.2046226 
+   lbs/kg instead of 2.2 lbs/kg.
+   RE+2^PSODEM                     
+   HDR+7^PSONVAVW
+   CRCL+7^PSOORUT2
+   HD+15^PSOSD1
+   HD1+29^PSOSD2
+   HD1+20^PSOSD3
+   HD+14^PSOSDP
+   HDR^PSOPMP0
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                   File Name             SFTP Mode
+ -----------------------------------------------------------------------
+ Outpatient Pharmacy V.7.0 Manager's     PSO_7_MAN_UM_           binary
+  User Manual                            R0218.PDF   
+  
+ Outpatient Pharmacy V.7.0 Pharmacist's  PSO_7_PHAR_UM_          binary
+  User Manual                            R0218.PDF         
+                                 
+ Outpatient Pharmacy V. 7.0              PSO_7_TECH_UM_          binary
+  Technician's User Manual               R0218.PDF 
+                                 
+ Outpatient Pharmacy V. 7.0              PSO_7_TM_R0218.PDF      binary
+  Technical Manual/Security Guide                       
+                                                                 
+ MOCHA 2.1B Release Notes                PSS_1_PSO_7_PSJ_5_      binary
+                                         RN_R0215.PDF
+  
+ MOCHA 2.1B Combined Builds              MOCHA_21B_PSO_OR_PSJ_   binary
+  Deployment, Installation,              PSS_CB_IG.PDF
+   Back-Out and Rollback Guide
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch, part of the combined follow up build, must be installed after
+ PSS*1.0*178, the combined build and PSS*1.0*206 have been installed.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+  
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The MOCHA 2.1B ENHANCEMENTS software distribution includes:
+  
+    File Name               Contents                  Retrieval Format
+    ---------------------   ----------------          ----------------
+    PSS_1_178.KID           PSS*1.0*178               ASCII
+  
+    MOCHA_2_1_PSO_OR_       PSJ*5.0*256               ASCII
+      PSJ_BUILD.KID         PSO*7.0*402
+                            OR*3.0*382
+  
+    PSS_1_206.KID           PSS*1.0*206               ASCII
+  
+    MOCHA_2_1_FOLLOW_       PSO*7.0*500               ASCII
+      UP_PSO_OR_PSJ.KID     OR*3.0*469
+                            PSJ*5.0*347
+  
+ Installation Instructions
+ -------------------------
+  
+ Please refer to the MOCHA 2.1B Combined Builds Deployment, Installation,
+ Back-Out and Rollback Guide for installation instructions.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ ****************************** NOTE ************************************
+ The 'Before' checksum values for routines PSOBKDE1, PSODEM, PSODOSUN,
+ PSOORED5, PSOORUT2, PSORXEDT, PSOSIG, and PSOVER1 in this patch will
+ appear incorrect.  This is because they are components of the preceding
+ patch PSO*7.0*402 which is also part of the MOCHA 2.1B group of builds.  
+ The FORUM Patch Module uses released checksum values to populate the
+ 'Before' fields below.  Since PSO*7.0*402 will be released at the same
+ time as this patch the FORUM Patch Module does not have access to the
+ actual 'Before' checksum values.
+ ****************************** NOTE *************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDE1
+    Before:  B8242878   After:  B8511547  **117,133,372,402,500**
+Routine Name: PSODDPR4
+    Before:B136589184   After:B142687224  **251,375,387,379,390,372,416,
+                                           484,500**
+Routine Name: PSODDPR8
+    Before: B57269094   After: B59640557  **390,372,416,500**
+Routine Name: PSODEM
+    Before: B18875711   After: B18912575  **5,19,233,258,326,390,411,402,500**
+Routine Name: PSODGAL
+    Before: B16555138   After:    Delete  
+Routine Name: PSODGAL1
+    Before:B113259514   After:B111659050  **251,401,390,424,429,411,500**
+Routine Name: PSODOSUN
+    Before:B100479276   After:B100248418  **251,379,372,416,436,402,500**
+Routine Name: PSONVAVW
+    Before: B19285655   After: B19324359  **260,500**
+Routine Name: PSOORED5
+    Before: B72949792   After: B73345856  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486,402,
+                                           500**
+Routine Name: PSOORUT2
+    Before:B105731983   After:B105702086  **11,146,132,182,233,243,261,
+                                           268,264,305,390,411,402,500**
+Routine Name: PSOPMP0
+    Before: B89661374   After: B89710024  **260,281,303,289,382,313,427,500**
+Routine Name: PSORXEDT
+    Before: B51616221   After: B52436750  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313,427,422,402,
+                                           500**
+Routine Name: PSOSD1
+    Before: B48940095   After: B48994823  **2,17,19,22,40,49,66,107,110,
+                                           132,233,258,240,320,326,360,
+                                           500**
+Routine Name: PSOSD2
+    Before: B29718119   After: B29770075  **2,19,107,110,176,233,258,326,500**
+Routine Name: PSOSD3
+    Before: B38820871   After: B38868653  **2,19,107,110,132,233,258,326,500**
+Routine Name: PSOSDP
+    Before: B31130096   After: B31171102  **2,17,19,107,110,155,176,233,
+                                           258,326,500**
+Routine Name: PSOSIG
+    Before: B70274708   After: B96478034  **46,99,114,391,313,282,455,
+                                           446,402,500**
+Routine Name: PSOVER1
+    Before:B130702321   After:B131717973  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379,390,372,416,411,422,402,
+                                           500**
+ 
+Routine list of preceding patches: 360, 402, 484
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2017
+Completed By:                               Date Completed: FEB 23, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

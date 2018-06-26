@@ -1,0 +1,362 @@
+$TXT Created by                   DEVVOO.DOMAIN.EXT  (KIDS) on Friday, 06/09/17 at 15:22
+=============================================================================
+Run Date: DEC 06, 2017                     Designation: DG*5.3*925
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #829                    Status: Released
+                  Compliance Date: JAN 06, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*907  <<= must be installed BEFORE `DG*5.3*925'
+                    (v)DG*5.3*915  <<= must be installed BEFORE `DG*5.3*925'
+
+Subject: ENROLLMENT SYSTEM COMMUNITY CARE (ESCC) ADD/EDIT ADDRESS UPDATES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*925 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which supports
+ Enrollment System Community Care (ESCC).
+  
+ DG*5.3*925 is also being released in support of the Enrollment System (ES)
+ 4.6.0 release. Refer to Informational Patch EAS*1*147 (Enrollment
+ Application System) for additional details regarding the ES release.
+  
+ This portion of the Add/Edit Address Updates build will modify Registration
+ Screens to display the correct address labels.
+  
+ Listing of Updates
+ ================== 
+  
+ 1. The label for "Address" is changed to "Permanent Mailing Address" and 
+    the label "Temporary" is changed to "Temporary Mailing Address" on the 
+    Patient Inquiry screen shown below in the following options:
+  
+       Patient Inquiry                       [DG PATIENT INQUIRY]
+       Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+       Register a Patient                    [DG REGISTER PATIENT]
+       Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+ REGPATNM,PATIENT                666-00-0436              JUN 8,2017
+ ==========================================================================
+  Permanent Mailing Address:             Temporary Mailing Address: 
+          123 MAIN STREET                        123 TEMPORARY STREET
+          MILFORD,MA 01757                       MILFORD,MA 01757
+          UNITED STATES                          UNITED STATES
+   County: WORCESTER (027)                 From/To: JUN 8,2017-UNSPECIFIED
+    Phone: UNSPECIFIED                       Phone: UNSPECIFIED
+   Office: UNSPECIFIED
+     Cell: UNSPECIFIED
+   E-mail: UNSPECIFIED
+ Bad Addr: 
+  
+  Confidential Address:                      Confidential Address 
+ Categories:
+          NO CONFIDENTIAL ADDRESS
+  From/To: NOT APPLICABLE
+  
+ Language Date/Time: UNANSWERED
+  Preferred Language: UNANSWERED
+ Type <Enter> to continue or '^' to exit: 
+  
+ 2. The label "Permanent Address" is changed to "Permanent Mailing Address"
+    and the label "Temporary Address" is changed to "Temporary Mailing 
+    Address" on the PATIENT DEMOGRAPHIC DATA, SCREEN <1> in the following 
+    options:
+  
+       View Registration Data                [DG REGISTRATION VIEW]
+       Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+  
+                      PATIENT DEMOGRAPHIC DATA, SCREEN <1>
+ REGPATNM,PATIENT; 
+ 666-00-0436                                                  
+ ==========================================================================
+  
+ [1]    Name: REGPATNM,PATIENT               SS: 666-00-0436  
+         DOB: JUN 8,2017
+      Family: REGPATNM                Birth Sex: MALE    MBI: 
+ UNANSWERED      
+       Given: PATIENT                 [2] Alias: < No alias entries on 
+ file >
+      Middle:                                   
+      Prefix:                                   
+      Suffix:                                   
+      Degree:                                   
+      Self-Identified Gender Identity: UNANSWERED
+ [3] Remarks: NO REMARKS ENTERED FOR THIS PATIENT
+ [4] Permanent Mailing Address:                  [5] Temporary Mailing 
+ Address: 
+          123 MAIN STREET                        123 TEMPORARY STREET
+          MILFORD,MA 01757                       MILFORD,MA 01757
+          UNITED STATES                          UNITED STATES
+    County: WORCESTER (027)                 County: WORCESTER (027)
+     Phone: UNANSWERED                       Phone: UNANSWERED
+    Office: UNANSWERED                     From/To: JUN 8,2017-UNANSWERED
+  Bad Addr: 
+ <RET> to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT: ^
+  
+  
+ 3. The label for "Temporary Address" is changed to "Temporary Mailing  
+    Address" on the screen shown below used to edit the Temporary Address 
+    in the following options:
+  
+       Patient Address Update                [DG ADDRESS UPDATE]
+  
+ Select OPTION NAME:    DG ADDRESS UPDATE     Patient Address Update
+ Patient Address Update
+  
+  
+ Veteran Name/SSN:    REGPATNM,PATIENT        6-8-17    
+ 666000436                
+         
+  
+ Do you want to update the (P)ermanent Address, (T)emporary Address, or 
+ (B)oth? T
+  
+ Temporary Mailing Address: 
+          123 TEMPORARY STREET
+          MILFORD,MA 01757
+  County: WORCESTER
+   Phone: 
+ From/To: Jun 08,2017-,
+  
+  
+ TEMPORARY ADDRESS ACTIVE?: YES//
+  
+  
+ 4. The label for "Permanent Address" is changed to "Permanent Mailing  
+    Address" and the question "Do you want to edit the Patient's Address?"
+    has been changed to "Do you want to edit the Patient's Permanent Mailing  
+    Address?" on the screen shown below used to edit the patient address  
+    after the user responds "Yes" to the "Edit Patient Data?" prompt in 
+    the following options:
+  
+       Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+       Register a Patient                    [DG REGISTER PATIENT]
+       Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+  
+  Do you want to edit Patient Data? Yes//   (Yes)
+  
+  Permanent Mailing Address: 
+            123 MAIN STREET
+            MILFORD,MA 01757
+            UNITED STATES
+    County: WORCESTER (027)
+     Phone: UNANSWERED
+    Office: UNANSWERED
+  Bad Addr: 
+ Do you want to edit the Patient's Permanent Mailing Address? N  (No)
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted 
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+  
+ Test Sites:
+ -----------
+ Fargo VA Health Care System (HCS) (Fargo, ND)
+ James E Van Zandt VA Medical Center (VAMC) (Altoona, PA)
+ Jesse Brown VA Medical Center (VAMC) (Chicago, IL)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         DG_5_3_925_RN.PDF       (binary)
+ User Manual - Registration Menu       DG_5_3_925_REG_UM.PDF   (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ The following options should be disabled during installation:
+     Patient Inquiry                       [DG PATIENT INQUIRY]
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+     Patient Address Update                [DG ADDRESS UPDATE]
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch 
+     #(DG*5.3*925):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. 
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' respond YES.
+  
+ 7.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options:
+  
+     Patient Inquiry                       [DG PATIENT INQUIRY]
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION] 
+     Patient Address Update                [DG ADDRESS UPDATE]
+     
+ 8.  When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <enter>.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**; AUG 13, 1993;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGADDUT2
+    Before:  B7090344   After:  B7195938  **688,851,925**
+Routine Name: DGADDUTL
+    Before: B57517976   After: B59041473  **658,695,730,688,808,851,872,
+                                           915,925**
+Routine Name: DGRP1
+    Before: B40184484   After: B40910302  **109,161,506,244,546,570,629,
+                                           638,649,700,653,688,750,851,
+                                           907,925**
+Routine Name: DGRPD
+    Before: B69759113   After: B71290433  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907,925**
+ 
+Routine list of preceding patches: 907, 915
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2016
+Completed By:                               Date Completed: DEC 05, 2017
+Released By :                               Date Released : DEC 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

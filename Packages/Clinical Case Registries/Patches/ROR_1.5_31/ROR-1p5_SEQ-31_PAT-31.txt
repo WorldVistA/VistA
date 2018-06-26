@@ -1,0 +1,733 @@
+$TXT Created by               at DEVVCC.DOMAIN.EXT  (KIDS) on Sunday, 12/03/17 at 19:02
+=============================================================================
+Run Date: JAN 29, 2018                     Designation: ROR*1.5*31
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #31                    Status: Released
+                  Compliance Date: MAR 01, 2018
+=============================================================================
+
+Associated patches: (v)ROR*1.5*30  <<= must be installed BEFORE `ROR*1.5*31'
+                    (v)PSN*4*530   <<= must be installed BEFORE `ROR*1.5*31'
+
+Subject: CCR ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch includes several enhancements and corrections to the Clinical
+ Case Registries (CCR) package.  These changes include:
+   
+ 1. Two new local registries added: (Movement Disorders - VA MOVEMENT
+    DISORDERS Adrenal Adenoma - VA ADRENAL ADENOMA)  including the
+    following functionality:
+  
+    a. The set up and initial build of the new registries.
+    b. Adding the new registries to the nightly job that searches for and
+       adds patients to them, based on registry-specific International
+       Classification of Disease, 9th edition (ICD-9), International
+       Classification of Disease, 10th edition (ICD-10) procedure codes
+       and Current Procedural Technology (CPT) procedure codes.
+    c. The standard local reports currently available in CCR will be
+       available for the new registries.
+  
+ 2. A correction was made for a defect found where the patients ICN was
+    missing on the portion of the Pharmacy Prescription Utilization Report
+    that lists the Highest Combined Outpatient (OP) and Inpatient (IP)
+    Utilization Summary. The report has been updated to include the ICN.
+  
+ 3. A correction was made on the Diagnoses report to keep the
+    display of Date of Death (DOD) consistent with all other reports.
+    Currently, If a time piece exists in VistA for the DOD, the Diagnosis
+    report displays the DOD as the date with the time include.   All the
+    other reports display the  DOD as just the date without the time. The
+    time stamp has been removed from the Date of Death column on the
+    Diagnosis Report to ensure consistency among all reports.
+  
+ 4. Two new report columns, entitled "PACT Team" and "PCP," will be added
+    to the report output following the column titled "ICN."
+    The "PACT team" data will list the patients Patient Care Team and
+    "PCP" data will list the patients Primary Care Provider. These new
+    report columns will be added everywhere "ICN" currently appears in all
+    reports.  The report column width for these new columns will be sized
+    to accommodate approximately 30 characters. 
+    If a patient does not have a PACT or PCP, the output will be null.
+  
+ 5. A new selection criteria parameter has been added for 'Age 
+    Range'. The new selection criteria is added to all reports on the GUI
+    side and to the column header when executing the following reports.
+    - BMI by Range
+    - Clinic Follow Up
+    - Combined Meds and Labs
+    - Current Inpatient List
+    - DAA Lab Monitoring
+    - Diagnoses
+    - Hepatitis A Vaccine or Immunity
+    - Hepatitis B Vaccine or Immunity
+    - Inpatient Utilization
+    - Lab Utilization
+    - List of Registry Patients
+    - Liver Score by Range
+    - Outpatient Utilization
+    - Pharmacy Prescription Utilization
+    - Potential DAA Candidates
+    - Procedures
+    - Radiology Utilization
+    - Registry Lab Tests by Range
+    - Registry Medications
+    - Renal Function by Range
+    - Sustained Virologic Response
+    - VERA Reimbursement Report 
+  
+ 6. This patch renamed the existing 'HIV WB' lab test group to 'HIV
+    Confirm'. The renamed lab group is located under the Edit Site
+    Parameters, Lab Tests tab of the HIV registry and is used to
+    include patient confirmatory testing.
+    The new 'HIV Confirm' lab group is displayed in the Result Ranges
+    panel on the Registry Lab Tests by Range report as well as on the
+    Patient Data Editor for those patients where the selected lab test was
+    used.
+  
+ 7. One new medication has been added to the ROR GENERIC DRUG file
+    (#799.51) to be used as inclusion criteria for patients in the
+    respective registry(s).
+      a. HEP C registry: SOFOSBUVIR/VELPATASVIR/VOXILAP
+  
+ 8. The version of the CCR software has been updated to 1.5.31.
+   
+  
+   
+  Patch Components:
+  -----------------
+   
+  File Data Included:
+   
+  File Name (Number)         Entry Name               New/Modified/Deleted
+  ------------------         ------------------       --------------------
+  ROR REGISTRY PARAMETERS    VA MOVEMENT DISORDERS    New
+   (#798.1)                  VA ADRENAL ADENOMA       New
+  
+                             
+                                                        
+   
+  ROR SELECTION RULE         VA MOVEMENT DISORDER PTF New
+   (#798.2)                  VA MOVEMENT DISORDER PTF New 
+                                (ICD10)          
+                             VA MOVEMENT DISORDER     New
+                                PROBLEM
+                             VA MOVEMENT DISORDER     New
+                                PROBLEM (ICD10)
+                             VA MOVEMENT DISORDER     New
+                                VPOV
+                             VA MOVEMENT DISORDER     New
+                                VPOV (ICD10)
+  
+                             VA ADRENAL ADENOMA PTF   New
+                             VA ADRENAL ADENOMA PTF   New
+                                (ICD10)   
+                             VA ADRENAL ADENOMA       New
+                                PROBLEM
+                             VA ADRENAL ADENOMA       New
+                                PROBLEM (ICD10)
+                             VA ADRENAL ADENOMA       New
+                                VPOV 
+                             VA ADRENAL ADENOMA       New
+                                VPOV (ICD10)
+                             
+                             
+   ROR ICD SEARCH (#798.5)   VA MOVEMENT DISORDERS    New
+                             VA ADRENAL ADENOMA       New
+                             
+        
+   ROR XML ITEM (#799.31)    PACT                     New
+                             PCP                      New
+                             AGE_RANGE                New
+  
+   ROR GENERIC DRUG          SOFOSBUVIR/VELPATASVIR/  New
+   (#799.51)                 VOXILAP
+  
+  
+   ROR LIST ITEM (#799.1)    eGFR by CKD-EPI  New
+                                          Registry: VA MOVEMENT DISORDERS
+                             eGFR by MDRD             New
+                                          Registry: VA MOVEMENT DISORDERS
+                             Creatinine clearance     New
+                              by Cockroft-Gault       
+                                          Registry: VA MOVEMENT DISORDERS
+                             FIB-4                    New
+                                          Registry: VA MOVEMENT DISORDERS
+                             APRI                     New
+                                          Registry: VA MOVEMENT DISORDERS
+                             MELD-Na                  New
+                                          Registry: VA MOVEMENT DISORDERS
+                             MELD                     New
+                                          Registry: VA MOVEMENT DISORDERS
+                             BMI                      New
+                                          Registry: VA MOVEMENT DISORDERS
+                             Registry Lab             New
+                                          Registry: VA MOVEMENT DISORDERS
+  
+  
+                             eGFR by CKD-EPI          New
+                                          Registry: VA ADRENAL ADENOMA
+                             eGFR by MDRD             New 
+                                          Registry: VA ADRENAL ADENOMA
+                             Creatinine clearance     New
+                              by Cockcroft-Gault      
+                                          Registry: VA ADRENAL ADENOMA
+                             FIB-4                    New
+                                          Registry: VA ADRENAL ADENOMA
+                             APRI                     New
+                                          Registry: VA ADRENAL ADENOMA
+                             MELD-Na                  New
+                                          Registry: VA ADRENAL ADENOMA
+                             MELD                     New
+                                          Registry: VA ADRENAL ADENOMA
+                             BMI                      New          
+                                          Registry: VA ADRENAL ADENOMA
+                             Registry Lab             New                 
+                                          Registry: VA ADRENAL ADENOMA
+  
+  
+  ROR LIST ITEM (#799.1)     HIV WB                   Modified
+  
+  
+  ROR REPORT PARAMETERS      ALL registry reports     Modified
+  (#799.34)
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                            New/Modified/Deleted
+ ---------------                            --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type            New/Modified/Deleted
+ -----------                 ------          --------------------
+ N/A 
+  
+  
+ Dialogs Associated:
+  
+ Dialog Number  Dialog           Name                  New/Modified/Deleted
+ -------------  ------------------------------         --------------------
+ 7981002.001    Current Inpatient List (HTML)              Modified
+ 7981002.002    Current Inpatient List (CSV)               Modified
+ 7981003.001    General Utiliz. and Demogr. (HTML)         Modified
+ 7981003.002    General Utiliz. and Demogr. (CSV)          Modified
+ 7981004.001    Clinic Follow Up (HTML)                    Modified
+ 7981004.002    Clinic Follow Up (CSV)                     Modified
+ 7981006.002    Laboratory Utilization (CSV)               Modified
+ 7981007.001    Radiology Utilization (HTML)               Modified
+ 7981007.002    Radiology Utilization (CSV)                Modified
+ 7981008.001    VERA Reimbursement Report (HTML)           Modified
+ 7981008.002    VERA Reimbursement Report (CSV)            Modified
+ 7981009.001    Pharmacy Prescription Utilization (HTML)   Modified
+ 7981009.002    Pharmacy Prescription Utilization (CSV)    Modified
+ 7981010.001    Registry Lab Tests by Range (HTML)         Modified
+ 7981010.002    Registry Lab Tests by Range (CSV)          Modified
+ 7981011.001    Patient Medication History (HTML)          Modified
+ 7981011.002    Patient Medication History (CSV)           Modified
+ 7981012.001    Combined Meds and Labs Report (HTML)       Modified
+ 7981012.002    Combined Meds and Labs Report (CSV)        Modified
+ 7981013.001    Diagnoses (HTML)                           Modified
+ 7981013.002    Diagnoses (CSV)                            Modified
+ 7981014.001    Registry Medications Report (HTML)         Modified
+ 7981014.002    Registry Medications Report (CSV)          Modified
+ 7981015.001    Procedures (HTML)                          Modified
+ 7981015.002    Procedures (CSV)                           Modified
+ 7981016.001    Outpatient Utilization (HTML)              Modified
+ 7981016.002    Outpatient Utilization (CSV)               Modified
+ 7981018.001    BMI Report by Range (HTML)                 Modified
+ 7981018.002    BMI Report by Range (CSV)                  Modified
+ 7981019.002    Liver Report by Range (CSV)                Modified
+ 7981019.001    Liver Report by Range (HTML)               Modified
+ 7981020.001    Renal Function by Range (HTML)             Modified
+ 7981020.002    Renal Function by Range (CSV)              Modified
+ 7981021.001    Potential DAA Candidates (HTML)            Modified
+ 7981021.002    Potential DAA Candidates (CSV)             Modified
+ 7981022.001    DAA Lab Monitoring (HTML)                  Modified
+ 7981022.002    DAA Lab Monitoring (CSV)                   Modified
+ 7981023.001    Sustained Virologic Response (HTML)        Modified
+ 7981023.002    Sustained Virologic Response (CSV)         Modified
+ 7981024.001    Hepatitis A Report (HTML)                  Modified
+ 7981024.002    Hepatitis A Report (CSV)                   Modified
+ 7981025.001    Hepatitis B Report (HTML)                  Modified
+ 7981025.002    Hepatitis B Report (CSV)                   Modified
+ 7981995.001    Lab data templates (HTML)                  Modified
+ 7981996.001    Pharmacy data templates (HTML)             Modified
+ 7981997.001    Patient data templates (HTML)              Modified
+ 7981997.002    Patient data templates (CSV)               Modified
+ 7981999.001    Common XSL templates (HTML)                Modified
+ 7981999.002    Common XSL templates (CSV)                 Modified
+  
+  
+  
+ New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+  
+  
+  Test Sites:
+  ----------
+  Coatesville, PA
+  Palo Alto HCS, CA
+  Phoenix, AZ
+   
+   
+  Installation Files
+  ==================
+   
+  GUI Update
+  ----------
+  IMPORTANT NOTE:  This patch includes a revised Graphical User 
+  Interface (GUI) application which must be distributed to the 
+  appropriate workstations.  After the patch is installed correctly,
+  and the GUI is updated, the version of the GUI will be 1.5.31.
+   
+  File Name         Contents      Transfer Mode  
+  ---------         -----------   -------------
+  ROR1_5P31GUI.ZIP  Zipped GUI    BINARY
+   
+  The file listed above may be obtained via Secure File Transfer
+  PROTOCOL (SFTP).  The preferred method is to SFTP the file from:
+  Download.vista.domain.ext.
+   
+  This transmits the file from the first available FTP server.  Sites 
+  may also elect to retrieve software directly from a specific server
+  as follows:
+   
+  OIFO              SFTP Address               Directory
+  ----------------  -------------------------  --------------------
+  Hines             domain.ext        []
+   
+   
+  M Code
+  ------
+  Included as a standard PackMan message.
+   
+   
+  Documentation Files
+  ===================
+   
+  The documentation has been updated and is distributed in the following
+  two zipped files. Each zip file contains both the .DOC and .PDF formats. 
+   
+  File Name             Description                        Protocol
+  ----------------------------------------------------------------- 
+  ROR1_5P31DOC1.ZIP     ROR User Manual                    BINARY
+   
+  ROR1_5P31DOC2.ZIP     Release Notes,                     BINARY
+                        Technical Manual/Security Guide,
+                        Installation/Implementation 
+                        Guide
+   
+   
+  The revised CCR documentation is available on the
+  ANONYMOUS.SOFTWARE directory at one of the following
+   
+  OIFO             FTP Address                Directory
+  --------------   ------------------------   ------------------
+  Hines            domain.ext        
+   
+  Sites may retrieve documentation in one of the following ways:
+   
+  1. The preferred method is to use SFTP to download the files from 
+     download.vista.domain.ext, which will transmit the files from the 
+     first available server.
+   
+  Documentation may also be retrieved from the VistA Documentation 
+  Library (VDL) on the Intranet at the following address:
+  http://www4.domain.ext/vdl
+   
+   
+  Patch Installation Overview:
+  ============================ 
+   
+  This patch includes an M patch and a revised Graphical User Interface
+  (GUI) executable.
+   
+  Below is a summary of the installation steps required for this patch.
+   
+  1.  Install M components.
+  2.  Update GUI.
+    
+    
+  Patch Installation:
+  ------------------
+  
+  M Pre/Post Installation Overview
+  ------------------------------
+  N/A 
+  
+  M INSTALLATION INSTRUCTIONS:
+  ----------------------------
+  Installation of the patch will not take more than 5 minutes. This patch
+  can be installed with VistA users online, but Registry users should be
+  logged out of the CCR Registry Application, as a new GUI is to be
+  installed. There are no options that need to be disabled prior to patch
+  install.
+   
+  NOTE: The nightly task (Registry Update & Data Extraction [ROR TASK] 
+  option) must not be running during the installation.
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  The pre-installation routine for this patch checks to be sure the task 
+  Initialize new registries (one time) [ROR INITIALIZE] is not running.  
+  If it is, the user is informed of the task number found and that the job
+  must finish or be terminated before the patch can be installed.  The 
+  patch installation then exits, incomplete.  Routine name is PRE^RORP031.
+   
+  The post-installation routine for this patch is POST^RORP031 and 
+  performs the following functions:
+   
+  
+     - Adds a new selection panel, AGE_RANGE to all CCR to report.
+  
+     - Adds the new AGE_RANGE entry to the ROR XML ITEM file (#799.31).
+  
+     - Rename HIV WB entry in the ROR LIST ITEM file (#799.1) to "HIV 
+       Confirm"
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+  
+ M Installation Instructions:
+ ----------------------------
+  1. Unschedule or delete the Registry Update & Data Extraction [ROR
+     TASK] job (CCR nightly job).
+  
+  2. Choose the PackMan message containing this patch.
+   
+  3.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch designation 'ROR*1.5*31':
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.    It is
+          recommended this step be done as it will be needed if a rollback
+          is required for this patch in the future.
+      b.  **Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+            ** Note that for this patch, this option will produce a system
+               error due to the known problem with Fileman not correctly
+               handling the lookup to a file with no B cross reference.
+               There is currently no workaround for this problem.
+               The error expected to be produced is:
+                 I C["P",$D(@("^"_$P(^(0),U,3)_"0)")) S C=$P(^(0),U,2)
+                 Q:'$D(^(+Y,0))  S Y=$P(^(0),U) I $D(^DD(+C,.01,0)) S
+                 C=$P(^(0),U,2) G S
+                 <SYNTAX>S+1^DIQ
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+  5. Use the Install Package(s) option and select the package
+     ROR*1.5*31.
+  
+    The following messages display:
+  
+ Incoming Files:
+  
+    798.1     ROR REGISTRY PARAMETERS  (including data)
+ Note:  You already have the 'ROR REGISTRY PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will OVERWRITE your data with mine.
+  
+    798.2     ROR SELECTION RULE  (including data)
+ Note:  You already have the 'ROR SELECTION RULE' File.
+ I will OVERWRITE your data with mine.
+  
+    798.5     ROR ICD SEARCH  (including data)
+ Note:  You already have the 'ROR ICD SEARCH' File.
+ I will OVERWRITE your data with mine.
+  
+    799.51    ROR GENERIC DRUG  (including data)
+ Note:  You already have the 'ROR GENERIC DRUG' File.
+ I will OVERWRITE your data with mine.
+  
+  6.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', respond NO
+  
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO
+  
+  
+  
+ GUI Installation Instructions:
+ ------------------------------    
+ 1. Unzip the ROR1_5P31GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with installation.
+   
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+  
+ INSTALLATION EXAMPLE:  
+ =====================
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    ROR*1.5*31    9/14/17@12:52:59
+      => ROR*1.5*31 TEST v10
+  
+ This Distribution was loaded on Sep 14, 2017@12:52:59 with header of 
+    ROR*1.5*31 TEST v10
+    It consisted of the following Install(s):
+      ROR*1.5*31
+ Checking Install for Package ROR*1.5*31
+  
+ Install Questions for ROR*1.5*31
+  
+ Incoming Files:
+  
+  
+    798.1     ROR REGISTRY PARAMETERS  (including data)
+ Note:  You already have the 'ROR REGISTRY PARAMETERS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    798.2     ROR SELECTION RULE  (including data)
+ Note:  You already have the 'ROR SELECTION RULE' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    798.5     ROR ICD SEARCH  (including data)
+ Note:  You already have the 'ROR ICD SEARCH' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    799.31    ROR XML ITEM  (including data)
+ Note:  You already have the 'ROR XML ITEM' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    799.51    ROR GENERIC DRUG  (including data)
+ Note:  You already have the 'ROR GENERIC DRUG' File.
+ I will OVERWRITE your data with mine.
+  
+ Maximum number of registry update subtasks:  (0-10): 5// 
+  
+ Suspend the post-install during the peak hours? NO// 
+  
+  
+ Date/Time to run the new registry initialize task:  9/14/17@13:08// 
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   SSH VIRTUAL TERMINAL
+  
+                                    
+ ROR*1.5*31                                   
+  
+ The scheduled task number is 8919396
+  
+    >> Step complete
+  
+ POST INSTALL COMPLETE
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  ROR*1.5*31 Installed. 
+                9/14/17@12:52:59
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 62
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORP031
+    Before:       n/a   After:B128693330  **31**
+Routine Name: RORUTL02
+    Before: B53382352   After: B58261524  **21,27,31**
+Routine Name: RORUTL11
+    Before:  B4666039   After:  B4071769  **13,14,15,17,18,20,19,21,22,
+                                           24,27,25,26,28,29,30,31**
+Routine Name: RORX001
+    Before: B49457815   After: B60961993  **8,10,14,17,19,21,31**
+Routine Name: RORX002
+    Before: B28362843   After: B43221624  **1,8,19,21,31**
+Routine Name: RORX003
+    Before: B39739839   After: B41815764  **1,8,13,19,21,30,31**
+Routine Name: RORX003A
+    Before: B49665251   After: B54138636  **1,21,30,31**
+Routine Name: RORX004
+    Before: B27457448   After: B37005998  **8,13,19,21,31**
+Routine Name: RORX005
+    Before: B10629002   After: B15238780  **21,31**
+Routine Name: RORX005A
+    Before: B40196382   After: B46197607  **1,8,10,13,19,21,31**
+Routine Name: RORX005B
+    Before:  B9080085   After: B10714938  **28,31**
+Routine Name: RORX005C
+    Before: B38387317   After: B48722299  **21,31**
+Routine Name: RORX006
+    Before: B11883397   After: B13663817  **21,31**
+Routine Name: RORX006A
+    Before: B35649870   After: B41340951  **8,13,19,21,31**
+Routine Name: RORX006C
+    Before: B22918813   After: B25987651  **21,31**
+Routine Name: RORX007
+    Before: B53595796   After: B66066509  **21,31**
+Routine Name: RORX007A
+    Before: B25681411   After: B28732550  **1,8,13,19,21,31**
+Routine Name: RORX008
+    Before:  B9636299   After: B14193423  **21,31**
+Routine Name: RORX008A
+    Before: B44591375   After: B54936763  **8,13,19,21,31**
+Routine Name: RORX009
+    Before: B15825292   After: B25826904  **21,31**
+Routine Name: RORX009A
+    Before: B81898095   After: B90917415  **8,13,19,21,31**
+Routine Name: RORX009C
+    Before: B65520857   After: B87202952  **21,31**
+Routine Name: RORX010
+    Before: B61839287   After: B75093403  **8,13,19,21,31**
+Routine Name: RORX011
+    Before:B100694826   After:B104112495  **1,8,13,19,21,31**
+Routine Name: RORX012
+    Before: B17967420   After: B23138519  **8,21,31**
+Routine Name: RORX012A
+    Before: B95062743   After:B120421000  **8,13,19,21,31**
+Routine Name: RORX013
+    Before:  B9830576   After: B12392289  **1,19,21,31**
+Routine Name: RORX013A
+    Before: B79404657   After: B88174933  **1,13,19,21,25,31**
+Routine Name: RORX013C
+    Before: B16710528   After: B19770411  **19,21,31**
+Routine Name: RORX014
+    Before: B10669506   After: B13414286  **21,31**
+Routine Name: RORX014A
+    Before: B43649580   After: B52467259  **8,13,19,21,31**
+Routine Name: RORX015
+    Before: B14335516   After: B18214274  **1,19,21,31**
+Routine Name: RORX015A
+    Before: B90387034   After: B98302910  **1,8,13,19,21,25,31**
+Routine Name: RORX015C
+    Before: B28498077   After: B36664881  **1,19,21,31**
+Routine Name: RORX016
+    Before:  B9229044   After: B11086418  **21,31**
+Routine Name: RORX016A
+    Before: B14149594   After: B15495238  **8,13,19,31**
+Routine Name: RORX016B
+    Before:  B9775689   After: B12089847  **21,31**
+Routine Name: RORX016C
+    Before: B20014196   After: B23020980  **21,31**
+Routine Name: RORX018
+    Before:B167696194   After:B166229893  **10,13,19,21,31**
+Routine Name: RORX018A
+    Before:       n/a   After:  B2762309  **31**
+Routine Name: RORX019
+    Before:B188558484   After:B212873345  **10,13,14,15,19,21,26,31**
+Routine Name: RORX020
+    Before: B71011817   After: B78730803  **10,13,14,15,19,21,31**
+Routine Name: RORX020A
+    Before: B55299646   After: B59481878  **10,14,15,21,31**
+Routine Name: RORX021
+    Before: B26620213   After: B30013567  **17,21,26,31**
+Routine Name: RORX021A
+    Before:B151761658   After:B172044491  **17,19,21,27,26,31**
+Routine Name: RORX022
+    Before: B15916471   After: B21237172  **17,21,31**
+Routine Name: RORX022A
+    Before:B147471078   After:B176351270  **8,13,17,18,19,21,28,31**
+Routine Name: RORX023
+    Before:  B8007140   After: B10226863  **24,31**
+Routine Name: RORX023A
+    Before:B122090515   After:B138370750  **24,27,31**
+Routine Name: RORX024
+    Before: B71003457   After: B77292615  **29,31**
+Routine Name: RORX024A
+    Before: B73730046   After: B88883037  **29,30,31**
+Routine Name: RORX025
+    Before: B19022640   After: B23252812  **29,31**
+Routine Name: RORXU002
+    Before:B148272435   After:B167579102  **1,10,13,15,17,19,21,22,26,
+                                           29,30,31**
+Routine Name: RORXU005
+    Before: B45030841   After: B56314333  **1,15,21,22,26,30,31**
+Routine Name: RORXU006
+    Before: B42534255   After: B51777169  **1,13,21,31**
+Routine Name: RORXU010
+    Before: B25087165   After: B25087165  **8,19,25,29,31**
+ 
+Routine list of preceding patches: 30
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2017
+Completed By:                               Date Completed: JAN 26, 2018
+Released By :                               Date Released : JAN 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

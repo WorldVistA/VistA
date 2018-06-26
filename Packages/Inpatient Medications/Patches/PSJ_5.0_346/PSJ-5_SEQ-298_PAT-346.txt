@@ -1,0 +1,180 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/20/17 at 10:44
+=============================================================================
+Run Date: DEC 27, 2017                     Designation: PSJ*5*346
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #298                      Status: Released
+                  Compliance Date: JAN 27, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*252   <<= must be installed BEFORE `PSJ*5*346'
+                    (v)PSJ*5*313   <<= must be installed BEFORE `PSJ*5*346'
+
+Subject: ORDER DISPLAY ISSUE / DUPLICATE ACCEPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following Issues:
+  
+ 1)  I9190253FY16   Order displayed twice after edit if you press return at
+                      QUIT.
+ 2)  I11117041FY17  Accept order prompt duplicated on IV orders
+  
+  
+ Associated NSR(s): 
+ ==================
+ N/A 
+  
+ Test Sites: 
+ ===========
+ Oklahoma City VAMC
+ Maryland HCS
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+ 1)  I9190253FY16   Order displayed twice after edit if you press return at
+                      QUIT.
+ 2)  I11117041FY17  Accept order prompt duplicated on IV orders
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1)  I9190253FY16   Order displayed twice after edit if you press return
+                      at QUIT.
+ Problem
+ --------
+ When editing an IV order in option PSJI ORDER after the order is accepted
+ the order summary is displayed twice.
+  
+ Resolution
+ -----------
+ The summary display routine EN^VALM is being called twice by two separate
+ routines. Modifications have been made to routines PSJIACT and PSIVOPT to 
+ determine if the order being processed is an active order and if so to 
+ only display the order once.
+  
+  
+ 2)  I11117041FY17  Accept order prompt duplicated on IV orders
+  
+ Problem
+ --------
+ An IV order was modified, first with a starred field (START DATE) then
+ a non-starred field.  The order was accepted, which resulted in a new
+ order being created, but when the screen redisplayed the ACCEPT and
+ EDIT were the only options displayed.  The user was not able to select
+ VERIFY unless they up-caret out of the screen.
+  
+ Resolution
+ -----------
+ A modification was made to routines PSJLIACT and PSIVORC2 to allow the 
+ display of the appropriate actions and not repeat the ACCEPT & EDIT 
+ actions.
+  
+ Pre-Installation Instructions
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+     Installation Menu.  From this menu, you may elect to use the following
+     options.  When prompted for the INSTALL NAME enter PSJ*5.0*346:
+  
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ Installation Verification:
+ ------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVOPT
+    Before: B58375431   After: B58751530  **17,27,58,88,104,110,155,181,
+                                           271,252,346**
+Routine Name: PSIVORC2
+    Before: B64197207   After: B64595795  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267,275,257,281,
+                                           313,346**
+Routine Name: PSJLIACT
+    Before: B53210467   After: B54174893  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257,299,
+                                           281,346**
+ 
+Routine list of preceding patches: 252, 313
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 03, 2017
+Completed By:                               Date Completed: DEC 27, 2017
+Released By :                               Date Released : DEC 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

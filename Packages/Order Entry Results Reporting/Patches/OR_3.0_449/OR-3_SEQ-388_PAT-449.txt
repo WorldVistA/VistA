@@ -1,0 +1,202 @@
+$TXT Created by                  CPRS30.DOMAIN.EXT  (KIDS) on Friday, 07/21/17 at 09:28
+=============================================================================
+Run Date: JAN 03, 2018                     Designation: OR*3*449
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #388                      Status: Released
+                  Compliance Date: FEB 03, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*449'
+                    (v)OR*3*263    <<= must be installed BEFORE `OR*3*449'
+                    (v)OR*3*332    <<= must be installed BEFORE `OR*3*449'
+
+Subject: PRINTING MAH FROM CPRS, PATIENT PROBLEM LIST, TEAM LIST ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1. BCMA Report Date Range when crossing a month.
+ 2. The VISTA printer version of the Patient Problem List has a dashed 
+    line superimposed over the first header line.
+ 3. Error attempting to generate an alert set up to go to a Team List when
+    there is a bad "AB" cross-reference in the OE/RR LIST file (#100.21).
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.       R12229988FY17 - BCMA Report Date Range
+  
+ Problem:
+ --------
+ When printing a report from the Computerized Patient Record System 
+ (CPRS) Reports tab using a user specified date range, and the report date
+ range traverses a year or month, then on the printed report the date range
+ changes the start date to the MAXIMUM DAYS BACK value specified for the
+ option, FILE NAME (file #101.24), from the user entered end range date.
+  
+ Resolution: 
+ -----------
+ Routine ORWRPP at tag DEQUE+12 has been modified to use the Fileman date 
+ difference function to compute the date difference ($$FMDIFF^XLFDT) the 
+ accurate days difference.
+  
+ 2.      I9836117FY16 - Problems Tab: printing issue
+  
+ Problem:
+ --------
+ When printing out the Problem List from the CPRS Problems tab directly to
+ paper on a VISTA printer from CPRS, a dashed line intended as a line
+ separator is superimposed over the first header line.
+  
+ Resolution:
+ -----------
+ Added a line feed between the initial header and the rest of the report.  
+ In tag PROBB of ORWRPP1 routine, insert a CR/LF (W !) in between the 
+ first header line (which identifies the user station location) and the 
+ logic representing the remainder of the Problem List report.
+  
+ 3.      R8666490FY16 - Multiple Order Errors
+  
+ Problem:
+ --------
+ The New Order alert was defined to send to the Team List. Whenever the 
+ system was attempting to queue the alert to a particular team, an 
+ undefined error would occur, which caused the alert to not queue.
+  
+ Resolution:
+ -----------
+ The root cause of the problem is that somehow the 'AB' cross-reference, 
+ which lists the teams that a patient is assigned to, was somehow 
+ corrupted. The routine ORQPTQ1 that queues the alert has been modified to
+ handle this problematic situation more gracefully. The ORLP DELETE TEAM
+ function was checked and no issues were discovered.
+  
+ Test Sites:
+ ----------
+ Madison VAMC
+ Alaska VA HCS
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This patch is being distributed through the National Patch Module, rather 
+ than via a host file.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ---------------------------
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*449):
+  
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*449.
+  
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ It is imperative that the patch installer performed a backup of the
+ routine included in this patch prior to installation.
+  
+ In the event of a major issue with the patch, the Facility CIO may make 
+ the decision to back-out the patch. However, this decision should 
+ include both Health Product Support and the CPRS development team.
+  
+ The back-out plan is to restore the routine from the backup created. If 
+ this is required, the site can verify the back-out was successful by 
+ verifying that the checksum matches the pre-patch checksum from the patch 
+ description.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQPTQ1
+    Before: B54791820   After: B56022861  **9,74,63,91,85,139,243,449**
+Routine Name: ORWRPP
+    Before: B42549274   After: B43489612  **10,85,109,192,332,449**
+Routine Name: ORWRPP1
+    Before: B23307424   After: B23947124  **109,160,192,263,449**
+ 
+Routine list of preceding patches: 243, 263, 332
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2017
+Completed By:                               Date Completed: JAN 02, 2018
+Released By :                               Date Released : JAN 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

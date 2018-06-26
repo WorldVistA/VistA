@@ -1,0 +1,137 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 08/04/17 at 11:43
+=============================================================================
+Run Date: DEC 18, 2017                     Designation: PSJ*5*345
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #295                      Status: Released
+                  Compliance Date: JAN 17, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*199   <<= must be installed BEFORE `PSJ*5*345'
+
+Subject: AMIS IV STATS REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following ISSUE:
+  
+  When the PSJI BACKGROUND JOB runs, no report is produced
+  
+ Associated NSR(s): 
+ ==================
+ N/A
+  
+ Test Sites: 
+ ===========
+ Upstate New York (Albany) HCS
+ White River Junction VAMC
+  
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ I15384375FY17 - PSJI BACKGROUND JOB is not producing the Missing Dose
+                 Information e-mail
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ I15384375FY17 - PSJI BACKGROUND JOB is not producing the Missing Dose
+                 Information e-mail
+  
+ Problem
+ --------
+ The PSJI BACKGROUND JOB has a few issues that are being addressed in this 
+ patch.  The first issue is that the Missing Cost Information e-mail is 
+ never getting generated.  The other issue is that the IV STATS file 
+ (50.8) is not being handled correctly.  If an additive or solution is 
+ missing its AVERAGE DRUG COST value, then its dispensing  information is 
+ never recorded and, even though the cost is added at a later date, it 
+ will not get retroactively added nor will recompilation of the IV Stats 
+ File report recover this data.
+  
+ Resolution
+ -----------
+ The routine PSIVSTAT was modified to handle these issues.  First off, the
+ temp global ^TMP("PSIVNC",$J was incorrectly having the data stored to
+ ^TMP($J,"PSIVNC", which is why the report never ran and the Transaction
+ node in the IV STATS file was always getting deleted.
+  
+ When exiting this process, the TMP Global was not getting killed because
+ of a typo. 
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ This patch should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*345)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*345.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ POST INSTALL INSTRUCTIONS
+ =========================
+  
+ A test site reported that the Missing Cost Information e-mail was not 
+ sent even after the patch was installed which was fixed by rescheduling 
+ the background job.  Although the background job should be working 
+ properly at most sites, as a preventative measure, sites should delete 
+ and reschedule the PSJI BACKGROUND JOB option in order to ensure it is 
+ queued correctly. This should be rescheduled using "Schedule/Unschedule 
+ Options" [XUTM SCHEDULE] and should be rescheduled with the same 
+ parameters.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVSTAT
+    Before: B21471707   After: B21482507  **3,18,84,81,104,111,130,199,345**
+ 
+Routine list of preceding patches: 199
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 01, 2017
+Completed By:                               Date Completed: DEC 18, 2017
+Released By :                               Date Released : DEC 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,397 @@
+$TXT Created by                  at DEVVOO.DOMAIN.EXT  (KIDS) on Thursday, 08/17/17 at 15:29
+=============================================================================
+Run Date: DEC 06, 2017                     Designation: DG*5.3*936
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #830                    Status: Released
+                  Compliance Date: JAN 06, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*925  <<= must be installed BEFORE `DG*5.3*936'
+
+Subject: ENROLLMENT SYSTEM COMMUNITY CARE (ESCC) HEALTH BENEFIT PLAN UPDATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ Patch DG*5.3*936 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which supports
+ Enrollment System Community Care (ESCC).
+  
+ DG*5.3*936 is also being released in support of the Enrollment System (ES)
+ 4.6.0 release. Refer to Informational Patch EAS*1*147 (Enrollment 
+ Application System) for additional details regarding the ES release.
+  
+ The Health Benefit Plan build components will include an additional field for
+ the Data Dictionary (DD) HEALTH BENEFIT PLAN file (#25.11) and will modify
+ the VistA entries for Health Benefit Plans that are stored or displayed to
+ the users within VistA.
+   
+ Listing of Updates
+ ==================
+  
+ 1. New field COVERAGE CODE field (#.05) is added to HEALTH BENEFIT PLAN 
+ file (#25.11). It is added to accommodate Coverage Code information for 
+ Health Benefit Plans and it is not visible by any users at this time.  
+  
+ 2. Six new Health Benefit Plans are getting added to HEALTH BENEFIT PLAN
+ file (#25.11) as part of post installation routine during Patch 
+ installation. Below is the list of Health Benefit Plans that are
+ getting added:
+         1. Veteran Plan - Veterans Choice Basic
+         2. Veteran Plan - Veterans Choice Mileage
+         3. Veteran Plan - Veterans Choice Wait Time
+         4. Veteran Plan - VC Unusual and Excessive Burden
+         5. Veteran Plan - Veterans Choice Air, Boat, or Ferry
+         6. Veteran Plan - Military Sexual Trauma
+  
+ 3. Modify display screen when using the menu options Patient Inquiry
+ [DG PATIENT INQUIRY], Register a Patient [DG REGISTER PATIENT], Load/Edit 
+ Patient Data [DG LOAD PATIENT DATA], Preregister a Patient [DGPRE 
+ PRE-REGISTER OPTION] to display Health Benefit Plan names.  The Health
+ Benefit Plan names will be the last group displayed on the screen. The
+ system shall display "None" if a Veteran has no assigned Health Benefit
+ Plans.  Any updates to the DGPRD patient inquiry screens will automatically
+ update other options that call DGRPD.
+  
+ Display Screen from Menu Option Patient Inquiry [DG PATIENT INQUIRY]
+  
+ Begin Screen Capture 1*
+  
+ Select OPTION NAME:    DG PATIENT INQUIRY     Patient Inquiry
+  
+ Select PATIENT NAME: DGREGISTER,TEST
+ DGREGISTER,TEST                                                   APR 5,1933
+ =============================================================================
+  
+  
+ Future Appointments: NONE
+  
+ Remarks: 
+  
+ Date of Death Information
+      Date of Death: 
+      Source of Notification: 
+      Updated Date/Time: 
+      Last Edited By: 
+  
+  
+ Health Benefit Plans Currently Assigned to Veteran:
+    Veteran Beneficiary Plan - CHAMPVA
+    Veteran Beneficiary Plan - Caregiver (Primary Family Caregiver)
+    Veteran Beneficiary Plan - Caregiver (Secondary Family Caregiver)
+  
+ Select PATIENT NAME: 
+  
+ End Screen Capture 1*
+  
+ 4. Add Health Benefit Plans to the Computerized Patient Record System (CPRS)
+ Patient Inquiry screen: The new Community Care Health Benefit Plans will be
+ displayed on the existing Patient Inquiry screen in CPRS.
+  
+ Display Screen from CPRS Patient Inquiry
+  
+ Begin Screen Capture 2*
+  
+ REGPATIENT,ONE                                                 MAY 1,1945
+ =============================================================================
+ Permanent Mailing Address:             Temporary Mailing Address: 
+          345 FIRST ST                           NO TEMPORARY MAILING
+          APT 33
+          TAMPA,FL 33611
+          UNITED STATES
+   County: HILLSBOROUGH (057)              From/To: NOT APPLICABLE
+    Phone: 813-555-2949                      Phone: NOT APPLICABLE
+   Office: 813-555-2949
+     Cell: UNSPECIFIED
+   E-mail: UNSPECIFIED
+ Bad Addr: 
+  
+ Confidential Address:                      Confidential Address Categories:
+          PO BOX 2342                        ELIGIBILITY/ENROLLMENT(Active)
+          TAMPA,FL 33611                     APPOINTMENT/SCHEDULING(Active)
+          UNITED STATES
+ From/To:  Dec 15, 2010-UNANSWERED
+  
+     POS: VIETNAM ERA                      Claim #: 666049282
+   Relig: BAPTIST                              Birth Sex: MALE
+    Race: UNANSWERED                     Ethnicity: UNANSWERED
+  
+ Language Date/Time: UNANSWERED
+ Preferred Language: UNANSWERED
+  
+   Combat Vet Status: NOT ELIGIBLE
+ Primary Eligibility: SERVICE CONNECTED 50% to 100% (NOT VERIFIED)
+ Other Eligibilities: 
+       Unemployable: NO
+ Means Test Signed?: 
+  
+ Means Test Not Required
+ Primary Means Test Last Applied 'DEC 15,2012'
+ Medication Copayment Exemption Status: EXEMPT
+ Patient is Service Connected 50 percent or more.
+ Last Rx Copay Exemption date: JUN 28, 2017
+  
+ Status      : PATIENT HAS NO INPATIENT OR LODGER ACTIVITY IN THE COMPUTER
+  
+ Future Appointments: NONE
+  
+ Remarks: 
+  
+ Date of Death Information
+      Date of Death: 
+      Source of Notification: 
+      Updated Date/Time: 
+      Last Edited By: 
+  
+ Emergency Contact Information:
+      E-Cont.: E,NAME
+ Relationship: 
+        Phone: UNSPECIFIED
+   Work Phone: UNSPECIFIED
+  
+ Health Benefit Plans Currently Assigned to Veteran:
+    Veteran Plan - VC Unusual and Excessive Burden
+    Veteran Plan - Veterans Choice Air, Boat, or Ferry
+  
+ Health Insurance Information:
+    Insurance   COB Subscriber ID     Group       Holder  Effective  Expires
+    ===========================================================================
+     No Insurance Information
+  
+  
+ Service Connection/Rated Disabilities:
+  
+          SC Percent: 80%
+ Rated Disabilities: DIABETES MELLITUS (80%-SC)
+  
+ End Screen Capture 2*
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ HEALTH BENEFIT PLAN File   COVERAGE CODE Field     New
+ (#25.11)                   (#.05)   
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------                                      
+ Fargo VA Health Care System (HCS) (Fargo, ND)
+ James E Van Zandt VA Medical Center (VAMC) (Altoona, PA)
+ Jesse Brown VA Medical Center (VAMC) (Chicago, IL)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                       DG_5_3_936_RN.PDF       (binary)
+ User Manual - Registration Menu     DG_5_3_936_REG_UM.PDF   (binary)
+  
+ CPRS User Guide: GUI Version updates associated with this patch will be 
+ included in the CPRS v31a release.
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This post install process will run the post install routine DG53P936 to 
+ set up the six new Health Benefit Plans (HBPs) in the HEALTH BENEFIT PLAN 
+ file (#25.11).  The routine will first check to see if these HBPs exist.  
+ The routine will then set up the required fields to prepare to load the
+ HBPs to the account.  If they do not already exist on the account, the
+ HBPs will be added.  During the post install process, a message will be
+ displayed regarding which HBPs were added and which already existed. If
+ the HBPs already exist, no action will be taken.  The install process
+ will also display this message "An Error occurred during updating Plan:
+ (Health Benefit Plan) Please log CA SDM ticket", if an error occurred
+ while trying to update the HBPs.
+  
+ The post-installation routine DG53P936 should be manually deleted
+ from your system using the KERNEL option Delete Routines [XTRDEL] upon
+ completion of the installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install. 
+  
+ The following options should be disabled during installation:
+     Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+     Register a Patient                    [DG REGISTER PATIENT]
+     Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+     View Registration Data                [DG REGISTRATION VIEW]
+     Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+     Patient Inquiry                       [DG PATIENT INQUIRY]
+   
+ Installation Instructions:
+ --------------------------
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu,
+         select the Installation Menu. From this menu, you may elect
+         to use the following options. When prompted for the INSTALL
+         NAME enter the patch #(ex. DG*5.3*936):
+ a.     Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+ b.     Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed. It compares all components of this patch
+         (routines, DDs, templates, etc.).
+ c.     Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s)
+         option and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+         install? NO//' respond NO
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' respond YES.
+  
+ 7.     When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+         Enter the following options:
+  
+            Load/Edit Patient Data           [DG LOAD PATIENT DATA]
+            Register a Patient               [DG REGISTER PATIENT]
+            Preregister a Patient            [DGPRE PRE-REGISTER OPTION]
+            View Registration Data           [DG REGISTRATION VIEW]
+            Eligibility Verification         [DG ELIGIBILITY VERIFICATION]
+            Patient Inquiry                  [DG PATIENT INQUIRY]
+  
+ 8.     When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <enter>.
+  
+ 9.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+         respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post-installation routine DG53P936 should be manually deleted
+ from your system using the KERNEL option Delete Routines [XTRDEL] upon
+ completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P936
+    Before:       n/a   After: B99859550  **936**
+Routine Name: DGRPD
+    Before: B71290433   After: B77747984  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907,925,936**
+ 
+Routine list of preceding patches: 925
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 04, 2017
+Completed By:                               Date Completed: DEC 05, 2017
+Released By :                               Date Released : DEC 06, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

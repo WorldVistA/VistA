@@ -1,0 +1,158 @@
+
+=============================================================================
+Run Date: APR 17, 2018                     Designation: PSO*7*521
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #429                      Status: Released
+                  Compliance Date: MAY 17, 2018
+=============================================================================
+
+
+Subject: FDA MEDICATION GUIDES AUTOMATIC PRINTING JAVA COMPONENT UPGRADE
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ FDA Medication Guides Automatic Printing Java software allows pharmacists 
+ to automatically print FDA Medication Guides for a specific medication 
+ when one is available and a prescription is being filled. This software 
+ must be installed on a Windows print server for the functionality to work 
+ correctly. 
+  
+ This patch is to upgrade the FDA Medication Guides Automatic Printing 
+ Java component to support Acrobat Reader DC version 18. Windows
+ registry keys for Acrobat Reader DC 18 have been added to
+ NetworkServiceTaskSetting.reg file. 
+  
+ The Acrobat Reader DC version 18 installation is available at
+ \\vha.domain.ext\cs\Production\Software Packages\Adobe\Acrobat Reader 
+ DC
+  
+ If your site is currently utilizing the FDA Med Guide Auto Printing 
+ software, this release provides the necessary Network Registry settings 
+ to allow the software to work with Adobe Acrobat Reader DC 18. Please
+ refer to the "FDA Medication Guides Project Java Component (Automatic
+ Printing) Installation Guide" for detailed instructions on retrieving and
+ installing the necessary software.
+  
+ ******If your site does not utilize the FDA Med Guide Auto Printing 
+ software, no further action on PSO*7*521 is necessary.******
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ R18810467FY18 - FDA Med Guides in Outpatient Pharmacy stopped printing 
+ when the print server was auto upgraded to Adobe Reader DC 18.
+ I18898754FY18 (d)
+ R18859958FY18 (d)
+  
+  
+ Problem:
+ --------
+ Automatic printing of FDA Med Guides was originally developed for use 
+ with Acrobat Reader 11.0. As Acrobat Reader DC 18 is the latest approved 
+ version in VA, Acrobat Reader DC 18 automatic updates are being pushed out
+ to the Windows servers by SCCM. This breaks the FDA Med Guides Automatic
+ Printing Java component.
+  
+ This patch is to upgrade the FDA Medication Guides Automatic Printing 
+ Java component to support Acrobat Reader DC 18.
+  
+ Resolution:
+ -----------
+ No code changes were made for this upgrade. The scripts were changed to 
+ add Windows registry keys for Adobe Acrobat Reader DC 18.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Patient Safety Issues:
+ ======================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Clarksburg - VA Medical Center
+ Battle Creek - VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to retrieve files 
+ from download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+    OI FIELD OFFICE     ADDRESS                        DIRECTORY
+    Hines               DOMAIN.EXT        
+    Salt Lake City      DOMAIN.EXT          
+   
+ The documentation distribution includes:
+  
+ FILE NAME                                    DESCRIPTION
+ ---------------------------------------------------------------------
+  
+ PHAR_FDA_MED_GUIDE_AUTO_PSO_7_521_IG.PDF   FDA Medication Guides 
+                                            Project Install Guide
+  
+ PSO_7_P521.ZIP                             FDA Medication Guides 
+                                            Auto Printing Application
+  
+ Documentation can also be retrieved from the VA Software Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.domain.ext/vdl. 
+  
+ Project Installation Instructions:
+ ---------------------------------
+ The FDA Medication Guide Automatic Printing (Increment 3) project 
+ contains a Java Application component, which is distributed in the 
+ PSO_7_P521.ZIP file. This file contains a folder called 
+ FDAMedGuidesPrinter that should be installed on Windows print 
+ servers. The FDAMedGuidesPrinter folder contains the software and
+ repository that will be used for retrieving and storing FDA Medication
+ Guides via Outpatient Pharmacy or National Drug File applications. For
+ detailed installation instructions please refer to the "FDA Medication
+ Guides Project Installation Guide" document.
+  
+  
+ Java Application Component Installation Instructions:
+ =====================================================
+ In order to install the Java Application component follow these steps:
+  
+   1. Uninstall the old version of FDA Medication Guides Automatic Printing
+      Java component. Follow the instructions given in the 
+      Installation Guide
+  
+   2. Unzip the PSO_7_P521.ZIP file 
+  
+   3. Follow the installation instructions given in the Installation Guide.
+      Note: you must have administrator rights on the machine when you 
+      run it.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 22, 2018
+Completed By:                               Date Completed: APR 16, 2018
+Released By :                               Date Released : APR 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

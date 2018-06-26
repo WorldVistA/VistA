@@ -1,0 +1,1284 @@
+$TXT Created by              at ADM1S1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 01/16/18 at 20:54
+=============================================================================
+Run Date: APR 02, 2018                     Designation: LBR*2.5*15
+Package : LBR - LIBRARY                       Priority: Mandatory
+Version : 2.5        SEQ #14                    Status: Released
+                  Compliance Date: MAY 03, 2018
+=============================================================================
+
+
+Subject: LIBRARY DECOMMISSION
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Print Template
+  - Routine
+  - Sort Template
+  - Other
+
+Description:
+============
+
+  ******************************************************************************
+  All scheduled Library options must be unscheduled before installing this 
+  patch.
+  ******************************************************************************
+  
+  This patch will retire the Library (LBR) version 2.5 package. All national 
+  components associated with the Library package will be removed. Every site may
+  not have all of the listed components.
+  
+  1. The following Library options will be removed. 
+        Serials Control [LBRY SER TECH MENU]
+        Check-in [LBRY SERIALS CHECK-IN]                
+        Return from Routing [LBRY RTN FRM ROUTING]
+        History of Check-in [LBRY HIST CHK-IN]
+        Reprint Routing Slips [LBRY REPRINT ROUTING]
+        Library Management [LBRYZ MANAGER]
+        Serials Management [LBRY SER MGT]
+        Library Site Parameters [LBRY SITE PRMTERS]
+        Serials Titles [LBRY SER TITLE EDT]
+        Remove Serial Title from Database [LBRY RMV SER TITLE]
+        Library Supporting Files [LBRY SER SUP EDIT]
+        Library Title Setup [LBRY BRF CKIN SETUP]
+        Copy Specific Edit [LBRY COPY EDT]
+        Name Entries [LBRY ROUTING LIST ENTRIES EDIT]
+        Medical Center Files [LBRY SITE CORE FILES]
+        Hospital Service File [LBRY HOSP SERV EDT]
+        Item Placement Location Entries [LBRY ITEM PLACEMENT LOCATION]
+        VALNET Library Package [LBRY MAIN MENU]
+        Select Library Site [LBRY SITE SELECT]
+        Title Specific Edit [LBRY TITLE(SER) EDT]
+        View Routing Information [LBRY VIEW ROUTING]
+        Serial Holdings Inquiry [LBRY INQ SER HOLD]
+        Missing Issues List [LBRY MISSING ISSUE]
+        Holdings Setup [LBRY BIBLI EDIT]
+        Purchasing Information Edit [LBRY FINANCE EDIT]
+        Titles Due for Renewal [LBRY TITLES DUE RENEWAL]
+        Subject Setup [LBRY SUBJECT EDIT]
+        Indexing Sources Setup [LBRY INDEXING SOURCES]
+        Serials Titles Reports [LBRY SER TITLES REPORTS]
+        Other Serials Reports [LBRY SER OTHER REPORTS]
+        All Serials Titles [LBRY TITLES ALPHABETICAL]
+        Local Titles by Location [LBRY TITLES LOCATION]
+        Local Titles by Vendor [LBRY TITLES VENDOR]
+        Local Microfilm Titles [LBRY MICROFILM]
+        Local Medical Titles [LBRY MEDICAL TITLES]
+        Local Patient Titles [LBRY PATIENT TITLES]
+        Local Administrative Titles [LBRY ADMINISTRATIVE TITLES]
+        Local Donor Titles [LBRY DONOR TITLES]
+        New Local Titles [LBRY NEW LOCAL TITLES]
+        Local Gaps List [LBRY GAPS LIST]
+        Outstanding Routed to Return Issues [LBRY MISSING R-T-R]
+        List of Recipients [LBRY RECIPIENTS]
+        List of Routed or Routed to Return titles [LBRY R OR R-T-R]
+        Titles by Union Lists [LBRY UNION LISTS]
+        For-your-information titles [LBRY FOR-YOUR-INFORMATION]
+        Library Patron Options [LBRY PATRON OPTIONS]
+        Patron Requests for the Local Library [LBRY PATRON REQUESTS]
+        Reports for Patrons [LBRY PATRONS REPORTS]
+        Medical Subscriptions with Cost [LBRY MEDICAL SUBSCRIPTIONS]
+        Local Patient Subscriptions [LBRY PATIENT SUBSCRIPTIONS]
+        Administrative Titles with Recipients [LBRY ADMIN RECIPIENTS]
+        Library Monthly Statistical Report [LBRY MONTHLY STATISTICAL]
+        General Serials Control Information [LBRY OVERVIEW #2]
+        PURGE Journal Date/s from a Title [LBRY PURGE]
+        Journal Title Availability Inquiry [LBRY PATRON TITLES]
+        Subject List of Journals Available [LBRY PATRON SUBJECT]
+        Serials Technician Main Menu [LBRY SER MAIN MENU]
+        Purchasing Information Update [LBRY PURCHASING UPDATE]
+        NEW LIBRARY SERVER [LBRYSRV]
+        SEND LIBRARY TRANSACTIONS [LBRY TRAN SEND]
+        PROCESS THE TRANSACTIONS FROM FORUM [LBRY TRAN PROCESS]
+        PURGE LIBRARY TRANSACTIONS [LBRY TRAN PURGE]
+        National files reports [LBRY NANCY REPORTS]
+        Library Management [LBRY MANAGER]
+        Library Transaction Report [LBRY TRAN REPORT]
+        Process Titles from FORUM Manually [LBRY TRAN MAN]
+        Resubmit Local Titles to FORUM [LBRY RESUB LOCAL]
+        Integrate Library Data [LBRY INT INTEGRATE DATA]
+        Prepare Library Data [LBRY INT PREPARE DATA]
+        Add a local vendor (COREFLS) [LBRY LOCAL VENDOR ADD]
+        COREFLS Conversion of old vendors [LBRY COREFLS CONVERSION]
+        General Library Package Information [LBRY OVERVIEW]
+        Hospital Service File [LBRY HOSP SERV]
+  
+  
+  2. The following Library input templates will be removed.
+        LBRY SITE
+        LBRY D2
+        LBRY CONTACTS ROUTING
+        LBRY D1
+        LBRY CHECK-IN SETUP
+        LBRY INSERT
+        LBRY JOURNAL DATE EDIT
+        LBRY CHECK-IN SETUP
+        LBRY BIBLIOGRAPHIC ENTRY
+        LBRY FINANCIAL ENTRY
+        LBRY INDEXING EDIT
+        LBRY PREDICT INSERT
+        LBRY PURCHASING UPDATE
+        LBRYLTF
+        LBRYREC
+        LBRYFRUP
+        LBRYPUUP
+        LBRYPPUP
+        LBRY TITLE SETUP
+        LBRY LOCAL SETUP
+        LBRYINUP
+        LBRY SITE2
+        LBRY D3
+        LBRY D4
+        LBRY BIBLIOGRAPHIC 2 ENTRY
+  
+  
+  3. The following Library sort templates will be removed.
+        LBRY TITLE ALPHABETICAL
+        LBRY TITLE LOCATION
+        LBRY GAPS LIST
+        LBRY MICROFILM HOLDINGS
+        LBRY SUBSCRIPTION/VENDOR
+        LBRY RECIPIENTS BY TITLE
+        LBRY RECIPIENTS WITH TITLES
+        LBRY MICROFILM VENDOR
+        LBRY MEDICAL HOLDINGS TEMP
+        LBRY MEDICAL BY SUBJECT
+        LBRY MEDICAL SUBSCRIPTIONS
+        LBRY PATIENT HOLDINGS
+        LBRY ADMIN TITLES
+        LBRY DONOR TITLES
+        LBRY PATIENT TITLES
+        LBRY PATIENT TITLES BRIEF
+        LBRY ROUTE-TO-RETURN
+        LBRY FYI LIST
+        LBRY ADMIN RECIPIENTS
+        LBRY UNION LIST CODE
+        LBRY NEW LOCAL TITLES
+        LBRY MISSING ISSUES LIST
+        LBRY MEDICAL HOLDINGS
+        LBRY SUB1
+        LBRY MINE CRP
+        LBRY X
+        LBRY ARLIS
+        LBRY TAF SORT
+        LBRY LOCAL HOLDINGS SORT
+        LBRY TITLE ALPHABETICAL
+        LBRY TITLES DUE RENEWAL
+        LBRY SUBSCRIPTION/VENDOR 2
+        LBRY MICROFILM VENDOR 2
+        LBRY MISSING ISSUES LIST 2
+  
+  
+  4. The following Library print templates will be removed.
+        LBRY MISSING ISSUES LIST
+        LBRY MISSING ISSUES HEADER
+        LBRY TITLE ALPHABETICAL
+        LBRY TITLE ALPHABETICAL BRIEF
+        LBRY TITLE LOCATION
+        LBRY TITLE LOCATION BRIEF
+        LBRY GAPS LIST
+        LBRY MICROFILM HOLDINGS
+        LBRY SUBSCRIPTION/VENDOR
+        LBRY TESTING BAD FILES
+        LBRY RECIPIENTS BY TITLE
+        LBRY RECIPIENTS WITH TITLES
+        LBRY MICROFILM VENDOR
+        LBRY MEDICAL HOLDINGS
+        LBRY BRIEF MEDICAL HOLD TEMP
+        LBRY MEDICAL BY SUBJECT
+        LBRY BRIEF MEDICAL/SUBJECT
+        LBRY MEDICAL SUBSCRIPTIONS
+        LBRY PATIENT HOLDINGS
+        LBRY ADMIN TITLES
+        LBRY DONOR TITLES
+        LBRY PATIENT TITLES
+        LBRY PATIENT TITLES BRIEF
+        LBRY ROUTE-TO-RETURN
+        LBRY FYI LIST
+        LBRY ADMIN RECIPIENTS
+        LBRY UNION LIST CODE
+        LBRY UNION LIST BRIEF
+        LBRY NEW LOCAL TITLES
+        LBRY PATRON TITLES
+        LBRY BRIEF MEDICAL HOLDINGS
+        LBRY SUB1
+        LBRY TITLE ALPHABETICAL
+        LBRY TITLE ALPHABETICAL BRIEF
+        LBRY TITLES DUE RENEWAL
+        LBRY MICROFILM HOLDINGS 2
+        LBRY TITLES DUE RENEWAL 2
+        LBRY MISSING ISSUES LIST 2
+  
+  
+  5. The following Library help frames will be removed.
+        LBRY SERIALS CHECK-IN
+        LBRY SERIALS RETURN
+        LBRY SERIALS VIEW
+        LBRY RET
+        LBRY SITE PARAMETERS1
+        LBRY HIS
+        LBRY CHECK-IN
+        LBRY LSF
+        LBRY IPL
+        LBRY SET
+        LBRY CSE
+        LBRY MCF
+        LBRY RST
+        LBRY HSF2
+        LBRY RRS
+        LBRY LSM
+        LBRY SER
+        LBRY SITE PARAMETERS2
+        LBRY CHEX
+        LBRY ENTERING
+        LBRY MANAGEMENT
+        LBRY HSF1
+        LBRY INTEGRITY
+        LBRY SEARCH STRATEGY
+        LBRY SEARCH EXAMPLE
+        LBRY ADDING TITLES
+        LBRY ROUTING ORDER
+        LBRY TOC
+        LBRY COMPLETION
+        LBRY HISTORY VIEW
+        LBRY SITECONTINUE
+        LBRY ADDINGCONTINUE
+        LBRY CSECONTINUE
+        LBRY CHECKCONTINUE
+        LBRY CHEXCONTINUE
+        LBRY INSERT
+        LBRY SERIALSCONTINUE
+        LBRY NOTESCONTINUE
+        LBRY CSE CHOICE PROMPT
+        LBRY ROUTING
+        LBRY MANAGEMENT2
+        LBRY HSF3
+        LBRY SUB
+        LBRY NME
+        LBRY PLACE
+        LBRY LTS
+        LBRY ENTRY
+        LBRY HOL
+        LBRY PIE
+        LBRY BIB
+        LBRY LTS EXAMPLE
+        LBRY ADDING2
+        LBRY CONADD
+        LBRY NOTES
+        LBRY FYI
+        LBRY COPIES
+        LBRY INACTIVE
+        LBRY CSECONTINUE2
+        LBRY ALTER
+        LBRY ROUTING EXAMPLE
+        LBRY EDITROUTE
+        LBRY EDITROUTE2
+        LBRY REMOVE
+        LBRY EDIT
+        LBRY FUTURE
+        LBRY START
+        LBRY START2
+        LBRY SUBJECT
+        LBRY LOCATION
+        LBRY MICROFILM
+        LBRY CATEGORY
+        LBRY MORE
+        LBRY UNION
+        LBRY RECOMMEND
+        LBRY STATEMENT
+        LBRY RETENTION
+        LBRY RENEWAL
+        LBRY INITIAL LOGON
+        LBRY SERVICE
+        LBRY FUNDING
+        LBRY STR
+        LBRY CHECKSUM
+        LBRY OSR
+        LBRY ADV INSERT
+        LBRY SEQUENCE
+        LBRY CHEX2
+        LBRY STATUS
+        LBRY CHOICES
+        LBRY CHOICES2
+        LBRY MULTIPLE
+        LBRY MULTIPLE2
+        LBRY SITE MANAGER
+        LBRY FIRST LOCATION
+        LBRY DELETE FIRSTLOC
+        LBRY SITECONTINUE2
+        LBRY DELETING2
+        LBRY STR2
+        LBRY MISSING ISSUE
+        LBRY TITLES ALPHABETICAL
+        LBRY TITLES LOCATION
+        LBRY TITLES VENDOR
+        LBRY MICROFILM TITLES
+        LBRY MEDICAL SUBSCRIPTIONS
+        LBRY PATIENT TITLES
+        LBRY ADMINISTRATIVE TITLES
+        LBRY DONOR TITLES
+        LBRY NEW LOCAL TITLES
+        LBRY MEDICAL TITLES
+        LBRY PATIENT SUBSCRIPTIONS
+        LBRY OSR2
+        LBRY TITLES DUE RENEWAL
+        LBRY GAPS LIST
+        LBRY MISSING R-T-R
+        LBRY RECIPIENTS
+        LBRY UNION LISTS
+        LBRY FOR-YOUR-INFORMATION
+        LBRY ADMIN RECIPIENTS
+        LBRY MONTHLY STATISTICAL
+        LBRY START WITH
+        LBRY DEVICE PROMPT
+        LBRY RECIPIENTS2
+        LBRY START WITH NULL
+        LBRY NEW
+        LBRY STARTEXAMPLE
+        LBRY DETAILED/BRIEF
+        LBRY GEN
+        LBRY GEN2
+        LBRY TAF
+        LBRY HELP
+        LBRY ABBREV
+        LBRY CONVENTIONS
+        LBRY MANUALS
+        LBRY ORDER
+        LBRY FEATURES
+        LBRY SIUG
+        LBRY FRAMES
+        LBRY FRAMES2
+        LBRY FRAMES3
+        LBRY ABBREV2
+        LBRY ABBREV3
+        LBRY ABBREV4
+        LBRY SPACE
+        LBRY JUMP
+        LBRY EDITING
+        LBRY DELETE
+        LBRY QUEUING
+        LBRY ORDER2
+        LBRY ORDER3
+        LBRY INSERTEX
+        LBRY INSERTEX2
+        LBRY FINDTITLE
+        LBRY TRUNCATION
+        LBRY TRUNCATION2
+        LBRY FRAMES4
+        LBRY TAF2
+        LBRY TAF3
+        LBRY REPLACE
+        LBRY HALTING
+        LBRY ID NUM
+        LBRY PREDICTION
+        LBRY PREDICTION2
+        LBRY PREDICTION3
+        LBRY PREDICTION4
+        LBRY PREDICTION5
+        LBRY PREDICTION6
+        LBRY GENERIC HELP PROMPT
+        LBRY INACTIVE HELP PROMPT
+        LBRY F-Y-I HELP PROMPT
+        LBRY NLM HELP ??
+        LBRY ROUTING HELP ??
+        LBRY MICROFILM ??
+        LBRY SUBJECT ??
+        LBRY GAPS ??
+        LBRY STOP
+        LBRY HINTS
+        LBRY SAME TITLE
+        LBRY INITIALISMS
+        LBRY PURGE ??
+        LBRY POP-UP ??
+        LBRY FUNDING ??
+        LBRY SUBJECT NAME ??
+        LBRY NAME ??
+        LBRY ITEM PLACEMENT NAME ??
+        LBRY FILE MISSING
+        LBRY DEFAULT
+        LBRY BIB INFO EXAMPLE
+        LBRY PUNCTUATION
+        LBRY AMPERSAND
+        LBRY PREDICTION7
+        LBRY CHECK-IN EDIT ??
+        LBRY BRIEF ??
+        LBRY DETAILED ??
+        LBRY PREDICTION POP-UP
+        LBRY SKIP TEST ??
+        LBRY ADP DIRECTORY UPDATES
+        LBRY ADP DIRECTORY
+        LBRY TYPES OF EQUIPMENT
+        LBRY ADP HARDWARE
+        LBRY FACILITY ADP OVERVIEW
+        LBRY ADP SOFTWARE REPORT
+        LBRY EXAMPLE - ADP HARDWARE
+        LBRY EXAMPLE2 - ADP HARDWARE
+        LBRY ULP BIBRECORD
+        LBRY ULP TITLE TRUNCATION
+        LBRY ULP SAME TITLE
+        LBRY ULP DIRECTORY
+        LBRY ULP HOLDINGS
+        LBRY ULP WORDS/FRAGMENTS
+        LBRY ULP ISSN
+        LBRY ULP SYNONYMS
+        LBRY ULP HINTS
+        LBRY ULP PUNCTUATION
+        LBRY ULP AMPERSAND
+        LBRY ULP BIBDISPLAY
+        LBRY ULP BIBDISPLAY2
+        LBRY ULP REPORTS CONTINUED
+        LBRY ULP LIBRARY ULP REPORTS
+  
+  
+  6. The following Library Bulletins will be removed.
+        LBRYFORUM
+        LBRYMANL
+  
+        
+  7. The following Library mail groups will be removed.
+        LBRYUPDT
+        LBRYFORUM
+  
+        
+  8. The following Library security keys will be removed.
+        LBRYIRM
+        LBRY LOCAL VENDOR
+        
+        
+  9. The following Library routines will be removed. If after the patch is 
+     installed there are still routines starting with LBR, then the site  
+     will be responsible for reviewing and deleting those routines.
+        LBR256EN
+        LBR258P 
+        LBR25P12
+        LBR25P9 
+        LBR25P9V
+        LBRCSL  
+        LBREDIT 
+        LBRLCNV 
+        LBRLCONV
+        LBRLM
+        LBRLP
+        LBRLP0  
+        LBRLP1  
+        LBRLP2  
+        LBRLP3  
+        LBRLP31 
+        LBRLP4  
+        LBRLP5  
+        LBRLP6  
+        LBRLP7  
+        LBRLPRG 
+        LBRLSITE
+        LBRLT
+        LBRLTST 
+        LBRNCNV1
+        LBRNCNV2
+        LBRNCNV3
+        LBRNTEG 
+        LBRPUTL 
+        LBRTCNV1
+        LBRTCNV2
+        LBRTCNV3
+        LBRTCNV4
+        LBRTCNV5
+        LBRVC681
+        LBRVC682
+        LBRVCLN 
+        LBRVCON1
+        LBRVCON2
+        LBRVCON3
+        LBRVCON9
+        LBRVCOND
+        LBRVCONE
+        LBRVCONP
+        LBRVCONS
+        LBRVCONV
+        LBRVCONX
+        LBRVENV 
+        LBRVPOST
+        LBRVPRE 
+        LBRVPRIN
+        LBRVRSEQ
+        LBRY 
+        LBRYADP 
+        LBRYADP2
+        LBRYADP3
+        LBRYADPL
+        LBRYADR 
+        LBRYALA 
+        LBRYALA1
+        LBRYASK 
+        LBRYASR 
+        LBRYCK  
+        LBRYCK0 
+        LBRYCK1 
+        LBRYCK2 
+        LBRYCK3 
+        LBRYCK4 
+        LBRYCK5 
+        LBRYCSE 
+        LBRYCSE0
+        LBRYDELP
+        LBRYDSP 
+        LBRYDSP1
+        LBRYDWN 
+        LBRYEDI 
+        LBRYEDR 
+        LBRYET1 
+        LBRYET2 
+        LBRYET3 
+        LBRYF01 
+        LBRYFEDR
+        LBRYFIN1
+        LBRYFINP
+        LBRYFLST
+        LBRYFRP2
+        LBRYFRPT
+        LBRYFSN1
+        LBRYFSN2
+        LBRYFSND
+        LBRYFSRV
+        LBRYHD  
+        LBRYHD1 
+        LBRYHIS 
+        LBRYHIS0
+        LBRYHIS1
+        LBRYHIS2
+        LBRYHLD 
+        LBRYHLD1
+        LBRYHLD2
+        LBRYHOL 
+        LBRYHSF 
+        LBRYHSP 
+        LBRYIPRE
+        LBRYKILL
+        LBRYLIPL
+        LBRYLSL 
+        LBRYLSR 
+        LBRYLSR1
+        LBRYLST 
+        LBRYLTF 
+        LBRYMNLM
+        LBRYMSTN
+        LBRYMTCN
+        LBRYNFU 
+        LBRYNLMC
+        LBRYNLMP
+        LBRYNLMT
+        LBRYNLT1
+        LBRYNLT2
+        LBRYNLTT
+        LBRYNSTL
+        LBRYNTE0
+        LBRYNTE1
+        LBRYNTE2
+        LBRYNTE3
+        LBRYNTE4
+        LBRYNTE5
+        LBRYNTE6
+        LBRYNTE7
+        LBRYNTEG
+        LBRYPG  
+        LBRYPG0 
+        LBRYPG1 
+        LBRYPG2 
+        LBRYPG3 
+        LBRYPPR 
+        LBRYPPR0
+        LBRYPRC1
+        LBRYPRC2
+        LBRYPRCM
+        LBRYPRCS
+        LBRYPRG 
+        LBRYPT1 
+        LBRYQRY 
+        LBRYREGN
+        LBRYREPT
+        LBRYRET 
+        LBRYRET0
+        LBRYRET1
+        LBRYRET2
+        LBRYRLE 
+        LBRYRPT 
+        LBRYRPT0
+        LBRYRPT1
+        LBRYRPT2
+        LBRYRRS 
+        LBRYRRS0
+        LBRYRSLT
+        LBRYRST 
+        LBRYRTX 
+        LBRYSEND
+        LBRYSITE
+        LBRYSRV 
+        LBRYSRV1
+        LBRYSTA 
+        LBRYSTR0
+        LBRYTAPE
+        LBRYTRN 
+        LBRYTST 
+        LBRYUE  
+        LBRYUED 
+        LBRYULP 
+        LBRYUSER
+        LBRYUST 
+        LBRYUTL 
+        LBRYX1  
+        LBRYX11 
+        LBRYX12 
+        LBRYX13 
+        LBRYX14 
+        LBRYX15 
+        LBRYX16 
+        LBRYX2  
+        LBRYX21 
+        LBRYX22 
+        LBRYX23 
+        LBRYX24 
+        LBRYX3  
+        LBRYX31 
+        LBRYX32 
+        LBRYX33 
+        LBRYX34 
+        LBRYX4  
+        LBRYX41 
+        LBRYX42 
+        LBRYX43 
+        LBRYX44 
+        LBRYX45 
+        LBRYX46 
+        LBRYX5  
+        LBRYX51 
+        LBRYX52 
+        LBRYX53 
+        LBRYX54 
+        LBRYX6  
+        LBRYX61 
+        LBRYX62 
+        LBRYX63 
+        LBRYX64 
+        LBRYX6A 
+        LBRYX6A1
+        LBRYX6A2
+        LBRYX6A3
+        LBRYX6A4
+        LBRYX7  
+        LBRYX71 
+        LBRYX72 
+        LBRYX73 
+        LBRYX74 
+        LBRYX75 
+        LBRYX76 
+        LBRYX77 
+        LBRYX78 
+        LBRYX8  
+        LBRYX81 
+        LBRYX82 
+        LBRYX83 
+        LBRYX84 
+        LBRYX85 
+        LBRYX86 
+        LBRYX87 
+        LBRYX88 
+        LBRYX9  
+        LBRYX91 
+        LBRYX92 
+        LBRYX93 
+        LBRYX94 
+  
+  
+  10. The following Library files and data will be removed.
+        LOCAL SERIALS file (#680)
+        PUBLISHER file (#680.1)
+        FREQUENCY file (#680.2)
+        SUBJECT file (#680.3)
+        NAME file (#680.4)
+        TITLE AUTHORITY file (#680.5)
+        LIBRARY PARAMETERS file (#680.6)
+        LBRY ITEM PLACEMENT LOCATION file (#680.7)
+        INDEXING SOURCES file (#680.8)
+        PREDICTION PATTERN file (#680.9)
+        LBRY DISPOSITION file (#681)
+        COUNTRY OF PUBLICATION file (#681.1)
+        LBRY ISSUE file (#682)
+        LIBRARY TRANSACTIONS file (#682.1)
+        AAHSST PROGRAM file (#686)
+        AAHSST SITE file (#686.11)
+        AAHSST STATISTICS file (#686.12)
+        AAHSST MISCELLANEOUS file (#686.13)
+        AAHSST SATELLITE file (#686.14)
+  
+  
+  11. A background job will be tasked when the patch is installed to remove
+      the Library files and data. Upon completion of the job, a MailMan 
+      message with the subject "Library Package Data & Data Dictionary
+      Removal" is generated showing a list of files that were deleted. If
+      there are routines that begin with LBR that were not removed, then
+      they will be listed in the message. These routines will need to be
+      reviewed by IRM to determine if they should be removed. 
+      
+ 12. Any remaining local Library components will need to be manually reviewed
+     and removed from each site.
+     
+   
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED TICKET(S):
+  =====================
+  N/A
+  
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Alexandria VAMC
+  Huntington VAMC
+         
+    
+  Installation Instructions:
+  ==========================   
+     Installation will take approximately 10 minutes.
+    
+     Suggested time to install: Non-peak requirement hours.
+        
+         NOTE: *** Please ensure any scheduled LBR options are unscheduled ***
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter LBR*2.5*15)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package 
+         LBR*2.5*15.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,  
+         and Protocols? NO//" respond NO.
+  
+      7. Review the installation message for notifications.
+   
+      8. You may delete the routine LBR25P15  from your production system 
+         after the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.5;Library;**[Patch List]**;Mar 11, 1996;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LBR256EN
+    Before:       n/a   After:    Delete  
+Routine Name: LBR258P
+    Before:  B4476345   After:    Delete  
+Routine Name: LBR25P12
+    Before:       n/a   After:    Delete  
+Routine Name: LBR25P15
+    Before:       n/a   After: B15463305  **15**
+Routine Name: LBR25P9
+    Before:  B3360171   After:    Delete  
+Routine Name: LBR25P9V
+    Before: B23191789   After:    Delete  
+Routine Name: LBRCSL
+    Before:   B500996   After:    Delete  
+Routine Name: LBREDIT
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLCNV
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLCONV
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLM
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP0
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP31
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP4
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP5
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP6
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLP7
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLPRG
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLSITE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLT
+    Before:       n/a   After:    Delete  
+Routine Name: LBRLTST
+    Before:       n/a   After:    Delete  
+Routine Name: LBRNCNV1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRNCNV2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRNCNV3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRNTEG
+    Before:       n/a   After:    Delete  
+Routine Name: LBRPUTL
+    Before:  B4409267   After:    Delete  
+Routine Name: LBRTCNV1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRTCNV2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRTCNV3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRTCNV4
+    Before:       n/a   After:    Delete  
+Routine Name: LBRTCNV5
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVC681
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVC682
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVCLN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVCON1
+    Before:  B2611033   After:    Delete  
+Routine Name: LBRVCON2
+    Before: B13414315   After:    Delete  
+Routine Name: LBRVCON3
+    Before: B11017202   After:    Delete  
+Routine Name: LBRVCON9
+    Before:  B3237470   After:    Delete  
+Routine Name: LBRVCOND
+    Before: B28481821   After:    Delete  
+Routine Name: LBRVCONE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVCONP
+    Before: B10811860   After:    Delete  
+Routine Name: LBRVCONS
+    Before: B25695189   After:    Delete  
+Routine Name: LBRVCONV
+    Before:  B5732048   After:    Delete  
+Routine Name: LBRVCONX
+    Before:  B5860705   After:    Delete  
+Routine Name: LBRVENV
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVPOST
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVPRE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVPRIN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRVRSEQ
+    Before:       n/a   After:    Delete  
+Routine Name: LBRY
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYADP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYADP2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYADP3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYADPL
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYADR
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYALA
+    Before:  B4052276   After:    Delete  
+Routine Name: LBRYALA1
+    Before:  B2125020   After:    Delete  
+Routine Name: LBRYASK
+    Before:  B1132304   After:    Delete  
+Routine Name: LBRYASR
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYCK
+    Before: B15996193   After:    Delete  
+Routine Name: LBRYCK0
+    Before: B13395161   After:    Delete  
+Routine Name: LBRYCK1
+    Before: B14879784   After:    Delete  
+Routine Name: LBRYCK2
+    Before:  B6667366   After:    Delete  
+Routine Name: LBRYCK3
+    Before:  B6554282   After:    Delete  
+Routine Name: LBRYCK4
+    Before:  B8921675   After:    Delete  
+Routine Name: LBRYCK5
+    Before:  B1488320   After:    Delete  
+Routine Name: LBRYCSE
+    Before: B18134746   After:    Delete  
+Routine Name: LBRYCSE0
+    Before:  B7123215   After:    Delete  
+Routine Name: LBRYDELP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYDSP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYDSP1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYDWN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYEDI
+    Before:  B4885485   After:    Delete  
+Routine Name: LBRYEDR
+    Before:   B985166   After:    Delete  
+Routine Name: LBRYET1
+    Before:  B6478773   After:    Delete  
+Routine Name: LBRYET2
+    Before:  B3860459   After:    Delete  
+Routine Name: LBRYET3
+    Before:   B408866   After:    Delete  
+Routine Name: LBRYF01
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFEDR
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFIN1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFINP
+    Before:  B3231841   After:    Delete  
+Routine Name: LBRYFLST
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFRP2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFRPT
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFSN1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFSN2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFSND
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYFSRV
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHD
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHD1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHIS
+    Before: B11619109   After:    Delete  
+Routine Name: LBRYHIS0
+    Before:  B6034597   After:    Delete  
+Routine Name: LBRYHIS1
+    Before:  B4953453   After:    Delete  
+Routine Name: LBRYHIS2
+    Before:  B1467019   After:    Delete  
+Routine Name: LBRYHLD
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHLD1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHLD2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHOL
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYHSF
+    Before:   B415226   After:    Delete  
+Routine Name: LBRYHSP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYIPRE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYKILL
+    Before:   B619451   After:    Delete  
+Routine Name: LBRYLIPL
+    Before:   B778193   After:    Delete  
+Routine Name: LBRYLSL
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYLSR
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYLSR1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYLST
+    Before: B15447641   After:    Delete  
+Routine Name: LBRYLTF
+    Before:  B3635836   After:    Delete  
+Routine Name: LBRYMNLM
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYMSTN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYMTCN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNFU
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLMC
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLMP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLMT
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLT1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLT2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNLTT
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNSTL
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE0
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE4
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE5
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE6
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTE7
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYNTEG
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYPG
+    Before: B10501660   After:    Delete  
+Routine Name: LBRYPG0
+    Before:  B1432705   After:    Delete  
+Routine Name: LBRYPG1
+    Before:  B4721912   After:    Delete  
+Routine Name: LBRYPG2
+    Before:  B1977183   After:    Delete  
+Routine Name: LBRYPG3
+    Before:  B1481685   After:    Delete  
+Routine Name: LBRYPPR
+    Before: B15392736   After:    Delete  
+Routine Name: LBRYPPR0
+    Before:  B5650276   After:    Delete  
+Routine Name: LBRYPRC1
+    Before:  B7547949   After:    Delete  
+Routine Name: LBRYPRC2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYPRCM
+    Before: B11416056   After:    Delete  
+Routine Name: LBRYPRCS
+    Before: B10586120   After:    Delete  
+Routine Name: LBRYPRG
+    Before:   B706874   After:    Delete  
+Routine Name: LBRYPT1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYQRY
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYREGN
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYREPT
+    Before:  B1012931   After:    Delete  
+Routine Name: LBRYRET
+    Before: B11592220   After:    Delete  
+Routine Name: LBRYRET0
+    Before:  B5173674   After:    Delete  
+Routine Name: LBRYRET1
+    Before:  B5793858   After:    Delete  
+Routine Name: LBRYRET2
+    Before:  B6380655   After:    Delete  
+Routine Name: LBRYRLE
+    Before:  B1189249   After:    Delete  
+Routine Name: LBRYRPT
+    Before: B25967108   After:    Delete  
+Routine Name: LBRYRPT0
+    Before: B21756464   After:    Delete  
+Routine Name: LBRYRPT1
+    Before:  B5942729   After:    Delete  
+Routine Name: LBRYRPT2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYRRS
+    Before:  B2192084   After:    Delete  
+Routine Name: LBRYRRS0
+    Before:  B5922082   After:    Delete  
+Routine Name: LBRYRSLT
+    Before:  B1698111   After:    Delete  
+Routine Name: LBRYRST
+    Before: B12319674   After:    Delete  
+Routine Name: LBRYRTX
+    Before: B12359855   After:    Delete  
+Routine Name: LBRYSEND
+    Before:  B5273590   After:    Delete  
+Routine Name: LBRYSITE
+    Before:  B4466209   After:    Delete  
+Routine Name: LBRYSRV
+    Before:  B7678102   After:    Delete  
+Routine Name: LBRYSRV1
+    Before:  B3804827   After:    Delete  
+Routine Name: LBRYSTA
+    Before:  B5434356   After:    Delete  
+Routine Name: LBRYSTR0
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYTAPE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYTRN
+    Before:  B6653903   After:    Delete  
+Routine Name: LBRYTST
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYUE
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYUED
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYULP
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYUSER
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYUST
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYUTL
+    Before:  B8862657   After:    Delete  
+Routine Name: LBRYX1
+    Before:  B7693982   After:    Delete  
+Routine Name: LBRYX11
+    Before:   B503515   After:    Delete  
+Routine Name: LBRYX12
+    Before:   B437732   After:    Delete  
+Routine Name: LBRYX13
+    Before:   B528543   After:    Delete  
+Routine Name: LBRYX14
+    Before:   B594859   After:    Delete  
+Routine Name: LBRYX15
+    Before:   B439819   After:    Delete  
+Routine Name: LBRYX16
+    Before:   B538318   After:    Delete  
+Routine Name: LBRYX2
+    Before:  B7314380   After:    Delete  
+Routine Name: LBRYX21
+    Before:  B1125982   After:    Delete  
+Routine Name: LBRYX22
+    Before:   B669668   After:    Delete  
+Routine Name: LBRYX23
+    Before:  B1194572   After:    Delete  
+Routine Name: LBRYX24
+    Before:   B688317   After:    Delete  
+Routine Name: LBRYX3
+    Before:  B7315147   After:    Delete  
+Routine Name: LBRYX31
+    Before:  B2083275   After:    Delete  
+Routine Name: LBRYX32
+    Before:  B2230445   After:    Delete  
+Routine Name: LBRYX33
+    Before:  B2283843   After:    Delete  
+Routine Name: LBRYX34
+    Before:  B2741493   After:    Delete  
+Routine Name: LBRYX4
+    Before:  B7718955   After:    Delete  
+Routine Name: LBRYX41
+    Before:  B1341735   After:    Delete  
+Routine Name: LBRYX42
+    Before:   B454988   After:    Delete  
+Routine Name: LBRYX43
+    Before:   B431209   After:    Delete  
+Routine Name: LBRYX44
+    Before:  B1418813   After:    Delete  
+Routine Name: LBRYX45
+    Before:   B457333   After:    Delete  
+Routine Name: LBRYX46
+    Before:   B433473   After:    Delete  
+Routine Name: LBRYX5
+    Before:  B7320983   After:    Delete  
+Routine Name: LBRYX51
+    Before:  B1156236   After:    Delete  
+Routine Name: LBRYX52
+    Before:   B440295   After:    Delete  
+Routine Name: LBRYX53
+    Before:  B1736965   After:    Delete  
+Routine Name: LBRYX54
+    Before:   B442551   After:    Delete  
+Routine Name: LBRYX6
+    Before:  B6568848   After:    Delete  
+Routine Name: LBRYX61
+    Before:   B134911   After:    Delete  
+Routine Name: LBRYX62
+    Before:   B678467   After:    Delete  
+Routine Name: LBRYX63
+    Before:   B141378   After:    Delete  
+Routine Name: LBRYX64
+    Before:   B687174   After:    Delete  
+Routine Name: LBRYX6A
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX6A1
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX6A2
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX6A3
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX6A4
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX7
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX71
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX72
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX73
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX74
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX75
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX76
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX77
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX78
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX8
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX81
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX82
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX83
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX84
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX85
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX86
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX87
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX88
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX9
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX91
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX92
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX93
+    Before:       n/a   After:    Delete  
+Routine Name: LBRYX94
+    Before:       n/a   After:    Delete  
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 29, 2017
+Completed By:                               Date Completed: MAR 29, 2018
+Released By :                               Date Released : APR 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

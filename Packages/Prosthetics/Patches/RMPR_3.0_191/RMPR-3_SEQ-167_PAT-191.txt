@@ -1,0 +1,130 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/08/17 at 18:56
+=============================================================================
+Run Date: FEB 01, 2018                     Designation: RMPR*3*191
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #167                      Status: Released
+                  Compliance Date: MAR 04, 2018
+=============================================================================
+
+Associated patches: (v)RMPR*3*182  <<= must be installed BEFORE `RMPR*3*191'
+
+Subject: UNDEFINED STATION CAUSING ERROR IN SUSPENSE PROCESSING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When jumping to Suspense Processing [RMPR SUSP MENU] from the current 
+ option/menu, a site station may be undefined. The option entry point was 
+ modified to check for station parameters and ensure that all required 
+ fields are defined, and, if not, call the station setup functionality.
+  
+ Associated SDM Tickets:
+ ======================
+ R16621509FY17 - <UNDEFINED>RMPRPAT2+15^RMPRPAT2 *RMPR("STA")
+     R16726784FY17(d) - <UNDEFINED>RMPRPAT2+15^RMPRPAT2 *RMPR("STA")
+     R17931935FY18(d) - <UNDEFINED>RMPRPAT2+15^RMPRPAT2
+     R18076622FY18(d) - <UNDEFINED>EN+9^RMPRUTL2 *RMPR("L")
+  
+ Associated NSR:
+ ==============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Salem VA Medical Center
+ Grand Junction VA Medical Center
+  
+ CA-SDM Overview:
+ ===============
+ 1. R16621509FY17 - <UNDEFINED>RMPRPAT2+15^RMPRPAT2 *RMPR("STA")
+  
+ Problem:
+ =======
+ During proactive error trap review after RMPR patch installs, sites are 
+ receiving errors related to undefined or missing station. Analysis found 
+ an additional site parameter was also undefined (besides the initial 
+ parameter fixed in patch RMPR*3.0*189) when jumping from a particular 
+ option/menu directly to Suspense Processing [RMPR SUSP MENU].
+  
+ Resolution:
+ ==========
+ Modified code in RMPREO to check if RMPR("STA") is defined; if not, call 
+ DIV4^RMPRSIT to define it. 
+  
+ Patch Installation:
+ ==================
+ Installation Instructions: This patch may be installed with users on the 
+ system. Install Time - less than 2 minutes.
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch name
+     RMPR*3.0*191:
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+   
+  4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+  5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+   
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer NO.
+   
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer NO.
+  
+       There are no Menu Options or Protocols to disable.
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout and Rollback Procedure:
+ ==============================
+ The routine deployed by this patch - RMPREO - may be restored from the 
+ message created in step 3d above.
+  
+ There is no data rollback required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPREO
+    Before: B12735146   After: B13298919  **45,55,83,182,191**
+ 
+Routine list of preceding patches: 182
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 19, 2017
+Completed By:                               Date Completed: FEB 01, 2018
+Released By :                               Date Released : FEB 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

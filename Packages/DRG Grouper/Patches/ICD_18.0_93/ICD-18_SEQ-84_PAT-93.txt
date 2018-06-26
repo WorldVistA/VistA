@@ -1,0 +1,327 @@
+
+=============================================================================
+Run Date: JAN 02, 2018                     Designation: ICD*18*93
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #84                     Status: Released
+                  Compliance Date: JAN 12, 2018
+=============================================================================
+
+Associated patches: (v)ICD*18*90   <<= must be installed BEFORE `ICD*18*93'
+
+Subject: FY2018 ANNUAL DRG GROUPER UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch provides the annual update to the Medicare Severity Diagnosis
+ Related Group (MS-DRG) Grouper version 35.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+ PLEASE NOTE: 
+   Be aware of the shortened compliance date. The dates listed in the patch
+   are accurate as the FY2018 annual patch was delayed.     
+   The changes included in this patch were effective as of 10/1/2017 per the
+   Federal Register Vol. 82, No. 155, dated August 14, 2017.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1) I17235153FY18 - FY2018 Annual DRG Grouper update
+  
+   
+ ASSOCIATED NSRs:
+ ================
+ N/A
+  
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ VISN 2 - Upstate New York HCS
+ VA North Florida/South Georgia HCS         
+  
+  
+ TICKET OVERVIEW:
+ ================
+ 1) I17235153FY18 - FY2018 Annual DRG Grouper update
+   
+    The following changes are published in the Federal Register, Vol. 82,
+    No. 155, dated August 14, 2017 with an effective date of October 1,
+    2017. All page references below are for this annual update and
+    resource documents can be found at https://www.cms.gov/.
+     
+       
+      Changes include:
+       
+      I.   Revised DRGs.
+       
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+   
+    III.   DRG Reclassification changes to the Grouper.
+  
+     IV.   Additional DRG-related data for the new ICD codes introduced by
+           patch LEX*2.0*113 (released October 5, 2017).
+  
+       
+    This is a summary of the additions/changes made:
+       
+      I.   Routine ICD1893A was written to update the DRG file (#80.2).
+  
+           NEW DRGs for FY 2018
+           --------------------
+           n/a
+                      
+  
+           INACTIVATED DRGs for FY 2018
+           ----------------------------
+           MS-DRG 984
+           MS-DRG 985
+           MS-DRG 986
+  
+  
+     II.   Routine ICD1893A is used to update the finalized values for DRG
+           relative weights and average length of stay (ALOS).
+    
+    
+    III.   DRG RECLASSIFICATION.
+           
+      Changes to other DRGs:
+      ----------------------
+       1. MDC 1 (p.38015)
+          Effective 10/1/2017 ICD-10 diagnosis code R53.2 (Functional 
+          quadriplegia) will be assigned to MS-DRGs 947 and 948 (Signs and
+          Symptoms with MCC and without MCC, respectively).
+  
+       2. MDC 1 (p.38019)
+          Effective 10/1/2017 reassignment of all cases with a principal
+          diagnosis of epilepsy and one of the following ICD-10-PCS code
+          combinations capturing cases with the neurostimulator generators
+          inserted into the skull (including cases involving the use of the
+          Responsive Neurostimulator (RNS) System), to MS-DRG 023,
+          even if there is no MCC reported:
+  
+          0NH00NZ (Insertion of neurostimulator generator into skull, open
+          approach), in combination with 00H00MZ (Insertion of neurostimulator
+          lead into brain, open approach)
+  
+          0NH00NZ (Insertion of neurostimulator generator into skull, open
+          approach), in combination with 00H03MZ (Insertion of neurostimulator
+          lead into brain, percutaneous approach)
+  
+          0NH00NZ (Insertion of neurostimulator generator into skull, open
+          approach), in combination with 00H04MZ (Insertion of neurostimulator
+          lead into brain, percutaneous endoscopic approach).
+  
+       3. MDC 1 (p.38022)
+          Effective 10/1/2017 reassignment of the ICD-10-CM diagnosis codes
+          listed on page 38020 of the Federal Register that are currently
+          assigned to MS-DRGs 067 and 068 and the ICD-10-CM diagnosis codes
+          currently assigned to MS-DRG 069 to the GROUPER logic for MS-DRGs 
+          061, 062, and 063 when those conditions are sequenced as the
+          principal diagnosis and reported with an ICD-10-PCS procedure
+          code describing use of a thrombolytic agent (for example,
+          Tissue Plasminogen Activator (TPA).
+          
+       4. MDC 2 (p.38022)
+          Effective 10/1/2017 reassignment of the following ICD-10-CM 
+          diagnosis codes from MS-DRGs 124 and 125 to MS-DRGs 917 and
+          918 for FY 2018:
+  
+          T49.5X1A; T49.5X2A; T49.5X3A; and T49.5X4A
+  
+       5. MDC 5 (p.38024)
+          Revision of the titles for MS-DRGs 246 and MS-DRG 248. The title of
+          MS-DRG 246 to 'Percutaneous Cardiovascular Procedures with
+          Drug-Eluting Stent with MCC or 4+ Arteries or Stents' and the
+          title of MS-DRG 248 to 'Percutaneous Cardiovascular Procedures with
+          Non-Drug-Eluting Stent with MCC or 4+ Arteries or Stents' effective
+          October 1, 2017 for ICD-10 MS-DRGs Version 35.
+  
+       6. MDC 5 (p.38027)
+          Reassign the four percutaneous mitral valve replacement procedure
+          codes listed on page 38026 of the Federal Register from MS-DRGs
+          216 through 221 to MS-DRGs 266 and 267 and assign the eight new
+          procedure codes (also listed on page 38026 of the Federal Register)
+          that describe percutaneous and transapical, percutaneous tricuspid
+          valve replacement procedures to MS-DRGs 266 and 267 effective
+          October 1, 2017 for ICD-10 MS-DRGs Version 35.
+  
+       7. MDC 8 (p.38029)
+          Reassigning the following Total Ankle Replacement (TAR)
+          procedure codes from MS DRG 470 to MS DRG 469, even if there
+          is no MCC reported: 0SRF0J9; 0SRF0JA; 0SRF0JZ; 0SRG0J9; 
+          0SRG0JA; and 0SRG0JZ for FY2018. Also changing the titles of
+          MS-DRGs 469 and 470 to the following to reflect these MS-DRG
+          reassignments:
+          
+          MS-DRG 469: 'Major Hip and Knee Joint Replacement or Reattachment
+          of Lower Extremity with MCC or Total Ankle Replacement'; and MS-DRG
+          470: 'Major Hip and Knee Joint Replacement or Reattachment of Lower
+          Extremity without MCC'.
+  
+       8. MDC 14 (p.38038)
+          Remove ICD-10-CM diagnosis codes O09.41, O09.42 and O09.43, which
+          describe supervision of pregnancy, from MS-DRG 782 and reassign them
+          to MS-DRG 998 (Principal Diagnosis Invalid as Discharge Diagnosis)
+          in the ICD-10 MS-DRGs Version 35, effective October 1, 2017.
+                
+       9. MDC 14 (p.38039)
+          Update the following in the ICD-10 MS-DRGs Version 35, effective
+          October 1, 2017:
+          
+          Move ICD-10-CM diagnosis code O75.1 from the list of principal or
+          secondary diagnosis under the second condition-complicating 
+          diagnosis for MS-DRG 774 to the secondary diagnosis list
+          only; and
+                 
+          Add ICD-10-CM diagnosis code O75.1 to the principal diagnosis list
+          GROUPER logic in MS-DRGs 769 and 776.
+  
+      10. MDC 15 (p.38040)
+          Add the 14 diagnosis codes describing 'observation and evaluation
+          of newborns for suspected conditions that are ruled out' listed on
+          page 38039 of the Federal Register to the GROUPER logic for MS-DRG
+          795 (Normal newborn) in the ICD-10 MS-DRGs Version 35, effective
+          October 1, 2017.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed during non-peak hours to
+ minimize potential disruption to users.  Additionally, installing during
+ peak hours may lead to an unusually long install time.  Do not interrupt
+ the installation.  Do not Queue this installation. If it is queued, it may
+ hang and not finish installing.
+  
+ Installation can take 40 mins to one (1) hour.
+  
+ Create a backup of the following global file before continuing.  When you
+ are creating a backup of non-subscripted globals, you are saving the entire
+ global.  You should use the utility ^%GO for non-subscripted globals, and
+ when prompted for a global, enter the global root (global name only, no open
+ parenthesis, no file number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICDD            entire ICDD global
+   
+  
+  1.  Retrieve the KIDS distribution host file. This patch will be
+      distributed in a host file due to the amount of data contained in
+      the patch.  The name of the host file is:
+  
+           ICD_18_93.KID
+  
+      Sites can retrieve VistA software from the following Secure File
+      Transfer Protocol (SFTP) addresses. The preferred method is to 
+      SFTP the files from:
+  
+           download.vista.domain.ext
+  
+      This will transmit the files from the first available SFTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+      
+           Hines                   domain.ext
+           Salt Lake City          domain.ext
+  
+      The ICD_18_93.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+  
+  2.  Load the KIDS distribution that is contained in file ICD_18_93.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter ICD*18.0*93):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package ICD*18.0*93:
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+  
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+      DRG Grouper                      [ICD DRG GROUPER]
+      DRG Calculation                  [DG DRG CALCULATION]
+      Load/Edit PTF Data               [DG PTF SCREEN]
+      Claims Tracking Edit             [IBT EDIT TRACKING ENTRY]
+      Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+      DRG Information Report           [DG PTF DRG INFORMATION OUTPUT]          
+  
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+  
+  6.  Please be aware that routine ICD1893P is deleted by design during
+      the install process.  Therefore, the ICD1893P post-install checksum
+      is not applicable.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1893A
+    Before:       n/a   After: B66184285  **93**
+Routine Name: ICD1893F
+    Before:       n/a   After: B59499713  **93**
+Routine Name: ICD1893G
+    Before:       n/a   After: B63144983  **93**
+Routine Name: ICD1893H
+    Before:       n/a   After: B59999567  **93**
+Routine Name: ICD1893I
+    Before:       n/a   After: B57731756  **93**
+Routine Name: ICD1893J
+    Before:       n/a   After: B60214816  **93**
+Routine Name: ICD1893K
+    Before:       n/a   After: B60282987  **93**
+Routine Name: ICD1893O
+    Before:       n/a   After:  B2996468  **93**
+Routine Name: ICD1893P
+    Before:       n/a   After:  B2854462  **93**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 01, 2017
+Completed By:                               Date Completed: DEC 29, 2017
+Released By :                               Date Released : JAN 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,132 @@
+
+=============================================================================
+Run Date: FEB 20, 2018                     Designation: OR*3*447
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #392                      Status: Released
+                  Compliance Date: MAR 23, 2018
+=============================================================================
+
+
+Subject: ANTI-COAGULATION MANAGEMENT TOOL GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ In preparation for the VA's transition to become two factor authentication
+ (2FA) compliant the Anticoagulation Management Tool (GUI) requires an 
+ upgrade to Delphi version XE8 in order to implement the new Remote 
+ Procedure Call (RPC) Broker allowing compliance.
+  
+ NOTE: The SSOi service is currently disabled so the 2FA (PIV) login will 
+ not come up initially for the Anticoagulation Management Tool.  You will 
+ be prompted for your Access and Verify code as you are currently. Once
+ the SSOi service is enabled and turned back on then you will begin 
+ receiving the PIV prompt at login for the Anticoagulation Management Tool.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+    Problem: 
+    --------
+    The Department of Veterans Affairs Cybersecurity Task Force has been 
+    tasked by the Chief Information Officer (CIO) and the Inspector General
+    (IG) to address identified material weaknesses. This task force has
+    mandated that all internal, user facing VA applications become two
+    factor authentication (2FA) compliant by April 30, 2017.
+  
+    In order to be compliant, applications are required to authenticate
+    users via Personal Identity Verification (PIV) cards.
+  
+    Note: Usernames and password will no longer be permitted 
+    for employees and contractors to access VA applications.  
+      
+    Resolution:
+    -----------
+    As part of the transition to 2FA, Anticoagulation Management Tool was 
+    upgraded to Delphi XE8 to allow access to the latest version of the 
+    RPC Broker implementing 2FA.
+  
+ Test Sites:
+ ===========
+ MINNEAPOLIS, MN 
+ CLEVELAND, OH  
+ BUFFALO, NY
+  
+      
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ To obtain the updated client software, use FTP to retrieve OR_30_447.zip
+ from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+ directories.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+   
+ The software distribution includes this file:  OR_30_447.zip (2.865 MB)
+   
+ FILE NAME          RETRIEVAL FORMAT    
+ ---------          ----------------
+ OR_30_447.ZIP      BINARY
+   
+   
+ ZIP FILE CONTENTS          DESCRIPTION           FILE VERSION    
+ -----------------          -----------           ------------
+ AntiCoagulate.exe          Client                1.0.447.7
+ Anticoag_help_file.hlp     Client help file    
+ Anticoag help file.cnt     Client help TOC file
+ AntiCoagulate.map          Map File
+ CVisit.rav                 Rave report file
+ MAppt No FAX Labs.rav      Rave report file
+ MAppt.rav                  Rave report file
+  
+   
+ Below is a list of the files related to this patch that will 
+ be needed and available via the FTP sites listed above.
+  
+ Title                               File Name           FTP Mode
+ -----------------------------------------------------------------------
+ Anticoagulation Management Tool     ORAMIG.doc          Binary
+ Installation/Implementation Guide    
+ Anticoagulation Management Tool     ORAMIG.PDF          Binary
+ Installation/Implementation Guide    
+ Anticoagulation Management Tool     ORAMTM.doc          Binary
+ Technical Manual 
+ Anticoagulation Management Tool     ORAMTM.PDF          Binary
+ Technical Manual 
+ Anticoagulation Management Tool     ORAMUM.doc          Binary
+ User Manual
+ Anticoagulation Management Tool     ORAMUM.PDF          Binary
+ User Manual
+   
+ Documentation can also be found on the VA Software 
+ Documentation Library at:
+ http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2017
+Completed By:                               Date Completed: FEB 20, 2018
+Released By :                               Date Released : FEB 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

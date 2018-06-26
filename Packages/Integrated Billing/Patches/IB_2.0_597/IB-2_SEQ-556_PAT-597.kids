@@ -1,0 +1,1777 @@
+Released IB*2*597 SEQ #556
+Extracted from mail message
+**KIDS**:IB*2.0*597^
+
+**INSTALL NAME**
+IB*2.0*597
+"BLD",10613,0)
+IB*2.0*597^INTEGRATED BILLING^0^3180209^y
+"BLD",10613,1,0)
+^^11^11^3171107^
+"BLD",10613,1,1,0)
+ This patch addresses 3 issues:
+"BLD",10613,1,2,0)
+ 
+"BLD",10613,1,3,0)
+ 1. Update the Integrated Billing option Correct Rejected/Denied Bill [IB
+"BLD",10613,1,4,0)
+    CORRECT REJECTED/DENIED] to address a missing lock issue.
+"BLD",10613,1,5,0)
+ 
+"BLD",10613,1,6,0)
+ 2. Correct the summary totals of the THIRD PARTY FOLLOW-UP SUMMARY in the
+"BLD",10613,1,7,0)
+    View/Print Extracted Reports [IBJD DM VIEW/PRINT EXTRACTS] option.
+"BLD",10613,1,8,0)
+ 
+"BLD",10613,1,9,0)
+ 3. The FINDLN+64 and FINDLN+118 undefined errors occur when the 
+"BLD",10613,1,10,0)
+    IBZDATA(1) variable is undefined which is supposed to hold formatting
+"BLD",10613,1,11,0)
+    data for the bill line.
+"BLD",10613,4,0)
+^9.64PA^^
+"BLD",10613,6.3)
+11
+"BLD",10613,"INIT")
+POST^IB20P597
+"BLD",10613,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10613,"KRN",.4,0)
+.4
+"BLD",10613,"KRN",.401,0)
+.401
+"BLD",10613,"KRN",.402,0)
+.402
+"BLD",10613,"KRN",.403,0)
+.403
+"BLD",10613,"KRN",.5,0)
+.5
+"BLD",10613,"KRN",.84,0)
+.84
+"BLD",10613,"KRN",3.6,0)
+3.6
+"BLD",10613,"KRN",3.8,0)
+3.8
+"BLD",10613,"KRN",9.2,0)
+9.2
+"BLD",10613,"KRN",9.8,0)
+9.8
+"BLD",10613,"KRN",9.8,"NM",0)
+^9.68A^5^4
+"BLD",10613,"KRN",9.8,"NM",1,0)
+IBCC^^0^B75296271
+"BLD",10613,"KRN",9.8,"NM",3,0)
+IB20P597^^0^B2837083
+"BLD",10613,"KRN",9.8,"NM",4,0)
+IBCEOB1^^0^B106424337
+"BLD",10613,"KRN",9.8,"NM",5,0)
+IBJDF2^^0^B68244751
+"BLD",10613,"KRN",9.8,"NM","B","IB20P597",3)
+
+"BLD",10613,"KRN",9.8,"NM","B","IBCC",1)
+
+"BLD",10613,"KRN",9.8,"NM","B","IBCEOB1",4)
+
+"BLD",10613,"KRN",9.8,"NM","B","IBJDF2",5)
+
+"BLD",10613,"KRN",19,0)
+19
+"BLD",10613,"KRN",19.1,0)
+19.1
+"BLD",10613,"KRN",101,0)
+101
+"BLD",10613,"KRN",409.61,0)
+409.61
+"BLD",10613,"KRN",771,0)
+771
+"BLD",10613,"KRN",779.2,0)
+779.2
+"BLD",10613,"KRN",870,0)
+870
+"BLD",10613,"KRN",8989.51,0)
+8989.51
+"BLD",10613,"KRN",8989.52,0)
+8989.52
+"BLD",10613,"KRN",8994,0)
+8994
+"BLD",10613,"KRN","B",.4,.4)
+
+"BLD",10613,"KRN","B",.401,.401)
+
+"BLD",10613,"KRN","B",.402,.402)
+
+"BLD",10613,"KRN","B",.403,.403)
+
+"BLD",10613,"KRN","B",.5,.5)
+
+"BLD",10613,"KRN","B",.84,.84)
+
+"BLD",10613,"KRN","B",3.6,3.6)
+
+"BLD",10613,"KRN","B",3.8,3.8)
+
+"BLD",10613,"KRN","B",9.2,9.2)
+
+"BLD",10613,"KRN","B",9.8,9.8)
+
+"BLD",10613,"KRN","B",19,19)
+
+"BLD",10613,"KRN","B",19.1,19.1)
+
+"BLD",10613,"KRN","B",101,101)
+
+"BLD",10613,"KRN","B",409.61,409.61)
+
+"BLD",10613,"KRN","B",771,771)
+
+"BLD",10613,"KRN","B",779.2,779.2)
+
+"BLD",10613,"KRN","B",870,870)
+
+"BLD",10613,"KRN","B",8989.51,8989.51)
+
+"BLD",10613,"KRN","B",8989.52,8989.52)
+
+"BLD",10613,"KRN","B",8994,8994)
+
+"BLD",10613,"QDEF")
+^^^^^^^^^^YES
+"BLD",10613,"QUES",0)
+^9.62^^
+"BLD",10613,"REQB",0)
+^9.611^3^3
+"BLD",10613,"REQB",1,0)
+IB*2.0*554^2
+"BLD",10613,"REQB",2,0)
+IB*2.0*547^2
+"BLD",10613,"REQB",3,0)
+IB*2.0*488^2
+"BLD",10613,"REQB","B","IB*2.0*488",3)
+
+"BLD",10613,"REQB","B","IB*2.0*547",2)
+
+"BLD",10613,"REQB","B","IB*2.0*554",1)
+
+"INIT")
+POST^IB20P597
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+597^3180209
+"PKG",200,22,1,"PAH",1,1,0)
+^^11^11^3180209
+"PKG",200,22,1,"PAH",1,1,1,0)
+ This patch addresses 3 issues:
+"PKG",200,22,1,"PAH",1,1,2,0)
+ 
+"PKG",200,22,1,"PAH",1,1,3,0)
+ 1. Update the Integrated Billing option Correct Rejected/Denied Bill [IB
+"PKG",200,22,1,"PAH",1,1,4,0)
+    CORRECT REJECTED/DENIED] to address a missing lock issue.
+"PKG",200,22,1,"PAH",1,1,5,0)
+ 
+"PKG",200,22,1,"PAH",1,1,6,0)
+ 2. Correct the summary totals of the THIRD PARTY FOLLOW-UP SUMMARY in the
+"PKG",200,22,1,"PAH",1,1,7,0)
+    View/Print Extracted Reports [IBJD DM VIEW/PRINT EXTRACTS] option.
+"PKG",200,22,1,"PAH",1,1,8,0)
+ 
+"PKG",200,22,1,"PAH",1,1,9,0)
+ 3. The FINDLN+64 and FINDLN+118 undefined errors occur when the 
+"PKG",200,22,1,"PAH",1,1,10,0)
+    IBZDATA(1) variable is undefined which is supposed to hold formatting
+"PKG",200,22,1,"PAH",1,1,11,0)
+    data for the bill line.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","IB20P597")
+0^3^B2837083^n/a
+"RTN","IB20P597",1,0)
+IB20P597 ;ALB/CXW - IB*2.0*597 POST-INIT: THIRD PARTY FOLLOW-UP SUMMARY ;Feb 09, 2018@10:11:43
+"RTN","IB20P597",2,0)
+ ;;2.0;INTEGRATED BILLING;**597**;21-MAR-94;Build 11
+"RTN","IB20P597",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P597",4,0)
+ ;
+"RTN","IB20P597",5,0)
+ Q
+"RTN","IB20P597",6,0)
+POST ;update the data in the Value field (#.02) of the file/subfile (#351.7/#351.702)
+"RTN","IB20P597",7,0)
+ N IBA,U S U="^"
+"RTN","IB20P597",8,0)
+ D MSG("IB*2.0*597 Post-Install starts.....")
+"RTN","IB20P597",9,0)
+ D MSG(""),TPFUS,MSG("")
+"RTN","IB20P597",10,0)
+ D MSG("IB*2.0*597 Post-Install is complete.")
+"RTN","IB20P597",11,0)
+ Q
+"RTN","IB20P597",12,0)
+ ;
+"RTN","IB20P597",13,0)
+TPFUS ; fix value of input variable for 3rd Party Follow-Up Summary
+"RTN","IB20P597",14,0)
+ ; ibsel = 5 is for all types
+"RTN","IB20P597",15,0)
+ N IBDA,IBDM,IBSEL,IBNM,IBIVA,DA,DIE,DR,X,Y
+"RTN","IB20P597",16,0)
+ S IBSEL="5,"
+"RTN","IB20P597",17,0)
+ S IBDM="IB DM EXTRACT REPORTS"
+"RTN","IB20P597",18,0)
+ S IBNM="THIRD PARTY FOLLOW-UP SUMMARY"
+"RTN","IB20P597",19,0)
+ S IBDA=$O(^IBE(351.7,"B",IBNM,0))
+"RTN","IB20P597",20,0)
+ I 'IBDA D MSG("  >>> "_IBNM_" of "_IBDM_" not found") Q
+"RTN","IB20P597",21,0)
+ S IBIVA=$O(^IBE(351.7,IBDA,1,"B","IBSEL",0))
+"RTN","IB20P597",22,0)
+ I 'IBIVA D MSG("  >>> Input variable IBSEL of "_IBNM_" not found") Q
+"RTN","IB20P597",23,0)
+ I $P($G(^IBE(351.7,IBDA,1,IBIVA,0)),U,2)=IBSEL D  Q 
+"RTN","IB20P597",24,0)
+ . D MSG("  >>> Value of input variable IBSEL of "_IBNM_" already")
+"RTN","IB20P597",25,0)
+ . D MSG("      updated in the "_IBDM_" file (#351.7)")
+"RTN","IB20P597",26,0)
+ S DA(1)=IBDA,DA=IBIVA
+"RTN","IB20P597",27,0)
+ S DIE="^IBE(351.7,"_DA(1)_",1,",DR=".02////"_IBSEL D ^DIE
+"RTN","IB20P597",28,0)
+ D MSG("  >>> Updating value of input variable IBSEL of "_IBNM)
+"RTN","IB20P597",29,0)
+ D MSG("      in the "_IBDM_" file (#351.7)")
+"RTN","IB20P597",30,0)
+ Q
+"RTN","IB20P597",31,0)
+ ;
+"RTN","IB20P597",32,0)
+MSG(IBA) ;
+"RTN","IB20P597",33,0)
+ D MES^XPDUTL(IBA)
+"RTN","IB20P597",34,0)
+ Q
+"RTN","IBCC")
+0^1^B75296271^B65758578
+"RTN","IBCC",1,0)
+IBCC ;ALB/MJB - CANCEL THIRD PARTY BILL ;Feb 09, 2018@10:11:43
+"RTN","IBCC",2,0)
+ ;;2.0;INTEGRATED BILLING;**2,19,77,80,51,142,137,161,199,241,155,276,320,358,433,432,447,516,547,597**;21-MAR-94;Build 11
+"RTN","IBCC",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCC",4,0)
+ ;
+"RTN","IBCC",5,0)
+ ;MAP TO DGCRC
+"RTN","IBCC",6,0)
+ ;
+"RTN","IBCC",7,0)
+ I '$D(IBCAN) S IBCAN=1
+"RTN","IBCC",8,0)
+ASK ;
+"RTN","IBCC",9,0)
+ ;***
+"RTN","IBCC",10,0)
+ ;I $D(XRT0) S:'$D(XRTN) XRTN="IBCC" D T1^%ZOSV ;stop rt clock
+"RTN","IBCC",11,0)
+ ;S XRTL=$ZU(0),XRTN="IBCC-1" D T0^%ZOSV ;start rt clock
+"RTN","IBCC",12,0)
+ ;
+"RTN","IBCC",13,0)
+ ; If called at entry point PROCESS, variable IBNOASK will exist.
+"RTN","IBCC",14,0)
+ ; First time through, IBNOASK=1
+"RTN","IBCC",15,0)
+ ; Second time through, IBNOASK=2 and it will quit
+"RTN","IBCC",16,0)
+ I $G(IBNOASK)=2 G Q
+"RTN","IBCC",17,0)
+ I $G(IBNOASK)=1 S IBNOASK=2
+"RTN","IBCC",18,0)
+ ;
+"RTN","IBCC",19,0)
+ G Q:$G(IBCE("EDI"))
+"RTN","IBCC",20,0)
+ D Q
+"RTN","IBCC",21,0)
+ ; Release currently locked record IB*2.0*597
+"RTN","IBCC",22,0)
+ I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) K IBLOCK
+"RTN","IBCC",23,0)
+ ;
+"RTN","IBCC",24,0)
+ S IBQUIT=0
+"RTN","IBCC",25,0)
+ N DPTNOFZY S DPTNOFZY=1  ;Suppress PATIENT file fuzzy lookups
+"RTN","IBCC",26,0)
+ I '$G(IBNOASK) S DIC="^DGCR(399,",DIC(0)="AEMQZ",DIC("A")="Enter BILL NUMBER or Patient NAME: " W !! D ^DIC I Y<1 S IBQUIT=1 G Q1
+"RTN","IBCC",27,0)
+ K IB364
+"RTN","IBCC",28,0)
+ ; Lock file entry and display message if lock can't be obtained. IB*2.0*597
+"RTN","IBCC",29,0)
+ S IBLOCK=Y
+"RTN","IBCC",30,0)
+ L +^DGCR(399,IBLOCK):$G(DILOCKTM,5) I '$T D LOCKED G ASK
+"RTN","IBCC",31,0)
+ ;
+"RTN","IBCC",32,0)
+NOPTF ; Note if IB364 is >0 it will be used as the ien to update in file 364
+"RTN","IBCC",33,0)
+ N DA,I
+"RTN","IBCC",34,0)
+ I '$G(IBNOASK) S IBIFN=+$G(Y)
+"RTN","IBCC",35,0)
+ I '$G(IBIFN) G ASK
+"RTN","IBCC",36,0)
+ I IBCAN>1 D NOPTF^IBCB2 I 'IBAC1 D NOPTF1^IBCB2 G ASK
+"RTN","IBCC",37,0)
+ ;
+"RTN","IBCC",38,0)
+ I $G(IBCNCRD)=1,$P($P($G(^DGCR(399,IBIFN,0)),U),"-",2)>98 D  Q
+"RTN","IBCC",39,0)
+ .W !!,"Please note that you have exceeded the maximum number of iterations (99) for this claim."
+"RTN","IBCC",40,0)
+ .W "Copy and cancel (CLON) must be used to correct this bill."
+"RTN","IBCC",41,0)
+ .I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) ; IB*2.0*597
+"RTN","IBCC",42,0)
+ .S IBQUIT=1 H 3
+"RTN","IBCC",43,0)
+ ; Check if bill has been referred to Counsel
+"RTN","IBCC",44,0)
+ I $P($G(^PRCA(430,IBIFN,6)),U,4) D  G ASK
+"RTN","IBCC",45,0)
+ . W !,"This bill has been referred to Regional Counsel and cannot be 'CANCELLED' in"
+"RTN","IBCC",46,0)
+ . W !,"Integrated Billing.  Please use the option 'TP Referred Follow-up'"
+"RTN","IBCC",47,0)
+ . W !,"[PRCA RC ACTION MENU] in Accounts Receivable to request that Regional"
+"RTN","IBCC",48,0)
+ . W !,"Counsel return the bill to your facility."
+"RTN","IBCC",49,0)
+ . Q
+"RTN","IBCC",50,0)
+ ;
+"RTN","IBCC",51,0)
+ F I=0,"S","U1" S IB(I)=$G(^DGCR(399,IBIFN,I))
+"RTN","IBCC",52,0)
+ S IBSTAT=$P(IB(0),U,13)
+"RTN","IBCC",53,0)
+ ; REMOVE New messages for CRD option IB*2.0*433 in IB*2.0*447  IA#5630
+"RTN","IBCC",54,0)
+ ;I $G(IBCNCRD)=1,IBSTAT'=2,'$$ACCK^PRCAACC(IBIFN) D  Q
+"RTN","IBCC",55,0)
+ ;.W !!,"This option cannot be used to correct some Billing Rate Types (Example: TRICARE)"
+"RTN","IBCC",56,0)
+ ;.W "Copy and cancel (CLON) must be used to correct this bill."
+"RTN","IBCC",57,0)
+ ;.S IBQUIT=1 H 3
+"RTN","IBCC",58,0)
+ ;
+"RTN","IBCC",59,0)
+ ; Restrict access to this process for REQUEST MRA bills
+"RTN","IBCC",60,0)
+ I IBSTAT=2,'$G(IBCE("EDI")),$$MRAWL^IBCEMU2(IBIFN) D  G ASK
+"RTN","IBCC",61,0)
+ . W !!?4,"This bill is in a status of REQUEST MRA and it does appear on the"
+"RTN","IBCC",62,0)
+ . W !?4,"MRA Management Work List.  Please use the 'MRA Management Menu' options"
+"RTN","IBCC",63,0)
+ . W !?4,"for all processing related to this bill."
+"RTN","IBCC",64,0)
+ . Q
+"RTN","IBCC",65,0)
+ ;
+"RTN","IBCC",66,0)
+ ; IB*2.0*432 Restrict access to claims on the new CBW Worklist
+"RTN","IBCC",67,0)
+ I $P($G(^DGCR(399,IBIFN,"S1")),U,7)=1,$G(IBMRANOT)'=1 D  G ASK
+"RTN","IBCC",68,0)
+ . W !!?4,"This bill appears on the CBW Management Work List.  Please use the"
+"RTN","IBCC",69,0)
+ . W !?4,"'CBW Management Menu' options for all processing related to this bill."
+"RTN","IBCC",70,0)
+ . Q
+"RTN","IBCC",71,0)
+ ;
+"RTN","IBCC",72,0)
+ ; Check if this is a paper claim. If not, check for split EOB.  If split, don't allow CRD unless more than 1 EOB has been returned
+"RTN","IBCC",73,0)
+ I $G(IBCNCRD)=1,$P($G(^DGCR(399,IBIFN,"TX")),U,8)'=1,$$SPLTMRA^IBCEMU1(IBIFN)=1 D  Q
+"RTN","IBCC",74,0)
+ .W !!,"There is a split EOB associated with this claim.  You cannot use this option to Correct this claim until the second EOB has been received."
+"RTN","IBCC",75,0)
+ .I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) ; IB*2.0*597
+"RTN","IBCC",76,0)
+ .S IBQUIT=1 H 3
+"RTN","IBCC",77,0)
+ .Q
+"RTN","IBCC",78,0)
+ ;
+"RTN","IBCC",79,0)
+ ; Warning message if in a REQUEST MRA status with no MRA on file
+"RTN","IBCC",80,0)
+ ; IB*2.0*516/TAZ,MRD - Forbid the user from using the option CRD
+"RTN","IBCC",81,0)
+ ; (Correct Rejected/Denied Bill) on an MRA claim if the status is
+"RTN","IBCC",82,0)
+ ; REQUEST MRA (IBSTAT=2).
+"RTN","IBCC",83,0)
+ I IBSTAT=2,'$$MRACNT^IBCEMU1(IBIFN) D  I $G(IBQUIT) H 3 Q
+"RTN","IBCC",84,0)
+ . N REJ
+"RTN","IBCC",85,0)
+ . D TXSTS^IBCEMU2(IBIFN,,.REJ)
+"RTN","IBCC",86,0)
+ . ;IB*2.0*516/TAZ - If CRD is from CSA allow a REJected claim to be CRD'ed without displaying a warning.
+"RTN","IBCC",87,0)
+ . I $G(IBCNCSA),REJ Q
+"RTN","IBCC",88,0)
+ . W *7,!!?4,$S('$G(IBCNCRD):"Warning!  ",1:""),"This bill is in a status of REQUEST MRA."
+"RTN","IBCC",89,0)
+ . W !?4,"No MRAs have been received"
+"RTN","IBCC",90,0)
+ . I REJ W ", but the most recent transmission of this",!?4,"MRA request bill was rejected."
+"RTN","IBCC",91,0)
+ . I 'REJ W " and there are no rejection messages on file",!?4,"for the most recent transmission of this MRA request bill."
+"RTN","IBCC",92,0)
+ . I $G(IBCNCRD) S IBQUIT=1 I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) ; IB*2.0*597
+"RTN","IBCC",93,0)
+ . Q
+"RTN","IBCC",94,0)
+ ;
+"RTN","IBCC",95,0)
+ I IBCAN=2,IB("S")]"",+$P(IB("S"),U,16),$P(IB("S"),U,17)]"" D  G 1
+"RTN","IBCC",96,0)
+ . W !!,"This bill was cancelled on " S Y=$P(IB("S"),U,17) X ^DD("DD") W Y," by ",$S($P(IB("S"),U,18)']"":IBU,$D(^VA(200,$P(IB("S"),U,18),0)):$P(^(0),U,1),1:IBU),"."
+"RTN","IBCC",97,0)
+ . S IBQUIT=1
+"RTN","IBCC",98,0)
+ ;
+"RTN","IBCC",99,0)
+ ; IB*2.0*516/TAZ,MRD - Forbid the user from using the option CRD
+"RTN","IBCC",100,0)
+ ; (Correct Rejected/Denied Bill) on all but primary claims.
+"RTN","IBCC",101,0)
+ I $G(IBCNCRD),($$COB^IBCEF(IBIFN)'="P") D  Q
+"RTN","IBCC",102,0)
+ . W !!,"Please note that COB data may exist for this bill."
+"RTN","IBCC",103,0)
+ . W !,"Copy and cancel (CLON) must be used to correct this bill."
+"RTN","IBCC",104,0)
+ . I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) ; IB*2.0*597
+"RTN","IBCC",105,0)
+ . S IBQUIT=1
+"RTN","IBCC",106,0)
+ . H 3
+"RTN","IBCC",107,0)
+ . Q
+"RTN","IBCC",108,0)
+ ;
+"RTN","IBCC",109,0)
+ ; Notify if a payment has been posted to this bill before cancel
+"RTN","IBCC",110,0)
+ N PRCABILL
+"RTN","IBCC",111,0)
+ S PRCABILL=$$TPR^PRCAFN(IBIFN)
+"RTN","IBCC",112,0)
+ I PRCABILL=-1 W !!,"Please note: PRCA was unable to determine if a payment has been posted." I $G(IBCNCRD)=1 W !,"Copy and cancel (CLON) must be used to correct this bill." I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) S IBQUIT=1 H 3 Q
+"RTN","IBCC",113,0)
+ I PRCABILL>0 W !!,"Please note a PAYMENT of **$"_$$TPR^PRCAFN(IBIFN)_"** has been POSTED to this bill."
+"RTN","IBCC",114,0)
+ ; New message for CRD option
+"RTN","IBCC",115,0)
+ I $G(IBCNCRD)=1,PRCABILL>0 W !,"Copy and cancel (CLON) must be used to correct this bill." I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) S IBQUIT=1 H 3 Q
+"RTN","IBCC",116,0)
+ ;
+"RTN","IBCC",117,0)
+ ; If bill was created via Electronic claims process then notify
+"RTN","IBCC",118,0)
+ ; user that cancellation should occur using ECME package
+"RTN","IBCC",119,0)
+ I $$GET1^DIQ(399,IBIFN_",",460)]"" D  G:'Y ASK
+"RTN","IBCC",120,0)
+ . W !!!?5,"This bill was created by the"
+"RTN","IBCC",121,0)
+ . W !?5,"Electronic Claims Management Engine (ECME)."
+"RTN","IBCC",122,0)
+ . W !?5,"Cancellation needs to occur in the ECME package by"
+"RTN","IBCC",123,0)
+ . W !?5,"submitting a REVERSAL to the Payer.",!!
+"RTN","IBCC",124,0)
+ . K DIR S DIR("A",1)="Has a REVERSAL for this e-Claim already been",DIR("A")="submitted to the payer via the ECME package (Y/N)",DIR(0)="Y",DIR("B")="NO" D ^DIR
+"RTN","IBCC",125,0)
+ . I Y=0 W !!,"<PLEASE SUBMIT A REVERSAL USING THE APPROPRIATE OPTION IN THE ECME PACKAGE>",$C(7)
+"RTN","IBCC",126,0)
+ ;
+"RTN","IBCC",127,0)
+CHK ;
+"RTN","IBCC",128,0)
+ ; if user came from CLON, make sure they know about the new CRD option  IB*2.0*447 remove TRICARE msg.
+"RTN","IBCC",129,0)
+ I $G(IBCNCOPY)=1 D
+"RTN","IBCC",130,0)
+ .W !!,*7,"Warning:  This option should NOT be used to correct Rejected/Denied claims."
+"RTN","IBCC",131,0)
+ .W !,"          It should ONLY be used to correct DENIED claims which have payments"
+"RTN","IBCC",132,0)
+ .W !,"          posted against them.***" ; and claims with certain Billing Rate Types (Example: TRICARE)."
+"RTN","IBCC",133,0)
+ ;
+"RTN","IBCC",134,0)
+ S (IBCCCC,IBQUIT)=0 I '$G(IBCEAUTO),'$G(IBMCSCAN) W !!,"ARE YOU SURE YOU WANT TO CANCEL THIS BILL" S %=2 D YN^DICN G:%=0 HELP I %'=1 S IBQUIT=1 G NO
+"RTN","IBCC",135,0)
+ ;
+"RTN","IBCC",136,0)
+ I '$G(IBCEAUTO) W !!,"LAST CHANCE TO CHANGE YOUR MIND..."
+"RTN","IBCC",137,0)
+ S DIE=399,DA=IBIFN,DIE("NO^")=""
+"RTN","IBCC",138,0)
+ S DR="16;S:'X Y=0;19;S IBCCCC=1;"
+"RTN","IBCC",139,0)
+ I $G(IBCEAUTO) S DR="16////1;19////EDI/MRA TURNED OFF;S IBCCCC=1;"
+"RTN","IBCC",140,0)
+ ;
+"RTN","IBCC",141,0)
+ ; esg - 8/23/06 - IB*2*358 - fix semi-colon in free text field
+"RTN","IBCC",142,0)
+ I $G(IBMCSRSC)'="" S DR="16;S:'X Y=0;19//^S X=IBMCSRSC;S IBCCCC=1;"
+"RTN","IBCC",143,0)
+ D ^DIE K DIE,DR
+"RTN","IBCC",144,0)
+ ;
+"RTN","IBCC",145,0)
+NO I 'IBCCCC W !!,"<NO ACTION TAKEN>",*7 S IBQUIT=1 G ASK:IBCAN<2,Q
+"RTN","IBCC",146,0)
+ S IBCCR=$P($G(^DGCR(399,IBIFN,"S")),U,19)
+"RTN","IBCC",147,0)
+ ; update claim # with new iteration  IB*2.0*447 move to later in the process
+"RTN","IBCC",148,0)
+ ;D:$G(IBCNCRD)=1 CRD
+"RTN","IBCC",149,0)
+ W !!,"...Bill has been cancelled..." D BULL^IBCBULL,BSTAT^IBCDC(IBIFN),PRIOR^IBCCC2(IBIFN)
+"RTN","IBCC",150,0)
+ ;
+"RTN","IBCC",151,0)
+ ; cancelling in ingenix claimsmanager if ingenix is running
+"RTN","IBCC",152,0)
+ ; clean-up of variables is OK if not coming in from ListMan screen
+"RTN","IBCC",153,0)
+ I $$CM^IBCIUT1(IBIFN) S IBCISNT=4 D ST2^IBCIST I '$G(IBCICNCL) K IBCISNT,IBCISTAT,IBCIREDT,IBCIERR
+"RTN","IBCC",154,0)
+ ;
+"RTN","IBCC",155,0)
+ S IBEDI=$G(IB364)
+"RTN","IBCC",156,0)
+ I 'IBEDI S IBEDI=+$$LAST364^IBCEF4(IBIFN)
+"RTN","IBCC",157,0)
+ ; ib*2.0*547 don't cancel MRA if cloning a bill that is secondary to MRA (share the same claim#)
+"RTN","IBCC",158,0)
+ I IBEDI D UPDEDI^IBCEM(IBEDI,"C",,$S($$MRASEC^IBCEF4(IBIFN):2,1:"")) ;Update EDI files, if needed
+"RTN","IBCC",159,0)
+ ;
+"RTN","IBCC",160,0)
+ F I="S","U1" S IB(I)=$S($D(^DGCR(399,IBIFN,I)):^(I),1:"")
+"RTN","IBCC",161,0)
+ S PRCASV("ARREC")=IBIFN,PRCASV("AMT")=$S(IB("U1")']"":0,1:$P(IB("U1"),"^")),PRCASV("DATE")=$P(IB("S"),"^",17),PRCASV("BY")=$P(IB("S"),"^",18)
+"RTN","IBCC",162,0)
+ S PRCASV("COMMENT")=$S($P(IB("S"),U,19)]"":$P(IB("S"),U,19),$P(^IBE(350.9,1,2),"^",7)]"":$P(^(2),"^",7),1:"BILL CANCELLED IN MAS")
+"RTN","IBCC",163,0)
+ S PRCASV("BY")=$S($P(IB("S"),U,18)]"":$P(IB("S"),U,18),1:"")
+"RTN","IBCC",164,0)
+ ; IA#3374/IB*2.0*433 Pass the CRD flag so FMS knows to send a cancel record before the new E record is sent
+"RTN","IBCC",165,0)
+ ;S X=$$CANCEL^RCBEIB($G(PRCASV("ARREC")),$G(PRCASV("DATE")),$G(PRCASV("BY")),$G(PRCASV("AMT")),$G(PRCASV("COMMENT")))
+"RTN","IBCC",166,0)
+ S PRCASV("ARCRD")=$G(IBCNCRD)
+"RTN","IBCC",167,0)
+ S X=$$CANCEL^RCBEIB($G(PRCASV("ARREC")),$G(PRCASV("DATE")),$G(PRCASV("BY")),$G(PRCASV("AMT")),$G(PRCASV("COMMENT")),$G(PRCASV("ARCRD")))
+"RTN","IBCC",168,0)
+ W !,$S(X:">> The receivable associated with the claim was cancelled.",1:">> The receivable associated with the claim was not cancelled.")
+"RTN","IBCC",169,0)
+ I $P(X,U,2)]"" W !,">>> ",$P(X,U,2) ; The reason why the claim can not be cancelled.
+"RTN","IBCC",170,0)
+ I IBCAN<2 D RNB^IBCC1 ;assign a reason not billable
+"RTN","IBCC",171,0)
+ G ASK:IBCAN<2,Q
+"RTN","IBCC",172,0)
+ ;
+"RTN","IBCC",173,0)
+HELP W !,?3,"Answer 'YES' or 'Y' if you wish to cancel this bill.",!,?3,"Answer 'NO' or 'N' if you want to abort." G CHK
+"RTN","IBCC",174,0)
+ Q
+"RTN","IBCC",175,0)
+1 I $P(IB(0),U,13)=1 W !,"This record was re-opened on " S Y=$P(IB(0),U,14) X ^DD("DD") W Y,"." G CHK
+"RTN","IBCC",176,0)
+ G ASK
+"RTN","IBCC",177,0)
+Q1 K:IBCAN=1 IBQUIT K IBCAN
+"RTN","IBCC",178,0)
+Q K %,IBEPAR,IBSTAT,IBARST,IBAC1,IB,DFN,IBX,IBZ,DIC,DIE,DR,PRCASV,PRCASVC,X,Y,IBEDI
+"RTN","IBCC",179,0)
+ I $G(IBLOCK)'<1 L -^DGCR(399,IBLOCK) K IBLOCK ; IB*2.0*597
+"RTN","IBCC",180,0)
+ ;***
+"RTN","IBCC",181,0)
+ ;I $D(XRT0) S:'$D(XRTN) XRTN="IBCC" D T1^%ZOSV ;stop rt clock
+"RTN","IBCC",182,0)
+ Q
+"RTN","IBCC",183,0)
+CRD(IBIFN) ; entry to point to add iteration # to claim
+"RTN","IBCC",184,0)
+ N IBFDA
+"RTN","IBCC",185,0)
+ S IBITN=$$ITN^IBCCC(IBIFN)
+"RTN","IBCC",186,0)
+ S IBFDA(399,IBIFN_",",.01)=IBITN
+"RTN","IBCC",187,0)
+ D FILE^DIE("","IBFDA")
+"RTN","IBCC",188,0)
+ ; this will re-open the claim, so reset to cancelled
+"RTN","IBCC",189,0)
+ S DIE=399,DA=IBIFN
+"RTN","IBCC",190,0)
+ S DR="16////1"
+"RTN","IBCC",191,0)
+ D ^DIE K DIE,DR
+"RTN","IBCC",192,0)
+ Q
+"RTN","IBCC",193,0)
+ ;
+"RTN","IBCC",194,0)
+PROCESS(IBIFN,IBCAN) ;
+"RTN","IBCC",195,0)
+ ; Entry point when the bill number is already known.  Use this when
+"RTN","IBCC",196,0)
+ ; you just want to try to cancel this bill and this bill only.
+"RTN","IBCC",197,0)
+ ; Input:
+"RTN","IBCC",198,0)
+ ;   IBIFN - Internal bill# (Required)
+"RTN","IBCC",199,0)
+ ;   IBCAN - Cancel Flag (optional, defaults to 1 if not included)
+"RTN","IBCC",200,0)
+ ;
+"RTN","IBCC",201,0)
+ NEW IBNOASK
+"RTN","IBCC",202,0)
+ S IBNOASK=1
+"RTN","IBCC",203,0)
+ S IBCAN=$G(IBCAN,1)
+"RTN","IBCC",204,0)
+ G ASK
+"RTN","IBCC",205,0)
+ ;
+"RTN","IBCC",206,0)
+LOCKED ; -- write record locked message IB*2.0*597
+"RTN","IBCC",207,0)
+ W !!,"Sorry, another user currently editing this entry."
+"RTN","IBCC",208,0)
+ W !,"Try again later."
+"RTN","IBCC",209,0)
+ D PAUSE^VALM1
+"RTN","IBCC",210,0)
+ Q
+"RTN","IBCC",211,0)
+ ;IBCC
+"RTN","IBCEOB1")
+0^4^B106424337^B103312053
+"RTN","IBCEOB1",1,0)
+IBCEOB1 ;ALB/TMP/PJH - 835 EDI EOB MSG PROCESSING ;Feb 09, 2018@10:11:43
+"RTN","IBCEOB1",2,0)
+ ;;2.0;INTEGRATED BILLING;**137,135,155,296,356,349,431,488,597**;21-MAR-94;Build 11
+"RTN","IBCEOB1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCEOB1",4,0)
+ Q
+"RTN","IBCEOB1",5,0)
+ ;
+"RTN","IBCEOB1",6,0)
+STORE(A,IB0,IBEOB,LEVEL) ;
+"RTN","IBCEOB1",7,0)
+ ; A = the string of data to extract and try to store
+"RTN","IBCEOB1",8,0)
+ ;       each ^ piece is a field to store
+"RTN","IBCEOB1",9,0)
+ ;         within each ^ piece, there are 5 ';' pieces:
+"RTN","IBCEOB1",10,0)
+ ;            1 = piece to extract from the data string;
+"RTN","IBCEOB1",11,0)
+ ;            2 = field to update;
+"RTN","IBCEOB1",12,0)
+ ;            3 = flag for dollar amt (1=YES);
+"RTN","IBCEOB1",13,0)
+ ;            4 = flag for 4-slash stuff without transform (1=YES);
+"RTN","IBCEOB1",14,0)
+ ;            5 = flag for numeric/non-dollar amt (1=Yes, 0=No,
+"RTN","IBCEOB1",15,0)
+ ;                 Dn = the field is numeric with 'n' decimal places
+"RTN","IBCEOB1",16,0)
+ ; IB0 = the record being processed
+"RTN","IBCEOB1",17,0)
+ ; IBEOB = the ien of the EOB entry in file 361.1
+"RTN","IBCEOB1",18,0)
+ ; LEVEL = the array that contains the DIE and DA values if stuffing at a
+"RTN","IBCEOB1",19,0)
+ ;         level other than the top level
+"RTN","IBCEOB1",20,0)
+ ;
+"RTN","IBCEOB1",21,0)
+ N B,IBPC,IBFLD,DA,DR,DIE,X,Y
+"RTN","IBCEOB1",22,0)
+ S DR=";"
+"RTN","IBCEOB1",23,0)
+ ;
+"RTN","IBCEOB1",24,0)
+ I '$G(LEVEL) S DIE="^IBM(361.1,",DA=IBEOB
+"RTN","IBCEOB1",25,0)
+ ;
+"RTN","IBCEOB1",26,0)
+ I $G(LEVEL) D
+"RTN","IBCEOB1",27,0)
+ . N Q
+"RTN","IBCEOB1",28,0)
+ . S DIE=$G(LEVEL("DIE"))
+"RTN","IBCEOB1",29,0)
+ . S Q=0 F  S Q=$O(LEVEL(Q)) Q:'Q  S DA(Q)=LEVEL(Q)
+"RTN","IBCEOB1",30,0)
+ . S DA=LEVEL(0)
+"RTN","IBCEOB1",31,0)
+ ;
+"RTN","IBCEOB1",32,0)
+ I $G(DA) F B=1:1:$L(A,U) D
+"RTN","IBCEOB1",33,0)
+ . S IBPC=$P(A,U,B),IBFLD=$P(IBPC,";",2)
+"RTN","IBCEOB1",34,0)
+ . I $P(IB0,U,+IBPC)'="",IBFLD D
+"RTN","IBCEOB1",35,0)
+ .. N VAL
+"RTN","IBCEOB1",36,0)
+ .. ; For dollar amts, add full cents; For numerics, strip leading
+"RTN","IBCEOB1",37,0)
+ .. ;   0's; For non-numeric/non-dollar amts, make any ; in data into |
+"RTN","IBCEOB1",38,0)
+ .. S VAL=$S($P(IBPC,";",3):$$DOLLAR^IBCEOB($P(IB0,U,+IBPC)),$P(IBPC,";",5):+$P(IB0,U,+IBPC),$P($P(IBPC,";",5),"D",2):$P(IB0,U,+IBPC)/(10**$P($P(IBPC,";",5),"D",2)),1:$TR($P(IB0,U,+IBPC),";","|"))
+"RTN","IBCEOB1",39,0)
+ .. I $P(IBPC,";",3),VAL S VAL=$P(VAL,".")_"."_$E($P(VAL,".",2)_"00",1,2)
+"RTN","IBCEOB1",40,0)
+ .. S DR=DR_IBFLD_"///"_$S($P(IBPC,";",4):"/",1:"")_VAL_";"
+"RTN","IBCEOB1",41,0)
+ ;
+"RTN","IBCEOB1",42,0)
+ S DR=$P(DR,";",2,$L(DR,";")-1)
+"RTN","IBCEOB1",43,0)
+ I DR'="" D ^DIE
+"RTN","IBCEOB1",44,0)
+ Q ($D(Y)=0) ;Successfully stored all the data it was sent if $D(Y)=0
+"RTN","IBCEOB1",45,0)
+ ;
+"RTN","IBCEOB1",46,0)
+HDR(IB0,IBEGBL,IBEOB,HIPAA) ; Store header data for EOB
+"RTN","IBCEOB1",47,0)
+ ; IB0 = the record being processed from the msg
+"RTN","IBCEOB1",48,0)
+ ; IBEOB = the ien of the EOB entry in file 361.1
+"RTN","IBCEOB1",49,0)
+ ;
+"RTN","IBCEOB1",50,0)
+ N IBDT,IBDTP,DA,DR,DIE,X,Y
+"RTN","IBCEOB1",51,0)
+ K IBXSAVE("XTRA"),IBZSAVE
+"RTN","IBCEOB1",52,0)
+ ;
+"RTN","IBCEOB1",53,0)
+ S HIPAA=+$P(IB0,U,16) ;HIPAA Version code
+"RTN","IBCEOB1",54,0)
+ S IBDT=$P(IB0,U,3),IBDT=$E(IBDT,1,4)-1700_$E(IBDT,5,8)_"."_$P(IB0,U,4)
+"RTN","IBCEOB1",55,0)
+ S IBDTP=$P(IB0,U,9)
+"RTN","IBCEOB1",56,0)
+ I IBDTP S IBDTP=$E(IBDTP,1,4)-1700_$E(IBDTP,5,8)
+"RTN","IBCEOB1",57,0)
+ S DR=$S($P(IB0,U,7)'="":".03////"_$P(IB0,U,7)_";",1:"")_".05////"_IBDT_";.04////"_($P(IB0,U,5)="Y")_";.15///"_$$COBN^IBCEF(+$G(^IBM(361.1,IBEOB,0)))_";.07///"_$P(IB0,U,8)_$S(IBDTP:";.06////"_IBDTP,1:"")
+"RTN","IBCEOB1",58,0)
+ S DIE="^IBM(361.1,",DA=IBEOB
+"RTN","IBCEOB1",59,0)
+ D ^DIE
+"RTN","IBCEOB1",60,0)
+ I $D(Y)'=0 D
+"RTN","IBCEOB1",61,0)
+ . S ^TMP(IBEGBL,$J,+$O(^TMP(IBEGBL,$J,""),-1)+1)="Bad header data"
+"RTN","IBCEOB1",62,0)
+ Q ($D(Y)=0)
+"RTN","IBCEOB1",63,0)
+ ;
+"RTN","IBCEOB1",64,0)
+FINDLN(IB0,IBEOB,IBZDATA,PLREF,ERRCOD) ; Find corresponding billed line for the adj
+"RTN","IBCEOB1",65,0)
+ ; IB0 = the record being processed
+"RTN","IBCEOB1",66,0)
+ ;       NOTE: pieces 3,4,16 are already reformatted
+"RTN","IBCEOB1",67,0)
+ ; IBEOB = the ien of the EOB entry in file 361.1
+"RTN","IBCEOB1",68,0)
+ ; IBZDATA = the array from the output formatter containing line
+"RTN","IBCEOB1",69,0)
+ ;           items for the bill.  This is passed in so this data only has
+"RTN","IBCEOB1",70,0)
+ ;           to be extracted once for each bill (the first time in, it
+"RTN","IBCEOB1",71,0)
+ ;           will be undefined)
+"RTN","IBCEOB1",72,0)
+ ; PLREF = Provider Line Reference
+"RTN","IBCEOB1",73,0)
+ ; OUTPUT = Line # in the original bill that this adjustment relates to
+"RTN","IBCEOB1",74,0)
+ ;          ^ paid procedure code if different from original procedure OR
+"RTN","IBCEOB1",75,0)
+ ;            paid rev code if different from original and no proc code
+"RTN","IBCEOB1",76,0)
+ ; ERRCOD = Contains any error condition that may have been encountered
+"RTN","IBCEOB1",77,0)
+ ;            while conducting the field matching tests.
+"RTN","IBCEOB1",78,0)
+ ;
+"RTN","IBCEOB1",79,0)
+ N IBLN,IBLN1,IBBNDL,OCHG,OCHG2,OPROC,OREVCD,IBIFN,IBXARRAY,IBXARRY
+"RTN","IBCEOB1",80,0)
+ N IBXERR,UNITS,UNITS2,UNITS3,IBMOD,Z,Z0,EOBCHG,IBZVLA,IBAMIN,MATCHED,MOD837S
+"RTN","IBCEOB1",81,0)
+ ;
+"RTN","IBCEOB1",82,0)
+ S (IBLN,IBLN1)="",IBIFN=+$G(^IBM(361.1,IBEOB,0)),(ERRCOD,MATCHED)=0
+"RTN","IBCEOB1",83,0)
+ S EOBCHG=+$$DOLLAR^IBCEOB($P(IB0,U,15))   ; charges on EOB 40 record
+"RTN","IBCEOB1",84,0)
+ ;
+"RTN","IBCEOB1",85,0)
+ ; if original procedure exists and is different than the 835 procedure,
+"RTN","IBCEOB1",86,0)
+ ; the procedure or revenue code originally billed will be in piece 10
+"RTN","IBCEOB1",87,0)
+ ; of the '40' record of the 835 flat file.  Otherwise, pc 10 is null.
+"RTN","IBCEOB1",88,0)
+ S IBBNDL=$S($P(IB0,U,10)'="":1,1:0)
+"RTN","IBCEOB1",89,0)
+ ;
+"RTN","IBCEOB1",90,0)
+ ; If this is a split MRA, build array of Vista line#'s from other split MRA's
+"RTN","IBCEOB1",91,0)
+ I $P($G(^IBM(361.1,IBEOB,0)),U,4)=1,$$SPLIT^IBCEMU1(IBEOB) D
+"RTN","IBCEOB1",92,0)
+ . N IEN S IEN=0
+"RTN","IBCEOB1",93,0)
+ . F  S IEN=$O(^IBM(361.1,"B",IBIFN,IEN)) Q:'IEN  I IEN'=IBEOB D
+"RTN","IBCEOB1",94,0)
+ .. I $P($G(^IBM(361.1,IEN,0)),U,4)'=1 Q    ; not an MRA
+"RTN","IBCEOB1",95,0)
+ .. I '$$SPLIT^IBCEMU1(IEN) Q               ; not a split EOB
+"RTN","IBCEOB1",96,0)
+ .. M IBZVLA=^IBM(361.1,IEN,15,"AC")
+"RTN","IBCEOB1",97,0)
+ .. Q
+"RTN","IBCEOB1",98,0)
+ . Q
+"RTN","IBCEOB1",99,0)
+ ;
+"RTN","IBCEOB1",100,0)
+ I $P($G(^DGCR(399,IBIFN,0)),U,19)=3 D  G FINDLNX     ; UB-04 format
+"RTN","IBCEOB1",101,0)
+ . I '$D(IBZDATA) D F^IBCEF("N-UB-04 SERVICE LINE (EDI)","IBZDATA",,IBIFN)
+"RTN","IBCEOB1",102,0)
+ . ; Quit if a Line Item CTRL # exist, skip mismatching process.
+"RTN","IBCEOB1",103,0)
+ . I +PLREF,$D(IBZDATA(+PLREF)) S IBLN=+PLREF_U_$P(IB0,U,10) Q
+"RTN","IBCEOB1",104,0)
+ . ;
+"RTN","IBCEOB1",105,0)
+ . S Z=0 F  S Z=$O(IBZDATA(Z)) Q:'Z  D  Q:+MATCHED
+"RTN","IBCEOB1",106,0)
+ .. ; Quit if processing an MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",107,0)
+ .. I $P($G(^IBM(361.1,IBEOB,0)),U,4)=1,$D(^IBM(361.1,IBEOB,15,"AC",Z)) Q
+"RTN","IBCEOB1",108,0)
+ .. ; Quit if split MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",109,0)
+ .. I $D(IBZVLA(Z)) Q
+"RTN","IBCEOB1",110,0)
+ .. I $G(IBZDATA(Z))="" Q
+"RTN","IBCEOB1",111,0)
+ .. ;
+"RTN","IBCEOB1",112,0)
+ .. ; CHECKING FOR A MATCHING RECORD ON FIRST PASS.
+"RTN","IBCEOB1",113,0)
+ .. D GTPRCD(IBBNDL,.OPROC,.OREVCD,IBZDATA(Z))      ; Get the Procedure Code values.
+"RTN","IBCEOB1",114,0)
+ .. ; if not bundled/unbundled
+"RTN","IBCEOB1",115,0)
+ .. I 'IBBNDL D  Q
+"RTN","IBCEOB1",116,0)
+ ... I OPROC="",OREVCD,OREVCD'=$P(IB0,U,4) Q      ; revenue code
+"RTN","IBCEOB1",117,0)
+ ... I OPROC'="",OPROC'=$P(IB0,U,3) Q             ; procedure code
+"RTN","IBCEOB1",118,0)
+ ... S MATCHED=Z
+"RTN","IBCEOB1",119,0)
+ .. ;
+"RTN","IBCEOB1",120,0)
+ .. ; if bundled/unbundled
+"RTN","IBCEOB1",121,0)
+ .. I IBBNDL D  Q
+"RTN","IBCEOB1",122,0)
+ ... I OPROC="",OREVCD,OREVCD'=+$P(IB0,U,10) Q    ; revenue code
+"RTN","IBCEOB1",123,0)
+ ... I OPROC'="",OPROC'=$P(IB0,U,10) Q            ; procedure code
+"RTN","IBCEOB1",124,0)
+ ... S MATCHED=Z
+"RTN","IBCEOB1",125,0)
+ .. Q
+"RTN","IBCEOB1",126,0)
+ . ;
+"RTN","IBCEOB1",127,0)
+ . I 'MATCHED D  Q
+"RTN","IBCEOB1",128,0)
+ .. I $G(IBZDATA(1))="" Q  ;if no data in IBZDATA(1) Quit to avoid undefined error - *597
+"RTN","IBCEOB1",129,0)
+ .. D GTPRCD(IBBNDL,.OPROC,.OREVCD,IBZDATA(1))  ; Due to no matches, get the info from the 1st line item.
+"RTN","IBCEOB1",130,0)
+ .. I 'IBBNDL D  Q
+"RTN","IBCEOB1",131,0)
+ ... I OPROC="",OREVCD,OREVCD'=$P(IB0,U,4) S ERRCOD=1 Q      ; revenue code
+"RTN","IBCEOB1",132,0)
+ ... I OPROC'="",OPROC'=$P(IB0,U,3) S ERRCOD=2 Q             ; procedure code
+"RTN","IBCEOB1",133,0)
+ .. I IBBNDL D  Q
+"RTN","IBCEOB1",134,0)
+ ... I OPROC="",OREVCD,OREVCD'=+$P(IB0,U,10) S ERRCOD=1 Q    ; revenue code
+"RTN","IBCEOB1",135,0)
+ ... I OPROC'="",OPROC'=$P(IB0,U,10) S ERRCOD=2 Q            ; procedure code
+"RTN","IBCEOB1",136,0)
+ .. Q
+"RTN","IBCEOB1",137,0)
+ . ;
+"RTN","IBCEOB1",138,0)
+ . ; FOUND A MATCHING PROCEDURE CODE...SO LET'S SEE IF EVERYTHING ELSE MATCHES.
+"RTN","IBCEOB1",139,0)
+ . S Z=MATCHED
+"RTN","IBCEOB1",140,0)
+ . D GTPRCD(IBBNDL,.OPROC,.OREVCD,IBZDATA(Z))      ; Get the Procedure Code values.
+"RTN","IBCEOB1",141,0)
+ . S OCHG=$P(IBZDATA(Z),U,3)*$P(IBZDATA(Z),U,4) ; Total charge from bill
+"RTN","IBCEOB1",142,0)
+ . S OCHG2=+$P(IBZDATA(Z),U,5)
+"RTN","IBCEOB1",143,0)
+ . I OCHG'=EOBCHG,OCHG2=EOBCHG S OCHG=OCHG2     ; update OCHG
+"RTN","IBCEOB1",144,0)
+ . ;
+"RTN","IBCEOB1",145,0)
+ . ; if not bundled/unbundled
+"RTN","IBCEOB1",146,0)
+ . I 'IBBNDL D  Q
+"RTN","IBCEOB1",147,0)
+ .. I +$P(IBZDATA(Z),U,4)'=$P(IB0,U,16) S ERRCOD=3 Q        ; original units
+"RTN","IBCEOB1",148,0)
+ .. I +OCHG'=EOBCHG S ERRCOD=4 Q                            ; original charges
+"RTN","IBCEOB1",149,0)
+ .. I '$$MODMATCH($P(IBZDATA(Z),U,9),$P(IB0,U,5,8),.MOD837S),'$$MODMATCH($P($P(IBZDATA(Z),U,9),",",1),$P(IB0,U,5),.MOD837S) S ERRCOD=5_U_MOD837S Q    ; modifiers
+"RTN","IBCEOB1",150,0)
+ .. S IBLN=Z
+"RTN","IBCEOB1",151,0)
+ .. Q
+"RTN","IBCEOB1",152,0)
+ . ;
+"RTN","IBCEOB1",153,0)
+ . ; if bundled/unbundled
+"RTN","IBCEOB1",154,0)
+ . I IBBNDL D  Q
+"RTN","IBCEOB1",155,0)
+ .. I +$P(IBZDATA(Z),U,4)'=$P(IB0,U,16) S ERRCOD=3 Q        ; original units
+"RTN","IBCEOB1",156,0)
+ .. I +OCHG'=EOBCHG S ERRCOD=4 Q                            ; original charges
+"RTN","IBCEOB1",157,0)
+ .. I '$$MODMATCH($P(IBZDATA(Z),U,9),$P(IB0,U,11,14),.MOD837S),'$$MODMATCH($P($P(IBZDATA(Z),U,9),",",1),$P(IB0,U,11),.MOD837S) S ERRCOD=5_U_MOD837S Q    ; modifiers
+"RTN","IBCEOB1",158,0)
+ .. S IBLN=Z_U_$S(OPROC'="":OPROC,1:OREVCD)
+"RTN","IBCEOB1",159,0)
+ .. Q
+"RTN","IBCEOB1",160,0)
+ . ; When dealing with Inpatient UB-04's, check for revenue code roll-ups
+"RTN","IBCEOB1",161,0)
+ . I 'IBLN,$$INPAT^IBCEF(IBIFN,1) D RCRU^IBCEOB00(.IBZDATA,IB0,.IBLN)
+"RTN","IBCEOB1",162,0)
+ . ; If only 1 rev code and charges are the same, assume a match
+"RTN","IBCEOB1",163,0)
+ . I 'IBLN,'$P($G(^IBM(361.1,IBEOB,0)),U,4),$O(IBZDATA(""),-1)=$O(IBZDATA("")),+OCHG=EOBCHG S IBLN=+$O(IBZDATA(""))_U_OREVCD
+"RTN","IBCEOB1",164,0)
+ ;
+"RTN","IBCEOB1",165,0)
+ ; At this point, we can assume the claim is CMS-1500 format
+"RTN","IBCEOB1",166,0)
+ I '$D(IBZDATA) D F^IBCEF("N-HCFA 1500 SERVICE LINE (EDI)","IBZDATA",,IBIFN)
+"RTN","IBCEOB1",167,0)
+ I +PLREF,$D(IBZDATA(+PLREF)) S IBLN=PLREF_U_$P(IB0,U,10) G FINDLNX   ; If a Line Item CTRL # exist, skip mismatching process.
+"RTN","IBCEOB1",168,0)
+ ;
+"RTN","IBCEOB1",169,0)
+ S Z=0 F  S Z=$O(IBZDATA(Z)) Q:'Z  D  Q:+MATCHED
+"RTN","IBCEOB1",170,0)
+ . ; Quit if processing an MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",171,0)
+ . I $P($G(^IBM(361.1,IBEOB,0)),U,4)=1,$D(^IBM(361.1,IBEOB,15,"AC",Z)) Q
+"RTN","IBCEOB1",172,0)
+ . ; Quit if split MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",173,0)
+ . I $D(IBZVLA(Z)) Q
+"RTN","IBCEOB1",174,0)
+ . I $G(IBZDATA(Z))="" Q
+"RTN","IBCEOB1",175,0)
+ . ;
+"RTN","IBCEOB1",176,0)
+ . ; CHECKING FOR A MATCHING RECORD ON FIRST PASS.
+"RTN","IBCEOB1",177,0)
+ . D GTPRCD(IBBNDL,.OPROC,.OREVCD,IBZDATA(Z))      ; Get the Procedure Code values.
+"RTN","IBCEOB1",178,0)
+ . I OPROC'=$S('IBBNDL:$P(IB0,U,3),1:$P(IB0,U,10)) Q   ;procedure code.
+"RTN","IBCEOB1",179,0)
+ . S MATCHED=Z
+"RTN","IBCEOB1",180,0)
+ . Q
+"RTN","IBCEOB1",181,0)
+ ;
+"RTN","IBCEOB1",182,0)
+ I 'MATCHED D  G FINDLNX
+"RTN","IBCEOB1",183,0)
+ . I $G(IBZDATA(1))="" Q  ;if no data in IBZDATA(1) Quit to avoid undefined error - *597
+"RTN","IBCEOB1",184,0)
+ . D GTPRCD(IBBNDL,.OPROC,.OREVCD,IBZDATA(1))  ; Because no matches, get the information from the 1st line item.
+"RTN","IBCEOB1",185,0)
+ . I OPROC'=$S('IBBNDL:$P(IB0,U,3),1:$P(IB0,U,10)) S ERRCOD=2   ; Mis-matched Proc Code.
+"RTN","IBCEOB1",186,0)
+ ;
+"RTN","IBCEOB1",187,0)
+ ; FOUND A MATCHING PROCEDURE CODE...SO LET'S SEE IF EVERYTHING ELSE MATCHES.
+"RTN","IBCEOB1",188,0)
+ S Z=MATCHED
+"RTN","IBCEOB1",189,0)
+ ; Quit if processing an MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",190,0)
+ I $P($G(^IBM(361.1,IBEOB,0)),U,4)=1,$D(^IBM(361.1,IBEOB,15,"AC",Z)) G FINDLNX
+"RTN","IBCEOB1",191,0)
+ ; Quit if split MRA and this VistA line# has already been filed
+"RTN","IBCEOB1",192,0)
+ I $D(IBZVLA(Z)) G FINDLNX
+"RTN","IBCEOB1",193,0)
+ I $G(IBZDATA(Z))="" G FINDLNX
+"RTN","IBCEOB1",194,0)
+ ;
+"RTN","IBCEOB1",195,0)
+ S OCHG=$P(IBZDATA(Z),U,8)*$P(IBZDATA(Z),U,9) ; charge from bill
+"RTN","IBCEOB1",196,0)
+ S IBAMIN=""
+"RTN","IBCEOB1",197,0)
+ I $P(IBZDATA(Z),U,12)'="" S IBAMIN=$P(IBZDATA(Z),U,12)  ;anesthesia minutes
+"RTN","IBCEOB1",198,0)
+ S UNITS=$S('IBAMIN:$P(IBZDATA(Z),U,9),1:IBAMIN/15)
+"RTN","IBCEOB1",199,0)
+ ; original units from bill or anesthesia minutes calculation
+"RTN","IBCEOB1",200,0)
+ I $P(UNITS,".",2) S UNITS=$FN(UNITS,"",1)    ; round to a single decimal place for fractional units
+"RTN","IBCEOB1",201,0)
+ I $P($P(IB0,U,16),".",2) S $P(IB0,U,16)=$FN($P(IB0,U,16),"",1)
+"RTN","IBCEOB1",202,0)
+ S UNITS2=$P(IBZDATA(Z),U,9)     ; just the units
+"RTN","IBCEOB1",203,0)
+ ; UNITS3 is the number of anesthesia minutes divided by 10, or nil.
+"RTN","IBCEOB1",204,0)
+ ; Solution to get around the Trailblazers bug for MRAs
+"RTN","IBCEOB1",205,0)
+ S UNITS3=""
+"RTN","IBCEOB1",206,0)
+ I IBAMIN'=0 S UNITS3=IBAMIN/10
+"RTN","IBCEOB1",207,0)
+ ;
+"RTN","IBCEOB1",208,0)
+ I UNITS'=$P(IB0,U,16),UNITS2'=$P(IB0,U,16),UNITS3'=$P(IB0,U,16),IBAMIN'=$P(IB0,U,16) S ERRCOD=3 G FINDLNX  ; Original units
+"RTN","IBCEOB1",209,0)
+ I $$DOLLAR^IBCEFG1(OCHG)'=+$P(IB0,U,15) S ERRCOD=4 G FINDLNX  ; original charges.
+"RTN","IBCEOB1",210,0)
+ I $S($P(IB0,U,19):$P(IB0,U,19)=$P(IBZDATA(Z),U),1:1) D  G:+ERRCOD FINDLNX
+"RTN","IBCEOB1",211,0)
+ . ;Original procedure/chg/units/date have matched in order to get here
+"RTN","IBCEOB1",212,0)
+ . ;Check matching original modifiers
+"RTN","IBCEOB1",213,0)
+ . I '$$MODMATCH($$MODLST^IBEFUNC2($P(IBZDATA(Z),U,10)),$S('IBBNDL:$P(IB0,U,5,8),1:$P(IB0,U,11,14)),.MOD837S) S ERRCOD=5_U_MOD837S Q   ; modifiers.
+"RTN","IBCEOB1",214,0)
+ . S IBLN=Z_$S(IBBNDL:U_OPROC,1:"")
+"RTN","IBCEOB1",215,0)
+ I 'IBLN,IBLN1 S IBLN=IBLN1
+"RTN","IBCEOB1",216,0)
+ ;
+"RTN","IBCEOB1",217,0)
+FINDLNX ;
+"RTN","IBCEOB1",218,0)
+ Q IBLN
+"RTN","IBCEOB1",219,0)
+ ;
+"RTN","IBCEOB1",220,0)
+GTPRCD(IBBNDL,OPROC,OREVCD,IBZREC) ; Set up the Procedure Code/Revenue Code fields.
+"RTN","IBCEOB1",221,0)
+ N CPT
+"RTN","IBCEOB1",222,0)
+ ;
+"RTN","IBCEOB1",223,0)
+ I $P($G(^DGCR(399,IBIFN,0)),U,19)=3 D  Q   ; For UB-04s
+"RTN","IBCEOB1",224,0)
+ . S CPT=$P(IBZREC,U,2)                        ; proc from bill
+"RTN","IBCEOB1",225,0)
+ . I CPT'?.N,CPT'="" S CPT=$O(^ICPT("B",CPT,""))   ; non-numeric proc
+"RTN","IBCEOB1",226,0)
+ . S OPROC=$$PRCD^IBCEF1(+CPT_";ICPT(")            ; ext proc code
+"RTN","IBCEOB1",227,0)
+ . S OREVCD=+$P($G(^DGCR(399.2,+IBZREC,0)),U)  ; Rev cd from bill
+"RTN","IBCEOB1",228,0)
+ ;
+"RTN","IBCEOB1",229,0)
+ ; For CMS-1500s
+"RTN","IBCEOB1",230,0)
+ S CPT=$P(IBZREC,U,5)        ; proc from bill
+"RTN","IBCEOB1",231,0)
+ I CPT'?.N,CPT'="" S CPT=$O(^ICPT("B",CPT,""))   ; non-numeric proc
+"RTN","IBCEOB1",232,0)
+ S OPROC=$$PRCD^IBCEF1(+CPT_";ICPT(")            ; ext proc code
+"RTN","IBCEOB1",233,0)
+ Q
+"RTN","IBCEOB1",234,0)
+ ;
+"RTN","IBCEOB1",235,0)
+MODMATCH(IB,MODLST,MOD837S) ; Match modifiers
+"RTN","IBCEOB1",236,0)
+ ; IB = the list of modifiers iens from the bill, comma delimited
+"RTN","IBCEOB1",237,0)
+ ; MODLST = the 4 '^' pieces of the reported modifiers
+"RTN","IBCEOB1",238,0)
+ ;
+"RTN","IBCEOB1",239,0)
+ N MODOK,Q,Z0,IBMOD,MMOD
+"RTN","IBCEOB1",240,0)
+ S MODOK=1,MOD837S=""
+"RTN","IBCEOB1",241,0)
+ I $TR(IB,",")'="" F Q=1:1:$L(IB,",") S Z0=$P(IB,",",Q) I Z0'="" D
+"RTN","IBCEOB1",242,0)
+ . S IBMOD(Z0)=$G(IBMOD(Z0))+1
+"RTN","IBCEOB1",243,0)
+ . I '$L(MOD837S) S MOD837S=Z0 Q
+"RTN","IBCEOB1",244,0)
+ . S MOD837S=MOD837S_","_Z0
+"RTN","IBCEOB1",245,0)
+ I $TR(MODLST,U)="",$O(IBMOD(""))="" G MODQ ; No modifiers used
+"RTN","IBCEOB1",246,0)
+ ;
+"RTN","IBCEOB1",247,0)
+ ; No match if no VistA modifiers, but there are MRA modifiers
+"RTN","IBCEOB1",248,0)
+ I $TR(MODLST,U)'="",$O(IBMOD(""))="" S MODOK=0 G MODQ
+"RTN","IBCEOB1",249,0)
+ ;
+"RTN","IBCEOB1",250,0)
+ ; Evaluate each MRA modifier
+"RTN","IBCEOB1",251,0)
+ F Z0=1:1:4 D
+"RTN","IBCEOB1",252,0)
+ . S MMOD=$P(MODLST,U,Z0) Q:MMOD=""     ; individual MRA modifier
+"RTN","IBCEOB1",253,0)
+ . I '$D(IBMOD(MMOD)) Q                 ; not in array so just quit
+"RTN","IBCEOB1",254,0)
+ . S IBMOD(MMOD)=IBMOD(MMOD)-1          ; decrement array counter
+"RTN","IBCEOB1",255,0)
+ . I 'IBMOD(MMOD) KILL IBMOD(MMOD)      ; if 0, then kill array entry
+"RTN","IBCEOB1",256,0)
+ . Q
+"RTN","IBCEOB1",257,0)
+ ;
+"RTN","IBCEOB1",258,0)
+ I $O(IBMOD(""))'="" S MODOK=0 ; All submitted mods not matched
+"RTN","IBCEOB1",259,0)
+MODQ Q MODOK
+"RTN","IBCEOB1",260,0)
+ ;
+"RTN","IBJDF2")
+0^5^B68244751^B67800970
+"RTN","IBJDF2",1,0)
+IBJDF2 ;ALB/CPM - THIRD PARTY FOLLOW-UP SUMMARY REPORT ;Feb 09, 2018@10:11:43
+"RTN","IBJDF2",2,0)
+ ;;2.0;INTEGRATED BILLING;**69,91,100,118,133,205,554,597**;21-MAR-94;Build 11
+"RTN","IBJDF2",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBJDF2",4,0)
+ ;
+"RTN","IBJDF2",5,0)
+EN ; - Option entry point.
+"RTN","IBJDF2",6,0)
+ ;
+"RTN","IBJDF2",7,0)
+ W !!,"This report provides a summary of all outstanding Third Party receivables.",!
+"RTN","IBJDF2",8,0)
+ ;
+"RTN","IBJDF2",9,0)
+DATE ; - Choose date to use for calculation
+"RTN","IBJDF2",10,0)
+ W !!,"Calculate report using (D)ATE OF CARE or (A)CTIVE IN AR (days): (A)CTIVE IN AR// " R X:DTIME
+"RTN","IBJDF2",11,0)
+ G:'$T!(X["^") ENQ S:X="" X="A" S X=$E(X)
+"RTN","IBJDF2",12,0)
+ I "ADad"'[X S IBOFF=99 D HELP^IBJDF1H G DATE
+"RTN","IBJDF2",13,0)
+ W "  ",$S("Dd"[X:"DATE OF CARE",1:"(DAYS) ACTIVE IN AR")
+"RTN","IBJDF2",14,0)
+ S IBSDATE=$S("Dd"[X:"D",1:"A")
+"RTN","IBJDF2",15,0)
+ ;
+"RTN","IBJDF2",16,0)
+ ; - Sort by division.
+"RTN","IBJDF2",17,0)
+ S DIR(0)="Y",DIR("B")="NO"
+"RTN","IBJDF2",18,0)
+ S DIR("A")="Do you wish to sort this report by division"
+"RTN","IBJDF2",19,0)
+ S DIR("?")="^D DHLP^IBJDF2"
+"RTN","IBJDF2",20,0)
+ D ^DIR K DIR I $D(DIRUT)!$D(DTOUT)!$D(DUOUT)!$D(DIROUT) G ENQ
+"RTN","IBJDF2",21,0)
+ S IBSORT=+Y K DIROUT,DTOUT,DUOUT,DIRUT
+"RTN","IBJDF2",22,0)
+ ;
+"RTN","IBJDF2",23,0)
+ ; - Issue prompt for division.
+"RTN","IBJDF2",24,0)
+ I IBSORT D PSDR^IBODIV G:Y<0 ENQ
+"RTN","IBJDF2",25,0)
+ ;
+"RTN","IBJDF2",26,0)
+TYP ; - Select type of summaries to print.
+"RTN","IBJDF2",27,0)
+ ; IB*2.0*554 DRF 10/19/2015 Add Non-VA care
+"RTN","IBJDF2",28,0)
+ W !!,"Choose which type of summaries to print:",!
+"RTN","IBJDF2",29,0)
+ S DIR(0)="LO^1:5^K:+$P(X,""-"",2)>5 X"
+"RTN","IBJDF2",30,0)
+ S DIR("A",1)="     1 - INPATIENT RECEIVABLES"
+"RTN","IBJDF2",31,0)
+ S DIR("A",2)="     2 - OUTPATIENT RECEIVABLES"
+"RTN","IBJDF2",32,0)
+ S DIR("A",3)="     3 - PHARMACY REFILL RECEIVABLES"
+"RTN","IBJDF2",33,0)
+ S DIR("A",4)="     4 - NON-VA CARE RECEIVABLES"
+"RTN","IBJDF2",34,0)
+ S DIR("A",5)="     5 - ALL RECEIVABLES"
+"RTN","IBJDF2",35,0)
+ S DIR("A",6)="",DIR("A")="Select",DIR("B")=5
+"RTN","IBJDF2",36,0)
+ D ^DIR K DIR I $D(DIRUT)!$D(DTOUT)!$D(DUOUT)!$D(DIROUT) G ENQ
+"RTN","IBJDF2",37,0)
+ S IBSEL=Y K DIROUT,DTOUT,DUOUT,DIRUT
+"RTN","IBJDF2",38,0)
+ ;
+"RTN","IBJDF2",39,0)
+ W !!,"This report only requires an 80 column printer."
+"RTN","IBJDF2",40,0)
+ W !!,"Note: This report requires a search through all active receivables."
+"RTN","IBJDF2",41,0)
+ W !?6,"You should queue this report to run after normal business hours.",!
+"RTN","IBJDF2",42,0)
+ ;
+"RTN","IBJDF2",43,0)
+ ; - Select a device.
+"RTN","IBJDF2",44,0)
+ S %ZIS="QM" D ^%ZIS G:POP ENQ
+"RTN","IBJDF2",45,0)
+ I $D(IO("Q")) D  G ENQ
+"RTN","IBJDF2",46,0)
+ .S ZTRTN="DQ^IBJDF2",ZTDESC="IB - FOLLOW-UP SUMMARY REPORT"
+"RTN","IBJDF2",47,0)
+ .F I="IBSEL","IBSDATE","IBSORT","VAUTD","VAUTD(" S ZTSAVE(I)=""
+"RTN","IBJDF2",48,0)
+ .D ^%ZTLOAD
+"RTN","IBJDF2",49,0)
+ .W !!,$S($D(ZTSK):"This job has been queued. The task number is "_ZTSK_".",1:"Unable to queue this job.")
+"RTN","IBJDF2",50,0)
+ .K ZTSK,IO("Q") D HOME^%ZIS
+"RTN","IBJDF2",51,0)
+ ;
+"RTN","IBJDF2",52,0)
+ U IO
+"RTN","IBJDF2",53,0)
+ ;
+"RTN","IBJDF2",54,0)
+DQ ; - Tasked entry point.
+"RTN","IBJDF2",55,0)
+ ;
+"RTN","IBJDF2",56,0)
+ I $G(IBXTRACT) D E^IBJDE(9,1) ; Change extract status.
+"RTN","IBJDF2",57,0)
+ ; 
+"RTN","IBJDF2",58,0)
+ K IB F I=1,2,3,4,5 I IBSEL[I D
+"RTN","IBJDF2",59,0)
+ .I 'IBSORT D  Q
+"RTN","IBJDF2",60,0)
+ ..F J=1:1:9 S IB(0,I,J)=""
+"RTN","IBJDF2",61,0)
+ .I 'VAUTD D  Q
+"RTN","IBJDF2",62,0)
+ ..S J=0 F  S J=$O(VAUTD(J)) Q:'J  F K=1:1:9 S IB(J,I,K)=""
+"RTN","IBJDF2",63,0)
+ .S J=0 F  S J=$O(^DG(40.8,J)) Q:'J  F K=1:1:9 S IB(J,I,K)=""
+"RTN","IBJDF2",64,0)
+ ;
+"RTN","IBJDF2",65,0)
+ ; - Find data required for the report.
+"RTN","IBJDF2",66,0)
+ S (IBQ,IBA)=0 F  S IBA=$O(^PRCA(430,"AC",16,IBA)) Q:'IBA  D  Q:IBQ
+"RTN","IBJDF2",67,0)
+ .;
+"RTN","IBJDF2",68,0)
+ .I IBA#100=0 S IBQ=$$STOP^IBOUTL("Third Party Follow-Up Summary Report") Q:IBQ
+"RTN","IBJDF2",69,0)
+ .;
+"RTN","IBJDF2",70,0)
+ .S IBAR=$G(^PRCA(430,IBA,0))
+"RTN","IBJDF2",71,0)
+ .I $P(IBAR,U,2)'=9,$P(IBAR,U,2)'=45 Q  ; Not an RI bill.
+"RTN","IBJDF2",72,0)
+ .S:"Aa"[IBSDATE IBARD=$$ACT(IBA) S:"Dd"[IBSDATE IBARD=$$DATE1(IBA) I 'IBARD Q  ; No activation date.
+"RTN","IBJDF2",73,0)
+ .I '$D(^DGCR(399,IBA,0)) Q  ;     No corresponding claim to this AR.
+"RTN","IBJDF2",74,0)
+ .;
+"RTN","IBJDF2",75,0)
+ .; - Get division if necessary.
+"RTN","IBJDF2",76,0)
+ .I 'IBSORT S IBDIV=0
+"RTN","IBJDF2",77,0)
+ .E  S IBDIV=$$DIV(IBA) I 'IBDIV S IBDIV=+$$PRIM^VASITE()
+"RTN","IBJDF2",78,0)
+ .I IBSORT,'VAUTD Q:'$D(VAUTD(IBDIV))  ; Not a selected division.
+"RTN","IBJDF2",79,0)
+ .;
+"RTN","IBJDF2",80,0)
+ .; - Determine whether bill is inpatient, outpatient, or RX refill.
+"RTN","IBJDF2",81,0)
+ .S IBTYP=$P($G(^DGCR(399,IBA,0)),U,5),IBTYP=$S(IBTYP>2:2,1:1)
+"RTN","IBJDF2",82,0)
+ .S:$D(^IBA(362.4,"C",IBA)) IBTYP=3
+"RTN","IBJDF2",83,0)
+ .I $P(IBAR,U,2)=45 S IBTYP=4  ;IB*2*554/DRF Look for Non-VA
+"RTN","IBJDF2",84,0)
+ .I IBSEL'[IBTYP,IBSEL'[5 Q
+"RTN","IBJDF2",85,0)
+ .;
+"RTN","IBJDF2",86,0)
+ .; - Handle claims referred to Regional Counsel.
+"RTN","IBJDF2",87,0)
+ .S IBOUT=+$G(^PRCA(430,IBA,7))
+"RTN","IBJDF2",88,0)
+ .I $P($G(^PRCA(430,IBA,6)),U,4) D  Q
+"RTN","IBJDF2",89,0)
+ ..F I=IBTYP,5 I IBSEL[I D
+"RTN","IBJDF2",90,0)
+ ...S $P(IB(IBDIV,I,8),U)=+IB(IBDIV,I,8)+1
+"RTN","IBJDF2",91,0)
+ ...S $P(IB(IBDIV,I,8),U,2)=$P(IB(IBDIV,I,8),U,2)+IBOUT
+"RTN","IBJDF2",92,0)
+ .;
+"RTN","IBJDF2",93,0)
+ .; - Determine age and outstanding balance.
+"RTN","IBJDF2",94,0)
+ .S IBAGE=$$FMDIFF^XLFDT(DT,IBARD),IBCAT=$$CAT(IBAGE)
+"RTN","IBJDF2",95,0)
+ .;
+"RTN","IBJDF2",96,0)
+ .F I=IBTYP,5 I IBSEL[I D
+"RTN","IBJDF2",97,0)
+ ..S $P(IB(IBDIV,I,IBCAT),U)=+IB(IBDIV,I,IBCAT)+1
+"RTN","IBJDF2",98,0)
+ ..S $P(IB(IBDIV,I,IBCAT),U,2)=$P(IB(IBDIV,I,IBCAT),U,2)+IBOUT
+"RTN","IBJDF2",99,0)
+ ;
+"RTN","IBJDF2",100,0)
+ I IBQ G ENQ
+"RTN","IBJDF2",101,0)
+ ;
+"RTN","IBJDF2",102,0)
+ ; - Extract summary data.
+"RTN","IBJDF2",103,0)
+ ; *597 fix array subscripts for all types
+"RTN","IBJDF2",104,0)
+ I $G(IBXTRACT) D  G ENQ
+"RTN","IBJDF2",105,0)
+ .F I=1:1:8 D
+"RTN","IBJDF2",106,0)
+ ..F J=1,2 S $P(IB(0,5,9),U,J)=$P(IB(0,5,9),U,J)+$P(IB(0,5,I),U,J)
+"RTN","IBJDF2",107,0)
+ .S I=0 F J=1:1:9 D
+"RTN","IBJDF2",108,0)
+ ..S I=I+1,IB(I)=+IB(0,5,J),I=I+1,IB(I)=$J(+$P(IB(0,5,J),U,2),0,2)
+"RTN","IBJDF2",109,0)
+ .D E^IBJDE(9,0)
+"RTN","IBJDF2",110,0)
+ ;
+"RTN","IBJDF2",111,0)
+ ; - Print the reports.
+"RTN","IBJDF2",112,0)
+ S (IBPAG,IBQ)=0 D NOW^%DTC S IBRUN=$$DAT2^IBOUTL(%)
+"RTN","IBJDF2",113,0)
+ I 'IBSORT D SUM(0) G ENQ
+"RTN","IBJDF2",114,0)
+ ;
+"RTN","IBJDF2",115,0)
+ S IBDIV=0 F  S IBDIV=$O(IB(IBDIV)) Q:'IBDIV  D SUM(IBDIV) Q:IBQ
+"RTN","IBJDF2",116,0)
+ ;
+"RTN","IBJDF2",117,0)
+ENQ I $D(ZTQUEUED) S ZTREQ="@" G ENQ1
+"RTN","IBJDF2",118,0)
+ ;
+"RTN","IBJDF2",119,0)
+ D ^%ZISC
+"RTN","IBJDF2",120,0)
+ENQ1 K IB,IBOFF,IBQ,IBSDATE,IBSEL,IBSORT,IBTEXT,IBA,IBAR,IBARD,IBDIV,IBAGE,IBOUT,IBCAT,IBPAG,IBRUN
+"RTN","IBJDF2",121,0)
+ K IBDH,IBTYP,IBTYPH,%,%ZIS,DFN,I,J,K,POP,VAUTD,X,Y,Z,ZTDESC,ZTRTN,ZTSAVE
+"RTN","IBJDF2",122,0)
+ K DIROUT,DTOUT,DUOUT,DIRUT
+"RTN","IBJDF2",123,0)
+ Q
+"RTN","IBJDF2",124,0)
+ ;
+"RTN","IBJDF2",125,0)
+SUM(IBDIV) ; - Print the report.
+"RTN","IBJDF2",126,0)
+ ;  Input: IBDIV=Pointer to the division in file #40.8
+"RTN","IBJDF2",127,0)
+ ;
+"RTN","IBJDF2",128,0)
+ S IBTYP=0 F  S IBTYP=$O(IB(IBDIV,IBTYP)) Q:'IBTYP  D  Q:IBQ
+"RTN","IBJDF2",129,0)
+ .I $E(IOST,1,2)="C-"!(IBPAG) W @IOF,*13
+"RTN","IBJDF2",130,0)
+ .S IBPAG=IBPAG+1 I $E(IOST,1,2)'="C-" W !?68,"Page: ",IBPAG
+"RTN","IBJDF2",131,0)
+ .W !!?22,"THIRD PARTY FOLLOW-UP SUMMARY REPORT"
+"RTN","IBJDF2",132,0)
+ .S IBTYPH=$S(IBTYP=1:"INPATIENT",IBTYP=2:"OUTPATIENT",IBTYP=3:"RX REFILL",IBTYP=4:"NON-VA",1:"ALL REIMBURSABLE")_" RECEIVABLES"_$S(IBSDATE="D":" ( date of care )",1:" ( days in AR )")
+"RTN","IBJDF2",133,0)
+ .W !?(80-$L(IBTYPH))\2,IBTYPH
+"RTN","IBJDF2",134,0)
+ .I IBDIV S IBDH="Division: "_$P($G(^DG(40.8,IBDIV,0)),U) W !?(80-$L(IBDH)\2),IBDH
+"RTN","IBJDF2",135,0)
+ .W !!?24,"Run Date: ",IBRUN,!?24,$$DASH(31),!!
+"RTN","IBJDF2",136,0)
+ .;
+"RTN","IBJDF2",137,0)
+ .; - Calculate totals first.
+"RTN","IBJDF2",138,0)
+ .F I=1:1:8 F J=1,2 S $P(IB(IBDIV,IBTYP,9),U,J)=$P(IB(IBDIV,IBTYP,9),U,J)+$P(IB(IBDIV,IBTYP,I),U,J)
+"RTN","IBJDF2",139,0)
+ .;
+"RTN","IBJDF2",140,0)
+ .W "AR Category",?31,"# Receivables",?52,"Total Outstanding Balance"
+"RTN","IBJDF2",141,0)
+ .W !,"-----------",?31,"-------------",?52,"-------------------------",!
+"RTN","IBJDF2",142,0)
+ .;
+"RTN","IBJDF2",143,0)
+ .I 'IB(IBDIV,IBTYP,9) W !,"There are no active receivables",$S(IBDIV:" for this division",1:""),"." D PAUSE Q
+"RTN","IBJDF2",144,0)
+ .;
+"RTN","IBJDF2",145,0)
+ .; - Primary loop to write results.
+"RTN","IBJDF2",146,0)
+ .S Y=$P(IB(IBDIV,IBTYP,9),U,2) F I=1:1:9 S X=$P($T(CATN+I),";;",2,99) D
+"RTN","IBJDF2",147,0)
+ ..W:I=9 ! W !,X,?30,$J(+IB(IBDIV,IBTYP,I),6)
+"RTN","IBJDF2",148,0)
+ ..W "  (",$J(+IB(IBDIV,IBTYP,I)/+IB(IBDIV,IBTYP,9)*100,0,$S(I=9:0,1:2)),"%)"
+"RTN","IBJDF2",149,0)
+ ..S Z=$FN($P(IB(IBDIV,IBTYP,I),U,2),",",2)
+"RTN","IBJDF2",150,0)
+ ..W ?52,$J($S(I=1!(I=9):"$",1:"")_Z,15)
+"RTN","IBJDF2",151,0)
+ ..W "  (",$J($S('Y:0,1:$P(IB(IBDIV,IBTYP,I),U,2)/Y*100),0,$S(I=9:0,1:2)),"%)"
+"RTN","IBJDF2",152,0)
+ .;
+"RTN","IBJDF2",153,0)
+ .D PAUSE
+"RTN","IBJDF2",154,0)
+ ;
+"RTN","IBJDF2",155,0)
+SUMQ Q
+"RTN","IBJDF2",156,0)
+ ;
+"RTN","IBJDF2",157,0)
+DASH(X) ; - Return a dashed line.
+"RTN","IBJDF2",158,0)
+ Q $TR($J("",X)," ","=")
+"RTN","IBJDF2",159,0)
+ ;
+"RTN","IBJDF2",160,0)
+PAUSE ; - Page break.
+"RTN","IBJDF2",161,0)
+ I $E(IOST,1,2)'="C-" Q
+"RTN","IBJDF2",162,0)
+ N IBX,DIR,DIRUT,DUOUT,DTOUT,DIROUT,X,Y
+"RTN","IBJDF2",163,0)
+ F IBX=$Y:1:(IOSL-3) W !
+"RTN","IBJDF2",164,0)
+ S DIR(0)="E" D ^DIR I $D(DIRUT)!($D(DUOUT)) S IBQ=1
+"RTN","IBJDF2",165,0)
+ Q
+"RTN","IBJDF2",166,0)
+ ;
+"RTN","IBJDF2",167,0)
+DHLP ; - 'Display Registration User' help.
+"RTN","IBJDF2",168,0)
+ W !,"Enter <CR> to summarize all receivables without regard to division,"
+"RTN","IBJDF2",169,0)
+ W !,"or YES to select those divisions for which a separate report should"
+"RTN","IBJDF2",170,0)
+ W !,"be created."
+"RTN","IBJDF2",171,0)
+ Q
+"RTN","IBJDF2",172,0)
+ ;
+"RTN","IBJDF2",173,0)
+CAT(X) ; - Determine category to place receivable.
+"RTN","IBJDF2",174,0)
+ Q $S($G(X)<31:1,X<61:2,X<91:3,X<121:4,X<181:5,X<366:6,1:7)
+"RTN","IBJDF2",175,0)
+ ;
+"RTN","IBJDF2",176,0)
+ACT(X) ; - Determine the activation date for a receivable.
+"RTN","IBJDF2",177,0)
+ N Y S Y=0 I '$G(X) G ACTQ
+"RTN","IBJDF2",178,0)
+ S Y=$P($G(^PRCA(430,X,6)),U,21) I Y G ACTQ
+"RTN","IBJDF2",179,0)
+ S Y=$P($G(^PRCA(430,X,9)),U,3) I Y G ACTQ
+"RTN","IBJDF2",180,0)
+ S Y=$P($G(^PRCA(430,X,0)),U,10)
+"RTN","IBJDF2",181,0)
+ACTQ Q Y
+"RTN","IBJDF2",182,0)
+ ;
+"RTN","IBJDF2",183,0)
+DATE1(X) ; - Determine the Date of Care
+"RTN","IBJDF2",184,0)
+ N Y S Y=0 I '$G(X) G DATEQ
+"RTN","IBJDF2",185,0)
+ S Y=$P($G(^DGCR(399,X,"U")),U,2) I Y G DATEQ
+"RTN","IBJDF2",186,0)
+DATEQ Q Y
+"RTN","IBJDF2",187,0)
+ ;
+"RTN","IBJDF2",188,0)
+DIV(IBX) ; - Determine the division for a claim.
+"RTN","IBJDF2",189,0)
+ ;  Input: IBX=Pointer to a claim in file #399
+"RTN","IBJDF2",190,0)
+ ; Output: IBY=Pointer to a division in file #40.8,
+"RTN","IBJDF2",191,0)
+ ;             or 0 if not determined
+"RTN","IBJDF2",192,0)
+ ;
+"RTN","IBJDF2",193,0)
+ N DFN,IBADM,IBEV,IBD,IBPTF,IBU,IBY,IBC,IBTY,VAINDT,VADMVT
+"RTN","IBJDF2",194,0)
+ S IBY=0,IBC=$G(^DGCR(399,+$G(IBX),0)) I $P(IBC,U)="" G DIVQ
+"RTN","IBJDF2",195,0)
+ S DFN=+$P(IBC,U,2),IBEV=+$P(IBC,U,3)\1,IBTY=$P(IBC,U,5)
+"RTN","IBJDF2",196,0)
+ ;
+"RTN","IBJDF2",197,0)
+ S IBY=+$P(IBC,U,22) I +IBY G DIVQ ; use bill default division if defined
+"RTN","IBJDF2",198,0)
+ ;
+"RTN","IBJDF2",199,0)
+ ; - For Pharmacy or Prosthetics claims, use the primary division.
+"RTN","IBJDF2",200,0)
+ I $D(^IBA(362.4,"AIFN"_IBX))!$D(^IBA(362.5,"AIFN"_IBX)) D  G DIVQ
+"RTN","IBJDF2",201,0)
+ .S IBY=$$PRIM^VASITE(DT) S:IBY'>0 IBY=0
+"RTN","IBJDF2",202,0)
+ ;
+"RTN","IBJDF2",203,0)
+ ; - Check all visit dates if outpatient claim.
+"RTN","IBJDF2",204,0)
+ I IBTY>2 D  G DIVQ
+"RTN","IBJDF2",205,0)
+ .S IBY=$$OPT(IBEV,DFN) Q:IBY
+"RTN","IBJDF2",206,0)
+ .S IBD=0 F  S IBD=$O(^DGCR(399,IBX,"OP",IBD)) Q:'IBD  S IBY=$$OPT(IBD,DFN) Q:IBY
+"RTN","IBJDF2",207,0)
+ ;
+"RTN","IBJDF2",208,0)
+ ; - Check inpatient claim.
+"RTN","IBJDF2",209,0)
+ S IBPTF=+$P(IBC,U,8),IBU=$G(^DGCR(399,IBX,"U"))
+"RTN","IBJDF2",210,0)
+ I IBPTF S IBADM=$O(^DGPM("APTF",IBPTF,0)) I IBADM S IBY=$$INP(IBADM) G:IBY DIVQ
+"RTN","IBJDF2",211,0)
+ S VAINDT=+IBU\1_.23 D ADM^VADPT2 I VADMVT S IBY=$$INP(VADMVT) G:IBY DIVQ
+"RTN","IBJDF2",212,0)
+ S VAINDT=$S($P(IBEV,".",2):IBEV,1:+IBEV\1_.23) D ADM^VADPT2 I VADMVT S IBY=$$INP(VADMVT)
+"RTN","IBJDF2",213,0)
+ ;
+"RTN","IBJDF2",214,0)
+DIVQ ; - If a division cannot be determined, use the primary division.
+"RTN","IBJDF2",215,0)
+ I 'IBY S IBY=$$PRIM^VASITE(DT) S:IBY'>0 IBY=0
+"RTN","IBJDF2",216,0)
+ Q IBY
+"RTN","IBJDF2",217,0)
+ ;
+"RTN","IBJDF2",218,0)
+INP(X) ; - Return division for a movement.
+"RTN","IBJDF2",219,0)
+ Q +$P($G(^DIC(42,+$P($G(^DGPM(+$G(X),0)),U,6),0)),U,11)
+"RTN","IBJDF2",220,0)
+ ;
+"RTN","IBJDF2",221,0)
+OPT(X,DFN) ; - Return division for a patient's outpatient visit date.
+"RTN","IBJDF2",222,0)
+ N IBFR,IBTO,IBY,IBY1,IBZ,IBZERR
+"RTN","IBJDF2",223,0)
+ S IBY=0 I '$G(X) G OPTQ
+"RTN","IBJDF2",224,0)
+ S IBFR=X,IBTO=X\1_".99"
+"RTN","IBJDF2",225,0)
+ F  S IBZ=$$EXOE^SDOE(DFN,IBFR,IBTO,,"IBZERR") K IBZERR Q:'IBZ  S IBY1=$$SCE^IBSDU(IBZ) D  Q:IBY
+"RTN","IBJDF2",226,0)
+ .I $P(IBY1,U,11) S IBY=$P(IBY1,U,11) Q
+"RTN","IBJDF2",227,0)
+ .S IBFR=IBY1+.000001
+"RTN","IBJDF2",228,0)
+OPTQ Q IBY
+"RTN","IBJDF2",229,0)
+ ;
+"RTN","IBJDF2",230,0)
+CATN ; - List of category names.
+"RTN","IBJDF2",231,0)
+ ;;Less than 30 days old
+"RTN","IBJDF2",232,0)
+ ;;31-60 days
+"RTN","IBJDF2",233,0)
+ ;;61-90 days
+"RTN","IBJDF2",234,0)
+ ;;91-120 days
+"RTN","IBJDF2",235,0)
+ ;;121-180 days
+"RTN","IBJDF2",236,0)
+ ;;181-365 days
+"RTN","IBJDF2",237,0)
+ ;;Over 365 days
+"RTN","IBJDF2",238,0)
+ ;;Referred to Regional Counsel
+"RTN","IBJDF2",239,0)
+ ;;Total Third Party Receivables
+"VER")
+8.0^22.2
+"BLD",10613,6)
+^556
+**END**
+**END**
+

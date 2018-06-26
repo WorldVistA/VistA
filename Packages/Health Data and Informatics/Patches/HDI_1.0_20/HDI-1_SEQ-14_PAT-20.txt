@@ -1,0 +1,178 @@
+$TXT Created by                at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 08/10/17 at 08:47
+=============================================================================
+Run Date: JAN 24, 2018                     Designation: HDI*1*20
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: FEB 24, 2018
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*20'
+                    (v)XU*8*683    <<= must be installed BEFORE `HDI*1*20'
+
+Subject: PAYERS NATIVE DOMAIN STANDARDIZATION
+
+Category: 
+  - Other
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Payers Domain enhancement includes 3 patches
+ that must be installed in the following order:
+       1.  XU*8.0*683
+       2.  HDI*1.0*20
+       3.  IB*2.0*585
+ **************************************************************************
+  
+ The post-install routine in this patch will add PAYERS Domain data 
+ to the HDI DOMAIN file (#7115.1). It will also add data for the 
+ file/fields being standardized for PAYERS to the HDIS FILE/FIELD 
+ file (#7115.6). These entries are being added to the files for VHA Unique 
+ Identifier (VUID) Seeding which is part of standardizing the MASTER TYPE 
+ OF PLAN (#355.99).
+  
+ Remedy Tickets addressed by this patch:
+ ======================================
+ NA
+  
+  
+ Test Sites:
+ ----------
+ Altoona, PA VAMC
+ Manchester, NH VAMC
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is being released as a FORUM patch. There is no new
+ documentation being released with this patch. For additional information, 
+ see the FORUM patch description for patch IB*2.0*585.
+  
+  
+ Installation Instructions:
+ =========================
+ This patch can be installed with users on the system with installation
+ taking less than 1 minute.
+  
+  Note: The following is a list of REQUIRED builds for HDI*1.0*20.
+        KIDS will not allow the installation of this patch
+        without the prior installation of them.
+  
+            HDI*1.0*6
+            XU*8.0*683
+            
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+      TEXT PRINT/DISPLAY option in the PackMan menu will display the
+      patch text only.]
+   
+   2. From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+   3. From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter HDI*1.0*20):
+  
+        a.  Backup a Transport Global
+        b.  Compare Transport Global to Current System
+        c.  Verify Checksums in Transport Global
+        d.  Print Transport Global
+  
+   4. Use the Install Package(s) option and select the package HDI*1.0*20.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      YES//', respond NO.
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond NO.
+    
+   7. Routine HDI1020A may be deleted after successful 
+      installation of this patch.
+  
+  
+  
+ **************************************************************************
+ *                                                                        *
+ * NOTE: Due to the complexity of this patch, based on its association to *
+ * patches XU*8.0*683 and IB*2.0*585, it is not recommended for back-out. *
+ * However, in the event that a site decides to back-out this patch, the  *
+ * site should contact the National Service Desk (NSD) to submit a CA SDM *
+ * ticket; the development team will assist with the process.             *
+ *                                                                        *
+ * The back-out should only be done in the event that the local facility  *
+ * management determines that the patch IB*2.0*585 is not appropriate for *
+ * that facility, and should only be done as a last resort.               *
+ *                                                                        *
+ **************************************************************************
+  
+ Backout Plan:
+ =============
+  
+ The following involves manual deletion of routines and will need to be 
+ executed from the programmers prompt. The deletion of a routine is a 
+ potentially dangerous activity. This procedure must be performed by
+ persons with programmer-level access, and in conjunction with the STS
+ Team. 
+  
+ Manual deletion of Routines HDI1020A:
+  
+ i.   From the ROUTINE MANAGEMENT MENU [XUROUTINES], select the DELETE 
+      ROUTINES [XTRDEL] option. IMPORTANT: When prompted for 'All
+      Routines?', enter NO.
+ ii.  At the 'Routine:' prompt, enter HDI1020A.
+ iii. At the next 'Routine:' prompt, press <Enter>.
+ iv.   At the prompt '1 routine to DELETE, OK:'. enter YES.
+  
+ Example, manual deletion of routines HDI1020A using option 
+ DELETE ROUTINES [XTRDEL]:
+  
+ Select OPTION NAME: ROUTINE MANAGEMENT MENU  XUROUTINES     Routine 
+ Management Menu
+  
+           Bring in Sent Routines
+           Delete Routines
+           First Line Routine Print
+           List Routines
+           Move Routines across Volume Sets
+  
+ Select OPTION NAME: DELETE ROUTINES  XTRDEL     Delete Routines
+ Delete Routines
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: HDI1020A
+ Routine: 
+  
+ 1 routines to DELETE, OK: NO// Y
+ HDI1020A
+ Done.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1020A
+    Before:       n/a   After:  B5356614  **20**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2017
+Completed By:                               Date Completed: JAN 23, 2018
+Released By :                               Date Released : JAN 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

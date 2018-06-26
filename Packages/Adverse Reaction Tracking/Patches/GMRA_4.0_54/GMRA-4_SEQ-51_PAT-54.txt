@@ -1,0 +1,192 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/21/17 at 11:20
+=============================================================================
+Run Date: DEC 08, 2017                     Designation: GMRA*4*54
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #51                      Status: Released
+                  Compliance Date: JAN 07, 2018
+=============================================================================
+
+Associated patches: (v)GMRA*4*48   <<= must be installed BEFORE `GMRA*4*54'
+
+Subject: FDA REPORT ERROR ASSESSMENT UPDATE AND ALLERGY MECHANISM FIX
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch GMRA*4.0*54 addresses the following three issues:
+  
+ 1. FDA report SUBSCRIPT error with non-VA drugs 
+  
+ 2. Adverse Reaction Assessment update when no previous Reaction 
+    Assessment value
+  
+ 3. Allergy file allows MECHANISM to be null
+  
+  
+ Associated Service Desk Ticket(s): 
+ ============================
+ 1. I7512203FY16 FDA report SUBSCRIPT error with non-VA drugs
+    
+ 2. R12765314FY17 Adverse Reaction Assessment update when no previous
+    Reaction Assessment value
+    Duplicates: I13282457FY17
+  
+ 3. I9175702FY16 Allergy file allows MECHANISM to be null
+  
+  
+ Associated NSR(s): 
+ ==================
+ N/A
+  
+ Participating Test Sites: 
+ =========================
+ New Jersey 
+ Iowa City 
+  
+  
+ Service Desk Ticket Overview:
+ =======================
+  
+ 1. I7512203FY16 FDA report SUBSCRIPT error with non-VA drugs
+  
+ Problem:
+ --------
+ When the Enter/Edit FDA Report Data option is used to generate an 
+ FDA report for patients that have Non-VA drugs on file empty lines 
+ are displayed for these drugs. When one of the empty lines is 
+ selected a subscript error occurs. This is because there is no 
+ existing functionality to handle non-VA drugs on these reports.
+  
+ Solution:
+ ---------
+ The new functionality to handle Non-VA drugs when generating the FDA 
+ report will be added with a future development patch. This patch 
+ (GMRA*4.0*54) will eliminate the empty lines, remove the hard error, 
+ and, when there are non-VA meds for the patient, display the 
+ following message: "There are Non-VA Meds on this patient's profile. 
+ Please review for possible manual inclusion in this report."
+  
+ Routine: GMRAPHR0
+  
+ 2. R12765314FY17 Adverse Reaction Assessment update when no 
+    previous Reaction Assessment value
+  
+ Problem:
+ --------
+  
+ When attempting to update the Adverse Reaction Assessment records for 
+ some patients using the Assessment clean up utility the update fails (two 
+ question marks are returned and the Assessment value in the utility is 
+ not updated). This occurs specifically for patients where there is an 
+ existing record in the ADVERSE REACTION ASSESSMENT FILE (#120.86) but 
+ there is no previous value in the REACTION ASSESSMENT field (#1).
+  
+ Solution:
+ ---------
+  
+ The code has been updated to properly file the Adverse Reaction 
+ Assessment update even when there is an existing record in the ADVERSE 
+ REACTION ASSESSMENT FILE (#120.86) with no previous value in the REACTION 
+ ASSESSMENT field (#1).
+  
+ Routine: GMRANKA
+  
+ 3. I9175702FY16 Allergy file allows MECHANISM to be null
+  
+ Problem:
+ --------
+    
+ The MECHANISM field (#17) in the PATIENT ALLERGIES file (#120.8) is 
+ enforced in CPRS but not when entering allergies through VistA. The 
+ null value has caused issues in the past and the value should be 
+ enforced consistently.
+  
+  
+ Solution:
+ ---------                     
+ The MECHANISM field (#17) will be a required field in VistA and will 
+ match existing CPRS functionality.
+  
+ Routine: N/A (DD)
+  
+ Technical
+ =========
+  
+ The following partial Data Dictionary entries are included:
+   
+   
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 120.8       Patient Allergies          YES   NO    NO                  NO
+ Partial DD: subDD:          fld: .17
+  
+  
+  
+    ==================== Installation Instructions ===================
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter GMRA*4.0*54).      
+  
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+     d. Print Transport Global - this option will allow you to view
+        the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package GMRA*4.0*54.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRANKA
+    Before: B14671193   After: B15183005  **2,21,36,48,54**
+Routine Name: GMRAPHR0
+    Before: B17991408   After: B20012768  **7,54**
+ 
+Routine list of preceding patches: 7, 48
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 18, 2016
+Completed By:                               Date Completed: DEC 07, 2017
+Released By :                               Date Released : DEC 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

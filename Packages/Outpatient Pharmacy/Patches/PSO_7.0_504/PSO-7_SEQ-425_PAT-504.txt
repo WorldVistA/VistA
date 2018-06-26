@@ -1,0 +1,381 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 02/26/18 at 08:21
+=============================================================================
+Run Date: MAR 29, 2018                     Designation: PSO*7*504
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #425                      Status: Released
+                  Compliance Date: APR 29, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*166   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*422   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*458   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*468   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*469   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*473   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*495   <<= must be installed BEFORE `PSO*7*504'
+                    (v)PSO*7*496   <<= must be installed BEFORE `PSO*7*504'
+
+Subject: PRESCRIBER DETOX# ISSUES FIX / CK HIDDEN OPTION / FILL DATE / WINDOW TO MAIL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. I15848129FY17 - Buprenorphine/naloxone prescription went through when
+                    the DEA expiration date was in the past 
+  
+ 2. R16854127FY18 - FILL DATE prompt range incorrect
+  
+ 3. I5855290FY15  - CK Hidden Option and Remote Order Checks
+     
+ 4. I17185111FY18 - Error when changing routing from Window to Mail
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I15848129FY17 - Buprenorphine/naloxone prescription went through when
+                    the DEA expiration date was in the past 
+    
+ Problem:
+ --------
+ The following 6 issues have been reported regarding the DEA and DETOX number 
+ functionality.
+ a. A detox Rx with a provider with an expired DEA/DETOX number can be
+    renewed
+ b. A detox Rx with a provider with an expired DEA/DETOX number can be
+    copied
+ c. When speed renewing a detox Rx, any provider can be selected.
+ d. When speed renewing a detox Rx, the maximum refills prompt is not
+    restricted by the drug special handling, i.e. maximum refills is 11.
+ e. If a provider has an expired DEA number but has a VA number and the
+    institution DEA number is not expired, then the provider may be selected
+    for detox Rx's.  This seems to contradict the description in PSO*7*391
+    item 16.  
+ f. If a provider with an expired DEA is associated with a new, renewed,
+    or copied Rx, then in the ORDER DEA ARCHIVE file (#101.52), the field
+    DETOX # will contain the DEA expiration date in Fileman format, and the
+    DEA # may be blank. 
+     
+ Resolution:
+ -----------
+ Each of the following issues reported above are being addressed the
+ following way:
+   
+ a. The users will no longer be able to renew a detox Rx if the current
+    prescriber on the Rx does not have a valid DETOX # on file. The menu
+    options Patient Prescription Processing [PSO LM BACKDOOR ORDERS] and
+    Barcode Batch Prescription Entry [PSO BATCH BARCODE] were modified to
+    display the following message if the user tries to renew the Rx:
+  
+      Provider must have a valid DETOX# for this Rx 
+   
+ b. The users will no longer be able to copy a detox Rx if the current
+    prescriber on the Rx does not have a valid DETOX # on file. The following
+    message will be displayed by Patient Prescription Processing [PSO LM 
+    BACKDOOR ORDERS] if the user tries to copy the Rx:
+  
+      Provider must have a valid DETOX# for this Rx
+    
+ c. The users will no longer be able to speed renew a detox Rx if the current
+    prescriber on the Rx does not have a valid DETOX # on file. The following
+    message will be displayed by the Patient Prescription Processing [PSO LM
+    BACKDOOR ORDERS] option if the user tries to speed renew the Rx:
+  
+      Rx# NNNNNN - Provider does not have a valid DETOX# required for this Rx
+  
+ d. The users will no longer be able to speed renew a prescription if the
+    number of refills entered is greater than the maximum number of refills
+    allowed for a specific prescription. The following message will be 
+    displayed in the Patient Prescription Processing [PSO LM BACKDOOR ORDERS]
+    option if the user enters a # OF REFILLS greater than the maximum 
+    allowed for the specific prescription:
+  
+      Rx# NNNNNN - # of Refills requested exceeds maximum allowed (5) for 
+      this Rx
+  
+ e. If the prescriber DEA # is expired s/he will no longer be accepted as a
+    valid provider for a detox #. If the user tries to select such prescriber
+    the following message will be displayed by the Patient Prescription
+    Processing [PSO LM BACKDOOR ORDERS] :
+  
+      Provider must have a valid DEA# or VA# to write prescriptions for this
+      drug.
+  
+ f. The Patient Prescription Processing [PSO LM BACKDOOR ORDERS] and the View
+    Prescriptions [PSO VIEW] options were modified to retrieve the prescriber
+    DEA# and DETOX# from the ORDER DEA ARCHIVE file (#101.52). Before, it was
+    retrieving the latest DEA# and DETOX# for the prescriber which could have
+    been expired since s/he wrote the prescription and by consequence would
+    display as blank.
+    
+ Technical Resolution:
+ --------------------- 
+ The routines PSOBBC, PSODIR, PSON52, PSONEW2, PSOORCPY, PSOORFI5, PSOORNE5,
+ PSOPKIV2, PSORENW, PSORENW4 and PSOUTIL have been modified to check and
+ prevent a prescriber without a valid DETOX# to be assigned to a renewed
+ prescription that requires a prescriber with a valid DETOX#. And the 
+ routine PSORXVW was modified to retrieve the DEA# and DETOX# values from
+ the CPRS order archive file instead of retrieving the latest info from the
+ NEW PERSON file (#200).
+  
+ 2. R16854127FY18 - FILL DATE prompt range incorrect
+  
+ Problem:
+ --------
+ It was reported by the Meds By Mail group that when they were entering new
+ prescriptions with zero refills into VistA using the Patient Prescription
+ Processing [PSO LM BACKDOOR ORDERS] option. If the prescription has zero
+ refills the prescription's expiration date is set to the issue date plus 
+ days supply. Because of mailing time to and from Meds by Mail, they often
+ have prescriptions "expire" in VistA before a patient can receive them when
+ using a valid fill date and issue date.   
+   
+ Resolution:
+ -----------
+ The date range allowed for the FILL DATE field was modified to accept a date
+ 366 days in the future for non-controlled substances and 184 days for
+ controlled substances drugs when entering a new prescription.
+   
+ Technical Resolution:
+ --------------------- 
+ The routine PSODIR2 was modified to expand the date range for the FILL DATE
+ prompt as indicated above.
+    
+ 3. I5855290FY15 - CK Hidden Option and Remote Order Checks
+  
+ Problem:
+ -------- 
+ The CK Hidden Option in Patient Prescription Processing [PSO LM BACKDOOR
+ ORDERS] does not pull in remote orders.
+  
+ Resolution:
+ -----------
+ Code in line POST+14^PSODRG was preventing the call to process duplicate
+ drug checks and, as such, it omitted remote order checks as well.  This
+ line of code will be modified by this patch.
+  
+ 4. I17185111FY18 - Error when changing routing from Window to Mail 
+  
+ Problem:
+ --------
+ A site reported an error after answering the prompt "Mail/Window" 
+ when finishing an outpatient prescription.  Error logged was: 
+ <UNDEFINED>MW+4^PSODIR2 *PSODIR("DFLG").  
+  
+ This error occurred when the order was pending, the patient had
+ "Other Language Preference" set to YES, and the user was finishing 
+ the prescription.  While finishing, the user first edited "Patient 
+ Instructions" (entered text at both instruction prompts), and then
+ edited "Mail/Window".  When they returned at Mail/Window, the hard
+ error occurred.
+  
+ Resolution:
+ -----------
+ Routine ^PSODIR2, paragraph MW, was modified so that array variable
+ PSODIR("DFLG") is now protected by the $G function, in case the data 
+ has not previously been set. Protected PSODIR("FIELD") with a $G,
+ as well. 
+  
+ Test Sites:
+ -----------
+ Oklahoma City VAMC
+ Milwaukee VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ N/A 
+  
+    
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users.  This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*504):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*504 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*504 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOASAP0
+    Before:B169084201   After:B165083587  **408,451,496,504**
+Routine Name: PSOBBC
+    Before:B109320592   After:B111560977  **11,22,27,34,46,130,146,185,
+                                           242,264,300,337,313,473,504**
+Routine Name: PSODIR
+    Before: B42450394   After: B42513700  **37,46,111,117,146,164,211,
+                                           264,275,391,372,416,422,504**
+Routine Name: PSODIR2
+    Before: B30158277   After: B28893582  **3,9,26,46,124,146,139,152,166,504**
+Routine Name: PSODRG
+    Before: B93820988   After: B93661712  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427,411,458,504**
+Routine Name: PSON52
+    Before: B99620667   After: B98826270  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408,
+                                           473,504**
+Routine Name: PSONEW2
+    Before: B43830604   After: B42942926  **32,37,46,71,94,124,139,157,
+                                           143,226,237,239,225,251,375,
+                                           372,504**
+Routine Name: PSOORCPY
+    Before: B35980463   After: B37014700  **10,21,27,32,46,100,117,148,
+                                           313,411,444,468,504**
+Routine Name: PSOORFI5
+    Before: B47164460   After: B48135325  **225,315,266,391,372,416,504**
+Routine Name: PSOORNE3
+    Before: B69565652   After: B66007798  **11,9,39,59,46,103,124,139,
+                                           152,194,391,313,444,504**
+Routine Name: PSOORNE5
+    Before: B54881611   After: B54894231  **11,27,32,46,78,99,117,131,
+                                           146,171,180,210,222,268,206,
+                                           225,391,444,504**
+Routine Name: PSOPKIV2
+    Before: B23138982   After: B23372370  **391,495,504**
+Routine Name: PSORENW
+    Before: B47375085   After: B48759882  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313,411,
+                                           504**
+Routine Name: PSORENW4
+    Before: B65687099   After: B73245534  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411,444,504**
+Routine Name: PSORXVW
+    Before: B80713537   After: B80641069  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359,385,400,391,313,
+                                           427,504**
+Routine Name: PSOUTIL
+    Before: B95814120   After:B145871756  **64,456,444,469,504**
+ 
+Routine list of preceding patches: 166, 422, 458, 468, 469, 473, 495, 496
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 13, 2017
+Completed By:                               Date Completed: MAR 28, 2018
+Released By :                               Date Released : MAR 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

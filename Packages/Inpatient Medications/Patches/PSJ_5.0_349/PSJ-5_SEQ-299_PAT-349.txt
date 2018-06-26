@@ -1,0 +1,140 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/06/17 at 13:11
+=============================================================================
+Run Date: JAN 05, 2018                     Designation: PSJ*5*349
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #299                      Status: Released
+                  Compliance Date: FEB 05, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*349'
+                    (v)PSJ*5*281   <<= must be installed BEFORE `PSJ*5*349'
+
+Subject: CROC GLOBAL & NEXT DOSE DUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1) There is an issue where the drug name is being stored for an intervention
+    for Clinical Reminder and not the drug IEN.
+ 2) "Next Dose Due:" is displaying incorrectly when changing START DATE/TIME 
+    to NOW on an active order.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+  
+ 1.  CA-SDM I11127755FY17  Rational 583634   
+  
+ IV Order Clinical Reminder Order Check Intervention Storing Bad Global Data for
+ Drug 
+  
+ Problem:
+ -------
+ An Inpatient with an active inpatient unit dose order had a new IV order
+ entered, which triggered the Clinical Reminder Order Check against the 
+ active  order. An intervention was entered into the APSP Intervention 
+ file (9009032.4), but was stored with the IV print name as opposed to the
+ drug IEN.
+  
+ Resolution:
+ ----------
+ A modification was made to routine PSJCROC to ensure that the TMP global is
+ being populated with the drug IEN and not the IV Print Name.
+  
+  
+ 2.  CA-SDM R12170420FY17  Rational 588136   
+  
+ Medication Order Schedule
+  
+ Problem:
+ -------
+ An Active Inpatient Med order with a Schedule of greater than 24 hours, 
+ e.g. Q72H, was modified by changing the START DATE/TIME on the order to
+ NOW. While finishing the order the "Next Dose Due:" is displaying the  
+ incorrect date/time.  
+  
+ Resolution:
+ -----------
+ Added code to routine PSJUTL so that during the edit process the correct "Next
+ Dose Due:" date and time is correctly displayed.  
+      
+  
+ Test Sites:
+ -----------
+ Manchester VAMC
+ Oklahoma City VAMC
+  
+ Patch Installation:
+      
+ Installation Instructions:
+ --------------------------
+ No options need to be disabled.  It is best to install this patch during
+ non-peak hours.  
+  
+ This patch should take less than 2 minutes to install.
+  
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+         Installation Menu.  From this menu, you may elect to use the following
+         options. When prompted for the INSTALL NAME enter the patch 
+         #PSJ*5.0*349:
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+         any routines exported with this patch. It will not backup any other 
+         changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will (allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch routines, DDs,
+        templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond NO.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond NO. 
+  
+ 7.     If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJCROC
+    Before: B43248221   After: B42770194  **281,349**
+Routine Name: PSJUTL
+    Before:B135053726   After:B137966319  **9,47,58,80,110,136,157,177,
+                                           134,179,267,349**
+ 
+Routine list of preceding patches: 267, 281
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 15, 2017
+Completed By:                               Date Completed: JAN 05, 2018
+Released By :                               Date Released : JAN 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

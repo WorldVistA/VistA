@@ -1,0 +1,233 @@
+
+=============================================================================
+Run Date: DEC 18, 2017                     Designation: EAS*1*156
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #126                      Status: Released
+                  Compliance Date: JAN 18, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.0 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.0. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development and upgrade 
+ efforts, including enhancements to support Community Care (CC) and ES 
+ Sustainment.
+  
+ The following functionality is updated in this ES 5.0 release:
+  
+  
+ ESM:
+ -  Technical Refresh: 
+   1. Upgrade WebLogic from 10.3.6 to WebLogic 12c
+   2. Upgrade Java EE version 1.6 to the Java EE version 1.8
+   3. Upgrade Non-JSF Components (formerly Core) Apache Ant from v1.7 
+      to v1.9
+   4. Upgrade Spring Framework from v1.2.8 to v4.1
+   5. Upgrade Junit from v3.8.1 to v4.12
+   6. Upgrade Log4j from v1.2.9 to v2.1
+   7. Upgrade Quartz from v1.5.2 to v2.2
+   8. Upgrade JasperSoft Reports from v2 to v6
+   9. Upgrade JAX-WS from v2.1 to v2.2.11
+  10. Upgrade Hibernate from v3 to v5
+  
+ -  Sustainment:
+  
+    1. Update the IRS Schemas for the tax year 2017
+    2. Add the GMT Threshold values for Income Year 2017 Patch
+    3. Corrected the SSN Verification transaction that was using the wrong
+       SSN
+    4. Zero out any Fortify findings of ES Mars dev stream based code 
+       streamPatch 
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 605185  Problem: In the production account the batch to create TPA file 
+         is connecting to ADRP even if batch is configured to run against
+         ADRRP
+         Resolution: Moved the TPA Processing used by the reporting
+         database from genericdao to the reportdatadao
+  
+ 606861  Problem: TPA file contains State data having length greater than 2
+         Resolution:  Updated the SQL Query to truncate excess characters
+  
+ 606862  Problem: TPA file contains Zip data having length greater than 5
+         Resolution: Updated the SQL Query to truncate excess characters
+  
+ 606863  Problem: TPA file contains Zip4 data having length greater than 4
+         Resolution: Updated the SQL Query to truncate excess characters
+  
+ 609078  Problem: TPA file contains imprecise date on Temporary Mailing 
+         Address
+         Resolution: Updated the SQL Query to truncate excess characters
+  
+ 609118  Problem: TPA file contains caret character in addresses lines
+         Resolution: Updated the SQL Query to replace the ^ char with '6'
+  
+ 615942  Problem: TPA file contains EDIPI with more than 10 chars
+         Resolution: Updated the SQL to ignore the EDIPI values that are
+         over 10 chars
+  
+ 615944  Problem: TPA file shows NOT_ENR_Date as current date
+         Resolution: Updated the Date to pick the enrollment end date
+         (either the date of death or the enrollment changed date). Code
+         was not merged
+  
+ 617212  Problem: Initial Negative file created on Oct 13 included ALL 
+         deceased even if they were never CC eligible
+         Resolution: Modified the ETL to pick up only those Persons who 
+         have been in the Manual Process
+  
+ 620101  Problem: Request SSN Verification Using Wrong SSN and wiping out
+         MVI correlation data
+         Resolution: Fixed the multiple defects in the job
+         requestSSNVerificationProceess removed the interim updates to 
+         MVI and changed the call to retrieve the PV instead of the ESR 
+         correlation profile
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.0 User Guide                ES_5_0_User_Guide.pdf         binary
+ ES 5.0 Release Notes             ES_5_0_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2017
+Completed By:                               Date Completed: DEC 14, 2017
+Released By :                               Date Released : DEC 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

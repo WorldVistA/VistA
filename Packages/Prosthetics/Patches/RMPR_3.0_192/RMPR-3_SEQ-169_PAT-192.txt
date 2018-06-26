@@ -1,0 +1,136 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 12/21/17 at 13:15
+=============================================================================
+Run Date: FEB 28, 2018                     Designation: RMPR*3*192
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #169                      Status: Released
+                  Compliance Date: MAR 31, 2018
+=============================================================================
+
+Associated patches: (v)RMPR*3*189  <<= must be installed BEFORE `RMPR*3*192'
+
+Subject: EDIT 2319 <SUBSCRIPT> ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+   
+  1. This patch will fix the subscript error issue in the EDIT 2319 [RMPR
+  EDIT 2319] option. An error will occur when the option is used in two 
+  situations. There are two files that are looked at when the edit is being
+  updated. If the PROSTHETICS 1358 (#664) file does not contain the
+  information the user will receive an error. If the RECORD OF PROS
+  APPLIANCE/REPAIR (#660) file does not have the referenced information the
+  user will receive an error.
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+  ASSOCIATED CA SDM TICKET(S):
+  ============================
+ 1. I17892458FY18 - Error in Milwaukee after patch RMPR3*189 in routine
+                    RMPRE29
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Sioux Falls VA HCS
+  North Texas HCS
+      
+  CA SDM OVERVIEW:
+  ================
+   
+  1. I17892458FY18 - Error in Milwaukee after patch RMPR3*189 in routine
+                     RMPRE29
+   
+  Problem:
+  --------
+  This patch will fix the subscript error issue in the EDIT 2319 [RMPR EDIT
+  2319] option. When the user uses the EDIT 2319 [RMPR EDIT 2319] option 
+  they will receive an error due to the RECORD OF PROS APPLIANCE/REPAIR
+  (#660) file and PROSTHETICS 1358 (#664) file not having matching
+  information.
+  
+  Resolution:
+  -----------
+  If the user uses the EDIT 2319 [RMPR EDIT 2319] option and the
+  information is not contained in the PROSTHETICS 1358 (#664) file, the
+  update will exit out because it is not needed. If the user uses 
+  the EDIT 2319 [RMPR EDIT 2319] option and the RECORD OF PROS
+  APPLIANCE/REPAIR (#660) file does not contain the needed information, it
+  will exit out since the update will not be needed.
+    
+  Installation Instructions:
+  ==========================
+  You may install these routines at any time without interruption to users.
+  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*192
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*192.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//," respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+  
+       Protocols? YES//," respond YES.
+  
+       a) When prompted "Enter options you wish to mark as 'Out of Order':"
+       enter the following options:
+  
+       Edit 2319  [RMPR EDIT 2319]  
+        
+       b) When prompted "Enter protocols you wish to mark as 'Out of
+          Order':" just press <Return>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRE29
+    Before: B46941510   After: B47259157  **36,41,51,57,62,74,81,61,145,
+                                           150,180,189,192**
+ 
+Routine list of preceding patches: 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2017
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : FEB 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

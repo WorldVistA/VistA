@@ -1,0 +1,152 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 01/08/18 at 09:43
+=============================================================================
+Run Date: MAR 19, 2018                     Designation: OR*3*474
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #396                      Status: Released
+                  Compliance Date: APR 19, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*391    <<= must be installed BEFORE `OR*3*474'
+
+Subject: ANTICOAG PROBLEM WITH EDITS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to address an issue with complications 
+ being removed from the Anti-Coagulation report if an edit is performed on 
+ a Flowsheet.
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 3635
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  R18005975FY18 - Problem with Complications
+  
+ Problem:
+ -------
+ When a complication is entered in the normal workflow in the 
+ Anticoagulation Management Tool (AMT), then the user goes back and edits
+ the flow sheet, the complication is removed from the report in the
+ Computerized Patient Record System (CPRS) report.
+  
+ Resolution:
+ ----------
+ A problem was identified with the routine that files the edits in the Log 
+ file. When the flow sheet is edited, and the system begins to file the 
+ data, the AMT makes a call to file the data in the log. Even though it 
+ doesn't pass the flag to tell the server to make the complications 
+ unavailable on the report, that is what the routine ORAM1 is doing. ORAM1 
+ was modified to only make them unavailable if the AMT specifically sends 
+ in the flag to remove the complications.
+  
+ Test Sites:
+ ----------
+ Salt Lake City
+ Buffalo 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no specific pre-installation steps required.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ OR*3.0*474:
+ a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates.
+ b.      Compare Transport Global to Current System - This option will 
+ (allow you to view all changes that will be made when this patch        
+ is installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+ c.      Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+  
+ 4.       From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//'
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//' 
+  
+ 7.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no post-installation tasks required.
+  
+ Backout/Rollback Plan:
+ ----------------------
+ This patch contains only one routine. It is crucial to the backout plan 
+ that you perform a backup of the build before doing the install.
+  
+ If the site leadership makes the determination that a critical issue 
+ requires that this patch be backed out, you need only restore the backup 
+ that was created.
+  
+ To verify the backout was successful, compare the checksum to the 
+ pre-patch values.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM1
+    Before:B175474289   After:B175568959  **307,339,351,361,391,474**
+ 
+Routine list of preceding patches: 391
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2017
+Completed By:                               Date Completed: MAR 16, 2018
+Released By :                               Date Released : MAR 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

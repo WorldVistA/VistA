@@ -1,0 +1,153 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/04/17 at 16:49
+=============================================================================
+Run Date: FEB 08, 2018                     Designation: SR*3*190
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #181                      Status: Released
+                  Compliance Date: MAR 10, 2018
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*190'
+
+Subject: NIR MISSING FIELDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses one (1) issue:
+  
+ 1.   Under certain conditions, the transplant/donor section is not
+      displayed on the Nurse Intraoperative Report (NIR)
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Associated ticket(s):
+ =====================
+ 1.      I11231200FY17 - NIR Missing Fields
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ White River Junction VAMC
+ Tennessee Valley Healthcare System (Nashville)
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ I11231200FY17 - NIR Missing Fields
+  
+ Problem:
+ --------
+ VistA Surgery patch SR*3.0*184 added new fields to the SURGERY file 
+ (#130) which display on the Time Out Verified Utilizing Checklist 
+ [SROMEN-VERF] and the Nurse Intraoperative Report [SRONRPT].  These
+ fields are required fields when PLANNED PRIN PROCEDURE CODE field 
+ (#27) is set to a value that lies within a given range of CPT codes.
+  
+ Since the SR*3.0*184 patch install, when data for the new fields in
+ the SURGERY file (#130) are entered and the SURGERY SITE PARAMETER: 
+ NURSE INTROP REPORT is set to "PRINT TITLES WITH INFO ONLY" and the
+ DEVICE(S) field (#31) is left blank; the Transplant/Donor section 
+ is not displayed on the NIR.
+  
+ Resolution:
+ -----------
+ The routine ^SRONRPT3 is modified to not skip the transplant/donor 
+ information.
+  
+ Routines: SRONRPT3
+  
+ Components:
+ ===========
+ N/A
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    can be installed when Surgery users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the 
+       Following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior
+       to installation, you should use the 'Backup a Transport Global' 
+       option at this time. You may also compare the routines in your 
+       production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' 
+       Menu and select the package 'SR*3.0*190'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//, choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       And Protocols? YES//', choose 'NO'.
+ 
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+ 
+ The back-out plan is to restore the routine from the backup created.
+ 
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+ 
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SRONRPT3
+    Before: B19372732   After: B19334113  **100,176,182,184,190**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 01, 2016
+Completed By:                               Date Completed: FEB 08, 2018
+Released By :                               Date Released : FEB 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

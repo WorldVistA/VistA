@@ -1,0 +1,297 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 11/17/17 at 12:42
+=============================================================================
+Run Date: DEC 27, 2017                     Designation: PSJ*5*340
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #297                      Status: Released
+                  Compliance Date: JAN 27, 2018
+=============================================================================
+
+
+Subject: CLEAN UP OLD EXPIRED ORDERS 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) issue:
+  
+ 1.  Orders in the Inpatient Pharmacy package may not have had their status 
+     updated to "EXPIRED", in the past, if the order STOP DATE/TIME value 
+     matched the start time of the ORMTIME RUN background job.  This happened 
+     because ORMTIME RUN and the pharmacy code compared the expiration time 
+     differently.  
+  
+     This was corrected with patch PSJ*5*339, but a clean-up effort must
+     be undertaken to place active/stopped Unit Dose and IV orders
+     into expired status.
+  
+ New Service Requests NSR(s):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 3522
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ I7822516FY16  - Clean Up Old Unexpired Orders
+ R12279547FY17 (d)
+ R10319922FY16 (d)
+  
+ Problem: 
+ --------
+ Several sites found inpatient unit dose and IV infusion orders 
+ with old stop dates that showed as active, instead of expired, in
+ CPRS and the Inpatient Pharmacy package.  The ORMTIME RUN background
+ job is one of the processes that is responsible for expiring these 
+ orders.  All of the unexpired orders had a stop date/time value that
+ matched the time the ORMTIME RUN background job started. ORMTIME RUN
+ and the VistA Inpatient Pharmacy code compared the expiration time 
+ differently and, as a result, many orders were skipped and never
+ expired.
+  
+ This situation occurred for Inpatient Pharmacy orders, but it was less
+ noticeable since the process of accessing the patient's inpatient med
+ profile also expired orders and there was less of a dependency
+ on the ORMTIME RUN job.  For unit dose and infusion orders, where 
+ the profile was less frequently accessed, it was more dependent on the
+ ORMTIME RUN job.  This issue was fixed with patch PSJ*5*339, but there
+ are old unexpired orders on file and they need to be expired. 
+  
+ Resolution:
+ -----------
+ A post-installation routine, PSJ5P340, was written to address the issue and 
+ expire the pharmacy orders that display an active status, yet are past the 
+ stop/expiration date.
+  
+ The post installation routine creates a background task to run the
+ clean-up process, so as not to delay installation.  The site installer
+ will see the following message on their screen when the background
+ task is initiated:
+  
+ =============================================================
+ Queuing background job for PSJ*5.0*340 Post-Installation...
+ Start time: MMM DD, YYYY@HH:MM:SS
+ A MailMan message will be sent to the installer upon Post
+ Install Completion.  This may take an hour or more, depending
+ upon site size.
+ ==============================================================
+  *** Task #XXXXXX Queued! ***
+  
+ The patch installer will receive the following MailMan message 
+ notification of the job's completion.  
+  
+  Example:
+  
+  Subj: PATCH PSJ*5.0*340 INSTALLATION COMPLETE        MM/DD/YY@HH:MM   
+  From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+  ---------------------------------------------------------------------
+    -- INSTALLER --
+    The post-install for PSJ*5.0*340 completed MMM DD, YYYY@HH:MM:SS.
+  
+  Enter message action (in IN basket): Ignore// 
+  
+  
+ Users who possess any of the following Security Keys will also receive a 
+ MailMan message when the task complete:
+    PSJI MGR
+    PSJU MGR
+    PSJU RPH
+    PSJ RPHARM
+    PSNMGR
+  
+  Example:
+  
+  Subj: PSJ*5.0*340 Pharmacy Expired Order Status Change   MM/DD/YY@HH:MM
+  From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+  -------------------------------------------------------------------------
+  
+   Patch PSJ*5.0*340 post-installation routine has updated
+   the status of 1021 stopped / expired pharmacy patient
+   orders from ACTIVE to EXPIRED.
+  
+   Information identifying orders that have had status
+   updates from ACTIVE to EXPIRED will remain in
+   ^XTMP("PSJ5P340",$J,DFN,IV/UD,UIEN) for 60 days.
+  
+   The following Pharmacy Patient file (#55) entries contain
+   corrupt data and should be manually checked in FileMan.
+   You can use the Order File# to manually change the Order
+   file (#100) STATUS field to EXPIRED via FileMan.
+  
+   DFN          Type   Order IEN   Order file#
+   ----------   ----   ---------   -----------
+  
+  Enter message action (in IN basket): Ignore//
+  
+  
+ Information identifying orders that have had status updates from ACTIVE
+ to EXPIRED will remain in global ^XTMP("PSJ5P340",$J,DFN,TYP,UIEN)
+ for 60 days.
+  
+         TEMPORARY FILE DEFINITION:
+         ^XTMP     - Name of File
+         "PSJ5P340"- Name of VistA Routine
+         $J        - Unique Job Number that Updated Data
+         DFN       - Internal Number on PHARMACY PATIENT file (#55)
+         TYP       - Either IV or UD 
+         UIEN      - Internal Order Number on PHARMACY PATIENT file (#55)
+  
+ The information contained in ^XTMP("PSJ5P340") can be displayed from
+ programmer mode via the following command:
+  
+         D ^%G
+  
+         Device:  
+         Right margin: 80 => 
+         Screen size for paging (0=nopaging)? 24 => 
+         For help on global specifications DO HELP^%G
+         Global ^XTMP("PSJ5P340" -- NOTE: translation in effect
+  
+ Test Sites:
+ -----------
+ Milwaukee VAMC
+ Albany VAMC  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ A post-installation job will run in the background when this patch is 
+ installed.  The installer will receive an email when complete.
+  
+ Pre-Installation Instructions:
+ -------------------------- 
+ It is not necessary to disable any options to install this patch.
+ This patch may be installed with users on the system, although
+ it is recommended that it be installed during non-peak hours to 
+ minimalize potential disruption to users.  This patch should take
+ less than 5 minutes to install, but the background job could take
+ over one hour to complete, depending upon the size of the site.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernal Installtion and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INStALL NAME enter the patch #  
+    (ex. PSJ*5.0*340):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//'
+    respond 0.
+  
+ 8. Please read special notes regarding post-installation routine, 
+    above.
+    
+        
+ Post-Installation Instructions:
+ -------------------------------
+  
+ The post installation routine, PSJ5P340, is not automatically deleted
+ as part of the installation process. You may delete it after installation 
+ if you desire using the following command from programmer mode:
+  
+ MNTVBB>D ^%RDELETE
+  
+ Delete routines/INCLUDE files.
+ WARNING: When <rtn>.MAC.0 is deleted, the latest backup is moved
+          to <rtn>.MAC.0, UNCOMPILED.
+  
+ Routine(s): PSJ5P340
+ Routine(s): 
+  
+  
+ Output on
+ Device: 
+ Right margin: 80 => 
+  
+ PSJ5P340.INT
+  
+  
+  
+ Okay to continue? Yes => Yes
+  
+  
+  
+ Installation Verification:
+ ------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Data changes, as a result of the post-installation routine, can be 
+ restored by using the ^XTMP("PSJ5P340" global as described above.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;DEC 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJ5P340
+    Before:       n/a   After: B40902281  **340**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 24, 2017
+Completed By:                               Date Completed: DEC 18, 2017
+Released By :                               Date Released : DEC 27, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

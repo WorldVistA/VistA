@@ -1,0 +1,207 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/24/17 at 13:14
+=============================================================================
+Run Date: MAR 27, 2018                     Designation: MD*1*58
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #42                      Status: Released
+                  Compliance Date: APR 27, 2018
+=============================================================================
+
+Associated patches: (v)MD*1*51     <<= must be installed BEFORE `MD*1*58'
+
+Subject: CP FLOWSHEETS BOOL DATA EDITING, SCROLLING, AUTO-REFRESH
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch fixes three bugs in Clinical Procedures(CP) Flowsheets.
+  
+ 1. The user is unable to edit Boolean values in observations.
+  
+ 2. If the user spins the mouse wheel, it will cause the program to cycle
+    through either the list of available flowsheets or the list of
+    available locations (depending on where the user is in the software).
+  
+ 3. If the auto-refresh happens at the same time as the user clicking on
+    the "Refresh" button for a flowsheet with totals, the totals can show
+    incorrect results (usually doubled).
+  
+ NOTE: Patch MD*1*58 includes a new GUI executable for CP Flowsheets.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I9397560FY16 - IN CP Flowsheets, terms using Boolean operators cannot 
+ be edited.
+  
+ Problem:
+ --------
+  
+ In CP Flowsheets, observations with Boolean (Yes/No) values could not be 
+ edited. Attempting to do so would result in an error: "Error validating 
+ Filer Document."
+  
+ Resolution:
+ -----------
+  
+ The logic of the function to extract and validate the edited value was 
+ fixed in the Delphi code to support Booleans. Previously, it would return
+ an empty string for any edited Boolean value.
+  
+  
+ 2. I9596539FY16 - Mouse scrolling creates errors
+  
+ Problem:
+ --------
+  
+ In CP Flowsheets, scrolling with mousewheel after selecting a flowsheet 
+ name will result in multiple error dialog windows and delays in getting 
+ to the flowsheet on which user needs to document. When adding data to a 
+ view, scrolling after selecting a Location will result in a different 
+ location than user intended.
+  
+ Resolution:
+ -----------
+  
+ The Delphi code was updated so that mousewheel scrolling no longer affects
+ the flowsheet or location dropdown lists (unless the list is actually
+ dropped down). Also, mousewheel scrolling now affects the scrollable
+ content under the mouse throughout the software.
+  
+  
+ 3. I16749714FY18 - auto refresh issue
+  
+ Problem:
+ --------
+  
+ In CP Flowsheets, when auto-refresh is active, if the user clicks on the 
+ "Refresh" button at the same time the auto-refresh happens (or if the 
+ user rapidly clicks multiple times on the "Refresh" button), the 
+ flowsheet totals could be erroneously calculated.
+  
+ Resolution:
+ -----------
+  
+ The refresh function that calculates the flowsheet totals has been changed
+ in the Delphi code to prevent unintended re-entry (which would cause it to
+ calculate totals multiple times, adding them together).
+  
+  
+ Test Sites:
+ -----------
+ Durham VAMC
+ Hines VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+  
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interface (GUI). Files and documentation
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Flowsheets (MD*1.0*58) Installation Guide" for 
+ installation and set-up information. This document is available on the
+ VA Software Document Library (VDL) at: http://www4.domain.ext/vdl/
+  
+ Title                     File Name         FTP Mode
+ -----------------------------------------------------------------------
+ CP Flowsheets (MD*1.0*58) MD_1_58_IG.docx    Binary
+ Installation Guide
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+ Clinical Procedures users should be off the system when this patch is 
+ installed. Installation will take less than 5 minutes. This patch should 
+ be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter MD*1*58).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         MD*1.0*58.                               
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install? 
+         NO//", respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond NO.
+  
+ Post Installation Overview:
+ ---------------------------
+  
+ A post-installation routine , MDPOST58, is provided which updates Clinical
+ Procedures with the expected version number for CP Flowsheets.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST58
+    Before:       n/a   After:   B824118  **58**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2017
+Completed By:                               Date Completed: MAR 21, 2018
+Released By :                               Date Released : MAR 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

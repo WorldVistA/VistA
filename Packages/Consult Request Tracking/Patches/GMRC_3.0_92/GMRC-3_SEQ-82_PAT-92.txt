@@ -1,0 +1,216 @@
+$TXT Created by              at CLN1G2.AAC.DOMAIN.EXT  (KIDS) on Thursday, 02/15/18 at 14:30
+=============================================================================
+Run Date: MAR 13, 2018                     Designation: GMRC*3*92
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #82                      Status: Released
+                  Compliance Date: APR 13, 2018
+=============================================================================
+
+Associated patches: (v)GMRC*3*58   <<= must be installed BEFORE `GMRC*3*92'
+
+Subject: TELERETINAL IFC ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1.  Add Station Number to Inter-Facility Consults.
+  
+ 2.  The hard error <UNDEFINED>PTERRMSG+28^GMRCIERR *GMRCSITE("NAME") 
+   
+ 3.  Documentation change.
+  
+ 4.  Error received when attempting to transmit Inter-Facility Consults.   
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+      
+ 1.  I8300448FY16 - Add station Number to Inter-Facility Consults.
+  
+     Problem:
+     --------
+     GMRCIBKG computes the Station Number incorrectly.  When the Station
+     Number is computed the function returns the 3rd piece which makes 
+     STA equal to the IEN instead of the Station Number.
+  
+     Resolution:
+     -----------
+     Waiver 394033 modified the process in GMRCIBKG to allow the correct
+     Station Number to be passed.  The code from Waiver 394033 has been 
+     incorporated into GMRCIBKG.  
+  
+  
+ 2.  I14588359FY17 - Hard error <UNDEFINED>PTERRMSG+28^GMRCIERR 
+     *GMRCSITE("NAME")
+  
+     Problem:
+     --------
+     The hard error <UNDEFINED>PTERRMSG+28^GMRCIERR *GMRCSITE("NAME") 
+     occurs sporadically when the IFC background job GMRCIBKG attempts to
+     return the station number for a group mail message.
+  
+     Resolution:
+     -----------
+     The routine GMRCIBKG has been modified to correctly return the Station
+     Number so a mail group message can be created.  The routine GMRCIBKG
+     will be corrected to return the correct Station Number instead of the
+     IEN.
+  
+  
+ 3.  I10472783FY16 - Documentation change.
+  
+     Problem:
+     --------
+     If a user has a last name with 2 names without hyphenation there is a 
+     potential for the spaces between the last names to be stripped out and
+     the names to appear as one.
+  
+     Resolution:
+     -----------
+     Documentation change to the CONSULT/REQUEST TRACKING USER manual 
+     to clarify how a user with two last names should enter their names 
+     for it to appear correctly. 
+  
+  
+ 4.  I10570396FY16 - Error received when attempting to transmit 
+     Inter-Facility Consults.
+  
+     Problem:
+     --------
+     The hard error <UNDEFINED>EN+28^GMRCIERR *GMRCSITE("NAME") occurs
+     sporadically when the IFC background job GMRCIBKG attempts to transmit
+     to a remote facility.
+  
+     Resolution:
+     -----------
+     Waiver 394033 modified the code at the site to allow the correct
+     Station Number to be passed to avoid the hard errors.  The code 
+     from Waiver 394033 has been incorporated into background routine
+     GMRCIBKG to allow the correct Station Number to be passed.
+  
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach VAMC
+ Bedford VAM               
+   
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites 
+ may also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+  
+    Hines:               domain.ext
+    Salt Lake City:      domain.ext
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation
+ Library at:   http://www4.domain.ext/vdl/
+  
+  
+ Title                   File Name                 FTP Mode
+ ----------------------------------------------------------------------
+ Consult/Request         GMRC_3_0_UM.PDF           BINARY
+ Tracking User Manual
+  
+  
+ Patch Installation:
+ --------------------
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch.
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      GMRC*3.0*92:
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed a
+ backup of the routine included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created. No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCIBKG
+    Before: B40965835   After: B42008856  **22,28,30,35,58,92**
+ 
+Routine list of preceding patches: 58
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2017
+Completed By:                               Date Completed: MAR 12, 2018
+Released By :                               Date Released : MAR 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

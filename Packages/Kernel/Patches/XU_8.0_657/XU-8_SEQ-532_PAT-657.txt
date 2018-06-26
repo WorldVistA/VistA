@@ -1,0 +1,273 @@
+$TXT Created by                  KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 12/07/17 at 08:48
+=============================================================================
+Run Date: DEC 11, 2017                     Designation: XU*8*657
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #532                      Status: Released
+                  Compliance Date: JAN 20, 2018
+=============================================================================
+
+
+Subject: SECURE HASH LIBRARY FUNCTIONS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Federal Information Processing Standards Publication 180-4 (FIPS PUB 
+ 180-4) specifies secure hash algorithms for computing a condensed 
+ representation of electronic data (message). The hash algorithms 
+ specified in this Standard are called secure because, for a given 
+ algorithm, it is computationally infeasible 1) to find a message that 
+ corresponds to a given message digest, or 2) to find two different 
+ messages that produce the same message digest. Any change to a message 
+ will, with a very high probability, result in a different message digest.
+  
+ SHA-256-384-512 algorithm is described in the NIST document:
+  http://csrc.nist.gov/groups/STM/cavp/documents/shs/sha256-384-512.pdf
+  
+ This routine provides new Kernel APIs for Secure Hash Algorithm (SHA) 
+ hashing of input of various formats. The first parameter, HASHLEN, is the 
+ hash length in bits. It can have one of the following values:
+   160 (SHA-1)
+   224 (SHA-224)
+   256 (SHA-256)
+   384 (SHA-384)
+   512 (SHA-512)
+  
+ $$FILE^XLFSHAN(HASHLEN,FILENUM,IEN,FIELD) - Return the SHA hash for the
+                                      specified file entry.
+  
+ $$GLOBAL^XLFSHAN(,HASHLEN,FILENUM,DATAONLY)- Return the SHA hash for an
+                                      entire global. If DATAONLY=1 the hash
+                                      is computed only for the data. If
+                                      DATAONLY=0 the data global location
+                                      is included in the hash computation.
+  
+ $$HOSTFILE^XLFSHAN(HASHLEN,PATH,FILENAME) - Return the SHA hash for a host
+                                      file.
+  
+ $$ROUTINE^XLFSHAN(HASHLEN,ROUTINE) - Return the SHA hash for a routine.
+  
+ $$SHAN^XLFSHAN(HASHLEN,MESSAGE)    - SHA hash for a message that can be
+                                      passed as a single string.
+  
+ $$LSHAAN^XLFSHAN(HASHLEN,MSUB,NBLOCKS) - SHA hash for a message too long
+                                      to be passed as a single string.
+  
+ In addition, this routine provides several new bitwise logic Math Library
+ Functions and CPU time Functions:
+  
+ $$AND^XLFSHAN(X,Y)                 - Bitwise logical AND 32 bits.
+  
+ $$XOR^XLFSHAN(X,Y)                 - Bitwise logical XOR 32 bits.
+  
+ $$OR^XLFSHAN(X,Y)                  - Bitwise logical OR 32 bits.
+  
+ $$CPUTIME^XLFSHAN()                - Returns two comma-delimited pieces,
+                                      "system" CPU time and "user" CPU time
+                                      (except on VMS where no separate
+                                      times are available). Time is
+                                      returned as milliseconds of CPU time.
+  
+ $$ETIMEMS^XLFSHAN(START,END)       - Calculates and returns the elapsed
+                                      time in milliseconds.
+  
+ A new supported Integration Control Registration (ICR) #6157 was created 
+ for these library functions.
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 02/05/15
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*657 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*657 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. I15173763FY17 Screenman variable to let you know the entry you are 
+ editing has changed isn't working properly
+  
+ Problem:
+ -------
+ Screenman variable to let you know the entry you are editing has changed 
+ isn't working properly.
+  
+ Resolution:
+ ----------
+ XU*8.0*657 fixes this by letting the code compute SHA HASH of the entry 
+ before and after editing. If the HASH changes, the entry has changed.
+  
+ Test Sites: (Patch Tracking Message #77100151)
+ ----------
+ Indianapolis
+ Orlando
+ Puget Sound
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The Kernel 8.0 Developers Guide has been updated as a result of this 
+ patch. The most up-to-date VA Kernel documentation is available on the 
+ VHA Software Document Library (VDL) at the following Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation. TaskMan does not have to be
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*657):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation tasks.
+  
+  
+ Back out Instructions:
+ ====================
+  
+    a.  Open the VistA MailMan message created during the "Backup a 
+        Transport Global" step of the patch installation process (i.e.,
+        Kernel and Kernel Toolkit Systems Management Guide, Section 23.7.8,
+        "Backing Up Transport Globals").
+    b.  Follow the installation sequence (i.e., Kernel and Kernel Toolkit
+        Systems Management Guide, Section 23.7.1, "Installation Sequence")
+        to load and install a patch from a PackMan message. This
+        installation restores the original (pre-patch) VistA routine.
+    c.  Because this is a new routine, the backup patch will only delete 
+        the new routine. There is nothing old to restore.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFSHAN
+    Before:       n/a   After:B156672301  **657**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 14, 2015
+Completed By:                               Date Completed: DEC 07, 2017
+Released By :                               Date Released : DEC 11, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

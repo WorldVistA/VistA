@@ -1,0 +1,259 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 01/19/18 at 09:48
+=============================================================================
+Run Date: MAR 08, 2018                     Designation: IB*2*615
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #558                      Status: Released
+                  Compliance Date: MAR 23, 2018
+=============================================================================
+
+
+Subject: FY18 IB STOP CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Mid-year 2018 changes, effective 4/01/2018.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed prior to 4/1/2018. Sites will need the updates for 
+ Mid Fiscal Year (FY) 18.
+ *************************************************************************
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R17924184FY18 FY18 MID YEAR IB STOP CODE UPDATE 
+  
+    Problem: 
+    --------
+    As requested by the Chief Business Office (CBO), the IB CLINIC
+    STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+    reflect changes for Fiscal Year 2018.
+   
+    Resolution:
+    -----------
+    Add and update requested Stop Codes as described below:
+  
+ STOP CODE ADDED
+ ---------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 241   APR 1,2018   SPECIALTY       WHLCHR AND ADVCD MOB CLC
+ 499   APR 1,2018   NON-BILLABLE    ENVIRO HLTH REG EXAM        OVERRIDE
+  
+ STOP CODE MODIFIED
+ ------------------
+  
+ OLD: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE   DESCRIPTION                    FLAG
+ --------------------------------------------------------------------------
+ 142     OCT 1,2006   BASIC CARE      ENTEROSTOMAL TX, WOUND OR SKIN  
+ 185     MAR 30,2011  BASIC CARE      PHYSICIAN EXTENDER (NP)         
+ 186     MAR 30,2011  BASIC CARE      PHYSICIAN EXTENDER (PA)         
+ 187     MAR 30,2011  BASIC CARE      PHYSICIAN EXTENDER (CNS)        
+ 201     DEC 6,2001   SPECIALTY CARE  PM & RS                         
+ 305     DEC 6,2001   SPECIALTY CARE  ENDOCR/METAB                    
+ 692     OCT 1,2010   BASIC CARE      RT CLIN VD TH PRV SITE(SAMSTA) OVERRIDE
+ 699     OCT 1,2015   BASIC CARE      REAL TIME CVT SAME STAT SERVIC  
+  
+ NEW: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE   DESCRIPTION                    FLAG
+ --------------------------------------------------------------------------
+ 142     APR 1,2018   BASIC CARE      WOUND TX & OSTOMY CARE          
+ 185     APR 1,2018   BASIC CARE      NURSE PRACTITIONER              
+ 186     APR 1,2018   BASIC CARE      PHYSICIAN ASSISTANT             
+ 187     APR 1,2018   BASIC CARE      CLINICAL NURSE SPECIALIST       
+ 201     APR 1,2018   SPECIALTY CARE  PM & RS PHYSICIAN                
+ 305     APR 1,2018   SPECIALTY CARE  ENDOCRINOLOGY                   
+ 692     APR 1,2018   SPECIALTY CARE  RTCL VTH PROV SIT (SAMDIV/STA)  
+ 699     APR 1,2018   SPECIALTY CARE  RTCL VTH EMG CONS(WKLD PATSIT)  
+  
+ Test Sites:
+ -----------
+ Chillicothe VA Medical Center
+ Jack C. Montgomery VA Medical Center (Muskogee)
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options. You may install this patch at
+ any time without interruption to users. It should take less than 2 minutes
+ to install this patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------  
+     1. Choose the PackMan message containing this patch.
+  
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+    
+     3. From the Kernel Installation & Distribution System menu, select 
+        the Installation Menu. From this menu, you may select to use the
+        following options. When prompted for INSTALL NAME, enter
+        the patch IB*2.0*615:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. From the Installtion Menu, select the Install Package(s) option
+        and choose the patch to install.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete routine IB20P615 after the installation.
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added. See below:
+     NOTE: If any type of error message is displayed during installation
+     create a ticket to resolve the issue.
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    241  WHLCHR AND ADVCD MOB CLC
+  
+    499  ENVIRO HLTH REG EXAM
+  
+      2 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    142  WOUND TX & OSTOMY CARE
+  
+    185  NURSE PRACTITIONER
+  
+    186  PHYSICIAN ASSISTANT
+  
+    187  CLINICAL NURSE SPECIALIST
+  
+    201  PM & RS PHYSICIAN
+  
+    305  ENDOCRINOLOGY
+  
+    692  RTCL VTH PROV SIT (SAMDIV/STA)
+  
+    699  RTCL VTH EMG CONS(WKLD PATSIT)
+  
+      8 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P615
+    Before:       n/a   After: B12530547  **615**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 18, 2017
+Completed By:                               Date Completed: MAR 07, 2018
+Released By :                               Date Released : MAR 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,173 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/28/17 at 11:25
+=============================================================================
+Run Date: DEC 19, 2017                     Designation: PSJ*5*350
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #296                      Status: Released
+                  Compliance Date: JAN 18, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*83    <<= must be installed BEFORE `PSJ*5*350'
+                    (v)PSJ*5*305   <<= must be installed BEFORE `PSJ*5*350'
+                    (v)PSJ*5*315   <<= must be installed BEFORE `PSJ*5*350'
+
+Subject: ADMIN HISTORY/DELETING PATIENT MOVEMENT/IV WARD LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1)     Admin History report has wrong data (New option AH)
+ 2)     Hard error when deleting AUTH ABS transfer
+ 3)     Scheduled IV labels sometimes do not print
+ 4)     Scheduled IV labels are printing past the WL Stop date/time
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1)  CA-SDM I12284711FY17       
+  
+ Admin History report has wrong data (New option AH)
+  
+ Problem: 
+ ========
+ The new AH Report, Administration History for Orderable Item, is pulling in
+ erroneous data.
+  
+ A patient had a Unit Dose and an IV order for the same orderable item during
+ the given time frame.  This report was designed for Unit Dose orders only.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSGAH to exclude IV orders.
+  
+  
+ 2)  CA-SDM I12778660FY17       
+  
+ Hard error when deleting AUTH ABS transfer with an IV order
+  
+ Problem: 
+ ========
+  
+ An Inpatient patient, with an active IV order, was transferred to AUTH ABS
+ (authorized absence < 96 hours).  The transfer was deleted and the user
+ received a hard error in VistA.
+  
+ Resolution:
+ ===========
+  
+ A modification was made to routine PSJADT1 to ensure that the variable VAIP(5)
+ has a valid value prior to calling PSJADT0.
+  
+ 3)  CA-SDM I13047648FY17       
+  
+ Scheduled IV labels sometimes do not print.
+  
+ Problem:
+ ========
+ A site had run their Ward List for piggyback coverage from 0501 - 0500.  
+ There was a patient who had an IV order of one-time with a start 
+ date/time that was the same as the stop date/time for the ward list, 0500.  
+ When the report was run it showed the patient but showed zero for labels
+ needed.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSIVWL to correct the evaluation so 
+ that if the start time of the order is exactly the same as the stop 
+ time of the manufacturing stop time for the coverage, the label will print.
+  
+ 4)  CA-SDM R16812937FY18
+  
+ Scheduled IV labels are printing past the WL stop date/time
+  
+ Problem:
+ ========
+ Some sites are seeing more labels being printed than there should be. 
+ Labels are printing out past the stop date/time of the submitted Ward List.
+ This issue surfaced after the release of PSJ*5*341.
+  
+ Resolution:
+ ===========
+ A modification was made to PSIVWL to ensure that labels are printed
+ for the time frame of the Ward List
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City VAMC 
+ Miami - VA Healthcare System
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions:
+ --------------------------
+ No options need to be disabled.  It is best to install this patch during
+ non-peak hours.  
+  
+ This patch should take less than 2 minutes to install.
+  
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+         Installation Menu.  From this menu, you may elect to use the following
+         options. When prompted for the INSTALL NAME enter the patch 
+         PSJ*5.0*350:
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+         any routines exported with this patch. It will not backup any other 
+         changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will (allow
+         you to view all changes that will be made when this patch is
+         installed.  It compares all components of this patch routines, DDs,
+         templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+         choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//, respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//, respond 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAH
+    Before: B25445995   After: B25669479  **315,350**
+Routine Name: PSIVWL
+    Before: B33431217   After: B33435702  **41,54,74,84,93,110,111,141,
+                                           305,350**
+Routine Name: PSJADT1
+    Before:  B5799392   After:  B5915914  **30,37,51,83,350**
+ 
+Routine list of preceding patches: 83, 305, 315
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2017
+Completed By:                               Date Completed: DEC 19, 2017
+Released By :                               Date Released : DEC 19, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

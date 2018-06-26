@@ -1,0 +1,186 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 11/14/17 at 10:09
+=============================================================================
+Run Date: JAN 03, 2018                     Designation: OR*3*467
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #387                      Status: Released
+                  Compliance Date: FEB 03, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*297    <<= must be installed BEFORE `OR*3*467'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*467'
+                    (v)OR*3*388    <<= must be installed BEFORE `OR*3*467'
+
+Subject: QUICK ORDER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three issues with Quick Order editing:
+  
+ 1. When attempting to add a new orderable item to a quick order with 
+ multiple orderable items (such as Infusions or VBECS), an error occurs.
+ 2. When attempting to edit an additive in a multi-additive Infusion (IV) 
+ quick order, the strength for all the other (non-edited) additives is 
+ removed.
+ 3. When attempting to enter the name of an orderable item that exceeds 30 
+ characters, the user is given the '??' response as if the entry is 
+ invalid.
+  
+ Further details are found in the Defect Tracking System overview section 
+ below.
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I11831268FY17 - Issues creating quick order for massive transfusion 
+                    protocol
+  
+ Problem:
+ -------
+ When entering the 4th component in VBECS the Application closes out with 
+ a hard error. Also, it was reported that the comment section is not long 
+ enough to enter instructions.
+  
+ Resolution:
+ ----------
+ The comments issue will not be addressed by this patch. The hard error, 
+ as well as the inability to add a new component has been corrected. This 
+ issue would also have affected IV quick orders with multiple additives. 
+ Routine ORCDLG1 has been modified to correct both these issues.
+  
+ 2. R15412941FY17 - QUICK ORDERS - VistA Issue Resetting
+  
+ Problem:
+ -------
+ VistA IV quick order edit is resetting all solution values to 
+ 0 anytime you add or delete an item. 
+  
+ Resolution:
+ ----------
+ The routine responsible for editing an additive in an IV quick order was 
+ attempting to also remove any of the 'associated items', such as 
+ strength. The idea being that if you changed the additive the existing 
+ strength would not be appropriate. 
+  
+ However, it was inappropriately deleting all the strengths, rather than 
+ only the strength associated with the additive being edited. The routine 
+ (ORCDPSIV) has been modified to only remove the strength and units that 
+ are associated with the individual additive being edited.
+  
+ 3. I11114267FY17 - Quick Order Entry doesn't Honor Exact Entry Name
+  
+ Problem:
+ -------
+ When the user enters an orderable item name longer than 30 characters, 
+ the system display the '??' along with the help text indicating the entry 
+ was invalid. This occurs even if the name entered is an exact match to an 
+ orderable item.
+  
+ Resolution:
+ ----------
+ The problems stems from the fact that the style of cross-reference used 
+ for this lookup only allows 30 characters in FileMan. However, it was 
+ constructed allowing more than 30 characters.
+  
+ The solution delivered in this patch retains the current cross-reference 
+ structure but modifies routine ORCDLG2 to notify the user if they enter 
+ more than 30 characters and then perform the lookup with only the first 
+ 30 characters that were entered.
+  
+ The message will display: 
+ Entries are matched based on the first 30 characters. Longer entries may
+ result in more than one match. If this happens, please select the desired
+ entry.
+  
+ Following the message, the 30 characters that will be used for the search 
+ will display. 
+  
+ Test Sites:
+ ----------
+ Bronx, NY
+ Palo Alto HCS, CA 
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter the
+         patch OR*3.0*467:
+  
+            a. Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will
+               not backup any other changes such as DDs or templates.
+            b. Compare Transport Global to Current System - This option
+               will (allow you to view all changes that will be made when
+               this patch is installed.  It compares all components
+               of this patch routines, DDs, templates, etc.). 
+            c. Verify Checksums in Transport Global - This option will
+               allow you to ensure the integrity of the routines that are
+               in the transport global. 
+  
+ 4.      From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//' 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDLG1
+    Before: B84017168   After: B85414399  **60,71,95,110,243,350,467**
+Routine Name: ORCDLG2
+    Before: B67157200   After: B70372078  **4,60,79,94,243,297,467**
+Routine Name: ORCDPSIV
+    Before:B121517971   After:B126767788  **4,38,48,158,195,243,296,280,
+                                           388,467**
+ 
+Routine list of preceding patches: 297, 350, 388
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 19, 2017
+Completed By:                               Date Completed: JAN 02, 2018
+Released By :                               Date Released : JAN 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

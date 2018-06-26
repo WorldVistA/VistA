@@ -1,0 +1,187 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/18/17 at 14:57
+=============================================================================
+Run Date: FEB 20, 2018                     Designation: RA*5*141
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #124                      Status: Released
+                  Compliance Date: MAR 23, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*141'
+                    (v)RA*5*97     <<= must be installed BEFORE `RA*5*141'
+                    (v)RA*5*129    <<= must be installed BEFORE `RA*5*141'
+
+Subject: MISC RADIOLOGY ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. <UNDEFINED>PRT+13^RARTE5
+ 2. SBY-Error Message: Report Designer HL7 Logs are not updating to Vista
+  
+ ASSOCIATED NSRs:
+ ================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+ ASSOCIATED SDM TICKETS:
+ =======================
+ 1. I14066990FY17 - <UNDEFINED>PRT+13^RARTE5
+ 2. I14376092FY17 - SBY-Error Message: Report Designer HL7 Logs are not 
+                    updating to Vista
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Miami
+ Salisbury
+  
+ SDM TICKET OVERVIEW:
+ ====================
+ 1. I14066990FY17 - <UNDEFINED>PRT+13^RARTE5
+  
+    Problem 1:
+    ----------
+    The user selects the Outside Report Entry/Edit [RA OUTSIDE RRTENTRY]
+    option. Enters a Case Number and then the user realizes the wrong 
+    case has been selected. The user will enter a '^' at the Select 
+    'Standard' Report to Copy: prompt to exit. An UNDEFINED variable 
+    error is generated and the user is forced out of VISTA.
+  
+    Resolution 1:
+    -------------
+    When the user enters a '^' at the "Select 'Standard' Report to Copy:"
+    prompt two seperate issues but related issues happen. A logic flow
+    control variable, RAXIT, is set to a quit condition and then 
+    overwritten. Variable RABIREQ is not defined. Both will generate
+    a hard error and force the user out of VistA.
+  
+    Modification of routine RARTE5 to protect the variable RAXIT from being
+    overwritten.
+  
+    Routines: RARTE5
+  
+ 2. I14376092FY17 - SBY-Error Message: Report Designer HL7 Logs are
+                    not updating to Vista
+  
+    Problem 2:
+    ----------
+    When a v2.4 HL7 report is broadcast to the VistA M server, the segments
+    and fields from that message are de-constructed and processed. It is 
+    assumed that the Universal Service ID (OBR-4) will have a value. A 
+    value may not always be assigned. Before this patch, the software
+    lapsed into an error condition because it does not have a result
+    status. After this patch the software will identify the missing Result
+    Status value and exit without error.
+  
+    Resolution 2:
+    -------------
+    RAHLTCPX will be updated to check for the array element PAR(4) and if
+    it is undefined, the software will negatively acknowledge ('NAK') the
+    inbound HL7 v2.4 ORU message.
+  
+    Routine: RAHLTCPX 
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  This patch cannot be installed with Radiology/Nuclear Medicine users on
+  the system. This patch should take less than five minutes to install.
+   
+  All VistA Radiology users are to be off the system. Voice Recognition 
+  and Radiology based PACS activities are to be paused while RA*5.0*141 is
+  installed.
+  
+ Installation Instructions:
+ --------------------------  
+  1. Stop entering radiology orders through CPRS and the Radiology/Nuclear 
+     Medicine application.
+  
+  2. Shutdown HL7 messaging between the VistA RIS and non-VistA RIS 
+     applications, by using the "Filer and Link Management Options [menu]".
+  
+  3. Choose the PacMan message containing this patch.
+  
+  4. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+  5. From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+   
+  6. From this menu, you may select to use the following options:
+     (when prompted for INSTALL NAME, enter RA*5.0*141)
+   
+     a. Backup a Transport Global - this option will create a backup
+        message of any routines exported with the patch. It will NOT
+        backup any other changes such as DDs or templates.
+   
+     b. Compare Transport Global to Current System - this option will
+        allow you to view all changes that will be made when the patch
+        is installed. It compares all components of the patch (routines,
+        DDs, templates, etc.).
+   
+     c. Verify Checksums in Transport Global - this option will ensure
+        the integrity of the routines that are in the transport global.
+   
+  7. Use the Install Package(s) option and select the package RA*5.0*141.
+   
+  8. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+     respond NO.
+  
+  9. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//", respond NO.
+  
+  10. If prompted 'Delay Install (Minutes): (0 - 60): 0//' respond 0.
+            
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed a
+ backup of the routine included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created. To
+ verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  Restart HL7 messaging between the VistA RIS and non-VistA RIS
+  applications, by using the "Filer and Link Management Options [menu]".
+      
+  Resume entering radiology order through CPRS and the 
+  Radiology/Nuclear Medicine application.
+  
+  The installation of RA*5.0*141 is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLTCPX
+    Before:B100969954   After:B100993150  **47,114,129,141**
+Routine Name: RARTE5
+    Before:B102640298   After:B103201399  **56,95,97,47,141**
+ 
+Routine list of preceding patches: 129
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 16, 2017
+Completed By:                               Date Completed: FEB 16, 2018
+Released By :                               Date Released : FEB 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

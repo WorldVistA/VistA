@@ -1,0 +1,613 @@
+
+=============================================================================
+Run Date: APR 23, 2018                     Designation: MAG*3*188
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #152                      Status: Released
+                  Compliance Date: MAY 24, 2018
+=============================================================================
+
+
+Subject: Clinical Display Issues
+
+Category: 
+  - Other
+
+Description:
+============
+
+  
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*185 and MAG*3.0*191.
+  
+ Subject:  CLINICAL DISPLAY ISSUES
+ ========
+ Category:  OTHER
+ =========
+  
+ Description:
+ ============
+ MAG*3.0*188 will resolve the following issues for the Clinical Display 
+ client:  
+   The ability to show/hide the grid on Electrocardiograms (EKGs) was 
+ inadvertently removed in MAG*3.0*167; the option will be restored. 
+   
+  The ability to select multiple EKGs for printing was inadvertently 
+ removed in MAG*3.0*167; the option will be restored.
+  
+  In the Radiology viewer, Computed Tomography (CT) images jump and the 
+ window/level functionality is not displayed properly if the images are 
+ scrolled quickly with the mouse.
+  
+   Image List Window Update
+  
+   Grid On/Off Feature Updates   
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 188_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.
+ MAG3_0P188_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ File Name                                  Description
+ =========                                  ============
+ MAG3_0P188.KID                             Kernel Installation and 
+                                            Distribution
+                                            System (KIDS) build
+                                            for Patch 188
+ MAG3_0P188_Clinical_Display_Setup.exe      Clinical Display client
+                                            installation file.
+ MAG3_0P188_CLINICAL_DISPLAY_INSTALL.MSI    Clinical Display push
+                                            installation file.
+ MAG3_0P188_Patch_Description.pdf           Patch Description for P188
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P188_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ The following are two new FileMan (FM) Files included in MAG*3.0*188:
+   MUSE TEST TYPES #2006.171 
+         o This file will hold a list of MUSE Test Types that are used by 
+           the MUSE FORMAT TABLE File to map a Test Type to a MUSE Format
+           ID number.
+         o The sites can add new Test Types to this file, if needed.  
+               -IMPORTANT: The spelling of the Test Type that is entered
+                into this file must EXACTLY match the spelling of the Test
+                Type on the MUSE System.
+  
+   MUSE FORMAT TABLE #2006.172
+         o This file is a mapping of MUSE Test Types to the MUSE Format ID 
+           number for a specified MUSE System.  
+               -The default Format ID's listed below are used by the MUSE
+                System to compile the MUSE Test data, for the specified
+                Test Type, into a PDF file for viewing.
+                The default Format ID's cannot be modified.  
+                The sites can add entries to this file if any of the 
+                default mappings of MUSE Test Types to MUSE Format IDs is
+                not correct for a certain MUSE System.  If site specific
+                Format ID's have been entered into the MUSE FORMAT TABLE,
+                those Format ID's will override the defaults.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.Defect 541749 (Ticket I14967812FY17) Showing/Hiding Grid on EKGs 
+  
+ Problem:   
+ MAG*3.0*167 inadvertently removed the ability to show/hide grid on EKGs.  
+  
+ Resolution: 
+ A new menu option, Grid On, has been added to the Options menu of the 
+ MUSE EKG Clinical Display window.  The menu option will default to 
+ "checked" when the window is opened.
+  
+ When the Grid On option is checked, the test generated by the MUSE system 
+ will include a grid. When Grid On is unchecked, the test generated by the 
+ MUSE system will not include a grid.
+  
+ Note: The way that the grid is displayed on the image has changed in this 
+ patch. In previous versions of the MUSE EKG Viewer, the patient test was
+ retrieved from the MUSE system without a grid.  When the test was 
+ displayed in the MUSE Viewer, a grid was drawn on top of the displayed 
+ test.  In this patch, different MUSE test formats are used to generate 
+ tests with and without grids.
+  
+  
+ 2. Defect 541795 (Trouble Ticket R14889502FY17) Printing Multiple Studies 
+  
+ Problem:  
+ Clinical Display used to be able to select more than one EKG study and 
+ print them at one time.  MAG*3.0*167 inadvertently removed that option.
+  
+ Resolution: 
+ The EKG (ECG) Test Type List on the MUSE Viewer window has been modified
+ to enable multiple selections.  The Popup Menu has a new Print Selected
+ Images. option which will open the Printer Dialog window.  The user can
+ select a printer and click "OK."  Selecting the File | Print Selected
+ Images. option will also print the images selected in the EKG Test Type
+ List.
+  
+ Notes: 
+ The grid will also be printed if the Options | Grid menu option is 
+ checked.  Multiple selections are accomplished by the standard methods: 
+  
+         Ctrl-Click to select an entry
+         Click to open one test 
+         Shift-click to select a range 
+         Ctrl-click to select an additional entry.
+  
+ All tests selected in the EKG Test Type list will be printed when "Print
+ Selected Images." is selected. 
+  
+ 3. Defect 586331 (Trouble Ticket I17074853FY18, I16872958FY18, 
+ R15933755FY17, R16210630FY17, R16376989FY17, R16454004FY17, & 
+ I16715556FY17) Images Jumping in CT Images
+  
+ Problem:  
+ In the Radiology viewer, CT images jump and the window/level functionality
+ is not displayed properly if the images are scrolled quickly with the
+ mouse.
+  
+ Resolution:  
+ The code was modified to fix this issue.  Now when a CT preset is 
+ selected, the window/level settings will not change when the user scrolls 
+ quickly or clicks the Play button. 
+  
+ 4. Defect 662033 (Trouble Ticket I16798961FY18): Image List Window Update
+  
+ Problem: 
+ An issue was reported in the Image List window, that when the Columns are 
+ resized or hidden, the changes are not saved in the User Preferences.
+  
+ Resolution: 
+ The code was modified to fix this issue.  
+  
+ 5. Defect 670519 (Trouble Ticket I18544856FY18): Grid On Feature Missing 
+ With New MUSE
+  
+ Problem: 
+ When the user changes Grid on/off, the user has to click on a different 
+ test and back for it to reload the test with no Grid.
+  
+ Resolution: 
+ When the user switches the grid setting, any images that are opened, will 
+ be redisplayed with the new grid setting.
+  
+ The following is the MUSE Test Type and Format ID Mapping: 
+  
+ MUSE Test Type and Format ID Mapping:
+ To display the MUSE Format Table, open the MUSE EKG Display viewer and 
+ Select the menu: Options | Show Format Table.    The MUSE Format Table 
+ window will be displayed and the default mappings will be listed.
+  
+ Default mapping: 
+  
+ MUSE Format Table Columns:
+ Site:
+   The MUSE System entry in the NETWORK LOCATION File.
+  "All Sites" means the default mapping for all MUSE Systems.
+  "All Sites" is not an entry in the NETWORK LOCATION File. 
+  
+ (Internal Entry Number) IEN:
+  The Internal Entry Number is for the NETWORK LOCATION entry.
+  '0' means the default mapping is for all MUSE Systems.
+  
+ Test Type:
+  This field can be modified by the user.  
+  
+ Grid:
+   Enter 'Yes' if a Grid is displayed, 'No' if a Grid is not displayed.
+  
+ Format ID:
+   Enter the new Format ID Number for the Test Type.
+  
+  
+ Modify MUSE FORMAT Table:
+ Review the Appendix A for examples on modifying the MUSE FORMAT TABLE to 
+ override the default Test Type - Format ID mappings.
+  
+ Test Sites:
+ ===========
+ The following sites are  test sites for this patch:
+         VA Denver Health Care System
+         Augusta VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/.
+  
+ Patch Installation:
+ ===================
+  
+ Supported Client Versions
+ ==========================
+ When MAG*3.0*188 is released, the list of supported versions of Clinical 
+ Display will not change.
+ The list of supported versions will remain:
+  
+ Supported Versions      No Longer Supported 
+ 3.0.188                 3.0.131
+ 3.0.191                 3.0.122
+ 3.0.181                 3.0.117
+ 3.0.167                 3.0.106
+ 3.0.161                 3.0.94
+ 3.0.149
+ 3.0.130
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*188 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used.  This 
+ patch must be installed by the compliance date.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Pre-Installation Instructions:
+ ===============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*188.
+  
+ VistA System (KIDS) Installation Instructions
+ ============================================= 
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1 On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2 Run the Installation option [XPD INSTALLATION MENU].
+ 3 Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P188.KID) of the 
+ Patch 188 KIDS file.
+   c. When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4 After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch. 
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when 
+ the patch is installed.  All components (routines, options, and so on) in
+ the patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It 
+ will NOT back up any of the other changes.
+ 5 After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+ a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+ b. When prompted for the install name, enter "MAG*3.0*188".
+ c. Answer "NO" to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6 When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Select INSTALL NAME:    MAG*3.0*188    10/25/17@13:38:19
+      => VistA Imaging V 3 - Patch 188 - MUSE Issues.  ;Created on Oct 25, 
+ 2
+  
+ This Distribution was loaded on Oct 25, 2017@13:38:19 with header of
+ VistA Imaging V 3 - Patch 188 - MUSE Issues.  ;Created on Oct 25, 2017@13:
+ 37:45
+    It consisted of the following Install(s):
+     MAG*3.0*188
+ Checking Install for Package MAG*3.0*188
+ Install Questions for MAG*3.0*188
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+   Running Pre-Install Routine: PRE^MAGIP188
+   Running Post-Install Routine: POS^MAGIP188
+  Post Install Mail Message: Oct 25, 2017@13:38:23
+   Updating Routine file...
+   Updating KIDS files...
+   MAG*3.0*188 Installed.
+                Oct 25, 2017@13:38:23
+  
+  Not a production UCI
+  NO Install Message sent
+   100%
+ Complete
+  
+ VistA Imaging Clinical Display Client Installation Instructions
+ ================================================================
+ The Clinical Imaging Display client software can be updated using one of 
+ the methods outlined below:
+  Manual installation
+  Automatic installation using other methods (SMS, PSexec, etc.).
+  
+ Note: 
+ =====
+ The Clinical Display Application is only supported on a Windows 7 
+ operating system; other operating systems are not officially 
+ supported.
+ Clinical Display is distributed with an MSI and EXE installation.  The MSI
+ is intended for sites that want to do a push installation (using SCCM or
+ another tool).  The EXE is intended for use to install on a single
+ workstation.
+ After client installation is complete, log in to an updated workstation 
+ and use the Help | About menu option to verify that the version number is 
+ 3.0.188.6.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P188_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ BackOut Plan: 
+ =============
+ KIDs Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*188 VistA KIDS, select the 
+ "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global". (See Installation Steps section, Step 4c; this must be 
+ done before the patch is installed).
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+  
+ 1.       Select the message shown below:
+  
+ Backup of MAG*3.0*188 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter "Yes" at the prompt.
+ 5.      Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2    Message #43934     Unloading Routine   MAGBRTE4 (PACKMAN_BACKUP)
+ Line 249  Message #43934     Unloading Routine   MAGQBUT4 (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Uninstalling Clinical Display Client MAG*3.0*188
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*188 client, use the Uninstall 
+ option from Windows Control Panel to Uninstall: "VistA Imaging Clinical 
+ Display".
+ Then install the previous version of Clinical Display which was included 
+ in MAG*3.0*191.
+  
+ Routine Information:
+ ====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum          Checksum        Patch List
+                 Before            After
+ MAGGTU4D        5527813           5740596         **93, 94, 106, 117, 122,
+                                                   131, 149, 138, 156, 161,
+                                                   167, 181,191, 188**
+ MAGGTSYS        14702469          27028795        **59,93,117,185, 188**
+ MAGGTU4M        NA                22884338        **188**
+ MAGIP188        NA                4692901         **188**
+  
+ Routine MAGIP188 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Appendix A 
+ ===========
+ Format ID:
+ Open the MUSE EKG Display window, and select the menu : Options | Show 
+ Format Table to see the MUSE Format Table.
+ Below is an example of the MUSE Format Table with only the default 
+ mappings.
+ The default mappings listed above may not be correct for all MUSE 
+ Systems.  If this is the case, the user will need to override the default 
+ mapping for that MUSE System. 
+  
+ Example: 
+ Table MUSE A  below is a screen shot of a MUSE System with the default 
+ mappings:
+  
+ (Table MUSE A)
+  
+ Table MUSE B below is a screen shot of a MUSE System with different 
+ Format ID's than the defaults. 
+ Notice in MUSE B below, the Format ID's  for VistA ECG, VistA HiRes, 
+ VistA Stress and VistA Holter are different than the defaults in MUSE A.
+  
+ (Table Muse B) 
+  
+ The Site will have to override the Default Format IDs, and map the four 
+ 'VistA...' entries to the Format IDs that are on the user's system.
+  
+ Override a Default Format ID:
+ To override a default Format ID, the user will need to make an entry into 
+ the MUSE FORMAT TABLE #2006.172 File.
+  
+ Use FileMan Enter/Edit option to add a new entry to the file.
+  
+ Example: 
+  
+ SLC>D P^DI
+  
+ VA FileMan 22.2
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES
+  
+ Input to what File: MUSE FORMAT TABLE//   (0 entries)
+ EDIT WHICH FIELD: ALL//
+  
+ Select MUSE FORMAT TABLE DESCRIPTION: ZZZ MUSE VistA ECG
+   Are you adding 'ZZZ MUSE VistA ECG' as
+     a new MUSE FORMAT TABLE (the 1ST)? No// y  (Yes)
+ NETWORK LOCATION: ZZZ MUSE SYS
+ TEST TYPE: RestingECG
+ GRID: N  NO
+ FORMAT ID NUMBER: 11
+ Select MUSE FORMAT TABLE DESCRIPTION:
+  
+ After all four overrides have been entered, Open the MUSE Format Table to 
+ verify the change
+ In the table above, the entry for the following has a format id of 11.
+ Site : ZZZ MUSE SYS
+ Test Type: RestingECG
+ Grid: NO
+  
+ This Format ID of 11 for 'RestingECG'.  
+  
+ Verify the New Format ID:
+ ===========================
+ To determine what Format ID was used to generate the MUSE Test Image 
+ follow the steps below: 
+         Click on a Test option in the list. 
+         After the Test is displayed,  check the menu:  Options | Show 
+         Messages.
+         A message area will display at the bottom of the window.
+         Scroll to the bottom of the messages,  then scroll up until you 
+ see 'Format ID = nn', which  will be the Format ID was used to generate 
+ the Test.
+ Below is an example of the message panel in the VistA Imaging MUSE EKG 
+ Viewer:
+  
+ Add a New Test Type: 
+ =================== 
+ If a new Test Type is added to the MUSE System, the VistA Imaging MUSE 
+ EKG Viewer will use the Format ID =1 to display Tests of that Type.  
+
+Routine Information:
+====================
+Routine Name: MAGIP188
+    Checksum:
+  NA
+ Description of Changes:
+  Standard install routine that sends install message to 
+  Mag Enterprise.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2017
+Completed By:                               Date Completed: APR 20, 2018
+Released By :                               Date Released : APR 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

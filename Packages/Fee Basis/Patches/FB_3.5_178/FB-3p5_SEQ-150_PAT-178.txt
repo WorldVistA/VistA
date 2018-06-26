@@ -1,0 +1,174 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/19/17 at 20:25
+=============================================================================
+Run Date: FEB 27, 2018                     Designation: FB*3.5*178
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #150                    Status: Released
+                  Compliance Date: MAR 30, 2018
+=============================================================================
+
+Associated patches: (v)FB*3.5*176  <<= must be installed BEFORE `FB*3.5*178'
+
+Subject: FEE BASIS CPT RVU CODE UPDATES - 77065-77067
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Fee Basis Current Procedural Terminology (CPT) Relative Value Unit 
+ (RVU) numbers for CPT codes 77065 through 77067 will be updated for 
+ Calendar Year (CY) 2017 with Fourth Quarter (Q4) values. This patch
+ updates the FEE BASIS CPT RVU (#162.97) file.
+  
+ ASSOCIATED TICKET:
+ ==================
+ 1. I17949590FY18 - Radiology Requests the RVUs for code 77065-77067 
+    be updated for CY 2017 with Q4 values.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Minneapolis VA Medical Center
+ VA Tennessee Valley Health Care System
+  
+ TICKET OVERVIEW:
+ ================
+ 1. I17949590FY18 - Radiology Requests the RVUs for code 77065-77067
+    be updated for CY 2017 with Q4 values.
+  
+    Problem:
+    --------
+    Radiology Requests the RVUs for code 77065-77067 be updated for CY
+    2017 with Q4 values for CY2017.
+  
+    Resolution:
+    -----------
+    Routine FB35178P updates the CY 2017 values for CPT codes 77065-77067.
+  
+ FEE BASIS CPT RVU (#162.97) values being added:
+  
+ CPT CODE-MODIFIER: 77065
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: .81
+   NON-FAC PRACTICE EXPENSE RVU: 2.89    FACILITY PRACTICE EXPENSE RVU: 2.89
+   MALPRACTICE EXPENSE RVU: .06          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77066
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: 1
+   NON-FAC PRACTICE EXPENSE RVU: 3.7     FACILITY PRACTICE EXPENSE RVU: 3.7
+   MALPRACTICE EXPENSE RVU: .07          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77067
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: .76
+   NON-FAC PRACTICE EXPENSE RVU: 3.04    FACILITY PRACTICE EXPENSE RVU: 3.04
+   MALPRACTICE EXPENSE RVU: .05          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77065-26
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: .81
+   NON-FAC PRACTICE EXPENSE RVU: .25     FACILITY PRACTICE EXPENSE RVU: .25 
+   MALPRACTICE EXPENSE RVU: .05          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77065-TC
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: 0
+   NON-FAC PRACTICE EXPENSE RVU: 2.64    FACILITY PRACTICE EXPENSE RVU: 2.64
+   MALPRACTICE EXPENSE RVU: .01          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77066-26
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: 1
+   NON-FAC PRACTICE EXPENSE RVU: .32     FACILITY PRACTICE EXPENSE RVU: .32
+   MALPRACTICE EXPENSE RVU: .06          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77066-TC
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: 0
+   NON-FAC PRACTICE EXPENSE RVU: 3.38    FACILITY PRACTICE EXPENSE RVU: 3.38
+   MALPRACTICE EXPENSE RVU: .01          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77067-26
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: .76
+   NON-FAC PRACTICE EXPENSE RVU: .25     FACILITY PRACTICE EXPENSE RVU: .25
+   MALPRACTICE EXPENSE RVU: .04          NONPAYABLE: 0
+  
+  
+ CPT CODE-MODIFIER: 77067-TC
+ CALENDAR YEAR: 2017                     WORK RELATIVE VALUE UNIT: 0
+   NON-FAC PRACTICE EXPENSE RVU: 2.79    FACILITY PRACTICE EXPENSE RVU: 2.79
+   MALPRACTICE EXPENSE RVU: .01          NONPAYABLE: 0
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system.   
+  
+ Install Time - less than 2 minutes. 
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*178)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       FB*3.5*178.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit enter.  
+  
+    6. When prompted "Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//", hit enter. 
+  
+    7. If an error is received during install, please contact your IRM for
+       additional support.
+  
+    8. The routine FB35178P can be removed from your production and 
+       test system after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FB35178P
+    Before:       n/a   After:  B3039377  **178**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2017
+Completed By:                               Date Completed: FEB 27, 2018
+Released By :                               Date Released : FEB 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

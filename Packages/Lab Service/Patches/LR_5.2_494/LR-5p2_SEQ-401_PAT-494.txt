@@ -1,0 +1,162 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/14/17 at 19:23
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: LR*5.2*494
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #401                    Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*412  <<= must be installed BEFORE `LR*5.2*494'
+
+Subject: LAB PROCESSING OF VBECS WORKLOAD ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) VistA Laboratory issue related to the 
+ processing of workload transactions received from VBECS (VistA Blood 
+ Establishment Computer Software).  Incorrect LAB ORDER ENTRY (#69) file 
+ entries are sometimes created.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ I9122091FY16 - Lab Processing of VBECS Workload Issue 
+  
+ Problem:
+ -------
+  
+ Incorrect LAB ORDER ENTRY (#69) file entries are sometimes created during 
+ the VistA Lab processing of VBECS workload transactions. The incorrect 
+ entries could be "orphans" or entries filed on a patient other than the 
+ patient for which the workload is being processed. The orphan entries 
+ contain only a "PCE" level without companion test, specimen, etc. levels. 
+ This issue can occur when a VBECS order is resulted and workload 
+ subsequently recorded on a date that is not the date the specimen was
+ specified to be collected during order entry.    
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*494 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*494 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*494 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Resolution: 
+ ----------
+  
+ Modify routine LRCAPBV to set the variable indicating the LAB ORDER ENTRY 
+ (#69) file date for the accession correctly before calling routine
+ LRCAPBV1. The "PCE" level of the LAB ORDER ENTRY (#69) file will then be
+ set correctly by routine LRCAPBV1.
+     
+ Routine: LRCAPBV
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Patient Safety Issues:
+ ======================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ San Diego
+  
+ West Roxbury
+  
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*494'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Back-out, Rollback Instructions:
+ --------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+   
+ The back-out plan is to restore the routine from the backup created.
+   
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+   
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPBV
+    Before: B56161594   After: B57666363  **325,401,412,494**
+ 
+Routine list of preceding patches: 412
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 07, 2017
+Completed By:                               Date Completed: FEB 22, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

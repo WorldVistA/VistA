@@ -1,0 +1,318 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/05/17 at 16:48
+=============================================================================
+Run Date: APR 05, 2018                     Designation: IB*2*598
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #561                      Status: Released
+                  Compliance Date: MAY 05, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*270    <<= must be installed BEFORE `IB*2*598'
+                    (v)IB*2*461    <<= must be installed BEFORE `IB*2*598'
+
+Subject: SPECIAL CONDITIONS & 0295T PROCEDURES SPLIT & HOSPICE AND FIRST PARTY CHARGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three issues.
+  
+ 1. Clinical Information header overlapping the special conditions in 
+ the expanded claims tracking entry screen in the Claims Tracking Edit 
+ [IBT EDIT BI TRACKING ENTRY] option.
+  
+ 2. Request to add the bundled procedures 0295T, 0296T, 0297T and 0298T to 
+ the procedures split structure.
+  
+ 3. Inappropriate First Party (patient) charges are being generated for 
+ patients being treated in Hospice. A post-init routine will update the 
+ MCCR Utility file (#399.1) and Specialty file (#42.4) to prevent unwanted 
+ First Party charge generation for Hospice stays.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+   
+   
+ Files & Fields Associated:
+   
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+   
+   
+ Forms Associated:
+  
+ Form Name                       File #          New/Modified/Deleted
+ ---------                       ------          --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                     N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A                     N/A
+   
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A                     N/A                     N/A
+   
+   
+ Additional Information:
+ N/A
+   
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I7659123FY16 bug found in the expanded claims Tracking Entry Screen
+  
+    Problem
+    --------
+    When a site user uses at least 3 special conditions for the veterans, the
+    expanded claims tracking entry screen displays the clinical information
+    header as well as the third special condition on the right of the header.
+  
+    Resolution:
+    -----------
+    Routine IBTRED0 was modified to adjust the display line for the clinical
+    information header to avoid the overlap on the special conditions.
+  
+  
+ 2. I9700749FY16 Global codes needs to be set to be auto cross walked
+  
+    Problem:
+    --------
+    The Chief Business Office has requested a set of bundled procedures added
+    to the procedures split list with the existing methodology.
+  
+  
+    The updated complete list of procedures split:
+  
+         Global           Technical           Professional
+         ------           ---------           ------------
+         93000            93005               93010
+         93015            93017               93016 & 93018
+         93040            93041               93042
+         93224            93225 & 93226       93227
+         93230            93231 & 93232       93233
+         93235            93236               93237
+         93268            93270 & 93271       93272
+         93720            93721               93722
+         93784            93786 & 93788       93790
+         94014            94015               94016
+         0295T            0296T & 0297T       0298T <------ new
+    
+    At Provider Based sites, the global procedure 0295T should not be billed.
+    The technical component 0296T & 0297T should be billed on the UB form,
+    and the professional component 0298T should be billed on the HCFA 1500.
+    
+    At Non-Provider Based (Freestanding) sites, if both the technical and the
+    professional components 0296T & 0297T & 0298T are performed, then the
+    global procedure 0295T should be billed.
+  
+  
+ *** Please Note ***
+ For bills not already coded with 0295T, the above update to procedure 
+ codes does not apply.
+  
+  
+    Resolution:
+    -----------
+    Routine IBCU7A1 was modified to add these bundled procedures: 0295T as
+    the global procedure, 0296T & 0297T as a technical component and 0298T
+    as a professional component to the procedures split list.
+  
+    The procedures split structure will reflect the charge and the split
+    will be done automatically:
+    - on an institutional bill if the global procedure 0295T is found in
+      encounter data, then on the bill the global 0295T is replaced with the
+      component 0296T & 0297T.
+    - on a professional bill if the global procedure 0295T is found in
+      encounter data, then on the bill the technical component 0296T & 0297T
+      is replaced with the professional component.
+    - at Non-Provider Based (Freestanding) sites if the global procedure
+      0295T is found in encounter data and both components 0296T & 0297T &
+      0298T are performed, then on the bill both components are replaced
+      with the global procedure.
+  
+ 3. I8996330FY16 Adding two new billing codes for Hospice Patients 
+  
+    Problem:
+    -------
+ Patients who should not be charged for Hospice stays, were in fact being
+ billed. First party charges are being cancelled manually by CPAC 
+ personnel.
+  
+    Resolution:
+    ----------
+ Adding two new entries, 'NH HOSPICE' and 'HOSPICE FOR ACUTE CARE', to the
+ MCCR Utility file (#399.1) and ensuring the IB ACTION TYPE (COPAYMENT)
+ (#.14) and IB ACTION TYPE (PER DIEM) (#.15) fields in the MCCR Utility 
+ file (#399.1) are left blank. Copays and per diem charges will not
+ generate if these fields are blank. The next step is to reset the BILLING
+ RATE BEDSECTION (#5) field of the two Hospice specialties to the
+ respective new BILLING RATE BEDSECTION / MCCR Utility file (#399.1)
+ entries added by this patch. Pointing to an entry with a blank IB ACTION
+ TYPE (COPAYMENT) (#.14) and IB ACTION TYPE (PER DIEM) (#.15) prevents
+ First Party (patient) charge billing.
+  
+  
+ Test Sites:
+ -----------
+ Boise VAMC
+ E.Kansas HCS 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ N/A
+  
+  
+ Title                           File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+   
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ Installation Instructions:
+ --------------------------
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+   
+    2.   From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+    3.   From this menu, you may select to use the following options: (when
+         prompted for INSTALL NAME, enter IB*2.0*620).
+   
+            a.   Verify Checksums in Transport Global - This option will
+                 allow you to ensure the integrity of the routines that
+                 are in the transport global.
+            b.   Print Transport Global - This option will allow you to 
+                 view the components of the KIDS build.
+            c.   Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of 
+                 this patch (routines, DD's, templates, etc.).
+            d.   Backup a Transport Global - This option will create a 
+                 backup message of any routines exported with this patch. 
+                 It will not backup any other changes such as DD's or 
+                 templates.
+   
+    4.   Use the Install Package(s) option and select the package 
+         IB*2.0*598.
+  
+    5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install?  
+         NO//", respond NO.
+   
+    6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+   
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+   
+         When prompted, 'Enter protocols you wish to mark as 'Out of 
+         Order':', enter: <ENTER>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine IB20P598 from your production system after the 
+ patch has been successfully verified.
+  
+ Use the 'Install File Print' option to review the updates and ensure
+ that the install has been completed. For an example:
+  
+         Running Post-Install Routine: MAIN^IB20P598
+         Adding new records to 399.1..
+         Record NH HOSPICE updated
+         Record HOSPICE FOR ACUTE CARE updated
+         Updating NH HOSPICE and HOSPICE FOR ACUTE CARE pointers..
+         NH HOSPICE pointer updated
+         HOSPICE FOR ACUTE CARE pointer updated
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message created from the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P598
+    Before:       n/a   After:  B7946414  **598**
+Routine Name: IBCU7A1
+    Before: B18327775   After: B27922710  **245,270,598**
+Routine Name: IBTRED0
+    Before: B23857712   After: B24089460  **160,210,317,276,458,461,598**
+ 
+Routine list of preceding patches: 270, 461
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 10, 2017
+Completed By:                               Date Completed: APR 05, 2018
+Released By :                               Date Released : APR 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

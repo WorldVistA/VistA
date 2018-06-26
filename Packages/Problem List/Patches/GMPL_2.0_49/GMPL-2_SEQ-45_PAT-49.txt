@@ -1,0 +1,534 @@
+
+=============================================================================
+Run Date: DEC 07, 2017                     Designation: GMPL*2*49
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #45                      Status: Released
+                  Compliance Date: JAN 16, 2018
+=============================================================================
+
+Associated patches: (c)OR*3*429        install with patch       `GMPL*2*49'
+                    (v)GMPL*2*40   <<= must be installed BEFORE `GMPL*2*49'
+                    (v)GMPL*2*45   <<= must be installed BEFORE `GMPL*2*49'
+
+Subject: Problem Selection List Enhancements
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch introduces the problem selection list enhancements that are 
+ documented in NSR 20160107: Problem List Diagnosis Menu. In order to 
+ document a problem within the Problems tab, users must use the Lexicon 
+ search to document the problem which often is time consuming and 
+ inefficient for common problems. To alleviate this burden, this request 
+ seeks to provide a list of commonly used diagnoses in SNOMED CT for a 
+ user and/or clinic. A Clinical Application Coordinator (CAC) will have 
+ the capability to assign users and/or clinics to any of the problem 
+ selection lists through the associating menu options.
+  
+ As such, this patch contains updates to the problem selection list menu 
+ options to streamline the creation and maintenance of selection lists for 
+ efficient patient problem documentation in CPRS. The various options on 
+ the following menu tree will be updated and can be accessed from the 
+ Create Problem Selection Lists option [GMPL BUILD LIST MENU] of the 
+ Problem List Mgt Menu [GMPL MGT MENU]:
+  
+    1      Build Problem Selection List(s)
+    2      Copy Selection List from IB Encounter Form
+              **> Out of order:  This option has been disabled due to the 
+ Problem List SNOMED CT implementation.
+    3      Assign/Remove Problem Selection List
+    4      Delete Problem Selection List
+    5      Check Problem Selection List Problem Codes
+    6      Import Problem Selection List
+  
+  
+ A CAC can perform the various actions on problem selection lists as 
+ illustrated above. Option 3: Assign/Remove Problem Selection List allows 
+ a user to assign or remove selection lists from certain entities using the
+ accustomed General Parameter Tools interface. See the OR*3.0*429 patch 
+ description for more information.
+  
+ Option 4: Delete Problem Selection List allows a user to delete a 
+ selection list and its content that is no longer in use. A list can only 
+ be deleted if it is not currently assigned to a User, Clinic, Division, or
+ System entity. This option also checks for any user list assignments in 
+ the NEW PERSON file and removes the deleted list appropriately.
+  
+ Option 5: Check Problem Selection List Problem Codes scans all the 
+ current selection lists in the system for any problems that have inactive 
+ SNOMED and/or ICD codes. The following sample report is displayed to the 
+ user. It has been updated to display the problems with inactive codes, as 
+ well as the corresponding category and list it is under. Problems with 
+ inactive SNOMED concept codes will be identified with <INACTIVE SCT 
+ CODE>, inactive ICD codes will be identified with <INACTIVE ICD CODE>, 
+ and if both SNOMED & ICD codes are inactive: <INACTIVE SCT/ICD CODE>.
+  
+ Code Set Version Review of Problem Selection Lists                 Page: 1
+ --------------------------------------------------------------------------
+ The following Problem Selection List(s) contain one or more problems that 
+ have inactive SNOMED and/or ICD codes attached to them. Any current users
+ or clinics using these Selection Lists, will not be able to add the
+ problems with inactive codes, until the list and the inactive codes are
+ updated. The list may not be assigned to any additional users or clinics
+ until updated.
+  
+  
+  TEST LIST:
+    CARDIO:
+      Acute Myocardial Infarction (ICD-9-CM 410.9)   <INACTIVE ICD CODE>
+      Coronary Artery Disease (ICD-9-CM 414.9)   <INACTIVE ICD CODE>
+      Angina Pectoris, Unstable (ICD-9-CM 411.1)   <INACTIVE ICD CODE>
+      Chest Pain (ICD-9-CM 786.50)   <INACTIVE ICD CODE>
+      Angina Pectoris (ICD-9-CM 413.9)   <INACTIVE ICD CODE>
+      Dyspnea (ICD-9-CM 786.09)   <INACTIVE ICD CODE>
+    GENERAL:
+      Headache (ICD-9-CM 784.0)   <INACTIVE ICD CODE>
+      Fever (ICD-9-CM 780.6)   <INACTIVE ICD CODE>
+    UROLOGY:
+      Bladder Carcinoma (ICD-9-CM 188.9)   <INACTIVE ICD CODE>
+      Impotence (ICD-9-CM 302.72)   <INACTIVE ICD CODE>
+ Type <Enter> to continue or '^' to exit: 
+  
+  
+ This patch also introduces a new import utility (Option 6) that will
+ assist in the addition and distribution of National problem selection list
+ content. This utility or menu option is locked with the new GMPL IMPRT
+ UTIL security key and should only be assigned to CAC users. The utility
+ allows CAC's to import external list content to the VistA system using two
+ import methods:
+  
+           HF        CSV host file
+           WEB       CSV file from a web site
+  
+ Both methods require the selection list content to be in a specific 
+ spreadsheet format and saved as a comma separated value (.CSV) file. If 
+ utilizing the "HF" method, the CSV host file must reside on an accessible 
+ host system. If utilizing the "WEB" method, the CSV host file must reside 
+ on an accessible website.
+  
+ This patch will also install the first version of the VA-NATIONAL PROBLEM 
+ SELECTION LIST which comprises of the following national selection list 
+ categories:
+  
+         VA-PRIMARY CARE
+         VA-CARDIOLOGY
+         VA-DENTAL
+         VA-DERMATOLOGY
+         VA-DIABETES
+         VA-EARS NOSE THROAT
+         VA-EMERGENCY DEPARTMENT
+         VA-ENDO METAB EXCEPT DIABETES
+         VA-GASTROENTEROLOGY
+         VA-GENERAL SURGERY
+         VA-GYNECOLOGY
+         VA-HEMATOLOGY
+         VA-INFECTIOUS DISEASE
+         VA-MENTAL HEALTH
+         VA-NEUROLOGY
+         VA-NEUROSURGERY
+         VA-ONCOLOGY
+         VA-OPHTHALMOLOGY
+         VA-ORTHOPEDICS
+         VA-PAIN
+         VA-PLASTIC SURGERY
+         VA-POLYTRAUMA
+         VA-PULMONARY
+         VA-RENAL NEPHROLOGY
+         VA-RHEUMATOLOGY
+         VA-UROLOGY
+  
+ Once installed, commonly used diagnoses under these categories will be 
+ available for CAC's to copy and utilize when building local problem 
+ selection lists for their site users/clinics.
+  
+ The Copy to New Category [GMPL MENU COPY GROUP] protocol menu action is 
+ created for this purpose. This menu action allows CAC's to adopt any 
+ national categories for local list category creation and use without 
+ modifying the national version/standard.
+  
+ In order to support all these enhancements, the file structures for the 
+ PROBLEM SELECTION LIST file #125 and PROBLEM SELECTION CATEGORY file 
+ #125.11 were also redesigned. To enable a tighter coupling between a 
+ selection list and its categories, the PROBLEM SELECTION LIST CONTENTS 
+ file #125.1 will now be a subfile/multiple of the PROBLEM SELECTION LIST 
+ file #125. The same concept applies to the PROBLEM SELECTION CATEGORY 
+ CONTENT file #125.12 which will now be a subfile of the PROBLEM SELECTION 
+ CATEGORY file #125.11. With this new redesign, the file data is also 
+ migrated to their respective file record entries to ensure continued 
+ operability.
+  
+ A new CLASS field is also added to the List (#125) and Category (#125.11) 
+ files in order to delineate, control, and manage the editing capabilities 
+ of national, local, or VISN level lists and categories. CAC's will not be 
+ able to create any "national" lists and categories using the "Build 
+ Problem Selection List(s)" menu option.
+  
+ This patch also scans the PROBLEM SELECTION LIST and PROBLEM SELECTION 
+ CATEGORY files for any duplicate names or names in mixed/lower case 
+ format. A report of finding will be generated to the installer and OR 
+ CACS mail group via MailMan and any mixed/lower case names will
+ automatically be converted to upper case.
+  
+ If a CAC is not in the OR CACS mail group when the patch is installed, 
+ please have the installer forward any reports to the local CAC. The CAC
+ will have to review any duplicate list and/or category names found and
+ edit/delete/reconcile the entries as appropriate.
+  
+ Sample Duplicate Name Report/Message:
+ =====================================
+  
+ Subj: Duplicate Problem Selection List/Category Name Report  [#203470]
+ 03/13/17@12:59  10 lines
+ From: GMPL*2.0*49 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ Duplicate problem selection list/category names are no longer allowed with
+ patch GMPL*2.0*49. The following list/category names are duplicates. 
+ Please have your CAC review these with the pre-existing file entries and
+ rename, delete, or reconcile the duplicate entries as needed.
+  
+      Duplicate List Names:
+  
+      ORTHOPEDIC
+  
+      Duplicate Category Names:
+  
+      NEUROLOGY
+  
+  
+  
+ Sample Mixed/Lower Case Name Report/Message:
+ ============================================
+  
+ Subj: Mixed & Lower Case List/Category Name Report  [#203469] 
+ 03/13/17@12:59 18 lines
+ From: GMPL*2.0*49 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ Mixed/lower case problem selection list/category names are no longer 
+ allowed with patch GMPL*2.0*49. This patch scans the Problem Selection
+ List and Problem Selection Category files for any names in mixed or lower
+ case letters and converts them to upper case.
+  
+ For those conversions that failed, please have a CAC or somebody with 
+ FileMan access manually modify the name to upper case.
+  
+ The following list names converted successfully:
+  
+      Test List 1
+  
+ The following category names converted successfully:
+  
+      Cardiovascular
+  
+  
+ If there are any pre-existing User/Clinic selection list assignments 
+ prior to patch installation, a report will also be generated and sent to
+ the installer and OR CACS mail group via Mailman. If there are any 
+ users that are assigned to a selection list that no longer exists, 
+ they will also be captured in this report. The following is a sample
+ report:
+  
+ Subj: Pre-existing USER/CLINIC Selection List Assignment Report  [#154024]
+ 08/15/17@09:50  129 lines
+ From: GMPL*2.0*49 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ This report was auto generated during installation to identify Problem
+ Selection Lists assigned to users and clinics prior to the installation of
+ GMPL*2.0*49. After installation all users and clinic assignments will be
+ migrated to the new Default Selection List Display parameter setting. If
+ users and clinics desire to use the National Problem Selection List as
+ their default setting then use the Assign/Remove menu option to reassign
+ those users or clinics listed in the report.
+  
+ User Selection List Assignments: 
+  
+    PROVIDER,ONE                       USER LIST 1
+    PROVIDER,TWO                       USER LIST 2
+    PROVIDER,THREE                     USER LIST 3
+    PROVIDER,FOUR                      USER LIST 4
+  
+ Clinic Selection List Assignments: 
+  
+    CARDIOLOGY                         CARDIO CLINIC LIST
+    GENERAL MEDICINE                   GENERAL MED CLINIC LIST
+    PAIN CLINIC                        PAIN CLINIC LIST
+    PRIMARY CARE                       PRIMARY CARE CLINIC LIST
+  
+ User(s) assigned to a Selection List that no longer exists:
+  
+    PROVIDER,FIVE                      Selection List #5
+    PROVIDER,SIX                       Selection List #6
+  
+ Type <Enter> to continue or '^' to exit:
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PROBLEM SELECTION 
+ LIST (#125)                    CLASS (#.04)                New
+ PROBLEM SELECTION 
+ LIST (#125)                    CATEGORY (#1)               New
+ PROBLEM SELECTION 
+ LIST (#125)               CATEGORY NAME (#1.01)            New
+ PROBLEM SELECTION 
+ LIST (#125)                  SEQUENCE (#1.02)              New
+ PROBLEM SELECTION 
+ LIST (#125)                  SUBHEADER (#1.03)             New
+ PROBLEM SELECTION 
+ LIST (#125)               SHOW PROBLEMS (#1.04)            New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)      DATE LAST MODIFIED (#.02)        Modified
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)             CLASS (#.03)                New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)       CATEGORY CONTENTS (#1)            New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)           PROBLEM (#1.01)               New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)           SEQUENCE (#1.02)              New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)         DISPLAY TEXT (#1.03)            New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)     ASSOCIATED ICD CODE (#1.04)         New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)    SNOMED CT CONCEPT CODE (#1.05)       New
+ PROBLEM SELECTION 
+ CATEGORY (#125.11)  SNOMED CT DESIGNATION CODE (#1.06)     New
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                         Type              New/Modified/Deleted
+ -----------                      -----------          --------------------
+ GMPL ASSIGN LIST                 Run Routine                Modified
+ GMPL BUILD LIST MENU                Menu                    Modified
+ GMPL DE-ASSIGN LIST              Run Routine                Deleted
+ GMPL SELECTION LIST CSV CHECK    Run Routine                Modified
+ GMPL SELECTION LIST IMPORT       Run Routine                  New
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                  New/Modified/Deleted
+ -------------                  -------------------- 
+ GMPL MENU ASSIGN LIST                Modified
+ GMPL MENU COPY GROUP                   New
+ GMPL MENU SAVE GROUP                 Modified
+ GMPL MENU SAVE LIST                  Modified
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name              New/Modified/Deleted
+ -----------------              --------------------
+ GMPL IMPRT UTIL                        New
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20160107: Problem List Diagnosis Menu
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Minnesota
+ Orlando
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available. This patch 
+ will be released as part of a combined multi-package build under PROBLEM 
+ SELECTION LIST BUILD 1.0. This combined build consists of the GMPL*2.0*49 
+ and OR*3.0*429 patches.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI&T Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Problem Selection List        GMPL_2_0_49_IG.PDF              Binary
+  Enhancements Deployment,     GMPL_2_0_49_IG.DOCX             Binary
+  Installation, Back-Out,
+  and Rollback Guide 
+ Problem List User Manual      GMPL_2_0_49_UM.PDF              Binary
+                               GMPL_2_0_49_UM.DOC              Binary
+ Problem List Technical Manual GMPL_2_0_49_TM.PDF              Binary
+                               GMPL_2_0_49_TM.DOC              Binary
+ Problem List Release Notes    GMPL_2_0_49_RN.PDF              Binary
+                               GMPL_2_0_49_RN.DOCX             Binary
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a pre and post-installation routine (GMPLY49) included. This 
+ routine will be automatically deleted once installation has completed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The pre-installation routine will automatically scan and correct 
+ any mixed/lower case list/category names found and send a report to 
+ the installer and OR CACS mail group via MailMan. Additionally, it will 
+ scan for any pre-existing User/Clinic selection list assignments and 
+ send a report to the same recipients as just mentioned. Any invalid 
+ user selection list assignments within the NEW PERSON file will be removed
+ appropriately. It will also remove the pre-existing data dictionaries for
+ the PROBLEM SELECTION LIST file (#125) and PROBLEM SELECTION CATEGORY file
+ (#125.11).
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the Problem Selection List Enhancements Deployment, 
+ Installation, Back-Out, and Rollback Guide for installation instructions.
+  
+ **NOTE: Users should stay out of the Problem Selection List ListManager 
+ Application entirely during the installation of this patch as data from 
+ files #125.1 and #125.12 are being migrated to files #125 and #125.11 
+ respectively. 
+  
+ Utilizing this ListMan App during the data migration process could lock 
+ up certain records and prevent data from being migrated successfully. If 
+ this should occur, a lock error message will be generated to the 
+ installer identifying those records during the post-installation.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine will automatically migrate data from files 
+ #125.1 and #125.12 to files #125 and #125.11 respectively. It is 
+ imperative that users stay out of the Problem Selection List ListMan App 
+ until the installer has received messages that the migration has 
+ successfully completed.
+  
+ It will also set the CLASS field for all pre-existing lists and 
+ categories to "Local". Additionally it will scan for duplicate 
+ list/category names and send a report to the installer and OR CACS 
+ mail group via MailMan. A few other post-processing items such as updating
+ the display order of several option and protocol menu items are also 
+ performed. The GMPL CODE LIST menu option is also marked out of order.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPL
+    Before: B26898783   After: B27126039  **3,11,28,42,49**
+Routine Name: GMPL1
+    Before: B41592331   After: B42997601  **3,20,28,43,42,45,49**
+Routine Name: GMPLBLCK
+    Before: B57283175   After: B78808461  **28,42,49**
+Routine Name: GMPLBLD
+    Before: B40896802   After: B62962648  **3,28,33,36,42,49**
+Routine Name: GMPLBLD1
+    Before: B34803359   After: B39853125  **3,28,36,42,49**
+Routine Name: GMPLBLD2
+    Before: B52174697   After: B88445928  **3,28,36,42,49**
+Routine Name: GMPLBLD3
+    Before: B23961246   After: B21650915  **28,42,49**
+Routine Name: GMPLBLDC
+    Before: B77042279   After:B105378779  **3,7,28,36,42,45,49**
+Routine Name: GMPLCLN
+    Before:B143436186   After:B127703293  **40,49**
+Routine Name: GMPLCOPY
+    Before:       n/a   After: B19671489  **49**
+Routine Name: GMPLINTR
+    Before:       n/a   After: B27139569  **49**
+Routine Name: GMPLSAVE
+    Before:B132948390   After:B133926032  **26,31,35,37,38,36,42,47,45,49**
+Routine Name: GMPLSLI1
+    Before:       n/a   After:B186261431  **49**
+Routine Name: GMPLSLI2
+    Before:       n/a   After: B11257875  **49**
+Routine Name: GMPLSLRP
+    Before:       n/a   After:  B3033052  **49**
+Routine Name: GMPLUTL2
+    Before: B93300856   After: B93151761  **10,18,21,26,35,36,42,45,49**
+Routine Name: GMPLUTL4
+    Before:  B2402441   After: B16873320  **26,49**
+Routine Name: GMPLX
+    Before:B102602938   After:B127583491  **7,23,26,28,27,36,42,40,49**
+Routine Name: GMPLY49
+    Before:       n/a   After:B185098073  **49**
+Routine Name: GMPLY49A
+    Before:       n/a   After: B22998218  **49**
+ 
+Routine list of preceding patches: 40, 45
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 13, 2016
+Completed By:                               Date Completed: DEC 07, 2017
+Released By :                               Date Released : DEC 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

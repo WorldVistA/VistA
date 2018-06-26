@@ -1,0 +1,202 @@
+
+=============================================================================
+Run Date: MAR 30, 2018                     Designation: PSO*7*513
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #426                      Status: Released
+                  Compliance Date: APR 30, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*478   <<= must be installed BEFORE `PSO*7*513'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 2 WARRANTY
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*83
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*513
+  
+ Both of these VistA patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: PSX PSO BUNDLE 1.0
+   KIDS Host File name: PSX_2_83_PSO.KID
+  
+  
+ This patch contains the following functionality:
+ ------------------------------------------------
+     This patch corrects the error causing non-billable TRICARE/CHAMPVA
+     prescriptions to transmit to CMOP instead of displaying on the
+     pharmacy worklist as rejected (eT or eC).
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A                       
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ (VDL) at:  http://www.domain.ext/vdl
+  
+ Title                                 File Name             Transfer Mode
+ --------------------------------------------------------------------------
+ *PSX Deploy Install Rollback Guide (PSX*2*83)
+                                       PSX_2_0_P83_IG.PDF    Binary
+  
+ *A single Deploy Install Rollback Guide will be released with this
+  multi-build.  It can be found on the CMOP page of the VDL.
+  
+  
+ Patch Installation
+ ==================
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may take up to 1 minute to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please see the Installation Instructions associated with patch 
+ PSX*2.0*83. 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;[DATE];[BUILD #]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOREJU3
+    Before: B98042345   After:B107526662  **287,290,358,359,385,421,427,
+                                           448,478,513**
+ 
+Routine list of preceding patches: 478
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2018
+Completed By:                               Date Completed: MAR 27, 2018
+Released By :                               Date Released : MAR 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,183 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/08/17 at 13:17
+=============================================================================
+Run Date: MAR 22, 2018                     Designation: LR*5.2*490
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #403                    Status: Released
+                  Compliance Date: APR 22, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*490'
+                    (v)LR*5.2*479  <<= must be installed BEFORE `LR*5.2*490'
+
+Subject: LRORDR DEFINED, MISSING UN-RELEASE PROMPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses two (2) issues:
+  
+ 1.   When a user goes to the Multipurpose accessioning option [LRQUICK] 
+      in the Accessioning menu option [LR IN], the variable LRORDR may 
+      still be set and causes the accessioning routine to erroneously 
+      assume that specimen collection will be by Ward Collect.
+  
+ 2.   When Anatomic Pathology Electronic Signatures are turned off and 
+      the Verify/release reports, anat path option [LRAPR] is selected to
+      unrelease a verified provisional report, the prompt to "Unrelease
+      Report" is not displayed.
+  
+  
+ Associated CA SDM ticket(s):
+ ===========================
+ 1.    R14025160FY17 - LRORDR Defined
+ 2.    I12008486FY17 - Missing Unrelease Prompt
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ William S. Middleton Memorial Veterans Hospital (Madison)
+ VA Heartland - West (Columbia)
+  
+ BLOOD BANK IMPACT:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*490 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*490 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*490 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ CA SDM Overview:
+ ================
+ 1.    R14025160FY17 - LRORDR Defined
+  
+ Problem:
+ --------
+ When going into the Log-in menu, anat path option [LRAPLG] from the 
+ Log-in menu, anat path option [LRAPL] in the Anatomic Pathology menu 
+ option [LRAP] of the Laboratory DHCP Menu [LRMENU], variable LRORDR gets
+ set to "WC" (Ward Collect) and is not cleaned up when exiting the option.
+ If a user goes to the Multipurpose accessioning option [LRQUICK] in the 
+ Accessioning menu option [LR IN] right after using the Log-in menu, anat
+ path option [LRAPL], the variable LRORDR is still set and causes the
+ accessioning routine to erroneously assume that specimen collection will
+ be by Ward Collection.
+  
+ Resolution:
+ -----------
+ The routine ^LRAPLG is modified to NEW the variable LRORDR.
+  
+ 2.    I12008486FY17 - Missing Unrelease Prompt
+  
+ Problem:
+ --------
+ When a user has an autopsy report that had a Provisional report entered
+ and verified and is ready to verify the final report, the provisional 
+ report needs to be unreleased using Verify/release reports, anat path
+ option [LRAPR].  However, when Electronic Signatures are turned off, and
+ the LRAPR option is selected, and a patient is entered, the prompt to
+ "Unrelease Report" is not displayed.
+  
+ Resolution:
+ -----------
+ The routine ^LRAPR is modified to present the prompt.
+  
+ Installation Instructions:
+ ==========================
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+       problems loading and/or installing this patch.
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+    option will load the KIDS patch onto your system.
+  
+ 2. The patch has now been loaded into a Transport global on your
+    system. You now need to use KIDS to install the transport global.
+  
+ 3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+    select the 'Installation' menu.
+  
+ 4. Use the 'Verify Checksum in Transport Global' option and verify
+    that all routines have the correct checksums.
+     
+ 5. On the KIDS menu, under the 'Installation' menu, use the 
+    following options:
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+    To preserve a copy of the routines exported in this patch prior
+    to installation, you should use the 'Backup a Transport Global' 
+    option at this time. You may also compare the routines in your 
+    production account to the routines in the patch by using the 
+    'Compare a Transport Global to Current System' option.
+  
+ 6. Use the 'Install Package(s)' option under the 'Installation' 
+    Menu and select the package 'LR*5.2*490'.
+  
+    When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+    choose 'NO'.
+  
+    When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    And Protocols? NO//', choose 'NO'.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPLG
+    Before: B12446427   After: B12481409  **72,201,259,462,479,490**
+Routine Name: LRAPR
+    Before:B102075847   After:B102103047  **72,248,259,317,365,350,490**
+ 
+Routine list of preceding patches: 350, 479
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2017
+Completed By:                               Date Completed: MAR 21, 2018
+Released By :                               Date Released : MAR 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

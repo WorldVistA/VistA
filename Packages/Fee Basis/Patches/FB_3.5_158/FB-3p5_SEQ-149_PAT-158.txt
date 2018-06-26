@@ -1,0 +1,368 @@
+$TXT Created by                      DEVFEX.DOMAIN.EXT  (KIDS) on Wednesday, 12/06/17 at 09:20
+=============================================================================
+Run Date: JAN 16, 2018                     Designation: FB*3.5*158
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #149                    Status: Released
+                  Compliance Date: FEB 15, 2018
+=============================================================================
+
+Associated patches: (v)FB*3.5*73   <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*91   <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*127  <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*128  <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*153  <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*154  <<= must be installed BEFORE `FB*3.5*158'
+                    (v)FB*3.5*157  <<= must be installed BEFORE `FB*3.5*158'
+
+Subject: Electronic Remittance Advise (ERA) Compliance
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+  ************************************************************************
+  *  If your site is using the Fee Basis Claims System (FBCS), you must  * 
+  *  install DSIF*3.2*13 immediately after installing FB*3.5*158 to      *
+  *  avoid application/processing errors. If your site is not using      *
+  *  FBCS, there is no need to install the FBCS patch.                   *
+  ************************************************************************
+  
+ The ERA Compliance patch (FB*3.5*158) addresses enhancements to VistA
+ Fee Basis and its compliance to CORE Level III Electronic Funds Transfer
+ (EFT) standards, as part of the Health Product Enhancements (HAPE)
+ Electronic Data Interchange (EDI) Purchased Care (PC) software
+ enhancement project.
+  
+ Batch Numbers will increase in size from 5 digits to 7 digits.
+  
+ Batches that are 7 years old or older will be purged on a monthly basis.
+  
+ Batch files, transmitted to Central Fee, for inpatient, outpatient, and
+ pharmacy claims will be updated to include data elements, previously
+ transmitted via Vitria, as well as additional claim data.
+  
+ Allow a maximum of 5 CARCs per claim line item with a maximum of 2 RARCs
+ per CARC to be entered.
+  
+ Software was also modified to decrease the maximum number of lines in a 
+ batch due to the addition of new fields in the batch.
+  
+ -OUTPATIENT: Previously users were able to have 85 lines in a batch; 
+ this is now changed to a maximum of 50 lines per batch.   
+  
+ -INPATIENT:  Previously users were able to have 42 lines in a batch; 
+ this is now changed to a maximum of 30 lines per batch.
+  
+ -PHARMACY:  Line maximum is unchanged by this patch.
+  
+ Associate CARCs with CORE Business Scenarios so that once a CARC and
+ scenario is established, only additional CARCs from the same scenario
+ can be selected.
+  
+ Set up the Fee Basis data dictionary to support RARC to CARC
+ relationships, still allowing for the selection of CARCless RARCs. Also
+ support relationships between CARCs and Groups, and RARCs and Groups.
+  
+ Populates ADJUSTMENT REASON (CARC) file (#161.91) with associated
+ REMITTANCE REMARK (RARC) codes, CORE SENARIO, and ADJUSTMENT GROUPs
+ (CAGC) to be complaint with CORE-required Code Combinations for CORE-
+ defined Business Scenarios for the Phase III CORE 360 Uniform Use of
+ Claim Adjustment Reason Codes and Remittance Advice Remark Codes (835)
+ Rule version 3.3.0 June 2016.
+  
+ The Fee Basis data dictionary will be expanded to accept additional
+ payment methodologies from FBCS.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ FEE BASIS SITE PARAMETERS  NEXT BATCH NUMBER (#10) Modified
+ (#161.4)
+ FEE BASIS BATCH (#161.7)   NUMBER (.01)            Modified
+ ADJUSTMENT REASON          REMITTANCE REMARK (5)   New 
+ (#161.91)                  CORE SCENARIO (6)       New
+                            ADJUSTMENT GROUP (7)    New
+ REMITTANCE REMARK          ADJUSTMENT GROUP (3)    New
+ (#161.93) 
+ FEE BASIS PAYMENT (#162)   ADJUSTMENT (162.08,1)   New
+                            PAYMENT METHODOLOGY     New
+                            (162.03,82)
+                            AUTHORIZATION NUMBER    New
+                            (162.03,83)
+                            ATTACHMENT ID           New
+                            (162.03,84)
+ FEE BASIS PHARMACY INVOICE ADJUSTMENT (#162.15,1)  New
+ (#162.1)
+                            AUTHORIZATION NUMBER    New
+                            (162.11,40)
+ FEE BASIS INVOICE (#162.5) ADJUSTMENT (#162.559,1) New
+                            AUTHORIZATION NUMBER    New
+                            (162.5,88)
+                            ATTACHMENT ID           New
+                            (162.5,91)
+                            PAYMENT METHODOLOGY     New
+                            (162.5,90)
+ FEE BASIS PAYMENT                                  New
+ METHODOLOGY (#163.98)
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ FBAA BATCH 7YR PURGE   run routine        New
+ ZTMQUEUABLE OPTIONS    menu               Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ FBCH EDIT PAYMENT  INPUT     FEE BASIS INVOICE (162.5)   Modified
+ FBCH ENTER PAYMENT INPUT     FEE BASIS INVOICE (162.5)   Modified
+ FBNH EDIT PAYMENT  INPUT     FEE BASIS INVOICE (162.5)   Modified
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ Problem:
+ -------
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ CENTRAL PLAINS HCS
+ HEARTLAND-EAST HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Fee Basis User Manual         FB_3_5_UM_R1217.PDF            (binary)
+ Fee Basis Technical Manual    FB_3_5_TM_R1217.PDF            (binary)
+      /Security Guide
+ Fee Basis Install Guide       FB_3_5_P158_IG.PDF             (binary)
+ Fee Basis  Release Notes      FB_3_5_P158_RN.PDF             (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-installation routine, FBXIP158, will run to compile the modified
+ input templates and remove the option, FB FPPS TRANSMIT, from its 
+ parent menu and also establish CARC/RARC relationships.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+  NOTE
+ *****************************************************************
+ *ALL Payment Batches MUST be Transmitted  to Central Fee        *
+ *and have a status of 'Vouchered' prior to installing FB*3.5*158*
+ *****************************************************************
+  
+ There are no options to disable for this installation.
+  
+ Installation Instructions:
+ --------------------------
+ The installation will install new and modified routines, Data Dictionaries,
+ and Input Templates.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, use the following options.
+     When prompted for the INSTALL NAME enter the patch #(ex. FB*3.5*158):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The option, FBAA BATCH 7YR PURGE, can now be entered into TaskManager
+ and scheduled to run monthly.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 94
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACIE
+    Before: B16604968   After: B17356437  **38,61,91,154,158**
+Routine Name: FBAACO2
+    Before: B31897549   After: B33011458  **4,55,61,77,116,122,133,108,
+                                           135,139,123,157,158**
+Routine Name: FBAACO3
+    Before: B58658444   After: B57937070  **4,38,55,61,116,122,133,108,
+                                           124,143,139,157,154,158**
+Routine Name: FBAADOB
+    Before:  B2793564   After:  B2800687  **158**
+Routine Name: FBAAEPI
+    Before: B33105165   After: B32470147  **38,61,124,132,123,154,158**
+Routine Name: FBAAFR
+    Before:  B2615408   After: B13991294  **61,158**
+Routine Name: FBAAMP
+    Before:B134317556   After:B133720533  **4,21,38,55,61,67,116,108,143,
+                                           123,154,158**
+Routine Name: FBAAMP1
+    Before: B12344888   After: B12388857  **4,55,61,77,139,158**
+Routine Name: FBAAPET
+    Before: B51663555   After: B51739856  **4,38,55,61,77,116,122,133,
+                                           108,124,132,139,123,154,158**
+Routine Name: FBAAPP0
+    Before:  B4309645   After:  B4339891  **61,91,158**
+Routine Name: FBAAUTL
+    Before: B26368074   After: B36872113  **101,114,108,124,127,158**
+Routine Name: FBAAUTL3
+    Before:  B4132421   After:  B4122598  **132,158**
+Routine Name: FBAAV0
+    Before: B56393278   After: B76214254  **3,4,55,89,98,116,108,132,139,
+                                           123,158**
+Routine Name: FBAAV01
+    Before: B27989531   After: B48459341  **89,98,108,123,158**
+Routine Name: FBAAV1
+    Before: B29697333   After: B29696707  **10,36,39,98,158**
+Routine Name: FBAAV2
+    Before: B17032694   After: B39413585  **3,89,98,116,108,123,158**
+Routine Name: FBAAV3
+    Before:  B3409907   After:  B4896340  **3,89,116,132,158**
+Routine Name: FBAAV4
+    Before: B39089780   After: B39332795  **13,34,37,70,146,127,153,158**
+Routine Name: FBAAV5
+    Before:B101588501   After:B139989645  **3,55,89,98,116,108,139,123,158**
+Routine Name: FBAAV8
+    Before:B119931377   After:B120330474  **123,158**
+Routine Name: FBAAVR5
+    Before: B40211184   After: B40211366  **132,158**
+Routine Name: FBBPG7Y
+    Before:       n/a   After:  B8669207  **158**
+Routine Name: FBCHEAP
+    Before: B21240885   After: B21016855  **38,55,61,77,154,158**
+Routine Name: FBCHFR
+    Before:  B2637264   After:  B8623931  **61,158**
+Routine Name: FBCHPET
+    Before: B44036498   After: B43033601  **4,38,61,77,116,108,124,132,
+                                           123,154,158**
+Routine Name: FBNHEP1
+    Before:  B9319871   After:  B9136492  **12,61,158**
+Routine Name: FBRXFR
+    Before:  B2618713   After:  B9233192  **61,158**
+Routine Name: FBSVBR
+    Before: B72554273   After: B79485755  **131,132,158**
+Routine Name: FBSVVA
+    Before: B19365869   After: B22383786  **131,132,158**
+Routine Name: FBUTL1
+    Before: B14646555   After: B19606435  **61,158**
+Routine Name: FBUTL2
+    Before: B53713039   After: B70356259  **61,73,158**
+Routine Name: FBUTL4
+    Before: B23579110   After: B26671787  **61,158**
+Routine Name: FBUTL4A
+    Before:       n/a   After: B30641813  **61,158**
+Routine Name: FBX2P158
+    Before:       n/a   After:B176094799  **158**
+Routine Name: FBXIP158
+    Before:       n/a   After:  B8013846  **158**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 15, 2014
+Completed By:                               Date Completed: JAN 11, 2018
+Released By :                               Date Released : JAN 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

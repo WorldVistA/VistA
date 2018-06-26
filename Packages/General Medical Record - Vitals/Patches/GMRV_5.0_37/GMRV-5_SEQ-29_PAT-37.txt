@@ -1,0 +1,168 @@
+$TXT Created by                     CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 01/10/18 at 10:13
+=============================================================================
+Run Date: APR 17, 2018                     Designation: GMRV*5*37
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #29                      Status: Released
+                  Compliance Date: MAY 18, 2018
+=============================================================================
+
+
+Subject: PREVENT FUTURE ENTRY TIME IN VITALS DLL
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issue in the Vitals Lite DLL:
+  
+ 1. Prevent entering Vitals for a future date/time.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Birmingham VA Medical Center, AL
+ VA Central California Health Care System (Fresno)
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I16787960FY18 - editing issues in vital through CPRS
+  
+    Duplicate(s)
+    ------------
+    I17948975FY18 - Vital Sign Issue within CPRS. *THIS ISSUE AFFECTS 
+                    DIRECT PATIENT CARE*
+    I17951975FY18 - vitals lite time is incorrect and is displaying a day 
+                    ahead - Patient Care
+  
+ Problem:
+ -------
+ A nursing assistant entered a Vital sign for a future time and you are 
+ not supposed to be able to do this. Vitals cannot be entered in the
+ future.
+  
+ Resolution:
+ ----------
+ The Vitals Lite GUI DLL was modified to ensure that a future date/time is
+ not selectable.
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interfaces (GUI). Files and documentation 
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from:
+  
+   download.vista.domain.ext.
+  
+ This transmits the files from the first available server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ GMRV*5.0*37 Vitals /      GMRV_5_37_IG.pdf     Binary
+ Measurements Installation Guide
+  
+ GUI DLL Component         GMRV_5_37.zip        Binary
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please reference the GMRV*5.0*37 Vitals / Measurements Installation 
+ Guide as this server install needs to be coordinated with the GUI DLL
+ installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users and needs to be installed at the same
+ time as the GUI DLL installation.
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the 
+    patch # GMRV*5.0*37.
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Please reference the GMRV*5.0*37 Vitals / Measurements Installation 
+ Guide for post install steps.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ Please reference the GMRV*5.0*37 Vitals / Measurements Installation Guide 
+ for the back-out/rollback directions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV37PST
+    Before:       n/a   After:   B921170  **37**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2017
+Completed By:                               Date Completed: APR 13, 2018
+Released By :                               Date Released : APR 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

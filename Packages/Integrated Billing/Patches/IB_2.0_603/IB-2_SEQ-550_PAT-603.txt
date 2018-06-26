@@ -1,0 +1,143 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/14/17 at 14:04
+=============================================================================
+Run Date: DEC 26, 2017                     Designation: IB*2*603
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #550                      Status: Released
+                  Compliance Date: JAN 26, 2018
+=============================================================================
+
+
+Subject: COST BASED AND INTER-AGENCY BILLING RATE UPDATES FOR CY2017 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses updates of Cost Based and Inter-Agency rates with an
+ effective date of 08/29/2017 in the CHARGE ITEM file (#363.2).
+  
+ ASSOCIATED TICKET(S):
+ =====================
+ 1. R16233836FY17 Cost Based and Inter Agency Rate Updates for 2017
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Asheville VAMC
+ Tennessee Valley HCS
+   
+ CA SDM OVERVIEW:
+ ================
+ 1. R16233836FY17 Cost Based and Inter Agency Rate Updates for 2017
+  
+    Problem:
+    --------
+    The Office of Community Care has requested a patch to update the Cost
+    Base and Inter-Agency rates to the Charge Master, with an effective 
+    date of 08/29/2017.
+  
+    It also includes the outpatient dental (Ineligible/Emergency dental care)
+    for Cost Based and Inter-Agency rates which will distinguish from the
+    outpatient visit rates.
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P603 will add 68 Cost Based and Inter-Agency
+    billing charges with an effective date of 08/29/2017 to the CHARGE ITEM
+    file (#362.2).
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*603):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P603.
+  
+ 6.   Example of successful installation.
+  
+     IB*2.0*603 Post-Install .....
+   
+     >> 68 Cost Based/Interagency Charge Items added (#363.2).
+  
+     IB*2.0*603 Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P603
+    Before:       n/a   After: B38241545  **603**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 29, 2017
+Completed By:                               Date Completed: DEC 21, 2017
+Released By :                               Date Released : DEC 26, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

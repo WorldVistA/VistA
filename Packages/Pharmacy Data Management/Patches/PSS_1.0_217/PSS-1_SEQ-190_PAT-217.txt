@@ -1,0 +1,187 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 11/30/17 at 12:01
+=============================================================================
+Run Date: APR 05, 2018                     Designation: PSS*1*217
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #190                      Status: Released
+                  Compliance Date: MAY 05, 2018
+=============================================================================
+
+
+Subject: SCRIPTALK ENHANCEMENTS
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch introduces data dictionary changes necessary to support the
+ enhancements to the ScripTalk 'talking' prescription label functionality
+ being introduced by patch PSO*7*502. The current ScripTalk label, released
+ in 2003, has a 2K memory capacity, which limits the amount of prescription
+ data that can be audibly read to the blind or low-vision Veteran using the
+ system. New ScripTalk labels with 10K capacity are now available, and this
+ patch takes advantage of that capacity by sending more prescription data,
+ including Drug Warnings, to the ScripTalk label.
+  
+ The data sent to the ScripTalk label (either 2K or 10K), will now be 
+ controlled by one of two new parameters, depending on how your ScripTalk
+ device definitions are set up. If they are set up at the system level
+ using a mapped device, the dataset will be controlled by the new SCPIPTALK
+ PRINTER TYPE SubField (#.03) in the SCRIPTALK PRINT DEVICE MAPPING SubFile
+ (#59.747) of the PHARMACY SYSTEM File (#59.7), which this patch 
+ introduces. If your ScripTalk device definition is set at the Outpatient
+ Site level,the dataset will be controlled by the new SCRIPTRALK PRINTER
+ TYPE Field (#107.2) in the OUTPATIENT SITE File (#59), which will be 
+ introduced by patch PSO*7.0*502. Neither of these new fields will be
+ populated upon patch install, and the software assumes a 2k dataset when
+ either parameter is null.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ SCRIPTALK PRINT DEVICE  SCRIPTALK PRINTER TYPE  New
+ (#59.747) SubFile of    (#.03)(subfield)
+ PHARMACY SYSTEM (#59.7)
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type    New/Modified/Deleted
+ -----------                      ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSR):
+ ---------------------------
+ 20170521
+  
+  
+ Patient Safety Issues (PSOs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+                                                      
+ Test Sites:
+ -----------
+ VA Connecticut HCS
+ Edward Hines Jr. VA Hospital
+ New Jersey HCS
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Patch PSS*1.0*217 is a required patch for PSO*7.0*502.  Please install 
+ PSS*1.0*217 prior to installing PSO*7.0*502.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A 
+  
+ Installation Instructions:
+ -------------------------- 
+ Installation will take less than 5 minutes and users can be on the system.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSS*1*217)
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+  
+    4. Use the Install Package(s) option and select the package PSS*1*217.
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ If you have a 10k printer currently installed on your system, you must 
+ change the ScripTalk device setup to indicate it is 10k. Otherwise, you 
+ will only get the 2k output. Additional information is included in the 
+ release notes as well as the technical manual.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the ScripTalk functionality.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Data dictionary changes were included with this patch. However, those 
+ changes were to add additional fields. At this time, it is not necessary 
+ to rollback these changes.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 03, 2017
+Completed By:                               Date Completed: APR 04, 2018
+Released By :                               Date Released : APR 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

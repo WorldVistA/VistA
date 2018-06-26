@@ -1,0 +1,168 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/17/18 at 18:42
+=============================================================================
+Run Date: APR 24, 2018                     Designation: OR*3*451
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #400                      Status: Released
+                  Compliance Date: MAY 31, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*459    <<= must be installed BEFORE `OR*3*451'
+
+Subject: ANTICOAG:REPEATING INR/EARLY APPTS.
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch OR*3.0*451 addresses the following three (3) issues:
+  
+ 1. I17625741FY18 - The show rate calculation skips over visits with an 
+ INR that repeats the previous visit's INR.
+  
+ 2. I17662491FY18 - When a patient comes in early - 48 hours before the 
+ next draw date - then it is counted as a missed appointment.
+  
+ 3. I18565288FY18 - The show rate calculation comes up as "None" for
+ patients who have a callback as their first appointment and an error
+ is logged in the error trap.
+  
+  
+ Defect Tracking System Tickets(s) & Overview:
+ =============================================
+  
+ 1. I17625741FY18(CA SDM) -  AMT Show Rate Issue #1: Blank INR visit issue
+  
+ Problem:
+ --------
+ The show rate calculation skips over visits with a blank INR or an INR 
+ that repeats the previous visit's INR. The idea behind this behavior is
+ possibly to skip over multiple following entries in a day. However that
+ behavior is not appropriate since it is also affects an entry for a later
+ day.
+  
+ Solution:
+ ---------
+ Routine ORAM2 has been modified to no longer skip over repeating INR 
+ entries. Instead it will now properly skip over same day entries. Blank
+ INR visits will still be skipped over since that is desired behavior.
+  
+ Routine: ORAM2
+  
+ 2. I17662491FY18(CA SDM) -  AMT Show Rate Issue #2 - 48 hour window
+  
+ Problem:
+ --------
+ There is a +/- 48 hour window that the New Draw date is checked against. 
+ When a patient is early - if they come in prior to that 48 hour clock -
+ then it is considered a missed appointment and will skew the show rate.
+ This is not desired behavior since a patient should be able to come in
+ early.
+  
+ Solution:
+ ---------
+ The routine has been changed to only count appointments as late if they 
+ are more than 2 days after the next draw date.
+  
+ Routine: ORAM2
+  
+ 3. I18565288FY18 - NFL: Patch OR*3*459 installed this am. Error 
+ <UNDEFINED>SHOWRATE+20^ORAM2 *ORAMRDT showing multiple times in Error 
+ Trap since.
+ Duplicates: I18593168FY18
+             I18592293FY18 
+             I18581253FY18
+  
+ Problem:
+ --------
+ If the first appointment of a patient was a callback then an error screen
+ is displayed when opening the AMT application. The show rate calculation 
+ comes up as "None" even if there are other appointments. An error entry 
+ <UNDEFINED>SHOWRATE+20^ORAM2 *ORAMRDT is logged in the error trap.
+  
+ Solution:
+ ---------
+ The routine has been modified to properly initialize the ORAMRDT variable.
+  
+ Routine: ORAM2
+  
+ Test Sites:
+ -----------
+ Boise VAMC
+ Denver VAMC 
+  
+ Patch Installation:
+  
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      OR*3.0*451:
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM2
+    Before: B63964344   After: B65404956  **307,339,354,361,391,459,451**
+ 
+Routine list of preceding patches: 459
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2017
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

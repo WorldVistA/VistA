@@ -1,0 +1,915 @@
+Released PSA*3*78 SEQ #60
+Extracted from mail message
+**KIDS**:PSA*3.0*78^
+
+**INSTALL NAME**
+PSA*3.0*78
+"BLD",10747,0)
+PSA*3.0*78^DRUG ACCOUNTABILITY^0^3171019^y
+"BLD",10747,1,0)
+^^31^31^3171019^
+"BLD",10747,1,1,0)
+This patch addresses one (1) issue:
+"BLD",10747,1,2,0)
+ 
+"BLD",10747,1,3,0)
+1. McKesson invoice verified, but controlled substance balance did
+"BLD",10747,1,4,0)
+   not update
+"BLD",10747,1,5,0)
+ 
+"BLD",10747,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10747,1,7,0)
+--------------------------------------------
+"BLD",10747,1,8,0)
+ 
+"BLD",10747,1,9,0)
+1.  I5849148FY15
+"BLD",10747,1,10,0)
+ 
+"BLD",10747,1,11,0)
+Problem:
+"BLD",10747,1,12,0)
+--------
+"BLD",10747,1,13,0)
+Verified Drug Accountability (McKesson) invoices will not be set 
+"BLD",10747,1,14,0)
+to a status of Complete if the user edits the invoice, verifies, 
+"BLD",10747,1,15,0)
+and closes (or is disconnected from) their Reflections session at  
+"BLD",10747,1,16,0)
+the "Type <Enter> to continue or '^' to exit:" prompt.  This causes 
+"BLD",10747,1,17,0)
+an out-of-balance situation with regards to the controlled substance 
+"BLD",10747,1,18,0)
+vault.
+"BLD",10747,1,19,0)
+ 
+"BLD",10747,1,20,0)
+Resolution:
+"BLD",10747,1,21,0)
+-----------
+"BLD",10747,1,22,0)
+If a user edits an invoice prior to verifying, VistA routine ^PSAVER1 
+"BLD",10747,1,23,0)
+sets the invoice status to VERIFIED and prompts for the user to 
+"BLD",10747,1,24,0)
+continue or exit, via subroutine END^PSAPROC. The prompt at that point
+"BLD",10747,1,25,0)
+waits for a response.  If the user's Reflections session ends without 
+"BLD",10747,1,26,0)
+completing the final prompt, important processing is missed with 
+"BLD",10747,1,27,0)
+regards to setting up invoice data for the background job that changes 
+"BLD",10747,1,28,0)
+the status from VERIFIED to COMPLETE.
+"BLD",10747,1,29,0)
+ 
+"BLD",10747,1,30,0)
+To resolve this issue, the call to execute the prompt via END^PSAPROC 
+"BLD",10747,1,31,0)
+has been moved to a more appropriate spot in EXIT^PSAVER.
+"BLD",10747,4,0)
+^9.64PA^^
+"BLD",10747,6.3)
+4
+"BLD",10747,"ABPKG")
+n
+"BLD",10747,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10747,"KRN",.4,0)
+.4
+"BLD",10747,"KRN",.401,0)
+.401
+"BLD",10747,"KRN",.402,0)
+.402
+"BLD",10747,"KRN",.403,0)
+.403
+"BLD",10747,"KRN",.5,0)
+.5
+"BLD",10747,"KRN",.84,0)
+.84
+"BLD",10747,"KRN",3.6,0)
+3.6
+"BLD",10747,"KRN",3.8,0)
+3.8
+"BLD",10747,"KRN",9.2,0)
+9.2
+"BLD",10747,"KRN",9.8,0)
+9.8
+"BLD",10747,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10747,"KRN",9.8,"NM",1,0)
+PSAVER^^0^B81042516
+"BLD",10747,"KRN",9.8,"NM",2,0)
+PSAVER1^^0^B57176156
+"BLD",10747,"KRN",9.8,"NM","B","PSAVER",1)
+
+"BLD",10747,"KRN",9.8,"NM","B","PSAVER1",2)
+
+"BLD",10747,"KRN",19,0)
+19
+"BLD",10747,"KRN",19.1,0)
+19.1
+"BLD",10747,"KRN",101,0)
+101
+"BLD",10747,"KRN",409.61,0)
+409.61
+"BLD",10747,"KRN",771,0)
+771
+"BLD",10747,"KRN",779.2,0)
+779.2
+"BLD",10747,"KRN",870,0)
+870
+"BLD",10747,"KRN",8989.51,0)
+8989.51
+"BLD",10747,"KRN",8989.52,0)
+8989.52
+"BLD",10747,"KRN",8994,0)
+8994
+"BLD",10747,"KRN","B",.4,.4)
+
+"BLD",10747,"KRN","B",.401,.401)
+
+"BLD",10747,"KRN","B",.402,.402)
+
+"BLD",10747,"KRN","B",.403,.403)
+
+"BLD",10747,"KRN","B",.5,.5)
+
+"BLD",10747,"KRN","B",.84,.84)
+
+"BLD",10747,"KRN","B",3.6,3.6)
+
+"BLD",10747,"KRN","B",3.8,3.8)
+
+"BLD",10747,"KRN","B",9.2,9.2)
+
+"BLD",10747,"KRN","B",9.8,9.8)
+
+"BLD",10747,"KRN","B",19,19)
+
+"BLD",10747,"KRN","B",19.1,19.1)
+
+"BLD",10747,"KRN","B",101,101)
+
+"BLD",10747,"KRN","B",409.61,409.61)
+
+"BLD",10747,"KRN","B",771,771)
+
+"BLD",10747,"KRN","B",779.2,779.2)
+
+"BLD",10747,"KRN","B",870,870)
+
+"BLD",10747,"KRN","B",8989.51,8989.51)
+
+"BLD",10747,"KRN","B",8989.52,8989.52)
+
+"BLD",10747,"KRN","B",8994,8994)
+
+"BLD",10747,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",10747,"QUES",0)
+^9.62^^
+"BLD",10747,"REQB",0)
+^9.611^1^1
+"BLD",10747,"REQB",1,0)
+PSA*3.0*71^1
+"BLD",10747,"REQB","B","PSA*3.0*71",1)
+
+"MBREQ")
+0
+"PKG",487,-1)
+1^1
+"PKG",487,0)
+DRUG ACCOUNTABILITY^PSA^Drug Accountability Inventory and Tracking module.
+"PKG",487,20,0)
+^9.402P^^
+"PKG",487,22,0)
+^9.49I^1^1
+"PKG",487,22,1,0)
+3.0^2971024^2981028^66481
+"PKG",487,22,1,"PAH",1,0)
+78^3171019
+"PKG",487,22,1,"PAH",1,1,0)
+^^31^31^3171019
+"PKG",487,22,1,"PAH",1,1,1,0)
+This patch addresses one (1) issue:
+"PKG",487,22,1,"PAH",1,1,2,0)
+ 
+"PKG",487,22,1,"PAH",1,1,3,0)
+1. McKesson invoice verified, but controlled substance balance did
+"PKG",487,22,1,"PAH",1,1,4,0)
+   not update
+"PKG",487,22,1,"PAH",1,1,5,0)
+ 
+"PKG",487,22,1,"PAH",1,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",487,22,1,"PAH",1,1,7,0)
+--------------------------------------------
+"PKG",487,22,1,"PAH",1,1,8,0)
+ 
+"PKG",487,22,1,"PAH",1,1,9,0)
+1.  I5849148FY15
+"PKG",487,22,1,"PAH",1,1,10,0)
+ 
+"PKG",487,22,1,"PAH",1,1,11,0)
+Problem:
+"PKG",487,22,1,"PAH",1,1,12,0)
+--------
+"PKG",487,22,1,"PAH",1,1,13,0)
+Verified Drug Accountability (McKesson) invoices will not be set 
+"PKG",487,22,1,"PAH",1,1,14,0)
+to a status of Complete if the user edits the invoice, verifies, 
+"PKG",487,22,1,"PAH",1,1,15,0)
+and closes (or is disconnected from) their Reflections session at  
+"PKG",487,22,1,"PAH",1,1,16,0)
+the "Type <Enter> to continue or '^' to exit:" prompt.  This causes 
+"PKG",487,22,1,"PAH",1,1,17,0)
+an out-of-balance situation with regards to the controlled substance 
+"PKG",487,22,1,"PAH",1,1,18,0)
+vault.
+"PKG",487,22,1,"PAH",1,1,19,0)
+ 
+"PKG",487,22,1,"PAH",1,1,20,0)
+Resolution:
+"PKG",487,22,1,"PAH",1,1,21,0)
+-----------
+"PKG",487,22,1,"PAH",1,1,22,0)
+If a user edits an invoice prior to verifying, VistA routine ^PSAVER1 
+"PKG",487,22,1,"PAH",1,1,23,0)
+sets the invoice status to VERIFIED and prompts for the user to 
+"PKG",487,22,1,"PAH",1,1,24,0)
+continue or exit, via subroutine END^PSAPROC. The prompt at that point
+"PKG",487,22,1,"PAH",1,1,25,0)
+waits for a response.  If the user's Reflections session ends without 
+"PKG",487,22,1,"PAH",1,1,26,0)
+completing the final prompt, important processing is missed with 
+"PKG",487,22,1,"PAH",1,1,27,0)
+regards to setting up invoice data for the background job that changes 
+"PKG",487,22,1,"PAH",1,1,28,0)
+the status from VERIFIED to COMPLETE.
+"PKG",487,22,1,"PAH",1,1,29,0)
+ 
+"PKG",487,22,1,"PAH",1,1,30,0)
+To resolve this issue, the call to execute the prompt via END^PSAPROC 
+"PKG",487,22,1,"PAH",1,1,31,0)
+has been moved to a more appropriate spot in EXIT^PSAVER.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSAVER")
+0^1^B81042516^B80171787
+"RTN","PSAVER",1,0)
+PSAVER ;BIR/JMB-Verify Invoices ;9/6/97
+"RTN","PSAVER",2,0)
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**60,65,71,78**;10/24/97;Build 4
+"RTN","PSAVER",3,0)
+ ;This routine allows the user to verify processed invoices. The entire
+"RTN","PSAVER",4,0)
+ ;invoice may be verified with/without editing. After verification, the
+"RTN","PSAVER",5,0)
+ ;pharmacy location or master vault balances are incremented during a
+"RTN","PSAVER",6,0)
+ ;background job (PSAVER5).
+"RTN","PSAVER",7,0)
+ ;
+"RTN","PSAVER",8,0)
+ I '$D(^XUSEC("PSA ORDERS",DUZ)) W !,"You do not hold the key to enter the option." Q
+"RTN","PSAVER",9,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER",10,0)
+ I '$D(^PSD(58.811,"ASTAT","P")) W !!,"There are no invoices that need to be verified." H 1 Q
+"RTN","PSAVER",11,0)
+ ;
+"RTN","PSAVER",12,0)
+ ;Creates a list of invoices that can be verified by the user. If the
+"RTN","PSAVER",13,0)
+ ;invoice contains at least one item marked as a controlled substance,
+"RTN","PSAVER",14,0)
+ ;the user must have the pharmacist key before it can be verified.
+"RTN","PSAVER",15,0)
+ S (PSACNT,PSAIEN,PSASUP)=0
+"RTN","PSAVER",16,0)
+ F  S PSAIEN=+$O(^PSD(58.811,"ASTAT","P",PSAIEN)) Q:'PSAIEN  D
+"RTN","PSAVER",17,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,0))
+"RTN","PSAVER",18,0)
+ .S PSAIEN1=0 F  S PSAIEN1=+$O(^PSD(58.811,"ASTAT","P",PSAIEN,PSAIEN1)) Q:'PSAIEN1  D
+"RTN","PSAVER",19,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))
+"RTN","PSAVER",20,0)
+ ..I $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",10)'=DUZ,$P(^(0),"^",8)="N"!(($P(^(0),"^",8)="S"!($P(^(0),"^",8)="A"))&($D(^XUSEC("PSJ RPHARM",DUZ)))) S PSACNT=PSACNT+1,PSAVER(PSACNT)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER",21,0)
+ I 'PSACNT D  H 1 G EXIT
+"RTN","PSAVER",22,0)
+ .W !!,"There is at least one invoice that needs to be verified. However, invoices",!,"cannot be verified by the same person who processed them and a pharmacist",!,"must verify invoices that contain a drug marked as a controlled substance."
+"RTN","PSAVER",23,0)
+ .W !!,"There are no invoices you can verify because the invoice(s) meet one of the",!,"above conditions."
+"RTN","PSAVER",24,0)
+ ;
+"RTN","PSAVER",25,0)
+ESIG D SIG^XUSESIG G:X1="" EXIT S PSAOUT=0
+"RTN","PSAVER",26,0)
+ ;
+"RTN","PSAVER",27,0)
+PRINT ;Asks & prints all invoices the user can verify.
+"RTN","PSAVER",28,0)
+ W ! S DIR(0)="Y",DIR("B")="N",DIR("A")="Print processed invoices",DIR("?",1)="Enter YES to print all invoices you can verify then begin verification.",DIR("?")="Enter NO to bypass printing the invoices and begin verification."
+"RTN","PSAVER",29,0)
+ S DIR("??")="^D PRINTYN^PSAVER"
+"RTN","PSAVER",30,0)
+ D ^DIR K DIR G:$G(DIRUT) EXIT G:'Y ENTIRE
+"RTN","PSAVER",31,0)
+ W ! S %ZIS="Q" D ^%ZIS G:POP ENTIRE
+"RTN","PSAVER",32,0)
+ I $D(IO("Q")) D  G ENTIRE
+"RTN","PSAVER",33,0)
+ .K ZTSAVE
+"RTN","PSAVER",34,0)
+ .S ZTDESC="Drug Acct. - Print Prime Vendor Invoices",ZTDTH=$H,ZTRTN="PRTINV^PSAVER",ZTSAVE("PSAVER(")="" D ^%ZTLOAD
+"RTN","PSAVER",35,0)
+ D PRTINV
+"RTN","PSAVER",36,0)
+ ;
+"RTN","PSAVER",37,0)
+ENTIRE ;Displays a list of all invoices the user can select to be verified.
+"RTN","PSAVER",38,0)
+ S PSASLN="",$P(PSASLN,"-",80)="",PSADLN="",$P(PSADLN,"=",80)=""
+"RTN","PSAVER",39,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>"
+"RTN","PSAVER",40,0)
+ W !!?2,"If there are no corrections, you can change the invoices' status",!?2,"to ""Verified"" by selecting them from the list. If you do have"
+"RTN","PSAVER",41,0)
+ W !?2,"corrections, press the return key then a second list will be",!?2,"displayed. You will be able to choose the invoices from that list",!?2,"and enter corrections.",!!?2,"Choose the invoices from the list you want to verify.",!,PSADLN
+"RTN","PSAVER",42,0)
+ S (PSA,PSACNT,PSASTOP)=0
+"RTN","PSAVER",43,0)
+ F  S PSA=+$O(PSAVER(PSA)) Q:'PSA  D  Q:PSASTOP
+"RTN","PSAVER",44,0)
+ .I $Y+5>IOSL D HDR Q:PSASTOP
+"RTN","PSAVER",45,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^"),PSAINV=$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),PSAINVDT=+$P(^(0),"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER",46,0)
+ .W !?(3-$L(PSA)),PSA_".  Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER",47,0)
+ K PSASTOP W !,PSADLN
+"RTN","PSAVER",48,0)
+ S DIR(0)="LO^1:"_PSACNT,DIR("A")="Select invoices to verify",DIR("?",1)="Enter the number to the left of the invoice",DIR("?")="data to be verified or a range of numbers.",DIR("??")="^D SEL^PSAVER"
+"RTN","PSAVER",49,0)
+ W ! D ^DIR K DIR G:$G(DTOUT)!($G(DUOUT)) EXIT
+"RTN","PSAVER",50,0)
+ I Y="",$D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4,LOAD G EDIT
+"RTN","PSAVER",51,0)
+ I Y="",'$D(^PSD(58.811,"ASTAT","L")) D LOAD G EDIT
+"RTN","PSAVER",52,0)
+ S PSASEL=Y
+"RTN","PSAVER",53,0)
+ ;
+"RTN","PSAVER",54,0)
+OKAY ;Verifies correct invoices were selected.
+"RTN","PSAVER",55,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>",!,PSADLN,!
+"RTN","PSAVER",56,0)
+ S PSACNT=0,PSATMP="" F PSAPC=1:1 S PSA=+$P(PSASEL,",",PSAPC) Q:'PSA  D
+"RTN","PSAVER",57,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2)
+"RTN","PSAVER",58,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))
+"RTN","PSAVER",59,0)
+ .S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0)
+"RTN","PSAVER",60,0)
+ .S PSAORD=$P(^PSD(58.811,PSAIEN,0),"^"),PSAINV=$P(PSAIN,"^"),PSAINVDT=+$P(PSAIN,"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER",61,0)
+ .W !?(3-$L(PSACNT)),PSACNT_".  Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER",62,0)
+ .I +$P(PSAIN,"^",5) D
+"RTN","PSAVER",63,0)
+ ..S PSALOC=+$P(PSAIN,"^",5) D SITES^PSAUTL1 S PSALOCN=$P(^PSD(58.8,PSALOC,0),"^")_PSACOMB
+"RTN","PSAVER",64,0)
+ ..W:$L(PSALOCN)>76 !?6,$P(PSALOCN,"(IP)",1)_"(IP)",!?23,$P(PSALOCN,"(IP)",2) W:$L(PSALOCN)<77 !?6,PSALOCN
+"RTN","PSAVER",65,0)
+ .I +$P(PSAIN,"^",12) W !?6,"MASTER VAULT: "_$P(^PSD(58.8,+$P(PSAIN,"^",12),0),"^")
+"RTN","PSAVER",66,0)
+ .W !
+"RTN","PSAVER",67,0)
+ .S PSAMSG="" D VERLOCK^PSAVER4 ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER",68,0)
+ .W:$L(PSAMSG) ?5,PSAMSG,!
+"RTN","PSAVER",69,0)
+ I PSASEL'=PSATMP S PSASEL=PSATMP K PSATMP
+"RTN","PSAVER",70,0)
+ I PSASEL="" S DIR(0)="E" D ^DIR G:$G(DIRUT) EXIT G ENTIRE
+"RTN","PSAVER",71,0)
+ S DIR(0)="Y",DIR("B")="N",DIR("A")="Are you sure "_$S(PSACNT=1:"this invoice's",1:"these invoices'")_" status should be changed to Verified"
+"RTN","PSAVER",72,0)
+ S DIR("?",1)="Enter YES if the list contains invoices with no corrections.",DIR("?",2)="Enter NO if the list contains at least one invoice you do not",DIR("?")="want to verify.",DIR("??")="^D VERIFY^PSAVER"
+"RTN","PSAVER",73,0)
+ D ^DIR K DIR D:'Y VERUNLCK^PSAVER4 G:$G(DIRUT) EXIT G:'Y ENTIRE ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER",74,0)
+ ;
+"RTN","PSAVER",75,0)
+ ;Send entire invoices to be verified in background, delete these
+"RTN","PSAVER",76,0)
+ ;invoices from the list, then create a new list of remaining invoices
+"RTN","PSAVER",77,0)
+ ;to be verified.
+"RTN","PSAVER",78,0)
+BKGJOB K PSAVBKG W ! F PSAPC=1:1 S PSA=+$P(PSASEL,",",PSAPC) Q:'PSA!(PSAOUT)  D
+"RTN","PSAVER",79,0)
+ .S PSAIEN=$P(PSAVER(PSA),"^"),PSAIEN1=$P(PSAVER(PSA),"^",2),PSASUP=0
+"RTN","PSAVER",80,0)
+ .Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,0))!('$D(^PSD(58.811,PSAIEN,0)))
+"RTN","PSAVER",81,0)
+ .S (PSACS,PSAERR,PSALINE,PSALNCNT,PSALNERR,PSALNSU)=0
+"RTN","PSAVER",82,0)
+ .S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0),PSAINV=$P(PSAIN,"^"),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER",83,0)
+ .F  S PSALINE=+$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE!(PSAOUT)  D
+"RTN","PSAVER",84,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0))
+"RTN","PSAVER",85,0)
+ ..S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSALNCNT=PSALNCNT+1
+"RTN","PSAVER",86,0)
+ ..S PSALOC=$S(+$P(PSADATA,"^",10):$P(PSAIN,"^",12),1:$P(PSAIN,"^",5))
+"RTN","PSAVER",87,0)
+ ..W "." D SETLINE^PSAVER3
+"RTN","PSAVER",88,0)
+ .Q:PSAOUT
+"RTN","PSAVER",89,0)
+ .I '$O(PSANOVER(PSAIEN,PSAIEN1,0)) D  Q
+"RTN","PSAVER",90,0)
+ ..S PSAVBKG(PSAIEN,PSAIEN1)="" K PSAVER(PSA) D STATUS^PSAVER3
+"RTN","PSAVER",91,0)
+ ..I '+$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13),$P($G(^PSD(58.8,+$P(PSAIN,"^",5),0)),"^",14)!($P($G(^PSD(58.8,+$P(PSAIN,"^",12),0)),"^",14)) D NEWDRUG^PSAVER1 I 1 ;*50
+"RTN","PSAVER",92,0)
+ ..W !,"   Order# "_PSAORD_" Invoice# "_PSAINV_"'s status has been changed to Verified!"
+"RTN","PSAVER",93,0)
+ .H 1 I $O(PSANOVER(PSAIEN,PSAIEN1,0)) D
+"RTN","PSAVER",94,0)
+ ..W !,"** Order# "_PSAORD_" Invoice# "_PSAINV_"'s status has not been changed to Verified."
+"RTN","PSAVER",95,0)
+ ..S PSAERR=0,PSAVER(PSA)=PSAIEN_"^"_PSAIEN1
+"RTN","PSAVER",96,0)
+ ..D PRINT^PSAVER3
+"RTN","PSAVER",97,0)
+ ..N PSATMP S PSATMP=PSASEL ;;<*65 RJS
+"RTN","PSAVER",98,0)
+ ..N PSASEL S PSASEL=PSA
+"RTN","PSAVER",99,0)
+ ..D VERUNLCK^PSAVER4  ;;*65 RJS>
+"RTN","PSAVER",100,0)
+ ..S PSAOUT=0
+"RTN","PSAVER",101,0)
+ ;
+"RTN","PSAVER",102,0)
+ ;If the invoices selected are error free, send them to the background
+"RTN","PSAVER",103,0)
+ ;job to complete the invoice and increment inventory.
+"RTN","PSAVER",104,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER",105,0)
+ D LOAD
+"RTN","PSAVER",106,0)
+ I $O(PSAVBKG(0)) D
+"RTN","PSAVER",107,0)
+ . K ZTSAVE S ZTDESC="Drug Acct. - Verify Prime Vendor Invoices",ZTIO="",ZTDTH=$H,ZTRTN="^PSAVER6",ZTSAVE("PSASEL")="",ZTSAVE("PSAVBKG(")="" D ^%ZTLOAD Q:$G(POP)
+"RTN","PSAVER",108,0)
+ ;D ^PSAVER6
+"RTN","PSAVER",109,0)
+ K PSAVBKG G:'$O(PSAEDIT(0)) EXIT
+"RTN","PSAVER",110,0)
+EDIT S PSARTN1=0
+"RTN","PSAVER",111,0)
+ D EDIT^PSAVER1
+"RTN","PSAVER",112,0)
+ ;
+"RTN","PSAVER",113,0)
+EXIT I $O(PSANEWD(0)) D ^PSAVER4 S PSARTN1=0
+"RTN","PSAVER",114,0)
+ I $G(PSARTN1) D END^PSAPROC
+"RTN","PSAVER",115,0)
+ K %ZIS,DA,DD,DIC,DIE,DIK,DIR,DIRUT,DO,DR,DTOUT,DUOUT,PSA,PSA10,PSAGAIN,PSA50IEN,PSAA,PSABEFOR,PSACHG,PSACHO,PSACNT,PSACOMB,PSACS,PSACSLN,PSACTRL
+"RTN","PSAVER",116,0)
+ K PSADATA,PSADD,PSADJ,PSADJD,PSADJFLD,PSADJN,PSADJO,PSADJOP,PSADJOV,PSADJP,PSADJPP,PSADJPV,PSADJQ,PSADJQP,PSADJQV,PSADJSUP,PSADLN,PSADRG
+"RTN","PSAVER",117,0)
+ K PSADRGN,PSADUOU,PSAEDIT,PSAERR,PSAFLD,PSAFLDS,PSAHOLD,PSAIEN,PSAIEN1,PSAIN,PSAINV,PSAINVDT,PSAISIT,PSAISITN,PSAKK,PSAL,PSALEN,PSALINE,PSALINEN
+"RTN","PSAVER",118,0)
+ K PSALINES,PSALN,PSALN0,PSALNCNT,PSALND,PSALNERR,PSALNP,PSALNSU,PSALNV,PSALOAD,PSALOC,PSALOCA,PSALOCN,PSAMENU,PSAMV,PSAMVA,PSAMVIEN,PSAMVN,PSAN10,PSANAME,PSANDC,PSANEW,PSANEWD
+"RTN","PSAVER",119,0)
+ K PSANO,PSANODE,PSANOVER,PSANUM,PSAONE,PSAONEMV,PSAORD,PSAORDU,PSAPHARM,PSAPRICE,PSAOSIT,PSAOSITN,PSAOU,PSAOUT,PSAPC,PSAPCF,PSAPCL,PSAPG,PSAPRINT,PSAQTY,PSALOCK,PSAMSG
+"RTN","PSAVER",120,0)
+ K PSAREA,PSAREC,PSARECD,PSAREORD,PSASAVE,PSASEL,PSASET,PSASLN,PSASTOCK,PSASUB,PSASUP,PSASUPP,PSATAB,PSATEMP,PSAUPC,PSAVAULT,PSAVBKG,PSAVER,PSAVSN,PSAOU,PSATMP,PSALCK
+"RTN","PSAVER",121,0)
+ K PSASS,X,X1,Y,ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE,PSARTN1
+"RTN","PSAVER",122,0)
+ Q
+"RTN","PSAVER",123,0)
+ ;
+"RTN","PSAVER",124,0)
+HDR ;Header with screen hold
+"RTN","PSAVER",125,0)
+ S PSASS=21-$Y F PSAKK=1:1:PSASS W !
+"RTN","PSAVER",126,0)
+ S DIR(0)="E" D ^DIR K DIR I $G(DIRUT) S PSASTOP=1 Q
+"RTN","PSAVER",127,0)
+ W @IOF,!?21,"<<< VERIFY ENTIRE INVOICE SCREEN >>>",!!,PSADLN
+"RTN","PSAVER",128,0)
+ Q
+"RTN","PSAVER",129,0)
+LOAD ;Loads invoices to be edited into an array
+"RTN","PSAVER",130,0)
+ K PSAEDIT S (PSALOAD,PSACNT)=0
+"RTN","PSAVER",131,0)
+ F  S PSALOAD=+$O(PSAVER(PSALOAD)) Q:'PSALOAD  S PSACNT=PSACNT+1,PSAEDIT(PSACNT)=PSAVER(PSALOAD)
+"RTN","PSAVER",132,0)
+ K PSAVER
+"RTN","PSAVER",133,0)
+ Q
+"RTN","PSAVER",134,0)
+ ;
+"RTN","PSAVER",135,0)
+PRTINV ;Sends invoices to printer
+"RTN","PSAVER",136,0)
+ S (PSA,PSAOUT)=0 F  S PSA=+$O(PSAVER(PSA)) Q:'PSA!(PSAOUT)  D
+"RTN","PSAVER",137,0)
+ .S PSAORD=$P(PSAVER(PSA),"^"),PSAINV=$P(PSAVER(PSA),"^",2) D ^PSAORDP1
+"RTN","PSAVER",138,0)
+ D ^%ZISC
+"RTN","PSAVER",139,0)
+ Q
+"RTN","PSAVER",140,0)
+ ;
+"RTN","PSAVER",141,0)
+SEL ;Extended help to 'Select invoices'
+"RTN","PSAVER",142,0)
+ W !?5,"Enter the number to the left of the invoice data that you want to verify.",!?5,"The invoices' statuses will be changed to Verified."
+"RTN","PSAVER",143,0)
+ Q
+"RTN","PSAVER",144,0)
+SELHELP ;Extended help for 'Select invoices to verify'
+"RTN","PSAVER",145,0)
+ W !?5,"Enter the number to the left of the invoice data you want to verify.",!?5,"The line items will be displayed for you to select the ones you want"
+"RTN","PSAVER",146,0)
+ W !?5,"to correct."
+"RTN","PSAVER",147,0)
+ Q
+"RTN","PSAVER",148,0)
+PRINTYN ;Extended help for 'Print invoices?'
+"RTN","PSAVER",149,0)
+ W !?5,"Enter YES to print all of the processed invoices you can verify.",!?5,"Enter NO to bypass printing the invoices and continue with verification."
+"RTN","PSAVER",150,0)
+ Q
+"RTN","PSAVER",151,0)
+VERIFY ;Extended help for 'Are you sure...'
+"RTN","PSAVER",152,0)
+ W !!?5,"Enter YES if the list contains invoices to be verified.",!!?5,"Enter NO if the list contains at least one invoice that should not be"
+"RTN","PSAVER",153,0)
+ W !?5,"verified. You will be returned to the original list so you can choose",!?5,"the invoices to be verified again."
+"RTN","PSAVER",154,0)
+ Q
+"RTN","PSAVER1")
+0^2^B57176156^B57200195
+"RTN","PSAVER1",1,0)
+PSAVER1 ;BIR/JMB-Verify Invoices - CONT'D ;7/23/97
+"RTN","PSAVER1",2,0)
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**33,60,65,71,78**;10/24/97;Build 4
+"RTN","PSAVER1",3,0)
+ ;This routine allows the user to edit processed invoices by selecting
+"RTN","PSAVER1",4,0)
+ ;the invoice's line item number. If there are no errors after editing
+"RTN","PSAVER1",5,0)
+ ;the line item is verified.
+"RTN","PSAVER1",6,0)
+ ;
+"RTN","PSAVER1",7,0)
+ ;References to global ^DIC(51.5 are covered by IA #1931
+"RTN","PSAVER1",8,0)
+ ;References to global ^PSDRUG( are covered by IA #2095
+"RTN","PSAVER1",9,0)
+ ;
+"RTN","PSAVER1",10,0)
+EDIT W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>",!!?2,"Choose the invoices from the list you want to edit.",!,PSASLN
+"RTN","PSAVER1",11,0)
+ S (PSA,PSACNT,PSASTOP)=0,PSATMP="" F  S PSA=+$O(PSAEDIT(PSA)) Q:'PSA  D  Q:PSASTOP
+"RTN","PSAVER1",12,0)
+ .I $Y+5>IOSL D HEADER Q:PSASTOP
+"RTN","PSAVER1",13,0)
+ .S PSAIEN=$P(PSAEDIT(PSA),"^"),PSAIEN1=$P(PSAEDIT(PSA),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER1",14,0)
+ .S PSAINV=$P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^"),PSAINVDT=+$P(^(0),"^",2),PSACNT=PSACNT+1
+"RTN","PSAVER1",15,0)
+ .W !?2,PSA_".",?6,"Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT)
+"RTN","PSAVER1",16,0)
+ K PSASTOP W !,PSASLN
+"RTN","PSAVER1",17,0)
+ S DIR(0)="LO^1:"_PSACNT,DIR("A")="Select invoices to edit",DIR("?",1)="Enter the number to the left of the invoice",DIR("?")="data to be verified or a range of numbers.",DIR("??")="^D SELHELP^PSAVER"
+"RTN","PSAVER1",18,0)
+ W ! D ^DIR K DIR Q:$G(DIRUT)
+"RTN","PSAVER1",19,0)
+ S PSASEL=Y
+"RTN","PSAVER1",20,0)
+ ;
+"RTN","PSAVER1",21,0)
+SEL ;Select line items to be edit
+"RTN","PSAVER1",22,0)
+ K PSAVBKG S PSATMP=""
+"RTN","PSAVER1",23,0)
+ F PSAPC=1:1 S PSA=$P(PSASEL,",",PSAPC) Q:'PSA  D CORR Q:PSAOUT
+"RTN","PSAVER1",24,0)
+ I $O(PSAVBKG(0)) D
+"RTN","PSAVER1",25,0)
+ .;K ZTSAVE S ZTDESC="Drug Acct. - Verify Prime Vendor Invoices",ZTIO="",ZTDTH=$H,ZTRTN="^PSAVER6",ZTSAVE("PSAVBKG(")="" D ^%ZTLOAD
+"RTN","PSAVER1",26,0)
+ .D ^PSAVER6
+"RTN","PSAVER1",27,0)
+ Q
+"RTN","PSAVER1",28,0)
+ ;
+"RTN","PSAVER1",29,0)
+HEADER ;Header with screen hold
+"RTN","PSAVER1",30,0)
+ S PSASS=21-$Y F PSAKK=1:1:PSASS W !
+"RTN","PSAVER1",31,0)
+ S DIR(0)="E" D ^DIR K DIR I $G(DIRUT) S PSASTOP=1 Q
+"RTN","PSAVER1",32,0)
+ W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>",!!,PSASLN
+"RTN","PSAVER1",33,0)
+ Q
+"RTN","PSAVER1",34,0)
+ ;
+"RTN","PSAVER1",35,0)
+CORR N PSASEL1 S PSASEL1=PSASEL N PSASEL  ;;<*65 RJS
+"RTN","PSAVER1",36,0)
+ I $D(^PSD(58.811,"ASTAT","L")) D LCKCHK^PSAVER4
+"RTN","PSAVER1",37,0)
+ S PSAIEN=$P(PSAEDIT(PSA),"^"),PSAIEN1=$P(PSAEDIT(PSA),"^",2),PSASEL=PSA ;;*65 RJS>
+"RTN","PSAVER1",38,0)
+ S PSAMSG="" D VERLOCK^PSAVER4 ; <== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",39,0)
+ I $L(PSAMSG) D  Q
+"RTN","PSAVER1",40,0)
+ .D HDR W !,?5,PSAMSG,! S DIR(0)="E" D ^DIR K DIR S PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1
+"RTN","PSAVER1",41,0)
+ S PSAIN=^PSD(58.811,PSAIEN,1,PSAIEN1,0),PSAINV=$P(^(0),"^"),PSAINVDT=$P(^(0),"^",2),PSAORD=$P(^PSD(58.811,PSAIEN,0),"^")
+"RTN","PSAVER1",42,0)
+ D HDR,RECD^PSAVER2 D:PSAOUT
+"RTN","PSAVER1",43,0)
+ .I PSAOUT D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!"
+"RTN","PSAVER1",44,0)
+ I $G(PSAOUT)!$G(DUOUT) S PSAOUT=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",45,0)
+ S PSALOC=+$P(PSAIN,"^",5),PSAMV=+$P(PSAIN,"^",12)
+"RTN","PSAVER1",46,0)
+ I PSALOC!($P(PSAIN,"^",8)="S")!($P(PSAIN,"^",8)="N") D  Q:PSAOUT
+"RTN","PSAVER1",47,0)
+ .D SITES^PSAUTL1 S PSALOCN=$S($G(PSALOC)'>0:"UNKNOWN",1:$P(^PSD(58.8,PSALOC,0),"^"))_PSACOMB
+"RTN","PSAVER1",48,0)
+ .W:$L(PSALOCN)>76 !!,$P(PSALOCN,"(IP)",1)_"(IP)",!?17,$P(PSALOCN,"(IP)",2) W:$L(PSALOCN)<77 !!,PSALOCN
+"RTN","PSAVER1",49,0)
+ .S DR=4 D PHARM^PSAVER2
+"RTN","PSAVER1",50,0)
+ I PSAMV!($P(PSAIN,"^",8)="S")!($P(PSAIN,"^",8)="A") W !!,$P($G(^PSD(58.8,PSAMV,0)),"^") S DR=13 D PHARM^PSAVER2
+"RTN","PSAVER1",51,0)
+ I X="" D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S PSAOUT=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",52,0)
+ ;
+"RTN","PSAVER1",53,0)
+LINES F  W ! S DIC="^PSD(58.811,"_PSAIEN_",1,"_PSAIEN1_",1,",DA(2)=PSAIEN,DA(1)=PSAIEN1,DIC(0)="QAEMZ",DIC("A")="Select Line#: " D ^DIC K DIC D  Q:PSAOUT
+"RTN","PSAVER1",54,0)
+ .I $G(DTOUT)!($G(DUOUT))!(Y<1) S PSAOUT=1 Q
+"RTN","PSAVER1",55,0)
+ .S PSALINE=+Y,PSALINEN=$P(Y,"^",2)
+"RTN","PSAVER1",56,0)
+ .I '$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)) W !,"Invalid line number." Q
+"RTN","PSAVER1",57,0)
+ .S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSASUP=0
+"RTN","PSAVER1",58,0)
+ .S PSANDC=$P(PSADATA,"^",11),PSAVSN=$P(PSADATA,"^",12),PSALOC=$S(+$P(PSADATA,"^",10):+$P(PSAIN,"^",12),1:+$P(PSAIN,"^",5))
+"RTN","PSAVER1",59,0)
+VIEW .D HDR,VERDISP^PSAUTL4 W PSASLN,!
+"RTN","PSAVER1",60,0)
+ .W "1. Drug",!,"2. Quantity Received",!,"3. Order Unit",!,"4. Dispense Units per Order Unit",! S PSACHO=4
+"RTN","PSAVER1",61,0)
+ .I $P($G(^PSD(58.8,PSALOC,0)),"^",14)  W "5. Stock Level",!,"6. Reorder Level",! S PSACHO=6
+"RTN","PSAVER1",62,0)
+ .S DIR(0)="LO^1:"_PSACHO,DIR("A")="Edit fields",DIR("?")="Enter the number(s) of the data to be edited" S DIR("??")="^D DDQOR^PSAVER3"
+"RTN","PSAVER1",63,0)
+ .D ^DIR K DIR I $G(DTOUT)!($G(DUOUT)) S PSAOUT=1 Q
+"RTN","PSAVER1",64,0)
+ .Q:Y=""  S PSAFLDS=Y,PSASET=0 D HDR,VERDISP^PSAUTL4 W PSASLN
+"RTN","PSAVER1",65,0)
+FIELDS .F PSAPCF=1:1 S PSAFLD=$P(PSAFLDS,",",PSAPCF) Q:'PSAFLD!(PSAOUT)  D
+"RTN","PSAVER1",66,0)
+ ..I PSAFLD=1 D ASKDRUG^PSAVER2 Q
+"RTN","PSAVER1",67,0)
+ ..I PSAFLD=2 D QTY^PSAVER2 Q
+"RTN","PSAVER1",68,0)
+ ..I PSAFLD=3 D OU^PSAVER2 Q
+"RTN","PSAVER1",69,0)
+ ..I PSAFLD=4,'PSASET S PSA50IEN=PSADRG D DUOU^PSAVER2 Q
+"RTN","PSAVER1",70,0)
+ ..I PSAFLD=5 D STOCK^PSAVER2 Q
+"RTN","PSAVER1",71,0)
+ ..I PSAFLD=6 D REORDER^PSAVER2
+"RTN","PSAVER1",72,0)
+ ;<== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",73,0)
+ ;Determines if the invoice's status should be changed to verified. If
+"RTN","PSAVER1",74,0)
+ ;so, the status is changed and the new drugs to the location is listed.
+"RTN","PSAVER1",75,0)
+ W ! S DIR(0)="Y",DIR("A")="Do you want to change the invoice's status to Verified",DIR("?",1)="Enter YES to change the invoice's status to Verified.",DIR("?")="Enter NO to keep the invoice's status as Processed."
+"RTN","PSAVER1",76,0)
+ S DIR("??")="^D CHGYN^PSAVER1" D ^DIR K DIR ;D:'Y VERUNLCK^PSAVER4
+"RTN","PSAVER1",77,0)
+ I $G(DIRUT)!('Y) D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S (PSAOUT,PSACHG)=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",78,0)
+ S PSACHG=Y,PSAVBKG(PSAIEN,PSAIEN1)=""
+"RTN","PSAVER1",79,0)
+ ;==> PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",80,0)
+ ;Looks to see if all line items are processed.
+"RTN","PSAVER1",81,0)
+PROCESS S (PSACS,PSAERR,PSALINE,PSALINES,PSALNCNT,PSALNSU,PSAOUT,PSASUP)=0
+"RTN","PSAVER1",82,0)
+ S PSAIN=$G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),PSAORD=$P($G(^PSD(58.811,PSAIEN,0)),"^")
+"RTN","PSAVER1",83,0)
+ F  S PSALINE=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE!(PSAOUT)  D
+"RTN","PSAVER1",84,0)
+ .S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0),PSALNERR=0,PSALNCNT=PSALNCNT+1
+"RTN","PSAVER1",85,0)
+ .D SETLINE^PSAVER3 I PSAOUT D VERUNLCK^PSAVER4 W !,"** The invoice's status has not been changed to Verified!" S (PSAOUT,PSACHG)=0,PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1 Q
+"RTN","PSAVER1",86,0)
+ .S:'+$G(PSALNERR) PSALINES=PSALINES+1 S PSADATA=^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)
+"RTN","PSAVER1",87,0)
+ .S:+$P(PSADATA,"^",10) PSACS=PSACS+1
+"RTN","PSAVER1",88,0)
+ ;
+"RTN","PSAVER1",89,0)
+CHECK I PSALNCNT'=PSALINES D  Q
+"RTN","PSAVER1",90,0)
+ .K PSAHOLD(PSALOC,PSAIEN,PSAIEN1) W !!,"** The invoice has not been placed in a Verified status!"
+"RTN","PSAVER1",91,0)
+ .D END^PSAPROC D:+$G(PSAERR) PRINT^PSAVER3
+"RTN","PSAVER1",92,0)
+ .D VERUNLCK^PSAVER4 S PSASEL=PSASEL1 K PSALOCK(PSA),PSASEL1,PSAVBKG(PSAIEN,PSAIEN1) Q  ;;<*65 RJS>
+"RTN","PSAVER1",93,0)
+ I +PSALNCNT,PSALNCNT=PSACS D
+"RTN","PSAVER1",94,0)
+ .S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="A" W !,"All drugs on the invoice are marked as a controlled substance."
+"RTN","PSAVER1",95,0)
+ .D:'+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",12) MASTER^PSAVER5
+"RTN","PSAVER1",96,0)
+ I PSACS,PSALNCNT'=PSACS S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="S" D:'$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5) GETLOC^PSAVER5
+"RTN","PSAVER1",97,0)
+ I 'PSACS S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",8)="N" D:'$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5) GETLOC^PSAVER5
+"RTN","PSAVER1",98,0)
+ I +PSALNCNT,PSALNCNT=PSALINES D  Q
+"RTN","PSAVER1",99,0)
+ .D CHG
+"RTN","PSAVER1",100,0)
+ .I PSALNCNT=PSASUP S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13)=1 Q
+"RTN","PSAVER1",101,0)
+ .S $P(^PSD(58.811,PSAIEN,1,PSAIEN1,0),"^",13)=0
+"RTN","PSAVER1",102,0)
+ D END^PSAPROC D:+$G(PSAERR) PRINT^PSAVER3
+"RTN","PSAVER1",103,0)
+ Q
+"RTN","PSAVER1",104,0)
+ ;<== PSA*3*60 (RJS-VMP)
+"RTN","PSAVER1",105,0)
+CHG D STATUS^PSAVER3,NEWDRUG
+"RTN","PSAVER1",106,0)
+ W !!,"The invoice status has been changed to Verified!"
+"RTN","PSAVER1",107,0)
+ S PSARTN1=1
+"RTN","PSAVER1",108,0)
+ Q
+"RTN","PSAVER1",109,0)
+ ;
+"RTN","PSAVER1",110,0)
+NEWDRUG ;If this invoice will add new drugs to location/vault, store in an
+"RTN","PSAVER1",111,0)
+ ;array the location/vault and drug name to be printed later.
+"RTN","PSAVER1",112,0)
+ K PSALND,PSALN0,PSALNP,PSALNV
+"RTN","PSAVER1",113,0)
+ S PSALINE=0,PSAPHARM=+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,0)),"^",5),PSAMV=$P($G(^(0)),"^",12)
+"RTN","PSAVER1",114,0)
+ Q:'PSALOC
+"RTN","PSAVER1",115,0)
+ F  S PSALINE=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE)) Q:'PSALINE  D
+"RTN","PSAVER1",116,0)
+ .S PSALN0=+$P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)),"^",2),PSALOC=$S($P($G(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,0)),"^",10):PSAMV,1:PSAPHARM)
+"RTN","PSAVER1",117,0)
+ .I $O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"D",0)) D
+"RTN","PSAVER1",118,0)
+ ..S PSADJ=$O(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,"D",0))
+"RTN","PSAVER1",119,0)
+ ..Q:'$D(^PSD(58.811,PSAIEN,1,PSAIEN1,1,PSALINE,1,PSADJ,0))
+"RTN","PSAVER1",120,0)
+ ..S PSALNP=+$P(PSADJ,"^",2),PSALNV=+$P(PSADJ,"^",6)
+"RTN","PSAVER1",121,0)
+ .S PSADD=$S($G(PSALNV):PSALNV,$G(PSALNP):PSALNP,PSALN0:PSALN0,1:0)
+"RTN","PSAVER1",122,0)
+ .I PSADD,'$D(^PSD(58.8,PSALOC,1,PSADD,0)) S PSANEWD(PSALOC,$S($P($G(^PSDRUG(PSADD,0)),"^")'="":$P($G(^PSDRUG(PSADD,0)),"^"),1:"UNKNOWN"))=PSADD
+"RTN","PSAVER1",123,0)
+ Q
+"RTN","PSAVER1",124,0)
+ ;
+"RTN","PSAVER1",125,0)
+HDR ;Header for screen that displays invoice data to be edited.
+"RTN","PSAVER1",126,0)
+ W @IOF,!?18,"<<< EDIT INVOICES TO BE VERIFIED SCREEN >>>"
+"RTN","PSAVER1",127,0)
+ W !!,"Order#: "_PSAORD_"  Invoice#: "_PSAINV_"  Invoice Date: "_$$FMTE^XLFDT(PSAINVDT),!,PSASLN,!
+"RTN","PSAVER1",128,0)
+ Q
+"RTN","PSAVER1",129,0)
+ ;
+"RTN","PSAVER1",130,0)
+CHGYN ;Extended help for 'Do you want to change the invoice's status to Verified'
+"RTN","PSAVER1",131,0)
+ W !?5,"Enter YES if the invoice is completely correct. You will not be able",!?5,"to edit it again."
+"RTN","PSAVER1",132,0)
+ W !!?5,"Enter NO if you need to edit the invoice again. You can edit it again",!?5,"by selecting the Verify Orders option."
+"RTN","PSAVER1",133,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10747,6)
+^60
+**END**
+**END**
+

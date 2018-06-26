@@ -1,0 +1,261 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/27/18 at 15:54
+=============================================================================
+Run Date: APR 24, 2018                     Designation: DVBA*2.7*205
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #173                    Status: Released
+                  Compliance Date: MAY 24, 2018
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*192<<= must be installed BEFORE `DVBA*2.7*205'
+
+Subject: CAPRI URL/PARAMETER UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ With the replacement of VistAWeb in Compensation and Pension Record
+ Interchange (CAPRI) with Joint Legacy Viewer (JLV), this patch adds
+ the new JLV uniform resource locator (URL) to the VistA parameters.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)   New/Modified/Deleted  
+ ------------------   -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name       New/Modified/Deleted
+ ------------------------        -------------------- 
+ DVBAB CAPRI JLV URL             New
+  
+ NAME: DVBAB CAPRI JLV URL
+  DISPLAY TEXT: Joint Legacy Viewer URL
+  MULTIPLE VALUED: No                   
+  VALUE DATA TYPE: free text
+  VALUE HELP: Enter the JLV URL
+  DESCRIPTION:   
+   This parameter contains the full URL that points to the 
+   Joint Legacy Viewer for a given patient.
+  PRECEDENCE: 1    
+  ENTITY FILE: PACKAGE
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ I18872737FY18    CAPRI's VistAWeb link will not connect to JLV service
+  
+ Problem:
+ --------
+    With the replacement of VistAWeb by JLV, in order for JLV to be 
+    accessible, the URL needs to be added in VistA to be retrieved
+    by existing remote procedure calls (RPCs). 
+  
+ Resolution:
+ -----------
+    A post install routine DVBA205P, will be run to add the new DVBAB 
+    CAPRI JLV URL record to the PARAMETERS file (#8989.5) with the  
+    following values:
+  
+    ENTITY (PKG): AUTOMATED MED INFO EXCHANGE
+    PARAMETER: DVBAB CAPRI JLV URL        INSTANCE: 1
+    VALUE: https://jlv.domain.ext/JLV/Login/loginParam?loginSource=CAPRI
+  
+    Also, this patch will update routine DVBABURL to include code to 
+    retrieve the JLV URL when called by the CAPRI RPC. As part of the 
+    build install DVBAB CAPRI JLV URL will be added to the PARAMETER 
+    DEFINITION (#8989.51) file.
+  
+  
+ Test Sites:
+ ----------
+ VA Greater Los Angeles HCS
+ Edith Nourse Rogers Memorial Veterans Hospital (Bedford)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+ http://www4.domain.ext/vdl/
+  
+ Title                                                  FTP Mode
+ ----------------------------------------------------------------------
+ CAPRI System Administration and Technical Guide        Binary
+ capri_sysadmintechguide_dvba_27_tm.doc (File Name)
+ capri_sysadmintechguide_dvba_27_tm.pdf (File Name)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Post install routine DVBA205P will add the DVBAB CAPRI JLV URL entry
+ to the PARAMETERS file (#8989.5) 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter DVBA*2.7*205)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        DVBA*2.7*205.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ You may delete routine DVBA205P after the installation.
+  
+ Back-Out Plan:
+ --------------------
+ FileMan can be used to remove the newly added "AUTOMATED MED INFO 
+ EXCHANGE" ENTITY (#.01) for the "DVBAB CAPRI JLV URL" PARAMETER (#2) 
+ from the PARAMETERS file (#8989.5) and the "DVBAB CAPRI JLV URL" entry 
+ from the PARAMETER DEFINITION file (#8989.51). The backup from step 3-d
+ of the installation instructions has to be installed to restore routine
+ DVBABURL to its previous state. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA205P
+    Before:       n/a   After:  B1630052  **205**
+Routine Name: DVBABURL
+    Before:  B7872092   After:  B8885291  **104,136,143,149,168,181,186,
+                                           192,205**
+ 
+Routine list of preceding patches: 192
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2018
+Completed By:                               Date Completed: APR 23, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

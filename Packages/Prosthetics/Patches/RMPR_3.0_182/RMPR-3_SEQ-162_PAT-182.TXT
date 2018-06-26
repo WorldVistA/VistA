@@ -1,0 +1,291 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 05/04/17 at 15:24
+=============================================================================
+Run Date: AUG 24, 2017                     Designation: RMPR*3*182
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #162                      Status: Released
+                  Compliance Date: SEP 24, 2017
+=============================================================================
+
+Associated patches: (v)RMPR*3*83   <<= must be installed BEFORE `RMPR*3*182'
+                    (v)RMPR*3*90   <<= must be installed BEFORE `RMPR*3*182'
+                    (v)RMPR*3*99   <<= must be installed BEFORE `RMPR*3*182'
+                    (v)RMPR*3*137  <<= must be installed BEFORE `RMPR*3*182'
+
+Subject: CONSULT FLAG;CLOSE OUT FIELDS;SUSP PROCESS SITE;RMPR VIEW;RECON EDIT
+
+Category: 
+  - Routine
+  - Print Template
+
+Description:
+============
+
+ This patch addresses the following five issues:
+  
+ 1) Eye glass STAT consult not showing on Suspense List
+  
+ 2) Add fields Lot, Model and Contract Number to Reconcile Close Out
+  
+ 3) Site issue causing error in Suspense Processing
+  
+ 4) Site was not getting diagnosis when using option RMPR VIEW 2319
+                       
+ 5) Reconciliation edit not working when used by two users at same time 
+  
+  
+ Associated Tickets:
+ ===================
+ 1) I7998157FY16 - Eye glass consults emergency status not coming across 
+                   correctly 
+  
+ 2) I8563498FY16 - Unable to add/edit Lot, Model and Contract Numbers 
+                   using option RMPR4Close Out 
+  
+ 3) I8485427FY16 - <UNDEFINED>HEAD1+5^RMPRFO *RMPRSITE
+  
+ 4) R11498855FY17 - ROC assign to R01 VISTA for MENU change
+  
+ 5) I12085141FY17 - User concerned that amendment is edited but there is 
+                    no corresponding entry in file 660 
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Pittsburgh HCS
+ Upstate New York HCS
+  
+  
+ CA SDM Overview:
+ ================ 
+ 1) I7998157FY16 - Eye glass consults emergency status not coming across 
+                   correctly 
+  
+    Problem:
+    --------
+    Site reports that when using Suspense Processing [RMPR SUSP MENU] 
+    option and displaying suspense records for selected patient, the STAT
+    (Emergency consult) entries are not flagged. 
+  
+  
+    Resolution:
+    -----------
+    Modification made to the patient Suspense Processing display for a 
+    patient to add flag defining a STAT suspense consult. In addition, a 
+    modification was made to the print template used when selecting action 
+    VIEW REQUEST to display the suspense status (urgency).
+  
+    ** Purchase Card manual has been updated to show new screen shots of
+       the Consult Emergency Status displaying on the Suspense screen.
+  
+    ** Suspense manual has been updated to show new screen shots of the
+       Consult Emergency Status displaying on the Suspense screen.
+  
+  
+  Routines: RMPREO         Print Template: RMPR VIEW REQUEST (FILE #668)
+  
+  
+  
+ 2) I8563498FY16 - Unable to add/edit Lot, Model and Contract Numbers 
+                   using option RMPR4Close Out 
+  
+    Problem:
+    --------
+    The option Reconcile/Close Out Purchase Card Transaction [RMPR4 CLOSE
+    OUT] currently allows edit of key fields associated with Purchase Card
+    order, but not Lot, Model or Contract Number.  These fields need to be
+    editable and accurate to be able to track any item recalls on patient
+    orders.
+  
+  
+    Resolution:
+    -----------
+    Modification has been made to the Reconcile Close Out processing to 
+    add new fields Lot, Model and Contract Number to be edited.
+  
+    ** Purchase Card manual has been updated to show new screen shots of
+       the new fields (Lot, Model and Contract Number) displaying on the
+       Reconciliation screen for editing purposes, if needed.
+  
+  
+  Routines: RMPR4E21, RMPR4L1
+  
+  
+  
+ 3) I8485427FY16 - <UNDEFINED>HEAD1+5^RMPRFO *RMPRSITE  
+  
+    Problem:
+    --------
+    Users are incurring an <undefined> error when entering/jumping to
+    Suspense Processing [RMPR SUSP MENU] option due to missing site.
+  
+  
+    Resolution:
+    -----------
+    Modification have been made to the Suspense Processing [RMPR 
+    SUSP MENU] option to insure the site variable is actually defined, not
+    simply associated site information.
+  
+  
+  Routine: RMPREO
+  
+  
+ 4) R11498855FY17- ROC assign to R01 VISTA for MENU change
+  
+    Problem:
+    --------
+    Site reports that when using View Prosthetics Item Transactions 
+    [RMPR VIEW 2319 READ ONLY] option the ICD codes would display as
+    'Invalid Code' followed by 'Inactive Date' message.
+  
+  
+    Resolution:
+    -----------
+    Modification was made to the ICD9/ICD10 handling when converting an ICD
+    pointer to ICD DIAGNOSIS (#80) file to a displayed code, description
+    and if code is an ICD9 or ICD10 diagnosis code.
+  
+  
+  Routines: RMPOPAT3 
+  
+  
+ 5) I12085141FY17 - User concerned that amendment is edited but there is 
+                    no corresponding entry in file 660 
+  
+    Problem:
+    --------
+    When two or more users are using the Reconciliation Reconcile/Close 
+    Out Purchase Card Transaction  [RMPR4 CLOSE OUT] option and editing
+    or adding items, the first user to file/exit will kill off the other
+    users working work file which results in the affected items in 
+    PROSTHETICS 1358 (#664) file not having a corresponding link in RECORD
+    OF PROS APPLIANCE/REPAIR (#660) file and any new items not created in
+    RECORD OF PROS APPLIANCE/REPAIR (#660) file.
+  
+  
+    Resolution:
+    -----------
+    Analysis found that exiting Reconcile/Close Out Purchase Card 
+    Transaction  [RMPR4 CLOSE OUT] option was killing off the files in 
+    ^TMP("RM",$J) and did not have a $J associated with the kill
+    (K ^TMP("AM")).  When multiple users are using the same option,
+    the first user to file and exit, will kill off the other user's temp 
+    work files. A change was made to the exit kill to add the job number
+    ($J) of the user.
+  
+  
+   Routines: RMPR4E21
+  
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                         File Name                 SFTP Mode
+ -----------------------------------------------------------------
+ Electronic Order / Suspense Processing User Manual
+                             rmpr_3_182.pdf                Binary
+ Purchase Cards User Manual     
+                          rmpr_3_182_pc_um.pdf             Binary
+   
+  
+  
+ Installation Instructions:
+ ========================== 
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*182)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*182.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+       Reconcile/Close Out Purchase Card Transaction  [RMPR4 CLOSE OUT]
+       Suspense Processing                             [RMPR SUSP MENU]
+       View Prosthetics Item Transactions    [RMPR VIEW 2319 READ ONLY]  
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOPAT3
+    Before: B37951435   After: B39179406  **70,92,99,182**
+Routine Name: RMPR4E21
+    Before: B62022503   After: B64344678  **3,12,26,28,30,34,41,45,62,
+                                           111,78,114,118,133,137,182**
+Routine Name: RMPR4LI
+    Before: B14468243   After: B18898445  **3,12,19,20,28,30,41,90,182**
+Routine Name: RMPREO
+    Before: B10452539   After: B12735146  **45,55,83,182**
+ 
+Routine list of preceding patches: 83, 90, 99, 137
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 28, 2016
+Completed By:                               Date Completed: AUG 24, 2017
+Released By :                               Date Released : AUG 24, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

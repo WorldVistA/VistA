@@ -1,0 +1,319 @@
+
+=============================================================================
+Run Date: APR 09, 2018                     Designation: EAS*1*159
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #132                      Status: Released
+                  Compliance Date: MAY 10, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.2 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.2. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development and upgrade 
+ efforts, including enhancements to support Community Care (CC) and ES 
+ Sustainment.
+  
+ The following defects and functionality are updated in this ES 5.2
+ release:
+  
+ ESM:
+ - Change label "eMIS" to "MSDS" on Message Search and Eligibility screens.
+ - iLOG ODM Business Rules are consolidated.
+ - Manage Pending defects:
+   - 696041 (RTC #) Missing "Status" word on error message.
+   - 687568 (RTC #) Incorrect error message display.
+   - 684543 (RTC #) Triggered second entry of 742-654 letter.
+   - 672305 (RTC#) IPN date is null in Total Closed Application report.
+ - eMIS defects:
+   - 696532 (RTC#) Wrong eMIS Error Message on report range from and end
+     date.
+   - 695539 (RTC#) Incorrect member ID on eMIS Message Log.
+   - 695065 (RTC #) HCA overwrote eMIS FDD.
+   - 681837 (RTC #) Disappearing IS On Active Duty after clicking
+     "Calculate POS" button.
+   - 682267 (RTC #) Raw Messages not displayed in the right order.
+   - 668402 (RTC#) Correct eMIS query status not displayed on Eligibility
+     screen.
+   - 603042 (RTC #) SDS Reference tables missing period.
+  
+ ESCC:
+ - Third Party Administrator (TPA) Log from Eligibility tab.
+ - Veterans Choice Eligibility (VCE) Detailed Report.
+ - VCE Summary Report.
+ - VCE data available in the Eligibility & Enrollment (E&E) Web Service.
+ - Defects identified in ES 5.1.0:
+   - 696580 (RCT #) TPA Transmission Detail screen missing data fields.
+   - 682338 (RTC #) Application error when a field for existing
+     contractor is updated.
+  
+ ES Sustainment defect fixes:
+ - 532051 (RTC #) ES not triggering ORUZ05 after address validation.
+ - 544339 (RTC #) ES_508_Screen reader does not announce that the 
+   highlighted fields in red have errors.
+ - 641658 (RTC #) Batch processes in the Z05 and Z11 jobs cannot be
+   cancelled due to an exception.
+ - 680709 (RTC #) 508 - TS 164873 Manage CCN Contractor/Add CCN Contractor
+   date fields do not follow format with 'mm/dd/yyyy' listed.
+ - 696660 (RTC #) PSIM Decoupling - Hibernate Configuration Issue - Link
+   and Move Events not included.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3661 - ES is not setting the Change Effective Date properly if 
+ Temporary Mailing Address is inactivated by site, resulting in other sites
+ of record not deactivating the Temporary Mailing Address.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ I14842363FY17  Problem: AAP data transfer to VistA
+                Resolution: See Resolution for RTC #532051
+  
+ I16258677FY17  Problem: POC is having a problem with the address
+                Resolution: See Resolution for RTC #622820
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 532051  Problem: ES not triggering ORUZ05 after address validation.
+         Resolution: Fixed issue in ORUZ05 trigger.
+  
+ 544339  Problem: ES_508_Screen reader does not announce that the 
+         highlighted fields in red have errors.
+         Resolution: Updated the LabelTag.java for the screen reader to 
+         differentiate the fields with errors (highlighted in red) from 
+         other fields.
+  
+ 641658  Problem: Batch processes in the Z05 and Z11 jobs cannot be
+         cancelled due to an exception.
+         Resolution: Implement the overridden "shouldUpdateJobResult" 
+         method in both GenerateZ05Process and PCMMZ11Process components.
+  
+ 668402  Problem: The NEW eMIS query status "No Member ID/eMIS Not 
+         Queried" is NOT being displayed on Eligibility screen.
+         Resolution: Updated eMIS query to show correct status name of "No 
+         Member ID/eMIS Not Queried".
+  
+ 672305  Problem: ES 6.0_MP: Total Closed Application Report shows IPN 
+         DATE with a value of NULL when a DATE is expected.
+         Resolution: Updated the Jasper Report to Display the IPN DATE and 
+         Closed Date.
+  
+ 679598  Problem: PROD: HBPlanProcess batch process not completing. 
+         Resolution: The "triggerZ11" column is added to 
+         HEALTH_BENEFIT_PROFILE table.
+  
+ 680709  Problem: 508 - TS 164873 Manage CCN Contractor/Add CCN Contractor 
+         date fields do not follow format with 'mm/dd/yyyy' listed.
+         Resolution: Added hint label "(mm/dd/yyyy)", as requested on both 
+         start date and end date fields.
+  
+ 682267  Problem: Raw Messages are not being displayed in the right Order.
+         Resolution: Corrected the eMIS Messages screen to display the Raw 
+         messages in the following order: Deployment, Disability, Military 
+         Service Eligibility Information, Retirements.
+  
+ 682338  Problem: ESCC B6 CCN - Manage CCN Contractors - Application error 
+         displayed when a field (any field) for an existing contractor is 
+         updated and one or more regions are removed.
+         Resolution: Code changes in ManageCCNContractorsAction, 
+         ManageCCNContatorsService, ManageCCNContractorsServiceImpl, 
+         CCNContractorDAO, CCNContractorDAOImpl, CCNContractor.hbm.xml, 
+         and CCNContractor_H.hbm.xml to edit the contractor's end date and
+         remove regions from the contractor in the same transaction.
+  
+ 684543  Problem: A second entry for 742 - 654 Reminder Letter was 
+         automatically triggered with an address update.
+         Resolution: Added reminder letters for the "HandleUndeliverable" 
+         mail feature.
+  
+ 687568  Problem: Incorrect error message displayed upon re-application of 
+         a Cancel Declined record with previous Enrollment Status of
+         Pending; Purple Heart Unconfirmed.
+         Resolution: Fixed the code to associate it with the correct error 
+         message.
+  
+ 693942  Problem: SDS Reference tables - Period missing from the last 
+         sentence of the body section in ES.
+         Resolution: Text was updated to add the missing period symbol.
+  
+ 695065  Problem: ESM B6- HCA Overwrote eMIS FDD.
+         Resolution: Fixed incorrect java logic.  The following String 
+         comparison with object was incorrect.
+         Changed from Incorrect String:
+         if(FutureDischargeSourceType.CODE_HCA.getCode().equals
+         (fddSourceType))
+         To correct string:
+         if(FutureDischargeSourceType.CODE_HCA.getCode().equals
+         (fddSourceType.getCode())).
+  
+ 695539  Problem: eMIS Message Log screen is reflecting an incorrect 
+         Member ID info when searching with a Combination of "Response
+         Status" and "Member Id".
+         Resolution: Fixed SQL conditions for eMIS Message Log screen to 
+         display the correct Member ID info when searching with "Error" or 
+         "No Response" statuses.
+  
+ 696041  Problem: ES 6.0_MP: Error message for Enrollment status is missing
+         the word "Status".
+         Resolution: Text changed to add the word "Status" in the error 
+         message.
+  
+ 696532  Problem: eMIS Message search is not returning an appropriate error
+         message when searching with only "Response Date Range from".
+         Resolution: Code changes to display the proper validation error 
+         message.
+  
+ 696660  Problem: PSIM Decoupling - Hibernate Configuration Issue - Link 
+         and Move Events not included.
+         Resolution: Added the link and move events to the transaction 
+         attributes in the Hibernate Configuration.
+  
+ 696990  Problem: ESM_5.1_ eMIS Query Status is not set to Military Service
+         Data Rejected.
+         Resolution: Works as expected. The data was not set up correctly.
+  
+ 698380  Problem: ES 6.0_MP: Remail Link not available for the 742 - 652A 
+         Letter in 'Sent to Print Vendor' status.
+         Resolution: Not able to reproduce, it seemed to be a 
+         Pre-Production environment issue and not application related.
+  
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.2 User Guide                ES_5_2_User_Guide.pdf         binary
+ ES 5.2 Release Notes             ES_5_2_Release_Notes.pdf      binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2018
+Completed By:                               Date Completed: APR 09, 2018
+Released By :                               Date Released : APR 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

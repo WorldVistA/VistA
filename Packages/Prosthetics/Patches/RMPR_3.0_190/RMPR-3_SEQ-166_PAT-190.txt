@@ -1,0 +1,159 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 10/11/17 at 06:58
+=============================================================================
+Run Date: DEC 07, 2017                     Designation: RMPR*3*190
+Package : RMPR - PROSTHETICS                  Priority: EMERGENCY
+Version : 3       SEQ #166                      Status: Released
+                  Compliance Date: DEC 08, 2017
+=============================================================================
+
+Associated patches: (v)RMPR*3*179  <<= must be installed BEFORE `RMPR*3*190'
+
+Subject: HOME OXYGEN BILLED CHARGES NOT DISPLAYING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following one issue:
+  
+ Home Oxygen billing process date failure has prevented users from viewing 
+ Home Oxygen items posted.
+                       
+  
+ Associated CA SDM Tickets:
+ ==========================
+ 1) I16190621FY17 - Home Oxygen posted charges not displaying when 
+                    displaying HO charges for patient
+    Duplicate: I16305954FY17 - Developer worked with AEU on this last week-
+                               CLE- User states that in a home oxygen
+                               billing program, the information that they
+                               are posting is not flowing over to the 
+                               patients prosthetic record in Vista.
+               I16474375FY17 - User cannot see anything in vista/menu 
+                               option in display print Patient in display
+                               from August 2nd.[9/13/2017 2:11 PM]
+               R16661749FY17 - Home oxygen items will not post to the 
+                               2319. 
+               R16382183FY17 - RMPR - has found issues occurring when the 
+                               Home Oxygen - MIW/TOM/NCH.CHS.IRO.MAD 
+               I16063279FY17 - AEU home oxygen billing does not post to 
+                               the veterans 2319 p... 
+               I16709471FY17 - CLL - Home Oxygen Bill has not posted to 
+                               the 2319 
+               I16714790FY17 - Home Oxygen Bills Not Posting To Patient's 
+                               2319 
+               I16902120FY18 - --VistA--Prosthetics delivery date not
+                               showing up in ^disp, #6,8 
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Cleveland VAMC
+ Salem VAMC 
+  
+ CA SDM Overview:
+ ================ 
+ 1) I16190621FY17 - Home Oxygen posted charges not displaying when 
+                    displaying HO charges for patient
+  
+ Problem:
+ --------
+ Site reports that when using option Display/Print Patient 2319 [RMPR
+ PRINT 2319] they do not see recently posted Home Oxygen billing items
+ posted during the monthly option Billing Transactions [RMPO BILLING 
+ TRANSACTIONS].
+  
+  
+ Resolution:
+ -----------
+ Modification made to the Billing Transactions [RMPO BILLING TRANSACTIONS]
+ option processing to ensure a date is connected to the selected vendor in
+ HOME OXYGEN TRANSACTIONS (#665.72) file. The vendor date setting has
+ been affected by the recent FileMan update concerning %DT(0) handling. 
+ Corrections will be made to billing from May 2017 to present.
+  
+  
+  Routines: RMPOBIL0, RMPO190P (new, pre-install)
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*190)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*190.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+       Billing Transactions     [RMPO BILLING TRANSACTIONS]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPO190P
+    Before:       n/a   After:  B7941870  **190**
+Routine Name: RMPOBIL0
+    Before: B45113783   After: B46413512  **29,46,50,147,179,190**
+ 
+Routine list of preceding patches: 179
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 21, 2017
+Completed By:                               Date Completed: DEC 07, 2017
+Released By :                               Date Released : DEC 07, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -248,7 +248,7 @@ class VistATaskmanUtil(object):
       return self.TASKMAN_STATUS_SHUTDOWN
 
     if (statusString == "current.." and
-        detailedStatus.find("RUN") >= 0):
+        detailedStatus.find("Main Loop") >= 0):
       return self.TASKMAN_STATUS_RUNNING_CURRENT
 
     if (detailedStatus.find("WAIT") >=0 and

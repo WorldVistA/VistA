@@ -1,0 +1,240 @@
+
+=============================================================================
+Run Date: FEB 07, 2018                     Designation: IVM*2*167
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #141                      Status: Released
+                  Compliance Date: MAR 10, 2018
+=============================================================================
+
+Associated patches: (v)IVM*2*159   <<= must be installed BEFORE `IVM*2*167'
+                    (v)IVM*2*165   <<= must be installed BEFORE `IVM*2*167'
+                    (v)IVM*2*168   <<= must be installed BEFORE `IVM*2*167'
+
+Subject: HOME PHONE AND FUTURE DISCHARGE DATE UPDATES 
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch IVM*2.0*167 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which 
+ supports Enrollment System Community Care (ESCC).
+  
+ Patch IVM*2.0*167 is being released as a supporting patch for Registration 
+ Patch DG*5.3*935. IVM*2.0*167 contains routine changes to check if a Future 
+ Discharge Date (FDD) record exists. An FDD record consists of a Service 
+ Branch, Entry Date and Future Discharge Date. If an FDD record exists, it 
+ will not be included in the ZMH segment of the ORU-Z07 and ORF-Z07 messages 
+ sent from Veterans Health Information Systems and Technology Architecture
+ (VistA) to Enrollment System (ES).
+  
+ The Military Service Future Discharge Date (FDD) build components include
+ changes to manage, process and display an FDD record. The record can be
+ manually updated in the ES and is read-only in VistA Registration. An FDD 
+ record can be received from the military service broker or via an on-line 
+ Healthcare Application. A Veteran can apply for Department of Veterans 
+ Affairs (VA) health benefits enrollment before being discharged from the 
+ military. The ES is the VA authoritative system for this information. VistA 
+ will update the military service episode (MSE) list and FDD record to match 
+ what is provided by ES. The FDD record will not be transmitted from VistA to 
+ the ES.
+  
+ Home Phone Number updates include disabling Home Phone data elements in
+ Income Verification Match (IVM) Demographics Upload Tool and directly
+ uploading PHONE NUMBER[RESIDENCE] field (#.131), RESIDENCE NUMBER CHANGE 
+ DT/TM field (#.1321),and RESIDENCE NUMBER CHANGE SITE field (#.1323), 
+ RESIDENCE NUMBER CHANGE SOURCE field (#.1322) to the PATIENT file (#2).
+  
+ Listing of Updates
+ ================== 
+  
+ 1. Disable Home Phone data elements in the IVM Demographics Upload tool 
+ as the application will not allow VistA to automatically file PHONE NUMBER
+ [RESIDENCE] field (#.131), RESIDENCE NUMBER CHANGE DT/TM field (#.1321),
+ RESIDENCE NUMBER CHANGE SITE field (#.1323) or RESIDENCE NUMBER CHANGE 
+ SOURCE field (#.1322) to the PATIENT file (#2) when processing Health Level 
+ 7 (HL7) messages from ES.
+  
+ 2. Directly upload the Home Phone data elements PHONE NUMBER [RESIDENCE] 
+ field (#.131), RESIDENCE NUMBER CHANGE DT/TM field (#.1321), RESIDENCE
+ NUMBER CHANGE SITE field (#.1323), RESIDENCE NUMBER CHANGE SOURCE field 
+ (#.1322) into PATIENT file (#2) when received from ES if the conditions
+ listed below are met:
+  
+  a. The Change Date/Time of the incoming Home Phone Number is not null.
+  
+  b. The Change Date/Time of the incoming Home Phone Number from ES is more
+     recent than the VistA Change Date/Time of Home Phone Number.
+  
+ 3. Update VistA to exclude the FDD record in the ZMH segment of the 
+    ORU/ORF-Z07.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted 
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+   
+ Test Sites:
+ -----------
+ Clement J. Zablocki VA Medical Center (VAMC) (Milwaukee, WI)
+ Jesse Brown VA Medical Center (VAMC) (Chicago, IL)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Patches for this installation are combined in the following host file for
+ distribution: DG_53_P935.KID. 
+  
+ The host file was created to simplify installation at Veterans
+ Health Administration (VHA) facilities. This file can be obtained from 
+ one of the anonymous SFTP directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DG_53_P935.KID                      DG*5.3*935         ASCII
+                                     IVM*2.0*167
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                       DG_5_3_P935_KID_RN.PDF  (binary)
+ IVM Technical Manual                IVM_2_P167_TM.PDF       (binary)
+ IVM User Manual                     IVM_2_P167_UM.PDF       (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the DG*5.3*935 patch description for installation 
+ instructions.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 39
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC6
+    Before:B147873748   After:B155161380  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151,152,165,167**
+Routine Name: IVMPREC8
+    Before:B233047174   After:B242938145  **5,6,12,58,73,79,102,115,121,
+                                           148,151,152,168,167**
+Routine Name: IVMPREC9
+    Before: B71223010   After: B75404695  **34,58,115,121,151,159,167**
+Routine Name: IVMPTRN8
+    Before: B79090653   After: B86571271  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151,141,150,160,161,
+                                           168,167**
+ 
+Routine list of preceding patches: 159, 165, 168
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 17, 2017
+Completed By:                               Date Completed: FEB 07, 2018
+Released By :                               Date Released : FEB 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

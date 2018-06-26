@@ -1,0 +1,256 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/24/17 at 09:37
+=============================================================================
+Run Date: MAR 01, 2018                     Designation: IB*2*604
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #557                      Status: Released
+                  Compliance Date: MAR 31, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*123    <<= must be installed BEFORE `IB*2*604'
+                    (v)IB*2*459    <<= must be installed BEFORE `IB*2*604'
+                    (v)IB*2*563    <<= must be installed BEFORE `IB*2*604'
+                    (v)IB*2*577    <<= must be installed BEFORE `IB*2*604'
+
+Subject: PSO COPAYMENTS;WORKLOAD ASSIGNMENT SEARCH;CPT DESCRIPTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will address 4 issues:
+  
+  1. The medication profile screen should show the co-payment indicator 
+     for non-service connected patients.
+  
+  2. This patch adds a check for the FILL NUMBER (#.1) field in the
+     IB BILL/CLAIMS PRESCRIPTION REFILL (#362.4) file when searching
+     for third party bills with matching first party prescription 
+     copayments using the Claims Matching Report [RCDP CLAIMS MATCH] 
+     option. This ensures that an original prescription with a fill date 
+     that differs from the date the bill was created will be included in 
+     the report.
+  
+  3. This patch changes the process of searching for clerks when using the
+     Workload Assignment Enter/Edit [IBJD FOLLOW-UP WORKLOAD] option so 
+     that new entries cannot be made to the NEW PERSON (#200) file. The 
+     option has been changed to search the NAME (#.01) field of the NEW 
+     PERSON (#200) file, instead of searching the IB DM WORKLOAD PARAMETERS
+     (#351.73) file. The entry found in the NEW PERSON (#200) file is then 
+     used to search the IB DM WORKLOAD PARAMETERS (#351.73) file, and will
+     allow a new entry to be made if a match is not found.
+  
+  4. For certain Clinical Procedure Terminology (CPT) codes we need 
+     to enter a procedure description- for CPT J1566 we do not have 
+     this option in V2. Other VistA sites allow you to enter the 
+     appropriate information. Can an update be done to V2 to have this
+     option for this CPT code- it is causing claims to deny.
+   
+       
+  ASSOCIATED NSR(S):
+  ==================
+  N/A
+      
+      
+  ASSOCIATED REMEDY TICKET(S):
+  ============================
+  1. I11160987FY17 - AEU reports the medication profile screen does not show
+                     the co-payment indicator for non-service connected patients.
+  
+  2. I12679229FY17 - Claims Matching Report dropping prescription copayment
+                     charges 
+  
+  3. I16239935FY17 - AR Productivity Report (Routine ^IBJDF8I) Adding Entries 
+                     to File 200
+  
+  4. R7964411FY16 - CPT code issue.
+  
+      
+  PARTICIPATING TEST SITES:
+  =========================
+  Maryland HCS
+  New York HCS
+      
+       
+  REMEDY OVERVIEW:
+  ================
+   
+  1. I11160987FY17 - AEU reports the medication profile screen does not show
+                     the co-payment indicator for non-service connected patients.
+   
+     Problem:
+     --------
+     The co-payment indicator "$" is not displaying on medication profiles so 
+     Accounts Receivable is not picking up potential billable amounts until 
+     after the medication is released.
+  
+    
+     Resolution:
+     -----------
+     The routine IBARX can be modified to check a patient's medication co-payment
+     exemption status to determine if the co-payment indicator should appear.
+  
+  2. I12679229FY17 - vhacpalantzd--VistA - Non-VRAM User--Claims Matching
+     Report Omissions
+   
+     Problem:
+     --------
+     Veterans who are charged a First Party Co-Pay for medication are
+     not receiving proper credit for corresponding Third Party Payments as
+     required. This is occurring because the VistA Claims Matching Report 
+     [RCDP CLAIMS MATCH] is not including claims for original prescriptions
+     that have a FILL DATE (#22) field in the PRESCRIPTION (#52) file that is 
+     different than the DATE (#.03) field in the IB BILL/CLAIMS PRESCRIPTION 
+     REFILL (#362.4) file.
+  
+    
+     Resolution:
+     -----------
+     In the routine IBEFURF, added a check in the Claims Matching Report [RCDP 
+     CLAIMS MATCH] for the FILL NUMBER (#.1) field in IB BILL/CLAIMS 
+     PRESCRIPTION REFILL (#362.4) file to allow searching of prescriptions by 
+     fill number in addition to fill date.
+  
+  3. I16239935FY17 - AR Productivity Report (Routine ^IBJDF8I) Adding Entries
+                     to File 200
+  
+     Problem:
+     --------
+     The Workload Assignment Enter/Edit [IBJD FOLLOW-UP WORKLOAD] option will
+     allow the user to create new entries in the NEW PERSON (#200) file if they
+     enter a unique name in the lookup of the CLERK NAME (#.01) field of the IB
+     DM WORKLOAD PARAMETERS (#351.73) file. This is because the CLERK NAME (#.01)
+     field of the IB DM WORKLOAD PARAMETERS (#351.73) file is a pointer to the
+     NEW PERSON (#200) file, and the FileMan ^DIC call allows learning new 
+     entries. Learning new entries allows the search to display entries from the
+     NEW PERSON (#200) file, but also allows new entries to be made to the file.
+  
+    
+     Resolution:
+     -----------
+     Changed the FileMan ^DIC call in the routine IBJDF8I to search the NAME
+     (#.01) field of the NEW PERSON (#200) file instead of searching the CLERK
+     NAME (#.01) field of the IB DM WORKLOAD PARAMETERS (#351.73) file. This   
+     search will not allow new entries to be made to the NEW PERSON (#200) file.
+     A second search is then performed on the CLERK NAME (#.01) field of the IB 
+     DM WORKLOAD PARAMETERS (#351.73) file using the entry found in the NEW  
+     PERSON (#200) file. This second search will allow new entries to be made to 
+     the IB DM WORKLOAD PARAMETERS (#351.73) file. The Workload Assignment
+     Enter/Edit [IBJD FOLLOW-UP WORKLOAD] option requires the user to have
+     the security key IBJD WORKLOAD ASSIGNMENT.
+  
+  4. R7964411FY16 - CPT code issue
+      
+     Problem:
+     -------
+     Description field is not always accurately displayed, due to the fact IBCU7
+     does not always select the correct CPT code/does not have the ability to 
+     trim duplicate white spaces off strings when evaluating if a code is a 
+     'NOC'.
+  
+  
+     Resolution:
+     -----------
+     The ^IBCU7 routine was updated so that the description prompt should only
+     be displayed if a CPT code can be categorized as a Not Otherwise 
+     Categorized ('NOC'). This can be determined by evaluating the DESCRIPTION
+     (#.01) subfield of the DESCRIPTION (#62) Multiple to see if they contain 
+     any of the following: NOT OTHERWISE, NOT ELSEWHERE, NOT LISTED, UNLISTED, 
+     UNSPECIFIED, UNCLASSIFIED, NON-SPECIFIED, NOS, NOS;, NS., NOS,, NOS/, 
+     (NOS), NOC, NOC;, NOC., NOC/, (NOC). If so, the description prompt should
+     be displayed. The original issue was coming from bad data being in the 
+     DESCRIPTION (#.01) subfield of the DESCRIPTION (#62) multiple (extra white
+     spaces) making it so ^IBCU7 could not determine the status of the code. 
+     This has the potential to effects all CPT codes, not just J1566 as reported. 
+     However, this was remedied by a data clean up so the original issue could
+     not be duplicated. However, to prevent this from happening again, an 
+     extrinsic function 'TM' was added to trim off white spaces before 
+     evaluating them with the 'NOC' subroutine within ^IBCU7. It was also 
+     discovered during testing that ^IBCU7 was not selecting the correct version
+     of a CPT code depending on the date. This issue was remedied by removing 
+     the direct reads to ^ICPT, replacing them with the appropriate Application
+     Programming Interface calls which help select the correct version of a
+     CPT code depending on the date selected. This update now makes the 
+     software Health Insurance Portability and Accountability Act compliant.
+  
+     
+    
+  Installation Instructions:
+  ==========================
+    
+     This patch may be installed with users on the system although it should be
+     installed during non-peak hours to minimize potential disruption to
+     users. This patch should take less than 2 minutes to install.
+     
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter IB*2.0*604)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed. It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package IB*2.0*604.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//" respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+             Patient Prescription Processing [PSO LM BACKDOOR ORDERS]
+             Claims Matching Report          [RCDP CLAIMS MATCH]
+             Workload Assignment Enter/Edit  [IBJD FOLLOW-UP WORKLOAD]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBARX
+    Before: B52093772   After: B52663311  **101,150,156,168,186,237,308,
+                                           563,604**
+Routine Name: IBCU7
+    Before:B116490042   After:B132964294  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516,522,577,604**
+Routine Name: IBEFURF
+    Before: B18754511   After: B19666061  **130,347,459,604**
+Routine Name: IBJDF8I
+    Before: B32963587   After: B35098407  **123,604**
+ 
+Routine list of preceding patches: 123, 459, 563, 577
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2017
+Completed By:                               Date Completed: MAR 01, 2018
+Released By :                               Date Released : MAR 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

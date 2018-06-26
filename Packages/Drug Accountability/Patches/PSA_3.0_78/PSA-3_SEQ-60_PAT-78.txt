@@ -1,0 +1,189 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/19/17 at 12:13
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: PSA*3*78
+Package : PSA - DRUG ACCOUNTABILITY           Priority: Mandatory
+Version : 3        SEQ #60                      Status: Released
+                  Compliance Date: MAR 28, 2018
+=============================================================================
+
+Associated patches: (v)PSA*3*71    <<= must be installed BEFORE `PSA*3*78'
+
+Subject: VERIFIED INVOICES NOT BEING FILED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) issue:
+  
+ 1. McKesson invoice verified, but controlled substance balance did
+    not update
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  I5849148FY15
+  
+ Problem:
+ --------
+ Verified Drug Accountability (McKesson) invoices will not be set 
+ to a status of Complete if the user edits the invoice, verifies, 
+ and closes (or is disconnected from) their Reflections session at  
+ the "Type <Enter> to continue or '^' to exit:" prompt.  This causes 
+ an out-of-balance situation with regards to the controlled substance 
+ vault.
+  
+ Resolution:
+ -----------
+ If a user edits an invoice prior to verifying, VistA routine ^PSAVER1 
+ sets the invoice status to VERIFIED and prompts for the user to 
+ continue or exit, via subroutine END^PSAPROC. The prompt at that point
+ waits for a response.  If the user's Reflections session ends without 
+ completing the final prompt, important processing is missed with 
+ regards to setting up invoice data for the background job that changes 
+ the status from VERIFIED to COMPLETE.
+  
+ To resolve this issue, the call to execute the prompt via END^PSAPROC 
+ has been moved to a more appropriate spot in EXIT^PSAVER.
+  
+  
+ Test Sites:
+ ----------
+ Clarksburg VAMC
+ Beckley VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+   
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options to install this patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSA*3.0*78):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+  
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;3.0; DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch 
+ List]**;10/24/97;Build 10
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DRUG ACCOUNTABILITY/INVENTORY INTERFACE;**[Patch List]**;10/24/97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSAVER
+    Before: B80171787   After: B81042516  **60,65,71,78**
+Routine Name: PSAVER1
+    Before: B57200195   After: B57176156  **33,60,65,71,78**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 04, 2017
+Completed By:                               Date Completed: FEB 23, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

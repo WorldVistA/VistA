@@ -1,0 +1,146 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/01/17 at 12:15
+=============================================================================
+Run Date: FEB 15, 2018                     Designation: HL*1.6*169
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #134                    Status: Released
+                  Compliance Date: MAR 18, 2018
+=============================================================================
+
+Associated patches: (v)HL*1.6*120  <<= must be installed BEFORE `HL*1.6*169'
+
+Subject: UPDATE MPI LISTENER FOR LINUX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates the Master Patient Index (MPI) listener to work on
+ Linux and Unix systems.
+  
+ **************************************************************************
+ * This patch updates the MPI Direct Connect listener entry point to work *
+ * on LINUX.  Even though the routine being modified is nationally        *
+ * distributed, it is only active or accessible on the Austin Information *
+ * Technology Center (AITC) server housing the Master Patient Index (MPI).*
+ * Since this is a nationally distributed routine, this patch will need to*
+ * be installed at all VAMC's, however this functionality will be         *
+ * transparent to the VAMC's.                                             *
+ **************************************************************************
+  
+  
+ Associated tickets:
+ ===================
+ I16368504FY17 - HL7 real-time connection written for MPI -- needs 
+                 updating for Linux   
+  
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ El Paso HCS
+ Martinsburg VAMC 
+  
+  
+ TICKET OVERVIEW:
+ ================
+ I16368504FY17 - HL7 real-time connection written for MPI -- needs 
+                 updating for Linux 
+  
+ Problem: 
+ ========
+ MPI will be migrating to a Linux based system which will require an
+ update to the listener triggered code to account for the new operating
+ system entry point.
+    
+ Resolution:
+ ===========
+ Routine HLCSAS will be modified to add a new entry point defined in XINETD
+ to manage incoming connections on Linux and Unix systems.
+  
+  
+ Routine: HLCSAS
+  
+ Please Note:
+ ============
+    Routine HLCSAS will display several XINDEX errors when installing
+    this patch.  The locking error will be resolved with this patch.
+    However, the rest of the errors have SACC exemptions or have been
+    approved and it is ok to proceed.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ ***This patch must be installed during non-peak hours***
+  
+ *Although it is possible to encounter an EDITED error, which would 
+ ungracefully stop a specific end-user session via the use of certain
+ HL7 processes, the chance of unintentionally doing so is extremely remote.
+ Analysis indicates no loss off patient data if an EDITED error did 
+ occur.  For this reason, the install instructions do NOT direct the 
+ installer to stop any HL7 processes (e.g., HL7 Links and Filers), 
+ nor do they direct the installer to stop the HL7 multithreaded listener
+ service.  However, installing this patch during non-peak hours is 
+ prudent.  It should take less than 2 minutes to install the patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter HL*1.6*169)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        HL*1.6*169.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13,1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLCSAS
+    Before: B12656721   After: B14424102  **43,89,120,169**
+ 
+Routine list of preceding patches: 120
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2017
+Completed By:                               Date Completed: FEB 15, 2018
+Released By :                               Date Released : FEB 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

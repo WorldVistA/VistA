@@ -1,0 +1,176 @@
+
+=============================================================================
+Run Date: FEB 26, 2018                     Designation: OR*3*382
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #394                      Status: Released
+                  Compliance Date: MAR 29, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*269    <<= must be installed BEFORE `OR*3*382'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*382'
+                    (v)OR*3*421    <<= must be installed BEFORE `OR*3*382'
+
+Subject: OR MOCHA 2.1 CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ OR*3*382 is part of the MOCHA v2.1b COMBINED BUILD. This patch will 
+ address the following issues:
+  
+   Corrects an issue with the Application Programming Interface (API) that 
+ searches through quick orders for specific orderable items. For Infusion 
+ orders, there is a possibility of having multiple orderable items 
+ associated with an order. If the name of the Pharmacy Orderable Item was 
+ edited for an IV Additive that was contained in a quick order, a 
+ notification via MailMan message was not sent to the G. OR CACS mail 
+ group and the person that edited the IV Additive Pharmacy Orderable Item. 
+ The notification was only sent when the IV Solution Pharmacy Orderable 
+ Item was edited. A notification via MailMan message will now be sent if 
+ any of the Pharmacy Orderable Item names are edited within a quick order 
+ with multiple orderable items. 
+  
+   CPRS will now display dosing messages in the same order as they are 
+ displayed through pharmacy backdoor options
+  
+   CPRS will group together and display all dosing warnings requiring an 
+ override reason by drug.
+  
+   CPRS
+ will group together and display all informational dosing messages by
+ drug
+  
+   CPRS will no longer prompt for an override reason for dosing 
+ informational messages. An override reason will only be prompted for high 
+ dose warnings.
+  
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  New Service Requests (NSRs)
+  ----------------------------  
+  N/A
+   
+  Patient Safety Issues (PSIs)
+  -----------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overview
+  ---------------------------
+  N/A
+   
+  Test Sites:
+  ----------
+  -CHARLESTON, SC 
+  -EASTERN COLORADO HCS
+  -HEARTLAND-WEST HCS
+  -TENNESSEE VALLEY HCS 
+  -WEST PALM BEACH, FL
+   
+   
+  Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+  
+ Please refer to the MOCHA 2.1b Installation & Rollback Guide for 
+ installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B120466042   After:B130208555  **7,56,70,94,141,215,243,293,
+                                           280,346,357,352,345,311,269,
+                                           382**
+Routine Name: ORCSAVE
+    Before:B124971276   After:B127544119  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286,269,423,421,382**
+Routine Name: ORCSAVE2
+    Before:B107941468   After:B113061054  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293,280,346,269,
+                                           421,382**
+Routine Name: ORDSGCHK
+    Before:B110004235   After: B98387224  **280,352,345,311,384,395,382**
+Routine Name: ORKCHK5
+    Before: B87020125   After: B90858156  **6,32,74,94,123,190,280,357,
+                                           345,269,382**
+Routine Name: ORKPS
+    Before: B95306003   After:B115111476  **6,32,74,94,123,141,190,232,
+                                           316,272,346,345,382**
+Routine Name: ORMPS1
+    Before: B71509240   After: B71534901  **86,92,94,116,134,152,158,149,
+                                           190,195,215,265,275,243,280,
+                                           350,382**
+Routine Name: ORUQO
+    Before: B18883882   After: B19420199  **315,395,382**
+ 
+Routine list of preceding patches: 350, 395, 421
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 25, 2013
+Completed By:                               Date Completed: FEB 26, 2018
+Released By :                               Date Released : FEB 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

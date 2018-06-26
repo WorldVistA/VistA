@@ -1,0 +1,317 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 12/14/17 at 09:37
+=============================================================================
+Run Date: MAR 22, 2018                     Designation: XU*8*686
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #538                      Status: Released
+                  Compliance Date: APR 22, 2018
+=============================================================================
+
+
+Subject: SUPPORT MEDICATIONS DOSAGE FORM DOMAIN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ***************************** ATTENTION **********************************
+ The Collaborative Terminology Tooling & Data Management (CTT DM) Native
+ Domain Standardization (NDS) Payers Domain enhancement includes 3 patches
+ that must be installed in the following order:
+  
+      1.  XU*8.0*686
+      2.  HDI*1.0*21
+      3.  PSS*1.0*211
+ **************************************************************************
+  
+  
+                         XU*8*686
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Updates the MASTER FILE PARAMETERS file (#4.001) with a new
+    entry Dose Forms(#50.60699):
+  
+    NUMBER: 50.60699                        MASTER FILE: MASTER DOSAGE FORM
+   MFI CODE: Dose Forms                  MASTER FILE IDENTIFIER: Dose Forms
+ COLUMN DESCRIPTION: Term                FIELD NUMBER: .01
+   COLUMN LENGTH: 60                     SEQUENCE: 1
+ COLUMN DESCRIPTION: VistA_External_Code
+   FIELD NUMBER: 1                       COLUMN LENGTH: 9
+   SEQUENCE: 2
+ COLUMN DESCRIPTION: VistA_External_Term_Type
+   FIELD NUMBER: 2                       COLUMN LENGTH: 30
+   SEQUENCE: 3
+ COLUMN DESCRIPTION: VistA_Related_Record
+   FIELD NUMBER: .01                     SUBFILE NUMBER: 50.60699901
+   SUBFILE LKUP COLUMN: VistA_Related_Record
+   COLUMN LENGTH: 30                     REPEATING FIELD: NO
+   SEQUENCE: 4
+ SUBFILE SEQUENCE: 1
+   SUBFILE COLUMN NAME: VistA_Related_Record
+   SUBFILE FIELD NUMBER: .01
+ COLUMN DESCRIPTION: vista_replaced_by   FIELD NUMBER: 99.97
+   VUID PREFIX: VUID                     SEQUENCE: 5
+ COLUMN DESCRIPTION: Status              FIELD NUMBER: .02
+   SUBFILE NUMBER: 50.6069901            COLUMN LENGTH: 1
+   SEQUENCE: 6
+   POST-PROCESSING LOGIC: D POST^HDIPSZRT
+   ZRT-PROCESSING LOGIC: D ZRT^HDIPSZRT  ZRT-DISCOVERY LOGIC: D DESC^HDIZRT
+  
+ 2) Updates the MD5 Signature file(#4.005) with a new entry
+    Dose Forms(#50.60699):
+  
+ NUMBER: 50.60699                        MD5 CODE SYSTEM: Dose Forms
+ FILE/SUBFILE NUMBER: 50.60699
+ FIELD NUMBER: .01                       SEQUENCE: 20
+ FIELD NUMBER: 1                         SEQUENCE: 30
+ FIELD NUMBER: 2                         SEQUENCE: 40
+ FIELD NUMBER: 99.97                     SEQUENCE: 60
+   VUID FROM FILE: 50.60699
+ FIELD NUMBER: 99.99                     SEQUENCE: 10
+ FILE/SUBFILE NUMBER: 50.60699901
+ FIELD NUMBER: .01                       SEQUENCE: 50
+  
+ 3) Updates the Input Transform of the field SUBFILE NUMBER (#.04) on
+ the sub-file COLUMN SUB-FILE (#4.011). The sub-file COLUMN SUB-FILE 
+ (#4.011) is on the file MASTER FILE PARAMETERS (#4.001):
+  
+  4.011,.04     SUBFILE NUMBER         0;4 NUMBER
+  
+    INPUT TRANSFORM:  K:+X'=X!(X>999999999)!(X<1)!(X?.E1"."10.N) X K:
+                                 '$$F^XUMF(+$G(XUMF)) X
+        LAST EDITED:      OCT 25, 2017 
+        HELP-PROMPT:      If multiple field, enter sub-file number. 
+        DESCRIPTION:      This field holds the FileMan sub-file number.
+                          ONLY if FIELD NUMBER relates to a field in a
+                          multiple.  
+  
+         NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+    
+  
+ Patch Components:
+  
+ -----------------
+  
+ Files & Entry Associated:
+  
+ File Name (Number)             Entry Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ MASTER FILE PARAMETERS file (#4.001) Dose Forms(#50.60699)          New
+ MD5 Signature file(#4.005)           Dose Forms(#50.60699)          New
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ COLUMN SUB-FILE sub-file(#4.011) SUBFILE NUMBER(#.04)  Modified
+  
+ Note: The COLUMN SUB-FILE is sub-file on the MASTER FILE PARAMETERS file 
+ (#4.001).
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------
+ OKLAHOMA CITY VAMC, OK
+ PROVIDENCE VAMC, RI 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.  There's no
+ updated Documentation being released with this patch.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*686 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*686 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The routines XUMF686, and XUMF686P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+  
+ Select INSTALL NAME:    XU*8.0*686     Loaded from Distribution    
+ 10/26/17@04:1
+ 6:30
+      => XU*8*686 V2
+  
+ This Distribution was loaded on Oct 26, 2017@04:16:30 with header of 
+    XU*8*686 V1
+    It consisted of the following Install(s):
+      XU*8.0*686
+  
+ Want each Routine Listed with Checksums: Yes// 
+  
+ PACKAGE: XU*8.0*686     Oct 26, 2017 4:16 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+  
+ XUMF686   Calculated   19973203
+ XUMF686P  Calculated    3543041
+  
+    2 Routines checked, 0 failed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*686:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------
+ N/A 
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of a new database definition. If assistance is needed 
+ to rollback/backout the patch please, log a CA Service Desk Manager (SDM)
+ ticket so the development team can assist in this process.
+  
+ This patch creates a new entry Dose Forms in the MASTER FILE PARAMETERS
+ file (#4.001), and the new entry Dose Forms MD5 Signature file(#4.005).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF686
+    Before:       n/a   After: B19973203  **686**
+Routine Name: XUMF686P
+    Before:       n/a   After:  B3543041  **686**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 23, 2017
+Completed By:                               Date Completed: MAR 21, 2018
+Released By :                               Date Released : MAR 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

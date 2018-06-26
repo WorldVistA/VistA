@@ -1,0 +1,261 @@
+$TXT Created by                  CPRS32.DOMAIN.EXT  (KIDS) on Tuesday, 05/23/17 at 10:10
+=============================================================================
+Run Date: MAR 13, 2018                     Designation: PSS*1*204
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #188                      Status: Released
+                  Compliance Date: APR 13, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*189   <<= must be installed BEFORE `PSS*1*204'
+                    (v)PSS*1*198   <<= must be installed BEFORE `PSS*1*204'
+
+Subject: ADD INDICATIONS TO PHARMACY ORDERABLE ITEMS FILE #50.7
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch provides the ability to add Indications for Use in the PHARMACY
+ ORDERABLE ITEMS file (#50.7). The MOST COMMON INDICATION FOR USE field
+ (#14) and INDICATIONS FOR USE multiple field (#13) have been added to the
+ file. 
+  
+ The menu options Edit Orderable Items [PSS EDIT ORDERABLE ITEMS], 
+ Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE ITEMS] 
+ and Drug Enter/Edit [PSS DRUG ENTER/EDIT] have been modified to prompt for
+ the most common indication and any additional indications for
+ prescriptions and medication orders. The fields are not required. The
+ maximum length of the indications is 40 characters of free text.
+  
+ Patch Components:
+ -----------------
+ APIs Associated:
+  
+ API Name                New/Modified/Deleted
+ --------                --------------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ PHARMACY ORDERABLE      INDICATIONS FOR USE     New
+ ITEMS (#50.7)           (sub-file #50.713)
+                            INDICATIONS FOR      New
+                            USE (#.01)
+                         MOST COMMON INDICATION  New
+                         FOR USE (#14)
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20100101 - Indication for Use for Prescriptions and Medication Orders
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+  
+  
+ Resolution:
+ ----------
+  
+  
+ Test Sites:
+ ----------
+ DANVILLE
+ PALO ALTO
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                      File Name            FTP Mode
+ -----------------------------------------------------------------
+ Pharmacy Data Management   
+    User Manual             pss_1_um_r0318.pdf   BINARY
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the Packman message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the following
+ options. When prompted for the INSTALL NAME enter the patch # 
+ (PSS*1.0*204):
+ a.  Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+ b.  Compare Transport Global to Current System - This option will allow
+ you to view all changes that will be made when this patch is installed.  
+ It compares all components of this patch (routines, DDs, templates, etc.).
+ c.  Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+ choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no specific post installation instructions.
+  
+ To verify proper installation of the patch:
+  
+ 1. Verify the Install File shows the patch install completed with no
+    errors.
+  
+ 2. Check the error trap and ensure no errors were reported.
+  
+ 3. Verify the checksum of the PSSPOIMO routine matches the expected 
+    checksum in the patch description.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routine included 
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSPOIM1
+    Before:B131239599   After:B133178041  **29,38,47,141,153,159,166,191,
+                                           198,204**
+Routine Name: PSSPOIMO
+    Before:B140931303   After:B142972365  **29,32,38,47,68,102,125,141,
+                                           153,159,166,172,191,189,204**
+ 
+Routine list of preceding patches: 189, 198
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 24, 2016
+Completed By:                               Date Completed: MAR 13, 2018
+Released By :                               Date Released : MAR 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

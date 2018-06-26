@@ -1,0 +1,1245 @@
+Released PSJ*5*355 SEQ #303
+Extracted from mail message
+**KIDS**:PSJ*5.0*355^
+
+**INSTALL NAME**
+PSJ*5.0*355
+"BLD",10780,0)
+PSJ*5.0*355^INPATIENT MEDICATIONS^0^3180208^y
+"BLD",10780,1,0)
+^^16^16^3171228^
+"BLD",10780,1,1,0)
+This patch addresses two (2) issues:
+"BLD",10780,1,2,0)
+ 
+"BLD",10780,1,3,0)
+1.  The IV Additive Quick Code is not display the dosage and is showing 
+"BLD",10780,1,4,0)
+    up during process as Additive Strength: QC when it should be 
+"BLD",10780,1,5,0)
+    displaying as a Quick Code strength:nnn MG (where nnn is the strength
+"BLD",10780,1,6,0)
+    of the quick code)
+"BLD",10780,1,7,0)
+ 
+"BLD",10780,1,8,0)
+    Currently a quick code is showing up, for example, "Additive Strength:
+"BLD",10780,1,9,0)
+    QC 1" The Quick Code, for example, should be displayed as "Quick Code 
+"BLD",10780,1,10,0)
+    Strength:400 MG"
+"BLD",10780,1,11,0)
+ 
+"BLD",10780,1,12,0)
+2.  The "Expected First Dose" prompt in the Inpatient Pharmacy package 
+"BLD",10780,1,13,0)
+    New Order Entry option will display the incorrect calculated value if
+"BLD",10780,1,14,0)
+    it is the second or subsequent order processed in a session when the 
+"BLD",10780,1,15,0)
+    second or subsequent order has a schedule greater than daily and the
+"BLD",10780,1,16,0)
+    Start Date is in the future.
+"BLD",10780,4,0)
+^9.64PA^^
+"BLD",10780,6.3)
+4
+"BLD",10780,"ABPKG")
+n
+"BLD",10780,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10780,"KRN",.4,0)
+.4
+"BLD",10780,"KRN",.401,0)
+.401
+"BLD",10780,"KRN",.402,0)
+.402
+"BLD",10780,"KRN",.403,0)
+.403
+"BLD",10780,"KRN",.5,0)
+.5
+"BLD",10780,"KRN",.84,0)
+.84
+"BLD",10780,"KRN",3.6,0)
+3.6
+"BLD",10780,"KRN",3.8,0)
+3.8
+"BLD",10780,"KRN",9.2,0)
+9.2
+"BLD",10780,"KRN",9.8,0)
+9.8
+"BLD",10780,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10780,"KRN",9.8,"NM",1,0)
+PSGOE7^^0^B40589301
+"BLD",10780,"KRN",9.8,"NM",2,0)
+PSIVEDRG^^0^B58388947
+"BLD",10780,"KRN",9.8,"NM",3,0)
+PSIVORC2^^0^B66091537
+"BLD",10780,"KRN",9.8,"NM","B","PSGOE7",1)
+
+"BLD",10780,"KRN",9.8,"NM","B","PSIVEDRG",2)
+
+"BLD",10780,"KRN",9.8,"NM","B","PSIVORC2",3)
+
+"BLD",10780,"KRN",19,0)
+19
+"BLD",10780,"KRN",19.1,0)
+19.1
+"BLD",10780,"KRN",101,0)
+101
+"BLD",10780,"KRN",409.61,0)
+409.61
+"BLD",10780,"KRN",409.61,"NM",0)
+^9.68A^1^1
+"BLD",10780,"KRN",409.61,"NM",1,0)
+PSJ LM UD ACTION^^0
+"BLD",10780,"KRN",409.61,"NM","B","PSJ LM UD ACTION",1)
+
+"BLD",10780,"KRN",771,0)
+771
+"BLD",10780,"KRN",779.2,0)
+779.2
+"BLD",10780,"KRN",870,0)
+870
+"BLD",10780,"KRN",8989.51,0)
+8989.51
+"BLD",10780,"KRN",8989.52,0)
+8989.52
+"BLD",10780,"KRN",8994,0)
+8994
+"BLD",10780,"KRN","B",.4,.4)
+
+"BLD",10780,"KRN","B",.401,.401)
+
+"BLD",10780,"KRN","B",.402,.402)
+
+"BLD",10780,"KRN","B",.403,.403)
+
+"BLD",10780,"KRN","B",.5,.5)
+
+"BLD",10780,"KRN","B",.84,.84)
+
+"BLD",10780,"KRN","B",3.6,3.6)
+
+"BLD",10780,"KRN","B",3.8,3.8)
+
+"BLD",10780,"KRN","B",9.2,9.2)
+
+"BLD",10780,"KRN","B",9.8,9.8)
+
+"BLD",10780,"KRN","B",19,19)
+
+"BLD",10780,"KRN","B",19.1,19.1)
+
+"BLD",10780,"KRN","B",101,101)
+
+"BLD",10780,"KRN","B",409.61,409.61)
+
+"BLD",10780,"KRN","B",771,771)
+
+"BLD",10780,"KRN","B",779.2,779.2)
+
+"BLD",10780,"KRN","B",870,870)
+
+"BLD",10780,"KRN","B",8989.51,8989.51)
+
+"BLD",10780,"KRN","B",8989.52,8989.52)
+
+"BLD",10780,"KRN","B",8994,8994)
+
+"BLD",10780,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",10780,"QUES",0)
+^9.62^^
+"BLD",10780,"REQB",0)
+^9.611^2^2
+"BLD",10780,"REQB",1,0)
+PSJ*5.0*317^2
+"BLD",10780,"REQB",2,0)
+PSJ*5.0*346^2
+"BLD",10780,"REQB","B","PSJ*5.0*317",1)
+
+"BLD",10780,"REQB","B","PSJ*5.0*346",2)
+
+"KRN",409.61,478,-1)
+0^1
+"KRN",409.61,478,0)
+PSJ LM UD ACTION^1^^80^6^19^1^1^Protocol^PSJU LM ACTIONS MENU^Unit Dose Edit^^^1
+"KRN",409.61,478,1)
+^PSJ LM ORDER VIEW HIDDEN ACTIONS
+"KRN",409.61,478,"ARRAY")
+ ^TMP("PSJUDE",$J)
+"KRN",409.61,478,"COL",0)
+^409.621^^0
+"KRN",409.61,478,"FNL")
+D ENKILL^PSJLMUDE S VALMBCK="Q"
+"KRN",409.61,478,"HDR")
+D HDR^PSJLMHED(DFN)
+"KRN",409.61,478,"INIT")
+D INIT^PSJLMUDE(DFN,PSJORD)
+"MBREQ")
+0
+"ORD",17,409.61)
+409.61;17;1;;;;LME1^XPDIA1;;;LMDEL^XPDIA1
+"ORD",17,409.61,0)
+LIST TEMPLATE
+"PKG",471,-1)
+1^1
+"PKG",471,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",471,20,0)
+^9.402P^^
+"PKG",471,22,0)
+^9.49I^1^1
+"PKG",471,22,1,0)
+5.0^2971215^2990325^66481
+"PKG",471,22,1,"PAH",1,0)
+355^3180208
+"PKG",471,22,1,"PAH",1,1,0)
+^^16^16^3180208
+"PKG",471,22,1,"PAH",1,1,1,0)
+This patch addresses two (2) issues:
+"PKG",471,22,1,"PAH",1,1,2,0)
+ 
+"PKG",471,22,1,"PAH",1,1,3,0)
+1.  The IV Additive Quick Code is not display the dosage and is showing 
+"PKG",471,22,1,"PAH",1,1,4,0)
+    up during process as Additive Strength: QC when it should be 
+"PKG",471,22,1,"PAH",1,1,5,0)
+    displaying as a Quick Code strength:nnn MG (where nnn is the strength
+"PKG",471,22,1,"PAH",1,1,6,0)
+    of the quick code)
+"PKG",471,22,1,"PAH",1,1,7,0)
+ 
+"PKG",471,22,1,"PAH",1,1,8,0)
+    Currently a quick code is showing up, for example, "Additive Strength:
+"PKG",471,22,1,"PAH",1,1,9,0)
+    QC 1" The Quick Code, for example, should be displayed as "Quick Code 
+"PKG",471,22,1,"PAH",1,1,10,0)
+    Strength:400 MG"
+"PKG",471,22,1,"PAH",1,1,11,0)
+ 
+"PKG",471,22,1,"PAH",1,1,12,0)
+2.  The "Expected First Dose" prompt in the Inpatient Pharmacy package 
+"PKG",471,22,1,"PAH",1,1,13,0)
+    New Order Entry option will display the incorrect calculated value if
+"PKG",471,22,1,"PAH",1,1,14,0)
+    it is the second or subsequent order processed in a session when the 
+"PKG",471,22,1,"PAH",1,1,15,0)
+    second or subsequent order has a schedule greater than daily and the
+"PKG",471,22,1,"PAH",1,1,16,0)
+    Start Date is in the future.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","PSGOE7")
+0^1^B40589301^B40214304
+"RTN","PSGOE7",1,0)
+PSGOE7 ;BIR/CML3-SELECT DRUG ;15 MAY 00 / 1:43 PM
+"RTN","PSGOE7",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**9,26,34,52,55,50,87,111,181,254,267,260,288,281,317,355**;16 DEC 97;Build 4
+"RTN","PSGOE7",3,0)
+ ;
+"RTN","PSGOE7",4,0)
+ ; Reference to ^PS(50.7 is supported by DBIA 2180
+"RTN","PSGOE7",5,0)
+ ; Reference to ^PS(59.7 is supported by DBIA 2181
+"RTN","PSGOE7",6,0)
+ ; Reference to ^PSDRUG( is supported by DBIA 2192
+"RTN","PSGOE7",7,0)
+ ; Reference to ^PSNAPIS is supported by DBIA 2531
+"RTN","PSGOE7",8,0)
+ ; Reference to $$GET^XPAR is supported by DBIA 2263
+"RTN","PSGOE7",9,0)
+ ; Reference to ^VADPT is supported by DBIA 10061
+"RTN","PSGOE7",10,0)
+ ; Reference to ^TMP("PSODAOC",$J supported by DBIA 6071
+"RTN","PSGOE7",11,0)
+ ; NFI-UD chgs for FR#: 1
+"RTN","PSGOE7",12,0)
+ ; 
+"RTN","PSGOE7",13,0)
+ ;S PSGDICS="U"_$S($D(PSJOERR):",I",1:"")
+"RTN","PSGOE7",14,0)
+ S PSGDICS="U"
+"RTN","PSGOE7",15,0)
+ ;
+"RTN","PSGOE7",16,0)
+AD ; Ask Drug
+"RTN","PSGOE7",17,0)
+ K PSJDOSE,PSJDOX ;var array use in ^PSJDOSE
+"RTN","PSGOE7",18,0)
+ K PSGODO,^TMP("PSJINTER",$J) D KILL^PSJBCMA5(+$G(PSJSYSP))
+"RTN","PSGOE7",19,0)
+ D ENKILL^PSJLMUDE
+"RTN","PSGOE7",20,0)
+ K DIC S DIC="^PS(50.7,",DIC(0)="EMQZVT",D="B^C" I '$P(PSJSYSU,";",4) S DIC("S")="I $$ENOISC^PSJUTL(Y,""U"")"
+"RTN","PSGOE7",21,0)
+ N PSJTABS,PSJPLTYP,PSJPDLOC
+"RTN","PSGOE7",22,0)
+ E  D
+"RTN","PSGOE7",23,0)
+ .I '$D(PSJDGCK) S DIC("T")="",DIC="^PSDRUG(",DIC("S")="I +$G(^PSDRUG(+Y,2)),$P($G(^PSDRUG(+Y,2)),""^"",3)[""U"" S X(1)=+$G(^(""I"")) I $S('X(1):1,1:X(1)>DT)",D="B^C^VAPN^VAC^NDC^XATC"
+"RTN","PSGOE7",24,0)
+ .I $D(PSJDGCK) S DIC("T")="",DIC="^PSDRUG(",DIC("S")="I +$G(^PSDRUG(+Y,2)),$$GCN^PSGOE7(+Y),$$PKGFLG^PSGOE7($P($G(^PSDRUG(+Y,2)),""^"",3)) S X(1)=+$G(^(""I"")) I $S('X(1):1,1:X(1)>DT)",D="B^C^VAPN^VAC^NDC^XATC"
+"RTN","PSGOE7",25,0)
+ ;
+"RTN","PSGOE7",26,0)
+AD1 ;
+"RTN","PSGOE7",27,0)
+ K PSGORD,PSJORD,PSJALLGY,PSGUSRX,^TMP("PSJINTER",$J),^PS(53.45,+$G(PSJSYSP),5),^PS(53.45,+$G(PSJSYSP),6),PSJPLTYP,PSJPDLOC
+"RTN","PSGOE7",28,0)
+ K ^TMP("PSODAOC",$J)
+"RTN","PSGOE7",29,0)
+ S PSGORQF=0 R !!,"Select DRUG: ",X:DTIME I '$T W $C(7) S X="^"
+"RTN","PSGOE7",30,0)
+ ; -- save off value of X in PSGUSRX so variable can be reliable checked at DO tag
+"RTN","PSGOE7",31,0)
+ S PSGUSRX=X
+"RTN","PSGOE7",32,0)
+ I $D(PSJDGCK) I ($G(PSJOCNT)=1&(X="")) D  Q
+"RTN","PSGOE7",33,0)
+ .W !!,"Not enough active profile drugs to perform drug check",!
+"RTN","PSGOE7",34,0)
+ .K DIR S DIR(0)="E",DIR("A")="Press Return to Continue..." D ^DIR K DIR W @IOF
+"RTN","PSGOE7",35,0)
+ I $D(PSJDGCK),X="" N PSGDGCKF S PSGDGCKF=1 G DGCKX
+"RTN","PSGOE7",36,0)
+ I ("^"[X)!(X="") S PSGORQF=1 G DONE
+"RTN","PSGOE7",37,0)
+ G:X?1"S."1.E DONE
+"RTN","PSGOE7",38,0)
+ I X?1."?" W !!?2,"Select the medication you wish the patient to receive." W:PSJSYSU<3 "  You should consult",!,"with your pharmacy before ordering any non-formulary medication." W !
+"RTN","PSGOE7",39,0)
+ ; PSJ*5*317 - PADE - Define PADE identifier for lookups if kernel parameter turned on
+"RTN","PSGOE7",40,0)
+ I $$GET^XPAR("SYS","PSJ PADE OE BALANCES") N PSJTABS N:'$G(VAIN(4))&$G(PSGP) VAIN,DFN,PSJTABS D
+"RTN","PSGOE7",41,0)
+ .N PSJORCL,PSJCLNK K DIC("W")
+"RTN","PSGOE7",42,0)
+ .I '$G(VAIN(4)),$G(PSGP) S DFN=PSGP D INP^VADPT
+"RTN","PSGOE7",43,0)
+ .; If clinic order, quit if clinic location is not linked to PADE
+"RTN","PSGOE7",44,0)
+ .S PSJORCL=$S($G(PSGORD)["P":$G(^PS(53.1,+$G(PSGORD),"DSS")),$G(PSGORD)["U":$G(^PS(55,+$G(PSGP),5,+$G(PSGORD),8)),$G(PSGORD)["V":$G(^PS(55,+$G(PSGP),"IV",+$G(PSGORD),"DSS")),1:"")
+"RTN","PSGOE7",45,0)
+ .I PSJORCL,$P(PSJORCL,"^",2) S PSJCLNK=$$PADECL^PSJPAD50(+$G(PSJORCL)) Q:'PSJCLNK
+"RTN","PSGOE7",46,0)
+ .I '$G(PSJCLNK) Q:'$$PADEWD^PSJPAD50(+$G(VAIN(4)))
+"RTN","PSGOE7",47,0)
+ .S $P(PSJTABS," ",40)=""
+"RTN","PSGOE7",48,0)
+ .S PSJPLTYP=$S($G(PSJCLNK):"""CL""",1:"""WD"""),PSJPDLOC=$S(PSJPLTYP="CL":+PSJORCL,1:+$G(VAIN(4)))
+"RTN","PSGOE7",49,0)
+ .S DIC("W")="W $E(PSJTABS,1,(40-$L($S($G(DIY)]"""":$G(DIY),1:$P($G(^PSDRUG(+$G(Y),0)),""^"")))))_""  PADE: ""_$$DRGQTY^PSJPADSI(+Y,"_PSJPLTYP_","_$G(PSJPDLOC)_")_""   ""_$P($G(^PSDRUG(+Y,0)),""^"",10)"
+"RTN","PSGOE7",50,0)
+ ;
+"RTN","PSGOE7",51,0)
+ D MIX^DIC1 G:X?1."?" AD1 G:"^"[X!(Y'>0) AD1 S (PSGDO,PSGDRG,PSGDRGN,PSGNEDFD,PSGPDRG,PSGPDRGN)=""
+"RTN","PSGOE7",52,0)
+ I $D(PSJDGCK) I $$PSJSUPCK^PSJDGCK(+Y) G AD1
+"RTN","PSGOE7",53,0)
+ ;
+"RTN","PSGOE7",54,0)
+DGCKX I $P(PSJSYSU,";",4) D  G DO
+"RTN","PSGOE7",55,0)
+ .S:'$D(PSJDGCK) PSGDRG=+Y,PSGDRGN=Y(0,0)
+"RTN","PSGOE7",56,0)
+ .S:$D(PSJDGCK)&'$D(PSGDGCKF) PSGDRG=+Y,PSGDRGN=Y(0,0)
+"RTN","PSGOE7",57,0)
+ .S:$D(PSJDGCK)&$D(PSGDGCKF) PSGDRG=$P($$DGCKIEN^PSJDGCK(),";",2),PSGDRGN=$P($G(^PSDRUG(PSGDRG,0)),U)
+"RTN","PSGOE7",58,0)
+ .D DIN^PSJDIN(+$G(^PSDRUG(PSGDRG,2)),PSGDRG)
+"RTN","PSGOE7",59,0)
+ .I '$D(PSJDGCK) I $P(Y(0),"^",9) D NF S:Y>0 PSGDRG=+Y(0),PSGDRGN=Y(0,0) D SNFM
+"RTN","PSGOE7",60,0)
+ .I $D(PSJDGCK)&'$D(PSGDGCKF) I $P(Y(0),"^",9) D NF S:Y>0 PSGDRG=+Y(0),PSGDRGN=Y(0,0) D SNFM
+"RTN","PSGOE7",61,0)
+ .S PSGPDRG=+$G(^PSDRUG(PSGDRG,2)),PSGPDRGN=$$OINAME^PSJLMUTL(PSGPDRG)
+"RTN","PSGOE7",62,0)
+ I '$D(PSJDGCK) S PSGPDRG=+Y,PSGPDRGN=$$OINAME^PSJLMUTL(PSGPDRG)
+"RTN","PSGOE7",63,0)
+ I $D(PSJDGCK)&'$D(PSGDGCKF) S PSGPDRG=+Y,PSGPDRGN=$$OINAME^PSJLMUTL(PSGPDRG)
+"RTN","PSGOE7",64,0)
+ ;F Q=1:1:$L(PSGDICS) S X=$P(PSGDICS,",",Q) Q:X=""  S PSJLUAPP=$O(^PS(50.3,PSGPDRG,1,"B",X,0)) I PSJLUAPP S X=$G(^PS(50.3,PSGPDRG,1,PSJLUAPP,0)) Q
+"RTN","PSGOE7",65,0)
+ S X=$O(^PSDRUG("ASP",PSGPDRG,0)) I X,'$O(^(X)) S PSGDRG=X,PSGDRGN=$$ENDDN^PSGMI(X)
+"RTN","PSGOE7",66,0)
+ ;
+"RTN","PSGOE7",67,0)
+DO ; dosage ordered
+"RTN","PSGOE7",68,0)
+ NEW PSJALLGY
+"RTN","PSGOE7",69,0)
+ S PSGNEDFD=$$GTNEDFD("U",PSGPDRG)
+"RTN","PSGOE7",70,0)
+ ; -- if PSGDGCKF is set, CK action is being used and no DRUG was entered, do not set PSJALLGY array
+"RTN","PSGOE7",71,0)
+ I $G(PSGDRG),$P(PSJSYSU,";",4) S:'$G(PSGDGCKF) PSJALLGY(PSGDRG)=$S($G(PSGUSRX)=""&($G(PSGDRG)):"",1:"P") D ENDDC^PSGSICHK(PSGP,PSGDRG) G:$G(PSGORQF) AD
+"RTN","PSGOE7",72,0)
+ I '$P(PSJSYSU,";",4) S PSGX=PSGPDRG D END^PSGSICHK G:Y<0 AD
+"RTN","PSGOE7",73,0)
+ S PSGDO=""
+"RTN","PSGOE7",74,0)
+ ;
+"RTN","PSGOE7",75,0)
+DONE ;
+"RTN","PSGOE7",76,0)
+ K DIC,%,%Y,PSGDICS,PSJLUAPP,Q1,Q2,Q3,Z,PSJALLGY,PSGUSRX Q
+"RTN","PSGOE7",77,0)
+ ;
+"RTN","PSGOE7",78,0)
+ ;
+"RTN","PSGOE7",79,0)
+NF ;
+"RTN","PSGOE7",80,0)
+ S Y=0 W $C(7),!!,"PLEASE NOTE: The selected item is not currently on your medical center's",!?13,"formulary." Q:'$P(PSJSYSU,";",2)
+"RTN","PSGOE7",81,0)
+ N CNT S CNT=0 F Q1=0:0 S Q1=$O(^PSDRUG(PSGDRG,65,Q1)) Q:'Q1  I $$CHKDRG(+$G(^(Q1,0))) S CNT=CNT+1
+"RTN","PSGOE7",82,0)
+ I CNT=0 W !!,"There are no formulary alternatives entered for this item." W:PSJSYSU>2 "  You should consult",!,"with your pharmacy before ordering this item." S Y=0 Q
+"RTN","PSGOE7",83,0)
+ I CNT=1 S Q1=$O(^PSDRUG(PSGDRG,65,0)),Q1=+$G(^(Q1,0)),Q3=$P(^PSDRUG(Q1,0),"^") W !!,Q3," has been entered as a formulary " W:$X>67 ! W "alternative."
+"RTN","PSGOE7",84,0)
+ I  F Q=1:1 S %=2 W !!,"Is ",$S(Q=1:"this",1:Q3)," acceptable" D YN^DICN Q:%  D NFOH
+"RTN","PSGOE7",85,0)
+ I CNT=1 S:%=1 (Y(0),Y)=Q1,Y(0,0)=Q3 S:%<0 Y=-1 Q
+"RTN","PSGOE7",86,0)
+ K DA,DIC S DA(1)=PSGDRG,DIC="^PSDRUG("_PSGDRG_",65,",DIC(0)="AEMQZ",DIC("A")="Select FORMULARY ALTERNATIVE: " W ! D ^DIC K DIC Q
+"RTN","PSGOE7",87,0)
+ ;
+"RTN","PSGOE7",88,0)
+NFOH ;
+"RTN","PSGOE7",89,0)
+ S X="Answer 'YES' to order this formulary alternative ("_Q3_") for the patient instead of the non-formulary item originally selected.  Answer 'NO' to use the drug originally selected."
+"RTN","PSGOE7",90,0)
+ W !!?2 F Y=1:1:$L(X," ") S Z=$P(X," ",Y) W:$L(Z)+$X+2>IOM ! W Z," "
+"RTN","PSGOE7",91,0)
+ Q
+"RTN","PSGOE7",92,0)
+CHKDRG(DRG) ; Determine if dispense drug is valid for Unit Dose.
+"RTN","PSGOE7",93,0)
+ I $D(^PSDRUG(DRG,0)),$P($G(^(2)),U,3)["U" S X=+$G(^("I")) I 'X!(X>DT) Q DRG
+"RTN","PSGOE7",94,0)
+ Q 0
+"RTN","PSGOE7",95,0)
+ ;
+"RTN","PSGOE7",96,0)
+SNFM ; show non-formulary message
+"RTN","PSGOE7",97,0)
+ S Y=1 Q:PSJSYSU=3!'$O(^PS(59.7,1,21,0))  W $C(7),! S Q=0 F  S Q=$O(^PS(59.7,1,21,Q)) Q:'Q  W !,$G(^(Q,0))
+"RTN","PSGOE7",98,0)
+ W ! D READ^PSJUTL S Y=1 Q
+"RTN","PSGOE7",99,0)
+ ;
+"RTN","PSGOE7",100,0)
+GTNEDFD(APP,PDRG) ; Find defaults from Orderable Item.
+"RTN","PSGOE7",101,0)
+ Q $P($G(^PS(50.7,+PDRG,0)),"^",5,8)
+"RTN","PSGOE7",102,0)
+ N Q,X S X=""
+"RTN","PSGOE7",103,0)
+ F Q=1:1:$L(APP) S X=$E(APP,Q) Q:X=""  S X=$O(^PS(50.3,+PDRG,1,"B",X,0)) I X S X=$P($G(^PS(50.3,+PDRG,1,X,0)),"^",5,8) Q
+"RTN","PSGOE7",104,0)
+ Q X
+"RTN","PSGOE7",105,0)
+ ;
+"RTN","PSGOE7",106,0)
+PKGFLG(PKF) ;Return 0 for not in range of acceptable package flags, 1 for within range
+"RTN","PSGOE7",107,0)
+ I $S(PKF["U":1,1:0) Q 1
+"RTN","PSGOE7",108,0)
+ I $S(PKF["I":1,1:0) Q 1
+"RTN","PSGOE7",109,0)
+ Q 0
+"RTN","PSGOE7",110,0)
+ ;
+"RTN","PSGOE7",111,0)
+GCN(PSGIENID) ;Return 0 for not matched, 1 for matched with no GCNSEQNO, 1^1 for matched with a GCNSEQNO
+"RTN","PSGOE7",112,0)
+ N PSGNDFID,PSGGCNPT,PSGGCNID
+"RTN","PSGOE7",113,0)
+ S PSGNDFID=$P($G(^PSDRUG(PSGIENID,"ND")),"^"),PSGGCNPT=$P($G(^PSDRUG(PSGIENID,"ND")),"^",3)
+"RTN","PSGOE7",114,0)
+ I 'PSGNDFID!('PSGGCNPT) Q 0
+"RTN","PSGOE7",115,0)
+ S PSGGCNID=$$PROD0^PSNAPIS(PSGNDFID,PSGGCNPT)
+"RTN","PSGOE7",116,0)
+ I $P(PSGGCNID,"^",7) Q PSGIENID_";"_PSGNDFID_";"_$P(PSGGCNID,"^",7)
+"RTN","PSGOE7",117,0)
+ Q PSGIENID_";"_PSGNDFID
+"RTN","PSIVEDRG")
+0^2^B58388947^B54894901
+"RTN","PSIVEDRG",1,0)
+PSIVEDRG ;BIR/MLM - ENTER/EDIT DRUGS FOR IV ORDER ;16 Mar 99 / 2:14 PM
+"RTN","PSIVEDRG",2,0)
+ ;;5.0;INPATIENT MEDICATIONS ;**21,33,50,65,74,84,128,147,181,263,281,313,355**;16 DEC 97;Build 4
+"RTN","PSIVEDRG",3,0)
+ ;
+"RTN","PSIVEDRG",4,0)
+ ; References to ^PS(52.6 supported by DBIA# 1231.
+"RTN","PSIVEDRG",5,0)
+ ; References to ^PS(52.7 supported by DBIA# 2173.
+"RTN","PSIVEDRG",6,0)
+ ; Reference to EN^PSOORDRG supported by DBIA# 2190.
+"RTN","PSIVEDRG",7,0)
+ ; Reference to ^TMP("PSODAOC",$J supported by DBIA #6071.
+"RTN","PSIVEDRG",8,0)
+ ;
+"RTN","PSIVEDRG",9,0)
+DRG ; Edit Additive/Solution data
+"RTN","PSIVEDRG",10,0)
+ N DRGOC K PSGORQF ;If PSGORQF=1 abort order after order check.
+"RTN","PSIVEDRG",11,0)
+ K PSIVOLD S DRG(2)="" I $D(DRG(DRGT)) S DRGI=+$O(DRG(DRGT,0)) I DRGI S PSIVOLD=1 D SETDRG
+"RTN","PSIVEDRG",12,0)
+DRG1 ;
+"RTN","PSIVEDRG",13,0)
+ Q:$G(PSGORQF)
+"RTN","PSIVEDRG",14,0)
+ I $G(X)="?" K DUOUT
+"RTN","PSIVEDRG",15,0)
+ D FULL^VALM1
+"RTN","PSIVEDRG",16,0)
+ W !,"Select ",DRGTN,": "
+"RTN","PSIVEDRG",17,0)
+ I DRGT=$G(PSIVOI),($G(PSIVOI("DILIST",0))>1) D GTADSOL Q
+"RTN","PSIVEDRG",18,0)
+ W:DRG(2)]"" DRG(2),"//" R X:DTIME S:'$T X="^" S:X=U DONE=1 I X["^"!(X=""&(DRG(2)="")) D CHKSCMNT Q
+"RTN","PSIVEDRG",19,0)
+DRG1A I X="" W !,DRGTN,": ",DRG(2),"//" R X:DTIME S:'$T X="^" D:X="^" CHKSCMNT Q:X="^"  I X="" S Y=1 D DRG3 G:DRGT="AD"!($G(P(4))="H") DRG1 Q
+"RTN","PSIVEDRG",20,0)
+ I X="@",DRG(2)]"" D DEL G:%'=1 DRG1A K DRG(DRGT,DRGI),^TMP("PSODAOC",$J) S DRGI=+$O(DRG(DRGT,0)) S:'DRGI DRG(DRGT,0)=0 D SETDRG G DRG1
+"RTN","PSIVEDRG",21,0)
+ I X["???",($E(P("OT"))="M"),(PSIVAC["C") D ORFLDS^PSIVEDT1 G DRG1
+"RTN","PSIVEDRG",22,0)
+ I X'["?" S %=0 D:$D(DRG(DRGT)) CHK G:%=1 DRG1A D DRG2 Q:$G(Y)>0&($G(P(4))'="H"&(DRGT="SOL"))  G DRG1
+"RTN","PSIVEDRG",23,0)
+ I $D(DRG(DRGT)) W !,"This order includes the following ",DRGTN,"S:",! D
+"RTN","PSIVEDRG",24,0)
+ . F Y=0:0 S Y=$O(DRG(DRGT,Y)) Q:'Y  D
+"RTN","PSIVEDRG",25,0)
+ . . W !,$P(DRG(DRGT,Y),U,2)
+"RTN","PSIVEDRG",26,0)
+ . . W:DRGT="AD" ?40,"Additive Strength: ",$S($$GET1^DIQ(52.6,+$G(DRG(DRGT,Y)),19):$$GET1^DIQ(52.6,+$G(DRG(DRGT,Y)),19)_" "_$$GET1^DIQ(52.6,+$G(DRG(DRGT,Y)),2),1:"N/A")
+"RTN","PSIVEDRG",27,0)
+ W !!,"YOU MAY ENTER A NEW ",DRGTN,", IF YOU WISH",! D GTSCRN(X) S DIC(0)="EQM" D ^DIC K DIC G DRG1
+"RTN","PSIVEDRG",28,0)
+ Q
+"RTN","PSIVEDRG",29,0)
+ ;
+"RTN","PSIVEDRG",30,0)
+SETDRG ; Put Drug data into DRG(x).
+"RTN","PSIVEDRG",31,0)
+ F X=1:1:6 S DRG(X)=$P(DRG(DRGT,DRGI),U,X)
+"RTN","PSIVEDRG",32,0)
+ S X="" I DRG(2)="",DRG(1) S DRG(2)="*** Undefined ***"
+"RTN","PSIVEDRG",33,0)
+ Q
+"RTN","PSIVEDRG",34,0)
+DRG2 ;
+"RTN","PSIVEDRG",35,0)
+ D GTSCRN(X) N PSIVX S PSIVX=X,DIC(0)="EQMZ" D ^DIC K DIC Q:Y<0
+"RTN","PSIVEDRG",36,0)
+ S PSJIVIEN=+Y
+"RTN","PSIVEDRG",37,0)
+ N PSJNF D NFIV^PSJDIN($S(DRGT="AD":52.6,1:52.7),+PSJIVIEN,.PSJNF)
+"RTN","PSIVEDRG",38,0)
+ W PSJNF("NF")
+"RTN","PSIVEDRG",39,0)
+ S PSIVNEW=1,DRGTMP=+Y_U_$P(Y(0),U)_U_$S(DRGT="SOL":$P(Y(0),U,3),1:"")_U_U_$P(Y(0),U,13)_U_$P(Y(0),U,11)
+"RTN","PSIVEDRG",40,0)
+ I '$D(ON55) N ON55 S ON55=ON
+"RTN","PSIVEDRG",41,0)
+ D ORDERCHK(DFN,ON55,1) I $G(PSGORQF) S X=U,DONE=1 Q
+"RTN","PSIVEDRG",42,0)
+ D DINIV^PSJDIN($S(DRGT="AD":52.6,1:52.7),+DRGTMP)
+"RTN","PSIVEDRG",43,0)
+ S (DRG(DRGT,0),DRGI)=$G(DRG(DRGT,0))+1,DRG(DRGT,DRGI)=DRGTMP K PSIVOLD
+"RTN","PSIVEDRG",44,0)
+ I (PSIVAC="PN"!(PSIVAC="CF")),(DRGT="AD"),$D(^PS(52.6,"C",PSIVX,+DRGTMP)) D ^PSIVQUI Q:$G(PSIVSTR)="QUICK CODE"!$G(PSGORQF)
+"RTN","PSIVEDRG",45,0)
+DRG3 ;
+"RTN","PSIVEDRG",46,0)
+ D:DRG(2)]"" DINIV^PSJDIN(FIL,+DRG(1))
+"RTN","PSIVEDRG",47,0)
+ D SETDRG
+"RTN","PSIVEDRG",48,0)
+ I DRGT="AD" S X=$P($G(^PS(FIL,+DRG(1),0)),U,3) W !!,"(The units of strength for this additive are in ",$$ENU^PSIVUTL(DRG(1)),")"
+"RTN","PSIVEDRG",49,0)
+AMT ;
+"RTN","PSIVEDRG",50,0)
+ I DRGT="SOL",'$G(PSIVOLD),($G(P(4))_$G(P(23))'["S") G DRG4
+"RTN","PSIVEDRG",51,0)
+1 ; Strength/Volume
+"RTN","PSIVEDRG",52,0)
+ W !,$S(DRGT="AD":"Strength: ",1:"Volume: ") W:+DRG(3) DRG(3),"//" R X:DTIME S:'$T X="^" Q:X="^"  G:X=""&DRG(3) 2 I X="" W $C(7),$S(DRGT="AD":"Strength",1:"Volume")," is REQUIRED!" G 1
+"RTN","PSIVEDRG",53,0)
+ D:$D(X) IT G:'$D(X)!($G(X)["?") AMT S DRG(3)=X I X="" D FIELD^DID($S(DRGT="AD":53.157,1:53.158),1,"","XECUTABLE HELP","PSJEX") X PSJEX("XECUTABLE HELP") K PSJEX G AMT
+"RTN","PSIVEDRG",54,0)
+2 ;
+"RTN","PSIVEDRG",55,0)
+ I DRGT="AD",$G(P("DTYP"))>1,P(4)'="S",P(23)'="S" K DIR S DIR(0)="53.157,2" S:DRG(4)]"" DIR("B")=DRG(4) D ^DIR Q:$D(DTOUT)!$D(DUOUT)  S:X="@" DRG(4)="" S:Y DRG(4)=Y
+"RTN","PSIVEDRG",56,0)
+DRG4 ;
+"RTN","PSIVEDRG",57,0)
+ F X=1:1:6 S $P(DRG(DRGT,DRGI),U,X)=DRG(X)
+"RTN","PSIVEDRG",58,0)
+ S DRG(2)=""
+"RTN","PSIVEDRG",59,0)
+ Q
+"RTN","PSIVEDRG",60,0)
+ ;
+"RTN","PSIVEDRG",61,0)
+CHKSCMNT ;
+"RTN","PSIVEDRG",62,0)
+ I $$SEECMENT() W !!,"*** One or more additives has 'See Comments' in the Bottle field.",!,"    Please correct.",!!
+"RTN","PSIVEDRG",63,0)
+ Q
+"RTN","PSIVEDRG",64,0)
+SEECMENT() ;
+"RTN","PSIVEDRG",65,0)
+ ;Return 1 if DRG array still contain "See Comments"
+"RTN","PSIVEDRG",66,0)
+ N PSIVDRGI,PSIVDRG0,PSIVFLG
+"RTN","PSIVEDRG",67,0)
+ S PSIVFLG=0
+"RTN","PSIVEDRG",68,0)
+ F PSIVDRGI=0:0 S PSIVDRGI=$O(DRG("AD",PSIVDRGI)) Q:'PSIVDRGI  Q:PSIVFLG  D
+"RTN","PSIVEDRG",69,0)
+ . S PSIVDRG0=$G(DRG("AD",PSIVDRGI))
+"RTN","PSIVEDRG",70,0)
+ . I $P(PSIVDRG0,U,4)="See Comments" S PSIVFLG=1
+"RTN","PSIVEDRG",71,0)
+ Q PSIVFLG
+"RTN","PSIVEDRG",72,0)
+GTSCRN(PSIVX) ;Set DIC("S") if MD OE or matching drug has already been selected.
+"RTN","PSIVEDRG",73,0)
+ D:"?"[PSIVX HOLDHDR^PSJOE
+"RTN","PSIVEDRG",74,0)
+ S X=PSIVX
+"RTN","PSIVEDRG",75,0)
+ K DA,DIC S DIC=FIL,DIC("S")=$$IVDRGSC^PSIVUTL
+"RTN","PSIVEDRG",76,0)
+ I $E(PSIVAC)'="P",($P(P("OT"),U)="F") S X(1)=" I $P(X(1),U,13)",DIC("S")=$G(DIC("S"))_$S(DRGT="AD":X(1),$E(PSIVAC)="O":X(1),1:"")
+"RTN","PSIVEDRG",77,0)
+ Q
+"RTN","PSIVEDRG",78,0)
+ ;
+"RTN","PSIVEDRG",79,0)
+IT ; Input Transform for Strength/Volume.
+"RTN","PSIVEDRG",80,0)
+ I X?1.N,$L(X)>20 S X="?"
+"RTN","PSIVEDRG",81,0)
+ I X["?" W $C(7) S F1=53.15_$S(DRGT="AD":7,1:8),F2=1 D ENHLP^PSIVORC1 Q
+"RTN","PSIVEDRG",82,0)
+ I DRGT="AD" K:X'?.6N0.1".".8N!('X) X I $D(X) S:(X<1)&($P(X,".")'=0) X=0_X S X=X_" "_$$ENU^PSIVUTL(DRG(1)) W "   ",X Q
+"RTN","PSIVEDRG",83,0)
+ I $D(X) K:X=""!(X'?.N0.1".".N)!(X>9999)!(X<.01) X I $D(X) S:(X<1)&($P(X,".")'=0) X=0_X S X=X_" ML" W "   ",X
+"RTN","PSIVEDRG",84,0)
+ W:'$D(X) $C(7),"??"
+"RTN","PSIVEDRG",85,0)
+ Q
+"RTN","PSIVEDRG",86,0)
+ ;
+"RTN","PSIVEDRG",87,0)
+ORDERCHK(DFN,ON,X) ; Do order check
+"RTN","PSIVEDRG",88,0)
+ ;* If X is define, include the DRG(X) to the order check
+"RTN","PSIVEDRG",89,0)
+ ;This module is no longer used as of PSJ*5*181
+"RTN","PSIVEDRG",90,0)
+ Q
+"RTN","PSIVEDRG",91,0)
+ I X M:$D(DRG) DRGOC(ON)=DRG
+"RTN","PSIVEDRG",92,0)
+ N TMPDRG,X,XX,Y,PSIVNEW,PSGDRG,PSGDRGN,PSJDD,PSGP
+"RTN","PSIVEDRG",93,0)
+ D SAVEDRG(.TMPDRG,.DRG) ;Store DRG array in TMPDRG array
+"RTN","PSIVEDRG",94,0)
+ S PSIVNEW=1,PSGDRGN=$P($G(DRGTMP),U,2)
+"RTN","PSIVEDRG",95,0)
+ S (PSJDD,PSGDRG)=$P(^PS(FIL,+DRGTMP,0),U,2),PSGP=DFN
+"RTN","PSIVEDRG",96,0)
+ I FIL="52.6"  D ENDDC^PSGSICHK(DFN,PSGDRG)
+"RTN","PSIVEDRG",97,0)
+ I FIL="52.7" D
+"RTN","PSIVEDRG",98,0)
+ . D EN^PSOORDRG(DFN,PSGDRG)
+"RTN","PSIVEDRG",99,0)
+ . N INTERVEN,PSJIREQ,PSJRXREQ S Y=1,(PSJIREQ,PSJRXREQ,INTERVEN,X)=""
+"RTN","PSIVEDRG",100,0)
+ . S DFN=PSGP K PSJPDRG
+"RTN","PSIVEDRG",101,0)
+ . D IVSOL^PSGSICHK
+"RTN","PSIVEDRG",102,0)
+ D SAVEDRG(.DRG,.TMPDRG) ;Restore DRG array from TMPDRG array
+"RTN","PSIVEDRG",103,0)
+ D ENSTOP^PSIVCAL
+"RTN","PSIVEDRG",104,0)
+ Q
+"RTN","PSIVEDRG",105,0)
+SAVEDRG(NEW,OLD)   ;Store/restore DRG array.
+"RTN","PSIVEDRG",106,0)
+ K NEW
+"RTN","PSIVEDRG",107,0)
+ S:$G(OLD) NEW=OLD
+"RTN","PSIVEDRG",108,0)
+ F X=0:0 S X=$O(OLD(X)) Q:'X  S NEW(X)=OLD(X)
+"RTN","PSIVEDRG",109,0)
+ F XX="AD","SOL" D
+"RTN","PSIVEDRG",110,0)
+ . I $D(OLD(XX,0))#10=1 S NEW(XX,0)=OLD(XX,0)
+"RTN","PSIVEDRG",111,0)
+ . F X=0:0 S X=$O(OLD(XX,X)) Q:'X  S NEW(XX,X)=OLD(XX,X)
+"RTN","PSIVEDRG",112,0)
+ Q
+"RTN","PSIVEDRG",113,0)
+ ;
+"RTN","PSIVEDRG",114,0)
+CHK ; Check if drug is already part of order
+"RTN","PSIVEDRG",115,0)
+ N DDONE,I,TDRG,TDRGP,J F TDRG=0:0 S TDRG=$O(DRG(DRGT,TDRG)) Q:'TDRG!$G(DDONE)  D
+"RTN","PSIVEDRG",116,0)
+ .I $$UPPER^VALM1($E($P(DRG(DRGT,+TDRG),U,2),1,$L(X)))=$$UPPER^VALM1(X) W $P($$UPPER^VALM1($P(DRG(DRGT,+TDRG),U,2)),$$UPPER^VALM1(X),2) D ASKCHK Q
+"RTN","PSIVEDRG",117,0)
+ .S TDRGP=$P(DRG(DRGT,TDRG),U) F J=0:0 S J=$O(^PS(FIL,TDRGP,3,J)) Q:'J!$G(DDONE)  I $$UPPER^VALM1($E($P(^PS(FIL,TDRGP,3,J,0),U),1,$L(X)))=$$UPPER^VALM1(X) D  D ASKCHK Q
+"RTN","PSIVEDRG",118,0)
+ ..W $P($$UPPER^VALM1($P(^PS(FIL,TDRGP,3,J,0),U)),$$UPPER^VALM1(X),2)," ",$P(DRG(DRGT,TDRG),U,2)
+"RTN","PSIVEDRG",119,0)
+ Q
+"RTN","PSIVEDRG",120,0)
+ ;
+"RTN","PSIVEDRG",121,0)
+ASKCHK ; Do you want a drug that was previously selected.
+"RTN","PSIVEDRG",122,0)
+ S I=DRG(DRGT,TDRG) W " ",$S($P(I,U,4):" ("_$P(I,U,4)_")",1:""),!,"...OK" S %=1 D YN^DICN
+"RTN","PSIVEDRG",123,0)
+ I %=1 S X="",DRGI=TDRG,(DDONE,PSIVOLD)=1 D SETDRG Q
+"RTN","PSIVEDRG",124,0)
+ W !,X
+"RTN","PSIVEDRG",125,0)
+ Q
+"RTN","PSIVEDRG",126,0)
+ ;
+"RTN","PSIVEDRG",127,0)
+DEL ;
+"RTN","PSIVEDRG",128,0)
+ W !?3,"SURE YOU WANT TO DELETE" S %=0 D YN^DICN S X="" I %'=1 W "  <NOTHING DELETED>"
+"RTN","PSIVEDRG",129,0)
+ Q
+"RTN","PSIVEDRG",130,0)
+GTADSOL ;Prompt for an ad/sol if there were multiple ad/sol matched to an OI
+"RTN","PSIVEDRG",131,0)
+ ;PSIVOI array is defined in GTIVDRG^PSIVORC2
+"RTN","PSIVEDRG",132,0)
+ N DIR,ND,X,Y
+"RTN","PSIVEDRG",133,0)
+ S DIR(0)="LA^1:"_+PSIVOI("DILIST",0)
+"RTN","PSIVEDRG",134,0)
+ S DIR("?")="Please select "_$S(PSIVOI="AD":"an Additive or Quick Code",1:"a Solution")_" from the list"
+"RTN","PSIVEDRG",135,0)
+ F X=0:0 S X=$O(PSIVOI("DILIST",X)) Q:'X  D
+"RTN","PSIVEDRG",136,0)
+ . S DIR("A",X)="  "_X_"  "_$S($P(PSIVOI("DILIST",X,0),U,4)="QC":"  - "_$P(PSIVOI("DILIST",X,0),U,2)_" -",1:$P(PSIVOI("DILIST",X,0),U,2))
+"RTN","PSIVEDRG",137,0)
+ . I PSIVOI="SOL" S $E(DIR("A",X),35)=$P(PSIVOI("DILIST",X,0),U,3)
+"RTN","PSIVEDRG",138,0)
+ . I $P(PSIVOI("DILIST",X,0),U,4)="QC" D
+"RTN","PSIVEDRG",139,0)
+ ..I PSIVOI="AD" S $E(DIR("A",X),35)="Quick Code Strength: "_$S($P(PSIVOI("DILIST",X,0),U,5)'="":$P(PSIVOI("DILIST",X,0),U,5),1:"N/A")_" "_" SCHEDULE: "_$S($P(PSIVOI("DILIST",X,0),U,6)'="":$P(PSIVOI("DILIST",X,0),U,6),1:"N/A")
+"RTN","PSIVEDRG",140,0)
+ .E  D
+"RTN","PSIVEDRG",141,0)
+ ..I PSIVOI="AD" S $E(DIR("A",X),40)="Additive Strength: "_$S($P(PSIVOI("DILIST",X,0),U,4)'="":$P(PSIVOI("DILIST",X,0),U,4)_" "_$P(PSIVOI("DILIST",X,0),U,3),1:"N/A")
+"RTN","PSIVEDRG",142,0)
+ S DIR("A")="Select (1 - "_+PSIVOI("DILIST",0)_"): "
+"RTN","PSIVEDRG",143,0)
+ D ^DIR
+"RTN","PSIVEDRG",144,0)
+ I +Y D
+"RTN","PSIVEDRG",145,0)
+ . N PSIVOIND S PSIVOIND=PSIVOI("DILIST",+Y,0)
+"RTN","PSIVEDRG",146,0)
+ . W "  "_$P(PSIVOIND,U,2)_$S(PSIVOI="SOL":"  "_$P(PSIVOIND,U,3),1:"")
+"RTN","PSIVEDRG",147,0)
+ . S ND=$G(^PS($S(PSIVOI="AD":52.6,1:52.7),+PSIVOIND,0))
+"RTN","PSIVEDRG",148,0)
+ . S DRG(PSIVOI,0)=1
+"RTN","PSIVEDRG",149,0)
+ . S DRG(PSIVOI,1)=+PSIVOIND_U_$P(ND,U)_U_$S(PSIVOI="SOL":$P(ND,U,3),1:"")_U_U_$P(ND,U,13)_U_$P(ND,U,11)
+"RTN","PSIVEDRG",150,0)
+ . S DRGI=1 D SETDRG
+"RTN","PSIVEDRG",151,0)
+ . I $P(PSIVOI("DILIST",+Y,0),U,4)="QC",DRGT="AD",$D(^PS(52.6,"C",$P(PSIVOI("DILIST",+Y,0),U,2),+PSIVOI("DILIST",+Y,0))) D   Q:$G(PSIVSTR)="QUICK CODE"!$G(PSGORQF)
+"RTN","PSIVEDRG",152,0)
+ .. S (X,PSIVX)=$P(PSIVOI("DILIST",+Y,0),U,2),(PSJIVIEN,Y)=+PSIVOI("DILIST",+Y,0) D
+"RTN","PSIVEDRG",153,0)
+ ... N PSJNF D NFIV^PSJDIN(52.6,+PSJIVIEN,.PSJNF) W PSJNF("NF")
+"RTN","PSIVEDRG",154,0)
+ ... S DRGTMP=DRG(DRGT,1)
+"RTN","PSIVEDRG",155,0)
+ ... I '$D(ON55) N ON55 S ON55=ON
+"RTN","PSIVEDRG",156,0)
+ ... D ORDERCHK(DFN,ON55,1) I $G(PSGORQF) S X=U,DONE=1 Q
+"RTN","PSIVEDRG",157,0)
+ ... D DINIV^PSJDIN(52.6,+DRGTMP)
+"RTN","PSIVEDRG",158,0)
+ ... D ^PSIVQUI
+"RTN","PSIVEDRG",159,0)
+ . I $P(PSIVOI("DILIST",+Y,0),U,4)'="QC" S DRGTMP=DRG(DRGT,1) D ORDERCHK(DFN,ON55,1) I $G(PSGORQF) S X=U,DONE=1 Q
+"RTN","PSIVEDRG",160,0)
+ . I PSIVOI="AD" D
+"RTN","PSIVEDRG",161,0)
+ .. N FIL S FIL=52.6 D DRG3
+"RTN","PSIVEDRG",162,0)
+ K PSIVOI
+"RTN","PSIVEDRG",163,0)
+ Q
+"RTN","PSIVORC2")
+0^3^B66091537^B64595795
+"RTN","PSIVORC2",1,0)
+PSIVORC2 ;BIR/MLM - PROCESS INCOMPLETE IV ORDER - CONT ;22 OCT 97 / 3:16 PM
+"RTN","PSIVORC2",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**29,49,50,65,58,85,101,110,127,151,181,267,275,257,281,313,346,355**;16 DEC 97;Build 4
+"RTN","PSIVORC2",3,0)
+ ;
+"RTN","PSIVORC2",4,0)
+ ; Reference to ^PS(51.2 is supported by DBIA #2178
+"RTN","PSIVORC2",5,0)
+ ; Reference to ^PS(55 is supported by DBIA #2191
+"RTN","PSIVORC2",6,0)
+ ; Reference to ^PS(52.6 is supported by DBIA #1231
+"RTN","PSIVORC2",7,0)
+ ; Reference to ^PS(52.7 is supported by DBIA #2173
+"RTN","PSIVORC2",8,0)
+ ; Reference to EN1^ORCFLAG is supported by DBIA #3620.
+"RTN","PSIVORC2",9,0)
+ ; Reference to ^PSSLOCK is supported by DBIA #2789
+"RTN","PSIVORC2",10,0)
+ ; Reference to ^TMP("PSODAOC",$J is supported by# DBIA 6071
+"RTN","PSIVORC2",11,0)
+ ;
+"RTN","PSIVORC2",12,0)
+EDCHK ;Update or create new order in 55.
+"RTN","PSIVORC2",13,0)
+ D CKORD D:'$G(PSJIVORF) ORPARM^PSIVOREN I 'PSJIVORF W !,"Either the Inpatient Medications or the IV Medications package is not on, please check the Order Parameters file" Q
+"RTN","PSIVORC2",14,0)
+ I PSIVCHG,PSJIVORF D NATURE^PSIVOREN I '$D(P("NAT")) W $C(7),"Order unchanged" Q
+"RTN","PSIVORC2",15,0)
+ S:PSIVCHG P("21FLG")=""
+"RTN","PSIVORC2",16,0)
+ I $G(PSJCOM) D IV^PSJCOMV Q
+"RTN","PSIVORC2",17,0)
+ Q:$$NONVF()
+"RTN","PSIVORC2",18,0)
+ACTIVE ;
+"RTN","PSIVORC2",19,0)
+ S PSJCOM=P("PRNTON")
+"RTN","PSIVORC2",20,0)
+ I PSJCOM D VFYIV^PSJCOMV Q
+"RTN","PSIVORC2",21,0)
+ S P("RES")=$P($G(^PS(53.1,+ON,0)),U,24)
+"RTN","PSIVORC2",22,0)
+ I P("RES")="R" S P("NEWON")=P("OLDON") S PSJOSTOP="" D
+"RTN","PSIVORC2",23,0)
+ .N PSJTROPI,PSJNVO S PSJNVO=$G(P("NEWON")) I (PSJNVO["P") D FILEOPI^PSJBCMA5(DFN,PSJNVO) S PSJTROPI=$$GETOPI^PSJBCMA5(DFN,PSJNVO) Q
+"RTN","PSIVORC2",24,0)
+ .I ($G(P("PON"))["P"),($G(ON55)=P("PON")) S PSJNVO=P("PON") D FILEOPI^PSJBCMA5(DFN,PSJNVO) S PSJTROPI=$$GETOPI^PSJBCMA5(DFN,PSJNVO)
+"RTN","PSIVORC2",25,0)
+ .I $G(P("NEWON")) D FILEOPI^PSJBCMA5(DFN,P("NEWON")) S PSJTROPI=$$GETOPI^PSJBCMA5(DFN,P("NEWON"))
+"RTN","PSIVORC2",26,0)
+ .D RUPDATE^PSIVOREN(DFN,ON,P(2)) I $P($G(^PS(53.45,+$G(PSJSYSP),6,0)),"^",3)
+"RTN","PSIVORC2",27,0)
+ I P("RES")'="R" S PSJORD=ON,P(17)="A",ORSTS=6,PSJORNP=P(6) D SETNEW^PSIVORFB S P("NEWON")=ON55 D @$S(PSIVCHG:"NEWORD",1:"OLDORD")
+"RTN","PSIVORC2",28,0)
+ I $G(PSJIOPIV) D MVOPI^PSJBCMA5($G(DFN),$G(PSJORD),$G(ON55)),MVOPIAL^PSJBCMA5($G(DFN),$G(PSJORD),$G(ON55))
+"RTN","PSIVORC2",29,0)
+ S (ON55,ON)=P("NEWON"),OD=P(2) D EN^PSIVORE
+"RTN","PSIVORC2",30,0)
+ D CIMOI^PSJIMO1(DFN,ON55,"",$G(PSJORD))
+"RTN","PSIVORC2",31,0)
+ D VF1^PSJLIACT("F","ORDER VERIFIED BY ",1)
+"RTN","PSIVORC2",32,0)
+ D ENLBL^PSIVOPT(2,DUZ,DFN,3,+ON55,"N")
+"RTN","PSIVORC2",33,0)
+ I $G(^PS(55,DFN,"IV",+ON55,4)) D EN1^PSJHL2(DFN,"ZV",ON55)
+"RTN","PSIVORC2",34,0)
+ L -^PS(53.1,+$G(PSJORD)) L -^PS(55,DFN,"IV",+ON55)
+"RTN","PSIVORC2",35,0)
+ Q
+"RTN","PSIVORC2",36,0)
+ ;
+"RTN","PSIVORC2",37,0)
+CKORD ;Check if new order is to be created.
+"RTN","PSIVORC2",38,0)
+ I $G(PSIVCOPY) S PSIVCHG=0 Q
+"RTN","PSIVORC2",39,0)
+ N ND,PSJCHG S PSIVCHG=0,ND(0)=$G(^PS(53.1,+ON,0)),ND("PD")=$G(^PS(53.1,+ON,.2))_U_$P(ND(0),U,3)
+"RTN","PSIVORC2",40,0)
+ N X S X=$P($G(^PS(53.1,+ON,8)),U,5),X=$S(P(8)["@":$P(X,"@"),1:X)
+"RTN","PSIVORC2",41,0)
+ S ND=$S($E(P("OT"))="I":P(8),1:X)_U_+$P(ND(0),U,3)_U_+$P(ND("PD"),U)
+"RTN","PSIVORC2",42,0)
+ S ND=ND_U_$S($P(ND(0),U,2)=+P("CLRK"):+$P(ND(0),U,2),1:+P(6))
+"RTN","PSIVORC2",43,0)
+ I ND'=($S($E(P("OT"))="I":P(8),P(8)["@":$P(P(8),"@"),1:P(8))_U_+P("MR")_U_+P("PD")_U_+P(6)) S PSIVCHG=1
+"RTN","PSIVORC2",44,0)
+ I 'PSIVCHG I $P($G(^PS(53.1,+ON,2)),U)'=P(9) S:($G(P("DTYP"))'=1) PSIVDSFG=1 S PSIVCHG=1
+"RTN","PSIVORC2",45,0)
+ N ND,TDRG,TMPDRG
+"RTN","PSIVORC2",46,0)
+ Q:PSIVCHG
+"RTN","PSIVORC2",47,0)
+ D TMPDRG1^PSJMISC(DFN,$G(ON),.TMPDRG)
+"RTN","PSIVORC2",48,0)
+ I $$COMPARE^PSJMISC(.DRG,.TMPDRG,$S(P("DTYP")=1:0,1:1)) S PSIVCHG=1
+"RTN","PSIVORC2",49,0)
+ K TMPDRG
+"RTN","PSIVORC2",50,0)
+ Q:PSIVCHG
+"RTN","PSIVORC2",51,0)
+ Q
+"RTN","PSIVORC2",52,0)
+CKPC ;
+"RTN","PSIVORC2",53,0)
+ ;PSJ*5*181 Note - No longer use by *181
+"RTN","PSIVORC2",54,0)
+ ;
+"RTN","PSIVORC2",55,0)
+ Q:PSIVCHG  I $E(P("OT"))'="I" D
+"RTN","PSIVORC2",56,0)
+ .;
+"RTN","PSIVORC2",57,0)
+ .; Check IV drugs for changes.
+"RTN","PSIVORC2",58,0)
+ .S DNE=0 F DRGT="AD","SOL" I $D(DRG(DRGT)) S FIL="52."_$S(DRGT="AD":6,1:7) D
+"RTN","PSIVORC2",59,0)
+ ..N ND,TDRG,ON1 F DRGI=0:0 S DRGI=$O(DRG(DRGT,DRGI)) Q:'DRGI!DNE  S TDRG(+$P(DRG(DRGT,DRGI),U),DRGI)=DRGI,TDRG("CNT")=+$G(TDRG("CNT"))+1
+"RTN","PSIVORC2",60,0)
+ ..F ON1=0:0 S ON1=$O(^PS(53.1,+ON,DRGT,ON1)) Q:'+ON1!DNE  S ND=$G(^PS(53.1,+ON,DRGT,ON1,0)),ND("CNT")=$G(ND("CNT"))+1 D
+"RTN","PSIVORC2",61,0)
+ ...S DRG=+$P(ND,U) S:'$D(TDRG(+DRG)) (DNE,PSIVCHG)=1 F DRGI=0:0 S DRGI=$O(TDRG(+DRG,DRGI)) Q:'DRGI!DNE  I $P($G(DRG(DRGT,DRGI)),U)_U_$P($G(DRG(DRGT,DRGI)),U,3)'=$P(ND,U,1,2) S (DNE,PSIVCHG)=1
+"RTN","PSIVORC2",62,0)
+ ..S:$G(ND("CNT"))'=$G(TDRG("CNT")) (DNE,PSIVCHG)=1 K ND,TDRG
+"RTN","PSIVORC2",63,0)
+ Q
+"RTN","PSIVORC2",64,0)
+ ;
+"RTN","PSIVORC2",65,0)
+OLDORD ; Update old order, update order links.
+"RTN","PSIVORC2",66,0)
+ Q:P("RES")="R"
+"RTN","PSIVORC2",67,0)
+ S P("OLDON")=$P($G(^PS(53.1,+ON,0)),U,25) I P("OLDON")'=ON55 S $P(^PS(55,DFN,"IV",+ON55,2),U,8)=P("RES"),$P(^(2),U,5)=P("OLDON") I P("OLDON") D
+"RTN","PSIVORC2",68,0)
+ .I P("OLDON")["V",$D(^PS(55,DFN,"IV",+P("OLDON"),0)) S $P(^(2),U,6)=ON55,$P(^(2),U,9)=P("RES")
+"RTN","PSIVORC2",69,0)
+ .I P("OLDON")["A",$D(^PS(55,DFN,5,+P("OLDON"),0)) S $P(^(0),U,26,27)=ON55_U_P("RES")
+"RTN","PSIVORC2",70,0)
+ .I $S(P("OLDON")["P":1,P("OLDON")["N":1,1:0),$D(^PS(53.1,+P("OLDON"),0)) S $P(^(0),U,26,27)=ON55_U_P("RES")
+"RTN","PSIVORC2",71,0)
+ D PUT531^PSIVORFA S $P(^PS(53.1,+ON,0),U,25,26)="^",ON=ON55 D UPD100^PSIVORFA
+"RTN","PSIVORC2",72,0)
+ Q
+"RTN","PSIVORC2",73,0)
+ ;
+"RTN","PSIVORC2",74,0)
+NEWORD ; Create new order, update order links.
+"RTN","PSIVORC2",75,0)
+ Q:P("RES")="R"
+"RTN","PSIVORC2",76,0)
+ S $P(^PS(53.1,+ON,0),U,26,27)=P("NEWON")_U_"E",PSIVAC="CE",PSJORNAT=P("NAT") D DC^PSIVORA
+"RTN","PSIVORC2",77,0)
+ S P("NEWON")=$P($G(^PS(53.1,+PSJORD,0)),U,26),$P(^PS(55,DFN,"IV",+P("NEWON"),2),U,5)=PSJORD,$P(^(2),U,8)="E",ON=ON55
+"RTN","PSIVORC2",78,0)
+ I PSJIVORF D EN1^PSJHL2(DFN,"SN",+ON55_"V","NEW ORDER CREATED")
+"RTN","PSIVORC2",79,0)
+ Q
+"RTN","PSIVORC2",80,0)
+ ;
+"RTN","PSIVORC2",81,0)
+GTIVDRG ; Try to find an IV drug from the Orderable Item.
+"RTN","PSIVORC2",82,0)
+ ; If there is only 1 match to OI then stuff in DRG otherwise prompt user to select which
+"RTN","PSIVORC2",83,0)
+ ; ad/sol matched to OI
+"RTN","PSIVORC2",84,0)
+ K PSIVOI N FIL,ND,SCR,PSJNOW
+"RTN","PSIVORC2",85,0)
+ D NOW^%DTC S PSJNOW=%
+"RTN","PSIVORC2",86,0)
+ S SCR("S")="S ND=$P($G(^(""I"")),U) I ND=""""!(ND>PSJNOW)"
+"RTN","PSIVORC2",87,0)
+ F FIL=52.6,52.7 D FIND^DIC(FIL,,"@;.01;2"_$S(FIL=52.6:";19",1:""),"QXP",+P("PD"),,"AOI",SCR("S"),,"PSIVOI") I +PSIVOI("DILIST",0)>0 D  Q
+"RTN","PSIVORC2",88,0)
+ . S DRGT=$S(FIL=52.6:"AD",1:"SOL"),PSIVOI=DRGT
+"RTN","PSIVORC2",89,0)
+ . I PSIVOI="AD" D
+"RTN","PSIVORC2",90,0)
+ .. N XX,XXX,QC S XX=0 F  S XX=$O(PSIVOI("DILIST",XX)) Q:XX=""  S XXX=+PSIVOI("DILIST",XX,0) D LIST^DIC(52.61,","_XXX_",","@;.01;1;4","PQ",,,,,,,"PSIVQC") D
+"RTN","PSIVORC2",91,0)
+ ... I +$G(PSIVQC("DILIST",0))>0 S QC=0 F  S QC=$O(PSIVQC("DILIST",QC)) Q:QC=""  S PSIVOI("DILIST",XX,QC,0)=PSIVQC("DILIST",QC,0)
+"RTN","PSIVORC2",92,0)
+ ... K PSIVQC("DILIST",0),PSIVQC("DILIST",0,"MAP")
+"RTN","PSIVORC2",93,0)
+ .. D RESET
+"RTN","PSIVORC2",94,0)
+ . I +PSIVOI("DILIST",0)=1 D
+"RTN","PSIVORC2",95,0)
+ .. S DRG=+PSIVOI("DILIST",1,0)
+"RTN","PSIVORC2",96,0)
+ .. S DNE=1,DRG(DRGT,0)=1,ND=$G(^PS(FIL,+DRG,0)),DRG(DRGT,1)=+DRG_U_$P(ND,U)_U_$S(FIL=52.7:$P(ND,U,3),1:"")_U_U_$P(ND,U,13)_U_$P(ND,U,11)
+"RTN","PSIVORC2",97,0)
+ K:+PSIVOI("DILIST",0)<2 PSIVOI
+"RTN","PSIVORC2",98,0)
+ Q
+"RTN","PSIVORC2",99,0)
+ ;
+"RTN","PSIVORC2",100,0)
+EDIT ; Edit incomplete order
+"RTN","PSIVORC2",101,0)
+ K PSIVENO
+"RTN","PSIVORC2",102,0)
+ S PSIVAC="CE"
+"RTN","PSIVORC2",103,0)
+ I $E(P("OT"))="I",'$D(DRG("AD")),('$D(DRG("SOL"))) D GTIVDRG
+"RTN","PSIVORC2",104,0)
+ I P(4)="" D 53^PSIVORC1 Q:P(4)=""  D ^PSIVORV2
+"RTN","PSIVORC2",105,0)
+ D GSTRING^PSIVORE1,GTFLDS^PSIVORFE ;S (PSIVOK,EDIT)="57^58^59^3"_$S(P("DTYP")=1:"^26^39",1:"")_"^63^64^"_$S($E(P("OT"))="I":"101^109^",1:"")_"10^25"_$S(+P(6)'=+P("CLRK"):"^1",1:"") D GTFLDS^PSIVORFE
+"RTN","PSIVORC2",106,0)
+ Q:$G(DONE)
+"RTN","PSIVORC2",107,0)
+ I '$G(PSIVENO) S PSIVENO=1 D EN^VALM("PSJ LM IV AC/EDIT") S VALMBCK="Q"
+"RTN","PSIVORC2",108,0)
+ Q
+"RTN","PSIVORC2",109,0)
+ ;
+"RTN","PSIVORC2",110,0)
+FINISH ; Ask only for missing data in incomplete IV order.
+"RTN","PSIVORC2",111,0)
+ D GTDRG^PSIVORFA  ; Re-setting DRG array
+"RTN","PSIVORC2",112,0)
+ S P("OPI")=$$ENPC^PSJUTL("V",+PSIVUP,60,P("OPI")) I $E(P("OT"))="I",'$D(DRG("AD")),('$D(DRG("SOL"))) S DNE=0 D GTIVDRG
+"RTN","PSIVORC2",113,0)
+ D:P(4)="" 53^PSIVORC1 Q:P(4)=""  S P("DTYP")=$S(P(4)="":0,P(4)="P"!(P(23)="P")!(P(5)):1,P(4)="H":2,1:3)
+"RTN","PSIVORC2",114,0)
+ I 'P(2) D ENT^PSIVCAL K %DT S X=P(2),%DT="RTX" D ^%DT S P(2)=+Y
+"RTN","PSIVORC2",115,0)
+ I 'P(3) D ENSTOP^PSIVCAL K %DT S X=P(3),%DT="RTX" D ^%DT S P(3)=+Y
+"RTN","PSIVORC2",116,0)
+ I 'P("MR") S P("MR")=$O(^PS(51.2,"B","INTRAVENOUS",0))_"^IV"
+"RTN","PSIVORC2",117,0)
+ ;
+"RTN","PSIVORC2",118,0)
+ ;Will prompt users to choose Dispense IV Additive when more than one are available for the Orderable Item
+"RTN","PSIVORC2",119,0)
+ ;
+"RTN","PSIVORC2",120,0)
+ N PSJQUIT S PSJQUIT=0 D MULTADDS^PSJLIFN I $G(PSJQUIT) S VALMBCK="R" Q
+"RTN","PSIVORC2",121,0)
+ ;
+"RTN","PSIVORC2",122,0)
+ S PSIVOK="1^3^10^25^26^39^57^58^59^63^64"
+"RTN","PSIVORC2",123,0)
+ D CKFLDS^PSIVORC1 D:EDIT]"" EDIT^PSIVEDT G COMPLTE^PSIVORC1
+"RTN","PSIVORC2",124,0)
+ Q
+"RTN","PSIVORC2",125,0)
+NONVF() ; Updated 53.1 status to non-verified after finish.
+"RTN","PSIVORC2",126,0)
+ NEW PSGOEAV S PSGOEAV=+$P(PSJSYSP0,U,9)
+"RTN","PSIVORC2",127,0)
+ S ^TMP("PSODAOC",$J,"IP NEW IEN")=ON
+"RTN","PSIVORC2",128,0)
+ I +PSJSYSU=3,PSGOEAV Q 0
+"RTN","PSIVORC2",129,0)
+ I +PSJSYSU=1,PSGOEAV Q 0
+"RTN","PSIVORC2",130,0)
+ I PSIVCHG D NWNONVF Q 1
+"RTN","PSIVORC2",131,0)
+ S P(17)="N",P("REN")=0
+"RTN","PSIVORC2",132,0)
+ D GTPD^PSIVORE2
+"RTN","PSIVORC2",133,0)
+ W !,"...transcribing this non-verified order...."
+"RTN","PSIVORC2",134,0)
+ S $P(^PS(53.1,+ON,.2),U)=""
+"RTN","PSIVORC2",135,0)
+ D PUT531^PSIVORFA
+"RTN","PSIVORC2",136,0)
+ D NEWNVAL^PSGAL5(ON,$S(+PSJSYSU=1:22000,+PSJSYSU=3:22005,1:22006),"","")
+"RTN","PSIVORC2",137,0)
+ I ($G(PSJINFIN)=2) D NEWNVAL^PSGAL5(ON,6000,"OTHER PRINT INFO")
+"RTN","PSIVORC2",138,0)
+ NEW PSIVORFA S PSIVORFA=1 D:ON["V" DEL55^PSIVORE2
+"RTN","PSIVORC2",139,0)
+ D VF
+"RTN","PSIVORC2",140,0)
+ Q 1
+"RTN","PSIVORC2",141,0)
+NWNONVF ;Create non-verified due to edit
+"RTN","PSIVORC2",142,0)
+ K DA D ENGNN^PSGOETO S P("NEWON")=DA_"P",P(17)="N",P("REN")=0
+"RTN","PSIVORC2",143,0)
+ I $D(^PS(53.45,PSJSYSP,6,1)) D FILEOPI^PSJBCMA5(DFN,P("NEWON"))
+"RTN","PSIVORC2",144,0)
+ S PSJORD=ON,$P(^PS(53.1,+ON,0),U,26,27)=P("NEWON")_U_"E",PSIVAC="CE",PSJORNAT=P("NAT") D DC^PSIVORA
+"RTN","PSIVORC2",145,0)
+ S P("OLDON")=ON,ON=P("NEWON")
+"RTN","PSIVORC2",146,0)
+ I $D(^PS(53.1,+P("OLDON"),12)) M ^PS(53.1,+P("NEWON"),12)=^PS(53.1,+P("OLDON"),12)
+"RTN","PSIVORC2",147,0)
+ S P("RES")="E"
+"RTN","PSIVORC2",148,0)
+ S P("DO")="" D GTPD^PSIVORE2 ;Get dosage order if not defined for IPM IV
+"RTN","PSIVORC2",149,0)
+ D PUT531^PSIVORFA
+"RTN","PSIVORC2",150,0)
+ S $P(^PS(53.1,+ON,0),U,25,26)=P("OLDON")_U_""
+"RTN","PSIVORC2",151,0)
+ D NEWNVAL^PSGAL5(ON,$S(+PSJSYSU=1:22000,+PSJSYSU=3:22005,1:22006),"","")
+"RTN","PSIVORC2",152,0)
+ D EN1^PSJHL2(DFN,"SN",ON,"SEND ORDER NUMBER")
+"RTN","PSIVORC2",153,0)
+ S ^TMP("PSODAOC",$J,"IP NEW IEN")=ON
+"RTN","PSIVORC2",154,0)
+ S:$D(PSGP)#10 PSJNOL=$$LS^PSSLOCK(PSGP,ON)
+"RTN","PSIVORC2",155,0)
+ D VF
+"RTN","PSIVORC2",156,0)
+ Q
+"RTN","PSIVORC2",157,0)
+VF ; Display Verify screen
+"RTN","PSIVORC2",158,0)
+ Q:ON'["P"
+"RTN","PSIVORC2",159,0)
+ K PSJIVBD
+"RTN","PSIVORC2",160,0)
+ D GT531^PSIVORFA(DFN,ON)
+"RTN","PSIVORC2",161,0)
+ S:$G(ON)]"" (ON55,PSJORD)=ON ;* CCR 6700
+"RTN","PSIVORC2",162,0)
+ S PSGACT="EL"
+"RTN","PSIVORC2",163,0)
+ I P(17)="N",(P("OLDON")=""),(+P("CLRK")=DUZ) S PSGACT="ELD"
+"RTN","PSIVORC2",164,0)
+ I +PSJSYSU=3!(+PSJSYSU=1) S PSGACT="DELV"
+"RTN","PSIVORC2",165,0)
+ I +PSJSYSU=3,$L($T(EN1^ORCFLAG)) S PSGACT=PSGACT_"G"
+"RTN","PSIVORC2",166,0)
+ I P("OT")="I" S PSJSTAR="(1)^(5)^(7)^(9)^(10)"
+"RTN","PSIVORC2",167,0)
+ I P("OT")'="I" S PSJSTAR="(1)^(2)^(3)^(5)^(7)^(9)"
+"RTN","PSIVORC2",168,0)
+ I '$G(PSJEDFLG) D
+"RTN","PSIVORC2",169,0)
+ .D EN^VALM("PSJ LM IV INPT ACTIVE")
+"RTN","PSIVORC2",170,0)
+ K PSJEDFLG
+"RTN","PSIVORC2",171,0)
+ ; Only store allergy if not verified after entering the order
+"RTN","PSIVORC2",172,0)
+ I ($G(ON)["P"),($S(($G(PSJOCFG)="NEW OE IV"):1,($G(PSJOCFG)="FN IV"):1,$G(PSIVENO):1,1:0)) D SETOC^PSJNEWOC(ON)
+"RTN","PSIVORC2",173,0)
+ Q
+"RTN","PSIVORC2",174,0)
+ ;
+"RTN","PSIVORC2",175,0)
+RESET ;Reset PSIVOI("DILIST") for additives with quick codes
+"RTN","PSIVORC2",176,0)
+ N XX,XXX,CNT S CNT=0
+"RTN","PSIVORC2",177,0)
+ S XX=0 F  S XX=$O(PSIVOI("DILIST",XX)) Q:XX=""  S CNT=CNT+1,LYN(CNT)=PSIVOI("DILIST",XX,0) D
+"RTN","PSIVORC2",178,0)
+ . S XXX=0 F  S XXX=$O(PSIVOI("DILIST",XX,XXX)) Q:XXX=""  D
+"RTN","PSIVORC2",179,0)
+ ..  S CNT=CNT+1,LYN(CNT)=$P(PSIVOI("DILIST",XX,0),"^")_"^"_$P(PSIVOI("DILIST",XX,XXX,0),"^",2)_"^"_$P(PSIVOI("DILIST",XX,XXX,0),"^")_"^"_"QC"_"^"_$P(PSIVOI("DILIST",XX,XXX,0),"^",3)_"^"_$P(PSIVOI("DILIST",XX,XXX,0),"^",4)
+"RTN","PSIVORC2",180,0)
+ K PSIVOI("DILIST")
+"RTN","PSIVORC2",181,0)
+ S PSIVOI("DILIST",0)=CNT_"^*^0^"
+"RTN","PSIVORC2",182,0)
+ S XX=0 F  S XX=$O(LYN(XX)) Q:'XX  S PSIVOI("DILIST",XX,0)=LYN(XX)
+"RTN","PSIVORC2",183,0)
+ K LYN
+"RTN","PSIVORC2",184,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10780,6)
+^303
+**END**
+**END**
+
