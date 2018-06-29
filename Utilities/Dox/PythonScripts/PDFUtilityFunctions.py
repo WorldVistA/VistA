@@ -14,6 +14,12 @@
 # limitations under the License.
 
 
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+
+# PDF stylesheet
+styles = getSampleStyleSheet()
+
 def generatePDFTableHeader(headerList, splitHeader=True):
     row = []
     for header in headerList:
