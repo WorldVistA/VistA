@@ -2490,9 +2490,11 @@ class WebPageGenerator:
                 indexList.append("Non-FileMan Globals")
             if len(routinesList) > 0:
                 indexList.append("Routines")
+            generatePackageComponents = False
             for keyVal in sectionLinkObj.keys():
                   totalObjectDict = package.getAllPackageComponents(keyVal)
                   if not len(totalObjectDict) == 0:
+                    generatePackageComponents = True
                     indexList.append(keyVal.replace("_"," "))
 
             outputFile = open(os.path.join(self._outDir, getPackageHtmlFileName(packageName)), 'w')
@@ -2511,7 +2513,8 @@ class WebPageGenerator:
 
             # Generate PDF customization dialog
             pdfList = indexList
-            pdfList.append("Legend Graph")
+            if generatePackageComponents:
+                pdfList.append("Legend Graph")
             writePDFCustomization(outputFile, str(pdfList))
 
             # Namespace
@@ -2570,15 +2573,14 @@ class WebPageGenerator:
                                             "rtns", sortedRoutinesList,
                                             outputFile, pdf)
 
-            # Legends
-            writeLegends(self._outDir, outputFile)
-            if self._generatePDFBundle:
-                pdf.append(Spacer(1, 10))
-                self.__writePDFLegends__(pdf)
-
             # Package Components
-            # Note: We're passing the package here, NOT the packageName
-            self.generatePackageComponentsSections(package, outputFile, pdf)
+            if generatePackageComponents:
+                writeLegends(self._outDir, outputFile)
+                if self._generatePDFBundle:
+                    pdf.append(Spacer(1, 10))
+                    self.__writePDFLegends__(pdf)
+                # Note: We're passing the package here, NOT the packageName
+                self.generatePackageComponentsSections(package, outputFile, pdf)
 
             self.generateIndexBar(outputFile, indexList)
             self.__includeFooter__(outputFile)
