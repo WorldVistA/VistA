@@ -2159,7 +2159,8 @@ class WebPageGenerator:
 #=======================================================================
 # Method to generate package dependency/dependent section info
 #=======================================================================
-    def generatePackageDependencySection(self, packageName, outputFile,
+    def generatePackageDependencySection(self, depPackages, packagesMerged,
+                                         packageName, outputFile,
                                          pdf, isDependencyList=True):
         if isDependencyList:
             sectionGraphHeader = "Dependency Graph"
@@ -2169,19 +2170,12 @@ class WebPageGenerator:
             sectionGraphHeader = "Dependent Graph"
             sectionListHeader = "Package Dependent List"
             packageSuffix = "_dependent"
-        package = self._allPackages[packageName]
-        depPackages, depPackagesMerged = \
-          mergeAndSortDependencyListByPackage(package, isDependencyList)
-        totalPackages = 0
-        if depPackages:
-            totalPackages = len(depPackages)
         if self._generatePDFBundle:
             paragraphs = []
         else:
             paragraphs = None
         self.writeSectionHeader(sectionGraphHeader, sectionGraphHeader,
-                                outputFile,
-                                paragraphs if totalPackages > 0 else None,
+                                outputFile, paragraphs,
                                 isAccordion=False)
         outputFile.write("<div class=\"contents\">\n")
         try:
@@ -2191,75 +2185,75 @@ class WebPageGenerator:
             imageFileName = packageName + "/" + fileNamePrefix + ".png"
             outputFile.write("<img id=\"package%sGraph\" src=\"%s\" border=\"0\" alt=\"Call Graph\" usemap=\"#%s\"/>\n"
                        % (packageSuffix, imageFileName, fileNamePrefix))
-            if totalPackages > 0 and self._generatePDFBundle:
+            if self._generatePDFBundle:
                 self.__writeImageToPDF__(imageFileName, paragraphs)
             # append the content of map outputFile
             for line in cmapFile:
                 outputFile.write(line)
         except IOError:
             pass
-        total = "%s Total: %d " % (sectionListHeader, totalPackages)
+        totalPackages = len(depPackages)
+        total = "%s, Total: %d " % (sectionListHeader, totalPackages)
         writeSubSectionHeader(total, outputFile)
-        if totalPackages > 0:
-            # Only write the key if there are packages
-            key = """Format:&nbsp;&nbsp;
-                            package[# of caller routines(R) -> # of called routines(R):
-                            # of global-accessing routines(R) -> # of called globals(G):
-                            # of caller fileman files(F) -> # of called fileman files(F):
-                            # of caller routines(R) -> # of fileman files accessed via db call(F):
-                            # of package components accessing routines(PC) -> # of called routines(R):
-                            # of caller globals(G) -> # of called routines (R):
-                            # of caller globals(G) -> # of called globals (G):"""
-            outputFile.write("<h4>%s</h4><BR>\n" % key)
-            if self._generatePDFBundle:
-                paragraphs.append(Spacer(1, 1))
-                paragraphs.append(Paragraph(total, styles['Heading3']))
-                paragraphs.append(Spacer(1, 1))
-                paragraphs.append(generateParagraph(key))
-                paragraphs.append(Spacer(1, 10))
+        # Only write the key if there are packages
+        key = """Format:&nbsp;&nbsp;
+                        package[# of caller routines(R) -> # of called routines(R):
+                        # of global-accessing routines(R) -> # of called globals(G):
+                        # of caller fileman files(F) -> # of called fileman files(F):
+                        # of caller routines(R) -> # of fileman files accessed via db call(F):
+                        # of package components accessing routines(PC) -> # of called routines(R):
+                        # of caller globals(G) -> # of called routines (R):
+                        # of caller globals(G) -> # of called globals (G):"""
+        outputFile.write("<h4>%s</h4><BR>\n" % key)
+        if self._generatePDFBundle:
+            paragraphs.append(Spacer(1, 1))
+            paragraphs.append(Paragraph(total, styles['Heading3']))
+            paragraphs.append(Spacer(1, 1))
+            paragraphs.append(generateParagraph(key))
+            paragraphs.append(Spacer(1, 10))
 
-            outputFile.write("<div><table>\n")
-            numOfCol = 6
-            numOfRow = totalPackages / numOfCol + 1
+        outputFile.write("<div><table>\n")
+        numOfCol = 6
+        numOfRow = totalPackages / numOfCol + 1
+        if self._generatePDFBundle:
+            PDFData = []
+        for index in range(numOfRow):
             if self._generatePDFBundle:
-                PDFData = []
-            for index in range(numOfRow):
-                if self._generatePDFBundle:
-                    PDFRow = []
-                outputFile.write("<tr>")
-                for j in range(numOfCol):
-                    if (index * numOfCol + j) < totalPackages:
-                        depPackage = depPackages[index * numOfCol + j]
-                        depPackageName = depPackage.getName()
-                        toolTipStartPackage = packageName
-                        toolTipEndPackage = depPackageName
-                        if not isDependencyList:
-                            toolTipStartPackage = depPackageName
-                            toolTipEndPackage = packageName
-                        depMetricsList = depPackagesMerged[depPackage]
-                        linkName, tooltip, edgeStyle = getPackageGraphEdgePropsByMetrics(
-                                                         depMetricsList,
-                                                         toolTipStartPackage,
-                                                         toolTipEndPackage,
-                                                         False)
+                PDFRow = []
+            outputFile.write("<tr>")
+            for j in range(numOfCol):
+                if (index * numOfCol + j) < totalPackages:
+                    depPackage = depPackages[index * numOfCol + j]
+                    depPackageName = depPackage.getName()
+                    toolTipStartPackage = packageName
+                    toolTipEndPackage = depPackageName
+                    if not isDependencyList:
+                        toolTipStartPackage = depPackageName
+                        toolTipEndPackage = packageName
+                    depMetricsList = packagesMerged[depPackage]
+                    linkName, tooltip, edgeStyle = getPackageGraphEdgePropsByMetrics(
+                                                     depMetricsList,
+                                                     toolTipStartPackage,
+                                                     toolTipEndPackage,
+                                                     False)
 
-                        depHyperLink = getPackagePackageDependencyHyperLink(packageName,
-                                                                          depPackageName,
-                                                                          linkName,
-                                                                          tooltip,
-                                                                          isDependencyList)
-                        outputFile.write("<td class=\"indexkey %s\"><a class=\"e1\" href=\"%s\">%s</a> [%s]&nbsp;&nbsp;&nbsp</td>"
-                                   % (packageSuffix, getPackageHtmlFileName(depPackageName), depPackageName, depHyperLink))
-                        if self._generatePDFBundle:
-                            PDFRow.append(generateParagraph("%s [%s]" % (depPackageName, linkName)))
-                if self._generatePDFBundle and PDFRow:
-                    PDFData.append(PDFRow)
-                outputFile.write("</tr>\n")
-            outputFile.write("</table></div>\n")
-            if self._generatePDFBundle:
-                t = self.__generatePDFTable__(PDFData, numOfCol)
-                paragraphs.append(t)
-        if totalPackages > 0 and self._generatePDFBundle:
+                    depHyperLink = getPackagePackageDependencyHyperLink(packageName,
+                                                                      depPackageName,
+                                                                      linkName,
+                                                                      tooltip,
+                                                                      isDependencyList)
+                    outputFile.write("<td class=\"indexkey %s\"><a class=\"e1\" href=\"%s\">%s</a> [%s]&nbsp;&nbsp;&nbsp</td>"
+                               % (packageSuffix, getPackageHtmlFileName(depPackageName), depPackageName, depHyperLink))
+                    if self._generatePDFBundle:
+                        PDFRow.append(generateParagraph("%s [%s]" % (depPackageName, linkName)))
+            if self._generatePDFBundle and PDFRow:
+                PDFData.append(PDFRow)
+            outputFile.write("</tr>\n")
+        outputFile.write("</table></div>\n")
+        if self._generatePDFBundle:
+            t = self.__generatePDFTable__(PDFData, numOfCol)
+            paragraphs.append(t)
+        if self._generatePDFBundle:
             pdf.append(KeepTogether(paragraphs))
         writeSectionEnd(outputFile)
         outputFile.write("</div>\n")
@@ -2459,11 +2453,43 @@ class WebPageGenerator:
                 pdf = []
             else:
                 pdf = None
+
+            # Collect the data for this package so we know which sections to
+            # include
             package = self._allPackages[packageName]
-            indexList = ["Namespace", "Doc", "Dependency Graph",
-                         "Dependent Graph",
-                         "ICR Entries","FileMan Files",
-                         "Non-FileMan Globals", "Routines"]
+            #
+            dependencyPackages, dependencyPackgesMerged = \
+                mergeAndSortDependencyListByPackage(package, True)
+            #
+            dependentPackages, dependentPackagesMerged = \
+                mergeAndSortDependencyListByPackage(package, False)
+            # Find all ICR entries that have the package as a "CUSTODIAL Package"
+            icrList = self.queryICRInfo(packageName.upper(),"*","*")
+            # Separate fileman files and non-fileman globals
+            fileManList, globalList = [], []
+            allGlobals = package.getAllGlobals()
+            for globalVar in allGlobals.itervalues():
+                if globalVar.isFileManFile():
+                    fileManList.append(globalVar)
+                else:
+                    globalList.append(globalVar)
+            #
+            routinesList = package.getAllRoutines().keys()
+
+            # Build list of sections with data
+            indexList = ["Namespace", "Doc"]
+            if dependencyPackages:
+                indexList.append("Dependency Graph")
+            if dependentPackages:
+                indexList.append("Dependent Graph")
+            if len(icrList) > 0:
+                indexList.append("ICR Entries")
+            if len(fileManList) > 0:
+                indexList.append("FileMan Files")
+            if len(globalList) > 0:
+                indexList.append("Non-FileMan Globals")
+            if len(routinesList) > 0:
+                indexList.append("Routines")
             for keyVal in sectionLinkObj.keys():
                   totalObjectDict = package.getAllPackageComponents(keyVal)
                   if not len(totalObjectDict) == 0:
@@ -2493,33 +2519,38 @@ class WebPageGenerator:
             # Note: We're passing the package here, NOT the packageName
             self.generatePackageDocumentationSection(package, outputFile)
 
-            # Dependency and Dependent Graphs
-            self.generatePackageDependencySection(packageName, outputFile, pdf, True)
-            self.generatePackageDependencySection(packageName, outputFile, pdf, False)
+            # Dependency Graph
+            if dependencyPackages:
+                self.generatePackageDependencySection(dependencyPackages,
+                                                      dependencyPackgesMerged,
+                                                      packageName,
+                                                      outputFile, pdf, True)
+            # Dependent Graph
+            if dependentPackages:
+                self.generatePackageDependencySection(dependentPackages,
+                                                      dependentPackagesMerged,
+                                                      packageName,
+                                                      outputFile, pdf, False)
 
             # ICR Entries
-            self.generatePackageICREntriesSection(packageName, outputFile, pdf)
-
-            # Separate fileman files and non-fileman globals
-            fileManList, globalList = [], []
-            allGlobals = package.getAllGlobals()
-            for globalVar in allGlobals.itervalues():
-                if globalVar.isFileManFile():
-                    fileManList.append(globalVar)
-                else:
-                    globalList.append(globalVar)
+            if len(icrList) > 0:
+                self.generatePackageICREntriesSection(icrList, outputFile, pdf)
 
             # FileMan files
-            self.generatePackageFileManFilesSection(fileManList,
-                                                    outputFile, pdf)
+            if len(fileManList) > 0:
+                self.generatePackageFileManFilesSection(fileManList,
+                                                        outputFile, pdf)
 
             # Non-FileMan Globals
-            self.generatePackageNonFileManGlobalsSection(globalList,
-                                                         outputFile, pdf)
+            if len(globalList) > 0:
+                self.generatePackageNonFileManGlobalsSection(globalList,
+                                                             outputFile, pdf)
 
             # Routines
             # Note: We're passing the package here, NOT the packageName
-            self.generatePackageRoutinesSection(package, outputFile, pdf)
+            if len(routinesList) > 0:
+                self.generatePackageRoutinesSection(routinesList,
+                                                    outputFile, pdf)
 
             # Legends
             writeLegends(self._outDir, outputFile)
@@ -2579,17 +2610,13 @@ class WebPageGenerator:
 #==============================================================================
 # Method to generate Package ICR Entries section info
 #==============================================================================
-    def generatePackageICREntriesSection(self, packageName, outputFile, pdf):
+    def generatePackageICREntriesSection(self, icrList, outputFile, pdf):
         if self._generatePDFBundle:
             pdfICRSection = []
         else:
             pdfICRSection = None
-        # Find all ICR entries that have the package as a "CUSTODIAL Package"
-        icrList = self.queryICRInfo(packageName.upper(),"*","*")
         self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
-                                "ICR Entries",
-                                outputFile,
-                                pdfICRSection if len(icrList) > 0 else None)
+                                "ICR Entries", outputFile, pdfICRSection)
         sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
         pdfData = self.generateTablizedItemList(sortedICRList, outputFile,
                                                 getICRHtmlFileName,
@@ -2610,7 +2637,7 @@ class WebPageGenerator:
             pdfAllFilemanFilesSection = None
         self.writeSectionHeader("FileMan Files, Total: %d" % len(fileManList),
                                 "FileMan Files", outputFile,
-                                pdfAllFilemanFilesSection if len(fileManList) > 0 else None)
+                                pdfAllFilemanFilesSection)
         sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo())) # sorted by fileMan file No
         pdfData = self.generateTablizedItemList(sortedFileManList, outputFile,
                                                 getGlobalHtmlFileName,
@@ -2633,8 +2660,7 @@ class WebPageGenerator:
             pdfNonFilemanGlobalsSection = None
         self.writeSectionHeader("Non-FileMan Globals, Total: %d" % len(globalList),
                                 "Non-FileMan Globals",
-                                outputFile,
-                                pdfNonFilemanGlobalsSection if len(globalList) > 0 else None)
+                                outputFile, pdfNonFilemanGlobalsSection)
         sortedGlobalList = sorted(globalList, key=lambda item: item.getName()) # sorted by global Name
         pdfData = self.generateTablizedItemList(sortedGlobalList, outputFile,
                                                 getGlobalHtmlFileName,
@@ -2648,12 +2674,12 @@ class WebPageGenerator:
 #==============================================================================
 # Method to generate Package Routines section info
 #==============================================================================
-    def generatePackageRoutinesSection(self, package, outputFile, pdf):
+    def generatePackageRoutinesSection(self, routinesList, outputFile, pdf):
         if self._generatePDFBundle:
             pdfAllRoutinesSection = []
         else:
             pdfAllRoutinesSection = None
-        sortedRoutines = sorted(package.getAllRoutines().keys())
+        sortedRoutines = sorted(routinesList)
         totalNumRoutine = len(sortedRoutines)
         self.writeSectionHeader("Routines, Total: %d" % totalNumRoutine,
                                 "Routines",
