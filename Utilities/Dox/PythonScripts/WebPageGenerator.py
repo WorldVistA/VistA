@@ -282,7 +282,7 @@ def writePDFCustomization(outputFile, titleList):
 accordionOpenFun = """
     <script type='text/javascript'>
         function openAccordionVal(event) {
-          if ($(".accordion").length > 5) {
+          if ($(".sectionHeader").length > 5) {
             $('.accordion').accordion( {active:false, collapsible:true });
             classVal = ".accordion"
             if (event.target.classList[1] != "Allaccord") {
@@ -299,7 +299,7 @@ def getAccordionHTML():
   return """
     <script type='text/javascript'>
        $( document ).ready(function() {
-           if ($(".accordion").length > 5) {
+           if ($(".sectionHeader").length > 5) {
                $( '.accordion' ).accordion({
                    heightStyle: "content",
                    collapsible: true,
@@ -702,9 +702,13 @@ class WebPageGenerator:
           outputFile.write('''</div>\n''');
 
     def writeSectionHeader(self, headerName, archName, outputFile, pdf,
-                           isAccordion='accordion'):
-        outputFile.write("<div class='%s  %s'><h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n"
-            % (isAccordion,archName.split(" ")[0], archName, headerName))
+                           isAccordion=True):
+        if isAccordion:
+          accordionClass = 'accordion'
+        else:
+          accordionClass = ''
+        outputFile.write("<div class='%s sectionheader %s'><h2 align=\"left\"><a name=\"%s\">%s</a></h2>\n"
+                          % (accordionClass, archName.split(" ")[0], archName, headerName))
         if pdf is not None and self._generatePDFBundle:
             pdf.append(Spacer(1, 20))
             pdf.append(Paragraph(headerName, styles['Heading2']))
@@ -1044,7 +1048,8 @@ class WebPageGenerator:
                 outputFile.write(getAccordionHTML())
                 if isFileManFile:
                     # Information
-                    self.writeSectionHeader("Information", "Info", outputFile, pdf, isAccordion="")
+                    self.writeSectionHeader("Information", "Info", outputFile,
+                                            pdf, isAccordion=False)
                     infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
                     itemList = [[globalVar.getFileNo(),
                               globalVar.getFileManName(),
@@ -1052,7 +1057,8 @@ class WebPageGenerator:
                     self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
                     if self._generatePDFBundle:
                         self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
-                    self.writeSectionHeader("Description", "Desc", outputFile, pdf, isAccordion="")
+                    self.writeSectionHeader("Description", "Desc", outputFile,
+                                            pdf, isAccordion=False)
                     # TODO: Write as a normal paragraph or series of paragraphs (i.e. not a list)
                     writeListData(globalVar.getDescription(), outputFile, classid="description")
                     if self._generatePDFBundle:
@@ -1062,8 +1068,8 @@ class WebPageGenerator:
                 totalRoutines = globalVar.getTotalNumberOfReferencedRoutines()
                 if totalRoutines:
                     self.writeSectionHeader("Directly Accessed By Routines, Total: %d" % totalRoutines,
-                                       "Directly Accessed By Routines",
-                                       outputFile, pdf)
+                                            "Directly Accessed By Routines",
+                                            outputFile, pdf)
                     self.generateGlobalRoutineDependentsSection(globalVar.getAllReferencedRoutines(),
                                                                 outputFile, pdf, classid="directCall")
                     writeSectionEnd(outputFile)
@@ -1074,9 +1080,9 @@ class WebPageGenerator:
                                         fileManDbCallRtns.itervalues()]
                     totalNumDbCallRtns = sum(DbCallRtnsNos)
                     self.writeSectionHeader("Accessed By FileMan Db Calls, Total: %d" %
-                                       totalNumDbCallRtns,
-                                       "Accessed By FileMan Db Calls",
-                                       outputFile,pdf)
+                                            totalNumDbCallRtns,
+                                            "Accessed By FileMan Db Calls",
+                                            outputFile, pdf)
                     self.generateGlobalRoutineDependentsSection(fileManDbCallRtns,
                                                                 outputFile,
                                                                 pdf,
@@ -1086,10 +1092,11 @@ class WebPageGenerator:
                     # Pointed to By FileMan Files
                     writeSectionToPDF = self._generatePDFBundle and \
                                         globalVar.getTotalNumberOfReferredGlobals() > 0
-                    self.writeSectionHeader("Pointed To By FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferredGlobals(),
-                                       "Pointed To By FileMan Files",
-                                       outputFile,
-                                       pdf if writeSectionToPDF else None)
+                    self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
+                                                % globalVar.getTotalNumberOfReferredGlobals(),
+                                            "Pointed To By FileMan Files",
+                                            outputFile,
+                                            pdf if writeSectionToPDF else None)
                     self.generateGlobalPointedToSection(globalVar, outputFile,
                                                         pdf if writeSectionToPDF else None,
                                                         True, classid="gblPointedTo")
@@ -1098,10 +1105,11 @@ class WebPageGenerator:
                     # Pointer To FileMan Files
                     writeSectionToPDF = self._generatePDFBundle and \
                                         globalVar.getTotalNumberOfReferencedGlobals() > 0
-                    self.writeSectionHeader("Pointer To FileMan Files, Total: %d" % globalVar.getTotalNumberOfReferencedGlobals(),
-                                       "Pointer To FileMan Files",
-                                       outputFile,
-                                       pdf if writeSectionToPDF else None)
+                    self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
+                                                % globalVar.getTotalNumberOfReferencedGlobals(),
+                                            "Pointer To FileMan Files",
+                                            outputFile,
+                                            pdf if writeSectionToPDF else None)
                     self.generateGlobalPointedToSection(globalVar, outputFile,
                                                         pdf if writeSectionToPDF else None,
                                                         False, classid="gblPointerTo")
@@ -1111,12 +1119,14 @@ class WebPageGenerator:
                     totalNoFields = 0
                     allFields = globalVar.getAllFileManFields()
                     if allFields: totalNoFields = len(allFields)
-                    self.writeSectionHeader("Fields, Total: %d" % totalNoFields, "Fields", outputFile, pdf)
+                    self.writeSectionHeader("Fields, Total: %d" % totalNoFields,
+                                            "Fields", outputFile, pdf)
                     self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
                     writeSectionEnd(outputFile)
 
                 if icrList:
-                   self.writeSectionHeader("ICR Entries", "ICR Entries", outputFile, pdf)
+                   self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
+                                           "ICR Entries", outputFile, pdf)
                    self.generateGlobalICRSection(icrList, outputFile, pdf)
                    writeSectionEnd(outputFile)
                 self.__generateIndividualRoutinePage__(globalVar, pdf,
@@ -1200,7 +1210,8 @@ class WebPageGenerator:
         packageName = package.getName();
 
         # Information
-        self.writeSectionHeader("Information", "Info", outputFile, pdf, isAccordion="")
+        self.writeSectionHeader("Information", "Info", outputFile, pdf,
+                                isAccordion=False)
         infoHeader = ["Parent File", "Name", "Number", "Package"]
         parentFile = subFile.getParentFile()
         parentFileLink = ""
@@ -2168,8 +2179,10 @@ class WebPageGenerator:
             paragraphs = []
         else:
             paragraphs = None
-        self.writeSectionHeader(sectionGraphHeader, sectionGraphHeader, outputFile,
-                           paragraphs if totalPackages > 0 else None, isAccordion="")
+        self.writeSectionHeader(sectionGraphHeader, sectionGraphHeader,
+                                outputFile,
+                                paragraphs if totalPackages > 0 else None,
+                                isAccordion=False)
         outputFile.write("<div class=\"contents\">\n")
         try:
             # write the image of the dependency graph
@@ -2472,7 +2485,8 @@ class WebPageGenerator:
             # Namespace
             namespace = "Namespace: %s" % listDataToCommaSeperatorString(package.getNamespaces())
             outputFile.write(getAccordionHTML())
-            self.writeSectionHeader("Namespace", "Namespace", outputFile, pdf, isAccordion="")
+            self.writeSectionHeader("Namespace", "Namespace", outputFile, pdf,
+                                    isAccordion=False)
             outputFile.write("<div class=packageNamespace>")
             outputFile.write("<div><p><h4 id=\"packageNamespace\">%s</h4></div>" % namespace)
             if self._generatePDFBundle:
@@ -2487,7 +2501,8 @@ class WebPageGenerator:
             writeSectionEnd(outputFile)
             # Link to VA documentation
             # Do not write in pdf
-            self.writeSectionHeader("Documentation", "Doc", outputFile, None, isAccordion="")
+            self.writeSectionHeader("Documentation", "Doc", outputFile, None,
+                                    isAccordion=False)
             if len(package.getDocLink()) > 0:
                 outputFile.write("<div><p><h4 id=\"packageDocs\">VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a></p></div>" % package.getDocLink())
                 if len(package.getDocMirrorLink()) > 0:
@@ -2633,7 +2648,7 @@ class WebPageGenerator:
 
             if self._generatePDFBundle:
                 pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
-                                                getPackagePdfFileName(packageName))
+                                           getPackagePdfFileName(packageName))
                 self.__writePDFFile__(pdf, pdfFileName)
 
 #===============================================================================
@@ -2793,7 +2808,7 @@ class WebPageGenerator:
     # Generator functions
     def __writeRoutineInfoSection__(self, routine, data, header, link,
                                     outputFile, pdf, classid=""):
-        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion="")
+        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
         outputFile.write("<div>")
         for comment in data:
             outputFile.write("<p><span class=\"information %s\">%s</span></p>\n" % (classid, comment))
@@ -2802,9 +2817,10 @@ class WebPageGenerator:
         outputFile.write("</div>")
 
     def __writeRoutineSourceSection__(self, routine, data, header, link,
-                                      outputFile, pdf, classid="", isAccordion=""):
+                                      outputFile, pdf, classid="",
+                                      isAccordion=False):
         # Do not write source file link in PDF
-        self.writeSectionHeader(header, link, outputFile, None)
+        self.writeSectionHeader(header, link, outputFile, None, isAccordion)
         if routine._objType in sectionLinkObj.keys():
           outputFile.write('<div><p><span class=\"information\">%s Information &lt;<a class=\"el\" href=\"http://code.osehra.org/vivian/files/%s/%s-%s.html\">%s</a>&gt;</span></p></div>\n'\
                                      % (routine._objType, sectionLinkObj[routine._objType]['number'].replace('.','_'), sectionLinkObj[routine._objType]['number'] ,routine.getIEN(), routine.getOriginalName())
@@ -2902,7 +2918,8 @@ class WebPageGenerator:
 
     def __writeEntryPointSection__(self, routine, data, header, link,
                                    outputFile, pdf, tableHeader, classid=""):
-        self.writeSectionHeader("Entry Points", "Routine Entry Points", outputFile, pdf)
+        self.writeSectionHeader("Entry Points", "Routine Entry Points",
+                                outputFile, pdf)
         entryPoints = routine.getEntryPoints()
         tableData = []
         if self._generatePDFBundle:
@@ -2940,7 +2957,8 @@ class WebPageGenerator:
 
     def __writeInteractionSection__(self, routine, data, header, link,
                                     outputFile, pdf, tableHeader, classid=""):
-        self.writeSectionHeader("Interaction Calls", "Interaction Calls", outputFile, pdf)
+        self.writeSectionHeader("Interaction Calls", "Interaction Calls",
+                                outputFile, pdf)
         calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS','DIALOG','DIALOGU'])
         if self._generatePDFBundle:
             self.__writePDFInteractionSection__(data, calledRtns, pdf, tableHeader)
@@ -3004,7 +3022,8 @@ class WebPageGenerator:
             pdfSection = []
         else:
             pdfSection = None
-        self.writeSectionHeader(header, link, outputFile, pdfSection, isAccordion="")
+        self.writeSectionHeader(header, link, outputFile, pdfSection,
+                                isAccordion=False)
         routineName = routine.getName()
         packageName = routine.getPackage().getName()
         if isDependency:
@@ -3302,7 +3321,8 @@ class WebPageGenerator:
         self.generateIndexBar(outputFile, indexList, printButton=True)
         title = "Routine: %s" % routineName
         self.writeTitleBlock(title, title, package, outputFile, pdf)
-        self.writeSectionHeader("Platform Dependent Routines", "DepRoutines", outputFile, pdf)
+        self.writeSectionHeader("Platform Dependent Routines", "DepRoutines",
+                                outputFile, pdf)
         # output the Platform part.
         tableRowList = []
         pdfTableRowList = []
@@ -3325,7 +3345,7 @@ class WebPageGenerator:
                                                link, outputFile, pdf, classid=""):
         fileNo = sectionLinkObj[routine.getObjectType()]['number']
         sourcePath = os.path.join(self._outDir,"..",fileNo.replace(".",'_'),fileNo+"-"+routine.getIEN()+".html")
-        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion="")
+        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
         if os.path.exists(sourcePath):
           file = open(sourcePath, 'r')
           fileLines = file.readlines()
