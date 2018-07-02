@@ -177,12 +177,12 @@ var titleDic  =  {
   //"Doc": {"tag": "null","sep": /\s{3}/,"generator": getText,"numCols":0, "header": "Documentation"},
   "Dependency Graph": {"tag": "_dependency","sep": /\s{3}/,"numCols":6},
   "Dependent Graph":{"tag": "_dependent","sep": /\s{3}/,"numCols":6},
-  "All ICR Entries":{"tag": "icrVals","sep": /\s{4}/,"generator":getTableList, "numCols":8},
+  "ICR Entries":{"tag": "icrVals","sep": /\s{4}/,"generator":getTableList, "numCols":8},
   // TODO: Need to find a package to test 'FileMan Files' section
   "FileMan Files":{"tag": "fmFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8},
   "Non-FileMan Globals":{"tag": "nonfmFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8},
-  "All Routines":{"tag": "rtns","sep": /\s{4}/,"generator":getTableList,"numCols":8},
-  
+  "Routines":{"tag": "rtns","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+
   //Package Components
   "Component Source":{"tag": "source","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
   "Remote Procedure":{"tag": "Option_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},

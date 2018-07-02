@@ -894,7 +894,7 @@ class WebPageGenerator:
                 allFileManFilesList.append(item)
         self.__includeHeader__(outputFile)
         outputFile.write("<title>FileMan Files List</title>")
-        outputFile.write("<div><h1>%s</h1></div>\n" % "All FileMan Files List Total: %d" % len(allFileManFilesList))
+        outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Files List, Total: %d" % len(allFileManFilesList))
         writeTableHeader(["FileMan Name",
                           "FileMan FileNo",
                           "Global Name"],
@@ -919,7 +919,7 @@ class WebPageGenerator:
         allSubFiles = self._crossRef.getAllFileManSubFiles()
         self.__includeHeader__(outputFile)
         outputFile.write("<title id=\"pageTitle\">Fileman Sub-Files</title>")
-        outputFile.write("<div><h1>%s</h1></div>\n" % "All FileMan Sub-Files List Total: %d" % len(allSubFiles))
+        outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Sub-Files List, Total: %d" % len(allSubFiles))
         writeTableHeader(["Sub-File Name",
                           "Sub-File FileNo",
                           "Package Name"],
@@ -2440,10 +2440,6 @@ class WebPageGenerator:
 # method to generate individual package page
 #===============================================================================
     def generateIndividualPackagePage(self):
-        indexList = ["Namespace", "Doc", "Dependency Graph",
-                     "Dependent Graph",
-                     "All ICR Entries","FileMan Files",
-                     "Non-FileMan Globals", "All Routines"]
         for packageName in self._allPackages.iterkeys():
             if self._generatePDFBundle:
                 self.__setupPDF__(isLandscape=True)
@@ -2453,8 +2449,8 @@ class WebPageGenerator:
             package = self._allPackages[packageName]
             indexList = ["Namespace", "Doc", "Dependency Graph",
                          "Dependent Graph",
-                         "All ICR Entries","FileMan Files",
-                         "Non-FileMan Globals", "All Routines"]
+                         "ICR Entries","FileMan Files",
+                         "Non-FileMan Globals", "Routines"]
             for keyVal in sectionLinkObj.keys():
                   totalObjectDict = package.getAllPackageComponents(keyVal)
                   if not len(totalObjectDict) == 0:
@@ -2510,10 +2506,10 @@ class WebPageGenerator:
             else:
                 pdfICRSection = None
             icrList = self.queryICRInfo(packageName.upper(),"*","*")
-            self.writeSectionHeader("All ICR Entries: %d" % len(icrList),
-                               "All ICR Entries",
-                               outputFile,
-                               pdfICRSection if len(icrList) > 0 else None)
+            self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
+                                    "ICR Entries",
+                                    outputFile,
+                                    pdfICRSection if len(icrList) > 0 else None)
             sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
             pdfData = self.generateTablizedItemList(sortedICRList, outputFile,
                                                     getICRHtmlFileName,
@@ -2538,10 +2534,9 @@ class WebPageGenerator:
                 pdfAllFilemanFilesSection = []
             else:
                 pdfAllFilemanFilesSection = None
-            self.writeSectionHeader("All FileMan Files Total: %d" % len(fileManList),
-                               "FileMan Files", outputFile,
-                               pdfAllFilemanFilesSection if len(fileManList) > 0 else None)
-
+            self.writeSectionHeader("FileMan Files, Total: %d" % len(fileManList),
+                                    "FileMan Files", outputFile,
+                                    pdfAllFilemanFilesSection if len(fileManList) > 0 else None)
             sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo())) # sorted by fileMan file No
             pdfData = self.generateTablizedItemList(sortedFileManList, outputFile,
                                                     getGlobalHtmlFileName,
@@ -2558,7 +2553,7 @@ class WebPageGenerator:
                 pdfNonFilemanGlobalsSection = []
             else:
                 pdfNonFilemanGlobalsSection = None
-            self.writeSectionHeader("Non FileMan Globals Total: %d" % len(globalList),
+            self.writeSectionHeader("Non-FileMan Globals, Total: %d" % len(globalList),
                                "Non-FileMan Globals",
                                outputFile,
                                pdfNonFilemanGlobalsSection if len(globalList) > 0 else None)
@@ -2579,11 +2574,10 @@ class WebPageGenerator:
                 pdfAllRoutinesSection = None
             sortedRoutines = sorted(package.getAllRoutines().keys())
             totalNumRoutine = len(sortedRoutines)
-            self.writeSectionHeader("All Routines Total: %d" % totalNumRoutine,
-                               "All Routines",
-                               outputFile,
-                               pdfAllRoutinesSection if totalNumRoutine > 0 else None)
-
+            self.writeSectionHeader("Routines, Total: %d" % totalNumRoutine,
+                                    "Routines",
+                                    outputFile,
+                                    pdfAllRoutinesSection)
             pdfData = self.generateTablizedItemList(sortedRoutines, outputFile,
                                                     getRoutineHtmlFileName,
                                                     self.getRoutineDisplayNameByName,
@@ -2593,6 +2587,7 @@ class WebPageGenerator:
                 pdfAllRoutinesSection.append(table)
                 pdf.append(KeepTogether(pdfAllRoutinesSection))
             writeSectionEnd(outputFile)
+
 
             # Legends
             writeLegends(self._outDir, outputFile)
@@ -2614,10 +2609,11 @@ class WebPageGenerator:
                 totalComponents.append(totalObjectDict[value])
               sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
               totalNumObjects = len(sortedComponents)
-              self.writeSectionHeader("All %s Total: %d" % (keyVal, totalNumObjects),
-                                 keyVal.replace("_"," "),
-                                 outputFile,
-                                 pdfPackageComponentsSection if totalNumObjects > 0 else None)
+              componentType = keyVal.replace("_"," ")
+              self.writeSectionHeader("%s, Total: %d" % (componentType, totalNumObjects),
+                                      componentType,
+                                      outputFile,
+                                      pdfPackageComponentsSection if totalNumObjects > 0 else None)
               pdfData = self.generateTablizedItemList(sortedComponents, outputFile,
                                                       getPackageObjHtmlFileName,
                                                       self.getPackageComponentDisplayName,
