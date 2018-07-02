@@ -2475,67 +2475,32 @@ class WebPageGenerator:
             self.__includeHeader__(outputFile)
             self.generateIndexBar(outputFile, indexList,
                                   printButton=True, packageName=packageName)
+
             # Title
             title = "Package: %s" % packageName
             self.writeTitleBlock(title, title, None, outputFile, pdf)
+
             # Generate PDF customization dialog
             pdfList = indexList
             pdfList.append("Legend Graph")
             writePDFCustomization(outputFile, str(pdfList))
-            # Namespace
-            namespace = "Namespace: %s" % listDataToCommaSeperatorString(package.getNamespaces())
-            outputFile.write(getAccordionHTML())
-            self.writeSectionHeader("Namespace", "Namespace", outputFile, pdf,
-                                    isAccordion=False)
-            outputFile.write("<div class=packageNamespace>")
-            outputFile.write("<div><p><h4 id=\"packageNamespace\">%s</h4></div>" % namespace)
-            if self._generatePDFBundle:
-                pdf.append(generateParagraph(namespace))
-            globalNamespaces = package.getGlobalNamespace()
-            if globalNamespaces and len(globalNamespaces) > 0:
-                globalNamespace = "Additional Global Namespace: %s" % listDataToCommaSeperatorString(globalNamespaces)
-                outputFile.write("<div><p><h4 id=\"packageNamespace\">" + globalNamespace + "</h4></div>")
-                if self._generatePDFBundle:
-                    pdf.append(generateParagraph(globalNamespace))
-            outputFile.write("</div>")
-            writeSectionEnd(outputFile)
-            # Link to VA documentation
-            # Do not write in pdf
-            self.writeSectionHeader("Documentation", "Doc", outputFile, None,
-                                    isAccordion=False)
-            if len(package.getDocLink()) > 0:
-                outputFile.write("<div><p><h4 id=\"packageDocs\">VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a></p></div>" % package.getDocLink())
-                if len(package.getDocMirrorLink()) > 0:
-                    outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
-            else:
-                outputFile.write("<div><p><h4><a href=\"https://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
-            writeSectionEnd(outputFile)
 
-            #
+            # Namespace
+            # Note: We're passing the package here, NOT the packageName
+            self.generatePackageNamespaceSection(package, outputFile, pdf)
+
+            # Link to VA documentation (do not write in pdf)
+            # Note: We're passing the package here, NOT the packageName
+            self.generatePackageDocumentationSection(package, outputFile)
+
+            # Dependency and Dependent Graphs
             self.generatePackageDependencySection(packageName, outputFile, pdf, True)
             self.generatePackageDependencySection(packageName, outputFile, pdf, False)
 
-            # Find all ICR entries that have the package as a "CUSTODIAL Package"
-            if self._generatePDFBundle:
-                pdfICRSection = []
-            else:
-                pdfICRSection = None
-            icrList = self.queryICRInfo(packageName.upper(),"*","*")
-            self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
-                                    "ICR Entries",
-                                    outputFile,
-                                    pdfICRSection if len(icrList) > 0 else None)
-            sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
-            pdfData = self.generateTablizedItemList(sortedICRList, outputFile,
-                                                    getICRHtmlFileName,
-                                                    getICRDisplayName, classid="icrVals")
-            if pdfData and self._generatePDFBundle:
-                table = self.__generatePDFTable__(pdfData)
-                pdfICRSection.append(table)
-                pdf.append(KeepTogether(pdfICRSection))
-            writeSectionEnd(outputFile)
+            # ICR Entries
+            self.generatePackageICREntriesSection(packageName, outputFile, pdf)
 
-            # separate fileman files and non-fileman globals
+            # Separate fileman files and non-fileman globals
             fileManList, globalList = [], []
             allGlobals = package.getAllGlobals()
             for globalVar in allGlobals.itervalues():
@@ -2544,65 +2509,17 @@ class WebPageGenerator:
                 else:
                     globalList.append(globalVar)
 
-            # section of All FileMan files
-            if self._generatePDFBundle:
-                pdfAllFilemanFilesSection = []
-            else:
-                pdfAllFilemanFilesSection = None
-            self.writeSectionHeader("FileMan Files, Total: %d" % len(fileManList),
-                                    "FileMan Files", outputFile,
-                                    pdfAllFilemanFilesSection if len(fileManList) > 0 else None)
-            sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo())) # sorted by fileMan file No
-            pdfData = self.generateTablizedItemList(sortedFileManList, outputFile,
-                                                    getGlobalHtmlFileName,
-                                                    getGlobalDisplayName, classid="fmFiles")
-            if pdfData and self._generatePDFBundle:
-                # Note: In generateTablizedItemList, number of columns is set to 8
-                table = self.__generatePDFTable__(pdfData, 8)
-                pdfAllFilemanFilesSection.append(table)
-                pdf.append(KeepTogether(pdfAllFilemanFilesSection))
-            writeSectionEnd(outputFile)
+            # FileMan files
+            self.generatePackageFileManFilesSection(fileManList,
+                                                    outputFile, pdf)
 
-            # section of All Non-FileMan Globals
-            if self._generatePDFBundle:
-                pdfNonFilemanGlobalsSection = []
-            else:
-                pdfNonFilemanGlobalsSection = None
-            self.writeSectionHeader("Non-FileMan Globals, Total: %d" % len(globalList),
-                               "Non-FileMan Globals",
-                               outputFile,
-                               pdfNonFilemanGlobalsSection if len(globalList) > 0 else None)
-            sortedGlobalList = sorted(globalList, key=lambda item: item.getName()) # sorted by global Name
-            pdfData = self.generateTablizedItemList(sortedGlobalList, outputFile,
-                                                    getGlobalHtmlFileName,
-                                                    getGlobalDisplayName, classid="nonfmFiles")
-            if pdfData and self._generatePDFBundle:
-                table = self.__generatePDFTable__(pdfData)
-                pdfNonFilemanGlobalsSection.append(table)
-                pdf.append(KeepTogether(pdfNonFilemanGlobalsSection))
-            writeSectionEnd(outputFile)
+            # Non-FileMan Globals
+            self.generatePackageNonFileManGlobalsSection(globalList,
+                                                         outputFile, pdf)
 
-            # section of all routines
-            if self._generatePDFBundle:
-                pdfAllRoutinesSection = []
-            else:
-                pdfAllRoutinesSection = None
-            sortedRoutines = sorted(package.getAllRoutines().keys())
-            totalNumRoutine = len(sortedRoutines)
-            self.writeSectionHeader("Routines, Total: %d" % totalNumRoutine,
-                                    "Routines",
-                                    outputFile,
-                                    pdfAllRoutinesSection)
-            pdfData = self.generateTablizedItemList(sortedRoutines, outputFile,
-                                                    getRoutineHtmlFileName,
-                                                    self.getRoutineDisplayNameByName,
-                                                    8, classid="rtns")
-            if pdfData and self._generatePDFBundle:
-                table = self.__generatePDFTable__(pdfData)
-                pdfAllRoutinesSection.append(table)
-                pdf.append(KeepTogether(pdfAllRoutinesSection))
-            writeSectionEnd(outputFile)
-
+            # Routines
+            # Note: We're passing the package here, NOT the packageName
+            self.generatePackageRoutinesSection(package, outputFile, pdf)
 
             # Legends
             writeLegends(self._outDir, outputFile)
@@ -2611,36 +2528,8 @@ class WebPageGenerator:
                 self.__writePDFLegends__(pdf)
 
             # Package Components
-            for keyVal in sectionLinkObj.keys():
-              totalObjectDict = package.getAllPackageComponents(keyVal)
-              if len(totalObjectDict) == 0:
-                continue
-              totalComponents  = []
-              if self._generatePDFBundle:
-                pdfPackageComponentsSection = []
-              else:
-                pdfPackageComponentsSection = None
-              for value in totalObjectDict.keys():
-                totalComponents.append(totalObjectDict[value])
-              sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
-              totalNumObjects = len(sortedComponents)
-              componentType = keyVal.replace("_"," ")
-              self.writeSectionHeader("%s, Total: %d" % (componentType, totalNumObjects),
-                                      componentType,
-                                      outputFile,
-                                      pdfPackageComponentsSection if totalNumObjects > 0 else None)
-              pdfData = self.generateTablizedItemList(sortedComponents, outputFile,
-                                                      getPackageObjHtmlFileName,
-                                                      self.getPackageComponentDisplayName,
-                                                      8,
-                                                      keyVal = keyVal,
-                                                      classid = keyVal+"_data")
-              if pdfData and self._generatePDFBundle:
-                table = self.__generatePDFTable__(pdfData, 8)
-                pdfPackageComponentsSection.append(table)
-                pdf.append(KeepTogether(pdfPackageComponentsSection))
-              writeSectionEnd(outputFile)
-            writeSectionEnd(outputFile)
+            # Note: We're passing the package here, NOT the packageName
+            self.generatePackageComponentsSections(package, outputFile, pdf)
 
             self.generateIndexBar(outputFile, indexList)
             self.__includeFooter__(outputFile)
@@ -2650,6 +2539,170 @@ class WebPageGenerator:
                 pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
                                            getPackagePdfFileName(packageName))
                 self.__writePDFFile__(pdf, pdfFileName)
+
+#==============================================================================
+# Method to generate Package Namespace section info
+#==============================================================================
+    def generatePackageNamespaceSection(self, package, outputFile, pdf):
+        namespace = "Namespace: %s" % listDataToCommaSeperatorString(package.getNamespaces())
+        outputFile.write(getAccordionHTML())
+        self.writeSectionHeader("Namespace", "Namespace", outputFile, pdf,
+                                isAccordion=False)
+        outputFile.write("<div class=packageNamespace>")
+        outputFile.write("<div><p><h4 id=\"packageNamespace\">%s</h4></div>" % namespace)
+        if self._generatePDFBundle:
+            pdf.append(generateParagraph(namespace))
+        globalNamespaces = package.getGlobalNamespace()
+        if globalNamespaces and len(globalNamespaces) > 0:
+            globalNamespace = "Additional Global Namespace: %s" \
+                                  % listDataToCommaSeperatorString(globalNamespaces)
+            outputFile.write("<div><p><h4 id=\"packageNamespace\">" + globalNamespace + "</h4></div>")
+            if self._generatePDFBundle:
+                pdf.append(generateParagraph(globalNamespace))
+        outputFile.write("</div>")
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package Documentation section info
+#==============================================================================
+    def generatePackageDocumentationSection(self, package, outputFile):
+        self.writeSectionHeader("Documentation", "Doc", outputFile, None,
+                                isAccordion=False)
+        if len(package.getDocLink()) > 0:
+            outputFile.write("<div><p><h4 id=\"packageDocs\">VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a></p></div>" % package.getDocLink())
+            if len(package.getDocMirrorLink()) > 0:
+                outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
+        else:
+            outputFile.write("<div><p><h4><a href=\"https://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package ICR Entries section info
+#==============================================================================
+    def generatePackageICREntriesSection(self, packageName, outputFile, pdf):
+        if self._generatePDFBundle:
+            pdfICRSection = []
+        else:
+            pdfICRSection = None
+        # Find all ICR entries that have the package as a "CUSTODIAL Package"
+        icrList = self.queryICRInfo(packageName.upper(),"*","*")
+        self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
+                                "ICR Entries",
+                                outputFile,
+                                pdfICRSection if len(icrList) > 0 else None)
+        sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
+        pdfData = self.generateTablizedItemList(sortedICRList, outputFile,
+                                                getICRHtmlFileName,
+                                                getICRDisplayName, classid="icrVals")
+        if pdfData and self._generatePDFBundle:
+            table = self.__generatePDFTable__(pdfData)
+            pdfICRSection.append(table)
+            pdf.append(KeepTogether(pdfICRSection))
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package FileMan Files section info
+#==============================================================================
+    def generatePackageFileManFilesSection(self, fileManList, outputFile, pdf):
+        if self._generatePDFBundle:
+            pdfAllFilemanFilesSection = []
+        else:
+            pdfAllFilemanFilesSection = None
+        self.writeSectionHeader("FileMan Files, Total: %d" % len(fileManList),
+                                "FileMan Files", outputFile,
+                                pdfAllFilemanFilesSection if len(fileManList) > 0 else None)
+        sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo())) # sorted by fileMan file No
+        pdfData = self.generateTablizedItemList(sortedFileManList, outputFile,
+                                                getGlobalHtmlFileName,
+                                                getGlobalDisplayName, classid="fmFiles")
+        if pdfData and self._generatePDFBundle:
+            # Note: In generateTablizedItemList, number of columns is set to 8
+            table = self.__generatePDFTable__(pdfData, 8)
+            pdfAllFilemanFilesSection.append(table)
+            pdf.append(KeepTogether(pdfAllFilemanFilesSection))
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package Non-FileMan Globals section info
+#==============================================================================
+    def generatePackageNonFileManGlobalsSection(self, globalList,
+                                                outputFile, pdf):
+        if self._generatePDFBundle:
+            pdfNonFilemanGlobalsSection = []
+        else:
+            pdfNonFilemanGlobalsSection = None
+        self.writeSectionHeader("Non-FileMan Globals, Total: %d" % len(globalList),
+                                "Non-FileMan Globals",
+                                outputFile,
+                                pdfNonFilemanGlobalsSection if len(globalList) > 0 else None)
+        sortedGlobalList = sorted(globalList, key=lambda item: item.getName()) # sorted by global Name
+        pdfData = self.generateTablizedItemList(sortedGlobalList, outputFile,
+                                                getGlobalHtmlFileName,
+                                                getGlobalDisplayName, classid="nonfmFiles")
+        if pdfData and self._generatePDFBundle:
+            table = self.__generatePDFTable__(pdfData)
+            pdfNonFilemanGlobalsSection.append(table)
+            pdf.append(KeepTogether(pdfNonFilemanGlobalsSection))
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package Routines section info
+#==============================================================================
+    def generatePackageRoutinesSection(self, package, outputFile, pdf):
+        if self._generatePDFBundle:
+            pdfAllRoutinesSection = []
+        else:
+            pdfAllRoutinesSection = None
+        sortedRoutines = sorted(package.getAllRoutines().keys())
+        totalNumRoutine = len(sortedRoutines)
+        self.writeSectionHeader("Routines, Total: %d" % totalNumRoutine,
+                                "Routines",
+                                outputFile,
+                                pdfAllRoutinesSection)
+        pdfData = self.generateTablizedItemList(sortedRoutines, outputFile,
+                                                getRoutineHtmlFileName,
+                                                self.getRoutineDisplayNameByName,
+                                                8, classid="rtns")
+        if pdfData and self._generatePDFBundle:
+            table = self.__generatePDFTable__(pdfData)
+            pdfAllRoutinesSection.append(table)
+            pdf.append(KeepTogether(pdfAllRoutinesSection))
+        writeSectionEnd(outputFile)
+
+#==============================================================================
+# Method to generate Package Components sections
+#==============================================================================
+    def generatePackageComponentsSections(self, package, outputFile, pdf):
+        for keyVal in sectionLinkObj.keys():
+            totalObjectDict = package.getAllPackageComponents(keyVal)
+            if len(totalObjectDict) == 0:
+                continue
+            totalComponents  = []
+            if self._generatePDFBundle:
+                pdfPackageComponentsSection = []
+            else:
+                pdfPackageComponentsSection = None
+            for value in totalObjectDict.keys():
+                totalComponents.append(totalObjectDict[value])
+            sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
+            totalNumObjects = len(sortedComponents)
+            componentType = keyVal.replace("_"," ")
+            self.writeSectionHeader("%s, Total: %d" % (componentType, totalNumObjects),
+                                    componentType,
+                                    outputFile,
+                                    pdfPackageComponentsSection if totalNumObjects > 0 else None)
+            pdfData = self.generateTablizedItemList(sortedComponents, outputFile,
+                                                    getPackageObjHtmlFileName,
+                                                    self.getPackageComponentDisplayName,
+                                                    8,
+                                                    keyVal = keyVal,
+                                                    classid = keyVal+"_data")
+            if pdfData and self._generatePDFBundle:
+                table = self.__generatePDFTable__(pdfData, 8)
+                pdfPackageComponentsSection.append(table)
+                pdf.append(KeepTogether(pdfPackageComponentsSection))
+            writeSectionEnd(outputFile)
+        writeSectionEnd(outputFile)
 
 #===============================================================================
 # method to generate Routine Dependency and Dependents page
