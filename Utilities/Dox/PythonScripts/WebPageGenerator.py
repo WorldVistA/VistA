@@ -954,13 +954,23 @@ class WebPageGenerator:
             packageName = package.getName()
             for (globalName, globalVar) in package.getAllGlobals().iteritems():
                 isFileManFile = globalVar.isFileManFile()
-
                 if isFileManFile:
-                    indexList = ["Info", "Desc",
-                                 "Directly Accessed By Routines",
-                                 "Accessed By FileMan Db Calls",
-                                 "Pointed To By FileMan Files",
-                                 "Pointer To FileMan Files", "Fields"]
+                    # Get all of the data first so we know which sections to
+                    # add to the indexList
+                    fileManDbCallRtns = globalVar.getFileManDbCallRoutines()
+                    allFields = globalVar.getAllFileManFields()
+
+                    indexList = ["Info", "Desc"]
+                    if globalVar.getTotalNumberOfReferencedRoutines() > 0:
+                        indexList.append("Directly Accessed By Routines")
+                    if fileManDbCallRtns:
+                        indexList.append("Accessed By FileMan Db Calls")
+                    if globalVar.getTotalNumberOfReferredGlobals() > 0:
+                        indexList.append( "Pointed To By FileMan Files")
+                    if globalVar.getTotalNumberOfReferencedGlobals() > 0:
+                        indexList.append("Pointer To FileMan Files")
+                    if allFields:
+                        indexList.append("Fields")
                 else:
                     indexList = ["Directly Accessed By Routines"]
                 htmlFileName = os.path.join(self._outDir,
@@ -1033,9 +1043,9 @@ class WebPageGenerator:
 
                 icrList = self.queryICRInfo(packageName.upper(),"GLOBAL", globalName[1:])
                 if icrList:
-                  indexList.append("ICR Entries")
+                    indexList.append("ICR Entries")
 
-                rtnIndexList,idxLst = findRelevantIndex(rtnIndexes,None)
+                rtnIndexList, idxLst = findRelevantIndex(rtnIndexes,None)
                 indexList = indexList + rtnIndexList
                 outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                 outputFile.write("")
@@ -1057,6 +1067,8 @@ class WebPageGenerator:
                     self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
                     if self._generatePDFBundle:
                         self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
+
+                    # Description
                     self.writeSectionHeader("Description", "Desc", outputFile,
                                             pdf, isAccordion=False)
                     # TODO: Write as a normal paragraph or series of paragraphs (i.e. not a list)
@@ -1064,17 +1076,17 @@ class WebPageGenerator:
                     if self._generatePDFBundle:
                         pdf.append(generatePDFListData(globalVar.getDescription()))
                     writeSectionEnd(outputFile)
+
                 # Directly Accessed By Routines
-                totalRoutines = globalVar.getTotalNumberOfReferencedRoutines()
-                if totalRoutines:
-                    self.writeSectionHeader("Directly Accessed By Routines, Total: %d" % totalRoutines,
+                if globalVar.getTotalNumberOfReferencedRoutines() > 0:
+                    self.writeSectionHeader("Directly Accessed By Routines, Total: %d" \
+                                                % globalVar.getTotalNumberOfReferencedRoutines(),
                                             "Directly Accessed By Routines",
                                             outputFile, pdf)
                     self.generateGlobalRoutineDependentsSection(globalVar.getAllReferencedRoutines(),
                                                                 outputFile, pdf, classid="directCall")
                     writeSectionEnd(outputFile)
                 # Accessed By FileMan Db Calls
-                fileManDbCallRtns = globalVar.getFileManDbCallRoutines()
                 if fileManDbCallRtns:
                     DbCallRtnsNos = [len(x) for x in
                                         fileManDbCallRtns.itervalues()]
@@ -1090,39 +1102,32 @@ class WebPageGenerator:
                     writeSectionEnd(outputFile)
                 if isFileManFile:
                     # Pointed to By FileMan Files
-                    writeSectionToPDF = self._generatePDFBundle and \
-                                        globalVar.getTotalNumberOfReferredGlobals() > 0
-                    self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
-                                                % globalVar.getTotalNumberOfReferredGlobals(),
-                                            "Pointed To By FileMan Files",
-                                            outputFile,
-                                            pdf if writeSectionToPDF else None)
-                    self.generateGlobalPointedToSection(globalVar, outputFile,
-                                                        pdf if writeSectionToPDF else None,
-                                                        True, classid="gblPointedTo")
-                    writeSectionEnd(outputFile)
+                    if globalVar.getTotalNumberOfReferredGlobals() > 0:
+                        self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
+                                                    % globalVar.getTotalNumberOfReferredGlobals(),
+                                                "Pointed To By FileMan Files",
+                                                outputFile, pdf)
+                        self.generateGlobalPointedToSection(globalVar, outputFile,
+                                                            pdf, True,
+                                                            classid="gblPointedTo")
+                        writeSectionEnd(outputFile)
 
                     # Pointer To FileMan Files
-                    writeSectionToPDF = self._generatePDFBundle and \
-                                        globalVar.getTotalNumberOfReferencedGlobals() > 0
-                    self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
-                                                % globalVar.getTotalNumberOfReferencedGlobals(),
-                                            "Pointer To FileMan Files",
-                                            outputFile,
-                                            pdf if writeSectionToPDF else None)
-                    self.generateGlobalPointedToSection(globalVar, outputFile,
-                                                        pdf if writeSectionToPDF else None,
-                                                        False, classid="gblPointerTo")
-                    writeSectionEnd(outputFile)
+                    if globalVar.getTotalNumberOfReferencedGlobals() > 0:
+                        self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
+                                                    % globalVar.getTotalNumberOfReferencedGlobals(),
+                                                "Pointer To FileMan Files",
+                                                outputFile, pdf)
+                        self.generateGlobalPointedToSection(globalVar, outputFile,
+                                                            pdf, False, classid="gblPointerTo")
+                        writeSectionEnd(outputFile)
 
                     # Fields
-                    totalNoFields = 0
-                    allFields = globalVar.getAllFileManFields()
-                    if allFields: totalNoFields = len(allFields)
-                    self.writeSectionHeader("Fields, Total: %d" % totalNoFields,
-                                            "Fields", outputFile, pdf)
-                    self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
-                    writeSectionEnd(outputFile)
+                    if allFields:
+                        self.writeSectionHeader("Fields, Total: %d" % len(allFields),
+                                                "Fields", outputFile, pdf)
+                        self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
+                        writeSectionEnd(outputFile)
 
                 if icrList:
                    self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
