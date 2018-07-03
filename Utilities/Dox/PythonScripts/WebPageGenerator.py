@@ -53,6 +53,12 @@ styles = getSampleStyleSheet()
 # constants
 DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
 
+dataURLDict = {
+  "DATA": "(IEN:<a href=\"%s\">%s</a>)",
+  "XRF": "(XREF %s)",
+  "HELP": "(HELP %s)"
+}
+
 componentTypeDict = {
   "action" : "A",
   "extended action" : "Ea",
@@ -2710,11 +2716,16 @@ class WebPageGenerator:
 #===============================================================================
 # Method to generate routine variables sections such as Local Variables, Global Variables
 #===============================================================================
-    def __findDataURL__(self, name, routine):
-       (field, ienVal) = name.split("DATA")
-       if "+" in ienVal:
-         ien,loc = ienVal.split("+")
-       return "<a href=\"#%s\">%s</a>(IEN:<a href=\"%s\">%s</a>)" % (field, field, self.__getDataEntryDetailHtmlLink__(routine.getFileNo(),ien), ien)
+    def __findDataURL__(self, name, routine, splitStr):
+      (field, ienVal) = name.split(splitStr)
+      dataLink = ienVal
+      if "+" in ienVal:
+        ien,loc = ienVal.split("+")
+      datafill = (ien)
+      if splitStr == "DATA":
+        datafill = (self.__getDataEntryDetailHtmlLink__(routine.getFileNo(),ien),ien)
+      dataLink = dataURLDict[splitStr] % datafill
+      return "<a href=\"#%s\">%s</a>%s" % (field,field,dataLink)
     def generateRoutineVariableSection(self, outputFile, routine, sectionTitle, headerList, variables,
                                        converFunc):
         self.writeSectionHeader(sectionTitle, sectionTitle, outputFile)
@@ -2756,9 +2767,10 @@ class WebPageGenerator:
         index = 0
         for offset in lineOccurences:
             offsetStr = offset
-            if re.search("[0-9.]+DATA[0-9]+", offset):
+            searchRes = re.search("^[0-9.]+(?P<splitval>DATA|XRF|HELP)[0-9]*", offset)
+            if searchRes:
               if routine:
-                  offsetStr = self.__findDataURL__(offset,routine)
+                  offsetStr = self.__findDataURL__(offset,routine,searchRes.group("splitval"))
             if index > 0:
                 lineOccurencesString += ",&nbsp;"
             lineOccurencesString += offsetStr
@@ -2872,7 +2884,7 @@ class WebPageGenerator:
             if self._generatePDFBundle:
                 self.__writePDFXIndexLegend__(pdfSection)
                 pdfSection.append(Spacer(1, 10))
-        outputList = convFunc(data, routine)
+        outputList = convFunc(data, routine=routine)
         self.writeGenericTablizedHtmlData(tableHeader, outputList, outputFile, classid)
         outputFile.write("</div>\n")
         if self._generatePDFBundle:
