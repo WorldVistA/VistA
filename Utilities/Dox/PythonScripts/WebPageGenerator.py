@@ -35,7 +35,6 @@ from LogManager import logger
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogether
 from reportlab.platypus import Table, TableStyle, Image
 from reportlab.platypus import ListFlowable, ListItem
-from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import landscape, letter, inch
 from reportlab.lib import colors
 import io
@@ -46,9 +45,6 @@ from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
 from UtilityFunctions import *
-
-# PDF stylesheet
-styles = getSampleStyleSheet()
 
 # constants
 DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
