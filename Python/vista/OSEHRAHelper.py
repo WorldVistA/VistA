@@ -102,14 +102,14 @@ class ConnectMUMPS(object):
   def getenv(self, volume):
     self.write('D GETENV^%ZOSV W Y')
     if sys.platform == 'win32':
-      match = self.wait_re(volume + ':[0-9A-Za-z-]+', None)
+      match = self.wait_re(volume + ':.+\s', None)
       test = match[1].span()
       VistAboxvol = ''
       for i in range(test[0], test[1]):
         VistAboxvol = VistAboxvol + match[2][i]
       self.boxvol = VistAboxvol
     else:
-      self.wait_re(volume + ':[0-9A-Za-z-]+', None)
+      self.wait_re(volume + ':.+\s', None)
       self.boxvol = self.connection.after
 
   def IEN(self, file, objectname):
