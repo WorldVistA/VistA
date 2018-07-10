@@ -546,8 +546,12 @@ def listDataToCommaSeperatorString(listData):
         index += 1
     return result
 
+def writeSectionBegin(outputFile):
+    outputFile.write("<div>\n")
+
 def writeSectionEnd(outputFile):
     outputFile.write("</div>\n")
+
 def writeSubSectionHeader(headerName, outputFile, classid=""):
     outputFile.write("<h3 class=\"%s\"align=\"left\">%s</h3>\n" % (classid, headerName))
 
@@ -703,8 +707,8 @@ class WebPageGenerator:
           outputFile.write('''<p>Select the objects that you wish to see in the downloaded PDF</p>\n''');
           outputFile.write('''</div>\n''');
 
-    def writeSectionHeader(self, headerName, archName, outputFile, pdf,
-                           isAccordion=True):
+    def writeSectionHeader(self, headerName, archName, outputFile,
+                           pdf=None, isAccordion=True):
         if isAccordion:
           accordionClass = 'accordion'
         else:
@@ -1664,9 +1668,6 @@ class WebPageGenerator:
                                                    outputFile, titleIndex):
         packageHyperLink = getPackageHyperLinkByName(package.getName())
         depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
-        # generate section header
-        self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
-                           package.getName(), outputFile, None)
         routineDepDict = package.getPackageRoutineDependencies()
         globalDepDict = package.getPackageGlobalDependencies()
         globalRtnDepDict = package.getPackageGlobalRoutineDependencies()
@@ -1760,97 +1761,175 @@ class WebPageGenerator:
                                                                                              packageHyperLink,
                                                                                              totalDbCallFileManFilesHtml,
                                                                                              depPackageHyperLink)
-        writeSubSectionHeader(summaryHeader, outputFile,classid="summary")
-        # print out the routine details
-        if len(callerRoutines) > 0:
-            writeSubSectionHeader("Caller Routines List in %s : %s" % (packageHyperLink,
-                                                                       totalCalledHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(callerRoutines), outputFile,
-                                          getRoutineHtmlFileName, self.getRoutineDisplayName,classid="callerRoutines")
-        if len(calledRoutines) > 0:
-            writeSubSectionHeader("Called Routines List in %s : %s" % (depPackageHyperLink,
-                                                                       totalCallerHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(calledRoutines), outputFile,
-                                          getRoutineHtmlFileName, self.getRoutineDisplayName,classid="calledRoutines")
+        writeSubSectionHeader(summaryHeader, outputFile, classid="summary")
+
+        # Print out the routine details
+        if len(callerRoutines) > 0 or len(calledRoutines) > 0:
+            sectionHeader = "Routines --> Routines"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(callerRoutines) > 0:
+                header = "Caller Routines List in %s : %s" % \
+                          (packageHyperLink, totalCalledHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(callerRoutines),
+                                              outputFile,
+                                              getRoutineHtmlFileName,
+                                              self.getRoutineDisplayName,
+                                              classid="callerRoutines")
+            if len(calledRoutines) > 0:
+                header = "Called Routines List in %s : %s" % \
+                          (depPackageHyperLink, totalCallerHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(calledRoutines),
+                                              outputFile,
+                                              getRoutineHtmlFileName,
+                                              self.getRoutineDisplayName,
+                                              classid="calledRoutines")
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
+
         # print out the Global -> routine details
-        if len(globalRtnCallRoutines) > 0:
-            writeSubSectionHeader("Caller Global List in %s : %s" % (packageHyperLink,
-                                                                       gblRtnCallerHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(globalRtnCallRoutines), outputFile,
-                                          getGlobalHtmlFileName)
-        if len(globalRtnCalledRoutines) > 0:
-            writeSubSectionHeader("Called Routines List in %s : %s" % (depPackageHyperLink,
-                                                                       gblRtnCalledHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(globalRtnCalledRoutines), outputFile,
-                                            getRoutineHtmlFileName, self.getRoutineDisplayName)
+        if len(globalRtnCallRoutines) > 0 or len(globalRtnCalledRoutines) > 0:
+            sectionHeader = "Globals --> Routines"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(globalRtnCallRoutines) > 0:
+                header = "Caller Global List in %s : %s" % \
+                          (packageHyperLink, gblRtnCallerHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(globalRtnCallRoutines),
+                                              outputFile,
+                                              getGlobalHtmlFileName)
+            if len(globalRtnCalledRoutines) > 0:
+                header = "Called Routines List in %s : %s" % \
+                          (depPackageHyperLink, gblRtnCalledHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(globalRtnCalledRoutines),
+                                              outputFile,
+                                              getRoutineHtmlFileName,
+                                              self.getRoutineDisplayName)
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
 
         # print out the Global -> global details
-        if len(globalGblCallRoutines) > 0:
-            writeSubSectionHeader("Caller Global List in %s : %s" % (packageHyperLink,
-                                                                       gblGblCallerHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(globalGblCallRoutines), outputFile,
-                                          getGlobalHtmlFileName)
-        if len(globalGblCalledRoutines) > 0:
-            writeSubSectionHeader("Called Globals List in %s : %s" % (depPackageHyperLink,
-                                                                       gblGblCalledHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(globalGblCalledRoutines), outputFile,
-                                          getGlobalHtmlFileName)
+        if len(globalGblCallRoutines) > 0 or len(globalGblCalledRoutines) > 0:
+            sectionHeader = "Globals --> Globals"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(globalGblCallRoutines) > 0:
+                header = "Caller Global List in %s : %s" % \
+                          (packageHyperLink, gblGblCallerHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(globalGblCallRoutines),
+                                              outputFile,
+                                              getGlobalHtmlFileName)
+            if len(globalGblCalledRoutines) > 0:
+                header = "Called Globals List in %s : %s" % \
+                          (depPackageHyperLink, gblGblCalledHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(globalGblCalledRoutines),
+                                              outputFile,
+                                              getGlobalHtmlFileName)
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
+
         # print out the Package Component details
-        if len(optionCallRoutines) > 0:
-            writeSubSectionHeader("Caller Package Components List in %s : %s" % (packageHyperLink,
-                                                                       optionCallerHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(optionCallRoutines), outputFile,
-                                          getPackageObjHtmlFileName, self.getPackageComponentDisplayName)
-        if len(optionCalledRoutines) > 0:
-            writeSubSectionHeader("Called Routines in %s : %s" % (depPackageHyperLink,
-                                                                       optionCalledHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(optionCalledRoutines), outputFile,
-                                          getPackageObjHtmlFileName, self.getRoutineDisplayName)
-        if len(referredRoutines) > 0:
-            writeSubSectionHeader("Referred Routines List in %s : %s" % (packageHyperLink,
-                                                                       totalReferredRoutineHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(referredRoutines), outputFile,
-                                          getRoutineHtmlFileName, self.getRoutineDisplayName,classid="referredRoutines")
-        if len(referredGlobals) > 0:
-            writeSubSectionHeader("Referenced Globals List in %s : %s" % (depPackageHyperLink,
-                                                                       totalReferredGlobalHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(referredGlobals), outputFile,
-                                          getGlobalHtmlFileName,classid="referredGlobals")
-        if len(referredFileManFiles) > 0:
-            writeSubSectionHeader("Referred FileMan Files List in %s : %s" % (packageHyperLink,
-                                                                       totalReferredFileManFilesHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(referredFileManFiles), outputFile,
-                                          getGlobalHtmlFileName, getGlobalDisplayName,classid="referredFileManFiles")
-        if len(referencedFileManFiles) > 0:
-            writeSubSectionHeader("Referenced FileMan Files List in %s : %s" % (depPackageHyperLink,
-                                                                       totalReferencedFileManFilesHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(referencedFileManFiles), outputFile,
-                                          getGlobalHtmlFileName, getGlobalDisplayName,classid="referencedFileManFiles")
-        if len(dbCallRoutines) > 0:
-            writeSubSectionHeader("FileMan Db Call Routines List in %s : %s" % (packageHyperLink,
-                                                                       totalDbCallRoutinesHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(dbCallRoutines), outputFile,
-                                          getRoutineHtmlFileName, self.getRoutineDisplayName,classid="dbCallRoutines")
-        if len(dbCallFileManFiles) > 0:
-            writeSubSectionHeader("FileMan Db Call Accessed FileMan Files List in %s : %s" % (depPackageHyperLink,
-                                                                       totalDbCallFileManFilesHtml),
-                                                                       outputFile)
-            self.generateTablizedItemList(sorted(dbCallFileManFiles), outputFile,
-                                          getGlobalHtmlFileName,classid="dbCallFileManFiles")
-        writeSectionEnd(outputFile)
+        if len(optionCallRoutines) > 0 or len(optionCalledRoutines) > 0:
+            sectionHeader = "Package Components List --> Routines"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(optionCallRoutines) > 0:
+                header = "Caller Package Components List in %s : %s" % \
+                          (packageHyperLink, optionCallerHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(optionCallRoutines),
+                                              outputFile,
+                                              getPackageObjHtmlFileName,
+                                              self.getPackageComponentDisplayName)
+            if len(optionCalledRoutines) > 0:
+                header = "Called Routines in %s : %s" % \
+                          (depPackageHyperLink, optionCalledHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(optionCalledRoutines),
+                                              outputFile,
+                                              getPackageObjHtmlFileName,
+                                              self.getRoutineDisplayName)
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
+
+        if len(referredRoutines) > 0 or len(referredGlobals) > 0:
+            sectionHeader = "Routines --> Globals"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(referredRoutines) > 0:
+                header = "Referred Routines List in %s : %s" % \
+                          (packageHyperLink, totalReferredRoutineHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(referredRoutines),
+                                              outputFile,
+                                              getRoutineHtmlFileName,
+                                              self.getRoutineDisplayName,
+                                              classid="referredRoutines")
+            if len(referredGlobals) > 0:
+                header = "Referenced Globals List in %s : %s" % \
+                          (depPackageHyperLink, totalReferredGlobalHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(referredGlobals),
+                                              outputFile,
+                                              getGlobalHtmlFileName,
+                                              classid="referredGlobals")
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
+
+        if len(referredFileManFiles) > 0 or len(referencedFileManFiles) > 0:
+            sectionHeader = "FileMan Files --> FileMan Files"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(referredFileManFiles) > 0:
+                header = "Referred FileMan Files List in %s : %s" % \
+                          (packageHyperLink, totalReferredFileManFilesHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(referredFileManFiles),
+                                              outputFile,
+                                              getGlobalHtmlFileName,
+                                              getGlobalDisplayName,
+                                              classid="referredFileManFiles")
+            if len(referencedFileManFiles) > 0:
+                header = "Referenced FileMan Files List in %s : %s" % \
+                          (depPackageHyperLink, totalReferencedFileManFilesHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(referencedFileManFiles),
+                                              outputFile,
+                                              getGlobalHtmlFileName,
+                                              getGlobalDisplayName,
+                                              classid="referencedFileManFiles")
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
+
+        if len(dbCallRoutines) > 0 or len(dbCallFileManFiles) > 0:
+            sectionHeader = "FileMan Db Call Routines --> FileMan Files"
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            writeSectionBegin(outputFile)
+            if len(dbCallRoutines) > 0:
+                header = "FileMan Db Call Routines List in %s : %s" % \
+                          (packageHyperLink, totalDbCallRoutinesHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(dbCallRoutines),
+                                              outputFile,
+                                              getRoutineHtmlFileName,
+                                              self.getRoutineDisplayName,
+                                              classid="dbCallRoutines")
+            if len(dbCallFileManFiles) > 0:
+                header = "FileMan Db Call Accessed FileMan Files List in %s : %s" % \
+                          (depPackageHyperLink, totalDbCallFileManFilesHtml)
+                writeSubSectionHeader(header, outputFile)
+                self.generateTablizedItemList(sorted(dbCallFileManFiles),
+                                              outputFile,
+                                              getGlobalHtmlFileName,
+                                              classid="dbCallFileManFiles")
+            writeSectionEnd(outputFile)
+            writeSectionEnd(outputFile) # Close accordion
         outputFile.write("<br/>\n")
 
 #===============================================================================
@@ -1859,21 +1938,43 @@ class WebPageGenerator:
     def generatePackageInteractionDetailPage(self, fileName, package, depPackage):
         outputFile = open(os.path.join(self._outDir, fileName), 'w')
         self.__includeHeader__(outputFile)
+
+        # Get package links
         packageHyperLink = getPackageHyperLinkByName(package.getName())
         depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
-        #generate the index bar
-        inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
-                   "%s-->%s" % (depPackage.getName(), package.getName())]
-        archList = [package.getName(), depPackage.getName()]
-        self.generateIndexBar(outputFile, inputList, archList, isIndex = False, printButton=True)
-        outputFile.write("<title id=\"pageTitle\">" + package.getName() + " : " + depPackage.getName() + "</title>")
-        outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
-                         (packageHyperLink, depPackageHyperLink))
 
-        writeLegends(self._outDir,outputFile)
-        #generate the summary part.
-        self.generatePackageRoutineDependencyDetailPage(package, depPackage, outputFile,"_1")
-        self.generatePackageRoutineDependencyDetailPage(depPackage, package, outputFile,"_2")
+        # Generate the index bar
+        inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
+                     "%s-->%s" % (depPackage.getName(), package.getName())]
+        archList = [package.getName(), depPackage.getName()]
+        self.generateIndexBar(outputFile, inputList, archList, isIndex=False,
+                              printButton=True)
+
+        # Title and header
+        outputFile.write("<title id=\"pageTitle\">" + package.getName() +
+                          " : " + depPackage.getName() + "</title>")
+        outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
+                          (packageHyperLink, depPackageHyperLink))
+
+        # Legends
+        writeLegends(self._outDir, outputFile)
+
+        # Accordion
+        outputFile.write(getAccordionHTML())
+
+        # Package --> Dep. Package
+        self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
+                                package.getName(), outputFile,
+                                isAccordion=False)
+        self.generatePackageRoutineDependencyDetailPage(package, depPackage,
+                                                        outputFile, "_1")
+        # Dep. Package --> Package
+        self.writeSectionHeader("%s-->%s :" % (depPackageHyperLink, packageHyperLink),
+                                depPackage.getName(), outputFile,
+                                isAccordion=False)
+        self.generatePackageRoutineDependencyDetailPage(depPackage, package,
+                                                        outputFile, "_2")
+
         self.generateIndexBar(outputFile, inputList, archList, isIndex = False)
         self.__includeFooter__(outputFile)
         outputFile.close()
