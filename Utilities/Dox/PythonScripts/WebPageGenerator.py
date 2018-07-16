@@ -3579,9 +3579,9 @@ class WebPageGenerator:
               if item['data'](*extraarg):
                 indexList.append(item['name'])
                 idxLst.append(idx)
-            title = routine._title+": "+routineName
-            self.writeTitleBlock(title, title, package, outputFile, pdf)
             self.generateIndexBar(outputFile, indexList, printButton=True)
+            title = routine._title.replace("_"," ") + ": " + routineName
+            self.writeTitleBlock(title, title, package, outputFile, pdf)
             # Generate PDF customization dialog
             writePDFCustomization(outputFile, str(indexList))
             for idx in idxLst:
