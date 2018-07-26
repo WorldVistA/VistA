@@ -1725,8 +1725,8 @@ class WebPageGenerator:
         gblRtnCalledHtml = "<span class=\"comment\">%d</span>" % len(globalRtnCalledRoutines)
         gblGblCallerHtml = "<span class=\"comment\">%d</span>" % len(globalGblCallRoutines)
         gblGblCalledHtml = "<span class=\"comment\">%d</span>" % len(globalGblCalledRoutines)
-        totalCalledHtml = "<span class=\"comment\">%d</span>" % len(callerRoutines)
-        totalCallerHtml = "<span class=\"comment\">%d</span>" % len(calledRoutines)
+        totalCallerHtml = "<span class=\"comment\">%d</span>" % len(callerRoutines)
+        totalCalledHtml = "<span class=\"comment\">%d</span>" % len(calledRoutines)
         totalReferredRoutineHtml = "<span class=\"comment\">%d</span>" % len(referredRoutines)
         totalReferredGlobalHtml = "<span class=\"comment\">%d</span>" % len(referredGlobals)
         totalReferredFileManFilesHtml = "<span class=\"comment\">%d</span>" % len(referredFileManFiles)
@@ -1745,9 +1745,9 @@ class WebPageGenerator:
                                                                                                packageHyperLink,
                                                                                                gblGblCalledHtml,
                                                                                                depPackageHyperLink)
-        summaryHeader += "<BR> Total %s Package Component(s) in %s called total %s routine(s) in %s" % (optionCalledHtml,
+        summaryHeader += "<BR> Total %s Package Component(s) in %s called total %s routine(s) in %s" % (optionCallerHtml,
                                                                                                packageHyperLink,
-                                                                                               optionCallerHtml,
+                                                                                               optionCalledHtml,
                                                                                                depPackageHyperLink)
         summaryHeader += "<BR> Total %s routine(s) in %s accessed total %s global(s) in %s" % (totalReferredRoutineHtml,
                                                                                              packageHyperLink,
