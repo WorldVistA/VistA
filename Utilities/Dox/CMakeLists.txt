@@ -152,8 +152,10 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
   add_test(ICRParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/ICRParser.cmake)
 endif()
 
-# 6. Write repository information to 'filesInfo.json' (VIVIAN)
-if (GENERATE_VIVIAN)
+# 6. Write repository information to 'filesInfo.json'.
+# Data is displayed in both ViViaN and DOX (GenerateIndexPage)
+if (GENERATE_DOX OR GENERATE_VIVIAN)
+  set(FILESINFO_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/filesInfo.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GenerateRepoInfo.cmake.in ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake @ONLY)
   add_test(GenerateRepoInfo ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake)
 endif()

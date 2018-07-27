@@ -608,7 +608,7 @@ def generateList(data):
 # class to generate the web page based on input
 class WebPageGenerator:
     def __init__(self, crossReference, outDir, pdfOutDir, repDir, docRepDir,
-                 git, includeSource, rtnJson, generatePDF):
+                 includeSource, rtnJson, repoJson, generatePDF):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
@@ -619,7 +619,6 @@ class WebPageGenerator:
             os.mkdir(self._pdfOutDir)
         self._repDir = repDir
         self._docRepDir = docRepDir
-        self._git = git
         self._header = [] # TODO: Not used? header.html is in repo and __includeHeader__ is called.. a lot
         self._footer = []
         self._source_header = []  # TODO: Not used?
@@ -627,6 +626,8 @@ class WebPageGenerator:
         self.__initWebTemplateFile__()
         with open(rtnJson, 'r') as jsonFile:
             self._rtnRefJson = json.load(jsonFile)
+        with open(repoJson, 'r') as jsonFile:
+            self._repoJson = json.load(jsonFile)
         self._generatePDFBundle = generatePDF
 
     def __initWebTemplateFile__(self):
@@ -822,21 +823,11 @@ class WebPageGenerator:
         outputFile.write(INDEX_HTML_PAGE_HEADER)
         outputFile.write(TOP_INDEX_BAR_PART)
         outputFile.write(INDEX_HTML_PAGE_INTRODUCTION_PART)
-        self.__generateGitRepositoryKey__(outputFile)
+        repo_info = "The information in this instance of DOX was generated on: \
+                     %s from the repository with a Git hash of: %s" \
+                    % (self._repoJson["date"], self._repoJson["sha1"])
+        outputFile.write("""<h6><a class ="anchor" id="howto"></a>%s</h6>\n""" % repo_info)
         self.__includeFooter__(outputFile)
-
-    def __generateGitRepositoryKey__(self, outputFile):
-        sha1Key = self.__getGitRepositLatestSha1Key__()
-        outputFile.write("""<h6><a class ="anchor" id="howto"></a>Note:Repository SHA1 key:%s</h6>\n""" % sha1Key)
-
-    def __getGitRepositLatestSha1Key__(self):
-        gitCommand = "\"" + self._git + "\"" + " rev-parse --verify HEAD"
-        os.chdir(self._repDir)
-        if os.path.exists(os.path.join(self._repDir,'.git')):
-          logger.debug("git Command is %s" % gitCommand)
-          result = subprocess.check_output(gitCommand, shell=True)
-          return result.strip()
-        return ""
 
     def __generateHtmlPageHeader__(self, isSource = False):
         if isSource:
@@ -3867,9 +3858,9 @@ def run(args):
                                   args.pdfOutdir,
                                   args.MRepositDir,
                                   doxDir,
-                                  args.git,
                                   args.includeSource,
                                   args.rtnJson,
+                                  args.filesJson,
                                   args.pdf)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")
@@ -3883,7 +3874,6 @@ if __name__ == '__main__':
                         help='Output Web Page directory')
     parser.add_argument('-po', '--pdfOutdir', required=True,
                         help='Output PDF directory')
-    parser.add_argument('-git', required=True, help='git executable')
     parser.add_argument('-is', '--includeSource', required=False,
                         default=False, action='store_true',
                         help='generate routine source code page?')
@@ -3893,13 +3883,18 @@ if __name__ == '__main__':
                         help='routine reference in VistA data file in JSON format')
     parser.add_argument('-icr','--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-st','--sortTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Sort Templates')
-    parser.add_argument('-it','--inputTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Input Templates')
-    parser.add_argument('-pt','--printTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Print Templates')
+    parser.add_argument('-st','--sortTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Sort Templates')
+    parser.add_argument('-it','--inputTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Input Templates')
+    parser.add_argument('-pt','--printTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Print Templates')
     parser.add_argument('-pdf', action='store_true',
                         help='generate html')
     parser.add_argument('-local', action='store_true',
                         help='Use links to local DOX pages')
+    parser.add_argument('-fj','--filesJson', required=True,
+                        help='Repository information in JSON format')
     result = parser.parse_args();
 
     if not result.outputLogFileName:
