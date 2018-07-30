@@ -45,7 +45,10 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     VistA.write('1') # list file attributes
     VistA.wait_re('START WITH WHAT FILE:')
     VistA.write(FileManNo)
-    VistA.wait_re('GO TO WHAT FILE:')
+    index = VistA.multiwait(["START WITH",'GO TO'])
+    if index == 0:
+      print 'No file to be found'
+      sys.exit(1)
     VistA.write(FileManNo)
     while True:
       index = VistA.multiwait(['Select SUB-FILE:',
@@ -114,13 +117,17 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     while True:
       index = VistA.multiwait(['Select DATA DICTIONARY UTILITY OPTION:',
                             'FORM\(S\)\/BLOCK\(S\):',
-                            '\a'])
+                            '\a',
+                            '<[A-Z]+>'])
       if index == 0:
         VistA.write('')
         break
       if index == 1 or index == 2:
         VistA.write('')
         continue
+      if index == 3:
+        print "ERROR: Something went wrong with processing this file: %s" % FileManNo
+        sys.exit(1)
     VistA.wait('Select OPTION:')
     VistA.write('')
     VistA.wait(PROMPT)
