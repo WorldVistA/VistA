@@ -306,8 +306,6 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
   VistA.write("Y")
   VistA.wait("BOX-VOLUME PAIR")
   VistA.write(VistA.boxvol + '\r')
-  VistA.wait("BOX-VOLUME PAIR")
-  VistA.write("")
   VistA.wait("Select PORT")
   VistA.write(tcp_port + '\rY')
   if VistA.type=='cache':
