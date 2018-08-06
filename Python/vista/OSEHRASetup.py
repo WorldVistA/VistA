@@ -880,11 +880,7 @@ def registerVitalsCPRS(VistA):
   # that will be used during testing.
   # Files can be downloaded: http://www.osehra.org/document/guis-used-automatic-functional-testing
   VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 08/11/09 15:00\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52\"')
+  VistA.write('S GMVDLL=\"5.0.37.2\"')
   VistA.wait(PROMPT,60)
   VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
   VistA.wait(PROMPT,60)
