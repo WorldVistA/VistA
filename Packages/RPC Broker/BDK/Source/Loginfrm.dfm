@@ -40,13 +40,13 @@ object frmSignon: TfrmSignon
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    object introText: TXWBRichEdit
+    object introText: TRichEdit
       Left = 6
       Top = 6
       Width = 749
       Height = 397
       Align = alClient
-      Font.Charset = ANSI_CHARSET
+      Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Courier New'
@@ -77,6 +77,7 @@ object frmSignon: TfrmSignon
       ReadOnly = True
       ScrollBars = ssVertical
       TabOrder = 0
+      Zoom = 100
     end
   end
   object Panel7: TPanel
