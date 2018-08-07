@@ -53,7 +53,8 @@ uses
   {Vcl}
   Graphics, Controls, Forms, Dialogs, StdCtrls, ExtCtrls, Buttons,
   {VA}
-  XWBHash, MFunStr, Trpcb, SgnonCnf, XWBut1, frmSignonMessage, XWBRich20;
+  XWBHash, MFunStr, Trpcb, SgnonCnf, XWBut1, frmSignonMessage, XWBRich20,
+  Vcl.ComCtrls;
 
 type
   TfrmSignon = class(TForm)
@@ -80,7 +81,7 @@ type
     lblVolume: TLabel;
     lblUCI: TLabel;
     lblPort: TLabel;
-    introText: TXWBRichEdit;
+    introText: TRichEdit;
     cbxChangeVerifyCode: TCheckBox;
     RpcbiBroker: TRPCBroker;
     procedure btnOkClick(Sender: TObject);
@@ -489,7 +490,12 @@ begin
 end;
 
 
-{--------------------- TfrmSignon.DoVerify -----------------------
+{procedure TfrmSignon.Label2Click(Sender: TObject);
+begin
+
+end;
+
+--------------------- TfrmSignon.DoVerify -----------------------
 Invoke VCEdit form if Change Verify Code box is checked
 ------------------------------------------------------------------}
 function TfrmSignon.DoVerify: Boolean;
