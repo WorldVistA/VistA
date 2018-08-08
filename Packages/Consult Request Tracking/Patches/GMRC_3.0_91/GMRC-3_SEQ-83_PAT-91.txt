@@ -1,0 +1,247 @@
+$TXT Created by                  CPRS31A.DOMAIN.EXT  (KIDS) on Thursday, 01/11/18 at 05:20
+=============================================================================
+Run Date: MAY 15, 2018                     Designation: GMRC*3*91
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #83                      Status: Released
+                  Compliance Date: JUN 15, 2018
+=============================================================================
+
+Associated patches: (v)GMRC*3*46   <<= must be installed BEFORE `GMRC*3*91'
+                    (v)GMRC*3*86   <<= must be installed BEFORE `GMRC*3*91'
+                    (v)OR*3*452    <<= must be installed BEFORE `GMRC*3*91'
+                    (v)GMRC*3*90   <<= must be installed BEFORE `GMRC*3*91'
+
+Subject: CONSULT ALERT ENHANCEMENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch, along with patch OR*3.0*452, introduces changes so that
+ users who are specifically identified to receive an alert by the person 
+ making a comment on a consult will receive the alert regardless of 
+ whether the alert is enabled or disabled for those users.
+  
+ Any users added via the "Send additional alerts" checkbox on the Add 
+ Comment to Consult dialog will always receive the CONSULT/REQUEST UPDATED 
+ alert.
+  
+ Note About Tracking Alert Activity and Recipients
+ -------------------------------------------------
+ Users added via "Send additional alerts" have never appeared in the
+ alert tools for determining *how* a specific user could receive an alert.
+ For example, the Determine Recipients for a Notification [ORB3 DETERMINE
+ RECIPIENTS] option does not reflect a user added via "Send additional 
+ alerts" other than if that user has the alert Enabled/ON.
+  
+ The override enhancement in this patch does not change the information 
+ above. If a user believes that s/he has received a CONSULT/REQUEST
+ UPDATED alert in error, and that user has the alert OFF/Disabled, then it 
+ can be assumed that the user was added via the override mechanism. The 
+ user who added the comment that triggered the alert, may be able to 
+ confirm who was selected as additional recipients.
+  
+ Once the alert has been generated/sent, all tools/reports for tracking 
+ alert recipients and recipient activity (i.e. First displayed to 
+ recipient; Processed by recipient; etc.) will display recipients and 
+ activity of users added via "Send additional alerts". This is the same 
+ system behavior as before this enhancement was installed.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20150609 - CPRS Enhancement Phase I
+ This NSR consists of several other NSRs bundled together. The specific 
+ NSRs that triggered this patch are 20140708 and 20150312 which both, in 
+ part, request enhancements to the CONSULT/REQUEST UPDATED alert.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee, WI
+ Portland, OR
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name               FTP Mode
+ -----------------------------------------------------------------------
+ Consult/Request Tracking User Manual   consum.pdf/doc          Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch: 
+ GMRC*3.0*91
+   a. Backup a Transport Global - This option will create a backup 
+   message of any routines exported with this patch. It will not backup any
+   other changes such as DDs or templates.
+   b. Compare Transport Global to Current System - This option will 
+   (allow you to view all changes that will be made when this patch        
+   is installed.  It compares all components of this patch routines, DDs, 
+   templates, etc.).
+   c. Verify Checksums in Transport Global - This option will allow you 
+   to ensure the integrity of the routines that are in the transport
+   global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//' 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//' 
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed a
+ backup of the routines included in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created. No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCGUIB
+    Before: B53899117   After: B54784294  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46,75,86,90,91**
+Routine Name: GMRCP
+    Before: B19973660   After: B20556617  **1,4,17,22,27,53,55,46,91**
+ 
+Routine list of preceding patches: 90
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 19, 2017
+Completed By:                               Date Completed: MAY 10, 2018
+Released By :                               Date Released : MAY 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

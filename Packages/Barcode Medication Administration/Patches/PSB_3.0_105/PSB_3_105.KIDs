@@ -1,0 +1,1084 @@
+KIDS Distribution saved on Apr 06, 2018@15:40:11
+PSB*3.0*105 TEST v2
+**KIDS**:PSB*3.0*105^
+
+**INSTALL NAME**
+PSB*3.0*105
+"BLD",10799,0)
+PSB*3.0*105^BAR CODE MED ADMIN^0^3180406^y
+"BLD",10799,1,0)
+^^26^26^3180208^
+"BLD",10799,1,1,0)
+This patch will resolve the following issues.
+"BLD",10799,1,2,0)
+ 
+"BLD",10799,1,3,0)
+1. R18279880FY18 - BCBU not consistently updating Clinic Orders
+"BLD",10799,1,4,0)
+   
+"BLD",10799,1,5,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10799,1,6,0)
+--------------------------------------------
+"BLD",10799,1,7,0)
+1. R18279880FY18 - Frequently, BCMA users are not able to access the BCBU
+"BLD",10799,1,8,0)
+                  database
+"BLD",10799,1,9,0)
+   
+"BLD",10799,1,10,0)
+Problem: 
+"BLD",10799,1,11,0)
+--------
+"BLD",10799,1,12,0)
+It was reported that almost all of the BCBU Contingency Error Alerts that
+"BLD",10799,1,13,0)
+Divisional sites receive continually are for patients who are not admitted
+"BLD",10799,1,14,0)
+or are deceased. Furthermore, testing of BCBU data for Clinic Orders reveals
+"BLD",10799,1,15,0)
+that the patient records for clinics using BCMA are rarely complete causing
+"BLD",10799,1,16,0)
+the menu options in BCBU to be placed OUT of ORDER to prevent medication
+"BLD",10799,1,17,0)
+errors during contingency operations.
+"BLD",10799,1,18,0)
+  
+"BLD",10799,1,19,0)
+Resolution:
+"BLD",10799,1,20,0)
+-----------
+"BLD",10799,1,21,0)
+It was identified that updates for BCMA Medication Logs for patients that are
+"BLD",10799,1,22,0)
+no longer inpatient fail to identify the correct division for which the HL7 
+"BLD",10799,1,23,0)
+message should be sent to. A fix was made to retrieve the correct Division
+"BLD",10799,1,24,0)
+using the Institution in the Medication Log if the patient is no longer
+"BLD",10799,1,25,0)
+inpatient. In addition, the BCBU Contingeny Error Alerts will no longer be
+"BLD",10799,1,26,0)
+generated for patients that are deceased.
+"BLD",10799,4,0)
+^9.64PA^^
+"BLD",10799,6)
+1^
+"BLD",10799,6.3)
+3
+"BLD",10799,"ABPKG")
+n
+"BLD",10799,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10799,"KRN",.4,0)
+.4
+"BLD",10799,"KRN",.401,0)
+.401
+"BLD",10799,"KRN",.402,0)
+.402
+"BLD",10799,"KRN",.403,0)
+.403
+"BLD",10799,"KRN",.5,0)
+.5
+"BLD",10799,"KRN",.84,0)
+.84
+"BLD",10799,"KRN",3.6,0)
+3.6
+"BLD",10799,"KRN",3.8,0)
+3.8
+"BLD",10799,"KRN",9.2,0)
+9.2
+"BLD",10799,"KRN",9.8,0)
+9.8
+"BLD",10799,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10799,"KRN",9.8,"NM",1,0)
+ALPBCBU^^0^B8290997
+"BLD",10799,"KRN",9.8,"NM",2,0)
+ALPBINP^^0^B98207486
+"BLD",10799,"KRN",9.8,"NM","B","ALPBCBU",1)
+
+"BLD",10799,"KRN",9.8,"NM","B","ALPBINP",2)
+
+"BLD",10799,"KRN",19,0)
+19
+"BLD",10799,"KRN",19.1,0)
+19.1
+"BLD",10799,"KRN",101,0)
+101
+"BLD",10799,"KRN",409.61,0)
+409.61
+"BLD",10799,"KRN",771,0)
+771
+"BLD",10799,"KRN",779.2,0)
+779.2
+"BLD",10799,"KRN",870,0)
+870
+"BLD",10799,"KRN",8989.51,0)
+8989.51
+"BLD",10799,"KRN",8989.52,0)
+8989.52
+"BLD",10799,"KRN",8994,0)
+8994
+"BLD",10799,"KRN","B",.4,.4)
+
+"BLD",10799,"KRN","B",.401,.401)
+
+"BLD",10799,"KRN","B",.402,.402)
+
+"BLD",10799,"KRN","B",.403,.403)
+
+"BLD",10799,"KRN","B",.5,.5)
+
+"BLD",10799,"KRN","B",.84,.84)
+
+"BLD",10799,"KRN","B",3.6,3.6)
+
+"BLD",10799,"KRN","B",3.8,3.8)
+
+"BLD",10799,"KRN","B",9.2,9.2)
+
+"BLD",10799,"KRN","B",9.8,9.8)
+
+"BLD",10799,"KRN","B",19,19)
+
+"BLD",10799,"KRN","B",19.1,19.1)
+
+"BLD",10799,"KRN","B",101,101)
+
+"BLD",10799,"KRN","B",409.61,409.61)
+
+"BLD",10799,"KRN","B",771,771)
+
+"BLD",10799,"KRN","B",779.2,779.2)
+
+"BLD",10799,"KRN","B",870,870)
+
+"BLD",10799,"KRN","B",8989.51,8989.51)
+
+"BLD",10799,"KRN","B",8989.52,8989.52)
+
+"BLD",10799,"KRN","B",8994,8994)
+
+"BLD",10799,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10799,"QUES",0)
+^9.62^^
+"BLD",10799,"REQB",0)
+^9.611^1^1
+"BLD",10799,"REQB",1,0)
+PSB*3.0*102^2
+"BLD",10799,"REQB","B","PSB*3.0*102",1)
+
+"MBREQ")
+0
+"PKG",550,-1)
+1^1
+"PKG",550,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",550,20,0)
+^9.402P^^
+"PKG",550,22,0)
+^9.49I^1^1
+"PKG",550,22,1,0)
+3.0^3040224^3040311^66481
+"PKG",550,22,1,"PAH",1,0)
+105^3180406^100877
+"PKG",550,22,1,"PAH",1,1,0)
+^^26^26^3180406
+"PKG",550,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues.
+"PKG",550,22,1,"PAH",1,1,2,0)
+ 
+"PKG",550,22,1,"PAH",1,1,3,0)
+1. R18279880FY18 - BCBU not consistently updating Clinic Orders
+"PKG",550,22,1,"PAH",1,1,4,0)
+   
+"PKG",550,22,1,"PAH",1,1,5,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",550,22,1,"PAH",1,1,6,0)
+--------------------------------------------
+"PKG",550,22,1,"PAH",1,1,7,0)
+1. R18279880FY18 - Frequently, BCMA users are not able to access the BCBU
+"PKG",550,22,1,"PAH",1,1,8,0)
+                  database
+"PKG",550,22,1,"PAH",1,1,9,0)
+   
+"PKG",550,22,1,"PAH",1,1,10,0)
+Problem: 
+"PKG",550,22,1,"PAH",1,1,11,0)
+--------
+"PKG",550,22,1,"PAH",1,1,12,0)
+It was reported that almost all of the BCBU Contingency Error Alerts that
+"PKG",550,22,1,"PAH",1,1,13,0)
+Divisional sites receive continually are for patients who are not admitted
+"PKG",550,22,1,"PAH",1,1,14,0)
+or are deceased. Furthermore, testing of BCBU data for Clinic Orders reveals
+"PKG",550,22,1,"PAH",1,1,15,0)
+that the patient records for clinics using BCMA are rarely complete causing
+"PKG",550,22,1,"PAH",1,1,16,0)
+the menu options in BCBU to be placed OUT of ORDER to prevent medication
+"PKG",550,22,1,"PAH",1,1,17,0)
+errors during contingency operations.
+"PKG",550,22,1,"PAH",1,1,18,0)
+  
+"PKG",550,22,1,"PAH",1,1,19,0)
+Resolution:
+"PKG",550,22,1,"PAH",1,1,20,0)
+-----------
+"PKG",550,22,1,"PAH",1,1,21,0)
+It was identified that updates for BCMA Medication Logs for patients that are
+"PKG",550,22,1,"PAH",1,1,22,0)
+no longer inpatient fail to identify the correct division for which the HL7 
+"PKG",550,22,1,"PAH",1,1,23,0)
+message should be sent to. A fix was made to retrieve the correct Division
+"PKG",550,22,1,"PAH",1,1,24,0)
+using the Institution in the Medication Log if the patient is no longer
+"PKG",550,22,1,"PAH",1,1,25,0)
+inpatient. In addition, the BCBU Contingeny Error Alerts will no longer be
+"PKG",550,22,1,"PAH",1,1,26,0)
+generated for patients that are deceased.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ALPBCBU")
+0^1^B8290997
+"RTN","ALPBCBU",1,0)
+ALPBCBU ;OIFO-DALLAS/SED/KC/MW  BCMA-BCBU INPT TO HL7 ;5/2/2002
+"RTN","ALPBCBU",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,102,105**;Mar 2004;Build 3
+"RTN","ALPBCBU",3,0)
+ ;This is the main routine for the BCBU software.
+"RTN","ALPBCBU",4,0)
+ ;It handles all the entries points for the BCBU software. 
+"RTN","ALPBCBU",5,0)
+ ;It also handles error checking.
+"RTN","ALPBCBU",6,0)
+IPH(ALPMSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBCBU",7,0)
+ N ALPRSLT,HL,HLA,HLECH,HLQ
+"RTN","ALPBCBU",8,0)
+ Q:'$D(ALPMSG)
+"RTN","ALPBCBU",9,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",10,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",11,0)
+ S ALPRSLT=$$IPH^ALPBINP(.ALPMSG)
+"RTN","ALPBCBU",12,0)
+ ;I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",13,0)
+ Q
+"RTN","ALPBCBU",14,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBCBU",15,0)
+ N ALPRSLT
+"RTN","ALPBCBU",16,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBCBU",17,0)
+ Q:'$D(ALPML)
+"RTN","ALPBCBU",18,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",19,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",20,0)
+ S ALPRSLT=$$MEDL^ALPBINP(ALPML)
+"RTN","ALPBCBU",21,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",22,0)
+ Q
+"RTN","ALPBCBU",23,0)
+NURV(ALDFN,ALPORD) ;Use this entry to send verifying nursing.
+"RTN","ALPBCBU",24,0)
+ N ALPRSLT
+"RTN","ALPBCBU",25,0)
+ ;ALDFN is the IEN of the patient
+"RTN","ALPBCBU",26,0)
+ ;ALPORDR is the order number
+"RTN","ALPBCBU",27,0)
+ Q:'$D(ALDFN)
+"RTN","ALPBCBU",28,0)
+ Q:'$D(ALPORD)
+"RTN","ALPBCBU",29,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",30,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",31,0)
+ K ALPB
+"RTN","ALPBCBU",32,0)
+ D EN^PSJBCBU(ALDFN,ALPORD,.ALPB)
+"RTN","ALPBCBU",33,0)
+ S ALPBI=0
+"RTN","ALPBCBU",34,0)
+ F  S ALPBI=$O(ALPB(ALPBI)) Q:ALPBI'>0  D
+"RTN","ALPBCBU",35,0)
+ . I $E(ALPB(ALPBI),1,3)="MSH" S MSH=ALPBI
+"RTN","ALPBCBU",36,0)
+ . I $E(ALPB(ALPBI),1,3)="PID" S PID=ALPBI
+"RTN","ALPBCBU",37,0)
+ . I $E(ALPB(ALPBI),1,3)="PV1" S PV1=ALPBI
+"RTN","ALPBCBU",38,0)
+ . I $E(ALPB(ALPBI),1,3)="ORC" S ORC=ALPBI
+"RTN","ALPBCBU",39,0)
+ I +$G(MSH)'>0 Q   ;MISSING MSH SEGMENT BAD MESSAGE
+"RTN","ALPBCBU",40,0)
+ S MSCTR=$E(ALPB(MSH),4,8)
+"RTN","ALPBCBU",41,0)
+ S ALPRSLT=$$INI^ALPBINP()
+"RTN","ALPBCBU",42,0)
+ K ALPB,ALPBI
+"RTN","ALPBCBU",43,0)
+ Q
+"RTN","ALPBCBU",44,0)
+PMOV ;Entry Point to send patient movement
+"RTN","ALPBCBU",45,0)
+ N ALPRSLT
+"RTN","ALPBCBU",46,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",47,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",48,0)
+ Q:'$D(DFN)!'$D(DGPMTYP)!'$D(DGPMUC)
+"RTN","ALPBCBU",49,0)
+ ;Checking if the patient is still admitted, if not, QUIT
+"RTN","ALPBCBU",50,0)
+ D INP^VADPT I '$P($G(VAIN(4)),"^") Q
+"RTN","ALPBCBU",51,0)
+ ;Screen out Lodgers
+"RTN","ALPBCBU",52,0)
+ Q:DGPMUC["LODGER"
+"RTN","ALPBCBU",53,0)
+ S ALPRSLT=$$PMOV^ALPBINP(DFN,DGPMTYP,DGPMUC,$P($G(DGPMA),U))
+"RTN","ALPBCBU",54,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",55,0)
+ Q
+"RTN","ALPBCBU",56,0)
+ERRLG ;Error Log Message
+"RTN","ALPBCBU",57,0)
+ ; Retrieving the Patient's division name to include on the alert
+"RTN","ALPBCBU",58,0)
+ N ALPDFN,ALPDIV,ALPDIVST,ALPINST
+"RTN","ALPBCBU",59,0)
+ S ALPDIVST=""
+"RTN","ALPBCBU",60,0)
+ S ALPDFN=+$P($G(^PSB(53.79,+$G(ALPML),0)),U,1)
+"RTN","ALPBCBU",61,0)
+ ; If Patient is deceased don't generate alert
+"RTN","ALPBCBU",62,0)
+ I $$DECEASED(ALPDFN) Q
+"RTN","ALPBCBU",63,0)
+ I ALPDFN>0 D
+"RTN","ALPBCBU",64,0)
+ . S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,0)
+"RTN","ALPBCBU",65,0)
+ . I 'ALPDIV,$G(ALPML) S ALPDIV=$$CDIV^ALPBINP(ALPML)
+"RTN","ALPBCBU",66,0)
+ . S ALPDIVST=$$GET1^DIQ(40.8,ALPDIV,1)
+"RTN","ALPBCBU",67,0)
+ I ALPDIVST="" S ALPINST=+$$GET1^DIQ(53.79,+$G(ALPML),.03,"I"),ALPDIVST=$$GET1^DIQ(4,ALPINST,99)
+"RTN","ALPBCBU",68,0)
+ ;Alert
+"RTN","ALPBCBU",69,0)
+ K XQA,XQAMSG,XQAOPT,XQAROU,XQAID,XQADATA,XQAFLAG
+"RTN","ALPBCBU",70,0)
+ S XQA("G.PSB BCBU ERRORS")=""
+"RTN","ALPBCBU",71,0)
+ S XQAMSG="BCBU Contingency Error"_$S(ALPDIVST:" / Site: "_ALPDIVST,1:"")_$S(ALPDFN:" / DFN: "_ALPDFN,1:"")
+"RTN","ALPBCBU",72,0)
+ S XQADATA=ALPRSLT
+"RTN","ALPBCBU",73,0)
+ S XQAROU="PERR^ALPBCBU"
+"RTN","ALPBCBU",74,0)
+ D SETUP^XQALERT
+"RTN","ALPBCBU",75,0)
+ Q
+"RTN","ALPBCBU",76,0)
+PERR ;Process the error
+"RTN","ALPBCBU",77,0)
+ W @IOF,!,"PSB BCBU Contingency Error",!
+"RTN","ALPBCBU",78,0)
+ W ?10,$P(XQADATA,U,2)_" / "_$P(XQADATA,U,3)
+"RTN","ALPBCBU",79,0)
+ Q
+"RTN","ALPBCBU",80,0)
+ ;
+"RTN","ALPBCBU",81,0)
+DECEASED(DFN) ; Patient Deceased?
+"RTN","ALPBCBU",82,0)
+ ; Return: 1 (YES) or 0 (NO)
+"RTN","ALPBCBU",83,0)
+ N VADM
+"RTN","ALPBCBU",84,0)
+ D DEM^VADPT
+"RTN","ALPBCBU",85,0)
+ Q $S('$G(VADM(6)):0,1:1)
+"RTN","ALPBINP")
+0^2^B98207486
+"RTN","ALPBINP",1,0)
+ALPBINP ;OIFO-DALLAS/SED/KC/MW  BCMA - BCBU INPT TO HL7 ;07/06/16 7:06am
+"RTN","ALPBINP",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,37,73,87,102,105**;May 2007;Build 3
+"RTN","ALPBINP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBINP",4,0)
+ ;This routine will intercept the HL7 message that it sent from Pharmacy
+"RTN","ALPBINP",5,0)
+ ;to CPRS to update order information. The message is then parsed and 
+"RTN","ALPBINP",6,0)
+ ;repackage so it can be sent to the BCBU workstation.
+"RTN","ALPBINP",7,0)
+ ;
+"RTN","ALPBINP",8,0)
+ ; Reference/IA
+"RTN","ALPBINP",9,0)
+ ; EN^PSJBCBU/3876
+"RTN","ALPBINP",10,0)
+ ; $$EN^VAFHLPID/263
+"RTN","ALPBINP",11,0)
+ ; $$EN^VAFHAPV1/4512
+"RTN","ALPBINP",12,0)
+ ; EN1^GMRADPT/10099
+"RTN","ALPBINP",13,0)
+ ; EN^PSJBCMA1/2829
+"RTN","ALPBINP",14,0)
+ ;
+"RTN","ALPBINP",15,0)
+ ;*87 - add ability to send two HL7 msgs for a Remove/Give scenario.  
+"RTN","ALPBINP",16,0)
+ ;      Sends the associated Give first then the Remove Medlog trans.
+"RTN","ALPBINP",17,0)
+ ;
+"RTN","ALPBINP",18,0)
+IPH(MSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBINP",19,0)
+ N VAIN,ALPMSG
+"RTN","ALPBINP",20,0)
+ S ALPMSG=$S($L($G(MSG)):MSG,1:"MSG")
+"RTN","ALPBINP",21,0)
+ I '$O(@ALPMSG@(0)) Q "0^MSG^Missing Message Array"
+"RTN","ALPBINP",22,0)
+ S MSH=0
+"RTN","ALPBINP",23,0)
+ F  S MSH=$O(@ALPMSG@(MSH)) Q:MSH'>0  Q:$E(@ALPMSG@(MSH),1,3)="MSH"
+"RTN","ALPBINP",24,0)
+ I +MSH'>0 Q "0^MSG^Missing MSH Segment Bad Message"
+"RTN","ALPBINP",25,0)
+ S MSFS=$E(@ALPMSG@(MSH),4,4)
+"RTN","ALPBINP",26,0)
+ S MSCS=$E(@ALPMSG@(MSH),5,5)
+"RTN","ALPBINP",27,0)
+ S MSCH=$E(@ALPMSG@(MSH),6,6)
+"RTN","ALPBINP",28,0)
+ S MSCTR=$E(@ALPMSG@(MSH),4,8)
+"RTN","ALPBINP",29,0)
+ ;The message is confirmed to be a Pharmacy message
+"RTN","ALPBINP",30,0)
+ I $P(@ALPMSG@(MSH),MSFS,3)'="PHARMACY" Q "1^^Not a Pharmacy Message"
+"RTN","ALPBINP",31,0)
+ ;A PID and PV1 segment is required for this message
+"RTN","ALPBINP",32,0)
+ S PID=0
+"RTN","ALPBINP",33,0)
+ F  S PID=$O(@ALPMSG@(PID)) Q:PID'>0  Q:$E(@ALPMSG@(PID),1,3)="PID"
+"RTN","ALPBINP",34,0)
+ I +PID'>0 Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",35,0)
+ ;Also the patient must have an inpatient status
+"RTN","ALPBINP",36,0)
+ S PV1=0
+"RTN","ALPBINP",37,0)
+ F  S PV1=$O(@ALPMSG@(PV1)) Q:PV1'>0  Q:$E(@ALPMSG@(PV1),1,3)="PV1"
+"RTN","ALPBINP",38,0)
+ I +PV1'>0 Q "0^MSG^Missing PV1 Segment Bad Message"
+"RTN","ALPBINP",39,0)
+ I $P(@ALPMSG@(PV1),MSFS,3)'="I" Q "1^^Not an Inpatient Pharmacy Message"
+"RTN","ALPBINP",40,0)
+ S ORC=0
+"RTN","ALPBINP",41,0)
+ F  S ORC=$O(@ALPMSG@(ORC)) Q:ORC'>0  Q:$E(@ALPMSG@(ORC),1,3)="ORC"
+"RTN","ALPBINP",42,0)
+ I +ORC'>0 Q "0^MSG^Missing ORC Segment Bad Message"
+"RTN","ALPBINP",43,0)
+ ;RE-BUILDING THE MESSAGE FOR BCBU
+"RTN","ALPBINP",44,0)
+ S ALPDFN=$P(@ALPMSG@(PID),MSFS,4)
+"RTN","ALPBINP",45,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",46,0)
+ S ALPORD=$P($P(@ALPMSG@(ORC),MSFS,4),MSCS,1)
+"RTN","ALPBINP",47,0)
+ I ALPORD="" Q "0^MSG^Invalid or Missing Order Number - ORC"
+"RTN","ALPBINP",48,0)
+ K ALPB
+"RTN","ALPBINP",49,0)
+ D EN^PSJBCBU(ALPDFN,ALPORD,.ALPB)
+"RTN","ALPBINP",50,0)
+SEED ;Entry point for ^ALPBIND
+"RTN","ALPBINP",51,0)
+ N VAIN
+"RTN","ALPBINP",52,0)
+ D INIT
+"RTN","ALPBINP",53,0)
+ S SUB=0 F  S SUB=$O(ALPB(SUB)) Q:'SUB  D
+"RTN","ALPBINP",54,0)
+ . ;convert and move the message to the HLA array for transport
+"RTN","ALPBINP",55,0)
+ . S HLA("HLS",SUB)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB))
+"RTN","ALPBINP",56,0)
+ . ;Now check for continuations 
+"RTN","ALPBINP",57,0)
+ . S SUB1=0
+"RTN","ALPBINP",58,0)
+ . F  S SUB1=$O(ALPB(SUB,SUB1)) Q:'SUB1  D
+"RTN","ALPBINP",59,0)
+ . . S HLA("HLS",SUB,SUB1)=$$CNV^ALPBUTL1(MSCTR,HLCTR,ALPB(SUB,SUB1))
+"RTN","ALPBINP",60,0)
+ . I $E(HLA("HLS",SUB),1,3)="RXE" S RXE=SUB
+"RTN","ALPBINP",61,0)
+ . I $E(HLA("HLS",SUB),1,3)="PID" S PID=SUB
+"RTN","ALPBINP",62,0)
+ . I $E(HLA("HLS",SUB),1,3)="PV1" S PV1=SUB
+"RTN","ALPBINP",63,0)
+ K HLA("HLS",MSH)
+"RTN","ALPBINP",64,0)
+ I '$D(HLA("HLS",PID)) Q "0^MSG^Missing PID Segment Bad Message"
+"RTN","ALPBINP",65,0)
+ S ALPDFN=$P($P(HLA("HLS",PID),HLFS,4),HLCS,1)
+"RTN","ALPBINP",66,0)
+ I +ALPDFN'>0 Q "0^MSG^Invalid or Missing Patient - PID"
+"RTN","ALPBINP",67,0)
+ S HLA("HLS",PID)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",68,0)
+ ;Fix RXE segement for Administration Type
+"RTN","ALPBINP",69,0)
+ D RXE
+"RTN","ALPBINP",70,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",71,0)
+ D PDIV
+"RTN","ALPBINP",72,0)
+ ;Override Ward Division with Clinic Division if present           *87
+"RTN","ALPBINP",73,0)
+ N ALPCLDIV
+"RTN","ALPBINP",74,0)
+ D:$G(ALPORD)
+"RTN","ALPBINP",75,0)
+ . S ALPCLDIV=$$CDIVOR(ALPDFN,ALPORD)  ;If Clin Ord, then returns DIV
+"RTN","ALPBINP",76,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",77,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",78,0)
+ ;
+"RTN","ALPBINP",79,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",80,0)
+ I '$D(HLL("LINKS")) Q "0^HL7^Missing HLL Links Array Division # "_ALPDIV
+"RTN","ALPBINP",81,0)
+ ;SET NEW PV1
+"RTN","ALPBINP",82,0)
+ D NOW^%DTC
+"RTN","ALPBINP",83,0)
+ S STRING=$$EN^VAFHAPV1(ALPDFN,%,"2,3,7,18")
+"RTN","ALPBINP",84,0)
+ S HLA("HLS",PV1)=STRING
+"RTN","ALPBINP",85,0)
+ I +ORC>0 D
+"RTN","ALPBINP",86,0)
+ . S ALPST=$$STAT^ALPBUTL1($P(HLA("HLS",ORC),HLFS,6))
+"RTN","ALPBINP",87,0)
+ . Q:ALPST=""
+"RTN","ALPBINP",88,0)
+ . S $P(HLA("HLS",ORC),HLFS,6)=$P(HLA("HLS",ORC),HLFS,6)_HLCS_ALPST
+"RTN","ALPBINP",89,0)
+ D AL1
+"RTN","ALPBINP",90,0)
+ ;Capture message to review for testing before sending
+"RTN","ALPBINP",91,0)
+ D SEND
+"RTN","ALPBINP",92,0)
+EXIT ;EXIT and kill
+"RTN","ALPBINP",93,0)
+ K HLA,SUB,SUB1,STRING,ALPLOC,MSCH,MSCS,MSCTR
+"RTN","ALPBINP",94,0)
+ K MSH,ORC,PID,PV1,RXE,RXR,ALPB,ALPBY,ALPBYN,ALPC,ALPDATA,ALPDFN
+"RTN","ALPBINP",95,0)
+ K ALPDT,ALPI,ALPII,ALPIV,ALPOPTS,ALPOR,ALPORD,ALPST
+"RTN","ALPBINP",96,0)
+ K ALPSTN,ALPSYM,EVENT,GMRA,GMRAL
+"RTN","ALPBINP",97,0)
+ Q ALPRSLT
+"RTN","ALPBINP",98,0)
+INI() ;INTIAL SET UP ENTRY
+"RTN","ALPBINP",99,0)
+ G SEED
+"RTN","ALPBINP",100,0)
+INIT ;CALL HL7 TO INITIALIZE MESSAGE VARIABLES
+"RTN","ALPBINP",101,0)
+ ;SET UP ENVIRONMENT FOR MESSAGE
+"RTN","ALPBINP",102,0)
+ K HL,HLA,HLECH,HLQ,ALPRSLT,ALPOPTS
+"RTN","ALPBINP",103,0)
+ S EVENT="PSB BCBU ORM SEND"
+"RTN","ALPBINP",104,0)
+ D INIT^HLFNC2(EVENT,.HL,1)
+"RTN","ALPBINP",105,0)
+ S HLCS=$E(HL("ECH")),HLCTR=HLFS_HL("ECH")
+"RTN","ALPBINP",106,0)
+ Q
+"RTN","ALPBINP",107,0)
+SEND ;CALL HL7 TO TRANSMIT SINGLE MESSAGE
+"RTN","ALPBINP",108,0)
+ K ALPRSLT,ALPOPTS
+"RTN","ALPBINP",109,0)
+ D GENERATE^HLMA(EVENT,"LM",1,.ALPRSLT,"",.ALPOPTS)
+"RTN","ALPBINP",110,0)
+ Q
+"RTN","ALPBINP",111,0)
+AL1 ;ALLERGY SEGMENT BUILD
+"RTN","ALPBINP",112,0)
+ ;The will build the ALP segment with the curent allergies
+"RTN","ALPBINP",113,0)
+ ;for the patient to be added to the message
+"RTN","ALPBINP",114,0)
+ N DFN
+"RTN","ALPBINP",115,0)
+ Q:+ALPDFN'>0
+"RTN","ALPBINP",116,0)
+ K GMRAL
+"RTN","ALPBINP",117,0)
+ S DFN=ALPDFN
+"RTN","ALPBINP",118,0)
+ S GMRA="0^0^111"  ;DEFINES WHAT ALLERGIES TO RETURN
+"RTN","ALPBINP",119,0)
+ D EN1^GMRADPT
+"RTN","ALPBINP",120,0)
+ Q:'$D(GMRAL)
+"RTN","ALPBINP",121,0)
+ S ALPI=0,ALPC=1,ALPSYM=""
+"RTN","ALPBINP",122,0)
+ F  S ALPI=$O(GMRAL(ALPI)) Q:+ALPI'>0  D
+"RTN","ALPBINP",123,0)
+ . S ALPADR=""
+"RTN","ALPBINP",124,0)
+ . I $P($P(GMRAL(ALPI),U,8),";",2)="P" S ALPADR="**ADR** "
+"RTN","ALPBINP",125,0)
+ . S ALPDATA="AL1"_HLFS_ALPC_HLFS_$P(GMRAL(ALPI),U,7)
+"RTN","ALPBINP",126,0)
+ . S ALPDATA=ALPDATA_HLFS_ALPI_HLCS_ALPADR_$E($P(GMRAL(ALPI),U,2),1,25)_HLCS_"VA120.8"
+"RTN","ALPBINP",127,0)
+ . S HLA("HLS",$O(HLA("HLS",9999999),-1)+1)=ALPDATA
+"RTN","ALPBINP",128,0)
+ . S ALPC=ALPC+1
+"RTN","ALPBINP",129,0)
+ K GMRAL
+"RTN","ALPBINP",130,0)
+ Q
+"RTN","ALPBINP",131,0)
+RXE ;
+"RTN","ALPBINP",132,0)
+ Q:+$G(RXE)'>0
+"RTN","ALPBINP",133,0)
+ K ^TMP("PSJ1",$J)
+"RTN","ALPBINP",134,0)
+ Q:'$D(HLA("HLS",RXE))
+"RTN","ALPBINP",135,0)
+ S DATA=HLA("HLS",RXE)
+"RTN","ALPBINP",136,0)
+ D EN^PSJBCMA1(ALPDFN,ALPORD,1)
+"RTN","ALPBINP",137,0)
+ S TYP=$P($G(^TMP("PSJ1",$J,4)),U,2)
+"RTN","ALPBINP",138,0)
+ Q:TYP="CONTINUOUS"
+"RTN","ALPBINP",139,0)
+ Q:TYP="FILL ON REQUEST"
+"RTN","ALPBINP",140,0)
+ S ALP1=$P(DATA,HLFS,2),ALP2=$P(ALP1,HLCS,2)
+"RTN","ALPBINP",141,0)
+ I ALP1[TYP Q
+"RTN","ALPBINP",142,0)
+ I ALP2[TYP Q
+"RTN","ALPBINP",143,0)
+ S $P(ALP2,"&",1)=$P(ALP2,"&",1)_" "_TYP
+"RTN","ALPBINP",144,0)
+ S $P(ALP1,HLCS,2)=ALP2,$P(DATA,HLFS,2)=ALP1
+"RTN","ALPBINP",145,0)
+ S HLA("HLS",RXE)=DATA
+"RTN","ALPBINP",146,0)
+ K TYP,ALP1,ALP2,^TMP("PSJ1",$J)
+"RTN","ALPBINP",147,0)
+ Q
+"RTN","ALPBINP",148,0)
+PDIV ;PATIENT DIVISION
+"RTN","ALPBINP",149,0)
+ ;Check ALPBMDT Variable
+"RTN","ALPBINP",150,0)
+ S:+$G(ALPBMDT)'>0 ALPBMDT=0
+"RTN","ALPBINP",151,0)
+ S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,ALPBMDT)
+"RTN","ALPBINP",152,0)
+ ;Screen Dom
+"RTN","ALPBINP",153,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q
+"RTN","ALPBINP",154,0)
+ ;Now do I send the Message or not Based of Division
+"RTN","ALPBINP",155,0)
+ I $D(ALPHLL("LINKS")) M HLL("LINKS")=ALPHLL("LINKS")
+"RTN","ALPBINP",156,0)
+ I '$D(HLL("LINKS")) D GET^ALPBPARM(.HLL,ALPDIV)
+"RTN","ALPBINP",157,0)
+ Q
+"RTN","ALPBINP",158,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBINP",159,0)
+ N VAIN
+"RTN","ALPBINP",160,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBINP",161,0)
+ I '$D(ALPML) Q "0^ALPML^No Med-Log Number"
+"RTN","ALPBINP",162,0)
+ I '$D(^PSB(53.79,ALPML,0)) Q "0^"_ALPML_"^Med - Log Number Invalid"
+"RTN","ALPBINP",163,0)
+ ;First get the required HL7 Variables
+"RTN","ALPBINP",164,0)
+ D INIT
+"RTN","ALPBINP",165,0)
+ ;Need to build the PID, PV1 and ORC segments
+"RTN","ALPBINP",166,0)
+ S ALPDFN=+$P($G(^PSB(53.79,ALPML,0)),U,1)
+"RTN","ALPBINP",167,0)
+ I +ALPDFN'>0 Q "0^"_ALPML_"^Invalid or Missing Patient - Med-Log"
+"RTN","ALPBINP",168,0)
+ ;Get the Division that the patient is associated with (Ward)
+"RTN","ALPBINP",169,0)
+ D PDIV
+"RTN","ALPBINP",170,0)
+ I ALPDIV="",$G(ALPML) S ALPDIV=$$CDIV(ALPML)
+"RTN","ALPBINP",171,0)
+ ;Override Ward Division with Clinic Division if present *87
+"RTN","ALPBINP",172,0)
+ N ALPCLDIV
+"RTN","ALPBINP",173,0)
+ D:$G(ALPML)
+"RTN","ALPBINP",174,0)
+ . S ALPCLDIV=$$CDIV(ALPML)   ;If Clinic, then will return a DIV
+"RTN","ALPBINP",175,0)
+ . S:$G(ALPCLDIV) ALPDIV=ALPCLDIV
+"RTN","ALPBINP",176,0)
+ ;Quit if a specific Div was selected & Not = user selection     *87
+"RTN","ALPBINP",177,0)
+ Q:(+$G(ALPDIV2)>0)&(ALPDIV'=$G(ALPDIV2)) "0^"   ;no error
+"RTN","ALPBINP",178,0)
+ ;
+"RTN","ALPBINP",179,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",180,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPML_"^Missing HLL Links Array Med-Log"
+"RTN","ALPBINP",181,0)
+ S ALPST=$P($G(^PSB(53.79,ALPML,0)),U,9)
+"RTN","ALPBINP",182,0)
+ S ALPBY=$P($G(^PSB(53.79,ALPML,0)),U,7)
+"RTN","ALPBINP",183,0)
+ S ALPDT=$P($G(^PSB(53.79,ALPML,0)),U,6)
+"RTN","ALPBINP",184,0)
+ S ALPOR=$P($G(^PSB(53.79,ALPML,.1)),U,1)
+"RTN","ALPBINP",185,0)
+ S ALPBYN=$P($G(^VA(200,ALPBY,0)),U,1)
+"RTN","ALPBINP",186,0)
+ S ALPSTN=$S($D(ALPST):$$EXTERNAL^DILFD(53.79,".09",,ALPST),1:"Non")
+"RTN","ALPBINP",187,0)
+ I '$D(ALPOR) Q "0^"_ALPML_"^Invalid or Missing Pharmacy Order Number Med-Log"
+"RTN","ALPBINP",188,0)
+ S PID=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",189,0)
+ I '$D(PID) Q "0^"_ALPML_"^Invalid or Missing Patient - PID Med-Log"
+"RTN","ALPBINP",190,0)
+ S PV1=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",191,0)
+ I '$D(PV1) Q "0^"_ALPML_"^Invalid or Missing Patient Location - PV1 Med-Log"
+"RTN","ALPBINP",192,0)
+ S HLA("HLS",1)=PID
+"RTN","ALPBINP",193,0)
+ S HLA("HLS",2)=PV1
+"RTN","ALPBINP",194,0)
+ ;BUILD ORC SEGMENT
+"RTN","ALPBINP",195,0)
+ S ORC="ORC"_HLFS_"ML"_HLFS_ALPML_HLCS_"ML"_HLFS_ALPOR_HLCS_"PS"_HLFS
+"RTN","ALPBINP",196,0)
+ S ORC=ORC_HLFS_ALPST_HLCS_ALPSTN_HLFS_HLFS_HLFS_HLFS
+"RTN","ALPBINP",197,0)
+ S ORC=ORC_$$HLDATE^HLFNC(ALPDT,"TS")_HLFS_ALPBY_HLCS_ALPBYN
+"RTN","ALPBINP",198,0)
+ S HLA("HLS",3)=ORC
+"RTN","ALPBINP",199,0)
+ ;The Message is ready to send                                     *87
+"RTN","ALPBINP",200,0)
+ ; If this Medlog entry is Removed, then save HLA array and find the
+"RTN","ALPBINP",201,0)
+ ; associated Give and alter the ORC seg in the HLA array and send the
+"RTN","ALPBINP",202,0)
+ ; Removed 2nd.
+"RTN","ALPBINP",203,0)
+ I $P(HLA("HLS",3),HLFS,6)["REMOVED" D
+"RTN","ALPBINP",204,0)
+ . N SAVHLA,SAVHLL
+"RTN","ALPBINP",205,0)
+ . M SAVHLA=HLA,SAVHLL=HLL
+"RTN","ALPBINP",206,0)
+ . N GIVSTR,GIVDT,GIVBY,GIVBY,GIVBYN
+"RTN","ALPBINP",207,0)
+ . S GIVSTR=$$FINDGIVE(ALPML)
+"RTN","ALPBINP",208,0)
+ . S GIVDT=$P(GIVSTR,U,1),GIVBY=$P(GIVSTR,U,5)
+"RTN","ALPBINP",209,0)
+ . S $P(HLA("HLS",3),HLFS,6)="G"_HLCS_"GIVEN"
+"RTN","ALPBINP",210,0)
+ . S $P(HLA("HLS",3),HLFS,10)=$$HLDATE^HLFNC(GIVDT,"TS")
+"RTN","ALPBINP",211,0)
+ . S GIVBYN=$$GET1^DIQ(200,GIVBY,"NAME")
+"RTN","ALPBINP",212,0)
+ . S $P(HLA("HLS",3),HLFS,11)=GIVBY_HLCS_GIVBYN
+"RTN","ALPBINP",213,0)
+ . D SEND        ;send assoc Medlog Give per a Removed trans
+"RTN","ALPBINP",214,0)
+ . D INIT
+"RTN","ALPBINP",215,0)
+ . M HLA=SAVHLA,HLL=SAVHLL
+"RTN","ALPBINP",216,0)
+ ;
+"RTN","ALPBINP",217,0)
+ D SEND     ;send current Medlog trans
+"RTN","ALPBINP",218,0)
+ Q ALPRSLT
+"RTN","ALPBINP",219,0)
+ ;
+"RTN","ALPBINP",220,0)
+ADMQ ;Need to que a single patient init for admissions
+"RTN","ALPBINP",221,0)
+ S ALDFN=ALPDFN
+"RTN","ALPBINP",222,0)
+ S ZTDTH=$$NOW^XLFDT
+"RTN","ALPBINP",223,0)
+ S ZTRTN="PAT^ALPBIND("""")"                    ;pass null Div par *87
+"RTN","ALPBINP",224,0)
+ S ZTDESC="PSB - Initialize Single Patient on Admission Contingency Workstation"
+"RTN","ALPBINP",225,0)
+ S ZTIO="",ZTSAVE("ALDFN")=""
+"RTN","ALPBINP",226,0)
+ D ^%ZTLOAD
+"RTN","ALPBINP",227,0)
+ K ZTIO,ZTDESC,ZTRTN,ZTSK
+"RTN","ALPBINP",228,0)
+ Q
+"RTN","ALPBINP",229,0)
+PMOV(ALPDFN,ALPTYP,ALPTT,ALPBMDT) ;Entry Point to send patient movement
+"RTN","ALPBINP",230,0)
+ N VAIN
+"RTN","ALPBINP",231,0)
+ I +$G(ALPDFN)'>0 Q "0^^Missing Patient ID"
+"RTN","ALPBINP",232,0)
+ D INIT
+"RTN","ALPBINP",233,0)
+ ;Check Movement type. If not a discharge then don't pass date and time
+"RTN","ALPBINP",234,0)
+ S:$G(ALPTT)'="DISCHARGE" ALPBMDT=0
+"RTN","ALPBINP",235,0)
+ ;Get the Division that the patient is associated with
+"RTN","ALPBINP",236,0)
+ D PDIV
+"RTN","ALPBINP",237,0)
+ I ALPDIV="DOM",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "0^^Screen of DOMICILIARY"
+"RTN","ALPBINP",238,0)
+ I '$D(HLL("LINKS")) Q "0^"_ALPDFN_"^Missing HLL Links Array Pat-Move / DFN: "_ALPDFN
+"RTN","ALPBINP",239,0)
+ S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",240,0)
+ S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",241,0)
+ S:$G(ALPTT)="DISCHARGE" $P(HLA("HLS",2),HLFS,37)=$G(ALPTYP)
+"RTN","ALPBINP",242,0)
+ D SEND
+"RTN","ALPBINP",243,0)
+ I ALPTYP=14!(ALPTYP=41) S ALPTT="ADMISSION" ;FOR RETURN FROM ASIH
+"RTN","ALPBINP",244,0)
+ I $G(ALPTT)="ADMISSION" D ADMQ
+"RTN","ALPBINP",245,0)
+ ;SEND A DISCHARGE TO DIV SENDING ASIH
+"RTN","ALPBINP",246,0)
+ I $G(ALPTYP)[13!($G(ALPTYP)[40) D
+"RTN","ALPBINP",247,0)
+ .D INIT
+"RTN","ALPBINP",248,0)
+ .S ALPWRD=$P($G(DGPMVI(5)),U,1) ;LAST WARD
+"RTN","ALPBINP",249,0)
+ .I +ALPWRD'>0 S ALPRSLT="0^^Screen - No Ward" Q  ;NO WARD
+"RTN","ALPBINP",250,0)
+ .S ALPBDIV=$P($G(^DIC(42,ALPWRD,0)),U,11)
+"RTN","ALPBINP",251,0)
+ .D GET^ALPBPARM(.HLL,ALPBDIV)
+"RTN","ALPBINP",252,0)
+ .S HLA("HLS",1)=$$EN^VAFHLPID(ALPDFN,"2,7,8,19")
+"RTN","ALPBINP",253,0)
+ .S HLA("HLS",2)=$$EN^VAFHAPV1(ALPDFN,DT,"2,3,7,18")
+"RTN","ALPBINP",254,0)
+ .S $P(HLA("HLS",2),HLFS,37)="ASIH"
+"RTN","ALPBINP",255,0)
+ .D SEND
+"RTN","ALPBINP",256,0)
+ Q ALPRSLT
+"RTN","ALPBINP",257,0)
+ ;
+"RTN","ALPBINP",258,0)
+CDIV(ML) ; Return DIVISION associated with input CLINIC
+"RTN","ALPBINP",259,0)
+ Q:'$G(ML) ""
+"RTN","ALPBINP",260,0)
+ N MLDATA,CLINICE,CLINICI,DIVE,DIVI,MLINST
+"RTN","ALPBINP",261,0)
+ S MLDATA=$G(^PSB(53.79,+ML,0))
+"RTN","ALPBINP",262,0)
+ S CLINICE=$P(MLDATA,"^",2),CLINICI=$O(^SC("B",CLINICE,0))
+"RTN","ALPBINP",263,0)
+ I CLINICI D
+"RTN","ALPBINP",264,0)
+ . S DIVI=$P($G(^SC(CLINICI,0)),"^",15)
+"RTN","ALPBINP",265,0)
+ E  D
+"RTN","ALPBINP",266,0)
+ . S MLINST=+$P(MLDATA,"^",3),DIVI=+$O(^DG(40.8,"AD",MLINST,0))
+"RTN","ALPBINP",267,0)
+ ; Retrieving HL7 parameters for the Clinic Division
+"RTN","ALPBINP",268,0)
+ S DIVE=$$GET1^DIQ(40.8,+DIVI,.01) D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",269,0)
+ Q DIVI
+"RTN","ALPBINP",270,0)
+ ;
+"RTN","ALPBINP",271,0)
+CDIVOR(DFN,ORDER) ; Return DIVISION associated with input ORDER
+"RTN","ALPBINP",272,0)
+ Q:'$G(ORDER) "" Q:'$G(DFN) ""
+"RTN","ALPBINP",273,0)
+ N CLINICI,DIVI,DIVE
+"RTN","ALPBINP",274,0)
+ S CLINICI=$S(ORDER["P":+$G(^PS(53.1,+ORDER,"DSS")),ORDER["U":+$G(^PS(55,DFN,5,+ORDER,8)),ORDER["V":+$G(^PS(55,DFN,"IV",+ORDER,"DSS")),1:"")
+"RTN","ALPBINP",275,0)
+ I 'CLINICI Q "" I '$D(^SC(CLINICI,0)) Q ""
+"RTN","ALPBINP",276,0)
+ S DIVI=$P($G(^SC(CLINICI,0)),"^",15),DIVE=$P($G(^DG(40.8,+DIVI,0)),"^")
+"RTN","ALPBINP",277,0)
+ D GET^ALPBPARM(.HLL,DIVE)
+"RTN","ALPBINP",278,0)
+ Q $P(^SC(CLINICI,0),"^",15)
+"RTN","ALPBINP",279,0)
+ ;
+"RTN","ALPBINP",280,0)
+FINDGIVE(IEN) ;Finds the last Give date/time in the Audit log              *87
+"RTN","ALPBINP",281,0)
+ ;   When a Remove action occurs and saved to 53.79, the Give Action
+"RTN","ALPBINP",282,0)
+ ;   Status & Action Date/Time are overwritten. This Function will
+"RTN","ALPBINP",283,0)
+ ;   retrieve that Give info.
+"RTN","ALPBINP",284,0)
+ ;
+"RTN","ALPBINP",285,0)
+ ; Function returns - string formatted as the MAH report uses
+"RTN","ALPBINP",286,0)
+ ;  date/time ^ by initials ^ action code ^ ien of 53.79 file ^ by DUZ
+"RTN","ALPBINP",287,0)
+ ;
+"RTN","ALPBINP",288,0)
+ N DA,STR
+"RTN","ALPBINP",289,0)
+ S STR=""
+"RTN","ALPBINP",290,0)
+ F DA=99999:0 S DA=$O(^PSB(53.79,IEN,.9,DA),-1) Q:'DA  D  Q:$P(STR,U,4)
+"RTN","ALPBINP",291,0)
+ .D:^PSB(53.79,IEN,.9,DA,0)["ACTION STATUS Set to 'GIVEN'"
+"RTN","ALPBINP",292,0)
+ ..S $P(STR,U,1)=$P(^PSB(53.79,IEN,.9,DA,0),U)
+"RTN","ALPBINP",293,0)
+ ..S $P(STR,U,2)=$P(^PSB(53.79,IEN,.9,DA,0),"'",4)
+"RTN","ALPBINP",294,0)
+ ..S $P(STR,U,3)="G"
+"RTN","ALPBINP",295,0)
+ ..S $P(STR,U,4)=IEN
+"RTN","ALPBINP",296,0)
+ ..S $P(STR,U,5)=$P(^PSB(53.79,IEN,.9,DA,0),U,5)
+"RTN","ALPBINP",297,0)
+ Q STR
+"VER")
+8.0^22.2
+**END**
+**END**

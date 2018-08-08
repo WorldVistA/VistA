@@ -1,0 +1,292 @@
+$TXT Created by                VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 03/05/18 at 11:17
+=============================================================================
+Run Date: JUN 14, 2018                     Designation: LA*5.2*95
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #71                    Status: Released
+                  Compliance Date: JUL 15, 2018
+=============================================================================
+
+Associated patches: (v)LA*5.2*74   <<= must be installed BEFORE `LA*5.2*95'
+
+Subject: CUSTOMIZABLE PARAMETER FOR LABORATORY SHIPPING MANIFEST DEFAULT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ LA*5.2*95 creates a customizable parameter in VistA that allows 
+ Laboratory staff at each site to determine the default response when 
+ prompted to create a shipping manifest. The manifests are vital to 
+ ensuring that all specimens arrive at the correct destination. The 
+ current default response (NO) is frequently accepted by hurried 
+ technicians, when in actuality they need to create a manifest.
+  
+ This patch creates the new parameter Default to create new manifest [LR 
+ MANIFEST DEFLT CREATE] in the Parameter Definition (#8989.51) file, which 
+ allows each site to choose the appropriate default response to the "There 
+ is not an open shipping manifest for [shipping configuration]. Do you 
+ want to start one?" prompt. To change the default response, users must 
+ enter Package Level Parameter Edit [LR7O PAR PKG] at the "Select OPTION 
+ NAME:" prompt, then enter the shipping configuration at the new "For 
+ Default to create new manifest - Select Shipping Configuration:" prompt, 
+ and then enter YES at the new "Create new manifest default: NO//:" 
+ prompt. If the parameter is not defined for the shipping configuration, 
+ then the default response will be NO.
+  
+ BLOOD BANK Clearance:
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*95 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*95 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+ RISK ANALYSIS: Changes made by patch LA*5.2*95 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name: New/Modified/Deleted
+ --------------- -------------------- 
+ LR MANIFEST DEFLT CREATE        New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ PARAMETER          N/A     LR PKG (8989.52)    Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20161105 Customizable Parameter for Laboratory Shipping Manifest 
+ Default
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Ralph H. Johnson VA Medical Center, Charleston, SC
+ VA Puget Sound Health Care System, Seattle, WA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a KIDS build and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ https://www.domain.ext/vdl/.
+  
+  
+ Title                         File Name                        FTP Mode
+ -----------------------------------------------------------------------
+ Laboratory Data Sharing       lab_ledi_iv_um_update.doc        Binary
+   and Interoperability (LDSI)/
+   Laboratory Electronic Data 
+   Interchange IV (LEDI IV) 
+   LDSI/LEDI IV User Manual      
+ Laboratory Data Sharing       lab_ledi_iv_um_update.pdf        Binary
+   and Interoperability (LDSI)/
+   Laboratory Electronic Data 
+   Interchange IV (LEDI IV) 
+   LDSI/LEDI IV User Manual  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number LA*5.2*95.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', press <Enter>.
+  
+ 7.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8.      If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a CA Technologies Service Desk Manager (CA SDM) ticket. The development 
+ team will then assist with the backout process. 
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the LA routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the LA routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch LA*5.2*95 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7SMB
+    Before: B50425818   After: B53156735  **27,46,64,74,95**
+ 
+Routine list of preceding patches: 74
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 16, 2017
+Completed By:                               Date Completed: JUN 13, 2018
+Released By :                               Date Released : JUN 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,190 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/08/18 at 16:27
+=============================================================================
+Run Date: JUN 15, 2018                     Designation: LA*5.2*87
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #72                    Status: Released
+                  Compliance Date: JUL 16, 2018
+=============================================================================
+
+Associated patches: (v)LA*5.2*88   <<= must be installed BEFORE `LA*5.2*87'
+
+Subject: VETERANS ID CARD AS PATIENT IDENTIFIER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue in the Automated Lab
+ Instruments package:
+  
+ Allow for the use of the VIC 4.0 (Veterans Information Card) card number
+ as a patient identifier in the PID (Patient Identifier) segment for Point 
+ of Care (POC) interface processing.
+  
+ Associated Ticket(s):
+ =====================
+ 1. I9917553FY16 - Veterans Information Cards in Point of Care Interface
+    
+ Blood Bank Review:
+ ================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*87 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*87 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*87 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+    
+ Participating Test Sites:
+ =========================
+ New Orleans, Southeast Louisiana Veterans Health Care System
+  
+ Tester: Cheryl Lanier
+  
+ ESL: Treasa Dodge
+  
+ Wichita,  Kansas (Robert J. Dole VA Medical Center) 
+  
+ Tester: Danette Lay
+  
+ ESL: Treasa Dodge
+  
+ Patient Safety Issue (PSI):
+ ===========================
+  
+ PSPO00002622
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. I9917553FY16 - Veterans ID Cards in Point of Care Interface
+  
+    Problem:
+    --------
+    Point of Care (POC) processing for lab tests cannot identify a patient
+    by scanning a Veterans ID Card (VIC) barcode.
+  
+    Solution:
+    ---------
+    Modify lab POC processing to recognize the VIC number when it is
+    present in the PID (Patient Identifier) segment of HL7 processing and
+    to use the VIC card number to identify the patient.
+  
+    Note:
+    -----
+  
+    Veterans ID Cards may contain both a barcode and magnetic stripe.  
+    Currently, Point of Care devices can only be used with barcodes - not 
+    magnetic stripes.  However, if the devices are able to use magnetic 
+    stripes in the future, the Point of Care vendors will need to "escape" 
+    the embedded "^" in the magnetic stripe before sending the transaction 
+    through the HL7 interface.  The "^" character is a reserved HL7 
+    delimiter.  VistA logic will then need to be changed to "unescape" the 
+    character depending on the vendor changes.
+  
+    Note:
+    -----
+  
+    Additional information is available in document LA*5.2*87 VHIC Card
+    Update Release Notes in the VA Software Document Library.
+  
+    Routine: LA7VIN2
+  
+ ==================== Installation Instructions ================== 
+ This patch may be loaded with users on the system.  You may wish to 
+ install it during non-peak hours. Installation will take less than 1 
+ minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       Preserve a copy of the routines exported in this patch prior to
+       installation, you should use the 'Backup a Transport Global' option
+       at this time. You may also compare the routines in your production
+       account to the routines in the patch by using the 'Compare a
+       Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LA*5.2*87'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+ Compare the checksum of routine LA7VIN2 to the "After" checksum listed in 
+ the patch description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ The routines can be restored to the previous versions by installing from
+ the backup MailMan message that was sent before installation.
+  
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ Checksum of the routine LA7VIN2 can be compared to the "Before" value 
+ listed in the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7VIN2
+    Before: B46992282   After: B59655310  **46,64,74,88,87**
+ 
+Routine list of preceding patches: 88
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 09, 2015
+Completed By:                               Date Completed: JUN 14, 2018
+Released By :                               Date Released : JUN 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

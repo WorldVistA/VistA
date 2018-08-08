@@ -1,0 +1,271 @@
+
+=============================================================================
+Run Date: MAY 03, 2018                     Designation: MHV*1*36
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #29                      Status: Released
+                  Compliance Date: JUN 04, 2018
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2018.3.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The May Quarterly MyHealtheVet Release MHV_2018.3.0.0 will be promoted to 
+ the MHV Production environment on Saturday, May 5th, 2018 starting at 
+ 10:00 PM EST.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ LEGACY SM ENHANCEMENTS 
+ SM ENHANCEMENTS
+ JAZZ    694335  Secure Messaging (SM) Network ID Recycling Enhancements 
+ (Inactivate a SM Healthcare Team Member & Reactivate Healthcare Team 
+ Member)
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ    692989  Delegation Phase 3 Implementation
+ JAZZ    698120  Delegation Phase 3 Connect Your Docs Access Enhancement 
+ for Delegate Users
+ JAZZ    692999  Delegation Phase 3 Self-Entered Information (SEI) Food 
+ and Activity Journal Enhancements for Delegation User
+ JAZZ    693008  Delegation Phase 3 Change Password Enhancement for 
+ Delegation User
+ JAZZ    698129  Delegation Phase 3 Profile Update Enhancements for 
+ Delegate Users 
+ JAZZ    698210  Delegation Phase 3 MHV Delegator should be able to access 
+ Veteran Delegation Tool (VDT) without user entering credentials in Manage 
+ Delegates page coming from Single Sign-On External (SSOe)
+ JAZZ    693152  Delegation Phase 3 HealtheLiving Assessment (HLA) Access 
+ Enhancement for Delegate user
+ JAZZ    706556  Delegation Phase 3 Implement SM Patient Delegation 
+ changes for 'View only' access user
+ JAZZ    698304  ChampVA Phase 2 - Implementation 
+ JAZZ    698307  Meds-By-Mail/ChampVA Integration work - Analysis, 
+ Development and Testing for all GUI VA Extracts (Allergies, Wellness 
+ Reminders, VA Appointments, VA Chemistry/Hematology Labs, Secure 
+ Messaging)
+ JAZZ    655305  Meds-By-Mail/ChampVA Integration work - Analysis, 
+ Development and Testing for Blue Button (BB) - Blue Button: Limit 
+ selection of Blue Button data categories for ChampVA Beneficiaries 
+  
+ MHV / SM NATIONAL PORTAL DEFECTS
+  
+ JAZZ    688732  Delegation - User Acceptance Testing (UAT) For Rx Refill 
+ and Track Prescription Account Activity Log (AAL) entry, Performed By is 
+ showing as Healthcare Proxy:  Read Access  even if the delegate is having 
+ Full Access
+ JAZZ    689391  Delegation - (UAT) Account Last Accessed is not 
+ Displaying the Correct Date/Time
+ JAZZ    706221  Delegation - (UAT) Login AAL entry is being made in 
+ Delegate account when they get logged into Delegator's account
+  
+ MHV ADMIN PORTAL ENHANCEMENTS
+  
+ JAZZ    693934  Performance Improvement - MHV Admin Portal should make a 
+ call to Master Veteran Index (MVI) with MVI.COMP1 Code
+ JAZZ    687577  Fortify/(Authority to Operate) ATO/AppScan work for 
+ 2018.3.0.0 Release
+ JAZZ    671211  Fortify - Review, Analyze and comment on 18.2 Admin 
+ Portal scan results for High and Critical Items
+ JAZZ    702695  Fortify Critical:  Admin Portal - Cross Site Scripting 
+ reflected from  18.2 release scans
+ JAZZ    702755  Fortify Critical:  Admin Portal - Privacy Violation from 
+ 18.2 scans
+ JAZZ    668687  Fortify High:  Admin Portal - Null Dereference from 18.2 
+ scans
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ    655305  Meds-By-Mail/ChampVA integration work - Analysis, 
+ Development and Testing for BlueButton
+ JAZZ    698210  Delegation Phase 3 - MHV Delegator should be able to 
+ access without user entering credentials in Manage Delegates page coming 
+ from Single Sign On External (SSOe)
+ JAZZ    699806  Create table and objects for STAFF_ACCOUNT_AUDIT
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ    694108  Show/Hide Option for Social Security Number (SSN) on 
+ Registration Page
+ JAZZ    704779  User ability to select 'Show' to temporarily Show/Hide 
+ the Password on Forgot Password Page (MHV SSOe/Vets.gov SSO/MHV Login 
+ Page)
+ JAZZ    694124  Update Profiles Page to reflect changes made to the 
+ Registration Page - User ability to select Show to Temporarily Show/Hide 
+ the SSN and move contact information and notifications sections
+ JAZZ    694080  Deactivation of Inactive Accounts - Basic Accounts only 
+ for 18.3 - Background Job
+ JAZZ    587186  Ensemble Services Call Migration
+ JAZZ    701392  Add back in a restriction for sending only two Health 
+ Summaries per day 
+  
+ MHV / SM NATIONAL PORTAL DEFECTS
+  
+ JAZZ    690310  Performance Improvement - MHV National Portal should only 
+ make 1305 MVI call with certain set code when Delegation Veterans Affairs 
+ Authentication Federation Infrastructure (VAAFI) Header is set to True
+ JAZZ    712896  SM email notification not occurring upon user upgrade to 
+ Premium using "Upgrade Now" button
+ JAZZ    532636  Alternate Account - Login or Register button displays the 
+ error page when login from DS LOGON
+ JAZZ    541822  When logging in with DS Logon from MHV login page then 
+ log out of DS Logon then go back in, you get an error when selecting MHV 
+ User Id and Password 
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ    712896  SM Email notification not occurring upon User Upgrade to 
+ Premium using "Upgrade Now" button.
+ JAZZ    723525  Patient Statement Enhancements Development
+  
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ    694346  MHV Personalization/Tailoring/Customization
+ JAZZ    694354  User Story (US) 01 - Allow MHV Users to Personalize their 
+ Branch of Service, Rank and Insert Branch Logo on Welcome bar 
+ JAZZ    694601  US 06 - Allow Users to set Veterans Administration 
+ Medical Center (VAMC) Preferences
+ JAZZ    694858  US 07 - VAMC Preferences user unselects their 
+ Preferred/Active Facilities
+ JAZZ    695237  US 08 - Admin Portal User Selects to View a MHV user's VA 
+ Facility List   
+ JAZZ    695405  US 09 - User Logged on MHV View Containing Header sees 
+ Customization
+ JAZZ    699586  US 11 - User views VAMC Preferences on Blue Button (BB) 
+ PDF report
+ JAZZ    699587  US 12 - User views VAMC Preferences on BB TXT Report
+ JAZZ    700622  US 13 - Incomplete Data Exists for a New Facility in the 
+ Evault Database due to being out of sync
+ JAZZ    701733  User Profile Personalization Service Layer
+ JAZZ    701745  Facility personalization Service Layer
+ JAZZ    695556  Registration Page Add Disclaimer like Social Security 
+ Administration (SSA)
+ JAZZ    695558  US 01 - User Views Registration Page Disclaimer
+ JAZZ    698543  Identity Disclaimer:  Registration Page Testing - Add 
+ Disclaimer and Subtract Congratulatory page 
+ JAZZ    699568  When Registering and the user accepts the Terms and 
+ Conditions (T&C) and Identity Disclaimer, system creates user account and 
+ displays Home Page with user automatically logged in
+ JAZZ    719131  Adding Heartbeat API service to all services. (isalive 
+ and version)
+ JAZZ    685687  Update Pathways Appointment Client to use resolved 
+ identifiers to query the Health Data Repository (HDR) Pathways Service 
+ JAZZ    708316  Online Scheduling Application (OPSS) - Users logging in 
+ can select and use SSO page that was already developed
+ JAZZ    696405  National Portal Fortify Work for 18.3
+  
+ MHV NATIONAL PORTAL DEFECTS
+  
+ JAZZ    625914  Resolve Radio Button Issue in Poll Feature of Liferay
+ JAZZ    716036  Content in System Timeout Banner error
+ JAZZ    687237  UAT SM Redesign: Table lines are missing in SM Patient in 
+ FireFox when the browser size is changed to 80% and 90% 
+ JAZZ    714673  SQA PROD: Get Care - Care Giver - Add new Provider: Error 
+ message on save for a required field is not user friendly. It seems to be 
+ printing part of the code
+ JAZZ    720704  SQA:  BBMI:  Image quality text does not show by default 
+ on a specific flow
+ JAZZ    682022  Fortify Defect: Blue Button hardcoded encryption keys may 
+ compromise system security in a way that cannot be easily remedied.
+ JAZZ    717057  SQA: Self-Entered Medication: Pink Check info box is 
+ missing for required field
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ    699587  US 12 User views VAMC preferences on BB Txt report
+ JAZZ    701745  Facility Personalization Service Layer
+ JAZZ    715722  Retire BBMI field test group by removing data from the 
+ database
+  
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ SM LEGACY ENHANCEMENTS
+  
+ JAZZ    485701  SM - Missing Check against null
+ JAZZ    577277  The SM Surrogate start and end dates are centuries off
+ JAZZ    707732  SM Patient Identifiers not displaying in clinicians Sent 
+ folders
+ JAZZ    708378  SM Patient Identifiers not displaying in clinicians Draft 
+ folders
+ JAZZ    710318  Remove period form user name in Forget User Name display
+ JAZZ    716103  SM - Poor Style: Value Never Read
+  
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS
+  
+ JAZZ    501984  MHV MVI Account Sync - MVI Data mismatch is growing - 
+ same as mvidatamatch status
+ JAZZ    548308  Incorrect correlation activity captured during log in
+ JAZZ    616121  Success Message remains on the screen when another error 
+ is displayed on the add new screen.    
+ JAZZ    622730  Add the Phone Number and Phone Number Type data fields 
+ users enter as their Preferred Method of Contact to the Help Desk tab
+ JAZZ    683847  Update content on the My Profiles, Forgot Password and 
+ Forgot User ID pages to alert users about password hint questions and 
+ password values
+ JAZZ    683854  Basic accounts whose identity is not found in MVI is 
+ getting the Relationship to the VA data field locked down for VA Patient
+ JAZZ    693059  Premium user with My Profile editable First name, Last 
+ Name, SSN, Gender and DOB fields
+ JAZZ    696718  WASA - Resolve application vulnerability to HTML 
+ Injection - medium issue
+ JAZZ    703413  Basic user updates account but the User still sees Basic  
+ JAZZ    708536  Resolve medium fortify issues on Mhv_Vital_signs module
+ JAZZ    708540  Resolve medium Fortify issues on Mhv_health_history module
+  
+ DATABASE ENHANCEMENTS
+  
+ JAZZ    692816          Modify the database change tracking reporting
+ JAZZ    701094          SM - Create a DB script to match the user's last 
+ name and last 4 SSN digits in the SM SSN field
+ JAZZ    716966          SM - Fix SM Surrogate start and end dates that 
+ are centuries off
+ JAZZ    717945          Make updates to the Detailed Database Change 
+ Tracking Report
+ JAZZ    721092          Setup an automated job to monitor for missing 
+ stations
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+  Documentation Retrieval Instructions:
+ ------------------------------------- 
+  MHV Documentation can be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 27, 2018
+Completed By:                               Date Completed: MAY 03, 2018
+Released By :                               Date Released : MAY 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

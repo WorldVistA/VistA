@@ -1,0 +1,453 @@
+
+=============================================================================
+Run Date: JUL 11, 2018                     Designation: WEBN*1.1*8
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #8                    Status: Released
+                  Compliance Date: AUG 11, 2018
+=============================================================================
+
+
+Subject: NUMI 15.5
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The NUMI WEBN*1.1*8 patch addresses issues with logging data in the NUMI 
+ Weblog table, handling errors during the manual synchronization 
+ operation, informing users of missing patient stay information like 
+ treating specialty, allowing only super users to unlock expired Physician 
+ Utilization Management Advisor (PUMA)reviews, also known as Physician 
+ Advisor (PA) reviews, allowing only super users to unlock/delete primary 
+ reviews that have expired PUMA reviews, allowing review owners to unlock 
+ a copied review entered by another user, hiding the unnecessary and not 
+ always accurate Episode Day of Care value on the Primary Review and 
+ Review screens, adding a time stamp to the NUMI generic error handling 
+ message, and informing users with more specific error messages when 
+ possible.
+  
+  
+  
+  
+ Patch Components:
+ -----------------
+ N/A   
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                             N/A                             N/A   
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A                             N/A                             N/A   
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A     N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A     N/A     N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A     N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A     N/A     N/A             N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I15949791FY17 - OQSV / NUMI - Expired PUMA Reviews w/comments after 
+ exp date
+  
+ Problem: 
+ --------
+ Expired Physician Advisor (PA) reviews show up with comments made after 
+ the expiration date because users are allowed to unlock PA reviews.
+  
+ Resolution:
+ -----------
+ To prevent expired PA reviews from showing up with comments this patch 
+ will limit the ability to unlock a PA review to super users only. In 
+ addition, only super users will be able to unlock/delete primary reviews 
+ associated with expired PA reviews.
+  
+  
+ 2. I13901016FY17 - Wrong Episode Day of Care on BH reviews
+  
+ Problem: 
+ --------
+ The NUMI Patient Review table was not designed to capture a non-integer 
+ value like 1-13, 13-X etc. Hence the episode day of care field displays 
+ an incorrect value on the Primary review screen. 
+  
+ Resolution:
+ -----------
+ To avoid the mismatch between the episode day of care field on the 
+ Primary review screen and the actual value displayed in the CERME criteria
+ in the lower section of the Primary review screen, the episode day of
+ care label will be hidden. Users are required to retrieve this information
+ from CERME criteria.
+  
+  
+ 3. R17135118FY18 - add a timestamp to the generic NUMI error displays
+  
+ Problem:
+ --------
+ NUMI generic error messages do not display a date/timestamp to the user. 
+  
+ Resolution:
+ -----------
+ This patch adds a DateTime string to the Error.aspx page. This should 
+ help somewhat in finding the errors in logs and monitoring when they are 
+ reported to Tier 2 and Tier 3 for troubleshooting.
+  
+  
+ 4. I10746276FY16 - Deceased patient warning disappeared from NUMI
+  
+ Problem:
+ --------
+ The User Guide describes a deceased patient warning that should appear in 
+ NUMI when a deceased patient is selected. This warning is no longer 
+ appearing. 
+  
+ Resolution:
+ -----------
+ A null check/empty code was added to History code to catch the deceased 
+ date and display the message.
+  
+  
+ 5. I19305917FY18 - Copying a PUMA not met review issue - PUMA child table 
+ carrying old values over on the copy function
+  
+ Problem: 
+ --------
+ NUMI generates a child record for copied PA reviews and the values 
+ persist.  This means that when the copied review does not require 
+ physician review, the physician ID from the original review still exists 
+ on the record and the physician's name is preselected on page load.
+  
+ Resolution:
+ -----------
+ Copied reviews will no longer carry over the original reviews PA review.  
+ This was the source of the data that was creating the problem.
+  
+  
+ 6.  I16085632FY17 - Cannot unlock a copied review  
+  
+ Problem: 
+ --------
+ NUMI does now allow a reviewer to unlock a copied review if the original 
+ was created by another user.
+  
+ Resolution:
+ -----------
+ The unlock transaction has been changed to check for the creator of the 
+ copied review instead of the original review.
+  
+  
+ 7. R6335030FY16 - OQSV / NUMI - Modify NUMI Login Screen
+  
+ Problem: 
+ --------
+ NUMI does not store the network credentials for first time users 
+ automatically.
+  
+ Resolution:
+ -----------
+ This patch will save users' network credentials automatically if they 
+ don't exist (are null) in the database.
+  
+  
+ 8. I7954988FY16 - PUMA review not required box checked but PUMA notified
+  
+ Problem: 
+ --------
+ NUMI is notifying PAs of copied reviews even when the review checkbox has 
+ been unchecked to denote it shouldn't go the PA.  It's also displaying 
+ the date in the data grid at the bottom of the review page of the PA 
+ review. 
+  
+ Resolution:
+ -----------
+ Copied reviews will no longer carry over the original review's PA 
+ review.  This was the source of the data that was creating the problem.
+  
+  
+ 9. I18133087FY18 - NUMI Table Not Replicating.
+  
+ Problem:
+ --------
+ The table NUMI.WebLog on SQL24 is not receiving replicated data from the 
+ NUMI production database; the data on SQL24 ends on Oct. 4, 2017. This 
+ table is supposed to be part of the replication process so it needs to 
+ have up-to-date data replicated from the production database.
+  
+ Resolution:
+ -----------
+ An enhanced Method call was created to write to the log and work with 
+ Fortify fixes.
+  
+  
+ 10. I17515964FY18 - User cannot pull up a profile for one particular 
+ person in her database.
+  
+ Problem: 
+ --------
+ Occasionally a VistA admission does not have the Patient Movement Type 
+ information which NUMI considers mandatory. When this happens NUMI fails 
+ and throws a generic error.
+  
+ Resolution:
+ -----------
+ Error handling was added to check for MovementType in the NUMI 
+ application to prevent NUMI from crashing.
+  
+  
+ 11. I17637739FY18 - NUMI manual sync error when a movement is missing key 
+ data such as Treating Specialty, Provider info.
+  
+ Problem:
+ --------
+ The Manual Synchronization with VistA page would crash NUMI if data were 
+ missing from the VistA Patient Stay that NUMI considered mandatory for 
+ synchronization. 
+  
+ Resolution:
+ -----------
+ Manual Synchronization with VistA will now display an error stating which 
+ stays did not synchronize into the application and advising the user that 
+ the data should be corrected in VistA and re-synchronized. In addition
+ the stay with missing data will be written to the info log in the
+ database with the patient name and the stay ID.
+  
+  
+ 12. I10844162FY16 - Synchronizer can't handle missing VistA treating 
+ specialty (TS) Admission record
+  
+ Problem:
+ --------
+ When a patient is admitted in VistA, 2 records are created - one is the 
+ admission record and the other is the TS/provider assignment. If the 
+ admission record is deleted, but the specialty/provider record remains, 
+ NUMI always gives the generic "an error has occurred" screen when the 
+ stay is selected. NUMI should be treating it as an invalid stay and 
+ presenting the user with the message that the stay can't be found in 
+ VistA and automatically dismissing it so that it appears on the Patient 
+ Stay Admin screen.
+  
+ Resolution:
+ -----------
+ NUMI will detect an incoming stay from VistA Integration Adapter (VIA) 
+ with an admission date of 1/1/1900.  The VIA returned stay keeps the 
+ admission record internal entry number (IEN) even when no admission 
+ record exists because it is referenced by subsequent movements, so the 
+ next best indicator is the admission date.  When the admission date 
+ doesn't exist on the admission record, VIA uses the default date of 
+ 1/1/1900.  By inference, this means that the admission part of the record 
+ pair is most likely missing and the stay is invalid.  When the 1/1/1900 
+ default date exists for a stay, NUMI will then invalidate the stay.
+  
+  
+ 13. I19096471FY18 - 2 different patient names displayed on NUMI History 
+                     screen
+     Child Tickets - INC0198769    INC0719462    INC0681409      
+                     INC0589310      INC0646282
+  
+ Problem: 
+ --------
+ NUMI users see a Patient Name mismatch on the History screen between the 
+ name displayed on the top portion of the screen (which is pulled from the 
+ NUMI database) and the name displayed in the middle of the screen that 
+ comes from VistA. This happens when the Patient Name on the Admission IEN 
+ is changed in VistA after it is synchronized into NUMI. 
+  
+ Resolution:
+ -----------
+ NUMI will invalidate the stay when the user clicks on the Patient Name on 
+ the Patient Selection screen and will give the user the option to delete 
+ the stay on the Patient Stay Administration screen.
+  
+  
+ 14. R10121514FY16 - NUMI / OQSV - Replace existing generic error  
+  
+ Problem: 
+ --------
+ Replace generic errors with more specifics about the point of failure.
+  
+ Resolution:
+ -----------
+ Updated error handling will inform users of specific points of failure 
+ such as VIA/VistA connection failure etc.
+  
+  
+ 15. R17521721FY18- Consolidate configuration files
+  
+ Problem: 
+ --------
+ NUMI release 15.3.1 included extra .config files.  This in combination 
+ with a bug in Visual Studio was generating files containing sensitive 
+ data that would need to be encrypted on production and were flagged 
+ during Fortify security scans.
+  
+ Resolution:
+ -----------
+ This is primarily a build and deployment code maintenance task.  Post 
+ build events were added to each project file to clean up extra 
+ configuration files and a unit test framework that was only used for the 
+ 15.3.1 release was excluded from the project which removes the need for 
+ the framework config file.
+  
+  
+ 16. INC0039104 - Fortify Code Quality Remediation for 15.5
+  
+ Problem: 
+ --------
+ NUMI requires code changes for the Code Quality review.
+  
+ Resolution:
+ -----------
+ This patch implements the recommended changes for Fortify. 
+  
+  
+  
+  
+  
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VAMC
+ Gainesville (NFSG)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/application.asp?appid=184
+  
+ File Name                       Title                           FTP Mode
+ -----------------------------------------------------------------------
+ numi_15_5_ug.pdf                NUMI User Guide v15.5           binary
+ numi_15_5_serversetupguide.pdf  NUMI Server Setup Guide v15.5   binary
+ numi_15_5_sysmgmtguide.pdf      NUMI System Management Guide v15.5  binary
+  
+  
+  
+ Patch Installation:
+ -------------------
+ Austin Information Technology Center (AITC) performs patch installation 
+ on a centralized web server.
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ NUMI application users need to be notified of the patch installation 
+ window after confirming the final release date and time with AITC. A 
+ maintenance page is served on the NUMI web application while installation 
+ and smoke testing are performed.
+  
+  
+ Installation Instructions:
+ --------------------------
+ NUMI is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ A back-out plan will be sent to AITC and attached to the installation 
+ change order (CO) in a separate document.
+  
+  
+ Routine Information:
+ --------------------
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 19, 2018
+Completed By:                               Date Completed: JUL 10, 2018
+Released By :                               Date Released : JUL 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

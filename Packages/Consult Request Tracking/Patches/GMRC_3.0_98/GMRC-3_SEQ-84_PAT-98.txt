@@ -1,0 +1,295 @@
+
+=============================================================================
+Run Date: MAY 18, 2018                     Designation: GMRC*3*98
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #84                      Status: Released
+                  Compliance Date: JUN 18, 2018
+=============================================================================
+
+
+Subject: CLEANUP OF CONSULT EVENTS FOR SCHEDULING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a data integrity issue related to the following issue:
+  
+ 1. I16857061FY18 - If a scheduler makes or cancels an appointment for a 
+                    consult and the current time ends in a zero (like 9:40),
+                    then the event recorded in the consult will display at
+                    the end of the consult event history instead of in
+                    sequence.
+  
+ This issue requires a fix to repair existing data effected by the issue.
+ This patch is bundled with a Scheduling patch that addresses this and other
+ issues. Below is a list of all the applications involved in this bundle 
+ along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    SCHEDULING (SD) V. 5.3                                SD*5.3*679
+    CONSULT/REQUEST TRACKING (GMRC) V. 3.0                GMRC*3.0*98
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ N/A
+  
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Service Desk Manager (SDM) Ticket(s) & Overview
+ -----------------------------------------------
+ 1. I16857061FY18 Consults are showing activities out of order in CPRS; 
+                  VistA FM shows activities in correct chronological order
+   
+ Problem:
+ -------
+ Our site is experiencing issues with Consults where the activities being 
+ recorded are out of order. I originally thought this was a result of the 
+ CONSULT TOOLBOX tool, but there are multiple sites reporting this issue, 
+ and the consensus is that this is being caused by VSE.
+  
+ Resolution:
+ ----------
+ The code that saves the SCHEDULED or STATUS CHANGE event when the appointment
+ is scheduled or canceled was corrected to save the timestamp correctly.
+  
+  
+ Test Sites:
+ ----------
+ Salt Lake City, Tomah
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                          File Name          FTP Mode
+ --------------------------------------------------------------------------
+ VistA Scheduling Enhancements GUI User Guide   VSE_VA_GUI_UG.PDF  Binary
+ VistA Scheduling Enhancements Technical Manual VSE_TM.PDF         Binary
+  
+  
+ Patch Installation:
+  
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   The components sent with this patch GMRC*3.0*98 have been included in the 
+   Host File SD_GMRC_VSE_BUNDLE_1_5.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch SD*5.3*679.
+   
+   
+   Installation Instructions
+   -------------------------
+   The components sent with this patch GMRC*3.0*98 have been included in the 
+   Host File SD_GMRC_VSE_BUNDLE_1_5.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch SD*5.3*679.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCP98
+    Before:       n/a   After:  B4638919  **98**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 14, 2017
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

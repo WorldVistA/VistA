@@ -1,0 +1,295 @@
+$TXT Created by                    KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 03/02/18 at 07:05
+=============================================================================
+Run Date: MAY 24, 2018                     Designation: DI*22.2*10
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #9                   Status: Released
+                  Compliance Date: JUN 24, 2018
+=============================================================================
+
+
+Subject: Bug Fixes and new APIs
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch DI*22.2*10 repairs the following defects:
+ 1. DIWP only supports strings up to 999 characters
+ 2. NUMDATE fix in patch 7 was not added to DINIT
+ 3. The variable DO is not killed after call to DIE
+ 4. New Application Program Interface (API) EN^DITP for repointing
+    deleted records
+ 5. New options for editing Data Types in patch 2 have no parent
+ 6. New API CHKPT^DIUTL(file, internal entry #, message)
+   
+ Patch Components:
+ ----------------- 
+ Files & Fields Associated:
+                                                   New/Modified/
+ File Name (#)                 Field Name (#)      Deleted
+ -------------                 --------------      -------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                     File #              New/Modified/Deleted
+ ---------                     ------              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ DI DATA TYPE OPTIONS           Menu               Deleted
+ DI DATA TYPE FILE              Run Routine        Deleted
+ DI DATA TYPE METHOD FILE       Run Routine        Deleted
+ DI DATA TYPE PROPERTY FILE     Run Routine        Deleted
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type      File Name    (Number)   New/Modified/Deleted
+ -------------   ----      ---------------------   --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Ticket I13413576FY17
+ Problem:
+ --------
+ Word Processing cannot parse a string greater than 999 and the FM 22.2
+ allows strings up to 4K characters.
+  
+ Resolution:
+ ----------
+ Modified DIWP and changed 999 to 9999
+  
+ 2. Ticket I15917948FY17
+ Problem:
+ --------
+ Patch DI*22.2*7 fixed the NUMDATE function in the FUNCTION file #.5,
+ but DINIT restored the old function.
+  
+ Resolution:
+ ----------
+ Modified DINIT4 and added fix to NUMDATE
+  
+ 3. Ticket I16009474FY17
+ Problem:
+ --------
+ The variable DO is not killed after a call to DIE if a user asked for
+ help in a multiple Date field.
+  
+ Resolution:
+ ----------
+ Modified DIEQ and added DO to kill statement at line Q
+  
+ 4. Ticket R13102022FY17
+ Problem:
+ --------
+ Need API to repoint a deleted value in a record, similar to what happens
+ when a pointer field value is deleted.
+  
+ Resolution:
+ ----------
+ Modified DITP and added tag EN(file, list) where file=file number,
+ list (Passed by Reference) = array containing list of entries to be
+ repointed 
+  
+ 5. Ticket R14175506FY17
+ Problem:
+ --------
+ New options that were for adding new data types and released as part of
+ patch DI*22.2*2 had no parent menu.  These option were not meant for
+ general distribution.  The options are: DI DATA TYPE OPTIONS,
+ DI DATA TYPE FILE, DI DATA TYPE METHOD FILE, and
+ DI DATA TYPE PROPERTY FILE.
+  
+ Resolution:
+ ----------
+ All four options will be deleted from the OPTION file and added to the
+ hard coded options in the DII routine.  Modified DII1 and DIFMEDT1
+ routines.
+  
+ 6. No ticket
+ Problem:
+ --------
+ Developer needs API to check what entries points to a particular record
+ in a file.
+  
+ Resolution:
+ ----------
+ CHKPT^DIUTL(file, ien, message).
+ INPUT: DIFILE=file number, DA=ien of record, DIMSG=closed global root
+ or local array
+ OUTPUT: DIMSG(0)=line count, DISMG(#)="Entry ien in FILE (file #)
+ refers to record DA" 
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*10 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*10 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ West Palm Beach, FL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new APIs can be found in the
+ FM 22.2 Developer's Guide
+  
+ Current documentation is on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                                File Name       SFTP Mode
+ -----------------------------------------------------------------
+ FM 22.2 Developer's Guide            fm22_2dg.pdf    Binary
+ FM 22.2 Technical Manual             fm22_2tm.pdf    Binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch only consists of routines. During the VistA Installation
+ Procedure of the KIDS build, the installer should back up the modified
+ routines by the use of the 'Backup a Transport Global' action
+ (step 3b in the Installations Instructions below).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.
+  
+  
+ Patch Installation:
+    
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be
+ stopped, Health Level 7 (HL7) filers do not need to be stopped, and
+ users may be on the system.  The patch should be installed during
+ non-peak hours to minimize potential for disruption to users.  This
+ patch should take less than 1 minute to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the MailMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter
+    DI*22.2*10.
+  a. Print Transport Global - This option lets you print the contents
+     of a Transport Global that is currently loaded in the ^XTMP
+     global.
+  b. Backup a Transport Global - This option will create a backup
+     message of any routines exported with this patch. It will not
+     backup any other changes such as functions.
+  c. Compare Transport Global to Current System - This option will
+     allow you to view all changes that will be made when this patch
+     is installed.  It compares all components of this patch
+     (routines, DDs, templates, etc.).
+  d. Verify Checksums in Transport Global - This option will allow
+     you to ensure the integrity of the routines that are in the
+     transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+    and when prompted for the INSTALL NAME, enter DI*22.2*10.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//' respond NO.
+  
+ 7. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//" respond NO.
+  
+ 8. If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//" respond NO. 
+  
+ 9. If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ none
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DIEQ
+    Before: B16904404   After: B16948298  **2,7,5,10**
+Routine Name: DIFMEDT1
+    Before:  B1665680   After:  B3205089  **2,10**
+Routine Name: DII1
+    Before:  B2105841   After:  B2240976  **8,10**
+Routine Name: DINIT4
+    Before: B12812168   After: B12872917  **10**
+Routine Name: DITP
+    Before: B11755027   After: B18223422  **10**
+Routine Name: DIUTL
+    Before:  B7082619   After: B13688793  **10**
+Routine Name: DIWP
+    Before: B14057388   After: B14095198  **10**
+ 
+Routine list of preceding patches: 5, 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 06, 2017
+Completed By:                               Date Completed: MAY 24, 2018
+Released By :                               Date Released : MAY 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

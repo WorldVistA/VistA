@@ -1,0 +1,287 @@
+$TXT Created by              J at CHEYL19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 06/22/18 at 15:28
+=============================================================================
+Run Date: JUL 20, 2018                     Designation: VIAB*1*12
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: EMERGENCY
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: JUL 23, 2018
+=============================================================================
+
+Associated patches: (v)VIAB*1*9    <<= must be installed BEFORE `VIAB*1*12'
+
+Subject: UPDATES TO VIA FOR CRM
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This EMERGENCY patch is required to remediate known security issues and 
+ maintain sustainment prior to a contract termination.
+  
+ The VistA Integration Adaptor (VIA) system is a middleware used to 
+ transport clinical and non-clinical electronic information between
+ producing and consuming applications in VA systems.  VIA utilizes remote
+ procedure calls (RPCs) for data requested by consuming applications.
+  
+ This patch contains modifications for 'write notes' functionality for the 
+ Customer Relationship Management (CRM) team.  
+  
+ The updates for this patch are:
+  
+ 1. The new VIABPCE SAVE remote procedure call (RPC) was added to save
+ progress note information in Computerized Patient Record System (CPRS).   
+ The calling application passes progress note updates to VIA which parses, 
+ formats, and calls the Patient Care Encounter (PCE) application program
+ interface (API) DATA2PCE^PXAPI which ultimately stores the data.
+  
+ 2. A post install routine VIAB12PO is included to add the new VIABPCE 
+ SAVE RPC to the VIAB Web Services option [VIAB WEB SERVICES OPTION].
+  
+ 3. The IMMTYPE target for VIAB GET IMMUNIZATION TYPE remote procedure call
+ (RPC) was modified to return either a list of active immunizations or one
+ or more immunizations by CVX code.
+  
+ 4. The PX SAVE DATA RPC was removed from the VIAB Web Services option 
+ [VIAB WEB SERVICES OPTION].
+  
+ 5. A comment to add Integration Control Registration (ICR) 6904 was added
+ to routine VIABPCE2.  No other changes were made to the routine.
+  
+ 6. The following remote procedure calls were added to the VIAB WEB
+ SERVICES [VIAB WEB SERVICES OPTION] option and there were no code changes 
+ for these:
+  
+     MBAA APOINTMENT LIST BY NAME
+     MBAA APPOINTMENT MAKE
+     MBAA CANCEL APPOINTMENT
+     MBAA FACILITY WAIT LIST
+     MBAA GET CLINIC AVAILABILITY
+     MBAA GET CLINIC DETAILS
+     MBAA LIST CANCELLATION REASONS
+     MBAA PATIENT PENDING APPT
+     MBAA PROVIDERS BY CLINIC
+     MBAA REMOVE FROM EWL
+     MBAA VERIFY CLINIC ACCESS
+     MBAA WAIT LIST BY DFN
+     ORWDRA32 RAORDITM
+     ORWDXA DC
+     ORWORDG ALLTREE
+     VIAB MEDHIST
+  
+ 7.  The following remote procedure calls were removed accidentally in 
+ VIAB*1*11.  They were originally in VIAB*1*9 and with this patch they are 
+ added back onto the VIAB WEB SERVICES [VIAB WEB SERVICES OPTION] option:
+  
+    ORDEA DEATEXT  
+    ORDEA SIGINFO                            
+    ORWDLR32 ALLSAMP  
+    ORWDLR32 ALLSPEC  
+    ORWDLR32 DEF  
+    ORWDLR32 GET LAB TIMES  
+    ORWDLR32 IC VALID  
+    ORWDLR32 IMMED COLLECT  
+    ORWDLR32 LOAD  
+    ORWDLR32 MAXDAYS  
+    ORWDLR33 FUTURE LAB COLLECTS  
+    ORWOR RESULT HISTORY
+    ORWDPS1 DFLTSPLY  
+    ORWDPS1 DOWSCH  
+    ORWDPS1 SCHALL  
+    ORWDPS2 ADMIN  
+    ORWDPS2 OISLCT  
+    ORWDPS32 AUTH  
+    ORWDPS32 VALSCH  
+    ORWDRA32 IMTYPSEL  
+    ORWDRA32 LOCTYPE  
+    ORWDXC ACCEPT  
+    ORWDXC ON
+    ORWU DEVICE  
+    ORWU INPLOC
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+    
+ Forms Associated:
+ N/A   
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+  
+ Options Associated: 
+  
+  Option Name                    Type              New/Modified/Deleted
+  ---------------                -----------       --------------------
+  VIAB Web Services option       Top Menu          Modified
+    [VIAB WEB SERVICES OPTION]
+  
+ Remote Procedure Calls:
+ -----------------------
+ MBAA APOINTMENT LIST BY NAME
+ MBAA APPOINTMENT MAKE
+ MBAA CANCEL APPOINTMENT
+ MBAA FACILITY WAIT LIST
+ MBAA GET CLINIC AVAILABILITY
+ MBAA GET CLINIC DETAILS
+ MBAA LIST CANCELLATION REASONS
+ MBAA PATIENT PENDING APPT
+ MBAA PROVIDERS BY CLINIC
+ MBAA REMOVE FROM EWL
+ MBAA VERIFY CLINIC ACCESS
+ MBAA WAIT LIST BY DFN
+ ORWDRA32 RAORDITM
+ ORWDXA DC
+ ORWORDG ALLTREE
+ VIABPCE SAVE
+ VIAB GET IMMUNIZATION TYPE
+ VIAB MEDHIST
+ ORDEA DEATEXT  
+ ORDEA SIGINFO                            
+ ORWDLR32 ALLSAMP  
+ ORWDLR32 ALLSPEC  
+ ORWDLR32 DEF  
+ ORWDLR32 GET LAB TIMES  
+ ORWDLR32 IC VALID  
+ ORWDLR32 IMMED COLLECT  
+ ORWDLR32 LOAD  
+ ORWDLR32 MAXDAYS  
+ ORWDLR33 FUTURE LAB COLLECTS  
+ ORWDPS1 DFLTSPLY  
+ ORWDPS1 DOWSCH  
+ ORWDPS1 SCHALL  
+ ORWDPS2 ADMIN  
+ ORWDPS2 OISLCT  
+ ORWDPS32 AUTH  
+ ORWDPS32 VALSCH  
+ ORWDRA32 IMTYPSEL  
+ ORWDRA32 LOCTYPE  
+ ORWDXC ACCEPT  
+ ORWDXC ON
+ ORWU DEVICE  
+ ORWU INPLOC
+  
+ Additional Information:
+ -----------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ -------------------------  
+ N/A
+     
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+     
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+     
+ Test Sites:
+ -----------
+ North Texas Veterans Health Care System
+ Gulf Coast Veterans Health Care System
+   
+ Patch Installation:
+ -------------------  
+     
+ Pre-Installation/Post-Installation Overview:
+ -------------------------------
+ This patch contains both pre-installation and post-installation
+ instructions.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install.
+  
+ No menu options need to be disabled.
+  
+ A post-installation routine VIAB12PO is included in this patch and it 
+ will run at the end of the installation.
+    
+ Installation Instructions:
+ -------------------------- 
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+    
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1*12:
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DDs, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+    
+   4.  From the Installation Menu, select the Install Package(s) option and
+       choose the patch (VIAB*1*12) to install.
+    
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? YES//', press <ENTER>. 
+   
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', press <ENTER>.
+    
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//', press <ENTER>.
+  
+   8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+     
+ Post-Installation Instructions:
+ -------------------------------
+ A post-installation routine VIAB12PO is included in this patch to add the
+ VIABPCE SAVE remote procedure call to the VIAB Web Services option [VIAB
+ WEB SERVICES OPTION]. This routine will be deleted once installation is 
+ complete.
+  
+ Back-Out Plan:
+ --------------------
+ Install the backup created during installation of the patch.  
+ This backup will revert VIAB* routines back to the pre-install version.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIAB12PO
+    Before:       n/a   After:  B1120242  **12**
+Routine Name: VIABPCE2
+    Before:   B815065   After:   B840437  **5,12**
+Routine Name: VIABRPC
+    Before: B70456024   After:B131841158  **7,8,9,12**
+Routine Name: VIABRPC7
+    Before:       n/a   After: B84520002  **7,8,9,12**
+ 
+Routine list of preceding patches: 5, 9
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 15, 2018
+Completed By:                               Date Completed: JUL 20, 2018
+Released By :                               Date Released : JUL 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

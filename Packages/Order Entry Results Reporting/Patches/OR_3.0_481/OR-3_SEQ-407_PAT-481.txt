@@ -1,0 +1,151 @@
+
+=============================================================================
+Run Date: JUL 02, 2018                     Designation: OR*3*481
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #407                      Status: Released
+                  Compliance Date: AUG 02, 2018
+=============================================================================
+
+Associated patches: (c)PSO*7*518       install with patch       `OR*3*481'
+                    (v)OR*3*469    <<= must be installed BEFORE `OR*3*481'
+
+Subject: MOCHA 2.1B Warranty Issues
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of warranty period & minor fixes for the MOCHA 
+ Enhancements 2.1B group of builds. A multiple package host file was
+ created to simplify installation at Veterans Health Administration (VHA)
+ facilities for the other portions. The combined host file
+ MOCHA_2_1_WARRANTY_OR_PSO_PSJ.KID contains OR*3.0*481, PSJ*5.0*358 and
+ PSO*7.0*518. In addition, there is this standalone Pharmacy Data
+ Management patch, PSS*1.0*224, which must be installed in conjunction with
+ the other builds.
+  
+ The CPRS v2.1B warranty fixes will provide the following corrections:
+ ====================================================================
+ 1. Scenario where upon entering a new clinic med or clinic infusion 
+ order, A pending outpatient medication order is not included in the 
+ duplicate therapy order check.
+  
+ 2. Entering an outpatient medication or Non-VA medication order for 
+ inpatient does not get duplicate therapy order check against PROFILE 
+ clinic med/infusion orders.
+  
+ 3. Issue with dispense drug used for order checking when entering a 
+ complex order with free text dosages.
+  
+  
+ Patch Components:
+ ================
+  
+ Files & Fields Associated:
+ -------------------------
+ N/A
+  
+ Forms Associated:
+ ----------------
+ N/A
+  
+ Mail Groups Associated:
+ ----------------------
+ N/A
+  
+ Options Associated:
+ ------------------
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Associated New Service Request(s):
+ =================================
+ N/A
+  
+ Patient Safety Issues (PSI)s:
+ ============================
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+ Blood Bank Clearance:
+ ====================
+ N/A
+  
+ Test Sites:
+ ==========
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+ Documentation Retrieval Instructions:
+ ====================================
+ Minor documentation changes have been made to some of the Pharmacy Data
+ Management manuals as part of this release. Please see the PSS*1.0*224
+ patch description for more information on those changes.
+  
+ Patch Installation:
+ ==================
+ Please refer to the PSO*7.0*518 patch description for install instructions
+ and backout procedures for all of the MOCHA 2.1B WARRANTY patches.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDSGCHK
+    Before: B98387224   After: B98434392  **280,352,345,311,384,395,382,481**
+Routine Name: ORKCHK4
+    Before: B27733732   After: B28811607  **6,32,74,87,94,123,162,190,
+                                           249,272,345,481**
+Routine Name: ORKCHK6
+    Before: B28136818   After: B29214406  **6,32,74,87,94,123,162,190,
+                                           249,280,272,346,345,269,469,
+                                           481**
+Routine Name: ORKPS1
+    Before:B108794510   After:B110514189  **232,272,346,352,345,311,402,
+                                           457,469,481**
+ 
+Routine list of preceding patches: 382, 469
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2018
+Completed By:                               Date Completed: JUL 02, 2018
+Released By :                               Date Released : JUL 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

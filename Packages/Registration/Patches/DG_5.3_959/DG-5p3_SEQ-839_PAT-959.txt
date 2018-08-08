@@ -1,0 +1,297 @@
+$TXT Created by                at DEVVOO.DOMAIN.EXT  (KIDS) on Thursday, 05/03/18 at 12:24
+=============================================================================
+Run Date: JUL 02, 2018                     Designation: DG*5.3*959
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #839                    Status: Released
+                  Compliance Date: AUG 02, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*935  <<= must be installed BEFORE `DG*5.3*959'
+
+Subject: PATCH TO A PATCH - DG*5.3*935 DEFECT FIXES
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*959 is being released to correct two defects found in patch 
+ DG*5.3*935 (MEMBER ID, HEALTH BENEFIT PLAN, FUTURE DISCHARGE DATE 
+ UPDATES).
+  
+ Patch DG*5.3*935, which was released on 2/7/2018 by the Enrollment System 
+ Modernization (ESM) Project Team, included code to delete Health
+ Eligibility Center (HEC)-owned Military Service Episodes (MSE) when an
+ ORU-Z11 or ORF-Z11 HL7 message from ES does not contain any ZMH segments.
+ This is an indication to Vista that all HEC-owned MSEs for a patient
+ should be deleted from the Military Service Episode (MSE) sub-file
+ (#.3216) in the Patient file (#2). The two defects associated with this
+ functionality and their resolution are described in the 'Defect Tracking
+ System Ticket(s) & Overview' section of this patch.
+  
+ Files & Fields
+ Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Incident #I18942491FY18 - An error in routine DGNOZMH is occurring when
+    processing an ORU-Z11 or ORF-Z11 HL7 message from ES with no ZMH
+    segment.
+  
+ Problem:
+ --------
+ An error <SUBSCRIPT>INCDEL+3^DGNOZMH is occurring when processing an
+ ORU-Z11 or ORF-Z11 message with no ZMH segment.
+  
+ Resolution:
+ -----------
+ a. Rewrite of the code that checks the DATA LOCKED field (#.07) of the
+ MSE record. If it equals 1, this is a HEC-owned MSE and should be deleted.
+ The logic did not account for having a zero (header) node for the MSE
+ multiple (^DPT(DFN,.3216,0)) that is incomplete (not having four pieces of
+ data, the last two of which define the last MSE subscript and the number
+ of MSE entries in the #.3216 sub-file). A couple of examples are:
+ ^DPT(DFN,.3216,0)="^2.3216D" and ^DPT(DFN,.3216,0)="^2.3216^^0". When
+ either of these zero nodes are encountered when processing an ORU-Z11 
+ or ORF-Z11 HL7 message from ES with no ZMH segment, the system errors out
+ with a SUBSCRIPT error. The logic now determines if the zero node is
+ complete before deleting HEC-owned MSEs. Otherwise, it QUITS and returns
+ to process the next Z11 segment.
+  
+ b. In addition to the change described above, the logic also checks for 
+ incomplete MSEs in the #.3216 sub-file and deletes them if they do not
+ have the required fields (no DISCHARGE DATE (#.03) and no FUTURE
+ DISCHARGE DATE (#.08)). The logic was checking only the last MSE, but
+ now it checks all MSEs.
+  
+ 2. Incident (Internal) - Defect discovered internally during research of
+    Incident #I18942491FY18
+  
+ Problem:
+ --------
+ This defect was discovered internally during research of Incident 
+ #I18942491FY18. When an ORU-Z11 or ORF-Z11 HL7 message from ES doesn't
+ have any MSE-type ZMH segments, but it does have a non-MSE ZMH segment,
+ the MSEs in the Patient file (#2) sub-file #.3216 are not deleted; only
+ the non-MSE ZMH segment(s) are processed.
+  
+ Resolution:
+ -----------
+ There is now a distinction between an MSE ZMH and a non-MSE ZMH, so when
+ there are no MSE ZMH segments, but there is at least one non-MSE ZMH
+ segment, the MSEs in node #.3216 are deleted and the non-MSE(s) are
+ processed.
+  
+ Test Sites:
+ -----------                                      
+ * Richard L. Roudebush VA Medical Center (Indianapolis VAMC)
+ * VA New York Harbor Healthcare System
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ There is no new or updated documentation being released with this patch.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+     date/time.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped. Stop All Messaging
+     Background Processes by using the [HL STOP ALL] option on the Filer
+     and Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+  
+ 3.  The following options should be disabled during installation:
+     
+     Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+     Patient Inquiry          [DG PATIENT INQUIRY]
+     Preregister A Patient    [DGPRE PRE-REGISTER OPTION]
+     Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+     View Registration Data   [DG REGISTRATION VIEW]
+     Register A Patient       [DG REGISTER PATIENT]
+     Admit A Patient          [DG ADMIT PATIENT]
+    
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation & Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch #
+     (DG*5.3*959):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. 
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', respond YES.
+  
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options:
+  
+     The following options should be disabled during installation:
+     
+     Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+     Patient Inquiry          [DG PATIENT INQUIRY]
+     Preregister A Patient    [DGPRE PRE-REGISTER OPTION]
+     Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+     View Registration Data   [DG REGISTRATION VIEW]
+     Register A Patient       [DG REGISTER PATIENT]
+     Admit A Patient          [DG ADMIT PATIENT]
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].  
+  
+ Back-Out Plan
+ -------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a Your IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ 1. Back-out Procedure:
+  
+ Prior to installing this patch (DG*5.3*959), the installer should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ 2. Validation of Roll Back Procedure:
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the DG* routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ DG*5.3*959 patch have been rolled back, the first two lines of the 
+ routines will no longer contain the designation of patch DG*5.3*959 in
+ the patch list section on line 2.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL1
+    Before: B54858665   After: B62801103  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842,894,
+                                           871,935,959**
+Routine Name: DGNOZMH
+    Before:  B1893168   After:  B2107871  **935,959**
+ 
+Routine list of preceding patches: 935
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2018
+Completed By:                               Date Completed: JUL 02, 2018
+Released By :                               Date Released : JUL 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

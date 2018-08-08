@@ -1,0 +1,225 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/02/18 at 09:42
+=============================================================================
+Run Date: MAY 03, 2018                     Designation: RMPR*3*193
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #170                      Status: Released
+                  Compliance Date: JUN 03, 2018
+=============================================================================
+
+Associated patches: (v)RMPR*3*83   <<= must be installed BEFORE `RMPR*3*193'
+
+Subject: OBTAIN INSTITUTION IEN AND FIX STATION FILING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ------------
+  
+ This patch adds the variable RMPRSITIEN to obtain the Institution 
+ Internal Entry Number (IEN) by using the entered Station Number. The data 
+ will then be stored correctly into the Prosthetics Suspense (668) file.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                       File #          New/Modified/Deleted
+ ---------                       ------          --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                             N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                             N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A                             N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.      R17777835FY18 - Prosthetics IFC Consult from Southern Nevada not 
+                         crossing into RMPR package.
+  
+ Problem:
+ --------
+ Prosthetics IFC Consult from Southern Nevada HCS (Station #593) are 
+ failing to populate in Palo Alto's Prosthetics package in Vista because 
+ the Institution Internal Entry Number (IEN) in Palo Alto system does not 
+ match the Station Number for Southern Nevada and the prosthetics software 
+ currently uses the Station Number passed in as if it was also the 
+ Institution IEN.
+  
+ Resolution:
+ -----------
+ Add the variable RMPRSITIEN to obtain the Institution IEN using the 
+ Station Number.
+  
+  
+ Test Sites:
+ -----------
+ Orlando VAMC
+ VA Palo Alto HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ N/A
+  
+  
+ Title                           File Name                       FTP Mode
+ ------------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is not necessary to disable any options.  You may install this patch 
+ at any time without interruption to users.  It should take less than 2 
+ minutes to install this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+  
+    2.   From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+  
+    3.   From this menu, you may select to use the following options: (when
+         prompted for INSTALL NAME, enter RMPR*3.0*193)
+  
+            a.   Verify Checksums in Transport Global - This option will 
+                 allow you to ensure the integrity of the routines that 
+                 are in the transport global.
+            b.   Print Transport Global - This option will allow you to 
+                 view the components of the KIDS build.
+            c.   Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of
+                 this patch (routines, DD's, templates, etc.).
+            d.   Backup a Transport Global - This option will create a
+                 backup message of any routines exported with this patch.
+                 It will not backup any other changes such as DD's or
+                 templates.
+  
+    4.   Use the Install Package(s) option and select the package
+         RMPR*3.0*193.
+  
+    5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", respond NO.
+  
+    6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09,1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRFC3
+    Before:  B5404403   After:  B5993521  **83,193**
+Routine Name: RMPRFC4
+    Before: B13693524   After: B13895528  **83,193**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2018
+Completed By:                               Date Completed: MAY 02, 2018
+Released By :                               Date Released : MAY 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

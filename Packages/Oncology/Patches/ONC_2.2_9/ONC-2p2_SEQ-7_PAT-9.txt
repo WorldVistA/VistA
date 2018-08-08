@@ -1,0 +1,274 @@
+
+=============================================================================
+Run Date: JUN 20, 2018                     Designation: ONC*2.2*9
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #7                    Status: Released
+                  Compliance Date: JUL 21, 2018
+=============================================================================
+
+Associated patches: (v)ONC*2.2*6   <<= must be installed BEFORE `ONC*2.2*9'
+
+Subject: Fix State Reporting and other issues
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ 1. Remove Cases where Class of Case=34 from State Extracts
+ In the "Create a report to preview State/VACCR output" [ONCO #STATE
+ DATA REPORT] and the "Create State/VACCR Data Download" [ONCO
+ #STATE DATA DISK] options, if the "Analytic Cases Only? //" prompt is
+ answered "NO", primaries with CLASS OF CASE=34 are currently included
+ in the State Extracts.  These cases should not be included in the State
+ Extracts and have been removed from the data download and the preview
+ report in the two options above.
+ 
+ 2. Histology Updates for ICD-O-3 MORPHOLOGY file (#169.3) in Preparation
+ for NAACCR v2018
+ NAACCR has provided a list of new histology codes, behavior codes and
+ new terms that will be reportable in 2018.  In preparation for these updates
+ the new and updated codes will be included in the ICD-O-3 MORPHOLOGY file
+ (#169.3) file and the length of the SYNONYM/EQUIVALENT TERM field (#2)
+ sub-field (#169.32, .01) has been expanded to 70 characters.
+ The new histology descriptions may be found here:
+ https://www.naaccr.org/2018-implementation/
+ 
+ 3. Problem with Clinical and Pathologic Stage Group fields automatically
+ filling (A) or (B) suffix
+ In the Abstract for Lymphoma cases, in the ONCOLOGY PRIMARY file (#165.5),
+ STAGE GROUP CLINICAL field (#38) and STAGE GROUP PATHOLOGIC (#88) fields 
+ were inadvertently getting an extra suffix.
+ This was due to an update in Patch ONC*2.2*6 (item # 8) in which new codes
+ were added to the Stage Group values, so that the automatic filling of the
+ suffix from the ONCOLOGY PRIMARY file (#165.5), LYMPH NODES field (#31) was
+ redundant.  This redundancy has been removed.
+ 
+ 4. Send BLANK for State/Requestor Items (columns 2340-3339 in SEER State Extract
+ In the "Create State/VACCR Data Download" [ONCO #STATE DATA DISK] option,
+ the SEER State Record Layout (V16.0) was sending the NPI Primary Surgeon,
+ Radiation Oncologist and Medical Oncologist NPI numbers in columns 2340-2369
+ which was causing a problem.  These columns should be reserved for State
+ Specific data fields and therefore these values will be removed, and columns 
+ 2340-3339 will be blank.
+ 
+ 5. New Grade fields and Staging/SSDi word processing fields added to Abstracts
+ In preparation for the NAACCR 2018 implementation, 3 new Grade fields and 2
+ new word processing fields have been added to the Abstract Edit Primary
+ [ONCO ABSTRACT-EDIT] option and displays.  The new Grade fields are GRADE
+ CLINICAL (#165.5, #24.3), GRADE PATHOLOGICAL (#165.5, #24.4) and GRADE
+ POST-THERAPY (#165.5, #24.5).  These fields do not yet have all of the site
+ specific codes for each field but they will allow users to enter the allowable
+ values (1,2,3,4,5,8,9,A,B,C,D,E,L,H,M,S).  The TEXT-STAGING (#165.5, #285)
+ and TEXT-SITE SPECIFIC DATA ITEMS (#165.5, #286) word processing fields
+ have also been added to assist registrars in storing text data relevant to
+ staging and the site-specific data items.
+ 
+ 
+ Test Sites: 
+ -----------
+ Asheville, NC VAMC 
+ Washington, DC VAMC  
+ West Haven, CT  
+  
+ PATCH COMPONENTS:
+ =================
+  
+ Routines:
+ ---------
+ ONC2PS09
+ ONCACD1
+ ONCODIS
+ ONCOPA1
+ ONCOTNS
+ ONCPCI
+ ONCPSD
+ ONCUPLPR
+  
+ Files & Fields Associated:
+ --------------------------                                    New/Modified/ 
+ File Name (#)                Field Name (#)                      Deleted 
+ -------------                ------------------               -----------------
+ ONCOLOGY PRIMARY (#165.5)    GRADE CLINICAL                   New
+                              GRADE PATHOLOGICAL               New
+                              GRADE POST-THERAPY               New
+                              TEXT-STAGING                     New
+                              TEXT-SITE SPECIFIC DATA ITEMS    New
+ 
+ ICD-O-3 MORPHOLOGY (#169.3)  <DATA>                           Modified
+ 
+ ICD-O-3 MORPHOLOGY (#169.3)  SYNONYM/EQV TERM (#169.32,.01)   Modified 
+ 
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ ONCO ABSTRACT-I    FILE #165.5     Type: Input Template
+  
+ Documentation Retrieval:
+ ========================
+ There are no documentation changes with this patch but the existing 
+ Oncology documentation is available on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices: 
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve Oncology documentation in one of the following ways: 
+   (1) The preferred method is to SFTP the files from     
+       download.vista.domain.ext, which will transmit the files from 
+       the first available FTP server.
+   (2) Sites may also elect to retrieve documentation directly from a
+       specific server listed below: 
+         Hines          ftp.domain.ext
+         Salt Lake City ftp.domain.ext
+  
+ (3) Documentation can also be retrieved from the VistA Documentation  
+     Library (VDL) on the Internet at the following address, 
+     http://www.domain.ext/vdl.  
+  
+ Patch Installation:
+ =================== 
+ Pre/Post Installation Overview: 
+ -------------------------------
+ There is a pre-installation routine included called ONCUPLPR; there is no 
+ post-installation routine for this patch.   
+  
+ Installation instructions:
+ -------------------------- 
+ This patch should be loaded with Oncology users off the system. 
+ Installation should take less than 5 minutes. The patch could also
+ be queued for installation.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P9.KID.
+     
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT           
+   
+  The software distribution includes: 
+     
+ File Name                        Description                FTP Mode
+ --------------------------------------------------------------------------
+ ONC22P9.KID                      KIDS Build                 ASCII
+  
+ 
+  1. Load the KIDS distribution file via the 'Load a Distribution' option 
+     on the KIDS Installation menu. 
+  
+  2. Prior to installing the patch you may want to make use of the 
+     following optional installation options located on the
+     KIDS Installation menu:
+   
+     a. Verify Checksums in Transport Global - This option will 
+        allow you to ensure the integrity of the routines that are in the
+        transport global. 
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).  
+     c. Backup a Transport Global - This option will create a 
+        backup message of any routines exported with this patch. It will 
+        not backup any other changes such as DD's or templates.  
+  
+  3. Install the KIDS distribution via the 'Install Package(s)'  
+       option on the KIDS Installation menu.
+  
+       a. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//' Answer NO.      
+       b. When prompted 'Want KIDS to INHIBIT LOGONS during the install'
+          NO//' Answer NO.   
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? NO//' Answer NO. 
+  
+ Back out/Rollback Plan
+ ----------------------
+  Backout of this patch will be performed only with the concurrence and 
+  participation of the appropriate VA site/region personnel. The decision 
+  to back out the patch will be a joint decision between VA site/region 
+  personnel and other appropriate VA personnel. 
+   
+  Prior to installing the updated KIDS package, the site/region should have 
+  saved a backup of the routines in a mail message using the Backup a 
+  Transport Global [XPD BACKUP] menu option. The message containing the 
+  backed up routines can be loaded with the "Xtract PackMan" function at 
+  the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+  then used to install the backed up routines onto the VistA system.
+ 
+ Note: In the event that a site decides to back out this 
+  patch, the site should contact the National Service Desk (NSD) to submit 
+  an IT Service Desk ticket. The development team will then assist with the
+  backout process and restoration of the DD and Input Template.
+ 
+ Validation of Backout Procedure of the Routines: 
+  -----------------------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+  the ONC routines contained in this patch using the option First Line 
+  Routine Print [XU FIRST LINE PRINT]. Once the ONC routines have been 
+  backed out, the first two lines of the routines will no longer contain 
+  the designation of patch ONC*2.2*9 on line 2 in the patch list section.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONC2PS09
+    Before:       n/a   After:  B2237612  **9**
+Routine Name: ONCACD1
+    Before: B68896487   After: B70408549  **1,4,5,8,9**
+Routine Name: ONCODIS
+    Before:   B774142   After:   B825697  **1,4,7,5,8,6,9**
+Routine Name: ONCOPA1
+    Before: B58177342   After: B60892840  **1,5,6,9**
+Routine Name: ONCOTNS
+    Before: B19091763   After: B19790752  **1,9**
+Routine Name: ONCPCI
+    Before: B24563873   After: B27235694  **1,9**
+Routine Name: ONCPSD
+    Before:  B8210758   After:  B8425456  **1,6,9**
+Routine Name: ONCUPLPR
+    Before:    B16433   After:  B1000520  **6,9**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2018
+Completed By:                               Date Completed: JUN 19, 2018
+Released By :                               Date Released : JUN 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

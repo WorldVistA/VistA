@@ -1,0 +1,153 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/20/18 at 14:34
+=============================================================================
+Run Date: JUL 19, 2018                     Designation: PSO*7*526
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #433                      Status: Released
+                  Compliance Date: AUG 19, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*496   <<= must be installed BEFORE `PSO*7*526'
+                    (v)PSO*7*504   <<= must be installed BEFORE `PSO*7*526'
+
+Subject: REFILL DT EN+14 DDIOL ERROR/OTHER PAT LANG PSODIR(DFLG) ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. INC0105896 - <SYNTAX> error
+      Duplicate:  INC0131321 
+      Duplicate:  INC0028243 
+ 2. INC0320678 - <UNDEFINED> Error 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC0105896 - <SYNTAX> error
+   
+ Problem: 
+ --------
+ A Syntax error occurs when editing a prescription refill and the space bar
+ is used to re-select the refill date.   Example: The error that appears 
+ in the trap is <SYNTAX>EN+14^DDIOL
+  
+ Resolution:
+ -----------
+ Modify FLDTINTR^PSOUTLA so the syntax is correct when displaying the 
+ 'INVALID DATE' message.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOUTLA.
+  
+  
+ 2. INC0320678 - <UNDEFINED> error
+   
+ Problem: 
+ --------
+ Various errors occur after editing Patient Instructions and Other Patient
+ Instructions for patients with another language preference.  Example: The 
+ error that appears in the trap will show as <UNDEFINED> PSODIR("DFLG")
+  
+ Resolution:
+ -----------
+ Modify PSODIR2 and PSODIR3 so the undefined error no longer occurs after
+ editing Patient Instructions and Other Patient Instructions.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routines PSODIR2 and PSODIR3.
+  
+  
+ Test Sites:
+ -----------
+ Durham HCS
+ Martinsburg VAMC
+  
+ Installation Instructions:
+ --------------------------
+ Users should not be processing prescriptions while patch is being 
+ installed.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+       When prompted for INSTALL NAME, enter the patch #, PSO*7.0*526:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' respond NO.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR2
+    Before: B28893582   After: B29095518  **3,9,26,46,124,146,139,152,
+                                           166,504,526**
+Routine Name: PSODIR3
+    Before: B18185000   After: B18349076  **3,46,184,222,206,318,444,526**
+Routine Name: PSOUTLA
+    Before: B52204149   After: B52284744  **1,15,23,56,126,222,354,444,
+                                           496,526**
+ 
+Routine list of preceding patches: 496, 504
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2018
+Completed By:                               Date Completed: JUL 18, 2018
+Released By :                               Date Released : JUL 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

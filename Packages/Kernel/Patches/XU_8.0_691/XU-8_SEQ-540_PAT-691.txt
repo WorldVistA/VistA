@@ -1,0 +1,414 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Wednesday, 03/21/18 at 10:23
+=============================================================================
+Run Date: MAY 23, 2018                     Designation: XU*8*691
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #540                      Status: Released
+                  Compliance Date: JUN 23, 2018
+=============================================================================
+
+
+Subject: RPCS FOR NEW PERSON FILE
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ There are no required builds for patch XU*8.0*691.
+  
+ Enhancements
+ The following enhancements exported in this patch were requested by and
+ in support of the Master Veteran Index (MVI) application for viewing and
+ managing Identity Access Management (IAM) data in the NEW PERSON File
+ (#200) in VistA for 2 Factor Authentication (2FA).
+  
+ Enhancement #1
+ A new restricted Remote Procedure Call (RPC) [XUS MVI NEW PERSON GET]
+ was created to allow execution of the new 'GET^XUMVINPU' Application 
+ Programming Interface (API) which will search for and return an existing
+ entry, if it exists, from the NEW PERSON File (#200). An array containing
+ the internal/external values of the user's information from the NEW PERSON
+ File (#200) for the following specific fields will be returned:
+   
+ ARRAY FORMAT: 
+           FILE #;FIELD #^FIELD NAME^INTERNAL VALUE^EXTERNAL VALUE
+  
+ FIELDS (Field #): 
+         - INTERNAL ENTRY NUMBER (IEN) [Or DUZ] (#.001)
+         - NAME (.#01)   
+         - DISUSER (#7)
+         - TERMINATION DATE (#9.2)
+         - TERMINATION REASON (#9.4)
+         - PROHIBITED TIMES FOR SIGN-ON (#15)
+         - DATE VERIFY CODE LAST CHANGED (#11.2)
+         - STREET ADDRESS 1 (#.111)
+         - OFFICE PHONE (#.132)
+         - EMAIL ADDRESS (#.151)
+         - DATE ENTERED (#30)
+         - CREATOR (#31)
+         - SSN (#9)
+         - LAST SIGN-ON DATE/TIME (#202)
+         - XUS LOGON ATTEMPT COUNT (#202.02)
+         - XUS ACTIVE USER (#.03)
+         - ENTRY LAST EDIT DATE (#202.04)
+         - LOCKOUT USER UNTIL (#202.05)
+         - DIVISION (#.01 in Sub-File 200.02)
+         - SERVICE/SECTION (#29)
+         - PRIMARY MENU OPTION (#201)
+         NOTE: Each SECONDARY MENU OPTIONS for the user is returned in
+               subsequent array entries.
+         - SECONDARY MENU OPTIONS (#.01 from Sub-File 200.03)
+         - SECID (#205.1)
+         - SUBJECT ORGANIZATION (#205.2)
+         - SUBJECT ORGANIZATION ID (#205.3)
+         - UNIQUE USER ID (#205.4)
+         - ADUPN (#205.5)
+         - NETWORK USERNAME (#501.1)
+         
+         NOTE: The following fields returned are actually retrieved from
+               the NAME COMPONENTS File (#20):
+         - FAMILY (LAST) NAME (#1)
+         - GIVEN (FIRST) NAME (#2)
+         - MIDDLE NAME (#3)
+         - PREFIX (#4)
+         - SUFFIX (#5)
+         - DEGREE (#6)
+  
+ If no entry is found for a user, then the RPC will return:
+  
+           '-1^[Specific Error Message]'
+  
+ RPC [XUS MVI NEW PERSON GET]:
+  
+ NAME: XUS MVI NEW PERSON GET            TAG: GET
+   ROUTINE: XUMVINPU                     RETURN VALUE TYPE: GLOBAL ARRAY
+   AVAILABILITY: AGREEMENT               WORD WRAP ON: TRUE
+   VERSION: 1                            APP PROXY ALLOWED: No
+  DESCRIPTION:   
+  This restricted RPC is used exclusively by the Master Veteran Index (MVI) 
+  to retrieve data (by DUZ or SECID) from the VistA NEW PERSON file (#200).
+ INPUT PARAMETER: DUZ                    PARAMETER TYPE: LITERAL
+   MAXIMUM DATA LENGTH: 40               REQUIRED: NO
+   SEQUENCE NUMBER: 1
+  DESCRIPTION:   
+  File IEN in the NEW PERSON file (#200)
+ INPUT PARAMETER: SECID                  PARAMETER TYPE: LITERAL
+   MAXIMUM DATA LENGTH: 40               REQUIRED: NO
+   SEQUENCE NUMBER: 2
+  DESCRIPTION:   
+  SECID field (#205.1) in the NEW PERSON file (#200)
+  RETURN PARAMETER DESCRIPTION:   
+   Success:
+    XURET = ^TMP("XUMVINPU",$J)
+     @XURET@(#) = FILE #;FIELD #^FIELD NAME^INTERNAL VALUE^EXTERNAL VALUE
+     @XURET@(1)="200;IEN^DUZ^^"
+     @XURET@(2)="200;.01^NAME^^"
+     @XURET@(3)="200;7^DISUSER^^"
+     @XURET@(4)="200;9.2^TERMINATION DATE^^"
+     @XURET@(5)="200;9.4^Termination Reason^^"
+     @XURET@(6)="200;15^PROHIBITED TIMES FOR SIGN-ON^^"
+     @XURET@(7)="200;11.2^DATE VERIFY CODE LAST CHANGED^^"
+     @XURET@(8)="200;.111^STREET ADDRESS 1^^"
+     @XURET@(9)="200;.132^OFFICE PHONE^^"
+     @XURET@(10)="200;.151^EMAIL ADDRESS^^"
+     @XURET@(11)="200;30^DATE ENTERED^^"
+     @XURET@(12)="200;31^CREATOR^^"
+     @XURET@(13)="200;9^SSN^^"
+     @XURET@(14)="200;202^LAST SIGN-ON DATE/TIME^"
+     @XURET@(15)="200;202.02^XUS Logon Attempt Count^^"
+     @XURET@(16)="200;202.03^XUS Active User^^"
+     @XURET@(17)="200;202.04^Entry Last Edit Date^^"
+     @XURET@(18)="200;202.05^LOCKOUT USER UNTIL^^"
+     @XURET@(19)="200.02;.01^DIVISION^1^^"
+     @XURET@(20)="200.02;.01^DIVISION^2
+     @XURET@(21)="200;10.1^NAME COMPONENTS^^"
+     @XURET@(22)="20;1^FAMILY (LAST) NAME^^"
+     @XURET@(23)="20;2^GIVEN (FIRST) NAME^^"
+     @XURET@(24)="20;3^MIDDLE NAME^^"
+     @XURET@(25)="20;4^PREFIX^^"
+     @XURET@(26)="20;5^SUFFIX^^"
+     @XURET@(27)="20;6^DEGREE^^"
+     @XURET@(28)="200;29^SERVICE/SECTION^^"
+     @XURET@(29)="200;201^PRIMARY MENU OPTION^^"
+     @XURET@(30)="200.03;.01^SECONDARY MENU OPTIONS^1^^"
+     @XURET@(31)="200.03;.01^SECONDARY MENU OPTIONS^2^^"
+     @XURET@(32)="200.03;.01^SECONDARY MENU OPTIONS^3^^"
+     @XURET@(33)="200;205.1^SECID^^"
+     @XURET@(34)="200;205.2^SUBJECT ORGANIZATION^^"
+     @XURET@(35)="200;205.3^SUBJECT ORGANIZATION ID^^"
+     @XURET@(36)="200;205.4^UNIQUE USER ID^^"
+     @XURET@(37)="200;205.5^ADUPN^^"
+     @XURET@(38)="200;501.1^NETWORK USERNAME^^"
+   
+   Fail:
+    XURET = ^TMP("XUMVINPU",$J)
+    @XURET@(1)="-1^Invalid User" 
+             or
+    @XURET@(1)="-1^No Data for User: ######"
+    
+ Enhancement #2   
+ A new restricted RPC [XUS MVI NEW PERSON UPDATE] was created to allow
+ execution of the new 'UPDATE^XUMVINPU' API, which will allow the 
+ following select fields to be updated to correct any issues discovered
+ for an existing entry in the NEW PERSON File (#200):
+  
+      - NAME                    (#.01)
+      - SECID                   (#205.1)
+      - SUBJECT ORGANIZATION    (#205.2)
+      - SUBJECT ORGANIZATION ID (#205.3)
+      - UNIQUE USER ID          (#205.4)
+      - ADUPN                   (#205.5)
+  
+ If the update is successful then the RPC will return a '1' else if an
+ error occurs during execution of the update, then the RPC will return the
+ following:
+  
+           '-1^[Specific Error Message]'
+  
+ RPC [XUS MVI NEW PERSON UPDATE]:
+  
+ NAME: XUS MVI NEW PERSON UPDATE         TAG: UPDATE
+ ROUTINE: XUMVINPU
+   RETURN VALUE TYPE: SINGLE VALUE       AVAILABILITY: AGREEMENT
+ VERSION: 1
+   APP PROXY ALLOWED: No
+  DESCRIPTION:   
+  This restricted RPC is used exclusively by the Master Veteran Index (MVI)
+  to update an entry (by DUZ) in the VistA NEW PERSON file (#200).
+ INPUT PARAMETER: XUARR                  PARAMETER TYPE: LIST
+ MAXIMUM DATA LENGTH: 255
+   REQUIRED: YES                         SEQUENCE NUMBER: 1
+  DESCRIPTION:   
+  The IEN (DUZ) for the NEW PERSON (#200) file is required to file the other
+  fields.
+   
+    XUARR(#) = FILE #;FIELD #^FIELD NAME^INTERNAL VALUE^EXTERNAL VALUE
+    XUARR(0)="200;IEN^DUZ^^"
+    XUARR(#)="200;.01^NAME^^"
+    XUARR(#)="200;205.1^SECID^^"
+    XUARR(#)="200;205.2^SUBJECT ORGANIZATION^^"
+    XUARR(#)="200;205.3^SUBJECT ORGANIZATION ID^^"
+    XUARR(#)="200;205.4^UNIQUE USER ID^^"
+    XUARR(#)="200;205.5^ADUPN^^"
+  RETURN PARAMETER DESCRIPTION:   
+    Success:
+     XURET(0) = 1
+   
+    Fail:
+     XURET(0) = "-1^No data passed"
+     XURET(0) = "-1^Invalid User DUZ (null)"
+     XURET(0) = "-1^User '"_XUDUZ_"' does not exist"
+     XURET(0) = "-1^Invalid Name Component IEN"
+     XURET(0) = "-1^No Data for Name Component IEN: "_NCIEN
+     XURET(0) = "-1^No data to file for record '"_XUDUZ_"' in file 200
+     XURET(0) = "-1^Unable to lock record '"_XUDUZ_"' in file 200" 
+     XURET(0) = "-1^"_$G(XUERR("DIERR",1,"TEXT",1))
+  
+     
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ XUS MVI NEW PERSON GET            NEW
+ XUS MVI NEW PERSON UPDATE         NEW
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+  
+ Blood Bank Team Coordination
+ ----------------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*691 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*691 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+   
+ Test Sites:
+ ----------
+ Montana VA HCS (Fort Harrison VAMC)
+ Salisbury VAMC
+     
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being distributed as a PackMan message.
+     
+   
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation routines in this patch.
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install.  This patch may be 
+ installed with users on the system. No options or protocols need to
+ be disabled and the installation may be queued.   
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. XU*8.0*691):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.  
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan
+ -------------
+ The back-out procedure would consist of completely removing (Ie. deleting)
+ the new RPCs (through FM) and the single new routine listed below, as all
+ of the components in this patch are 'NEW':
+  
+       - RPC: XUS MVI NEW PERSON GET
+       - RPC: XUS MVI NEW PERSON UPDATRE
+       - ROUTINE: XUMVINPU
+  
+ If assistance is still required to back-out the patch please log a CA
+ Service Desk Manager (SDM) ticket so the development team can assist in
+ the process.
+   
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMVINPU
+    Before:       n/a   After: B42823064  **691**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 30, 2018
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

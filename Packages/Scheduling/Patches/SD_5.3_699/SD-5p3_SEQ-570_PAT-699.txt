@@ -1,0 +1,151 @@
+
+=============================================================================
+Run Date: JUL 02, 2018                     Designation: SD*5.3*699
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #570                    Status: Released
+                  Compliance Date: JUL 09, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*679  <<= must be installed BEFORE `SD*5.3*699'
+
+Subject: VISTA SCHEDULING GUI 2.0.0.15.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ VistA Scheduling (VS) Graphical User Interface (GUI) version 2.0.0.15 was
+ found to contain a few defects upon production release that were not
+ caught in earlier rounds of testing. A new release, VistA Scheduling GUI
+ version 2.0.0.15.1, is being distributed via SCCM with fixes for these
+ issues.
+  
+ These defects are GUI only. There is no new VistA patch associated with this
+ GUI release, as it continues to use the VistA patch associated with the
+ previous GUI release, SD*5.3*679.
+  
+ The corrected defects are as follows (with a workaround for dealing with each
+ defect before the GUI update is applied):
+ 1. Appointment start time and duration
+     a. Problem: During some overbooking and Multiple Return to Clinic (MRTC)
+        actions a system bug will change the time of the new overbooked
+        appointment to the earlier or later available slot (white space 
+        on the clinic grid). It may be difficult for users to see and in
+        some cases difficult or impossible to manually override.
+        BE ALERT: This could cause confusion about appointment times for
+        patients who are overbooked.
+     b. Workaround:
+           i. Schedulers should double check the start time of new
+              overbooked and MRTC appointments very carefully.
+          ii. When scheduling an overbook, put your cursor in the Start
+              Time field and manually edit the appointment time.
+         iii. If you need to overbook part of an MRTC series with a locked
+              time slot, you can switch to VistA to make that particular
+              appointment. This will require a manual disposition of
+              "Removed/No Longer Necessary" of that MRTC child request in
+              VS GUI.
+ 2. Calendar slots appearing open (white)
+     a. Problem: If the user left clicks to select a slot in the calendar,
+        additional white "slots" often appear in the calendar display. 
+        This only changes the appearance of the calendar in VS GUI, it does
+        not change the grid in VistA and does not affect whether a user can
+        or cannot schedule into that slot.
+     b. Workaround: Schedulers can clear out the residual white spaces by
+        advancing the calendar forward/back, or putting their cursor into
+        the clinic search box and hitting Enter.
+ 3. Appointment length when rescheduling in a variable length clinic
+     a. Problem: Dragging a variable length appointment that has more than one
+        slot associated with it to a new time will default the newly 
+        scheduled appointment length to the minimum slot length (not the
+        longer appointment length) when it is dropped.
+     b. Workaround: You can continue to drag and drop for single slot
+        appointments. For appointments that span multiple slots, the 
+        scheduler will need to cancel and reschedule the appointment and 
+        not drag and drop into a new slot.
+ 4. Appointment length when scheduling in a variable length clinic
+     a. Problem: When the user highlights multiple slots in the schedule 
+        to book an extended appointment in a variable-length clinic, and
+        then right-clicks on any slot other than the last one in order to
+        choose "Add Appointment", the system would book only the clicked
+        slot instead of all selected slots.
+     b. Workaround:
+           i. To extend appointments, click the first slot, hold down Shift, and
+              click the final slot to highlight the full duration needed.
+          ii. Once you have the full length of the variable appointment
+              selected, right click in the very bottom of your orange area, and
+              select "Add Appointment" to get the full length to transfer into
+              the Make Appointment box. If you click anywhere in the
+              highlighted area outside of the very bottom, it will reduce the
+              appointment duration to one slot.
+         iii. Double check the appointment duration before hitting OK. If it is
+              incorrect, use the drop-down duration to adjust OR go back to
+              the calendar and reselect the extended period.
+  
+ All VistA sites shall install the VS PRODUCTION and TEST GUIs on
+ all workstations using the CMCB package provided by SD. The TEST GUIs will
+ be used to provide training to VS GUI users.
+   
+   - CMCB Build Document (Production):
+ http://vaww.eie.domain.ext/SysDesign/CS/Shared%20Documents/Build%20Documents/
+ Application%20Tier%203%20and%204/VA%20VistA%20Scheduling%20GUI_P%20
+ Build%20Document.pdf
+   
+   - CMCB Build Document (Test):
+ http://vaww.eie.domain.ext/SysDesign/CS/Shared%20Documents/Build%20Documents/
+ Application%20Tier%203%20and%204/VA%20VistA%20Scheduling%20GUI_T%20
+ Build%20Document.pdf
+   
+  Implementation Manager POC:
+   
+  Name: Kathleen Rafish
+  
+  Phone: 360-759-1993
+  
+  Email: kathleen.rafish@domain.ext
+  
+ Test Sites
+ ----------
+ TOMAH
+ SALT LAKE CITY
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality related to this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.  
+    
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+    Hines:          domain.ext
+    Salt Lake City: domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ VistA Scheduling GUI User Guide       VSE_GUI_1_5_User_Guide.PDF  Binary
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 11, 2018
+Completed By:                               Date Completed: JUL 02, 2018
+Released By :                               Date Released : JUL 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

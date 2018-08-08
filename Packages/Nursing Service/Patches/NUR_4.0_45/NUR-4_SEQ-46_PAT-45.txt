@@ -1,0 +1,322 @@
+$TXT Created by                VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 01/03/18 at 11:42
+=============================================================================
+Run Date: MAY 14, 2018                     Designation: NUR*4*45
+Package : NUR - NURSING SERVICE               Priority: Mandatory
+Version : 4        SEQ #46                      Status: Released
+                  Compliance Date: JUN 14, 2018
+=============================================================================
+
+Associated patches: (v)NUR*4*24    <<= must be installed BEFORE `NUR*4*45'
+
+Subject: EPIP NUR REMEDIATION 2.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ NUR*4.0*45 provides the following enhancements to VistA:
+  
+ - Modifies the Nursing Patient Care Assignment Worksheet to display only 
+ the last four digits of each patient's Social Security Number (SSN) and 
+ to remove the admitting diagnosis from the worksheet and replace it with 
+ the text "ON FILE." These changes protect confidential patient 
+ information and help ensure privacy.
+  
+ - Enhances the Nursing End-of-Shift Report to facilitate communication 
+ between staff when shifts change. This modification adds an additional 
+ line of header information to the report to clarify the purpose of the 
+ various report sections. The new header information includes Situation, 
+ Background, Assessment, and Recommendation column headings. The report 
+ additionally displays oxygen levels in the Assessment section where the 
+ patient's vitals (Latest Vitals) are displayed.
+  
+ New categories (Assessment, Safety, and Special Needs) are added to the 
+ Patient Problems section of the report to enable staff to document 
+ additional information that is critical to patient care. The report is 
+ further modified to display only the last four digits of the patient's 
+ Social Security Number (SSN) to help ensure privacy.
+  
+ The Attending Physician's voice and digital pager numbers can be excluded 
+ from the End-of-Shift Report. Excluding contact information for the 
+ Attending Physician eliminates confusion for staff regarding who to 
+ contact for patient care issues. This patch adds the PRINT ATT NUMS ON 
+ EOS RPT field (#10.6) to the NURS PARAMETERS file (#213.9) to act as a 
+ parameter that controls the display of the Attending Physician contact 
+ numbers. Initially, the value is set to NO and Attending Physician 
+ contact numbers are not displayed on the report. Users at each site can 
+ display the Attending Physician contact numbers by setting the value to 
+ YES using the Site Parameter File [NURSFL-SITE], which can be found using 
+ the following pathway:
+  
+    Nursing System Manager's Menu [NURS-SYS-MGR]
+      Nursing Features (all options) [NURS-ALL]
+        Administrative Site File Functions [NURSFL-MENU]
+          Site Parameter File [NURSFL-SITE]
+  
+ Your site might have modified the pathway, so check with your local IT 
+ operations if you are having difficulty accessing the option.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ ------------------            -------------------     --------------------
+ NURS PARAMETERS (213.9)       PRINT ATT NUMS ON       New
+                               EOS RPT (10.6)
+  
+ Forms Associated:
+  
+ Form Name                     File #                  New/Modified/Deleted
+ ---------                     ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                   New/Modified/Deleted
+ ---------------                   --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                       Type                New/Modified/Deleted
+ -----------                       ----                --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------                   --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name        Type         File Name (Number)  New/Modified/Deleted
+ -------------        ----         ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20170309 Enhancements to Nursing Patient Assignment Worksheet
+ 20170316 Enhancements to Nursing End of Shift Report
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ North Florida/South Georgia Veterans Health System, Gainesville, FL
+ Memphis VA Medical Center, Memphis, TN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a KIDS build and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ https://wwww.domain.ext/vdl/.
+  
+  
+ Title                               File Name                   FTP Mode
+ ------------------------------------------------------------------------
+ VistA Nursing User Manual 
+   Version 4.0 Change Pages
+   for Patch NUR*4.0*45              nurs_4_p45_um_cp.doc        Binary
+ VistA Nursing User Manual    
+   Version 4.0 Change Pages 
+   for Patch NUR*4.0*45              nurs_4_p45_um_cp.pdf        Binary
+ VistA Nursing Technical Manual 
+   and Package Security Guide 
+   Version 4.0 Change Pages 
+   for Patch NUR*4.0*45              nurs_4_p45_tm_cp.doc        Binary
+ VistA Nursing Technical Manual 
+   and Package Security Guide 
+   Version 4.0 Change Pages  
+   for Patch NUR*4.0*45              nurs_4_p45_tm_cp.pdf        Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number NUR*4.0*45.
+  
+       a. Verify Checksums in Transport Global - This option will help 
+ ensure the 
+          integrity of the routines that are in the transport global.
+  
+       b. Print Transport Global - This option will enable viewing the 
+ components of
+          the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will 
+ enable viewing 
+          all changes that will be made when this patch is installed. It 
+ compares all
+          components of this patch (routines, data dictionaries, 
+ templates, etc.).
+  
+       d. Back up a Transport Global - This option will create a backup 
+ message of any
+          routines exported with this patch. It will not back up any other 
+ changes such
+          as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+  
+ Note: If Data Dictionary changes are listed in the Files and Fields 
+ Associated section of the patch description, then those changes will 
+ remain in the Data Dictionary in the event that a restore is performed. 
+ Updated files and fields must be manually removed from the Data 
+ Dictionary by a programmer via FileMan.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the NUR routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the NUR routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NURSING SERVICE;**[Patch List]**;May 9, 2017;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: NURCAS0
+    Before: B17342342   After: B17500465  **45**
+Routine Name: NURCES01
+    Before:  B7255375   After:  B9542610  **45**
+Routine Name: NURCES2
+    Before: B25560885   After: B26458316  **2,24,45**
+Routine Name: NURCES5
+    Before:  B9681203   After:  B9700151  **24,45**
+Routine Name: NURSAPFU
+    Before:   B749798   After:   B778777  **45**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 25, 2017
+Completed By:                               Date Completed: MAY 11, 2018
+Released By :                               Date Released : MAY 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

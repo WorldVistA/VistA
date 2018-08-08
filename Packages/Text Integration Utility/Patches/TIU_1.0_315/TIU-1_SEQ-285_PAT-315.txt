@@ -1,0 +1,133 @@
+$TXT Created by                     CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 03/08/18 at 08:39
+=============================================================================
+Run Date: JUL 12, 2018                     Designation: TIU*1*315
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #285                      Status: Released
+                  Compliance Date: AUG 12, 2018
+=============================================================================
+
+
+Subject: MEDIMPORT DLL UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the Mobile Electronic 
+ Document (M.E.D.) application:
+ 1. No notes to import into CPRS via Med Import feature
+  
+ NOTE: During the testing of this patch it was noted that the M.E.D. 
+ application violated a security policy by allowing the application to 
+ write to the database that is stored in the Program Files folder. 
+ This patch will correct this vulnerability by moving the database to 
+ a neutral location so the application can interact with it.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R15977397FY17 - TIU*1*311 Mobile Electronic Documentation GUI error
+  
+ Problem:
+ -------
+ When trying to import notes from the M.E.D. application into CPRS, a 
+ pop up displays informing the user that there are no notes to import.
+  
+ Resolution:
+ ----------
+ There was an issue with the database (MED.mdb) that was introduced 
+ with patch TIU*1.0*311. An update has been applied to the database
+ (MED.mdb) to correct the field types as well as the M.E.D. GUI itself 
+ in order to reference these updated types.
+  
+ Test Sites:
+ ----------
+ Charlie Norwood VAMC (Augusta, GA)
+ Central Plains HCS (Iowa City, IA)
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Patch Installation:
+ =================== 
+ Please refer to the Mobile Electronic Documentation (TIU*1.0*315) 
+ Installation Guide: TIU_1_315_MED_IG.docx for file names and 
+ installation instructions.
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with an updated Dynamic Link Library 
+ (DLL). Files and documentation pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from 
+ download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                                  File Name              FTP Mode
+ -----------------------------------------------------------------------
+ Mobile Electronic Documentation        TIU_1_315_IG.DOCX      Binary
+ (TIU*1.0*315) Installation Guide
+ TIU MED GUI New Install                TIU_1_315.ZIP          Binary 
+ TIU MED GUI Upgrade from TIU*1.0*311   TIU_10_315_Upgrade.ZIP Binary
+ TIU MED GUI Source Code                TIU_1_315_Src.ZIP      Binary
+  
+ Post-Installation Instructions:
+ -------------------------------
+ NA
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Please reference the Mobile Electronic Documentation (TIU*1.0*315) 
+ Installation Guide for further instructions.
+  
+ Routine Information:
+ --------------------
+ TIU315P exists in order to update the TIU MED GUI VERSION parameter. This 
+ routine will run as a post install and will be deleted when the patch has 
+ successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIU315P
+    Before:       n/a   After:   B821268  **315**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2017
+Completed By:                               Date Completed: JUL 10, 2018
+Released By :                               Date Released : JUL 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

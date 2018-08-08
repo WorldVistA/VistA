@@ -1,0 +1,228 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/13/18 at 16:14
+=============================================================================
+Run Date: JUN 08, 2018                     Designation: IB*2*619
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #566                      Status: Released
+                  Compliance Date: JUL 09, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*564    <<= must be installed BEFORE `IB*2*619'
+
+Subject: AUTO-REMOVE TC MODIFIER FOR MEDICARE CLAIMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue: 
+  
+ Technical Component (TC) modifier needs to be automatically removed from 
+ any procedure on institutional Medicare only bills, in the Enter/Edit 
+ Billing Information [IB EDIT BILLING INFO] option.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R18501755FY18 Auto-remove the TC modifier for Medicare claims
+  
+    Problem:
+    --------
+    The Community Care Office (OCC) has requested Technical Component (TC)
+    modifier be automatically removed from any procedure on institutional
+    bills for Medicare only, in the Enter/Edit Billing Information [IB EDIT
+    BILLING INFO] option. For any other payer scenario, append the TC
+    modifier where appropriate.
+  
+    Resolution:
+    -----------
+    Routine IBCU7A was modified to automatically remove the TC modifier from
+    any procedure on institutional bills for Medicare, if the payer
+    sequence is primary, the primary payer or the secondary payer is
+    Medicare, and the only professional charge on the procedure is 26
+    modified.
+  
+    A POST-INIT routine IB20P619 was created to remove the TC modifier for
+    Medicare on existing bills based on above requirements in the BILL/CLAIMS
+    (#399) file.
+  
+  
+ TEST SITES:
+ -----------
+ Boston HCS
+ Coatesville VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+   
+ Installation will take less than 15 minutes-but will vary from site to site
+ depending on the size of the BILL/CLAIMS (#399) file, which is searched
+ for the TC modifier for Medicare to update in the post-init routine.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+      
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+      
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch IB*2.0*619:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+      
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+     
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+      
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+  
+   ** 7. During install, verify that all entries were added successfully.
+         If an error is displayed, please create a ticket.  
+    
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine IB20P619 from your production system after the 
+ patch has been successfully verified.
+  
+ Use the 'Install File Print' option to review the updates and ensure
+ that the install has been completed. For an example:
+  
+     IB*2.0*619 Post-Install starts .....
+  
+ TC modifier removed for Medicare on total 2 bills of the BILL/CLAIMS (#399) file
+  
+     IB*2.0*619 Post-Install is complete.
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 34
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P619
+    Before:       n/a   After:  B6123081  **619**
+Routine Name: IBCU7A
+    Before: B49515881   After: B51776414  **245,287,483,564,619**
+ 
+Routine list of preceding patches: 564
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 05, 2018
+Completed By:                               Date Completed: JUN 07, 2018
+Released By :                               Date Released : JUN 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

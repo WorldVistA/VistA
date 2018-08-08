@@ -1,0 +1,165 @@
+
+=============================================================================
+Run Date: MAY 31, 2018                     Designation: WEBP*1*18
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #18                      Status: Released
+                  Compliance Date: JUN 30, 2018
+=============================================================================
+
+
+Subject: PCMM WEB V1.18 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*18 will implement the software changes necessary to capture 
+ encounters that occurred prior to the patient's primary care (PC) 
+ assignment but wasn't completed until after the patient was assigned to 
+ the PC team. This will allow the nightly Auto Inactivation (AI) job to 
+ detect and apply this valid encounter to the patient's PC assignment.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+ 1. RTC 694962 - The system does not detect encounters that are started 
+ before a patient's assignment to a PC team but checked out after the PC 
+ assignment. The nightly AI job needs to be able to capture a valid 
+ encounter if the patient is assigned to PC team AFTER the encounter has 
+ started but BEFORE the encounter is checked out/completed. Logic was 
+ added to the Java code of the nightly AI process so it will apply 
+ encounters that are started before the patient's primary care team 
+ assignment but checked out on or after the patient's assignment to the 
+ team.
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+ 2. RTC 684783 - The Technical Reference Manual (TRM) compliance review 
+ that was provided stated that the related library upgrades need to have 
+ the versions upgraded to meet the current TRM compliance. The following 
+ library versions and all dependencies were upgraded per TRM compliance 
+ review:
+         Upgraded commons-lang to version 3.5
+         Upgraded antlr to version 4.6
+         Upgraded log4j to log4j version 2.10.0
+  
+ NOTE: The RTC above (#684783) is documenting the TRM changes to the
+ application's versions that were implemented in production with WEBP1.17
+ release.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*18 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ 691 - West LA VAMC
+ 618 - Minneapolis VA HCS
+ 626 - Nashville VAMC
+  
+  
+ Documentation:
+ ==============
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a yourIT ServiceNow ticket using the category: ENTERPRISE 
+ APPLICATION.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 03, 2018
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

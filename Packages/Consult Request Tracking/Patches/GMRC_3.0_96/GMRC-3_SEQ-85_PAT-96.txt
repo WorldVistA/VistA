@@ -1,0 +1,652 @@
+$TXT Created by                    COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Thursday, 05/03/18 at 11:21
+=============================================================================
+Run Date: JUN 13, 2018                     Designation: GMRC*3*96
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #85                      Status: Released
+                  Compliance Date: JUL 14, 2018
+=============================================================================
+
+Associated patches: (v)GMRC*3*28   <<= must be installed BEFORE `GMRC*3*96'
+                    (v)GMRC*3*85   <<= must be installed BEFORE `GMRC*3*96'
+                    (v)GMRC*3*89   <<= must be installed BEFORE `GMRC*3*96'
+
+Subject: GMRC UNIQUE CONSULT SITE ID
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ----------------------------------
+ The One Consult (OC) Unique Consult ID (UCID) is a unique identifier 
+ attached to consult records created in Veterans Information Systems and 
+ Technology Architecture (VistA). 
+  
+ This identifier is designed to be unique across all VA VistA instances, 
+ and allows a connection to be maintained across consult artifacts as they 
+ are transferred to external systems. Having a way to identify the 
+ originating record via the new UCID will improve the coordination of care 
+ and continuity of care for VA patients receiving treatment outside of the 
+ VA network. 
+  
+ This patch will update the code so that the Unique Consult ID (UCID) is 
+ created to include the Station ID along with the consult IEN in the format
+ of '999_Consult IEN Number'.
+  
+  
+ Patch Components
+ ================ 
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)         Field Name(Number)              Deleted
+ -------------------         ------------------            -------------
+ REQUEST/CONSULTATION (#123)                               Modified
+                             UNIQUE CONSULT ID  (#80)      New
+  
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted   
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted   
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted   
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted   
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted   
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted   
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted   
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted   
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted   
+ -----------                  ----                         -------------
+ N/A
+  
+  
+  
+ Parameter Definitions:
+                                                                                             New/Modified/
+ Parameter Name                                            New/Modified/
+                                                           Deleted   
+ --------------                                            -------------
+ GMRC UNIQUE CONSULT SITE ID                               NEW
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted   
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted   
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted   
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted   
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted   
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted   
+ -------------      ----                                   -------------
+ N/A
+  
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted   
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted   
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information
+ ---------------------------- 
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Anchorage
+ Portland
+           
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                        domain.ext   
+    Salt Lake City:               domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+  
+ http://www.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ -----------------------------------------------------------------------
+ Consult/Request Technical Manual        constm.pdf            Binary
+ Consult/Request Technical Manual        constm.docx           Binary
+  
+  
+ Patch Installation:
+  
+ *****************************************
+ DO NOT QUEUE the install of this patch.
+ *****************************************
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There will be post-install instructions which will have to be read and 
+ understood by the installer before continuing with the install of this 
+ patch.  Also, there will be a post-install routine which will be run 
+ automatically after the install and will save a Unique Station ID 
+ parameter, based upon your Station ID from the pre-install document 
+ called 'VSSC Unique Station ID Mapping' (see below).
+  
+ The routine POST^GMRCP96 will remain on the site after the install has 
+ completed.  It will not be deleted in case the installer wishes to re-run 
+ this routine later.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install. 
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+ Installation Instructions
+ -----------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter patch 
+     GMRC*3.0*96:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//NO  
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO// 
+                                                                 
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ A routine will be run to the screen for the installer.  Your SITE_ID will 
+ be displayed to the screen.  The installer will refer to the 'VSSC Unique
+  
+ Station ID Mapping' table below.  Under the column called Stations, 
+ locate your SITE ID from above.  Look across to the next column called 
+ 'Unique Station ID.  Verify that this number is the same number which 
+ appears on your screen for 'GMRC UNIQUE CONSULT ID' number.
+  
+ If the 'GMRC UNIQUE CONSULT ID' number is incorrect or the 'GMRC UNIQUE 
+ CONSULT ID' number is 999 please contact your IRM for assistance.  Note: 
+ The Unique Station ID will be displayed as 999 when the Station ID is not 
+ mapped.  The UCID will look like '999_Consult Number'.
+  
+ Post-Install Document - 'VSSC Unique Station ID Mapping'
+  
+ VISN   Stations Unique  Station
+                 Station
+                 ID
+ ----   -------- ------- -------
+  
+ 1      402      202     (V01) (402) Togus VA Medical Center
+ 1      405      203     (V01) (405) White River Junction VA Medical Center
+ 1      518      204     (V01) (518) Edith Nourse Rogers Memorial 
+                         Veterans' Hospital
+ 1      523      205     (V01) (523) Jamaica Plain VA Medical Center
+ 1      608      208     (V01) (608) Manchester VA Medical Center
+ 1      631      209     (V01) (631) Edward P. Boland Department of 
+                         Veterans Affairs Medical Center
+ 1      650      210     (V01) (650) Providence VA Medical Center
+ 1      689      212     (V01) (689) West Haven VA Medical Center
+ 2      526      218     (V02) (526) James J. Peters Department of 
+                         Veterans Affairs Medical Center
+ 2      528      215     (V02) (528) Buffalo VA Medical Center
+ 2      528A5    216     (V02) (528A5) Canandaigua VA Medical Center
+ 2      528A6    214     (V02) (528A6) Bath VA Medical Center
+ 2      528A7    217     (V02) (528A7) Syracuse VA Medical Center
+ 2      528A8    213     (V02) (528A8) Samuel S. Stratton Department of 
+                         Veterans Affairs Medical Center
+ 2      561      221     (V02) (561) East Orange VA Medical Center
+ 2      620      223     (V02) (620) Franklin Delano Roosevelt Hospital
+ 2      630      224     (V02) (630) Manhattan VA Medical Center
+ 2      632      225     (V02) (632) Northport VA Medical Center
+ 4      460      226     (V04) (460) Wilmington VA Medical Center
+ 4      503      227     (V04) (503) James E. Van Zandt Veterans' 
+                         Administration Medical Center
+ 4      529      228     (V04) (529) Butler VA Medical Center
+ 4      542      230     (V04) (542) Coatesville VA Medical Center
+ 4      562      231     (V04) (562) Erie VA Medical Center
+ 4      595      232     (V04) (595) Lebanon VA Medical Center
+ 4      642      233     (V04) (642) Corporal Michael J. Crescenz 
+                         Department of Veterans Affairs Medical Center
+ 4      646      234     (V04) (646) Pittsburgh VA Medical 
+                         Center-University Drive
+ 4      693      235     (V04) (693) Wilkes-Barre VA Medical Center
+ 5      512      236     (V05) (512) Baltimore VA Medical Center
+ 5      517      241     (V05) (517) Beckley VA Medical Center
+ 5      540      229     (V05) (540) Louis A. Johnson Veterans' 
+                         Administration Medical Center
+ 5      581      265     (V05) (581) Huntington VA Medical Center
+ 5      613      239     (V05) (613) Martinsburg VA Medical Center
+ 5      688      240     (V05) (688) Washington VA Medical Center
+ 6      558      242     (V06) (558) Durham VA Medical Center
+ 6      565      243     (V06) (565) Fayetteville VA Medical Center
+ 6      590      244     (V06) (590) Hampton VA Medical Center
+ 6      637      245     (V06) (637) Charles George Department of Veterans 
+                         Affairs Medical Center
+ 6      652      246     (V06) (652) Hunter Holmes McGuire Hospital
+ 6      658      247     (V06) (658) Salem VA Medical Center
+ 6      659      248     (V06) (659) W.G. (Bill) Hefner Salisbury 
+                         Department of Veterans Affairs Medical Center
+ 7      508      249     (V07) (508) Atlanta VA Medical Center
+ 7      509      250     (V07) (509) Charlie Norwood Department of 
+                         Veterans Affairs Medical Center
+ 7      521      251     (V07) (521) Birmingham VA Medical Center
+ 7      534      252     (V07) (534) Ralph H. Johnson Department of 
+                         Veterans Affairs Medical Center
+ 7      544      253     (V07) (544) Wm. Jennings Bryan Dorn Department of
+                         Veterans Affairs Medical Center
+ 7      557      254     (V07) (557) Carl Vinson Veterans' Administration 
+                         Medical Center
+ 7      619      256     (V07) (619) Central Alabama VA Medical 
+                         Center-Montgomery
+ 7      679      257     (V07) (679) Tuscaloosa VA Medical Center
+ 8      516      258     (V08) (516) C.W. Bill Young Department of 
+                         Veterans Affairs Medical Center
+ 8      546      259     (V08) (546) Bruce W. Carter Department of 
+                         Veterans Affairs Medical Center
+ 8      548      260     (V08) (548) West Palm Beach VA Medical Center
+ 8      573      261     (V08) (573) Malcom Randall Department of Veterans 
+                         Affairs Medical Center
+ 8      672      263     (V08) (672) San Juan VA Medical Center
+ 8      673      264     (V08) (673) James A. Haley Veterans' Hospital
+ 8      675      358     (V08) (675) Orlando VA Medical Center
+ 9      596      267     (V09) (596) Lexington VA Medical Center-Leestown
+ 9      603      268     (V09) (603) Robley Rex Department of Veterans 
+                         Affairs Medical Center
+ 9      614      269     (V09) (614) Memphis VA Medical Center
+ 9      621      270     (V09) (621) James H. Quillen Department of 
+                         Veterans Affairs Medical Center
+ 9      626      272     (V09) (626) Nashville VA Medical Center
+ 10     506      279     (V10) (506) Ann Arbor VA Medical Center
+ 10     515      280     (V10) (515) Battle Creek VA Medical Center
+ 10     538      273     (V10) (538) Chillicothe VA Medical Center
+ 10     539      274     (V10) (539) Cincinnati VA Medical Center
+ 10     541      276     (V10) (541) Louis Stokes Cleveland Department of 
+                         Veterans Affairs Medical Center
+ 10     552      277     (V10) (552) Dayton VA Medical Center
+ 10     553      282     (V10) (553) John D. Dingell Department of 
+                         Veterans Affairs Medical Center
+ 10     583      283     (V10) (583) Richard L. Roudebush Veterans' 
+                         Administration Medical Center
+ 10     610      284     (V10) (610) Marion VA Medical Center
+ 10     655      285     (V10) (655) Aleda E. Lutz Department of Veterans 
+                         Affairs Medical Center
+ 10     757      278     (V10) (757) Chalmers P. Wylie Veterans Outpatient 
+                         Clinic
+ 12     537      287     (V12) (537) Jesse Brown Department of Veterans 
+                         Affairs Medical Center
+ 12     550      281     (V12) (550) Danville VA Medical Center
+ 12     556      288     (V12) (556) Captain James A. Lovell Federal 
+                         Health Care Center
+ 12     578      289     (V12) (578) Edward Hines Junior Hospital
+ 12     585      290     (V12) (585) Oscar G. Johnson Department of 
+                         Veterans Affairs Medical Facility
+ 12     607      291     (V12) (607) William S. Middleton Memorial 
+                         Veterans' Hospital
+ 12     676      292     (V12) (676) Tomah VA Medical Center
+ 12     695      293     (V12) (695) Clement J. Zablocki Veterans' 
+                         Administration Medical Center
+ 15     589      295     (V15) (589) Kansas City VA Medical Center
+ 15     589A4    294     (V15) (589A4) Harry S. Truman Memorial Veterans' 
+                         Hospital
+ 15     589A5    297     (V15) (589A5) Colmery-O'Neil Veterans' 
+                         Administration Medical Center
+ 15     589A7    298     (V15) (589A7) Robert J. Dole Department of 
+                         Veterans Affairs Medical and Regional Office
+                         Center
+ 15     657      302     (V15) (657) John Cochran Veterans Hospital
+ 15     657A4    300     (V15) (657A4) John J. Pershing Veterans' 
+                         Administration Medical Center
+ 16     657A5    299     (V15) (657A5) Marion VA Medical Center
+ 16     502      303     (V16) (502) Alexandria VA Medical Center
+ 16     520      304     (V16) (520) Biloxi VA Medical Center
+ 16     564      305     (V16) (564) Fayetteville VA Medical Center
+ 16     580      306     (V16) (580) Michael E. DeBakey Department of 
+                         Veterans Affairs Medical Center
+ 16     586      307     (V16) (586) G.V. (Sonny) Montgomery Department of 
+                         Veterans Affairs Medical Center
+ 16     598      308     (V16) (598) John L. McClellan Memorial Veterans' 
+                         Hospital
+ 16     629      310     (V16) (629) New Orleans VA Medical Center
+ 16     667      312     (V16) (667) Overton Brooks Veterans' 
+                         Administration Medical Center
+ 17     504      317     (V17) (504) Thomas E. Creek Department of 
+                         Veterans Affairs Medical Center
+ 17     519      318     (V17) (519) George H. O'Brien, Jr., Department of 
+                         Veterans Affairs Medical Center
+ 17     549      313     (V17) (549) Dallas VA Medical Center
+ 17     671      314     (V17) (671) Audie L. Murphy Memorial Veterans' 
+                         Hospital
+ 17     674      315     (V17) (674) Olin E. Teague Veterans' Center
+ 17     740      427     (V17) (740) Harlingen VA Clinic
+ 17     756      322     (V17) (756) El Paso VA Clinic
+ 19     436      323     (V19) (436) Fort Harrison VA Medical Center
+ 19     442      325     (V19) (442) Cheyenne VA Medical Center
+ 19     554      326     (V19) (554) Denver VA Medical Center
+ 19     575      327     (V19) (575) Grand Junction VA Medical Center
+ 19     623      309     (V19) (623) Jack C. Montgomery Department of 
+                         Veterans Affairs Medical Center
+ 19     635      311     (V19) (635) Oklahoma City VA Medical Center
+ 19     660      328     (V19) (660) George E. Wahlen Department of 
+                         Veterans Affairs Medical Center
+ 19     666      329     (V19) (666) Sheridan VA Medical Center
+ 20     463      330     (V20) (463) Anchorage VA Medical Center
+ 20     531      331     (V20) (531) Boise VA Medical Center
+ 20     648      332     (V20) (648) Portland VA Medical Center
+ 20     653      333     (V20) (653) Roseburg VA Medical Center
+ 20     663      334     (V20) (663) Seattle VA Medical Center
+ 20     668      335     (V20) (668) Mann-Grandstaff Department of 
+                         Veterans Affairs Medical Center
+ 20     687      336     (V20) (687) Jonathan M. Wainwright Memorial VA 
+                         Medical Center
+ 20     692      337     (V20) (692) White City VA Medical Center
+ 21     459      339     (V21) (459) Spark M. Matsunaga Department of 
+                         Veterans Affairs Medical Center
+ 21     570      340     (V21) (570) Fresno VA Medical Center
+ 21     593      345     (V21) (593) Las Vegas VA Medical Center
+ 21     612A4    341     (V21) (612A4) Sacramento VA Medical Center
+ 21     640      342     (V21) (640) Palo Alto VA Medical Center
+ 21     654      343     (V21) (654) Ioannis A. Lougaris Veterans' 
+                         Administration Medical Center
+ 21     662      344     (V21) (662) San Francisco VA Medical Center
+ 22     501      316     (V22) (501) Raymond G. Murphy Department of 
+                         Veterans Affairs Medical Center
+ 22     600      346     (V22) (600) Long Beach VA Medical Center
+ 22     605      347     (V22) (605) Jerry L. Pettis Memorial Veterans' 
+                         Hospital
+ 22     644      319     (V22) (644) Carl T. Hayden Veterans' 
+                         Administration Medical Center
+ 22     649      320     (V22) (649) Bob Stump Department of Veterans 
+                         Affairs Medical Center
+ 22     664      348     (V22) (664) San Diego VA Medical Center
+ 22     678      321     (V22) (678) Tucson VA Medical Center
+ 22     691      349     (V22) (691) West Los Angeles VA Medical Center
+ 23     437      350     (V23) (437) Fargo VA Medical Center
+ 23     438      351     (V23) (438) Royal C. Johnson Veterans' Memorial 
+                         Hospital
+ 23     568      352     (V23) (568) Fort Meade VA Medical Center
+ 23     618      353     (V23) (618) Minneapolis VA Medical Center
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ I.
+ This patch contains a new database definition. If assistance is needed to
+ rollback/back out the patch please, log a CA Service Desk Manager (SDM) ticket
+ so the development team can assist in this process.
+  
+ This patch creates a new field #80 UNIQUE CONSULT ID entry in the
+ REQUEST/CONSULTATION file (#123).
+   
+ To back out this database definition, we can use FileMan to delete the entries:
+   
+ VISTA>D P^DI
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 4  MODIFY FILE ATTRIBUTES
+ Do you want to use the screen-mode version? YES// NO
+  
+ Modify what File: NATURE OF ORDER// 123  REQUEST/CONSULTATION 
+ Select FIELD: 80  UNIQUE CONSULT ID
+ LABEL: UNIQUE CONSULT ID // @
+    SURE YOU WANT TO DELETE THE ENTIRE 'UNIQUE CONSULT ID ' FIELD? Y
+  
+ II.
+ This patch also contains 4 GMRC routines.  The decision to back-out or
+ rollback software will be a joint decision between development team, VA
+ site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of install).
+ The message containing the backed-up routines can be loaded with the "Xtract
+ PackMan" function at the Message Action prompt. The Packman function
+ "INSTALL/CHECK MESSAGE" is then used to install the backed-up routines onto
+ the VistA System. 
+  
+ III.
+ This patch also contains a new PARAMETER (GMRC UNIQUE CONSULT SITE ID).  
+ If assistance is needed to rollback/back out the patch please, log a CA 
+ Service Desk Manager (SDM) ticket so the development team can assist in 
+ this process.
+   
+ To back out this parameter, you can use FileMan to delete the entry:
+   
+ VISTA>D P^DI
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+ Select PARAMETERS ENTITY: GMRC
+  
+ GMRC  CONSULT/REQUEST TRACKING     GMRC
+         ...OK? Yes//   (Yes)
+      1   CONSULT/REQUEST TRACKING       GMRC CONSULT LIST DAYS     1
+      2   CONSULT/REQUEST TRACKING       GMRC PROCEDURE CONVERSION     1
+      3   CONSULT/REQUEST TRACKING       GMRC UNIQUE CONSULT SITE ID     1
+ CHOOSE 1-3: 3  CONSULT/REQUEST TRACKING     GMRC UNIQUE CONSULT SITE 
+ ID     1
+  
+ ENTITY: CONSULT/REQUEST TRACKING// @
+    SURE YOU WANT TO DELETE THE ENTIRE PARAMETERS? Y
+   
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of the
+ four GMRC nes contained in this patch using the option First Line Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the GMRC*3.0*96 patch have been rolled back, the first two lines of the Routines will no longer contain th
+ e designation of patch GMRC*3.0*96 in the patch list section on line 2.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+     
+ It is imperative that you have performed a backup of the routines
+ included in this patch prior to installation.
+    
+ The back-out plan is to restore the routines from the backup created.
+    
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+    
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCHL7B
+    Before: B26855576   After: B29656014  **1,5,12,21,17,22,33,66,46,73,85,96**
+Routine Name: GMRCHL7H
+    Before:B130038973   After:B135984194  **75,85,96**
+Routine Name: GMRCP96
+    Before:       n/a   After: B21123189  **96**
+Routine Name: GMRCUTL1
+    Before: B14006176   After: B17295672  **1,4,12,15,21,17,28,89,96**
+ 
+Routine list of preceding patches: 85, 89
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2017
+Completed By:                               Date Completed: JUN 12, 2018
+Released By :                               Date Released : JUN 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,205 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/27/18 at 14:28
+=============================================================================
+Run Date: JUN 26, 2018                     Designation: PX*1*220
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #166                      Status: Released
+                  Compliance Date: JUL 27, 2018
+=============================================================================
+
+Associated patches: (v)PX*1*186    <<= must be installed BEFORE `PX*1*220'
+
+Subject: TYPE VALIDATION FOR OCCUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves potential runtime errors when $$OCCUP^PXBGPRV is run 
+ with an invalid provider passed in.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R18136943FY18 - Class one autoverify has stopped working for Fargo. 
+    When trying to manually verify results, users get kicked out of VISTA.
+  
+  
+    Problem:
+    --------
+    A runtime error occurs during Lab Auto-Verification or when the
+    menu option Enter/verify data (auto instrument) [LRVR] is run and the
+    selected provider does not have a VA CODE (#5) field found in the
+    PERSON CLASS (#8932.1) file. PERSON CLASS (#8932.1) file entries
+    without a VA CODE (#5) field are only considered providers if their VA
+    CODE (#5) field is defined; otherwise they are considered agencies.
+    The PCE function $$OCCUP^PXBGPRV was not designed to handle the PERSON 
+    CLASS (#8932.1) file entries without a VA CODE (#5) field. This
+    prevents the variable TYPE from being defined, causing a runtime error.
+  
+  
+    Resolution:
+    -----------
+    Updated $$OCCUP^PXBGPRV to validate that the variable TYPE is defined.
+    If it is not, the appropriate error code/message will be returned in
+    order to prevent a runtime error. This will prevent VistA from crashing
+    when an incorrect provider without a VA CODE (#5) field has been
+    selected.
+  
+  
+ TEST SITES:
+ -----------
+ Fargo VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch PX*1.0*220:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//" respond YES.
+  
+         a. When Prompted "Enter options you wish to mark as 'Out Of 
+            Order':", enter the following options:
+  
+             Enter/verify data (auto instrument) [LRVR]
+  
+          b. When Prompted "Enter protocols you wish to mark as 'Out Of 
+             Order':", Press <ENTER>.
+  
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXBGPRV
+    Before: B43042405   After: B44361527  **7,11,108,186,220**
+ 
+Routine list of preceding patches: 186
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 14, 2018
+Completed By:                               Date Completed: JUN 26, 2018
+Released By :                               Date Released : JUN 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

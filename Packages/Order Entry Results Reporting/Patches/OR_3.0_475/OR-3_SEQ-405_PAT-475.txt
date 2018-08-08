@@ -1,0 +1,222 @@
+$TXT Created by                  CPRS31A.DOMAIN.EXT  (KIDS) on Monday, 02/26/18 at 15:03
+=============================================================================
+Run Date: MAY 31, 2018                     Designation: OR*3*475
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #405                      Status: Released
+                  Compliance Date: JUL 01, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*434    <<= must be installed BEFORE `OR*3*475'
+
+Subject: FIX FOR RTC ORDER SIG 
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch is a follow up to the Computerized Patient Record System 
+ (CPRS) Graphical User Interface (GUI) v31.A release.
+ 
+ The purpose of OR*3*475 is to fix a bug found in the Return to Clinic
+ associated functionality area. When a user selects the T+30D in the date 
+ field, the NLT (No Later Than) text does not transfer through to the
+ details of the order when the RTC order is signed.
+ 
+ Patch Components:
+ -----------------
+ 
+ Files & Fields Associated:
+ 
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+ 
+ Forms Associated:
+ 
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+ 
+ Mail Groups Associated:
+ 
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+ 
+ Options Associated:
+ 
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+ 
+ Protocols Associated:
+ 
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+ 
+ Security Keys Associated:
+ 
+ Security Key Name
+ -----------------
+ N/A
+ 
+ Templates Associated:
+ 
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+ 
+ Additional Information:
+ 
+ 
+ New Service Requests (NSRs):
+ ----------------------------  
+ None
+ 
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+ 
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 
+ 1.  I18167176FY18
+  
+ Problem:
+ -------
+ The Order Sig changes from no later than "DATE" to on or before "DATE" when
+ the user signs a RTC Order that is entered with the Time Sensitive Prompt. 
+ 
+ Resolution:
+ ----------
+ The following routines were updated to address this problem
+ ORMSD
+ ORMBLDSD
+ 
+ Test Sites:
+ ----------
+ Tomah
+ San Diego
+ 
+ 2. I18697094FY18
+ 
+ Problem:
+ -------
+ Mumps error <UNDEFINED>SAVEREC+58^ORMSD *ORDIALOG(177 is filed when VSE 
+ completes a RTC Order with out answering the Time Sensitive prompt
+ and the order was placed through the VistA List Manager interface.
+ 
+ Resolution:
+ ----------
+ The SD RTC order dialog was updated to make the Time Sensitive prompt
+ required.
+ 
+ Test Sites:
+ ----------
+ Tomah
+ San Diego
+ 
+ Patch Installation:
+ 
+ 
+ Pre/Post Installation Overview:
+ -------------------------------
+ None
+ 
+ Pre-Installation Instructions:
+ ------------------------------
+ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+ 
+ 
+ Installation Instructions:
+ --------------------------
+ 
+ 1. Choose the PackMan message containing this patch.
+ 
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+ 
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch OR*3.0*475:
+ 
+ a. Backup a Transport Global - This option will create a backup message of
+    any routines exported with this patch. It will not backup any other
+    changes such as DDs or templates.
+ 
+ b. Compare Transport Global to Current System - This option will (allow
+    you to view all changes that will be made when this patch is installed. 
+    It compares all components of this patch routines, DDs, templates, etc.).
+ 
+ c. Verify Checksums in Transport Global - This option will allow you to
+    ensure the integrity of the routines that are in the transport global.
+ 
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO// <enter>
+ 
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//<enter>
+ 
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//<enter> 
+ 
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0// respond 0.
+ 
+ 
+ Post-Installation Instructions:
+ -------------------------------
+ None
+ 
+ Back-out, Rollback Instructions:
+ --------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+  decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+   
+ The back-out plan is to restore the routine from the backup created.
+    
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMBLDSD
+    Before: B17436904   After: B17520894  **434,475**
+Routine Name: ORMSD
+    Before: B98846550   After: B98961984  **434,475**
+ 
+Routine list of preceding patches: 434
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2018
+Completed By:                               Date Completed: MAY 31, 2018
+Released By :                               Date Released : MAY 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

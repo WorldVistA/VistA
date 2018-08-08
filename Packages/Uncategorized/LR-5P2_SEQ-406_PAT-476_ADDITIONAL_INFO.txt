@@ -1,0 +1,34 @@
+Subj: Minor issues found with LR*5.2*476
+18 May 2018 15:06:11 -0400 (EDT)  36 lines
+-----------------------------------------------------------------------------After the release of patch LR*5.2*476 two (2) very minor issues were 
+discovered. These issues will be corrected with patch LR*5.2*508. 
+ 
+Issue 1:
+===========
+In the EXECUTE CODE entry for BACTERIOLOGY, the patch installed an 
+incorrect internal entry number (IEN) which is checked in order to 
+present the Sputum Screen field to the user.  The IEN 68 from the
+Topography file (#61) is incorrectly used in the EXECUTE CODE:  
+BACTERIOLOGY
+ 
+It is identified as follows:
+S DR="11.55////"_DUZ_";.055;.05;.99;11.6;11.5;1;S 
+LRSPEC=$P(LRBG0,U,5),Y=$S(LRS PEC=71:11.57,LRSPEC=68:11.58,1:0);11.57;S
+                                           =========
+Y=0;11.58",LREND=0 D ^DIE S:$D(Y) LREN D=1 Q:$D(Y)  D ^LRMIBUG Q:LREND  S
+DR="13;11" D ^DIE Q
+ 
+The code should be the IEN 360 for SPUTUM in the Topography file (#61). 
+Select TOPOGRAPHY FIELD NAME: `360  SPUTUM     2Y030
+ 
+Issue #2:
+In the EXECUTE CODE file, the entry for MYCOLOGY has been identified with 
+a reference to field 19.2  in both the original code at sites, and 
+support accounts, as well as the patch code.
+ 
+S DR="19.5////"_DUZ_";.05;.99;19;19.2;20;20.5;21;18",DR(2,63.37)=".01:99" 
+D ^DIE Q                         ====
+ 
+The field undelined (19.2) is not defined in the Data Dictionary of the 
+LAB DATA file (#63).  The reference to 19.2 will be removed. 
+ 

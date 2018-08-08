@@ -1,0 +1,186 @@
+
+=============================================================================
+Run Date: JUN 28, 2018                     Designation: IB*2*596
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #568                      Status: Released
+                  Compliance Date: JUL 29, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*511    <<= must be installed BEFORE `IB*2*596'
+
+Subject: MCCF EDI TAS EPAYMENTS BUILD 2 & 3
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Below is a list of all the applications involved in this patch along
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                    PRCA*4.5*321
+    INTEGRATED BILLING (IB) V. 2.0                         IB*2.0*596
+  
+ The patches (PRCA*4.5*321 and IB*2.0*596) are being released in the
+ Kernel Installation and Distribution System (KIDS) multi-build 
+ distribution as PRCA_IB_EPAYMENTS_BUNDLE_2_0.KID.
+  
+ The ePayments Agent Cashier menu receipt processing and link payment 
+ functionality has been changed to allow EEOBs, marked as 'removed' when 
+ suspended in the ERA Worklist, to be restored to the correct claim. 
+  
+ Routine "IBCEOB4" was modified to accommodate restoring EEOBs which have 
+ previously been removed back to the correct claim.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)    New/Modified/Deleted
+ -------------        ----      ------------------    --------------------
+ N/A
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ BOSTON HCS
+ NORTHPORT, NY
+ TOGUS, ME
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ Title                              File Name                  SFTP Mode
+ -----------------------------------------------------------------------
+ *Deployment, Installation,         prca_4_5_321_ig.pdf        Binary
+   Back-Out, and Rollback
+   Guide (PRCA*4.5*321)
+  
+ *A single Release Notes document will be released with this 
+ multi-build. It can be found on the Accounts Receivable page of the VDL.
+  
+  
+ Installation Instructions:
+ -------------------------
+ The components sent with this patch IB*2.0*596 have been included in the
+ host file PRCA_IB_EPAYMENTS_BUNDLE_2_0.KID. Please follow the installation
+ instructions listed in the patch description for patch PRCA*4.5*321.
+  
+  
+   ****************************************************************
+   * Follow the installation instructions for patch PRCA*4.5*321. *
+   ****************************************************************
+  
+  
+ The host file PRCA_IB_EPAYMENTS_BUNDLE_2_0.KID, contains the following 
+ patches:
+  
+         PRCA*4.5*321
+         IB*2.0*596
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-1994;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEOB4
+    Before: B24468385   After: B25651384  **451,511,596**
+ 
+Routine list of preceding patches: 511
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 23, 2017
+Completed By:                               Date Completed: JUN 28, 2018
+Released By :                               Date Released : JUN 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

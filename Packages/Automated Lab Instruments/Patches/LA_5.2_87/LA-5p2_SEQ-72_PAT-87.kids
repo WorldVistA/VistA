@@ -1,0 +1,741 @@
+Released LA*5.2*87 SEQ #72
+Extracted from mail message
+**KIDS**:LA*5.2*87^
+
+**INSTALL NAME**
+LA*5.2*87
+"BLD",10530,0)
+LA*5.2*87^AUTOMATED LAB INSTRUMENTS^0^3180308^y
+"BLD",10530,1,0)
+^^5^5^3180308^^
+"BLD",10530,1,1,0)
+This patch is a VM patch that addresses 1 issue in the Lab package:
+"BLD",10530,1,2,0)
+ 
+"BLD",10530,1,3,0)
+1.  Modify lab Automated Instrument routines to allow for the
+"BLD",10530,1,4,0)
+    use of the VIC 4.0 card number as a patient identifier in the
+"BLD",10530,1,5,0)
+    PID segment for POC (Point of Care) processing.
+"BLD",10530,4,0)
+^9.64PA^^0
+"BLD",10530,6.3)
+12
+"BLD",10530,"ABPKG")
+n
+"BLD",10530,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10530,"KRN",.4,0)
+.4
+"BLD",10530,"KRN",.401,0)
+.401
+"BLD",10530,"KRN",.402,0)
+.402
+"BLD",10530,"KRN",.403,0)
+.403
+"BLD",10530,"KRN",.5,0)
+.5
+"BLD",10530,"KRN",.84,0)
+.84
+"BLD",10530,"KRN",3.6,0)
+3.6
+"BLD",10530,"KRN",3.8,0)
+3.8
+"BLD",10530,"KRN",9.2,0)
+9.2
+"BLD",10530,"KRN",9.8,0)
+9.8
+"BLD",10530,"KRN",9.8,"NM",0)
+^9.68A^2^1
+"BLD",10530,"KRN",9.8,"NM",2,0)
+LA7VIN2^^0^B59655310
+"BLD",10530,"KRN",9.8,"NM","B","LA7VIN2",2)
+
+"BLD",10530,"KRN",19,0)
+19
+"BLD",10530,"KRN",19.1,0)
+19.1
+"BLD",10530,"KRN",101,0)
+101
+"BLD",10530,"KRN",409.61,0)
+409.61
+"BLD",10530,"KRN",771,0)
+771
+"BLD",10530,"KRN",779.2,0)
+779.2
+"BLD",10530,"KRN",870,0)
+870
+"BLD",10530,"KRN",8989.51,0)
+8989.51
+"BLD",10530,"KRN",8989.52,0)
+8989.52
+"BLD",10530,"KRN",8994,0)
+8994
+"BLD",10530,"KRN","B",.4,.4)
+
+"BLD",10530,"KRN","B",.401,.401)
+
+"BLD",10530,"KRN","B",.402,.402)
+
+"BLD",10530,"KRN","B",.403,.403)
+
+"BLD",10530,"KRN","B",.5,.5)
+
+"BLD",10530,"KRN","B",.84,.84)
+
+"BLD",10530,"KRN","B",3.6,3.6)
+
+"BLD",10530,"KRN","B",3.8,3.8)
+
+"BLD",10530,"KRN","B",9.2,9.2)
+
+"BLD",10530,"KRN","B",9.8,9.8)
+
+"BLD",10530,"KRN","B",19,19)
+
+"BLD",10530,"KRN","B",19.1,19.1)
+
+"BLD",10530,"KRN","B",101,101)
+
+"BLD",10530,"KRN","B",409.61,409.61)
+
+"BLD",10530,"KRN","B",771,771)
+
+"BLD",10530,"KRN","B",779.2,779.2)
+
+"BLD",10530,"KRN","B",870,870)
+
+"BLD",10530,"KRN","B",8989.51,8989.51)
+
+"BLD",10530,"KRN","B",8989.52,8989.52)
+
+"BLD",10530,"KRN","B",8994,8994)
+
+"BLD",10530,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10530,"QUES",0)
+^9.62^^
+"BLD",10530,"REQB",0)
+^9.611^2^1
+"BLD",10530,"REQB",2,0)
+LA*5.2*88^2
+"BLD",10530,"REQB","B","LA*5.2*88",2)
+
+"MBREQ")
+0
+"PKG",53,-1)
+1^1
+"PKG",53,0)
+AUTOMATED LAB INSTRUMENTS^LA
+"PKG",53,20,0)
+^9.402P^^
+"PKG",53,22,0)
+^9.49I^1^1
+"PKG",53,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",53,22,1,"PAH",1,0)
+87^3180308
+"PKG",53,22,1,"PAH",1,1,0)
+^^5^5^3180308
+"PKG",53,22,1,"PAH",1,1,1,0)
+This patch is a VM patch that addresses 1 issue in the Lab package:
+"PKG",53,22,1,"PAH",1,1,2,0)
+ 
+"PKG",53,22,1,"PAH",1,1,3,0)
+1.  Modify lab Automated Instrument routines to allow for the
+"PKG",53,22,1,"PAH",1,1,4,0)
+    use of the VIC 4.0 card number as a patient identifier in the
+"PKG",53,22,1,"PAH",1,1,5,0)
+    PID segment for POC (Point of Care) processing.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","LA7VIN2")
+0^2^B59655310^B46992282
+"RTN","LA7VIN2",1,0)
+LA7VIN2 ;DALOI/JMC - Process Incoming UI Msgs, continued ;06/22/15  13:02
+"RTN","LA7VIN2",2,0)
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**46,64,74,88,87**;Sep 27, 1994;Build 12
+"RTN","LA7VIN2",3,0)
+ ; 
+"RTN","LA7VIN2",4,0)
+ ; Reference to RPCVIC^DPTLK supported by IA #5888
+"RTN","LA7VIN2",5,0)
+ ; Reference to DEM^VADPT supported by IA #10061
+"RTN","LA7VIN2",6,0)
+ ;
+"RTN","LA7VIN2",7,0)
+ ;This routine is a continuation of LA7VIN1 and is only called from there.
+"RTN","LA7VIN2",8,0)
+ Q
+"RTN","LA7VIN2",9,0)
+ ;
+"RTN","LA7VIN2",10,0)
+MSH ; Process MSH segment
+"RTN","LA7VIN2",11,0)
+ N LA7X
+"RTN","LA7VIN2",12,0)
+ ;
+"RTN","LA7VIN2",13,0)
+ I $E(LA7SEG(0),1,3)'="MSH" D  Q
+"RTN","LA7VIN2",14,0)
+ . S (LA7ABORT,LA7ERR)=7
+"RTN","LA7VIN2",15,0)
+ . D CREATE^LA7LOG(LA7ERR)
+"RTN","LA7VIN2",16,0)
+ ;
+"RTN","LA7VIN2",17,0)
+ ; Encoding characters
+"RTN","LA7VIN2",18,0)
+ S LA7FS=$E(LA7SEG(0),4)
+"RTN","LA7VIN2",19,0)
+ S LA7CS=$E(LA7SEG(0),5)
+"RTN","LA7VIN2",20,0)
+ S LA7ECH=$E(LA7SEG(0),5,8)
+"RTN","LA7VIN2",21,0)
+ ; No field or component separator
+"RTN","LA7VIN2",22,0)
+ I LA7FS=""!(LA7CS="") D
+"RTN","LA7VIN2",23,0)
+ . S (LA7ABORT,LA7ERR)=8
+"RTN","LA7VIN2",24,0)
+ . D CREATE^LA7LOG(LA7ERR)
+"RTN","LA7VIN2",25,0)
+ ;
+"RTN","LA7VIN2",26,0)
+ ; Sending application
+"RTN","LA7VIN2",27,0)
+ S LA7SAP=$$P^LA7VHLU(.LA7SEG,3,LA7FS)
+"RTN","LA7VIN2",28,0)
+ S LA7ID=LA7SAP_"-I-"
+"RTN","LA7VIN2",29,0)
+ ;
+"RTN","LA7VIN2",30,0)
+ ; Sending facility
+"RTN","LA7VIN2",31,0)
+ S LA7SFAC=$$P^LA7VHLU(.LA7SEG,4,LA7FS)
+"RTN","LA7VIN2",32,0)
+ ;
+"RTN","LA7VIN2",33,0)
+ ; Receiving application
+"RTN","LA7VIN2",34,0)
+ S LA7RAP=$$P^LA7VHLU(.LA7SEG,5,LA7FS)
+"RTN","LA7VIN2",35,0)
+ ;
+"RTN","LA7VIN2",36,0)
+ ; Receiving facility
+"RTN","LA7VIN2",37,0)
+ S LA7RFAC=$$P^LA7VHLU(.LA7SEG,6,LA7FS)
+"RTN","LA7VIN2",38,0)
+ ;
+"RTN","LA7VIN2",39,0)
+ ; Message date/time from first component
+"RTN","LA7VIN2",40,0)
+ S LA7MEDT=$$HL7TFM^XLFDT($P($$P^LA7VHLU(.LA7SEG,7,LA7FS),LA7CS),"L")
+"RTN","LA7VIN2",41,0)
+ ;
+"RTN","LA7VIN2",42,0)
+ ; Message type
+"RTN","LA7VIN2",43,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,9,LA7FS)
+"RTN","LA7VIN2",44,0)
+ S LA7MTYP=$P(LA7X,LA7CS,1)
+"RTN","LA7VIN2",45,0)
+ ;
+"RTN","LA7VIN2",46,0)
+ ; Message Control ID
+"RTN","LA7VIN2",47,0)
+ S LA7MID=$$P^LA7VHLU(.LA7SEG,10,LA7FS)
+"RTN","LA7VIN2",48,0)
+ ;
+"RTN","LA7VIN2",49,0)
+ ; HL7 version
+"RTN","LA7VIN2",50,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,12,LA7FS)
+"RTN","LA7VIN2",51,0)
+ S LA7HLV=$P(LA7X,LA7CS,1)
+"RTN","LA7VIN2",52,0)
+ ;
+"RTN","LA7VIN2",53,0)
+ ; Accept acknowledgement type
+"RTN","LA7VIN2",54,0)
+ S LA7AAT(0)=$$P^LA7VHLU(.LA7SEG,15,LA7FS)
+"RTN","LA7VIN2",55,0)
+ ;
+"RTN","LA7VIN2",56,0)
+ ; Application acknowledgement type
+"RTN","LA7VIN2",57,0)
+ S LA7AAT(1)=$$P^LA7VHLU(.LA7SEG,16,LA7FS)
+"RTN","LA7VIN2",58,0)
+ ;
+"RTN","LA7VIN2",59,0)
+ Q
+"RTN","LA7VIN2",60,0)
+ ;
+"RTN","LA7VIN2",61,0)
+ ;
+"RTN","LA7VIN2",62,0)
+ORC ; Process ORC segment
+"RTN","LA7VIN2",63,0)
+ N LA7X,LA7Y
+"RTN","LA7VIN2",64,0)
+ ;
+"RTN","LA7VIN2",65,0)
+ ; Order control
+"RTN","LA7VIN2",66,0)
+ S LA7OTYPE=$$P^LA7VHLU(.LA7SEG,2,LA7FS)
+"RTN","LA7VIN2",67,0)
+ ;
+"RTN","LA7VIN2",68,0)
+ ; Place order number
+"RTN","LA7VIN2",69,0)
+ S LA7PON=$$P^LA7VHLU(.LA7SEG,3,LA7FS)
+"RTN","LA7VIN2",70,0)
+ ;
+"RTN","LA7VIN2",71,0)
+ ; Setup shipping manifest variable
+"RTN","LA7VIN2",72,0)
+ S LA7Y=0
+"RTN","LA7VIN2",73,0)
+ S LA7X=$P($$P^LA7VHLU(.LA7SEG,5,LA7FS),LA7CS)
+"RTN","LA7VIN2",74,0)
+ I LA7X'="" S LA7Y=$O(^LAHM(62.8,"B",LA7X,0))
+"RTN","LA7VIN2",75,0)
+ I LA7Y S LA7628=LA7Y
+"RTN","LA7VIN2",76,0)
+ S LA7SM=LA7Y_"^"_LA7X
+"RTN","LA7VIN2",77,0)
+ ;
+"RTN","LA7VIN2",78,0)
+ ; Setup shipping configuration variable
+"RTN","LA7VIN2",79,0)
+ I $P(LA7SM,"^") S LA7629=+$P($G(^LAHM(62.8,$P(LA7SM,"^"),0)),"^",2)
+"RTN","LA7VIN2",80,0)
+ E  S LA7629=0
+"RTN","LA7VIN2",81,0)
+ ;
+"RTN","LA7VIN2",82,0)
+ ; Set new order/shipping manifest received alert/identifiers
+"RTN","LA7VIN2",83,0)
+ I LA7MTYP="ORM",$P(LA7SM,"^",2)'="" D
+"RTN","LA7VIN2",84,0)
+ . S ^TMP("LA7-ORM",$J,LA76248,LA76249,$P(LA7SM,"^",2))=""
+"RTN","LA7VIN2",85,0)
+ . D SETID^LA7VHLU1(LA76249,LA7ID,$P(LA7SM,"^",2),1)
+"RTN","LA7VIN2",86,0)
+ . D SETID^LA7VHLU1(LA76249,"",$P(LA7SM,"^",2),0)
+"RTN","LA7VIN2",87,0)
+ ;
+"RTN","LA7VIN2",88,0)
+ ; Order quantity/timing (duration, units, urgency)
+"RTN","LA7VIN2",89,0)
+ S LA7ODUR=$P($$P^LA7VHLU(.LA7SEG,8,LA7FS),LA7CS,3)
+"RTN","LA7VIN2",90,0)
+ S LA7ODURU=$P($$P^LA7VHLU(.LA7SEG,8,LA7FS),LA7CS,4)
+"RTN","LA7VIN2",91,0)
+ S LA7OUR=$P($$P^LA7VHLU(.LA7SEG,8,LA7FS),LA7CS,6)
+"RTN","LA7VIN2",92,0)
+ ;
+"RTN","LA7VIN2",93,0)
+ ; Date/time of transaction
+"RTN","LA7VIN2",94,0)
+ S LA7ORDT=$$HL7TFM^XLFDT($P($$P^LA7VHLU(.LA7SEG,10,LA7FS),LA7CS),"L")
+"RTN","LA7VIN2",95,0)
+ ;
+"RTN","LA7VIN2",96,0)
+ ; Placer's entered by (id^duz^last name, first name, mi [id])
+"RTN","LA7VIN2",97,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,11,LA7FS)
+"RTN","LA7VIN2",98,0)
+ S LA7PEB=$$XCNTFM^LA7VHLU9(LA7X,LA7ECH)
+"RTN","LA7VIN2",99,0)
+ I LA7PEB="^0^" S LA7PEB=""
+"RTN","LA7VIN2",100,0)
+ ;
+"RTN","LA7VIN2",101,0)
+ ; Placer's verified by (id^duz^last name, first name, mi [id])
+"RTN","LA7VIN2",102,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,12,LA7FS)
+"RTN","LA7VIN2",103,0)
+ S LA7PVB=$$XCNTFM^LA7VHLU9(LA7X,LA7ECH)
+"RTN","LA7VIN2",104,0)
+ I LA7PVB="^0^" S LA7PVB=""
+"RTN","LA7VIN2",105,0)
+ ;
+"RTN","LA7VIN2",106,0)
+ ; Placer's ordering provider (id^duz^last name, first name, mi [id])
+"RTN","LA7VIN2",107,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,13,LA7FS)
+"RTN","LA7VIN2",108,0)
+ S LA7POP=$$XCNTFM^LA7VHLU9(LA7X,LA7ECH)
+"RTN","LA7VIN2",109,0)
+ I LA7POP="^0^" S LA7POP=""
+"RTN","LA7VIN2",110,0)
+ ;
+"RTN","LA7VIN2",111,0)
+ ; Enterer's ordering location
+"RTN","LA7VIN2",112,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,14,LA7FS)
+"RTN","LA7VIN2",113,0)
+ S LA7Y=$$PLTFM^LA7VHLU4(LA7X,LA7FS,LA7ECH)
+"RTN","LA7VIN2",114,0)
+ S LA7EOL=$P(LA7Y,"^",1,3)
+"RTN","LA7VIN2",115,0)
+ I LA7EOL="^0^" S LA7EOL=""
+"RTN","LA7VIN2",116,0)
+ ;
+"RTN","LA7VIN2",117,0)
+ ; Order control code reason
+"RTN","LA7VIN2",118,0)
+ S LA7OCR=$$P^LA7VHLU(.LA7SEG,17,LA7FS)
+"RTN","LA7VIN2",119,0)
+ ;
+"RTN","LA7VIN2",120,0)
+ ;
+"RTN","LA7VIN2",121,0)
+ ; If ORM order message, determine specimen collecting site from ORC
+"RTN","LA7VIN2",122,0)
+ ; segment, if none use MSH sending facility value
+"RTN","LA7VIN2",123,0)
+ S LA7CSITE=""
+"RTN","LA7VIN2",124,0)
+ I LA7MTYP="ORM" D
+"RTN","LA7VIN2",125,0)
+ . S LA7X=$P($$P^LA7VHLU(.LA7SEG,18,LA7FS),LA7CS)
+"RTN","LA7VIN2",126,0)
+ . S LA7CSITE=$$FINDSITE^LA7VHLU2(LA7X,2,1)
+"RTN","LA7VIN2",127,0)
+ . I LA7CSITE'>0 S LA7CSITE=$$FINDSITE^LA7VHLU2(LA7SFAC,2,0)
+"RTN","LA7VIN2",128,0)
+ ;
+"RTN","LA7VIN2",129,0)
+ Q
+"RTN","LA7VIN2",130,0)
+ ;
+"RTN","LA7VIN2",131,0)
+ ;
+"RTN","LA7VIN2",132,0)
+NTE ; Process NTE segment
+"RTN","LA7VIN2",133,0)
+ ;
+"RTN","LA7VIN2",134,0)
+ D NTE^LA7VIN2A
+"RTN","LA7VIN2",135,0)
+ Q
+"RTN","LA7VIN2",136,0)
+ ;
+"RTN","LA7VIN2",137,0)
+ ;
+"RTN","LA7VIN2",138,0)
+PID ; Process PID segment
+"RTN","LA7VIN2",139,0)
+ N LA7I,LA7X,LA7Y,X,Y
+"RTN","LA7VIN2",140,0)
+ ;
+"RTN","LA7VIN2",141,0)
+ S (DFN,LA7DOB,LA7ICN,LA7PRACE,LA7PNM,LA7PTID2,LA7PTID3,LA7PTID4,LA7SEX,LA7SSN,LRDFN,LRTDFN)=""
+"RTN","LA7VIN2",142,0)
+ ;
+"RTN","LA7VIN2",143,0)
+ ; PID Set ID
+"RTN","LA7VIN2",144,0)
+ S LA7SPID=$$P^LA7VHLU(.LA7SEG,2,LA7FS)
+"RTN","LA7VIN2",145,0)
+ ;
+"RTN","LA7VIN2",146,0)
+ ; Extract patient identifiers
+"RTN","LA7VIN2",147,0)
+ S LA7PTID2=$$P^LA7VHLU(.LA7SEG,3,LA7FS)
+"RTN","LA7VIN2",148,0)
+ S LA7PTID3=$$P^LA7VHLU(.LA7SEG,4,LA7FS)
+"RTN","LA7VIN2",149,0)
+ S LA7PTID4=$$P^LA7VHLU(.LA7SEG,5,LA7FS)
+"RTN","LA7VIN2",150,0)
+ ; Resolve ICN if identifier is from MPI
+"RTN","LA7VIN2",151,0)
+ ; Assume SSN is identifier if "SS" or blank
+"RTN","LA7VIN2",152,0)
+ F LA7I=1:1:$L(LA7PTID3,$E(LA7ECH,2)) D
+"RTN","LA7VIN2",153,0)
+ . N LA7J,LA7X,LA7ID
+"RTN","LA7VIN2",154,0)
+ . S X=$P(LA7PTID3,$E(LA7ECH,2),LA7I) Q:'$L(X)
+"RTN","LA7VIN2",155,0)
+ . S LA7PTID3(LA7I)=X,LA7ID=$P(LA7PTID3(LA7I),$E(LA7ECH),5)
+"RTN","LA7VIN2",156,0)
+ . I LA7ID'="","NI^PI"[LA7ID D  Q
+"RTN","LA7VIN2",157,0)
+ . . S Y=$P(LA7PTID3(LA7I),$E(LA7ECH))
+"RTN","LA7VIN2",158,0)
+ . . I Y?10N1"V"6N S LA7Y=Y
+"RTN","LA7VIN2",159,0)
+ . . E  S LA7Y=Y_"V"_$P(LA7PTID3(LA7I),$E(LA7ECH),2)
+"RTN","LA7VIN2",160,0)
+ . . S LA7X=$$CHKICN^LA7VHLU2(LA7Y)
+"RTN","LA7VIN2",161,0)
+ . . I LA7X>0 S DFN=$P(LA7X,"^"),LA7ICN=$P(LA7X,"^",2)
+"RTN","LA7VIN2",162,0)
+ . I LA7ID="SS"!(LA7ID="") D  Q
+"RTN","LA7VIN2",163,0)
+ . . F LA7J=1:1:3 S LA7X(LA7J)=$P(LA7PTID3(LA7I),$E(LA7ECH),LA7J)
+"RTN","LA7VIN2",164,0)
+ . . ;following line is commented out in LR*5.2*87
+"RTN","LA7VIN2",165,0)
+ . . ;Veteran Identification Card (VIC) ID's might be received
+"RTN","LA7VIN2",166,0)
+ . . ;in PID segment instead of social security numbers
+"RTN","LA7VIN2",167,0)
+ . . ;I LA7X(1)'?9N.1A Q
+"RTN","LA7VIN2",168,0)
+ . . ;routine DPTLK will return the DFN for an SSN
+"RTN","LA7VIN2",169,0)
+ . . ;or VIC ID
+"RTN","LA7VIN2",170,0)
+ . . I '$G(DFN) D RPCVIC^DPTLK(.DFN,LA7X(1))
+"RTN","LA7VIN2",171,0)
+ . . I LA7X(3)="M11",LA7X(2)'=$P($$M11^HLFNC(LA7X(1),LA7ECH),$E(LA7ECH),2) Q
+"RTN","LA7VIN2",172,0)
+ . . ;following line commented out because VIC ID may have been received
+"RTN","LA7VIN2",173,0)
+ . . ;S LA7SSN=LA7X(1),DFN=$O(^DPT("SSN",LA7SSN,0))
+"RTN","LA7VIN2",174,0)
+ . . ;Determine SSN from DFN returned by DPTLK
+"RTN","LA7VIN2",175,0)
+ . . ;SSN is needed for transaction lookups in
+"RTN","LA7VIN2",176,0)
+ . . ;option Display Lab Universal Interface Message
+"RTN","LA7VIN2",177,0)
+ . . I $G(DFN)>0 D
+"RTN","LA7VIN2",178,0)
+ . . . N VADM
+"RTN","LA7VIN2",179,0)
+ . . . D DEM^VADPT
+"RTN","LA7VIN2",180,0)
+ . . . S LA7SSN=$P(VADM(2),"^")
+"RTN","LA7VIN2",181,0)
+ ;
+"RTN","LA7VIN2",182,0)
+ ; Check PID-2 (alternate patient id) if PID-3 did not yield SSN/ICN
+"RTN","LA7VIN2",183,0)
+ F LA7I=1:1:$L(LA7PTID2,$E(LA7ECH,2)) D
+"RTN","LA7VIN2",184,0)
+ . N LA7J,LA7X,LA7ID
+"RTN","LA7VIN2",185,0)
+ . S X=$P(LA7PTID2,$E(LA7ECH,2),LA7I) Q:'$L(X)
+"RTN","LA7VIN2",186,0)
+ . S LA7PTID2(LA7I)=X,LA7ID=$P(LA7PTID2(LA7I),$E(LA7ECH),5)
+"RTN","LA7VIN2",187,0)
+ . I LA7ICN="",LA7ID'="","NI^PI"[LA7ID D  Q
+"RTN","LA7VIN2",188,0)
+ . . S Y=$P(LA7PTID2(LA7I),$E(LA7ECH))
+"RTN","LA7VIN2",189,0)
+ . . I Y?10N1"V"6N S LA7Y=Y
+"RTN","LA7VIN2",190,0)
+ . . E  S LA7Y=Y_"V"_$P(LA7PTID2(LA7I),$E(LA7ECH),2)
+"RTN","LA7VIN2",191,0)
+ . . S LA7X=$$CHKICN^LA7VHLU2(LA7Y)
+"RTN","LA7VIN2",192,0)
+ . . I LA7X>0 S DFN=$P(LA7X,"^"),LA7ICN=$P(LA7X,"^",2)
+"RTN","LA7VIN2",193,0)
+ . I LA7SSN="",LA7ID="SS"!(LA7ID="") D  Q
+"RTN","LA7VIN2",194,0)
+ . . F LA7J=1:1:3 S LA7X(LA7J)=$P(LA7PTID2(LA7I),$E(LA7ECH),LA7J)
+"RTN","LA7VIN2",195,0)
+ . . I LA7X(1)'?9N.1A Q
+"RTN","LA7VIN2",196,0)
+ . . I LA7X(3)="M11",LA7X(2)'=$P($$M11^HLFNC(LA7X(1),LA7ECH),$E(LA7ECH),2) Q
+"RTN","LA7VIN2",197,0)
+ . . S LA7SSN=LA7X(1),DFN=$O(^DPT("SSN",LA7SSN,0))
+"RTN","LA7VIN2",198,0)
+ ;
+"RTN","LA7VIN2",199,0)
+ ; Extract patient name
+"RTN","LA7VIN2",200,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,6,LA7FS)
+"RTN","LA7VIN2",201,0)
+ I LA7X'="" D
+"RTN","LA7VIN2",202,0)
+ . S LA7PNM=$$FMNAME^HLFNC(LA7X,LA7ECH)
+"RTN","LA7VIN2",203,0)
+ . D SETID^LA7VHLU1(LA76249,LA7ID,LA7PNM,0)
+"RTN","LA7VIN2",204,0)
+ . D SETID^LA7VHLU1(LA76249,"",LA7PNM,0)
+"RTN","LA7VIN2",205,0)
+ ;
+"RTN","LA7VIN2",206,0)
+ ; Extract date of birth
+"RTN","LA7VIN2",207,0)
+ ; Check for degree of precision in 2nd component to provide backward compatibility with HL7 <v2.3
+"RTN","LA7VIN2",208,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,8,LA7FS)
+"RTN","LA7VIN2",209,0)
+ I LA7X D
+"RTN","LA7VIN2",210,0)
+ . S LA7Y=$P(LA7X,LA7CS,2),LA7X=$P(LA7X,LA7CS,1)
+"RTN","LA7VIN2",211,0)
+ . I (LA7Y=""!(LA7Y="D")),$E(LA7X,9,12)="0000" S LA7X=$E(LA7X,1,8)
+"RTN","LA7VIN2",212,0)
+ . S LA7DOB=$$HL7TFM^XLFDT(LA7X)
+"RTN","LA7VIN2",213,0)
+ . I LA7DOB<1 S LA7DOB=""
+"RTN","LA7VIN2",214,0)
+ . I LA7Y="L" S LA7DOB=$E(LA7DOB,1,5)_"00"
+"RTN","LA7VIN2",215,0)
+ . I LA7Y="Y" S LA7DOB=$E(LA7DOB,1,3)_"0000"
+"RTN","LA7VIN2",216,0)
+ ;
+"RTN","LA7VIN2",217,0)
+ ; Extract patient's sex
+"RTN","LA7VIN2",218,0)
+ S LA7SEX=$$P^LA7VHLU(.LA7SEG,9,LA7FS)
+"RTN","LA7VIN2",219,0)
+ ;
+"RTN","LA7VIN2",220,0)
+ ; Extract patient's race
+"RTN","LA7VIN2",221,0)
+ S LA7X=$$P^LA7VHLU(.LA7SEG,11,LA7FS)
+"RTN","LA7VIN2",222,0)
+ I $P(LA7X,LA7CS)'="" D
+"RTN","LA7VIN2",223,0)
+ . I $P(LA7X,LA7CS,3)="0005" S $P(LA7X,LA7CS,3)="HL70005"
+"RTN","LA7VIN2",224,0)
+ . S LA7PRACE=$P(LA7X,LA7CS)_":"_$P(LA7X,LA7CS,2)_$S($P(LA7X,LA7CS,3)'="":":"_$P(LA7X,LA7CS,3),1:"")
+"RTN","LA7VIN2",225,0)
+ ;
+"RTN","LA7VIN2",226,0)
+ ; Extract patient's SSN and determine DFN
+"RTN","LA7VIN2",227,0)
+ ; If SSN determined previously from PID-3 then compare SSN's
+"RTN","LA7VIN2",228,0)
+ ; If DFN determined previously from ICN then check DFN based on SSN.
+"RTN","LA7VIN2",229,0)
+ S LA7X=$P($$P^LA7VHLU(.LA7SEG,20,LA7FS),LA7CS)
+"RTN","LA7VIN2",230,0)
+ S LA7X=$TR(LA7X,"-","") ; remove "-" if any
+"RTN","LA7VIN2",231,0)
+ I LA7X?9N.1A D
+"RTN","LA7VIN2",232,0)
+ . I LA7SSN'="",LA7X'=LA7SSN Q
+"RTN","LA7VIN2",233,0)
+ . S LA7SSN=LA7X
+"RTN","LA7VIN2",234,0)
+ . I DFN,DFN'=$O(^DPT("SSN",LA7SSN,0)) Q
+"RTN","LA7VIN2",235,0)
+ . S DFN=$O(^DPT("SSN",LA7SSN,0))
+"RTN","LA7VIN2",236,0)
+ I LA7SSN'="" D
+"RTN","LA7VIN2",237,0)
+ . I LA7INTYP>19,LA7INTYP<30 D SETID^LA7VHLU1(LA76249,LA7ID,LA7SSN,1) Q
+"RTN","LA7VIN2",238,0)
+ . D SETID^LA7VHLU1(LA76249,LA7ID,LA7SSN,0)
+"RTN","LA7VIN2",239,0)
+ ;If VIC ID sent, set additional identifier for lookup
+"RTN","LA7VIN2",240,0)
+ ;VIC ID will always begin with "%"
+"RTN","LA7VIN2",241,0)
+ I $E($G(LA7PTID3))="%" D
+"RTN","LA7VIN2",242,0)
+ . D SETID^LA7VHLU1(LA76249,LA7ID,$P(LA7PTID3,"^"),0)
+"RTN","LA7VIN2",243,0)
+ I DFN S LRDFN=$P($G(^DPT(DFN,"LR")),"^")
+"RTN","LA7VIN2",244,0)
+ ;
+"RTN","LA7VIN2",245,0)
+ Q
+"RTN","LA7VIN2",246,0)
+ ;
+"RTN","LA7VIN2",247,0)
+ ;
+"RTN","LA7VIN2",248,0)
+PV1 ; Process PV1 segment
+"RTN","LA7VIN2",249,0)
+ ;
+"RTN","LA7VIN2",250,0)
+ ; PV1 Set ID
+"RTN","LA7VIN2",251,0)
+ S LA7SPV1=$$P^LA7VHLU(.LA7SEG,2,LA7FS)
+"RTN","LA7VIN2",252,0)
+ ;
+"RTN","LA7VIN2",253,0)
+ ; Extract ordering location
+"RTN","LA7VIN2",254,0)
+ S LA7LOC=$P($$P^LA7VHLU(.LA7SEG,4,LA7FS),LA7CS)
+"RTN","LA7VIN2",255,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10530,6)
+^72
+**END**
+**END**
+

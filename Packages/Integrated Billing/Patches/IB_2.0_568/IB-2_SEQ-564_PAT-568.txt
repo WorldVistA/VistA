@@ -1,0 +1,391 @@
+$TXT Created by                  at DEVESR.DOMAIN.EXT  (KIDS) on Wednesday, 02/21/18 at 16:11
+=============================================================================
+Run Date: MAY 24, 2018                     Designation: IB*2*568
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #564                      Status: Released
+                  Compliance Date: JUN 24, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*135    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*220    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*447    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*458    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*473    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*498    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*577    <<= must be installed BEFORE `IB*2*568'
+                    (v)IB*2*597    <<= must be installed BEFORE `IB*2*568'
+
+Subject: HAPE FY16 REVENUE ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INSTALLATION NOTE:
+ ----------------------------
+ There are three patches associated with this project - PRCA*4.5*315,
+ IB*2.0*568 and PSO*7.0*463. All three patches are to be installed as
+ PackMan files.  There is no bundle.
+  
+ The three patches for this project MUST be installed in this order:
+ 1.  PRCA*4.5*315
+ 2.  IB*2.0*568
+ 3.  PSO*7.0*463
+  
+ Description
+ -----------
+ The Chief Business Office (CBO) is requesting system enhancements to
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Outpatient
+ Pharmacy (PSO) software modules.
+  
+ The mission of the Department of Veterans Affairs (VA), Office of
+ Information & Technology (OI&T), is to provide benefits and services
+ to veterans of the United States Armed Forces. In meeting these goals, OIT
+ strives to provide high quality, effective, and efficient Information
+ Technology (IT) services to those responsible for providing care to the
+ veterans at the point-of-care, as well as throughout all the points of the
+ veterans' health care. The VA depends on Information
+ Management/Information Technology (IM/IT) systems to meet mission goals.
+  
+ The overall FY16 HAPE Revenue Enhancement project is comprised of three 
+ New Service Requests (NSR):
+  
+ NSR #20150506
+ The Revenue Eligibility Enhancements Project effort for the
+ (CBO), bundles several NSRs with similar business needs into a single
+ requirements document.  Successfully addressing the requirements contained
+ within this document will enable the Department of VA to appropriately 
+ bill certain subsets of billable events by correcting, automating, or
+ enhancing current VistA systems.
+  
+ NSR #20150507
+ The Revenue Operations Enhancements Project combines several NSRs,
+ as well. This effort enables the VA to improve revenue operation
+ functionality related to repayment plans, late charge capture, bill
+ suspension reasons, the billing of deactivated providers, and the display
+ of appeal rights and responsibilities on the Veterans Beneficiary travel
+ Bill of Collections form.  Implementation of the proposed enhancements 
+ will make a significant positive impact on stakeholders and target users.
+  
+ NSR #20150505
+ The Revenue Reporting Enhancements Project will enable the VA to
+ improve tracking and reporting of revenue, and will support revenue
+ reporting business rules and guidelines.
+  
+  
+ IB*2.0*568 patch enhancements, pertinent to the above NSRs, include:
+  
+ 1.) When generating the RNB (Reasons Not Billable) report, the
+ Integrated Billing system shall populate the charges for all types of
+ services provided. Charges will not be screened by any billable criteria
+ but will indicate the full amount as if the care was to be billed.
+  
+ 2.) The sub-option Claims Tracking Parameter Edit [IBT EDIT TRACKING
+ PARAMETERS], that currently has no key, will be locked with a new Security
+ Key called IB PARAMETER EDIT.
+  
+ 3.) The option MCCR Site Parameter Display/Edit [IBJ MCCR SITE
+ PARAMETERS], which is currently locked with the IB SUPERVISOR Security
+ Key, will be instead locked with the new key. NOTE: IV Managers, Billing 
+ Managers and other select staff approved to edit through the MCCR SITE
+ PARAMETERS option will need to have this key assigned
+  
+  
+ 4.) The Integrated Billing system shall create claims tracking entries
+ for previously unbilled Prosthetics/DME items when new billable insurance
+ is entered into the patient's insurance file.
+  
+ 5.) A new coverage limitation field shall be created in the insurance
+ file for Prosthetics.  Like the other existing coverage limitation
+ fields in the insurance file (Inpatient, Outpatient, Pharmacy etc.),
+ this field will have the following options:
+        0=NOT COVERED
+        1=COVERED
+        2=CONDITIONAL COVERAGE
+ Once selected, they will show in the patient insurance file as Yes,
+ No, or Conditional.
+  
+ 6.) The system shall automatically assign an RNB [NO PROSTHETIC
+ COVERAGE (CV22)] for Prosthetics/DME items if the patient has no coverage
+ for Prosthetics in his/her insurance file.
+  
+ 7.) The system shall have a new option to add Prosthetics items to
+ Manual and Nightly Claims Tracking.
+  
+ 8.) Users will be able to select Suspended Type from the menu to
+ display in the First Party Follow- Up [IBJD FOLLOW-UP FIRST PARTY]
+ report.
+  
+ 9.) First Party Follow-Up [IBJD FOLLOW-UP FIRST PARTY] report shall
+ be modified to incorporate reason for suspension.
+  
+ 10.) A new warning message will print to the screen in the Enter/Edit
+ Billing Information option if an ATTENDING, REFERRING or RENDERING
+ Provider has a PERSON CLASS in the NEW PERSON file (#200) that was expired
+ at the time of the Date of Service.
+  
+ 11.) On the Third Party Joint Inquiry screen, one (1) character space
+ shall be added to the "Type" field so that it will accommodate five
+ characters (a one-character classification indicator, a forward slash
+ (/), a one-character component indicator, a forward slash (/), and a
+ one-character care type) ("X/X/X").  If a bill contains prescriptions,
+ then an "R" shall be concatenated to the fifth character sub-type position
+ of the "Type" field. If a bill contains prosthetics, then a "P" shall be
+ concatenated to fifth character sub-type position of the "Type" field. The
+ "Type" field shall contain five (5) characters as follows:
+ 1. "I" for Inpatient or "O" for Outpatient,
+ 2. "/" forward slash character
+ 3. "P" for Professional or "I" for Institutional
+ 4. "/" forward slash character
+ 5. "P" for Prosthetics or "R" for Prescriptions
+  
+ 12.) Three new Third Party Insurance Rate Types shall be created in
+ the VistA IB system for the billers to choose from when billing for
+ encounters. They are as follows:
+        HUMANITARIAN REIMB. INS.
+        DENTAL REIMB. INS.
+        INELIGIBLE REIMB. INS.
+  
+ 13.) Each of the new rate types above will have the 'Insurer' as the
+ responsible party.
+  
+ 14.) Billers (revenue staff) should be able to identify any remaining
+ charges to the patient after the Third Party payments are received for
+ Emergency Humanitarian, Ineligible and Dental services so they can
+ accomplish balance billing.
+  
+ Concurrent Development / Dependencies:
+ --------------------------------------
+ PRCA*4.5*315
+ PSO*7*463 
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)     New/Modified/Deleted
+ ------------------    -------------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type          New/Modified/Deleted
+ -----------                     ----          --------------------
+ IB AUTO BILLER PARAMS           ROUTINE       MODIFIED
+ IB EDIT SITE PARAMETERS         ROUTINE       MODIFIED
+ IBJ MCCR SITE PARAMETERS        ROUTINE       MODIFIED
+ IBT EDIT TRACKING PARAMETERS    ROUTINE       MODIFIED
+ IBT SUP MANUALLY QUE ENCTRS     ROUTINE       MODIFIED
+ IBT SUP MANUALLY QUE PRSTHTCS   ROUTINE       NEW
+ IBT SUP MANUALLY QUE RX FILLS   ROUTINE       MODIFIED
+ IBT SUPERVISORS MENU            MENU          MODIFIED
+  
+ Protocols Associated:
+  
+ Protocol Name                                  New/Modified/Deleted
+ -------------                                  --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ IB PARAMETER EDIT
+  
+  
+ Templates Associated:
+  
+ Template Name                Type   File Name (Number)      New/Mod/Del
+ -------------                ----   ------------------      -----------
+ IBJT ACTIVE LIST             LIST                           NEW
+ IBJT INACTIVE LIST           LIST                           NEW
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20150505 - Revenue Reporting Enhancements
+ 20150506 - Revenue Eligibility Enhancements
+ 20150507 - Revenue Operations Enhancements
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overviews:
+ ----------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Durham VAMC
+ Central Alabama Veterans Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Choose the PackMan message containing this patch.
+  
+ Sites may retrieve documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+ OI Field Offices:
+  
+ Hines:           domain.ext
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation
+ Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                              File Name           FTP Mode
+ -------------------------------------------------------------------------------
+ Integrated Billing User Manual                     IB_2_0_UM.PDF       Binary
+ Integrated Billing Claims Tracking User Guide      IB_2_0_CT_UG.PDF    Binary
+ Integrated Billing Technical Manual/Security Guide IB_2_0_TM.PDF       Binary
+ Integrated Billing Deployment, Installation,
+      Back-Out, and Rollback Guide (IB*2*568)       IB_2_0_P568_IG.PDF  Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post installation routine, IBY568PO, is automatically deleted as a 
+ part of the normal installation process if allowed by your Kernel site 
+ parameters.
+  
+ The post installation routine performs the following tasks:
+  
+    o Add the Prosthetics entry to the INSURANCE RIDERS file (#355.6)
+    o Add Prosthetics to the PLAN LIMITATION CATEGORY file (#355.31)
+    o Add 3 new rate types to the RATE TYPE file (#399.3)
+    o Add 7 new rate schedules to the RATE SCHEDULE file (#363)
+    o Add 1 new IB error message to the IB ERROR file (#350.8)
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The option MCCR Site Parameter Display/Edit [IBJ MCCR SITE
+ PARAMETERS], which is currently locked with the IB SUPERVISOR Security
+ Key, will be instead locked with the new key IB PARAMETER EDIT. IV
+ Managers, Billing Managers and other select staff approved to edit through
+ the MCCR SITE PARAMETERS option will need to have this key assigned.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  To Install the Patch, from the Installation Menu, select the Install
+     Package(s) option and choose the patch to install. When prompted for
+     the INSTALL NAME, enter the patch# (IB*2.0*568).
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  You may press return to accept the default answer of 
+     NO IF your system rebuilds menu trees nightly using TaskMan. If you 
+     do not have this scheduled as a nightly task, you must answer YES to 
+     rebuild the menu trees.  This could affect users on the system 
+     and your installation time will increase.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//, enter 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//, enter 'NO' 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCAPP
+    Before: B21485583   After: B23150807  **432,447,568**
+Routine Name: IBCBB11
+    Before:B112052327   After:B125441111  **51,343,363,371,395,392,401,
+                                           384,400,436,432,516,550,577,
+                                           568**
+Routine Name: IBCNSBL2
+    Before: B33173974   After: B39593451  **52,80,153,240,432,568**
+Routine Name: IBECEA
+    Before: B10792926   After: B13714935  **199,135,568**
+Routine Name: IBJDB21
+    Before: B73370335   After:B127496258  **123,159,185,399,437,458,568**
+Routine Name: IBJDF11
+    Before: B29605847   After: B30230903  **69,80,118,128,204,205,227,
+                                           451,530,554,568**
+Routine Name: IBJDF2
+    Before: B68244751   After: B68533516  **69,91,100,118,133,205,554,597,568**
+Routine Name: IBJDF4
+    Before: B27131031   After: B43681161  **123,204,220,568**
+Routine Name: IBJDF41
+    Before: B88827246   After:B103009700  **123,159,204,356,451,473,568**
+Routine Name: IBJDF42
+    Before: B53237550   After: B55007532  **123,204,568**
+Routine Name: IBJDF43
+    Before: B23469371   After: B25427864  **123,568**
+Routine Name: IBJTLA1
+    Before: B12051503   After: B13446872  **39,80,61,51,153,137,183,276,
+                                           451,516,530,568**
+Routine Name: IBJTLB1
+    Before: B12752963   After: B13573050  **39,80,61,137,276,451,516,530,568**
+Routine Name: IBTRE2
+    Before: B32981505   After: B41874411  **23,121,249,312,568**
+Routine Name: IBTRE20
+    Before: B13573861   After: B20324155  **40,91,249,568**
+Routine Name: IBTRKR5
+    Before: B35067366   After: B38746753  **13,260,312,339,389,474,498,568**
+Routine Name: IBY568PO
+    Before:       n/a   After: B78022144  **568**
+ 
+Routine list of preceding patches: 135, 220, 447, 458, 473, 498, 577, 597
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 17, 2016
+Completed By:                               Date Completed: MAY 23, 2018
+Released By :                               Date Released : MAY 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

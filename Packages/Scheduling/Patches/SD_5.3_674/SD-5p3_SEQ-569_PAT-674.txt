@@ -1,0 +1,225 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/13/18 at 13:56
+=============================================================================
+Run Date: JUN 27, 2018                     Designation: SD*5.3*674
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #569                    Status: Released
+                  Compliance Date: JUL 28, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*291  <<= must be installed BEFORE `SD*5.3*674'
+                    (v)SD*5.3*509  <<= must be installed BEFORE `SD*5.3*674'
+                    (v)SD*5.3*529  <<= must be installed BEFORE `SD*5.3*674'
+                    (v)SD*5.3*611  <<= must be installed BEFORE `SD*5.3*674'
+                    (v)SD*5.3*645  <<= must be installed BEFORE `SD*5.3*674'
+
+Subject: APPOINTMENT MAPPING ISSUE, DISCONTINUE CLU/CLW TRANSMISSIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+  1. Clinic availabilities with future start dates display as available 
+     prior to the future requested date.
+  
+  2. The Clinic Utilization & Capacity Data transmissions to Austin
+     should no longer be transmitted.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ ----------------------------
+ N/A
+  
+ Forms Associated:
+ -------------------
+ N/A
+  
+ Mail Groups Associated:
+ -------------------------
+ N/A
+  
+ Options Associated:
+ ---------------------
+ N/A
+  
+ Protocols Associated:
+ -----------------------
+ N/A
+  
+ Security Keys Associated:
+ ---------------------------
+ N/A
+  
+ Templates Associated:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R10782271FY16 - VistA scheduling error. Indefinite slot with a future
+                    date displaying prior.
+    I16888165FY18(d)
+ 
+    Problem:
+    --------
+    The Set up a Clinic [SDBUILD] and Remap Clinic [SDD] options create
+    invalid entries in the AVAILABILITY (#1920) sub-file in the HOSPITAL
+    LOCATION (#44) file when a new clinic availability is created for a
+    future date with an indefinite end date.
+     
+  
+    Resolution:
+    -----------
+    Routines SDAUT1, SDD0, SDM0, and SDM1 were modified to check the
+    initial start date of indefinite clinic availabilities before
+    creating new entries in the AVAILABILITY (#1920) sub-file in the
+    HOSPITAL LOCATION (#44) file. 
+  
+  
+ 2. R15541750FY17 - Stop Clinic Utilization (CLU) and Clinic Wait List
+                    (CLW) MailMan data transmissions to Austin Information
+                    Technology Center (AITC) from 130 VistA instances 
+  
+    Problem:
+    --------
+    AITC has requested the CLU and CLW transmissions stop being transmitted
+    to Austin for all VistA sites. Stacy Campbell, Deputy Director, 
+    VHA Support Service Center (VSSC) has confirmed the VSSC is no longer
+    utilizing the reports generated on the mainframe created from the 
+    CLU/CLW data transmissions send via MailMan.
+     
+  
+    Resolution:
+    -----------
+    Routine SD53674P was created to delete the scheduled tasks from 
+    TaskMan, and kill the ^XTMP("SD53P192","EXTRACT") global. Routine
+    SCRPW74 was also modified to quit the transmission when called if
+    it is queued in the future.
+  
+ Test Sites:
+ ----------
+ Charles George VAMC (Asheville)
+ Coatesville VAMC
+   
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  The installer of this patch MUST hold the "ZTMQ"      *
+     *  Security Key to install. If you do not hold the key   *
+     *  or are unsure, please use the Allocation of Security  *
+     *  Keys [ORLEASE] menu option to add this key.           *
+     **********************************************************
+  
+ This patch should be queued to install during off peak hours.   
+  
+ Install Time - less than 20 minutes. 
+     
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter SD*5.3*674):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package SD*5.3*674.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted 'Want to DISABLE Scheduled Options and Menu
+       Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+       Set up a Clinic                      [SDBUILD]
+       Remap Clinic                         [SDD]
+       Display Clinic Availability Report   [SD DISPLAY AVAIL REPORT]
+       Appointment Management               [SDAM APPT MGT]
+  
+      When prompted "Enter protocols you wish to mark as "Out of
+      Order":" just press <Return>.
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+    1. Optional - Once this patch has been successfully installed you may 
+       delete the post-init routine: SD53674P.
+  
+    2. Once this patch has been successfully installed, please review the
+       install file to verify the tasks have been un-scheduled and deleted.
+  
+ Back-Out Plan:
+ --------------------
+    This patch can be backed out by installing the routines/PackMan 
+    message created from the installation instructions, Step 3-d,  
+    "Backup a Transport Global".
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCRPW74
+    Before: B43863725   After: B45475509  **192,206,223,241,249,291,674**
+Routine Name: SD53674P
+    Before:       n/a   After:  B7767783  **674**
+Routine Name: SDAUT1
+    Before:  B4386633   After:  B7091141  **140,674**
+Routine Name: SDCLAV1
+    Before: B58999426   After: B60059248  **140,167,168,76,383,463,490,
+                                           517,533,509,674**
+Routine Name: SDD0
+    Before: B19483727   After: B23452464  **167,401,529,674**
+Routine Name: SDM0
+    Before: B93886442   After:B100540927  **140,167,206,186,223,237,241,
+                                           384,334,547,621,622,645,674**
+Routine Name: SDM1
+    Before: B54343109   After: B57988164  **32,167,168,80,223,263,273,
+                                           408,327,478,490,446,547,611,
+                                           674**
+ 
+Routine list of preceding patches: 291, 509, 529, 611, 645
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 23, 2017
+Completed By:                               Date Completed: JUN 27, 2018
+Released By :                               Date Released : JUN 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

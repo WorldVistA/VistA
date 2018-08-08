@@ -1,0 +1,406 @@
+$TXT Created by              TAS-EINS-HFD.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 04/11/18 at 12:51
+=============================================================================
+Run Date: JUN 04, 2018                     Designation: IB*2*595
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #565                      Status: Released
+                  Compliance Date: JUL 05, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*399    <<= must be installed BEFORE `IB*2*595'
+                    (v)IB*2*554    <<= must be installed BEFORE `IB*2*595'
+                    (v)IB*2*601    <<= must be installed BEFORE `IB*2*595'
+
+Subject: MCCF EDI TAS EINSURANCE BUILD 5
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 1 project.
+  
+ The post install routine uses IA #4677.
+  
+ Complete List of patch items:
+  1. Modified VistA to properly file an eligibility response when that
+     response is associated with a payer name that begins with numeric
+     characters.
+  
+  2. Modified the excel version of the eIV Payer Link Report [IBCNE IIV 
+     PAYER LINK REPORT] option to display the correct value for the locally
+     active status column, LOCAL ACTIVE (#365.12, .03), so that eInsurance
+     users have an accurate report and know what payers they may need to
+     update.
+  
+  3. On the first of the month, the nightly job will automatically purge 
+     eIV related inquiries and responses so that outdated responses are
+     removed and database space is maximized. If the automatic purge
+     process can't be completed, the proper authorities will be notified
+     via email message to mailman group "IBCNE EIV MESSAGE" and outlook
+     address VHAEINSURANCERR@domain.ext .
+  
+  4. Modified VistA to display the additional one letter Source of
+     Information (SOI) codes associated with the SOURCE OF INFORMATION FILE
+     (#355.12) on the screens for the Process Insurance Buffer 
+     [IBCN INSURANCE BUFFER PROCESS] option (insurance buffer). This allows
+     the user to determine how the insurance buffer entry was created and
+     assist with work-list sorting. The help text has been updated to
+     include the new SOI codes.
+  
+  5. Removed the ability to directly create insurance policies on the
+     patient's insurance records from outside of the IB package. Disallowed
+     users from creating an entry in the INSURANCE TYPE sub-file (#2.312)
+     within the PATIENT file (#2) via the Fee Patient Inquiry [FBAA
+     PATIENT INQUIRY] option, via the Preregister a Patient [DGPRE
+     PRE-REGISTER OPTION] option and via the Register a Patient
+     [DG REGISTER PATIENT] option. Using those same options, users can now
+     create an insurance buffer entry for any insurance company, including
+     "MEDICARE (WNR)".
+  
+  6. Enhanced the ability to manage auto match entries, a user holding 
+     security key IBCNE EIV MAINTANENCE can access the Enter/Edit Auto
+     Match Entries [IBCNE AUTO MATCH ENTER/EDIT] option to delete existing
+     entries within that option. Users who do not hold security key 
+     IBCNE EIV MAINTANENCE cannot access the Enter/Edit Auto Match Entries
+     [IBCNE AUTO MATCH ENTER/EDIT] option.
+  
+  7. In the IIV RESPONSE (#365) file, capture the patient's internal entry 
+     number for the INSURANCE TYPE sub-file (#2.312) within the Patient
+     (#2) file to accurately track when an auto-update successfully updates
+     a patient's policy. The eIV Auto Update Report [IBCNE EIV UPDATE
+     REPORT] option will utilize the data to more accurately report on all
+     auto updated policies for a given time frame. Manual user verification
+     will no longer impact the report results. Adjusted the daily Financial
+     Service Center (FSC) registration message to report only yesterday's
+     data to protect against duplication.   
+  
+  8. Modified VistA to update the VERIFIED BY field (#2.312, 1.04) and the 
+     LAST EDITED BY field (#2.312, 1.06) in a timely manner with accurate
+     data so that downstream processes and reports contain the proper
+     information. 
+  
+  9. Persisted the Source of Information (#2.312, 1.09) field so that it 
+     always reflects the original SOI specifying how the policy was
+     identified. This will facilitate generating return on investment
+     reports that associate dollars collected with the source used to
+     identify the insurance policy. Added a unique SOI identifier,
+     "MYVA HEALTH JOURNAL", that may be utilized to augment source
+     reporting.
+  
+ 10. Modified VistA to generate a SOI of "eIV" from the eIV Appointment 
+     extract to be saved in the IIV TRANSMISSION QUEUE (#365.1) file in
+     field SOURCE OF INFORMATION (#3.02) so that outbound Health Level
+     Seven messages can carry the SOI and FSC can persist the data
+     accurately and use it for data analysis.
+  
+ 11. When moving subscribers to a different insurance plan, VistA allows 
+     the user to add/edit the BANKING IDENTIFICATION NUMBER (#355.3, 6.02)
+     and the PROCESSOR CONTROL NUMBER (#355.3,6.03) to ensure that those
+     fields are populated in the destination group insurance plan.
+  
+ 12. Vista was updated to prevent the Insurance buffer from being 
+     auto-updated when the Source of Information code (#2.312, 1.09) is
+     "Contract Services".
+  
+  
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (#)                        Deleted
+ -------------------   ---------------------------------   -------------
+ IIV RESPONSE (#365)   PATIENT (#.02)                      Modified
+ IIV RESPONSE (#365)   PAYER (#.03)                        Modified
+ IIV RESPONSE (#365)   DATE/TIME RECEIVED (#.07)           Modified
+ IIV RESPONSE (#365)   INSUR RECORD IEN (#.12)             New
+ IIV RESPONSE (#365)   EIV AUTO-UPDATE (#.13)              New
+ IIV RESPONSE (#365)   AUTO (Cross-Reference)              New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (#)                  Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+   
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (#)                  Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. N/A
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ CINCINNATI, OH
+ MONTANA HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       SFTP Mode
+ -----------------------------------------------------------------------
+ Electronic Insurance          IB_2_0_P595_EIV_UM.pdf          Binary
+ Verification (eIV) User Guide
+  
+ Electronic Insurance          IB_2_0_P595_EIV_TM.pdf          Binary
+ Verification (eIV)
+ Technical Manual/Security Guide
+  
+ Deployment, Installation,     IB_2_0_P595_IG.pdf              Binary
+ Back-out, and Rollback Guide 
+ (IB*2.0*595) 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post install routine IBY595PO can be deleted after installation.
+ Refer to the post-installation instructions for more details regarding
+ what this routine specifically does.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ *****************************************************************
+ * You should install this patch during non-peak hours, when no  *
+ * Integrated Billing users are on the system.                   *
+ *****************************************************************
+   
+ This patch may be installed with users on the system although it is 
+ *strongly* recommended that it be installed during non-peak hours 
+ to minimize potential disruption to users. This patch should take
+ less than 5 minutes to install.
+  
+ These options should be disabled during the install:
+  
+         [IBCN INSURANCE BUFFER PROCESS]
+         [IBCN PATIENT INSURANCE]
+         [IBCNE IIV PAYER LINK REPORT]
+         [FBAA PATIENT INQUIRY] 
+         [DGPRE PRE-REGISTER OPTION]
+         [DG REGISTER PATIENT]
+         [IBCN MOVE SUBSCRIB TO PLAN]
+  
+ Installation Instructions
+ -------------------------
+  
+ *** Do not install this patch when the eIV NIGHTLY PROCESS [IBCNE IIV 
+ BATCH PROCESS] background job is running.
+  
+ Install Time: Less than 5 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     IB*2.0*595.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global. 
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//', enter YES. 
+  
+       When prompted 'Enter options you wish to mark as 'Out Of Order':
+       Enter the following options one at a time:
+  
+         [IBCN INSURANCE BUFFER PROCESS]
+         [IBCN PATIENT INSURANCE]
+         [IBCNE IIV PAYER LINK REPORT]
+         [FBAA PATIENT INQUIRY] 
+         [DGPRE PRE-REGISTER OPTION]
+         [DG REGISTER PATIENT]
+         [IBCN MOVE SUBSCRIB TO PLAN]
+  
+       When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+       Press the Return or Enter key as there are no protocols that
+       needs to be marked as 'Out of Order'.
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post install (IBY595PO) has two assignments:
+  
+   a. Check and Add if needed a new Source of Information (#355.12) entry. 
+      Code (#355.12,.01) to "20"
+      Description (#355.12,.02) to "MYVA HEALTH JOURNAL"
+      ACRONYM (#355.12,.03) to "MVAH"
+  
+   b. Check and Add if needed a New Person (#200) entry (IA #4677.)
+      NAME (#200,.01) to "AUTOUPDATE,IBEIV"
+      User Class (#200.07,.01) to "APPLICATION PROXY"
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBAR
+    Before: B66457219   After: B66826717  **82,240,345,413,416,497,528,
+                                           554,595**
+Routine Name: IBCNBLL
+    Before:B148784052   After:B157960738  **82,149,153,183,184,271,345,
+                                           416,438,435,506,519,528,549,
+                                           601,595**
+Routine Name: IBCNEAME
+    Before:  B9090150   After: B13446799  **184,252,595**
+Routine Name: IBCNEDE
+    Before: B35885367   After: B48578031  **184,271,300,416,438,497,549,
+                                           593,595**
+Routine Name: IBCNEDE2
+    Before: B88831173   After: B91260138  **184,271,249,345,416,438,506,
+                                           549,593,595**
+Routine Name: IBCNEDST
+    Before: B57795358   After: B64728722  **497,506,549,595**
+Routine Name: IBCNEHL1
+    Before:B155699201   After:B169495376  **300,345,416,444,438,497,506,
+                                           549,593,601,595**
+Routine Name: IBCNEHL3
+    Before:B171692667   After:B171754905  **300,416,497,506,595**
+Routine Name: IBCNEKI2
+    Before:  B9273638   After:  B9851422  **271,316,416,595**
+Routine Name: IBCNEKIT
+    Before: B55673167   After: B78057141  **184,271,316,416,549,595**
+Routine Name: IBCNERPD
+    Before:B108873361   After:B110303722  **184,252,416,521,528,595**
+Routine Name: IBCNERPF
+    Before: B35587922   After: B38432371  **416,528,549,595**
+Routine Name: IBCNERPG
+    Before: B51210670   After: B57439598  **416,528,549,595**
+Routine Name: IBCNERPH
+    Before: B48112420   After: B52475568  **416,528,549,595**
+Routine Name: IBCNSMM
+    Before: B21854403   After: B19301339  **103,133,184,516,601,595**
+Routine Name: IBCNSP01
+    Before: B52258890   After: B52030470  **43,52,85,251,371,377,416,452,
+                                           497,595**
+Routine Name: IBCNSUR2
+    Before: B18995204   After: B21196070  **103,238,399,595**
+Routine Name: IBCNVRD1
+    Before:B219042298   After:B208983433  **528,595**
+Routine Name: IBY595PO
+    Before:       n/a   After:  B6003457  **595**
+ 
+Routine list of preceding patches: 399, 554, 601
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 07, 2017
+Completed By:                               Date Completed: JUN 04, 2018
+Released By :                               Date Released : JUN 04, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

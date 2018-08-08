@@ -1,0 +1,157 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 04/12/18 at 07:36
+=============================================================================
+Run Date: JUL 10, 2018                     Designation: RA*5*147
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #129                      Status: Released
+                  Compliance Date: AUG 10, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*136    <<= must be installed BEFORE `RA*5*147'
+
+Subject: 2018 MAINT OF RADIOLOGY FILE #73.2 (RADIOLOGY CPT BY PROCEDURE TYPE)
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ The Radiology Program Office sends out an updated listing
+ of the Radiology CPT by Procedure Type (73.2) on a 
+ yearly basis.  This update needs to be distributed to 
+ the sites.
+      
+ New Service Requests (NSRs):
+ ----------------------------  
+      
+ Patient Safety Issues (PSIs):
+ -----------------------------
+                     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Rational Work Item - 695565 - Yearly update to Radiology yearly procedure
+       
+ Associated NSR(s):
+ =============
+ N/A
+       
+ Problem:
+ --------
+ File 73.2 (RADIOLOGY CPT BY PROCEDURE TYPE) needs to be updated with the
+ yearly updates provided by the Radiology Program Office.
+        
+ Resolution:
+ ------------     
+ This patch will update the 73.2 file (RADIOLOGY CPT BY PROCEDURE TYPE) for
+ distribution to the sites.
+          
+ Test Sites:
+ ----------
+ Fresno VA HCS
+ Miami VA HCS
+       
+      
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+     
+ Patch Installation:
+      
+      
+ Pre/Post Installation Overview:
+ -------------------------------
+      
+ Pre-Installation Instructions:
+ ------------------------------    
+     
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off the system.  Other VISTA users will not be
+ affected. Install Time - less than 2 minutes (unless otherwise indicated)
+      
+ Installation Instructions:
+ --------------------------     
+                
+ 1.  Load Transport Global 
+     ---------------------------
+       
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*147):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer NO 
+      
+ Back-out/Rollback Strategy:
+ ==========================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+      
+ This patch involves data modifications.  A rollback would need to be 
+ implemented.
+      
+ To rollback, please re-install patch RA*5*136
+      
+ Post-Installation Instructions:
+ -------------------------------
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 27, 2018
+Completed By:                               Date Completed: JUL 09, 2018
+Released By :                               Date Released : JUL 10, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
