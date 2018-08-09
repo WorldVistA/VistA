@@ -1706,19 +1706,22 @@ class WebPageGenerator:
             dbCallRoutines = dbCallDepDict[depPackage][0]
             dbCallFileManFiles = dbCallDepDict[depPackage][1]
             titleList = titleList + ["FileMan Db Call Routines"+titleIndex, "FileMan Db Call Accessed FileMan Files"+titleIndex]
+        if optionDepDict and depPackage in optionDepDict:
+            optionCallRoutines = optionDepDict[depPackage][0]
+            optionCalledRoutines = optionDepDict[depPackage][1]
+            titleList = titleList + ["Package Component(s)"+titleIndex, "Package Component called Routines"+titleIndex]
+        if globalRtnDepDict and depPackage in globalRtnDepDict:
+            globalRtnCallRoutines = globalRtnDepDict[depPackage][0]
+            globalRtnCalledRoutines = globalRtnDepDict[depPackage][1]
+            titleList = titleList + ["RCaller Globals"+titleIndex, "GCalled Routines"+titleIndex]
+        if gblgblDepDicts and depPackage in gblgblDepDicts:
+            globalGblCallRoutines = gblgblDepDicts[depPackage][0]
+            globalGblCalledRoutines = gblgblDepDicts[depPackage][1]
+            titleList = titleList + ["GCaller Globals"+titleIndex, "Called Globals"+titleIndex]
         # Generate PDF customization dialog
         pdfList = titleList
         pdfList.append("Legend Graph")
         writePDFCustomization(outputFile, str(pdfList))
-        if optionDepDict and depPackage in optionDepDict:
-            optionCallRoutines = optionDepDict[depPackage][0]
-            optionCalledRoutines = optionDepDict[depPackage][1]
-        if globalRtnDepDict and depPackage in globalRtnDepDict:
-            globalRtnCallRoutines = globalRtnDepDict[depPackage][0]
-            globalRtnCalledRoutines = globalRtnDepDict[depPackage][1]
-        if gblgblDepDicts and depPackage in gblgblDepDicts:
-            globalGblCallRoutines = gblgblDepDicts[depPackage][0]
-            globalGblCalledRoutines = gblgblDepDicts[depPackage][1]
         optionCalledHtml = "<span class=\"comment\">%d</span>" % len(optionCalledRoutines)
         optionCallerHtml = "<span class=\"comment\">%d</span>" % len(optionCallRoutines)
         gblRtnCallerHtml = "<span class=\"comment\">%d</span>" % len(globalRtnCallRoutines)
@@ -1800,7 +1803,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(globalRtnCallRoutines),
                                               outputFile,
-                                              getGlobalHtmlFileName)
+                                              getGlobalHtmlFileName,
+                                              classid="rcallerGlobals")
             if len(globalRtnCalledRoutines) > 0:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, gblRtnCalledHtml)
@@ -1808,7 +1812,8 @@ class WebPageGenerator:
                 self.generateTablizedItemList(sorted(globalRtnCalledRoutines),
                                               outputFile,
                                               getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName)
+                                              self.getRoutineDisplayName,
+                                              classid="gcalledRoutines")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1823,14 +1828,16 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(globalGblCallRoutines),
                                               outputFile,
-                                              getGlobalHtmlFileName)
+                                              getGlobalHtmlFileName,
+                                              classid="gCallerGlobals")
             if len(globalGblCalledRoutines) > 0:
                 header = "Called Globals List in %s : %s" % \
                           (depPackageHyperLink, gblGblCalledHtml)
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(globalGblCalledRoutines),
                                               outputFile,
-                                              getGlobalHtmlFileName)
+                                              getGlobalHtmlFileName,
+                                              classid="calledGlobals")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1846,7 +1853,8 @@ class WebPageGenerator:
                 self.generateTablizedItemList(sorted(optionCallRoutines),
                                               outputFile,
                                               getPackageObjHtmlFileName,
-                                              self.getPackageComponentDisplayName)
+                                              self.getPackageComponentDisplayName,
+                                              classid="PCObjects")
             if len(optionCalledRoutines) > 0:
                 header = "Called Routines in %s : %s" % \
                           (depPackageHyperLink, optionCalledHtml)
@@ -1854,7 +1862,8 @@ class WebPageGenerator:
                 self.generateTablizedItemList(sorted(optionCalledRoutines),
                                               outputFile,
                                               getPackageObjHtmlFileName,
-                                              self.getRoutineDisplayName)
+                                              self.getRoutineDisplayName,
+                                              classid="PCcalledRoutines")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1968,13 +1977,14 @@ class WebPageGenerator:
                                 isAccordion=False)
         self.generatePackageRoutineDependencyDetailPage(package, depPackage,
                                                         outputFile, "_1")
+        writeSectionEnd(outputFile)
         # Dep. Package --> Package
         self.writeSectionHeader("%s-->%s :" % (depPackageHyperLink, packageHyperLink),
                                 depPackage.getName(), outputFile,
                                 isAccordion=False)
         self.generatePackageRoutineDependencyDetailPage(depPackage, package,
                                                         outputFile, "_2")
-
+        writeSectionEnd(outputFile)
         self.generateIndexBar(outputFile, inputList, archList, isIndex = False)
         self.__includeFooter__(outputFile)
         outputFile.close()
