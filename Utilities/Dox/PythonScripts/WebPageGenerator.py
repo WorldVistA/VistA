@@ -272,7 +272,7 @@ find the routine/global via
 
 # Note: This should ALWAYS be called, even when not generating PDF bundle
 def writePDFCustomization(outputFile, titleList):
-  outputFile.write("<script>initTitleList="+titleList+"\n")
+  outputFile.write("<script>initTitleList=%s\n" % str(titleList))
   outputFile.write(" initTitleList.forEach(function(obj) {\n")
   outputFile.write('''   if (obj == "Doc") {return }\n''');
   outputFile.write('''   $("#pdfSelection").append('<input class="headerVal" type="checkbox" val="'+obj+'" checked>'+obj+'</input>')\n''');
@@ -280,8 +280,7 @@ def writePDFCustomization(outputFile, titleList):
   outputFile.write(" })\n")
   outputFile.write("</script>\n")
 
-# utility functions
-accordionOpenFun = """
+OPEN_ACCORDION_FUNCTION = """
     <script type='text/javascript'>
         function openAccordionVal(event) {
           if ($(".sectionHeader").length > 5) {
@@ -297,8 +296,7 @@ accordionOpenFun = """
 
 """
 
-def getAccordionHTML():
-  return """
+ACCORDION =  """
     <script type='text/javascript'>
        function locationHashChanged() {
            locationString = window.location.hash.substring(1)
@@ -456,7 +454,7 @@ def generateIndexedTableRow(outputFile, inputList, httpLinkFunction,
     outputFile.write("<tr>")
     for item in inputList:
         if len(item) == 1 and item in indexSet:
-            outputFile.write("<td><a name=\"%s\"></a>" % item)
+            outputFile.write("<td><a name='%s'></a>" % item)
             outputFile.write("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">")
             outputFile.write("<tr><td><div class=\"ah\">&nbsp;&nbsp;%s&nbsp;&nbsp;</div></td></tr>" % item)
             outputFile.write("</table></td>")
@@ -682,43 +680,77 @@ class WebPageGenerator:
         self.failures.append(pdfFileName)
         pass
 
-    # generate index bar based on input list
-    def generateIndexBar(self, outputFile, inputList, archList=None,
-                         isIndex=False, printButton=False, packageName=None):
+# -----------------------------------------------------------------------------
+# Generate page-specific navigation bar for *most* DOX pages. Allows navigation
+# to specific items and/or sections. Generally, each page will have two
+# page-specific navigation bars:
+#   * header: directly below the global navigation bar.
+#   * footer: following all page-specific content
+#
+# There are three types of page-specific navigation bars:
+#   1. Index (no Print or All buttons). Header and footer are the same
+#   2. Non-Index header
+#     2a. Package headers also include a 'PDF' button, if generating PDFs
+#   3. Non-Index footer (no Print buttons)
+# -----------------------------------------------------------------------------
+    def generateNavigationBar(self, outputFile, inputList, archList=None,
+                              printButton=True, printList=None,
+                              allButton=True, packageName=None):
         if (not inputList) or len(inputList) == 0:
             return
         hasArchList = archList and len(archList) == len(inputList)
-        outputFile.write(accordionOpenFun)
+        onClickOpenAccordion = "onclick=\"openAccordionVal(event)\""
+        outputFile.write(OPEN_ACCORDION_FUNCTION)
         outputFile.write("<div class=\"qindex\">\n")
-        for i in range(len(inputList) - 1):
+        for i in range(len(inputList)):
             if hasArchList:
                 archName = archList[i]
             else:
                 archName = inputList[i]
-            outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" % (archName.split(" ")[0],archName,
-                                                                                         inputList[i]))
-        if hasArchList:
-            archName = archList[-1]
-        else:
-            archName = inputList[-1]
-        outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" % (archName.split(" ")[0],archName,
-            inputList[-1]))
-        outputFile.write("<a onclick=\"openAccordionVal(event)\" class=\"qindex Allaccord\" href=\"#%s\">%s</a></div>\n" % ("All","All"))
-        if not isIndex and printButton:
-          outputFile.write("<div class=\"qindex\">\n")
-          outputFile.write("<a onclick=\"startWritePDF(event)\" class=\"qindex printPage\" href=\"#Print\">Print Page as PDF</a>")
-          if packageName and self._generatePDFBundle:
-            # Note: Do NOT use os.path.join, want a "/" even if path is generated on Windows
-            # TODO: This is hardcoded to the path (currently) set in CMakeLists
-            pdfZipFilename = "PDF/" + normalizePackageName(packageName) + ".zip"
-            outputFile.write("&nbsp;|&nbsp;")
-            outputFile.write("<a onclick=\"startDownloadPDFBundle('" + pdfZipFilename + "')\" \
-                            class=\"qindex printAll\" href=\"#PrintAll\">Print All `" + packageName + "` Pages as PDF</a>")
-          outputFile.write("</div>")
-          outputFile.write("<div style=\"display:none;\" id=pdfSelection>\n")
-          outputFile.write('''<h3>Customize PDF page</h3>\n''');
-          outputFile.write('''<p>Select the objects that you wish to see in the downloaded PDF</p>\n''');
-          outputFile.write('''</div>\n''');
+            outputFile.write("<a %s class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" %
+                (onClickOpenAccordion, archName.split(" ")[0], archName, inputList[i]))
+        if allButton:
+            outputFile.write("<a %s class=\"qindex Allaccord\" href=\"#%s\">%s</a>\n" %
+                (onClickOpenAccordion, "All","All"))
+        outputFile.write("</div>\n")
+        if printButton:
+            outputFile.write("<div class=\"qindex\">\n")
+            outputFile.write("<a onclick=\"startWritePDF(event)\" \
+                             class=\"qindex printPage\" href=\"#Print\">Print Page as PDF</a>")
+            if packageName and self._generatePDFBundle:
+                # Note: Do NOT use os.path.join, want a "/" even if path is
+                # generated on Windows
+                # TODO: This is hardcoded to the path (currently) set in
+                # CMakeLists
+                pdfZipFilename = "PDF/" + normalizePackageName(packageName) + ".zip"
+                outputFile.write("&nbsp;|&nbsp;")
+                outputFile.write("<a onclick=\"startDownloadPDFBundle('%s')\" \
+                                 class=\"qindex printAll\" href=\"#PrintAll\">Print All `%s` Pages as PDF</a>"
+                                    % (pdfZipFilename, packageName))
+            outputFile.write("</div>")
+
+            # The dialog that will be displayed when the user selects 'Print'
+            outputFile.write("<div style=\"display:none;\" id=pdfSelection>\n")
+            outputFile.write("<h3>Customize PDF page</h3>\n")
+            outputFile.write("<p>Select the objects that you wish to see in the downloaded PDF</p>\n")
+            outputFile.write("</div>\n")
+
+            if printList:
+              # Generate list of printable sections
+              writePDFCustomization(outputFile, printList)
+
+    def generateIndexNavigationBar(self, outputFile, inputList):
+        self.generateNavigationBar(outputFile, inputList, printButton=False,
+                                   allButton=False)
+
+    # Navigation Bar + footer
+    def generateFooterWithNavigationBar(self, outputFile, indexList,
+                                        archList=None):
+        self.generateNavigationBar(outputFile, indexList, archList,
+                                   printButton=False)
+        self.__includeFooter__(outputFile)
+
+#------------------------------------------------------------------------------
 
     def writeSectionHeader(self, headerName, archName, outputFile,
                            pdf=None, isAccordion=True):
@@ -873,7 +905,7 @@ class WebPageGenerator:
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h1>Global Index List</h1>\n</div>\n</div>")
-        self.generateIndexBar(outputFile, string.uppercase, isIndex = True, printButton=True)
+        self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         sortedGlobals = [] # a list of list
         for globalVar in self._allGlobals.itervalues():
@@ -896,7 +928,7 @@ class WebPageGenerator:
                     itemsPerRow.append(sortedGlobals[i + numPerCol * j][1]);
             generateIndexedGlobalTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
-        self.generateIndexBar(outputFile, string.uppercase, isIndex = True)
+        self.generateIndexNavigationBar(outputFile, string.uppercase)
         self.__includeFooter__(outputFile)
         outputFile.close()
 
@@ -1068,13 +1100,9 @@ class WebPageGenerator:
                 indexList = indexList + rtnIndexList
                 outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                 outputFile.write("")
-                # generated the qindex bar
-                self.generateIndexBar(outputFile, indexList, printButton=True)
+                self.generateNavigationBar(outputFile, indexList)
                 title = "Global: %s" % globalName
-                # Generate PDF customization dialog
-                writePDFCustomization(outputFile, str(indexList))
                 self.writeTitleBlock(title, title, package, outputFile, pdf)
-                outputFile.write(getAccordionHTML())
                 if isFileManFile:
                     # Information
                     self.writeSectionHeader("Information", "Info", outputFile,
@@ -1157,8 +1185,7 @@ class WebPageGenerator:
                                                        platform=None,
                                                        existingOutFile=outputFile,
                                                        DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
-                self.generateIndexBar(outputFile, indexList)
-                self.__includeFooter__(outputFile)
+                self.generateFooterWithNavigationBar(outputFile, indexList)
                 outputFile.close()
 
                 if self._generatePDFBundle:
@@ -1189,10 +1216,7 @@ class WebPageGenerator:
 
         # write the same _header file
         self.__includeHeader__(outputFile)
-        # generated the qindex bar
-        self.generateIndexBar(outputFile, indexList, printButton=True)
-        # Generate PDF customization dialog
-        writePDFCustomization(outputFile, str(indexList))
+        self.generateNavigationBar(outputFile, indexList, printList=indexList)
         # get the root file package
         fileIter = subFile
         topDownList=[fileIter]
@@ -1229,8 +1253,6 @@ class WebPageGenerator:
             index += 1
         self.writeTitleBlock(title, title, package, outputFile, pdf,
                              linkHtmlTxt, linkPDFTxt)
-        outputFile.write(getAccordionHTML())
-
         packageName = package.getName();
 
         # Information
@@ -1255,9 +1277,7 @@ class WebPageGenerator:
         self.__generateFileManFileDetails__(subFile, outputFile, pdf)
         writeSectionEnd(outputFile)
 
-        # generated the index bar at the bottom
-        self.generateIndexBar(outputFile, indexList)
-        self.__includeFooter__(outputFile)
+        self.generateFooterWithNavigationBar(outputFile, indexList)
         outputFile.close()
 
         if self._generatePDFBundle:
@@ -1731,10 +1751,14 @@ class WebPageGenerator:
             globalGblCallRoutines = gblgblDepDicts[depPackage][0]
             globalGblCalledRoutines = gblgblDepDicts[depPackage][1]
             titleList = titleList + ["GCaller Globals"+titleIndex, "Called Globals"+titleIndex]
+
+        # TODO: Refactor code so that we don't have to call
+        # writePDFCustomization directly and can use generateNavigationBar
         # Generate PDF customization dialog
         pdfList = titleList
         pdfList.append("Legend Graph")
-        writePDFCustomization(outputFile, str(pdfList))
+        writePDFCustomization(outputFile, pdfList)
+
         optionCalledHtml = "<span class=\"comment\">%d</span>" % len(optionCalledRoutines)
         optionCallerHtml = "<span class=\"comment\">%d</span>" % len(optionCallRoutines)
         gblRtnCallerHtml = "<span class=\"comment\">%d</span>" % len(globalRtnCallRoutines)
@@ -1969,12 +1993,11 @@ class WebPageGenerator:
         inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
                      "%s-->%s" % (depPackage.getName(), package.getName())]
         archList = [package.getName(), depPackage.getName()]
-        self.generateIndexBar(outputFile, inputList, archList, isIndex=False,
-                              printButton=True)
+        self.generateNavigationBar(outputFile, inputList, archList)
 
         # Title and header
-        outputFile.write("<title id=\"pageTitle\">" + package.getName() +
-                          " : " + depPackage.getName() + "</title>")
+        pageTitle = package.getName() + " : " + depPackage.getName()
+        outputFile.write("<title id=\"pageTitle\">" + pageTitle + "</title>")
         outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
                           (packageHyperLink, depPackageHyperLink))
 
@@ -1982,7 +2005,7 @@ class WebPageGenerator:
         writeLegends(self._outDir, outputFile)
 
         # Accordion
-        outputFile.write(getAccordionHTML())
+        outputFile.write(ACCORDION)
 
         # Package --> Dep. Package
         self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
@@ -1998,8 +2021,7 @@ class WebPageGenerator:
         self.generatePackageRoutineDependencyDetailPage(depPackage, package,
                                                         outputFile, "_2")
         writeSectionEnd(outputFile)
-        self.generateIndexBar(outputFile, inputList, archList, isIndex = False)
-        self.__includeFooter__(outputFile)
+        self.generateFooterWithNavigationBar(outputFile, inputList, archList)
         outputFile.close()
 
     ###########################################################################
@@ -2202,7 +2224,7 @@ class WebPageGenerator:
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
-        self.generateIndexBar(outputFile, indexList, isIndex = True, printButton=True)
+        self.generateIndexNavigationBar(outputFile, indexList)
         outputFile.write("<div class=\"contents\">\n")
         sortedRoutines = []
         for routine in self._allRoutines.itervalues():
@@ -2224,7 +2246,7 @@ class WebPageGenerator:
                                            self.getRoutineDisplayNameByName,
                                            indexSet)
         outputFile.write("</table>\n</div>\n")
-        self.generateIndexBar(outputFile, indexList, isIndex = True)
+        self.generateIndexNavigationBar(outputFile, indexList)
         self.__includeFooter__(outputFile)
         outputFile.close()
 
@@ -2264,7 +2286,7 @@ class WebPageGenerator:
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h1>Package List</h1>\n</div>\n</div>")
-        self.generateIndexBar(outputFile, string.uppercase, isIndex = True, printButton=True)
+        self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         #generated the table
         totalNumPackages = len(self._allPackages) + len(string.uppercase)
@@ -2283,7 +2305,7 @@ class WebPageGenerator:
                     itemsPerRow.append(sortedPackages[i + j * numPerCol]);
             generateIndexedPackageTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
-        self.generateIndexBar(outputFile, string.uppercase, isIndex = True)
+        self.generateIndexNavigationBar(outputFile, string.uppercase)
         self.__includeFooter__(outputFile)
         outputFile.close()
 
@@ -2389,23 +2411,30 @@ class WebPageGenerator:
         writeSectionEnd(outputFile)
         outputFile.write("</div>\n")
 
-#===============================================================================
+#==============================================================================
 #
-#===============================================================================
+#==============================================================================
     def writeTitleBlock(self, pageTitle, title, package, outputFile, pdf,
-                        extraHtmlHeader=None, extraPDFHeader=None):
+                        extraHtmlHeader=None, extraPDFHeader=None,
+                        accordion=True):
         if pdf is not None and self._generatePDFBundle:
             self.__writePDFTitleBlock__(title, package, pdf, extraPDFHeader)
 
-        outputFile.write("<title id=\"pageTitle\">%s</title>" % pageTitle)
+        outputFile.write("<title id=\"pageTitle\">%s</title>\n" % pageTitle)
         outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
+        outputFile.write("<div class=\"headertitle\">\n")
         if package is not None:
-            outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
+            outputFile.write(("<h4>Package: %s</h4>\n"
                                % getPackageHyperLinkByName(package.getName())))
         if extraHtmlHeader:
-            outputFile.write("<h4>%s</h4>\n</div>\n</div><br/>\n" % extraHtmlHeader)
-        outputFile.write("<h1>%s</h1>\n</div>\n</div><br/>\n" % title)
+            outputFile.write("<h4>%s</h4>\n" % extraHtmlHeader)
+        outputFile.write("<h1>%s</h1>\n" % title)
+        outputFile.write("</div>\n") # _header
+        outputFile.write("</div>\n") # headertitle
+        outputFile.write("<br/>\n")
+
+        if accordion:
+            outputFile.write(ACCORDION)
 
     def __writePDFTitleBlock__(self, title, package, pdf, extraPDFHeader=None):
         if package is not None:
@@ -2632,21 +2661,17 @@ class WebPageGenerator:
 
             # Write the _header part
             self.__includeHeader__(outputFile)
-            self.generateIndexBar(outputFile, indexList,
-                                  printButton=True, packageName=packageName)
+
+            pdfList = indexList
+            if generatePackageComponents:
+                pdfList.append("Legend Graph")
+            self.generateNavigationBar(outputFile, indexList,
+                                       printList=pdfList,
+                                       packageName=packageName)
 
             # Title
             title = "Package: %s" % packageName
             self.writeTitleBlock(title, title, None, outputFile, pdf)
-
-            # Accordion function
-            outputFile.write(getAccordionHTML())
-
-            # Generate PDF customization dialog
-            pdfList = indexList
-            if generatePackageComponents:
-                pdfList.append("Legend Graph")
-            writePDFCustomization(outputFile, str(pdfList))
 
             # Namespace
             # Note: We're passing the package here, NOT the packageName
@@ -2713,8 +2738,7 @@ class WebPageGenerator:
                 # Note: We're passing the package here, NOT the packageName
                 self.generatePackageComponentsSections(package, outputFile, pdf)
 
-            self.generateIndexBar(outputFile, indexList)
-            self.__includeFooter__(outputFile)
+            self.generateFooterWithNavigationBar(outputFile, indexList)
             outputFile.close()
 
             if self._generatePDFBundle:
@@ -3430,18 +3454,14 @@ class WebPageGenerator:
         else:
           outputFile = open(os.path.join(self._outDir,fileNameGenerator(routine, routine._title)), 'w')
           self.__includeHeader__(outputFile)
-        # generated the qindex bar
         indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
         if not existingOutFile:
-          self.generateIndexBar(outputFile, indexList, printButton=True)
-          # Generate PDF customization dialog
-          writePDFCustomization(outputFile, str(indexList))
+          self.generateNavigationBar(outputFile, indexList, printList=indexList)
           title = "Routine: %s" % routineName
           routineHeader = title
           if platform:
               routineHeader += "Platform: %s" % platform
           self.writeTitleBlock(title, routineHeader, package, outputFile, pdf)
-          outputFile.write(getAccordionHTML())
         for idx in idxLst:
           sectionGen = sectionGenLst[idx]
           data = sectionGen['data'](*sectionGen.get('dataarg',[]))
@@ -3453,9 +3473,7 @@ class WebPageGenerator:
                                   pdf, classid=classid, *geneargs)
           writeSectionEnd(outputFile)
         if not existingOutFile:
-        # generated the index bar at the bottom
-          self.generateIndexBar(outputFile, indexList)
-          self.__includeFooter__(outputFile)
+          self.generateFooterWithNavigationBar(outputFile, indexList)
           outputFile.close()
 
 #===============================================================================
@@ -3475,10 +3493,10 @@ class WebPageGenerator:
         outputFile = open(os.path.join(self._outDir,
                                        getRoutineHtmlFileNameUnquoted(routineName)), 'w')
         self.__includeHeader__(outputFile)
-        # generated the qindex bar
-        self.generateIndexBar(outputFile, indexList, printButton=True)
+        self.generateNavigationBar(outputFile, indexList, printList=indexList)
         title = "Routine: %s" % routineName
-        self.writeTitleBlock(title, title, package, outputFile, pdf)
+        self.writeTitleBlock(title, title, package, outputFile, pdf,
+                             accordion=False)
         self.writeSectionHeader("Platform Dependent Routines", "DepRoutines",
                                 outputFile, pdf)
         # output the Platform part.
@@ -3491,9 +3509,7 @@ class WebPageGenerator:
         if self._generatePDFBundle:
             self.__writeGenericTablizedPDFData__(["Routine", "Platform"], tableRowList, pdf)
         outputFile.write("<br/>\n")
-        # generated the index bar at the bottom
-        self.generateIndexBar(outputFile, indexList)
-        self.__includeFooter__(outputFile)
+        self.generateFooterWithNavigationBar(outputFile, indexList)
         outputFile.close()
 
 #===============================================================================
@@ -3696,7 +3712,6 @@ class WebPageGenerator:
             else:
                 pdf = None
             self.__includeHeader__(outputFile)
-            # generated the qindex bar
             indexList = []
             idxLst = []
             for idx, item in enumerate(sectionGenLst):
@@ -3704,11 +3719,11 @@ class WebPageGenerator:
               if item['data'](*extraarg):
                 indexList.append(item['name'])
                 idxLst.append(idx)
-            self.generateIndexBar(outputFile, indexList, printButton=True)
+            self.generateNavigationBar(outputFile, indexList,
+                                       printList=indexList)
             title = routine._title.replace("_"," ") + ": " + routineName
-            self.writeTitleBlock(title, title, package, outputFile, pdf)
-            # Generate PDF customization dialog
-            writePDFCustomization(outputFile, str(indexList))
+            self.writeTitleBlock(title, title, package, outputFile, pdf,
+                                 accordion=False)
             for idx in idxLst:
               sectionGen = sectionGenLst[idx]
               data = sectionGen['data'](*sectionGen.get('dataarg',[]))
@@ -3720,9 +3735,7 @@ class WebPageGenerator:
               writeSectionEnd(outputFile)
               if header == "Local Variables":
                 outputFile.write("</div>\n")
-          # generated the index bar at the bottom
-            self.generateIndexBar(outputFile, indexList)
-            self.__includeFooter__(outputFile)
+            self.generateFooterWithNavigationBar(outputFile, indexList)
             outputFile.close()
 
             if self._generatePDFBundle:
@@ -3745,7 +3758,7 @@ class WebPageGenerator:
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
-        self.generateIndexBar(outputFile, indexList, isIndex=True)
+        self.generateIndexNavigationBar(outputFile, indexList)
         outputFile.write("<div class=\"contents\">\n")
         sortedComponents = []
         objectDict = {}
@@ -3773,7 +3786,7 @@ class WebPageGenerator:
                                            self.getPackageComponentDisplayName,
                                            indexSet)
         outputFile.write("</table>\n</div>\n")
-        self.generateIndexBar(outputFile, indexList)
+        self.generateIndexNavigationBar(outputFile, indexList)
         outputFile.write('</div>')
 
     def generatePackageComponentListPage(self):
