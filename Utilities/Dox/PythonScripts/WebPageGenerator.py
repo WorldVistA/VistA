@@ -901,10 +901,7 @@ class WebPageGenerator:
     def generateGlobalNameIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "globals.html"), 'w')
         self.__includeHeader__(outputFile)
-        outputFile.write("<title>Global Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Global Index List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Global", outputFile)
         self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         sortedGlobals = [] # a list of list
@@ -2211,10 +2208,7 @@ class WebPageGenerator:
     def generateRoutineIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "routines.html"), 'w')
         self.__includeHeader__(outputFile)
-        outputFile.write("<title>Routine Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Routine Index List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Routine", outputFile)
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
@@ -2275,11 +2269,7 @@ class WebPageGenerator:
     def generatePackageIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "packages.html"), 'w')
         self.__includeHeader__(outputFile)
-        #write the _header
-        outputFile.write("<title>Package List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Package List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Package", outputFile)
         self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         #generated the table
@@ -2438,6 +2428,16 @@ class WebPageGenerator:
             pdf.append(Paragraph(extraPDFHeader, styles['Heading4']))
             pdf.append(Spacer(1, 10))
         pdf.append(Paragraph(title, styles['Title']))
+
+    def _writeIndexTitleBlock(self, title, outputFile):
+        title = "%s Index List" % title
+        outputFile.write("<title>%s</title>"% title)
+        outputFile.write("<div class=\"_header\">\n")
+        outputFile.write("<div class=\"headertitle\">")
+        outputFile.write("<h1>%s</h1>\n" % title)
+        outputFile.write("</div>\n") # _header
+        outputFile.write("</div>\n") # headertitle
+        outputFile.write("<br/>\n")
 
 #===============================================================================
 # method to generate a tablized representation of data
@@ -3745,10 +3745,8 @@ class WebPageGenerator:
 
     def generatePackageComponentIndexPage(self, keyVal, outputFile):
         outputFile.write('<div class="componentList" style="display: none;" id=%s>' % keyVal)
-        outputFile.write("<title>"+keyVal+" Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>"+keyVal+"  Index List</h1>\n</div>\n</div>")
+        title = keyVal.replace("_"," ")
+        self._writeIndexTitleBlock(title, outputFile)
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
@@ -3797,10 +3795,7 @@ $( document ).ready(function() {
 })
 </script>
         """)
-        outputFile.write("<title>Package Components Link List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Package Components List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Package Components", outputFile)
         outputFile.write("<h3>Legends:</h3>")
         outputFile.write(PCLegend)
         outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
@@ -3810,7 +3805,7 @@ $( document ).ready(function() {
             outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))
         outputFile.write("</select>\n")
         for objectKey in allObjects:
-          self.generatePackageComponentIndexPage(objectKey,outputFile)
+            self.generatePackageComponentIndexPage(objectKey, outputFile)
         self.__includeFooter__(outputFile)
         outputFile.close()
 
