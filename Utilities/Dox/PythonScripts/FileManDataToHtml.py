@@ -23,7 +23,7 @@ import cgi
 import re
 import json
 
-dox_url="http://code.osehra.org/dox/"
+DOX_URL = None
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
@@ -89,12 +89,12 @@ def getRoutineHRefLink(dataEntry, routineName, **kargs):
     if crossRef and not crossRef.getRoutineByName(rtnName):
       return routineName
   pos = routineName.find(rtnName)
-  return routineName[:pos] + "<a href=\"%s%s\">%s</a>" % (dox_url,
-                                      getRoutineHtmlFileName(rtnName),
-                                      rtnName) + routineName[pos+len(rtnName):]
+  return routineName[:pos] + "<a href=\"%s%s\">%s</a>" % (DOX_URL,
+                                                          getRoutineHtmlFileName(rtnName),
+                                                          rtnName) + routineName[pos+len(rtnName):]
 
 def getPackageHRefLink(pkgName):
-  value = "<a href=\"%s%s\">%s</a>" % (dox_url,
+  value = "<a href=\"%s%s\">%s</a>" % (DOX_URL,
                                        getPackageHtmlFileName(pkgName),
                                        pkgName)
   return value
@@ -301,13 +301,11 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, outDir,glbData = None, doxURL=None):
-    global dox_url
+  def __init__(self, crossRef, outDir, doxURL):
+    global DOX_URL
     self.crossRef = crossRef
     self.outDir = outDir
-    self.glbData = glbData
-    if doxURL:
-      dox_url = doxURL
+    DOX_URL = doxURL
     # a map of a tuple of menu options (parent, child) which point to the synonym for the child option
     #
     #  Example: ('DGBT BENE TRAVEL MENU', 'DGBT TRAVEL REPORTS MENU') : [RPTS]

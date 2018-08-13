@@ -25,6 +25,7 @@ from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
+from UtilityFunctions import getDOXURL
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
@@ -877,13 +878,12 @@ def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef, fileNo, f
   glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
   return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[fileNo]['path'], fileNo, fieldNo)
 
-def testGlobalParser(args):
+def run(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
+
   crossRef = parseCrossRefGeneratorWithArgs(args)
-  _doxURL = "http://code.osehra.org/dox/"
-  if args.local:
-    _doxURL = "../dox/"
+  _doxURL = getDOXURL(args.local)
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
@@ -896,7 +896,7 @@ def testGlobalParser(args):
   glbDataParser.outdir = args.outdir
 
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, args.outdir,doxURL=_doxURL)
+  htmlGen = FileManDataToHtml(crossRef, args.outdir, _doxURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
@@ -991,9 +991,6 @@ def unit_test():
   test_horologToDateTime()
   test_getMumpsRoutine()
   #test_FileManDataEntry()
-
-def run(result):
-  testGlobalParser(result)
 
 def main():
   from LogManager import initConsoleLogging

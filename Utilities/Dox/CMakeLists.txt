@@ -59,6 +59,18 @@ mark_as_advanced(GENERATE_VIVIAN)
 
 set(GENERATE_PDF_BUNDLE "FALSE" CACHE BOOL "Generate PDF bundle")
 
+if(GENERATE_PDF_BUNDLE)
+  set(GENERATE_PDF "-pdf")
+else()
+  set(GENERATE_PDF "")
+endif()
+
+if(LOCAL_DOX_LINKS)
+  set(GENERATE_LOCAL_LINKS "-local")
+else()
+  set(GENERATE_LOCAL_LINKS "")
+endif()
+
 if (NOT GENERATE_DOX AND NOT GENERATE_VIVIAN)
   message(ERROR "Must select GENERATE_DOX and/or GENERATE_VIVIAN.")
 endif()
