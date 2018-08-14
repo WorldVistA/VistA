@@ -300,6 +300,15 @@ accordionOpenFun = """
 def getAccordionHTML():
   return """
     <script type='text/javascript'>
+       function locationHashChanged() {
+           locationString = window.location.hash.substring(1)
+           $("td[name='"+locationString+"']").closest(".accordion").accordion({ activate: function(event, ui) {
+               window.location = window.location.hash
+           }});
+           $("[name='"+locationString+"']").closest(".accordion").accordion( 'option', 'active',0 );
+           var scrollPos = $("a[name='"+locationString+"']").closest("td").offset().top;
+           $("html, body").animate({ scrollTop: scrollPos }, 1000);
+       }
        $( document ).ready(function() {
            if ($(".sectionHeader").length > 5) {
                $( '.accordion' ).accordion({
@@ -308,6 +317,10 @@ def getAccordionHTML():
                    active: false
                })
            }
+          if(window.location.hash) {
+               locationHashChanged()
+          }
+          window.onhashchange = locationHashChanged
        })
     </script>
   """
