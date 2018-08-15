@@ -40,6 +40,7 @@ def useAjaxDataTable(len):
     return len > 4000 # if has more than 4000 entries, use ajax approach
 
 dox_url = "http://code.osehra.org/dox/"
+vivianURL = "http://code.osehra.org/vivian/files/"
 pgkUpperCaseNameDict = dict()
 rpcNameToIenMapping = dict()
 RPC_FILE_NO = '8994'
@@ -77,6 +78,7 @@ def getGeneralDescription(value, icrEntry, **kargs):
     return description
 
 def getPackageHRefLink(pkgName, icrEntry, **kargs):
+    global pgkUpperCaseNameDict
     if pkgName in pkgMap:
         pkgLink = getPackageHtmlFileName(pkgMap[pkgName])
         return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
@@ -139,7 +141,7 @@ def getRoutineHRefLink(rtnName, icrEntry, **kargs):
 
 def getRPCHRefLink(rpcName, icrEntry, **kargs):
     if rpcName in rpcNameToIenMapping:
-        rpcFilename = '%s-%s.html' % (RPC_FILE_NO, rpcNameToIenMapping[rpcName])
+        rpcFilename = '%s%s/%s-%s.html' % (vivianURL, RPC_FILE_NO, RPC_FILE_NO, rpcNameToIenMapping[rpcName])
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
 
@@ -705,12 +707,15 @@ def createRemoteProcedureMapping(MRepositDir, crossRef):
 
 def run(args):
     global dox_url
+    global vivianURL
+    global rpcNameToIenMapping
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
     icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir, args.pdfOutdir, args.pdf)
     if args.local:
       dox_url = "../dox/"
+      vivianURL = "../"
     if hasattr(args, 'date'):
         date = args.date
     else:
