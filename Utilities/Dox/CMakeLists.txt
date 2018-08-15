@@ -149,6 +149,7 @@ endif()
 if (GENERATE_DOX)
   set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
   file(MAKE_DIRECTORY "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
+  file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/Web/code_pretty_scripts" DESTINATION "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
 
 # 7. Run the Graph Generator script
 # Uses 'dot' to generate graphs and legends for the WebPageGenerator (DOX)
