@@ -937,12 +937,6 @@ class WebPageGenerator:
 #===============================================================================
     def generateGlobalFileNoIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "filemanfiles.html"), 'wb')
-        self.__generateGlobalFileNoIndexPage__(outputFile)
-
-#===============================================================================
-#
-#===============================================================================
-    def __generateGlobalFileNoIndexPage__(self, outputFile):
         allFileManFilesList = []
         for item in self._allGlobals.itervalues():
             if item.isFileManFile():
