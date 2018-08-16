@@ -22,6 +22,7 @@ from UtilityFunctions import getPackageHtmlFileName, getGlobalHtmlFileNameByName
 from UtilityFunctions import getRoutineHtmlFileName
 from UtilityFunctions import pkgMap, normalizePackageName
 from UtilityFunctions import generatePDFTableHeader
+from UtilityFunctions import getDOXURL, getViViaNURL
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
@@ -39,8 +40,9 @@ def normalizeName(name):
 def useAjaxDataTable(len):
     return len > 4000 # if has more than 4000 entries, use ajax approach
 
-dox_url = "http://code.osehra.org/dox/"
-vivianURL = "http://code.osehra.org/vivian/files/"
+DOX_URL = None
+VIVIAN_URL = None
+
 pgkUpperCaseNameDict = dict()
 rpcNameToIenMapping = dict()
 RPC_FILE_NO = '8994'
@@ -81,7 +83,7 @@ def getPackageHRefLink(pkgName, icrEntry, **kargs):
     global pgkUpperCaseNameDict
     if pkgName in pkgMap:
         pkgLink = getPackageHtmlFileName(pkgMap[pkgName])
-        return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
+        return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
     crossRef = None
     if 'crossRef' in kargs:
         crossRef = kargs['crossRef']
@@ -92,7 +94,9 @@ def getPackageHRefLink(pkgName, icrEntry, **kargs):
         upperName = normalizeName(pkgName).upper()
         if upperName in pgkUpperCaseNameDict:
             addToPackageMap(icrEntry, pgkUpperCaseNameDict[upperName])
-            return '<a href=\"%s%s\">%s</a>' % (dox_url, getPackageHtmlFileName(pgkUpperCaseNameDict[upperName]) , pkgName)
+            return '<a href=\"%s%s\">%s</a>' % (DOX_URL,
+                                                getPackageHtmlFileName(pgkUpperCaseNameDict[upperName]),
+                                                pkgName)
         pkg = crossRef.getPackageByName(pkgName)
         if not pkg:
             pkgRename = normalizeName(pkgName).title()
@@ -104,7 +108,7 @@ def getPackageHRefLink(pkgName, icrEntry, **kargs):
         if pkg:
             addToPackageMap(icrEntry, pkg.getName())
             pkgLink = getPackageHtmlFileName(pkg.getName())
-            return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
+            return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
         else:
             logger.warn('Can not find mapping for package: [%s]', pkgName)
     return pkgName
@@ -119,7 +123,7 @@ def getFileManFileHRefLink(fileNo, icrEntry, **kargs):
             linkName = getGlobalHtmlFileNameByName(fileInfo.getName())
             logger.debug('link is [%s]', linkName)
             # addToPackageMap(icrEntry, fileInfo.getPackage().getName())
-            return '<a href=\"%s%s\">%s</a>' % (dox_url, linkName, fileNo)
+            return '<a href=\"%s%s\">%s</a>' % (DOX_URL, linkName, fileNo)
         else:
             logger.debug('Can not find file: [%s]', fileNo)
     return fileNo
@@ -133,7 +137,9 @@ def getRoutineHRefLink(rtnName, icrEntry, **kargs):
         if routine:
             logger.debug('Routine Name is %s, package: %s', routine.getName(), routine.getPackage())
             # addToPackageMap(icrEntry, routine.getPackage().getName())
-            return '<a href=\"%s%s\">%s</a>' % (dox_url, getRoutineHtmlFileName(routine.getName()), rtnName)
+            return '<a href=\"%s%s\">%s</a>' % (DOX_URL,
+                                                getRoutineHtmlFileName(routine.getName()),
+                                                rtnName)
         else:
             logger.debug('Cannot find routine [%s]', rtnName)
             logger.debug('After Categorization: routine: [%s], info: [%s]', rtnName, crossRef.categorizeRoutineByNamespace(rtnName))
@@ -141,7 +147,9 @@ def getRoutineHRefLink(rtnName, icrEntry, **kargs):
 
 def getRPCHRefLink(rpcName, icrEntry, **kargs):
     if rpcName in rpcNameToIenMapping:
-        rpcFilename = '%s%s/%s-%s.html' % (vivianURL, RPC_FILE_NO, RPC_FILE_NO, rpcNameToIenMapping[rpcName])
+        rpcFilename = '%s%s/%s-%s.html' % (VIVIAN_URL, RPC_FILE_NO,
+                                           RPC_FILE_NO,
+                                           rpcNameToIenMapping[rpcName])
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
 
@@ -706,16 +714,15 @@ def createRemoteProcedureMapping(MRepositDir, crossRef):
                                                        RPC_NAME_FIELD_NO)
 
 def run(args):
-    global dox_url
-    global vivianURL
+    global DOX_URL
+    global VIVIAN_URL
     global rpcNameToIenMapping
     crossRef = parseCrossReferenceGeneratorArgs(args.MRepositDir,
                                                 args.patchRepositDir)
     rpcNameToIenMapping = createRemoteProcedureMapping(args.MRepositDir, crossRef)
     icrJsonToHtml = ICRJsonToHtml(crossRef, args.outdir, args.pdfOutdir, args.pdf)
-    if args.local:
-      dox_url = "../dox/"
-      vivianURL = "../"
+    DOX_URL = getDOXURL(args.local)
+    VIVIAN_URL = getViViaNURL(args.local)
     if hasattr(args, 'date'):
         date = args.date
     else:

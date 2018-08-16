@@ -117,6 +117,20 @@ def initLogging(outputFileName):
 
 ###############################################################################
 
+def getDOXURL(local):
+    if local:
+        return "../dox/"
+    else:
+        return "https://code.osehra.org/dox/"
+
+def getViViaNURL(local):
+    if local:
+        return "../"
+    else:
+        return "https://code.osehra.org/vivian/files/"
+
+###############################################################################
+
 def findDotColor(object, title=""):
   color = "color=black"
   if "getObjectType" in dir(object):

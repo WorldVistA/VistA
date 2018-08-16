@@ -94,6 +94,8 @@ PACKAGE_OBJECT_SECTION_HEADER_LIST = ["Name", "Field # of Occurrence",]
 
 LINE_TAG_PER_LINE = 10
 
+VIVIAN_URL = None
+
 # constants for html page
 GOOGLE_ANALYTICS_JS_CODE = """
 <script type="text/javascript">
@@ -340,8 +342,7 @@ def getGlobalPDFFileNameByName(globalName):
                         normalizeGlobalName(globalName))
 
 def getICRHtmlFileName(icrEntry):
-    # TODO: Needs to be a more general address?
-    return ("https://code.osehra.org/vivian/files/ICR/ICR-%s.html" % icrEntry["NUMBER"])
+    return ("%sICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
 
 def getGlobalHtmlFileName(globalVar):
     if globalVar.isSubFile():
@@ -901,10 +902,7 @@ class WebPageGenerator:
     def generateGlobalNameIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "globals.html"), 'w')
         self.__includeHeader__(outputFile)
-        outputFile.write("<title>Global Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Global Index List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Global", outputFile)
         self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         sortedGlobals = [] # a list of list
@@ -2211,10 +2209,7 @@ class WebPageGenerator:
     def generateRoutineIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "routines.html"), 'w')
         self.__includeHeader__(outputFile)
-        outputFile.write("<title>Routine Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Routine Index List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Routine", outputFile)
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
@@ -2275,11 +2270,7 @@ class WebPageGenerator:
     def generatePackageIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "packages.html"), 'w')
         self.__includeHeader__(outputFile)
-        #write the _header
-        outputFile.write("<title>Package List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Package List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Package", outputFile)
         self.generateIndexNavigationBar(outputFile, string.uppercase)
         outputFile.write("<div class=\"contents\">\n")
         #generated the table
@@ -2438,6 +2429,16 @@ class WebPageGenerator:
             pdf.append(Paragraph(extraPDFHeader, styles['Heading4']))
             pdf.append(Spacer(1, 10))
         pdf.append(Paragraph(title, styles['Title']))
+
+    def _writeIndexTitleBlock(self, title, outputFile):
+        title = "%s Index List" % title
+        outputFile.write("<title>%s</title>"% title)
+        outputFile.write("<div class=\"_header\">\n")
+        outputFile.write("<div class=\"headertitle\">")
+        outputFile.write("<h1>%s</h1>\n" % title)
+        outputFile.write("</div>\n") # _header
+        outputFile.write("</div>\n") # headertitle
+        outputFile.write("<br/>\n")
 
 #===============================================================================
 # method to generate a tablized representation of data
@@ -2849,8 +2850,8 @@ class WebPageGenerator:
                                             outputFile, pdf, isDependency)
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("https://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
-            ien))
+      return "%s%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.','_'), fileNo, ien)
+
 #===============================================================================
 # Method to generate routine variables sections such as Local Variables, Global Variables
 #===============================================================================
@@ -2869,9 +2870,7 @@ class WebPageGenerator:
         self.writeSectionHeader(sectionTitle, sectionTitle, outputFile)
         outputList = converFunc(variables, routine=routine)
         writeGenericTablizedHtmlData(headerList, outputList, outputFile)
-    def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("https://code.osehra.org/vivian/files/%s/%s-%s.html" % (fileNo.replace('.','_'),fileNo,
-            ien))
+
     def __convertRPCDataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '8994')
     def __convertHL7DataReference__(self, variables, routine=None):
@@ -2997,14 +2996,19 @@ class WebPageGenerator:
         # Do not write source file link in PDF
         self.writeSectionHeader(header, link, outputFile, None, isAccordion)
         if routine._objType in sectionLinkObj.keys():
-          outputFile.write('<div><p><span class=\"information\">%s Information &lt;<a class=\"el\" href=\"http://code.osehra.org/vivian/files/%s/%s-%s.html\">%s</a>&gt;</span></p></div>\n'\
-                                     % (routine._objType, sectionLinkObj[routine._objType]['number'].replace('.','_'), sectionLinkObj[routine._objType]['number'] ,routine.getIEN(), routine.getOriginalName())
-          )
+            outputFile.write("<div><p>")
+            outputFile.write("<span class=\"information\">%s Information &lt;<a class=\"el\" href=\"%s%s/%s-%s.html\">%s</a>&gt;</span>"
+                % (routine._objType, VIVIAN_URL,
+                   sectionLinkObj[routine._objType]['number'].replace('.','_'),
+                   sectionLinkObj[routine._objType]['number'],
+                   routine.getIEN(), routine.getOriginalName()))
+            outputFile.write("</p></div>\n")
         else:
-          outputFile.write("<div class=\"%s\"><p><span class=\"sourcefile\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p></div>\n" %
-                         (classid,
-                          getRoutineSourceHtmlFileName(routine.getOriginalName()),
-                          routine.getOriginalName()))
+            outputFile.write("<div class=\"%s\">" % classid)
+            outputFile.write("<p><span class=\"sourcefile\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>"
+                % (getRoutineSourceHtmlFileName(routine.getOriginalName()),
+                   routine.getOriginalName()))
+            outputFile.write("</div>\n")
 
     # Generate routine variables sections
     # (e.g. Local Variables or Global Variables)
@@ -3745,10 +3749,8 @@ class WebPageGenerator:
 
     def generatePackageComponentIndexPage(self, keyVal, outputFile):
         outputFile.write('<div class="componentList" style="display: none;" id=%s>' % keyVal)
-        outputFile.write("<title>"+keyVal+" Index List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>"+keyVal+"  Index List</h1>\n</div>\n</div>")
+        title = keyVal.replace("_"," ")
+        self._writeIndexTitleBlock(title, outputFile)
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
         indexSet = sorted(set(indexList))
@@ -3797,10 +3799,7 @@ $( document ).ready(function() {
 })
 </script>
         """)
-        outputFile.write("<title>Package Components Link List</title>")
-        outputFile.write("<div class=\"_header\">\n")
-        outputFile.write("<div class=\"headertitle\">")
-        outputFile.write("<h1>Package Components List</h1>\n</div>\n</div>")
+        self._writeIndexTitleBlock("Package Components", outputFile)
         outputFile.write("<h3>Legends:</h3>")
         outputFile.write(PCLegend)
         outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
@@ -3810,7 +3809,7 @@ $( document ).ready(function() {
             outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))
         outputFile.write("</select>\n")
         for objectKey in allObjects:
-          self.generatePackageComponentIndexPage(objectKey,outputFile)
+            self.generatePackageComponentIndexPage(objectKey, outputFile)
         self.__includeFooter__(outputFile)
         outputFile.close()
 
@@ -3852,6 +3851,8 @@ $( document ).ready(function() {
 # main
 #===============================================================================
 def run(args):
+    global VIVIAN_URL
+    VIVIAN_URL = getViViaNURL(args.local)
     icrJsonFile = os.path.abspath(args.icrJsonFile)
     parsedICRJSON = parseICRJson(icrJsonFile)
     crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args, pkgDepJson=None, icrJson=parsedICRJSON,
@@ -3897,6 +3898,8 @@ if __name__ == '__main__':
     parser.add_argument('-pt','--printTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Print Templates')
     parser.add_argument('-pdf', action='store_true',
                         help='generate html')
+    parser.add_argument('-local', action='store_true',
+                        help='Use links to local DOX pages')
     result = parser.parse_args();
 
     if not result.outputLogFileName:
