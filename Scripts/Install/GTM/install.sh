@@ -85,12 +85,10 @@ fi
 # Download ydbinstall
 echo "Downloading ydbinstall"
 curl -s -L https://raw.githubusercontent.com/YottaDB/YottaDB/master/sr_unix/ydbinstall.sh -o ydbinstall
-
-# Verify hash as we are going to make it executable
-sha1sum -c --status ydbinstall_SHA1
-if [ $? -gt 0 ]; then
+isValidFile=`head ydbinstall | grep "Fidelity National Information"`
+if [[ ! $isValidFile ]]; then
     echo "Something went wrong downloading ydbinstall"
-    exit $?
+    exit 1
 fi
 
 # Get kernel.shmmax to determine if we can use 32k strings
