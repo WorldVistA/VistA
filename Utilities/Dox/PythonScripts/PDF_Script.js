@@ -105,7 +105,7 @@ function getTableList(pdfObj,titleIndex) {
   var returnObj = [];
   var fullVals = [];
   if("needsSplit" in pdfObj) {
-    targetAccord = $(".accordion")[titleIndex-1]
+    targetAccord = $(".sectionheader:not(.accordion)")[titleIndex-1]
     fullVals = $(targetAccord).find("."+pdfObj.tag).text().split(pdfObj.sep);
   } else {
     fullVals = $("."+pdfObj.tag).text().split(pdfObj.sep);
@@ -245,6 +245,12 @@ var titleDic  =  {
   "Referenced FileMan Files":{"tag": "referencedFileManFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   "FileMan Db Call Routines":{"tag": "dbCallRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   "FileMan Db Call Accessed FileMan Files":{"tag": "dbCallFileManFiles","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "Package Component(s)":{"tag": "PCObjects","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "Package Component called Routines":{"tag": "PCcalledRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "RCaller Globals":{"tag": "rcallerGlobals","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "GCalled Routines":{"tag": "gcalledRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "GCaller Globals":{"tag": "gCallerGlobals","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
+  "Called Globals":{"tag": "calledGlobals","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   //multiple pages
   "Legend Graph":{"tag": "colorLegend","sep": /\s{2}/,"numCols":2,"stretchColumn":2}
   }
