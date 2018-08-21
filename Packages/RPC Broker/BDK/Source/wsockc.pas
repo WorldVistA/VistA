@@ -199,7 +199,7 @@ type
     ApplicationSegment: String;
     IsConnected: Boolean;
     IPprotocol: Integer;       //p65 - IPv4=4, IPv6=6, default=0
-    function NetCall(hSocket: TSocket; imsg: String): PChar;
+    function NetCall(hSocket: TSocket; imsg: TBytes): PChar;
     function tCall(hSocket: TSocket; api, apVer: String; Parameters: TParams;
              var Sec, App: PChar; TimeOut: integer): PChar;
     function cRight( z: PChar;  n: longint): PChar;
@@ -208,7 +208,7 @@ type
     function BuildHdr ( wkid: string; winh: string; prch: string;
              wish: string): string;
     function BuildPar(hSocket: TSocket; api, RPCVer: string;
-             const Parameters: TParams): string;
+             const Parameters: TParams): TBytes;
     function StrPack (n: string; p: integer): string;
     function VarPack(n: string): string;
     function NetStart(ForegroundM: boolean; Server: string; ListenerPort: integer;
@@ -226,8 +226,8 @@ type
     property CountWidth: Integer read FCountWidth write FCountWidth;
   end;
 
-  function LPack(Str: String; NDigits: Integer): String;
-  function SPack(Str: String): String;
+  function LPack(Str: String; NDigits: Integer): TBytes;
+  function SPack(Str: String): TBytes;
   function FAddrToString(Addr: TSockAddr): String;
   function FGetAddrInfo(nodename,servname: PAnsiChar; phints: PAddrInfo;
            out res: PAddrInfo): Integer; stdcall;
@@ -258,14 +258,15 @@ implementation
 
 {----------------------- LPack ---------------------------------
 ----------------------------------------------------------------}
-function LPack(Str: String; NDigits: Integer): String;
+function LPack(Str: String; NDigits: Integer): TBytes;
 var
   r: Integer;
   t: String;
+  t2: String;
   Width: Integer;
   Ex1: Exception;
 begin
-  r := Length(Str);
+  r := TEncoding.UTF8.GetByteCount(Str);
   // check for enough space in NDigits characters
   t := IntToStr(r);
   Width := Length(t);
@@ -275,7 +276,8 @@ begin
     Raise Ex1;
   end; //if
   t := '000000000' + IntToStr(r);               {eg 11-1-96}
-  Result := Copy(t, length(t)-(NDigits-1),length(t)) + Str;
+  t2 := Copy(t, length(t)-(NDigits-1),length(t));
+  Result := TEncoding.UTF8.GetBytes(t2) + TEncoding.UTF8.GetBytes(Str);
 end; //function LPack
 
 
@@ -285,19 +287,19 @@ thus Str must be less than 256 characters.
   e.g., SPack('DataValue')
   returns   #9 + 'DataValue'
 ----------------------------------------------------------------}
-function SPack(Str: String): String;
+function SPack(Str: String): TBytes;
 var
   r: Integer;
   Ex1: Exception;
 begin
-  r := Length(Str);
+  r := TEncoding.UTF8.GetByteCount(Str);
   // check for enough space in one byte
   if r > 255 then
   begin
     Ex1 := Exception.Create('In generation of message to server, call to SPack with Length of string of '+IntToStr(r)+' chars which exceeds max of 255 chars');
     Raise Ex1;
   end; //if
-  Result := Char(r) + Str;
+  Result := TEncoding.UTF8.GetBytes(Char(r)) + TEncoding.UTF8.GetBytes(Str);
 end; //function SPack
 
 
@@ -458,15 +460,16 @@ end; //function TXWBWinsock.BuildHdr
 {----------------------- TXWBWinsock.BuildPar ------------------
 Builds the RPC Broker call to be sent to the VistA server.
 ----------------------------------------------------------------}
-function TXWBWinsock.BuildPar(hSocket: TSocket; api, RPCVer: string; const Parameters: TParams): string;
+function TXWBWinsock.BuildPar(hSocket: TSocket; api, RPCVer: string; const Parameters: TParams): TBytes;
 var
   i,ParamCount: integer;
-  param: string;
+  param: TBytes;
   tResult: string;
   subscript: string;
   IsSeen: Boolean;
 begin
-  param := '5';
+  SetLength(param, 1);
+  param[0] := Ord('5');
   if Parameters = nil then ParamCount := 0
   else ParamCount := Parameters.Count;
   for i := 0 to ParamCount - 1 do
@@ -476,23 +479,23 @@ begin
       with Parameters[i] do
       begin
         if PType = literal then
-          param := param + '0'+LPack(Value,CountWidth)+'f';      // 030107 new message protocol
+          param := param + [Ord('0')] + LPack(Value,CountWidth )+ [Ord('f')];      // 030107 new message protocol
         if PType = reference then
-          param := param + '1'+LPack(Value,CountWidth)+'f';     // 030107 new message protocol
+          param := param + [Ord('1')] + LPack(Value,CountWidth) + [Ord('f')];     // 030107 new message protocol
         if PType = empty then
-          param := param + '4f';
+          param := param + [Ord('4'), Ord('f')];
         if (PType = list) or (PType = global) then
         begin
           if PType = list then      // 030107 new message protocol
-            param := param + '2'
+            param := param + [Ord('2')]
           else
-            param := param + '3';
+            param := param + [Ord('3')];
           IsSeen := False;
           subscript := Mult.First;
           while subscript <> '' do
           begin
             if IsSeen then
-              param := param + 't';
+              param := param + [Ord('t')];
             if Mult[subscript] = '' then
               Mult[subscript] := #1;
             param := param + LPack(subscript,CountWidth)+LPack(Mult[subscript],CountWidth);
@@ -501,19 +504,19 @@ begin
           end; //while subscript <> ''
           if not IsSeen then         // 040922 added to take care of list/global parameters with no values
             param := param + LPack('',CountWidth);
-          param := param + 'f';
+          param := param + [Ord('f')];
         end; //if (PType = list) or (PType = global)
         if PType = stream then
         begin
-          param := param + '5' + LPack(Value,CountWidth) + 'f';
+          param := param + [Ord('5')] + LPack(Value,CountWidth) + [Ord('f')];
         end; //if PType = stream
       end; //with Parameters[i] do
     end; //if Parameters[i].PType <> undefined
   end; //for i := 0
-  if param = '5' then
-    param := param + '4f';
-  tresult := '[XWB]' + '11' + IntToStr(CountWidth) + '0' + '2' + SPack(RPCVer) + SPack(api) + param + #4;
-  Result := tresult;
+  if param[0] = Ord('5') then
+    param := param + [Ord('4'), Ord('f')];
+  tresult := '[XWB]11' + IntToStr(CountWidth) + '02';
+  Result := TEncoding.UTF8.GetBytes(tresult) + SPack(RPCVer) + SPack(api) + param + [4];
 end; //function TXWBWinsock.BuildPar
 
 
@@ -553,114 +556,105 @@ end; //function TXWBWinsock.VarPack
 
 {----------------------- TXWBWinsock.NetCall -------------------
 ----------------------------------------------------------------}
-function TXWBWinsock.NetCall(hSocket: TSocket; imsg: String): PChar; // JLI 090805
+function TXWBWinsock.NetCall(hSocket: TSocket; imsg: Tbytes): PChar; // JLI 090805
 var
-  BufSend, BufRecv, BufPtr: Array[0..Buffer32k] of Byte;      // ose/smh
-  FinalBuf: TBytes;                                           // ose/smh
-  imsgBytes: TBytes;                                          // ose/smh
-  LBufSend, LBufRecv, LBufPtr: integer;                       // ose/smh
-  accBuf: Array[0..Buffer32k] of Byte;                        // ose/smh
+  BufSink: TBytes;                                            // to /dev/null
+  BufSend: TBytes;                                            // Send Buffer
+  BufRecv: TBytes;                                            // Receive Buffer
+  LBufSend: integer;                                          // Send Buffer Length
   OldTimeOut: integer;
-  BytesRead, BytesLeft, BytesTotal: longint;
+  BytesRead, BytesTotal: longint;
   TryNumber: Integer;
   BadXfer: Boolean;
   xString: String;
 begin
+  { -- default return empty char }
+  Result := PChar('');
+
   { -- clear receive buffer prior to sending rpc }
   if xFlush = True then
   begin
+    SetLength(BufSink, Buffer32k);
     OldTimeOut := HookTimeOut;
     HookTimeOut := 0;
     NetCallPending := True;
     NetTimerStart := Now;
-    BytesRead := recv(hSocket, BufRecv, Buffer32k, 0);
+    BytesRead := recv(hSocket, BufSink[0], Buffer32k, 0);
     if BytesRead > 0 then
-      while BufRecv[BytesRead-1] <> $4 do
+      while BufSink[BytesRead-1] <> $4 do
       begin
-        BytesRead := recv(hSocket, BufRecv, Buffer32k, 0);
+        BytesRead := recv(hSocket, BufSink[0], Buffer32k, 0);
       end; //while
     xFlush := False;
     HookTimeOut := OldTimeOut;
   end; //if
+
+  { -- Init some vars }
   TryNumber := 0;
   BadXfer := True;
+
   { -- send message length + message to server }
-  try // BufRecv
-    LBufSend := TEncoding.UTF8.GetByteCount(imsg);                       //ose/smh
-    imsgBytes := TEncoding.UTF8.GetBytes(imsg);
-    Move(imsgBytes[0], BufSend, LBufSend); //p60       //ose/smh
-    try // BufSend
-      Result := PChar('');
-      while BadXfer and (TryNumber < 4) do
+  { -- Convert imsg into UTF-8 bytes and put into BufSend }
+  LBufSend := Length(imsg);
+  SetLength(BufSend, LBufSend);
+  BufSend := imsg;
+
+  while BadXfer and (TryNumber < 4) do
+  begin
+    NetCallPending := True;
+    NetTimerStart := Now;
+    TryNumber := TryNumber + 1;
+    BadXfer := False;
+
+    // Now send
+    SocketError := send(hSocket, BufSend[0], LBufSend,0); //p60  //smh
+    if SocketError = SOCKET_ERROR then
+      NetError('send', 0);
+
+   {Get Security and Application packets}
+    SecuritySegment := GetServerPacket(hSocket);
+    ApplicationSegment := GetServerPacket(hSocket);
+
+    { -- loop reading TCP buffer until server is finished sending reply }
+    BytesTotal := 0;
+    repeat
+      SetLength(BufRecv, Buffer32k + BytesTotal);
+      BytesRead := recv(hSocket, BufRecv[BytesTotal], Buffer32k, 0);
+      if BytesRead <= 0 then
       begin
-        NetCallPending := True;
-        NetTimerStart := Now;
-        TryNumber := TryNumber + 1;
-        BadXfer := False;
-        SocketError := send(hSocket, BufSend, LBufSend,0); //p60  //smh
-        if SocketError = SOCKET_ERROR then
-          NetError('send', 0);
-        try
-          BufPtr := BufRecv;
-          BytesLeft := Buffer32k;
-          BytesTotal := 0;
-         {Get Security and Application packets}
-          SecuritySegment := GetServerPacket(hSocket);
-          ApplicationSegment := GetServerPacket(hSocket);
-          { -- loop reading TCP buffer until server is finished sending reply }
-          repeat
-            BytesRead := recv(hSocket, BufPtr, BytesLeft, 0);
-            if BytesRead > 0 then
-            begin
-              if BufPtr[BytesRead-1] = $4 then
-              begin
-                Move(BufPtr, accBuf, BytesRead);
-              end //if BufPtr
-              else
-              begin
-                BufPtr[BytesRead] := $0;
-                //sBuf := ConCat(sBuf, BufPtr);
-                Move(BufPtr, accBuf[BytesRead + 1], BytesRead);
-              end; //else BufPtr
-              Inc(BytesTotal, BytesRead);
-            end; //if BytesRead > 0
-            if BytesRead <= 0 then
-            begin
-              if BytesRead = SOCKET_ERROR then
-                NetError('recv', 0)
-              else
-                NetError('connection lost', 0);
-              break;
-            end; //if BytesRead <= 0
-          until BufPtr[BytesRead-1] = $4; //repeat
-          accBuf[BytesTotal-1] := $0; //smh: was sBuf := Copy(sBuf, 1, BytesTotal - 1);
-          Result := StrAlloc(BytesTotal+1);
-          SetLength(FinalBuf, BytesTotal-1);
-          Move(accBuf, FinalBuf[0], BytesTotal-1);
-          StrCopy(Result, PChar(TEncoding.UTF8.GetString(FinalBuf)));
-          if ApplicationSegment = 'U411' then
-            BadXfer := True;
-          NetCallPending := False;
-        finally //try
-        end; //try
-      end;
-    finally //try BufSend
-    end; //try BufSend
-    if BadXfer then
-    begin
-      NetError(AnsiStrings.StrPas('Repeated Incomplete Reads on the server'), XWB_BadReads);  //p60
-      Result := StrNew('');
-    end; //if BadXfer
-    { -- if there was on error on the server, display the error code }
-    if AnsiChar(Result[0]) = #24 then
-    begin
-      xString := String(Result);           // JLI 090804
-      xString := Copy(xString,2,Length(xString)); // JLI 090804
-      NetError(xString, XWB_M_REJECT);
-      Result := StrNew('');
-    end; //if AnsiChar(Result[0]) = #24
-  finally //try BufRecv
-  end; //try BufRecv
+        if BytesRead = SOCKET_ERROR then
+          NetError('recv', 0)
+        else
+          NetError('connection lost', 0);
+        break;
+      end; //if BytesRead <= 0
+      Inc(BytesTotal, BytesRead);
+    until BufRecv[BytesTotal-1] = $4; //repeat
+    SetLength(BufRecv, BytesTotal);
+    BufRecv[BytesTotal-1] := $0;
+
+    Result := StrAlloc(BytesTotal);
+    StrCopy(Result, PChar(TEncoding.UTF8.GetString(BufRecv)));
+
+    if ApplicationSegment = 'U411' then
+      BadXfer := True;
+    NetCallPending := False;
+  end;
+
+  if BadXfer then
+  begin
+    NetError('Repeated Incomplete Reads on the server', XWB_BadReads);  //p60
+    Result := StrNew('');
+  end; //if BadXfer
+
+  { -- if there was on error on the server, display the error code }
+  if Result[0] = #24 then
+  begin
+    xString := String(Result);           // JLI 090804
+    xString := Copy(xString,2,Length(xString)); // JLI 090804
+    NetError(xString, XWB_M_REJECT);
+    Result := StrNew('');
+  end; //if AnsiChar(Result[0]) = #24
 end; //function TXWBWinsock.NetCall
 
 
@@ -669,7 +663,7 @@ end; //function TXWBWinsock.NetCall
 function TXWBWinsock.tCall(hSocket: TSocket; api, apVer: String; Parameters: TParams;
          var Sec , App: PChar; TimeOut: integer ): PChar;
 var
-  tmp: string;
+  tmp: TBytes;
   ChangeCursor: Boolean;
 begin
   HookTimeOut := TimeOut;
@@ -705,7 +699,8 @@ var
   LocalAddressLength, VistAAddressLength: DWORD;
   Timeout: timeval;
   ipv6only: DWORD;
-  y, tmp, upArrow, rAccept, rLost: string;
+  tmp, upArrow, rAccept, rLost: string;
+  y: TBytes;
   tmpPchar: PChar;
   r: integer;
   lin: TLinger;
@@ -785,11 +780,11 @@ begin
     if DNSLookup > 0 then
       NetError ('gethostname (local)',0);
   end;
-  y := '[XWB]' + '10' + IntToStr(CountWidth) + '0' + '4'+#$A + 'TCPConnect50'
-       + LPack(LocalAddressString,CountWidth) + 'f0' + LPack(IntToStr(0),CountWidth)
-       + 'f0' + LPack(String(pLocalName),CountWidth) + 'f' + #4;
+  y := TEncoding.UTF8.GetBytes('[XWB]' + '10' + IntToStr(CountWidth) + '0' + '4'+#$A + 'TCPConnect50');
+  y := y + LPack(LocalAddressString,CountWidth) + [ Ord('f'), Ord('0') ] + LPack(IntToStr(0),CountWidth);
+  y := y + [ Ord('f'), Ord('0') ] + LPack(String(pLocalName),CountWidth) + [ Ord('f'), 4 ];
   HookTimeOut := 30;
-  tmpPChar := NetCall(hSocket, PChar(y));
+  tmpPChar := NetCall(hSocket, y);
   tmp := tmpPchar;
   StrDispose(tmpPchar);
   if CompareStr(tmp, rlost) = 0 then
@@ -844,7 +839,7 @@ begin
   Str := '[XWB]' + '10'+IntToStr(CountWidth)+'0' +'4'+#5+'#BYE#'+#4;
   if hSocket <> INVALID_SOCKET then
   begin
-    tmpPChar := NetCall(hSocket,Str);
+    tmpPChar := NetCall(hSocket, TEncoding.UTF8.GetBytes(Str));
  	  tmp := tmpPChar;
     StrDispose(tmpPChar);
     lin.l_onoff := 1;                    { -- shut down the M handler};
