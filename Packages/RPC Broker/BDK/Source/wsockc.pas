@@ -555,8 +555,11 @@ end; //function TXWBWinsock.VarPack
 ----------------------------------------------------------------}
 function TXWBWinsock.NetCall(hSocket: TSocket; imsg: String): PChar; // JLI 090805
 var
-  BufSend, BufRecv, BufPtr: PAnsiChar;
-  sBuf: string;
+  BufSend, BufRecv, BufPtr: Array[0..Buffer32k] of Byte;      // ose/smh
+  FinalBuf: TBytes;                                           // ose/smh
+  imsgBytes: TBytes;                                          // ose/smh
+  LBufSend, LBufRecv, LBufPtr: integer;                       // ose/smh
+  accBuf: Array[0..Buffer32k] of Byte;                        // ose/smh
   OldTimeOut: integer;
   BytesRead, BytesLeft, BytesTotal: longint;
   TryNumber: Integer;
@@ -569,24 +572,23 @@ begin
     OldTimeOut := HookTimeOut;
     HookTimeOut := 0;
     NetCallPending := True;
-    BufRecv := PAnsiChar(StrAlloc(Buffer32k));
     NetTimerStart := Now;
-    BytesRead := recv(hSocket, BufRecv^, Buffer32k, 0);
+    BytesRead := recv(hSocket, BufRecv, Buffer32k, 0);
     if BytesRead > 0 then
-      while BufRecv[BytesRead-1] <> #4 do
+      while BufRecv[BytesRead-1] <> $4 do
       begin
-        BytesRead := recv(hSocket, BufRecv^, Buffer32k, 0);
+        BytesRead := recv(hSocket, BufRecv, Buffer32k, 0);
       end; //while
-    AnsiStrings.StrDispose(BufRecv); //p60
     xFlush := False;
     HookTimeOut := OldTimeOut;
   end; //if
   TryNumber := 0;
   BadXfer := True;
   { -- send message length + message to server }
-  BufRecv := PAnsiChar(StrAlloc(Buffer32k));
   try // BufRecv
-      BufSend := AnsiStrings.StrNew(PAnsiChar(AnsiString(imsg))); //p60
+    LBufSend := TEncoding.UTF8.GetByteCount(imsg);                       //ose/smh
+    imsgBytes := TEncoding.UTF8.GetBytes(imsg);
+    Move(imsgBytes[0], BufSend, LBufSend); //p60       //ose/smh
     try // BufSend
       Result := PChar('');
       while BadXfer and (TryNumber < 4) do
@@ -595,10 +597,9 @@ begin
         NetTimerStart := Now;
         TryNumber := TryNumber + 1;
         BadXfer := False;
-        SocketError := send(hSocket, BufSend^, AnsiStrings.StrLen(BufSend),0); //p60
+        SocketError := send(hSocket, BufSend, LBufSend,0); //p60  //smh
         if SocketError = SOCKET_ERROR then
           NetError('send', 0);
-        BufRecv[0] := #0;
         try
           BufPtr := BufRecv;
           BytesLeft := Buffer32k;
@@ -606,20 +607,20 @@ begin
          {Get Security and Application packets}
           SecuritySegment := GetServerPacket(hSocket);
           ApplicationSegment := GetServerPacket(hSocket);
-          sBuf := '';
           { -- loop reading TCP buffer until server is finished sending reply }
           repeat
-            BytesRead := recv(hSocket, BufPtr^, BytesLeft, 0);
+            BytesRead := recv(hSocket, BufPtr, BytesLeft, 0);
             if BytesRead > 0 then
             begin
-              if BufPtr[BytesRead-1] = #4 then
+              if BufPtr[BytesRead-1] = $4 then
               begin
-                sBuf := ConCat(sBuf, BufPtr);
+                Move(BufPtr, accBuf, BytesRead);
               end //if BufPtr
               else
               begin
-                BufPtr[BytesRead] := #0;
-                sBuf := ConCat(sBuf, BufPtr);
+                BufPtr[BytesRead] := $0;
+                //sBuf := ConCat(sBuf, BufPtr);
+                Move(BufPtr, accBuf[BytesRead + 1], BytesRead);
               end; //else BufPtr
               Inc(BytesTotal, BytesRead);
             end; //if BytesRead > 0
@@ -631,19 +632,19 @@ begin
                 NetError('connection lost', 0);
               break;
             end; //if BytesRead <= 0
-          until BufPtr[BytesRead-1] = #4; //repeat
-          sBuf := Copy(sBuf, 1, BytesTotal - 1);
+          until BufPtr[BytesRead-1] = $4; //repeat
+          accBuf[BytesTotal-1] := $0; //smh: was sBuf := Copy(sBuf, 1, BytesTotal - 1);
           Result := StrAlloc(BytesTotal+1);
-          StrCopy(Result, PChar(sBuf));
+          SetLength(FinalBuf, BytesTotal-1);
+          Move(accBuf, FinalBuf[0], BytesTotal-1);
+          StrCopy(Result, PChar(TEncoding.UTF8.GetString(FinalBuf)));
           if ApplicationSegment = 'U411' then
             BadXfer := True;
           NetCallPending := False;
         finally //try
-          sBuf := '';
         end; //try
       end;
     finally //try BufSend
-      AnsiStrings.StrDispose(BufSend); //p60
     end; //try BufSend
     if BadXfer then
     begin
@@ -659,7 +660,6 @@ begin
       Result := StrNew('');
     end; //if AnsiChar(Result[0]) = #24
   finally //try BufRecv
-    AnsiStrings.StrDispose(BufRecv); //p60
   end; //try BufRecv
 end; //function TXWBWinsock.NetCall
 
@@ -887,29 +887,25 @@ end; //procedure TXWBWinsock.CloseSockSystem
 ----------------------------------------------------------------}
 function TXWBWinsock.GetServerPacket(hSocket: TSocket): string;
 var
-  s,sb: PAnsiChar;
+  s: Array[0..1] of Byte; //smh
+  sb: Array[0..255] of Byte;
   buflen: integer;
 begin
-  s := AnsiStrings.AnsiStrAlloc(1); //p60
-  s[0] := #0;
-  buflen := recv(hSocket, s^, 1, 0); //get length of segment
+  s[0] := $0;
+  buflen := recv(hSocket, s, 1, 0); //get length of segment
   if buflen = SOCKET_ERROR then   // check for timing problem if initial attempt to read during connection fails
   begin
     sleep(100);
-    buflen := recv(hSocket, s^, 1, 0);
+    buflen := recv(hSocket, s, 1, 0);
   end; //if
   if buflen = SOCKET_ERROR then
     NetError( 'recv',0);
   buflen := ord(s[0]);
-  sb := AnsiStrings.AnsiStrAlloc(buflen+1); //p60
-  sb[0] := #0;
-  buflen := recv(hSocket, sb^, buflen, 0); {get security segment}
+  buflen := recv(hSocket, sb, buflen, 0); {get security segment}
   if buflen = SOCKET_ERROR then
     NetError( 'recv',0);
-  sb[buflen] := #0;
-  Result := AnsiStrings.StrPas(sb); //p60
-  AnsiStrings.StrDispose(sb); //p60
-  AnsiStrings.StrDispose(s); //p60
+  sb[buflen] := $0;
+  Result := UTF8ToString(sb); //p60 //smh
 end; //function TXWBWinsock.GetServerPacket
 
 
