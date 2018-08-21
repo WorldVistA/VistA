@@ -883,7 +883,7 @@ end; //procedure TXWBWinsock.CloseSockSystem
 function TXWBWinsock.GetServerPacket(hSocket: TSocket): string;
 var
   s: Array[0..1] of Byte; //smh
-  sb: Array[0..255] of Byte;
+  sb: TBytes;
   buflen: integer;
 begin
   s[0] := $0;
@@ -896,11 +896,12 @@ begin
   if buflen = SOCKET_ERROR then
     NetError( 'recv',0);
   buflen := ord(s[0]);
-  buflen := recv(hSocket, sb, buflen, 0); {get security segment}
+  SetLength(sb, 1 + buflen);
+  buflen := recv(hSocket, sb[0], buflen, 0); {get security segment}
   if buflen = SOCKET_ERROR then
     NetError( 'recv',0);
   sb[buflen] := $0;
-  Result := UTF8ToString(sb); //p60 //smh
+  Result := TEncoding.UTF8.GetString(sb); //p60 //smh
 end; //function TXWBWinsock.GetServerPacket
 
 
