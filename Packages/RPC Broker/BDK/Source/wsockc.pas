@@ -2,14 +2,17 @@
 	Package: XWB - Kernel RPCBroker
 	Date Created: Sept 18, 1997 (Version 1.1)
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
-	Developers: Danila Manapsal, Don Craven, Raul Mendoza, Joel Ivey,
-              Herlan Westra
+	Developers: Danila Manapsal, Don Craven, Raul Mendoza, Joel Ivey (JLI),
+              Herlan Westra (HGW), Sam Habiel (SMH)
 	Description: Contains TRPCBroker and related components.
   Unit: Wsockc manages WinSock connections and creates/parses messages.
-	Current Release: Version 1.1 Patch 65
+	Current Release: Version 1.1 Patch 10001
 *************************************************************** }
 
 { **************************************************
+  Changed in v1.1.10001 (SMH 2018/08/22) XWB*1.1*10001
+  1. Major rewrite to support UTF-8 Send/Receive
+
   Changes in v1.1.65 (HGW 06/23/2016) XWB*1.1*65
   1. Added error XWB_BadToken for SSOi testing.
   2. Replaced some AnsiString variables with String variables to resolve
@@ -299,7 +302,7 @@ begin
     Ex1 := Exception.Create('In generation of message to server, call to SPack with Length of string of '+IntToStr(r)+' chars which exceeds max of 255 chars');
     Raise Ex1;
   end; //if
-  Result := TEncoding.UTF8.GetBytes(Char(r)) + TEncoding.UTF8.GetBytes(Str);
+  Result := [r] + TEncoding.UTF8.GetBytes(Str);
 end; //function SPack
 
 
@@ -479,7 +482,7 @@ begin
       with Parameters[i] do
       begin
         if PType = literal then
-          param := param + [Ord('0')] + LPack(Value,CountWidth )+ [Ord('f')];      // 030107 new message protocol
+          param := param + [Ord('0')] + LPack(Value,CountWidth) + [Ord('f')];      // 030107 new message protocol
         if PType = reference then
           param := param + [Ord('1')] + LPack(Value,CountWidth) + [Ord('f')];     // 030107 new message protocol
         if PType = empty then
