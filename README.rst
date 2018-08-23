@@ -6,7 +6,7 @@ OSEHRA VistA
 
 This source tree contains patches, tests, and tools for VistA, the Veterans
 Health Information Systems and Technology Architecture.  It is maintained by
-OSEHRA, the Open Source Electronic Health Record Agent.
+OSEHRA, the Open Source Electronic Health Record Alliance.
 
 This version of VistA includes Open Source Community contributions accepted
 by OSEHRA.
