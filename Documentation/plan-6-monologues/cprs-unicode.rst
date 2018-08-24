@@ -222,7 +222,7 @@ The XWB Broker in VistA needed a couple of changes:
 I took the opportunity to refactor XWBRW while I am at it to make it simpler
 and increase the buffer sizes--which were still at 255 characters. I also
 commented it very well in order to make sure that I can maintain it in the
-future. You can find the new version `here <https://github.com/OSEHRA-Sandbox/VistA-M/blob/plan-vi/Packages/RPC%20Broker/Routines/XWBRW.m`_.
+future. You can find the new version `here <https://github.com/OSEHRA-Sandbox/VistA-M/blob/plan-vi/Packages/RPC%20Broker/Routines/XWBRW.m>`_.
 
 What about Caché?
 -----------------
