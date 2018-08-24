@@ -18,7 +18,7 @@ represent glyph based languages (such as Chinese) for the first time in CPRS.
 I (Sam Habiel) was very involved in choosing a character set for VistA's
 implementation in Jordan, where various elements needed to be represented in
 Arabic. You can find my adventures linked from my `home page
-<http://smh101.com>`. In the end, due to the fact that Delphi 2006 only allowed
+<http://smh101.com>`_. In the end, due to the fact that Delphi 2006 only allowed
 us to use single bytes for each character, we ended up using Windows Code Page
 1256 for all of VistA. It worked, but it required us to write some hooks in
 order to talk to other systems that used Unicode (e.g. Printers).
@@ -26,7 +26,7 @@ order to talk to other systems that used Unicode (e.g. Printers).
 Modifying the XWB Broker - Try 1 and why were only partially successful
 -----------------------------------------------------------------------
 We found out quickly that we needed to modify a single broker file: `wsockc.pas
-https://github.com/OSEHRA/VistA/blob/master/Packages/RPC%20Broker/BDK/Source/wsockc.pas`.
+https://github.com/OSEHRA/VistA/blob/master/Packages/RPC%20Broker/BDK/Source/wsockc.pas`_.
 It was easier said than done. Writing network communication code is hard; and
 trying to adapt the existing older string types turned out to be problematic.
 These are the main issues:
@@ -37,7 +37,7 @@ These are the main issues:
   zero terminated strings.
 * Correct Unicode converstion methods are hard to find. There are so many of
   them, and some of them produce the wrong result (e.g. `UTF8ToString()
-  http://docwiki.embarcadero.com/Libraries/Tokyo/en/System.UTF8ToString`)
+  http://docwiki.embarcadero.com/Libraries/Tokyo/en/System.UTF8ToString`_)
   strips the initial character of the output--possibly it wants to create a
   Pascal string, not a reference counted string.
 * ``wsockc.pas`` was not refactored with the advent of Delphi XE--the algorithm
@@ -83,3 +83,7 @@ This code worked for receiving data from VistA, but was incorrect in other
 respects. The biggest problem we had was that the BytesRead count did not
 reflect the end of the string anymore--and we didn't know anyway in which to
 fix this--thus the hacky copy at the end that guesses the end of the string.
+I also learned later that pAnsiChar has some hidden semantics that make them
+convert strings into the current code page being used in the system.
+
+I have converted 
