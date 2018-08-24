@@ -49,6 +49,7 @@ The following is the main receive loop as as result of our first try. Code
 containing "//" was previous code that was commented out.
 
 .. code:: pascal
+
   //  BufSend, BufRecv, BufPtr: PChar;
   BufSend, BufRecv, BufPtr: PAnsiChar;
   ...
