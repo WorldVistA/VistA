@@ -26,7 +26,7 @@ order to talk to other systems that used Unicode (e.g. Printers).
 Modifying the XWB Broker - Try 1 and why were only partially successful
 -----------------------------------------------------------------------
 We found out quickly that we needed to modify a single broker file: `wsockc.pas
-https://github.com/OSEHRA/VistA/blob/master/Packages/RPC%20Broker/BDK/Source/wsockc.pas`_.
+<https://github.com/OSEHRA/VistA/blob/master/Packages/RPC%20Broker/BDK/Source/wsockc.pas>`_.
 It was easier said than done. Writing network communication code is hard; and
 trying to adapt the existing older string types turned out to be problematic.
 These are the main issues:
@@ -37,7 +37,7 @@ These are the main issues:
   zero terminated strings.
 * Correct Unicode converstion methods are hard to find. There are so many of
   them, and some of them produce the wrong result (e.g. `UTF8ToString()
-  http://docwiki.embarcadero.com/Libraries/Tokyo/en/System.UTF8ToString`_)
+  <http://docwiki.embarcadero.com/Libraries/Tokyo/en/System.UTF8ToString>`_)
   strips the initial character of the output--possibly it wants to create a
   Pascal string, not a reference counted string.
 * ``wsockc.pas`` was not refactored with the advent of Delphi XE--the algorithm
