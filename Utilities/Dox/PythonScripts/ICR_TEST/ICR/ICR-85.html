@@ -1,0 +1,172 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTg1").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA85-A &nbsp;&nbsp;  ICR (85)</h1>
+<div id="demo"><table id="SUNSLTg1" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>85</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>85</td>
+</tr>
+<tr>
+<td>FILE NUMBER</td>
+<td><a href="https://code.osehra.org/dox/Global_XkRJQygxOTUuNA==.html">195.4</a></td>
+</tr>
+<tr>
+<td>GLOBAL ROOT</td>
+<td>DIC(195.4,</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>1991/07/09</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Record_Tracking.html">RECORD TRACKING</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Albany</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Private</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>File</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>DBIA85-A</td>
+</tr>
+<tr>
+<td>ORIGINAL NUMBER</td>
+<td>85</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+
+1. Activation interface
+2. Make an appointment
+Checkin/unscheduled visit
+3. Cancel an appointment
+4. Changing clinic names
+
+1. Use of the Record Tracking System Parameter file # 195.4
+SD calls RT if the field 'MAS INTERFACE STATUS' is 'UP'
+^DIC(195.4,1,"UP")=1^
+
+2.  When a clinic appointment is made if the appointment is 'today'
+or if the Record Tracking System Parameter 'Batch requests' is
+set to 'No' or if records are requested for an unscheduled visit.
+
+A.  An entry is made in the Requested Records file #190.1
+^RTV(190.1,n)
+by a call from RT^SDUTL to a tasked job QUE^RTQ
+or RT^SDI
+
+B.  After the entry is added to the Requested Records file #190.1
+an entry is made in Parent Record Request field
+of the Patient subfield of the Hospital Location file #44
+^SC(n,"S",,,,"RTR")=n^
+by a return call from CREATE+11^RTQ2 to RTSET^SDUTL
+
+3.  When a clinic appointment is canceled:
+If there is a Requested Records entry in file #190.1
+the status is changed to 'canceled' by a call
+RTV(190.1,n)=^^^^^x^
+from RT+2^SDUTL to CANCEL^RTQ2.
+
+4.  When the name of a clinic is changed the corresponding names
+of entries in the Pull List file #194.2 are changed by a trigger
+on the .01 field of the Hospital Location file #44.  Clinic
+^SC(1,0)=DJones Medical Clinic^
+^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^
+Clinic names are changed in a compiled input template.  To
+insure the use of this trigger the following action is taken:
+The Record Tracking package includes the .01 field of the
+Hospital Location file #44 so that the SDB template is
+re-compiled when the Record Tracking package is initialized.
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>DIC(195.4,</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<li>
+<dt>ISC:  &nbsp;&nbsp;Albany</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Scheduling.html">SCHEDULING</a></dt>
+</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

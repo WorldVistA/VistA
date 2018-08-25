@@ -1,0 +1,278 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+    var table = $("#ICR_List-MailMan").DataTable({
+        bInfo: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: false,
+        searchHighlight: true,
+        columns: [{ name : 'IA #'},{ name : 'Name'},{ name : 'Type'},{ name : 'Custodial Package'},{ name : 'Date Created'},{ name : 'DBIC Approval Status'},{ name : 'Status'},{ name : 'Usage'},{ name : 'File #'},{ name : 'General Description'},{ name : 'Remote Procedure'},{ name : 'Routine'},{ name : 'Date Activated'}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          },
+          {
+              extend: 'csv',
+              title: 'ICR_List-MailMan',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdf',
+              title: 'ICR_List-MailMan',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          }
+
+        ]
+    });
+
+    var columns = table.settings().init().columns;
+    table.columns().every(function(index) {
+      var column = this;
+      var name = columns[index].name;
+      if (name == 'General Description') {
+        column.visible(false);
+      }
+      if (name == 'IA #'||name == 'Name'||name == 'Custodial Package'||name == 'Date Created'||name == 'File #'||name == 'Remote Procedure'||name == 'Routine'||name == 'Date Activated'||name == 'General Description') {
+        var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
+          .appendTo( $(column.footer()).empty() )
+          .on('keyup change', function() {
+            if (column.search() !== this.value) {
+              column
+                .search(this.value)
+                .draw();
+            }
+          });
+      } else {
+        var select = $('<select name="' + name + '"><option value=""></option></select>')
+          .appendTo($(column.footer()).empty())
+          .on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column
+              .search(val ? '^'+val+'$' : '', true, false)
+              .draw();
+          });
+
+        column.data().unique().sort().each(function(d, j) {
+          if ($.trim( d ) != '') {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+          }
+        });
+      }
+    });
+
+
+    table
+     .search('')
+     .columns().search('')
+     .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
+}); </script>
+
+
+<script type="text/javascript" id="js">
+  function clearFilters() {
+    var table = $('#ICR_List-MailMan').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
+    $("select").prop('selectedIndex', 0);
+    $('#ICR_List-MailMan tfoot input').val('');
+  }
+</script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: MailMan ICR List</h1><div id="demo"><table id="ICR_List-MailMan" class="display">
+<thead>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>1151</td>
+<td><a title=" ^XMS1 contains the following application programmer functions:
+ $$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages only.
+ $$SRVTIME(MSGIEN,RDUZ,Status) which sets status of recipients in a message.
+
+
+
+
+ Appendix 1 -- Message Server Protocol
+
+ Overview
+ A server is an option which is invoked when a mail message that has been addressed to it has been delivered.  As an option, many of the parameters associated with the servers are embedded in the definition of the option. Therefore, in order to understand servers completely, you should refer to the server documentation in Kernel 7.0 manuals.  Options are listed in the Menu Management documentation.
+ Servers may or may not receive data.  The received data usually comes in the form of the text of the message being delivered to it, but the data may also be pointed to by the message, and exist in the system either because it was there in the beginning, or because it arrived independently.
+ Servers may be addressed from a remote  site.  A server on ALTOONA.domain.ext may receive a message addressed to it from WASHINGTON.domain.ext.  In fact, this is very common.  There are security features as parameters of the option that has been designated as a server because of the fact.  Please be aware of these security parameters.  Messages addressed to servers will not be scheduled if security is not passed.  Filegrams work through use of a server.  Data is loaded into a mail message, addressed and when delivered, processed by the filegram server into the receiving database.
+ Servers are always invoked through tasks that are set up when the message is delivered into the system locally or over the network.  One of the options is to &quot;Run Immediately&quot;.  Then the task is scheduled to run &quot;NOW&quot;.
+ However, tasks may not need to be scheduled at all because the system manager has stated so in the entry for the server in the Option file or because of a problem.  See the Menu Management documentation in the MailMan Technical Manual and Systems Management Guide for more information concerning this. Server Statuses
+ Server recipients are recorded in the recipient chain of a message and appear similarly to other users.  MailMan enters statuses on its own as stages in the server process are reached.  First, the message is marked as &quot;Awaiting Server&quot;.  This indicates that the message has been received and the option is a valid one.  At this point, a task has been created to actually invoke MenuMan to schedule or perform the service (option) required.
+ The last status which MailMan sets is &quot;Served&quot;, which means that MenuMan has been called successfully and MenuMan has either performed the task in the case of a server that runs immediately, or that some other action has been done.
+ At this point, a task could be scheduled to invoke the server or simply a message could be sent to indicate that the task exists and needs to be scheduled, or some other action that was required was performed.  MenuMan has its own statuses which will be used.
+
+ $$SRVTIME^XMS1
+ This extrinsic function sets status of recipients in a message.
+ Usage: S X=$$SRVTIME^XMS1(A,B,C)
+ Where: A = XMZ (message number) B = A string representing the recipient name C = Status is free-text (String less than nine (9) characters in length)
+ If successful, X = 0 ...or If unsuccessful, X will be a number followed by a human readable error
+ Addressing a Server
+ To address a server, precede the recipient name with &quot;S.&quot; (e.g., S.XMECHO). This example sends a message to the Mail Man Echo Tester server.  &quot;S.&quot; must be followed by an option name from the Option file in the Target Domain.  If not, a &quot;Recipient not Found&quot; error will occur.
+ A &quot;Recipient Ambiguous&quot; error will occur, if there is more than one option whose name partially matches the name addressed.
+ The District Registry server for admitting a new patient could be addressed as follows:
+ S.DGDISTADMIT@SANFRANCISCO.domain.ext
+ The message is destined for the DGDISTADMIT option at San Francisco.  Replies to this message would be from this same name.
+
+ Writing a Server Program
+ The server communicates with mail messages in specific ways.  Code is used to interface the server to the message system.  The code below returns the original message to the sender:
+ ECHO    ; K XMY S XMSUB=$E(&quot;Server echo of&quot;&quot;_XMBSUB_&quot;`&quot;,1,65) S XMY(XMFROM)=&quot;&quot;,XMTXT=&quot;^XMB(3.9,&quot;_XMZ_&quot;,2,&quot; D ^XMD Q
+ In this example, the variable XMFROM contains the sender address and is supplied to the server when invoked.  Other variables also exist upon invocation of the server.
+ The XMF.1 example server program is supplied with MailMan.  XMF1 uses some of the other variables supplied to the server.
+ Execute variable XMREC to read a line of the message.  XMER and XMRG are returned. XMER  This variable returns the execution status of XMREC.  XMER&lt;0, if there is no more message text to read.  The value of XMER will be zero (0), if XMRG is being returned as non-null.  XMRG, in that case, will have as its value the text of the next line of the message.
+ XMRG   The value of XMRG will be the next line of message text.  XMRG will always be defined, though it will be null when XMER&lt;0.
+ XMPOS  This variable contains the current position of the text returned in the variable XMGR.  It is initialized if it is undefined, but should be killed by the server when it is finished &quot;Reading&quot; the message.
+ Here&quot;s another example of code, this time from XMF1:
+ S XMA=0 A  ; X XMREC        ;       Receive a line I $D(XMER) G Q;XMER&lt;0  ;       Check for end of message S XMA=XMA+1    ;       Increment local line count S XMTEXT(XMA)=XMRG     ;       Set local array G A    ;       Go back for another line
+ Double Serving Messages
+ On occasion, the transmission/receive process is interrupted by a system back-up.  It appears to result in the same message being served twice.  The Audit Log for the Options file shows two messages with the same message number and subject, but with different Date/Times and Job Numbers.
+
+ To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="ICR-1151.html">MAILMAN: Server API</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_MailMan.html">MAILMAN</a></td>
+<td>1995/02/20</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Supported</td>
+<td></td>
+<td><br>^XMS1 contains the following application programmer<br>functions:
+<br>$$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages<br>only.
+<br>$$SRVTIME(MSGIEN,RDUZ,Status) which sets status of recipients in a message.
+
+
+
+
+<br>Appendix 1 -- Message Server Protocol
+
+<br>Overview
+<br>A server is an option which is invoked when a mail message that has been<br>addressed to it has been delivered.  As an option, many of the parameters<br>associated with the servers are embedded in the definition of the option.<br>Therefore, in order to understand servers completely, you should refer to the<br>server documentation in Kernel 7.0 manuals.  Options are listed in the Menu<br>Management documentation.
+<br>Servers may or may not receive data.  The received data usually comes in the<br>form of the text of the message being delivered to it, but the data may also<br>be pointed to by the message, and exist in the system either because it was<br>there in the beginning, or because it arrived independently.
+<br>Servers may be addressed from a remote  site.  A server on ALTOONA.domain.ext may<br>receive a message addressed to it from WASHINGTON.domain.ext.  In fact, this is<br>very common.  There are security features as parameters of the option that has<br>been designated as a server because of the fact.  Please be aware of these<br>security parameters.  Messages addressed to servers will not be scheduled if<br>security is not passed.  Filegrams work through use of a server.  Data is<br>loaded into a mail message, addressed and when delivered, processed by the<br>filegram server into the receiving database.
+<br>Servers are always invoked through tasks that are set up when the message is<br>delivered into the system locally or over the network.  One of the options is<br>to &quot;Run Immediately&quot;.  Then the task is scheduled to run &quot;NOW&quot;.
+<br>However, tasks may not need to be scheduled at all because the system manager<br>has stated so in the entry for the server in the Option file or because of a<br>problem.  See the Menu Management documentation in the MailMan Technical<br>Manual and Systems Management Guide for more information concerning this.<br>Server Statuses
+<br>Server recipients are recorded in the recipient chain of a message and appear<br>similarly to other users.  MailMan enters statuses on its own as stages in the<br>server process are reached.  First, the message is marked as &quot;Awaiting<br>Server&quot;.  This indicates that the message has been received and the option is<br>a valid one.  At this point, a task has been created to actually invoke<br>MenuMan to schedule or perform the service (option) required.
+<br>The last status which MailMan sets is &quot;Served&quot;, which means that MenuMan has<br>been called successfully and MenuMan has either performed the task in the case<br>of a server that runs immediately, or that some other action has been done.
+<br>At this point, a task could be scheduled to invoke the server or simply a<br>message could be sent to indicate that the task exists and needs to be<br>scheduled, or some other action that was required was performed.  MenuMan has<br>its own statuses which will be used.
+
+<br>$$SRVTIME^XMS1
+<br>This extrinsic function sets status of recipients in a message.
+<br>Usage: S X=$$SRVTIME^XMS1(A,B,C)
+<br>Where: A = XMZ (message number)<br>B = A string representing the recipient name<br>C = Status is free-text (String less than nine (9)<br>characters in length)
+<br>If successful, X = 0<br>...or If unsuccessful, X will be a number followed by a human<br>readable error
+<br>Addressing a Server
+<br>To address a server, precede the recipient name with &quot;S.&quot; (e.g., S.XMECHO).<br>This example sends a message to the Mail Man Echo Tester server.  &quot;S.&quot; must be<br>followed by an option name from the Option file in the Target Domain.  If not,<br>a &quot;Recipient not Found&quot; error will occur.
+<br>A &quot;Recipient Ambiguous&quot; error will occur, if there is more than one option<br>whose name partially matches the name addressed.
+<br>The District Registry server for admitting a new patient could be addressed as<br>follows:
+<br>S.DGDISTADMIT@SANFRANCISCO.domain.ext
+<br>The message is destined for the DGDISTADMIT option at San Francisco.  Replies<br>to this message would be from this same name.
+
+<br>Writing a Server Program
+<br>The server communicates with mail messages in specific ways.  Code is used to<br>interface the server to the message system.  The code below returns the<br>original message to the sender:
+<br>ECHO    ;<br>K XMY<br>S XMSUB=$E(&quot;Server echo of&quot;&quot;_XMBSUB_&quot;`&quot;,1,65)<br>S XMY(XMFROM)=&quot;&quot;,XMTXT=&quot;^XMB(3.9,&quot;_XMZ_&quot;,2,&quot;<br>D ^XMD<br>Q
+<br>In this example, the variable XMFROM contains the sender address and is<br>supplied to the server when invoked.  Other variables also exist upon<br>invocation of the server.
+<br>The XMF.1 example server program is supplied with MailMan.  XMF1 uses some of<br>the other variables supplied to the server.
+<br>Execute variable XMREC to read a line of the message.  XMER and XMRG are<br>returned.<br>XMER  This variable returns the execution status of XMREC.  XMER&lt;0, if there<br>is no more message text to read.  The value of XMER will be zero (0), if XMRG<br>is being returned as non-null.  XMRG, in that case, will have as its value the<br>text of the next line of the message.
+<br>XMRG   The value of XMRG will be the next line of message text.  XMRG will<br>always be defined, though it will be null when XMER&lt;0.
+<br>XMPOS  This variable contains the current position of the text returned in the<br>variable XMGR.  It is initialized if it is undefined, but should be killed by<br>the server when it is finished &quot;Reading&quot; the message.
+<br>Here&quot;s another example of code, this time from XMF1:
+<br>S XMA=0<br>A  ;<br>X XMREC        ;       Receive a line<br>I $D(XMER) G Q;XMER&lt;0  ;       Check for end of message<br>S XMA=XMA+1    ;       Increment local line count<br>S XMTEXT(XMA)=XMRG     ;       Set local array<br>G A    ;       Go back for another line
+<br>Double Serving Messages
+<br>On occasion, the transmission/receive process is interrupted by a system<br>back-up.  It appears to result in the same message being served twice.  The<br>Audit Log for the Options file shows two messages with the same message number<br>and subject, but with different Date/Times and Job Numbers.
+
+<br>To avoid this, application servers should be written such that they check for<br>and avoid processing of the same message being delivered to any particular<br>server.  MailMan transparently checks this and does not deliver twice to mail<br>boxes.  However, devices and servers do not have mail boxes to check against.<br>Servers can have some understanding of special mail baskets in the<br>Postmaster&quot;s mail box and can be written to check for duplicate deliveries<br>(See reference XMAIC entry points in the Callable Routines section of the<br>Technical Manual and System Manager&quot;s Guide).</td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Routine_XMS1.html">XMS1</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

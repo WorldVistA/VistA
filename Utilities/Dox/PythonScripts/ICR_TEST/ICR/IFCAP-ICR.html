@@ -1,0 +1,328 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+    var table = $("#ICR_List-IFCAP").DataTable({
+        bInfo: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: false,
+        searchHighlight: true,
+        columns: [{ name : 'IA #'},{ name : 'Name'},{ name : 'Type'},{ name : 'Custodial Package'},{ name : 'Date Created'},{ name : 'DBIC Approval Status'},{ name : 'Status'},{ name : 'Usage'},{ name : 'File #'},{ name : 'General Description'},{ name : 'Remote Procedure'},{ name : 'Routine'},{ name : 'Date Activated'}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          },
+          {
+              extend: 'csv',
+              title: 'ICR_List-IFCAP',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdf',
+              title: 'ICR_List-IFCAP',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          }
+
+        ]
+    });
+
+    var columns = table.settings().init().columns;
+    table.columns().every(function(index) {
+      var column = this;
+      var name = columns[index].name;
+      if (name == 'General Description') {
+        column.visible(false);
+      }
+      if (name == 'IA #'||name == 'Name'||name == 'Custodial Package'||name == 'Date Created'||name == 'File #'||name == 'Remote Procedure'||name == 'Routine'||name == 'Date Activated'||name == 'General Description') {
+        var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
+          .appendTo( $(column.footer()).empty() )
+          .on('keyup change', function() {
+            if (column.search() !== this.value) {
+              column
+                .search(this.value)
+                .draw();
+            }
+          });
+      } else {
+        var select = $('<select name="' + name + '"><option value=""></option></select>')
+          .appendTo($(column.footer()).empty())
+          .on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column
+              .search(val ? '^'+val+'$' : '', true, false)
+              .draw();
+          });
+
+        column.data().unique().sort().each(function(d, j) {
+          if ($.trim( d ) != '') {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+          }
+        });
+      }
+    });
+
+
+    table
+     .search('')
+     .columns().search('')
+     .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
+}); </script>
+
+
+<script type="text/javascript" id="js">
+  function clearFilters() {
+    var table = $('#ICR_List-IFCAP').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
+    $("select").prop('selectedIndex', 0);
+    $('#ICR_List-IFCAP tfoot input').val('');
+  }
+</script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: IFCAP ICR List</h1><div id="demo"><table id="ICR_List-IFCAP" class="display">
+<thead>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>214</td>
+<td><a title=" The following is entered as DBIA until the next version of DA:
+ All components indentified in this integration request involve reading from IFCAP files.  Drug Accountability does not write to any IFCAP files. Looking toward an interface with the IFCAP Generic Inventory Package, Drug Accountability (PSA) begins the process with a Connection Menu.  The PSAINIT creates in the DRUG file (#50) a multiple (#50.0441) pointing to the IFCAP ITEM MASTER file (#441), enabling a direct link between the DRUG file (#50) and the ITEM MASTER file (#441).
+ The first connecting tool provided in the Connection Menu is a sub- menu using the National Drug Code (NDC) to attempt matching entries.  In the ITEM MASTER file (#441), the NDC field (#4) is located in the VENDOR multiple (#6). This field has an input transform that prevents a user from using the same NDC for more than one ITEM MASTER file entry.  In studying an ITEM MASTER file from a local site, it was discovered that there were several entries in their ITEM MASTER file that did possess the same NDC.  Since this situation might lead a connector to link a drug to a potentially less active item, the first option in the NDC Menu is the NDC Duplicates Report (ITEM file).  This report loops through the NDC (&quot;F&quot;) x-ref in #441.  If more than one item contains the same NDC and is not inactive (field #16, &quot;$G(^PRC(441,D0,3))), the duplicates are listed.  The report displays the NDC that has more than one item attached to it, the item numbers attached, their SHORT DESCRIPTION (#.05), and the VENDOR (#6) =&gt; VENDOR file (#440,#1) that contains the duplicated NDC.
+ The second item on the NDC Menu is the Report Potential NDC Matches option.  This report loops through the active, unlinked (to #441) entries in the DRUG file (#50) that have an NDC.  If a corresponding NDC is found in the &quot;F&quot; x-ref in the ITEM MASTER file (#441), the NDC and drug name are listed from the DRUG file (#50) and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER file (#441).  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file (#50), a check is made to see if the matched ITEM MASTER file entry is already linked to another DRUG file entry.  If so the user is informed of the existing connection.
+ Using this same loop and display criteria, the Controlled Connection by NDC Match allows the user the opportunity to actually link matched entries. If the user approves the displayed match, a ^DIE stuff of the item number into the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated DRUG/ITEM file link by NDC option uses the same loop and display criteria and the ^DIE stuff for all matches in the loop.
+ In the event that the user requires more information about a selected drug from either the DRUG file or the ITEM MASTER file before linking, the Inquire/Compare DRUG file/ITEM file option is available.  This option uses a FM inquire with a no-link pointer jump from the DRUG file to the ITEM MASTER file via the NDC &quot;F&quot; x-ref in #441.  The user selects the drug from the DRUG file and along with corresponding info from the DRUG file the DESCRIPTION (#.1), NSN (#5), NDC (VENDOR (#6),#4) by which the jump occurred, and from that same VENDOR multiple the UNIT COST (#1), UNIT OF PURCHASE (#1.5), DATE OF UNIT PRICE (#2.5), PACKAGING MULTIPLE (#1.6), calculated unit cost = UNIT COST (#1)/DISPENSE UNITS PER ORDER UNIT from the DRUG file, VENDOR (#.01), CREATED BY (#15), and with a jump to #200 their OFFICE PHONE NUMBER.  Using this same jump, the DRUG file/ITEM file Comparison Report displays the same data with the user selecting a range of drugs from the DRUG file.
+ The FSN Menu functions similar to the NDC Menu.  The Report Potential FSN Matches option loops through the active, unlinked (to #441) entries in the DRUG file that have an FSN.  If a corresponding NSN is found in the &quot;BA&quot; x-ref in the ITEM MASTER file, the FSN and drug name are listed from the DRUG file and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER file.  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file, a check is made to see if the matched ITEM MASTER file entry is already linked to another DRUG file entry.  If so the user is informed of the existing connection.
+ Using this same loop and display criteria the Controlled Connection by FSN Match option allows the user to actually link matched entries.  If the user approves the displayed match, a ^DIE stuff of the item number into the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated DRUG/ITEM File Link by FSN option uses the same loop and display criteria and the ^DIE stuff for all matches in the loop.
+ The Single Drug Match option uses both the NDC and FSN/NSN tools described previously to offer a connection for a single selection from the DRUG file.  If a link to an ITEM MASTER file entry already exists, it is displayed to the user and they may edit the connection in the DRUG file. Using the ITEM NUMBER multiple pointer (#50.0441) in the DRUG file, the user can also do look-ups to the ITEM MASTER file via available x-refs (NSN (BA), SHORT DESCRIPTION (C), VENDOR STOCK # (D), or NDC (F)) in order to select additional connections.
+ The Report of Unlinked DRUG/ITEM File Entries lists active drugs from the DRUG file which do not yet have any entries in the ITEM NUMBER multiple (#50.0441).  The Connect Unlinked DRUG/ITEM file Entries option loops through these unlinked entries and offers all the tools described in the Single Drug Match option to perform the links.
+ The Active, Unlinked Drugs in the ITEM File option allows the user to select a purchase date from which to consider an ITEM MASTER file drug active. It then loops through the ITEM MASTER file and when an entry&quot;s FSC (#2) = 6505 (Federal Supply Classification for drugs), is not an INACTIVATED ITEM? (#16), is not linked to a drug(&quot;$O(^PSDRUG,&quot;AB&quot;,ITEM,&quot;&quot;)), has an entry in the FCP (#1) multiple, and has within at least one FCP entry, an entry in the PURCHASE ORDER (#1) multiple, the P.O. DATE(s) (#442,#.1) are checked against the user selected purchase date.  For entries that pass this criteria, the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05), NSN (#5), LAST VENDOR ORDERED (#9), NDC (#6,#4) (for the LAST VENDOR ORDERED), and the DESCRIPTION (#.1) are displayed.
+ The Display Connected Drug option allows the user to print both a vendor catalog for a selected item as well as a procurement history.  The user selects an entry from the DRUG file.  If it is connected to more than one entry in the ITEM MASTER file the user is asked to select one of the connected entries from the ITEM NUMBER multiple (#50.0441).  From the ITEM MASTER file, the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05),and NSN are displayed. If the selected ITEM MASTER file entry has only one VENDOR (#6) or has a MANDATORY SOURCE (#10), then that vendor is displayed along with the VENDOR STOCK # (#3), NDC (#4), PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), MINIMUM ORDER (#8), DATE OF UNIT PRICE (#2.5), and REQUIRED ORDER MULTIPLE (#9).  If there is more than one vendor for the item, the LAST VENDOR ORDERED (#9) is displayed as well as each available vendor sorted by DATE OF UNIT PRICE (#2.5), beginning with the most recent date.  For each vendor the PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), DATE OF UNIT PRICE(#2.5), and whether or not the vendor has a current contract is listed.  The contract verification is made by looping through the CONTRACT NUMBER multiple (#6) in the VENDOR file (#440) and checking the EXPIRATION DATE (#1).  If there is an entry in the FCP (#1) multiple for the selected item and any of the FCP entries have an entry in their PURCHASE ORDER (#1) multiple, the user is offered a procurement history.  They can enter a date from which they wish to view the history.  They must also select an FCP.  For each purchase order that passes the criteria, the PURCHASE ORDER NUMBER (#.01), VENDOR (#5), P.O. DATE (#.1), QUANTITY (#40,#2) (LINE ITEM NUMBER located using the &quot;AE&quot; x-ref in the ITEM (#40) multiple), UNIT OF PURCHASE (#3), TOTAL COST(#15), and QUANTITY PREVIOUSLY RECEIVED (#11) are displayed. Average ordered/month, total ordered, and total cost are also listed. If the MANDATORY SOURCE (#10) for the selected item is flagged in the VENDOR file (#440) with an &quot;S&quot; in the SUPPLY WHSE. INDICATOR (#.05), then the user is informed that the Supply Warehouse is the mandatory source.  Using the &quot;AD&quot; x-ref in the INVENTORY TRANSACTION file (#445.2) a check is made for any distribution by the warehouse of this item.  If procurement history exists, the user is informed and allowed to enter a date from which to view the history.  By looping through the &quot;AD&quot; x-ref in #445.2 and checking the TRANSACTION ID (#1)?1&quot;R&quot;.N and the DATE POSTED (#2.5) is not less than the user entered date, a history is displayed.  From the INVENTORY TRANSACTION file (#445.2), the DATE POSTED (#2.5), TRANSACTION/P.O. NUMBER (#410), -QUANTITY (#6), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), and OTHER INVENTORY POINT AFFECTED (#14) are displayed.
+ The Unposted Procurement History and Posted Drug Procurement History options are an effort to restore some of the drug accountability lost with the disappearance of the LOG 036 report.  For the Unposted Procurement History, the user is asked to select a month to review.  A loop through the PROCUREMENT &amp; ACCOUNTING TRANSACTION file (#442), using the P.O. DATE (&quot;AB&quot;) x-ref collects PO&quot;s for the user selected month.  If the COST CENTER (#2) = 822400 (Pharmacy) and the SUPPLY STATUS (#.5)&gt;14 &amp; &lt;45 (basically ordered), the PO&quot;s are sorted into ^TMP by Station/FCP.  For each Station/FCP the PO&quot;s are listed, displaying PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP(#1), VENDOR (#5), and TOTAL AMOUNT (#91).  While looping through these PO&quot;s another ^TMP is created, sorted by the DESCRIPTION (#1) of each ITEM (#40) on each PO. The user is asked if they would like to print item totals.  If so, an alphabetical listing occurs displaying each ITEM&quot;s (#40) DESCRIPTION (#1) and REPETITIVE (PR CARD) NO. (#1.5) and each PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP (#1), QUANTITY (#40,#2), ACTUAL UNIT COST (#40,#5), and TOTAL COST (#40,#15).  Finally, the user is if they would like a list of high dollar items.  They are invited to enter a cut-off dollar amount and each item exceeding that amount is listed beginning with the highest total cost.  The total cost was determined by totaling the TOTAL COST (#40,#15) amounts for each item listed in the previous display and building a ^TMP to sort from high to low.  Each ITEM&quot;s (#40) DESCRIPTION (#1), total TOTAL COST (#15), and Station/FCP is shown.
+ The Posted Drug Procurement History option uses the TYPE OF INVENTORY POINT (&quot;AC&quot;) x-ref in the GENERIC INVENTORY file (#445) to locate a &quot;W&quot; or the warehouse inventory.  A loop through the INVENTORY ITEM (#1) multiple, using the ITEM NO. (#.01) to check in the ITEM MASTER (#441) file for a FSC (#2) = 6505 (Federal Supply Classification for drugs) isolates the warehouse drugs in ^TMP.  Looping through ^TMP a check is made using the INVENTORY POINT (&quot;AD&quot;) x-ref in the INVENTORY TRANSACTION (#445.2) file to isolate items that have had distribution (TRANSACTION ID (#1)?&quot;R&quot;.N) and fall within the user selected month (DATE POSTED (#2.5)).  These transactions are sorted by the OTHER INVENTORY POINT AFFECTED (#14) and the OTHER INVENTORY POINT AFFECTED (#14) , -QUANTITY (#6), QUANTITY (#410,#10,#2) obtained by using the TRANSACTION /P.O. NUMBER (#445.2,#410), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), total cost (-QUANTITY (#6) * SELLING UNIT PRICE (#8)), DATE POSTED (#2.5), and TRANSACTION/P.O. NUMBER (#410).  Similar to the Unposted Procurement History, a high dollar sort is also offered.
+ As stated in the opening paragraph, the Connection Menu lays the groundwork for an interface with the IFCAP Generic Inventory Package.  Phase two of this process is contained in a Pharmacy Location Menu.  With this menu the Pharmacy user will create and edit the parameters of a Drug Accountability location such as Inpatient, Outpatient, or a Combined (IP/OP) operation.  The purpose of the interface is to allow the receiving that occurs in the Inventory Package to pass the converted dispensing unit quantity of a connected drug (ITEM/DRUG file) from a Generic Inventory point (#445) to a Drug Accountability location (#58.8).  To establish a direct link between these two files, a PRIMARY INVENTORY POINT field exists in the DRUG ACCOUNTABILITY STATS file (#58.8).  This field points to the GENERIC INVENTORY file (#445) uses the TYPE OF INVENTORY POINT (#.7) = &quot;P&quot; and COST CENTER (#.9) = 822400 (Pharmacy) fields as screens.  The input transform also contains a call to ^PSAUTL where the &quot;E&quot; x-ref in #58.8 is checked to prevent the linking of one primary inventory point to more than one DA location.  The Set up/edit a Pharmacy Location option allows the user to edit this link.  If a DA location (#58.8)is linked to an Inventory point (#445), the INVENTORY ITEMS (#1) are checked both against the &quot;AB&quot; x-ref in the DRUG (#50) file and the &quot;C&quot; x-ref in the DA (#58.8) file to see if all Inventory items are tracked in DA.  If not the user is given the ability (^DIE) to add Inventory items to the DA location.  The Display Location option shows the PRIMARY INVENTORY POINT (#11) currently linked to the selected DA location.
+ The Inventory Interface sub-menu contains three report options and a populate option.  The Report of Inventory items&quot; link to DRUG file displays from a selected GENERIC INVENTORY point (#445), selection screened by COST CENTER (#.9) = 822400 and TYPE OF INVENTORY POINT (#.7) = &quot;P&quot;, the ITEM NO. (#445,#1,#.01), either the DESCRIPTION (#.7) or from the ITEM MASTER file (#441), the SHORT DESCRIPTION (#.05)and if connected the DRUG (#50) name.  The Loadable Inventory Items Report operates exactly the same, however, only lists connected items.  The Populate Pharmacy Location with Inventory items option uses the same criteria and if a connected drug within an inventory point does not yet exist in the DRUG (#10) multiple in the selected DA location (#58.8), a ^DIE stuff occurs with a list of drugs loaded displayed at a user selected device.  The Display Drugs Not Loaded in Primary option loops through the DRUG (#10) multiple in a selected DA location (#58.8) and using the &quot;AB&quot; x-ref in the DRUG (#50) file, checks the &quot;AE&quot; x-ref in the GENERIC INVENTORY (#445) file for the existance of each drug in the linked Primary Inventory Point. Those drugs not found in the Inventory point are displayed along with their ITEM MASTER (#441) file NUMBER (#.01) and SHORT DESCRIPTION (#.05).
+
+ CONDENSED DATA DICTIONARY---DRUG FILE (#50)    VERSION:  6
+ STORED IN: ^PSDRUG(                                       01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: ITEM NUMBER(AB)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .001      NUMBER (NJ5,0), [ ] .01       GENERIC NAME (RF), [0;1] 6         FSN (F), [0;6] 12        ORDER UNIT (P51.5&quot;), [660;2] 13        PRICE PER ORDER UNIT (NJ7,2), [660;3] 14.5      DISPENSE UNIT (F), [660;8] 15        DISPENSE UNITS PER ORDER UNIT (NJ4,0), [660;5] 16        PRICE PER DISPENSE UNIT (NJ6,2), [660;6] 17        SOURCE OF SUPPLY (F), [660;7] 31        NDC (FX), [2;4] 100       INACTIVE DATE (D), [I;1] 441       IFCAP ITEM NUMBER (Multiple-50.0441), [441;0] .01  ITEM NUMBER (M*P441&quot;X), [0;1]
+ CONDENSED DATA DICTIONARY---ITEM MASTER FILE (#441)UCI: LTL,VAA
+ STORED IN: ^PRC(441,                                      01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: SHORT DESCRIPTION(AC)  INACTIVATED ITEM?(AD) NUMBER(B)  NSN(BA)  NSN(BB)  SHORT DESCRIPTION(C) VENDOR STOCK #(D)  NDC(F)  NSN(G)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       NUMBER (RNJ6,0X), [0;1] .05       SHORT DESCRIPTION (RFX), [0;2] .1 DESCRIPTION (Multiple-441.02), [1;0] .01  DESCRIPTION (W), [0;1] 1         FCP (Multiple-441.03), [4;0] .01  FCP (RFX), [0;1] 1    PURCHASE ORDER (Multiple-441.04), [1;0] .01  PURCHASE ORDER (P442&quot;X), [0;1] 3    PREFERRED VENDOR (*P440&quot;), [0;3] 2         FSC (RP441.2&quot;), [0;3] 5         NSN (FX), [0;5] 6         VENDOR (Multiple-441.01), [2;0] .01  VENDOR (MP440X), [0;1] 1    UNIT COST (RNJ10,3), [0;2] 1.5  UNIT OF PURCHASE (RP420.5&quot;), [0;7] 1.6  PACKAGING MULTIPLE (RNJ6,0), [0;8] 2    CONTRACT (NJ6,0XO), [0;3] 2.2  CONTRACT EXP. DATE (CJ8), [ ; ] 2.5  DATE OF UNIT PRICE (RD), [0;6] 3    VENDOR STOCK # (FX), [0;4] 4    NDC (FX), [0;5] 8    MINIMUM ORDER (NJ6,0), [0;12] 9    REQUIRED ORDER MULTIPLE (NJ6,0), [0;11] 9         LAST VENDOR ORDERED (P440&quot;), [0;4] 10        MANDATORY SOURCE (*P440&quot;), [0;8] 14 DATE ITEM CREATED (D), [0;9] 15        CREATED BY (P3&quot;), [0;11] 16 INACTIVATED ITEM? (S), [3;1]
+ CONDENSED DATA DICTIONARY---VENDOR FILE (#440) UCI: LTL,VAA
+ STORED IN: ^PRC(440,                                      01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: SUPPLY WHSE. INDICATOR(AC)  NAME(AD)  INACTIVATED VENDOR(AE) NAME(B)  SYNONYM(C)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .001      NUMBER (NJ6,0), [ ] .01       NAME (RFX), [0;1] .05       SUPPLY WHSE. INDICATOR (SX), [0;11] 6         CONTRACT NUMBER (Multiple-440.03), [4;0] .01  CONTRACT NUMBER (MFX), [0;1] 1    EXPIRATION DATE (RD), [0;2]
+ CONDENSED DATA DICTIONARY---NEW PERSON FILE (#200)  VERSION:  6.5
+ STORED IN: ^VA(200,                                       01/27/93 --------------------------------------------------------------------------
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       NAME (RFX), [0;1] .132      OFFICE PHONE (F), [.13;2]
+ CONDENSED DATA DICTIONARY---PROCUREMENT &amp; ACCOUNTING TRANSACTIONS FILE (#442)
+ STORED IN: ^PRC(442,                                      01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: P.O. DATE(AB)  FCP(AC)  ISSUE VOUCHER NO.(SUPPLY)(AD)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       PURCHASE ORDER NUMBER (RFX), [0;1] .1        P.O. DATE (RDX), [1;15] .5        SUPPLY STATUS (*P442.3&quot;), [7;1] 1         FCP (RFX), [0;3] 2 COST CENTER (FX), [0;5] 5         VENDOR (R*P440X), [1;1] 40        ITEM (Multiple-442.01), [2;0] .01  LINE ITEM NUMBER (RMNJ2,0X), [0;1] 1    DESCRIPTION (Multiple-442.05), [1;0] .01  DESCRIPTION (W), [0;1] 1.5  REPETITIVE (PR CARD) NO. (*P441&quot;X), [0;5] 2    QUANTITY (RNJ9,2), [0;2] 3    UNIT OF PURCHASE (RP420.5&quot;X), [0;3] 5    ACTUAL UNIT COST (RNJ9,2X), [0;9] 11   QUANTITY PREVIOUSLY RECEIVED (NJ9,2), [2;8] 15   TOTAL COST (RNJ9,2), [2;1] 91        TOTAL AMOUNT (RNJ10,2), [0;15]
+ CONDENSED DATA DICTIONARY---INVENTORY TRANSACTION FILE (#445.2)
+ STORED IN: ^PRCP(445.2,                                   01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DATE POSTED(ABEG)  ITEM NO.(AC)  INVENTORY POINT(AD) ITEM NO.(AE)  INVENTORY POINT(ANXT)  INVENTORY POINT(B) TRANSACTION/P.O. NUMBER(C)  TRANSACTION ID(T)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       INVENTORY POINT (RP445&quot;), [0;1] 1         TRANSACTION ID (RF), [0;2] 2.5       DATE POSTED (D), [0;17] 5         PACKAGING UNIT (F), [0;6] 6 QUANTITY (NJ6,0), [0;7] 8         SELLING UNIT PRICE (NJ11,3), [0;9] 14 OTHER INVENTORY POINT AFFECTED (P445&quot;), [0;18] 410       TRANSACTION/P.O. NUMBER (F), [0;19]
+ CONDENSED DATA DICTIONARY---GENERIC INVENTORY FILE (#445)
+ STORED IN: ^PRCP(445,                                     01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DISTRIBUTION POINT(AB)  TYPE OF INVENTORY POINT(AC) INVENTORY USER(AD)  ITEM NO.(AE)  ABBREVIATED NAME(AF) KEEP PERPETUAL INVENTORY?(AG)  INVENTORY POINT(B) INVENTORY POINT(C)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       INVENTORY POINT (RFX), [0;1] .7        TYPE OF INVENTORY POINT (R*SX), [0;3] .9        COST CENTER (P420.1&quot;), [0;7] 1         INVENTORY ITEM (Multiple-445.01), [1;0] .01  ITEM NO. (MP441&quot;X), [0;1]
+ CONDENSED DATA DICTIONARY---DRUG ACCOUNTABILITY STATS FILE (#58.8)
+ STORED IN: ^PSD(58.8,                                     01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DRUG(C) PRIMARY INVENTORY POINT(E)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001), [1;0] .01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT (*P445&quot;X), [0;6]
+ This DBIA is effective until 18 months following Drug Accountability V2.0.
+" href="ICR-214.html">DBIA214</a></td>
+<td>Other</td>
+<td><a href="https://code.osehra.org/dox/Package_IFCAP.html">IFCAP</a></td>
+<td>1993/02/22</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td><br>The following is entered as DBIA until the next version<br>of DA:
+<br>All components indentified in this integration request involve reading<br>from IFCAP files.  Drug Accountability does not write to any IFCAP files.<br>Looking toward an interface with the IFCAP Generic Inventory Package, Drug<br>Accountability (PSA) begins the process with a Connection Menu.  The PSAINIT<br>creates in the DRUG file (#50) a multiple (#50.0441) pointing to the IFCAP<br>ITEM MASTER file (#441), enabling a direct link between the DRUG file (#50)<br>and the ITEM MASTER file (#441).
+<br>The first connecting tool provided in the Connection Menu is a sub- menu<br>using the National Drug Code (NDC) to attempt matching entries.  In the ITEM<br>MASTER file (#441), the NDC field (#4) is located in the VENDOR multiple (#6).<br>This field has an input transform that prevents a user from using the same NDC<br>for more than one ITEM MASTER file entry.  In studying an ITEM MASTER file<br>from a local site, it was discovered that there were several entries in their<br>ITEM MASTER file that did possess the same NDC.  Since this situation might<br>lead a connector to link a drug to a potentially less active item, the first<br>option in the NDC Menu is the NDC Duplicates Report (ITEM file).  This report<br>loops through the NDC (&quot;F&quot;) x-ref in #441.  If more than one item contains the<br>same NDC and is not inactive (field #16, &quot;$G(^PRC(441,D0,3))), the duplicates<br>are listed.  The report displays the NDC that has more than one item attached<br>to it, the item numbers attached, their SHORT DESCRIPTION (#.05), and the<br>VENDOR (#6) =&gt; VENDOR file (#440,#1) that contains the duplicated NDC.
+<br>The second item on the NDC Menu is the Report Potential NDC Matches<br>option.  This report loops through the active, unlinked (to #441) entries in<br>the DRUG file (#50) that have an NDC.  If a corresponding NDC is found in the<br>&quot;F&quot; x-ref in the ITEM MASTER file (#441), the NDC and drug name are listed<br>from the DRUG file (#50) and the ITEM NUMBER (#.01) and DESCRIPTION (#.1)<br>listed from the ITEM MASTER file (#441).  Using the ITEM NUMBER (&quot;AB&quot;) x-ref<br>in the DRUG file (#50), a check is made to see if the matched ITEM MASTER file<br>entry is already linked to another DRUG file entry.  If so the user is<br>informed of the existing connection.
+<br>Using this same loop and display criteria, the Controlled Connection by<br>NDC Match allows the user the opportunity to actually link matched entries.<br>If the user approves the displayed match, a ^DIE stuff of the item number into<br>the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated<br>DRUG/ITEM file link by NDC option uses the same loop and display criteria and<br>the ^DIE stuff for all matches in the loop.
+<br>In the event that the user requires more information about a selected drug<br>from either the DRUG file or the ITEM MASTER file before linking, the<br>Inquire/Compare DRUG file/ITEM file option is available.  This option uses a<br>FM inquire with a no-link pointer jump from the DRUG file to the ITEM MASTER<br>file via the NDC &quot;F&quot; x-ref in #441.  The user selects the drug from the DRUG<br>file and along with corresponding info from the DRUG file the DESCRIPTION<br>(#.1), NSN (#5), NDC (VENDOR (#6),#4) by which the jump occurred, and from<br>that same VENDOR multiple the UNIT COST (#1), UNIT OF PURCHASE (#1.5), DATE OF<br>UNIT PRICE (#2.5), PACKAGING MULTIPLE (#1.6), calculated unit cost = UNIT COST<br>(#1)/DISPENSE UNITS PER ORDER UNIT from the DRUG file, VENDOR (#.01), CREATED<br>BY (#15), and with a jump to #200 their OFFICE PHONE NUMBER.  Using this same<br>jump, the DRUG file/ITEM file Comparison Report displays the same data with<br>the user selecting a range of drugs from the DRUG file.
+<br>The FSN Menu functions similar to the NDC Menu.  The Report Potential FSN<br>Matches option loops through the active, unlinked (to #441) entries in the<br>DRUG file that have an FSN.  If a corresponding NSN is found in the &quot;BA&quot; x-ref<br>in the ITEM MASTER file, the FSN and drug name are listed from the DRUG file<br>and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER<br>file.  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file, a check is made to<br>see if the matched ITEM MASTER file entry is already linked to another DRUG<br>file entry.  If so the user is informed of the existing connection.
+<br>Using this same loop and display criteria the Controlled Connection by<br>FSN Match option allows the user to actually link matched entries.  If the<br>user approves the displayed match, a ^DIE stuff of the item number into the<br>item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated<br>DRUG/ITEM File Link by FSN option uses the same loop and display criteria and<br>the ^DIE stuff for all matches in the loop.
+<br>The Single Drug Match option uses both the NDC and FSN/NSN tools<br>described previously to offer a connection for a single selection from the<br>DRUG file.  If a link to an ITEM MASTER file entry already exists, it is<br>displayed to the user and they may edit the connection in the DRUG file.<br>Using the ITEM NUMBER multiple pointer (#50.0441) in the DRUG file, the user<br>can also do look-ups to the ITEM MASTER file via available x-refs (NSN (BA),<br>SHORT DESCRIPTION (C), VENDOR STOCK # (D), or NDC (F)) in order to select<br>additional connections.
+<br>The Report of Unlinked DRUG/ITEM File Entries lists active drugs from the<br>DRUG file which do not yet have any entries in the ITEM NUMBER multiple<br>(#50.0441).  The Connect Unlinked DRUG/ITEM file Entries option loops through<br>these unlinked entries and offers all the tools described in the Single Drug<br>Match option to perform the links.
+<br>The Active, Unlinked Drugs in the ITEM File option allows the user to<br>select a purchase date from which to consider an ITEM MASTER file drug active.<br>It then loops through the ITEM MASTER file and when an entry&quot;s FSC (#2) = 6505<br>(Federal Supply Classification for drugs), is not an INACTIVATED ITEM? (#16),<br>is not linked to a drug(&quot;$O(^PSDRUG,&quot;AB&quot;,ITEM,&quot;&quot;)), has an entry in the FCP<br>(#1) multiple, and has within at least one FCP entry, an entry in the PURCHASE<br>ORDER (#1) multiple, the P.O. DATE(s) (#442,#.1) are checked against the user<br>selected purchase date.  For entries that pass this criteria, the ITEM NUMBER<br>(#.01), SHORT DESCRIPTION (#.05), NSN (#5), LAST VENDOR ORDERED (#9), NDC<br>(#6,#4) (for the LAST VENDOR ORDERED), and the DESCRIPTION (#.1) are<br>displayed.
+<br>The Display Connected Drug option allows the user to print both a vendor<br>catalog for a selected item as well as a procurement history.  The user<br>selects an entry from the DRUG file.  If it is connected to more than one<br>entry in the ITEM MASTER file the user is asked to select one of the connected<br>entries from the ITEM NUMBER multiple (#50.0441).  From the ITEM MASTER file,<br>the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05),and NSN are displayed. If the<br>selected ITEM MASTER file entry has only one VENDOR (#6) or has a MANDATORY<br>SOURCE (#10), then that vendor is displayed along with the VENDOR STOCK #<br>(#3), NDC (#4), PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST<br>(#1), MINIMUM ORDER (#8), DATE OF UNIT PRICE (#2.5), and REQUIRED ORDER<br>MULTIPLE (#9).  If there is more than one vendor for the item, the LAST VENDOR<br>ORDERED (#9) is displayed as well as each available vendor sorted by DATE OF<br>UNIT PRICE (#2.5), beginning with the most recent date.  For each vendor the<br>PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), DATE OF<br>UNIT PRICE(#2.5), and whether or not the vendor has a current contract is<br>listed.  The contract verification is made by looping through the CONTRACT<br>NUMBER multiple (#6) in the VENDOR file (#440) and checking the EXPIRATION<br>DATE (#1).  If there is an entry in the FCP (#1) multiple for the selected<br>item and any of the FCP entries have an entry in their PURCHASE ORDER (#1)<br>multiple, the user is offered a procurement history.  They can enter a date<br>from which they wish to view the history.  They must also select an FCP.  For<br>each purchase order that passes the criteria, the PURCHASE ORDER NUMBER<br>(#.01), VENDOR (#5), P.O. DATE (#.1), QUANTITY (#40,#2) (LINE ITEM NUMBER<br>located using the &quot;AE&quot; x-ref in the ITEM (#40) multiple), UNIT OF PURCHASE<br>(#3), TOTAL COST(#15), and QUANTITY PREVIOUSLY RECEIVED (#11) are displayed.<br>Average ordered/month, total ordered, and total cost are also listed.<br>If the MANDATORY SOURCE (#10) for the selected item is flagged in the<br>VENDOR file (#440) with an &quot;S&quot; in the SUPPLY WHSE. INDICATOR (#.05), then the<br>user is informed that the Supply Warehouse is the mandatory source.  Using the<br>&quot;AD&quot; x-ref in the INVENTORY TRANSACTION file (#445.2) a check is made for any<br>distribution by the warehouse of this item.  If procurement history exists,<br>the user is informed and allowed to enter a date from which to view the<br>history.  By looping through the &quot;AD&quot; x-ref in #445.2 and checking the<br>TRANSACTION ID (#1)?1&quot;R&quot;.N and the DATE POSTED (#2.5) is not less than the<br>user entered date, a history is displayed.  From the INVENTORY TRANSACTION<br>file (#445.2), the DATE POSTED (#2.5), TRANSACTION/P.O. NUMBER (#410),<br>-QUANTITY (#6), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), and OTHER<br>INVENTORY POINT AFFECTED (#14) are displayed.
+<br>The Unposted Procurement History and Posted Drug Procurement History<br>options are an effort to restore some of the drug accountability lost with the<br>disappearance of the LOG 036 report.  For the Unposted Procurement History,<br>the user is asked to select a month to review.  A loop through the PROCUREMENT<br>&amp; ACCOUNTING TRANSACTION file (#442), using the P.O. DATE (&quot;AB&quot;) x-ref<br>collects PO&quot;s for the user selected month.  If the COST CENTER (#2) = 822400<br>(Pharmacy) and the SUPPLY STATUS (#.5)&gt;14 &amp; &lt;45 (basically ordered), the PO&quot;s<br>are sorted into ^TMP by Station/FCP.  For each Station/FCP the PO&quot;s are<br>listed, displaying PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP(#1),<br>VENDOR (#5), and TOTAL AMOUNT (#91).  While looping through these PO&quot;s another<br>^TMP is created, sorted by the DESCRIPTION (#1) of each ITEM (#40) on each PO.<br>The user is asked if they would like to print item totals.  If so, an<br>alphabetical listing occurs displaying each ITEM&quot;s (#40) DESCRIPTION (#1) and<br>REPETITIVE (PR CARD) NO. (#1.5) and each PURCHASE ORDER NUMBER (#.01), P.O.<br>DATE (#.1), FCP (#1), QUANTITY (#40,#2), ACTUAL UNIT COST (#40,#5), and TOTAL<br>COST (#40,#15).  Finally, the user is if they would like a list of high dollar<br>items.  They are invited to enter a cut-off dollar amount and each item<br>exceeding that amount is listed beginning with the highest total cost.  The<br>total cost was determined by totaling the TOTAL COST (#40,#15) amounts for<br>each item listed in the previous display and building a ^TMP to sort from high<br>to low.  Each ITEM&quot;s (#40) DESCRIPTION (#1), total TOTAL COST (#15), and<br>Station/FCP is shown.
+<br>The Posted Drug Procurement History option uses the TYPE OF INVENTORY<br>POINT (&quot;AC&quot;) x-ref in the GENERIC INVENTORY file (#445) to locate a &quot;W&quot; or the<br>warehouse inventory.  A loop through the INVENTORY ITEM (#1) multiple, using<br>the ITEM NO. (#.01) to check in the ITEM MASTER (#441) file for a FSC (#2) =<br>6505 (Federal Supply Classification for drugs) isolates the warehouse drugs in<br>^TMP.  Looping through ^TMP a check is made using the INVENTORY POINT (&quot;AD&quot;)<br>x-ref in the INVENTORY TRANSACTION (#445.2) file to isolate items that have<br>had distribution (TRANSACTION ID (#1)?&quot;R&quot;.N) and fall within the user selected<br>month (DATE POSTED (#2.5)).  These transactions are sorted by the OTHER<br>INVENTORY POINT AFFECTED (#14) and the OTHER INVENTORY POINT AFFECTED (#14) ,<br>-QUANTITY (#6), QUANTITY (#410,#10,#2) obtained by using the TRANSACTION /P.O.<br>NUMBER (#445.2,#410), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), total cost<br>(-QUANTITY (#6) * SELLING UNIT PRICE (#8)), DATE POSTED (#2.5), and<br>TRANSACTION/P.O. NUMBER (#410).  Similar to the Unposted Procurement History,<br>a high dollar sort is also offered.
+<br>As stated in the opening paragraph, the Connection Menu lays the<br>groundwork for an interface with the IFCAP Generic Inventory Package.  Phase<br>two of this process is contained in a Pharmacy Location Menu.  With this menu<br>the Pharmacy user will create and edit the parameters of a Drug Accountability<br>location such as Inpatient, Outpatient, or a Combined (IP/OP) operation.  The<br>purpose of the interface is to allow the receiving that occurs in the<br>Inventory Package to pass the converted dispensing unit quantity of a<br>connected drug (ITEM/DRUG file) from a Generic Inventory point (#445) to a<br>Drug Accountability location (#58.8).  To establish a direct link between<br>these two files, a PRIMARY INVENTORY POINT field exists in the DRUG<br>ACCOUNTABILITY STATS file (#58.8).  This field points to the GENERIC INVENTORY<br>file (#445) uses the TYPE OF INVENTORY POINT (#.7) = &quot;P&quot; and COST CENTER (#.9)<br>= 822400 (Pharmacy) fields as screens.  The input transform also contains a<br>call to ^PSAUTL where the &quot;E&quot; x-ref in #58.8 is checked to prevent the linking<br>of one primary inventory point to more than one DA location.  The Set up/edit<br>a Pharmacy Location option allows the user to edit this link.  If a DA<br>location (#58.8)is linked to an Inventory point (#445), the INVENTORY ITEMS<br>(#1) are checked both against the &quot;AB&quot; x-ref in the DRUG (#50) file and the<br>&quot;C&quot; x-ref in the DA (#58.8) file to see if all Inventory items are tracked in<br>DA.  If not the user is given the ability (^DIE) to add Inventory items to the<br>DA location.  The Display Location option shows the PRIMARY INVENTORY POINT<br>(#11) currently linked to the selected DA location.
+<br>The Inventory Interface sub-menu contains three report options and a<br>populate option.  The Report of Inventory items&quot; link to DRUG file displays<br>from a selected GENERIC INVENTORY point (#445), selection screened by COST<br>CENTER (#.9) = 822400 and TYPE OF INVENTORY POINT (#.7) = &quot;P&quot;, the ITEM NO.<br>(#445,#1,#.01), either the DESCRIPTION (#.7) or from the ITEM MASTER file<br>(#441), the SHORT DESCRIPTION (#.05)and if connected the DRUG (#50) name.  The<br>Loadable Inventory Items Report operates exactly the same, however, only lists<br>connected items.  The Populate Pharmacy Location with Inventory items option<br>uses the same criteria and if a connected drug within an inventory point does<br>not yet exist in the DRUG (#10) multiple in the selected DA location (#58.8),<br>a ^DIE stuff occurs with a list of drugs loaded displayed at a user selected<br>device.  The Display Drugs Not Loaded in Primary option loops through the DRUG<br>(#10) multiple in a selected DA location (#58.8) and using the &quot;AB&quot; x-ref in<br>the DRUG (#50) file, checks the &quot;AE&quot; x-ref in the GENERIC INVENTORY (#445)<br>file for the existance of each drug in the linked Primary Inventory Point.<br>Those drugs not found in the Inventory point are displayed along with their<br>ITEM MASTER (#441) file NUMBER (#.01) and SHORT DESCRIPTION (#.05).
+
+<br>CONDENSED DATA DICTIONARY---DRUG FILE (#50)    VERSION:  6
+<br>STORED IN: ^PSDRUG(                                       01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>ITEM NUMBER(AB)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.001      NUMBER (NJ5,0), [ ] .01       GENERIC NAME (RF), [0;1] 6         FSN<br>(F), [0;6] 12        ORDER UNIT (P51.5&quot;), [660;2] 13        PRICE PER ORDER<br>UNIT (NJ7,2), [660;3] 14.5      DISPENSE UNIT (F), [660;8] 15        DISPENSE<br>UNITS PER ORDER UNIT (NJ4,0), [660;5] 16        PRICE PER DISPENSE UNIT<br>(NJ6,2), [660;6] 17        SOURCE OF SUPPLY (F), [660;7] 31        NDC (FX),<br>[2;4] 100       INACTIVE DATE (D), [I;1] 441       IFCAP ITEM NUMBER<br>(Multiple-50.0441), [441;0]<br>.01  ITEM NUMBER (M*P441&quot;X), [0;1]
+<br>CONDENSED DATA DICTIONARY---ITEM MASTER FILE (#441)UCI: LTL,VAA
+<br>STORED IN: ^PRC(441,                                      01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>SHORT DESCRIPTION(AC)  INACTIVATED ITEM?(AD)<br>NUMBER(B)  NSN(BA)  NSN(BB)  SHORT DESCRIPTION(C)<br>VENDOR STOCK #(D)  NDC(F)  NSN(G)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       NUMBER (RNJ6,0X), [0;1] .05       SHORT DESCRIPTION (RFX), [0;2] .1<br>DESCRIPTION (Multiple-441.02), [1;0]<br>.01  DESCRIPTION (W), [0;1] 1         FCP (Multiple-441.03), [4;0]<br>.01  FCP (RFX), [0;1]<br>1    PURCHASE ORDER (Multiple-441.04), [1;0]<br>.01  PURCHASE ORDER (P442&quot;X), [0;1]<br>3    PREFERRED VENDOR (*P440&quot;), [0;3] 2         FSC (RP441.2&quot;),<br>[0;3] 5         NSN (FX), [0;5] 6         VENDOR (Multiple-441.01), [2;0]<br>.01  VENDOR (MP440X), [0;1]<br>1    UNIT COST (RNJ10,3), [0;2]<br>1.5  UNIT OF PURCHASE (RP420.5&quot;), [0;7]<br>1.6  PACKAGING MULTIPLE (RNJ6,0), [0;8]<br>2    CONTRACT (NJ6,0XO), [0;3]<br>2.2  CONTRACT EXP. DATE (CJ8), [ ; ]<br>2.5  DATE OF UNIT PRICE (RD), [0;6]<br>3    VENDOR STOCK # (FX), [0;4]<br>4    NDC (FX), [0;5]<br>8    MINIMUM ORDER (NJ6,0), [0;12]<br>9    REQUIRED ORDER MULTIPLE (NJ6,0), [0;11] 9         LAST VENDOR<br>ORDERED (P440&quot;), [0;4] 10        MANDATORY SOURCE (*P440&quot;), [0;8] 14<br>DATE ITEM CREATED (D), [0;9] 15        CREATED BY (P3&quot;), [0;11] 16<br>INACTIVATED ITEM? (S), [3;1]
+<br>CONDENSED DATA DICTIONARY---VENDOR FILE (#440) UCI: LTL,VAA
+<br>STORED IN: ^PRC(440,                                      01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>SUPPLY WHSE. INDICATOR(AC)  NAME(AD)  INACTIVATED VENDOR(AE)<br>NAME(B)  SYNONYM(C)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.001      NUMBER (NJ6,0), [ ] .01       NAME (RFX), [0;1] .05       SUPPLY<br>WHSE. INDICATOR (SX), [0;11] 6         CONTRACT NUMBER (Multiple-440.03),<br>[4;0]<br>.01  CONTRACT NUMBER (MFX), [0;1]<br>1    EXPIRATION DATE (RD), [0;2]
+<br>CONDENSED DATA DICTIONARY---NEW PERSON FILE (#200)  VERSION:  6.5
+<br>STORED IN: ^VA(200,                                       01/27/93<br>--------------------------------------------------------------------------
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       NAME (RFX), [0;1] .132      OFFICE PHONE (F), [.13;2]
+<br>CONDENSED DATA DICTIONARY---PROCUREMENT &amp; ACCOUNTING TRANSACTIONS FILE (#442)
+<br>STORED IN: ^PRC(442,                                      01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>P.O. DATE(AB)  FCP(AC)  ISSUE VOUCHER NO.(SUPPLY)(AD)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       PURCHASE ORDER NUMBER (RFX), [0;1] .1        P.O. DATE (RDX), [1;15]<br>.5        SUPPLY STATUS (*P442.3&quot;), [7;1] 1         FCP (RFX), [0;3] 2<br>COST CENTER (FX), [0;5] 5         VENDOR (R*P440X), [1;1] 40        ITEM<br>(Multiple-442.01), [2;0]<br>.01  LINE ITEM NUMBER (RMNJ2,0X), [0;1]<br>1    DESCRIPTION (Multiple-442.05), [1;0]<br>.01  DESCRIPTION (W), [0;1]<br>1.5  REPETITIVE (PR CARD) NO. (*P441&quot;X), [0;5]<br>2    QUANTITY (RNJ9,2), [0;2]<br>3    UNIT OF PURCHASE (RP420.5&quot;X), [0;3]<br>5    ACTUAL UNIT COST (RNJ9,2X), [0;9]<br>11   QUANTITY PREVIOUSLY RECEIVED (NJ9,2), [2;8]<br>15   TOTAL COST (RNJ9,2), [2;1] 91        TOTAL AMOUNT (RNJ10,2),<br>[0;15]
+<br>CONDENSED DATA DICTIONARY---INVENTORY TRANSACTION FILE (#445.2)
+<br>STORED IN: ^PRCP(445.2,                                   01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DATE POSTED(ABEG)  ITEM NO.(AC)  INVENTORY POINT(AD)<br>ITEM NO.(AE)  INVENTORY POINT(ANXT)  INVENTORY POINT(B)<br>TRANSACTION/P.O. NUMBER(C)  TRANSACTION ID(T)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       INVENTORY POINT (RP445&quot;), [0;1] 1         TRANSACTION ID (RF), [0;2]<br>2.5       DATE POSTED (D), [0;17] 5         PACKAGING UNIT (F), [0;6] 6<br>QUANTITY (NJ6,0), [0;7] 8         SELLING UNIT PRICE (NJ11,3), [0;9] 14<br>OTHER INVENTORY POINT AFFECTED (P445&quot;), [0;18] 410       TRANSACTION/P.O.<br>NUMBER (F), [0;19]
+<br>CONDENSED DATA DICTIONARY---GENERIC INVENTORY FILE (#445)
+<br>STORED IN: ^PRCP(445,                                     01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DISTRIBUTION POINT(AB)  TYPE OF INVENTORY POINT(AC)<br>INVENTORY USER(AD)  ITEM NO.(AE)  ABBREVIATED NAME(AF)<br>KEEP PERPETUAL INVENTORY?(AG)  INVENTORY POINT(B)<br>INVENTORY POINT(C)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       INVENTORY POINT (RFX), [0;1] .7        TYPE OF INVENTORY POINT<br>(R*SX), [0;3] .9        COST CENTER (P420.1&quot;), [0;7] 1         INVENTORY ITEM<br>(Multiple-445.01), [1;0]<br>.01  ITEM NO. (MP441&quot;X), [0;1]
+<br>CONDENSED DATA DICTIONARY---DRUG ACCOUNTABILITY STATS FILE (#58.8)
+<br>STORED IN: ^PSD(58.8,                                     01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DRUG(C)<br>PRIMARY INVENTORY POINT(E)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001),<br>[1;0]<br>.01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT<br>(*P445&quot;X), [0;6]
+<br>This DBIA is effective until 18 months following Drug Accountability V2.0.
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

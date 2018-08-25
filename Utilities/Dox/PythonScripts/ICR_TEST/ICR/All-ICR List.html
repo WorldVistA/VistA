@@ -1,0 +1,705 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+    var table = $("#ICR_List-All").DataTable({
+        bInfo: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: false,
+        searchHighlight: true,
+        columns: [{ name : 'IA #'},{ name : 'Name'},{ name : 'Type'},{ name : 'Custodial Package'},{ name : 'Date Created'},{ name : 'DBIC Approval Status'},{ name : 'Status'},{ name : 'Usage'},{ name : 'File #'},{ name : 'General Description'},{ name : 'Remote Procedure'},{ name : 'Routine'},{ name : 'Date Activated'}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          },
+          {
+              extend: 'csv',
+              title: 'ICR_List-All',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdf',
+              title: 'ICR_List-All',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          }
+
+        ]
+    });
+
+    var columns = table.settings().init().columns;
+    table.columns().every(function(index) {
+      var column = this;
+      var name = columns[index].name;
+      if (name == 'General Description') {
+        column.visible(false);
+      }
+      if (name == 'IA #'||name == 'Name'||name == 'Custodial Package'||name == 'Date Created'||name == 'File #'||name == 'Remote Procedure'||name == 'Routine'||name == 'Date Activated'||name == 'General Description') {
+        var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
+          .appendTo( $(column.footer()).empty() )
+          .on('keyup change', function() {
+            if (column.search() !== this.value) {
+              column
+                .search(this.value)
+                .draw();
+            }
+          });
+      } else {
+        var select = $('<select name="' + name + '"><option value=""></option></select>')
+          .appendTo($(column.footer()).empty())
+          .on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column
+              .search(val ? '^'+val+'$' : '', true, false)
+              .draw();
+          });
+
+        column.data().unique().sort().each(function(d, j) {
+          if ($.trim( d ) != '') {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+          }
+        });
+      }
+    });
+
+
+    table
+     .search('')
+     .columns().search('')
+     .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
+}); </script>
+
+
+<script type="text/javascript" id="js">
+  function clearFilters() {
+    var table = $('#ICR_List-All').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
+    $("select").prop('selectedIndex', 0);
+    $('#ICR_List-All tfoot input').val('');
+  }
+</script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>All ICR List</h1><div id="demo"><table id="ICR_List-All" class="display">
+<thead>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>1151</td>
+<td><a title=" ^XMS1 contains the following application programmer functions:
+ $$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages only.
+ $$SRVTIME(MSGIEN,RDUZ,Status) which sets status of recipients in a message.
+
+
+
+
+ Appendix 1 -- Message Server Protocol
+
+ Overview
+ A server is an option which is invoked when a mail message that has been addressed to it has been delivered.  As an option, many of the parameters associated with the servers are embedded in the definition of the option. Therefore, in order to understand servers completely, you should refer to the server documentation in Kernel 7.0 manuals.  Options are listed in the Menu Management documentation.
+ Servers may or may not receive data.  The received data usually comes in the form of the text of the message being delivered to it, but the data may also be pointed to by the message, and exist in the system either because it was there in the beginning, or because it arrived independently.
+ Servers may be addressed from a remote  site.  A server on ALTOONA.domain.ext may receive a message addressed to it from WASHINGTON.domain.ext.  In fact, this is very common.  There are security features as parameters of the option that has been designated as a server because of the fact.  Please be aware of these security parameters.  Messages addressed to servers will not be scheduled if security is not passed.  Filegrams work through use of a server.  Data is loaded into a mail message, addressed and when delivered, processed by the filegram server into the receiving database.
+ Servers are always invoked through tasks that are set up when the message is delivered into the system locally or over the network.  One of the options is to &quot;Run Immediately&quot;.  Then the task is scheduled to run &quot;NOW&quot;.
+ However, tasks may not need to be scheduled at all because the system manager has stated so in the entry for the server in the Option file or because of a problem.  See the Menu Management documentation in the MailMan Technical Manual and Systems Management Guide for more information concerning this. Server Statuses
+ Server recipients are recorded in the recipient chain of a message and appear similarly to other users.  MailMan enters statuses on its own as stages in the server process are reached.  First, the message is marked as &quot;Awaiting Server&quot;.  This indicates that the message has been received and the option is a valid one.  At this point, a task has been created to actually invoke MenuMan to schedule or perform the service (option) required.
+ The last status which MailMan sets is &quot;Served&quot;, which means that MenuMan has been called successfully and MenuMan has either performed the task in the case of a server that runs immediately, or that some other action has been done.
+ At this point, a task could be scheduled to invoke the server or simply a message could be sent to indicate that the task exists and needs to be scheduled, or some other action that was required was performed.  MenuMan has its own statuses which will be used.
+
+ $$SRVTIME^XMS1
+ This extrinsic function sets status of recipients in a message.
+ Usage: S X=$$SRVTIME^XMS1(A,B,C)
+ Where: A = XMZ (message number) B = A string representing the recipient name C = Status is free-text (String less than nine (9) characters in length)
+ If successful, X = 0 ...or If unsuccessful, X will be a number followed by a human readable error
+ Addressing a Server
+ To address a server, precede the recipient name with &quot;S.&quot; (e.g., S.XMECHO). This example sends a message to the Mail Man Echo Tester server.  &quot;S.&quot; must be followed by an option name from the Option file in the Target Domain.  If not, a &quot;Recipient not Found&quot; error will occur.
+ A &quot;Recipient Ambiguous&quot; error will occur, if there is more than one option whose name partially matches the name addressed.
+ The District Registry server for admitting a new patient could be addressed as follows:
+ S.DGDISTADMIT@SANFRANCISCO.domain.ext
+ The message is destined for the DGDISTADMIT option at San Francisco.  Replies to this message would be from this same name.
+
+ Writing a Server Program
+ The server communicates with mail messages in specific ways.  Code is used to interface the server to the message system.  The code below returns the original message to the sender:
+ ECHO    ; K XMY S XMSUB=$E(&quot;Server echo of&quot;&quot;_XMBSUB_&quot;`&quot;,1,65) S XMY(XMFROM)=&quot;&quot;,XMTXT=&quot;^XMB(3.9,&quot;_XMZ_&quot;,2,&quot; D ^XMD Q
+ In this example, the variable XMFROM contains the sender address and is supplied to the server when invoked.  Other variables also exist upon invocation of the server.
+ The XMF.1 example server program is supplied with MailMan.  XMF1 uses some of the other variables supplied to the server.
+ Execute variable XMREC to read a line of the message.  XMER and XMRG are returned. XMER  This variable returns the execution status of XMREC.  XMER&lt;0, if there is no more message text to read.  The value of XMER will be zero (0), if XMRG is being returned as non-null.  XMRG, in that case, will have as its value the text of the next line of the message.
+ XMRG   The value of XMRG will be the next line of message text.  XMRG will always be defined, though it will be null when XMER&lt;0.
+ XMPOS  This variable contains the current position of the text returned in the variable XMGR.  It is initialized if it is undefined, but should be killed by the server when it is finished &quot;Reading&quot; the message.
+ Here&quot;s another example of code, this time from XMF1:
+ S XMA=0 A  ; X XMREC        ;       Receive a line I $D(XMER) G Q;XMER&lt;0  ;       Check for end of message S XMA=XMA+1    ;       Increment local line count S XMTEXT(XMA)=XMRG     ;       Set local array G A    ;       Go back for another line
+ Double Serving Messages
+ On occasion, the transmission/receive process is interrupted by a system back-up.  It appears to result in the same message being served twice.  The Audit Log for the Options file shows two messages with the same message number and subject, but with different Date/Times and Job Numbers.
+
+ To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="ICR-1151.html">MAILMAN: Server API</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_MailMan.html">MAILMAN</a></td>
+<td>1995/02/20</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Supported</td>
+<td></td>
+<td><br>^XMS1 contains the following application programmer<br>functions:
+<br>$$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages<br>only.
+<br>$$SRVTIME(MSGIEN,RDUZ,Status) which sets status of recipients in a message.
+
+
+
+
+<br>Appendix 1 -- Message Server Protocol
+
+<br>Overview
+<br>A server is an option which is invoked when a mail message that has been<br>addressed to it has been delivered.  As an option, many of the parameters<br>associated with the servers are embedded in the definition of the option.<br>Therefore, in order to understand servers completely, you should refer to the<br>server documentation in Kernel 7.0 manuals.  Options are listed in the Menu<br>Management documentation.
+<br>Servers may or may not receive data.  The received data usually comes in the<br>form of the text of the message being delivered to it, but the data may also<br>be pointed to by the message, and exist in the system either because it was<br>there in the beginning, or because it arrived independently.
+<br>Servers may be addressed from a remote  site.  A server on ALTOONA.domain.ext may<br>receive a message addressed to it from WASHINGTON.domain.ext.  In fact, this is<br>very common.  There are security features as parameters of the option that has<br>been designated as a server because of the fact.  Please be aware of these<br>security parameters.  Messages addressed to servers will not be scheduled if<br>security is not passed.  Filegrams work through use of a server.  Data is<br>loaded into a mail message, addressed and when delivered, processed by the<br>filegram server into the receiving database.
+<br>Servers are always invoked through tasks that are set up when the message is<br>delivered into the system locally or over the network.  One of the options is<br>to &quot;Run Immediately&quot;.  Then the task is scheduled to run &quot;NOW&quot;.
+<br>However, tasks may not need to be scheduled at all because the system manager<br>has stated so in the entry for the server in the Option file or because of a<br>problem.  See the Menu Management documentation in the MailMan Technical<br>Manual and Systems Management Guide for more information concerning this.<br>Server Statuses
+<br>Server recipients are recorded in the recipient chain of a message and appear<br>similarly to other users.  MailMan enters statuses on its own as stages in the<br>server process are reached.  First, the message is marked as &quot;Awaiting<br>Server&quot;.  This indicates that the message has been received and the option is<br>a valid one.  At this point, a task has been created to actually invoke<br>MenuMan to schedule or perform the service (option) required.
+<br>The last status which MailMan sets is &quot;Served&quot;, which means that MenuMan has<br>been called successfully and MenuMan has either performed the task in the case<br>of a server that runs immediately, or that some other action has been done.
+<br>At this point, a task could be scheduled to invoke the server or simply a<br>message could be sent to indicate that the task exists and needs to be<br>scheduled, or some other action that was required was performed.  MenuMan has<br>its own statuses which will be used.
+
+<br>$$SRVTIME^XMS1
+<br>This extrinsic function sets status of recipients in a message.
+<br>Usage: S X=$$SRVTIME^XMS1(A,B,C)
+<br>Where: A = XMZ (message number)<br>B = A string representing the recipient name<br>C = Status is free-text (String less than nine (9)<br>characters in length)
+<br>If successful, X = 0<br>...or If unsuccessful, X will be a number followed by a human<br>readable error
+<br>Addressing a Server
+<br>To address a server, precede the recipient name with &quot;S.&quot; (e.g., S.XMECHO).<br>This example sends a message to the Mail Man Echo Tester server.  &quot;S.&quot; must be<br>followed by an option name from the Option file in the Target Domain.  If not,<br>a &quot;Recipient not Found&quot; error will occur.
+<br>A &quot;Recipient Ambiguous&quot; error will occur, if there is more than one option<br>whose name partially matches the name addressed.
+<br>The District Registry server for admitting a new patient could be addressed as<br>follows:
+<br>S.DGDISTADMIT@SANFRANCISCO.domain.ext
+<br>The message is destined for the DGDISTADMIT option at San Francisco.  Replies<br>to this message would be from this same name.
+
+<br>Writing a Server Program
+<br>The server communicates with mail messages in specific ways.  Code is used to<br>interface the server to the message system.  The code below returns the<br>original message to the sender:
+<br>ECHO    ;<br>K XMY<br>S XMSUB=$E(&quot;Server echo of&quot;&quot;_XMBSUB_&quot;`&quot;,1,65)<br>S XMY(XMFROM)=&quot;&quot;,XMTXT=&quot;^XMB(3.9,&quot;_XMZ_&quot;,2,&quot;<br>D ^XMD<br>Q
+<br>In this example, the variable XMFROM contains the sender address and is<br>supplied to the server when invoked.  Other variables also exist upon<br>invocation of the server.
+<br>The XMF.1 example server program is supplied with MailMan.  XMF1 uses some of<br>the other variables supplied to the server.
+<br>Execute variable XMREC to read a line of the message.  XMER and XMRG are<br>returned.<br>XMER  This variable returns the execution status of XMREC.  XMER&lt;0, if there<br>is no more message text to read.  The value of XMER will be zero (0), if XMRG<br>is being returned as non-null.  XMRG, in that case, will have as its value the<br>text of the next line of the message.
+<br>XMRG   The value of XMRG will be the next line of message text.  XMRG will<br>always be defined, though it will be null when XMER&lt;0.
+<br>XMPOS  This variable contains the current position of the text returned in the<br>variable XMGR.  It is initialized if it is undefined, but should be killed by<br>the server when it is finished &quot;Reading&quot; the message.
+<br>Here&quot;s another example of code, this time from XMF1:
+<br>S XMA=0<br>A  ;<br>X XMREC        ;       Receive a line<br>I $D(XMER) G Q;XMER&lt;0  ;       Check for end of message<br>S XMA=XMA+1    ;       Increment local line count<br>S XMTEXT(XMA)=XMRG     ;       Set local array<br>G A    ;       Go back for another line
+<br>Double Serving Messages
+<br>On occasion, the transmission/receive process is interrupted by a system<br>back-up.  It appears to result in the same message being served twice.  The<br>Audit Log for the Options file shows two messages with the same message number<br>and subject, but with different Date/Times and Job Numbers.
+
+<br>To avoid this, application servers should be written such that they check for<br>and avoid processing of the same message being delivered to any particular<br>server.  MailMan transparently checks this and does not deliver twice to mail<br>boxes.  However, devices and servers do not have mail boxes to check against.<br>Servers can have some understanding of special mail baskets in the<br>Postmaster&quot;s mail box and can be written to check for duplicate deliveries<br>(See reference XMAIC entry points in the Callable Routines section of the<br>Technical Manual and System Manager&quot;s Guide).</td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Routine_XMS1.html">XMS1</a></td>
+<td></td>
+</tr>
+<tr>
+<td>91</td>
+<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td>1991/09/11</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td><a href="https://code.osehra.org/dox/Global_XkxBQig2MA==.html">60</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>214</td>
+<td><a title=" The following is entered as DBIA until the next version of DA:
+ All components indentified in this integration request involve reading from IFCAP files.  Drug Accountability does not write to any IFCAP files. Looking toward an interface with the IFCAP Generic Inventory Package, Drug Accountability (PSA) begins the process with a Connection Menu.  The PSAINIT creates in the DRUG file (#50) a multiple (#50.0441) pointing to the IFCAP ITEM MASTER file (#441), enabling a direct link between the DRUG file (#50) and the ITEM MASTER file (#441).
+ The first connecting tool provided in the Connection Menu is a sub- menu using the National Drug Code (NDC) to attempt matching entries.  In the ITEM MASTER file (#441), the NDC field (#4) is located in the VENDOR multiple (#6). This field has an input transform that prevents a user from using the same NDC for more than one ITEM MASTER file entry.  In studying an ITEM MASTER file from a local site, it was discovered that there were several entries in their ITEM MASTER file that did possess the same NDC.  Since this situation might lead a connector to link a drug to a potentially less active item, the first option in the NDC Menu is the NDC Duplicates Report (ITEM file).  This report loops through the NDC (&quot;F&quot;) x-ref in #441.  If more than one item contains the same NDC and is not inactive (field #16, &quot;$G(^PRC(441,D0,3))), the duplicates are listed.  The report displays the NDC that has more than one item attached to it, the item numbers attached, their SHORT DESCRIPTION (#.05), and the VENDOR (#6) =&gt; VENDOR file (#440,#1) that contains the duplicated NDC.
+ The second item on the NDC Menu is the Report Potential NDC Matches option.  This report loops through the active, unlinked (to #441) entries in the DRUG file (#50) that have an NDC.  If a corresponding NDC is found in the &quot;F&quot; x-ref in the ITEM MASTER file (#441), the NDC and drug name are listed from the DRUG file (#50) and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER file (#441).  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file (#50), a check is made to see if the matched ITEM MASTER file entry is already linked to another DRUG file entry.  If so the user is informed of the existing connection.
+ Using this same loop and display criteria, the Controlled Connection by NDC Match allows the user the opportunity to actually link matched entries. If the user approves the displayed match, a ^DIE stuff of the item number into the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated DRUG/ITEM file link by NDC option uses the same loop and display criteria and the ^DIE stuff for all matches in the loop.
+ In the event that the user requires more information about a selected drug from either the DRUG file or the ITEM MASTER file before linking, the Inquire/Compare DRUG file/ITEM file option is available.  This option uses a FM inquire with a no-link pointer jump from the DRUG file to the ITEM MASTER file via the NDC &quot;F&quot; x-ref in #441.  The user selects the drug from the DRUG file and along with corresponding info from the DRUG file the DESCRIPTION (#.1), NSN (#5), NDC (VENDOR (#6),#4) by which the jump occurred, and from that same VENDOR multiple the UNIT COST (#1), UNIT OF PURCHASE (#1.5), DATE OF UNIT PRICE (#2.5), PACKAGING MULTIPLE (#1.6), calculated unit cost = UNIT COST (#1)/DISPENSE UNITS PER ORDER UNIT from the DRUG file, VENDOR (#.01), CREATED BY (#15), and with a jump to #200 their OFFICE PHONE NUMBER.  Using this same jump, the DRUG file/ITEM file Comparison Report displays the same data with the user selecting a range of drugs from the DRUG file.
+ The FSN Menu functions similar to the NDC Menu.  The Report Potential FSN Matches option loops through the active, unlinked (to #441) entries in the DRUG file that have an FSN.  If a corresponding NSN is found in the &quot;BA&quot; x-ref in the ITEM MASTER file, the FSN and drug name are listed from the DRUG file and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER file.  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file, a check is made to see if the matched ITEM MASTER file entry is already linked to another DRUG file entry.  If so the user is informed of the existing connection.
+ Using this same loop and display criteria the Controlled Connection by FSN Match option allows the user to actually link matched entries.  If the user approves the displayed match, a ^DIE stuff of the item number into the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated DRUG/ITEM File Link by FSN option uses the same loop and display criteria and the ^DIE stuff for all matches in the loop.
+ The Single Drug Match option uses both the NDC and FSN/NSN tools described previously to offer a connection for a single selection from the DRUG file.  If a link to an ITEM MASTER file entry already exists, it is displayed to the user and they may edit the connection in the DRUG file. Using the ITEM NUMBER multiple pointer (#50.0441) in the DRUG file, the user can also do look-ups to the ITEM MASTER file via available x-refs (NSN (BA), SHORT DESCRIPTION (C), VENDOR STOCK # (D), or NDC (F)) in order to select additional connections.
+ The Report of Unlinked DRUG/ITEM File Entries lists active drugs from the DRUG file which do not yet have any entries in the ITEM NUMBER multiple (#50.0441).  The Connect Unlinked DRUG/ITEM file Entries option loops through these unlinked entries and offers all the tools described in the Single Drug Match option to perform the links.
+ The Active, Unlinked Drugs in the ITEM File option allows the user to select a purchase date from which to consider an ITEM MASTER file drug active. It then loops through the ITEM MASTER file and when an entry&quot;s FSC (#2) = 6505 (Federal Supply Classification for drugs), is not an INACTIVATED ITEM? (#16), is not linked to a drug(&quot;$O(^PSDRUG,&quot;AB&quot;,ITEM,&quot;&quot;)), has an entry in the FCP (#1) multiple, and has within at least one FCP entry, an entry in the PURCHASE ORDER (#1) multiple, the P.O. DATE(s) (#442,#.1) are checked against the user selected purchase date.  For entries that pass this criteria, the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05), NSN (#5), LAST VENDOR ORDERED (#9), NDC (#6,#4) (for the LAST VENDOR ORDERED), and the DESCRIPTION (#.1) are displayed.
+ The Display Connected Drug option allows the user to print both a vendor catalog for a selected item as well as a procurement history.  The user selects an entry from the DRUG file.  If it is connected to more than one entry in the ITEM MASTER file the user is asked to select one of the connected entries from the ITEM NUMBER multiple (#50.0441).  From the ITEM MASTER file, the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05),and NSN are displayed. If the selected ITEM MASTER file entry has only one VENDOR (#6) or has a MANDATORY SOURCE (#10), then that vendor is displayed along with the VENDOR STOCK # (#3), NDC (#4), PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), MINIMUM ORDER (#8), DATE OF UNIT PRICE (#2.5), and REQUIRED ORDER MULTIPLE (#9).  If there is more than one vendor for the item, the LAST VENDOR ORDERED (#9) is displayed as well as each available vendor sorted by DATE OF UNIT PRICE (#2.5), beginning with the most recent date.  For each vendor the PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), DATE OF UNIT PRICE(#2.5), and whether or not the vendor has a current contract is listed.  The contract verification is made by looping through the CONTRACT NUMBER multiple (#6) in the VENDOR file (#440) and checking the EXPIRATION DATE (#1).  If there is an entry in the FCP (#1) multiple for the selected item and any of the FCP entries have an entry in their PURCHASE ORDER (#1) multiple, the user is offered a procurement history.  They can enter a date from which they wish to view the history.  They must also select an FCP.  For each purchase order that passes the criteria, the PURCHASE ORDER NUMBER (#.01), VENDOR (#5), P.O. DATE (#.1), QUANTITY (#40,#2) (LINE ITEM NUMBER located using the &quot;AE&quot; x-ref in the ITEM (#40) multiple), UNIT OF PURCHASE (#3), TOTAL COST(#15), and QUANTITY PREVIOUSLY RECEIVED (#11) are displayed. Average ordered/month, total ordered, and total cost are also listed. If the MANDATORY SOURCE (#10) for the selected item is flagged in the VENDOR file (#440) with an &quot;S&quot; in the SUPPLY WHSE. INDICATOR (#.05), then the user is informed that the Supply Warehouse is the mandatory source.  Using the &quot;AD&quot; x-ref in the INVENTORY TRANSACTION file (#445.2) a check is made for any distribution by the warehouse of this item.  If procurement history exists, the user is informed and allowed to enter a date from which to view the history.  By looping through the &quot;AD&quot; x-ref in #445.2 and checking the TRANSACTION ID (#1)?1&quot;R&quot;.N and the DATE POSTED (#2.5) is not less than the user entered date, a history is displayed.  From the INVENTORY TRANSACTION file (#445.2), the DATE POSTED (#2.5), TRANSACTION/P.O. NUMBER (#410), -QUANTITY (#6), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), and OTHER INVENTORY POINT AFFECTED (#14) are displayed.
+ The Unposted Procurement History and Posted Drug Procurement History options are an effort to restore some of the drug accountability lost with the disappearance of the LOG 036 report.  For the Unposted Procurement History, the user is asked to select a month to review.  A loop through the PROCUREMENT &amp; ACCOUNTING TRANSACTION file (#442), using the P.O. DATE (&quot;AB&quot;) x-ref collects PO&quot;s for the user selected month.  If the COST CENTER (#2) = 822400 (Pharmacy) and the SUPPLY STATUS (#.5)&gt;14 &amp; &lt;45 (basically ordered), the PO&quot;s are sorted into ^TMP by Station/FCP.  For each Station/FCP the PO&quot;s are listed, displaying PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP(#1), VENDOR (#5), and TOTAL AMOUNT (#91).  While looping through these PO&quot;s another ^TMP is created, sorted by the DESCRIPTION (#1) of each ITEM (#40) on each PO. The user is asked if they would like to print item totals.  If so, an alphabetical listing occurs displaying each ITEM&quot;s (#40) DESCRIPTION (#1) and REPETITIVE (PR CARD) NO. (#1.5) and each PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP (#1), QUANTITY (#40,#2), ACTUAL UNIT COST (#40,#5), and TOTAL COST (#40,#15).  Finally, the user is if they would like a list of high dollar items.  They are invited to enter a cut-off dollar amount and each item exceeding that amount is listed beginning with the highest total cost.  The total cost was determined by totaling the TOTAL COST (#40,#15) amounts for each item listed in the previous display and building a ^TMP to sort from high to low.  Each ITEM&quot;s (#40) DESCRIPTION (#1), total TOTAL COST (#15), and Station/FCP is shown.
+ The Posted Drug Procurement History option uses the TYPE OF INVENTORY POINT (&quot;AC&quot;) x-ref in the GENERIC INVENTORY file (#445) to locate a &quot;W&quot; or the warehouse inventory.  A loop through the INVENTORY ITEM (#1) multiple, using the ITEM NO. (#.01) to check in the ITEM MASTER (#441) file for a FSC (#2) = 6505 (Federal Supply Classification for drugs) isolates the warehouse drugs in ^TMP.  Looping through ^TMP a check is made using the INVENTORY POINT (&quot;AD&quot;) x-ref in the INVENTORY TRANSACTION (#445.2) file to isolate items that have had distribution (TRANSACTION ID (#1)?&quot;R&quot;.N) and fall within the user selected month (DATE POSTED (#2.5)).  These transactions are sorted by the OTHER INVENTORY POINT AFFECTED (#14) and the OTHER INVENTORY POINT AFFECTED (#14) , -QUANTITY (#6), QUANTITY (#410,#10,#2) obtained by using the TRANSACTION /P.O. NUMBER (#445.2,#410), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), total cost (-QUANTITY (#6) * SELLING UNIT PRICE (#8)), DATE POSTED (#2.5), and TRANSACTION/P.O. NUMBER (#410).  Similar to the Unposted Procurement History, a high dollar sort is also offered.
+ As stated in the opening paragraph, the Connection Menu lays the groundwork for an interface with the IFCAP Generic Inventory Package.  Phase two of this process is contained in a Pharmacy Location Menu.  With this menu the Pharmacy user will create and edit the parameters of a Drug Accountability location such as Inpatient, Outpatient, or a Combined (IP/OP) operation.  The purpose of the interface is to allow the receiving that occurs in the Inventory Package to pass the converted dispensing unit quantity of a connected drug (ITEM/DRUG file) from a Generic Inventory point (#445) to a Drug Accountability location (#58.8).  To establish a direct link between these two files, a PRIMARY INVENTORY POINT field exists in the DRUG ACCOUNTABILITY STATS file (#58.8).  This field points to the GENERIC INVENTORY file (#445) uses the TYPE OF INVENTORY POINT (#.7) = &quot;P&quot; and COST CENTER (#.9) = 822400 (Pharmacy) fields as screens.  The input transform also contains a call to ^PSAUTL where the &quot;E&quot; x-ref in #58.8 is checked to prevent the linking of one primary inventory point to more than one DA location.  The Set up/edit a Pharmacy Location option allows the user to edit this link.  If a DA location (#58.8)is linked to an Inventory point (#445), the INVENTORY ITEMS (#1) are checked both against the &quot;AB&quot; x-ref in the DRUG (#50) file and the &quot;C&quot; x-ref in the DA (#58.8) file to see if all Inventory items are tracked in DA.  If not the user is given the ability (^DIE) to add Inventory items to the DA location.  The Display Location option shows the PRIMARY INVENTORY POINT (#11) currently linked to the selected DA location.
+ The Inventory Interface sub-menu contains three report options and a populate option.  The Report of Inventory items&quot; link to DRUG file displays from a selected GENERIC INVENTORY point (#445), selection screened by COST CENTER (#.9) = 822400 and TYPE OF INVENTORY POINT (#.7) = &quot;P&quot;, the ITEM NO. (#445,#1,#.01), either the DESCRIPTION (#.7) or from the ITEM MASTER file (#441), the SHORT DESCRIPTION (#.05)and if connected the DRUG (#50) name.  The Loadable Inventory Items Report operates exactly the same, however, only lists connected items.  The Populate Pharmacy Location with Inventory items option uses the same criteria and if a connected drug within an inventory point does not yet exist in the DRUG (#10) multiple in the selected DA location (#58.8), a ^DIE stuff occurs with a list of drugs loaded displayed at a user selected device.  The Display Drugs Not Loaded in Primary option loops through the DRUG (#10) multiple in a selected DA location (#58.8) and using the &quot;AB&quot; x-ref in the DRUG (#50) file, checks the &quot;AE&quot; x-ref in the GENERIC INVENTORY (#445) file for the existance of each drug in the linked Primary Inventory Point. Those drugs not found in the Inventory point are displayed along with their ITEM MASTER (#441) file NUMBER (#.01) and SHORT DESCRIPTION (#.05).
+
+ CONDENSED DATA DICTIONARY---DRUG FILE (#50)    VERSION:  6
+ STORED IN: ^PSDRUG(                                       01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: ITEM NUMBER(AB)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .001      NUMBER (NJ5,0), [ ] .01       GENERIC NAME (RF), [0;1] 6         FSN (F), [0;6] 12        ORDER UNIT (P51.5&quot;), [660;2] 13        PRICE PER ORDER UNIT (NJ7,2), [660;3] 14.5      DISPENSE UNIT (F), [660;8] 15        DISPENSE UNITS PER ORDER UNIT (NJ4,0), [660;5] 16        PRICE PER DISPENSE UNIT (NJ6,2), [660;6] 17        SOURCE OF SUPPLY (F), [660;7] 31        NDC (FX), [2;4] 100       INACTIVE DATE (D), [I;1] 441       IFCAP ITEM NUMBER (Multiple-50.0441), [441;0] .01  ITEM NUMBER (M*P441&quot;X), [0;1]
+ CONDENSED DATA DICTIONARY---ITEM MASTER FILE (#441)UCI: LTL,VAA
+ STORED IN: ^PRC(441,                                      01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: SHORT DESCRIPTION(AC)  INACTIVATED ITEM?(AD) NUMBER(B)  NSN(BA)  NSN(BB)  SHORT DESCRIPTION(C) VENDOR STOCK #(D)  NDC(F)  NSN(G)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       NUMBER (RNJ6,0X), [0;1] .05       SHORT DESCRIPTION (RFX), [0;2] .1 DESCRIPTION (Multiple-441.02), [1;0] .01  DESCRIPTION (W), [0;1] 1         FCP (Multiple-441.03), [4;0] .01  FCP (RFX), [0;1] 1    PURCHASE ORDER (Multiple-441.04), [1;0] .01  PURCHASE ORDER (P442&quot;X), [0;1] 3    PREFERRED VENDOR (*P440&quot;), [0;3] 2         FSC (RP441.2&quot;), [0;3] 5         NSN (FX), [0;5] 6         VENDOR (Multiple-441.01), [2;0] .01  VENDOR (MP440X), [0;1] 1    UNIT COST (RNJ10,3), [0;2] 1.5  UNIT OF PURCHASE (RP420.5&quot;), [0;7] 1.6  PACKAGING MULTIPLE (RNJ6,0), [0;8] 2    CONTRACT (NJ6,0XO), [0;3] 2.2  CONTRACT EXP. DATE (CJ8), [ ; ] 2.5  DATE OF UNIT PRICE (RD), [0;6] 3    VENDOR STOCK # (FX), [0;4] 4    NDC (FX), [0;5] 8    MINIMUM ORDER (NJ6,0), [0;12] 9    REQUIRED ORDER MULTIPLE (NJ6,0), [0;11] 9         LAST VENDOR ORDERED (P440&quot;), [0;4] 10        MANDATORY SOURCE (*P440&quot;), [0;8] 14 DATE ITEM CREATED (D), [0;9] 15        CREATED BY (P3&quot;), [0;11] 16 INACTIVATED ITEM? (S), [3;1]
+ CONDENSED DATA DICTIONARY---VENDOR FILE (#440) UCI: LTL,VAA
+ STORED IN: ^PRC(440,                                      01/26/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: SUPPLY WHSE. INDICATOR(AC)  NAME(AD)  INACTIVATED VENDOR(AE) NAME(B)  SYNONYM(C)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .001      NUMBER (NJ6,0), [ ] .01       NAME (RFX), [0;1] .05       SUPPLY WHSE. INDICATOR (SX), [0;11] 6         CONTRACT NUMBER (Multiple-440.03), [4;0] .01  CONTRACT NUMBER (MFX), [0;1] 1    EXPIRATION DATE (RD), [0;2]
+ CONDENSED DATA DICTIONARY---NEW PERSON FILE (#200)  VERSION:  6.5
+ STORED IN: ^VA(200,                                       01/27/93 --------------------------------------------------------------------------
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       NAME (RFX), [0;1] .132      OFFICE PHONE (F), [.13;2]
+ CONDENSED DATA DICTIONARY---PROCUREMENT &amp; ACCOUNTING TRANSACTIONS FILE (#442)
+ STORED IN: ^PRC(442,                                      01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: P.O. DATE(AB)  FCP(AC)  ISSUE VOUCHER NO.(SUPPLY)(AD)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       PURCHASE ORDER NUMBER (RFX), [0;1] .1        P.O. DATE (RDX), [1;15] .5        SUPPLY STATUS (*P442.3&quot;), [7;1] 1         FCP (RFX), [0;3] 2 COST CENTER (FX), [0;5] 5         VENDOR (R*P440X), [1;1] 40        ITEM (Multiple-442.01), [2;0] .01  LINE ITEM NUMBER (RMNJ2,0X), [0;1] 1    DESCRIPTION (Multiple-442.05), [1;0] .01  DESCRIPTION (W), [0;1] 1.5  REPETITIVE (PR CARD) NO. (*P441&quot;X), [0;5] 2    QUANTITY (RNJ9,2), [0;2] 3    UNIT OF PURCHASE (RP420.5&quot;X), [0;3] 5    ACTUAL UNIT COST (RNJ9,2X), [0;9] 11   QUANTITY PREVIOUSLY RECEIVED (NJ9,2), [2;8] 15   TOTAL COST (RNJ9,2), [2;1] 91        TOTAL AMOUNT (RNJ10,2), [0;15]
+ CONDENSED DATA DICTIONARY---INVENTORY TRANSACTION FILE (#445.2)
+ STORED IN: ^PRCP(445.2,                                   01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DATE POSTED(ABEG)  ITEM NO.(AC)  INVENTORY POINT(AD) ITEM NO.(AE)  INVENTORY POINT(ANXT)  INVENTORY POINT(B) TRANSACTION/P.O. NUMBER(C)  TRANSACTION ID(T)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       INVENTORY POINT (RP445&quot;), [0;1] 1         TRANSACTION ID (RF), [0;2] 2.5       DATE POSTED (D), [0;17] 5         PACKAGING UNIT (F), [0;6] 6 QUANTITY (NJ6,0), [0;7] 8         SELLING UNIT PRICE (NJ11,3), [0;9] 14 OTHER INVENTORY POINT AFFECTED (P445&quot;), [0;18] 410       TRANSACTION/P.O. NUMBER (F), [0;19]
+ CONDENSED DATA DICTIONARY---GENERIC INVENTORY FILE (#445)
+ STORED IN: ^PRCP(445,                                     01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DISTRIBUTION POINT(AB)  TYPE OF INVENTORY POINT(AC) INVENTORY USER(AD)  ITEM NO.(AE)  ABBREVIATED NAME(AF) KEEP PERPETUAL INVENTORY?(AG)  INVENTORY POINT(B) INVENTORY POINT(C)
+
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       INVENTORY POINT (RFX), [0;1] .7        TYPE OF INVENTORY POINT (R*SX), [0;3] .9        COST CENTER (P420.1&quot;), [0;7] 1         INVENTORY ITEM (Multiple-445.01), [1;0] .01  ITEM NO. (MP441&quot;X), [0;1]
+ CONDENSED DATA DICTIONARY---DRUG ACCOUNTABILITY STATS FILE (#58.8)
+ STORED IN: ^PSD(58.8,                                     01/27/93 --------------------------------------------------------------------------
+ CROSS REFERENCED BY: DRUG(C) PRIMARY INVENTORY POINT(E)
+ FILE STRUCTURE
+ FIELD     FIELD NUMBER    NAME
+ .01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001), [1;0] .01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT (*P445&quot;X), [0;6]
+ This DBIA is effective until 18 months following Drug Accountability V2.0.
+" href="ICR-214.html">DBIA214</a></td>
+<td>Other</td>
+<td><a href="https://code.osehra.org/dox/Package_IFCAP.html">IFCAP</a></td>
+<td>1993/02/22</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td><br>The following is entered as DBIA until the next version<br>of DA:
+<br>All components indentified in this integration request involve reading<br>from IFCAP files.  Drug Accountability does not write to any IFCAP files.<br>Looking toward an interface with the IFCAP Generic Inventory Package, Drug<br>Accountability (PSA) begins the process with a Connection Menu.  The PSAINIT<br>creates in the DRUG file (#50) a multiple (#50.0441) pointing to the IFCAP<br>ITEM MASTER file (#441), enabling a direct link between the DRUG file (#50)<br>and the ITEM MASTER file (#441).
+<br>The first connecting tool provided in the Connection Menu is a sub- menu<br>using the National Drug Code (NDC) to attempt matching entries.  In the ITEM<br>MASTER file (#441), the NDC field (#4) is located in the VENDOR multiple (#6).<br>This field has an input transform that prevents a user from using the same NDC<br>for more than one ITEM MASTER file entry.  In studying an ITEM MASTER file<br>from a local site, it was discovered that there were several entries in their<br>ITEM MASTER file that did possess the same NDC.  Since this situation might<br>lead a connector to link a drug to a potentially less active item, the first<br>option in the NDC Menu is the NDC Duplicates Report (ITEM file).  This report<br>loops through the NDC (&quot;F&quot;) x-ref in #441.  If more than one item contains the<br>same NDC and is not inactive (field #16, &quot;$G(^PRC(441,D0,3))), the duplicates<br>are listed.  The report displays the NDC that has more than one item attached<br>to it, the item numbers attached, their SHORT DESCRIPTION (#.05), and the<br>VENDOR (#6) =&gt; VENDOR file (#440,#1) that contains the duplicated NDC.
+<br>The second item on the NDC Menu is the Report Potential NDC Matches<br>option.  This report loops through the active, unlinked (to #441) entries in<br>the DRUG file (#50) that have an NDC.  If a corresponding NDC is found in the<br>&quot;F&quot; x-ref in the ITEM MASTER file (#441), the NDC and drug name are listed<br>from the DRUG file (#50) and the ITEM NUMBER (#.01) and DESCRIPTION (#.1)<br>listed from the ITEM MASTER file (#441).  Using the ITEM NUMBER (&quot;AB&quot;) x-ref<br>in the DRUG file (#50), a check is made to see if the matched ITEM MASTER file<br>entry is already linked to another DRUG file entry.  If so the user is<br>informed of the existing connection.
+<br>Using this same loop and display criteria, the Controlled Connection by<br>NDC Match allows the user the opportunity to actually link matched entries.<br>If the user approves the displayed match, a ^DIE stuff of the item number into<br>the item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated<br>DRUG/ITEM file link by NDC option uses the same loop and display criteria and<br>the ^DIE stuff for all matches in the loop.
+<br>In the event that the user requires more information about a selected drug<br>from either the DRUG file or the ITEM MASTER file before linking, the<br>Inquire/Compare DRUG file/ITEM file option is available.  This option uses a<br>FM inquire with a no-link pointer jump from the DRUG file to the ITEM MASTER<br>file via the NDC &quot;F&quot; x-ref in #441.  The user selects the drug from the DRUG<br>file and along with corresponding info from the DRUG file the DESCRIPTION<br>(#.1), NSN (#5), NDC (VENDOR (#6),#4) by which the jump occurred, and from<br>that same VENDOR multiple the UNIT COST (#1), UNIT OF PURCHASE (#1.5), DATE OF<br>UNIT PRICE (#2.5), PACKAGING MULTIPLE (#1.6), calculated unit cost = UNIT COST<br>(#1)/DISPENSE UNITS PER ORDER UNIT from the DRUG file, VENDOR (#.01), CREATED<br>BY (#15), and with a jump to #200 their OFFICE PHONE NUMBER.  Using this same<br>jump, the DRUG file/ITEM file Comparison Report displays the same data with<br>the user selecting a range of drugs from the DRUG file.
+<br>The FSN Menu functions similar to the NDC Menu.  The Report Potential FSN<br>Matches option loops through the active, unlinked (to #441) entries in the<br>DRUG file that have an FSN.  If a corresponding NSN is found in the &quot;BA&quot; x-ref<br>in the ITEM MASTER file, the FSN and drug name are listed from the DRUG file<br>and the ITEM NUMBER (#.01) and DESCRIPTION (#.1) listed from the ITEM MASTER<br>file.  Using the ITEM NUMBER (&quot;AB&quot;) x-ref in the DRUG file, a check is made to<br>see if the matched ITEM MASTER file entry is already linked to another DRUG<br>file entry.  If so the user is informed of the existing connection.
+<br>Using this same loop and display criteria the Controlled Connection by<br>FSN Match option allows the user to actually link matched entries.  If the<br>user approves the displayed match, a ^DIE stuff of the item number into the<br>item multiple (#50.0441) in the DRUG file occurs.  Likewise, the Automated<br>DRUG/ITEM File Link by FSN option uses the same loop and display criteria and<br>the ^DIE stuff for all matches in the loop.
+<br>The Single Drug Match option uses both the NDC and FSN/NSN tools<br>described previously to offer a connection for a single selection from the<br>DRUG file.  If a link to an ITEM MASTER file entry already exists, it is<br>displayed to the user and they may edit the connection in the DRUG file.<br>Using the ITEM NUMBER multiple pointer (#50.0441) in the DRUG file, the user<br>can also do look-ups to the ITEM MASTER file via available x-refs (NSN (BA),<br>SHORT DESCRIPTION (C), VENDOR STOCK # (D), or NDC (F)) in order to select<br>additional connections.
+<br>The Report of Unlinked DRUG/ITEM File Entries lists active drugs from the<br>DRUG file which do not yet have any entries in the ITEM NUMBER multiple<br>(#50.0441).  The Connect Unlinked DRUG/ITEM file Entries option loops through<br>these unlinked entries and offers all the tools described in the Single Drug<br>Match option to perform the links.
+<br>The Active, Unlinked Drugs in the ITEM File option allows the user to<br>select a purchase date from which to consider an ITEM MASTER file drug active.<br>It then loops through the ITEM MASTER file and when an entry&quot;s FSC (#2) = 6505<br>(Federal Supply Classification for drugs), is not an INACTIVATED ITEM? (#16),<br>is not linked to a drug(&quot;$O(^PSDRUG,&quot;AB&quot;,ITEM,&quot;&quot;)), has an entry in the FCP<br>(#1) multiple, and has within at least one FCP entry, an entry in the PURCHASE<br>ORDER (#1) multiple, the P.O. DATE(s) (#442,#.1) are checked against the user<br>selected purchase date.  For entries that pass this criteria, the ITEM NUMBER<br>(#.01), SHORT DESCRIPTION (#.05), NSN (#5), LAST VENDOR ORDERED (#9), NDC<br>(#6,#4) (for the LAST VENDOR ORDERED), and the DESCRIPTION (#.1) are<br>displayed.
+<br>The Display Connected Drug option allows the user to print both a vendor<br>catalog for a selected item as well as a procurement history.  The user<br>selects an entry from the DRUG file.  If it is connected to more than one<br>entry in the ITEM MASTER file the user is asked to select one of the connected<br>entries from the ITEM NUMBER multiple (#50.0441).  From the ITEM MASTER file,<br>the ITEM NUMBER (#.01), SHORT DESCRIPTION (#.05),and NSN are displayed. If the<br>selected ITEM MASTER file entry has only one VENDOR (#6) or has a MANDATORY<br>SOURCE (#10), then that vendor is displayed along with the VENDOR STOCK #<br>(#3), NDC (#4), PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST<br>(#1), MINIMUM ORDER (#8), DATE OF UNIT PRICE (#2.5), and REQUIRED ORDER<br>MULTIPLE (#9).  If there is more than one vendor for the item, the LAST VENDOR<br>ORDERED (#9) is displayed as well as each available vendor sorted by DATE OF<br>UNIT PRICE (#2.5), beginning with the most recent date.  For each vendor the<br>PACKAGING MULTIPLE (#1.6), UNIT OF PURCHASE (#1.5), UNIT COST (#1), DATE OF<br>UNIT PRICE(#2.5), and whether or not the vendor has a current contract is<br>listed.  The contract verification is made by looping through the CONTRACT<br>NUMBER multiple (#6) in the VENDOR file (#440) and checking the EXPIRATION<br>DATE (#1).  If there is an entry in the FCP (#1) multiple for the selected<br>item and any of the FCP entries have an entry in their PURCHASE ORDER (#1)<br>multiple, the user is offered a procurement history.  They can enter a date<br>from which they wish to view the history.  They must also select an FCP.  For<br>each purchase order that passes the criteria, the PURCHASE ORDER NUMBER<br>(#.01), VENDOR (#5), P.O. DATE (#.1), QUANTITY (#40,#2) (LINE ITEM NUMBER<br>located using the &quot;AE&quot; x-ref in the ITEM (#40) multiple), UNIT OF PURCHASE<br>(#3), TOTAL COST(#15), and QUANTITY PREVIOUSLY RECEIVED (#11) are displayed.<br>Average ordered/month, total ordered, and total cost are also listed.<br>If the MANDATORY SOURCE (#10) for the selected item is flagged in the<br>VENDOR file (#440) with an &quot;S&quot; in the SUPPLY WHSE. INDICATOR (#.05), then the<br>user is informed that the Supply Warehouse is the mandatory source.  Using the<br>&quot;AD&quot; x-ref in the INVENTORY TRANSACTION file (#445.2) a check is made for any<br>distribution by the warehouse of this item.  If procurement history exists,<br>the user is informed and allowed to enter a date from which to view the<br>history.  By looping through the &quot;AD&quot; x-ref in #445.2 and checking the<br>TRANSACTION ID (#1)?1&quot;R&quot;.N and the DATE POSTED (#2.5) is not less than the<br>user entered date, a history is displayed.  From the INVENTORY TRANSACTION<br>file (#445.2), the DATE POSTED (#2.5), TRANSACTION/P.O. NUMBER (#410),<br>-QUANTITY (#6), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), and OTHER<br>INVENTORY POINT AFFECTED (#14) are displayed.
+<br>The Unposted Procurement History and Posted Drug Procurement History<br>options are an effort to restore some of the drug accountability lost with the<br>disappearance of the LOG 036 report.  For the Unposted Procurement History,<br>the user is asked to select a month to review.  A loop through the PROCUREMENT<br>&amp; ACCOUNTING TRANSACTION file (#442), using the P.O. DATE (&quot;AB&quot;) x-ref<br>collects PO&quot;s for the user selected month.  If the COST CENTER (#2) = 822400<br>(Pharmacy) and the SUPPLY STATUS (#.5)&gt;14 &amp; &lt;45 (basically ordered), the PO&quot;s<br>are sorted into ^TMP by Station/FCP.  For each Station/FCP the PO&quot;s are<br>listed, displaying PURCHASE ORDER NUMBER (#.01), P.O. DATE (#.1), FCP(#1),<br>VENDOR (#5), and TOTAL AMOUNT (#91).  While looping through these PO&quot;s another<br>^TMP is created, sorted by the DESCRIPTION (#1) of each ITEM (#40) on each PO.<br>The user is asked if they would like to print item totals.  If so, an<br>alphabetical listing occurs displaying each ITEM&quot;s (#40) DESCRIPTION (#1) and<br>REPETITIVE (PR CARD) NO. (#1.5) and each PURCHASE ORDER NUMBER (#.01), P.O.<br>DATE (#.1), FCP (#1), QUANTITY (#40,#2), ACTUAL UNIT COST (#40,#5), and TOTAL<br>COST (#40,#15).  Finally, the user is if they would like a list of high dollar<br>items.  They are invited to enter a cut-off dollar amount and each item<br>exceeding that amount is listed beginning with the highest total cost.  The<br>total cost was determined by totaling the TOTAL COST (#40,#15) amounts for<br>each item listed in the previous display and building a ^TMP to sort from high<br>to low.  Each ITEM&quot;s (#40) DESCRIPTION (#1), total TOTAL COST (#15), and<br>Station/FCP is shown.
+<br>The Posted Drug Procurement History option uses the TYPE OF INVENTORY<br>POINT (&quot;AC&quot;) x-ref in the GENERIC INVENTORY file (#445) to locate a &quot;W&quot; or the<br>warehouse inventory.  A loop through the INVENTORY ITEM (#1) multiple, using<br>the ITEM NO. (#.01) to check in the ITEM MASTER (#441) file for a FSC (#2) =<br>6505 (Federal Supply Classification for drugs) isolates the warehouse drugs in<br>^TMP.  Looping through ^TMP a check is made using the INVENTORY POINT (&quot;AD&quot;)<br>x-ref in the INVENTORY TRANSACTION (#445.2) file to isolate items that have<br>had distribution (TRANSACTION ID (#1)?&quot;R&quot;.N) and fall within the user selected<br>month (DATE POSTED (#2.5)).  These transactions are sorted by the OTHER<br>INVENTORY POINT AFFECTED (#14) and the OTHER INVENTORY POINT AFFECTED (#14) ,<br>-QUANTITY (#6), QUANTITY (#410,#10,#2) obtained by using the TRANSACTION /P.O.<br>NUMBER (#445.2,#410), PACKAGING UNIT (#5), SELLING UNIT PRICE (#8), total cost<br>(-QUANTITY (#6) * SELLING UNIT PRICE (#8)), DATE POSTED (#2.5), and<br>TRANSACTION/P.O. NUMBER (#410).  Similar to the Unposted Procurement History,<br>a high dollar sort is also offered.
+<br>As stated in the opening paragraph, the Connection Menu lays the<br>groundwork for an interface with the IFCAP Generic Inventory Package.  Phase<br>two of this process is contained in a Pharmacy Location Menu.  With this menu<br>the Pharmacy user will create and edit the parameters of a Drug Accountability<br>location such as Inpatient, Outpatient, or a Combined (IP/OP) operation.  The<br>purpose of the interface is to allow the receiving that occurs in the<br>Inventory Package to pass the converted dispensing unit quantity of a<br>connected drug (ITEM/DRUG file) from a Generic Inventory point (#445) to a<br>Drug Accountability location (#58.8).  To establish a direct link between<br>these two files, a PRIMARY INVENTORY POINT field exists in the DRUG<br>ACCOUNTABILITY STATS file (#58.8).  This field points to the GENERIC INVENTORY<br>file (#445) uses the TYPE OF INVENTORY POINT (#.7) = &quot;P&quot; and COST CENTER (#.9)<br>= 822400 (Pharmacy) fields as screens.  The input transform also contains a<br>call to ^PSAUTL where the &quot;E&quot; x-ref in #58.8 is checked to prevent the linking<br>of one primary inventory point to more than one DA location.  The Set up/edit<br>a Pharmacy Location option allows the user to edit this link.  If a DA<br>location (#58.8)is linked to an Inventory point (#445), the INVENTORY ITEMS<br>(#1) are checked both against the &quot;AB&quot; x-ref in the DRUG (#50) file and the<br>&quot;C&quot; x-ref in the DA (#58.8) file to see if all Inventory items are tracked in<br>DA.  If not the user is given the ability (^DIE) to add Inventory items to the<br>DA location.  The Display Location option shows the PRIMARY INVENTORY POINT<br>(#11) currently linked to the selected DA location.
+<br>The Inventory Interface sub-menu contains three report options and a<br>populate option.  The Report of Inventory items&quot; link to DRUG file displays<br>from a selected GENERIC INVENTORY point (#445), selection screened by COST<br>CENTER (#.9) = 822400 and TYPE OF INVENTORY POINT (#.7) = &quot;P&quot;, the ITEM NO.<br>(#445,#1,#.01), either the DESCRIPTION (#.7) or from the ITEM MASTER file<br>(#441), the SHORT DESCRIPTION (#.05)and if connected the DRUG (#50) name.  The<br>Loadable Inventory Items Report operates exactly the same, however, only lists<br>connected items.  The Populate Pharmacy Location with Inventory items option<br>uses the same criteria and if a connected drug within an inventory point does<br>not yet exist in the DRUG (#10) multiple in the selected DA location (#58.8),<br>a ^DIE stuff occurs with a list of drugs loaded displayed at a user selected<br>device.  The Display Drugs Not Loaded in Primary option loops through the DRUG<br>(#10) multiple in a selected DA location (#58.8) and using the &quot;AB&quot; x-ref in<br>the DRUG (#50) file, checks the &quot;AE&quot; x-ref in the GENERIC INVENTORY (#445)<br>file for the existance of each drug in the linked Primary Inventory Point.<br>Those drugs not found in the Inventory point are displayed along with their<br>ITEM MASTER (#441) file NUMBER (#.01) and SHORT DESCRIPTION (#.05).
+
+<br>CONDENSED DATA DICTIONARY---DRUG FILE (#50)    VERSION:  6
+<br>STORED IN: ^PSDRUG(                                       01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>ITEM NUMBER(AB)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.001      NUMBER (NJ5,0), [ ] .01       GENERIC NAME (RF), [0;1] 6         FSN<br>(F), [0;6] 12        ORDER UNIT (P51.5&quot;), [660;2] 13        PRICE PER ORDER<br>UNIT (NJ7,2), [660;3] 14.5      DISPENSE UNIT (F), [660;8] 15        DISPENSE<br>UNITS PER ORDER UNIT (NJ4,0), [660;5] 16        PRICE PER DISPENSE UNIT<br>(NJ6,2), [660;6] 17        SOURCE OF SUPPLY (F), [660;7] 31        NDC (FX),<br>[2;4] 100       INACTIVE DATE (D), [I;1] 441       IFCAP ITEM NUMBER<br>(Multiple-50.0441), [441;0]<br>.01  ITEM NUMBER (M*P441&quot;X), [0;1]
+<br>CONDENSED DATA DICTIONARY---ITEM MASTER FILE (#441)UCI: LTL,VAA
+<br>STORED IN: ^PRC(441,                                      01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>SHORT DESCRIPTION(AC)  INACTIVATED ITEM?(AD)<br>NUMBER(B)  NSN(BA)  NSN(BB)  SHORT DESCRIPTION(C)<br>VENDOR STOCK #(D)  NDC(F)  NSN(G)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       NUMBER (RNJ6,0X), [0;1] .05       SHORT DESCRIPTION (RFX), [0;2] .1<br>DESCRIPTION (Multiple-441.02), [1;0]<br>.01  DESCRIPTION (W), [0;1] 1         FCP (Multiple-441.03), [4;0]<br>.01  FCP (RFX), [0;1]<br>1    PURCHASE ORDER (Multiple-441.04), [1;0]<br>.01  PURCHASE ORDER (P442&quot;X), [0;1]<br>3    PREFERRED VENDOR (*P440&quot;), [0;3] 2         FSC (RP441.2&quot;),<br>[0;3] 5         NSN (FX), [0;5] 6         VENDOR (Multiple-441.01), [2;0]<br>.01  VENDOR (MP440X), [0;1]<br>1    UNIT COST (RNJ10,3), [0;2]<br>1.5  UNIT OF PURCHASE (RP420.5&quot;), [0;7]<br>1.6  PACKAGING MULTIPLE (RNJ6,0), [0;8]<br>2    CONTRACT (NJ6,0XO), [0;3]<br>2.2  CONTRACT EXP. DATE (CJ8), [ ; ]<br>2.5  DATE OF UNIT PRICE (RD), [0;6]<br>3    VENDOR STOCK # (FX), [0;4]<br>4    NDC (FX), [0;5]<br>8    MINIMUM ORDER (NJ6,0), [0;12]<br>9    REQUIRED ORDER MULTIPLE (NJ6,0), [0;11] 9         LAST VENDOR<br>ORDERED (P440&quot;), [0;4] 10        MANDATORY SOURCE (*P440&quot;), [0;8] 14<br>DATE ITEM CREATED (D), [0;9] 15        CREATED BY (P3&quot;), [0;11] 16<br>INACTIVATED ITEM? (S), [3;1]
+<br>CONDENSED DATA DICTIONARY---VENDOR FILE (#440) UCI: LTL,VAA
+<br>STORED IN: ^PRC(440,                                      01/26/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>SUPPLY WHSE. INDICATOR(AC)  NAME(AD)  INACTIVATED VENDOR(AE)<br>NAME(B)  SYNONYM(C)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.001      NUMBER (NJ6,0), [ ] .01       NAME (RFX), [0;1] .05       SUPPLY<br>WHSE. INDICATOR (SX), [0;11] 6         CONTRACT NUMBER (Multiple-440.03),<br>[4;0]<br>.01  CONTRACT NUMBER (MFX), [0;1]<br>1    EXPIRATION DATE (RD), [0;2]
+<br>CONDENSED DATA DICTIONARY---NEW PERSON FILE (#200)  VERSION:  6.5
+<br>STORED IN: ^VA(200,                                       01/27/93<br>--------------------------------------------------------------------------
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       NAME (RFX), [0;1] .132      OFFICE PHONE (F), [.13;2]
+<br>CONDENSED DATA DICTIONARY---PROCUREMENT &amp; ACCOUNTING TRANSACTIONS FILE (#442)
+<br>STORED IN: ^PRC(442,                                      01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>P.O. DATE(AB)  FCP(AC)  ISSUE VOUCHER NO.(SUPPLY)(AD)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       PURCHASE ORDER NUMBER (RFX), [0;1] .1        P.O. DATE (RDX), [1;15]<br>.5        SUPPLY STATUS (*P442.3&quot;), [7;1] 1         FCP (RFX), [0;3] 2<br>COST CENTER (FX), [0;5] 5         VENDOR (R*P440X), [1;1] 40        ITEM<br>(Multiple-442.01), [2;0]<br>.01  LINE ITEM NUMBER (RMNJ2,0X), [0;1]<br>1    DESCRIPTION (Multiple-442.05), [1;0]<br>.01  DESCRIPTION (W), [0;1]<br>1.5  REPETITIVE (PR CARD) NO. (*P441&quot;X), [0;5]<br>2    QUANTITY (RNJ9,2), [0;2]<br>3    UNIT OF PURCHASE (RP420.5&quot;X), [0;3]<br>5    ACTUAL UNIT COST (RNJ9,2X), [0;9]<br>11   QUANTITY PREVIOUSLY RECEIVED (NJ9,2), [2;8]<br>15   TOTAL COST (RNJ9,2), [2;1] 91        TOTAL AMOUNT (RNJ10,2),<br>[0;15]
+<br>CONDENSED DATA DICTIONARY---INVENTORY TRANSACTION FILE (#445.2)
+<br>STORED IN: ^PRCP(445.2,                                   01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DATE POSTED(ABEG)  ITEM NO.(AC)  INVENTORY POINT(AD)<br>ITEM NO.(AE)  INVENTORY POINT(ANXT)  INVENTORY POINT(B)<br>TRANSACTION/P.O. NUMBER(C)  TRANSACTION ID(T)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       INVENTORY POINT (RP445&quot;), [0;1] 1         TRANSACTION ID (RF), [0;2]<br>2.5       DATE POSTED (D), [0;17] 5         PACKAGING UNIT (F), [0;6] 6<br>QUANTITY (NJ6,0), [0;7] 8         SELLING UNIT PRICE (NJ11,3), [0;9] 14<br>OTHER INVENTORY POINT AFFECTED (P445&quot;), [0;18] 410       TRANSACTION/P.O.<br>NUMBER (F), [0;19]
+<br>CONDENSED DATA DICTIONARY---GENERIC INVENTORY FILE (#445)
+<br>STORED IN: ^PRCP(445,                                     01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DISTRIBUTION POINT(AB)  TYPE OF INVENTORY POINT(AC)<br>INVENTORY USER(AD)  ITEM NO.(AE)  ABBREVIATED NAME(AF)<br>KEEP PERPETUAL INVENTORY?(AG)  INVENTORY POINT(B)<br>INVENTORY POINT(C)
+
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       INVENTORY POINT (RFX), [0;1] .7        TYPE OF INVENTORY POINT<br>(R*SX), [0;3] .9        COST CENTER (P420.1&quot;), [0;7] 1         INVENTORY ITEM<br>(Multiple-445.01), [1;0]<br>.01  ITEM NO. (MP441&quot;X), [0;1]
+<br>CONDENSED DATA DICTIONARY---DRUG ACCOUNTABILITY STATS FILE (#58.8)
+<br>STORED IN: ^PSD(58.8,                                     01/27/93<br>--------------------------------------------------------------------------
+<br>CROSS REFERENCED BY:<br>DRUG(C)<br>PRIMARY INVENTORY POINT(E)
+<br>FILE STRUCTURE
+<br>FIELD     FIELD NUMBER    NAME
+<br>.01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001),<br>[1;0]<br>.01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT<br>(*P445&quot;X), [0;6]
+<br>This DBIA is effective until 18 months following Drug Accountability V2.0.
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>85</td>
+<td><a title="
+ 1. Activation interface 2. Make an appointment Checkin/unscheduled visit 3. Cancel an appointment 4. Changing clinic names
+ 1. Use of the Record Tracking System Parameter file # 195.4 SD calls RT if the field &quot;MAS INTERFACE STATUS&quot; is &quot;UP&quot; ^DIC(195.4,1,&quot;UP&quot;)=1^
+ 2.  When a clinic appointment is made if the appointment is &quot;today&quot; or if the Record Tracking System Parameter &quot;Batch requests&quot; is set to &quot;No&quot; or if records are requested for an unscheduled visit.
+ A.  An entry is made in the Requested Records file #190.1 ^RTV(190.1,n) by a call from RT^SDUTL to a tasked job QUE^RTQ or RT^SDI
+ B.  After the entry is added to the Requested Records file #190.1 an entry is made in Parent Record Request field of the Patient subfield of the Hospital Location file #44 ^SC(n,&quot;S&quot;,,,,&quot;RTR&quot;)=n^ by a return call from CREATE+11^RTQ2 to RTSET^SDUTL
+ 3.  When a clinic appointment is canceled: If there is a Requested Records entry in file #190.1 the status is changed to &quot;canceled&quot; by a call RTV(190.1,n)=^^^^^x^ from RT+2^SDUTL to CANCEL^RTQ2.
+ 4.  When the name of a clinic is changed the corresponding names of entries in the Pull List file #194.2 are changed by a trigger on the .01 field of the Hospital Location file #44.  Clinic ^SC(1,0)=DJones Medical Clinic^ ^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^ Clinic names are changed in a compiled input template.  To insure the use of this trigger the following action is taken: The Record Tracking package includes the .01 field of the Hospital Location file #44 so that the SDB template is re-compiled when the Record Tracking package is initialized." href="ICR-85.html">DBIA85-A</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Record_Tracking.html">RECORD TRACKING</a></td>
+<td>1991/07/09</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XkRJQygxOTUuNA==.html">195.4</a></td>
+<td>
+<br>1. Activation interface<br>2. Make an appointment<br>Checkin/unscheduled visit<br>3. Cancel an appointment<br>4. Changing clinic names
+<br>1. Use of the Record Tracking System Parameter file # 195.4<br>SD calls RT if the field &quot;MAS INTERFACE STATUS&quot; is &quot;UP&quot;<br>^DIC(195.4,1,&quot;UP&quot;)=1^
+<br>2.  When a clinic appointment is made if the appointment is &quot;today&quot;<br>or if the Record Tracking System Parameter &quot;Batch requests&quot; is<br>set to &quot;No&quot; or if records are requested for an unscheduled visit.
+<br>A.  An entry is made in the Requested Records file #190.1<br>^RTV(190.1,n)<br>by a call from RT^SDUTL to a tasked job QUE^RTQ<br>or RT^SDI
+<br>B.  After the entry is added to the Requested Records file #190.1<br>an entry is made in Parent Record Request field<br>of the Patient subfield of the Hospital Location file #44<br>^SC(n,&quot;S&quot;,,,,&quot;RTR&quot;)=n^<br>by a return call from CREATE+11^RTQ2 to RTSET^SDUTL
+<br>3.  When a clinic appointment is canceled:<br>If there is a Requested Records entry in file #190.1<br>the status is changed to &quot;canceled&quot; by a call<br>RTV(190.1,n)=^^^^^x^<br>from RT+2^SDUTL to CANCEL^RTQ2.
+<br>4.  When the name of a clinic is changed the corresponding names<br>of entries in the Pull List file #194.2 are changed by a trigger<br>on the .01 field of the Hospital Location file #44.  Clinic<br>^SC(1,0)=DJones Medical Clinic^<br>^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^<br>Clinic names are changed in a compiled input template.  To<br>insure the use of this trigger the following action is taken:<br>The Record Tracking package includes the .01 field of the<br>Hospital Location file #44 so that the SDB template is<br>re-compiled when the Record Tracking package is initialized.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6104</td>
+<td><a title="
+ NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td>2014/09/23</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
+<td>
+<br>NAME: LRHY GET SITES                    TAG: GETSITES<br>ROUTINE: LRHYRP01                     RETURN VALUE<br>TYPE: ARRAY<br>DESCRIPTION:<br>This RPC will return all Howdy Sites<br>USAGE: Controlled Subscri  ENTERED: SEP 23,2014<br>STATUS: Pending             EXPIRES:<br>DURATION:                     VERSION:<br>DESCRIPTION:                        TYPE: Remote Procedure</td>
+<td></td>
+<td></td>
+<td>2014/10/02</td>
+</tr>
+<tr>
+<td>4849</td>
+<td><a title=" For the PFSS project, which includes a number of VistA application packages, structures are setup for HL7 communication between VistA and an external COTS system for patient billing.
+ Most inbound HL7 messages are being received for processing by the REGISTRATION package (DG), but two specific messages (ADT-A05 and ADT-A04) must be processed only by the INTEGRATED BILLING package within the new IBB module for PFSS.
+ The IBB receivers use four PROTOCOLS (file #101) in order to route the ADT-A05 and ADT-A04 to the processing routine.  Since the COTS system will only use the HL7 APPLICATION PARAMETER (file #771) names setup for the DG application in their MSH segments, the IBB Protocols must be pointed to these file #771 entries.
+ This IA allows the four IBB Protocols to utilize the DG Application Parameters DGPFSS ADT RECV and DGPFSS ADT SENDING as follows:
+ NAME: IBB PFSS ADT-A04 CLIENT           TYPE: subscriber RECEIVING APPLICATION: DGPFSS ADT RECV EVENT TYPE: A04                       RESPONSE MESSAGE TYPE: ADT PROCESSING ROUTINE: D A04^IBBAADTI    SENDING FACILITY REQUIRED?: NO RECEIVING FACILITY REQUIRED?: NO
+ NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04 MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS ADT-A04 CLIENT
+ NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber RECEIVING APPLICATION: DGPFSS ADT RECV EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO RECEIVING FACILITY REQUIRED?: NO
+ NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05 ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL VERSION ID: 2.4
+ VIEWER: KOPECKY,STEPHEN C VIEWER: FAIN,ZACHARY" href="ICR-4849.html">DBIA #4849</a></td>
+<td>Other</td>
+<td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
+<td>2006/04/20</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XkhMKDc3MQ==.html">771</a></td>
+<td><br>For the PFSS project, which includes a number of VistA<br>application packages, structures are setup for HL7 communication between VistA<br>and an external COTS system for patient billing.
+<br>Most inbound HL7 messages are being received for processing by the<br>REGISTRATION package (DG), but two specific messages (ADT-A05 and ADT-A04)<br>must be processed only by the INTEGRATED BILLING package within the new IBB<br>module for PFSS.
+<br>The IBB receivers use four PROTOCOLS (file #101) in order to route the ADT-A05<br>and ADT-A04 to the processing routine.  Since the COTS system will only use<br>the HL7 APPLICATION PARAMETER (file #771) names setup for the DG application<br>in their MSH segments, the IBB Protocols must be pointed to these file #771<br>entries.
+<br>This IA allows the four IBB Protocols to utilize the DG Application Parameters<br>DGPFSS ADT RECV and DGPFSS ADT SENDING as follows:
+<br>NAME: IBB PFSS ADT-A04 CLIENT           TYPE: subscriber<br>RECEIVING APPLICATION: DGPFSS ADT RECV<br>EVENT TYPE: A04                       RESPONSE MESSAGE TYPE: ADT<br>PROCESSING ROUTINE: D A04^IBBAADTI    SENDING FACILITY REQUIRED?: NO<br>RECEIVING FACILITY REQUIRED?: NO
+<br>NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver<br>TYPE: event driver<br>SENDING APPLICATION: DGPFSS ADT SENDING<br>TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04<br>MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL<br>APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS<br>ADT-A04 CLIENT
+<br>NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber<br>RECEIVING APPLICATION: DGPFSS ADT RECV<br>EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT<br>PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO<br>RECEIVING FACILITY REQUIRED?: NO
+<br>NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver<br>TYPE: event driver<br>SENDING APPLICATION: DGPFSS ADT SENDING<br>TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05<br>ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL<br>VERSION ID: 2.4
+<br>VIEWER: KOPECKY,STEPHEN C<br>VIEWER: FAIN,ZACHARY</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td><a title=" S u r g e r y   f i l e   ( 1 3 0 ) ." href="ICR-16.html">DBIA16</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
+<td>1990/02/26</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XlNSRg==.html">130</a></td>
+<td><br>S<br>u<br>r<br>g<br>e<br>r<br>y<br> <br>f<br>i<br>l<br>e<br> <br>(<br>1<br>3<br>0<br>)<br>.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4528</td>
+<td><a title=" MAG IMPORT CHECK STATUS This RPC is called to get a status record from the IMPORT STATUS file (2006.037)" href="ICR-4528.html">MAG IMPORT CHECK STATUS</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_Imaging.html">IMAGING</a></td>
+<td>2004/10/29</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td><br>MAG IMPORT CHECK STATUS This RPC is called to get a<br>status record from the IMPORT STATUS file (2006.037)</td>
+<td>MAG IMPORT CHECK STATUS</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3248</td>
+<td><a title=" This Remote procedure call will allow the calling application to REMOVE the link between a specific Document in the TIU Document File (#8925) and a specific Image in the Image File (#2005).
+ NAME: TIU REMOVE LINK TO IMAGE          TAG: DELIMAGE ROUTINE: TIUSRVPL                     RETURN VALUE TYPE: SINGLE VALUE AVAILABILITY: SUBSCRIPTION DESCRIPTION: This RPC will remove a link between a document and an image. Only valid links may be removed.  INPUT PARAMETER: TIUDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 1 DESCRIPTION: This is the record number (IEN) of the document in the TIU DOCUMENT FILE (#8925).  INPUT PARAMETER: IMGDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 2 DESCRIPTION: This is the record number (IEN) of the document in the IMAGE FILE (#2005). RETURN PARAMETER DESCRIPTION: This is a BOOLEAN result. If the call is made with record numbers for which a valid link exists, it will remove the link, and the return value will be 1 (TRUE), otherwise, the return value will have two &quot;^&quot;-pieces (i.e., zero and an explanatory message (e.g., 0^ Document and Image not currently linked))." href="ICR-3248.html">TIU REMOVE LINK TO IMAGE</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
+<td>2000/11/13</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td><br>This Remote procedure call will allow the calling<br>application to REMOVE the link between a specific Document in the TIU Document<br>File (#8925) and a specific Image in the Image File (#2005).
+<br>NAME: TIU REMOVE LINK TO IMAGE          TAG: DELIMAGE<br>ROUTINE: TIUSRVPL                     RETURN VALUE TYPE: SINGLE VALUE<br>AVAILABILITY: SUBSCRIPTION<br>DESCRIPTION:<br>This RPC will remove a link between a document and an image. Only valid<br>links may be removed.  INPUT PARAMETER: TIUDA                  PARAMETER<br>TYPE: LITERAL<br>REQUIRED: YES                         SEQUENCE NUMBER: 1<br>DESCRIPTION:<br>This is the record number (IEN) of the document in the TIU DOCUMENT FILE<br>(#8925).  INPUT PARAMETER: IMGDA                  PARAMETER TYPE: LITERAL<br>REQUIRED: YES                         SEQUENCE NUMBER: 2<br>DESCRIPTION:<br>This is the record number (IEN) of the document in the IMAGE FILE<br>(#2005).<br>RETURN PARAMETER DESCRIPTION:<br>This is a BOOLEAN result. If the call is made with record numbers for<br>which a valid link exists, it will remove the link, and the return value<br>will be 1 (TRUE), otherwise, the return value will have two &quot;^&quot;-pieces<br>(i.e., zero and an explanatory message (e.g., 0^ Document and Image not<br>currently linked)).</td>
+<td><a href="https://code.osehra.org/vivian/files/8994/8994-393.html">TIU REMOVE LINK TO IMAGE</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>977</td>
+<td><a title=" This integration agreement permits IFCAP to remove entries from the OPTION file (#19) until the release and availability of KIDS.
+" href="ICR-977.html">DBIA977</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
+<td>1994/08/29</td>
+<td></td>
+<td>Pending</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XkRJQygxOQ==.html">19</a></td>
+<td><br>This integration agreement permits IFCAP to remove<br>entries from the OPTION file (#19) until the release and availability of KIDS.
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3996</td>
+<td><a title="
+ NAME: GMV ADD VM TAG: EN1 ROUTINE: GMVDCSAV RETURN VALUE TYPE: SINGLE VALUE AVAILABILITY: SUBSCRIPTION INACTIVE: ACTIVE WORD WRAP ON: TRUE DESCRIPTION: This remote procedure call is used to enter a new Vital/Measurement record in the GMRV Vital Measurement file (#120.5).
+ This remote procedure call is documented in Integration Agreement 3996. INPUT PARAMETER: GMRVDATA PARAMETER TYPE: LITERAL MAXIMUM DATA LENGTH: 255 REQUIRED: YES SEQUENCE NUMBER: 1 DESCRIPTION: This variable contains the data needed to create a Vital/Measurement record in the GMRV Vital Measurement (#120.5) file. The values are parsed out of the GMRVDATA variable and filed.
+ GMRVDATA has the following data: piece1^piece2^piece3^piece4^piece5
+ where: piece1 = date/time in FileMan internal format piece2 = patient number from FILE 2 (i.e., DFN) piece3 = vital type, a semi-colon, the reading, a semi-colon, and oxygen flow rate and percentage values [optional] (e.g., 21;99;1 l/min 90%) piece4 = hospital location (FILE 44) pointer value piece5 = user number from FILE 200 (i.e., DUZ), an asterisk, and the qualifier (File 120.52) internal entry numbers separated by colons (e.g., 547*50:65) RETURN PARAMETER DESCRIPTION: RESULT does not return a value.
+ The data is filed in the GMRV VITAL MEASUREMENT (#120.5) file.
+ Example:
+ &gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot; &gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)" href="ICR-3996.html">GMV ADD VM</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_General_Medical_Record___Vitals.html">GEN. MED. REC. - VITALS</a></td>
+<td>2005/11/30</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td>
+<br>NAME: GMV ADD VM<br>TAG: EN1<br>ROUTINE: GMVDCSAV<br>RETURN VALUE TYPE: SINGLE VALUE<br>AVAILABILITY: SUBSCRIPTION<br>INACTIVE: ACTIVE<br>WORD WRAP ON: TRUE<br>DESCRIPTION:<br>This remote procedure call is used to enter a new Vital/Measurement<br>record in the GMRV Vital Measurement file (#120.5).
+<br>This remote procedure call is documented in Integration Agreement 3996.<br>INPUT PARAMETER: GMRVDATA<br>PARAMETER TYPE: LITERAL<br>MAXIMUM DATA LENGTH: 255<br>REQUIRED: YES<br>SEQUENCE NUMBER: 1<br>DESCRIPTION:<br>This variable contains the data needed to create a Vital/Measurement<br>record in the GMRV Vital Measurement (#120.5) file. The values are parsed<br>out of the GMRVDATA variable and filed.
+<br>GMRVDATA has the following data:<br>piece1^piece2^piece3^piece4^piece5
+<br>where:<br>piece1 = date/time in FileMan internal format<br>piece2 = patient number from FILE 2 (i.e., DFN)<br>piece3 = vital type, a semi-colon, the reading, a semi-colon, and<br>oxygen flow rate and percentage values [optional] (e.g.,<br>21;99;1 l/min 90%)<br>piece4 = hospital location (FILE 44) pointer value<br>piece5 = user number from FILE 200 (i.e., DUZ), an asterisk, and the<br>qualifier (File 120.52) internal entry numbers separated by<br>colons (e.g., 547*50:65)<br>RETURN PARAMETER DESCRIPTION:<br>RESULT does not return a value.
+<br>The data is filed in the GMRV VITAL MEASUREMENT (#120.5) file.
+<br>Example:
+<br>&gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot;<br>&gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)</td>
+<td><a href="https://code.osehra.org/vivian/files/8994/8994-1267.html">GMV ADD VM</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1068</td>
+<td><a title=" Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as follows: FILE    ORDER   PREFIX  LAYGO   MESSAGE 80      1      I       n       ICD9 Code 627.5    2      D       n       DSM-III-R Code This is for use with Mental Health v4.18 and Mental Health v5.0.
+ With the release of Mental Heath v5.01 this will be changed to: FILE    ORDER   PREFIX  LAYGO   MESSAGE 80      1      I       n       ICD9 Code 627.7    2      D       n       DSM-IV
+ PNs should have had an agreement to use this file.  Prior to the release of Progress Notes v2.5 this data was a part of the Mental Health progress notes global 606.  The agreement was somehow overlooked when the data was converted to ^GMR(121.
+ GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18, 5.0 and 5.01 of Mental Health.
+ Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the existence of all 3 possible globals and accomplish the prting accordingly. VIEWER: SCHLEHUBER,PAM VIEWER: DEFA,TANA VIEWER: EBERT,AL VIEWER: ANDREASSEN,LARRY VIEWER: CRAVEN,MARCIE J VIEWER: DEVLIN,MARK J" href="ICR-1068.html">DBIA1068</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Mental_Health.html">MENTAL HEALTH</a></td>
+<td>1994/11/21</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XllTRCg2MjcuNw==.html">627.7</a></td>
+<td><br>Progress Notes has a variable pointer, DXLS, file 121,<br>field 30 that is as follows:<br>FILE    ORDER   PREFIX  LAYGO   MESSAGE<br>80      1      I       n       ICD9 Code<br>627.5    2      D       n       DSM-III-R Code This is for use with<br>Mental Health v4.18 and Mental Health v5.0.
+<br>With the release of Mental Heath v5.01 this will be changed to:<br>FILE    ORDER   PREFIX  LAYGO   MESSAGE<br>80      1      I       n       ICD9 Code<br>627.7    2      D       n       DSM-IV
+<br>PNs should have had an agreement to use this file.  Prior to the release of<br>Progress Notes v2.5 this data was a part of the Mental Health progress notes<br>global 606.  The agreement was somehow overlooked when the data was converted<br>to ^GMR(121.
+<br>GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18, 5.0<br>and 5.01 of Mental Health.
+<br>Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the<br>existence of all 3 possible globals and accomplish the prting accordingly.<br>VIEWER: SCHLEHUBER,PAM<br>VIEWER: DEFA,TANA<br>VIEWER: EBERT,AL<br>VIEWER: ANDREASSEN,LARRY<br>VIEWER: CRAVEN,MARCIE J<br>VIEWER: DEVLIN,MARK J</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5499</td>
+<td><a title=" Add support for Mental Health
+ 1796     NAME: TIU GET PERSONAL PREFERENCES CUSTODIAL PACKAGE:  TEXT INTEGRATION UTILITIES                 Salt Lake City SUBSCRIBING PACKAGE: FUNCTIONAL INDEPENDENCE ORDER ENTRY/RESULTS REPORTING USAGE: Controlled Subscri  ENTERED: APR 30,2003 STATUS: Active              EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure Returns Users personal preferences for TIU in the following format:
+ TIUY = USER [1P] ^ DEFAULT LOCATION [2P] ^ REVIEW SCREEN SORT FIELD [3S] ^ ==&gt;REVIEW SCREEN SORT ORDER [4S] ^ DISPLAY MENUS [5S] ^ PATIENT ==&gt;SELECTION PREFERENCE [6S] ^ ASK &quot;Save changes?&quot; AFTER EDIT [7S] ^ ==&gt;ASK SUBJECT FOR PROGRESS NOTES [8S] ^
+ TAG^ROUTINE: GETPREF^TIUSRVR KEYWORDS:" href="ICR-5499.html">TIU GET PERSONAL PREFERENCES</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
+<td>2009/09/25</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td><br>Add support for Mental Health
+<br>1796     NAME: TIU GET PERSONAL PREFERENCES<br>CUSTODIAL PACKAGE:  TEXT INTEGRATION UTILITIES                 Salt Lake City<br>SUBSCRIBING PACKAGE: FUNCTIONAL INDEPENDENCE<br>ORDER ENTRY/RESULTS REPORTING<br>USAGE: Controlled Subscri  ENTERED: APR 30,2003<br>STATUS: Active              EXPIRES:<br>DURATION:                     VERSION:<br>DESCRIPTION:                        TYPE: Remote Procedure<br>Returns Users personal preferences for TIU in the following format:
+<br>TIUY = USER [1P] ^ DEFAULT LOCATION [2P] ^ REVIEW SCREEN SORT FIELD [3S] ^<br>==&gt;REVIEW SCREEN SORT ORDER [4S] ^ DISPLAY MENUS [5S] ^ PATIENT<br>==&gt;SELECTION PREFERENCE [6S] ^ ASK &quot;Save changes?&quot; AFTER EDIT [7S]<br>^<br>==&gt;ASK SUBJECT FOR PROGRESS NOTES [8S] ^
+<br>TAG^ROUTINE: GETPREF^TIUSRVR<br>KEYWORDS:</td>
+<td><a href="https://code.osehra.org/vivian/files/8994/8994-91.html">TIU GET PERSONAL PREFERENCES</a></td>
+<td></td>
+<td>2009/09/25</td>
+</tr>
+<tr>
+<td>6730</td>
+<td><a title=" VIA needs to read a number of fields from Surgery File #130 for VIAB SRGY RPTLIST RPC." href="ICR-6730.html">VIAB SRGY RPTLIST</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
+<td>2017/01/26</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XlNSRg==.html">130</a></td>
+<td><br>VIA needs to read a number of fields from Surgery File<br>#130 for VIAB SRGY RPTLIST RPC.</td>
+<td></td>
+<td></td>
+<td>2017/03/09</td>
+</tr>
+<tr>
+<td>10155</td>
+<td><a title=" The 3rd piece of ^DD(filenumber,fieldnumber,0) is used in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to return this field for input to the supported call Y^DIQ." href="ICR-10155.html">SET OF CODES</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
+<td>1998/02/03</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Supported</td>
+<td>0</td>
+<td><br>The 3rd piece of ^DD(filenumber,fieldnumber,0) is used<br>in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to<br>return this field for input to the supported call Y^DIQ.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10156</td>
+<td><a title=" Exporting, deleting, updating Options by Namespace via KIDS is permitted.  Linking menu options from other packages requires IAs between the packages whose options are being &quot;linked&quot;." href="ICR-10156.html">OPTION FILE</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
+<td>2006/05/31</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Supported</td>
+<td><a href="https://code.osehra.org/dox/Global_XkRJQygxOQ==.html">19</a></td>
+<td><br>Exporting, deleting, updating Options by Namespace via<br>KIDS is permitted.  Linking menu options from other packages requires IAs<br>between the packages whose options are being &quot;linked&quot;.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>
