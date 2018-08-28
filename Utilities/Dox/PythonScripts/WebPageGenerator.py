@@ -28,6 +28,7 @@ import string
 import subprocess
 import sys
 import urllib
+import cgi
 
 from operator import itemgetter
 from LogManager import logger
@@ -1064,12 +1065,38 @@ class WebPageGenerator:
                 icrList = self.queryICRInfo(packageName.upper(),"GLOBAL", globalName[1:])
                 if icrList:
                     indexList.append("ICR Entries")
-
+                # Generate the listing of objects
+                entryList=[]
+                pdfEntryList=[]
+                pdfEntryRow = []
+                if globalVar.getFileNo():
+                  jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.','_')+".json")
+                  if os.path.isfile(jsonFile):
+                    print "Checking %s for entries" % jsonFile
+                    with open(jsonFile,"r") as entryData:
+                      try:
+                        globalVals = json.load(entryData)
+                        indexList.append("Found Entries")
+                        for entry in globalVals:
+                            globalVals[entry]["GlobalNum"] = globalVar.getFileNo()
+                            globalVals[entry]["IENum"] = entry
+                            for val in globalVals[entry]:
+                              globalVals[entry][val] = cgi.escape(globalVals[entry][val])
+                            entryList.append(globalVals[entry])
+                            pdfEntryRow.append(self.getGlobalEntryName(globalVals[entry]))
+                            if len(pdfEntryRow) == 8:
+                              pdfEntryList.append(pdfEntryRow)
+                              pdfEntryRow = []
+                      except ValueError:
+                        pass
+                    while len(pdfEntryRow) < 8:
+                      pdfEntryRow.append("")
+                    pdfEntryList.append(pdfEntryRow)
                 rtnIndexList, idxLst = findRelevantIndex(rtnIndexes,None)
                 indexList = indexList + rtnIndexList
                 outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                 outputFile.write("")
-                self.generateNavigationBar(outputFile, indexList)
+                self.generateNavigationBar(outputFile, indexList, printList=indexList)
                 title = "Global: %s" % globalName
                 self.writeTitleBlock(title, title, package, outputFile, pdf)
                 if isFileManFile:
@@ -1144,7 +1171,17 @@ class WebPageGenerator:
                                                 "Fields", outputFile, pdf)
                         self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
                         writeSectionEnd(outputFile)
-
+                # Generate the listing of objects
+                if len(entryList) > 0:
+                  self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
+                                          "Found Entries", outputFile, pdf)
+                  self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)), outputFile,self.getGlobalEntryHTML,nameFunc=self.getGlobalEntryName, classid="gblEntry")
+                  if self._generatePDFBundle:
+                      columns = 8
+                      columnWidth = self.doc.width/columns
+                      colWidths = [columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth]
+                      self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf,isString=True,columnWidths=colWidths)
+                  writeSectionEnd(outputFile)
                 if icrList:
                    self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
                                            "ICR Entries", outputFile, pdf)
@@ -1156,7 +1193,6 @@ class WebPageGenerator:
                                                        DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
                 self.generateFooterWithNavigationBar(outputFile, indexList)
                 outputFile.close()
-
                 if self._generatePDFBundle:
                     self.__writePDFFile__(pdf, pdfFileName)
 
@@ -2179,6 +2215,14 @@ class WebPageGenerator:
         return routineName
     def getRoutineDisplayName(self, routine):
         return self.getRoutineDisplayNameByName(routine.getName())
+
+    def getGlobalEntryName(self, routine):
+        name = "Entry: %s" % routine["IENum"]
+        if ".01" in routine:
+          name = routine['.01']
+        return name
+    def getGlobalEntryHTML(self, routine):
+        return "%s%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".","_"),routine["GlobalNum"],routine["IENum"])
 
 #===============================================================================
 # Method to generate routine Index page

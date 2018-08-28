@@ -215,6 +215,7 @@ var titleDic  =  {
   "Fields":{"tag": "fmFields","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":5,"stretchColumn":4},
   // TODO: "Fields Referenced" need to be split into different lines
   "ICR Entries":{"tag": "icrVals","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":4,"stretchColumn":3},
+  "Found Entries": {"tag": "gblEntry","sep": /\s{4}/,"generator":getTableList,"numCols":8},
 
   // Routine
   "RoutineInfo":{"tag": "information","sep": /\s{4}/,"generator": getText, "header": "Information"},
