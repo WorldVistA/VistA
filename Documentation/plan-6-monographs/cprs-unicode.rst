@@ -7,7 +7,7 @@ OSEHRA just started a project called Plan VistA Internationlization (VI)--and
 in order to distinguish it from VistA Imaging, we decided to call it Plan 6.
 The objective of the project is to allow VistA to be easily modified by
 international users for use in their own countries in local languages and local
-dates. It is not intended to be a through implementation in a specific language.
+dates. It is not intended to be a thorough implementation in a specific language.
 
 One of the first stages of OSEHRA's Plan 6 work is for CPRS to be able to talk
 to VistA in UTF-8. Since Delphi XE (released in 2009), Delphi supported Unicode
@@ -202,7 +202,7 @@ Using TBytes allowed me several advantages:
   I will only need to perform a single read from the socket.
 * There was a previous limitation of 32k for the size of the reply in VistA.
   This is now removed.
-* There is no discrepancy anymore between the number of bytes read the and
+* There is no discrepancy anymore between the number of bytes read and the
   location of the end of the string, as we are still dealing with bytes until
   the very end.
 
