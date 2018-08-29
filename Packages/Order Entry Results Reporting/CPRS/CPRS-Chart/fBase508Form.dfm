@@ -12,10 +12,18 @@ object frmBase508Form: TfrmBase508Form
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnDeactivate = FormDeactivate
+  OnHide = FormHide
   OnHelp = FormHelp
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object amgrMain: TVA508AccessibilityManager
     Data = (
       (

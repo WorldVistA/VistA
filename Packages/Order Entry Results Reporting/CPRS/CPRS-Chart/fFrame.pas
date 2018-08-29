@@ -396,7 +396,7 @@ implementation
 
 uses
   ORNet, rCore, fPtSelMsg, fPtSel, fCover, fProbs, fMeds, fOrders, rOrders, fNotes, fConsults, fDCSumm,
-  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview, fxBroker,
+  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview, {fxBroker,}
   fxLists, fxServer, ORSystem, fRptBox, fSplash, rODAllergy, uInit, fLabTests, fLabInfo, uGlobalVar,
   uReminders, fReminderTree, ORClasses, fDeviceSelect, fDrawers, fReminderDialog, ShellAPI, rVitals,
   fOptions, fGraphs, fGraphData, rTemplates, fSurgery, rSurgery, uEventHooks, uSignItems,
@@ -406,7 +406,8 @@ uses
   , CCOW_const
   {$ENDIF}
   , VA508AccessibilityRouter, fOtherSchedule, VAUtils, uVA508CPRSCompatibility, fIVRoutes,
-  fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls;
+  fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls,
+  uGN_RPCLog;
 
 var
   IsRunExecuted: Boolean = FALSE;
