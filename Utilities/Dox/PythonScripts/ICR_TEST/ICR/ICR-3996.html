@@ -1,0 +1,215 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTM5OTY").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>GMV ADD VM &nbsp;&nbsp;  ICR (3996)</h1>
+<div id="demo"><table id="SUNSLTM5OTY" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>3996</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>3996</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>2005/11/30</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_General_Medical_Record___Vitals.html">GEN. MED. REC. - VITALS</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Chicago</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Controlled Subscription</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>Remote Procedure</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>GMV ADD VM</td>
+</tr>
+<tr>
+<td>REMOTE PROCEDURE</td>
+<td><a href="https://code.osehra.org/vivian/files/8994/8994-1267.html">GMV ADD VM</a></td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+
+NAME: GMV ADD VM
+TAG: EN1
+ROUTINE: GMVDCSAV
+RETURN VALUE TYPE: SINGLE VALUE
+AVAILABILITY: SUBSCRIPTION
+INACTIVE: ACTIVE
+WORD WRAP ON: TRUE
+DESCRIPTION:
+This remote procedure call is used to enter a new Vital/Measurement
+record in the GMRV Vital Measurement file (#120.5).
+
+This remote procedure call is documented in Integration Agreement 3996.
+INPUT PARAMETER: GMRVDATA
+PARAMETER TYPE: LITERAL
+MAXIMUM DATA LENGTH: 255
+REQUIRED: YES
+SEQUENCE NUMBER: 1
+DESCRIPTION:
+This variable contains the data needed to create a Vital/Measurement
+record in the GMRV Vital Measurement (#120.5) file. The values are parsed
+out of the GMRVDATA variable and filed.
+
+GMRVDATA has the following data:
+piece1^piece2^piece3^piece4^piece5
+
+where:
+piece1 = date/time in FileMan internal format
+piece2 = patient number from FILE 2 (i.e., DFN)
+piece3 = vital type, a semi-colon, the reading, a semi-colon, and
+oxygen flow rate and percentage values [optional] (e.g.,
+21;99;1 l/min 90%)
+piece4 = hospital location (FILE 44) pointer value
+piece5 = user number from FILE 200 (i.e., DUZ), an asterisk, and the
+qualifier (File 120.52) internal entry numbers separated by
+colons (e.g., 547*50:65)
+RETURN PARAMETER DESCRIPTION:
+RESULT does not return a value.
+
+The data is filed in the GMRV VITAL MEASUREMENT (#120.5) file.
+
+Example:
+
+&gt; S GMRVDATA="3051011.1635^134^1;120/80;^67^87*2:38:50:75"
+&gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<li>
+<dt>ISC:  &nbsp;&nbsp;Salt Lake City</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></dt>
+</li>
+<li>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_VA_Certified_Components___DSSI.html">VA CERTIFIED COMPONENTS - DSSI</a></dt>
+</li>
+<li>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DBA Comments</td>
+<td><pre>
+11/21/12-MM:  Added Patient Assessment Documetation Package
+(PADP) as a subscriber for NUPA*1*1.  The PADP package uses RPC GMV ADD VM in
+order to upload vitals. Frank Traxler concurred with request with the
+following warning to the team:
+
+"This API creates new vital signs/measurements entries for patients. There are
+few built-in data checks in it. If you pass it junk data values, it will most
+likely file them." 5/21/2014-MC: Added surgery as a subscribing package. Patch
+SR*3.0*180.  Requested by James Harris. Approved by Frank Traxler.  7/9/14-MC:
+PADP did not complete the class 3 to class 1 conversion process, but it is
+still installed at sites. Sites have the option to utilize the program,
+however it is no longer nationally supported.  There will be no further
+patching of the package. PADP has been removed as a subscriber to this ICR.
+</pre>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>41976561</td>
+</tr>
+<tr>
+<td>DATE/TIME EDITED</td>
+<td>
+<ol>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;SUBSCRIBER ADDED</dt>
+<dt>AT THE REQUEST OF:  &nbsp;&nbsp;DEZORZI,KEVIN</dt>
+<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;TRAXLER,FRANK</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2012/11/21 15:05</dt>
+</li>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;SUBSCRIBER ADDED</dt>
+<dt>AT THE REQUEST OF:  &nbsp;&nbsp;HARRIS,JAMES</dt>
+<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;TRAXLER,FRANK</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2014/05/21 14:12</dt>
+</li>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;SUBSCRIBER ADDED</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2014/05/21 14:13</dt>
+</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

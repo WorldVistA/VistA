@@ -1,0 +1,227 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTQ4NDk").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA #4849 &nbsp;&nbsp;  ICR (4849)</h1>
+<div id="demo"><table id="SUNSLTQ4NDk" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>4849</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>4849</td>
+</tr>
+<tr>
+<td>FILE NUMBER</td>
+<td><a href="https://code.osehra.org/dox/Global_XkhMKDc3MQ==.html">771</a></td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>2006/04/20</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Private</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>Other</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>DBIA #4849</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+For the PFSS project, which includes a number of VistA
+application packages, structures are setup for HL7 communication between VistA
+and an external COTS system for patient billing.
+
+Most inbound HL7 messages are being received for processing by the
+REGISTRATION package (DG), but two specific messages (ADT-A05 and ADT-A04)
+must be processed only by the INTEGRATED BILLING package within the new IBB
+module for PFSS.
+
+The IBB receivers use four PROTOCOLS (file #101) in order to route the ADT-A05
+and ADT-A04 to the processing routine.  Since the COTS system will only use
+the HL7 APPLICATION PARAMETER (file #771) names setup for the DG application
+in their MSH segments, the IBB Protocols must be pointed to these file #771
+entries.
+
+This IA allows the four IBB Protocols to utilize the DG Application Parameters
+DGPFSS ADT RECV and DGPFSS ADT SENDING as follows:
+
+NAME: IBB PFSS ADT-A04 CLIENT           TYPE: subscriber
+RECEIVING APPLICATION: DGPFSS ADT RECV
+EVENT TYPE: A04                       RESPONSE MESSAGE TYPE: ADT
+PROCESSING ROUTINE: D A04^IBBAADTI    SENDING FACILITY REQUIRED?: NO
+RECEIVING FACILITY REQUIRED?: NO
+
+NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver
+TYPE: event driver
+SENDING APPLICATION: DGPFSS ADT SENDING
+TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04
+MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL
+APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS
+ADT-A04 CLIENT
+
+NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber
+RECEIVING APPLICATION: DGPFSS ADT RECV
+EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT
+PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO
+RECEIVING FACILITY REQUIRED?: NO
+
+NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver
+TYPE: event driver
+SENDING APPLICATION: DGPFSS ADT SENDING
+TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05
+ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL
+VERSION ID: 2.4
+
+VIEWER: KOPECKY,STEPHEN C
+VIEWER: FAIN,ZACHARY
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>KEYWORDS</td>
+<td>
+<ol>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;PFSS</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;HL7</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;PROTOCOLS</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<li>
+<dt>SUBSCRIBING DETAILS:  &nbsp;&nbsp;<pre>
+Four PROTOCOL file (#101) entries setup by IBB for PFSS
+processing of inbound ADT-A05 and ADT-A04 messages will utilize HL7
+APPLICATION PARAMETER file (#771) entries in the DG namespace that are
+intended for use exclusively by the PFSS project.
+
+The PROTOCOL file entries for IB are:
+
+NAME: IBB PFSS ADT-A04 CLIENT           TYPE: subscriber
+RECEIVING APPLICATION: DGPFSS ADT RECV
+EVENT TYPE: A04                       RESPONSE MESSAGE TYPE: ADT
+PROCESSING ROUTINE: D A04^IBBAADTI    SENDING FACILITY REQUIRED?: NO
+RECEIVING FACILITY REQUIRED?: NO
+
+NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver
+TYPE: event driver
+SENDING APPLICATION: DGPFSS ADT SENDING
+TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04
+MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL
+APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS
+ADT-A04 CLIENT
+
+NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber
+RECEIVING APPLICATION: DGPFSS ADT RECV
+EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT
+PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO
+RECEIVING FACILITY REQUIRED?: NO
+
+NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver
+TYPE: event driver
+SENDING APPLICATION: DGPFSS ADT SENDING
+TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05
+ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL
+VERSION ID: 2.4
+
+</pre>
+</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Integrated_Billing.html">INTEGRATED BILLING</a></dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>EDITOR</td>
+<td>
+<ol>
+<li>
+<dt>EDITOR:  &nbsp;&nbsp;PAJERSKI,JAN</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>42863544</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

@@ -1,0 +1,164 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTMyNDg").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>TIU REMOVE LINK TO IMAGE &nbsp;&nbsp;  ICR (3248)</h1>
+<div id="demo"><table id="SUNSLTMyNDg" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>3248</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>3248</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>2000/11/13</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Salt Lake City</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Controlled Subscription</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>Remote Procedure</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>TIU REMOVE LINK TO IMAGE</td>
+</tr>
+<tr>
+<td>REMOTE PROCEDURE</td>
+<td><a href="https://code.osehra.org/vivian/files/8994/8994-393.html">TIU REMOVE LINK TO IMAGE</a></td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+This Remote procedure call will allow the calling
+application to REMOVE the link between a specific Document in the TIU Document
+File (#8925) and a specific Image in the Image File (#2005).
+
+NAME: TIU REMOVE LINK TO IMAGE          TAG: DELIMAGE
+ROUTINE: TIUSRVPL                     RETURN VALUE TYPE: SINGLE VALUE
+AVAILABILITY: SUBSCRIPTION
+DESCRIPTION:
+This RPC will remove a link between a document and an image. Only valid
+links may be removed.  INPUT PARAMETER: TIUDA                  PARAMETER
+TYPE: LITERAL
+REQUIRED: YES                         SEQUENCE NUMBER: 1
+DESCRIPTION:
+This is the record number (IEN) of the document in the TIU DOCUMENT FILE
+(#8925).  INPUT PARAMETER: IMGDA                  PARAMETER TYPE: LITERAL
+REQUIRED: YES                         SEQUENCE NUMBER: 2
+DESCRIPTION:
+This is the record number (IEN) of the document in the IMAGE FILE
+(#2005).
+RETURN PARAMETER DESCRIPTION:
+This is a BOOLEAN result. If the call is made with record numbers for
+which a valid link exists, it will remove the link, and the return value
+will be 1 (TRUE), otherwise, the return value will have two '^'-pieces
+(i.e., zero and an explanatory message (e.g., 0^ Document and Image not
+currently linked)).
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>KEYWORDS</td>
+<td>
+<ol>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;DOCUMENT</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;IMAGE</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<li>
+<dt>ISC:  &nbsp;&nbsp;Washington/Silver Spring</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Imaging.html">IMAGING</a></dt>
+</li>
+<li>
+<dt>ISC:  &nbsp;&nbsp;Salt Lake City</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>32270625</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

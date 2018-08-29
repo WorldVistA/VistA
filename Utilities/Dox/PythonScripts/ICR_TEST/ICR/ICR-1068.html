@@ -1,0 +1,253 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTEwNjg").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA1068 &nbsp;&nbsp;  ICR (1068)</h1>
+<div id="demo"><table id="SUNSLTEwNjg" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>1068</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>1068</td>
+</tr>
+<tr>
+<td>FILE NUMBER</td>
+<td><a href="https://code.osehra.org/dox/Global_XllTRCg2MjcuNw==.html">627.7</a></td>
+</tr>
+<tr>
+<td>GLOBAL ROOT</td>
+<td>YSD</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>1994/11/21</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Mental_Health.html">MENTAL HEALTH</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Dallas</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Private</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>File</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>DBIA1068</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+Progress Notes has a variable pointer, DXLS, file 121,
+field 30 that is as follows:
+FILE    ORDER   PREFIX  LAYGO   MESSAGE
+80      1      I       n       ICD9 Code
+627.5    2      D       n       DSM-III-R Code This is for use with
+Mental Health v4.18 and Mental Health v5.0.
+
+With the release of Mental Heath v5.01 this will be changed to:
+FILE    ORDER   PREFIX  LAYGO   MESSAGE
+80      1      I       n       ICD9 Code
+627.7    2      D       n       DSM-IV
+
+PNs should have had an agreement to use this file.  Prior to the release of
+Progress Notes v2.5 this data was a part of the Mental Health progress notes
+global 606.  The agreement was somehow overlooked when the data was converted
+to ^GMR(121.
+
+GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18, 5.0
+and 5.01 of Mental Health.
+
+Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the
+existence of all 3 possible globals and accomplish the prting accordingly.
+VIEWER: SCHLEHUBER,PAM
+VIEWER: DEFA,TANA
+VIEWER: EBERT,AL
+VIEWER: ANDREASSEN,LARRY
+VIEWER: CRAVEN,MARCIE J
+VIEWER: DEVLIN,MARK J
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>KEYWORDS</td>
+<td>
+<ol>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;[u'', u'***************************', u'The mental health code has been modified to do what is in yellow above.']</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agr</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>YSD</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<li>
+<dt>ISC:  &nbsp;&nbsp;Salt Lake City</dt>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></dt>
+</li>
+<li>
+<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;TEXT INTEGRATION UTILITIES                 Salt Lake City</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DBA Comments</td>
+<td><pre>
+While trying to determine what impact ICD10 changes will have
+on the active DBIA ICR #1068, it was discovered that the Progress Note package
+no longer uses this ICR.
+
+From: Trost, Debbie The following is from the message string discussing this:
+I have retired the DBIA #1068.   That sure made it easier Robert!
+
+From: Davis, Robert B. (HP) Sent: Monday, May 07, 2012 9:26 AM To: McClenahan,
+Margy; Trost, Debbie Cc: Phelps, Ty (EDS); Russell, Joel; Traxler, Frank;
+Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence
+
+Thanks Margy!
+
+Debbie, does that mean this ICR needs to be retired, or another status that
+would be appropriate?
+
+Please advise.thx!
+
+Rob
+
+From: McClenahan, Margy Sent: Monday, May 07, 2012 12:22 PM To: Davis, Robert
+B. (HP) Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;
+Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence
+
+Thank you for letting us know.  TIU no longer has routines GMRPNP3 or GMRPNP4
+nor does it use file 121 any longer.  We no longer need that ICR.  Thanks
+again, Margy
+
+From: Davis, Robert B. (HP) Sent: Friday, May 04, 2012 7:44 AM To: McClenahan,
+Margy Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;
+Jackson, Todd (HP); Bootz, Kristina (HP) Subject: IA1068 concurrence
+
+Hi Margy,
+
+I am the primary developer on the ICD10 remediation project for the mental
+health package and am seeking ICR concurrence on IA1068 which we want to
+update the verbiage on (see below in Yellow) mainly in reference to some new
+functionality for the DSM table which is what the IA is for (Mental Health is
+the custodial package and TIU is the subscribing package for the DSM table).
+I was given your name, along with the names of Ty Phelps and Joel Russell, as
+points of contact for TIU to ask about this.  Ty indicated you may be the best
+one to ask for feedback.
+
+Here is the IA along with the updates we are proposing:
+
+1068     NAME: DBIA1068
+CUSTODIAL PACKAGE: MENTAL HEALTH                              Dallas
+</pre>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>12542237</td>
+</tr>
+<tr>
+<td>DATE/TIME EDITED</td>
+<td>
+<ol>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;RETIRED</dt>
+<dt>AT THE REQUEST OF:  &nbsp;&nbsp;MCCLENAHAN,MARGY</dt>
+<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;DAVIS,ROBERT</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2012/05/07 14:46</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>ENTERED</td>
+<td>NOV 21,1994</td>
+</tr>
+<tr>
+<td>EXPIRES</td>
+<td></td>
+</tr>
+<tr>
+<td>VERSION</td>
+<td>[u'', u'FILE: 627.7                  ROOT: YSD']</td>
+</tr>
+<tr>
+<td>DESCRIPTION</td>
+<td>[u'', u'Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as', u'follows:', u'FILE    ORDER   PREFIX  LAYGO   MESSAGE', u'80      1      I       n       ICD Code', u'627.5    2      D       n       DSM-III-R Code This is for use with', u'Mental Health v4.18 and Mental Health v5.0.', u'With the release of Mental Heath v5.01 this will be changed to:', u'FILE    ORDER   PREFIX  LAYGO   MESSAGE', u'80      1      I       n       ICD Code', u'INTEGRATION REFERENCE INQUIRY #1068            APR 26,2012  14:00    PAGE 2', u'--------------------------------------------------------------------------', u'------', u'627.7    2      D       n       DSM-IV', u'PNs should have had an agreement to use this file.  Prior to the release', u'of Progress Notes v2.5 this data was a part of the Mental Health progress', u'notes global 606.  The agreement was somehow overlooked when the data was', u'converted to ^GMR(121.', u'GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18,', u'5.0 and 5.01 of Mental Health.', u'Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for', u'the existence of all 3 possible globals and accomplish the prting', u'accordingly.', u'Please note that Mental Health has made modifications to its YSDIAGE menu', u"option to check the 0;8 field of file 627.7 and, if it is '9' which denotes", u'ICD9 ICD VERSION then some date validation logic will be triggered to make', u'certain that the DATE/TIME OF DIAGNOSIS field in file 627.8 is before the', u"ICD10 implementation date.  Similarly, if 0;8 of file 627.7 is '10' which", u'denotes ICD10 ICD VERSION then the DATE/TIME OF DIAGNOSIS field of file', u'627.8 will be checked to ascertain that it is on or after the ICD10', u'Implementation date.  TIU should probably add some validation logic in', u'its routines to emulate what has been done in Mental Health routines for', u'the YSDIAGE menu option.']</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

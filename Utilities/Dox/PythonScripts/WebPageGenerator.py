@@ -429,8 +429,8 @@ def getGlobalHypeLinkByName(globalName):
                                       globalName)
 
 def getPackageHyperLinkByName(packageName):
-    if packageName in pkgMap:
-      packageName = pkgMap[packageName]
+    if packageName in PACKAGE_MAP:
+      packageName = PACKAGE_MAP[packageName]
     return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
                                       packageName)
 
@@ -1630,8 +1630,8 @@ class WebPageGenerator:
             for value in entry["SUBSCRIBING PACKAGE"]:
                 pkgName = value["SUBSCRIBING PACKAGE"][0] if type(value["SUBSCRIBING PACKAGE"]) is list else value["SUBSCRIBING PACKAGE"]
                 subscribingPackage += "<li>" + getPackageHyperLinkByName(pkgName) + "</li>"
-                if pkgName in pkgMap:
-                    pkgName = pkgMap[pkgName]
+                if pkgName in PACKAGE_MAP:
+                    pkgName = PACKAGE_MAP[pkgName]
                 subscribingPackages.append(generateParagraph(pkgName))
             if self._generatePDFBundle:
                 subscribingPackagesPDF = generateList(subscribingPackages)

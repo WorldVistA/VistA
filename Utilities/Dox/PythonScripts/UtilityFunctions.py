@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#---------------------------------------------------------------------------
 
 import csv
 import json
@@ -26,7 +27,7 @@ from LogManager import logger
 from PDFUtilityFunctions import *
 
 
-pkgMap = {
+PACKAGE_MAP = {
     'AUTOMATED INFO COLLECTION SYS': 'Automated Information Collection System',
     'AUTOMATED MED INFO EXCHANGE': 'Automated Medical Information Exchange',
     'BAR CODE MED ADMIN': 'Barcode Medication Administration',
@@ -212,8 +213,8 @@ def getPackageHtmlFileName(packageName):
                         normalizePackageName(packageName))
 
 def normalizePackageName(packageName):
-    if packageName in pkgMap:
-       packageName = pkgMap[packageName]
+    if packageName in PACKAGE_MAP:
+       packageName = PACKAGE_MAP[packageName]
     newName = packageName.replace(' ', '_')
     return newName.replace('-', "_").replace('.', '_').replace('/', '_')
 

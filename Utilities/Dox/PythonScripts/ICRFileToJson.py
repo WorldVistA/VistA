@@ -1,14 +1,27 @@
+#---------------------------------------------------------------------------
+# Copyright 2018 The Open Source Electronic Health Record Alliance
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
 import os
 import re
 import os.path
 import json
-import argparse
-import pprint
-import logging
 
 from datetime import datetime
-from LogManager import logger, initConsoleLogging
-from ICRSchema import ICR_FILE_KEYWORDS, DATE_TIME_FIELD
+from LogManager import logger
+from ICRSchema import ICR_FILE_KEYWORDS, DATE_TIME_FIELD, INTEGRATION_REFERENCES_LIST
 from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields
@@ -16,72 +29,62 @@ START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
 GENERIC_START_OF_RECORD = re.compile('^( *)?(?P<name>[A-Z^/]+( [A-Z/#^]+)*): ') # TODO? max of 2 spaces
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
 GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z^/]+( [A-Z/^#]+)*): ')
-INTEGRATION_REFERENCES_LIST = re.compile('^[\r\f]?INTEGRATION REFERENCES LIST *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
 
 LINES_TO_IGNORE = [
     re.compile('^-+$')
 ]
 
-def convertDateTimeField(inputDt):
-    try:
-        if inputDt.find('@') < 0:
-            return datetime.strptime(inputDt, '%b %d, %Y').strftime('%Y/%m/%d')
-        else:
-            return datetime.strptime(inputDt, '%b %d, %Y@%H:%M').strftime('%Y/%m/%d %H:%M')
-    except ValueError:
-        return inputDt
-
-date = None
+def convertICRToJson(inputFilename, outputFilename):
+    icrFileToJson = ICRFileToJson()
+    icrFileToJson.parse(inputFilename, outputFilename)
 
 """
 This is the class to parse the VA ICR file and convert to JSON format.
 """
 class ICRFileToJson(object):
     def __init__(self):
-        self._totalRecord = 0 # total number of record
         self._curRecord = None # current record object
         self._outObject = [] # store output result
-        self._curLineNo = 0
         self._curField = None
         self._curStack = []
-        self._DBAComments = False
-        self._generalDescription = False
 
     def parse(self, inputFilename, outputFilename):
-        global date
         with open(inputFilename,'r') as ICRFile:
+            curLineNo = 0
+            DBAComments = False
+            generalDescription = False
             for line in ICRFile:
                 line = line.rstrip("\r\n")
-                self._curLineNo +=1
+                curLineNo +=1
                 # get rid of lines that are ignored
                 if self.isIgnoredLine(line):
                     continue
                 match = INTEGRATION_REFERENCES_LIST.match(line)
                 if match:
-                    date = match.group(1).strip()
+                    # Skip this line. Use getDate() to parse date
                     continue
                 match = START_OF_RECORD.match(line)
-                if match and not self._DBAComments and not self._generalDescription:
+                if match and not DBAComments and not generalDescription:
                     self._startOfNewItem(match, line)
                     continue
                 match = GENERIC_START_OF_RECORD.search(line)
                 if not match:
                     match = DBA_COMMENTS.match(line)
                     if match:
-                        self._DBAComments = True
+                        DBAComments = True
                 if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
                     if fieldName == 'DBA Comments':
-                        self._DBAComments = True
+                        DBAComments = True
                     elif fieldName == 'GENERAL DESCRIPTION':
-                        self._generalDescription = True
-                    if self._DBAComments:
+                        generalDescription = True
+                    if DBAComments:
                         if fieldName in ICR_FILE_KEYWORDS:
-                            self._DBAComments = False
-                    elif self._generalDescription:
+                            DBAComments = False
+                    elif generalDescription:
                         if line.startswith("  STATUS:"):  # Starts with exactly 2 spaces
-                            self._generalDescription = False
-                    if self._DBAComments:
+                            generalDescription = False
+                    if DBAComments:
                         fieldName = 'DBA Comments'
                         if self._curField == fieldName:
                             self._appendWordsFieldLine(line)
@@ -90,7 +93,7 @@ class ICRFileToJson(object):
                             name = match.group('name') # this is the name part
                             restOfLine = line[match.end():]
                             self._curRecord[name] = restOfLine.strip()
-                    elif self._generalDescription:
+                    elif generalDescription:
                         fieldName = 'GENERAL DESCRIPTION'
                         if self._curField == fieldName:
                             self._appendWordsFieldLine(line)
@@ -123,21 +126,24 @@ class ICRFileToJson(object):
                     if self._curRecord:
                         if len(line.strip()) == 0:
                             continue
-                        print 'No field associated with line %s: %s ' % (self._curLineNo, line)
-        logger.info('End of file now')
+                        logger.debug('No field associated with line %s: %s ' %
+                                      (curLineNo, line))
+        logger.debug('End of file now')
         if len(self._curStack) > 0:
             self._curField = None
             self._rewindStack()
         if self._curRecord:
-            logger.info('Add last record: %s', self._curRecord)
+            logger.debug('Add last record: %s', self._curRecord)
             self._outObject.append(self._curRecord)
-        # pprint.pprint(self._outObject);
+        outputDir = os.path.dirname(outputFilename)
+        if not os.path.exists(outputDir):
+            # Will also create intermediate directories if needed
+            os.makedirs(outputDir)
         with open(outputFilename, 'w') as out_file:
             json.dump(self._outObject,out_file, indent=4)
 
     def _startOfNewItem(self, matchObj, line):
         logger.debug('Starting of new item: %s', self._curStack)
-        logger.info('Starting of new item: %s', line)
         self._curField = None
 
         self._rewindStack()
@@ -145,7 +151,6 @@ class ICRFileToJson(object):
             self._outObject.append(self._curRecord)
         self._curRecord = {}
         self._findKeyValueInLine(matchObj, line, self._curRecord)
-        #pprint.pprint(self._curRecord)
 
     def _findKeyValueInLine(self, match, line, outObj):
         """ parse all name value pair in a line and put back in outObj"""
@@ -184,7 +189,16 @@ class ICRFileToJson(object):
 
         dtFields = set(allFlds) & DATE_TIME_FIELD
         for fld in dtFields:
-            outObj[fld] = convertDateTimeField(outObj[fld])
+            outObj[fld] = self._convertDateTimeField(outObj[fld])
+
+    def _convertDateTimeField(self, inputDt):
+        try:
+            if inputDt.find('@') < 0:
+                return datetime.strptime(inputDt, '%b %d, %Y').strftime('%Y/%m/%d')
+            else:
+                return datetime.strptime(inputDt, '%b %d, %Y@%H:%M').strftime('%Y/%m/%d %H:%M')
+        except ValueError:
+            return inputDt
 
     def _startOfSubFile(self, match, line):
         """
@@ -269,15 +283,3 @@ class ICRFileToJson(object):
                 logger.warn('fieldName: [%s] is already parsed in [%s], ignore the words fields', fieldName, stackItem[1])
                 return True
         return False
-
-def run(args):
-    icrFileToJson = ICRFileToJson()
-    icrFileToJson.parse(args.icrfile, args.icrJsonFile)
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA ICR File to JSON Parser')
-    parser.add_argument('icrfile', help='path to the VistA ICR file')
-    parser.add_argument('icrJsonFile', help='path to the output JSON file')
-    result = parser.parse_args()
-    initConsoleLogging()
-    run(result)

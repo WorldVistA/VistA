@@ -1,0 +1,207 @@
+<html>
+
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+    var table = $("#ICR_List-Lab_Service").DataTable({
+        bInfo: true,
+        dom: '<Bfr<t>ilp>',
+        iDisplayLength: 25,
+        pagingType: "full_numbers",
+        bStateSave: true,
+        bAutoWidth: false,
+        searchHighlight: true,
+        columns: [{ name : 'IA #'},{ name : 'Name'},{ name : 'Type'},{ name : 'Custodial Package'},{ name : 'Date Created'},{ name : 'DBIC Approval Status'},{ name : 'Status'},{ name : 'Usage'},{ name : 'File #'},{ name : 'General Description'},{ name : 'Remote Procedure'},{ name : 'Routine'},{ name : 'Date Activated'}],
+        buttons: [
+          {
+            text: 'Toggle Columns',
+            extend: 'colvis',
+          },
+          {
+            text: 'Reset Columns',
+            extend: 'colvisRestore',
+          },
+          {
+            text: 'Clear Search',
+            action: function ( e, dt, node, conf ) {
+              clearFilters();
+            }
+          },
+          {
+              extend: 'csv',
+              title: 'ICR_List-Lab_Service',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          },
+          {
+              extend: 'pdf',
+              title: 'ICR_List-Lab_Service',
+              orientation: 'landscape',
+              pageSize: 'LEGAL',
+              exportOptions: {
+                  columns: ':visible'
+              }
+          }
+
+        ]
+    });
+
+    var columns = table.settings().init().columns;
+    table.columns().every(function(index) {
+      var column = this;
+      var name = columns[index].name;
+      if (name == 'General Description') {
+        column.visible(false);
+      }
+      if (name == 'IA #'||name == 'Name'||name == 'Custodial Package'||name == 'Date Created'||name == 'File #'||name == 'Remote Procedure'||name == 'Routine'||name == 'Date Activated'||name == 'General Description') {
+        var select = $('<input type="text" name="' + name + '" placeholder="Search ' + name + '" />')
+          .appendTo( $(column.footer()).empty() )
+          .on('keyup change', function() {
+            if (column.search() !== this.value) {
+              column
+                .search(this.value)
+                .draw();
+            }
+          });
+      } else {
+        var select = $('<select name="' + name + '"><option value=""></option></select>')
+          .appendTo($(column.footer()).empty())
+          .on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column
+              .search(val ? '^'+val+'$' : '', true, false)
+              .draw();
+          });
+
+        column.data().unique().sort().each(function(d, j) {
+          if ($.trim( d ) != '') {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+          }
+        });
+      }
+    });
+
+
+    table
+     .search('')
+     .columns().search('')
+     .draw();
+
+    $('.dataTables_filter input').attr('title', 'Search includes ALL columns. Use `Toggle Columns` to display hidden columns.');
+}); </script>
+
+
+<script type="text/javascript" id="js">
+  function clearFilters() {
+    var table = $('#ICR_List-Lab_Service').DataTable();
+    table
+      .search( '' )
+      .columns().search( '' )
+      .draw();
+    $("select").prop('selectedIndex', 0);
+    $('#ICR_List-Lab_Service tfoot input').val('');
+  }
+</script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: Lab Service ICR List</h1><div id="demo"><table id="ICR_List-Lab_Service" class="display">
+<thead>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>IA #</th>
+<th>Name</th>
+<th>Type</th>
+<th>Custodial Package</th>
+<th>Date Created</th>
+<th>DBIC Approval Status</th>
+<th>Status</th>
+<th>Usage</th>
+<th>File #</th>
+<th>General Description</th>
+<th>Remote Procedure</th>
+<th>Routine</th>
+<th>Date Activated</th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>91</td>
+<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td>1991/09/11</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td><a href="https://code.osehra.org/dox/Global_XkxBQig2MA==.html">60</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>6104</td>
+<td><a title="
+ NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
+<td>Remote Procedure</td>
+<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td>2014/09/23</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
+<td>
+<br>NAME: LRHY GET SITES                    TAG: GETSITES<br>ROUTINE: LRHYRP01                     RETURN VALUE<br>TYPE: ARRAY<br>DESCRIPTION:<br>This RPC will return all Howdy Sites<br>USAGE: Controlled Subscri  ENTERED: SEP 23,2014<br>STATUS: Pending             EXPIRES:<br>DURATION:                     VERSION:<br>DESCRIPTION:                        TYPE: Remote Procedure</td>
+<td></td>
+<td></td>
+<td>2014/10/02</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

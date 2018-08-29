@@ -1,0 +1,322 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTExNTE").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>MAILMAN: Server API &nbsp;&nbsp;  ICR (1151)</h1>
+<div id="demo"><table id="SUNSLTExNTE" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>1151</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>1151</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>1995/02/20</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_MailMan.html">MAILMAN</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>San Francisco</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>Routine</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>ROUTINE</td>
+<td><a href="https://code.osehra.org/dox/Routine_XMS1.html">XMS1</a></td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>MAILMAN: Server API</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+^XMS1 contains the following application programmer
+functions:
+
+$$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages
+only.
+
+$$SRVTIME(MSGIEN,RDUZ,Status) which sets status of recipients in a message.
+
+
+
+
+
+Appendix 1 -- Message Server Protocol
+
+
+Overview
+
+A server is an option which is invoked when a mail message that has been
+addressed to it has been delivered.  As an option, many of the parameters
+associated with the servers are embedded in the definition of the option.
+Therefore, in order to understand servers completely, you should refer to the
+server documentation in Kernel 7.0 manuals.  Options are listed in the Menu
+Management documentation.
+
+Servers may or may not receive data.  The received data usually comes in the
+form of the text of the message being delivered to it, but the data may also
+be pointed to by the message, and exist in the system either because it was
+there in the beginning, or because it arrived independently.
+
+Servers may be addressed from a remote  site.  A server on ALTOONA.domain.ext may
+receive a message addressed to it from WASHINGTON.domain.ext.  In fact, this is
+very common.  There are security features as parameters of the option that has
+been designated as a server because of the fact.  Please be aware of these
+security parameters.  Messages addressed to servers will not be scheduled if
+security is not passed.  Filegrams work through use of a server.  Data is
+loaded into a mail message, addressed and when delivered, processed by the
+filegram server into the receiving database.
+
+Servers are always invoked through tasks that are set up when the message is
+delivered into the system locally or over the network.  One of the options is
+to "Run Immediately".  Then the task is scheduled to run "NOW".
+
+However, tasks may not need to be scheduled at all because the system manager
+has stated so in the entry for the server in the Option file or because of a
+problem.  See the Menu Management documentation in the MailMan Technical
+Manual and Systems Management Guide for more information concerning this.
+Server Statuses
+
+Server recipients are recorded in the recipient chain of a message and appear
+similarly to other users.  MailMan enters statuses on its own as stages in the
+server process are reached.  First, the message is marked as "Awaiting
+Server".  This indicates that the message has been received and the option is
+a valid one.  At this point, a task has been created to actually invoke
+MenuMan to schedule or perform the service (option) required.
+
+The last status which MailMan sets is "Served", which means that MenuMan has
+been called successfully and MenuMan has either performed the task in the case
+of a server that runs immediately, or that some other action has been done.
+
+At this point, a task could be scheduled to invoke the server or simply a
+message could be sent to indicate that the task exists and needs to be
+scheduled, or some other action that was required was performed.  MenuMan has
+its own statuses which will be used.
+
+
+$$SRVTIME^XMS1
+
+This extrinsic function sets status of recipients in a message.
+
+Usage: S X=$$SRVTIME^XMS1(A,B,C)
+
+Where: A = XMZ (message number)
+B = A string representing the recipient name
+C = Status is free-text (String less than nine (9)
+characters in length)
+
+If successful, X = 0
+...or If unsuccessful, X will be a number followed by a human
+readable error
+
+Addressing a Server
+
+To address a server, precede the recipient name with "S." (e.g., S.XMECHO).
+This example sends a message to the Mail Man Echo Tester server.  "S." must be
+followed by an option name from the Option file in the Target Domain.  If not,
+a "Recipient not Found" error will occur.
+
+A "Recipient Ambiguous" error will occur, if there is more than one option
+whose name partially matches the name addressed.
+
+The District Registry server for admitting a new patient could be addressed as
+follows:
+
+S.DGDISTADMIT@SANFRANCISCO.domain.ext
+
+The message is destined for the DGDISTADMIT option at San Francisco.  Replies
+to this message would be from this same name.
+
+
+Writing a Server Program
+
+The server communicates with mail messages in specific ways.  Code is used to
+interface the server to the message system.  The code below returns the
+original message to the sender:
+
+ECHO    ;
+K XMY
+S XMSUB=$E("Server echo of'"_XMBSUB_"`",1,65)
+S XMY(XMFROM)="",XMTXT="^XMB(3.9,"_XMZ_",2,"
+D ^XMD
+Q
+
+In this example, the variable XMFROM contains the sender address and is
+supplied to the server when invoked.  Other variables also exist upon
+invocation of the server.
+
+The XMF.1 example server program is supplied with MailMan.  XMF1 uses some of
+the other variables supplied to the server.
+
+Execute variable XMREC to read a line of the message.  XMER and XMRG are
+returned.
+XMER  This variable returns the execution status of XMREC.  XMER&lt;0, if there
+is no more message text to read.  The value of XMER will be zero (0), if XMRG
+is being returned as non-null.  XMRG, in that case, will have as its value the
+text of the next line of the message.
+
+XMRG   The value of XMRG will be the next line of message text.  XMRG will
+always be defined, though it will be null when XMER&lt;0.
+
+XMPOS  This variable contains the current position of the text returned in the
+variable XMGR.  It is initialized if it is undefined, but should be killed by
+the server when it is finished "Reading" the message.
+
+Here's another example of code, this time from XMF1:
+
+S XMA=0
+A  ;
+X XMREC        ;       Receive a line
+I $D(XMER) G Q;XMER&lt;0  ;       Check for end of message
+S XMA=XMA+1    ;       Increment local line count
+S XMTEXT(XMA)=XMRG     ;       Set local array
+G A    ;       Go back for another line
+
+Double Serving Messages
+
+On occasion, the transmission/receive process is interrupted by a system
+back-up.  It appears to result in the same message being served twice.  The
+Audit Log for the Options file shows two messages with the same message number
+and subject, but with different Date/Times and Job Numbers.
+
+
+To avoid this, application servers should be written such that they check for
+and avoid processing of the same message being delivered to any particular
+server.  MailMan transparently checks this and does not deliver twice to mail
+boxes.  However, devices and servers do not have mail boxes to check against.
+Servers can have some understanding of special mail baskets in the
+Postmaster's mail box and can be written to check for duplicate deliveries
+(See reference XMAIC entry points in the Callable Routines section of the
+Technical Manual and System Manager's Guide).
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>XMS1</td>
+</tr>
+<tr>
+<td>COMPONENT/ENTRY POINT</td>
+<td>
+<ol>
+<li>
+<dt>COMPONENT DESCRIPTION:  &nbsp;&nbsp;<pre>
+
+
+
+
+$$STATUS^XMS1
+
+This extrinsic function extracts the status from network messages only.
+
+Usage:         S X=$$STATUS^XMS1(A,B)
+
+Where:         A = Message Number
+B = Recipient (pointer to File #200 or free-text Network
+Address)
+
+If successful, X=String
+...or If unsuccessful X=""
+
+
+Examples:
+
+W $$STATUS^XMS1(51555,"NOSS,VER@VER.GOLD.domain.ext")
+Awaiting transmission.
+</pre>
+</dt>
+<dt>COMPONENT/ENTRY POINT:  &nbsp;&nbsp;STATUS</dt>
+</li>
+<li>
+<dt>COMPONENT DESCRIPTION:  &nbsp;&nbsp;<pre>
+$$SRVTIME^XMS1
+
+This extrinsic function sets status of recipients in a message.
+
+Usage: S X=$$SRVTIME^XMS1(A,B,C)
+
+Where: A = XMZ (message number)
+B = A string representing the recipient name
+C = Status is free-text (String less than nine (9)
+characters in length)
+
+If successful, X = 0
+...or If unsuccessful, X will be a number followed by a human
+readable error
+
+</pre>
+</dt>
+<dt>COMPONENT/ENTRY POINT:  &nbsp;&nbsp;$$SRVTIME</dt>
+</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>
