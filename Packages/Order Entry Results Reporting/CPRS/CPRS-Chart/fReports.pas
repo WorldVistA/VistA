@@ -2025,7 +2025,7 @@ end;
 procedure TfrmReports.GoRemote(Dest: TStringList; AItem: string; AQualifier, ARpc: string; AHSTag: string; AHDR: string; aFHIE: string);
 var
   i, j: integer;
-  LocalHandle, Query, Report, Seq: string;
+  LocalHandle, Query, Report, Seq, aVistaWebLabel: string;
   HSType, DaysBack, ExamID, MaxOcc: string;
   Alpha, Omega, Trans: double;
 begin
@@ -2035,14 +2035,16 @@ begin
   Alpha := 0;
   Omega := 0;
   Seq := '';
+  aVistaWebLabel := GetVistaWeb_JLV_LabelName;
+  if aVistaWebLabel = '' then aVistaWebLabel := 'VistaWeb';
   if AHDR = '1' then
     begin
       if HDRActive = '0' then
         begin
-          InfoBox('The HDR is currently inactive in CPRS.' + CRLF + 'You must use VistaWeb to view this report.', 'Use VistaWeb for HDR data', MB_OK);
+          InfoBox('The HDR is currently inactive in CPRS.' + CRLF + 'You must use ' + aVistaWebLabel + ' to view this report.', 'Use ' + aVistaWebLabel + ' for HDR data', MB_OK);
           Exit;
         end;
-      //InfoBox('You must use VistaWeb to view this report.', 'Use VistaWeb for HDR data', MB_OK);
+      //InfoBox('You must use ' + aVistaWebLabel + ' to view this report.', 'Use ' + aVistaWebLabel + ' for HDR data', MB_OK);
       if (Piece(AItem, ':', 1) = 'OR_VWAL') or (Piece(AItem, ':', 1) = 'OR_VWRX') then
         AQualifier := 'T-37000;T+37000;99999';
       if (Piece(AItem, ':', 1) = 'OR_VWVS') and (CharAt(AQualifier, 1) = ';') then
@@ -2114,8 +2116,8 @@ begin
           end;
         if (LeftStr(TRemoteSite(Items[i]).SiteID, 4) = '200N') then
           begin
-            TRemoteSite(Items[i]).QueryStatus := '1^Not Included - USE VistAWeb';
-            UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED - USE VistAWeb');
+            TRemoteSite(Items[i]).QueryStatus := '1^Not Included - USE ' + aVistaWebLabel;
+            UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'NOT INCLUDED - USE ' + aVistaWebLabel);
             TRemoteSite(Items[i]).RemoteHandle := '';
             TRemoteSite(Items[i]).QueryStatus := '1^Done';
             continue;

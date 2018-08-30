@@ -269,26 +269,16 @@ end;
 
 function CallVistA(const aRPCName: string; const aParam: array of const; aReturn: TStrings): boolean; overload;
 { Call Broker, full results in aReturn }
-var
-  aMutex: Integer;
 begin
-  repeat
-    aMutex := CreateMutex(nil, True, RPCBROKER_MUTEX_NAME);
-  until (aMutex <> 0) and (GetLastError <> ERROR_ALREADY_EXISTS);
-
   try
-    try
-      Result := False;
-      SetParams(aRPCName, aParam);
-      aReturn.Clear;
-      CallBroker(aReturn);
-      Result := True;
-    finally
-      RPCBrokerV.Results.Clear;
-      RPCBrokerV.Param.Clear;
-    end;
+    Result := False;
+    SetParams(aRPCName, aParam);
+    aReturn.Clear;
+    CallBroker(aReturn);
+    Result := True;
   finally
-    CloseHandle(aMutex);
+    RPCBrokerV.Results.Clear;
+    RPCBrokerV.Param.Clear;
   end;
 end;
 
@@ -367,6 +357,7 @@ begin
           end;
       end; { with...for }
   // RPCBrokerV.Call;
+
   try
     QueryPerformanceCounter(RPCStart);
     if aReturn <> nil then
@@ -375,34 +366,20 @@ begin
       RPCBrokerV.Call;
     QueryPerformanceCounter(RPCStop);
   except
-    // The broker erroneously sets connected to false if there is any error (including an
-    // error on the M side). It should only set connection to false if there is no connection.
     on E: EBrokerError do
       begin
-        if E.Code = XWB_M_REJECT then
+        if not RPCBrokerV.Connected then
           begin
-            x := 'An error occurred on the server.' + CRLF + CRLF + E.Action;
-            Application.MessageBox(PChar(x), 'Server Error', MB_OK);
+            Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
+            Application.Terminate;
           end
-        else raise;
-        (*
-          case E.Code of
-          XWB_M_REJECT:  begin
-          x := 'An error occurred on the server.' + CRLF + CRLF + E.Action;
-          Application.MessageBox(PChar(x), 'Server Error', MB_OK);
-          end;
-          else           begin
-          x := 'An error occurred with the network connection.' + CRLF +
-          'Action was: ' + E.Action + CRLF + 'Code was: ' + E.Mnemonic +
-          CRLF + CRLF + 'Application cannot continue.';
-          Application.MessageBox(PChar(x), 'Network Error', MB_OK);
-          end;
-          end;
-        *)
-        // make optional later...
-        if not RPCBrokerV.Connected then Application.Terminate;
+        else
+          raise; // Still have connectivity, let the app try and sort it out :-)
       end;
+    else
+      raise;
   end;
+
   RunString := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
   QueryPerformanceFrequency(fFrequency);
   dt := ((MSecsPerSec * (RPCStop - RPCStart)) div fFrequency) / MSecsPerSec / SecsPerDay;
@@ -410,7 +387,10 @@ begin
   AStringList[1] := RunString;
   AStringList.Add(' ');
   AStringList.Add('Results -----------------------------------------------------------------');
-  FastAddStrings(RPCBrokerV.Results, AStringList);
+  if Assigned(aReturn) then
+    FastAddStrings(aReturn, AStringList)
+  else
+    FastAddStrings(RPCBrokerV.Results, AStringList);
   uCallList.Add(AStringList);
   if uShowRPCs then StatusText('');
   RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (completed)';

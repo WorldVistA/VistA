@@ -16,7 +16,10 @@
 add_delphi_project(CPRSChart)
 #add_dependencies(CPRSChart ORDateLibXE3)
 
-set(BUILD_DELPHI_XuDigSig_DIR "${CMAKE_CURRENT_SOURCE_DIR}/XuDigSig" CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
+
+set(BUILD_DELPHI_XuDigSig_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../PKI" CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/CPRSChart.TLB" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/CPRSChart.ridl" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 if(NOT BUILD_DELPHI_XuDigSig_DIR)
   message(WARNING "The CPRSv29 source on the FOIA site contained code that was
 released under the 1.1 version of the Mozilla Public license. These files

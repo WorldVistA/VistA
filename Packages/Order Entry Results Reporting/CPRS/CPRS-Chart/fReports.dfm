@@ -641,6 +641,7 @@ inherited frmReports: TfrmReports
         Visible = False
         WantReturns = False
         WordWrap = False
+        Zoom = 100
       end
     end
     object pnlRightMiddle: TPanel

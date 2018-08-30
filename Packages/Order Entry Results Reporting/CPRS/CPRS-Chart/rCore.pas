@@ -208,10 +208,11 @@ function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; Dat
 function HasRemoteData(const DFN: string; var ALocations: TStringList): Boolean;
 function CheckHL7TCPLink: Boolean;
 function GetVistaWebAddress(value: string): string;
+function GetVistaWeb_JLV_LabelName: string;
 
 implementation
 
-uses Hash, uCore, ShlObj, Windows;
+uses XWBHash, uCore, ShlObj, Windows;
 
 var
   uPtListDfltSort: string = '';                  // Current user's patient selection list default sort order.
@@ -1312,6 +1313,11 @@ function GetVistaWebAddress(value: string): string;
 begin
   CallV('ORWCIRN WEBADDR', [value]);
   result := RPCBrokerV.Results[0];
+end;
+
+function GetVistaWeb_JLV_LabelName: string;
+begin
+  result := sCallV('ORWCIRN JLV LABEL', [nil]);
 end;
 
 function GetDefaultPrinter(DUZ: Int64; Location: integer): string;

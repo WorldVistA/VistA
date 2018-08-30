@@ -156,7 +156,7 @@ begin
   FreeOnTerminate := True;
   SetLength(RPCArray, 0);
   try
-   ThreadBroker := TRPCThreadBroker.Create(nil);
+   ThreadBroker := TRPCBroker.Create(nil);
    ThreadBroker.Server := Piece(RPCParams, '^', 1);
    ThreadBroker.ListenerPort := StrToIntDef(Piece(RPCParams, '^', 2), 9200);
    ThreadBroker.LogIn.LogInHandle := Piece(RPCParams, '^', 3);
@@ -368,7 +368,7 @@ end;
 
 begin
   SetLength(RPCS, 0);
-  DebugReportBroker := TRPCThreadBroker.Create(nil);
+  DebugReportBroker := TRPCBroker.Create(nil);
   try
     //Setup the progress bar
     DebugProgBar.Max := (RetainedRPCCount + 3);

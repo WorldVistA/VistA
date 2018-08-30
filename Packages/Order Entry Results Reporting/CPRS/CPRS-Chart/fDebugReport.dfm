@@ -30,8 +30,8 @@ object frmDebugReport: TfrmDebugReport
     object img1: TImage
       Left = 0
       Top = 0
-      Width = 185
-      Height = 269
+      Width = 200
+      Height = 350
       Align = alClient
       AutoSize = True
       Picture.Data = {
@@ -2257,8 +2257,6 @@ object frmDebugReport: TfrmDebugReport
         0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E
         0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E0E
         0E0E0E0E0E0E0E0E0E0E0E0E0E0E}
-      ExplicitWidth = 200
-      ExplicitHeight = 350
     end
   end
   object pnlMain: TPanel
@@ -2308,7 +2306,7 @@ object frmDebugReport: TfrmDebugReport
         AlignWithMargins = True
         Left = 9
         Top = 9
-        Width = 402
+        Width = 222
         Height = 16
         Align = alTop
         Caption = 'Please provide a brief description:'
@@ -2318,7 +2316,6 @@ object frmDebugReport: TfrmDebugReport
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 222
       end
       object ActionMemo: TMemo
         Left = 6
@@ -2497,7 +2494,7 @@ object frmDebugReport: TfrmDebugReport
     object Label1: TLabel
       Left = 0
       Top = 0
-      Width = 605
+      Width = 198
       Height = 16
       Align = alTop
       Alignment = taCenter
@@ -2508,7 +2505,6 @@ object frmDebugReport: TfrmDebugReport
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitWidth = 198
     end
     object DebugProgBar: TProgressBar
       Left = 0

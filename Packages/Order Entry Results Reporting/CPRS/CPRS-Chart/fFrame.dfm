@@ -566,7 +566,7 @@ inherited frmFrame: TfrmFrame
           Margins.Right = 4
           Margins.Bottom = 4
           Anchors = [akLeft, akTop, akRight, akBottom]
-          Caption = 'laVAA2'
+          Caption = 'Pt Insur'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -583,7 +583,7 @@ inherited frmFrame: TfrmFrame
           Margins.Right = 4
           Margins.Bottom = 4
           Anchors = [akLeft, akTop, akRight, akBottom]
-          Caption = 'laMHV'
+          Caption = 'MHV'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -712,14 +712,13 @@ inherited frmFrame: TfrmFrame
           Top = 2
           Width = 86
           Height = 23
-          Hint = 'Click to open VistaWeb'
+          Hint = 'Click for any external patient data'
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
           Align = alTop
           BevelWidth = 2
-          Caption = 'VistaWeb'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBtnFace
           Font.Height = -15
@@ -746,7 +745,6 @@ inherited frmFrame: TfrmFrame
             Margins.Bottom = 4
             Align = alClient
             Alignment = taCenter
-            Caption = 'VistaWeb'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clInfoText
             Font.Height = -12
@@ -755,7 +753,7 @@ inherited frmFrame: TfrmFrame
             ParentFont = False
             Layout = tlCenter
             OnClick = pnlVistaWebClick
-            ExplicitWidth = 46
+            ExplicitWidth = 3
             ExplicitHeight = 13
           end
         end

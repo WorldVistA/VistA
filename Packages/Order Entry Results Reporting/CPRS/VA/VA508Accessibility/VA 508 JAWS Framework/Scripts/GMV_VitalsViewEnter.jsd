@@ -1,0 +1,38 @@
+:function AutoStartEvent
+
+:function VA508ChangeEvent
+:Synopsis customize callback from events so that calendars speak
+:Param handle/hwnd No Description
+:Param int/iDataStatus No Description
+:Param string/sCaption No Description
+:Param string/sValue No Description
+:Param string/sControlType No Description
+:Param string/sState No Description
+:Param string/sInstructions No Description
+:Param string/sItemInstructions No Description
+
+:function CPRSChart__HandleCustomWindows
+:Returns int True means speaking was handled.
+:Synopsis process special functions for CPRS
+:Description Can this be in main file and then overriden in site?
+:Param handle/FocusWIndow Focused Window Handle
+
+:function FocusChangedEvent
+:Synopsis This event gets overridden when JAWS isn't speaking the titles correctly.  If needed, it initializes the global variables it uses.
+:Description This speaks the Cover Sheet Vitals and the Procedure Order Reason For Request.
+
+:function GetHandleFromAddress
+:Returns handle The handle of the child at that adress; 0 if the address is invalid for the parent.
+:Synopsis This utility function walks down the windows hierarchy
+:Description The component ID's vary from compile to compile, so constants aren't much help for identifying the components.  Instead, we use the component's hierarchical position as an address to locate it as a descendant of the form.
+:Param handle/Parent The handle of a window we have already identified
+:Param string/Address A space-separated list of numeral integers indicating the relationships from generation to generation.  Each integer indicates which child to choose from its parent, with 1 being the first child.
+
+:function SiteCodeInitialize
+:Synopsis Placeholder for site customization.
+:Description This code will be run when the USE statement for site specific code is commented out. It is just an empty function call.
+
+:function NewTextEvent
+:Synopsis This event gets overridden when JAWS starts talking too much
+:Description The edit field of TORComboBoxes uses highlighted text to auto-complete what has been typed in so far.  We only want JAWS to say the selected list item.
+

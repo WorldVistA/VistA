@@ -147,6 +147,10 @@ type
   end;
 
 const
+  Version = '1.0.2.1';
+
+  PKI_VERSION = 1;
+
   PKI_PIN_RESULT: array [TPKIPINResult] of string = ('OK', 'PIN Canceled', 'Card Locked', 'PIN Error');
 
   PKI_PIN_MESSAGE: array [TPKIPINResult] of string = ('OK', 'User canceled signing.', 'User card is locked.', 'PIN Error');

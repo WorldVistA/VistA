@@ -1,0 +1,76 @@
+package XWB_RXE8;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VistA RPC Broker Runtime Package - XE8'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl,
+  rtl,
+  xmlrtl,
+  dbrtl,
+  inet,
+  vcldb,
+  vclie;
+
+contains
+  XlfSid in '@SOURCE@\XlfSid.pas',
+  Loginfrm in '@SOURCE@\Loginfrm.pas' {in 'Loginfrm.pas'},
+  RpcbErr in '@SOURCE@\RpcbErr.pas' {in 'Rpcberr.pas'},
+  Rpcnet in '@SOURCE@\Rpcnet.pas' {in 'Rpcnet.pas'},
+  SelDiv in '@SOURCE@\SelDiv.pas' {in 'SelDiv.pas'},
+  SgnonCnf in '@SOURCE@\SgnonCnf.pas' {in 'Sgnoncnf.pas'},
+  Splvista in '@SOURCE@\Splvista.pas' {in 'Splvista.pas'},
+  VCEdit in '@SOURCE@\VCEdit.pas' {in 'Vcedit.pas'},
+  frmSignonMessage in '@SOURCE@\frmSignonMessage.pas' {in 'frmSignonMessage.pas'},
+  AddServer in '@SOURCE@\AddServer.pas' {frmAddServer},
+  fRPCBErrMsg in '@SOURCE@\fRPCBErrMsg.pas' {frmErrMsg},
+  fSgnonDlg in '@SOURCE@\fSgnonDlg.pas' {frmSignonDialog},
+  CCOWRPCBroker in '@SOURCE@\CCOWRPCBroker.pas',
+  CCOW_const in '@SOURCE@\CCOW_const.pas',
+  VERGENCECONTEXTORLib_TLB in '@SOURCE@\VERGENCECONTEXTORLib_TLB.pas',
+  Trpcb in '@SOURCE@\Trpcb.pas',
+  fPlinkpw in '@SOURCE@\fPlinkpw.pas' {fPlinkPassword},
+  fSSHUsername in '@SOURCE@\fSSHUsername.pas' {SSHUsername},
+  fDebugInfo in '@SOURCE@\fDebugInfo.pas' {frmDebugInfo},
+  Rpcconf1 in '@SOURCE@\Rpcconf1.pas' {rpcConfig},
+  XWBRich20 in '@SOURCE@\XWBRich20.pas',
+  XWBSSOi in '@SOURCE@\XWBSSOi.pas' {XWBSSOiFrm},
+  XWBut1 in '@SOURCE@\XWBut1.pas',
+  MFunStr in '@SOURCE@\MFunStr.pas',
+  RpcSLogin in '@SOURCE@\RpcSLogin.pas',
+  XWBHash in '@SOURCE@\XWBHash.pas',
+  Wsockc in '@SOURCE@\Wsockc.pas';
+
+end.
+
+
+
+
+
+

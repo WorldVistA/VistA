@@ -72,7 +72,7 @@ type
     function getCertNonRepudiationKeyUsage: boolean;
     function getCertOfflineCRLSignKeyUsage: boolean;
 
-    // function getToString: string;
+    function getToString: string;
   public
     constructor Create(aCertificate: PCCERT_CONTEXT);
     destructor Destroy; override;
@@ -118,7 +118,7 @@ type
     property CertTrustCTLIsNotSignatureValid: boolean read getCertTrustCTLIsNotSignatureValid;
     property CertTrustCTLIsNotValidForUsage: boolean read getCertTrustCTLIsNotValidForUsage;
 
-    //property ToString: string read getToString;
+    property AsString: string read getToString;
   end;
 
 implementation
@@ -333,7 +333,6 @@ begin
   Result := fCertIntendedPurposes;
 end;
 
-{ Used for Debug... remove later
 function TPKIEncryptionCertificate.getToString: string;
 var
   aResult: TStringList;
@@ -418,7 +417,6 @@ begin
     FreeAndNil(aResult);
   end;
 end;
-}
 
 function TPKIEncryptionCertificate.open(aCertificate: PCCERT_CONTEXT): boolean;
 var

@@ -12,9 +12,11 @@ object ORfrmDtTm: TORfrmDtTm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object TxtDateSelected: TLabel
@@ -26,7 +28,7 @@ object ORfrmDtTm: TORfrmDtTm
     Visible = False
   end
   object bvlFrame: TBevel
-    Left = -3
+    Left = 8
     Top = 6
     Width = 302
     Height = 221
@@ -34,8 +36,8 @@ object ORfrmDtTm: TORfrmDtTm
     Style = bsRaised
   end
   object Label1: TLabel
-    Left = 20
-    Top = 181
+    Left = 66
+    Top = 204
     Width = 200
     Height = 13
     AutoSize = False
@@ -147,11 +149,12 @@ object ORfrmDtTm: TORfrmDtTm
     TabOrder = 2
     OnChange = txtTimeChange
   end
-  object lstHour: TListBox
+  object lstHour: TORDtTmListBox
     Left = 218
     Top = 38
     Width = 45
     Height = 160
+    Style = lbOwnerDrawVariable
     ItemHeight = 13
     Items.Strings = (
       '  0'
@@ -180,12 +183,14 @@ object ORfrmDtTm: TORfrmDtTm
       '23')
     TabOrder = 3
     OnClick = lstHourClick
+    OnEnter = lstHourEnter
   end
-  object lstMinute: TListBox
+  object lstMinute: TORDtTmListBox
     Left = 266
     Top = 38
     Width = 33
     Height = 160
+    Style = lbOwnerDrawVariable
     ItemHeight = 13
     Items.Strings = (
       ':00 --'
@@ -226,6 +231,7 @@ object ORfrmDtTm: TORfrmDtTm
     Top = 38
     Width = 192
     Height = 160
+    Color = clScrollBar
     StartOfWeek = 0
     TabOrder = 0
     UseCurrentDate = False
@@ -241,7 +247,7 @@ object ORfrmDtTm: TORfrmDtTm
     OnClick = cmdTodayClick
   end
   object cmdNow: TButton
-    Left = 218
+    Left = 216
     Top = 200
     Width = 31
     Height = 17
@@ -259,6 +265,8 @@ object ORfrmDtTm: TORfrmDtTm
     OnClick = cmdMidnightClick
   end
   object VA508AccessibilityManager1: TVA508AccessibilityManager
+    Left = 312
+    Top = 192
     Data = (
       (
         'Component = lblDate'
