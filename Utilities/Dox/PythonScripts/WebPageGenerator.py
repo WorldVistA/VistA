@@ -44,6 +44,7 @@ from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
+from HTMLUtilityFunctions import FOOTER
 from UtilityFunctions import *
 
 # constants
@@ -619,33 +620,20 @@ class WebPageGenerator:
             os.mkdir(self._pdfOutDir)
         self._repDir = repDir
         self._docRepDir = docRepDir
-        self._header = [] # TODO: Not used? header.html is in repo and __includeHeader__ is called.. a lot
-        self._footer = []
-        self._source_header = []  # TODO: Not used?
         self._includeSource = includeSource
-        self.__initWebTemplateFile__()
+        self._header = self.__generateHtmlPageHeader__(isSource=False)
+        self._source_header = self.__generateHtmlPageHeader__(isSource=True)
         with open(rtnJson, 'r') as jsonFile:
             self._rtnRefJson = json.load(jsonFile)
         with open(repoJson, 'r') as jsonFile:
             self._repoJson = json.load(jsonFile)
         self._generatePDFBundle = generatePDF
 
-    def __initWebTemplateFile__(self):
-        #load _header and _footer in the memory
-        self.__generateHtmlPageHeader__(True)
-        self.__generateHtmlPageHeader__(False)
-        webDir = os.path.join(self._docRepDir, "Web")
-        footer = open(os.path.join(webDir, "footer.html"), 'r')
-        for line in footer:
-            self._footer.append(line)
-        footer.close()
 
     def __includeHeader__(self, outputFile, indexList=""):
         for line in (self._header):
             outputFile.write(line)
-    def __includeFooter__(self, outputFile):
-        for line in self._footer:
-            outputFile.write(line)
+
     def __includeSourceHeader__(self, outputFile):
         for line in self._source_header:
             outputFile.write(line)
@@ -750,7 +738,7 @@ class WebPageGenerator:
                                         archList=None):
         self.generateNavigationBar(outputFile, indexList, archList,
                                    printButton=False)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
 
 #------------------------------------------------------------------------------
 
@@ -827,23 +815,21 @@ class WebPageGenerator:
                      %s from the repository with a Git hash of: %s" \
                     % (self._repoJson["date"], self._repoJson["sha1"])
         outputFile.write("""<h6><a class ="anchor" id="howto"></a>%s</h6>\n""" % repo_info)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
 
-    def __generateHtmlPageHeader__(self, isSource = False):
+    def __generateHtmlPageHeader__(self, isSource=False):
+        header = []
+        header.append(COMMON_HEADER_PART)
         if isSource:
-            output = self._source_header
+            header.append(CODE_PRETTY_JS_CODE)
+        header.append(GOOGLE_ANALYTICS_JS_CODE)
+        header.append(HEADER_END)
+        if isSource:
+            header.append(SOURCE_CODE_BODY_PART)
         else:
-            output = self._header
-        output.append(COMMON_HEADER_PART)
-        if isSource:
-            output.append(CODE_PRETTY_JS_CODE)
-        output.append(GOOGLE_ANALYTICS_JS_CODE)
-        output.append(HEADER_END)
-        if isSource:
-            output.append(SOURCE_CODE_BODY_PART)
-        else:
-            output.append(DEFAULT_BODY_PART)
-        output.append(TOP_INDEX_BAR_PART)
+            header.append(DEFAULT_BODY_PART)
+        header.append(TOP_INDEX_BAR_PART)
+        return header
 
 #===============================================================================
 # Method to generate Package Namespace Mapping page
@@ -884,7 +870,7 @@ class WebPageGenerator:
                 outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -918,7 +904,7 @@ class WebPageGenerator:
             generateIndexedGlobalTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, string.uppercase)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -946,7 +932,7 @@ class WebPageGenerator:
             outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -975,7 +961,7 @@ class WebPageGenerator:
             outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -2140,7 +2126,7 @@ class WebPageGenerator:
                 if len(line):
                   outputFile.write("%s \n" % line)
               outputFile.write("</xmp>\n")
-            self.__includeFooter__(outputFile)
+            outputFile.write(FOOTER)
             outputFile.close()
 
 #===============================================================================
@@ -2227,7 +2213,7 @@ class WebPageGenerator:
                                            indexSet)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, indexList)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -2282,7 +2268,7 @@ class WebPageGenerator:
             generateIndexedPackageTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, string.uppercase)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #=======================================================================
@@ -3801,7 +3787,7 @@ $( document ).ready(function() {
         outputFile.write("</select>\n")
         for objectKey in allObjects:
             self.generatePackageComponentIndexPage(objectKey, outputFile)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
