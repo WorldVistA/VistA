@@ -19,7 +19,7 @@ execute_process(COMMAND
   "@PYTHON_EXECUTABLE@"
   "@PYTHONSCRIPTS_DIR@/GenerateRepoInfo.py"
   -mr @DOCUMENT_VISTA_M_DIR@
-  -outdir @DOCUMENT_VISTA_OUTPUT_DIR@
+  -outputfile @FILESINFO_JSON@
   -git "@GIT_EXECUTABLE@"
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)

@@ -44,6 +44,7 @@ from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 from CrossReference import *
 
+from HTMLUtilityFunctions import FOOTER
 from UtilityFunctions import *
 
 # constants
@@ -608,7 +609,7 @@ def generateList(data):
 # class to generate the web page based on input
 class WebPageGenerator:
     def __init__(self, crossReference, outDir, pdfOutDir, repDir, docRepDir,
-                 git, includeSource, rtnJson, generatePDF):
+                 includeSource, rtnJson, repoJson, generatePDF):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
@@ -619,32 +620,20 @@ class WebPageGenerator:
             os.mkdir(self._pdfOutDir)
         self._repDir = repDir
         self._docRepDir = docRepDir
-        self._git = git
-        self._header = [] # TODO: Not used? header.html is in repo and __includeHeader__ is called.. a lot
-        self._footer = []
-        self._source_header = []  # TODO: Not used?
         self._includeSource = includeSource
-        self.__initWebTemplateFile__()
+        self._header = self.__generateHtmlPageHeader__(isSource=False)
+        self._source_header = self.__generateHtmlPageHeader__(isSource=True)
         with open(rtnJson, 'r') as jsonFile:
             self._rtnRefJson = json.load(jsonFile)
+        with open(repoJson, 'r') as jsonFile:
+            self._repoJson = json.load(jsonFile)
         self._generatePDFBundle = generatePDF
 
-    def __initWebTemplateFile__(self):
-        #load _header and _footer in the memory
-        self.__generateHtmlPageHeader__(True)
-        self.__generateHtmlPageHeader__(False)
-        webDir = os.path.join(self._docRepDir, "Web")
-        footer = open(os.path.join(webDir, "footer.html"), 'r')
-        for line in footer:
-            self._footer.append(line)
-        footer.close()
 
     def __includeHeader__(self, outputFile, indexList=""):
         for line in (self._header):
             outputFile.write(line)
-    def __includeFooter__(self, outputFile):
-        for line in self._footer:
-            outputFile.write(line)
+
     def __includeSourceHeader__(self, outputFile):
         for line in self._source_header:
             outputFile.write(line)
@@ -749,7 +738,7 @@ class WebPageGenerator:
                                         archList=None):
         self.generateNavigationBar(outputFile, indexList, archList,
                                    printButton=False)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
 
 #------------------------------------------------------------------------------
 
@@ -822,37 +811,25 @@ class WebPageGenerator:
         outputFile.write(INDEX_HTML_PAGE_HEADER)
         outputFile.write(TOP_INDEX_BAR_PART)
         outputFile.write(INDEX_HTML_PAGE_INTRODUCTION_PART)
-        self.__generateGitRepositoryKey__(outputFile)
-        self.__includeFooter__(outputFile)
+        repo_info = "The information in this instance of DOX was generated on: \
+                     %s from the repository with a Git hash of: %s" \
+                    % (self._repoJson["date"], self._repoJson["sha1"])
+        outputFile.write("""<h6><a class ="anchor" id="howto"></a>%s</h6>\n""" % repo_info)
+        outputFile.write(FOOTER)
 
-    def __generateGitRepositoryKey__(self, outputFile):
-        sha1Key = self.__getGitRepositLatestSha1Key__()
-        outputFile.write("""<h6><a class ="anchor" id="howto"></a>Note:Repository SHA1 key:%s</h6>\n""" % sha1Key)
-
-    def __getGitRepositLatestSha1Key__(self):
-        gitCommand = "\"" + self._git + "\"" + " rev-parse --verify HEAD"
-        os.chdir(self._repDir)
-        if os.path.exists(os.path.join(self._repDir,'.git')):
-          logger.debug("git Command is %s" % gitCommand)
-          result = subprocess.check_output(gitCommand, shell=True)
-          return result.strip()
-        return ""
-
-    def __generateHtmlPageHeader__(self, isSource = False):
+    def __generateHtmlPageHeader__(self, isSource=False):
+        header = []
+        header.append(COMMON_HEADER_PART)
         if isSource:
-            output = self._source_header
+            header.append(CODE_PRETTY_JS_CODE)
+        header.append(GOOGLE_ANALYTICS_JS_CODE)
+        header.append(HEADER_END)
+        if isSource:
+            header.append(SOURCE_CODE_BODY_PART)
         else:
-            output = self._header
-        output.append(COMMON_HEADER_PART)
-        if isSource:
-            output.append(CODE_PRETTY_JS_CODE)
-        output.append(GOOGLE_ANALYTICS_JS_CODE)
-        output.append(HEADER_END)
-        if isSource:
-            output.append(SOURCE_CODE_BODY_PART)
-        else:
-            output.append(DEFAULT_BODY_PART)
-        output.append(TOP_INDEX_BAR_PART)
+            header.append(DEFAULT_BODY_PART)
+        header.append(TOP_INDEX_BAR_PART)
+        return header
 
 #===============================================================================
 # Method to generate Package Namespace Mapping page
@@ -893,7 +870,7 @@ class WebPageGenerator:
                 outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -927,7 +904,7 @@ class WebPageGenerator:
             generateIndexedGlobalTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, string.uppercase)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -955,7 +932,7 @@ class WebPageGenerator:
             outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -984,7 +961,7 @@ class WebPageGenerator:
             outputFile.write("</tr>\n")
         outputFile.write("</table>\n")
         outputFile.write("<BR>\n")
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -2149,7 +2126,7 @@ class WebPageGenerator:
                 if len(line):
                   outputFile.write("%s \n" % line)
               outputFile.write("</xmp>\n")
-            self.__includeFooter__(outputFile)
+            outputFile.write(FOOTER)
             outputFile.close()
 
 #===============================================================================
@@ -2236,7 +2213,7 @@ class WebPageGenerator:
                                            indexSet)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, indexList)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -2291,7 +2268,7 @@ class WebPageGenerator:
             generateIndexedPackageTableRow(outputFile, itemsPerRow)
         outputFile.write("</table>\n</div>\n")
         self.generateIndexNavigationBar(outputFile, string.uppercase)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #=======================================================================
@@ -3810,7 +3787,7 @@ $( document ).ready(function() {
         outputFile.write("</select>\n")
         for objectKey in allObjects:
             self.generatePackageComponentIndexPage(objectKey, outputFile)
-        self.__includeFooter__(outputFile)
+        outputFile.write(FOOTER)
         outputFile.close()
 
 #===============================================================================
@@ -3867,9 +3844,9 @@ def run(args):
                                   args.pdfOutdir,
                                   args.MRepositDir,
                                   doxDir,
-                                  args.git,
                                   args.includeSource,
                                   args.rtnJson,
+                                  args.filesJson,
                                   args.pdf)
     webPageGen.generateWebPage()
     logger.info ("End of generating web pages....")
@@ -3883,7 +3860,6 @@ if __name__ == '__main__':
                         help='Output Web Page directory')
     parser.add_argument('-po', '--pdfOutdir', required=True,
                         help='Output PDF directory')
-    parser.add_argument('-git', required=True, help='git executable')
     parser.add_argument('-is', '--includeSource', required=False,
                         default=False, action='store_true',
                         help='generate routine source code page?')
@@ -3893,13 +3869,18 @@ if __name__ == '__main__':
                         help='routine reference in VistA data file in JSON format')
     parser.add_argument('-icr','--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-st','--sortTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Sort Templates')
-    parser.add_argument('-it','--inputTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Input Templates')
-    parser.add_argument('-pt','--printTemplateDep', required=True, help='CSV formatted "Relational Jump" field data for Print Templates')
+    parser.add_argument('-st','--sortTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Sort Templates')
+    parser.add_argument('-it','--inputTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Input Templates')
+    parser.add_argument('-pt','--printTemplateDep', required=True,
+                        help='CSV formatted "Relational Jump" field data for Print Templates')
     parser.add_argument('-pdf', action='store_true',
                         help='generate html')
     parser.add_argument('-local', action='store_true',
                         help='Use links to local DOX pages')
+    parser.add_argument('-fj','--filesJson', required=True,
+                        help='Repository information in JSON format')
     result = parser.parse_args();
 
     if not result.outputLogFileName:
