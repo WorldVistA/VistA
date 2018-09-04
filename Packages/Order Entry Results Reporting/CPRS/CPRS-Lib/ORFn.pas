@@ -445,7 +445,7 @@ var
   i: Integer;
 begin
   Result := False;
-  for i := 1 to Length(x) do if CharInSet(x[i], ['!'..'~']) then  // ordinal values 33..126
+  for i := 1 to Length(x) do if not x[i].IsControl then
   begin
     Result := True;
     break;
