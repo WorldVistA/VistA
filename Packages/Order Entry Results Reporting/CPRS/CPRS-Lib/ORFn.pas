@@ -920,9 +920,9 @@ begin
   GetStrings(ATo);
   ms := TMemoryStream.Create;
   try
-    str[0].SaveToStream(ms);
+    str[0].SaveToStream(ms, TEncoding.Unicode);
     ms.Seek(0, soFromBeginning);
-    str[1].LoadFromStream(ms);
+    str[1].LoadFromStream(ms, TEncoding.Unicode);
   finally
     ms.Free;
   end;
@@ -991,12 +991,12 @@ begin
   GetStrings(ATo);
   ms := TMemoryStream.Create;
   try
-    str[1].SaveToStream(ms);
+    str[1].SaveToStream(ms, TEncoding.Unicode);
     ms.Seek(0, soFromEnd);
-    str[0].SaveToStream(ms);
+    str[0].SaveToStream(ms, TEncoding.Unicode);
     ms.Seek(0, soFromBeginning);
     str[1].Clear;
-    str[1].LoadFromStream(ms);
+    str[1].LoadFromStream(ms, TEncoding.Unicode);
   finally
     ms.Free;
   end;
@@ -1023,9 +1023,9 @@ begin
   begin
     ms := TMemoryStream.Create;
     try
-      source.SaveToStream(ms, TEncoding.Default);
+      source.SaveToStream(ms, TEncoding.Unicode);
       ms.Seek(0, soFromBeginning);
-      destination.LoadFromStream(ms);
+      destination.LoadFromStream(ms, TEncoding.Unicode);
     finally
       ms.Free;
     end;
@@ -1046,12 +1046,12 @@ begin
   begin
     ms := TMemoryStream.Create;
     try
-      destination.SaveToStream(ms);
+      destination.SaveToStream(ms, TEncoding.Unicode);
       ms.Seek(0, soFromEnd);
-      source.SaveToStream(ms, TEncoding.Default);
+      source.SaveToStream(ms, TEncoding.Unicode);
       ms.Seek(0, soFromBeginning);
       destination.Clear;
-      destination.LoadFromStream(ms);
+      destination.LoadFromStream(ms, TEncoding.Unicode);
     finally
       ms.Free;
     end;
