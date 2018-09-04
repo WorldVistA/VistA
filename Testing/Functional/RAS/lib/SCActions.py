@@ -1271,12 +1271,13 @@ class SCActions (Actions):
             self.VistA.write(appnum)
         self.VistA.wait('check out')
         self.VistA.write('Yes')
-        self.VistA.wait('deleting')
-        self.VistA.wait_re('continue[:]*')
-        self.VistA.write('')
-        self.VistA.wait('deleting check out')
-        self.VistA.wait('exit:')
-        self.VistA.write('')
+        while True:
+          index = self.VistA.multiwait(['deleting','continue[:]*','deleting check out','exit:'])
+          if index == 1:
+            self.VistA.write('')
+          if index == 3:
+            self.VistA.wait('')
+            break
         self.VistA.wait('Action:')
         self.VistA.write('')
 
