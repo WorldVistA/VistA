@@ -546,22 +546,16 @@ end;
 function FilteredString(const x: string; ATabWidth: Integer = 8): string;
 var
   i, j: Integer;
-  xc: AnsiChar;
+  c: Char;
 begin
   Result := '';
   for i := 1 to Length(x) do
   begin
-    xc := AnsiChar(x[i]);
-    case xc of
-            #9: for j := 1 to (ATabWidth - (Length(Result) mod ATabWidth)) do
-                  Result := Result + ' ';
-     #32..#127: Result := Result + x[i];
-    #128..#159: Result := Result + '?';
-  #10,#13,#160: Result := Result + ' ';
-    #161..#255: Result := Result + x[i];
-    end;
+    c := x[i];
+    if c = #9 then for j := 1 to (ATabWidth - (Length(Result) mod ATabWidth)) do Result := Result + ' '
+    else Result := Result + c;
   end;
-  if Copy(Result, Length(Result), 1) = ' ' then Result := TrimRight(Result) + ' ';
+  if (Result <> '') and (Result[Length(Result)] = ' ') then Result := TrimRight(Result) + ' ';
 end;
 
 procedure ExpandTabsFilter(AList: TStrings; ATabWidth: Integer);
