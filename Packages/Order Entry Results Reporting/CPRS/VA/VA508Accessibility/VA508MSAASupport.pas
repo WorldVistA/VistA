@@ -94,7 +94,6 @@ type
     FComponent: TWinControl;
     FOldWndProc: TWndMethod;
     function ImageEventIndex(Event: TVA508OnImageIndexQueryEvent): integer;
-    function ManagerEventIndex(): integer;
     function ListProcIndex(Proc: TVA508ListQueryProc): integer;
     function ProcIndex(Proc: TVA508QueryProc): integer;
     procedure Attach;
@@ -522,21 +521,6 @@ begin
         Result := i;
         exit;
       end;
-    end;
-  end;
-  Result := -1;
-end;
-
-function TMSAAServer.ManagerEventIndex(): integer;
-var
-  i: integer;
-begin
-  for i := 0 to FEventData.Count - 1 do
-  begin
-    if FEventData[i] is TManagerEventData then
-    begin
-      Result := i;
-      exit;
     end;
   end;
   Result := -1;

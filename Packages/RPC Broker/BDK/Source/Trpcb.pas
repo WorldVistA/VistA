@@ -890,7 +890,6 @@ var
   InternalBroker: TRPCBroker;                       {use separate component}
   Str: String;
 begin
-  Result := False;
   Connected := True;
   InternalBroker := nil;
   try
@@ -998,7 +997,7 @@ var
   thisOwner: TComponent;
   RPCBContextor: TContextorControl;
   thisParent: TForm;
-  BrokerDir, Str1, Str2, Str3 :string;
+  Str1, Str2, Str3 :string;
   PseudoPort: Integer;
   PseudoServer, PseudoPortStr: String;
 begin

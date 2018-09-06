@@ -115,7 +115,7 @@ begin
   for I := 1 to Length(Val) do    // Iterate
   begin
     C := Val[I];
-    if not (C in ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','.',':']) then
+    if not CharInSet(C, ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','.',':']) then
     begin
       Result := False;
       Break;
@@ -133,10 +133,9 @@ begin
   if not IsIPAddress(ServerName) then
   begin
     outcome := PAnsiChar(StrAlloc(256));  // JLI 090804
-    host := PAnsiChar(StrAlloc(length(ServerName) + 1));  // JLI 090804
-    AnsiStrings.StrPCopy(host, ServerName); //p60
+    host := PAnsiChar(AnsiString(ServerName)); //p60
     LibGetHostIP1(TaskInstance, host, outcome);
-    Result := AnsiStrings.StrPas(outcome);    //p60
+    Result := String(AnsiString(outcome));    //p60
     AnsiStrings.StrDispose(outcome);        //p60
     AnsiStrings.StrDispose(host);           //p60
   end
