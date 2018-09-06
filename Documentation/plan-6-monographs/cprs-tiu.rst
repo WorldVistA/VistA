@@ -2,7 +2,7 @@ Reports and TIU unicode support
 ===============================
 After the conversion of CPRS to talk to VistA in Unicode, we needed to find all
 the places in CPRS that for some reason or another do not take or display
-Unicode text. By and large, these places have actually been hard to find (which
+Unicode text. By and large, these places have actually been easy to find (which
 is a good thing!). One obvious place that had issues was the Notes tab. We
 couldn't paste any non ASCII text; and if we typed it in (not pasted it), it
 wouldn't save. Another place was that in various reports
@@ -42,7 +42,7 @@ It was frustrating when trying to paste into notes: error messages; and saved da
 * Method ``ScrubTheClipboard`` in ``Packages/Order Entry Results
   Reporting/CPRS/CPRS-Chart/ORExtensions.pas`` existed for the sole purpose of
   cleaning copied and pasted text. It did stuff like replace smart quotes with
-  regular quotes and then replace all other high bit chracters with question
+  regular quotes and then replace extended ASCII with question
   marks. I don't know exactly what happened to it when I pasted Korean text in;
   but suffice it to say, it was obviously not needed now that the database is
   in Unicode. So that source code was completely removed. For details, see
@@ -68,3 +68,8 @@ A full TIU note with Korean copied from Wikipedia:
    :align: center
    :alt: Korean Note
 
+I tested templating and it worked very well. I remember from my days in Jordan
+that templates garbled our Windows-1256 Arabic--so I was glad to see that I
+didn't need to make any changes at all to get it work. I tried template objects
+that returned Korean text; and Template fields that returned Korean text (like
+Yes/No in Korean).
