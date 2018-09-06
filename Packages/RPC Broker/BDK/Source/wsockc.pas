@@ -207,9 +207,6 @@ type
              var Sec, App: PChar; TimeOut: integer): PChar;
     function cRight( z: PChar;  n: longint): PChar;
     function cLeft( z: PChar; n: longint): PChar;
-    function BuildApi ( n,p: string; f: longint): string;
-    function BuildHdr ( wkid: string; winh: string; prch: string;
-             wish: string): string;
     function BuildPar(hSocket: TSocket; api, RPCVer: string;
              const Parameters: TParams): TBytes;
     function StrPack (n: string; p: integer): string;
@@ -395,18 +392,6 @@ begin
 end; //function TXBWinsock.cLeft
 
 
-{----------------------- TXWBWinsock.BuildApi ------------------
-----------------------------------------------------------------}
-function TXWBWinsock.BuildApi ( n,p: String; f: longint): String;
-var
-  x,s: String;
-begin
-  x := IntToStr(f);
-  s := StrPack(p,5);
-  result := StrPack(x + n + '^' + s,5);
-end; //function TXWBWinsock.BuildApi
-
-
 {----------------------- TXWBWinsock.NetworkConnect ------------
 ----------------------------------------------------------------}
 function TXWBWinsock.NetworkConnect(ForegroundM: boolean; Server: string;
@@ -447,17 +432,6 @@ begin
       SocketError := WSACleanup;                //-- shutdown TCP API
   end; //if
 end; //procedure TXWBWinsock.NetworkDisconnect
-
-
-{----------------------- TXWBWinsock.BuildHdr ------------------
-----------------------------------------------------------------}
-function TXWBWinsock.BuildHdr ( wkid: string; winh: string; prch: string; wish: string): string;
-var
-  t: string;
-begin
-  t := wkid + ';' + winh + ';' + prch + ';' + wish + ';';
-  Result := StrPack(t,3);
-end; //function TXWBWinsock.BuildHdr
 
 
 {----------------------- TXWBWinsock.BuildPar ------------------
@@ -528,13 +502,16 @@ end; //function TXWBWinsock.BuildPar
 function TXWBWinsock.StrPack(n: String; p: Integer): String;
 var
   s,l: Integer;
-  t,x,zero: shortstring;
+  t,x,zero: string;
   y: String;
 begin
+  //OSE:SMH - Refactored to use regular strings instead of pascal strings
+  // but code is apprently never
   s := Length(n);
-  fillchar(zero,p+1, '0');
-  SetLength(zero, p);
-  str(s,x);
+  zero := StringOfChar('0', p + 1);    //fillchar(zero,p+1, '0');
+  //SetLength(zero, p);
+  //str(s,x);
+  x := IntToStr(s);
   t := zero + x;
   l := length(x)+1;
   y := Copy(t, l , p);
@@ -777,12 +754,14 @@ begin
     NetError('getaddrinfo (Client)',0);
   pLocalName := pLocalResult.ai_canonname;
   //Don't send an IPv6 address as a host name due to VistA x-ref "AS2" in SIGN-ON LOG
-  if AnsiContainsStr(pLocalName,':') then
+  { OSE/SMH - This code is no longer needed since XU*8*638 -- I am commenting it out }
+  {if AnsiContainsStr(pLocalName,':') then
   begin
     DNSLookup := gethostname(pLocalName, 255); // get name of local system
     if DNSLookup > 0 then
       NetError ('gethostname (local)',0);
   end;
+  }
   y := TEncoding.UTF8.GetBytes('[XWB]' + '10' + IntToStr(CountWidth) + '0' + '4'+#$A + 'TCPConnect50');
   y := y + LPack(LocalAddressString,CountWidth) + [ Ord('f'), Ord('0') ] + LPack(IntToStr(0),CountWidth);
   y := y + [ Ord('f'), Ord('0') ] + LPack(String(pLocalName),CountWidth) + [ Ord('f'), 4 ];
@@ -823,7 +802,6 @@ var
   ChangeCursor: Boolean;
   tmpPChar: PChar;
   Str: String;
-  x: array [0..15] of Char;
 begin
   if not IsConnected then exit;
   if Screen.Cursor = crDefault then
@@ -838,7 +816,6 @@ begin
       screen.cursor := crDefault;
       exit;
   end; //if hSocket <= 0
-  StrPcopy(x, StrPack(StrPack('#BYE#',5),5));
   Str := '[XWB]' + '10'+IntToStr(CountWidth)+'0' +'4'+#5+'#BYE#'+#4;
   if hSocket <> INVALID_SOCKET then
   begin

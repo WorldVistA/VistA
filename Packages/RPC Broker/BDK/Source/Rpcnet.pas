@@ -308,7 +308,7 @@ begin
    WSAError := WSAGetAsyncError(hTCP); { in case async call failed }
    If  WSAError < 0 then
    begin
-        AnsiStrings.StrPCopy(chrTemp,IntToStr(WSAError));    //p60
+        chrTemp := PAnsiChar(AnsiString(IntToStr(WSAError)));    //p60
         exit;
    end;
 
@@ -320,7 +320,7 @@ begin
          begin
               AnsiStrings.StrCopy(chrTemp, 'Unknown!');    //p60
               if rpcconfig <> nil then
-                rpcconfig.pnlAddress.Caption := AnsiStrings.StrPas(chrTemp);   //p60
+                rpcconfig.pnlAddress.Caption := string(chrTemp);   //p60
               exit;
          end;
       {success, return resolved address}
