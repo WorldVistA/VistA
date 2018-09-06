@@ -12,7 +12,7 @@ uses
   TRPCB,
   RPCConf1;
 
-procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: boolean);
+procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: boolean; AC: string = ''; VC: string = '');
 function AuthorizedOption(const OptionName: string): boolean;
 function ConnectToServer(const OptionName: string): boolean;
 function MRef(glvn: string): string;
@@ -256,7 +256,7 @@ var
 begin
   aLst := TStringList.Create;
   try
-    Result := CallVistA(aRPCName, aParam, aLst);
+    CallVistA(aRPCName, aParam, aLst);
     if aLst.Count > 0 then
       aReturn := aLst[0]
     else
@@ -271,7 +271,6 @@ function CallVistA(const aRPCName: string; const aParam: array of const; aReturn
 { Call Broker, full results in aReturn }
 begin
   try
-    Result := False;
     SetParams(aRPCName, aParam);
     aReturn.Clear;
     CallBroker(aReturn);
@@ -406,13 +405,18 @@ begin
   CallBrokerInContext(aReturn);
 end;
 
-procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: boolean);
+procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: boolean; AC: string = ''; VC: string = '');
 { makes the initial connection to a server }
+var
+  ACVC: string;
 begin
+  ACVC := '';
+  if (AC <> '') and (VC <> '') then  ACVC := AC + ';' + VC;
   EnsureBroker;
   with RPCBrokerV do
     begin
       Server := AName;
+      AccessVerifyCodes := ACVC;
       if APort > 0 then ListenerPort := APort;
       DebugMode := WantDebug;
       Connected := True;
@@ -437,7 +441,7 @@ function ConnectToServer(const OptionName: string): boolean;
   this application (option) is allowed for this user }
 var
   WantDebug: boolean;
-  AServer, APort, x: string;
+  AServer, APort, x, AAC, AVC: string;
   i, ModalResult: Integer;
 begin
   Result := False;
@@ -451,6 +455,10 @@ begin
       x := UpperCase(Piece(ParamStr(i), '=', 1));
       if (x = 'S') or (x = 'SERVER') then AServer := Piece(ParamStr(i), '=', 2);
       if (x = 'P') or (x = 'PORT') then APort := Piece(ParamStr(i), '=', 2);
+      // OSEHRA/SMH - For making testing easier, allow passing of access code
+      // and verify code on the command line, but only in debug mode.
+      if (x = 'AC') then AAC := Piece(ParamStr(i), '=', 2);
+      if (x = 'VC') then AVC := Piece(ParamStr(i), '=', 2);
     end;
   if (AServer = '') or (APort = '') then
     begin
@@ -459,7 +467,7 @@ begin
     end;
   // use try..except to work around errors in the Broker SignOn screen
   try
-    SetBrokerServer(AServer, StrToIntDef(APort, 9200), WantDebug);
+    SetBrokerServer(AServer, StrToIntDef(APort, 9200), WantDebug, AAC, AVC);
     Result := AuthorizedOption(OptionName);
     if Result then Result := RPCBrokerV.Connected;
     RPCBrokerV.RPCTimeLimit := 300;
