@@ -445,7 +445,7 @@ var
   i: Integer;
 begin
   Result := False;
-  for i := 1 to Length(x) do if CharInSet(x[i], ['!'..'~']) then  // ordinal values 33..126
+  for i := 1 to Length(x) do if not x[i].IsControl then
   begin
     Result := True;
     break;
@@ -544,31 +544,26 @@ begin
 end;
 
 function FilteredString(const x: string; ATabWidth: Integer = 8): string;
+{ Refactored by OSEHRA/SMH to removed all ASCIIisms }
 var
   i, j: Integer;
-  xc: AnsiChar;
+  c: Char;
 begin
   Result := '';
   for i := 1 to Length(x) do
   begin
-    xc := AnsiChar(x[i]);
-    case xc of
-            #9: for j := 1 to (ATabWidth - (Length(Result) mod ATabWidth)) do
-                  Result := Result + ' ';
-     #32..#127: Result := Result + x[i];
-    #128..#159: Result := Result + '?';
-  #10,#13,#160: Result := Result + ' ';
-    #161..#255: Result := Result + x[i];
-    end;
+    c := x[i];
+    if c = #9 then for j := 1 to (ATabWidth - (Length(Result) mod ATabWidth)) do Result := Result + ' '
+    else Result := Result + c;
   end;
-  if Copy(Result, Length(Result), 1) = ' ' then Result := TrimRight(Result) + ' ';
+  if (Result <> '') and (Result[Length(Result)] = ' ') then Result := TrimRight(Result) + ' ';
 end;
 
 procedure ExpandTabsFilter(AList: TStrings; ATabWidth: Integer);
 var
   i, j, k: Integer;
   x, y: string;
-  xc: AnsiChar;
+  xc: Char;
 begin
   with AList do for i := 0 to Count - 1 do
   begin
@@ -576,16 +571,11 @@ begin
     y := '';
     for j := 1 to Length(x) do
     begin
-      xc := AnsiChar(x[j]);
-      case xc of
-                #9: for k := 1 to (ATabWidth - (Length(y) mod ATabWidth)) do y := y + ' ';
-         #32..#127: y := y + x[j];
-        #128..#159: y := y + '?';
-              #160: y := y + ' ';
-        #161..#255: y := y + x[j];
-      end;
+      xc := Char(x[j]);
+      if xc = #9 then for k := 1 to (ATabWidth - (Length(y) mod ATabWidth)) do y := y + ' '
+      else y := y + x[j]
     end;
-    if Copy(y, Length(y), 1) = ' ' then y := TrimRight(y) + ' ';
+  if (y <> '') and (y[Length(y)] = ' ') then y := TrimRight(y) + ' ';
     Strings[i] := y;
     //Strings[i] := TrimRight(y) + ' ';
   end;
@@ -827,7 +817,7 @@ begin
    // get the strings to compare
   Str1 := Piece(List[Index1], SortADelim, SortPieceNum);
   Str2 := Piece(List[Index2], SortADelim, SortPieceNum);
-  Result := AnsiCompareText(Str1, Str2);
+  Result := CompareText(Str1, Str2);
 end;
 
 
