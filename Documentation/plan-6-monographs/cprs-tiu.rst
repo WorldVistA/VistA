@@ -73,3 +73,29 @@ that templates garbled our Windows-1256 Arabic--so I was glad to see that I
 didn't need to make any changes at all to get it work. I tried template objects
 that returned Korean text; and Template fields that returned Korean text (like
 Yes/No in Korean).
+
+TIU Notes: RPC ORWTIU CHKTXT
+----------------------------
+In the first draft of the software, I actually missed this in my testing. In addition
+to all the Delphi Checks for empty notes, there is an RPC that is run to check to see
+if the note is empty. Guess what? It checked each note character to see if it was empty
+by its ASCII code. If it can't find a single ASCII code in the printable ASCII range,
+it considers the document invalid. I missed this because all my testing previously included
+a single printable ASCII character--especially spaces.
+
+The previous code called in EMPTYDOC+13^TIULF looked like this:
+
+.. code:: M
+
+  I $A(TIUCHAR)'<33&($A(TIUCHAR)'>123)!($A(TIUCHAR)=125) S TIUY=0 Q
+
+I changed it to look like this:
+
+.. code:: M
+
+  I TIUCHAR'=124,TIUCHAR'?1C S TIUY=0 Q  ; *10001*; Previously, individual ASCII chars where checked (<32 & >125)
+
+The old code is somewhat suspect, in that it does not include 126 (``~``),
+which is also a printable character. And I now notice that I forgot the $ASCII
+on TIUCHAR.  Which means that I need to go back and do another revision for
+this code. Maybe later this week.
