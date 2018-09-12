@@ -3876,7 +3876,8 @@ def run(args):
     VIVIAN_URL = getViViaNURL(args.local)
     icrJsonFile = os.path.abspath(args.icrJsonFile)
     parsedICRJSON = parseICRJson(icrJsonFile)
-    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args, pkgDepJson=None, icrJson=parsedICRJSON,
+    crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,
+                                                                   icrJson=parsedICRJSON,
                                                                    inputTemplateDeps=readIntoDictionary(args.inputTemplateDep),
                                                                    sortTemplateDeps=readIntoDictionary(args.sortTemplateDep),
                                                                    printTemplateDeps=readIntoDictionary(args.printTemplateDep)
@@ -3900,8 +3901,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='VistA Visual Cross-Reference Documentation Generator',
         parents=[crossRefArgParse])
-    parser.add_argument('-o', '--outdir', required=True,
-                        help='Output Web Page directory')
     parser.add_argument('-po', '--pdfOutdir', required=True,
                         help='Output PDF directory')
     parser.add_argument('-is', '--includeSource', required=False,

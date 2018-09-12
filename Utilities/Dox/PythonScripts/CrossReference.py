@@ -1674,49 +1674,8 @@ class CrossReference:
             if routineName in self._allRoutines:
                 logger.info("Removing Routine: %s" % routineName)
                 self._allRoutines.pop(routineName)
-    def generateAllPackageDependencies(self, outputJsonFile=None):
+    def generateAllPackageDependencies(self):
         self.__fixPlatformDependentRoutines__()
         self.__generatePlatformDependentRoutineDependencies__()
         for package in self._allPackages.itervalues():
             package.generatePackageDependencies()
-        # output dependency information in json format
-        if outputJsonFile:
-            self._outputAllPackageDependency(outputJsonFile)
-
-    def _outputAllPackageDependency(self, outputFile):
-        # Collect a set of dependents / depends for each package
-        dependents = {}
-        depends = {}
-        for pkg in self._allPackages.itervalues():
-            depends[pkg.getName()] = set()
-            for depPkgs in [pkg.getPackageRoutineDependencies(),
-                            pkg.getPackageGlobalDependencies(),
-                            pkg.getPackageFileManFileDependencies(),
-                            pkg.getPackageFileManDbCallDependencies()]:
-                for depPkg in depPkgs:
-                    if depPkg.getName() == pkg.getName():
-                        # Current package, nothing to do
-                        continue
-                    else:
-                        # Add to dependency set
-                        depends[pkg.getName()].add(depPkg.getName())
-
-                    # Now let's add the current package as a dependent
-                    if depPkg.getName() not in dependents:
-                        dependents[depPkg.getName()] = set()
-                    dependents[depPkg.getName()].add(pkg.getName())
-
-        # Build json output
-        outJson = []
-        for pkgName in depends.keys():
-            pkgjson = {'name': pkgName, "depends": list(depends[pkgName])}
-            if pkgName in dependents:
-                pkgjson['dependents'] = list(dependents[pkgName])
-            else:
-                pkgjson['dependents'] = []
-            outJson.append(pkgjson)
-
-        # Write json file
-        with open(outputFile, "w") as output:
-            import json
-            json.dump(outJson, output)

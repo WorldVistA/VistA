@@ -187,7 +187,7 @@ if (GENERATE_DOX)
 endif()
 
 if(GENERATE_VIVIAN)
-  # 9. Run Cross Reference Builder
+  # 9. Run Package Dependency Generator script
   # Generates PackageDependency file used in ViViaN
   set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/pkgdep.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GeneratePackageDep.cmake.in ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake @ONLY)

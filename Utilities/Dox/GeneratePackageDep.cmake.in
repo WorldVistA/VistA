@@ -17,7 +17,7 @@ message(STATUS "Generating Package Dependency JSON...")
 
 execute_process(COMMAND
   "@PYTHON_EXECUTABLE@"
-  "@PYTHONSCRIPTS_DIR@/CrossReferenceBuilder.py"
+  "@PYTHONSCRIPTS_DIR@/PackageDependencyGenerator.py"
   -mr @DOCUMENT_VISTA_M_DIR@
   -pr @VISTA_SOURCE_DIR@
   -xl @CALLER_GRAPH_LOG_DIR@
@@ -28,5 +28,5 @@ execute_process(COMMAND
 
   OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
-  message(FATAL_ERROR "Error running CrossReferenceBuilder:\n\n${output}")
+  message(FATAL_ERROR "Error running PackageDependencyGenerator:\n\n${output}")
 endif()

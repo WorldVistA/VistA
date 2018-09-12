@@ -280,7 +280,8 @@ def run(args):
   parsedICRJSON = parseICRJson(icrJsonFile)
   logger.info ("Building cross reference....")
   doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
-  crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args, pkgDepJson=None, icrJson=parsedICRJSON,
+  crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,
+                                                                 icrJson=parsedICRJSON,
                                                                  inputTemplateDeps=readIntoDictionary(args.inputTemplateDep),
                                                                  sortTemplateDeps=readIntoDictionary(args.sortTemplateDep),
                                                                  printTemplateDeps=readIntoDictionary(args.printTemplateDep)
@@ -298,8 +299,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='VistA Visual Cross-Reference Graph Generator',
         parents=[crossRefArgParse])
-    parser.add_argument('-o', '--outdir', required=True,
-                        help='Output Web Page directory')
     parser.add_argument('-dot', required=True,
                         help='path to the folder containing dot excecutable')
     parser.add_argument('-lf', '--outputLogFileName', required=False,
