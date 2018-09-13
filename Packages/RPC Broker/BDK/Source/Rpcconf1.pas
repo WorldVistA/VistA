@@ -11,6 +11,13 @@
 *************************************************************** }
 
 { **************************************************
+  Changes in v1.1.10001 (SMH 2018-09-13) XWB*1.1*10001
+  1. Fix compiler warnings in IsIPAddress and GetServerIP
+  2. GetServerInfo seems to have been broken in v1.1.60 -- it never showed up --
+     there were multiple fixes required to the fuction to behave properly. In any
+     case, due to common use cases, I always decided to show the form. I.e, if you
+     don't want this to show, specify s and p on the command line.
+
   Changes in v1.1.65 (HGW 11/21/2016) XWB*1.1*65
   1. None.
 
@@ -66,6 +73,7 @@ type
     TPanelSSHUsername: TPanel;
     Panel2: TPanel;
     pnlSSHUsername: TPanel;
+    btnDelete: TButton;
     procedure cboServerClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -137,7 +145,6 @@ begin
     LibGetHostIP1(TaskInstance, host, outcome);
     Result := String(AnsiString(outcome));    //p60
     AnsiStrings.StrDispose(outcome);        //p60
-    AnsiStrings.StrDispose(host);           //p60
   end
   else
     Result := ServerName;
@@ -191,6 +198,7 @@ end;
 function GetServerInfo(var Server,Port,SSHUsername: string): integer;
 var
   index: integer;
+  originalCount: integer;
   tmpServerPairs : TStringList;      //Format: SERVER,port#
   TextStr: String;
 begin
@@ -203,49 +211,57 @@ begin
   with rpcConfig do
   begin
     tmpServerPairs := TStringList.Create;
+
+    // Read HKLM and add entries if they are not empty.
     ReadRegValues(HKLM, REG_SERVERS, tmpServerPairs);
-    ServerPairs.Assign(tmpServerPairs);
+    for index := 0 to (tmpServerPairs.Count-1) do
+    begin
+      TextStr := tmpServerPairs[index];
+      if (TextStr <> '') then
+        ServerPairs.Add(TextStr);
+    end;
     tmpServerPairs.Clear;
+
+    // Read HKCU and add entries if they are not empty and haven't been already added.
     ReadRegValues(HKCU, REG_SERVERS, tmpServerPairs);
     for index := 0 to (tmpServerPairs.Count-1) do
     begin
       TextStr := tmpServerPairs[index];
-      if ServerPairs.IndexOf(TextStr) < 0 then
+      if (TextStr <> '') and (ServerPairs.IndexOf(TextStr) < 0) then
         ServerPairs.Add(TextStr);
     end;
+
     ButtonStatus := mrOk;
-    if ServerPairs.Count < 1 then
+
+    // Keep track of the original count as we add "BROKERSERVER" aNd that may be CONFUSING.
+    originalCount := ServerPairs.Count;
+    if originalCount < 1 then
     begin
-      WriteRegData(HKCU, REG_SERVERS, 'BROKERSERVER,9200', '');
+      // BAD! OSE/SMH  --> This BROKERSERVER is generally meaningless. A user can choose it below if they are inside of the VA.
+      // WriteRegData(HKCU, REG_SERVERS, 'BROKERSERVER,9200', '');
       ServerPairs.Add('BROKERSERVER,9200');
     end;
-    if ServerPairs.Count > 1 then  // P31                     //need to show form
-    begin
-      //Initialize form.
-      for index := 0 to (ServerPairs.Count -1) do     //Load combobox
-        cboServer.Items.Add(ServerPairs[index]);
-      cboServer.ItemIndex := 0;
-      rServer := Piece(ServerPairs[0], ',', 1);
-      rPort := Piece(Piece(ServerPairs[0], '=', 1), ',', 2);
-      pnlPort.Caption := rPort;
-      rSSHUsername := Piece(ServerPairs[0], '=', 2);
-      pnlSSHUsername.Caption := rSSHUsername;
-      //Get and display IP address.
-      pnlAddress.Caption := GetServerIP(rServer);
-      ShowModal;                           //Display form
-    end
-    else                //One choice: form not shown, value returned.
-    begin
-      rServer := Piece(ServerPairs[0], ',', 1);
-      rPort   := Piece(Piece(ServerPairs[0], '=', 1), ',', 2);
-      rSSHUsername := Piece(ServerPairs[0], '=', 2);
-    end;
+
+    //Initialize form.
+    for index := 0 to (ServerPairs.Count -1) do     //Load combobox
+      cboServer.Items.Add(ServerPairs[index]);
+    cboServer.ItemIndex := 0;
+    rServer := Piece(ServerPairs[0], ',', 1);
+    rPort := Piece(Piece(ServerPairs[0], '=', 1), ',', 2);
+    pnlPort.Caption := rPort;
+    rSSHUsername := Piece(ServerPairs[0], '=', 2);
+    pnlSSHUsername.Caption := rSSHUsername;
+    //Get and display IP address.
+    pnlAddress.Caption := GetServerIP(rServer);
+    ShowModal;                           //Display form
+
     if ButtonStatus = mrOk then
     begin
       Server := rServer;
       Port := rPort;
       SSHUsername := rSSHUsername;
     end;
+
     Result := ButtonStatus;
     tmpServerPairs.Free;
     libClose(TaskInstance);
@@ -338,12 +354,17 @@ var
 begin
      {Based on selction, get Text value}
      index := cboServer.ItemIndex;
+     if index < 0  then exit;
+     
      Text := cboServer.Items[index];
+     Text := Text.Split(['='])[0];
+
      // now delete from both locations it could be stored
-     DeleteRegData(HKLM, REG_SERVERS, Text);
+     // DeleteRegData(HKLM, REG_SERVERS, Text); SMH -- user doesn't have access to that as a normal user.
      DeleteRegData(HKCU, REG_SERVERS, Text);
      // and update both cboServer and ServerPairs entries
      cboServer.Items.Delete(index);
+     cboServer.Refresh;
      ServerPairs.Delete(index);
      // and set buttons dependent on selection back to disabled
      btnOK.Enabled := False;

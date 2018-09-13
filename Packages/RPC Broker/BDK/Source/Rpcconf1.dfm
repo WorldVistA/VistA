@@ -7,7 +7,7 @@ object rpcConfig: TrpcConfig
   BorderStyle = bsSingle
   Caption = 'Connect To'
   ClientHeight = 139
-  ClientWidth = 358
+  ClientWidth = 423
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,14 @@ object rpcConfig: TrpcConfig
   OnClose = FormClose
   OnCreate = FormCreate
   DesignSize = (
-    358
+    423
     139)
   PixelsPerInch = 96
   TextHeight = 16
   object cboServer: TComboBox
     Left = 5
     Top = 10
-    Width = 351
+    Width = 416
     Height = 21
     Hint = 'Choose a Server Name'
     Margins.Left = 2
@@ -53,7 +53,7 @@ object rpcConfig: TrpcConfig
   object TPanelAddress: TPanel
     Left = 5
     Top = 80
-    Width = 346
+    Width = 418
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -220,7 +220,7 @@ object rpcConfig: TrpcConfig
   object btnHelp: TBitBtn
     Left = 183
     Top = 48
-    Width = 84
+    Width = 83
     Height = 28
     Margins.Left = 2
     Margins.Top = 2
@@ -239,7 +239,7 @@ object rpcConfig: TrpcConfig
     OnClick = btnHelpClick
   end
   object btnNew: TButton
-    Left = 270
+    Left = 264
     Top = 48
     Width = 84
     Height = 28
@@ -261,7 +261,7 @@ object rpcConfig: TrpcConfig
   object TPanelSSHUsername: TPanel
     Left = 5
     Top = 108
-    Width = 346
+    Width = 418
     Height = 24
     Margins.Left = 2
     Margins.Top = 2
@@ -320,7 +320,7 @@ object rpcConfig: TrpcConfig
       end
     end
     object Panel2: TPanel
-      Left = 146
+      Left = 218
       Top = 1
       Width = 199
       Height = 22
@@ -364,5 +364,15 @@ object rpcConfig: TrpcConfig
         TabOrder = 0
       end
     end
+  end
+  object btnDelete: TButton
+    AlignWithMargins = True
+    Left = 345
+    Top = 48
+    Width = 77
+    Height = 28
+    Caption = '&Delete'
+    TabOrder = 7
+    OnClick = btnDeleteClick
   end
 end
