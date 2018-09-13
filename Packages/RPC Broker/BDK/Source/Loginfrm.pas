@@ -115,7 +115,7 @@ implementation
 
 
 uses
-  RpcSlogin, VCEdit, fRPCBErrMsg, RpcConf1, XlfSid;
+  RpcSlogin, VCEdit, fRPCBErrMsg, XlfSid;
 
 var
   SysMenu: HMenu;
