@@ -46,10 +46,10 @@ object frmSignon: TfrmSignon
       Width = 749
       Height = 397
       Align = alClient
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
-      Font.Name = 'Courier New'
+      Font.Name = 'Consolas'
       Font.Style = []
       Lines.Strings = (
         ''
