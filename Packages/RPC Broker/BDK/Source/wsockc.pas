@@ -209,7 +209,6 @@ type
     function cLeft( z: PChar; n: longint): PChar;
     function BuildPar(hSocket: TSocket; api, RPCVer: string;
              const Parameters: TParams): TBytes;
-    function StrPack (n: string; p: integer): string;
     function VarPack(n: string): string;
     function NetStart(ForegroundM: boolean; Server: string; ListenerPort: integer;
              var hSocket: TSocket): integer;
@@ -495,29 +494,6 @@ begin
   tresult := '[XWB]11' + IntToStr(CountWidth) + '02';
   Result := TEncoding.UTF8.GetBytes(tresult) + SPack(RPCVer) + SPack(api) + param + [4];
 end; //function TXWBWinsock.BuildPar
-
-
-{----------------------- TXWBWinsock.StrPack -------------------
-----------------------------------------------------------------}
-function TXWBWinsock.StrPack(n: String; p: Integer): String;
-var
-  s,l: Integer;
-  t,x,zero: string;
-  y: String;
-begin
-  //OSE:SMH - Refactored to use regular strings instead of pascal strings
-  // but code is apprently never
-  s := Length(n);
-  zero := StringOfChar('0', p + 1);    //fillchar(zero,p+1, '0');
-  //SetLength(zero, p);
-  //str(s,x);
-  x := IntToStr(s);
-  t := zero + x;
-  l := length(x)+1;
-  y := Copy(t, l , p);
-  y := y + n;
-  Result := y;
-end; //function TXWBWinsock.StrPack
 
 
 {----------------------- TXWBWinsock.VarPack -------------------
