@@ -84,6 +84,7 @@ class PatchSequenceApply(object):
     if installName and installName not in self._patchSet:
       errMsg = ("Can not find patch for install name %s" % installName)
       raise Exception(errMsg)
+    dependencyIssues = {}
     for patchInfo in patchList:
       namespace = patchInfo.namespace
       self.__updatePatchInfoPackageName__(patchInfo)
@@ -94,12 +95,14 @@ class PatchSequenceApply(object):
         if self.__isPatchReadyToInstall__(patchInfo, patchList):
           self._outPatchList.append(patchInfo)
         else:
-          errorMsg = ("Can not install patch %s" % patchInfo.installName)
-          logger.error(errorMsg)
-          raise Exception(errorMsg)
+          dependencyIssues[patchInfo.installName] = patchInfo.depKIDSBuild
+          continue #raise Exception(errorMsg)
       if isUpToPatch and installName and installName == patchInfo.installName:
         break
-
+    if len(dependencyIssues):
+        for obj in dependencyIssues:
+            logger.error("Problems found with dependencies of %s in: %s" % (obj, dependencyIssues[obj]))
+        raise Exception("Dependency Errors Found")
     logger.info("Total patches are %d" % len(self._outPatchList))
     for patchInfo in self._outPatchList:
       logger.info("%s, %s, %s" % (patchInfo.installName,
@@ -378,6 +381,8 @@ class PatchSequenceApply(object):
       else:
         logger.error("dep %s is not installed for %s %s" %
                     (item, patchInfo.installName, patchInfo.kidsFilePath))
+        patchInfo.depKIDSBuild.remove(item)
+        patchInfo.depKIDSBuild.add(item+" <---")
         return False
     return True
 
