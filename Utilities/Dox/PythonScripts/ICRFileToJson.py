@@ -185,7 +185,10 @@ class ICRFileToJson(object):
                     else:
                         outObj[allmatches[idx-1].group('name')] = restOfLine[allmatches[idx-1].end():rm.start()].strip()
         else:
-            outObj[name] = line[match.end():].strip()
+            if name == 'GENERAL DESCRIPTION':
+                outObj[name] = [line[match.end():].strip()]
+            else:
+                outObj[name] = line[match.end():].strip()
 
         dtFields = set(allFlds) & DATE_TIME_FIELD
         for fld in dtFields:
