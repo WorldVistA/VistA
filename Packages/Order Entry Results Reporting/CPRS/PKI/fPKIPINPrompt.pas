@@ -90,7 +90,6 @@ begin
                       2:
                         MessageDlg('Invalid PIN Value Entered. You have one attempt left before the card is locked.', mtInformation, [mbOk], 0);
                     end;
-                    Result := prError;
                     inc(aTryCount);
                     edtPINValue.Text := '';
                   end;

@@ -57,7 +57,6 @@ uses
 ------------------------------------------------------------------}
 function ValidAVCodes(SLBroker: TRPCBroker): boolean;
 begin
-  Result := False;
   try
     with SLBroker do
     begin
@@ -134,7 +133,6 @@ var
   uToken: String;
   iTokenLength: Integer;
 begin
-  Result := False;
   try
     with SLBroker do
     begin
@@ -151,7 +149,7 @@ begin
           //Build Param[0] global, 200 chars per node
           iStart := (I * 200) + 1;
           iEnd := iStart + 199;
-          Mult[IntToStr(I)] := AnsiStrings.AnsiMidStr(uToken, iStart, 200);
+          Mult[IntToStr(I)] := uToken.Substring(iStart, 200);
           I := I + 1;
         end;
       end;
