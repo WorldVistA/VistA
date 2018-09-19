@@ -890,6 +890,7 @@ var
   InternalBroker: TRPCBroker;                       {use separate component}
   Str: String;
 begin
+  Result := False;
   Connected := True;
   InternalBroker := nil;
   try
