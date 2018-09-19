@@ -1221,6 +1221,7 @@ var
   aCSPName: AnsiString;
 begin
   try
+    Result := False;
     aCSPName := AnsiString(fCSPName);
     fOnLogEvent('Checking Card Reader Status');
     if not getIsCardReaderReady then

@@ -435,6 +435,7 @@ var
   aChainPara: CERT_CHAIN_PARA;
   aChainConfig: CERT_CHAIN_ENGINE_CONFIG;
 begin
+  Result := False;
   try
     try
       // Get the friendly name
