@@ -4,6 +4,24 @@ Install FOIA Patches
 **--- These instructions are for Windows Caché environments only ---**
 
 
+Update VistA
+------------
+
+Clone the latest version of master from the VistA_ and VistA-M_ repositories.
+
+Create a local VistA branch, the name is not important.
+
+Setup and Configure
+~~~~~~~~~~~~~~~~~~~
+
+`Set up the testing environment`_ using the TEST_VISTA_FRESH and
+TEST_VISTA_SETUP options.
+
+Run the `automated VistA import script`_ and, if necessary, configure_ VistA.
+
+Save a copy of the configured Cache.dat so that a clean instance is available
+without re-running the import script.
+
 Download Patches
 ----------------
 
@@ -11,14 +29,36 @@ Download Patches
 processing, it is recommended to make a copy of the downloaded patches, so
 they don't need to be downloaded again if something goes wrong.
 
-Cleanup
-~~~~~~~
+Cleanup Line Endings
+~~~~~~~~~~~~~~~~~~~~
 
 Convert text files to LF-only newlines::
 
  find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|KIDS\|kid\|kids\|TXT\|TXTs\|txt\|txts\)$' -print0 |
  xargs -0 fromdos
 
+If you don't do this, when running the next script, you may see errors like::
+
+  2017-12-20 07:28:25,391 WARNING Can not parse **INSTALL NAME**
+  Traceback (most recent call last):
+    File "Scripts/ConvertToExternalData.py", line 310, in <module>
+      main()
+    File "Scripts/ConvertToExternalData.py", line 296, in main
+      converter.convertCurrentDir(result.inputDir)
+    File "Scripts/ConvertToExternalData.py", line 230, in convertCurrentDir
+      self.convertKIDSBuildFile(absFileName)
+    File "Scripts/ConvertToExternalData.py", line 241, in convertKIDSBuildFile
+      kidsParser.parseKIDSBuild(kidsFile)
+    File "C:\Users\betsy.mcphail\development\VistA\Scripts\KIDSBuildParser.py", line 538, in parseKIDSBuild
+      kidsBuild=self._curKidsBuild)
+    File "C:\Users\betsy.mcphail\development\VistA\Scripts\KIDSBuildParser.py", line 236, in parseLines
+      handler(lines, kidsBuild)
+    File "C:\Users\betsy.mcphail\development\VistA\Scripts\KIDSBuildParser.py", line 266, in __handlePostInstallRoutine__
+      if kidsBuild.postInstallRoutine:
+  AttributeError: 'NoneType' object has no attribute 'postInstallRoutine'
+
+Convert Large Files
+~~~~~~~~~~~~~~~~~~~
 
 Convert large files to content links referencing external data::
 
@@ -47,31 +87,7 @@ CovertToExternalData script may fail with errors like::
         if kidsBuild.postInstallRoutine:
     AttributeError: 'NoneType' object has no attribute 'postInstallRoutine'
 
-Update VistA
-------------
-
-Clone the latest version of master from the VistA_ and VistA-M_ repositories.
-
-Create a local VistA branch, the name is not important.
-
-Setup and Configure
-~~~~~~~~~~~~~~~~~~~
-
-`Set up the testing environment`_ using the TEST_VISTA_FRESH and
-TEST_VISTA_SETUP options.
-
-Run the `automated VistA import script`_ and configure_ VistA.
-
-Save a copy of the configured Cache.dat so that a clean instance is available
-without re-running the import script.
-
-
-Populate Packages
-~~~~~~~~~~~~~~~~~
-
-Sort_ the new patches into the ``Packages/`` directory structure.
-
-Rename any ".ExternalData_SHA1_<SHA>" files to just the SHA, for example::
+Rename ".ExternalData_SHA1_<SHA>" files to just the SHA, for example::
 
   mv .ExternalData_SHA1_4d8ef9763be16099e4a10ea67ba8812245c227d3 4d8ef9763be16099e4a10ea67ba8812245c227d3
 
@@ -82,6 +98,11 @@ Alternatively, the script will also look in
 
 Do *not* commit the external data files to the repository.
 
+Populate Packages
+~~~~~~~~~~~~~~~~~
+
+Sort_ the new patches into the ``Packages/`` directory structure.
+
 Add new files (excludes external data files) and commit changes so far to a
 local branch.
 
@@ -89,19 +110,18 @@ Update Spreadsheet
 ~~~~~~~~~~~~~~~~~~
 
 Follow the instructions in `Update Spreadsheet`_ to update the current year's
-patch spreadsheet to the latest available version. Submit the updated
-spreadsheet to Gerrit.
+patch spreadsheet to the latest available version.
 
 **Note:**: In January, the previous year's spreadsheet may also need to be
 updated.
 
-**Note:** The testing portion of `Update Spreadsheet`_ is also described below.
+Move .csv file to the ``Packages/Uncategorized/`` directory and commit to local branch.
 
 Patch Sequence
 ~~~~~~~~~~~~~~
 
 Run the `patch installer script`_ from the VistA Scripts directory to verify
-that all require patches are available. Choose the option to generate patch
+that all required patches are available. Choose the option to generate patch
 sequence order with actually installing any of the patches::
 
   cd Scripts
@@ -114,6 +134,8 @@ installer script completes with no errors.
 
 For help with other potential errors, refer to `Potential Issues`_.
 
+Commit any changes to the working VistA branch.
+
 Apply Patches
 ~~~~~~~~~~~~~
 
@@ -125,11 +147,14 @@ patches::
 
 Fix any errors and commit changes so far to the working VistA branch.
 
-Commit Changes
-~~~~~~~~~~~~~~
+Create PR For VistA Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create a Gerritt PR for the VistA changes as desribed in the
 `Contributor Git Instructions`_.
+
+If the spreadsheet needed to be modified, note the lines that were changed or
+removed in the commit message.
 
 Update VistA-M
 --------------
@@ -137,7 +162,7 @@ Update VistA-M
 `Set up the testing environment`_ but this time, do *not* use the
 TEST_VISTA_SETUP option.
 
-Run the `automated VistA import script`_ and configure_ VistA.
+Run the `automated VistA import script`_.
 
 Save a copy of the configured Cache.dat so that a clean instance is available
 without re-running the import script.
@@ -188,7 +213,7 @@ the VistA-M repo, this expected, the changes can be discarded.
 Uncategorized files
 ~~~~~~~~~~~~~~~~~~~
 
-Update Packages.csv to take into account the files that are in
+Update Packages.csv to take into account the files that are in VistA-M
 ``Packages/Uncategorized/``.
 
 Move the contents of the ``Packages/Uncategorized/Routines/`` and
@@ -204,11 +229,14 @@ Make a commit with the updated Packages.csv and any moved files.
 Update Packages.csv in the *VistA* directory to include any changes just made.
 Revise the topic and push it back to Gerrit.
 
-Commit Changes
-~~~~~~~~~~~~~~
+Create VistA-M Branch
+~~~~~~~~~~~~~~~~~~~~~
 
 Create a branch in the `OSEHRA VistA-M Sandbox`_ (e.g. OV_Nov_2017) and push
 all of the VistA-M commits there.
+
+**Note:** There will be several uncommitted files with just a date change in
+the VistA-M repository. This is expected, these changes can be discarded.
 
 Run Tests
 ~~~~~~~~~
@@ -216,7 +244,7 @@ Run Tests
 `Set up the testing environment`_ using the TEST_VISTA_FRESH and
 TEST_VISTA_SETUP options.
 
-Run the `automated VistA import script`_ and configure_ VistA.
+Run the `automated VistA import script`_.
 
 Save a copy of the configured Cache.dat so that a clean instance is available
 without re-running the import script.
@@ -265,6 +293,7 @@ CPRS
 
 If any of the GUIs need to be updated, new versions can be downloaded from:
 https://foia-vista.osehra.org/Patches_By_Application
+
 
 
 .. _VistA: https://github.com/OSEHRA/VistA

@@ -298,14 +298,30 @@ Example
 +++++++++
 ::
 
-  File "c:\Users\joe.snyder\Work\OSEHRA\VistA\Scripts\PatchOrderGenerator.py", line 737, in visitNode
-    raise Exception("DAG is NOT acyclic")
-  Exception: DAG is NOT acyclic
-  2016-01-19 11:32:51,857 ERROR This is a cycle among these items:
-  'DG*5.3*904'
-  'DG*5.3*901'
-  'IVM*2.0*160'
-  'EAS*1.0*113'
+  2018-09-19 16:02:22,858 ERROR This is a cycle among these items:
+  'ECX*3.0*153'
+  'DG*5.3*895'
+  'PSN*4.0*434'
+  'PSN*4.0*433'
+  'PSN*4.0*432'
+  'PSN*4.0*365'
+  'PXRM*2.0*57'
+  'IB*2.0*538'
+  'SD*5.3*620'
+  'DVBA*2.7*191'
+  'PSJ*5.0*304'
+  'GMPL*2.0*46'
+  'DENT*1.2*67'
+  'XU*8.0*638'
+  'LR*5.2*438'
+  'VPR*1.0*4'
+  'SD*5.3*621'
+  'IBD*3.0*66'
+  'OR*3.0*398'
+  'XT*7.3*137'
+  2018-09-19 16:02:22,858 ERROR Failed to sort patches: DAG is NOT acyclic
+  2018-09-19 16:02:22,859 INFO Total patches are 0
+
 
 Resolution
 ++++++++++
@@ -313,10 +329,9 @@ Resolution
 The above problem is a convergence of the extra dependencies causing a cycle of
 dependencies.
 
-Unfortunately, the solutions so far have been to remove available information
-from the parser's reach.  Tne solution for the above problem was  to remove the
-text files, thus removing number information about the builds and eliminating
-one avenue of dependency information.
+Unfortunately, the solution so far have been to remove available information
+from the parser's reach.  Tne solution for the above problem was to remove
+patches from the most recent spreadsheet.
 
 
 .. _some: https://github.com/OSEHRA/VistA/blob/master/Packages/Kernel/Patches/XU_8.0_599/XU_8.0_599.py
