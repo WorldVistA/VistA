@@ -46,14 +46,14 @@ Vagrant can be download from http://downloads.vagrantup.com/. You need to
 download the correct version of vagrant according to your operating system.
 
 The vagrant download site is organized so the latest version is always at the
-top. OSEHRA has tested Vagrant 1.3.5, but there is no reason at this point
-newer versions won't work.
-
-Vagrant also shows the operating system icons to the left of the links to make
-the choice easier.
+top. Vagrant also shows the operating system icons to the left of the links to
+make the choice easier.
 
 You can install Vagrant at this point. It is a simple installer that you can
 take the defaults through the installation process.
+
+NOTE: OSEHRA has tested Vagrant 2.1.2 with VirtualBox 5.1.28. Other compatible
+versions may be used.
 
 VirtualBox
 ----------
