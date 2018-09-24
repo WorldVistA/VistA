@@ -63,6 +63,9 @@ from ConvertToExternalData import isValidGlobalSha1Suffix
 from ConvertToExternalData import isValidPythonSuffix
 from KIDSAssociatedFilesMapping import getAssociatedInstallName
 
+class CycleException(Exception):
+    pass
+
 """
 This class will generate a Patch order based on input
 patch directory
@@ -101,7 +104,12 @@ class PatchOrderGenerator(object):
         raise Exception("Could not find patch for %s" % installName)
     self.__updatePatchDependency__((installName is None))
     self.__generatePatchDependencyGraph__()
-    self.__topologicSort__(installName)
+    try:
+        self.__topologicSort__(installName)
+    except CycleException as e:
+        errorMessage = "Failed to sort patches: %s" % e
+        logger.error(errorMessage)
+        return []
     logger.info("After topologic sort %d" % len(self._patchOrder))
     return self._patchOrder
 
@@ -696,7 +704,7 @@ def visitNode(nodeName, depDict, visitSet, tempStack, result):
     index = tempStack.index(nodeName)
     logger.error("This is a cycle among these items:\n" +
                  '\n'.join(repr(x) for x in tempStack[index:]))
-    raise Exception("DAG is NOT acyclic")
+    raise CycleException("DAG is NOT acyclic")
   tempStack.append(nodeName)
   for item in depDict.get(nodeName,[]):
     visitNode(item, depDict, visitSet, tempStack, result)
