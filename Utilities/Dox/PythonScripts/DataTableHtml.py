@@ -69,6 +69,16 @@ downloadButtons = """
               pageSize: 'LEGAL',
               exportOptions: {
                   columns: ':visible'
+              },
+              customize: function (doc) {
+                  // Taken from https://stackoverflow.com/questions/35642802/datatables-export-pdf-with-100-width
+                  var colCount = new Array();
+                  var length = $$('#${tableName} tbody tr:first-child td').length;
+                  console.log('length / number of td in report one record = '+length);
+                  $$('#${tableName}').find('tbody tr:first-child td').each(function(){
+                      colCount.push(parseFloat(100 / length)+'%');
+                  });
+                  doc.content[1].table.widths = colCount;
               }
           }
 """
