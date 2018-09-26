@@ -59,7 +59,13 @@ downloadButtons = """
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
-                  columns: ':visible'
+                  columns: ':visible',
+                  format: {
+                     body: function(html, indx, node) {
+                        var entryList = html.split("</li>");
+                        return $$("<div/>").html(entryList.join("|")).text();
+                     }
+                  }
               }
           },
           {
@@ -68,7 +74,21 @@ downloadButtons = """
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
-                  columns: ':visible'
+                  columns: ':visible',
+                  format: {
+                     body: function(html, indx, node) {
+                        var entryList = html.split("</li>");
+                        var parsedList = []
+                        entryList.forEach(function(d) {
+                            if (d.indexOf("<li>") != -1) {
+                              parsedList.push("* " + d)
+                            } else {
+                              parsedList.push(d)
+                            }
+                        });
+                        return $$("<div/>").html(parsedList.join("  ")).text();
+                     }
+                  }
               },
               customize: function (doc) {
                   // Taken from https://stackoverflow.com/questions/35642802/datatables-export-pdf-with-100-width
