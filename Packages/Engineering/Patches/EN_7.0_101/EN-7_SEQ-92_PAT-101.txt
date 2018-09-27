@@ -1,0 +1,208 @@
+$TXT Created by              MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/08/18 at 15:56
+=============================================================================
+Run Date: JUN 11, 2018                     Designation: EN*7*101
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #92                      Status: Released
+                  Compliance Date: JUL 12, 2018
+=============================================================================
+
+
+Subject: DAYS BETWEEN RETURNS
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ The patch addresses 1 issue:
+  
+ 1.   Users are not able to set an Equipment Return Date greater than 90
+      days in the future. Some equipment needs this date to be as far as
+      365 days in the future. 
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ CMR #6914.1             DAYS BETWEEN RETURNS    Modified
+                          (#30)
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I9857246FY16 - Days Between Returns Field
+   
+    Problem:
+    --------
+    There is a need to generate an Equipment Return Date 365 days in the
+    future. The current maximum is 90. The Equipment return date is
+    calculated by using the PHYSICAL INVENTORY DATE field (#23) of the 
+    EQUIPMENT INV. file (#6914) plus the number of days entered in DAYS 
+    BETWEEN RETURNS field (#30) of the CMR file (#6914.1) or the default
+    of 90 DAYS if no value is entered in DAYS BETWEEN RETURNS field (#30).
+  
+  
+    Resolution:
+    -----------
+    The problem occurs because of the "Input Transform" for DAYS 
+    BETWEEN RETURNS field (#30) in the CMR file (#6914.1) currently does
+    not allow a value greater than 90. Change the input transform to allow
+    a value up to 365 inclusive.
+  
+ TEST SITES:
+ ==========
+ LOUISVILLE, KY
+ TUCSON, AZ
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to install this patch, backup the Data Dictionary for the CMR file
+ (#6914.1) using your site's policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^DD(6914.1
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch EN*7.0*101:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//" respond NO.
+  
+      7. When prompted "Delay Install (Minutes):  (0-60): 0//" enter an
+         appropriate number of minutes to delay the installation in 
+         order to give users enough time to exit the disabled options
+         before the installation starts.
+  
+      8. When prompted "Device: Home//" respond with the correct device.
+      
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Please use %GIGEN for restoring the Data Dictionary for the CMR file 
+ (#6914.1) if needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^DD(6914.1
+    7. At the To global ^DD(6914.1=>, enter ^DD(6914.1
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2016
+Completed By:                               Date Completed: JUN 11, 2018
+Released By :                               Date Released : JUN 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

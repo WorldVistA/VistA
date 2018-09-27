@@ -1,0 +1,2249 @@
+Released DI*22.2*10 SEQ #9
+Extracted from mail message
+**KIDS**:DI*22.2*10^
+
+**INSTALL NAME**
+DI*22.2*10
+"BLD",1613,0)
+DI*22.2*10^VA FILEMAN^0^3180302^y
+"BLD",1613,1,0)
+240^9.61A^240^240^3180302^^^
+"BLD",1613,1,1,0)
+Patch DI*22.2*10 repairs the following defects:
+"BLD",1613,1,2,0)
+ 1.     DIWP only supports strings up to 999 characters
+"BLD",1613,1,3,0)
+ 2.     NUMDATE fix in patch 7 was not added to DINIT
+"BLD",1613,1,4,0)
+ 3.     The variable DO is not killed after call to DIE
+"BLD",1613,1,5,0)
+ 4.     New api EN^DITP for repointing deleted records
+"BLD",1613,1,6,0)
+ 5.     New options for editing Data Types in patch 2 have no parent
+"BLD",1613,1,7,0)
+ 6.     New API CHKPT^DIUTL(file, ien, message)
+"BLD",1613,1,8,0)
+
+"BLD",1613,1,9,0)
+  
+"BLD",1613,1,10,0)
+Patch Components:
+"BLD",1613,1,11,0)
+----------------- 
+"BLD",1613,1,12,0)
+ Files & Fields Associated:
+"BLD",1613,1,13,0)
+                                                             New/Modified/
+"BLD",1613,1,14,0)
+File Name (#)                  Field Name (#)                       Deleted
+"BLD",1613,1,15,0)
+-------------                  --------------                  -------------
+"BLD",1613,1,16,0)
+ N/A
+"BLD",1613,1,17,0)
+ 
+"BLD",1613,1,18,0)
+Forms Associated:
+"BLD",1613,1,19,0)
+ 
+"BLD",1613,1,20,0)
+Form Name                     File #               New/Modified/Deleted
+"BLD",1613,1,21,0)
+---------                     ------               --------------------
+"BLD",1613,1,22,0)
+ N/A
+"BLD",1613,1,23,0)
+ 
+"BLD",1613,1,24,0)
+Mail Groups Associated:
+"BLD",1613,1,25,0)
+ 
+"BLD",1613,1,26,0)
+Mail Group Name          New/Modified/Deleted
+"BLD",1613,1,27,0)
+---------------          --------------------
+"BLD",1613,1,28,0)
+ N/A                       
+"BLD",1613,1,29,0)
+ 
+"BLD",1613,1,30,0)
+Options Associated:
+"BLD",1613,1,31,0)
+ 
+"BLD",1613,1,32,0)
+Option Name                    Type               New/Modified/Deleted
+"BLD",1613,1,33,0)
+-----------                    ----               -------------------- 
+"BLD",1613,1,34,0)
+ DI DATA TYPE OPTIONS          Menu               Deleted
+"BLD",1613,1,35,0)
+ DI DATA TYPE FILE             Run Routine        Deleted
+"BLD",1613,1,36,0)
+ DI DATA TYPE METHOD FILE      Run Routine        Deleted
+"BLD",1613,1,37,0)
+ DI DATA TYPE PROPERTY FILE    Run Routine        Deleted
+"BLD",1613,1,38,0)
+ 
+"BLD",1613,1,39,0)
+ 
+"BLD",1613,1,40,0)
+Protocols Associated:
+"BLD",1613,1,41,0)
+ 
+"BLD",1613,1,42,0)
+Protocol Name       New/Modified/Deleted
+"BLD",1613,1,43,0)
+-------------       -------------------- 
+"BLD",1613,1,44,0)
+ N/A
+"BLD",1613,1,45,0)
+ 
+"BLD",1613,1,46,0)
+Security Keys Associated:
+"BLD",1613,1,47,0)
+ 
+"BLD",1613,1,48,0)
+Security Key Name
+"BLD",1613,1,49,0)
+-----------------
+"BLD",1613,1,50,0)
+ N/A
+"BLD",1613,1,51,0)
+ 
+"BLD",1613,1,52,0)
+Templates Associated:
+"BLD",1613,1,53,0)
+ 
+"BLD",1613,1,54,0)
+Template Name   Type      File Name        (Number)  New/Modified/Deleted
+"BLD",1613,1,55,0)
+-------------   ----      -------------------------  --------------------
+"BLD",1613,1,56,0)
+ N/A
+"BLD",1613,1,57,0)
+ 
+"BLD",1613,1,58,0)
+Additional Information:
+"BLD",1613,1,59,0)
+-----------------------
+"BLD",1613,1,60,0)
+ N/A
+"BLD",1613,1,61,0)
+ 
+"BLD",1613,1,62,0)
+New Service Requests (NSRs):
+"BLD",1613,1,63,0)
+----------------------------  
+"BLD",1613,1,64,0)
+ N/A
+"BLD",1613,1,65,0)
+ 
+"BLD",1613,1,66,0)
+Patient Safety Issues (PSIs):
+"BLD",1613,1,67,0)
+-----------------------------
+"BLD",1613,1,68,0)
+ N/A
+"BLD",1613,1,69,0)
+ 
+"BLD",1613,1,70,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",1613,1,71,0)
+--------------------------------------------
+"BLD",1613,1,72,0)
+ 1. Ticket I13413576FY17
+"BLD",1613,1,73,0)
+ Problem:
+"BLD",1613,1,74,0)
+ --------
+"BLD",1613,1,75,0)
+ Word Processing cannot parse a string greater than 999 and the FM 22.2
+"BLD",1613,1,76,0)
+ allows strings up to 4K characters.
+"BLD",1613,1,77,0)
+ 
+"BLD",1613,1,78,0)
+ Resolution:
+"BLD",1613,1,79,0)
+ ----------
+"BLD",1613,1,80,0)
+ Modified DIWP and changed 999 to 9999
+"BLD",1613,1,81,0)
+ 
+"BLD",1613,1,82,0)
+ 2. Ticket I15917948FY17
+"BLD",1613,1,83,0)
+ Problem:
+"BLD",1613,1,84,0)
+ --------
+"BLD",1613,1,85,0)
+ Patch DI*22.2*7 fixed the NUMDATE function in the FUNCTION file #.5,
+"BLD",1613,1,86,0)
+  but DINIT restored the old function.
+"BLD",1613,1,87,0)
+ 
+"BLD",1613,1,88,0)
+ Resolution:
+"BLD",1613,1,89,0)
+ ----------
+"BLD",1613,1,90,0)
+ Modified DINIT4 and added fix to NUMDATE
+"BLD",1613,1,91,0)
+ 
+"BLD",1613,1,92,0)
+ 3. Ticket I16009474FY17
+"BLD",1613,1,93,0)
+ Problem:
+"BLD",1613,1,94,0)
+ --------
+"BLD",1613,1,95,0)
+ The variable DO is not killed after a call to DIE if a user asked for
+"BLD",1613,1,96,0)
+  help in a multiple Date field.
+"BLD",1613,1,97,0)
+
+"BLD",1613,1,98,0)
+ Resolution:
+"BLD",1613,1,99,0)
+ ----------
+"BLD",1613,1,100,0)
+ Modified DIEQ and added DO to kill statement at line Q
+"BLD",1613,1,101,0)
+ 
+"BLD",1613,1,102,0)
+ 4. Ticket R13102022FY17
+"BLD",1613,1,103,0)
+ Problem:
+"BLD",1613,1,104,0)
+ --------
+"BLD",1613,1,105,0)
+ Need API to repoint a deleted value in a record, similar to what happens
+"BLD",1613,1,106,0)
+  when a pointer field value is deleted.
+"BLD",1613,1,107,0)
+ 
+"BLD",1613,1,108,0)
+ Resolution:
+"BLD",1613,1,109,0)
+ ----------
+"BLD",1613,1,110,0)
+ Modified DITP and added tag EN(file, list) where file=file number,
+"BLD",1613,1,111,0)
+ list= array containing list of entries to be repointed(Passed by Reference)
+"BLD",1613,1,112,0)
+ 
+"BLD",1613,1,113,0)
+ 5. Ticket R14175506FY17
+"BLD",1613,1,114,0)
+ Problem:
+"BLD",1613,1,115,0)
+ --------
+"BLD",1613,1,116,0)
+ New options that were for adding new data types and released as part of
+"BLD",1613,1,117,0)
+ patch DI*22.2*2 had no parent menu.  These option were not meant for
+"BLD",1613,1,118,0)
+ general distribution.  The options are: DI DATA TYPE OPTIONS,
+"BLD",1613,1,119,0)
+  DI DATA TYPE FILE, DI DATA TYPE METHOD FILE, and
+"BLD",1613,1,120,0)
+  DI DATA TYPE PROPERTY FILE.
+"BLD",1613,1,121,0)
+ 
+"BLD",1613,1,122,0)
+ Resolution:
+"BLD",1613,1,123,0)
+ ----------
+"BLD",1613,1,124,0)
+ All four options will be deleted from the OPTION file and added to the
+"BLD",1613,1,125,0)
+ hard coded options in the DII routine.  Modified DII1 and DIFMEDT1
+"BLD",1613,1,126,0)
+ routines.
+"BLD",1613,1,127,0)
+
+"BLD",1613,1,128,0)
+ 6. No ticket
+"BLD",1613,1,129,0)
+ Problem:
+"BLD",1613,1,130,0)
+ --------
+"BLD",1613,1,131,0)
+ Developer needs API to check what entries points to a particular record
+"BLD",1613,1,132,0)
+  in a file.
+"BLD",1613,1,133,0)
+
+"BLD",1613,1,134,0)
+ Resolution:
+"BLD",1613,1,135,0)
+ ----------
+"BLD",1613,1,136,0)
+ CHKPT^DIUTL(file, ien, message).
+"BLD",1613,1,137,0)
+ ;INPUT: DIFILE=file number, DA=ien of record, DIMSG=closed global root
+"BLD",1613,1,138,0)
+  or local array
+"BLD",1613,1,139,0)
+ ;OUTPUT: DIMSG(0)=line count, DISMG(#)="Entry ien in FILE (file #)
+"BLD",1613,1,140,0)
+  refers to record DA" 
+"BLD",1613,1,141,0)
+
+"BLD",1613,1,142,0)
+ Blood Bank Clearance:
+"BLD",1613,1,143,0)
+ ---------------------
+"BLD",1613,1,144,0)
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*10 contains
+"BLD",1613,1,145,0)
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+"BLD",1613,1,146,0)
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+"BLD",1613,1,147,0)
+ software design safeguards or safety critical elements functions.
+"BLD",1613,1,148,0)
+
+"BLD",1613,1,149,0)
+ RISK ANALYSIS: Changes made by patch DI*22.2*10 have no effect on Blood Bank
+"BLD",1613,1,150,0)
+ software functionality, therefore RISK is none.
+"BLD",1613,1,151,0)
+
+"BLD",1613,1,152,0)
+
+"BLD",1613,1,153,0)
+Test Sites:
+"BLD",1613,1,154,0)
+-----------
+"BLD",1613,1,155,0)
+ Charleston
+"BLD",1613,1,156,0)
+ West Palm Beach
+"BLD",1613,1,157,0)
+ 
+"BLD",1613,1,158,0)
+ 
+"BLD",1613,1,159,0)
+Software and Documentation Retrieval Instructions:
+"BLD",1613,1,160,0)
+-------------------------------------------------- 
+"BLD",1613,1,161,0)
+Documentation describing the new api, EN^DITP, can be found in the
+"BLD",1613,1,162,0)
+FM 22.2 Developer's Guide
+"BLD",1613,1,163,0)
+ 
+"BLD",1613,1,164,0)
+Current documentation is on the VA Software Documentation Library 
+"BLD",1613,1,165,0)
+at: http://www.domain.ext/vdl/ 
+"BLD",1613,1,166,0)
+ 
+"BLD",1613,1,167,0)
+Title                                File Name          SFTP Mode
+"BLD",1613,1,168,0)
+-----------------------------------------------------------------
+"BLD",1613,1,169,0)
+FM 22.2 Developer's Guide              fm22_2dg.PDF    Binary
+"BLD",1613,1,170,0)
+FM 22.2 User Manual                    fm22_2um1.PDF   Binary
+"BLD",1613,1,171,0)
+FM 22.2 Advanced User Manual           fm22_2um2.PDF   Binary
+"BLD",1613,1,172,0)
+FM 22.2 Technical Manual               fm22_2tm.PDF    Binary
+"BLD",1613,1,173,0)
+ 
+"BLD",1613,1,174,0)
+ 
+"BLD",1613,1,175,0)
+Backout and Rollback Procedure:
+"BLD",1613,1,176,0)
+-------------------------------
+"BLD",1613,1,177,0)
+This patch only consists of routines. During the VistA Installation
+"BLD",1613,1,178,0)
+Procedure of the KIDS build, the installer should back up the modified routines by the use of the 'Backup a Transport Global' action
+"BLD",1613,1,179,0)
+(step 3b in the Installations Instructions below).
+"BLD",1613,1,180,0)
+ 
+"BLD",1613,1,181,0)
+If rollback/backout is required, the installer can restore the routines
+"BLD",1613,1,182,0)
+using the MailMan message that were saved prior to installing the
+"BLD",1613,1,183,0)
+patch.
+"BLD",1613,1,184,0)
+ 
+"BLD",1613,1,185,0)
+ 
+"BLD",1613,1,186,0)
+Patch Installation:
+"BLD",1613,1,187,0)
+ 
+"BLD",1613,1,188,0)
+  
+"BLD",1613,1,189,0)
+Pre-Installation Instructions:
+"BLD",1613,1,190,0)
+------------------------------
+"BLD",1613,1,191,0)
+This patch can be queued for installation.  TaskMan does not have to be 
+"BLD",1613,1,192,0)
+stopped, HL7 filers do not need to be stopped, and users may be on the 
+"BLD",1613,1,193,0)
+system.  The patch should be installed during non-peak hours to minimize
+"BLD",1613,1,194,0)
+potential for disruption to users.  This patch should take less than 1 
+"BLD",1613,1,195,0)
+minute to install.
+"BLD",1613,1,196,0)
+ 
+"BLD",1613,1,197,0)
+ 
+"BLD",1613,1,198,0)
+Installation Instructions:
+"BLD",1613,1,199,0)
+--------------------------
+"BLD",1613,1,200,0)
+1.  Choose the MailMan message containing this patch.
+"BLD",1613,1,201,0)
+ 
+"BLD",1613,1,202,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",1613,1,203,0)
+ 
+"BLD",1613,1,204,0)
+3.  From the Kernel Installation and Distribution System Menu, select
+"BLD",1613,1,205,0)
+    the Installation Menu.  From this menu, you may elect to use the
+"BLD",1613,1,206,0)
+    following options. When prompted for the INSTALL NAME enter DI*22.2*10.
+"BLD",1613,1,207,0)
+ a.     Print Transport Global - This option lets you print the contents
+"BLD",1613,1,208,0)
+        of a Transport Global that is currently loaded in the ^XTMP
+"BLD",1613,1,209,0)
+        global.
+"BLD",1613,1,210,0)
+ b.     Backup a Transport Global - This option will create a backup
+"BLD",1613,1,211,0)
+        message of any routines exported with this patch. It will not
+"BLD",1613,1,212,0)
+        backup any other changes such as functions.
+"BLD",1613,1,213,0)
+ c.     Compare Transport Global to Current System - This option will
+"BLD",1613,1,214,0)
+        allow you to view all changes that will be made when this patch
+"BLD",1613,1,215,0)
+        is installed.  It compares all components of this patch
+"BLD",1613,1,216,0)
+        (routines, DDs, templates, etc.).
+"BLD",1613,1,217,0)
+ d.     Verify Checksums in Transport Global - This option will allow
+"BLD",1613,1,218,0)
+        you to ensure the integrity of the routines that are in the
+"BLD",1613,1,219,0)
+        transport global.
+"BLD",1613,1,220,0)
+ 
+"BLD",1613,1,221,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"BLD",1613,1,222,0)
+    When prompted for the INSTALL NAME, enter DI*22.2*10.
+"BLD",1613,1,223,0)
+ 
+"BLD",1613,1,224,0)
+5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+"BLD",1613,1,225,0)
+    Install? NO//' respond NO.
+"BLD",1613,1,226,0)
+ 
+"BLD",1613,1,227,0)
+7.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+"BLD",1613,1,228,0)
+    NO//" respond NO.
+"BLD",1613,1,229,0)
+ 
+"BLD",1613,1,230,0)
+8.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",1613,1,231,0)
+    and Protocols? NO//" respond NO. 
+"BLD",1613,1,232,0)
+ 
+"BLD",1613,1,233,0)
+9.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+"BLD",1613,1,234,0)
+ 
+"BLD",1613,1,235,0)
+ 
+"BLD",1613,1,236,0)
+Post-Installation Instructions:
+"BLD",1613,1,237,0)
+-------------------------------
+"BLD",1613,1,238,0)
+none
+"BLD",1613,1,239,0)
+ 
+"BLD",1613,1,240,0)
+ 
+"BLD",1613,4,0)
+^9.64PA^^
+"BLD",1613,6)
+3^
+"BLD",1613,6.3)
+11
+"BLD",1613,"KRN",0)
+^9.67PA^1.5^24
+"BLD",1613,"KRN",.4,0)
+.4
+"BLD",1613,"KRN",.401,0)
+.401
+"BLD",1613,"KRN",.402,0)
+.402
+"BLD",1613,"KRN",.403,0)
+.403
+"BLD",1613,"KRN",.5,0)
+.5
+"BLD",1613,"KRN",.84,0)
+.84
+"BLD",1613,"KRN",1.5,0)
+1.5
+"BLD",1613,"KRN",1.6,0)
+1.6
+"BLD",1613,"KRN",1.61,0)
+1.61
+"BLD",1613,"KRN",1.62,0)
+1.62
+"BLD",1613,"KRN",3.6,0)
+3.6
+"BLD",1613,"KRN",3.8,0)
+3.8
+"BLD",1613,"KRN",9.2,0)
+9.2
+"BLD",1613,"KRN",9.8,0)
+9.8
+"BLD",1613,"KRN",9.8,"NM",0)
+^9.68A^8^7
+"BLD",1613,"KRN",9.8,"NM",1,0)
+DIEQ^^0^B16948298
+"BLD",1613,"KRN",9.8,"NM",3,0)
+DITP^^0^B18223422
+"BLD",1613,"KRN",9.8,"NM",4,0)
+DIWP^^0^B14095198
+"BLD",1613,"KRN",9.8,"NM",5,0)
+DINIT4^^0^B12872917
+"BLD",1613,"KRN",9.8,"NM",6,0)
+DII1^^0^B2240976
+"BLD",1613,"KRN",9.8,"NM",7,0)
+DIFMEDT1^^0^B3205089
+"BLD",1613,"KRN",9.8,"NM",8,0)
+DIUTL^^0^B13688793
+"BLD",1613,"KRN",9.8,"NM","B","DIEQ",1)
+
+"BLD",1613,"KRN",9.8,"NM","B","DIFMEDT1",7)
+
+"BLD",1613,"KRN",9.8,"NM","B","DII1",6)
+
+"BLD",1613,"KRN",9.8,"NM","B","DINIT4",5)
+
+"BLD",1613,"KRN",9.8,"NM","B","DITP",3)
+
+"BLD",1613,"KRN",9.8,"NM","B","DIUTL",8)
+
+"BLD",1613,"KRN",9.8,"NM","B","DIWP",4)
+
+"BLD",1613,"KRN",19,0)
+19
+"BLD",1613,"KRN",19,"NM",0)
+^9.68A^4^4
+"BLD",1613,"KRN",19,"NM",1,0)
+DI DATA TYPE FILE^^1^
+"BLD",1613,"KRN",19,"NM",2,0)
+DI DATA TYPE PROPERTY FILE^^1^
+"BLD",1613,"KRN",19,"NM",3,0)
+DI DATA TYPE METHOD FILE^^1^
+"BLD",1613,"KRN",19,"NM",4,0)
+DI DATA TYPE OPTIONS^^1^
+"BLD",1613,"KRN",19,"NM","B","DI DATA TYPE FILE",1)
+
+"BLD",1613,"KRN",19,"NM","B","DI DATA TYPE METHOD FILE",3)
+
+"BLD",1613,"KRN",19,"NM","B","DI DATA TYPE OPTIONS",4)
+
+"BLD",1613,"KRN",19,"NM","B","DI DATA TYPE PROPERTY FILE",2)
+
+"BLD",1613,"KRN",19.1,0)
+19.1
+"BLD",1613,"KRN",101,0)
+101
+"BLD",1613,"KRN",409.61,0)
+409.61
+"BLD",1613,"KRN",771,0)
+771
+"BLD",1613,"KRN",779.2,0)
+779.2
+"BLD",1613,"KRN",870,0)
+870
+"BLD",1613,"KRN",8989.51,0)
+8989.51
+"BLD",1613,"KRN",8989.52,0)
+8989.52
+"BLD",1613,"KRN",8994,0)
+8994
+"BLD",1613,"KRN","B",.4,.4)
+
+"BLD",1613,"KRN","B",.401,.401)
+
+"BLD",1613,"KRN","B",.402,.402)
+
+"BLD",1613,"KRN","B",.403,.403)
+
+"BLD",1613,"KRN","B",.5,.5)
+
+"BLD",1613,"KRN","B",.84,.84)
+
+"BLD",1613,"KRN","B",1.5,1.5)
+
+"BLD",1613,"KRN","B",1.6,1.6)
+
+"BLD",1613,"KRN","B",1.61,1.61)
+
+"BLD",1613,"KRN","B",1.62,1.62)
+
+"BLD",1613,"KRN","B",3.6,3.6)
+
+"BLD",1613,"KRN","B",3.8,3.8)
+
+"BLD",1613,"KRN","B",9.2,9.2)
+
+"BLD",1613,"KRN","B",9.8,9.8)
+
+"BLD",1613,"KRN","B",19,19)
+
+"BLD",1613,"KRN","B",19.1,19.1)
+
+"BLD",1613,"KRN","B",101,101)
+
+"BLD",1613,"KRN","B",409.61,409.61)
+
+"BLD",1613,"KRN","B",771,771)
+
+"BLD",1613,"KRN","B",779.2,779.2)
+
+"BLD",1613,"KRN","B",870,870)
+
+"BLD",1613,"KRN","B",8989.51,8989.51)
+
+"BLD",1613,"KRN","B",8989.52,8989.52)
+
+"BLD",1613,"KRN","B",8994,8994)
+
+"BLD",1613,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",1613,"QUES",0)
+^9.62^^
+"BLD",1613,"REQB",0)
+^9.611^^
+"KRN",19,1760,-1)
+1^1
+"KRN",19,1760,0)
+DI DATA TYPE FILE
+"KRN",19,1761,-1)
+1^2
+"KRN",19,1761,0)
+DI DATA TYPE PROPERTY FILE
+"KRN",19,1762,-1)
+1^3
+"KRN",19,1762,0)
+DI DATA TYPE METHOD FILE
+"KRN",19,1763,-1)
+1^4
+"KRN",19,1763,0)
+DI DATA TYPE OPTIONS
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",4,-1)
+1^1
+"PKG",4,0)
+VA FILEMAN^DI^FM INIT^
+"PKG",4,22,0)
+^9.49I^1^1
+"PKG",4,22,1,0)
+22.2^3160105^3170815^6
+"PKG",4,22,1,"PAH",1,0)
+10^3180302^6
+"PKG",4,22,1,"PAH",1,1,0)
+^^240^240^3180302
+"PKG",4,22,1,"PAH",1,1,1,0)
+Patch DI*22.2*10 repairs the following defects:
+"PKG",4,22,1,"PAH",1,1,2,0)
+ 1.     DIWP only supports strings up to 999 characters
+"PKG",4,22,1,"PAH",1,1,3,0)
+ 2.     NUMDATE fix in patch 7 was not added to DINIT
+"PKG",4,22,1,"PAH",1,1,4,0)
+ 3.     The variable DO is not killed after call to DIE
+"PKG",4,22,1,"PAH",1,1,5,0)
+ 4.     New api EN^DITP for repointing deleted records
+"PKG",4,22,1,"PAH",1,1,6,0)
+ 5.     New options for editing Data Types in patch 2 have no parent
+"PKG",4,22,1,"PAH",1,1,7,0)
+ 6.     New API CHKPT^DIUTL(file, ien, message)
+"PKG",4,22,1,"PAH",1,1,8,0)
+
+"PKG",4,22,1,"PAH",1,1,9,0)
+  
+"PKG",4,22,1,"PAH",1,1,10,0)
+Patch Components:
+"PKG",4,22,1,"PAH",1,1,11,0)
+----------------- 
+"PKG",4,22,1,"PAH",1,1,12,0)
+ Files & Fields Associated:
+"PKG",4,22,1,"PAH",1,1,13,0)
+                                                             New/Modified/
+"PKG",4,22,1,"PAH",1,1,14,0)
+File Name (#)                  Field Name (#)                       Deleted
+"PKG",4,22,1,"PAH",1,1,15,0)
+-------------                  --------------                  -------------
+"PKG",4,22,1,"PAH",1,1,16,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,17,0)
+ 
+"PKG",4,22,1,"PAH",1,1,18,0)
+Forms Associated:
+"PKG",4,22,1,"PAH",1,1,19,0)
+ 
+"PKG",4,22,1,"PAH",1,1,20,0)
+Form Name                     File #               New/Modified/Deleted
+"PKG",4,22,1,"PAH",1,1,21,0)
+---------                     ------               --------------------
+"PKG",4,22,1,"PAH",1,1,22,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,23,0)
+ 
+"PKG",4,22,1,"PAH",1,1,24,0)
+Mail Groups Associated:
+"PKG",4,22,1,"PAH",1,1,25,0)
+ 
+"PKG",4,22,1,"PAH",1,1,26,0)
+Mail Group Name          New/Modified/Deleted
+"PKG",4,22,1,"PAH",1,1,27,0)
+---------------          --------------------
+"PKG",4,22,1,"PAH",1,1,28,0)
+ N/A                       
+"PKG",4,22,1,"PAH",1,1,29,0)
+ 
+"PKG",4,22,1,"PAH",1,1,30,0)
+Options Associated:
+"PKG",4,22,1,"PAH",1,1,31,0)
+ 
+"PKG",4,22,1,"PAH",1,1,32,0)
+Option Name                    Type               New/Modified/Deleted
+"PKG",4,22,1,"PAH",1,1,33,0)
+-----------                    ----               -------------------- 
+"PKG",4,22,1,"PAH",1,1,34,0)
+ DI DATA TYPE OPTIONS          Menu               Deleted
+"PKG",4,22,1,"PAH",1,1,35,0)
+ DI DATA TYPE FILE             Run Routine        Deleted
+"PKG",4,22,1,"PAH",1,1,36,0)
+ DI DATA TYPE METHOD FILE      Run Routine        Deleted
+"PKG",4,22,1,"PAH",1,1,37,0)
+ DI DATA TYPE PROPERTY FILE    Run Routine        Deleted
+"PKG",4,22,1,"PAH",1,1,38,0)
+ 
+"PKG",4,22,1,"PAH",1,1,39,0)
+ 
+"PKG",4,22,1,"PAH",1,1,40,0)
+Protocols Associated:
+"PKG",4,22,1,"PAH",1,1,41,0)
+ 
+"PKG",4,22,1,"PAH",1,1,42,0)
+Protocol Name       New/Modified/Deleted
+"PKG",4,22,1,"PAH",1,1,43,0)
+-------------       -------------------- 
+"PKG",4,22,1,"PAH",1,1,44,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,45,0)
+ 
+"PKG",4,22,1,"PAH",1,1,46,0)
+Security Keys Associated:
+"PKG",4,22,1,"PAH",1,1,47,0)
+ 
+"PKG",4,22,1,"PAH",1,1,48,0)
+Security Key Name
+"PKG",4,22,1,"PAH",1,1,49,0)
+-----------------
+"PKG",4,22,1,"PAH",1,1,50,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,51,0)
+ 
+"PKG",4,22,1,"PAH",1,1,52,0)
+Templates Associated:
+"PKG",4,22,1,"PAH",1,1,53,0)
+ 
+"PKG",4,22,1,"PAH",1,1,54,0)
+Template Name   Type      File Name        (Number)  New/Modified/Deleted
+"PKG",4,22,1,"PAH",1,1,55,0)
+-------------   ----      -------------------------  --------------------
+"PKG",4,22,1,"PAH",1,1,56,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,57,0)
+ 
+"PKG",4,22,1,"PAH",1,1,58,0)
+Additional Information:
+"PKG",4,22,1,"PAH",1,1,59,0)
+-----------------------
+"PKG",4,22,1,"PAH",1,1,60,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,61,0)
+ 
+"PKG",4,22,1,"PAH",1,1,62,0)
+New Service Requests (NSRs):
+"PKG",4,22,1,"PAH",1,1,63,0)
+----------------------------  
+"PKG",4,22,1,"PAH",1,1,64,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,65,0)
+ 
+"PKG",4,22,1,"PAH",1,1,66,0)
+Patient Safety Issues (PSIs):
+"PKG",4,22,1,"PAH",1,1,67,0)
+-----------------------------
+"PKG",4,22,1,"PAH",1,1,68,0)
+ N/A
+"PKG",4,22,1,"PAH",1,1,69,0)
+ 
+"PKG",4,22,1,"PAH",1,1,70,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",4,22,1,"PAH",1,1,71,0)
+--------------------------------------------
+"PKG",4,22,1,"PAH",1,1,72,0)
+ 1. Ticket I13413576FY17
+"PKG",4,22,1,"PAH",1,1,73,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,74,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,75,0)
+ Word Processing cannot parse a string greater than 999 and the FM 22.2
+"PKG",4,22,1,"PAH",1,1,76,0)
+ allows strings up to 4K characters.
+"PKG",4,22,1,"PAH",1,1,77,0)
+ 
+"PKG",4,22,1,"PAH",1,1,78,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,79,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,80,0)
+ Modified DIWP and changed 999 to 9999
+"PKG",4,22,1,"PAH",1,1,81,0)
+ 
+"PKG",4,22,1,"PAH",1,1,82,0)
+ 2. Ticket I15917948FY17
+"PKG",4,22,1,"PAH",1,1,83,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,84,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,85,0)
+ Patch DI*22.2*7 fixed the NUMDATE function in the FUNCTION file #.5,
+"PKG",4,22,1,"PAH",1,1,86,0)
+  but DINIT restored the old function.
+"PKG",4,22,1,"PAH",1,1,87,0)
+ 
+"PKG",4,22,1,"PAH",1,1,88,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,89,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,90,0)
+ Modified DINIT4 and added fix to NUMDATE
+"PKG",4,22,1,"PAH",1,1,91,0)
+ 
+"PKG",4,22,1,"PAH",1,1,92,0)
+ 3. Ticket I16009474FY17
+"PKG",4,22,1,"PAH",1,1,93,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,94,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,95,0)
+ The variable DO is not killed after a call to DIE if a user asked for
+"PKG",4,22,1,"PAH",1,1,96,0)
+  help in a multiple Date field.
+"PKG",4,22,1,"PAH",1,1,97,0)
+
+"PKG",4,22,1,"PAH",1,1,98,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,99,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,100,0)
+ Modified DIEQ and added DO to kill statement at line Q
+"PKG",4,22,1,"PAH",1,1,101,0)
+ 
+"PKG",4,22,1,"PAH",1,1,102,0)
+ 4. Ticket R13102022FY17
+"PKG",4,22,1,"PAH",1,1,103,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,104,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,105,0)
+ Need API to repoint a deleted value in a record, similar to what happens
+"PKG",4,22,1,"PAH",1,1,106,0)
+  when a pointer field value is deleted.
+"PKG",4,22,1,"PAH",1,1,107,0)
+ 
+"PKG",4,22,1,"PAH",1,1,108,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,109,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,110,0)
+ Modified DITP and added tag EN(file, list) where file=file number,
+"PKG",4,22,1,"PAH",1,1,111,0)
+ list= array containing list of entries to be repointed(Passed by Reference)
+"PKG",4,22,1,"PAH",1,1,112,0)
+ 
+"PKG",4,22,1,"PAH",1,1,113,0)
+ 5. Ticket R14175506FY17
+"PKG",4,22,1,"PAH",1,1,114,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,115,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,116,0)
+ New options that were for adding new data types and released as part of
+"PKG",4,22,1,"PAH",1,1,117,0)
+ patch DI*22.2*2 had no parent menu.  These option were not meant for
+"PKG",4,22,1,"PAH",1,1,118,0)
+ general distribution.  The options are: DI DATA TYPE OPTIONS,
+"PKG",4,22,1,"PAH",1,1,119,0)
+  DI DATA TYPE FILE, DI DATA TYPE METHOD FILE, and
+"PKG",4,22,1,"PAH",1,1,120,0)
+  DI DATA TYPE PROPERTY FILE.
+"PKG",4,22,1,"PAH",1,1,121,0)
+ 
+"PKG",4,22,1,"PAH",1,1,122,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,123,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,124,0)
+ All four options will be deleted from the OPTION file and added to the
+"PKG",4,22,1,"PAH",1,1,125,0)
+ hard coded options in the DII routine.  Modified DII1 and DIFMEDT1
+"PKG",4,22,1,"PAH",1,1,126,0)
+ routines.
+"PKG",4,22,1,"PAH",1,1,127,0)
+
+"PKG",4,22,1,"PAH",1,1,128,0)
+ 6. No ticket
+"PKG",4,22,1,"PAH",1,1,129,0)
+ Problem:
+"PKG",4,22,1,"PAH",1,1,130,0)
+ --------
+"PKG",4,22,1,"PAH",1,1,131,0)
+ Developer needs API to check what entries points to a particular record
+"PKG",4,22,1,"PAH",1,1,132,0)
+  in a file.
+"PKG",4,22,1,"PAH",1,1,133,0)
+
+"PKG",4,22,1,"PAH",1,1,134,0)
+ Resolution:
+"PKG",4,22,1,"PAH",1,1,135,0)
+ ----------
+"PKG",4,22,1,"PAH",1,1,136,0)
+ CHKPT^DIUTL(file, ien, message).
+"PKG",4,22,1,"PAH",1,1,137,0)
+ ;INPUT: DIFILE=file number, DA=ien of record, DIMSG=closed global root
+"PKG",4,22,1,"PAH",1,1,138,0)
+  or local array
+"PKG",4,22,1,"PAH",1,1,139,0)
+ ;OUTPUT: DIMSG(0)=line count, DISMG(#)="Entry ien in FILE (file #)
+"PKG",4,22,1,"PAH",1,1,140,0)
+  refers to record DA" 
+"PKG",4,22,1,"PAH",1,1,141,0)
+
+"PKG",4,22,1,"PAH",1,1,142,0)
+ Blood Bank Clearance:
+"PKG",4,22,1,"PAH",1,1,143,0)
+ ---------------------
+"PKG",4,22,1,"PAH",1,1,144,0)
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*10 contains
+"PKG",4,22,1,"PAH",1,1,145,0)
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+"PKG",4,22,1,"PAH",1,1,146,0)
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+"PKG",4,22,1,"PAH",1,1,147,0)
+ software design safeguards or safety critical elements functions.
+"PKG",4,22,1,"PAH",1,1,148,0)
+
+"PKG",4,22,1,"PAH",1,1,149,0)
+ RISK ANALYSIS: Changes made by patch DI*22.2*10 have no effect on Blood Bank
+"PKG",4,22,1,"PAH",1,1,150,0)
+ software functionality, therefore RISK is none.
+"PKG",4,22,1,"PAH",1,1,151,0)
+
+"PKG",4,22,1,"PAH",1,1,152,0)
+
+"PKG",4,22,1,"PAH",1,1,153,0)
+Test Sites:
+"PKG",4,22,1,"PAH",1,1,154,0)
+-----------
+"PKG",4,22,1,"PAH",1,1,155,0)
+ Charleston
+"PKG",4,22,1,"PAH",1,1,156,0)
+ West Palm Beach
+"PKG",4,22,1,"PAH",1,1,157,0)
+ 
+"PKG",4,22,1,"PAH",1,1,158,0)
+ 
+"PKG",4,22,1,"PAH",1,1,159,0)
+Software and Documentation Retrieval Instructions:
+"PKG",4,22,1,"PAH",1,1,160,0)
+-------------------------------------------------- 
+"PKG",4,22,1,"PAH",1,1,161,0)
+Documentation describing the new api, EN^DITP, can be found in the
+"PKG",4,22,1,"PAH",1,1,162,0)
+FM 22.2 Developer's Guide
+"PKG",4,22,1,"PAH",1,1,163,0)
+ 
+"PKG",4,22,1,"PAH",1,1,164,0)
+Current documentation is on the VA Software Documentation Library 
+"PKG",4,22,1,"PAH",1,1,165,0)
+at: http://www.domain.ext/vdl/ 
+"PKG",4,22,1,"PAH",1,1,166,0)
+ 
+"PKG",4,22,1,"PAH",1,1,167,0)
+Title                                File Name          SFTP Mode
+"PKG",4,22,1,"PAH",1,1,168,0)
+-----------------------------------------------------------------
+"PKG",4,22,1,"PAH",1,1,169,0)
+FM 22.2 Developer's Guide              fm22_2dg.PDF    Binary
+"PKG",4,22,1,"PAH",1,1,170,0)
+FM 22.2 User Manual                    fm22_2um1.PDF   Binary
+"PKG",4,22,1,"PAH",1,1,171,0)
+FM 22.2 Advanced User Manual           fm22_2um2.PDF   Binary
+"PKG",4,22,1,"PAH",1,1,172,0)
+FM 22.2 Technical Manual               fm22_2tm.PDF    Binary
+"PKG",4,22,1,"PAH",1,1,173,0)
+ 
+"PKG",4,22,1,"PAH",1,1,174,0)
+ 
+"PKG",4,22,1,"PAH",1,1,175,0)
+Backout and Rollback Procedure:
+"PKG",4,22,1,"PAH",1,1,176,0)
+-------------------------------
+"PKG",4,22,1,"PAH",1,1,177,0)
+This patch only consists of routines. During the VistA Installation
+"PKG",4,22,1,"PAH",1,1,178,0)
+Procedure of the KIDS build, the installer should back up the modified routines by the use of the 'Backup a Transport Global' action
+"PKG",4,22,1,"PAH",1,1,179,0)
+(step 3b in the Installations Instructions below).
+"PKG",4,22,1,"PAH",1,1,180,0)
+ 
+"PKG",4,22,1,"PAH",1,1,181,0)
+If rollback/backout is required, the installer can restore the routines
+"PKG",4,22,1,"PAH",1,1,182,0)
+using the MailMan message that were saved prior to installing the
+"PKG",4,22,1,"PAH",1,1,183,0)
+patch.
+"PKG",4,22,1,"PAH",1,1,184,0)
+ 
+"PKG",4,22,1,"PAH",1,1,185,0)
+ 
+"PKG",4,22,1,"PAH",1,1,186,0)
+Patch Installation:
+"PKG",4,22,1,"PAH",1,1,187,0)
+ 
+"PKG",4,22,1,"PAH",1,1,188,0)
+  
+"PKG",4,22,1,"PAH",1,1,189,0)
+Pre-Installation Instructions:
+"PKG",4,22,1,"PAH",1,1,190,0)
+------------------------------
+"PKG",4,22,1,"PAH",1,1,191,0)
+This patch can be queued for installation.  TaskMan does not have to be 
+"PKG",4,22,1,"PAH",1,1,192,0)
+stopped, HL7 filers do not need to be stopped, and users may be on the 
+"PKG",4,22,1,"PAH",1,1,193,0)
+system.  The patch should be installed during non-peak hours to minimize
+"PKG",4,22,1,"PAH",1,1,194,0)
+potential for disruption to users.  This patch should take less than 1 
+"PKG",4,22,1,"PAH",1,1,195,0)
+minute to install.
+"PKG",4,22,1,"PAH",1,1,196,0)
+ 
+"PKG",4,22,1,"PAH",1,1,197,0)
+ 
+"PKG",4,22,1,"PAH",1,1,198,0)
+Installation Instructions:
+"PKG",4,22,1,"PAH",1,1,199,0)
+--------------------------
+"PKG",4,22,1,"PAH",1,1,200,0)
+1.  Choose the MailMan message containing this patch.
+"PKG",4,22,1,"PAH",1,1,201,0)
+ 
+"PKG",4,22,1,"PAH",1,1,202,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",4,22,1,"PAH",1,1,203,0)
+ 
+"PKG",4,22,1,"PAH",1,1,204,0)
+3.  From the Kernel Installation and Distribution System Menu, select
+"PKG",4,22,1,"PAH",1,1,205,0)
+    the Installation Menu.  From this menu, you may elect to use the
+"PKG",4,22,1,"PAH",1,1,206,0)
+    following options. When prompted for the INSTALL NAME enter DI*22.2*10.
+"PKG",4,22,1,"PAH",1,1,207,0)
+ a.     Print Transport Global - This option lets you print the contents
+"PKG",4,22,1,"PAH",1,1,208,0)
+        of a Transport Global that is currently loaded in the ^XTMP
+"PKG",4,22,1,"PAH",1,1,209,0)
+        global.
+"PKG",4,22,1,"PAH",1,1,210,0)
+ b.     Backup a Transport Global - This option will create a backup
+"PKG",4,22,1,"PAH",1,1,211,0)
+        message of any routines exported with this patch. It will not
+"PKG",4,22,1,"PAH",1,1,212,0)
+        backup any other changes such as functions.
+"PKG",4,22,1,"PAH",1,1,213,0)
+ c.     Compare Transport Global to Current System - This option will
+"PKG",4,22,1,"PAH",1,1,214,0)
+        allow you to view all changes that will be made when this patch
+"PKG",4,22,1,"PAH",1,1,215,0)
+        is installed.  It compares all components of this patch
+"PKG",4,22,1,"PAH",1,1,216,0)
+        (routines, DDs, templates, etc.).
+"PKG",4,22,1,"PAH",1,1,217,0)
+ d.     Verify Checksums in Transport Global - This option will allow
+"PKG",4,22,1,"PAH",1,1,218,0)
+        you to ensure the integrity of the routines that are in the
+"PKG",4,22,1,"PAH",1,1,219,0)
+        transport global.
+"PKG",4,22,1,"PAH",1,1,220,0)
+ 
+"PKG",4,22,1,"PAH",1,1,221,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"PKG",4,22,1,"PAH",1,1,222,0)
+    When prompted for the INSTALL NAME, enter DI*22.2*10.
+"PKG",4,22,1,"PAH",1,1,223,0)
+ 
+"PKG",4,22,1,"PAH",1,1,224,0)
+5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+"PKG",4,22,1,"PAH",1,1,225,0)
+    Install? NO//' respond NO.
+"PKG",4,22,1,"PAH",1,1,226,0)
+ 
+"PKG",4,22,1,"PAH",1,1,227,0)
+7.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+"PKG",4,22,1,"PAH",1,1,228,0)
+    NO//" respond NO.
+"PKG",4,22,1,"PAH",1,1,229,0)
+ 
+"PKG",4,22,1,"PAH",1,1,230,0)
+8.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",4,22,1,"PAH",1,1,231,0)
+    and Protocols? NO//" respond NO. 
+"PKG",4,22,1,"PAH",1,1,232,0)
+ 
+"PKG",4,22,1,"PAH",1,1,233,0)
+9.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+"PKG",4,22,1,"PAH",1,1,234,0)
+ 
+"PKG",4,22,1,"PAH",1,1,235,0)
+ 
+"PKG",4,22,1,"PAH",1,1,236,0)
+Post-Installation Instructions:
+"PKG",4,22,1,"PAH",1,1,237,0)
+-------------------------------
+"PKG",4,22,1,"PAH",1,1,238,0)
+none
+"PKG",4,22,1,"PAH",1,1,239,0)
+ 
+"PKG",4,22,1,"PAH",1,1,240,0)
+ 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","DIEQ")
+0^1^B16948298^B16904404
+"RTN","DIEQ",1,0)
+DIEQ ;SFISC/XAK,YJK - HELP DURING INPUT ;14MAR2016
+"RTN","DIEQ",2,0)
+ ;;22.2;VA FileMan;**2,7,5,10**;Jan 05, 2016;Build 11
+"RTN","DIEQ",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DIEQ",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DIEQ",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DIEQ",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DIEQ",7,0)
+ ;;GFT;**4,3,59,999,1004,1024
+"RTN","DIEQ",8,0)
+ ;
+"RTN","DIEQ",9,0)
+BN S D=$P(DQ(DQ),U,4) S:DP+1 D=DIFLD
+"RTN","DIEQ",10,0)
+ S DZ=X D EN1 G B^DIED
+"RTN","DIEQ",11,0)
+QQ ;
+"RTN","DIEQ",12,0)
+ I DV,DV["*",$D(^DD(+DV,.01,0)) S DQ(DQ)=$P(DQ(DQ),U,1,4)_U_$P(^(0),U,5,99)
+"RTN","DIEQ",13,0)
+EN1 ;N DDH,DST,A1 S DDH=0 G M:DV I DP<0 D HP G P ;p7
+"RTN","DIEQ",14,0)
+  N DST,A1 S DDH=0 G M:DV I DP<0 D HP G P
+"RTN","DIEQ",15,0)
+HELP I X="?"!(X["BAD") S X=$$HELP^DIALOGZ(DP,D),A1="T" D N:X]"" I '$G(DISORT),$D(^DD(DP,D,12)) S X=^(12) D N ;HELP MESSAGE
+"RTN","DIEQ",16,0)
+ D H G:'$D(DZ) Q
+"RTN","DIEQ",17,0)
+ ;
+"RTN","DIEQ",18,0)
+P I DV["P" K DO S DIC=U_DU,D="B",DIC(0)="M"_$E("L",DV'["'") G AST:DV["*"&('$G(DISORT)) D DQ^DICQ D % G Q
+"RTN","DIEQ",19,0)
+VP S DU=DP S:DV DU=+DO(2),D=.01 I DV["V" D V G Q
+"RTN","DIEQ",20,0)
+D I DV["D" S %(0)=0,%("X")=$P(DQ(DQ),U,5,9) I DV'["t" D DT^DIEH1($P($P(%("X"),"%DT=""",2),""""),1) ;ONCE WAS A CALL TO HELP^%DTC ;p5
+"RTN","DIEQ",21,0)
+ ;.I %("X")="" S %("X")=$$GETMETH^DIETLIBF(DU,D,"INPUT TRANSFORM") ;p5
+"RTN","DIEQ",22,0)
+S I DV["S" D:'$G(DISORT) SETSCR^DIR(DU,D) S A1="T",DST=$$EZBLD^DIALOG(8068)_" " D DS D  K DIC("S")
+"RTN","DIEQ",23,0)
+ .N A,A1,A2
+"RTN","DIEQ",24,0)
+ .S A=$P(DQ(DQ),U,3) I DV["t" S DG=$$GETPROP^DIETLIBF(DU,D,"SET OF CODES") I DG]"" S A=DG
+"RTN","DIEQ",25,0)
+ .I $G(DUZ("LANG"))>1,A=$P(^DD(DP,D,0),U,3) S A=$$SETIN^DIALOGZ_";" ;NAKED
+"RTN","DIEQ",26,0)
+ .F DG=1:1 S Y=$P(A,";",DG) Q:Y=""  S D=$P(Y,":",2),Y=$P(Y,":") I 1 X:$D(DIC("S")) DIC("S") I  S A2="",$P(A2," ",15-($L(Y)+7))=" ",DST="  "_Y_A2_" "_D D DS
+"RTN","DIEQ",27,0)
+Q K DO,DST,A1 S:$D(DIE) DIC=DIE S D=0 I $D(DDH)>10 D LIST^DDSU ;p10
+"RTN","DIEQ",28,0)
+ D:DV UDA
+"RTN","DIEQ",29,0)
+ Q
+"RTN","DIEQ",30,0)
+ ;
+"RTN","DIEQ",31,0)
+ ;
+"RTN","DIEQ",32,0)
+ ;
+"RTN","DIEQ",33,0)
+N F  Q:X=""  F %=$L(X," "):-1:1 I $L($P(X," ",1,%))<75 S DST=$P(X," ",1,%) D DS D:X'="" N1 Q
+"RTN","DIEQ",34,0)
+ S X=DZ
+"RTN","DIEQ",35,0)
+ Q
+"RTN","DIEQ",36,0)
+ ;
+"RTN","DIEQ",37,0)
+N1 S X=$P(X," ",%+1,$L(X," ")) Q
+"RTN","DIEQ",38,0)
+ ;
+"RTN","DIEQ",39,0)
+DS S:'$D(A1) A1="T" S DDH=$G(DDH)+1,DDH(DDH,A1)=$S(A1="X":"",1:"     ")_DST K A1,DST Q
+"RTN","DIEQ",40,0)
+ ;
+"RTN","DIEQ",41,0)
+HP I $D(DQ(DQ,3)) S A1="T",DST=DQ(DQ,3) D DS
+"RTN","DIEQ",42,0)
+ I $D(DQ(DQ,4)) S A1="X",DST=DQ(DQ,4) D DS
+"RTN","DIEQ",43,0)
+ Q
+"RTN","DIEQ",44,0)
+ ;
+"RTN","DIEQ",45,0)
+% S %=$G(DIC("V")) K DIC S:%]"" DIC("V")=% Q
+"RTN","DIEQ",46,0)
+ ;
+"RTN","DIEQ",47,0)
+AST S:$D(X)[0 X="?" X $P(DQ(DQ),U,5,99) K DIC G Q
+"RTN","DIEQ",48,0)
+ D ^DIC K DIC,DICS,DICW G Q
+"RTN","DIEQ",49,0)
+ ;
+"RTN","DIEQ",50,0)
+M ;COME HERE FROM EN1 ABOVE WHEN WE'RE IN A MULTIPLE FIELD
+"RTN","DIEQ",51,0)
+ K DO S DZ=X,DIC=DIE_DA_","_$S(+$P(DC,U,3)=$P(DC,U,3):$P(DC,U,3),1:$C(34)_$P(DC,U,3)_$C(34))_",",D="B",DIC(0)="LM",DZ(1)=0
+"RTN","DIEQ",52,0)
+ I '$D(@(DIC_"0)")) S DO=U_$P(DC,U,2) D DO2^DIC1
+"RTN","DIEQ",53,0)
+ D:'$D(DO) DO^DIC1
+"RTN","DIEQ",54,0)
+ D DDA,DQ^DICQ D % G Q:'$D(DZ)!(DV["S") S X=DZ G P
+"RTN","DIEQ",55,0)
+ ;
+"RTN","DIEQ",56,0)
+H I '$G(DISORT) D  Q:'$D(DZ)
+"RTN","DIEQ",57,0)
+ . I $G(DV)["t" S DST=$$XHELP^DIETLIBF(DP,D)
+"RTN","DIEQ",58,0)
+ . E  S DST=$G(^DD(DP,D,4))
+"RTN","DIEQ",59,0)
+ . I DST'?."^" S A1="X" D DS,LIST^DDSU
+"RTN","DIEQ",60,0)
+ I $G(X)?1"??".E,X'["BAD" D
+"RTN","DIEQ",61,0)
+ . N DIDG,DG,DDD,DD,DIY,DIZ,DUOUT
+"RTN","DIEQ",62,0)
+ . S DIDG=$P($G(^DD(DP,D,21,0)),U,3)
+"RTN","DIEQ",63,0)
+ . K DDSQ
+"RTN","DIEQ",64,0)
+ . I '$D(DDS) S DDD=5,DD="",DIY=99,DIZ=21 I $G(DIPGM)'="DICQ1" N DIPGM S DIPGM="DIEQ" D Z^DDSU
+"RTN","DIEQ",65,0)
+ . F DG=1:1 Q:'$D(^DD(DP,D,21,DG,0))  Q:+DIDG&(DG>DIDG)  D  Q:$D(DDSQ)
+"RTN","DIEQ",66,0)
+ . . I '($G(DDH)#15) D LIST^DDSU I $G(DTOUT)!($G(DUOUT)) S DDSQ=1
+"RTN","DIEQ",67,0)
+ . . Q:$D(DDSQ)
+"RTN","DIEQ",68,0)
+ . . S DDH=$G(DDH)+1,DDH(DDH,"T")=^DD(DP,D,21,DG,0) ;S DST=^DD(DP,D,21,DG,0) D DS Q  ;GRAB DESCRIPTION NODE BY NODE
+"RTN","DIEQ",69,0)
+ . I '$D(DDSQ) Q:$D(DDH)'>10  D LIST^DDSU
+"RTN","DIEQ",70,0)
+ . I $D(DDSQ) K DDSQ,DDH
+"RTN","DIEQ",71,0)
+ . Q
+"RTN","DIEQ",72,0)
+ Q
+"RTN","DIEQ",73,0)
+ ;
+"RTN","DIEQ",74,0)
+BK S DDH=$G(DDH)+1,DDH(DDH,"T")=" " Q
+"RTN","DIEQ",75,0)
+ ;
+"RTN","DIEQ",76,0)
+V S DDH=+$G(DDH),A1="T",DST=$$EZBLD^DIALOG(8071) D DS
+"RTN","DIEQ",77,0)
+EGP F Y=0:0 S Y=$O(^DD(DU,D,"V",Y)) Q:Y'>0  I $D(^(Y,0)) S Y(0)=^(0) X:$D(DIC("V")) DIC("V") I  I $D(^DIC(+Y(0),0)) S Y(1)=$P(Y(0),U,4),Y(2)=$$FILENAME^DIALOGZ(+Y(0)),DST=$$EZBLD^DIALOG(8072,.Y) K Y(1),Y(2) D DS ;**CCO/NI V-P FILE NAMES
+"RTN","DIEQ",78,0)
+ D BK S DST=$$EZBLD^DIALOG(8073) D DS S DU="" D BK I DZ'?1"??".E K X,DZ Q
+"RTN","DIEQ",79,0)
+ D T^DIEQ1 K X,DZ Q
+"RTN","DIEQ",80,0)
+ ;
+"RTN","DIEQ",81,0)
+DDA N T,%
+"RTN","DIEQ",82,0)
+ S T=$T
+"RTN","DIEQ",83,0)
+ F %=+$O(DA(" "),-1):-1:1 K DA(%+1) S:$D(DA(%))#2 DA(%+1)=DA(%)
+"RTN","DIEQ",84,0)
+ K DA(1) S:$D(DA)#2 DA(1)=DA
+"RTN","DIEQ",85,0)
+ I T
+"RTN","DIEQ",86,0)
+ Q
+"RTN","DIEQ",87,0)
+ ;
+"RTN","DIEQ",88,0)
+UDA N T,%
+"RTN","DIEQ",89,0)
+ S T=$T
+"RTN","DIEQ",90,0)
+ S DA=$G(DA(1)) ;K DA(1)
+"RTN","DIEQ",91,0)
+ F %=2:1:+$O(DA(" "),-1) I $D(DA(%))#2 S DA(%-1)=DA(%) K DA(%)
+"RTN","DIEQ",92,0)
+ I T
+"RTN","DIEQ",93,0)
+ Q
+"RTN","DIEQ",94,0)
+ ;
+"RTN","DIEQ",95,0)
+ ;#8071  Enter one of the following
+"RTN","DIEQ",96,0)
+ ;#8072  |Prefix|.EntryName to select a |filename|
+"RTN","DIEQ",97,0)
+ ;#8073  To see the entries in any particular file type <Prefix.?>
+"RTN","DIFMEDT1")
+0^7^B3205089^B1665680
+"RTN","DIFMEDT1",1,0)
+DIFMEDT1 ;O-OIFO/BI - FM23 Extensible Data Types ;27-Oct-2015
+"RTN","DIFMEDT1",2,0)
+ ;;22.2;VA FileMan;**2,10**;Jan 05, 2016;Build 11
+"RTN","DIFMEDT1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DIFMEDT1",4,0)
+0 ;
+"RTN","DIFMEDT1",5,0)
+ S DIC="^DOPT(""DIFMEDT"","
+"RTN","DIFMEDT1",6,0)
+ G OPT:$D(^DOPT("DIFMEDT",3)) S ^(0)="EXTENSIBLE DATA TYPE OPTIONS^1.01" K ^("B")
+"RTN","DIFMEDT1",7,0)
+ F X=1:1:3 S ^DOPT("DIFMEDT",X,0)=$P($T(@X),";;",2)
+"RTN","DIFMEDT1",8,0)
+ S DIK=DIC D IXALL^DIK
+"RTN","DIFMEDT1",9,0)
+OPT ;
+"RTN","DIFMEDT1",10,0)
+ S DIC(0)="AEQIZ" D ^DIC G Q:Y<0 S DI=+Y D EN G 0
+"RTN","DIFMEDT1",11,0)
+ ;
+"RTN","DIFMEDT1",12,0)
+EN ;Entry point for all options
+"RTN","DIFMEDT1",13,0)
+ D @DI W !!
+"RTN","DIFMEDT1",14,0)
+Q K %,DI,DIC,DIK,X,Y Q
+"RTN","DIFMEDT1",15,0)
+ ;
+"RTN","DIFMEDT1",16,0)
+1 ;;ENTER OR EDIT DATA TYPE FILE
+"RTN","DIFMEDT1",17,0)
+ G ENP81^DIFMEDT1
+"RTN","DIFMEDT1",18,0)
+ ;
+"RTN","DIFMEDT1",19,0)
+2 ;;ENTER OR EDIT DATA TYPE METHOD FILE
+"RTN","DIFMEDT1",20,0)
+ G ENP87^DIFMEDT1
+"RTN","DIFMEDT1",21,0)
+ ;
+"RTN","DIFMEDT1",22,0)
+3 ;;ENTER OR EDIT DATA TYPE PROPERTY FILE
+"RTN","DIFMEDT1",23,0)
+ G ENP86^DIFMEDT1
+"RTN","DIFMEDT1",24,0)
+ ;
+"RTN","DIFMEDT1",25,0)
+ ;
+"RTN","DIFMEDT1",26,0)
+ENP81 ; Entry Point to Enter or Edit DATA TYPE FILE (#.81)
+"RTN","DIFMEDT1",27,0)
+ D MAIN(.81) Q
+"RTN","DIFMEDT1",28,0)
+ ;
+"RTN","DIFMEDT1",29,0)
+ENP86 ; Entry Point to Enter or Edit DATA TYPE PROPERTY FILE (#.86)
+"RTN","DIFMEDT1",30,0)
+ D MAIN(.86) Q
+"RTN","DIFMEDT1",31,0)
+ ;
+"RTN","DIFMEDT1",32,0)
+ENP87 ; Entry Point to Enter or Edit DATA TYPE METHOD FILE (#.87)
+"RTN","DIFMEDT1",33,0)
+ D MAIN(.87) Q
+"RTN","DIFMEDT1",34,0)
+ ;
+"RTN","DIFMEDT1",35,0)
+MAIN(FILE) ; Private Entry Point
+"RTN","DIFMEDT1",36,0)
+ N DIC,DIR,SCREEN,Y
+"RTN","DIFMEDT1",37,0)
+ S SCREEN=0
+"RTN","DIFMEDT1",38,0)
+ ;
+"RTN","DIFMEDT1",39,0)
+ ; Ask about using Screen-Mode
+"RTN","DIFMEDT1",40,0)
+ S DIR(0)="Y"
+"RTN","DIFMEDT1",41,0)
+ S DIR("A")="Do you want to use the screen-mode version"
+"RTN","DIFMEDT1",42,0)
+ S DIR("B")="YES"
+"RTN","DIFMEDT1",43,0)
+ D ^DIR
+"RTN","DIFMEDT1",44,0)
+ S:Y>0 SCREEN=1
+"RTN","DIFMEDT1",45,0)
+ ;
+"RTN","DIFMEDT1",46,0)
+SELECT ; Private Loop for user input
+"RTN","DIFMEDT1",47,0)
+ ; Select Prompt
+"RTN","DIFMEDT1",48,0)
+ S DIC="^DI("_FILE_",",DIC(0)="AELMQ" D ^DIC
+"RTN","DIFMEDT1",49,0)
+ ;
+"RTN","DIFMEDT1",50,0)
+ ; Exit if nothing is selected
+"RTN","DIFMEDT1",51,0)
+ Q:Y<1
+"RTN","DIFMEDT1",52,0)
+ ;
+"RTN","DIFMEDT1",53,0)
+ ; Use Screen-Mode
+"RTN","DIFMEDT1",54,0)
+ D:SCREEN
+"RTN","DIFMEDT1",55,0)
+ . N DIC,DIE,DR,DA,DDSPARM,DDSFILE,DDSPAGE
+"RTN","DIFMEDT1",56,0)
+ . S DA=+Y,DDSFILE=FILE,DR="[DIP"_$P(FILE,".",2)_"S]",DDSPAGE=1
+"RTN","DIFMEDT1",57,0)
+ . D ^DDS
+"RTN","DIFMEDT1",58,0)
+ ;
+"RTN","DIFMEDT1",59,0)
+ ; Use Roll-And-Scroll Mode
+"RTN","DIFMEDT1",60,0)
+ D:'SCREEN
+"RTN","DIFMEDT1",61,0)
+ . S DIE="^DI("_FILE_",",DA=+Y,DR="[DIP"_$P(FILE,".",2)_"IT]" D ^DIE
+"RTN","DIFMEDT1",62,0)
+ . W !!
+"RTN","DIFMEDT1",63,0)
+ G SELECT
+"RTN","DIFMEDT1",64,0)
+ Q
+"RTN","DII1")
+0^6^B2240976^B2105841
+"RTN","DII1",1,0)
+DII1 ;SFISC/XAK-OTHER OPTIONS ;7/25/96  14:15
+"RTN","DII1",2,0)
+ ;;22.2;VA FileMan;**8,10**;Jan 05, 2016;Build 11
+"RTN","DII1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DII1",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DII1",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DII1",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DII1",7,0)
+ ;
+"RTN","DII1",8,0)
+0 S DIC="^DOPT(""DII1"","
+"RTN","DII1",9,0)
+ G OPT:$D(^DOPT("DII1",11)) S ^(0)="OTHER OPTION^1.01" K ^("B")
+"RTN","DII1",10,0)
+ F X=1:1:11 S ^DOPT("DII1",X,0)=$P($T(@X),";;",2)
+"RTN","DII1",11,0)
+ S DIK=DIC D IXALL^DIK
+"RTN","DII1",12,0)
+OPT ;
+"RTN","DII1",13,0)
+ S DIC(0)="AEQIZ" D ^DIC G Q:Y<0 S DI=+Y D EN G 0
+"RTN","DII1",14,0)
+ ;
+"RTN","DII1",15,0)
+EN ;
+"RTN","DII1",16,0)
+ D @DI W !!
+"RTN","DII1",17,0)
+Q K %,DIC,DIK,DI,DA,I,J,X,Y Q
+"RTN","DII1",18,0)
+ ;
+"RTN","DII1",19,0)
+1 ;;FILEGRAMS
+"RTN","DII1",20,0)
+ G ^DIFGO
+"RTN","DII1",21,0)
+ ;
+"RTN","DII1",22,0)
+2 ;;ARCHIVING
+"RTN","DII1",23,0)
+ G NOKL^DIAR
+"RTN","DII1",24,0)
+ ;
+"RTN","DII1",25,0)
+3 ;;AUDITING
+"RTN","DII1",26,0)
+ G ^DIAU
+"RTN","DII1",27,0)
+ ;
+"RTN","DII1",28,0)
+4 ;;SCREENMAN
+"RTN","DII1",29,0)
+ G ^DDSOPT
+"RTN","DII1",30,0)
+ ;
+"RTN","DII1",31,0)
+5 ;;STATISTICS
+"RTN","DII1",32,0)
+ G ^DIX
+"RTN","DII1",33,0)
+ ;
+"RTN","DII1",34,0)
+6 ;;EXTRACT DATA TO FILEMAN FILE
+"RTN","DII1",35,0)
+ G ^DIAX
+"RTN","DII1",36,0)
+ ;
+"RTN","DII1",37,0)
+7 ;;DATA EXPORT TO FOREIGN FORMAT
+"RTN","DII1",38,0)
+ G NOKL^DDXP
+"RTN","DII1",39,0)
+ ;
+"RTN","DII1",40,0)
+8 ;;IMPORT DATA
+"RTN","DII1",41,0)
+ G EN^DDMPU
+"RTN","DII1",42,0)
+ ;
+"RTN","DII1",43,0)
+9 ;;BROWSER
+"RTN","DII1",44,0)
+ G ^DDBR
+"RTN","DII1",45,0)
+ ;
+"RTN","DII1",46,0)
+10 ;;DATA ACCESS CONTROL
+"RTN","DII1",47,0)
+ G ^DIACOPT
+"RTN","DII1",48,0)
+ ;
+"RTN","DII1",49,0)
+11 ;;DATA TYPE OPTIONS
+"RTN","DII1",50,0)
+ G ^DIFMEDT1
+"RTN","DINIT4")
+0^5^B12872917^B12812168
+"RTN","DINIT4",1,0)
+DINIT4 ;SFISC/GFT-INITIALIZE VA FILEMAN ;24SEP2009
+"RTN","DINIT4",2,0)
+ ;;22.2;VA FileMan;**10**;Jan 05, 2016;Build 11
+"RTN","DINIT4",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DINIT4",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DINIT4",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DINIT4",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DINIT4",7,0)
+ ;
+"RTN","DINIT4",8,0)
+DD F I=1:1 S X=$E($T(DD+I),4,999) G ^DINIT41:X?.P S ^DD("FUNC",I,0)=$P(X,";",1),Y=1 F DU=1,2,3,9,10 S Y=Y+1 I $P(X,";",Y)]"" S ^(DU)=$P(X,";",Y)
+"RTN","DINIT4",9,0)
+ ;;SQUAREROOT;D SQR^DIXC S X=$S(X'>0:"",1:Y);;;
+"RTN","DINIT4",10,0)
+ ;;TIME;S X=$E($P(X,".",2)_"0000",1,4),%=X>1159 S:X>1259 X=X-1200 S X=X\100_":"_$E(X#100+100,2,3)_" "_$E("AP",%+1)_"M";;;
+"RTN","DINIT4",11,0)
+ ;;MONTH;S X=$E(X,1,5)_0_0 S:'X X="";D^D;;
+"RTN","DINIT4",12,0)
+ ;;YEAR;S X=$E(X,1,3)_"0000" S:'X X="";D^D;;
+"RTN","DINIT4",13,0)
+ ;;DATE;S X=$P(X,".",1);D^D;;
+"RTN","DINIT4",14,0)
+ ;;DAYOFWEEK;D DW^%DTC;^D;;
+"RTN","DINIT4",15,0)
+ ;;CLOSE
+"RTN","DINIT4",16,0)
+ ;;ABS;S:X<0 X=-X;;;
+"RTN","DINIT4",17,0)
+ ;;INTERNAL;S X=X;;;
+"RTN","DINIT4",18,0)
+ ;;MAX;S:X1>X X=X1;O;2;MAXIMUM OF 2 VALUES
+"RTN","DINIT4",19,0)
+ ;;MIN;S:X1<X X=X1;O;2;MINIMUM OF TWO VALUES
+"RTN","DINIT4",20,0)
+ ;;REVERSE;S X=$RE(X);;;DATA CHARACTERS IN RIGHT-TO-LEFT ORDER
+"RTN","DINIT4",21,0)
+ ;;UPPERCASE;S X=$$UP^DILIBF(X);;;
+"RTN","DINIT4",22,0)
+ ;;LOWERCASE;X "F %=2:1:$L(X) I $E(X,%)?1U,$E(X,%-1)?1A S X=$E(X,0,%-1)_$C($A(X,%)+32)_$E(X,%+1,999)";;;
+"RTN","DINIT4",23,0)
+ ;;CENTER;S X=$J("",$S($D(DIWR)+$D(DIWL)=2:DIWR-DIWL+1,$D(IOM):IOM,1:80)-$L(X)\2-$X)_X;;;;W
+"RTN","DINIT4",24,0)
+ ;;UNDERLINE;S %="",Y=$S($D(IOST)[0:-1,$A(IOST)-80:-1,1:$L(X)<83) X:Y+1 "F Y=1:1:$L(X) "_$S(Y:"S %=$C(8)_%",1:"W $E(X,Y),$C(8)")_"_""_""" S:Y+1 X=$S(%]"":X_%,1:%);;;UNDERLINE (ARG) IF OUTPUTTING TO A PRINTER DEVICE;W
+"RTN","DINIT4",25,0)
+ ;;PAGEFEED;S %Y=1,%=$S($D(DIWF):$F(DIWF,"B"),1:0) X:% "F %Y=%:1 Q:$E(DIWF,%Y)'?1N" S:$D(DIWF) DIWF=$E(DIWF,1,%-2)_$E(DIWF,%Y,999)_"B"_(X\1) X:X>(IOSL-$Y)&$D(^UTILITY($J,1))&'$D(^("W"))&'$D(DIWF) ^(1) S X="";;;START NEW PAGE IF <ARG LINES LEFT;W
+"RTN","DINIT4",26,0)
+ ;;BREAKABLE;D:'$D(DISYS) OS^DII X ^DD("OS",DISYS,1);;;OUTPUT DEVICE CAN BE INTERRUPTED IF ARGUMENT IS NON-ZERO
+"RTN","DINIT4",27,0)
+ ;;NUMMONTH;S X=+$E(X,4,5);^D;;MONTH NUMBER (0-12) FOR A DATE
+"RTN","DINIT4",28,0)
+ ;;NUMDAY;S X=+$E(X,6,7);^D;;DAY NUMBER (0-31) FOR A DATE
+"RTN","DINIT4",29,0)
+ ;;NUMYEAR;S:X X=$E(X,2,3);^D;;YEAR NUMBER (00-99) FOR A DATE
+"RTN","DINIT4",30,0)
+ ;;NUMDATE;S:X X=$E(X,4,5)_"/"_$E(X,6,7)_"/"_$E(X,2,3);^D;;DATE IN 'NN/NN/NN' FORMAT
+"RTN","DINIT4",31,0)
+ ;;REPLACE;X "F %=0:0 S %=$F(X2,X1,%) Q:%<2  S X2=$E(X2,1,%-$L(X1)-1)_X_$E(X2,%,999),%=%-$L(X1)+$L(X)" S X=X2;;3;THE 1ST ARGUMENT, WITH ALL OCCURRENCES OF THE 2ND ARGUMENT REPLACED BY THE 3RD
+"RTN","DINIT4",32,0)
+ ;;NOW;N %I,%H,% D NOW^%DTC S X=%;D;0;CURRENT DATE/TIME
+"RTN","DINIT4",33,0)
+ ;;TODAY;N %I,%H,% D NOW^%DTC;D;0;CURRENT DATE
+"RTN","DINIT4",34,0)
+ ;;PAGE;S X=$G(DC);;0;PAGE NUMBER (OF OUTPUT)
+"RTN","DINIT4",35,0)
+ ;;SETTAB;S DIWT=X,X="" F %=1:1 S Y="X"_% Q:'$D(@Y)  S DIWT=@Y_","_DIWT;;VARIABLE;SET TAB STOPS;W
+"RTN","DINIT4",36,0)
+ ;;RIGHT-JUSTIFY;S X="" S:'$D(DIWF) DIWF="" S:DIWF'["R" DIWF=DIWF_"R";;0;;W
+"RTN","DINIT4",37,0)
+ ;;DOUBLE-SPACE;S X="" S:'$D(DIWF) DIWF="" S:DIWF'["D" DIWF=DIWF_"D";;0;;W
+"RTN","DINIT4",38,0)
+ ;;SINGLE-SPACE;S:'$D(DIWF) DIWF="" S X="",DIWF=$P(DIWF,"D",1)_$P(DIWF,"D",2);;0;;W
+"RTN","DITP")
+0^3^B18223422^B11755027
+"RTN","DITP",1,0)
+DITP ;SFISC/GFT-TRANSFER POINTERS ;17MAY2005
+"RTN","DITP",2,0)
+ ;;22.2;VA FileMan;**10**;Jan 05, 2016;Build 11
+"RTN","DITP",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DITP",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DITP",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DITP",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DITP",7,0)
+ ;
+"RTN","DITP",8,0)
+ D ASK Q:%-1  G PTS
+"RTN","DITP",9,0)
+ ;
+"RTN","DITP",10,0)
+ASK ;
+"RTN","DITP",11,0)
+ I '$D(^UTILITY("DIT",$J,0,1)) S %=2 Q
+"RTN","DITP",12,0)
+ S %=$O(^(1)),%Y=+^(1) S:%="" %=-1
+"RTN","DITP",13,0)
+U I $D(^DD(%Y,0,"UP")) S %Y=^("UP") G U
+"RTN","DITP",14,0)
+ W !,"SINCE THE "_$P("TRANSFERRED^DELETED",U,DH+1)_" ENTRY MAY HAVE BEEN 'POINTED TO'"
+"RTN","DITP",15,0)
+ W !,"BY ENTRIES IN THE '"_$P(^DIC(+%Y,0),U,1)_"' FILE," W:%>1 " ETC.,"
+"RTN","DITP",16,0)
+Q W !,"DO YOU WANT THOSE POINTERS UPDATED (WHICH COULD TAKE QUITE A WHILE)"
+"RTN","DITP",17,0)
+ S %=2 D YN^DICN Q:%
+"RTN","DITP",18,0)
+ W !?4,"ANSWER 'YES' IF YOU THINK THAT THE ENTRY WHICH YOU HAVE JUST "_$P("MOVED^DELETED",U,DH+1),!?4,"MAY BE 'POINTED TO' BY SOME POINTER-TYPE FIELD VALUE SOMEWHERE",!
+"RTN","DITP",19,0)
+ G Q
+"RTN","DITP",20,0)
+ ;
+"RTN","DITP",21,0)
+ ;
+"RTN","DITP",22,0)
+ ;
+"RTN","DITP",23,0)
+ ;
+"RTN","DITP",24,0)
+EN(DIFILE,DILIST) ;IF THERE ARE POINTERS TO FILE 'DIFILE', GO THRU THE DILIST AND CHANGE THE POINTERS
+"RTN","DITP",25,0)
+ K ^UTILITY("DIT",$J)
+"RTN","DITP",26,0)
+ N Y,DIA,DTO,DL
+"RTN","DITP",27,0)
+ S (DIA("P"),Y)=DIFILE,(DIA,DTO)=$G(^DIC(+DIFILE,0,"GL")) I DTO="" W "ERROR in specification" Q  ;,DIA(1)=FROM
+"RTN","DITP",28,0)
+ D PTS^DIT
+"RTN","DITP",29,0)
+ S X=0 F Y=0:0 S Y=$O(DILIST(Y)) Q:'Y  S %=$P(DILIST(Y),U,2) D  I '$D(X) W "ERROR in specification" G END
+"RTN","DITP",30,0)
+ .I '%,"@"'[% K X Q
+"RTN","DITP",31,0)
+ .I %,'$D(@(DTO_"%)")) K X Q
+"RTN","DITP",32,0)
+ .S X=X+1,^UTILITY("DIT",$J,+DILIST(Y))=%_";"_$E(DTO,2,99)
+"RTN","DITP",33,0)
+ I X D P
+"RTN","DITP",34,0)
+END K ^UTILITY("DIT",$J)
+"RTN","DITP",35,0)
+ Q
+"RTN","DITP",36,0)
+ ;
+"RTN","DITP",37,0)
+PTS ;
+"RTN","DITP",38,0)
+ D WAIT^DICD K IOP
+"RTN","DITP",39,0)
+ ;At this point, e.g.^UTILITY("DIT",$J,0,1)=801.41^15^V
+"RTN","DITP",40,0)
+ ;and ^UTILITY("DIT",$J,38)="103;AUTTIMM("  meaning that pointers to entry 38 in ^AUTTIMM are being moved to 103
+"RTN","DITP",41,0)
+P F  S X=$O(^UTILITY("DIT",$J,0,0)) Q:X=""  S Y=^UTILITY("DIT",$J,0,X),L=$P(Y,U,2) K ^(X) D 1(+Y,L,.DTO) ;KILL NODES AS WE PROCESS THEM
+"RTN","DITP",42,0)
+ K ^UTILITY("DIT",$J) Q
+"RTN","DITP",43,0)
+ ;
+"RTN","DITP",44,0)
+1(DIPFILE,DIPFIELD,DTO) ;CALL DIP PRINT MODULE ONCE TO GO THRU CHANGING ONE FIELD'S VALUE.  'DTO' IS ROOT OF FILE BEING POINTED TO.
+"RTN","DITP",45,0)
+ N DIPVP,DL,L,DHD,DIA,BY,DITPY,DR,D,X,FLDS,DIOBEG,FR,TO,DISTOP,DIOBEG
+"RTN","DITP",46,0)
+ S (BY,FR,TO)="",DIPVP=$P(^DD(DIPFILE,DIPFIELD,0),U,2)["V" Q:$P(^(0),U,2)  ;A MULTIPLE CAN'T POINT
+"RTN","DITP",47,0)
+ S DL=1,DL(1)=DIPFIELD_"////^D STUFF^DITP("_(DIPVP)_")"
+"RTN","DITP",48,0)
+ ;S X=$S($D(DE(DQ))[0:"""",$D(^UTILITY(""DIT"",$J,DE(DQ)))-1:"""",^(DE(DQ)):"_$S($P(Y,U,3)'["V":"+",1:"")_"^(DE(DQ)),1:""@"") I X]"""",$G(DIFIXPT)=1 D PTRPT^DITP" K ^(X)
+"RTN","DITP",49,0)
+ S L=$P(^DD(DIPFILE,DIPFIELD,0),U,4),%=$P(L,";",2),L=""""_$P(L,";",1)_"""",DHD=$P(^(0),U) I % S %="$P(^("_L_"),U,"_%_")"
+"RTN","DITP",50,0)
+ E  S %="$E(^("_L_"),"_+$E(%,2,9)_","_$P(%,",",2)_")"
+"RTN","DITP",51,0)
+ S L=L_")):"""","_%_"?."" "":"""","
+"RTN","DITP",52,0)
+ I DIPVP,DTO]"" S L=L_"$P("_%_","";"",2)'="""_$E(DTO,2,99)_""":"""","
+"RTN","DITP",53,0)
+ S L=L_"'$D(^UTILITY(""DIT"",$J,+"_%_")):"""","
+"RTN","DITP",54,0)
+UP S (D(DL),%)=+Y I $D(^DD(%,0,"UP")) S DL=DL+1,Y=^("UP"),(DL(DL),%)=$O(^DD(Y,"SB",%,0))_"///",X(DL)=""""_$P($P(^DD(Y,+%,0),U,4),";")_"""",BY=+%_","_BY G UP
+"RTN","DITP",55,0)
+ S DHD=$O(^("NM",0))_" entries whose '"_DHD_"' pointers have been changed"
+"RTN","DITP",56,0)
+ Q:'$D(^DIC(%,0,"GL"))  S DIC=^("GL"),DITPY="S X=$S('$D("_DIC_"D0,"
+"RTN","DITP",57,0)
+ F X=0:1:DL-1 S DR(X+1,D(DL-X))=DL(DL-X) S:X DITPY=DITPY_X(DL+1-X)_",D"_X_","
+"RTN","DITP",58,0)
+ S DIA("P")=%,%=$L(BY,",") I %>2 S BY=$P(BY,",",%-2)_",.01,"_BY
+"RTN","DITP",59,0)
+ S DITPY=DITPY_L_"1:D"_X_")",BY=BY_"X DITPY;@"
+"RTN","DITP",60,0)
+ ;Now DITPY=e.g. S X=$S('$D(^AUPNVIMM(D0,"0")):"",$P(^("0"),U,1)?." ":"",'$D(^UTILITY("DIT",$J,+$P(^("0"),U,1))):"",1:D0)
+"RTN","DITP",61,0)
+ S L=0,FLDS="",DISTOP=0,DHIT="N DIFIXPT G LOOP^DIA2",%ZIS="",DIOBEG="W !!" ;It will happen in DIA2
+"RTN","DITP",62,0)
+ I $G(DIQUIET) K DIOBEG S DIFIXPT=1 ;DHD="@@"
+"RTN","DITP",63,0)
+ D EN1^DIP
+"RTN","DITP",64,0)
+IOP S IOP=$S($G(IOS):"`"_IOS,1:$G(IO)) Q  ;KEEP THE SAME OUTPUT DEVICE AS WE GO THRU DIFFERENT 'PRINTINGS'
+"RTN","DITP",65,0)
+ ;
+"RTN","DITP",66,0)
+STUFF(VP) ;VP=BOOLEAN
+"RTN","DITP",67,0)
+ S X="" Q:$G(DE(DQ))=""
+"RTN","DITP",68,0)
+ N % S %=DE(DQ) Q:'%!'$D(^UTILITY("DIT",$J,+%))  ;^UTILITY("DIT",$J,38)="103;AUTTIMM(" means 'CHANGE OLD 38 TO 103' if we have a variable-pointer to ^AUTTIMM
+"RTN","DITP",69,0)
+ S X=^(+%) I 'VP S X=+X
+"RTN","DITP",70,0)
+ E  S X=$S($P(X,";",2)'=$P(%,";",2):"",'X:"@",1:X) W:X="" "    (no change)" Q
+"RTN","DITP",71,0)
+ S:'X X="@"
+"RTN","DITP",72,0)
+ Q
+"RTN","DITP",73,0)
+ ;
+"RTN","DITP",74,0)
+PTRPT Q:'$G(DIFIXPTC)  N I,J,X
+"RTN","DITP",75,0)
+ F I=1:1:DL S J="" F  S J=$O(DR(I,J)) Q:J=""  I DR(I,J)["///" S X=$P($G(DR(I,J)),"///",1) I X]"" D
+"RTN","DITP",76,0)
+ . S ^TMP("DIFIXPT",$J,DIFIXPTC)=^TMP("DIFIXPT",$J,DIFIXPTC)_$S(I>1:" entry:"_$S(I=DL:$G(DA),1:$G(DA(DL-I))),1:"")_$S(I=DL:"   field:",1:"   mult.fld:")_X
+"RTN","DITP",77,0)
+ . Q
+"RTN","DITP",78,0)
+ Q
+"RTN","DIUTL")
+0^8^B13688793^B7082619
+"RTN","DIUTL",1,0)
+DIUTL ;GFT/GFT - TIMSON'S UTILITIES;24JAN2013
+"RTN","DIUTL",2,0)
+ ;;22.2;VA FileMan;**10**;Jan 05, 2016;Build 11
+"RTN","DIUTL",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DIUTL",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DIUTL",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DIUTL",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DIUTL",7,0)
+ ;
+"RTN","DIUTL",8,0)
+ ;
+"RTN","DIUTL",9,0)
+NAKED(DIUTLREF) ;The argument is evaluated and returned, while keeping the naked reference as it was!
+"RTN","DIUTL",10,0)
+ N DIUTLNKD ;THIS WILL BE THE NAME OF THE NAKED
+"RTN","DIUTL",11,0)
+ X "I $ZREFERENCE=""""" I  S DIUTLNKD="^TMP(""DI DUMMY"",0)"
+"RTN","DIUTL",12,0)
+ E  S DIUTLNKD=$NA(^(0))
+"RTN","DIUTL",13,0)
+ X "S DIUTLREF="_DIUTLREF
+"RTN","DIUTL",14,0)
+ D  Q DIUTLREF
+"RTN","DIUTL",15,0)
+ .I $D(@DIUTLNKD)
+"RTN","DIUTL",16,0)
+ ;
+"RTN","DIUTL",17,0)
+ ;
+"RTN","DIUTL",18,0)
+DATE(Y) ;**CCO/NI   RETURN A DATE
+"RTN","DIUTL",19,0)
+ ;I Y X ^DD("DD")
+"RTN","DIUTL",20,0)
+ Q $$FMTE^DILIBF(Y,"1U")
+"RTN","DIUTL",21,0)
+ ;
+"RTN","DIUTL",22,0)
+ ;
+"RTN","DIUTL",23,0)
+NOWINT() ;INTERNAL VERSION OF NOW
+"RTN","DIUTL",24,0)
+ N %,%I,%H,%M,%D,%Y,X
+"RTN","DIUTL",25,0)
+ D NOW^%DTC Q %
+"RTN","DIUTL",26,0)
+ ;
+"RTN","DIUTL",27,0)
+ ;
+"RTN","DIUTL",28,0)
+NOW() ;EXTERNAL NOW
+"RTN","DIUTL",29,0)
+ N X S X=$$NOWINT Q $$DATE(X-(X#.0001))
+"RTN","DIUTL",30,0)
+ ;
+"RTN","DIUTL",31,0)
+ ;
+"RTN","DIUTL",32,0)
+WP(DIRF,DIWL,DIWR,DIWPUT) ;Write out WP field (if any) stored at DIRF, or put it in DIWPUT array
+"RTN","DIUTL",33,0)
+ N DIWF,Z,A1,D,X,DIW,DIWT,DN,I,DIWI,DIWTC,DIWX
+"RTN","DIUTL",34,0)
+ K ^UTILITY($J,"W")
+"RTN","DIUTL",35,0)
+ S DIWF=$E("W",'$D(DIWPUT))_"|" S:'$G(IOM) IOM=80 S:'$G(DIWR) DIWR=IOM S:'$G(DIWL) DIWL=1
+"RTN","DIUTL",36,0)
+ S A1=$P($G(@DIRF@(0)),U,3) F D=0:0 S D=$O(@DIRF@(D)) Q:D>A1&A1!'D  S X=^(D,0) D ^DIWP G QWP:$G(DN)=0
+"RTN","DIUTL",37,0)
+ I $G(DIWPUT)]"" D  Q 1
+"RTN","DIUTL",38,0)
+ .K @DIWPUT M @DIWPUT=^UTILITY($J,"W")
+"RTN","DIUTL",39,0)
+ D ^DIWW
+"RTN","DIUTL",40,0)
+QWP I $G(DN)'=0 Q 1
+"RTN","DIUTL",41,0)
+ K DIOEND Q 0
+"RTN","DIUTL",42,0)
+ ;
+"RTN","DIUTL",43,0)
+IJ(N) ;build I & J arrays given subfile number N
+"RTN","DIUTL",44,0)
+ N A K I,J
+"RTN","DIUTL",45,0)
+ S J(0)=N,N=0
+"RTN","DIUTL",46,0)
+0 I $D(^DIC(J(0),0,"GL")) S I(0)=^("GL") Q
+"RTN","DIUTL",47,0)
+ S A=$G(^DD(J(0),0,"UP")) Q:A=""
+"RTN","DIUTL",48,0)
+ S I=$O(^DD(A,"SB",J(0),0)) Q:'I
+"RTN","DIUTL",49,0)
+ S I=$P($P($G(^DD(A,I,0)),U,4),";") Q:I=""
+"RTN","DIUTL",50,0)
+ I +I'=I S I=""""_I_""""
+"RTN","DIUTL",51,0)
+ F J=N:-1:0 S J(J+1)=J(J) S:J I(J+1)=I(J)
+"RTN","DIUTL",52,0)
+ S J(0)=A,I(1)=I,N=N+1 G 0
+"RTN","DIUTL",53,0)
+ ;
+"RTN","DIUTL",54,0)
+ ;
+"RTN","DIUTL",55,0)
+DIVR(DI,DIFLD) ;verify
+"RTN","DIUTL",56,0)
+ N DIVZ,S,A,DA,DICL,V,Z,DDC,DR,N,Y,I,J,Q,W,V,T,DQI
+"RTN","DIUTL",57,0)
+ K ^UTILITY("DIVR",$J),^DD(U,$J)
+"RTN","DIUTL",58,0)
+ D IJ(DI)
+"RTN","DIUTL",59,0)
+ I '$O(@(I(0)_"0)")) Q  ;File must have some entries!
+"RTN","DIUTL",60,0)
+ S S=";",Q="""",V=$O(J(""),-1),A=DI,DA=DIFLD
+"RTN","DIUTL",61,0)
+ S DR=$P(^DD(DI,DIFLD,0),U,2),Z=$P(^(0),U,3),$P(Y(0),U,4)=$P(^(0),U,4),DDC=$P(^(0),U,5,999)
+"RTN","DIUTL",62,0)
+ Q:DR["W"!(DR["C")
+"RTN","DIUTL",63,0)
+ F T="N","S","V","P","K","F" Q:DR[T
+"RTN","DIUTL",64,0)
+ W !!,"SINCE YOU HAVE CHANGED THE FIELD DEFINITION,",!,"EXISTING '",$P(^(0),U),"' DATA WILL NOW BE CHECKED FOR INCONSISTENCIES",!,"OK"
+"RTN","DIUTL",65,0)
+ S %=1 D YN^DICN Q:%-1
+"RTN","DIUTL",66,0)
+ ;D ^%ZIS Q:POP
+"RTN","DIUTL",67,0)
+ ;U IO   WON'T WORK BECAUSE Q+3^DIVR ASKS TO STORE IN TEMPLATE
+"RTN","DIUTL",68,0)
+ D EN^DIVR(DI,DIFLD)
+"RTN","DIUTL",69,0)
+ ;D ^%ZISC
+"RTN","DIUTL",70,0)
+ Q
+"RTN","DIUTL",71,0)
+ ;
+"RTN","DIUTL",72,0)
+CHKPT(DIFILE,DA,DIMSG) ;check if any entries points to this entry(DA) in file (DIFILE)
+"RTN","DIUTL",73,0)
+ ;INPUT: DIFILE=file number, DA=ien of record, DIMSG=closed global root or local array
+"RTN","DIUTL",74,0)
+ ;OUTPUT: DIMSG(0)=line count, DISMG(#)="Entry ien in FILE (file #) refers to it."
+"RTN","DIUTL",75,0)
+ ;CODE CAME FROM DEL^DPTLK2
+"RTN","DIUTL",76,0)
+ Q:$G(DIMSG)=""  S @DIMSG@(0)=0
+"RTN","DIUTL",77,0)
+ Q:'$G(DA)  Q:$G(^DIC(+$G(DIFILE),0))=""
+"RTN","DIUTL",78,0)
+ N I,J,K,L,A,B,C,G,T,Q S Q="""",C=0
+"RTN","DIUTL",79,0)
+ ;find all files and fields that point to this file
+"RTN","DIUTL",80,0)
+ F I=0:0 S I=$O(^DD(DIFILE,0,"PT",I)) Q:'I  F J=0:0 S J=+$O(^DD(DIFILE,0,"PT",I,J)),(B,T)=I Q:'J  D
+"RTN","DIUTL",81,0)
+ .;check if multiple, find top file level = T
+"RTN","DIUTL",82,0)
+ . F  S B=+$G(^DD(B,0,"UP")) S:B T=B I 'B S G=$G(^DIC(+T,0,"GL")) Q
+"RTN","DIUTL",83,0)
+ .;pointing to file must have file level cross reference; file level (+A=T), not mumps
+"RTN","DIUTL",84,0)
+ . F K=0:0 S K=$O(^DD(I,J,1,K)) Q:'K  S A=$G(^(K,0)) I +A=T,$L($P(A,U,2)),'$L($P(A,U,3)) D
+"RTN","DIUTL",85,0)
+  .. Q:'$L(G)
+"RTN","DIUTL",86,0)
+  ..; if variable pointer, then reset DA to contain global ref.  DA;gr
+"RTN","DIUTL",87,0)
+  .. I $P(^DD(I,J,0),U,2)["V" S L=DA N DA S DA=Q_L_";"_$P($G(^DIC(DIFILE,0,"GL")),"^",2)_Q
+"RTN","DIUTL",88,0)
+  .. F L=0:0 S L=$O(@(G_Q_$P(A,U,2)_Q_","_DA_",L)")) Q:'L  D
+"RTN","DIUTL",89,0)
+  ... S C=C+1,@DIMSG@(C)="Entry "_L_" in "_$P($G(^DIC(T,0)),U)_" ("_T_") refers to it."
+"RTN","DIUTL",90,0)
+  .. Q
+"RTN","DIUTL",91,0)
+ . Q
+"RTN","DIUTL",92,0)
+ S @DIMSG@(0)=C
+"RTN","DIUTL",93,0)
+ Q
+"RTN","DIWP")
+0^4^B14095198^B14057388
+"RTN","DIWP",1,0)
+DIWP ;SFISC/GFT-ASSEMBLE WP LINE ;24APR2012
+"RTN","DIWP",2,0)
+ ;;22.2;VA FileMan;**10**;Jan 05, 2016;Build 11
+"RTN","DIWP",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","DIWP",4,0)
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+"RTN","DIWP",5,0)
+ ;;Based on Medsphere Systems Corporation's MSC FileMan 1051.
+"RTN","DIWP",6,0)
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+"RTN","DIWP",7,0)
+ ;
+"RTN","DIWP",8,0)
+ ;The DIWF variable contains a string of one-letter codes to control W-P output.
+"RTN","DIWP",9,0)
+ ;"|" in DIWF means that "|"-windows are not to be evaluated, but are to be printed as
+"RTN","DIWP",10,0)
+ ;     they stand.
+"RTN","DIWP",11,0)
+ ;"X" means eXactly line-for-line, with "||" printed as "||"
+"RTN","DIWP",12,0)
+ ;"W" in DIWF means that formatted text will be written out to
+"RTN","DIWP",13,0)
+ ;     the current device as it is assembled.
+"RTN","DIWP",14,0)
+ ;"N" means NOWRAP-- text is assembled line-for-line
+"RTN","DIWP",15,0)
+ ;"R" means text will be assembled Right-justified
+"RTN","DIWP",16,0)
+ ;"D" means text will be double-spaced
+"RTN","DIWP",17,0)
+ ;"L" means internal line numbers appear at the left margin
+"RTN","DIWP",18,0)
+ ;"C" followed by a number will cause formatting of text in a column
+"RTN","DIWP",19,0)
+ ;     width specified by the number.
+"RTN","DIWP",20,0)
+ ;"I" followed by a number will cause text to be indented that number
+"RTN","DIWP",21,0)
+ ;     of columns.
+"RTN","DIWP",22,0)
+ ;"?" means that, if user's terminal is available, "|"-windows that cannot
+"RTN","DIWP",23,0)
+ ;     be evaluated will be asked from the user's terminal.
+"RTN","DIWP",24,0)
+ ;"B" followed by number causes new page when output gets within that
+"RTN","DIWP",25,0)
+ ;   number of lines from the bottom of the page (as defined by IOSL).
+"RTN","DIWP",26,0)
+ ;   
+"RTN","DIWP",27,0)
+ ;DIWTC is a Boolean -- Are we printing out in LINE MODE?
+"RTN","DIWP",28,0)
+ S:'$L(X) X=" "
+"RTN","DIWP",29,0)
+ S DIWTC=X[($C(124)_"TAB") S:'$D(DN) DN=1
+"RTN","DIWP",30,0)
+LN S:'$D(DIWF) DIWF="" S:'DIWTC DIWTC=DIWF["N" S DIWX=X,DIW=$C(124),I=$P(DIWF,"C",2) I I S DIWR=DIWL+I-1
+"RTN","DIWP",31,0)
+ I '$D(^UTILITY($J,"W",DIWL)) S ^(DIWL)=1 K DIWFU,DIWFWU,DIWLL D DIWI S:'$D(DIWT) DIWT="5,10,15,20,25" G DIW
+"RTN","DIWP",32,0)
+ S I=^(DIWL),DIWI=^(DIWL,I,0) I DIWI="" D DIWI G Z
+"RTN","DIWP",33,0)
+ D NEW:DIWTC
+"RTN","DIWP",34,0)
+Z S Z=X?.P!DIWTC I X?1" ".E!Z S DIWTC=1 D NEW:DIWI]"" S DIWTC=Z
+"RTN","DIWP",35,0)
+DIW ;from RCR+5^DIWW
+"RTN","DIWP",36,0)
+ I DIWF["X" S DIWTC=1,X=DIWX,DIWX="" D C G D ;**DI*22*152**  Leave line unaltered
+"RTN","DIWP",37,0)
+ S X=$P(DIWX,DIW,1) D C:X]"" S X=$P(DIWX,DIW,1),DIWX=$P(DIWX,DIW,2,9999) G D:DIWX="" I $D(DIWP),X'?.E1" " D ST
+"RTN","DIWP",38,0)
+ S X=$P(DIWX,DIW,1) I $P(X,"TAB",1)="" D TAB G N
+"RTN","DIWP",39,0)
+ I X="TOP" D PUT S ^("X")="S DIFF=1 X:$D(^UTILITY($J,1)) ^(1)" D NEW G N
+"RTN","DIWP",40,0)
+ I DIWF'[DIW G U:X="_" D PUT,RCR^DIWW G N:$D(X)
+"RTN","DIWP",41,0)
+ S X=DIW_$P(DIWX,DIW,1) S:DIWX[DIW!(DIWF'[DIW) X=X_DIW D C ;DO NOT PUT GRATUITOUS "|" AT END, IF DIWF["|"
+"RTN","DIWP",42,0)
+N K X S DIWX=$P(DIWX,DIW,2,99) I DIWX]"" D ST:$D(DIWP) G DIW
+"RTN","DIWP",43,0)
+D K DIWP D PUT,PRE:DIWTC S:DIWTC DIWI="" Q
+"RTN","DIWP",44,0)
+ ;
+"RTN","DIWP",45,0)
+ST S DIWI=$E(DIWI,1,$L(DIWI)-1) K DIWP Q
+"RTN","DIWP",46,0)
+ ;
+"RTN","DIWP",47,0)
+DIWI S DIWI=$J("",+$P(DIWF,"I",2)) I DIWF["L",$D(D)#2 S DIWLL=D
+"RTN","DIWP",48,0)
+ Q
+"RTN","DIWP",49,0)
+PUT S I=^UTILITY($J,"W",DIWL),^(DIWL,I,0)=DIWI I DIWF["L",$D(DIWLL) S ^("L")=DIWLL
+"RTN","DIWP",50,0)
+ Q
+"RTN","DIWP",51,0)
+L ;
+"RTN","DIWP",52,0)
+ S DIWTC=1 G LN
+"RTN","DIWP",53,0)
+ ;
+"RTN","DIWP",54,0)
+TAB I X="" S X=DIW G C
+"RTN","DIWP",55,0)
+ S J=$P(DIWT,",",DIWTC),DIWTC=DIWTC+1 S:X?3A1P.P.N.E J=$E(X,5,9) S:J?1"""".E1"""" J=$E(J,2,$L(J)-1)
+"RTN","DIWP",56,0)
+ I J'>0 S %=$P(DIWX,DIW,2) Q:%=""  S J=$S(J<0:1-$L(%)-J,J="C":DIWR-DIWL-$L(%)\2,1:0)
+"RTN","DIWP",57,0)
+ S J=J-1-$L(DIWI) Q:J<1  S X=$J("",J)
+"RTN","DIWP",58,0)
+C K DIWP I DIWTC S DIWI=DIWI_X Q
+"RTN","DIWP",59,0)
+B S Z=DIWR-DIWL+1-$L(DIWI) G FULL:$F(X," ")-1>Z F %=Z:-1 I " "[$E(X,%) S:$E(X,%+1)=" " %=%+1 Q
+"RTN","DIWP",60,0)
+ S Z=$E(X,1,%-1),X=$E(X,%+1,9999) I Z]"" S DIWI=DIWI_Z G S:X]"" S %=$E(Z,$L(Z)) S:%'=" " DIWI=DIWI_$J("",%="."+1),DIWP=1 Q
+"RTN","DIWP",61,0)
+FULL I $P(DIWF,"I",2)'<$L(DIWI) S DIWI=DIWI_$P(X," ",1),X=$P(X," ",2,9999)
+"RTN","DIWP",62,0)
+S D PUT,NEW G B:X]"" Q
+"RTN","DIWP",63,0)
+ ;
+"RTN","DIWP",64,0)
+U S I=^UTILITY($J,"W",DIWL) I $D(DIWFU) S ^(DIWL,I,"U",$L(DIWI)+1)="" K DIWFU G N
+"RTN","DIWP",65,0)
+ S ^(DIWL,I,"U",$L(DIWI)+1)=X,DIWFU=1 G N
+"RTN","DIWP",66,0)
+ ;
+"RTN","DIWP",67,0)
+NEW D DIWI
+"RTN","DIWP",68,0)
+PRE S I=^UTILITY($J,"W",DIWL),^(DIWL)=I+1,^(DIWL,I+1,0)="" I DIWF["D" S ^(0)=" ",^UTILITY($J,"W",DIWL)=I+2,^(DIWL,I+2,0)=""
+"RTN","DIWP",69,0)
+ I $D(DIWFU) S ^("U",1+$P(DIWF,"I",2))="_"
+"RTN","DIWP",70,0)
+ G P:DIWF'["R"!DIWTC K % Q:'$D(^UTILITY($J,"W",DIWL,I,0))
+"RTN","DIWP",71,0)
+ S Y=^(0),%=$L(Y) F %=%:-1 Q:$A(Y,%)-32
+"RTN","DIWP",72,0)
+ S Y=$E(Y,1,%),J=DIWR-DIWL-%+1,%X=0 G P:J<1
+"RTN","DIWP",73,0)
+ F %=1:1 S %(%)=$P(Y," ",1),Y=$P(Y," ",2,9999) G:Y="" PAD:%-1,P I $E(%(%),$L(%(%)))?.P S:%=1&(%(%)="") %=0,%X=%X+1 S:%&J J=J-1,%(%)=%(%)_" "
+"RTN","DIWP",74,0)
+PAD I J F Y=%\2+1:1:%-1,%\2:-1 S %(Y)=%(Y)_" ",J=J-1 G PAD:Y=1!'J
+"RTN","DIWP",75,0)
+ S Y=%(%) F %=%-1:-1:1 S Y=%(%)_" "_Y
+"RTN","DIWP",76,0)
+ S ^(0)=$J("",%X)_Y K %
+"RTN","DIWP",77,0)
+P I DIWF["W" G NX^DIWW
+"VER")
+8.0^22.2
+"BLD",1613,6)
+^9
+**END**
+**END**
+

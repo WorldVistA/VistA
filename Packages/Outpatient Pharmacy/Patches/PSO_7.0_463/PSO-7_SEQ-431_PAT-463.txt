@@ -1,0 +1,278 @@
+$TXT Created by               R at DEVESR.DOMAIN.EXT  (KIDS) on Wednesday, 01/17/18 at 23:25
+=============================================================================
+Run Date: MAY 24, 2018                     Designation: PSO*7*463
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #431                      Status: Released
+                  Compliance Date: JUN 24, 2018
+=============================================================================
+
+Associated patches: (v)PSN*4*492   <<= must be installed BEFORE `PSO*7*463'
+                    (v)PSO*7*476   <<= must be installed BEFORE `PSO*7*463'
+
+Subject: HAPE FY16 REVENUE ENHANCEMENT
+
+Category: 
+  - Routine
+  - Input Template
+  - Other
+
+Description:
+============
+
+ IMPORTANT INSTALLATION NOTE:
+ ----------------------------
+ There are three patches associated with this project - PRCA*4.5*315,
+ IB*2.0*568 and PSO*7.0*463. All three patches are to be installed as
+ PackMan files.  There is no bundle.
+  
+ The three patches for this project MUST be installed in this order:
+ 1.  PRCA*4.5*315
+ 2.  IB*2.0*568
+ 3.  PSO*7.0*463
+  
+ Description
+ -----------
+ The Chief Business Office (CBO) is requesting system enhancements to The
+ Veterans Health Information Systems and Technology Architecture (VistA)
+ Accounts Receivable (AR), Integrated Billing (IB), and Outpatient Pharmacy
+ (PSO) software modules.
+  
+ The mission of the Department of Veterans Affairs (VA), Office of
+ Information & Technology (OI&T), is to provide benefits and services to
+ veterans of the United States Armed Forces. In meeting these goals, OIT
+ strives to provide high quality, effective, and efficient Information
+ Technology (IT) services to those responsible for providing care to the
+ veterans at the point-of-care, as well as throughout all the points of the
+ veterans' health care. The VA depends on Information Management /
+ Information Technology (IM/IT) systems to meet mission goals.
+  
+ The overall FY16 HAPE (Health Administration Product Enhancements)
+ Revenue Enhancement project encompasses three New Service Requests (NSR):
+  
+ NSR #20150506
+ The Revenue Eligibility Enhancements Project effort for the CBO, bundles
+ several NSRs with similar business needs into a single requirements
+ document.  Successfully addressing the requirements contained within this
+ document will enable the VA to appropriately bill certain subsets of
+ billable events by correcting, automating, or enhancing current VistA
+ systems.
+  
+ NSR #20150507
+ The Revenue Operations Enhancements Project combines several NSRs,
+ as well. This effort enables the VA to improve revenue operation
+ functionality related to repayment plans, late charge capture, bill
+ suspension reasons, the billing of deactivated providers, and the display
+ of appeal rights and responsibilities on the Veterans Beneficiary travel
+ Bill of Collections form. Implementation of the proposed enhancements will
+ make a significant positive impact on stakeholders and target users.
+  
+ NSR #20150505
+ The Revenue Reporting Enhancements Project will enable the VA to
+ improve tracking and reporting of revenue, and will support revenue
+ reporting business rules and guidelines.
+  
+  
+ PSO*7.0*463 patch enhancements, pertinent to the above NSRs, include:
+  
+ 1.) In the event of a Prescription Reset Status/Cancel Charges action,
+ all automatic prepayment generation shall be eliminated.
+  
+ 2.) All "credit balances" that are automatically generated in the event
+ of a Prescription Reset Status/Cancel Charges action exemption to stop.
+  
+ 3.) A new on-demand List Manager report will be made available for
+ identification of Prescription resets.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)     New/Modified/Deleted
+ ------------------    -------------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type          New/Modified/Deleted
+ -----------                     ----          --------------------
+ PSOCP MENU                      MENU          MODIFIED
+ PSOCP RESET COPAY STATUS LM     ROUTINE       NEW
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                   New/Modified/Deleted
+ -------------                   --------------------
+ PSO PATIENT MEDICATION MENU     NEW
+ PSO PATIENT MED ACC PRO         NEW
+ PSO PATIENT MED BILL PRO        NEW
+ PSO PATIENT MED TPJI            NEW
+ PSO PATIENT MED CANCEL          NEW
+ PSO PATIENT MED RESET           NEW
+ PSO PATIENT MED EXPORT          NEW
+ PSO PATIENT MED NEW PAT         NEW
+ PSO PATIENT MED PAT BILL        NEW
+ PSO PAT MED PAT INQ             NEW
+  
+  
+ Templates Associated:
+  
+ Template Name                 Type   File Name (Number)      New/Mod/Del
+ -------------                 ----   ------------------      -----------
+ PSO PATIENT MEDICATION LIST   LIST   N/A                     NEW
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20150505 - Revenue Reporting Enhancements
+ 20150506 - Revenue Eligibility Enhancements
+ 20150507 - Revenue Operations Enhancements
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Durham VAMC
+ Central Alabama Veterans Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions
+ -------------------------------------------------
+ Documentation describing the new functionality introduced by these patches
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+ ---------------     --------------------       ------------------
+ Hines:             domain.ext          
+ Salt Lake City:    domain.ext            
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ ------------------------------------------------------------------------------
+ Title                                File Name                      FTP Mode
+ ------------------------------------------------------------------------------
+ Outpatient Pharmacy Technical
+    Manual/Security Guide             PSO_7_P463_TM.PDF              binary
+  
+ Outpatient Pharmacy Installation
+    Guide, Release Notes,
+    and Back-out Manual (PSO*7*463)   PSO_7_P463_IG.PDF              binary
+  
+ Outpatient Pharmacy Manager's
+    User Manual                       PSO_7_P463_MAN_UM.PDF          binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This process will install new and updated routines and other components
+ listed above.
+  
+ The patch will be released in conjunction with Integrated Billing
+ patch IB*2.0*568, and Accounts Receivable patch PRCA*4.5*315.
+  
+   ************************ NOTE ************************
+   The patch should be installed when no Outpatient
+   Pharmacy users are on the system.
+   ******************************************************
+  
+ Installation will take less than 1 minute. Installation may be queued if
+ desired.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+   1. Choose the PackMan message containing this patch.
+  
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+   3. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   4. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSO*7.0*463):
+          a.  Verify Checksums in Transport Global - This option will
+              allow you to ensure the integrity of the routines that are
+              in the transport global.
+          b.  Print Transport Global - This option will allow you to
+              view the components of the KID build.
+          c.  Compare Transport Global to Current System - This option
+              will allow you to view all changes that will be made when
+              this patch is installed.  It compares all components of
+              this patch (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a
+              backup message of any routines exported with this patch.
+              It will not backup any other changes such as DD's or
+              templates.
+  
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//" respond NO.
+  
+   6. When prompted "Want KID to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no special tasks to perform after this patch installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 36
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCPB
+    Before: B94005590   After: B93273887  **72,71,85,185,143,219,239,201,
+                                           263,303,431,476,463**
+Routine Name: PSOCPF
+    Before:       n/a   After: B65916211  **463**
+Routine Name: PSOCPF1
+    Before:       n/a   After: B49346922  **463**
+Routine Name: PSOCPF2
+    Before:       n/a   After: B16086034  **463**
+ 
+Routine list of preceding patches: 476
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 17, 2016
+Completed By:                               Date Completed: MAY 23, 2018
+Released By :                               Date Released : MAY 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

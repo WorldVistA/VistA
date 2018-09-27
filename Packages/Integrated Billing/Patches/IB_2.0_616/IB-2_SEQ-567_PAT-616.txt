@@ -1,0 +1,269 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/11/18 at 08:43
+=============================================================================
+Run Date: JUN 14, 2018                     Designation: IB*2*616
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #567                      Status: Released
+                  Compliance Date: JUL 15, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*554    <<= must be installed BEFORE `IB*2*616'
+                    (v)IB*2*604    <<= must be installed BEFORE `IB*2*616'
+
+Subject: CORRECT ERROR IN HELD CHARGES REPORT AND PARTIAL MATCH CPT ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1.  An undefined error occurs when running the Held Charges Report
+ LM [IB OUTPUT HELD CHARGES LM] option.
+  
+ 2.  When running the Enter/Edit Billing Information [IB EDIT BILLING INFO]
+ option, the user will not be prompted for the DESCRIPTION (VERSIONED) 
+ (#62) field of the CPT (#81) file when they enter a partial match CPT 
+ code.
+  
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                       File #          New/Modified/Deleted
+ ---------                       ------          --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                     N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A                     N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ CA SDM:
+ ---------
+ 1. I17399485FY18 - Vista routine IBOHLS1 at line tag CHRGS requires a patch
+                    for Institution file lookup
+   
+    Problem: 
+    -------
+    An error occurs when the Held Charges Report LM [IB OUTPUT HELD CHARGES
+    LM] option is run and a record in the FACILITY (#3) field of the
+    PTF (#45) file contains a Station Number that does not match the
+    INSTITUTION (#4) file Internal Entry Number (IEN).
+   
+    Resolution:
+    ----------
+    Routine IBOHLS1 was modified to properly convert the Station Number to
+    the INSTITUTION (#4) file IEN when the record type in THE INTEGRATED
+    BILLING ACTION (#350) file is PTF.
+  
+ Rational Defect:
+ ---------------- 
+ 1.  692271 - Description field is not displayed when partial CPT code entered
+  
+     Problem: 
+     -------
+     When running the Enter/Edit Billing Information [IB EDIT BILLING INFO]
+     option, the user will not be prompted for the DESCRIPTION (VERSIONED)
+     (#62) field of the CPT (#81) file when they enter a partial match CPT 
+     code.
+  
+    Resolution:
+    ----------
+    Routine IBCU7 was modified to properly store the full CPT code in the
+    IBCODE variable when the user enters a partial match.
+  
+ Test Sites:
+ -----------
+ Alaska VAHCS
+ VA Southern Nevada HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ N/A
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ Title                           File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file be disabled to prevent
+ possible conflicts while running the KIDS Install. Other VISTA users will
+ not be affected.
+  
+          Held Charges Report LM           [IB OUTPUT HELD CHARGES LM]
+          Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+  
+ It should take less than 2 minutes to install this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+  
+    2.   From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+  
+    3.   From this menu, you may select to use the following options: (when
+         prompted for INSTALL NAME, enter IB*2.0*616).
+  
+            a.   Verify Checksums in Transport Global - This option will
+                 allow you to ensure the integrity of the routines that
+                 are in the transport global.
+            b.   Print Transport Global - This option will allow you to 
+                 view the components of the KIDS build.
+            c.   Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of 
+                 this patch (routines, DD's, templates, etc.).
+            d.   Backup a Transport Global - This option will create a 
+                 backup message of any routines exported with this patch. 
+                 It will not backup any other changes such as DD's or 
+                 templates.
+  
+    4.   Use the Install Package(s) option and select the package 
+         IB*2.0*616.
+  
+    5.   When Prompted "Want KIDS to INHIBIT LOGONs during the install?  
+         NO//", respond NO.
+  
+    6.   When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? YES//", respond YES.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+         Held Charges Report LM           [IB OUTPUT HELD CHARGES LM]
+         Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+        
+         When prompted, 'Enter protocols you wish to mark as 'Out of 
+         Order':', enter: <ENTER>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out by installing the Backup routines/packman 
+ message created from the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCU7
+    Before:B132964294   After:B134090555  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516,522,577,604,616**
+Routine Name: IBOHLS1
+    Before: B97465496   After: B99684965  **554,616**
+ 
+Routine list of preceding patches: 554, 604
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 28, 2017
+Completed By:                               Date Completed: JUN 13, 2018
+Released By :                               Date Released : JUN 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -89,11 +89,12 @@ def getWebLinkForPatchSourceMultiBuilds(patchInfo, reposHash):
   buildLink = getWebLinkForPatchSourceByFile(patchInfo.kidsFilePath,
                                              reposHash, fileType=True)
   otherLink = []
-  for item in patchInfo.otherKidsInfoList:
-    if item[0]:
-      otherLink.append(getWebLinkForPatchSourceByFile(item[0], reposHash))
-    else:
-      otherLink.append(None)
+  if patchInfo.otherKidsInfoList:
+    for item in patchInfo.otherKidsInfoList:
+      if item[0]:
+        otherLink.append(getWebLinkForPatchSourceByFile(item[0], reposHash))
+      else:
+        otherLink.append(None)
   return buildLink, otherLink
 
 def getWebLinkForPatchSourceByFile(filePath, reposHash, fileType=False):

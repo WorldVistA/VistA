@@ -1,0 +1,284 @@
+
+=============================================================================
+Run Date: JUN 18, 2018                     Designation: EAS*1*163
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #135                      Status: Released
+                  Compliance Date: JUL 19, 2018
+=============================================================================
+
+
+Subject: BUILD 7.3 - ENROLLMENT SYSTEM (ES) 5.2.3 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.2.3. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) fixed defects to support
+ Community Care (CC) and ES Sustainment. (ES 5.2.3 was deployed on 06/16/2018.)
+  
+ The following functionality is updated in this ES 5.2.3 release:
+  
+ ESM:  N/A
+  
+ ES Sustainment defect fixes: 
+ 1      Communication - When accessing the Communication tab | Available for
+        Mailing tab | select any letter | enter a comment and update, the
+        comment field now displays all contents.
+ 2      Null HEC Period of Service (POS)-If HEC POS is blank and if Military
+        Service Episode (MSE) exists then the HEC POS is calculated.
+ 3      Section 508 - Screen reader does not identify the data tables on
+        Financial page.
+ 4      Source Of Change - From the Source of Change drop down list the VA and
+        VOA did not map correctly, but now the 'VA' option maps to VET360 and
+        'VOA' maps to USVOA.
+ 5      Section 508 - Focus Indicator skips over the Financial Detail link on
+        the Financial screen.
+ 6      Section 508 - In the Expand Group eeSummary and Select eeSummary
+        clickable images, the focus indicator changes when option is selected.
+ 7      Section 508 - Expand Group eeSummary and Select eeSummary focus
+        indicator focuses on an image that has no functionality.
+ 8      Spring configuration for "'ecisOutboundJMSTemplate'" is causing error
+        messages in log files.
+ 9      Remediate High/Critical Fortify findings.
+ 10     Duplicate inserts into ADR.PERSON_TRAITS.
+ 11     ES sending updates to VET360 when address is not changed.
+ 12     ES Sending phone related data with no source.
+ 13     INC0810022: Sites reported a 4+ hour wait for a query response and
+        experiencing slow acknowledgements. 
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ 
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ 
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+ 
+ 
+ 
+ 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Ticket #       Overview
+ --------    -------------------
+ INC0810022  Sites reported a 4+ hour query response time and experiencing slow 
+             acknowledgements.  
+ 
+ 
+ Rational Team Concert (RTC):
+ 
+ RTC #       Problem / Resolution:
+ --------    -------------------
+ 488858      Defect: Communication - Previously Mailed tab not loaded
+             completely when it is a result of an error.
+             Resolution: When accessing the Communication tab | Available for
+             Mailing tab | select any letter | enter a comment and update, the
+             comment field now displays the contents.
+ 
+ 567013      Defect: Null HEC Period of Service
+             Resolution: Updated the HEC Period of Service (POS) action method
+             to check if there is a Military Service Episode (MSE) and if the
+             HEC POS is blank then the HEC POS is calculated.
+ 
+ 612821      Defect: Section 508 - Screen reader does not identify the data
+             tables on Financial page.
+             Resolution: Data tables are now identified correctly as the
+             presentation role was removed and summaries were added to the
+             appropriate tables.
+ 
+ 690824      Defect: Source Of Change - VA and VOA do not map correctly so
+             'null' needs to be the source in RF1 segment.
+             Resolution: From the Source of Change drop down, the VA and VOA
+             options are now mapped so that the 'VA' option is mapped to
+             VET360 and 'VOA' is mapped to USVOA.
+ 
+ 726078      Defect: Section 508 - Focus Indicator skips over the Financial
+             Detail link on the Financial screen.
+             Resolution: The code now includes an indicator tag so the
+             Financial screen, Financial Detail link is now recognized.
+ 
+ 726080      Defect: Section 508 - Expand Group eeSummary and Select eeSummary
+             clickable images but focus indicator changes when option is
+             selected.
+             Resolution: The user can now navigate through all active controls
+             and select/deselect options while the reader remains focused
+             rather than move to the top of the page.
+ 
+ 726081      Defect: Section 508 - Expand Group eeSummary and Select eeSummary
+             focus indicator focuses on an image that has no functionality.
+             Resolution: The user can navigate through all active controls by
+             using the keyboard and the system maintains focus after an option
+             is selected.
+ 
+ 728329      Defect: Spring configuration for "'ecisOutboundJMSTemplate'" is
+             causing error messages showing in log files.
+             Resolution: An error message was corrected by the changes made by
+             RTC task #625544 (ES 5.0 release); additional verification will
+             validate that messages are appearing in the log file.
+ 
+ 733031      Defect: Remediate High/Critical Fortify findings.
+             Resolution: When conducting a Fortify SCA security analysis
+             on Pluto Dev stream source code, all ES Critical/High/Medium
+             findings were updated/addressed.
+ 
+ 739466      Defect: Duplicate inserts into ADR.PERSON_TRAITS.
+             Resolution: When multiple transactions are processed at the same
+             time, duplicate inserts no longer occur.
+ 
+ 741302      Defect: ES sending updates to VET360 when address is not changed.
+             Resolution: ES no longer erroneously sends an address change to
+             VET360; ES now compares the address fields' effective date before
+             updating.
+ 
+ 741342      Defect: ES Sending phone related data with no source.
+             Resolution: Production data had duplicate phone number types but
+             no change effective date; therefore, because production data
+             cannot be deleted, the phone compare algorithm was changed to
+             look at all phones of each type not just the first type. 
+ 
+ 756010      Defect:  INC0810022-Sites reported a 4+ hour query response time
+             and experiencing slow acknowledgements.  
+             Resolution: Updated the EJB configuration for both the inbound
+             query and acknowledgements to improve the processing time.
+ 
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Host File and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ 
+ 
+ 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+ 
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.2.3 Release Notes          ES_5_2_3_Release_Notes.pdf     binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ 
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 
+ 
+ Routine Information:
+ ====================
+ 
+ No routines included.
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 25, 2018
+Completed By:                               Date Completed: JUN 18, 2018
+Released By :                               Date Released : JUN 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

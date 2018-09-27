@@ -1,0 +1,85 @@
+
+=============================================================================
+Run Date: MAY 17, 2018                     Designation: SD*5.3*688
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #566                    Status: Released
+                  Compliance Date: MAY 31, 2018
+=============================================================================
+
+
+Subject: VISTA SCHEDULING GUI 2.0.0.15
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch contains the VistA components necessary to support the 1.5 
+ release of VistA Scheduling Enhancements (VSE) as well as addressing the
+ following issues:
+  
+ 1.  R16560417FY17 - The user is unable to print a list of the Veteran's
+                     pending appointments.
+ 2.  I17168559FY17 - When adding text to a note field using cut-and-paste
+                     from a separate document in which CTRL characters are
+                     embedded, an error results.
+ 3.  R16775634FY18 - Additional information (e.g., primary care provider)
+                     is not displayed on the VistA Scheduling (VS) 
+                     Graphical User Interface (GUI) patient ribbon bar.
+ 4.  R16581333FY17 - Privileged users are prevented from accessing expand
+                     entry and view appointment.
+ 5.  R15408067FY17 - A patient's preference for morning (AM) or afternoon
+                     (PM) appointments is not being stored.
+ 6.  I12603678FY17 - VS GUI does not allow a scheduler to cancel 
+                     appointments for dead patients.
+ 7.  I15673411FY17 - VS GUI does not properly display appointment slots for
+                     clinics that do not open on a hour boundary.
+ 8.  I16714975FY17 - VS GUI does not display appointments exactly 365 days
+                     in the future.
+ 9.  I16734058FY17 - User preferences are not properly cleared.
+  
+ The VS GUI v2.0.0.15 and VistA patch SD*5.3*679 provide additional
+ enhancements to the VS GUI v2.0.0.14. SD*5.3*679 requires the installation
+ of VS GUI version 2.0.0.15 to properly function.  Both SD*5.3*679 and VS
+ GUI version 2.0.0.15 must be coordinated and installed at the same time
+ during the same maintenance window. It is necessary that the CMCB
+ deployment team  verify with the VistA Application team on the scheduled
+ patch installs to coordinate the VSE GUI install timeline.
+  
+ (Core): All Vista sites shall install the VSE PRODUCTION and TEST GUIs on
+ all workstations using the CMCB package provided by SD. The TEST GUIs will
+ be used to provide training to VSE (VistA Scheduling Enhancement) users.
+  
+  - CMCB Build Document (Production):
+ http://vaww.eie.domain.ext/SysDesign/CS/Shared%20Documents/Build%20Documents/
+ Application%20Tier%203%20and%204/VA%20VistA%20Scheduling%20GUI_P%20
+ Build%20Document.pdf
+  
+  - CMCB Build Document (Test):
+ http://vaww.eie.domain.ext/SysDesign/CS/Shared%20Documents/Build%20Documents/
+ Application%20Tier%203%20and%204/VA%20VistA%20Scheduling%20GUI_T%20
+ Build%20Document.pdf
+  
+ Implementation Manager POC:
+  
+ Name: Yoojin Lee
+  
+ Phone: 206-277-4608 Email: yoojin.lee@domain.ext
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2018
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

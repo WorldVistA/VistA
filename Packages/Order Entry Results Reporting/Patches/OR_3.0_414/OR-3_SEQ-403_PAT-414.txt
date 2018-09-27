@@ -1,0 +1,243 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 04/18/18 at 09:53
+=============================================================================
+Run Date: MAY 31, 2018                     Designation: OR*3*414
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #403                      Status: Released
+                  Compliance Date: JUL 01, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*143    <<= must be installed BEFORE `OR*3*414'
+                    (v)OR*3*286    <<= must be installed BEFORE `OR*3*414'
+
+Subject: LABS WITH NEITHER TYPE ARE ORDERABLE/CRCL DOES NOT CALCULATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ 1. Orderable Items with a value in the TYPE (#60.7) field of Neither 
+    appear as an available lab test when ordering in CPRS [Computerized
+    Patient Record System].
+  
+ 2. When the last creatinine lab has a "canc" result then the CrCL 
+    [Creatinine Clearance] calculation will skip all results with the same
+    specimen and go on to look at lab results for other specimens.
+  
+ 3. When a weight or height entry for the patient's vitals is marked as
+    Pass, Unavailable or Refused the CrCL value for the patient disappears
+    even though there is a previous valid entry.
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO 3072: VistA selects creatinine results from 1/7/1992 for creatinine 
+            clearance (CrCL) calculation on a patient with more recent labs
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. R5652139FY15 - BL: File 60 tests set to "Output" and "Neither" still
+                   appear in the "All Other Labs" ordering list in CPRS
+  
+    Problem:
+    --------
+    Any entry in the ORDERABLE ITEMS (#101.43) file with a value in the
+    TYPE (#60.7) field of Neither appear as an available lab test when
+    ordering in CPRS. This only happens when there is a manual change to
+    the SET (#.01) field in the SET MEMBERSHIP subfile (#9).
+  
+    Resolution:
+    -----------
+    The Data Dictionary entry for the SET (#.01) field was modified to 
+    control for Type being set to Neither when creating index values.
+  
+ 2. R7070724FY16 - BL: VistA pulls up creatinine from 01/07/92 labs for
+                   creatinine ...
+    Duplicate: I18695731FY18
+  
+    Problem:
+    --------
+    When the last creatinine lab has a "canc" result then the CrCL
+    calculation will skip all results with the same specimen and go on to
+    look at lab results for other specimens. This means that the latest
+    valid result may be skipped over in favor of very old results or CrCL
+    is not calculated.     
+  
+    Resolution:
+    -----------
+    Routine ORQQLR1 will be modified to look for the last valid result in a
+    specimen.
+  
+ 3. I9885268FY16 - BL: CrCl not calculated when last enter weight in vitals
+                   package is "unavailable"
+  
+    Problem:
+    --------
+    When a weight or height entry in to the patient's vitals is marked as
+    Pass, Unavailable or Refused the CrCL value for the patient disappears
+    even though there is a previous valid entry.
+      
+    Technical:
+    ----------
+    The API [Application Programmer Interface] defined in IA [Integration
+    Agreements] #5770 that returns the last vitals value for CrCL
+    lab tests is also used by the cover sheet to display the last value
+    entered. The CrCL needs the last valid value while the cover sheet
+    needs the last value. Right now the API is returning the last value
+    even if it is invalid and there is a valid value previously entered.
+  
+    Resolution:
+    -----------
+    Routine ORQQVI will be modified to create separate tags for the IA and
+    the cover sheet. The API defined for the IA will know search for the
+    latest valid value.
+  
+ Test Sites:
+ -----------
+ Boise VAMC
+ Bedford VAMC
+  
+ Installation Instructions:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch. 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu. From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      OR*3.0*414:
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed. It compares all components of the patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ ==========================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. Since this patch contains both routine
+ and data dictionary changes the back-out procedure will have two phases.
+  
+ Routine back-out:
+ -----------------  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+  
+ Data Dictionary back-out:
+ -------------------------
+ To modify the input transform code, copy the following and paste at 
+ the programmer prompt:
+  
+ S ORX="Q:$P($G(^ORD(101.43,DA(1),""LR"")),U,7)=""O"""
+ S ORX=ORX_"  N NM,IN S NM=$P(^(0),U),IN=$G(^(.1)) S:$L(NM) "
+ S ORX=ORX_"^ORD(101.43,""S.""_X,$$UP^XLFSTR(NM),DA(1))=U_NM_U_IN"
+ S ^DD(101.439,.01,1,2,1)=ORX
+ K ORX
+  
+ A FileMan display can be used to validate execution of the data dictionary
+ roll back:
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 8  DATA DICTIONARY UTILITIES
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: ORDERABLE ITEMS//   ([#] entries)
+       GO TO What File: ORDERABLE ITEMS//   ([#] entries)
+       Select SUB-FILE: SET MEMBERSHIP
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// SET  
+ Go to field: SET
+ DEVICE:   HOME  (CRT)    Right Margin: 80// 
+ STANDARD DATA DICTIONARY #101.439 -- SET MEMBERSHIP SUB-FILE 2/8/18 PAGE 1
+ STORED IN ^ORD(101.43,D0,9, SITE: TEST.CHEYENNE.DOMAIN.EXT UCI:CHEYL98,ROU
+  
+ DATA        NAME                  GLOBAL        DATA
+ ELEMENT     TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 101.439,.01 SET                    0;1 FREE TEXT (Multiply asked)
+  
+             INPUT TRANSFORM:  K:$L(X)>8!($L(X)<2) X
+             LAST EDITED:      AUG 06, 1996 
+             HELP-PROMPT:      Answer must be 2-8 characters in length. 
+             DESCRIPTION:      This is the name of a set to which this
+                               orderable item belongs.  
+  
+             CROSS-REFERENCE:  101.439^B 
+                           1)= S ^ORD(101.43,DA(1),9,"B",$E(X,1,30),DA)=""
+                           2)= K ^ORD(101.43,DA(1),9,"B",$E(X,1,30),DA)
+  
+             CROSS-REFERENCE:  101.43^S^MUMPS 
+                           1)= Q:$P($G(^ORD(101.43,DA(1),"LR")),U,7)="O"
+                            N NM,IN S NM=$P(^(0),U),IN=$G(^(.1)) S:$L(NM) ^
+                            ORD(101.43,"S."_X,$$UP^XLFSTR(NM),DA(1))=U_NM_U
+                            _IN
+  
+ STANDARD DATA DICTIONARY #101.439 -- SET MEMBERSHIP SUB-FILE 2/8/18 PAGE 2
+ STORED IN ^ORD(101.43,D0,9, SITE:TEST.CHEYENNE.DOMAIN.EXT UCI:CHEYL98,ROU
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+                           2)= N NM S NM=$P(^ORD(101.43,DA(1),0),U) K:$L(N
+                               M) ^ORD(101.43,"S."_X,$$UP^XLFSTR(NM),DA(1))
+                               Allows retrieval of orderable items by set.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQQLR1
+    Before: B15053517   After: B16256943  **6,51,74,143,414**
+Routine Name: ORQQVI
+    Before: B35437287   After: B42659899  **10,198,215,250,260,285,286,414**
+ 
+Routine list of preceding patches: 143, 286
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2015
+Completed By:                               Date Completed: MAY 31, 2018
+Released By :                               Date Released : MAY 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

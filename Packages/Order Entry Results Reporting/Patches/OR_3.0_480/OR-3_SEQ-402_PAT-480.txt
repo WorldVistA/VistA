@@ -1,0 +1,124 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/13/18 at 15:53
+=============================================================================
+Run Date: MAY 23, 2018                     Designation: OR*3*480
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #402                      Status: Released
+                  Compliance Date: JUN 23, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*480'
+
+Subject: ORDERED DRUG MISFILED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+      
+ 1. I18279537FY18 - <UNDEFINED>OPIOID+15^OCXOZ0F ^PSDRUG(8182,0)
+    Duplicates: R18261188FY18, I18636533FY18, I18799158FY18    
+  
+     Problem:
+     --------
+     Hard error can occur when entering an opioid order.  This error is due to 
+     another order belonging to the patient having been filed incorrectly 
+     from pharmacy during the finish process.  When finishing a complex order 
+     with long instructions the data returned to CPRS from pharmacy can be 
+     split into multiple lines that can truncate the drug causing it to be 
+     filed incorrectly.  The error can then occur when a subsequent opiod 
+     order is entered.  In addition, the incorrectly filed order cannot be
+     renewed. 
+  
+     Resolution:
+     -----------
+     Modify routine ORMPS to handle multiple lines returned in segment RXE.
+  
+  
+ Test Sites:
+ -----------
+ Miami VA HCS
+ VA Illiana HCS (Danville)
+  
+  
+ Patch Installation:
+ --------------------
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch.
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      OR*3.0*480:
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed a
+ backup of the routine included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created. No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMPS
+    Before: B86715269   After: B88228259  **3,54,62,86,92,94,116,138,152,
+                                           141,165,149,213,195,243,306,
+                                           350,480**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 13, 2018
+Completed By:                               Date Completed: MAY 23, 2018
+Released By :                               Date Released : MAY 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

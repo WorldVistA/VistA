@@ -1,0 +1,1387 @@
+Released IB*2*616 SEQ #567
+Extracted from mail message
+**KIDS**:IB*2.0*616^
+
+**INSTALL NAME**
+IB*2.0*616
+"BLD",10801,0)
+IB*2.0*616^INTEGRATED BILLING^0^3180411^y
+"BLD",10801,1,0)
+^^8^8^3180306^
+"BLD",10801,1,1,0)
+This patch addresses the following 2 issues:
+"BLD",10801,1,2,0)
+ 
+"BLD",10801,1,3,0)
+1.  An undefined error occurs when running the Held Charges Report
+"BLD",10801,1,4,0)
+LM [IB OUTPUT HELD CHARGES LM] option.
+"BLD",10801,1,5,0)
+ 
+"BLD",10801,1,6,0)
+2.  When running the Enter/Edit Billing Information [IB EDIT BILLING INFO]
+"BLD",10801,1,7,0)
+option, the user will not be prompted for the PROCEDURE DESCRIPTION field
+"BLD",10801,1,8,0)
+when they enter a partial match CPT code.
+"BLD",10801,4,0)
+^9.64PA^^
+"BLD",10801,6.3)
+7
+"BLD",10801,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10801,"KRN",.4,0)
+.4
+"BLD",10801,"KRN",.401,0)
+.401
+"BLD",10801,"KRN",.402,0)
+.402
+"BLD",10801,"KRN",.403,0)
+.403
+"BLD",10801,"KRN",.5,0)
+.5
+"BLD",10801,"KRN",.84,0)
+.84
+"BLD",10801,"KRN",3.6,0)
+3.6
+"BLD",10801,"KRN",3.8,0)
+3.8
+"BLD",10801,"KRN",9.2,0)
+9.2
+"BLD",10801,"KRN",9.8,0)
+9.8
+"BLD",10801,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10801,"KRN",9.8,"NM",1,0)
+IBOHLS1^^0^B99684965
+"BLD",10801,"KRN",9.8,"NM",2,0)
+IBCU7^^0^B134090555
+"BLD",10801,"KRN",9.8,"NM","B","IBCU7",2)
+
+"BLD",10801,"KRN",9.8,"NM","B","IBOHLS1",1)
+
+"BLD",10801,"KRN",19,0)
+19
+"BLD",10801,"KRN",19.1,0)
+19.1
+"BLD",10801,"KRN",101,0)
+101
+"BLD",10801,"KRN",409.61,0)
+409.61
+"BLD",10801,"KRN",771,0)
+771
+"BLD",10801,"KRN",779.2,0)
+779.2
+"BLD",10801,"KRN",870,0)
+870
+"BLD",10801,"KRN",8989.51,0)
+8989.51
+"BLD",10801,"KRN",8989.52,0)
+8989.52
+"BLD",10801,"KRN",8994,0)
+8994
+"BLD",10801,"KRN","B",.4,.4)
+
+"BLD",10801,"KRN","B",.401,.401)
+
+"BLD",10801,"KRN","B",.402,.402)
+
+"BLD",10801,"KRN","B",.403,.403)
+
+"BLD",10801,"KRN","B",.5,.5)
+
+"BLD",10801,"KRN","B",.84,.84)
+
+"BLD",10801,"KRN","B",3.6,3.6)
+
+"BLD",10801,"KRN","B",3.8,3.8)
+
+"BLD",10801,"KRN","B",9.2,9.2)
+
+"BLD",10801,"KRN","B",9.8,9.8)
+
+"BLD",10801,"KRN","B",19,19)
+
+"BLD",10801,"KRN","B",19.1,19.1)
+
+"BLD",10801,"KRN","B",101,101)
+
+"BLD",10801,"KRN","B",409.61,409.61)
+
+"BLD",10801,"KRN","B",771,771)
+
+"BLD",10801,"KRN","B",779.2,779.2)
+
+"BLD",10801,"KRN","B",870,870)
+
+"BLD",10801,"KRN","B",8989.51,8989.51)
+
+"BLD",10801,"KRN","B",8989.52,8989.52)
+
+"BLD",10801,"KRN","B",8994,8994)
+
+"BLD",10801,"QDEF")
+^^^^^^^^^^YES
+"BLD",10801,"QUES",0)
+^9.62^^
+"BLD",10801,"REQB",0)
+^9.611^2^2
+"BLD",10801,"REQB",1,0)
+IB*2.0*554^2
+"BLD",10801,"REQB",2,0)
+IB*2.0*604^2
+"BLD",10801,"REQB","B","IB*2.0*554",1)
+
+"BLD",10801,"REQB","B","IB*2.0*604",2)
+
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+616^3180411
+"PKG",200,22,1,"PAH",1,1,0)
+^^8^8^3180411
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses the following 2 issues:
+"PKG",200,22,1,"PAH",1,1,2,0)
+ 
+"PKG",200,22,1,"PAH",1,1,3,0)
+1.  An undefined error occurs when running the Held Charges Report
+"PKG",200,22,1,"PAH",1,1,4,0)
+LM [IB OUTPUT HELD CHARGES LM] option.
+"PKG",200,22,1,"PAH",1,1,5,0)
+ 
+"PKG",200,22,1,"PAH",1,1,6,0)
+2.  When running the Enter/Edit Billing Information [IB EDIT BILLING INFO]
+"PKG",200,22,1,"PAH",1,1,7,0)
+option, the user will not be prompted for the PROCEDURE DESCRIPTION field
+"PKG",200,22,1,"PAH",1,1,8,0)
+when they enter a partial match CPT code.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IBCU7")
+0^2^B134090555^B132964294
+"RTN","IBCU7",1,0)
+IBCU7 ;ALB/AAS - INTERCEPT SCREEN INPUT OF PROCEDURE CODES ;29-OCT-91
+"RTN","IBCU7",2,0)
+ ;;2.0;INTEGRATED BILLING;**62,52,106,125,51,137,210,245,228,260,348,371,432,447,488,461,516,522,577,604,616**;21-MAR-94;Build 7
+"RTN","IBCU7",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCU7",4,0)
+ ;
+"RTN","IBCU7",5,0)
+ ;MAP TO DGCRU7
+"RTN","IBCU7",6,0)
+ ;
+"RTN","IBCU7",7,0)
+ ; This routine is a copy of IBUC7 for testing purposes.
+"RTN","IBCU7",8,0)
+ ;
+"RTN","IBCU7",9,0)
+CHKX ;  -interception of input x from Additional Procedure input
+"RTN","IBCU7",10,0)
+ G:X=" " CHKXQ
+"RTN","IBCU7",11,0)
+ I $$INPAT^IBCEF(DA(1)),'$P($G(^IBE(350.9,1,1)),"^",15),X'?1A1.2N D  G CHKXQ
+"RTN","IBCU7",12,0)
+ . K X
+"RTN","IBCU7",13,0)
+ . D EN^DDIOL("Site param does not allow entry of non-PTF procedures") ;Fileman error here will be: The previous error occurred when performing an action specified in a Pre-lookup transform (7.5 node).
+"RTN","IBCU7",14,0)
+ G:'$D(^UTILITY($J,"IB")) CHKXQ
+"RTN","IBCU7",15,0)
+ ;S M=($A($E(X,1))-64),S=+$E(X,2) Q:'$G(^UTILITY($J,"IB",M,S))  S X="`"_+^(S)
+"RTN","IBCU7",16,0)
+ S M=0 I X?1A1.2N S N=$G(^UTILITY($J,"IB","B",X)) S M=+N,S=+$P(N,U,2),P=X S S=$G(^UTILITY($J,"IB",M,S)) I +S S X="`"_+S I $P(N,U,3)="N" S X=""""_X_"""" S $P(^UTILITY($J,"IB","B",P),U,3)="Y"
+"RTN","IBCU7",17,0)
+ I +M,$D(DGPROCDT),DGPROCDT'=$P($G(^UTILITY($J,"IB",M,1)),"^",2) S DGPROCDT=$P(^(1),"^",2) W !!,"Procedure Date: " S Y=DGPROCDT X ^DD("DD") W Y,!
+"RTN","IBCU7",18,0)
+CHKXQ Q
+"RTN","IBCU7",19,0)
+ ;
+"RTN","IBCU7",20,0)
+CODMUL ;Date oriented entry of procedure
+"RTN","IBCU7",21,0)
+DELASK I $D(IBZ20),IBZ20,IBZ20'=$P(^DGCR(399,IBIFN,0),U,9) S %=2 W !,"SINCE THE PROCEDURE CODING METHOD HAS BEEN CHANGED, DO YOU WANT TO DELETE ALL",!,"PROCEDURE CODES IN THIS BILL"
+"RTN","IBCU7",22,0)
+ I  D YN^DICN Q:%=-1  D:%=1 DELADD I %Y?1."?" W !!,"If you answer 'Yes', all procedure codes will be DELETED from this bill.",! G DELASK
+"RTN","IBCU7",23,0)
+ K %,%Y,DA,IBZ20,DIK ;W !,"Procedure Entry:"
+"RTN","IBCU7",24,0)
+ ;
+"RTN","IBCU7",25,0)
+CODDT I $D(IBIFN),$D(^DGCR(399,IBIFN,0)),$P(^(0),U,9) S DIC("V")=$S($P(^(0),U,9)=9:"I +Y(0)=80.1",$P(^(0),U,9)=4!($P(^(0),U,9)=5):"I +Y(0)=81",1:"")
+"RTN","IBCU7",26,0)
+ I $P($G(^DGCR(399,IBIFN,0)),"^",5)<3 S IBZTYPE=1 I $P($G(^UTILITY($J,"IB",1,1)),"^",2) S DGPROCDT=$P(^(1),"^",2) D ASKCOD
+"RTN","IBCU7",27,0)
+ S X=$$PRCDIV^IBCU71(IBIFN) I +X W !!,$P(X,U,2),!
+"RTN","IBCU7",28,0)
+ N Z,Z0 S Z=$G(^DGCR(399,IBIFN,"U")),Z0=$$FMTE^XLFDT($P(Z,U),"2D")_"-"_$$FMTE^XLFDT($P(Z,U,2),"2D")
+"RTN","IBCU7",29,0)
+ W !,"Select PROCEDURE DATE"_$S($TR(Z0,"-")'="":" ("_Z0_")",1:"")_": " R X:DTIME G:'$T!("^"[X) CODQ D:X["?" CODHLP
+"RTN","IBCU7",30,0)
+ S IBEX=0 D  ; Get procedure date
+"RTN","IBCU7",31,0)
+ . I X=" ",$D(DGPROCDT),DGPROCDT?7N S Y=DGPROCDT D D^DIQ W "   (",Y,")" Q
+"RTN","IBCU7",32,0)
+ . I X=" ",+$P($G(^DGCR(399,IBIFN,"OP",0)),"^",4) S (DGPROCDT,Y)=$O(^DGCR(399,IBIFN,"OP",0)) D D^DIQ W "   (",Y,")" Q
+"RTN","IBCU7",33,0)
+ . S %DT="EXP",%DT(0)=-DT D ^%DT K %DT I Y<1 S IBEX=1 Q
+"RTN","IBCU7",34,0)
+ . I '$$OPV2^IBCU41(Y,IBIFN,1) S IBEX=1 Q
+"RTN","IBCU7",35,0)
+ . S:'$G(IBZTYPE) X=$$OPV^IBCU41(Y,IBIFN) S DGPROCDT=Y
+"RTN","IBCU7",36,0)
+ I 'IBEX D ASKCOD,ADDCPT^IBCU71:$D(DGCPT)
+"RTN","IBCU7",37,0)
+ K IBEX
+"RTN","IBCU7",38,0)
+ G CODDT
+"RTN","IBCU7",39,0)
+ ;
+"RTN","IBCU7",40,0)
+ASKCOD N Z,Z0,DA,IBACT,IBQUIT,IBLNPRV,IBCODE,IBPIEN  ;WCJ;2.0*432
+"RTN","IBCU7",41,0)
+ N IBPOPOUT  S IBPOPOUT=0  ; IB*2.0*447 BI
+"RTN","IBCU7",42,0)
+ K DGCPT
+"RTN","IBCU7",43,0)
+ S DGCPT=0,DGCPTUP=$P($G(^IBE(350.9,1,1)),"^",19),DGADDVST=0,IBFT=$P($G(^DGCR(399,IBIFN,0)),"^",19)
+"RTN","IBCU7",44,0)
+ I '$D(^DGCR(399,IBIFN,"CP",0)) S ^DGCR(399,IBIFN,"CP",0)=U_$$GETSPEC^IBEFUNC(399,304)
+"RTN","IBCU7",45,0)
+ ;
+"RTN","IBCU7",46,0)
+ F  S IBQUIT=0 D  Q:IBQUIT
+"RTN","IBCU7",47,0)
+ . S IBPOPOUT=0
+"RTN","IBCU7",48,0)
+ . D DICV ; restrict code type to PCM
+"RTN","IBCU7",49,0)
+ . S DIC("A")="   Select PROCEDURE: "
+"RTN","IBCU7",50,0)
+ . S DIC="^DGCR(399,"_IBIFN_",""CP"","
+"RTN","IBCU7",51,0)
+ . S DIC(0)="AEQMNL"
+"RTN","IBCU7",52,0)
+ . S DIC("S")="I '$D(DIV(""S""))&($P(^(0),U,2)=DGPROCDT)"
+"RTN","IBCU7",53,0)
+ . S DIC("DR")="1///^S X=DGPROCDT"
+"RTN","IBCU7",54,0)
+ . S DA(1)=IBIFN,DLAYGO=399
+"RTN","IBCU7",55,0)
+ . W ! D ^DIC I Y<1 S IBQUIT=1 Q
+"RTN","IBCU7",56,0)
+ . S IBPROCP=+Y
+"RTN","IBCU7",57,0)
+ . S IBCODE="" I Y["ICPT" S IBPIEN=+$P(Y,U,2),IBCODE=$P($$CPT^ICPTCOD(IBPIEN),U,2) ;IB*2.0*616, get procedure code, supported by ICR 1995
+"RTN","IBCU7",58,0)
+ . ; If we just added inactive code - it must be deleted.
+"RTN","IBCU7",59,0)
+ . S IBACT=0 ; Active flag
+"RTN","IBCU7",60,0)
+ . I Y["ICD0" S IBACT=$$ICD0ACT^IBACSV(+$P(Y,U,2),$$BDATE^IBACSV(IBIFN))
+"RTN","IBCU7",61,0)
+ . I Y["ICPT" S IBACT=$$CPTACT^IBACSV(+$P(Y,U,2),DGPROCDT)
+"RTN","IBCU7",62,0)
+ . S DGCPTNEW=$P(Y,"^",3) ;Was the procedure just added?
+"RTN","IBCU7",63,0)
+ . I DGCPTNEW,'IBACT D DELPROC Q
+"RTN","IBCU7",64,0)
+ . I 'IBACT W !,*7,"Warning:  Procedure code is inactive on this date",!
+"RTN","IBCU7",65,0)
+ . I DGCPTNEW,$D(^UTILITY($J,"IB")),$$INPAT^IBCEF(IBIFN),Y["ICPT(" D DATA^IBCU74(Y,.IBLNPRV)
+"RTN","IBCU7",66,0)
+ . S DGADDVST=$S(DGCPTNEW:1,$D(DGADDVST):DGADDVST,1:0)
+"RTN","IBCU7",67,0)
+ . N IBPRV,IBPRVO,IBPRVN
+"RTN","IBCU7",68,0)
+ . ;
+"RTN","IBCU7",69,0)
+ . ; Line level provider function by form type.
+"RTN","IBCU7",70,0)
+ . ;     CMS-1500 (FORM TYPE=2)
+"RTN","IBCU7",71,0)
+ . ;              RENDERING PROVIDER, REFERRING PROVIDER,
+"RTN","IBCU7",72,0)
+ . ;              and SUPERVISING PROVIDER.
+"RTN","IBCU7",73,0)
+ . ;     UB-04 (FORM TYPE=3)
+"RTN","IBCU7",74,0)
+ . ;              RENDERING PROVIDER, REFERRING PROVIDER,
+"RTN","IBCU7",75,0)
+ . ;              OPERATING PROVIDER, and OTHER OPERATING
+"RTN","IBCU7",76,0)
+ . ;              PROVIDER.
+"RTN","IBCU7",77,0)
+ . ;
+"RTN","IBCU7",78,0)
+ . ; Removed: Call to $$MAINPRV^IBCEU(IBIFN) is for claim
+"RTN","IBCU7",79,0)
+ . ;          level provider defaults.
+"RTN","IBCU7",80,0)
+ . ;     1. For new line level providers we don't need
+"RTN","IBCU7",81,0)
+ . ;        or want default claim level provider
+"RTN","IBCU7",82,0)
+ . ;        (requirement).
+"RTN","IBCU7",83,0)
+ . ;     2. We don't want to default claim level to
+"RTN","IBCU7",84,0)
+ . ;        line level provider (requirement).
+"RTN","IBCU7",85,0)
+ . ;
+"RTN","IBCU7",86,0)
+ . K DIC("V")  ; DEM;432 - KILL DIC("V") because this was for previous variable pointer use.
+"RTN","IBCU7",87,0)
+ . ;
+"RTN","IBCU7",88,0)
+ . N IBPROCSV  ; DEM;432 - Variable IBPROCSV is variable to preserve value of 'Y', which is procedure code info returned by call to ^DIC.
+"RTN","IBCU7",89,0)
+ . S IBPROCSV=Y  ; DEM;432 - Preserve value of Y for after calls to FileMan (Y = procedure code info returned by call to ^DIC).
+"RTN","IBCU7",90,0)
+ . K DR   ;WCJ;IB*2.0*432
+"RTN","IBCU7",91,0)
+ . ;
+"RTN","IBCU7",92,0)
+ . I IBPROCSV["ICD0" S DR=".01",DIE=DIC,(IBPROCP,DA)=+Y D ^DIE Q:'$D(DA)!($D(Y))  K DR ; IB*2.0*461
+"RTN","IBCU7",93,0)
+ . I IBPROCSV["ICPT" S DR=".01;16",DIE=DIC,(IBPROCP,DA)=+Y D ^DIE Q:'$D(DA)!($D(Y))  K DR ; IB*2.0*447 BI
+"RTN","IBCU7",94,0)
+ . ;
+"RTN","IBCU7",95,0)
+ . S DR=""
+"RTN","IBCU7",96,0)
+ . ;
+"RTN","IBCU7",97,0)
+ . ; MRD;IB*2.0*516 - Added line level PROCEDURE DESCRIPTION field,
+"RTN","IBCU7",98,0)
+ . ; asked only if the procedure is an "NOC".
+"RTN","IBCU7",99,0)
+ . I IBPROCSV["ICPT",$$NOCPROC(IBPROCSV,IBCODE,DGPROCDT) D  ; added IBCODE,DGPROCDT in *604
+"RTN","IBCU7",100,0)
+ . . S DA=$P(IBPROCSV,"^")  ; The line# on the bill/claim.
+"RTN","IBCU7",101,0)
+ . . S DR=51                ; Field# for PROCEDURE DESCRIPTION
+"RTN","IBCU7",102,0)
+ . . D ^DIE
+"RTN","IBCU7",103,0)
+ . . Q
+"RTN","IBCU7",104,0)
+ . ;
+"RTN","IBCU7",105,0)
+ . D EN^IBCU7B ; DEM;432 - Call to line level provider user input.
+"RTN","IBCU7",106,0)
+ . S Y=IBPROCSV  ; DEM;432 - Restore value of Y after calls to FileMan
+"RTN","IBCU7",107,0)
+ . K IBPROCSV
+"RTN","IBCU7",108,0)
+ . K DR   ;WCJ;IB*2.0*432
+"RTN","IBCU7",109,0)
+ . I IBPOPOUT Q   ; IB*2.0*447 BI
+"RTN","IBCU7",110,0)
+ . S DR="" I Y["ICPT" S DR="6;5//"_$$DEFDIV(IBIFN)_";"
+"RTN","IBCU7",111,0)
+ . S DR=DR_$S(IBFT=2:"8;9;17//NO;",1:"")_3,DIE=DIC,(IBPROCP,DA)=+Y D ^DIE Q:'$D(DA)!($E($G(Y))=U)
+"RTN","IBCU7",112,0)
+ . K DR   ;WCJ;IB*2.0*432
+"RTN","IBCU7",113,0)
+ . ;
+"RTN","IBCU7",114,0)
+ . ; MRD;IB*2.0*516 - Allow user to add an NDC and Units.  Ask only if
+"RTN","IBCU7",115,0)
+ . ; coding system is not ICD and this is not a prescription claim. If
+"RTN","IBCU7",116,0)
+ . ; an NDC is entered, prompt for Units.
+"RTN","IBCU7",117,0)
+ . I $P($G(^DGCR(399,IBIFN,0)),U,9)'=9,'$$RXLINK^IBCSC5C(IBIFN,IBPROCP) D
+"RTN","IBCU7",118,0)
+ . . K DA
+"RTN","IBCU7",119,0)
+ . . S DA=IBPROCP,DA(1)=IBIFN,DIE="^DGCR(399,"_IBIFN_",""CP"","
+"RTN","IBCU7",120,0)
+ . . ; vd/Beginning IB*2*577 - Added the prompt for Unit/Basis of Measurement.
+"RTN","IBCU7",121,0)
+ . . ; S DR="53NDC NUMBER;I X="""" S Y="""";54//1"
+"RTN","IBCU7",122,0)
+ . . S DR="53NDC NUMBER;I X="""" S Y="""";52R~//UN;54R~QUANTITY//1"  ;Prompt for NDC, UN & amt.
+"RTN","IBCU7",123,0)
+ . . ; vd/Ending IB*2*577
+"RTN","IBCU7",124,0)
+ . . D ^DIE
+"RTN","IBCU7",125,0)
+ . . Q
+"RTN","IBCU7",126,0)
+ . ;
+"RTN","IBCU7",127,0)
+ . I IBFT=3 D:'$$INPAT^IBCEF(IBIFN) ATTACH  ; DEM;432 - Prompt for Attachment Control Number.
+"RTN","IBCU7",128,0)
+ . ; DEM;432 - Add Additional OB Minutes to DR string for call to DIE.
+"RTN","IBCU7",129,0)
+ . S DR=$$SPCUNIT(IBIFN,IBPROCP) S:DR["15;" DR=DR_"74Additional OB Minutes" D ^DIE ; miles/minutes/hours
+"RTN","IBCU7",130,0)
+ . ;
+"RTN","IBCU7",131,0)
+ . I IBFT=2 D
+"RTN","IBCU7",132,0)
+ .. D DX^IBCU72(IBIFN,IBPROCP)
+"RTN","IBCU7",133,0)
+ .. S X=$$ADDTNL(IBIFN,.DA)
+"RTN","IBCU7",134,0)
+ . Q:$$INPAT^IBCEF(IBIFN)  ;only outpatient bills
+"RTN","IBCU7",135,0)
+ . ;add procedures to array for download to PCE: dgcpt(assoc clinic,cpt,'provider^first dx^modifiers',cnt)=""
+"RTN","IBCU7",136,0)
+ . S DGPROC=$G(^DGCR(399,IBIFN,"CP",+DA,0))
+"RTN","IBCU7",137,0)
+ . S X=$P(DGPROC,U,18)_U_+$G(^IBA(362.3,+$P(DGPROC,U,11),0))_U_$P(DGPROC,U,15)
+"RTN","IBCU7",138,0)
+ . I 'DGCPTNEW,$P(DGPROC,"^",7)="" S DGCPTNEW=2
+"RTN","IBCU7",139,0)
+ . I DGCPTUP,DGCPTNEW S DGCPT=DGCPT+1 I $P(DGPROC,"^",7) S DGCPT($P(DGPROC,"^",7),+DGPROC,X,DGCPT)=""
+"RTN","IBCU7",140,0)
+ . ; add visit date to bill
+"RTN","IBCU7",141,0)
+ . I DGADDVST S (X,DINUM)=DGPROCDT D VFILE1^IBCOPV1 K DINUM,X,DGNOADD,DGADDVST
+"RTN","IBCU7",142,0)
+ ; Delete modifiers with only a sequence #, no code
+"RTN","IBCU7",143,0)
+ S Z=0 F  S Z=$O(^DGCR(399,IBIFN,"CP",Z)) Q:'Z  S Z0=0 F  S Z0=$O(^DGCR(399,IBIFN,"CP",Z,"MOD",Z0)) Q:'Z0  I $P($G(^(Z0,0)),U,2)="" S DA(2)=IBIFN,DA(1)=Z,DA=Z0,DIK="^DGCR(399,"_DA(2)_",""CP"","_DA(1)_",""MOD""," D ^DIK
+"RTN","IBCU7",144,0)
+ Q
+"RTN","IBCU7",145,0)
+CODQ K %DT,DGPROC,DIC,DIE,DR,DGPROCDT,IBPROCP,DLAYGO
+"RTN","IBCU7",146,0)
+ K IBFT,DGNOADD,DGADDVST,DGCPT,DGCPTUP,IBZTYPE,DGCPTNEW
+"RTN","IBCU7",147,0)
+ Q
+"RTN","IBCU7",148,0)
+ ;
+"RTN","IBCU7",149,0)
+DELPROC ; Remove the selected procedure, because of inactive status (cancel selection)
+"RTN","IBCU7",150,0)
+ W !!,*7,"The Procedure code is inactive on ",$$DAT1^IBOUTL(DGPROCDT),"."
+"RTN","IBCU7",151,0)
+ W !,"Please select another Procedure."
+"RTN","IBCU7",152,0)
+ S DA(1)=IBIFN,DA=+Y,DIK="^DGCR(399,"_IBIFN_",""CP"","
+"RTN","IBCU7",153,0)
+ D ^DIK
+"RTN","IBCU7",154,0)
+ Q
+"RTN","IBCU7",155,0)
+ ;
+"RTN","IBCU7",156,0)
+DELADD N Z,Z0,DA,DIK,X,Y
+"RTN","IBCU7",157,0)
+ S DA(1)=IBIFN
+"RTN","IBCU7",158,0)
+ ;Delete references to proc on rev codes
+"RTN","IBCU7",159,0)
+ S Z=0 F  S Z=$O(^DGCR(399,IBIFN,"RC",Z)) Q:'Z  S Z0=$G(^(Z,0)) I Z0'="",$P(Z0,U,15)!$S($P(Z0,U,10)=3:$P(Z0,U,11),1:0) S DIE="^DGCR(399,"_DA(1)_",""RC"",",DA=Z,DR=".11///@;.15///@"_$S($P(Z0,U,8):"",1:";.08////1") D ^DIE
+"RTN","IBCU7",160,0)
+ S DIK="^DGCR(399,"_DA(1)_",""CP""," F DA=0:0 S DA=$O(^DGCR(399,DA(1),"CP",DA)) Q:'DA  D ^DIK
+"RTN","IBCU7",161,0)
+ S DGRVRCAL=1
+"RTN","IBCU7",162,0)
+ Q
+"RTN","IBCU7",163,0)
+ ;
+"RTN","IBCU7",164,0)
+DTMES ;Message if procedure date not in date range
+"RTN","IBCU7",165,0)
+ Q:'$D(IBIFN)  Q:'$D(^DGCR(399,IBIFN,"U"))  S DGNODUU=^("U")
+"RTN","IBCU7",166,0)
+ G:X'<$P(DGNODUU,"^")&(X'>$P(DGNODUU,"^",2)) DTMESQ
+"RTN","IBCU7",167,0)
+ W *7,!!?3,"Date must be within STATEMENT COVERS FROM and STATEMENT COVERS TO period."
+"RTN","IBCU7",168,0)
+ S Y=$P(DGNODUU,"^") X ^DD("DD")
+"RTN","IBCU7",169,0)
+ W !?3,"Enter a date between ",Y," and " S Y=$P(DGNODUU,"^",2) X ^DD("DD") W Y,!
+"RTN","IBCU7",170,0)
+ K X,Y
+"RTN","IBCU7",171,0)
+DTMESQ K DGNODUU Q
+"RTN","IBCU7",172,0)
+ ;
+"RTN","IBCU7",173,0)
+CODHLP ;Display Additional Procedure codes
+"RTN","IBCU7",174,0)
+ N I,J,Y,IBMOD
+"RTN","IBCU7",175,0)
+ I '$O(^DGCR(399,IBIFN,"CP",0)) W !!?5,"No Codes Entered!",! Q
+"RTN","IBCU7",176,0)
+ W ! F I=0:0 S I=$O(^DGCR(399,IBIFN,"CP",I)) Q:'I  S Y=$G(^(I,0)) S Z=$$PRCNM^IBCSCH1($P(Y,"^",1),$P(Y,"^",2)) W !?5,$E($P(Z,"^",2),1,33),?40,"- ",$P(Z,"^") D
+"RTN","IBCU7",177,0)
+ . N IBY
+"RTN","IBCU7",178,0)
+ . S IBY=$P(Y,U,2)
+"RTN","IBCU7",179,0)
+ . S IBMOD=$$GETMOD^IBEFUNC(IBIFN,I,1)
+"RTN","IBCU7",180,0)
+ . I IBMOD'="" S IBMOD="/"_IBMOD W IBMOD
+"RTN","IBCU7",181,0)
+ . W ?60,"Date: " S Y=IBY D DT^DIQ
+"RTN","IBCU7",182,0)
+ W !
+"RTN","IBCU7",183,0)
+ ;
+"RTN","IBCU7",184,0)
+ K Z Q
+"RTN","IBCU7",185,0)
+ ;
+"RTN","IBCU7",186,0)
+DICV I $D(IBIFN),$D(^DGCR(399,IBIFN,0)),$P(^(0),U,9) S DIC("V")=$S($P(^(0),U,9)=9:"I +Y(0)=80.1",$P(^(0),U,9)=4!($P(^(0),U,9)=5):"I +Y(0)=81",1:"")
+"RTN","IBCU7",187,0)
+ Q
+"RTN","IBCU7",188,0)
+ ;
+"RTN","IBCU7",189,0)
+DEFDIV(IBIFN) ; Find default division for bill IBIFN
+"RTN","IBCU7",190,0)
+ Q $P($G(^DG(40.8,+$P($G(^DGCR(399,IBIFN,0)),U,22),0)),U)
+"RTN","IBCU7",191,0)
+ ;
+"RTN","IBCU7",192,0)
+ADDTNL(IBIFN,DA) ;
+"RTN","IBCU7",193,0)
+ N DR,IBOK,X,Y,DIR
+"RTN","IBCU7",194,0)
+ S IBOK=1
+"RTN","IBCU7",195,0)
+ S DR="19T;50.09T;50.08T" D ^DIE  ; WCJ;IB*2.0*488 Added Ts
+"RTN","IBCU7",196,0)
+ ;I '($$FT^IBCEF(IBIFN)'=3&($$INPAT^IBCEF(IBIFN))) D ATTACH  ; DEM;432 - Prompt for Attachment Control Number.
+"RTN","IBCU7",197,0)
+ I '($$FT^IBCEF(IBIFN)=3&($$INPAT^IBCEF(IBIFN))) D ATTACH  ; DEM;432 - Prompt for Attachment Control Number.
+"RTN","IBCU7",198,0)
+ I $D(Y) S IBOK=0 G ADDTNLQ
+"RTN","IBCU7",199,0)
+ ;/Beginning of IB*2.0*488 (vd)
+"RTN","IBCU7",200,0)
+ ;S DIR("B")="NO",DIR("A")="EDIT CMS-1500 SPECIAL PROGRAM FIELDS and BOX 19?: ",DIR("A",1)=" ",DIR(0)="YA"
+"RTN","IBCU7",201,0)
+ ;S DIR("?",1)="Respond YES only if you need to add/edit data for chiropractic visits,"
+"RTN","IBCU7",202,0)
+ ;S DIR("?")="EPSDT care, or if billing for HOSPICE and attending is not a hospice employee."
+"RTN","IBCU7",203,0)
+ ;D ^DIR K DIR
+"RTN","IBCU7",204,0)
+ ;I Y'=1 S IBOK=0 G ADDTNLQ
+"RTN","IBCU7",205,0)
+ ;S DR="W !,""  <<EPSDT>>"";50.07;W !!,""  <<HOSPICE>>"";50.03"
+"RTN","IBCU7",206,0)
+ S DR="50.07T;50.03T"   ;WCJ;IB*2.0*488 added Ts
+"RTN","IBCU7",207,0)
+ ;/End of IB*2.0*488 (vd)
+"RTN","IBCU7",208,0)
+ D ^DIE
+"RTN","IBCU7",209,0)
+ W !
+"RTN","IBCU7",210,0)
+ADDTNLQ Q IBOK
+"RTN","IBCU7",211,0)
+ ;
+"RTN","IBCU7",212,0)
+XTRA1(Y) ;
+"RTN","IBCU7",213,0)
+ K Y
+"RTN","IBCU7",214,0)
+ Q
+"RTN","IBCU7",215,0)
+ ;
+"RTN","IBCU7",216,0)
+SPCUNIT(IBIFN,DA) ; return fields for special units if applicable, in DR form
+"RTN","IBCU7",217,0)
+ N IB0,IBCPT,IBDR,IBCT,IBFT,DFN S IBDR=""
+"RTN","IBCU7",218,0)
+ S IB0=$G(^DGCR(399,+$G(IBIFN),0)),IBCT=$P(IB0,U,27),IBFT=$P(IB0,U,19),DFN=$P(IB0,U,2)
+"RTN","IBCU7",219,0)
+ S IBCPT=$G(^DGCR(399,+$G(IBIFN),"CP",+$G(DA),0)) I IBCPT'["ICPT" G SPCUNTQ
+"RTN","IBCU7",220,0)
+ I +$$ITMUNIT^IBCRU4(+IBCPT,5,IBCT) S IBDR="15;" D SROMIN^IBCU74(IBIFN,DA) G SPCUNTQ ; minutes
+"RTN","IBCU7",221,0)
+ I +$$ITMUNIT^IBCRU4(+IBCPT,4,IBCT) S IBDR="21;" G SPCUNTQ ; miles
+"RTN","IBCU7",222,0)
+ I +$$ITMUNIT^IBCRU4(+IBCPT,6,IBCT) S IBDR="22//"_$$OBSHOUR^IBCU74(DFN,$P(IBCPT,U,2))_";" G SPCUNTQ ; hours
+"RTN","IBCU7",223,0)
+ I +IBFT=2,$P($G(^IBE(353.2,+$P(IBCPT,U,10),0)),U,2)="ANESTHESIA" S IBDR="15;" ; minutes
+"RTN","IBCU7",224,0)
+SPCUNTQ Q IBDR
+"RTN","IBCU7",225,0)
+ ;
+"RTN","IBCU7",226,0)
+ATTACH ; DEM;432 - Attachment control number.
+"RTN","IBCU7",227,0)
+ ; Ask if user wants to enter Attachment Control Number.
+"RTN","IBCU7",228,0)
+ N DIR,X,Y,DA,DIE,DR
+"RTN","IBCU7",229,0)
+ S DIR("A")="Enter Attachment Control Number"
+"RTN","IBCU7",230,0)
+ S DIR(0)="Y",DIR("B")="NO"
+"RTN","IBCU7",231,0)
+ D ^DIR
+"RTN","IBCU7",232,0)
+ Q:'Y
+"RTN","IBCU7",233,0)
+ ; User chose to enter Attachment Control Number.
+"RTN","IBCU7",234,0)
+ ; User enters Attachment Control fields.
+"RTN","IBCU7",235,0)
+ S DA(1)=IBIFN,DA=IBPROCP
+"RTN","IBCU7",236,0)
+ S DIE="^DGCR(399,"_DA(1)_",""CP"","
+"RTN","IBCU7",237,0)
+ S DR="71Report Type;72Report Transmission Method;70Attachment Control Number"
+"RTN","IBCU7",238,0)
+ D ^DIE
+"RTN","IBCU7",239,0)
+ Q
+"RTN","IBCU7",240,0)
+ ;
+"RTN","IBCU7",241,0)
+NOCPROC(IBPROCSV,IBCODE,IBDATE) ; MRD;IB*2.0*516 - Function to determine if procedure is an
+"RTN","IBCU7",242,0)
+ ; "NOC". Returns '1' if "NOC" procedure, otherwise '0'.
+"RTN","IBCU7",243,0)
+ ;
+"RTN","IBCU7",244,0)
+ N IBNOC,IBPROCEX,IBPROCIN,IBPROCNM,IBX,IBLINES,IBSTR,IBEND,IBLN
+"RTN","IBCU7",245,0)
+ S IBNOC=0
+"RTN","IBCU7",246,0)
+ I $G(IBPROCSV)="" G NOCPROCQ
+"RTN","IBCU7",247,0)
+ I $G(IBCODE)="" G NOCPROCQ
+"RTN","IBCU7",248,0)
+ I $G(IBDATE)'?7N G NOCPROCQ
+"RTN","IBCU7",249,0)
+ S IBPROCIN=$P($P(IBPROCSV,U,2),";") ;parsing out the IEN
+"RTN","IBCU7",250,0)
+ I IBPROCIN="" G NOCPROCQ
+"RTN","IBCU7",251,0)
+ ;
+"RTN","IBCU7",252,0)
+ ; If procedure code ends in '99', quit with a '1'.
+"RTN","IBCU7",253,0)
+ ;
+"RTN","IBCU7",254,0)
+ I $E(IBCODE,$L(IBCODE)-1,$L(IBCODE))=99 S IBNOC=1 G NOCPROCQ ;Does code end with 99? If so NOC
+"RTN","IBCU7",255,0)
+ ;
+"RTN","IBCU7",256,0)
+ ; Pull procedure name, then check to see if it contains one of the
+"RTN","IBCU7",257,0)
+ ; specified strings.
+"RTN","IBCU7",258,0)
+ ;
+"RTN","IBCU7",259,0)
+ S IBPROCNM=$$CPT^ICPTCOD(IBCODE,IBDATE)
+"RTN","IBCU7",260,0)
+ S IBPROCNM=$P(IBPROCNM,U,3)
+"RTN","IBCU7",261,0)
+ I IBPROCNM'="",($$NOC(IBPROCNM)) S IBNOC=1 G NOCPROCQ ; Does external match NOC strings? if so NOC
+"RTN","IBCU7",262,0)
+ ;
+"RTN","IBCU7",263,0)
+ ;Does array strings match any of the specified strings
+"RTN","IBCU7",264,0)
+ S IBLINES=$$CPTD^ICPTCOD(IBCODE,"IBINFO",,IBDATE) ;get number of lines/array of lines
+"RTN","IBCU7",265,0)
+ S IBEND=1 S:IBLINES>1 IBEND=IBLINES-1 ;set up counter for loop
+"RTN","IBCU7",266,0)
+ F IBLN=1:1:IBEND D  Q:IBNOC=1  ;loop through array so we can check if node values = NOC
+"RTN","IBCU7",267,0)
+ . N IBSTR S IBSTR=$$TM($G(IBINFO(IBLN)))_" "_$$TM($G(IBINFO(IBLN+1)))_" " ;Build strings for NOC comparison
+"RTN","IBCU7",268,0)
+ . S IBNOC=$$NOC(IBSTR) ;is current combination of strings a NOC?
+"RTN","IBCU7",269,0)
+ . Q
+"RTN","IBCU7",270,0)
+ ;
+"RTN","IBCU7",271,0)
+NOCPROCQ ; Quit out.
+"RTN","IBCU7",272,0)
+ K IBINFO ;killing the array made in CPTD^ICPTCOD
+"RTN","IBCU7",273,0)
+ Q IBNOC
+"RTN","IBCU7",274,0)
+ ;
+"RTN","IBCU7",275,0)
+NOC(IBTEXT) ; Quit with '1' if IBTEXT contains one of the specified strings.
+"RTN","IBCU7",276,0)
+ ;
+"RTN","IBCU7",277,0)
+ S IBTEXT=$TR(IBTEXT,"abcdefghijklmnopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+"RTN","IBCU7",278,0)
+ ;
+"RTN","IBCU7",279,0)
+ I IBTEXT["NOT OTHERWISE" Q 1
+"RTN","IBCU7",280,0)
+ I IBTEXT["NOT ELSEWHERE" Q 1
+"RTN","IBCU7",281,0)
+ I IBTEXT["NOT LISTED" Q 1
+"RTN","IBCU7",282,0)
+ I IBTEXT["UNLISTED" Q 1
+"RTN","IBCU7",283,0)
+ I IBTEXT["UNSPECIFIED" Q 1
+"RTN","IBCU7",284,0)
+ I IBTEXT["UNCLASSIFIED" Q 1
+"RTN","IBCU7",285,0)
+ I IBTEXT["NON-SPECIFIED" Q 1
+"RTN","IBCU7",286,0)
+ I IBTEXT["NOS " Q 1
+"RTN","IBCU7",287,0)
+ I IBTEXT["NOS;" Q 1
+"RTN","IBCU7",288,0)
+ I IBTEXT["NOS." Q 1
+"RTN","IBCU7",289,0)
+ I IBTEXT["NOS," Q 1
+"RTN","IBCU7",290,0)
+ I IBTEXT["NOS/" Q 1
+"RTN","IBCU7",291,0)
+ I IBTEXT["(NOS)" Q 1
+"RTN","IBCU7",292,0)
+ I IBTEXT["NOC " Q 1
+"RTN","IBCU7",293,0)
+ I IBTEXT["NOC;" Q 1
+"RTN","IBCU7",294,0)
+ I IBTEXT["NOC." Q 1
+"RTN","IBCU7",295,0)
+ I IBTEXT["NOC," Q 1
+"RTN","IBCU7",296,0)
+ I IBTEXT["NOC/" Q 1
+"RTN","IBCU7",297,0)
+ I IBTEXT["(NOC)" Q 1
+"RTN","IBCU7",298,0)
+ ;
+"RTN","IBCU7",299,0)
+ ; Check if last three charcters are 'NOC' or 'NOS'.
+"RTN","IBCU7",300,0)
+ ;
+"RTN","IBCU7",301,0)
+ S IBTEXT=$E(IBTEXT,$L(IBTEXT)-2,$L(IBTEXT))
+"RTN","IBCU7",302,0)
+ Q 0
+"RTN","IBCU7",303,0)
+ ;
+"RTN","IBCU7",304,0)
+TM(IBX,IBY) ; Trim Character Y - Default " "
+"RTN","IBCU7",305,0)
+ S IBX=$G(IBX) Q:IBX="" IBX  S IBY=$G(IBY) S:'$L(IBY) IBY=" "
+"RTN","IBCU7",306,0)
+ F  Q:$E(IBX,1)'=IBY  S IBX=$E(IBX,2,$L(IBX))
+"RTN","IBCU7",307,0)
+ F  Q:$E(IBX,$L(IBX))'=IBY  S IBX=$E(IBX,1,($L(IBX)-1))
+"RTN","IBCU7",308,0)
+ Q IBX
+"RTN","IBOHLS1")
+0^1^B99684965^B97465496
+"RTN","IBOHLS1",1,0)
+IBOHLS1 ;ALB/BAA - IB HELD CHARGES LIST MANAGER ;08-SEP-2015
+"RTN","IBOHLS1",2,0)
+ ;;2.0;INTEGRATED BILLING;**554,616**;21-MAR-94;Build 7
+"RTN","IBOHLS1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBOHLS1",4,0)
+ ;
+"RTN","IBOHLS1",5,0)
+SORT ; get the data
+"RTN","IBOHLS1",6,0)
+ N CNT,IBN,SINST
+"RTN","IBOHLS1",7,0)
+ S CNT=0
+"RTN","IBOHLS1",8,0)
+ ; compile data to display here
+"RTN","IBOHLS1",9,0)
+ I 'PATS D
+"RTN","IBOHLS1",10,0)
+ . S IBN=0 F  S IBN=$O(^IB("AC",8,IBN)) Q:'IBN  D CHRGS(IBN,PATS)
+"RTN","IBOHLS1",11,0)
+ I PATS D
+"RTN","IBOHLS1",12,0)
+ . S DFN=0 F  S DFN=$O(FILTERS(2,DFN)) Q:'DFN  D
+"RTN","IBOHLS1",13,0)
+ .. S IBN=0 F  S IBN=$O(^IB("AH",DFN,IBN)) Q:'IBN  D CHRGS(IBN,PATS)
+"RTN","IBOHLS1",14,0)
+ Q
+"RTN","IBOHLS1",15,0)
+ ;
+"RTN","IBOHLS1",16,0)
+CHRGS(IBN,PATS) ; charges on hold
+"RTN","IBOHLS1",17,0)
+ N IBFR,IBTO,HDAYS,IBND,HINST,DFN,HST,IBACT,IBCHG,ID,SS,SSLE,SSLS,NAME,HLDT,FLAG
+"RTN","IBOHLS1",18,0)
+ N CLINIC,IBND1,RSLTFRM
+"RTN","IBOHLS1",19,0)
+ S SINST=""
+"RTN","IBOHLS1",20,0)
+ S IBND=$G(^IB(IBN,0)) Q:'IBND
+"RTN","IBOHLS1",21,0)
+ S RSLTFRM=$P(IBND,U,4)
+"RTN","IBOHLS1",22,0)
+ S HINST=$$INST(RSLTFRM),CLINIC=$P(HINST,U,2),HINST=$P(HINST,U,1)
+"RTN","IBOHLS1",23,0)
+ S FLAG=""
+"RTN","IBOHLS1",24,0)
+ I HINST="*" S FLAG="*",HINST=$P(IBND,U,13)
+"RTN","IBOHLS1",25,0)
+ I HINST="" S FLAG="*",HINST=$P(IBND,U,13)
+"RTN","IBOHLS1",26,0)
+ I HINST'="" S SINST=$P(^DIC(4,HINST,0),U,1)
+"RTN","IBOHLS1",27,0)
+ I INSTS,HINST="" Q
+"RTN","IBOHLS1",28,0)
+ I INSTS,'$D(FILTERS(1,HINST)) Q
+"RTN","IBOHLS1",29,0)
+ S IBND1=$G(^IB(IBN,1))
+"RTN","IBOHLS1",30,0)
+ S HLDT=$P(IBND1,U,6)
+"RTN","IBOHLS1",31,0)
+ S IBACT=+IBND
+"RTN","IBOHLS1",32,0)
+ S DFN=$P(IBND,U,2)
+"RTN","IBOHLS1",33,0)
+ D PAT
+"RTN","IBOHLS1",34,0)
+ S HST=$P(IBND,U,5)
+"RTN","IBOHLS1",35,0)
+ I HST'=8 Q
+"RTN","IBOHLS1",36,0)
+ S IBFR=$P(IBND,U,14),IBTO=$P(IBND,U,15)
+"RTN","IBOHLS1",37,0)
+ I $P(IBND,U,4)["52:" D
+"RTN","IBOHLS1",38,0)
+ .S IBRXN=$P($P(IBND,U,4),":",2),IBRF=$P($P(IBND,U,4),":",3)
+"RTN","IBOHLS1",39,0)
+ .I +IBRF>0 S IBFR=$$SUBFILE^IBRXUTL(+IBRXN,IBRF,52,.01),IBTO=$P($$SUBFILE^IBRXUTL(+IBRXN,IBRF,52,17),".")
+"RTN","IBOHLS1",40,0)
+ .I +IBRF=0 S IBFR=$$FILE^IBRXUTL(+IBRXN,22),IBTO=$P($$FILE^IBRXUTL(+IBRXN,31),".")
+"RTN","IBOHLS1",41,0)
+ I HLDT<BDATE!(HLDT>EDATE) Q
+"RTN","IBOHLS1",42,0)
+ S HDAYS=$$FMDIFF^XLFDT(DT,HLDT,1)
+"RTN","IBOHLS1",43,0)
+ S IBCHG=$P(IBND,U,7)
+"RTN","IBOHLS1",44,0)
+ D BILLS
+"RTN","IBOHLS1",45,0)
+ Q
+"RTN","IBOHLS1",46,0)
+ ;
+"RTN","IBOHLS1",47,0)
+INST(RF) ; figure out where performed
+"RTN","IBOHLS1",48,0)
+ N FL,IEN,IBIEN,DIEN,INT,CLNM,IBSTA
+"RTN","IBOHLS1",49,0)
+ S IBRXN=$P(RF,":",2),INT="*",CLNM=""
+"RTN","IBOHLS1",50,0)
+ S IBIEN=$P(IBRXN,";",1)
+"RTN","IBOHLS1",51,0)
+ S FL=$P(RF,":",1)
+"RTN","IBOHLS1",52,0)
+ ;
+"RTN","IBOHLS1",53,0)
+ I FL=350 S INT="*",CLNM=""
+"RTN","IBOHLS1",54,0)
+ ;
+"RTN","IBOHLS1",55,0)
+ I FL=45 D
+"RTN","IBOHLS1",56,0)
+ . S IBSTA=$$GET1^DIQ(45,IBIEN_",",3,"I"),CLNM="" ;IB*2*616, 45 file stores Station Number
+"RTN","IBOHLS1",57,0)
+ . D FIND^DIC(4,"","@;.01;IX","X",IBSTA,99,"D","","","MSG") S INT=$G(MSG("DILIST",2,1)) ;Convert Station number to Institution file IEN      
+"RTN","IBOHLS1",58,0)
+ ;
+"RTN","IBOHLS1",59,0)
+ I FL=52 D
+"RTN","IBOHLS1",60,0)
+ . S IEN=$$GET1^DIQ(52,IBIEN_",",20,"I"),CLNM=$$GET1^DIQ(52,IBIEN_",",20,"E")
+"RTN","IBOHLS1",61,0)
+ . S INT=$$GET1^DIQ(59,IEN_",",100,"I")
+"RTN","IBOHLS1",62,0)
+ ;
+"RTN","IBOHLS1",63,0)
+ I FL=405 D
+"RTN","IBOHLS1",64,0)
+ . S IEN=$$GET1^DIQ(405,IBIEN_",",.06,"I"),CLNM=$$GET1^DIQ(405,IBIEN_",",.06,"E")
+"RTN","IBOHLS1",65,0)
+ . S DIEN=$$GET1^DIQ(42,IEN_",",.015,"I")
+"RTN","IBOHLS1",66,0)
+ . S INT=$$GET1^DIQ(40.8,DIEN_",",.07,"I")
+"RTN","IBOHLS1",67,0)
+ ;
+"RTN","IBOHLS1",68,0)
+ I FL=409.68 D
+"RTN","IBOHLS1",69,0)
+ . S IEN=$$GET1^DIQ(409.68,IBIEN_",",.04,"I"),CLNM=$$GET1^DIQ(409.68,IBIEN_",",.04,"E")
+"RTN","IBOHLS1",70,0)
+ . S INT=$$GET1^DIQ(44,IEN_",",3,"I")
+"RTN","IBOHLS1",71,0)
+ ;
+"RTN","IBOHLS1",72,0)
+ Q INT_U_CLNM
+"RTN","IBOHLS1",73,0)
+ ;
+"RTN","IBOHLS1",74,0)
+ ;
+"RTN","IBOHLS1",75,0)
+PAT ; patient name
+"RTN","IBOHLS1",76,0)
+ N VAERR,VADM D DEM^VADPT I VAERR K VADM
+"RTN","IBOHLS1",77,0)
+ S NAME=$G(VADM(1)) S:NAME="" NAME=" "
+"RTN","IBOHLS1",78,0)
+ S SS=$P($G(VADM(2)),U,1),SSLE=$L(SS),SSLS=6 I $E(SS,SSLE)="P" S SSLS=5
+"RTN","IBOHLS1",79,0)
+ S ID=$E(NAME,1)_$E(SS,SSLS,SSLE)
+"RTN","IBOHLS1",80,0)
+ Q
+"RTN","IBOHLS1",81,0)
+ ;
+"RTN","IBOHLS1",82,0)
+BILLS ; find bills for charges on hold
+"RTN","IBOHLS1",83,0)
+ N IBT,IBATYPE,IBCHRG,IBTP
+"RTN","IBOHLS1",84,0)
+ S IBATYPE=$S($P($G(^IBE(350.1,+$P(IBND,U,3),0)),U)["OPT":"O",$P($G(^IBE(350.1,+IBND,U,3,0)),U)["PSO":"RX",1:"I")
+"RTN","IBOHLS1",85,0)
+ S CNT=CNT+1
+"RTN","IBOHLS1",86,0)
+ S IBTP=$P(IBND,"^",3),IBTP=$P($G(^IBE(350.1,IBTP,0)),"^",1),IBTP=$S(IBTP["PSO NSC":"RXNSC",IBTP["PSO SC":"RX SC",1:$E(IBTP,4,7))
+"RTN","IBOHLS1",87,0)
+ S ^TMP($J,"IBOHLS",NAME,CNT)=NAME_U_ID_U_IBTP_U_IBFR_U_IBTO_U_HDAYS_U_IBCHG
+"RTN","IBOHLS1",88,0)
+ S ^TMP($J,"IBOHLS",NAME,CNT,"IBND")=DFN_U_NAME_U_IBN_U_IBFR_U_IBTO_U_SINST_U_FLAG_U_CLINIC
+"RTN","IBOHLS1",89,0)
+ I IBATYPE="I" D INP
+"RTN","IBOHLS1",90,0)
+ I IBATYPE="O" D OTP
+"RTN","IBOHLS1",91,0)
+ E  D RX
+"RTN","IBOHLS1",92,0)
+ I IINS,$D(^TMP($J,"IBOHLS",NAME,CNT)),'$D(^TMP($J,"IBOHLS INS",NAME)) D GETINS
+"RTN","IBOHLS1",93,0)
+ Q
+"RTN","IBOHLS1",94,0)
+ ;
+"RTN","IBOHLS1",95,0)
+INP ; inpatient bills
+"RTN","IBOHLS1",96,0)
+ N IBEV,IBBILL,IBT,X,X1,X2,IBEND,IBOK,IBBCHG,IBBILL0,IBBILLU1,BILL,BCNT,BLTRK,RNB,STATUS
+"RTN","IBOHLS1",97,0)
+ N HLDDT,AUDT,IBTYPE
+"RTN","IBOHLS1",98,0)
+ S IBTYPE=$P(IBND,"^",3),IBTYPE=$P($G(^IBE(350.1,IBTYPE,0)),"^",1),IBTYPE=$S(IBTYPE["PSO NSC":"RXNSC",IBTYPE["PSO SC":"RX SC",1:$E(IBTYPE,4,7))
+"RTN","IBOHLS1",99,0)
+ S IBEV=$P(IBND,U,16) Q:'IBEV  ; parent event
+"RTN","IBOHLS1",100,0)
+ S IBEV=($P($G(^IB(IBEV,0)),U,17)\1) Q:'IBEV  ; date of parent event
+"RTN","IBOHLS1",101,0)
+ S X1=IBEV,X2=1 D C^%DTC S IBEND=X
+"RTN","IBOHLS1",102,0)
+ S BCNT=0
+"RTN","IBOHLS1",103,0)
+ S IBT=(IBEV-.0001) F  S IBT=$O(^DGCR(399,"D",IBT)) Q:'IBT!(IBT'<IBEND)  S IBBILL=0 F  S IBBILL=$O(^DGCR(399,"D",IBT,IBBILL)) Q:IBBILL=""  D
+"RTN","IBOHLS1",104,0)
+ . S IBBILL0=$G(^DGCR(399,IBBILL,0))
+"RTN","IBOHLS1",105,0)
+ . S BILL=$P(IBBILL0,U,1)
+"RTN","IBOHLS1",106,0)
+ . S AUDT=$$GET1^DIQ(399,IBBILL,10,"I")
+"RTN","IBOHLS1",107,0)
+ . S HLDDT=$S(AUDT'="":$$FMDIFF^XLFDT(DT,AUDT,1),1:HDAYS)
+"RTN","IBOHLS1",108,0)
+ . S IBBCHG=$$GET1^DIQ(430,IBBILL,77)
+"RTN","IBOHLS1",109,0)
+ . S STATUS=$$GET1^DIQ(430,IBBILL,8,"O")
+"RTN","IBOHLS1",110,0)
+ . S (BLTRK,RNB)=""
+"RTN","IBOHLS1",111,0)
+ . S BLTRK=$O(^IBT(356,"E",IBBILL,BLTRK))
+"RTN","IBOHLS1",112,0)
+ . I BLTRK'="" S RNB=$$GET1^DIQ(356,BLTRK,.19,"O")
+"RTN","IBOHLS1",113,0)
+ . D INPTCK
+"RTN","IBOHLS1",114,0)
+ . I IBOK D
+"RTN","IBOHLS1",115,0)
+ .. ;BILL#AR STATUS^DATE BILLED^AUTH DATE^HLD DAYS^CHARGE^RNB^BILL TRK #
+"RTN","IBOHLS1",116,0)
+ .. S BCNT=BCNT+1
+"RTN","IBOHLS1",117,0)
+ .. S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT)=BILL_U_STATUS_U_IBT_U_AUDT_U_HLDDT_U_IBBCHG_U_RNB_U_BLTRK ;BILL#^AR STATUS^DATE BILLED^CHARGE
+"RTN","IBOHLS1",118,0)
+ .. S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT,"B")=IBBILL_U_BLTRK_U_RNB
+"RTN","IBOHLS1",119,0)
+ Q
+"RTN","IBOHLS1",120,0)
+ ;
+"RTN","IBOHLS1",121,0)
+INPTCK ; does bill belong to charge? returns IBOK=0 if no
+"RTN","IBOHLS1",122,0)
+ N IBBILLU
+"RTN","IBOHLS1",123,0)
+ S IBBILLU=$G(^DGCR(399,IBBILL,"U"))
+"RTN","IBOHLS1",124,0)
+ S IBBILL=$P(IBBILL0,U,1)
+"RTN","IBOHLS1",125,0)
+ S IBOK=1
+"RTN","IBOHLS1",126,0)
+CK1 ; for same patient?
+"RTN","IBOHLS1",127,0)
+ I DFN=$P(IBBILL0,U,2)
+"RTN","IBOHLS1",128,0)
+ S IBOK=$T
+"RTN","IBOHLS1",129,0)
+ Q:'IBOK
+"RTN","IBOHLS1",130,0)
+CK2 ; same type- inp or opt?
+"RTN","IBOHLS1",131,0)
+ N B S B=$S(+$P(IBBILL0,U,5)<3:"I",1:"O")
+"RTN","IBOHLS1",132,0)
+ I B=IBATYPE S IBOK=1
+"RTN","IBOHLS1",133,0)
+ S IBOK=$T
+"RTN","IBOHLS1",134,0)
+ Q:'IBOK
+"RTN","IBOHLS1",135,0)
+CK3 ; overlap in date range?
+"RTN","IBOHLS1",136,0)
+ N F,T
+"RTN","IBOHLS1",137,0)
+ S F=+IBBILLU,T=$P(IBBILLU,U,2)
+"RTN","IBOHLS1",138,0)
+ I (IBTO<F)!(IBFR>T)
+"RTN","IBOHLS1",139,0)
+ S IBOK='$T
+"RTN","IBOHLS1",140,0)
+ Q:'IBOK
+"RTN","IBOHLS1",141,0)
+CK4 ; insurance bill?
+"RTN","IBOHLS1",142,0)
+ I $P(IBBILL0,U,11)="i"
+"RTN","IBOHLS1",143,0)
+ S IBOK=$T
+"RTN","IBOHLS1",144,0)
+ Q
+"RTN","IBOHLS1",145,0)
+ ;
+"RTN","IBOHLS1",146,0)
+OTP ; outpatient bills
+"RTN","IBOHLS1",147,0)
+ N X,IBV,IBBILL,IBOK,IBBILL0,IBBCHG,IBBILLU1,IBBILLU,BILL,BCNT
+"RTN","IBOHLS1",148,0)
+ S BCNT=0
+"RTN","IBOHLS1",149,0)
+ S IBV=(IBFR\1)-.0001 F  S IBV=$O(^DGCR(399,"AOPV",DFN,IBV)) Q:'IBV!(IBV>IBTO)  S IBBILL=0 D
+"RTN","IBOHLS1",150,0)
+ .F  S IBBILL=$O(^DGCR(399,"AOPV",DFN,IBV,IBBILL)) Q:('IBBILL)  D
+"RTN","IBOHLS1",151,0)
+ .. S IBBILL0=$G(^DGCR(399,IBBILL,0)),IBBILLU=$G(^DGCR(399,IBBILL,"U")) D CK4 Q:'IBOK
+"RTN","IBOHLS1",152,0)
+ .. S BILL=$P(IBBILL0,U,1)
+"RTN","IBOHLS1",153,0)
+ .. S AUDT=$$GET1^DIQ(399,IBBILL,10,"I")
+"RTN","IBOHLS1",154,0)
+ .. S HLDDT=$S(AUDT'="":$$FMDIFF^XLFDT(DT,AUDT,1),1:HDAYS)
+"RTN","IBOHLS1",155,0)
+ .. S IBBCHG=$$GET1^DIQ(430,IBBILL,77)
+"RTN","IBOHLS1",156,0)
+ .. S STATUS=$$GET1^DIQ(430,IBBILL,8,"O")
+"RTN","IBOHLS1",157,0)
+ .. S (BLTRK,RNB)=""
+"RTN","IBOHLS1",158,0)
+ .. S BLTRK=$O(^IBT(356,"E",IBBILL,BLTRK))
+"RTN","IBOHLS1",159,0)
+ .. I BLTRK'="" S RNB=$$GET1^DIQ(356,BLTRK,.19,"O")
+"RTN","IBOHLS1",160,0)
+ .. S BILL=$P(IBBILL0,U,1),BCNT=BCNT+1
+"RTN","IBOHLS1",161,0)
+ .. S IBBILLU1=$G(^DGCR(399,IBBILL,"U1")),IBBCHG=$P(IBBILLU1,U,1)
+"RTN","IBOHLS1",162,0)
+ .. S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT)=BILL_U_STATUS_U_IBV_U_AUDT_U_HLDDT_U_IBBCHG_U_RNB_U_BLTRK ;BILL#^AR STATUS^DATE BILLED^AUTH DATE^DAYS ON HOLD^CHARGE^RNB^BILL TRK NO
+"RTN","IBOHLS1",163,0)
+ .. S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT,"B")=IBBILL_U_BLTRK
+"RTN","IBOHLS1",164,0)
+ Q
+"RTN","IBOHLS1",165,0)
+ ;
+"RTN","IBOHLS1",166,0)
+RX ; rx refill bills
+"RTN","IBOHLS1",167,0)
+ N IBRDT,IBRF,IBRX,IBRXN,IBTYPE
+"RTN","IBOHLS1",168,0)
+ S (IBRX,IBRXN,IBRF,IBRDT)=0 N IENS
+"RTN","IBOHLS1",169,0)
+ I $P(IBND,U,4)'["52:" Q
+"RTN","IBOHLS1",170,0)
+ ;
+"RTN","IBOHLS1",171,0)
+ S IBTYPE=$P(IBND,"^",3),IBTYPE=$P($G(^IBE(350.1,IBTYPE,0)),"^",1),IBTYPE=$S(IBTYPE["PSO NSC":"RXNSC",IBTYPE["PSO SC":"RX SC",1:$E(IBTYPE,4,7))
+"RTN","IBOHLS1",172,0)
+ S IBRXN=$P($P(IBND,U,4),":",2),IBRX=$P($P(IBND,U,8),"-"),IBRF=$P($P(IBND,U,4),":",3)
+"RTN","IBOHLS1",173,0)
+ S ^TMP($J,"IBOHLS",NAME,CNT,1)=IBRX   ;RX VALUE
+"RTN","IBOHLS1",174,0)
+ I +IBRF>0 S IBRDT=$$SUBFILE^IBRXUTL(+IBRXN,IBRF,52,.01)
+"RTN","IBOHLS1",175,0)
+ I +IBRF=0 S IBRDT=$$FILE^IBRXUTL(+IBRXN,22)
+"RTN","IBOHLS1",176,0)
+ ;
+"RTN","IBOHLS1",177,0)
+ Q:(IBRX="")!('IBRDT)
+"RTN","IBOHLS1",178,0)
+ N X,IBBILL,IBBILL0,IBFILL,IBFILL0,IBOK,IBBCHG,BCNT
+"RTN","IBOHLS1",179,0)
+ S BCNT=0
+"RTN","IBOHLS1",180,0)
+ S IBFILL=0 F  S IBFILL=$O(^IBA(362.4,"B",IBRX,IBFILL)) Q:IBFILL=""  D
+"RTN","IBOHLS1",181,0)
+ . S BCNT=BCNT+1
+"RTN","IBOHLS1",182,0)
+ . S IBFILL0=$G(^IBA(362.4,IBFILL,0)) I $P(IBFILL0,U,3)'=IBRDT Q
+"RTN","IBOHLS1",183,0)
+ . S IBBILL=+$P(IBFILL0,U,2) I 'IBBILL Q
+"RTN","IBOHLS1",184,0)
+ . S IBBILL0=$G(^DGCR(399,IBBILL,0)) D CK4 I 'IBOK Q
+"RTN","IBOHLS1",185,0)
+ . S BILL=$P(IBBILL0,U,1)
+"RTN","IBOHLS1",186,0)
+ . S AUDT=$$GET1^DIQ(399,IBBILL,10,"I")
+"RTN","IBOHLS1",187,0)
+ . S HLDDT=$S(AUDT'="":$$FMDIFF^XLFDT(DT,AUDT,1),1:HDAYS)
+"RTN","IBOHLS1",188,0)
+ . S IBBCHG=$$GET1^DIQ(430,IBBILL,77)
+"RTN","IBOHLS1",189,0)
+ . S STATUS=$$GET1^DIQ(430,IBBILL,8,"O")
+"RTN","IBOHLS1",190,0)
+ . S (BLTRK,RNB)=""
+"RTN","IBOHLS1",191,0)
+ . S BLTRK=$O(^IBT(356,"E",IBBILL,BLTRK))
+"RTN","IBOHLS1",192,0)
+ . I BLTRK'="" S RNB=$$GET1^DIQ(356,BLTRK,.19,"O")
+"RTN","IBOHLS1",193,0)
+ . S BCNT=BCNT+1
+"RTN","IBOHLS1",194,0)
+ . S IBBILLU1=$G(^DGCR(399,IBBILL,"U1")),IBBCHG=$P(IBBILLU1,U,1)
+"RTN","IBOHLS1",195,0)
+ . S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT)=BILL_U_STATUS_U_IBRDT_U_AUDT_U_HLDDT_U_IBBCHG_U_RNB_U_BLTRK ;BILL#^AR STATUS^DATE BILLED^CHARGE
+"RTN","IBOHLS1",196,0)
+ . S ^TMP($J,"IBOHLS",NAME,CNT,2,BCNT,"B")=IBBILL_U_BLTRK_U_RNB
+"RTN","IBOHLS1",197,0)
+ Q
+"RTN","IBOHLS1",198,0)
+ ;
+"RTN","IBOHLS1",199,0)
+GETINS ; get insurance information
+"RTN","IBOHLS1",200,0)
+ N XX,IBINS,IBX,ICNT,INSCO,SUBID,PLNID,EFFDT,EFDTCK,EXPDT,EXDTCK,LEDT,SUBNAM,CVD
+"RTN","IBOHLS1",201,0)
+ N PLNCOV,PEFDT,PCOVD,PCOM,PCNT,COVFN,GRP,CKDT,IBCNT
+"RTN","IBOHLS1",202,0)
+ N IBINS0,IBINS7,LIM,INSTYP,IB0,IBS,REIMB
+"RTN","IBOHLS1",203,0)
+ S (PLNCOV,PLNID,PEFDT,PCOVD,PCOM)=""
+"RTN","IBOHLS1",204,0)
+ S ICNT=0
+"RTN","IBOHLS1",205,0)
+ D ALL^IBCNS1(DFN,"IBINS")
+"RTN","IBOHLS1",206,0)
+ S XX=0
+"RTN","IBOHLS1",207,0)
+ F  S XX=$O(IBINS(XX)) Q:'XX  D
+"RTN","IBOHLS1",208,0)
+ . S IBINS0=IBINS(XX,0)
+"RTN","IBOHLS1",209,0)
+ . S IBINS7=$G(IBINS(XX,7))
+"RTN","IBOHLS1",210,0)
+ . S PLNID=$P(IBINS0,U,18),GRP=$P(IBINS0,U,3)
+"RTN","IBOHLS1",211,0)
+ . I PLNID'="" I $P($G(^IBA(355.3,PLNID,0)),"^",11) Q  ;plan is inactive
+"RTN","IBOHLS1",212,0)
+ . S INSCO=$P(^DIC(36,+IBINS0,0),U,1),REIMB=$P(INSCO,U,2)
+"RTN","IBOHLS1",213,0)
+ . I $P(INSCO,U,5) Q  ;insurance company inactive 
+"RTN","IBOHLS1",214,0)
+ . S SUBID=$P(IBINS7,U,2)
+"RTN","IBOHLS1",215,0)
+ . S SUBNAM=$P(IBINS7,U,1)
+"RTN","IBOHLS1",216,0)
+ . S EXDTCK=+$P(IBINS0,U,4)
+"RTN","IBOHLS1",217,0)
+ . S EFDTCK=+$P(IBINS0,U,8)
+"RTN","IBOHLS1",218,0)
+ . I EXDTCK,EXDTCK<IBFR Q  ; if insurance expired before the from date of copay quit
+"RTN","IBOHLS1",219,0)
+ . I EFDTCK,EFDTCK>IBTO Q  ; if insurance not in effect for period quit
+"RTN","IBOHLS1",220,0)
+ . S EFFDT=$$DAT1^IBOUTL(EFDTCK)
+"RTN","IBOHLS1",221,0)
+ . S EXPDT=$$DAT1^IBOUTL(EXDTCK)
+"RTN","IBOHLS1",222,0)
+ . S ICNT=ICNT+1
+"RTN","IBOHLS1",223,0)
+ . ;ins co^sub id^plan id^effective dt^expiration date
+"RTN","IBOHLS1",224,0)
+ . S ^TMP($J,"IBOHLS",NAME,CNT,3,ICNT)=IBINS0_U_PLNID
+"RTN","IBOHLS1",225,0)
+ . S ^TMP($J,"IBOHLS INS",NAME,ICNT)=INSCO_U_SUBNAM_U_GRP_U_EFFDT_U_EXPDT
+"RTN","IBOHLS1",226,0)
+ . ;plan coverage^effective date^covered?^limit comments
+"RTN","IBOHLS1",227,0)
+ . S LIM=0,PCNT=0
+"RTN","IBOHLS1",228,0)
+ . F  S LIM=$O(^IBE(355.31,LIM)) Q:'LIM  D
+"RTN","IBOHLS1",229,0)
+ .. S PLNCOV=$P($G(^IBE(355.31,LIM,0)),U),IBCNT=0,PEFDT=""
+"RTN","IBOHLS1",230,0)
+ .. S PCOVD="",LEDT="",PCOM=""
+"RTN","IBOHLS1",231,0)
+ .. F  S LEDT=$O(^IBA(355.32,"APCD",PLNID,LIM,LEDT)) Q:$S(LEDT="":IBCNT,1:0)  D  Q:LEDT=""
+"RTN","IBOHLS1",232,0)
+ ... S COVFN=+$O(^IBA(355.32,"APCD",PLNID,LIM,+LEDT,"")),PCOVD=$G(^IBA(355.32,+COVFN,0))
+"RTN","IBOHLS1",233,0)
+ ... S PEFDT=$$DAT1^IBOUTL($P(LEDT,"-",2))
+"RTN","IBOHLS1",234,0)
+ ... I PCOVD="" S PCOVD="BY DEFAULT" D SETINS(PLNCOV,PEFDT,PCOVD,PCOM,IBCNT) Q
+"RTN","IBOHLS1",235,0)
+ ... S IBCNT=IBCNT+1,PCOM=""
+"RTN","IBOHLS1",236,0)
+ ... I PCOVD'="" S CVD=$P(PCOVD,U,4),PCOVD=$S(CVD:$S(CVD<2:"YES",CVD=2:"CONDITIONAL",1:"UNKNOWN"),1:"NO")
+"RTN","IBOHLS1",237,0)
+ ... I '$O(^IBA(355.32,COVFN,2,0))  D SETINS(PLNCOV,PEFDT,PCOVD,PCOM,IBCNT) Q 
+"RTN","IBOHLS1",238,0)
+ ... S (IBS,IB0)=0 F  S IB0=$O(^IBA(355.32,COVFN,2,IB0)) Q:'IB0  D
+"RTN","IBOHLS1",239,0)
+ .... S PCOM=""
+"RTN","IBOHLS1",240,0)
+ .... S PCOM=^IBA(355.32,COVFN,2,IB0,0)
+"RTN","IBOHLS1",241,0)
+ .... I IBS=0 D SETINS(PLNCOV,PEFDT,PCOVD,PCOM,IBCNT)
+"RTN","IBOHLS1",242,0)
+ .... I IBS>0 D SETCOV(PCOM)
+"RTN","IBOHLS1",243,0)
+ .... S IBS=IBS+1
+"RTN","IBOHLS1",244,0)
+ Q
+"RTN","IBOHLS1",245,0)
+ ;
+"RTN","IBOHLS1",246,0)
+SETINS(PLNCOV,PEFDT,PCOVD,PCOM,IBCNT) ; SET GLOBAL ENTRY
+"RTN","IBOHLS1",247,0)
+ S PCNT=PCNT+1
+"RTN","IBOHLS1",248,0)
+ I IBCNT>1 S PLNCOV=""
+"RTN","IBOHLS1",249,0)
+ S ^TMP($J,"IBOHLS",NAME,CNT,3,ICNT,PCNT)=""
+"RTN","IBOHLS1",250,0)
+ S ^TMP($J,"IBOHLS INS",NAME,ICNT,0)=IBINS0_U_PLNID
+"RTN","IBOHLS1",251,0)
+ S ^TMP($J,"IBOHLS INS",NAME,ICNT,PCNT)=PLNCOV_U_PEFDT_U_PCOVD_U_PCOM
+"RTN","IBOHLS1",252,0)
+ Q
+"RTN","IBOHLS1",253,0)
+ ;
+"RTN","IBOHLS1",254,0)
+SETCOV(PCOM) ; SET COVERAGE WHEN MULTIPLE
+"RTN","IBOHLS1",255,0)
+ S PCNT=PCNT+1
+"RTN","IBOHLS1",256,0)
+ S ^TMP($J,"IBOHLS INS",NAME,ICNT,PCNT)=""_U_""_U_""_U_PCOM
+"RTN","IBOHLS1",257,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10801,6)
+^567
+**END**
+**END**
+

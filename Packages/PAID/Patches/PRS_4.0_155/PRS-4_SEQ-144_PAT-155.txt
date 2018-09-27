@@ -1,0 +1,271 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/12/18 at 14:14
+=============================================================================
+Run Date: JUN 14, 2018                     Designation: PRS*4*155
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #144                      Status: Released
+                  Compliance Date: JUL 15, 2018
+=============================================================================
+
+Associated patches: (v)PRS*4*153   <<= must be installed BEFORE `PRS*4*155'
+
+Subject: PAID HYBRID ADDITIONS 3Q18
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Hybrid table in file PAID CODE 
+ FILES (#454) for Occupation Series/Title Codes converting to Hybrid
+ status.
+  
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+  
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ ------------------            -------------------     --------------------
+ PAID CODE FILES (#454)        CODE (#.01)             Modified
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I19071293FY18 - NEW HYBRID CODE ADDITIONS
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below is the occupation that was added in PAID for the 0640 
+ hybrid conversion:
+  
+        064045  SUPERVISORY HEALTH TECH (TELEHLTH CLNL) 
+  
+ Below are the occupations that were added in PAID for the 1601 
+ hybrid conversion:
+  
+        160103  BIO EQUIPMENT SUPPORT SPEC (INFO SYS) 
+        160104  BIO EQUIPMENT SUPPORT SPEC (IMAGING) 
+        160105  BIO EQUIPMENT SUPPORT SPECIALIST (LEAD) 
+        160106  BIO EQUIPMENT SUPPORT SPEC (SUPV) 
+        160107  BIO EQUIPMENT SUPPORT SPECIALIST(SUPV) 
+        160108  BIO EQUIPMENT SUPPORT SPECIALIST(VISN) 
+        160109  BIO EQUIPMENT SUPPORT SPEC (NATIONAL) 
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ 2. I19073848FY18 - Add New Hybrid Occupations
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0601 
+ hybrid conversion:
+  
+        0601A2  GENETIC COUNSELOR 
+        0601A3  GENETIC COUNSELOR ADVANCED CLINICAL 
+        0601A4  GENETIC COUNSELOR MANAGER/SUPERVISOR 
+        0601A5  GENETIC COUNSEL VISN/NATIONAL PROG MANG
+  
+ Below are the occupations that were added in PAID for the 0646 
+ hybrid conversion:
+  
+        064605  HISTOPATHOLOGY TECHNICIAN 
+        064606  HISTOPATHOLOGY TECHNICIAN (ADVAN) 
+        064607  HISTOPATHOLOGY TECHNICIAN (LEAD) 
+        064608  HISTOPATHOLOGY TECHNICIAN (SUPV)
+  
+ Below are the occupations that were added in PAID for the 0640 
+ hybrid conversion:
+  
+        064046  HEALTH TECHNICIAN (MASSAGE THERAPIST)
+        064047  MASSAGE THERAPIST (ADVANCED) 
+        064048  MASSAGE THERAPIST (LEAD) 
+        064049  MASSAGE THERAPIST (SUPERVISORY) 
+        064051  HEALTH TECHNICIAN (OPTOMETRY)
+        064053  HEALTH TECHNICIAN (OPTOMETRY)
+        064054  HEALTH TECHNICIAN (OPTOMETRY)
+        064055  HEALTH TECHNICIAN LEAD (OPTOMETRY)
+        064056  SUPV HEALTH TECHNICIAN (OPTOMETRY)
+        064057  SUPV HEALTH TECHNICIAN (OPTOMETRY)
+        
+ Below are the occupations that were added in PAID for the 0633 
+ hybrid conversion:
+        
+        063303  LEAD PHYSICAL THERAPIST
+        063313  SUPERVISORY PHYSICAL THERAPIST
+  
+ Below is the occupation that was added in PAID for the 0660 
+ hybrid conversion:
+                
+        066007  PHARMACIST
+  
+ The following occupations have had their explanation updated:
+  
+        064081  HEALTH TECH (OPHTHALMOLOGY)DVL LVL 1
+        064082  HEALTH TECH (OPHTHALMOLOGY) DVL LVL2
+        064085  HEALTH TECH OPHTHALMOLOGY (ADVAN LEVEL)
+        064089  HEALTH TECHNICIAN PROGRAM COORD OPHT
+  
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+ Additionally, the data dictionary of the Code (#01.) field of the 
+ Occupation Series and Title Code (#454.01) subfile of the PAID CODE 
+ FILES (#454) file has been modified to allow either of the last two 
+ characters, of the six character code, to be uppercase letters or 
+ numbers.
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Dayton VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ If installed during the normal workday, it is recommended that the PAID
+ users be off the system. 
+  
+ Install Time - less than 2 minutes.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PRS*4.0*155)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PRS*4.0*155.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//", respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+             Decompose Time      [PRSA PAY DECOMP]
+  
+      7. Review the installation message for errors.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out by installing the backup created in step 3d from
+ the Installation Instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B90738421   After: B93319655  **96,130,135,138,141,143,147,
+                                           148,152,153,155**
+ 
+Routine list of preceding patches: 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 06, 2018
+Completed By:                               Date Completed: JUN 13, 2018
+Released By :                               Date Released : JUN 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

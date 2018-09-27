@@ -1,0 +1,199 @@
+
+=============================================================================
+Run Date: MAY 17, 2018                     Designation: PSJ*5*360
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #306                      Status: Released
+                  Compliance Date: JUN 17, 2018
+=============================================================================
+
+
+Subject: Informational - VIE TO HEALTH CONNECT
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch describing the migration from Vitria
+ Interface Engine (VIE) to InterSystems Health Connect. Health Connect is a
+ part of the suite of products grouped under HealthShare.
+ **************************************************************************
+  
+ The Health Connect product will be replacing the Vitria Interface 
+ Engine (VIE). During the transition phase, Health Connect and VIE will 
+ be running concurrently.
+  
+ A parallel deployment is planned at an enterprise level. The VIE Pharmacy 
+ Automated Dispensing Equipment (PADE) functionality will remain in place
+ for most sites while specific sites will implement the PADE Health
+ Connect.  Production will run concurrently with VIE, replacing only the
+ VIE PADE functionality. Both VIE and Health Connect systems will run in
+ parallel at the site level when Health Connect PADE is rolled out. VIE
+ will continue to process messages for applications that have not yet been
+ migrated. The Health Connect PADE production will process PADE messages.
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)                     Field Name   New/Modified/Deleted
+ ------------                      ----------   --------------------
+ N/A
+  
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+  
+ Kernel Parameters Associated:
+  
+ Kernel Parameter Name              Entities                   Values
+ ---------------------       ---------------                 --------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ N/A
+  
+   
+ Protocols Associated:
+  
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                           New/Modified/Deleted
+ -----------------                           --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name               Type  File Name (#)  New/Modified/Deleted
+ -------------               ----  ------------   --------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+     
+  
+ TEST Sites:
+ ===========
+ Long Beach VAMC
+ Honululu VAMC 
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Albany         domain.ext
+  Hines          domain.ext
+  Salt Lake City domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                         File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Inpatient Medications Technical          PSJ_5_TM.PDF         Binary
+  Manual/ Security Guide
+  
+ Inpatient Medications Pharmacy Interface PSJ_5_TG.PDF         Binary
+  Automation Startup and Troubleshooting Guide
+  
+ Health Connect / Pharmacy Automated      HC_PADE_1_0_IG.PDF       Binary
+ Dispensing Equipment (PADE) 1.0
+ Deployment, Installation, Back-Out
+ and Rollback Guide  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+  
+     
+ Installation Instructions
+ -------------------------
+ 
+ **************************************************************************
+ The following instructions are to be performed only when directed to do so 
+ by the Healthshare National Admin Team. These changes can only be implemented 
+ in collaboration and coordination with site Pharmacy Administrator (ADPAC), 
+ Vendor Engineer or Implementation Support, Clinical Product Support and 
+ Healthshare National Admin Team as outlined in the Pharmacy Interface 
+ Automation(PIA) Startup and Troubleshooting Guide. Please refer to the 
+ Pharmacy Interface Automation(PIA) Startup and Troubleshooting Guide for 
+ complete details.
+ **************************************************************************
+ 
+ After Healthshare's Health Connect is stood up, and the Health Connect
+ Production instance is ready to process incoming and outgoing messages,
+ the site administrator will need to edit the HL LOGICAL LINKS file
+ (#870) for PSJ PADE entry. The PADE servers and VistA logical links 
+ will need to point to an IP address and port to the Health Connect 
+ production.
+ 
+ 1. Stop the PSJ PADE Logical Link with HL7 Menu option: Start/Stop Links
+ 1. Edit the PSJ PADE Logical Link with HL7 menu option: Link Edit.
+ 2. Edit the HL LOGICAL LINK for PSJ PADE and replace the existing TCP/IP
+    ADDRESS and existing TCP/IP PORT with the Health Connect IP address 
+    and port.
+ 3. Once it has been confirmed that Health Connect is ready to process 
+    messages, start the PSJ PADE Logical Link using the Start/Stop
+    Links option.
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2018
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

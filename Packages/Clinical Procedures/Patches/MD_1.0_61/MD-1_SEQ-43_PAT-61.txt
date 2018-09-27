@@ -1,0 +1,226 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/30/18 at 09:11
+=============================================================================
+Run Date: JUN 28, 2018                     Designation: MD*1*61
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #43                      Status: Released
+                  Compliance Date: JUL 30, 2018
+=============================================================================
+
+Associated patches: (v)MD*1*58     <<= must be installed BEFORE `MD*1*61'
+
+Subject: CP FLOWSHEET DATE RANGE SELECTOR, MOUSE WHEEL, AND NETWORK HELP FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch fixes the following bugs in Clinical Procedures (CP)
+ Flowsheets:
+  
+ 1. When opening the Date Range Selector in CP Flowsheets, the calendar 
+ that displays the month does not display the full month. The column for 
+ Saturday is either fully or partially obscured.
+  
+ 2. In CP Flowsheets, if the user spins the mouse wheel over the Windows 
+ desktop or another running application while Flowsheets has keyboard 
+ focus, it may cause the program to cycle through either the list of 
+ available flowsheets or the list of available locations (depending on 
+ where the user is in the software).
+  
+ 3. When running CP Flowsheets from a network drive or shared network 
+ folder, the user can't access the help file.
+  
+ NOTE: Patch MD*1*61 includes a new Graphical User Interface (GUI)
+ executable for CP Flowsheets.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. CA-SDM R17135139FY18 - Clinical Procedure Flowsheets Date Range
+    Selector.
+  
+ Problem:
+ --------
+ When opening the Date Range Selector in CP Flowsheets, the calendar that 
+ displays the month does NOT display the column for Saturday. Only Sunday 
+ through Friday are visible to the user. It is possible for a user to click
+ on arrows beside the Today button to move the date into the Saturday
+ column. However, this is neither intuitive nor efficient.
+  
+ Resolution:
+ -----------
+ The Date Range Selector form was widened sufficiently for both calendars
+ to be fully visible.
+  
+ 2. INC0275439 - Mouse scrolling creates errors
+  
+ Problem:
+ --------
+ In CP Flowsheets, if the user spins the mouse wheel over the Windows 
+ desktop or another running application while Flowsheets has keyboard 
+ focus, it may cause the program to cycle through either the list of 
+ available flowsheets or the list of available locations (depending on
+ where the user is in the software).
+  
+ Resolution:
+ -----------
+ The Delphi code was updated so that scrolling the mouse wheel while the 
+ mouse is pointing off the application does not affect combo boxes.
+  
+ 3. INC0452105 - Network help file for CP Flowsheets
+  
+ Problem:
+ --------
+ When CP Flowsheets is run from a network drive or network shared folder, 
+ the help file cannot be accessed. This is due to changes in Windows 
+ security that don't allow a program that is run off a network to open help
+ files that aren't on the local computer.
+  
+ Resolution:
+ -----------
+ The first time the user attempts to access the help file, the file is 
+ downloaded to the user's local hard drive. Then it can be used normally.
+  
+  
+ Test Sites:
+ -----------
+ VA Maryland HCS
+ VA Northern Indiana HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+  
+ This software is being released as a PackMan message distributed through 
+ FORUM, combined with a ZIP file containing the client GUI files. Files and
+ documentation pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Flowsheets (MD*1.0*61) Deployment, Installation, 
+ Back-Out, and Rollback Guide" for patch and GUI installation and set-up
+ information.
+ This document is available on the VA Software Document Library (VDL) at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                        File Name         FTP Mode
+ -----------------------------------------------------------------------
+ CP Flowsheets (MD*1.0*61) Deployment,        md_1_p61_ig.pdf   Binary
+ Installation, Back-Out, and Rollback Guide
+  
+ To obtain the updated client software, use SFTP to retrieve MD_1_61.ZIP
+ from one of the OI Field Offices' ANONYMOUS.SOFTWARE directories.
+  
+ File Name        Retrieval Format
+ ---------        ----------------
+ MD_1_61.ZIP      Binary
+  
+  
+ Zip File Contents        Description        File Version 
+ -----------------        -----------        ------------
+ CPFlowsheets.exe         Client             1.0.61.1
+ CPFlowsheets.cnt         Client CNT file
+ CPFlowsheets.hlp         Client help file
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Clinical Procedures users should be off the system when this patch is 
+ installed. Installation will take less than 5 minutes. This patch should 
+ be installed during non-peak requirement hours.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 3. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+  
+ 4. From the Installation menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch MD*1.0*61. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+   
+ 5. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter MD*1.0*61).      
+  
+    a. Verify Checksums in Transport Global - This option will allow 
+       you to ensure the integrity of the routines that are in the
+       transport global.
+    b. Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+    c. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch 
+       is installed.
+      
+ 6. From the Installation menu, select the Install Package(s) option and
+    select the patch: MD*1.0*61.
+   
+ 7. If prompted, "Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install?", respond NO.
+  
+ 8. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+   
+ 9. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Post-installation routine MDPOST61 is provided which updates Clinical
+ Procedures with the expected version number for CP Flowsheets.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine included
+ in this patch prior to installation.
+  
+ Please reference the CP Flowsheets (MD*1.0*61) Deployment, Installation,
+ Back-Out, and Rollback Guide for back-out/rollback instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST61
+    Before:       n/a   After:  B1645038  **61**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2018
+Completed By:                               Date Completed: JUN 27, 2018
+Released By :                               Date Released : JUN 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

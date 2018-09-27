@@ -1,0 +1,155 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/20/18 at 11:36
+=============================================================================
+Run Date: JUN 29, 2018                     Designation: PSJ*5*371
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #311                      Status: Released
+                  Compliance Date: JUL 06, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*361   <<= must be installed BEFORE `PSJ*5*371'
+
+Subject: Fix Problem Created by PSJ*5*361 regarding Long Special Instructions
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Emergency Patch to back out and replace VistA routine PSJBCMA5 that
+ caused an issue with long Special Instructions, released in patch 
+ PSJ*5.0*361.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ 3726
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1)   INC1037196       
+  
+ Problem: 
+ ========
+ After installing released patch, PSJ*5.0*361, editing of verified
+ Inpatient Medication orders that result in a new medication order will
+ replace any existing 'long' Special Instructions with text "Instructions
+ too long. See Order View or BCMA for full text."  
+  
+ Resolution:
+ ===========
+ This patch will return routine PSJBCMA5 to the pre-PSJ*5.0*361 code.
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City VAMC
+ West Palm Beach VAMC
+  
+  
+ Patch Installation:
+ ------------------
+ PSJ*5.0*275 and PSJ*5.0*361 must be installed before installing 
+ PSJ*5.0*371.
+  
+ Installation Instructions:
+ ==========================
+ No options need to be disabled.  It is best to install this patch during
+ non-peak hours.  
+  
+ This patch should take less than 2 minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select 
+        the Installation Menu.  From this menu, you may elect to use the
+        following options. When prompted for the INSTALL NAME enter the
+        patch #PSJ*5.0*371:
+  
+   a.   Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch routines, 
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond NO
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond NO
+  
+ 7.     If prompted 'Delay Install (Minutes): (0 - 60): 0//' respond 0
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in the patch
+ description.
+   
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSJ*5.0*371 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSJ*5.0*371 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA5
+    Before: B80575447   After: B80438277  **267,275,361,371**
+ 
+Routine list of preceding patches: 361
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2018
+Completed By:                               Date Completed: JUN 29, 2018
+Released By :                               Date Released : JUN 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,222 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 03/05/18 at 12:47
+=============================================================================
+Run Date: MAY 21, 2018                     Designation: EDP*2*9
+Package : EDP - EMERGENCY DEPARTMENT          Priority: Mandatory
+Version : 2         SEQ #5                      Status: Released
+                  Compliance Date: JUN 21, 2018
+=============================================================================
+
+
+Subject: REMOVE ICD9 REFERENCES IN ED LOG FIELDS
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch corrects 1 issue within the EMERGENCY DEPARTMENT INTEGRATION 
+ SOFTWARE package:
+  
+ 1. Fields in the ED LOG(230) file refer to out of date APIs and to ICD9.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.I10851094FY16 - EDIS - Change to correct fields .01 and .02 in File 230
+ Subfile 230.04
+    Problem:
+    --------
+    For File 230 Subfile 230.04 the fields .01 and .02 need changes. 
+  
+    Currently, subfile is listed as such:
+  
+       TECHNICAL DESCRIPTION:
+       This multiple serves two purposes: 
+  
+       1)  If the site has chosen to allow free text diagnoses, the list of
+       diagnoses entered is stored here.  In this case there will be no ICD
+       9 code.  Clerical staff will enter the diagnosis list into PCE at a 
+       later time using information from this list.  
+  
+       2)  If the site has chosen to use coded diagnoses, this multiple is 
+       used to hold the selected diagnoses until a PCE visit is created.  
+       In that case, PCE becomes the real holder of the diagnosis list.  
+  
+       The parameter that controls the behavior of this list is in the 
+       TRACKING AREA file (231.9).
+  
+    The technical description makes reference to ICD9 code which is no
+    longer valid.
+  
+    Currently, .01 is listed as such:
+  
+       230.04,.01 DISCHARGE DIAGNOSIS 0;1 FREE TEXT (Multiply asked)
+  
+        ....
+  
+        TECHNICAL DESCR: If the parameters are set so that coded
+        diagnoses will be required, the text will
+        match the Clinical Lexicon text. Some
+        Clinical Lexicon entries map to more than one
+        ICD code. $$ICDONE^LEXU is used to determine
+        which code to store here. 
+  
+    The Technical description is too long and refers to $$ICDONE^LEXU which
+    is no longer a valid API.
+  
+    Currently, .02 is listed as such:
+  
+       230.04,.02 ICD9 CODE 0;2 POINTER TO ICD DIAGNOSIS FILE (#80)
+  
+        ....
+  
+  
+        TECHNICAL DESCR: Clinical Lexicon utilities are used by the
+        application to look up diagnoses. Some
+        Clinical Lexicon entries map to more than one
+        ICD code. $$ICDONE^LEXU is used to determine
+        which code to store here. This also becomes
+        the code that is stored in PCE. 
+  
+  
+    Again this technical description is too long and should remove the API 
+    reference but also the field name of ICD9 Code should be ICD CODE.
+  
+    This was discussed by the MED 59 team and the consensus recommendation 
+    was to have this repaired by the EAM team in the course of some of 
+    their other patchwork. 
+      
+    Resolution:
+    -----------
+    Modify the 230.04 subfile to:
+  
+       TECHNICAL DESCRIPTION:
+       This multiple serves two purposes: 
+  
+       1)  If the site has chosen to allow free text diagnoses, the list of
+       diagnoses entered is stored here.  In this case there will be no ICD
+       code.  Clerical staff will enter the diagnosis list into PCE at a 
+       later time using information from this list.  
+  
+       2)  If the site has chosen to use coded diagnoses, this multiple is 
+       used to hold the selected diagnoses until a PCE visit is created.  
+       In that case, PCE becomes the real holder of the diagnosis list.  
+  
+       The parameter that controls the behavior of this list is in the 
+       TRACKING AREA file (231.9).
+  
+    Modify field .01 to:
+  
+       230.04,.01 DISCHARGE DIAGNOSIS 0;1 FREE TEXT (Multiply asked)
+  
+        ....
+  
+        TECHNICAL DESCR: If the parameters are set so that coded
+        diagnoses will be required, the text will
+        match the Clinical Lexicon text. Some
+        Clinical Lexicon entries map to more than one
+        ICD code. 
+  
+    and modify field .02 to:
+  
+       230.04,.02 ICD CODE 0;2 POINTER TO ICD DIAGNOSIS FILE (#80)
+  
+        ....
+  
+  
+        TECHNICAL DESCR: Clinical Lexicon utilities are used by the
+        application to look up diagnoses. Some
+        Clinical Lexicon entries map to more than on ICD code.
+  
+ Test Sites:
+ ==========
+  
+ New York Harbor (Manhattan) - New York
+ Overton Brooks VA Medical Center (Shreveport)
+  
+ Software and Documentation Retrieval Instructions:
+ ------------------------------------------------
+  
+ This section contains the following software and documentation files that 
+ support the new functionality and minor fixes introduced by this patch:
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+                                                                      
+  
+ The documentation will be in the form of Adobe Acrobat files
+ Documentation can also be found on the VA Software Document Library 
+ at: http://www.domain.ext/vdl/application.asp?appid=179 
+  
+ File Description                File Name                       FTP Mode
+ ------------------------------------------------------------------------
+  
+ EDIS Technical Manual           EDIS_2_1_2_TM.PDF                 BINARY
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      EDP*2.0*9:
+      a. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', answer NO.
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  7.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+ Back-out/Rollback Strategy:
+ ===========================
+ Since the only modification in the patch is a change to the field 
+ documentation there is no possibility of a patch failure.
+  
+ If it is found necessary to back out of the changes made then a version of
+ the patch will be forwarded with the original wording. To restore the 
+ wording the site will install that version of the patch.
+  
+ To verify the back-out completed successfully, review the field 
+ description in the data dictionary utilities in FileMan.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 20, 2014
+Completed By:                               Date Completed: MAY 17, 2018
+Released By :                               Date Released : MAY 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

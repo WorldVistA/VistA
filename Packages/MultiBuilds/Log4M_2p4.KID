@@ -1,0 +1,4032 @@
+KIDS Distribution saved on Jul 25, 2017@10:47:17
+v2.4
+**KIDS**:LOG4M 2.4^
+
+**INSTALL NAME**
+LOG4M 2.4
+"BLD",9696,0)
+LOG4M 2.4^Log4M^0^3170725^y
+"BLD",9696,1,0)
+^9.61A^107^107^3170725^^
+"BLD",9696,1,1,0)
+Log4M
+"BLD",9696,1,2,0)
+ 
+"BLD",9696,1,3,0)
+The XTMLOG* routines provide a Log4M capability similar to Log4J. The logging commands can be embedded in the code and activated by initializing logging in one of several different ways. Otherwise, the logging commands are checked and then ignor
+"BLD",9696,1,4,0)
+ 
+"BLD",9696,1,5,0)
+Logging is useful to verify behavior during development and to find out problems in production. If it is turned off, it has no effect.
+"BLD",9696,1,6,0)
+Brief Guide
+"BLD",9696,1,7,0)
+ 
+"BLD",9696,1,8,0)
+A more comprehensive guide is in the wiki.
+"BLD",9696,1,9,0)
+ 
+"BLD",9696,1,10,0)
+Before you start logging, you must turn logging on. Normally, this is done by creating an entry in the LOG4M CONFIG (#8992.7) file, but we will skip that for the simple examples below. After it's turned on, it needs to be turned off; however, if
+"BLD",9696,1,11,0)
+ 
+"BLD",9696,1,12,0)
+To turn logging on, you can do this (C means print to the console. You can also save to a global or stream to a socket, but that will be covered later).
+"BLD",9696,1,13,0)
+ 
+"BLD",9696,1,14,0)
+  D INITEASY^XTMLOG("C")
+"BLD",9696,1,15,0)
+ 
+"BLD",9696,1,16,0)
+To turn logging off, you can just do (but don't do it yet!):
+"BLD",9696,1,17,0)
+ 
+"BLD",9696,1,18,0)
+  D ENDLOG^XTMLOG()
+"BLD",9696,1,19,0)
+ 
+"BLD",9696,1,20,0)
+XTMLOG can be used to output a simple message:
+"BLD",9696,1,21,0)
+ 
+"BLD",9696,1,22,0)
+   D INFO^XTMLOG("ENTERED CHKWATCH")
+"BLD",9696,1,23,0)
+ 
+"BLD",9696,1,24,0)
+will result in an output similar to
+"BLD",9696,1,25,0)
+ 
+"BLD",9696,1,26,0)
+   20080207.145617 INFO CHKWATCH+3 XTDEBUG5 - ENTERED CHKWATCH
+"BLD",9696,1,27,0)
+ 
+"BLD",9696,1,28,0)
+XTMLOG can be used to output a message along with values for one or more comma separated variables
+"BLD",9696,1,29,0)
+ 
+"BLD",9696,1,30,0)
+   D DEBUG^XTMLOG("DATA1","VALUE1,VALUE2")
+"BLD",9696,1,31,0)
+ 
+"BLD",9696,1,32,0)
+   20080207.145617 DEBUG COMMANDS+11 XTDEBUG1 - DATA1 - VALUE1: 0
+"BLD",9696,1,33,0)
+   20080207.145617 DEBUG COMMANDS+11 XTDEBUG1 - DATA1 - VALUE2: XVAL=XTDEBV(1)
+"BLD",9696,1,34,0)
+ 
+"BLD",9696,1,35,0)
+XTMLOG can be used to output a message and values for variables including array values for the variables if they exist.
+"BLD",9696,1,36,0)
+ 
+"BLD",9696,1,37,0)
+   D DEBUG^XTMLOG("DATA2","VALUE1,VALUE2,VALUE3,^TMP($J,""DATA"")",1)
+"BLD",9696,1,38,0)
+ 
+"BLD",9696,1,39,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE1: 3
+"BLD",9696,1,40,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2: XVAL=XTDEBV(1)
+"BLD",9696,1,41,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2("NEW"): 15
+"BLD",9696,1,42,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2("OLD",1): 
+"BLD",9696,1,43,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE3: <UNDEFINED>
+"BLD",9696,1,44,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - ^TMP($J,"DATA",1): LAST,FIRST M
+"BLD",9696,1,45,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - ^TMP($J,"DATA",2): 04/01/2001
+"BLD",9696,1,46,0)
+ 
+"BLD",9696,1,47,0)
+In addition to INFO and DEBUG, you also have WARN, ERROR, and FATAL^XTMLOG. Each of them prints a different severity error. We discuss the severities below.
+"BLD",9696,1,48,0)
+ 
+"BLD",9696,1,49,0)
+The best way to control logging is through an entry in the LOG4M CONFIG file (#8992.7).
+"BLD",9696,1,50,0)
+ 
+"BLD",9696,1,51,0)
+A typical entry looks like this:
+"BLD",9696,1,52,0)
+ 
+"BLD",9696,1,53,0)
+  NAME: MY-APPLICAITON                          ACTIVE: YES, EASY CONFIG
+"BLD",9696,1,54,0)
+  EZ ENTRY: C;G,MYAPPLICATION                   EZ LEVEL: DEBUG
+"BLD",9696,1,55,0)
+ 
+"BLD",9696,1,56,0)
+The NAME field (#.01) for an entry is used to control logging. The NAME of an entry (e.g., XTEXAMPLE) can be referenced in the initialization process and if the file entry does not exist, the logging is not activated. If the
+"BLD",9696,1,57,0)
+If the entry exists and the ACTIVE field (#.02) is set to NO, logging will not be activated. Otherwise logging as instructed by the settings for this entry will be activated for the current job, until logging for the entry is terminated.
+"BLD",9696,1,58,0)
+ 
+"BLD",9696,1,59,0)
+An XTMEXAMPLE entry could be created in the LOG4M CONFIG file. It would then be activated in the code, processing performed, and the logging turned off as in the example below.
+"BLD",9696,1,60,0)
+ 
+"BLD",9696,1,61,0)
+  D FILEINIT^XTMLOG("XTMEXAMPLE")
+"BLD",9696,1,62,0)
+  D PROCESSING
+"BLD",9696,1,63,0)
+  D ENDLOG^XTMLOG("XTMEXAMPLE")
+"BLD",9696,1,64,0)
+ 
+"BLD",9696,1,65,0)
+If the XTMEXAMPLE entry does not exist in the LOG4M CONFIG file, logging will not be turned on. If the XTMEXAMPLE entry does exist, the value of the ACTIVE field (#.02) is checked, and if it is not specified or NO, logging will not be turned on.
+"BLD",9696,1,66,0)
+ 
+"BLD",9696,1,67,0)
+If the ACTIVE field of the XTMEXAMPLE entry is E for YES, EASY CONFIG, logging will be activated based on the values in the EASY ENTRY (#.03) and EASY LEVEL (#.04) fields. (The alternative to the E or YES, EASY CONFIG for active logging is D or 
+"BLD",9696,1,68,0)
+ 
+"BLD",9696,1,69,0)
+The EASY ENTRY field (#.03) can be used to easily specify the type(s) of logging desired. The value is a text string with semi-colon separated specifiers for logging modes.
+"BLD",9696,1,70,0)
+ 
+"BLD",9696,1,71,0)
+   C - indicates logging to the user's console.  Logging messages are sent 
+"BLD",9696,1,72,0)
+       to the console as they are generated.
+"BLD",9696,1,73,0)
+   G - indicates logging to a global location and is followed by a comma 
+"BLD",9696,1,74,0)
+       and an identifer for the global location under ^XTMP("XTMLOG", [e.g., 
+"BLD",9696,1,75,0)
+       G,TEST4 would result in data being stored under the global location
+"BLD",9696,1,76,0)
+       ^XTMP("TEST4",DUZ,yymmdd.hhmmss,$J, where DUZ is the internal entry
+"BLD",9696,1,77,0)
+       number for the user in the NEW PERSON file (#200), and yymmdd.hhmmss is
+"BLD",9696,1,78,0)
+       the date and time the logging was initialized, and $J is the job number
+"BLD",9696,1,79,0)
+       of the user's process].  When logging is initialized for a subscript,
+"BLD",9696,1,80,0)
+       such as TEST4, the lifetime for the ^XTMP("TEST4" global is set or 
+"BLD",9696,1,81,0)
+       updated to a week from the current date.
+"BLD",9696,1,82,0)
+   S - (E.g. S,127.0.0.1:60002) will stream logging data to a remote TCP/IP
+"BLD",9696,1,83,0)
+       socket. This is useful when you are (for example) using CPRS and want
+"BLD",9696,1,84,0)
+       to see messages dynamically as they are generated.
+"BLD",9696,1,85,0)
+ 
+"BLD",9696,1,86,0)
+The EASY LEVEL field (#.04) can be used to specify the level of logging desired. The highest level (with respect to usual urgency) is FATAL.
+"BLD",9696,1,87,0)
+The lowest level (again with respect to usual urgency) is DEBUG.
+"BLD",9696,1,88,0)
+Between these two extremes are (in decreasing order of usual urgency) ERROR, WARN, and INFO. Choosing a specific level (e.g., INFO) will include all higher levels as well (e.g., for INFO, any logging calls with a level of FATAL, ERROR, WARN or I
+"BLD",9696,1,89,0)
+ 
+"BLD",9696,1,90,0)
+The ROUTINE FILTER field (#.05) may be used to control the routines which logging is active in. These controls permit the amount of data logged to the system to be maintained at a reasonable amount, even if a large number of users are actively u
+"BLD",9696,1,91,0)
+ 
+"BLD",9696,1,92,0)
+If data has been entered in the USER FILTER field (#.06), logging will only be activated for users whose internal entry number in file 200 are included in the USER FILTER field.
+"BLD",9696,1,93,0)
+ 
+"BLD",9696,1,94,0)
+Specialized fields, which would not normally be required, but are available, are:
+"BLD",9696,1,95,0)
+ 
+"BLD",9696,1,96,0)
+^DD(8992.7,.07,0)=OUTPUT ON CLOSE^S^N:NONE;P:PRINTER;M:MAIL MESSAGE;^0;7^Q
+"BLD",9696,1,97,0)
+^DD(8992.7,.08,0)=OUTPUT SPECS^F^^0;8^K:$L(X)>25!($L(X)<1) X
+"BLD",9696,1,98,0)
+^DD(8992.7,1,0)=DETAILED CONFIG^8992.71^^1;0
+"BLD",9696,1,99,0)
+^DD(8992.7,2.01,0)=PRINT LAYOUT^F^^2;1^K:$L(X)>40!($L(X)<5) X
+"BLD",9696,1,100,0)
+ 
+"BLD",9696,1,101,0)
+If you saved data into a global, there is an entry point which can display it for you: VIEW^XTMLOG1 as a colored output.
+"BLD",9696,1,102,0)
+ 
+"BLD",9696,1,103,0)
+To delete data you saved into a global, the entry point CLEAR^XTMLOG1 clears it for you. WARNING: This call now deletes the XTMP entry with the same name as the .01 field entry in Log4M Config file. It should rather try to figure out the name of
+"BLD",9696,1,104,0)
+Developer Notes
+"BLD",9696,1,105,0)
+ 
+"BLD",9696,1,106,0)
+    TODOs are listed at the top of ^XTMLOG.
+"BLD",9696,1,107,0)
+    Unit Tests are in ^XTMLT1, which is the driver for the other Unit Test routines. Coverage is about 35%. This obviously needs work.
+"BLD",9696,4,0)
+^9.64PA^8992.7^1
+"BLD",9696,4,8992.7,0)
+8992.7
+"BLD",9696,4,8992.7,222)
+y^y^f^^^^n
+"BLD",9696,4,"B",8992.7,8992.7)
+
+"BLD",9696,6.3)
+3
+"BLD",9696,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9696,"KRN",.4,0)
+.4
+"BLD",9696,"KRN",.401,0)
+.401
+"BLD",9696,"KRN",.402,0)
+.402
+"BLD",9696,"KRN",.403,0)
+.403
+"BLD",9696,"KRN",.5,0)
+.5
+"BLD",9696,"KRN",.84,0)
+.84
+"BLD",9696,"KRN",3.6,0)
+3.6
+"BLD",9696,"KRN",3.8,0)
+3.8
+"BLD",9696,"KRN",9.2,0)
+9.2
+"BLD",9696,"KRN",9.8,0)
+9.8
+"BLD",9696,"KRN",9.8,"NM",0)
+^9.68A^8^8
+"BLD",9696,"KRN",9.8,"NM",1,0)
+XTMLOG^^0^B168891383
+"BLD",9696,"KRN",9.8,"NM",2,0)
+XTMLOG1^^0^B186330058
+"BLD",9696,"KRN",9.8,"NM",3,0)
+XTMLOPAR^^0^B19189396
+"BLD",9696,"KRN",9.8,"NM",4,0)
+XTMLOSKT^^0^B36963579
+"BLD",9696,"KRN",9.8,"NM",5,0)
+XTMLT1^^0^B74412192
+"BLD",9696,"KRN",9.8,"NM",6,0)
+XTMLT2^^0^B135507
+"BLD",9696,"KRN",9.8,"NM",7,0)
+XTMLT3^^0^B16329171
+"BLD",9696,"KRN",9.8,"NM",8,0)
+XTMLT4^^0^B6103099
+"BLD",9696,"KRN",9.8,"NM","B","XTMLOG",1)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLOG1",2)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLOPAR",3)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLOSKT",4)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLT1",5)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLT2",6)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLT3",7)
+
+"BLD",9696,"KRN",9.8,"NM","B","XTMLT4",8)
+
+"BLD",9696,"KRN",19,0)
+19
+"BLD",9696,"KRN",19.1,0)
+19.1
+"BLD",9696,"KRN",101,0)
+101
+"BLD",9696,"KRN",409.61,0)
+409.61
+"BLD",9696,"KRN",771,0)
+771
+"BLD",9696,"KRN",779.2,0)
+779.2
+"BLD",9696,"KRN",870,0)
+870
+"BLD",9696,"KRN",8989.51,0)
+8989.51
+"BLD",9696,"KRN",8989.52,0)
+8989.52
+"BLD",9696,"KRN",8994,0)
+8994
+"BLD",9696,"KRN","B",.4,.4)
+
+"BLD",9696,"KRN","B",.401,.401)
+
+"BLD",9696,"KRN","B",.402,.402)
+
+"BLD",9696,"KRN","B",.403,.403)
+
+"BLD",9696,"KRN","B",.5,.5)
+
+"BLD",9696,"KRN","B",.84,.84)
+
+"BLD",9696,"KRN","B",3.6,3.6)
+
+"BLD",9696,"KRN","B",3.8,3.8)
+
+"BLD",9696,"KRN","B",9.2,9.2)
+
+"BLD",9696,"KRN","B",9.8,9.8)
+
+"BLD",9696,"KRN","B",19,19)
+
+"BLD",9696,"KRN","B",19.1,19.1)
+
+"BLD",9696,"KRN","B",101,101)
+
+"BLD",9696,"KRN","B",409.61,409.61)
+
+"BLD",9696,"KRN","B",771,771)
+
+"BLD",9696,"KRN","B",779.2,779.2)
+
+"BLD",9696,"KRN","B",870,870)
+
+"BLD",9696,"KRN","B",8989.51,8989.51)
+
+"BLD",9696,"KRN","B",8989.52,8989.52)
+
+"BLD",9696,"KRN","B",8994,8994)
+
+"BLD",9696,"QUES",0)
+^9.62^^
+"BLD",9696,"REQB",0)
+^9.611^^
+"FIA",8992.7)
+LOG4M CONFIG
+"FIA",8992.7,0)
+^XTV(8992.7,
+"FIA",8992.7,0,0)
+8992.7
+"FIA",8992.7,0,1)
+y^y^f^^^^n
+"FIA",8992.7,0,10)
+
+"FIA",8992.7,0,11)
+
+"FIA",8992.7,0,"RLRO")
+
+"FIA",8992.7,0,"VR")
+2.4^LOG4M
+"FIA",8992.7,8992.7)
+0
+"FIA",8992.7,8992.71)
+0
+"MBREQ")
+0
+"PKG",583,-1)
+1^1
+"PKG",583,0)
+Log4M^XTML^Log4M - A logger package similar to Log4J
+"PKG",583,22,0)
+^9.49I^1^1
+"PKG",583,22,1,0)
+2.4^3170725
+"PKG",583,22,1,1,0)
+^^107^107^3170725
+"PKG",583,22,1,1,1,0)
+Log4M
+"PKG",583,22,1,1,2,0)
+ 
+"PKG",583,22,1,1,3,0)
+The XTMLOG* routines provide a Log4M capability similar to Log4J. The logging commands can be embedded in the code and activated by initializing logging in one of several different ways. Otherwise, the logging commands are checked and then ignor
+"PKG",583,22,1,1,4,0)
+ 
+"PKG",583,22,1,1,5,0)
+Logging is useful to verify behavior during development and to find out problems in production. If it is turned off, it has no effect.
+"PKG",583,22,1,1,6,0)
+Brief Guide
+"PKG",583,22,1,1,7,0)
+ 
+"PKG",583,22,1,1,8,0)
+A more comprehensive guide is in the wiki.
+"PKG",583,22,1,1,9,0)
+ 
+"PKG",583,22,1,1,10,0)
+Before you start logging, you must turn logging on. Normally, this is done by creating an entry in the LOG4M CONFIG (#8992.7) file, but we will skip that for the simple examples below. After it's turned on, it needs to be turned off; however, if
+"PKG",583,22,1,1,11,0)
+ 
+"PKG",583,22,1,1,12,0)
+To turn logging on, you can do this (C means print to the console. You can also save to a global or stream to a socket, but that will be covered later).
+"PKG",583,22,1,1,13,0)
+ 
+"PKG",583,22,1,1,14,0)
+  D INITEASY^XTMLOG("C")
+"PKG",583,22,1,1,15,0)
+ 
+"PKG",583,22,1,1,16,0)
+To turn logging off, you can just do (but don't do it yet!):
+"PKG",583,22,1,1,17,0)
+ 
+"PKG",583,22,1,1,18,0)
+  D ENDLOG^XTMLOG()
+"PKG",583,22,1,1,19,0)
+ 
+"PKG",583,22,1,1,20,0)
+XTMLOG can be used to output a simple message:
+"PKG",583,22,1,1,21,0)
+ 
+"PKG",583,22,1,1,22,0)
+   D INFO^XTMLOG("ENTERED CHKWATCH")
+"PKG",583,22,1,1,23,0)
+ 
+"PKG",583,22,1,1,24,0)
+will result in an output similar to
+"PKG",583,22,1,1,25,0)
+ 
+"PKG",583,22,1,1,26,0)
+   20080207.145617 INFO CHKWATCH+3 XTDEBUG5 - ENTERED CHKWATCH
+"PKG",583,22,1,1,27,0)
+ 
+"PKG",583,22,1,1,28,0)
+XTMLOG can be used to output a message along with values for one or more comma separated variables
+"PKG",583,22,1,1,29,0)
+ 
+"PKG",583,22,1,1,30,0)
+   D DEBUG^XTMLOG("DATA1","VALUE1,VALUE2")
+"PKG",583,22,1,1,31,0)
+ 
+"PKG",583,22,1,1,32,0)
+   20080207.145617 DEBUG COMMANDS+11 XTDEBUG1 - DATA1 - VALUE1: 0
+"PKG",583,22,1,1,33,0)
+   20080207.145617 DEBUG COMMANDS+11 XTDEBUG1 - DATA1 - VALUE2: XVAL=XTDEBV(1)
+"PKG",583,22,1,1,34,0)
+ 
+"PKG",583,22,1,1,35,0)
+XTMLOG can be used to output a message and values for variables including array values for the variables if they exist.
+"PKG",583,22,1,1,36,0)
+ 
+"PKG",583,22,1,1,37,0)
+   D DEBUG^XTMLOG("DATA2","VALUE1,VALUE2,VALUE3,^TMP($J,""DATA"")",1)
+"PKG",583,22,1,1,38,0)
+ 
+"PKG",583,22,1,1,39,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE1: 3
+"PKG",583,22,1,1,40,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2: XVAL=XTDEBV(1)
+"PKG",583,22,1,1,41,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2("NEW"): 15
+"PKG",583,22,1,1,42,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE2("OLD",1): 
+"PKG",583,22,1,1,43,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - VALUE3: <UNDEFINED>
+"PKG",583,22,1,1,44,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - ^TMP($J,"DATA",1): LAST,FIRST M
+"PKG",583,22,1,1,45,0)
+   20080207.145617 DEBUG COMMANDS+22 XTDEBUG1 - DATA2 - ^TMP($J,"DATA",2): 04/01/2001
+"PKG",583,22,1,1,46,0)
+ 
+"PKG",583,22,1,1,47,0)
+In addition to INFO and DEBUG, you also have WARN, ERROR, and FATAL^XTMLOG. Each of them prints a different severity error. We discuss the severities below.
+"PKG",583,22,1,1,48,0)
+ 
+"PKG",583,22,1,1,49,0)
+The best way to control logging is through an entry in the LOG4M CONFIG file (#8992.7).
+"PKG",583,22,1,1,50,0)
+ 
+"PKG",583,22,1,1,51,0)
+A typical entry looks like this:
+"PKG",583,22,1,1,52,0)
+ 
+"PKG",583,22,1,1,53,0)
+  NAME: MY-APPLICAITON                          ACTIVE: YES, EASY CONFIG
+"PKG",583,22,1,1,54,0)
+  EZ ENTRY: C;G,MYAPPLICATION                   EZ LEVEL: DEBUG
+"PKG",583,22,1,1,55,0)
+ 
+"PKG",583,22,1,1,56,0)
+The NAME field (#.01) for an entry is used to control logging. The NAME of an entry (e.g., XTEXAMPLE) can be referenced in the initialization process and if the file entry does not exist, the logging is not activated. If the
+"PKG",583,22,1,1,57,0)
+If the entry exists and the ACTIVE field (#.02) is set to NO, logging will not be activated. Otherwise logging as instructed by the settings for this entry will be activated for the current job, until logging for the entry is terminated.
+"PKG",583,22,1,1,58,0)
+ 
+"PKG",583,22,1,1,59,0)
+An XTMEXAMPLE entry could be created in the LOG4M CONFIG file. It would then be activated in the code, processing performed, and the logging turned off as in the example below.
+"PKG",583,22,1,1,60,0)
+ 
+"PKG",583,22,1,1,61,0)
+  D FILEINIT^XTMLOG("XTMEXAMPLE")
+"PKG",583,22,1,1,62,0)
+  D PROCESSING
+"PKG",583,22,1,1,63,0)
+  D ENDLOG^XTMLOG("XTMEXAMPLE")
+"PKG",583,22,1,1,64,0)
+ 
+"PKG",583,22,1,1,65,0)
+If the XTMEXAMPLE entry does not exist in the LOG4M CONFIG file, logging will not be turned on. If the XTMEXAMPLE entry does exist, the value of the ACTIVE field (#.02) is checked, and if it is not specified or NO, logging will not be turned on.
+"PKG",583,22,1,1,66,0)
+ 
+"PKG",583,22,1,1,67,0)
+If the ACTIVE field of the XTMEXAMPLE entry is E for YES, EASY CONFIG, logging will be activated based on the values in the EASY ENTRY (#.03) and EASY LEVEL (#.04) fields. (The alternative to the E or YES, EASY CONFIG for active logging is D or 
+"PKG",583,22,1,1,68,0)
+ 
+"PKG",583,22,1,1,69,0)
+The EASY ENTRY field (#.03) can be used to easily specify the type(s) of logging desired. The value is a text string with semi-colon separated specifiers for logging modes.
+"PKG",583,22,1,1,70,0)
+ 
+"PKG",583,22,1,1,71,0)
+   C - indicates logging to the user's console.  Logging messages are sent 
+"PKG",583,22,1,1,72,0)
+       to the console as they are generated.
+"PKG",583,22,1,1,73,0)
+   G - indicates logging to a global location and is followed by a comma 
+"PKG",583,22,1,1,74,0)
+       and an identifer for the global location under ^XTMP("XTMLOG", [e.g., 
+"PKG",583,22,1,1,75,0)
+       G,TEST4 would result in data being stored under the global location
+"PKG",583,22,1,1,76,0)
+       ^XTMP("TEST4",DUZ,yymmdd.hhmmss,$J, where DUZ is the internal entry
+"PKG",583,22,1,1,77,0)
+       number for the user in the NEW PERSON file (#200), and yymmdd.hhmmss is
+"PKG",583,22,1,1,78,0)
+       the date and time the logging was initialized, and $J is the job number
+"PKG",583,22,1,1,79,0)
+       of the user's process].  When logging is initialized for a subscript,
+"PKG",583,22,1,1,80,0)
+       such as TEST4, the lifetime for the ^XTMP("TEST4" global is set or 
+"PKG",583,22,1,1,81,0)
+       updated to a week from the current date.
+"PKG",583,22,1,1,82,0)
+   S - (E.g. S,127.0.0.1:60002) will stream logging data to a remote TCP/IP
+"PKG",583,22,1,1,83,0)
+       socket. This is useful when you are (for example) using CPRS and want
+"PKG",583,22,1,1,84,0)
+       to see messages dynamically as they are generated.
+"PKG",583,22,1,1,85,0)
+ 
+"PKG",583,22,1,1,86,0)
+The EASY LEVEL field (#.04) can be used to specify the level of logging desired. The highest level (with respect to usual urgency) is FATAL.
+"PKG",583,22,1,1,87,0)
+The lowest level (again with respect to usual urgency) is DEBUG.
+"PKG",583,22,1,1,88,0)
+Between these two extremes are (in decreasing order of usual urgency) ERROR, WARN, and INFO. Choosing a specific level (e.g., INFO) will include all higher levels as well (e.g., for INFO, any logging calls with a level of FATAL, ERROR, WARN or I
+"PKG",583,22,1,1,89,0)
+ 
+"PKG",583,22,1,1,90,0)
+The ROUTINE FILTER field (#.05) may be used to control the routines which logging is active in. These controls permit the amount of data logged to the system to be maintained at a reasonable amount, even if a large number of users are actively u
+"PKG",583,22,1,1,91,0)
+ 
+"PKG",583,22,1,1,92,0)
+If data has been entered in the USER FILTER field (#.06), logging will only be activated for users whose internal entry number in file 200 are included in the USER FILTER field.
+"PKG",583,22,1,1,93,0)
+ 
+"PKG",583,22,1,1,94,0)
+Specialized fields, which would not normally be required, but are available, are:
+"PKG",583,22,1,1,95,0)
+ 
+"PKG",583,22,1,1,96,0)
+^DD(8992.7,.07,0)=OUTPUT ON CLOSE^S^N:NONE;P:PRINTER;M:MAIL MESSAGE;^0;7^Q
+"PKG",583,22,1,1,97,0)
+^DD(8992.7,.08,0)=OUTPUT SPECS^F^^0;8^K:$L(X)>25!($L(X)<1) X
+"PKG",583,22,1,1,98,0)
+^DD(8992.7,1,0)=DETAILED CONFIG^8992.71^^1;0
+"PKG",583,22,1,1,99,0)
+^DD(8992.7,2.01,0)=PRINT LAYOUT^F^^2;1^K:$L(X)>40!($L(X)<5) X
+"PKG",583,22,1,1,100,0)
+ 
+"PKG",583,22,1,1,101,0)
+If you saved data into a global, there is an entry point which can display it for you: VIEW^XTMLOG1 as a colored output.
+"PKG",583,22,1,1,102,0)
+ 
+"PKG",583,22,1,1,103,0)
+To delete data you saved into a global, the entry point CLEAR^XTMLOG1 clears it for you. WARNING: This call now deletes the XTMP entry with the same name as the .01 field entry in Log4M Config file. It should rather try to figure out the name of
+"PKG",583,22,1,1,104,0)
+Developer Notes
+"PKG",583,22,1,1,105,0)
+ 
+"PKG",583,22,1,1,106,0)
+    TODOs are listed at the top of ^XTMLOG.
+"PKG",583,22,1,1,107,0)
+    Unit Tests are in ^XTMLT1, which is the driver for the other Unit Test routines. Coverage is about 35%. This obviously needs work.
+"PKG",583,"VERSION")
+2.4
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+8
+"RTN","XTMLOG")
+0^1^B168891383
+"RTN","XTMLOG",1,0)
+XTMLOG ;JLI/FO-OAK - LOG4M M LOGGING UTILITY ;2017-07-25  10:37 AM
+"RTN","XTMLOG",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLOG",3,0)
+ ; 
+"RTN","XTMLOG",4,0)
+ ; Main Author: Joel Ivey, Ph.D. from 2007-2012
+"RTN","XTMLOG",5,0)
+ ; Various Changes throughout by Sam Habiel, Pharm.D. 2012-2017
+"RTN","XTMLOG",6,0)
+ ; Includes some public domain code written by Kevin Muldrum
+"RTN","XTMLOG",7,0)
+ ;
+"RTN","XTMLOG",8,0)
+ ; Routine provides logging capability similar in various
+"RTN","XTMLOG",9,0)
+ ; respects to Log4J.
+"RTN","XTMLOG",10,0)
+ ;
+"RTN","XTMLOG",11,0)
+ ; TODO (sam): I added SAVEARR b/c I didn't realize the DEBUG and INFO
+"RTN","XTMLOG",12,0)
+ ;             can expand out arrays. It needs to be deprecated. HOWEVER,
+"RTN","XTMLOG",13,0)
+ ;             DEBUG and INFO don't work with sockets. So that needs to be fixed
+"RTN","XTMLOG",14,0)
+ ;             first!
+"RTN","XTMLOG",15,0)
+ ; TODO (sam): I removed Joel's ability for the socket to become a server,
+"RTN","XTMLOG",16,0)
+ ;             rather than a client. I couldn't ever get it to work. I should
+"RTN","XTMLOG",17,0)
+ ;             try harder next time and support both Server and Client models.
+"RTN","XTMLOG",18,0)
+ ;
+"RTN","XTMLOG",19,0)
+ D:$t(^%ut)]"" EN^%ut("XTMLT1",3)
+"RTN","XTMLOG",20,0)
+ Q
+"RTN","XTMLOG",21,0)
+ ;
+"RTN","XTMLOG",22,0)
+INITFILE(DIRREF,FILEREF,NAME) ; jli .SR -- Configuration is read a file (DIRREF is the directory, and FILEREF is the filename)
+"RTN","XTMLOG",23,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",24,0)
+ N HOSTGLOB
+"RTN","XTMLOG",25,0)
+ S HOSTGLOB=$NA(^TMP("XTMLOG1",$J)) K @HOSTGLOB S @HOSTGLOB@(0)=""
+"RTN","XTMLOG",26,0)
+ I '$$FTG^%ZISH(DIRREF,FILEREF,$NA(@HOSTGLOB@(1)),3) Q:$Q 0 Q
+"RTN","XTMLOG",27,0)
+ N % S %=$$INITIAL(HOSTGLOB,$G(NAME,"XTMLOG"),XTLOGLIN)
+"RTN","XTMLOG",28,0)
+ Q:$Q % Q
+"RTN","XTMLOG",29,0)
+ ;
+"RTN","XTMLOG",30,0)
+FILEINIT(NAMEFLD) ; jli .SR -- called as extrinsic function
+"RTN","XTMLOG",31,0)
+ ; NAMEFLD - input - Name of entry in LOG4M CONFIG file (#8992.7 )
+"RTN","XTMLOG",32,0)
+ ;                   to be used for setting up logging
+"RTN","XTMLOG",33,0)
+ ; returns - 0 if initiating logging failed
+"RTN","XTMLOG",34,0)
+ ;           1 if initiating logging was successful
+"RTN","XTMLOG",35,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",36,0)
+ N XTMLIEN,XTMLACTV,XTMLRES,XTMLERR,XTMLARR,XVAL
+"RTN","XTMLOG",37,0)
+ ; ZEXCEPT: XTLOGINP - KILLED IN ENDLOG
+"RTN","XTMLOG",38,0)
+ S XTMLIEN=$O(^XTV(8992.7,"B",NAMEFLD,0)) I XTMLIEN'>0 Q:$Q 0 Q
+"RTN","XTMLOG",39,0)
+ ; get data from the LOG4M CONFIG file
+"RTN","XTMLOG",40,0)
+ D GETS^DIQ(8992.7,XTMLIEN_",",".02:.06;3.01:3.03","I","XTMLRES","XTMLERR")
+"RTN","XTMLOG",41,0)
+ S XTMLARR=$NA(XTMLRES(8992.7,XTMLIEN_","))
+"RTN","XTMLOG",42,0)
+ ; quit if logging set to NO or it is not there
+"RTN","XTMLOG",43,0)
+ I ($G(@XTMLARR@(.02,"I"))="N")!($G(@XTMLARR@(.02,"I"))="") Q 0
+"RTN","XTMLOG",44,0)
+ ; Following change made to make different fields for print or mail at request of DBA for files
+"RTN","XTMLOG",45,0)
+ ;S XVAL=@XTMLARR@(.07,"I") I (XVAL="M")!(XVAL="P") S XTLOGINP(NAMEFLD,"OUTTYPE")=XVAL,XTLOGINP(NAMEFLD,"OUTSPECS")=@XTMLARR@(.08,"I") ;121228
+"RTN","XTMLOG",46,0)
+ S XVAL=@XTMLARR@(3.01,"I") I (XVAL="M")!(XVAL="P") S XTLOGINP(NAMEFLD,"OUTTYPE")=XVAL S:XVAL="M" XTLOGINP(NAMEFLD,"OUTSPECS")=@XTMLARR@(3.02,"I") S:XVAL="P" XTLOGINP(NAMEFLD,"OUTSPECS")=@XTMLARR@(3.03,"I") ; 121228
+"RTN","XTMLOG",47,0)
+ I @XTMLARR@(.02,"I")="E" Q $$INITEASY($G(@XTMLARR@(.03,"I")),$G(@XTMLARR@(.04,"I")),NAMEFLD,XTLOGLIN,$G(@XTMLARR@(.05,"I")),$G(@XTMLARR@(.06,"I")))
+"RTN","XTMLOG",48,0)
+ N % S %=$$INITIAL($NA(@XTMLARR@(1)),NAMEFLD,XTLOGLIN)
+"RTN","XTMLOG",49,0)
+ Q:$Q % Q
+"RTN","XTMLOG",50,0)
+ ;
+"RTN","XTMLOG",51,0)
+INITGLOB(HOSTGLOB,NAME,XTLOGLIN) ; Configuration data is read under a global root - HOSTGLOB is a closed global root
+"RTN","XTMLOG",52,0)
+ I '$D(XTLOGLIN) S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",53,0)
+ N % S %=$$INITIAL(HOSTGLOB,$G(NAME,"XTMLOG"),XTLOGLIN)
+"RTN","XTMLOG",54,0)
+ Q:$Q % Q
+"RTN","XTMLOG",55,0)
+ ;
+"RTN","XTMLOG",56,0)
+INITNONE(NAME) ; No configuration data to read - use defaults - console and global logging
+"RTN","XTMLOG",57,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",58,0)
+ N % S %=$$INITIAL("",$G(NAME,"XTMLOG"),"",XTLOGLIN)
+"RTN","XTMLOG",59,0)
+ Q:$Q % Q
+"RTN","XTMLOG",60,0)
+ ;
+"RTN","XTMLOG",61,0)
+INITEASY(CONFIG,LEVEL,NAME,XTLOGLIN,XTMLROUS,XTMLUSRS) ;
+"RTN","XTMLOG",62,0)
+ ; for INITEASY indicate the type of appenders desired as a series of ';'-pieces with names or first
+"RTN","XTMLOG",63,0)
+ ; letters to identify the appender type [C(onsole), (G)lobal, and S(ocket)].
+"RTN","XTMLOG",64,0)
+ ;    Global and Socket may have additional specifications separated by a Comma after the name
+"RTN","XTMLOG",65,0)
+ ;    indicator
+"RTN","XTMLOG",66,0)
+ ;       Global  -- Top Subscript under XTMP, if not specified "XTMLOG" is the default
+"RTN","XTMLOG",67,0)
+ ;       Socket  -- Port number for output of the logging data, if not specified 8025 is the default
+"RTN","XTMLOG",68,0)
+ ;
+"RTN","XTMLOG",69,0)
+ ;    use of D INITEASY^XTMLOG("C;G,LOGDATA;S,127.0.0.1:9450","WARN") would have logging sent to
+"RTN","XTMLOG",70,0)
+ ;            the console,
+"RTN","XTMLOG",71,0)
+ ;            stored under ^XTMP("LOGDATA",  for a week, and
+"RTN","XTMLOG",72,0)
+ ;            sent out on a socket at port 9450 on the current system in real time
+"RTN","XTMLOG",73,0)
+ ;            for calls with priority or level at WARN or above.
+"RTN","XTMLOG",74,0)
+ ;
+"RTN","XTMLOG",75,0)
+ ;  XTMLROUS - An optional string containing a comma-separated list of routine names or namespaces,
+"RTN","XTMLOG",76,0)
+ ;            namespaces are indicated by an asterick following the namespace characters.
+"RTN","XTMLOG",77,0)
+ ;
+"RTN","XTMLOG",78,0)
+ I '$D(XTLOGLIN) N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",79,0)
+ S CONFIG="*"_CONFIG I $G(LEVEL)'="" S CONFIG=CONFIG_";,"_LEVEL
+"RTN","XTMLOG",80,0)
+ N % S %=$$INITIAL(CONFIG,$G(NAME,"XTMLOG"),XTLOGLIN,$G(XTMLROUS),$G(XTMLUSRS))
+"RTN","XTMLOG",81,0)
+ Q:$Q % Q
+"RTN","XTMLOG",82,0)
+ ;
+"RTN","XTMLOG",83,0)
+INITIAL(HOSTGLOB,NAME,XTLOGLIN,XTMLROUS,XTMLUSRS) ;
+"RTN","XTMLOG",84,0)
+ N XX,TESTLIST,I,X,XTCMLCNT,XTMLROU,XTMLCNT,XTMLRCNT
+"RTN","XTMLOG",85,0)
+ N XTLOGSET
+"RTN","XTMLOG",86,0)
+ ; ZEXCEPT: XTLOGINP - KILLED IN ENDLOG
+"RTN","XTMLOG",87,0)
+ I $G(XTMLUSRS)'="",(","_XTMLUSRS_",")'[(","_DUZ_",") Q 0 ; DON'T LOG FOR THIS USER
+"RTN","XTMLOG",88,0)
+ I $G(XTLOGLIN)="" S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",89,0)
+ S NAME=$G(NAME,"XTMLOG"),XTMLROUS=$G(XTMLROUS)
+"RTN","XTMLOG",90,0)
+ I $G(HOSTGLOB)'="",$E(HOSTGLOB)'="*" D PARSE(NAME,HOSTGLOB,.XTLOGINP) I '$D(XTLOGINP) Q 0
+"RTN","XTMLOG",91,0)
+ S TESTLIST="FATAL^ERROR^WARN^INFO^DEBUG",XTLOGSET=""
+"RTN","XTMLOG",92,0)
+ I $E(HOSTGLOB)="*" D EASYSET($E(HOSTGLOB,2,99),NAME,.XTLOGINP)
+"RTN","XTMLOG",93,0)
+ D DEFAULTS(NAME,.XTLOGINP) ; set defaults if values not present
+"RTN","XTMLOG",94,0)
+ F I=1:1:5 S X=$P(TESTLIST,U,I) S XTLOGSET=XTLOGSET_","_I I X=XTLOGINP(NAME,"PRIORITY") Q
+"RTN","XTMLOG",95,0)
+ S XTLOGINP(NAME,"LOGSET")=XTLOGSET_",",XTLOGINP(NAME,"COUNT")=0
+"RTN","XTMLOG",96,0)
+ S XTMLRCNT=0 F I=1:1 S XTMLROU=$P($G(XTMLROUS),",",I) Q:XTMLROU=""  S XTMLRCNT=XTMLRCNT+1,XTLOGINP(NAME,"ROUS",XTMLRCNT)=XTMLROU,XTLOGINP(NAME,"ROUS")=XTMLRCNT
+"RTN","XTMLOG",97,0)
+ Q 1
+"RTN","XTMLOG",98,0)
+ ;
+"RTN","XTMLOG",99,0)
+CHKRLST(LOCATION,ROUNAME) ; function - indicates whether ROUNAME is among selected routines for logging
+"RTN","XTMLOG",100,0)
+ I $O(@LOCATION@("ROUS",0))'>0 Q 1
+"RTN","XTMLOG",101,0)
+ N I,VAL,XTMLRNAM
+"RTN","XTMLOG",102,0)
+ S VAL=0 F I=0:0 S I=$O(@LOCATION@("ROUS",I)) Q:I'>0  D  Q:VAL
+"RTN","XTMLOG",103,0)
+ . I @LOCATION@("ROUS",I)["*" S XTMLRNAM=$P(@LOCATION@("ROUS",I),"*") I $E(ROUNAME,1,$L(XTMLRNAM))=XTMLRNAM S VAL=1
+"RTN","XTMLOG",104,0)
+ . I @LOCATION@("ROUS",I)'["*",@LOCATION@("ROUS",I)=ROUNAME S VAL=1
+"RTN","XTMLOG",105,0)
+ . Q
+"RTN","XTMLOG",106,0)
+ Q VAL
+"RTN","XTMLOG",107,0)
+ ;
+"RTN","XTMLOG",108,0)
+STOPLOG(XTLOGNAM,OUTTYPE,OUTSPECS) ; JUST ANOTHER NAME FOR ENDLOG
+"RTN","XTMLOG",109,0)
+ D ENDLOG($G(XTLOGNAM),$G(OUTTYPE),$G(OUTSPECS))
+"RTN","XTMLOG",110,0)
+ Q
+"RTN","XTMLOG",111,0)
+ ;
+"RTN","XTMLOG",112,0)
+ENDLOG(XTLOGNAM,OUTTYPE,OUTSPECS) ; OUTTYPE, AND OUTSPECS ARE OPTIONAL - REMOVES LOGNAM FROM LOGGING
+"RTN","XTMLOG",113,0)
+ ; ZEXCEPT: XTLOGINP,XTMTCPIO - KILLED HERE, SET ELSEWHERE
+"RTN","XTMLOG",114,0)
+ S XTLOGNAM=$G(XTLOGNAM,"XTMLOG")
+"RTN","XTMLOG",115,0)
+ I $G(OUTTYPE)="M"!($G(XTLOGINP(XTLOGNAM,"OUTTYPE"))="M") D SENDMAIL(XTLOGNAM,$S($G(OUTSPECS)'="":OUTSPECS,$G(XTLOGINP(XTLOGNAM,"OUTSPECS"))'="":XTLOGINP(XTLOGNAM,"OUTSPECS"),1:""))
+"RTN","XTMLOG",116,0)
+ I $G(OUTTYPE)="P"!($G(XTLOGINP(XTLOGNAM,"OUTTYPE"))="P") D PRINTIT(XTLOGNAM,$S($G(OUTSPECS)'="":OUTSPECS,$G(XTLOGINP(XTLOGNAM,"OUTSPECS"))'="":XTLOGINP(XTLOGNAM,"OUTSPECS"),1:""))
+"RTN","XTMLOG",117,0)
+ I $D(XTLOGINP(XTLOGNAM,"PORT")) D CLOSE^%ZISTCP
+"RTN","XTMLOG",118,0)
+ K XTLOGINP(XTLOGNAM)
+"RTN","XTMLOG",119,0)
+ K XTMTCPIO ; This variable's presence indicates that we have a current connexion.
+"RTN","XTMLOG",120,0)
+ Q
+"RTN","XTMLOG",121,0)
+ ;
+"RTN","XTMLOG",122,0)
+EASYSET(CONFIG,NAME,XTLOGINP) ;
+"RTN","XTMLOG",123,0)
+ N X
+"RTN","XTMLOG",124,0)
+ F  Q:CONFIG=""  S X=$P(CONFIG,";"),CONFIG=$P(CONFIG,";",2,99) D
+"RTN","XTMLOG",125,0)
+ . I $E(X)="C" D SETCONSO("C",NAME,.XTLOGINP)
+"RTN","XTMLOG",126,0)
+ . I $E(X)="G" D SETGLOB("G",$P(X,",",2),NAME,.XTLOGINP)
+"RTN","XTMLOG",127,0)
+ . I $E(X)="S" D SETSOCK("S",$P(X,",",2),NAME,.XTLOGINP)
+"RTN","XTMLOG",128,0)
+ . I $E(X)="," D SETLEVEL($P(X,",",2),NAME,.XTLOGINP)
+"RTN","XTMLOG",129,0)
+ . Q
+"RTN","XTMLOG",130,0)
+ Q
+"RTN","XTMLOG",131,0)
+ ;
+"RTN","XTMLOG",132,0)
+DEFAULTS(NAME,XTLOGINP) ; XTLOGINP is passed by reference
+"RTN","XTMLOG",133,0)
+ I '$D(XTLOGINP(NAME,"PRIORITY")) S XTLOGINP(NAME,"PRIORITY")="DEBUG" ; default priority is DEBUG
+"RTN","XTMLOG",134,0)
+ I '$D(XTLOGINP(NAME,"APPENDER")) D SETCONSO("A",NAME,.XTLOGINP) ; default is CONSOLEAPPENDER
+"RTN","XTMLOG",135,0)
+ Q
+"RTN","XTMLOG",136,0)
+ ;
+"RTN","XTMLOG",137,0)
+SETCONSO(ID,NAME,XTLOGINP) ;
+"RTN","XTMLOG",138,0)
+ N NODE
+"RTN","XTMLOG",139,0)
+ S NODE=$NA(XTLOGINP(NAME,"APPENDER",ID))
+"RTN","XTMLOG",140,0)
+ S @NODE@("TYPE")="CONSOLEAPPENDER",@NODE@("LAYOUT")="PATTERNLAYOUT"
+"RTN","XTMLOG",141,0)
+ S @NODE@("LAYOUT.CONVERSIONPATTERN")="%d %-5p %L %F - %m%n"
+"RTN","XTMLOG",142,0)
+ Q
+"RTN","XTMLOG",143,0)
+ ;
+"RTN","XTMLOG",144,0)
+SETGLOB(ID,SUBSCRIP,NAME,XTLOGINP) ;
+"RTN","XTMLOG",145,0)
+ N NODE,INFO
+"RTN","XTMLOG",146,0)
+ S NODE=$NA(XTLOGINP(NAME,"APPENDER",ID))
+"RTN","XTMLOG",147,0)
+ S @NODE@("TYPE")="GLOBAL",@NODE@("LAYOUT")="PATTERNLAYOUT"
+"RTN","XTMLOG",148,0)
+ S @NODE@("LAYOUT.CONVERSIONPATTERN")="%d %-5p %L %F - %m%n"
+"RTN","XTMLOG",149,0)
+ S SUBSCRIP=$S($G(SUBSCRIP)="":"XTMLOG",1:SUBSCRIP)
+"RTN","XTMLOG",150,0)
+ S:'$D(INFO("$H")) INFO("$H")=$H
+"RTN","XTMLOG",151,0)
+ ;N XTMLOGDT,FORMAT S FORMAT="{yyMMdd.HHmmss",XTMLOGDT=$$GETDATE^XTMLOG1(.INFO,.FORMAT)
+"RTN","XTMLOG",152,0)
+ N XTMLOGDT S XTMLOGDT=$$NOW^XLFDT()
+"RTN","XTMLOG",153,0)
+ S @NODE@("CLOSEDROOT")=$NA(^XTMP(SUBSCRIP,DUZ,XTMLOGDT,$J)) ; use current $H as constant and $J
+"RTN","XTMLOG",154,0)
+ S ^XTMP(SUBSCRIP,0)=$$FMADD^XLFDT(DT,7)_U_DT ; Mark it to be saved for a week
+"RTN","XTMLOG",155,0)
+ Q
+"RTN","XTMLOG",156,0)
+ ;
+"RTN","XTMLOG",157,0)
+SETSOCK(ID,PORT,NAME,XTLOGINP) ;
+"RTN","XTMLOG",158,0)
+ ; ZEXCEPT: XTMTCPIO Set here, killed in ENDLOG
+"RTN","XTMLOG",159,0)
+ N NODE
+"RTN","XTMLOG",160,0)
+ S NODE=$NA(XTLOGINP(NAME,"APPENDER",ID))
+"RTN","XTMLOG",161,0)
+ S @NODE@("TYPE")="SOCKETAPPENDER",@NODE@("LAYOUT")="PATTERNLAYOUT"
+"RTN","XTMLOG",162,0)
+ S @NODE@("LAYOUT.CONVERSIONPATTERN")="%d %-5p %L %F - %m%n"
+"RTN","XTMLOG",163,0)
+ ; S PORT=$S($G(PORT)="":8025,1:PORT)
+"RTN","XTMLOG",164,0)
+ S @NODE@("PORT")=PORT
+"RTN","XTMLOG",165,0)
+ ; D START^XTMLOSKT(PORT) ; Start socket running if it isn't already
+"RTN","XTMLOG",166,0)
+ N HOST S HOST=$P(PORT,":")
+"RTN","XTMLOG",167,0)
+ N REALPORT S REALPORT=$P(PORT,":",2)
+"RTN","XTMLOG",168,0)
+ D
+"RTN","XTMLOG",169,0)
+ . I $D(XTMTCPIO) QUIT
+"RTN","XTMLOG",170,0)
+ . N IO ; protect our precious IO
+"RTN","XTMLOG",171,0)
+ . N POP
+"RTN","XTMLOG",172,0)
+ . D CALL^%ZISTCP(HOST,REALPORT,0)
+"RTN","XTMLOG",173,0)
+ . I 'POP S XTMTCPIO=IO
+"RTN","XTMLOG",174,0)
+ ; IO gets restored back. XTMTCPIO is now the TCP device
+"RTN","XTMLOG",175,0)
+ I $D(XTMTCPIO) D
+"RTN","XTMLOG",176,0)
+ . N $ES,$ET S $ET="D CLOSE^%ZISTCP S $EC="""""
+"RTN","XTMLOG",177,0)
+ . I +$SY=47 U XTMTCPIO        ; GT.M
+"RTN","XTMLOG",178,0)
+ . I +$SY=0 U XTMTCPIO:(::"S") ; Cache
+"RTN","XTMLOG",179,0)
+ . W "Connected",$C(13,10),!
+"RTN","XTMLOG",180,0)
+ . D CRFLUSH^XTMLOG1
+"RTN","XTMLOG",181,0)
+ QUIT
+"RTN","XTMLOG",182,0)
+ ;
+"RTN","XTMLOG",183,0)
+SETLEVEL(LEVEL,NAME,XTLOGINP) ;
+"RTN","XTMLOG",184,0)
+ N X
+"RTN","XTMLOG",185,0)
+ S X=$$UP^XLFSTR($E(LEVEL)),X=$S(X="D":5,X="I":4,X="W":3,X="E":2,X="F":1,1:5)
+"RTN","XTMLOG",186,0)
+ S XTLOGINP(NAME,"PRIORITY")=$P("FATAL^ERROR^WARN^INFO^DEBUG",U,X)
+"RTN","XTMLOG",187,0)
+ Q
+"RTN","XTMLOG",188,0)
+ ;
+"RTN","XTMLOG",189,0)
+PARSE(NAME,GLOBREF,RESULTS) ; parse configuration file - RESULTS is passed by reference
+"RTN","XTMLOG",190,0)
+ N XTMROOT,FILTYPE,INDEX,XLINE
+"RTN","XTMLOG",191,0)
+ N APPENDER,APPENDID,APPENDTY,I,REST
+"RTN","XTMLOG",192,0)
+ S FILTYPE="PROPERTIES"
+"RTN","XTMLOG",193,0)
+ S INDEX="" F  S INDEX=$O(@GLOBREF@(INDEX)) Q:INDEX=""  S XLINE=$G(@GLOBREF@(INDEX)) S:XLINE="" XLINE=$G(@GLOBREF@(INDEX,0)) I XLINE'="" S:XLINE["<?xml" FILTYPE="XML" Q
+"RTN","XTMLOG",194,0)
+ ;
+"RTN","XTMLOG",195,0)
+ I FILTYPE="XML" D ENTRY^XTMLOPAR(NAME,GLOBREF,.RESULTS) Q  ; Handle xml separately
+"RTN","XTMLOG",196,0)
+ ;
+"RTN","XTMLOG",197,0)
+ S INDEX="" F  S INDEX=$O(@GLOBREF@(INDEX)) Q:INDEX=""  S XLINE=$G(@GLOBREF@(INDEX)) S:XLINE="" XLINE=$G(@GLOBREF@(INDEX,0)) D
+"RTN","XTMLOG",198,0)
+ . S XLINE=$P(XLINE,"#") Q:XLINE=""
+"RTN","XTMLOG",199,0)
+ . ; have to get the rootlogger info first
+"RTN","XTMLOG",200,0)
+ . I '$D(XTMROOT) Q:$$UP^XLFSTR(XLINE)'["ROOTLOGGER"  D  Q
+"RTN","XTMLOG",201,0)
+ . . S XLINE=$P(XLINE,"=",2),XLINE=$TR(XLINE," ","")
+"RTN","XTMLOG",202,0)
+ . . S RESULTS(NAME,"PRIORITY")=$$UP^XLFSTR($P(XLINE,",")),XTMROOT=""
+"RTN","XTMLOG",203,0)
+ . . F  S XLINE=$P(XLINE,",",2,99) Q:XLINE=""  S RESULTS(NAME,"APPENDER",$$UP^XLFSTR($P(XLINE,",")))=""
+"RTN","XTMLOG",204,0)
+ . . Q
+"RTN","XTMLOG",205,0)
+ . S APPENDER=$P($$UP^XLFSTR(XLINE),"APPENDER.",2),REST=$P(XLINE,"=",2,99),APPENDER=$P(APPENDER,"=")
+"RTN","XTMLOG",206,0)
+ . S APPENDID=$P(APPENDER,"."),APPENDTY=$P(APPENDER,".",2,99)
+"RTN","XTMLOG",207,0)
+ . I APPENDTY="" S APPENDTY=$P(REST,".",$L(REST,".")) D
+"RTN","XTMLOG",208,0)
+ . . N STR,STR1,STR2 S STR="CONSOLEAPPENDER^ROLLINGFILEAPPENDER",STR2="CONSOLE^ROLLFILE"
+"RTN","XTMLOG",209,0)
+ . . F I=1:1 S STR1=$P(STR,U,I) Q:STR1=""  I $$UP^XLFSTR(APPENDTY)=STR1 S RESULTS(NAME,"APPENDER",APPENDID,"TYPE")=$E(STR1,1,8) Q
+"RTN","XTMLOG",210,0)
+ . . I STR1="" S RESULTS(NAME,"APPENDER",APPENDID,"TYPE")="UNKNOWN"
+"RTN","XTMLOG",211,0)
+ . . Q
+"RTN","XTMLOG",212,0)
+ . I APPENDTY="LAYOUT" S RESULTS(NAME,"APPENDER",APPENDID,APPENDTY)=$$UP^XLFSTR($P(REST,".",$L(REST,".")))
+"RTN","XTMLOG",213,0)
+ . E  S RESULTS(NAME,"APPENDER",APPENDID,APPENDTY)=REST
+"RTN","XTMLOG",214,0)
+ . Q
+"RTN","XTMLOG",215,0)
+ Q
+"RTN","XTMLOG",216,0)
+ ;
+"RTN","XTMLOG",217,0)
+ENABLED(NAME) ; .SR returns 1 if NAME is active -- USAGE $$ENABLED^XTMLOG1(NAME)
+"RTN","XTMLOG",218,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",219,0)
+ Q $S($D(XTLOGINP(NAME)):1,1:0)
+"RTN","XTMLOG",220,0)
+ ;
+"RTN","XTMLOG",221,0)
+DEBNABLD(NAME) ; .SR  returns 1 if DEBUG is enabled, otherwise zero
+"RTN","XTMLOG",222,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",223,0)
+ Q XTLOGINP(NAME,"LOGSET")[",5,"
+"RTN","XTMLOG",224,0)
+ ;
+"RTN","XTMLOG",225,0)
+INFNABLD(NAME) ;
+"RTN","XTMLOG",226,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",227,0)
+ Q XTLOGINP(NAME,"LOGSET")[",4,"
+"RTN","XTMLOG",228,0)
+ ;
+"RTN","XTMLOG",229,0)
+WARNABLD(NAME) ;
+"RTN","XTMLOG",230,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",231,0)
+ Q XTLOGINP(NAME,"LOGSET")[",3,"
+"RTN","XTMLOG",232,0)
+ ;
+"RTN","XTMLOG",233,0)
+ERRNABLD(NAME) ;
+"RTN","XTMLOG",234,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",235,0)
+ Q XTLOGINP(NAME,"LOGSET")[",2,"
+"RTN","XTMLOG",236,0)
+ ;
+"RTN","XTMLOG",237,0)
+FATNABLD(NAME) ;
+"RTN","XTMLOG",238,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",239,0)
+ Q XTLOGINP(NAME,"LOGSET")[",1,"
+"RTN","XTMLOG",240,0)
+ ;
+"RTN","XTMLOG",241,0)
+DEBUG(MESG,VARS,XTMLOARR) ; .SR
+"RTN","XTMLOG",242,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",243,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",244,0)
+ N XTLOGINF
+"RTN","XTMLOG",245,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",246,0)
+ S XTLOGINF("PRIORITY")="DEBUG"
+"RTN","XTMLOG",247,0)
+ D LOG(MESG,5,XTLOGLIN,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG",248,0)
+ Q
+"RTN","XTMLOG",249,0)
+ ;
+"RTN","XTMLOG",250,0)
+INFO(MESG,VARS,XTMLOARR) ; .SR
+"RTN","XTMLOG",251,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",252,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",253,0)
+ N XTLOGINF
+"RTN","XTMLOG",254,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",255,0)
+ S XTLOGINF("PRIORITY")="INFO"
+"RTN","XTMLOG",256,0)
+ D LOG(MESG,4,XTLOGLIN,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG",257,0)
+ Q
+"RTN","XTMLOG",258,0)
+ ;
+"RTN","XTMLOG",259,0)
+WARN(MESG,VARS,XTMLOARR) ; .SR
+"RTN","XTMLOG",260,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",261,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",262,0)
+ N XTLOGINF
+"RTN","XTMLOG",263,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",264,0)
+ S XTLOGINF("PRIORITY")="WARN"
+"RTN","XTMLOG",265,0)
+ D LOG(MESG,3,XTLOGLIN,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG",266,0)
+ Q
+"RTN","XTMLOG",267,0)
+ ;
+"RTN","XTMLOG",268,0)
+ERROR(MESG,VARS,XTMLOARR) ; .SR
+"RTN","XTMLOG",269,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",270,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",271,0)
+ N XTLOGINF
+"RTN","XTMLOG",272,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",273,0)
+ S XTLOGINF("PRIORITY")="ERROR"
+"RTN","XTMLOG",274,0)
+ D LOG(MESG,2,XTLOGLIN,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG",275,0)
+ Q
+"RTN","XTMLOG",276,0)
+ ;
+"RTN","XTMLOG",277,0)
+FATAL(MESG,VARS,XTMLOARR) ; .SR
+"RTN","XTMLOG",278,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",279,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",280,0)
+ N XTLOGINF
+"RTN","XTMLOG",281,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",282,0)
+ S XTLOGINF("PRIORITY")="FATAL"
+"RTN","XTMLOG",283,0)
+ D LOG(MESG,1,XTLOGLIN,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG",284,0)
+ Q
+"RTN","XTMLOG",285,0)
+ ;
+"RTN","XTMLOG",286,0)
+ ; VEN/SMH - EP to save arrays...
+"RTN","XTMLOG",287,0)
+SAVEARR(IN,OUT) ; .SR
+"RTN","XTMLOG",288,0)
+ ; ZEXCEPT: XTLOGINP - CREATED IN INITIAL, KILLED IN ENDLOG
+"RTN","XTMLOG",289,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",290,0)
+ N XTLOGINF
+"RTN","XTMLOG",291,0)
+ N XTLOGLIN S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",292,0)
+ I XTLOGLIN["SAVE" S XTLOGLIN=$P($STACK($STACK-2,"PLACE")," ")
+"RTN","XTMLOG",293,0)
+ S XTLOGINF("PRIORITY")="DEBUG"
+"RTN","XTMLOG",294,0)
+ I $D(OUT) M @OUT=@IN QUIT
+"RTN","XTMLOG",295,0)
+ D LOG(,5,XTLOGLIN,IN,,1)
+"RTN","XTMLOG",296,0)
+ QUIT
+"RTN","XTMLOG",297,0)
+ ;
+"RTN","XTMLOG",298,0)
+ ;
+"RTN","XTMLOG",299,0)
+LOG(MESG,SET,XTLOGLIN,VARS,XTMLOARR,SAVE) ; .SR  entry point for logging an item
+"RTN","XTMLOG",300,0)
+ ; this will be ignored unless SETUP^XTMLOG has been called previously
+"RTN","XTMLOG",301,0)
+ ; MESG - any text that should be recorded for the current location
+"RTN","XTMLOG",302,0)
+ ;        (Required)
+"RTN","XTMLOG",303,0)
+ ;
+"RTN","XTMLOG",304,0)
+ ; SET - a set number if desired (if none is specified, it will always
+"RTN","XTMLOG",305,0)
+ ;       be logged when logging is active) set numbers may be integer
+"RTN","XTMLOG",306,0)
+ ;       values used to indicate a group of logging calls which are
+"RTN","XTMLOG",307,0)
+ ;       similar and should be active at the same time.  Using SETS a
+"RTN","XTMLOG",308,0)
+ ;       number of log points may be set up, but only those in an
+"RTN","XTMLOG",309,0)
+ ;       active set, or with no set specified will be recorded.  Thus,
+"RTN","XTMLOG",310,0)
+ ;       input data might be logged in set 1, values associated with a
+"RTN","XTMLOG",311,0)
+ ;       process might be set 2, etc. Specific sets that are active are
+"RTN","XTMLOG",312,0)
+ ;       specified through the SET parameter in the SETUP call.
+"RTN","XTMLOG",313,0)
+ ; SAVE - If we want to save the array in a global or just print it out.
+"RTN","XTMLOG",314,0)
+ ;
+"RTN","XTMLOG",315,0)
+ I '$D(XTLOGINP) Q
+"RTN","XTMLOG",316,0)
+ N APPENDID,APPNAME,APPTYPE,NAME,XTMECNT,XTMGLOB
+"RTN","XTMLOG",317,0)
+ ; ZEXCEPT: XTLOGINF,XTLOGINP
+"RTN","XTMLOG",318,0)
+ I $G(XTLOGLIN)="" S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",319,0)
+ N XTMACTIV
+"RTN","XTMLOG",320,0)
+ S NAME="" F  S NAME=$O(XTLOGINP(NAME)) Q:NAME=""  D
+"RTN","XTMLOG",321,0)
+ . I $G(XTLOGINP(NAME,"LOGSET"))'="",$G(SET)'="",XTLOGINP(NAME,"LOGSET")'[(","_SET_",") Q  ; only process if set is in those specified or is not specified
+"RTN","XTMLOG",322,0)
+ . I '$$CHKRLST($NA(XTLOGINP(NAME)),$P(XTLOGLIN,"^",2)) Q
+"RTN","XTMLOG",323,0)
+ . S XTMACTIV(NAME)=""
+"RTN","XTMLOG",324,0)
+ . Q
+"RTN","XTMLOG",325,0)
+ I '$D(XTMACTIV) Q
+"RTN","XTMLOG",326,0)
+ ;
+"RTN","XTMLOG",327,0)
+ I $D(XTLOGINP) S NAME="" F  S NAME=$O(XTMACTIV(NAME)) Q:NAME=""  D
+"RTN","XTMLOG",328,0)
+ . S XTLOGINP(NAME,"COUNT")=$G(XTLOGINP(NAME,"COUNT"))+1
+"RTN","XTMLOG",329,0)
+ . S XTLOGINF("PRIORITY")=$S($D(SET):$P("FATAL^ERROR^WARN^INFO^DEBUG",U,SET),1:"    ")
+"RTN","XTMLOG",330,0)
+ . S XTLOGINF("$H")=$H,XTLOGINF("LOCATION")=XTLOGLIN
+"RTN","XTMLOG",331,0)
+ . S XTLOGINF("COUNT")=XTLOGINP(NAME,"COUNT")
+"RTN","XTMLOG",332,0)
+ . I $G(SAVE) S XTLOGINF("SAVE")=1
+"RTN","XTMLOG",333,0)
+ . S APPENDID=""
+"RTN","XTMLOG",334,0)
+ . F  S APPENDID=$O(XTLOGINP(NAME,"APPENDER",APPENDID)) Q:APPENDID=""  D
+"RTN","XTMLOG",335,0)
+ . . S APPNAME="APPENDER",APPTYPE=XTLOGINP(NAME,APPNAME,APPENDID,"TYPE")
+"RTN","XTMLOG",336,0)
+ . . I $T(@($E(APPTYPE,1,8)_"^XTMLOG1"))'="" D @($E(APPTYPE,1,8)_"^XTMLOG1($NA(XTLOGINP(NAME,APPNAME,APPENDID)),.XTLOGINF,$G(MESG),$G(VARS),$G(XTMLOARR))") I 1
+"RTN","XTMLOG",337,0)
+ . . E  I '$G(XTMECNT) S $ZE="APPENDER *"_APPTYPE_"* NOT SUPPORTED IN XTMLOG1" D ^%ZTER S XTMECNT=1 ; indicate that appender is not available
+"RTN","XTMLOG",338,0)
+ . . Q
+"RTN","XTMLOG",339,0)
+ . Q
+"RTN","XTMLOG",340,0)
+ Q
+"RTN","XTMLOG",341,0)
+ ;
+"RTN","XTMLOG",342,0)
+SENDMAIL(XTMLOGID,RECIP) ; internal - used to generate an e-mail report.
+"RTN","XTMLOG",343,0)
+ N XMY,XMSUB,XMTEXT,XTMMAIL,XTI
+"RTN","XTMLOG",344,0)
+ I $G(RECIP)="" S XMY(DUZ)=""
+"RTN","XTMLOG",345,0)
+ E  F XTI=1:1 Q:$P(RECIP,";",XTI)=""  S XMY($P(RECIP,";",XTI))=""
+"RTN","XTMLOG",346,0)
+ S XTMMAIL=$NA(^TMP($J,"XTMLOG")) K @XTMMAIL
+"RTN","XTMLOG",347,0)
+ S XMSUB="Logged Data: "_XTMLOGID,XMTEXT="^TMP($J,""XTMLOG"","
+"RTN","XTMLOG",348,0)
+ I '$$SETGLOB1(XTMLOGID,XTMMAIL) Q  ; NO GLOBAL DATA TO SEND
+"RTN","XTMLOG",349,0)
+ D ^XMD
+"RTN","XTMLOG",350,0)
+ Q
+"RTN","XTMLOG",351,0)
+ ;
+"RTN","XTMLOG",352,0)
+PRINTIT(XTMLOGID,LOC) ; internal - LOC is printer specification in format for IOP
+"RTN","XTMLOG",353,0)
+ N GLOBLOC,IOP,I
+"RTN","XTMLOG",354,0)
+ S GLOBLOC=$NA(^TMP($J,"XTMLOG")) K @GLOBLOC
+"RTN","XTMLOG",355,0)
+ I '$$SETGLOB1(XTMLOGID,GLOBLOC) Q  ; NO GLOBAL DATA TO SEND
+"RTN","XTMLOG",356,0)
+ I $G(LOC)'="" S IOP=LOC D ^%ZIS U IO
+"RTN","XTMLOG",357,0)
+ F I=0:0 S I=$O(@GLOBLOC@(I)) Q:I'>0  W !,^(I)
+"RTN","XTMLOG",358,0)
+ I $G(LOC)'="" D ^%ZISC
+"RTN","XTMLOG",359,0)
+ Q
+"RTN","XTMLOG",360,0)
+ ;
+"RTN","XTMLOG",361,0)
+SETGLOB1(XTMLOGID,GLOBLOC) ; internal - move current data into output format
+"RTN","XTMLOG",362,0)
+ ; GLOBLOC is a closed global reference under which the output will be stored without zero nodes
+"RTN","XTMLOG",363,0)
+ N ROOT,NCNT,X1,X2,X3,X4
+"RTN","XTMLOG",364,0)
+ ; ZEXCEPT: XTLOGINP - CREATED ON INITIALIZATION, KILLED IN ENDLOG
+"RTN","XTMLOG",365,0)
+ S ROOT=$G(XTLOGINP(XTMLOGID,"APPENDER","G","CLOSEDROOT"))
+"RTN","XTMLOG",366,0)
+ I ROOT="" Q 0 ; NO GLOBAL REFERENCE - SO NO DATA
+"RTN","XTMLOG",367,0)
+ S NCNT=0
+"RTN","XTMLOG",368,0)
+ ; X1=CURRENT DATE/TIME X2=LOG SEQUENCE NUMBER X3=LINE^ROUTINE X4=COUNT IN CURRENT LOGGING
+"RTN","XTMLOG",369,0)
+ S X1="" F  S X1=$O(@ROOT@(X1)) Q:X1=""  S X2="" F  S X2=$O(@ROOT@(X1,X2)) Q:X2=""  S X3="" F  S X3=$O(@ROOT@(X1,X2,X3)) Q:X3=""  S X4="" F  S X4=$O(@ROOT@(X1,X2,X3,X4)) Q:X4=""  S NCNT=NCNT+1,@GLOBLOC@(NCNT)=@ROOT@(X1,X2,X3,X4)
+"RTN","XTMLOG",370,0)
+ Q NCNT>0
+"RTN","XTMLOG",371,0)
+ ;
+"RTN","XTMLOG",372,0)
+REALERR ; entry to log a real error
+"RTN","XTMLOG",373,0)
+ N XTLOGLIN,NAME,XTLOGINF,MESG
+"RTN","XTMLOG",374,0)
+ ; ZEXCEPT: XTLOGINP - CREATED ON INITIALIZATION, KILLED IN ENDLOG
+"RTN","XTMLOG",375,0)
+ S XTLOGLIN=$P($STACK($STACK-1,"PLACE")," ")
+"RTN","XTMLOG",376,0)
+ S MESG="Encountered Error: "_$ZE
+"RTN","XTMLOG",377,0)
+ S XTLOGINF("PRIORITY")="FATAL"
+"RTN","XTMLOG",378,0)
+ D LOG(MESG,1) S NAME="" F  S NAME=$O(XTLOGINP(NAME)) Q:NAME=""  D ENDLOG(NAME)
+"RTN","XTMLOG",379,0)
+ S $ETRAP=""
+"RTN","XTMLOG",380,0)
+ G ERR^ZU
+"RTN","XTMLOG",381,0)
+ Q
+"RTN","XTMLOG",382,0)
+ ; [Public Interactive Entry Points]
+"RTN","XTMLOG",383,0)
+ ; View Global Logs
+"RTN","XTMLOG",384,0)
+VIEW G VIEW^XTMLOG1
+"RTN","XTMLOG",385,0)
+DISPLAY G DISPLAY^XTMLOG1
+"RTN","XTMLOG",386,0)
+VIEWLOG G VIEWLOG^XTMLOG1
+"RTN","XTMLOG",387,0)
+LOGVIEW G LOGVIEW^XTMLOG1
+"RTN","XTMLOG",388,0)
+ ; Clear Global Logs
+"RTN","XTMLOG",389,0)
+CLEAR G CLEAR^XTMLOG1
+"RTN","XTMLOG1")
+0^2^B186330058
+"RTN","XTMLOG1",1,0)
+XTMLOG1 ;jli/fo-oak - handle appender functions for Log4M ;2017-07-25  10:37 AM
+"RTN","XTMLOG1",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLOG1",3,0)
+ ; Main Author: Joel Ivey, Ph.D. from 2007-2012
+"RTN","XTMLOG1",4,0)
+ ; Various Changes throughout by Sam Habiel, Pharm.D. 2012-2017
+"RTN","XTMLOG1",5,0)
+ Q
+"RTN","XTMLOG1",6,0)
+ ; Each appender name is truncated to a max of eight characters and is a tag for the processing
+"RTN","XTMLOG1",7,0)
+ ; for that appender.
+"RTN","XTMLOG1",8,0)
+ ; 1st Argument is closed root for the appender information in the XTMINPUT array.
+"RTN","XTMLOG1",9,0)
+ ;      i.e.,  XTMINPUT(NAME,"APPENDER",APPENDID) The full appender name is at @ROOT@("TYPE")
+"RTN","XTMLOG1",10,0)
+ ;
+"RTN","XTMLOG1",11,0)
+ ; 2nd Argument is INFO data
+"RTN","XTMLOG1",12,0)
+ ;
+"RTN","XTMLOG1",13,0)
+ ; 3rd Argument is Message sent by logging call
+"RTN","XTMLOG1",14,0)
+ ;
+"RTN","XTMLOG1",15,0)
+ ; 4th Argument (optional) is a string of comma separated variable names, which will be included in the output.
+"RTN","XTMLOG1",16,0)
+ ;      Global nodes should be entered using $NA(
+"RTN","XTMLOG1",17,0)
+ ;      Example:  "VALUE1,VALUE2"  or  "VALUE1,"_$NA(^TMP($J,"VALUE"))_",VALUE2"
+"RTN","XTMLOG1",18,0)
+ ;
+"RTN","XTMLOG1",19,0)
+ ; 5th Argument (optional) a value of 1 if the variable(s) should be considered to be arrays and the values
+"RTN","XTMLOG1",20,0)
+ ;      of array elements should be displayed if they exist.
+"RTN","XTMLOG1",21,0)
+ ;
+"RTN","XTMLOG1",22,0)
+CONSOLEA(ROOT,INFO,MESSAGE,VARS,XTMLOARR) ;
+"RTN","XTMLOG1",23,0)
+ U $P
+"RTN","XTMLOG1",24,0)
+ N GLOBREF,XTMLOGI S GLOBREF=$NA(^TMP("CONSOLEA",$J)) K @GLOBREF
+"RTN","XTMLOG1",25,0)
+ I $G(INFO("SAVE")) D
+"RTN","XTMLOG1",26,0)
+ . W $C(27)_"[32m"
+"RTN","XTMLOG1",27,0)
+ . W:$X !  ; new line if we need it.
+"RTN","XTMLOG1",28,0)
+ . D ZWRITE(VARS)
+"RTN","XTMLOG1",29,0)
+ . W $C(27)_"[0m"
+"RTN","XTMLOG1",30,0)
+ E  D SETLINES(GLOBREF,ROOT,.INFO,MESSAGE,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG1",31,0)
+ F XTMLOGI=0:0 S XTMLOGI=$O(@GLOBREF@(XTMLOGI)) Q:XTMLOGI'>0  D
+"RTN","XTMLOG1",32,0)
+ . ; Set Color
+"RTN","XTMLOG1",33,0)
+ . W $C(27)_"[32m"
+"RTN","XTMLOG1",34,0)
+ . W !,@GLOBREF@(XTMLOGI)
+"RTN","XTMLOG1",35,0)
+ . W $C(27)_"[0m"
+"RTN","XTMLOG1",36,0)
+ Q
+"RTN","XTMLOG1",37,0)
+ ;
+"RTN","XTMLOG1",38,0)
+ROLLINGF(ROOT,INFO,MESSAGE) ;
+"RTN","XTMLOG1",39,0)
+ Q
+"RTN","XTMLOG1",40,0)
+ ;
+"RTN","XTMLOG1",41,0)
+DAILYROL(ROOT,INFO,MESSAGE) ;
+"RTN","XTMLOG1",42,0)
+ Q
+"RTN","XTMLOG1",43,0)
+ ;
+"RTN","XTMLOG1",44,0)
+GLOBAL(ROOT,INFO,MESSAGE,VARS,XTMLOARR) ;
+"RTN","XTMLOG1",45,0)
+ N GLOBREF,XTMLOGI
+"RTN","XTMLOG1",46,0)
+ S GLOBREF=$NA(^TMP("XTMLGLOB",$J)) K @GLOBREF
+"RTN","XTMLOG1",47,0)
+ D SETLINES(GLOBREF,ROOT,.INFO,MESSAGE,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG1",48,0)
+ ; N XTMLOGDT S XTMLOGDT=$$GETDATE(.INFO,"{yyMMdd.HHmmss")
+"RTN","XTMLOG1",49,0)
+ N XTMLOGDT S XTMLOGDT=$$HTFM^XLFDT(INFO("$H"))
+"RTN","XTMLOG1",50,0)
+ S:INFO("LOCATION")="" INFO("LOCATION")=" "
+"RTN","XTMLOG1",51,0)
+ I $G(INFO("SAVE")) M @(@ROOT@("CLOSEDROOT"))@(XTMLOGDT,INFO("COUNT"),INFO("LOCATION"),VARS)=@VARS
+"RTN","XTMLOG1",52,0)
+ F XTMLOGI=0:0 S XTMLOGI=$O(@GLOBREF@(XTMLOGI)) Q:XTMLOGI'>0  S @(@ROOT@("CLOSEDROOT"))@(XTMLOGDT,INFO("COUNT"),INFO("LOCATION"),XTMLOGI)=@GLOBREF@(XTMLOGI)
+"RTN","XTMLOG1",53,0)
+ Q
+"RTN","XTMLOG1",54,0)
+ ;
+"RTN","XTMLOG1",55,0)
+SOCKETAP(ROOT,INFO,MESSAGE,VARS,XTMLOARR) ; Socket appender
+"RTN","XTMLOG1",56,0)
+ ; ZEXCEPT: XTMTCPIO from XTMLOG socket initializer at SETSOCK
+"RTN","XTMLOG1",57,0)
+ Q:'$D(XTMTCPIO)  ; No open device
+"RTN","XTMLOG1",58,0)
+ N $ET,$ES S $ET="Q:($ES>1)  K XTMTCPIO S $EC="""""  ; bye bye. Kill TCPIO and unwind.
+"RTN","XTMLOG1",59,0)
+ U XTMTCPIO
+"RTN","XTMLOG1",60,0)
+ W:$X $C(13,10)  ; new line if we need it.
+"RTN","XTMLOG1",61,0)
+ N GLOBREF,XTMLOGI S GLOBREF=$NA(^TMP("SOCKETA",$J)) K @GLOBREF
+"RTN","XTMLOG1",62,0)
+ I $G(INFO("SAVE")) D
+"RTN","XTMLOG1",63,0)
+ . D ZWRITE(VARS,,,1)
+"RTN","XTMLOG1",64,0)
+ E  D SETLINES(GLOBREF,ROOT,.INFO,MESSAGE,$G(VARS),$G(XTMLOARR))
+"RTN","XTMLOG1",65,0)
+ F XTMLOGI=0:0 S XTMLOGI=$O(@GLOBREF@(XTMLOGI)) Q:XTMLOGI'>0  W @GLOBREF@(XTMLOGI) D CRFLUSH
+"RTN","XTMLOG1",66,0)
+ ; S ^TMP("XTMLOSKT","DATA",@ROOT@("PORT"),$J,INFO("COUNT"))=$$FORMAT(ROOT,.INFO,MESSAGE) ; Don't know what that accomplished
+"RTN","XTMLOG1",67,0)
+ U IO
+"RTN","XTMLOG1",68,0)
+ Q
+"RTN","XTMLOG1",69,0)
+ ;
+"RTN","XTMLOG1",70,0)
+SETLINES(XTMLGLOB,ROOT,INFO,MESSAGE,VARS,XTMLOARR) ; returns lines for output in XTMLGLOB
+"RTN","XTMLOG1",71,0)
+ N XTMLOGI,XTMLOGJ,XTMLOGVR,XTMLOCHR,XTMLOCNT,XTMLOPAR,XTMLOQUO,XTMLOSRT,VARDATA,VARDATAQ,XTMLBASE
+"RTN","XTMLOG1",72,0)
+ K @XTMLGLOB
+"RTN","XTMLOG1",73,0)
+ S XTMLBASE=$$FORMAT(ROOT,.INFO,MESSAGE)
+"RTN","XTMLOG1",74,0)
+ S XTMLOPAR=0,XTMLOQUO=0,XTMLOCNT=0,XTMLOSRT=1
+"RTN","XTMLOG1",75,0)
+ I $G(VARS)="" S @XTMLGLOB@(1)=XTMLBASE Q
+"RTN","XTMLOG1",76,0)
+ S XTMLOARR=+$G(XTMLOARR)
+"RTN","XTMLOG1",77,0)
+ F XTMLOGI=1:1 S XTMLOCHR=$E(VARS,XTMLOGI) Q:XTMLOCHR=""  D
+"RTN","XTMLOG1",78,0)
+ . S:XTMLOCHR="(" XTMLOPAR=XTMLOPAR+1 S:XTMLOCHR=")" XTMLOPAR=XTMLOPAR-1 S:XTMLOCHR="""" XTMLOQUO=$S(XTMLOQUO=0:1,1:0) I XTMLOPAR=0,XTMLOQUO=0,XTMLOCHR="," S XTMLOCNT=XTMLOCNT+1,VARS(XTMLOCNT)=$E(VARS,XTMLOSRT,XTMLOGI-1),XTMLOSRT=XTMLOGI+1
+"RTN","XTMLOG1",79,0)
+ . Q
+"RTN","XTMLOG1",80,0)
+ I XTMLOGI>XTMLOSRT S XTMLOCNT=XTMLOCNT+1,VARS(XTMLOCNT)=$E(VARS,XTMLOSRT,XTMLOGI)
+"RTN","XTMLOG1",81,0)
+ S XTMLOCNT=0
+"RTN","XTMLOG1",82,0)
+ F XTMLOGI=1:1 Q:'$D(VARS(XTMLOGI))  S XTMLOGVR=VARS(XTMLOGI) S XTMLOCNT=XTMLOCNT+1,@XTMLGLOB@(XTMLOCNT)=XTMLBASE_" - "_VARS(XTMLOGI)_": "_$S($D(@VARS(XTMLOGI))#2:@VARS(XTMLOGI),1:"<undefined>") I XTMLOARR D
+"RTN","XTMLOG1",83,0)
+ . S VARDATA=VARS(XTMLOGI) I $D(@VARDATA)>1 D
+"RTN","XTMLOG1",84,0)
+ . . S VARDATAQ=$S($E(VARDATA,$L(VARDATA))=")":$E(VARDATA,1,$L(VARDATA)-1),1:"")
+"RTN","XTMLOG1",85,0)
+ . . F XTMLOGJ=1:1 S VARDATA=$Q(@(VARDATA)) Q:VARDATA=""  Q:((VARDATAQ'="")&(VARDATA'[VARDATAQ))  S XTMLOCNT=XTMLOCNT+1,@XTMLGLOB@(XTMLOCNT)=XTMLBASE_" - "_VARDATA_": "_$S($D(@VARDATA)#2:@VARDATA,1:"<undefined>")
+"RTN","XTMLOG1",86,0)
+ . . Q
+"RTN","XTMLOG1",87,0)
+ . Q
+"RTN","XTMLOG1",88,0)
+ Q
+"RTN","XTMLOG1",89,0)
+ ;
+"RTN","XTMLOG1",90,0)
+FORMAT(ROOT,INFO,MESSAGE) ; Generate Formatted message
+"RTN","XTMLOG1",91,0)
+ N XTMLOGX,FRMT,LJUST,MINWID,CATEGORY,PREC,DATESTR
+"RTN","XTMLOG1",92,0)
+ S XTMLOGX="",FRMT=$G(@ROOT@("LAYOUT.CONVERSIONPATTERN"))
+"RTN","XTMLOG1",93,0)
+ ; anything before % is actual text
+"RTN","XTMLOG1",94,0)
+ F  Q:FRMT=""  S XTMLOGX=XTMLOGX_$P(FRMT,"%"),FRMT=$P(FRMT,"%",2,99) D
+"RTN","XTMLOG1",95,0)
+ . I $E(FRMT)="%" S XTMLOGX=XTMLOGX_"%",FRMT=$$RESTOF(FRMT) Q  ; %% yields %
+"RTN","XTMLOG1",96,0)
+ . S LJUST=$S($E(FRMT)="-":1,1:0) I LJUST S FRMT=$$RESTOF(FRMT) ; - left justify
+"RTN","XTMLOG1",97,0)
+ . S MINWID="" F  Q:'(FRMT?1N.E)  S MINWID=MINWID_$E(FRMT),FRMT=$$RESTOF(FRMT) ; digits min width
+"RTN","XTMLOG1",98,0)
+ . S MINWID=+MINWID
+"RTN","XTMLOG1",99,0)
+ . I $E(FRMT)="n" S FRMT=$$RESTOF(FRMT) Q  ; end of line
+"RTN","XTMLOG1",100,0)
+ . I $E(FRMT)="c" S FRMT=$$RESTOF(FRMT),PREC=$$GETPREC(.FRMT),CATEGORY=$G(INFO("CATEGORY")) S:PREC>0 CATEGORY=$P(CATEGORY,".",$L(CATEGORY,".")-PREC+1,$L(CATEGORY,".")) S XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,CATEGORY) Q
+"RTN","XTMLOG1",101,0)
+ . I $E(FRMT)="p" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,$G(INFO("PRIORITY"))) Q
+"RTN","XTMLOG1",102,0)
+ . I $E(FRMT)="t" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,$J) Q
+"RTN","XTMLOG1",103,0)
+ . I $E(FRMT)="m" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,MESSAGE) Q
+"RTN","XTMLOG1",104,0)
+ . I $E(FRMT)="L" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,$P($G(INFO("LOCATION")),U)) Q
+"RTN","XTMLOG1",105,0)
+ . I $E(FRMT)="M" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,$P($P($G(INFO("LOCATION")),U),"+")) Q
+"RTN","XTMLOG1",106,0)
+ . I $E(FRMT)="F" S FRMT=$$RESTOF(FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,$P($G(INFO("LOCATION")),U,2)) Q
+"RTN","XTMLOG1",107,0)
+ . I $E(FRMT)="d" S FRMT=$$RESTOF(FRMT),DATESTR=$$GETDATE(.INFO,.FRMT),XTMLOGX=$$ADDTEXT(XTMLOGX,LJUST,MINWID,DATESTR) Q
+"RTN","XTMLOG1",108,0)
+ . S FRMT=$$RESTOF(FRMT) ; if unknown, just remove
+"RTN","XTMLOG1",109,0)
+ . Q
+"RTN","XTMLOG1",110,0)
+ Q XTMLOGX
+"RTN","XTMLOG1",111,0)
+ ;
+"RTN","XTMLOG1",112,0)
+RESTOF(X) ;
+"RTN","XTMLOG1",113,0)
+ Q $E(X,2,$L(X))
+"RTN","XTMLOG1",114,0)
+ ;
+"RTN","XTMLOG1",115,0)
+GETDATE(INFO,X) ; INFO and X are passed by refernce
+"RTN","XTMLOG1",116,0)
+ N FRMT,DATEVAL,X1,FMDATE
+"RTN","XTMLOG1",117,0)
+ I $E(X)="{" S X=$$RESTOF(X) S FRMT=$$DATEFRMT(.X)
+"RTN","XTMLOG1",118,0)
+ E  S FRMT="yyyyMMdd.HHmmss"
+"RTN","XTMLOG1",119,0)
+ I FRMT'="" S FMDATE=$$HTFM^XLFDT(INFO("$H"))
+"RTN","XTMLOG1",120,0)
+ S DATEVAL="" F  Q:FRMT=""  S X1=$E(FRMT),FRMT=$$RESTOF(FRMT) D
+"RTN","XTMLOG1",121,0)
+ . I X1="y" S X1=$$YEAR(FMDATE,.FRMT)
+"RTN","XTMLOG1",122,0)
+ . I X1="M" S X1=$$MONTH(FMDATE,.FRMT)
+"RTN","XTMLOG1",123,0)
+ . I X1="d" S X1=$$DAY(FMDATE,.FRMT)
+"RTN","XTMLOG1",124,0)
+ . I X1="H" S X1=$$HOUR(FMDATE,.FRMT)
+"RTN","XTMLOG1",125,0)
+ . I X1="m" S X1=$$MIN(FMDATE,.FRMT)
+"RTN","XTMLOG1",126,0)
+ . I X1="s" S X1=$$SEC(FMDATE,.FRMT)
+"RTN","XTMLOG1",127,0)
+ . I X1="S" S X1=$$MILLISEC(FMDATE,.FRMT)
+"RTN","XTMLOG1",128,0)
+ . S DATEVAL=DATEVAL_X1
+"RTN","XTMLOG1",129,0)
+ . Q
+"RTN","XTMLOG1",130,0)
+ Q DATEVAL
+"RTN","XTMLOG1",131,0)
+ ;
+"RTN","XTMLOG1",132,0)
+DATEFRMT(X) ; X is passed by reference
+"RTN","XTMLOG1",133,0)
+ N XVAL,X1 S XVAL=""
+"RTN","XTMLOG1",134,0)
+ F  Q:X=""  S X1=$E(X),X=$$RESTOF(X) S:X1'="}" XVAL=XVAL_X1 I X1="}" Q
+"RTN","XTMLOG1",135,0)
+ Q XVAL
+"RTN","XTMLOG1",136,0)
+ ;
+"RTN","XTMLOG1",137,0)
+ADDTEXT(STR,LJUST,MINWID,NEW) ;
+"RTN","XTMLOG1",138,0)
+ N FILL
+"RTN","XTMLOG1",139,0)
+ I MINWID>0 S $P(FILL," ",MINWID)=" "
+"RTN","XTMLOG1",140,0)
+ I $L(NEW)<MINWID D
+"RTN","XTMLOG1",141,0)
+ . I LJUST S NEW=NEW_FILL,NEW=$E(NEW,1,MINWID)
+"RTN","XTMLOG1",142,0)
+ . E  S NEW=FILL_NEW,NEW=$E(NEW,$L(NEW)-MINWID+1,$L(NEW))
+"RTN","XTMLOG1",143,0)
+ Q STR_NEW
+"RTN","XTMLOG1",144,0)
+ ;
+"RTN","XTMLOG1",145,0)
+GETPREC(X) ; X passed by reference
+"RTN","XTMLOG1",146,0)
+ ; dummy stub
+"RTN","XTMLOG1",147,0)
+ Q -1
+"RTN","XTMLOG1",148,0)
+ ;
+"RTN","XTMLOG1",149,0)
+YEAR(FMDATE,FRMT) ;
+"RTN","XTMLOG1",150,0)
+ N N
+"RTN","XTMLOG1",151,0)
+ S N=1 F  Q:$E(FRMT)'="y"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",152,0)
+ Q $E($E(FMDATE,1,3)+1700,5-N,4)
+"RTN","XTMLOG1",153,0)
+ ;
+"RTN","XTMLOG1",154,0)
+MONTH(FMDATE,FRMT) ;
+"RTN","XTMLOG1",155,0)
+ N N,XVAL
+"RTN","XTMLOG1",156,0)
+ S N=1 F  Q:$E(FRMT)'="M"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",157,0)
+ S XVAL=$E(FMDATE,4,5)
+"RTN","XTMLOG1",158,0)
+ I N=3 S XVAL=$P("JAN^FEB^MAR^APR^MAY^JUN^JUL^AUG^SEP^OCT^NOV^DEC",U,+XVAL)
+"RTN","XTMLOG1",159,0)
+ I N>3 S XVAL=$P("JANUARY^FEBRUARY^MARCH^APRIL^MAY^JUNE^JULY^AUGUST^SEPTEMBER^OCTOBER^NOVEMBER^DECEMBER",U,+XVAL)
+"RTN","XTMLOG1",160,0)
+ Q XVAL
+"RTN","XTMLOG1",161,0)
+ ;
+"RTN","XTMLOG1",162,0)
+DAY(FMDATE,FRMT) ;
+"RTN","XTMLOG1",163,0)
+ N N,XVAL
+"RTN","XTMLOG1",164,0)
+ S N=1 F  Q:$E(FRMT)'="d"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",165,0)
+ S XVAL=$E(FMDATE,6,7)
+"RTN","XTMLOG1",166,0)
+ ;I N>2 S XVAL=$P
+"RTN","XTMLOG1",167,0)
+ Q XVAL
+"RTN","XTMLOG1",168,0)
+ ;
+"RTN","XTMLOG1",169,0)
+HOUR(FMDATE,FRMT) ;
+"RTN","XTMLOG1",170,0)
+ N N,XVAL
+"RTN","XTMLOG1",171,0)
+ S N=1 F  Q:$E(FRMT)'="H"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",172,0)
+ S XVAL=$E(FMDATE_"OOO",9,10)
+"RTN","XTMLOG1",173,0)
+ I N=1 S FRMT=FRMT_$S(XVAL>12:" PM",1:" AM"),XVAL=$S(XVAL>12:XVAL-12,1:XVAL)
+"RTN","XTMLOG1",174,0)
+ Q XVAL
+"RTN","XTMLOG1",175,0)
+ ;
+"RTN","XTMLOG1",176,0)
+MIN(FMDATE,FRMT) ;
+"RTN","XTMLOG1",177,0)
+ N N,XVAL
+"RTN","XTMLOG1",178,0)
+ S N=1 F  Q:$E(FRMT)'="m"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",179,0)
+ S XVAL=$E(FMDATE_"00000",11,12)
+"RTN","XTMLOG1",180,0)
+ I N=1 S XVAL=+XVAL
+"RTN","XTMLOG1",181,0)
+ Q XVAL
+"RTN","XTMLOG1",182,0)
+ ;
+"RTN","XTMLOG1",183,0)
+SEC(FMDATE,FRMT) ;
+"RTN","XTMLOG1",184,0)
+ N N,XVAL
+"RTN","XTMLOG1",185,0)
+ S N=1 F  Q:$E(FRMT)'="s"  S N=N+1,FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",186,0)
+ S XVAL=$E(FMDATE_"0000000",13,14)
+"RTN","XTMLOG1",187,0)
+ I N=1 S XVAL=+XVAL
+"RTN","XTMLOG1",188,0)
+ Q XVAL
+"RTN","XTMLOG1",189,0)
+ ;
+"RTN","XTMLOG1",190,0)
+MILLISEC(FMDATE,FRMT) ;
+"RTN","XTMLOG1",191,0)
+ ; NO WAY TO GET MILLISECONDS, JUST PUT NULLS
+"RTN","XTMLOG1",192,0)
+ F  Q:$E(FRMT)'="S"  S FRMT=$$RESTOF(FRMT)
+"RTN","XTMLOG1",193,0)
+ Q ""
+"RTN","XTMLOG1",194,0)
+ ;
+"RTN","XTMLOG1",195,0)
+FLATTEN(VARS,GLOBREF) ; Flatten via $QUERY; VARS is a string
+"RTN","XTMLOG1",196,0)
+ N CNT S CNT=0
+"RTN","XTMLOG1",197,0)
+ N I F I=1:1:$L(VARS,",") D
+"RTN","XTMLOG1",198,0)
+ . N VAR S VAR=$P(VARS,",",I)
+"RTN","XTMLOG1",199,0)
+ . N QL S QL=$QL(VAR)
+"RTN","XTMLOG1",200,0)
+ . N STOPVAR S STOPVAR=$NA(@VAR,QL)
+"RTN","XTMLOG1",201,0)
+ . S VAR=$Q(@VAR) Q:$NA(@VAR,QL)'=STOPVAR  Q:VAR=""  S CNT=CNT+1,@GLOBREF@(CNT)=@VAR
+"RTN","XTMLOG1",202,0)
+ QUIT
+"RTN","XTMLOG1",203,0)
+ ;
+"RTN","XTMLOG1",204,0)
+ZWRITE(NAME,QS,QSREP,SOC) ; Replacement for ZWRITE ; Public Proc
+"RTN","XTMLOG1",205,0)
+ ; Pass NAME by name as a closed reference. lvn and gvn are both supported.
+"RTN","XTMLOG1",206,0)
+ ; QS = Query Subscript to replace. Optional.
+"RTN","XTMLOG1",207,0)
+ ; QSREP = Query Subscrpt replacement. Optional, but must be passed if QS is.
+"RTN","XTMLOG1",208,0)
+ ; SOC = Is socket?
+"RTN","XTMLOG1",209,0)
+ ;
+"RTN","XTMLOG1",210,0)
+ ; : syntax is not supported (yet)
+"RTN","XTMLOG1",211,0)
+ S QS=$G(QS),QSREP=$G(QSREP)
+"RTN","XTMLOG1",212,0)
+ I QS,'$L(QSREP) S $EC=",U-INVALID-PARAMETERS,"
+"RTN","XTMLOG1",213,0)
+ N NL ; new line
+"RTN","XTMLOG1",214,0)
+ ; I $G(SOC)="" S NL="!" ; New line
+"RTN","XTMLOG1",215,0)
+ ; E  N CRLF S CRLF=$C(13,10)_",*-3",NL=$NA(CRLF) ; Weirdness b/c we have to @NL.
+"RTN","XTMLOG1",216,0)
+ N INCEXPN S INCEXPN=""
+"RTN","XTMLOG1",217,0)
+ I $L(QSREP) S INCEXPN="S $G("_QSREP_")="_QSREP_"+1"
+"RTN","XTMLOG1",218,0)
+ N L S L=$L(NAME) ; Name length
+"RTN","XTMLOG1",219,0)
+ I $E(NAME,L-2,L)=",*)" S NAME=$E(NAME,1,L-3)_")" ; If last sub is *, remove it and close the ref
+"RTN","XTMLOG1",220,0)
+ N ORIGNAME S ORIGNAME=NAME          ;
+"RTN","XTMLOG1",221,0)
+ N ORIGQL S ORIGQL=$QL(NAME)         ; Number of subscripts in the original name
+"RTN","XTMLOG1",222,0)
+ I $D(@NAME)#2 W $S(QS:$$SUBNAME(NAME,QS,QSREP),1:NAME),"=",$$FORMAT1(@NAME),! D:$G(SOC) CRFLUSH        ; Write base if it exists
+"RTN","XTMLOG1",223,0)
+ ; $QUERY through the name.
+"RTN","XTMLOG1",224,0)
+ ; Stop when we are out.
+"RTN","XTMLOG1",225,0)
+ ; Stop when the last subscript of the original name isn't the same as
+"RTN","XTMLOG1",226,0)
+ ; the last subscript of the Name.
+"RTN","XTMLOG1",227,0)
+ F  S NAME=$Q(@NAME) Q:NAME=""  Q:$NA(@ORIGNAME,ORIGQL)'=$NA(@NAME,ORIGQL)  D
+"RTN","XTMLOG1",228,0)
+ . W $S(QS:$$SUBNAME(NAME,QS,QSREP),1:NAME),"=",$$FORMAT1(@NAME),! D:$G(SOC) CRFLUSH
+"RTN","XTMLOG1",229,0)
+ QUIT
+"RTN","XTMLOG1",230,0)
+ ;
+"RTN","XTMLOG1",231,0)
+CRFLUSH ; Flush socket (Linux doesn't need this... it sends upon write)
+"RTN","XTMLOG1",232,0)
+ W $C(13,10)
+"RTN","XTMLOG1",233,0)
+ W:(+$SY=0) *-3
+"RTN","XTMLOG1",234,0)
+ QUIT
+"RTN","XTMLOG1",235,0)
+ ;
+"RTN","XTMLOG1",236,0)
+SUBNAME(N,QS,QSREP) ; Substitue subscript QS's value with QSREP in name reference N
+"RTN","XTMLOG1",237,0)
+ N VARCR S VARCR=$NA(@N,QS-1) ; Closed reference of name up to the sub we want to change
+"RTN","XTMLOG1",238,0)
+ N VAROR S VAROR=$S($E(VARCR,$L(VARCR))=")":$E(VARCR,1,$L(VARCR)-1)_",",1:VARCR_"(") ; Open ref
+"RTN","XTMLOG1",239,0)
+ N B4 S B4=$NA(@N,QS),B4=$E(B4,1,$L(B4)-1) ; Before sub piece, only used in next line
+"RTN","XTMLOG1",240,0)
+ N AF S AF=$P(N,B4,2,99) ; After sub piece
+"RTN","XTMLOG1",241,0)
+ QUIT VAROR_QSREP_AF
+"RTN","XTMLOG1",242,0)
+ ;
+"RTN","XTMLOG1",243,0)
+FORMAT1(V) ; Add quotes, replace control characters if necessary; Public $$
+"RTN","XTMLOG1",244,0)
+ ;If numeric, nothing to do.
+"RTN","XTMLOG1",245,0)
+ ;If no encoding required, then return as quoted string.
+"RTN","XTMLOG1",246,0)
+ ;Otherwise, return as an expression with $C()'s and strings.
+"RTN","XTMLOG1",247,0)
+ I +V=V Q V       ; If numeric, just return the value.
+"RTN","XTMLOG1",248,0)
+ N QT S QT=""""   ; Quote
+"RTN","XTMLOG1",249,0)
+ I $F(V,QT) D     ; chk if V contains any Quotes
+"RTN","XTMLOG1",250,0)
+ . N P S P=0                  ;position pointer into V
+"RTN","XTMLOG1",251,0)
+ . F  S P=$F(V,QT,P) Q:'P  D  ;find next "
+"RTN","XTMLOG1",252,0)
+ . . S $E(V,P-1)=QT_QT        ;double each "
+"RTN","XTMLOG1",253,0)
+ . . S P=P+1                  ;skip over new "
+"RTN","XTMLOG1",254,0)
+ I $$CCC(V) D  Q V     ; If control character is present do this and quit
+"RTN","XTMLOG1",255,0)
+ . S V=$$RCC(QT_V_QT)  ; Replace control characters in "V"
+"RTN","XTMLOG1",256,0)
+ . S:$E(V,1,3)="""""_" $E(V,1,3)="" ; Replace doubled up quotes at start
+"RTN","XTMLOG1",257,0)
+ . N L S L=$L(V) S:$E(V,L-2,L)="_""""" $E(V,L-2,L)="" ; Replace doubled up quotes at end
+"RTN","XTMLOG1",258,0)
+ Q QT_V_QT ; If no control charactrrs, quit with "V"
+"RTN","XTMLOG1",259,0)
+ ;
+"RTN","XTMLOG1",260,0)
+CCC(S) ;test if S Contains a Control Character or $C(255); Public $$
+"RTN","XTMLOG1",261,0)
+ Q:S?.E1C.E 1
+"RTN","XTMLOG1",262,0)
+ Q:$F(S,$C(255)) 1
+"RTN","XTMLOG1",263,0)
+ Q 0
+"RTN","XTMLOG1",264,0)
+ ;
+"RTN","XTMLOG1",265,0)
+RCC(NA) ;Replace control chars in NA with $C( ). Returns encoded string; Public $$
+"RTN","XTMLOG1",266,0)
+ Q:'$$CCC(NA) NA                         ;No embedded ctrl chars
+"RTN","XTMLOG1",267,0)
+ N OUT S OUT=""                          ;holds output name
+"RTN","XTMLOG1",268,0)
+ N CC S CC=0                             ;count ctrl chars in $C(
+"RTN","XTMLOG1",269,0)
+ N C255 S C255=$C(255)                   ;$C(255) which Mumps may not classify as a Control
+"RTN","XTMLOG1",270,0)
+ N C                                     ;temp hold each char
+"RTN","XTMLOG1",271,0)
+ N I F I=1:1:$L(NA) S C=$E(NA,I) D           ;for each char C in NA
+"RTN","XTMLOG1",272,0)
+ . I C'?1C,C'=C255 D  S OUT=OUT_C Q      ;not a ctrl char
+"RTN","XTMLOG1",273,0)
+ . . I CC S OUT=OUT_")_""",CC=0          ;close up $C(... if one is open
+"RTN","XTMLOG1",274,0)
+ . I CC D
+"RTN","XTMLOG1",275,0)
+ . . I CC=256 S OUT=OUT_")_$C("_$A(C),CC=0  ;max args in one $C(
+"RTN","XTMLOG1",276,0)
+ . . E  S OUT=OUT_","_$A(C)              ;add next ctrl char to $C(
+"RTN","XTMLOG1",277,0)
+ . E  S OUT=OUT_"""_$C("_$A(C)
+"RTN","XTMLOG1",278,0)
+ . S CC=CC+1
+"RTN","XTMLOG1",279,0)
+ . Q
+"RTN","XTMLOG1",280,0)
+ Q OUT
+"RTN","XTMLOG1",281,0)
+ ;
+"RTN","XTMLOG1",282,0)
+ ;
+"RTN","XTMLOG1",283,0)
+VIEW ;
+"RTN","XTMLOG1",284,0)
+DISPLAY ;
+"RTN","XTMLOG1",285,0)
+VIEWLOG ;
+"RTN","XTMLOG1",286,0)
+LOGVIEW ; [Public] View logs interactively in ^XTMP
+"RTN","XTMLOG1",287,0)
+ ; ZEXCEPT: DTIME
+"RTN","XTMLOG1",288,0)
+ N X,Y,DIC
+"RTN","XTMLOG1",289,0)
+ F  D VIEWLOOP Q:Y<0
+"RTN","XTMLOG1",290,0)
+ QUIT
+"RTN","XTMLOG1",291,0)
+ ;
+"RTN","XTMLOG1",292,0)
+VIEWLOOP ; [Private]
+"RTN","XTMLOG1",293,0)
+ ; ZEXCEPT: DTIME,DIC,Y
+"RTN","XTMLOG1",294,0)
+ ;
+"RTN","XTMLOG1",295,0)
+ ; Select Logging Name in 8992.7
+"RTN","XTMLOG1",296,0)
+ S DIC=8992.7,DIC(0)="AEMQ" D ^DIC
+"RTN","XTMLOG1",297,0)
+ Q:(Y<1)
+"RTN","XTMLOG1",298,0)
+ ;
+"RTN","XTMLOG1",299,0)
+ ; Get global entry
+"RTN","XTMLOG1",300,0)
+ N XTMLSUB S XTMLSUB=$$G(+Y)
+"RTN","XTMLOG1",301,0)
+ ;
+"RTN","XTMLOG1",302,0)
+ I $G(XTMLSUB)="" W "Cannot determine Global. Use RUN^XTMLOG1 manually",! QUIT
+"RTN","XTMLOG1",303,0)
+ ;
+"RTN","XTMLOG1",304,0)
+ ; Get a user for whom we are logging. This is a CPU intensive operation. I need to figure out how to speed it up.
+"RTN","XTMLOG1",305,0)
+ N X,Y,DIC ; Shadow the previous Y, so when we pop, Y is the last ^DIC's value.
+"RTN","XTMLOG1",306,0)
+ S DIC=200,DIC(0)="AEMQ",DIC("S")="I $D(^XTMP(XTMLSUB,Y))" D ^DIC
+"RTN","XTMLOG1",307,0)
+ Q:Y<1
+"RTN","XTMLOG1",308,0)
+ N USER S USER=+Y
+"RTN","XTMLOG1",309,0)
+ ;
+"RTN","XTMLOG1",310,0)
+ ; Make a pretend fileman file.
+"RTN","XTMLOG1",311,0)
+ K ^TMP("XTMLOGVIEW",$J)
+"RTN","XTMLOG1",312,0)
+ S ^TMP("XTMLOGVIEW",$J,0)="Log Date"_U_"1.01D"_U_0_U_0
+"RTN","XTMLOG1",313,0)
+ N I F I=0:0 S I=$O(^XTMP(XTMLSUB,USER,I)) Q:'I  D
+"RTN","XTMLOG1",314,0)
+ . N J F J=0:0 S J=$O(^XTMP(XTMLSUB,USER,I,J)) Q:'J  D
+"RTN","XTMLOG1",315,0)
+ .. S $P(^TMP("XTMLOGVIEW",$J,0),U,4)=$P(^TMP("XTMLOGVIEW",$J,0),U,4)+1
+"RTN","XTMLOG1",316,0)
+ .. N IEN S IEN=$P(^TMP("XTMLOGVIEW",$J,0),U,4)
+"RTN","XTMLOG1",317,0)
+ .. S ^TMP("XTMLOGVIEW",$J,IEN,0)=I_U_J
+"RTN","XTMLOG1",318,0)
+ .. S ^TMP("XTMLOGVIEW",$J,"B",I,IEN)=""
+"RTN","XTMLOG1",319,0)
+ K X,Y,DIC
+"RTN","XTMLOG1",320,0)
+ S DIC="^TMP(""XTMLOGVIEW"",$J,",DIC(0)="AEQZn",DIC("W")="W ?50,""$J: ""_$P(^(0),U,2)"
+"RTN","XTMLOG1",321,0)
+ D ^DIC
+"RTN","XTMLOG1",322,0)
+ K ^TMP("XTMLOGVIEW",$J)
+"RTN","XTMLOG1",323,0)
+ Q:Y<1
+"RTN","XTMLOG1",324,0)
+ N DATE S DATE=$P(Y(0),U,1)
+"RTN","XTMLOG1",325,0)
+ N JOB S JOB=$P(Y(0),U,2)
+"RTN","XTMLOG1",326,0)
+ D RUN(XTMLSUB,DATE,USER,JOB)
+"RTN","XTMLOG1",327,0)
+ QUIT
+"RTN","XTMLOG1",328,0)
+ ;
+"RTN","XTMLOG1",329,0)
+RUN(XTMLSUB,DATE,USER,JOB) ; [Public] Runner
+"RTN","XTMLOG1",330,0)
+ N LINE S $P(LINE,"=",80)="="
+"RTN","XTMLOG1",331,0)
+ ; Now loop through the global.
+"RTN","XTMLOG1",332,0)
+ N R S R=$NA(^XTMP(XTMLSUB,USER,DATE,JOB))
+"RTN","XTMLOG1",333,0)
+ N J,K,L,M S (J,K,L,M)=""
+"RTN","XTMLOG1",334,0)
+ W !,$$BOLD(),$$CJ^XLFSTR("---- JOB NUMBER "_JOB_" ----",80),$$RESET,!!
+"RTN","XTMLOG1",335,0)
+ F  S J=$O(@R@(J)) Q:J=""  D  ; Log Start Time
+"RTN","XTMLOG1",336,0)
+ . F  S K=$O(@R@(J,K)) Q:K=""  D  ; Event counter
+"RTN","XTMLOG1",337,0)
+ . . F  S L=$O(@R@(J,K,L)) Q:L=""  D  ; Routine invoking logging
+"RTN","XTMLOG1",338,0)
+ . . . F  S M=$O(@R@(J,K,L,M)) Q:M=""  D  ; Log Sub
+"RTN","XTMLOG1",339,0)
+ . . . . I +M D WRITINF(^(M)) I 1  ; If numeric, regular event
+"RTN","XTMLOG1",340,0)
+ . . . . E  D SAVEPRT($NA(^(M)))   ; If not, it's a saved off global. Print it in ZWRITE format.
+"RTN","XTMLOG1",341,0)
+ . . W !,$$RED,LINE,$$RESET,!! ; Write divider line before next event
+"RTN","XTMLOG1",342,0)
+ QUIT
+"RTN","XTMLOG1",343,0)
+WRITINF(L) ; [INTERNAL ONLY] Write informational line
+"RTN","XTMLOG1",344,0)
+ N TIME S TIME=$P(L," ")
+"RTN","XTMLOG1",345,0)
+ N REST S REST=$P(L," ",2,99)
+"RTN","XTMLOG1",346,0)
+ W $$BOLD(),TIME,$$RESET(),": ",$$GREEN(),REST,$$RESET(),!
+"RTN","XTMLOG1",347,0)
+ QUIT
+"RTN","XTMLOG1",348,0)
+ ;
+"RTN","XTMLOG1",349,0)
+SAVEPRT(G) ; [INTERNAL ONLY] Print saved array entry in G
+"RTN","XTMLOG1",350,0)
+ N Q S Q="""" ; Quote
+"RTN","XTMLOG1",351,0)
+ N N ; Just one var after the N
+"RTN","XTMLOG1",352,0)
+ N REF S REF=$QS(G,$QL(G))
+"RTN","XTMLOG1",353,0)
+ N REFOPEN S REFOPEN=$$OREF^DILF(REF) ; Make this an open root so we can append to it.
+"RTN","XTMLOG1",354,0)
+ N SUBSTR
+"RTN","XTMLOG1",355,0)
+ N QSTOP S QSTOP=G
+"RTN","XTMLOG1",356,0)
+ N QL S QL=$QL(G)
+"RTN","XTMLOG1",357,0)
+ F  S G=$Q(@G)  Q:$NA(@G,QL)'=QSTOP  Q:G=""  D
+"RTN","XTMLOG1",358,0)
+ . N SUBSTR S SUBSTR=""
+"RTN","XTMLOG1",359,0)
+ . F N=9:1:$QL(G) D
+"RTN","XTMLOG1",360,0)
+ . . N SUB S SUB=$QS(G,N) ; Actual sub (no quotes)
+"RTN","XTMLOG1",361,0)
+ . . N QSUB S QSUB=$S(SUB=+SUB:SUB,1:Q_SUB_Q)  ; Quote sub (if necessary)
+"RTN","XTMLOG1",362,0)
+ . . S SUBSTR=SUBSTR_QSUB_"," ; Append to string
+"RTN","XTMLOG1",363,0)
+ . S $E(SUBSTR,$L(SUBSTR))=")" ; remove final comma and replace with )
+"RTN","XTMLOG1",364,0)
+ . N REF2PRINT S REF2PRINT=REFOPEN_SUBSTR  ; Actual full global reference in ZWRITE format
+"RTN","XTMLOG1",365,0)
+ . N VAL S VAL=@G  ; Value of Subscript
+"RTN","XTMLOG1",366,0)
+ . N QVAL  ; Quoted value (if necessary)
+"RTN","XTMLOG1",367,0)
+ . I VAL'=+VAL S QVAL=Q_VAL_Q
+"RTN","XTMLOG1",368,0)
+ . E  S QVAL=VAL
+"RTN","XTMLOG1",369,0)
+ . W $$YELLOW(),REF2PRINT_"="_QVAL,$$RESET(),!
+"RTN","XTMLOG1",370,0)
+ . ; TODO: Unload global into system if the user wants to.
+"RTN","XTMLOG1",371,0)
+ QUIT
+"RTN","XTMLOG1",372,0)
+ ;
+"RTN","XTMLOG1",373,0)
+RED() ; Private
+"RTN","XTMLOG1",374,0)
+ Q $C(27)_"[31m"
+"RTN","XTMLOG1",375,0)
+GREEN() ; Private
+"RTN","XTMLOG1",376,0)
+ Q $C(27)_"[32m"
+"RTN","XTMLOG1",377,0)
+YELLOW() ; Private
+"RTN","XTMLOG1",378,0)
+ Q $C(27)_"[33m"
+"RTN","XTMLOG1",379,0)
+RESET() ; Private
+"RTN","XTMLOG1",380,0)
+ Q $C(27)_"[0m"
+"RTN","XTMLOG1",381,0)
+BOLD() ; Private
+"RTN","XTMLOG1",382,0)
+ Q $C(27)_"[1m"
+"RTN","XTMLOG1",383,0)
+ ;
+"RTN","XTMLOG1",384,0)
+CLEAR ; [Public] Remove logs
+"RTN","XTMLOG1",385,0)
+ N X,Y,DIC
+"RTN","XTMLOG1",386,0)
+ S DIC=8992.7,DIC(0)="AEMQ" D ^DIC
+"RTN","XTMLOG1",387,0)
+ Q:(Y<1)
+"RTN","XTMLOG1",388,0)
+ ; Get global entry
+"RTN","XTMLOG1",389,0)
+ N XTMLSUB S XTMLSUB=$$G(+Y)
+"RTN","XTMLOG1",390,0)
+ ;
+"RTN","XTMLOG1",391,0)
+ I $G(XTMLSUB)="" W "Cannot determine Global. Kill XTMP Global manually",! QUIT
+"RTN","XTMLOG1",392,0)
+ K ^XTMP(XTMLSUB)
+"RTN","XTMLOG1",393,0)
+ QUIT
+"RTN","XTMLOG1",394,0)
+ ;
+"RTN","XTMLOG1",395,0)
+G(Y) ; [$$ Private] Get XTMP Global
+"RTN","XTMLOG1",396,0)
+ ; Get the EZ Entry
+"RTN","XTMLOG1",397,0)
+ N EZENTRY S EZENTRY=$P(^XTV(8992.7,Y,0),U,3)
+"RTN","XTMLOG1",398,0)
+ I EZENTRY="" Q ""
+"RTN","XTMLOG1",399,0)
+ ;
+"RTN","XTMLOG1",400,0)
+ N XTMLSUB
+"RTN","XTMLOG1",401,0)
+ N I F I=1:1:$L(EZENTRY,";") D
+"RTN","XTMLOG1",402,0)
+ . N ENTRY S ENTRY=$P(EZENTRY,";",I)
+"RTN","XTMLOG1",403,0)
+ . I $E(ENTRY)="G" S XTMLSUB=$P(ENTRY,",",2)
+"RTN","XTMLOG1",404,0)
+ ;
+"RTN","XTMLOG1",405,0)
+ Q $G(XTMLSUB)
+"RTN","XTMLOPAR")
+0^3^B19189396
+"RTN","XTMLOPAR",1,0)
+XTMLOPAR ;JLI/FO-OAK - HANDLE PARSING FOR LOG4M XML CONFIGURATION FILE ;2017-07-25  10:38 AM
+"RTN","XTMLOPAR",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLOPAR",3,0)
+ ; Author: Joel Ivey, Ph.D. from 2007-2012
+"RTN","XTMLOPAR",4,0)
+ Q
+"RTN","XTMLOPAR",5,0)
+ENTRY(XTMNAME,GLOBROOT,RESULTS) ; RESULTS is passed by reference
+"RTN","XTMLOPAR",6,0)
+ S ELNUM=0,COUNT=0,APPCOUNT=0,GLOROOT=$NA(^TMP("JLIXML",$J)),GLOROOT(0)=GLOROOT K @GLOROOT
+"RTN","XTMLOPAR",7,0)
+ S ARRAY("STARTDOCUMENT")="STARTDOC^XTMLOPAR",ARRAY("ENDDOCUMENT")="ENDDOC^XTMLOPAR"
+"RTN","XTMLOPAR",8,0)
+ S ARRAY("DOCTYPE")="DOCTYPE^XTMLOPAR",ARRAY("STARTELEMENT")="STARTEL^XTMLOPAR"
+"RTN","XTMLOPAR",9,0)
+ S ARRAY("ENDELEMENT")="ENDEL^XTMLOPAR",ARRAY("CHARACTERS")="CHARS^XTMLOPAR"
+"RTN","XTMLOPAR",10,0)
+ S ARRAY("PI")="PI^XTMLOPAR",ARRAY("NOTATION")="NOTATION^XTMLOPAR"
+"RTN","XTMLOPAR",11,0)
+ S ARRAY("EXTERNAL")="EXTERNAL^XTMLOPAR",ARRAY("COMMENT")="COMMENT^XTMLOPAR",ARRAY("ERROR")="ERROR^XTMLOPAR"
+"RTN","XTMLOPAR",12,0)
+ D EN^MXMLPRSE(GLOBROOT,.ARRAY,"V")
+"RTN","XTMLOPAR",13,0)
+ Q
+"RTN","XTMLOPAR",14,0)
+ ;
+"RTN","XTMLOPAR",15,0)
+STARTDOC ; STARTDOCUMENT
+"RTN","XTMLOPAR",16,0)
+ W !,"START DOC ENTRY"
+"RTN","XTMLOPAR",17,0)
+ Q
+"RTN","XTMLOPAR",18,0)
+ ;
+"RTN","XTMLOPAR",19,0)
+ENDDOC ; ENDDOCUMENT
+"RTN","XTMLOPAR",20,0)
+ W !,"END DOC ENTRY"
+"RTN","XTMLOPAR",21,0)
+ Q
+"RTN","XTMLOPAR",22,0)
+ ;
+"RTN","XTMLOPAR",23,0)
+DOCTYPE(ROOT,PUBID,SYSID) ; DOCTYPE
+"RTN","XTMLOPAR",24,0)
+ W !,"DOCTYPE ENTRY"
+"RTN","XTMLOPAR",25,0)
+ W !,"ROOT=",ROOT,"  PUBID=",PUBID,"  SYSID=",SYSID
+"RTN","XTMLOPAR",26,0)
+ Q
+"RTN","XTMLOPAR",27,0)
+ ;
+"RTN","XTMLOPAR",28,0)
+STARTEL(NAME,ATTRIBS) ; STARTELEMENT
+"RTN","XTMLOPAR",29,0)
+ ;W !,"START ELEMENT ",NAME,! ZW ATTRIBS
+"RTN","XTMLOPAR",30,0)
+ S ELNUM=$G(ELNUM)+1
+"RTN","XTMLOPAR",31,0)
+ S COUNT=COUNT+1
+"RTN","XTMLOPAR",32,0)
+ S GLOROOT(ELNUM)=$NA(@GLOROOT(ELNUM-1)@(NAME,COUNT))
+"RTN","XTMLOPAR",33,0)
+ S A="" F  S A=$O(ATTRIBS(A)) Q:A=""  S @GLOROOT(ELNUM)@(A)=ATTRIBS(A)
+"RTN","XTMLOPAR",34,0)
+ S FLAG=$G(FLAG),PARAMFLG=""
+"RTN","XTMLOPAR",35,0)
+ I $$UP^XLFSTR(NAME)="ROOT" S FLAG="ROOT"
+"RTN","XTMLOPAR",36,0)
+ I $$UP^XLFSTR(NAME)="APPENDER" S FLAG="APPENDER",APPNAME=""
+"RTN","XTMLOPAR",37,0)
+ I $$UP^XLFSTR(NAME)="PARAM" S PARAMFLG=1
+"RTN","XTMLOPAR",38,0)
+ I FLAG="ROOT" D ROOT(NAME,.ATTRIBS)
+"RTN","XTMLOPAR",39,0)
+ I FLAG="APPENDER" D APPENDER(NAME,.ATTRIBS)
+"RTN","XTMLOPAR",40,0)
+ Q
+"RTN","XTMLOPAR",41,0)
+ ;
+"RTN","XTMLOPAR",42,0)
+ENDEL(NAME) ; ENDELEMENT
+"RTN","XTMLOPAR",43,0)
+ W !,"END ELEMENT ",NAME
+"RTN","XTMLOPAR",44,0)
+ K GLOROOT(ELNUM)
+"RTN","XTMLOPAR",45,0)
+ S ELNUM=ELNUM-1
+"RTN","XTMLOPAR",46,0)
+ Q
+"RTN","XTMLOPAR",47,0)
+ ;
+"RTN","XTMLOPAR",48,0)
+CHARS(TEXT) ; CHARACTERS
+"RTN","XTMLOPAR",49,0)
+ ;W !,"IN CHARS: ",TEXT
+"RTN","XTMLOPAR",50,0)
+ Q
+"RTN","XTMLOPAR",51,0)
+ ;
+"RTN","XTMLOPAR",52,0)
+PI(TARGET,TEXT) ; PI
+"RTN","XTMLOPAR",53,0)
+ ;W !,"IN PI: TARGET=",TARGET,"  TEXT=",TEXT
+"RTN","XTMLOPAR",54,0)
+ Q
+"RTN","XTMLOPAR",55,0)
+ ;
+"RTN","XTMLOPAR",56,0)
+NOTATION(NAME,SYSID,PUBIC) ; NOTATION
+"RTN","XTMLOPAR",57,0)
+ ;W !,"IN NOTATION, NAME=",NAME,"  SYSID=,$G(SYSID),"  PUBIC=",$G(PUBIC)
+"RTN","XTMLOPAR",58,0)
+ Q
+"RTN","XTMLOPAR",59,0)
+ ;
+"RTN","XTMLOPAR",60,0)
+EXTERNAL(SYSID,PUBID,GLOBAL) ; EXTERNAL
+"RTN","XTMLOPAR",61,0)
+ ;W !,"IN EXTERNAL SYSID=",$G(SYSID),"  PUBID=",$G(PUBID),"  GLOBAL=",$G(GLOBAL)
+"RTN","XTMLOPAR",62,0)
+ S PUBID=SYSID,SYSID=""
+"RTN","XTMLOPAR",63,0)
+ Q
+"RTN","XTMLOPAR",64,0)
+ ;
+"RTN","XTMLOPAR",65,0)
+COMMENT(TEXT) ; COMMENT
+"RTN","XTMLOPAR",66,0)
+ ;W !,"IN COMMENT: TEXT=",TEXT
+"RTN","XTMLOPAR",67,0)
+ Q
+"RTN","XTMLOPAR",68,0)
+ ;
+"RTN","XTMLOPAR",69,0)
+ERROR(ERR) ; ERROR - ERR is a local array
+"RTN","XTMLOPAR",70,0)
+ ;W !,"IN ERROR",! ZW ERR
+"RTN","XTMLOPAR",71,0)
+ Q
+"RTN","XTMLOPAR",72,0)
+ ;
+"RTN","XTMLOPAR",73,0)
+ROOT(NAME,ATTRIBS) ;
+"RTN","XTMLOPAR",74,0)
+ N ATTNAME,COUNT
+"RTN","XTMLOPAR",75,0)
+ ;W !,"IN ROOT: NAME=",NAME,! ZW ATTRIBS
+"RTN","XTMLOPAR",76,0)
+ S ATTNAME="",COUNT=0 F  S ATTNAME=$O(ATTRIBS(ATTNAME)) Q:ATTNAME=""  S COUNT=COUNT+1,XNAME(COUNT)=ATTNAME
+"RTN","XTMLOPAR",77,0)
+ I COUNT=1 S RESULTS(XTMNAME,$$UP^XLFSTR(NAME))=$$UP^XLFSTR(ATTRIBS(XNAME(1)))
+"RTN","XTMLOPAR",78,0)
+ Q
+"RTN","XTMLOPAR",79,0)
+ ;
+"RTN","XTMLOPAR",80,0)
+APPENDER(NAME,ATTRIBS) ;
+"RTN","XTMLOPAR",81,0)
+ I APPNAME="" D  Q
+"RTN","XTMLOPAR",82,0)
+ . S ATTNAME="" F  S ATTNAME=$O(ATTRIBS(ATTNAME)) Q:ATTNAME=""  I $$UP^XLFSTR(ATTNAME)="NAME" S APPCOUNT=APPCOUNT+1,APPNAME=APPCOUNT,RESULTS(XTMNAME,"APPENDER",APPNAME,"TYPE")=$$UP^XLFSTR(ATTRIBS(ATTNAME))
+"RTN","XTMLOPAR",83,0)
+ . I APPNAME'="" S ATTNAME="" F  S ATTNAME=$O(ATTRIBS(ATTNAME)) Q:ATTNAME=""  I $$UP^XLFSTR(ATTNAME)'="NAME" S RESULTS(XTMNAME,"APPENDER",APPNAME,$$UP^XLFSTR(ATTNAME))=$$UP^XLFSTR(ATTRIBS(ATTNAME))
+"RTN","XTMLOPAR",84,0)
+ . Q
+"RTN","XTMLOPAR",85,0)
+ ; now parameters
+"RTN","XTMLOPAR",86,0)
+ I PARAMFLG D  Q
+"RTN","XTMLOPAR",87,0)
+ . S ATTNAME="",XNAME="",XVALUE="" F  S ATTNAME=$O(ATTRIBS(ATTNAME)) Q:ATTNAME=""  S:$$UP^XLFSTR(ATTNAME)="NAME" XNAME=ATTNAME S:$$UP^XLFSTR(ATTNAME)="VALUE" XVALUE=ATTNAME
+"RTN","XTMLOPAR",88,0)
+ . I XNAME'="",XVALUE'="" S RESULTS(XTMNAME,"APPENDER",APPNAME,$$UP^XLFSTR(ATTRIBS(XNAME)))=$$UP^XLFSTR(ATTRIBS(XVALUE))
+"RTN","XTMLOPAR",89,0)
+ . Q
+"RTN","XTMLOPAR",90,0)
+ E  D DEBUG^XTMLOG("IN APPENDER WITH NO FLAG")
+"RTN","XTMLOPAR",91,0)
+ Q
+"RTN","XTMLOPAR",92,0)
+ ;
+"RTN","XTMLOPAR",93,0)
+LOADGLOB ; Load input (pasted) text into a global
+"RTN","XTMLOPAR",94,0)
+ N XGLOB,COUNT,X
+"RTN","XTMLOPAR",95,0)
+ W !,"Paste your text.  When there are no more lines within 5 seconds, it will finish.",!,":"
+"RTN","XTMLOPAR",96,0)
+ S XGLOB=$NA(^TMP("XTMLOAD",$J)) K @XGLOB
+"RTN","XTMLOPAR",97,0)
+ S COUNT=0 F  R X:5 Q:'$T  W ! D
+"RTN","XTMLOPAR",98,0)
+ . F  Q:$E(X,$L(X))'=" "  S X=$E(X,1,$L(X)-1) ; remove trailing spaces
+"RTN","XTMLOPAR",99,0)
+ . I X'="" S COUNT=COUNT+1,@XGLOB@(COUNT)=X ; skip null lines and store text
+"RTN","XTMLOPAR",100,0)
+ . Q
+"RTN","XTMLOPAR",101,0)
+ W !!,COUNT," lines input and stored under ",XGLOB
+"RTN","XTMLOPAR",102,0)
+ Q
+"RTN","XTMLOSKT")
+0^4^B36963579
+"RTN","XTMLOSKT",1,0)
+XTMLOSKT ;SLC/KCM;2017-07-25  10:39 AM;06/07/08  17:02
+"RTN","XTMLOSKT",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLOSKT",3,0)
+ ;
+"RTN","XTMLOSKT",4,0)
+ ; Includes some public domain code written by Kevin Muldrum
+"RTN","XTMLOSKT",5,0)
+ ; This code is currently not used.
+"RTN","XTMLOSKT",6,0)
+ ;
+"RTN","XTMLOSKT",7,0)
+ ; This routine is the background process that listens for client
+"RTN","XTMLOSKT",8,0)
+ ; requests to connect to M.  When a request is received, This
+"RTN","XTMLOSKT",9,0)
+ ; procedure will job a routine to handle the requests of the client.
+"RTN","XTMLOSKT",10,0)
+ ;
+"RTN","XTMLOSKT",11,0)
+ ; This job may be started in the background with:  D STRT^XWBTCP(PORT)
+"RTN","XTMLOSKT",12,0)
+ ;
+"RTN","XTMLOSKT",13,0)
+ ; When running, this job may be stopped with:      D STOP^XWBTCP(PORT)
+"RTN","XTMLOSKT",14,0)
+ ;
+"RTN","XTMLOSKT",15,0)
+ ; Where port is the known service port to listen for connections
+"RTN","XTMLOSKT",16,0)
+ ;
+"RTN","XTMLOSKT",17,0)
+EN(XWBTSKT) ; -- accept clients and start the individual message handler
+"RTN","XTMLOSKT",18,0)
+ ;N $ETRAP,$ESTACK S $ETRAP="D ^%ZTER J EN^XTMLOSKT($G(XWBTSKT)) HALT"
+"RTN","XTMLOSKT",19,0)
+ N RETRY,X,XWBVER,XWBVOL,LEN,MSG,XWBOS,DONE,DSMTCP,NATIP
+"RTN","XTMLOSKT",20,0)
+ S U="^",RETRY="START"
+"RTN","XTMLOSKT",21,0)
+ X ^%ZOSF("UCI") S XWBVOL=$P(Y,",",2) ;(*p7,p9*)
+"RTN","XTMLOSKT",22,0)
+ IF $G(XWBTSKT)="" S XWBTSKT=9400 ; default service port
+"RTN","XTMLOSKT",23,0)
+ S XWBTDEV=XWBTSKT
+"RTN","XTMLOSKT",24,0)
+ ;
+"RTN","XTMLOSKT",25,0)
+ Q:'$$SEMAPHOR(XWBTSKT,"LOCK")  ; -- quit if job is already running
+"RTN","XTMLOSKT",26,0)
+ ;
+"RTN","XTMLOSKT",27,0)
+ S XWBDEBUG=$$GET^XPAR("SYS","XWBDEBUG")
+"RTN","XTMLOSKT",28,0)
+ I XWBDEBUG D LOGSTART^XWBDLOG("XTMLOSKT")
+"RTN","XTMLOSKT",29,0)
+ D UPDTREC(XWBTSKT,3) ;updt RPC BROKER SITE PARAMETER record as RUNNING
+"RTN","XTMLOSKT",30,0)
+ D MARKER^XWBTCP(XWBTSKT,-1) ;Clear marker
+"RTN","XTMLOSKT",31,0)
+ ;
+"RTN","XTMLOSKT",32,0)
+ H 2 ;Hibernate so caller can clear (*p16)
+"RTN","XTMLOSKT",33,0)
+ D SETNM^%ZOSV($E("XTML_Port:"_XWBTSKT,1,15)) ;change process name
+"RTN","XTMLOSKT",34,0)
+ S ^TMP("XTMLOSKT","$J",$J)=""
+"RTN","XTMLOSKT",35,0)
+ ;
+"RTN","XTMLOSKT",36,0)
+RESTART ;
+"RTN","XTMLOSKT",37,0)
+ N $ESTACK S $ETRAP="D ETRAP^XTMLOSKT"
+"RTN","XTMLOSKT",38,0)
+ S DONE=0,X=0
+"RTN","XTMLOSKT",39,0)
+ S XWBOS=$S(^%ZOSF("OS")["DSM":"DSM",^("OS")["OpenM":"OpenM",^("OS")["GT.M":"GTM",^("OS")["MSM":"MSM",1:"")
+"RTN","XTMLOSKT",40,0)
+ ;
+"RTN","XTMLOSKT",41,0)
+ S %T=0,IOF="!" ;Check for Open success (*p35)
+"RTN","XTMLOSKT",42,0)
+ I XWBOS="DSM" O XWBTSKT:TCPCHAN:5 S %T=$T ;Open listener
+"RTN","XTMLOSKT",43,0)
+ I XWBOS="OpenM" S XWBTDEV="|TCP|"_XWBTSKT O XWBTDEV:(:XWBTSKT:"AT"::512:512:10):5 S %T=$T ;512 buffers, queue = 10 (*p35)
+"RTN","XTMLOSKT",44,0)
+ I XWBOS="GTM" D
+"RTN","XTMLOSKT",45,0)
+ . S @("$ZINTERRUPT=""I $$JOBEXAM^ZU($ZPOSITION)""")
+"RTN","XTMLOSKT",46,0)
+ . S XWBTDEV="SKD$"_$J,XWBTSKT=XWBTSKT,IOF="#"
+"RTN","XTMLOSKT",47,0)
+ . O XWBTDEV:(ZLISTEN=XWBTSKT_":TCP":ATTACH="listener"):5:"SOCKET" ;S %T=$T Q:'%T
+"RTN","XTMLOSKT",48,0)
+ . U XWBTDEV S XWBTDEV("LISTENER")=$KEY
+"RTN","XTMLOSKT",49,0)
+ . W /LISTEN(1)
+"RTN","XTMLOSKT",50,0)
+ . U XWBTDEV S XWBTDEV("STATUS")=$KEY
+"RTN","XTMLOSKT",51,0)
+ . Q
+"RTN","XTMLOSKT",52,0)
+ ;
+"RTN","XTMLOSKT",53,0)
+ I XWBDEBUG D LOG^XWBTCPC("Port Open: "_XWBTSKT)
+"RTN","XTMLOSKT",54,0)
+ F  D  Q:DONE
+"RTN","XTMLOSKT",55,0)
+ . ; -- listen for connect & get the initial message from the client
+"RTN","XTMLOSKT",56,0)
+ . I XWBOS="DSM" U XWBTSKT
+"RTN","XTMLOSKT",57,0)
+ . I XWBOS="MSM" S XWBTDEV=56 O 56 U 56::"TCP" W /SOCKET("",XWBTSKT)
+"RTN","XTMLOSKT",58,0)
+ . I XWBOS="OpenM" U XWBTDEV R *X
+"RTN","XTMLOSKT",59,0)
+ . I XWBOS="GTM" D
+"RTN","XTMLOSKT",60,0)
+ . . K XWBTDEV("SOCKET")
+"RTN","XTMLOSKT",61,0)
+ . . F  D  Q:$D(XWBTDEV("SOCKET"))
+"RTN","XTMLOSKT",62,0)
+ . . . ;Wait for connection, $KEY will be "CONNECT|socket_handle|remote_ipaddress"
+"RTN","XTMLOSKT",63,0)
+ . . . U XWBTDEV W /WAIT(10) S XWBTDEV("KEY")=$KEY
+"RTN","XTMLOSKT",64,0)
+ . . . I XWBTDEV("KEY")="" Q
+"RTN","XTMLOSKT",65,0)
+ . . . S XWBTDEV("SOCKET")=$P(XWBTDEV("KEY"),"|",2)
+"RTN","XTMLOSKT",66,0)
+ . . . S (XWBTDEV("IP"),IO("GTM-IP"))=$P(XWBTDEV("KEY"),"|",3)
+"RTN","XTMLOSKT",67,0)
+ . . . U XWBTDEV:(SOCKET=XWBTDEV("SOCKET"):WIDTH=512:NOWRAP:EXCEPTION="GOTO ETRAP")
+"RTN","XTMLOSKT",68,0)
+ . . . Q
+"RTN","XTMLOSKT",69,0)
+ . . Q
+"RTN","XTMLOSKT",70,0)
+ . I $D(^TMP("XTMLOSKT","DATA",XWBTSKT)) D
+"RTN","XTMLOSKT",71,0)
+ . . U XWBTSKT
+"RTN","XTMLOSKT",72,0)
+ . . D FLUSH
+"RTN","XTMLOSKT",73,0)
+ . . N I,X S JOB="" F  Q:DONE  S JOB=$O(^TMP("XTMLOSKT","DATA",XWBTSKT,JOB)) Q:JOB=""  F I=0:0 S I=$O(^TMP("XTMLOSKT","DATA",XWBTSKT,JOB,I)) Q:I'>0  D
+"RTN","XTMLOSKT",74,0)
+ . . . S X=^TMP("XTMLOSKT","DATA",XWBTSKT,JOB,I) K ^(I) D
+"RTN","XTMLOSKT",75,0)
+ . . . . N $ETRAP,$ESTACK S $ETRAP="D IGNOR^XTMLOSKT"
+"RTN","XTMLOSKT",76,0)
+ . . . . W X,$C(13,10),@IOF I $D(^TMP("XTMLOSKT","STOP",XWBTSKT)) S DONE=1 K ^(XWBTSKT)
+"RTN","XTMLOSKT",77,0)
+ . . . Q
+"RTN","XTMLOSKT",78,0)
+ . . Q
+"RTN","XTMLOSKT",79,0)
+ . H 1
+"RTN","XTMLOSKT",80,0)
+ . I $D(^TMP("XTMLOSKT","STOP",XWBTSKT)) S DONE=1 K ^(XWBTSKT)
+"RTN","XTMLOSKT",81,0)
+ . Q
+"RTN","XTMLOSKT",82,0)
+ ; -- loop end
+"RTN","XTMLOSKT",83,0)
+ ;
+"RTN","XTMLOSKT",84,0)
+ S %=$$SEMAPHOR(XWBTSKT,"UNLOCK") ; destroy 'running flag'
+"RTN","XTMLOSKT",85,0)
+ D UPDTREC(XWBTSKT,6) ;updt RPC BROKER SITE PARAMETER record as STOPPED
+"RTN","XTMLOSKT",86,0)
+ IF XWBOS="DSM" C XWBTSKT ;Do Close last in case it gets an error
+"RTN","XTMLOSKT",87,0)
+ Q
+"RTN","XTMLOSKT",88,0)
+IGNOR ;
+"RTN","XTMLOSKT",89,0)
+ S IGNOR=$G(IGNOR)+1
+"RTN","XTMLOSKT",90,0)
+ ; S ^TMP("XTMLOSKT","IGNOR",IGNOR)=$H
+"RTN","XTMLOSKT",91,0)
+ S $ET="",$EC=""
+"RTN","XTMLOSKT",92,0)
+ Q
+"RTN","XTMLOSKT",93,0)
+ ;
+"RTN","XTMLOSKT",94,0)
+ ;
+"RTN","XTMLOSKT",95,0)
+ETRAP ; -- on trapped error, send error info to client
+"RTN","XTMLOSKT",96,0)
+ N XWBERC,XWBERR ;S $ETRAP="D ^%ZTER J EN^XTMLOSKT($G(XWBTSKT)) HALT"
+"RTN","XTMLOSKT",97,0)
+ S XWBERC=$$EC^%ZOSV,XWBERR=$C(24)_"M  ERROR="_XWBERC_$C(13,10)_"LAST REF="_$$LGR^%ZOSV_$C(4)
+"RTN","XTMLOSKT",98,0)
+ S ECOUNT=$G(ECOUNT)+1
+"RTN","XTMLOSKT",99,0)
+ S ^TMP("XTMLOSKT","ETRAP",ECOUNT,$H)=XWBERR
+"RTN","XTMLOSKT",100,0)
+ I (XWBERC["WRITE")!(XWBERC["READ") S $ECODE="" Q  ;
+"RTN","XTMLOSKT",101,0)
+ D ^%ZTER ;Record error and clear $ECODE
+"RTN","XTMLOSKT",102,0)
+ I XWBERC["F-DUPLNAM" D  HALT
+"RTN","XTMLOSKT",103,0)
+ . S %=$$SEMAPHOR(XWBTSKT,"UNLOCK") ; destroy 'running flag'
+"RTN","XTMLOSKT",104,0)
+ . D UPDTREC(XWBTSKT,6) ;updt RPC BROKER SITE PARAMETER record as STOPPED
+"RTN","XTMLOSKT",105,0)
+ . Q
+"RTN","XTMLOSKT",106,0)
+ Q
+"RTN","XTMLOSKT",107,0)
+ ;
+"RTN","XTMLOSKT",108,0)
+FLUSH ;Flush the input buffer
+"RTN","XTMLOSKT",109,0)
+ F  R X:0 Q:'$T
+"RTN","XTMLOSKT",110,0)
+ Q
+"RTN","XTMLOSKT",111,0)
+ ;
+"RTN","XTMLOSKT",112,0)
+RELEASE(%) ;Now release the connection. (*p7*)
+"RTN","XTMLOSKT",113,0)
+ ;Parameter is zero to Release, one to Close
+"RTN","XTMLOSKT",114,0)
+ I XWBOS="DSM" D  Q  ;(*p35)
+"RTN","XTMLOSKT",115,0)
+ . I $G(%) C XWBTSKT Q
+"RTN","XTMLOSKT",116,0)
+ . U XWBTSKT:DISCONNECT ; release this socket
+"RTN","XTMLOSKT",117,0)
+ I XWBOS="OpenM" D  Q  ;(*p35)
+"RTN","XTMLOSKT",118,0)
+ . I $G(%) C XWBTDEV Q
+"RTN","XTMLOSKT",119,0)
+ . W *-3,*-2 ;Send any data and release the socket
+"RTN","XTMLOSKT",120,0)
+ I XWBOS="GTM" D  Q  ;(*p35)
+"RTN","XTMLOSKT",121,0)
+ . I $G(%) C XWBTDEV Q
+"RTN","XTMLOSKT",122,0)
+ . C XWBTDEV:(SOCKET=XWBTDEV("SOCKET")) ;release the socket
+"RTN","XTMLOSKT",123,0)
+ I XWBOS="MSM" C 56
+"RTN","XTMLOSKT",124,0)
+ Q
+"RTN","XTMLOSKT",125,0)
+ ;
+"RTN","XTMLOSKT",126,0)
+UPDTREC(XWBTSKT,STATE,XWBENV) ; -- update STATUS field and ^%ZIS X-ref of the
+"RTN","XTMLOSKT",127,0)
+ ;RPC BROKER SITE PARAMETER file
+"RTN","XTMLOSKT",128,0)
+ ;XWBTSKT: listener port
+"RTN","XTMLOSKT",129,0)
+ N C,XWBOXIEN,XWBPOIEN,XWBFDA
+"RTN","XTMLOSKT",130,0)
+ S C=",",U="^"
+"RTN","XTMLOSKT",131,0)
+ I $G(XWBENV)'="" S Y=XWBENV
+"RTN","XTMLOSKT",132,0)
+ E  D GETENV^%ZOSV ;get Y=UCI^VOL^NODE^BOXLOOKUP of current system
+"RTN","XTMLOSKT",133,0)
+ ;I STATE=3 S ^%ZIS(8994.171,"RPCB Listener",$P(Y,U,2),$P(Y,U),$P(Y,U,4),XWBTSKT)=$J
+"RTN","XTMLOSKT",134,0)
+ ;I STATE=6 K ^%ZIS(8994.171,"RPCB Listener",$P(Y,U,2),$P(Y,U),$P(Y,U,4),XWBTSKT)
+"RTN","XTMLOSKT",135,0)
+ ;
+"RTN","XTMLOSKT",136,0)
+ S XWBOXIEN=$$FIND1^DIC(8994.17,",1,","",$P(Y,U,4)) ;find rec for box
+"RTN","XTMLOSKT",137,0)
+ S XWBPOIEN=$$FIND1^DIC(8994.171,C_XWBOXIEN_",1,","",XWBTSKT)
+"RTN","XTMLOSKT",138,0)
+ D:XWBPOIEN>0  ;update STATUS field if entry was found
+"RTN","XTMLOSKT",139,0)
+ . D FDA^DILF(8994.171,XWBPOIEN_C_XWBOXIEN_C_1_C,1,"R",STATE,"XWBFDA")
+"RTN","XTMLOSKT",140,0)
+ . D FILE^DIE("","XWBFDA")
+"RTN","XTMLOSKT",141,0)
+ Q
+"RTN","XTMLOSKT",142,0)
+ ;
+"RTN","XTMLOSKT",143,0)
+ ;
+"RTN","XTMLOSKT",144,0)
+SEMAPHOR(XWBTSKT,XWBACT) ;Lock/Unlock listener semaphore
+"RTN","XTMLOSKT",145,0)
+ ;XWBTSKT: listener port, XWBACT: "LOCK" | "UNLOCK" action to perform
+"RTN","XTMLOSKT",146,0)
+ ;if LOCK is requested, it will be attempted with 1 sec timeout and if
+"RTN","XTMLOSKT",147,0)
+ ;lock was obtained RESULT will be 1, otherwise it will be 0.  For
+"RTN","XTMLOSKT",148,0)
+ ;unlock RESULT will always be 1.
+"RTN","XTMLOSKT",149,0)
+ N RESULT
+"RTN","XTMLOSKT",150,0)
+ S U="^",RESULT=1
+"RTN","XTMLOSKT",151,0)
+ D GETENV^%ZOSV ;get Y=UCI^VOL^NODE^BOXLOOKUP of current system
+"RTN","XTMLOSKT",152,0)
+ I XWBACT="LOCK" D
+"RTN","XTMLOSKT",153,0)
+ . L +^%ZIS(8994.171,"RPCB Listener",$P(Y,U,2),$P(Y,U),$P(Y,U,4),XWBTSKT):1
+"RTN","XTMLOSKT",154,0)
+ . S RESULT=$T
+"RTN","XTMLOSKT",155,0)
+ E  L -^%ZIS(8994.171,"RPCB Listener",$P(Y,U,2),$P(Y,U),$P(Y,U,4),XWBTSKT)
+"RTN","XTMLOSKT",156,0)
+ Q RESULT
+"RTN","XTMLOSKT",157,0)
+ ;
+"RTN","XTMLOSKT",158,0)
+NEWJOB() ;Check if OK to start a new job, Return 1 if OK, 0 if not OK.
+"RTN","XTMLOSKT",159,0)
+ N X,Y,J
+"RTN","XTMLOSKT",160,0)
+ S X=$O(^XTV(8989.3,1,4,"B",XWBVOL,0)),J=$S(X>0:^XTV(8989.3,1,4,X,0),1:"ROU^y^1")
+"RTN","XTMLOSKT",161,0)
+ I $D(^%ZOSF("ACTJ")) X ^("ACTJ") I $P(J,U,3),($P(J,U,3)'>Y) Q 0
+"RTN","XTMLOSKT",162,0)
+ Q 1
+"RTN","XTMLOSKT",163,0)
+ ;
+"RTN","XTMLOSKT",164,0)
+START(PORT) ;
+"RTN","XTMLOSKT",165,0)
+ J EN^XTMLOSKT(PORT)
+"RTN","XTMLOSKT",166,0)
+ Q
+"RTN","XTMLOSKT",167,0)
+ ;
+"RTN","XTMLOSKT",168,0)
+STOP(PORT) ;
+"RTN","XTMLOSKT",169,0)
+ S ^TMP("XTMLOSKT","STOP",PORT)=""
+"RTN","XTMLOSKT",170,0)
+ Q
+"RTN","XTMLOSKT",171,0)
+ ;
+"RTN","XTMLOSKT",172,0)
+SETDATA(STR,PORT,COUNT) ;
+"RTN","XTMLOSKT",173,0)
+ S PORT=$G(PORT,8025),OLDCOUNT=$G(COUNT,$G(OLDCOUNT))+1
+"RTN","XTMLOSKT",174,0)
+ S ^TMP("XTMLOSKT","DATA",PORT,$J,OLDCOUNT)=STR
+"RTN","XTMLOSKT",175,0)
+ Q
+"RTN","XTMLOSKT",176,0)
+ ;
+"RTN","XTMLT1")
+0^5^B74412192
+"RTN","XTMLT1",1,0)
+XTMLT1 ;JLI/FO-OAK TEST ROUTINE FOR LOGGER ;2017-07-25  10:31 AM
+"RTN","XTMLT1",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLT1",3,0)
+ ; Code authored by Joel Ivey 2008-2017. Minor changes by Sam Habiel in 2017 for bug fixes.
+"RTN","XTMLT1",4,0)
+ D EN^%ut("XTMLT1",2)
+"RTN","XTMLT1",5,0)
+ QUIT
+"RTN","XTMLT1",6,0)
+ ;
+"RTN","XTMLT1",7,0)
+CHECKIEN() ; returns internal entry number of XTMLT1
+"RTN","XTMLT1",8,0)
+ N XTMLT1,FDA
+"RTN","XTMLT1",9,0)
+ S XTMLT1=$$FIND1^DIC(8992.7,"","X","XTMLT1")
+"RTN","XTMLT1",10,0)
+ I XTMLT1'>0 S FDA(8992.7,"+1,",.01)="XTMLT1" D UPDATE^DIE("","FDA") S XTMLT1=$$FIND1^DIC(8992.7,"","X","XTMLT1")
+"RTN","XTMLT1",11,0)
+ Q XTMLT1
+"RTN","XTMLT1",12,0)
+ ;
+"RTN","XTMLT1",13,0)
+STARTUP ;
+"RTN","XTMLT1",14,0)
+ N UTIEN,ROOT
+"RTN","XTMLT1",15,0)
+ S UTIEN=$$CHECKIEN()
+"RTN","XTMLT1",16,0)
+ S ROOT=$NA(^TMP("XTSAVECOPY",$J))
+"RTN","XTMLT1",17,0)
+ D GETS^DIQ(8992.7,UTIEN_",",".02:.08","I",ROOT)
+"RTN","XTMLT1",18,0)
+ Q
+"RTN","XTMLT1",19,0)
+ ;
+"RTN","XTMLT1",20,0)
+SHUTDOWN ;
+"RTN","XTMLT1",21,0)
+ N XTI,XTVAL,XTFDA,UTIEN,ROOT
+"RTN","XTMLT1",22,0)
+ S UTIEN=$$CHECKIEN()
+"RTN","XTMLT1",23,0)
+ S ROOT=$NA(^TMP("XTSAVECOPY",$J,8992.7,UTIEN_","))
+"RTN","XTMLT1",24,0)
+ F XTI=.02:.01:.08 S XTVAL=$G(@ROOT@(XTI,"I")) S XTFDA(8992.7,UTIEN_",",XTI)=XTVAL
+"RTN","XTMLT1",25,0)
+ D FILE^DIE("I","XTFDA")
+"RTN","XTMLT1",26,0)
+ K ^TMP("XTSAVECOPY",$J)
+"RTN","XTMLT1",27,0)
+ Q
+"RTN","XTMLT1",28,0)
+ ;
+"RTN","XTMLT1",29,0)
+SETFDA(IEN,FDA,ACTIVE,TYPE,LEVEL,ROUFILTR,USRFILTR,OUTTYPE,OUTSPECS) ; FDA passed by reference
+"RTN","XTMLT1",30,0)
+ S IEN=IEN_","
+"RTN","XTMLT1",31,0)
+ S FDA(8992.7,IEN,.02)=ACTIVE
+"RTN","XTMLT1",32,0)
+ S FDA(8992.7,IEN,.03)=TYPE
+"RTN","XTMLT1",33,0)
+ S FDA(8992.7,IEN,.04)=LEVEL
+"RTN","XTMLT1",34,0)
+ S FDA(8992.7,IEN,.05)=ROUFILTR
+"RTN","XTMLT1",35,0)
+ S FDA(8992.7,IEN,.06)=USRFILTR
+"RTN","XTMLT1",36,0)
+ S FDA(8992.7,IEN,.07)=$G(OUTTYPE)
+"RTN","XTMLT1",37,0)
+ S FDA(8992.7,IEN,.08)=$G(OUTSPECS)
+"RTN","XTMLT1",38,0)
+ Q
+"RTN","XTMLT1",39,0)
+ ;
+"RTN","XTMLT1",40,0)
+NORMAL ;
+"RTN","XTMLT1",41,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",42,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",43,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","","")
+"RTN","XTMLT1",44,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",45,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",46,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",47,0)
+ D TESTS
+"RTN","XTMLT1",48,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",49,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",50,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS+1^XTMLT1",1))["ENTERED TESTS","INFO-ENTERED TESTS FAILED")
+"RTN","XTMLT1",51,0)
+ D CHKTF^%ut($G(@XTMLBASE@(2,"TESTS+2^XTMLT1",1))["DUZ: "_DUZ,"BASIC DUZ VARIABLE FAILED")
+"RTN","XTMLT1",52,0)
+ D CHKTF^%ut($G(@XTMLBASE@(3,"TESTS+3^XTMLT1",2))["DUZ(0): "_DUZ(0),"DUZ VARIABLE ARRAY FAILED")
+"RTN","XTMLT1",53,0)
+ D CHKTF^%ut($G(@XTMLBASE@(4,"TESTS+9^XTMLT1",1))["^TMP("_$J_",""VALUE""): VALUE","GLOBAL NODE FAILED")
+"RTN","XTMLT1",54,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",1))["DUZ: "_DUZ,"VARIABLE AND GLOBAL FAILED VARIABLE")
+"RTN","XTMLT1",55,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",2))["^TMP("_$J_",""VALUE""): VALUE","VARIABALE AND GLOBAL FAILED GLOBAL")
+"RTN","XTMLT1",56,0)
+ D CHKTF^%ut($G(@XTMLBASE@(6,"TESTS+11^XTMLT1",4))[",1): VALUE1,1","GLOBAL ARRAY FAILED")
+"RTN","XTMLT1",57,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",58,0)
+ Q
+"RTN","XTMLT1",59,0)
+ ;
+"RTN","XTMLT1",60,0)
+INFOONLY ;
+"RTN","XTMLT1",61,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",62,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",63,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","INFO","","")
+"RTN","XTMLT1",64,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",65,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",66,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",67,0)
+ D TESTS
+"RTN","XTMLT1",68,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",69,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",70,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS+1^XTMLT1",1))["ENTERED TESTS","INFO - ENTERED TESTS FAILED")
+"RTN","XTMLT1",71,0)
+ D CHKTF^%ut($D(@XTMLBASE@(2,"TESTS+2^XTMLT1",1))=0,"DUZ LISTED DEBUG - NOT INFO ONLY")
+"RTN","XTMLT1",72,0)
+ D CHKTF^%ut($G(@XTMLBASE@(3,"TESTS+13^XTMLT1",1))["EXITING TESTS","INFO - EXITING TESTS FAILED")
+"RTN","XTMLT1",73,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",74,0)
+ Q
+"RTN","XTMLT1",75,0)
+ ;
+"RTN","XTMLT1",76,0)
+CURRUSER ;
+"RTN","XTMLT1",77,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",78,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",79,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","",DUZ)
+"RTN","XTMLT1",80,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",81,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",82,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",83,0)
+ D TESTS
+"RTN","XTMLT1",84,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",85,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",86,0)
+ D CHKTF^%ut(XTMLBASE'="","XTMLBASE RETURNED NULL")
+"RTN","XTMLT1",87,0)
+ I XTMLBASE="" Q
+"RTN","XTMLT1",88,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS+1^XTMLT1",1))["ENTERED TESTS","INFO-ENTERED TESTS FAILED")
+"RTN","XTMLT1",89,0)
+ D CHKTF^%ut($G(@XTMLBASE@(2,"TESTS+2^XTMLT1",1))["DUZ: "_DUZ,"BASIC DUZ VARIABLE FAILED")
+"RTN","XTMLT1",90,0)
+ D CHKTF^%ut($G(@XTMLBASE@(3,"TESTS+3^XTMLT1",2))["DUZ(0): "_DUZ(0),"DUZ VARIABLE ARRAY FAILED")
+"RTN","XTMLT1",91,0)
+ D CHKTF^%ut($G(@XTMLBASE@(4,"TESTS+9^XTMLT1",1))["^TMP("_$J_",""VALUE""): VALUE","GLOBAL NODE FAILED")
+"RTN","XTMLT1",92,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",1))["DUZ: "_DUZ,"VARIABLE AND GLOBAL FAILED VARIABLE")
+"RTN","XTMLT1",93,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",2))["^TMP("_$J_",""VALUE""): VALUE","VARIABALE AND GLOBAL FAILED GLOBAL")
+"RTN","XTMLT1",94,0)
+ D CHKTF^%ut($G(@XTMLBASE@(6,"TESTS+11^XTMLT1",4))[",1): VALUE1,1","GLOBAL ARRAY FAILED")
+"RTN","XTMLT1",95,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",96,0)
+ Q
+"RTN","XTMLT1",97,0)
+ ;
+"RTN","XTMLT1",98,0)
+OTHRUSER ;
+"RTN","XTMLT1",99,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",100,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",101,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","",DUZ+1)
+"RTN","XTMLT1",102,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",103,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",104,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",105,0)
+ D TESTS
+"RTN","XTMLT1",106,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",107,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",108,0)
+ D CHKTF^%ut(XTMLBASE="","USER FILTERED TESTS FAILED")
+"RTN","XTMLT1",109,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",110,0)
+ Q
+"RTN","XTMLT1",111,0)
+ ;
+"RTN","XTMLT1",112,0)
+LIMITROU ;
+"RTN","XTMLT1",113,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",114,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",115,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","XTMLT2","")
+"RTN","XTMLT1",116,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",117,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",118,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",119,0)
+ D TESTS
+"RTN","XTMLT1",120,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",121,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",122,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS1+1^XTMLT2",1))["ENTERED TESTS1","ROUTINE FILTERED TESTS FAILED")
+"RTN","XTMLT1",123,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",124,0)
+ Q
+"RTN","XTMLT1",125,0)
+ ;
+"RTN","XTMLT1",126,0)
+EMAIL ; must be activated by commenting next line to run - this is done to prevent many e-mails one for each time the unit tests are run.
+"RTN","XTMLT1",127,0)
+ W !,"[E-MAIL test can be activated by commenting out EMAIL+1^XTMLT1]" Q  ; comment out this line to have it send an e-mail with the logging results to this user
+"RTN","XTMLT1",128,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",129,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",130,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","","","M","")
+"RTN","XTMLT1",131,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",132,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",133,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",134,0)
+ D TESTS
+"RTN","XTMLT1",135,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",136,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",137,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS+1^XTMLT1",1))["ENTERED TESTS","INFO-ENTERED TESTS FAILED")
+"RTN","XTMLT1",138,0)
+ D CHKTF^%ut($G(@XTMLBASE@(2,"TESTS+2^XTMLT1",1))["DUZ: "_DUZ,"BASIC DUZ VARIABLE FAILED")
+"RTN","XTMLT1",139,0)
+ D CHKTF^%ut($G(@XTMLBASE@(3,"TESTS+3^XTMLT1",2))["DUZ(0): "_DUZ(0),"DUZ VARIABLE ARRAY FAILED")
+"RTN","XTMLT1",140,0)
+ D CHKTF^%ut($G(@XTMLBASE@(4,"TESTS+9^XTMLT1",1))["^TMP("_$J_",""VALUE""): VALUE","GLOBAL NODE FAILED")
+"RTN","XTMLT1",141,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",1))["DUZ: "_DUZ,"VARIABLE AND GLOBAL FAILED VARIABLE")
+"RTN","XTMLT1",142,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",2))["^TMP("_$J_",""VALUE""): VALUE","VARIABALE AND GLOBAL FAILED GLOBAL")
+"RTN","XTMLT1",143,0)
+ D CHKTF^%ut($G(@XTMLBASE@(6,"TESTS+11^XTMLT1",4))[",1): VALUE1,1","GLOBAL ARRAY FAILED")
+"RTN","XTMLT1",144,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",145,0)
+ Q
+"RTN","XTMLT1",146,0)
+ ;
+"RTN","XTMLT1",147,0)
+PRINT ;
+"RTN","XTMLT1",148,0)
+ W !,"[The print exit option can be activated by commenting out PRINT+1^XTMLT1]",! Q
+"RTN","XTMLT1",149,0)
+ W !,"The following is the output from PRINT output type",!
+"RTN","XTMLT1",150,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",151,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",152,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","","","P","")
+"RTN","XTMLT1",153,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",154,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",155,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",156,0)
+ D TESTS
+"RTN","XTMLT1",157,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",158,0)
+ W !!,"End of output from PRINT output type",!
+"RTN","XTMLT1",159,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",160,0)
+ D CHKTF^%ut($G(@XTMLBASE@(1,"TESTS+1^XTMLT1",1))["ENTERED TESTS","INFO-ENTERED TESTS FAILED")
+"RTN","XTMLT1",161,0)
+ D CHKTF^%ut($G(@XTMLBASE@(2,"TESTS+2^XTMLT1",1))["DUZ: "_DUZ,"BASIC DUZ VARIABLE FAILED")
+"RTN","XTMLT1",162,0)
+ D CHKTF^%ut($G(@XTMLBASE@(3,"TESTS+3^XTMLT1",2))["DUZ(0): "_DUZ(0),"DUZ VARIABLE ARRAY FAILED")
+"RTN","XTMLT1",163,0)
+ D CHKTF^%ut($G(@XTMLBASE@(4,"TESTS+9^XTMLT1",1))["^TMP("_$J_",""VALUE""): VALUE","GLOBAL NODE FAILED")
+"RTN","XTMLT1",164,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",1))["DUZ: "_DUZ,"VARIABLE AND GLOBAL FAILED VARIABLE")
+"RTN","XTMLT1",165,0)
+ D CHKTF^%ut($G(@XTMLBASE@(5,"TESTS+10^XTMLT1",2))["^TMP("_$J_",""VALUE""): VALUE","VARIABALE AND GLOBAL FAILED GLOBAL")
+"RTN","XTMLT1",166,0)
+ D CHKTF^%ut($G(@XTMLBASE@(6,"TESTS+11^XTMLT1",4))[",1): VALUE1,1","GLOBAL ARRAY FAILED")
+"RTN","XTMLT1",167,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",168,0)
+ Q
+"RTN","XTMLT1",169,0)
+ ;
+"RTN","XTMLT1",170,0)
+TESTS ;
+"RTN","XTMLT1",171,0)
+ D INFO^XTMLOG("ENTERED TESTS")
+"RTN","XTMLT1",172,0)
+ D DEBUG^XTMLOG("TEST1","DUZ")
+"RTN","XTMLT1",173,0)
+ D DEBUG^XTMLOG("TEST2","DUZ",1)
+"RTN","XTMLT1",174,0)
+ K ^TMP($J)
+"RTN","XTMLT1",175,0)
+ S ^TMP($J,"VALUE")="VALUE"
+"RTN","XTMLT1",176,0)
+ S ^TMP($J,"VALUE1")="VALUE1"
+"RTN","XTMLT1",177,0)
+ S ^TMP($J,"VALUE1",1)="VALUE1,1"
+"RTN","XTMLT1",178,0)
+ S ^TMP($J,"VALUE2")="VALUE2"
+"RTN","XTMLT1",179,0)
+ D DEBUG^XTMLOG("TEST3",$NA(^TMP($J,"VALUE")))
+"RTN","XTMLT1",180,0)
+ D DEBUG^XTMLOG("TEST4","DUZ,"_$NA(^TMP($J,"VALUE")))
+"RTN","XTMLT1",181,0)
+ D DEBUG^XTMLOG("TEST5",$NA(^TMP($J)),1)
+"RTN","XTMLT1",182,0)
+ D TESTS1^XTMLT2
+"RTN","XTMLT1",183,0)
+ D INFO^XTMLOG("EXITING TESTS")
+"RTN","XTMLT1",184,0)
+ Q
+"RTN","XTMLT1",185,0)
+ ;
+"RTN","XTMLT1",186,0)
+GETBASE() ;
+"RTN","XTMLT1",187,0)
+ N X1,X2,X3,X4,X5
+"RTN","XTMLT1",188,0)
+ S X1=$O(^XTMP("XTMLT1",DUZ,"")) Q:X1="" "" ; START DATE/TIME
+"RTN","XTMLT1",189,0)
+ S X2=$O(^XTMP("XTMLT1",DUZ,X1,"")) Q:X2="" "" ;$J
+"RTN","XTMLT1",190,0)
+ S X3=$O(^XTMP("XTMLT1",DUZ,X1,X2,"")) Q:X3="" "" ;CURRENT DATE/TIME
+"RTN","XTMLT1",191,0)
+ S X4=$O(^XTMP("XTMLT1",DUZ,X1,X2,X3,"")) Q:X4="" "" ;LOG ENTRY NUMBER
+"RTN","XTMLT1",192,0)
+ S X5=$O(^XTMP("XTMLT1",DUZ,X1,X2,X3,X4,"")) Q:X5="" "" ;TAG^ROUTINE LOGGED FROM
+"RTN","XTMLT1",193,0)
+ Q $NA(^XTMP("XTMLT1",DUZ,X1,X2,X3))
+"RTN","XTMLT1",194,0)
+ ;
+"RTN","XTMLT1",195,0)
+POP1 ;
+"RTN","XTMLT1",196,0)
+ K ^XTMP("XTMLT1",DUZ)
+"RTN","XTMLT1",197,0)
+ N XTMI F XTMI=1:1:11 D POP2 W "." H 1
+"RTN","XTMLT1",198,0)
+ QUIT
+"RTN","XTMLT1",199,0)
+ ;
+"RTN","XTMLT1",200,0)
+POP2 ;
+"RTN","XTMLT1",201,0)
+ N UTIEN,UTFDA,XTMLBASE
+"RTN","XTMLT1",202,0)
+ S UTIEN=$$CHECKIEN() Q:UTIEN'>0
+"RTN","XTMLT1",203,0)
+ D SETFDA(UTIEN,.UTFDA,"E","G,XTMLT1","DEBUG","","")
+"RTN","XTMLT1",204,0)
+ D FILE^DIE("I","UTFDA")
+"RTN","XTMLT1",205,0)
+ S XTMLBASE=$$FILEINIT^XTMLOG("XTMLT1")
+"RTN","XTMLT1",206,0)
+ D TESTS
+"RTN","XTMLT1",207,0)
+ D ENDLOG^XTMLOG("XTMLT1")
+"RTN","XTMLT1",208,0)
+ S XTMLBASE=$$GETBASE()
+"RTN","XTMLT1",209,0)
+ Q
+"RTN","XTMLT1",210,0)
+ ;
+"RTN","XTMLT1",211,0)
+XTROU ;
+"RTN","XTMLT1",212,0)
+ ;;XTMLT2;USED FOR TESTING ROUTINE FILTER, CURRENTLY NO TESTS
+"RTN","XTMLT1",213,0)
+ ;;XTMLT3;PARSING, ETC.
+"RTN","XTMLT1",214,0)
+ ;;XTMLT4;FORMAT HANDLING
+"RTN","XTMLT1",215,0)
+XTENT ;
+"RTN","XTMLT1",216,0)
+ ;;NORMAL;
+"RTN","XTMLT1",217,0)
+ ;;INFOONLY;
+"RTN","XTMLT1",218,0)
+ ;;CURRUSER;
+"RTN","XTMLT1",219,0)
+ ;;OTHRUSER;
+"RTN","XTMLT1",220,0)
+ ;;LIMITROU;
+"RTN","XTMLT1",221,0)
+ ;;EMAIL;
+"RTN","XTMLT1",222,0)
+ ;;PRINT;
+"RTN","XTMLT1",223,0)
+ ;;POP1;
+"RTN","XTMLT2")
+0^6^B135507
+"RTN","XTMLT2",1,0)
+XTMLT2 ;JLI/FO-OAK TEST ROUTINE FOR LOGGER ;2017-07-25  10:32 AM
+"RTN","XTMLT2",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLT2",3,0)
+ ; Code authored by Joel Ivey 2008-2017. Minor changes by Sam Habiel in 2017 for bug fixes.
+"RTN","XTMLT2",4,0)
+TESTS1 ;
+"RTN","XTMLT2",5,0)
+ D INFO^XTMLOG("ENTERED TESTS1")
+"RTN","XTMLT2",6,0)
+ N XX S XX=10 D DEBUG^XTMLOG("VARIABLE","XX")
+"RTN","XTMLT2",7,0)
+ Q
+"RTN","XTMLT3")
+0^7^B16329171
+"RTN","XTMLT3",1,0)
+XTMLT3 ;JLI/FO-OAK - TEST ROUTINES FOR XTMLOG ;2017-07-25  10:32 AM
+"RTN","XTMLT3",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLT3",3,0)
+ ; Code authored by Joel Ivey 2008-2017. Minor changes by Sam Habiel in 2017 for bug fixes.
+"RTN","XTMLT3",4,0)
+ D EN^%ut("XTMTSTL1")
+"RTN","XTMLT3",5,0)
+ Q
+"RTN","XTMLT3",6,0)
+ENT1 ;
+"RTN","XTMLT3",7,0)
+PARSE ;
+"RTN","XTMLT3",8,0)
+ N XTMNAME,GLOBLOC,RESULTS
+"RTN","XTMLT3",9,0)
+ S XTMNAME="TESTNAME"
+"RTN","XTMLT3",10,0)
+ S GLOBLOC=$NA(^TMP("XTMTSTL1",$J,"PARSE")) K @GLOBLOC
+"RTN","XTMLT3",11,0)
+ S @GLOBLOC@(1)="log4j.rootLogger=debug, stdout, R"
+"RTN","XTMLT3",12,0)
+ S @GLOBLOC@(2)=""
+"RTN","XTMLT3",13,0)
+ S @GLOBLOC@(3)="log4j.appender.stdout=org.appache.log4j.ConsoleAppender"
+"RTN","XTMLT3",14,0)
+ S @GLOBLOC@(4)="log4j.appender.stdout.layout=org.apache.log4j.PatternLayout"
+"RTN","XTMLT3",15,0)
+ S @GLOBLOC@(5)=""
+"RTN","XTMLT3",16,0)
+ S @GLOBLOC@(6)="# Pattern to output the caller's file name and line number."
+"RTN","XTMLT3",17,0)
+ S @GLOBLOC@(7)="log4j.appender.stdout.layout.ConversionPattern=%5p [%t] (%F:%L) - %m%n"
+"RTN","XTMLT3",18,0)
+ S @GLOBLOC@(8)=""
+"RTN","XTMLT3",19,0)
+ S @GLOBLOC@(9)="log4j.appender.R=org.apache.log4j.RollingFileAppender"
+"RTN","XTMLT3",20,0)
+ S @GLOBLOC@(10)="log4j.appender.R.File=example.log"
+"RTN","XTMLT3",21,0)
+ S @GLOBLOC@(11)=""
+"RTN","XTMLT3",22,0)
+ S @GLOBLOC@(12)="log4j.appender.R.MaxFileSize=100KB"
+"RTN","XTMLT3",23,0)
+ S @GLOBLOC@(13)="# Keep one backup file"
+"RTN","XTMLT3",24,0)
+ S @GLOBLOC@(14)="log4j.appender.R.MaxBackupIndex=1"
+"RTN","XTMLT3",25,0)
+ S @GLOBLOC@(15)=""
+"RTN","XTMLT3",26,0)
+ S @GLOBLOC@(16)="log4j.appender.R.layout=org.apache.log4j.PatternLayout"
+"RTN","XTMLT3",27,0)
+ S @GLOBLOC@(17)="log4j.appender.R.layout.ConversionPattern=%p %t %c - %m%n"
+"RTN","XTMLT3",28,0)
+ ;
+"RTN","XTMLT3",29,0)
+ D PARSE^XTMLOG(XTMNAME,GLOBLOC,.RESULTS)
+"RTN","XTMLT3",30,0)
+ ;
+"RTN","XTMLT3",31,0)
+ D CHKEQ^%ut("DEBUG",$G(RESULTS(XTMNAME,"PRIORITY")),"Incorrect Level ID")
+"RTN","XTMLT3",32,0)
+ D CHKEQ^%ut("CONSOLEA",$G(RESULTS(XTMNAME,"APPENDER","STDOUT","TYPE")),"Incorrect Output Type")
+"RTN","XTMLT3",33,0)
+ D CHKEQ^%ut("PATTERNLAYOUT",$G(RESULTS(XTMNAME,"APPENDER","STDOUT","LAYOUT")),"Incorrect Layout")
+"RTN","XTMLT3",34,0)
+ D CHKEQ^%ut("%5p [%t] (%F:%L) - %m%n",$G(RESULTS(XTMNAME,"APPENDER","STDOUT","LAYOUT.CONVERSIONPATTERN")),"Incorrect Conversion Pattern")
+"RTN","XTMLT3",35,0)
+ D CHKEQ^%ut("ROLLINGF",$G(RESULTS(XTMNAME,"APPENDER","R","TYPE")),"Incorrect Output Type")
+"RTN","XTMLT3",36,0)
+ D CHKEQ^%ut("example.log",$G(RESULTS(XTMNAME,"APPENDER","R","FILE")),"Incorrect Output File Name")
+"RTN","XTMLT3",37,0)
+ D CHKEQ^%ut("100KB",$G(RESULTS(XTMNAME,"APPENDER","R","MAXFILESIZE")),"Incorrect MaxFileSize")
+"RTN","XTMLT3",38,0)
+ D CHKEQ^%ut("1",$G(RESULTS(XTMNAME,"APPENDER","R","MAXBACKUPINDEX")),"Incorrect MaxBackupIndex")
+"RTN","XTMLT3",39,0)
+ D CHKEQ^%ut("PATTERNLAYOUT",$G(RESULTS(XTMNAME,"APPENDER","R","LAYOUT")),"Incorrect Layout")
+"RTN","XTMLT3",40,0)
+ D CHKEQ^%ut("%p %t %c - %m%n",$G(RESULTS(XTMNAME,"APPENDER","R","LAYOUT.CONVERSIONPATTERN")),"Incorrect Conversion Pattern")
+"RTN","XTMLT3",41,0)
+ ;
+"RTN","XTMLT3",42,0)
+ K @GLOBLOC
+"RTN","XTMLT3",43,0)
+ Q
+"RTN","XTMLT3",44,0)
+ ;
+"RTN","XTMLT3",45,0)
+APPEND ;
+"RTN","XTMLT3",46,0)
+ N XTLOGSET,XTLOGSEQ,XTMINFO,XTMLNAME,XTLOGINP,ROOT
+"RTN","XTMLT3",47,0)
+ S XTLOGSET="",XTLOGSEQ=0,XTMINFO("COUNT")=0
+"RTN","XTMLT3",48,0)
+ S ROOT=$NA(XTLOGINP("NAME1","APPENDER","A1"))
+"RTN","XTMLT3",49,0)
+ S @ROOT@("TYPE")="CONSOLEA",@ROOT@("LAYOUT")="PATTERNLAYOUT",@ROOT@("LAYOUT.CONVERSIONPATTERN")="%p %t %c - %m%n"
+"RTN","XTMLT3",50,0)
+ S ROOT=$NA(XTLOGINP("NAME1","APPENDER","A2")),@ROOT@("TYPE")="GLOBAL",@ROOT@("LAYOUT")="PATTERNLAYOUT"
+"RTN","XTMLT3",51,0)
+ S @ROOT@("LAYOUT.CONVERSIONPATTERN")="%d [%p] %L - %m%n"
+"RTN","XTMLT3",52,0)
+ S @ROOT@("CLOSEDROOT")=$NA(^TMP("XTMLROOT",$J))
+"RTN","XTMLT3",53,0)
+ D LOG^XTMLOG("This is the message")
+"RTN","XTMLT3",54,0)
+ Q
+"RTN","XTMLT3",55,0)
+ ;
+"RTN","XTMLT3",56,0)
+ENABLED ;
+"RTN","XTMLT3",57,0)
+ N XTLOGINP
+"RTN","XTMLT3",58,0)
+ K XTLOGINP("XTMLOG")
+"RTN","XTMLT3",59,0)
+ D CHKEQ^%ut(0,$$ENABLED^XTMLOG("XTMLOG"),"Should have returned zero")
+"RTN","XTMLT3",60,0)
+ S XTLOGINP("XTMLOG")=""
+"RTN","XTMLT3",61,0)
+ D CHKEQ^%ut(1,$$ENABLED^XTMLOG("XTMLOG"),"Should have returned one")
+"RTN","XTMLT3",62,0)
+ Q
+"RTN","XTMLT3",63,0)
+ ;
+"RTN","XTMLT3",64,0)
+XTROU ;
+"RTN","XTMLT3",65,0)
+ ;;XTMLT4;TESTS FOR XTMLOG
+"RTN","XTMLT3",66,0)
+ ;;XTMLT1;
+"RTN","XTMLT3",67,0)
+XTENT ;
+"RTN","XTMLT3",68,0)
+ ;;PARSE;CHECK PARSING OF PARAMETER FILE
+"RTN","XTMLT3",69,0)
+ ;;ENABLED;Check return value for Enabled entry point
+"RTN","XTMLT3",70,0)
+ ;;APPEND;Check functioning for appenders
+"RTN","XTMLT4")
+0^8^B6103099
+"RTN","XTMLT4",1,0)
+XTMLT4 ;JLI/FO-OAK - UNIT TESTS FOR XTMLOG ;2017-07-25  10:32 AM
+"RTN","XTMLT4",2,0)
+ ;;2.4;LOG4M;;Jul 25, 2017;Build 3
+"RTN","XTMLT4",3,0)
+ ; Code authored by Joel Ivey 2008-2017. Minor changes by Sam Habiel in 2017 for bug fixes.
+"RTN","XTMLT4",4,0)
+ D EN^%ut("XTMLT4")
+"RTN","XTMLT4",5,0)
+ Q
+"RTN","XTMLT4",6,0)
+ ;
+"RTN","XTMLT4",7,0)
+FORMAT ;
+"RTN","XTMLT4",8,0)
+ N TSTNAME,ROOT,INFO,XX,ROOTVAL
+"RTN","XTMLT4",9,0)
+ S TSTNAME="TEST"
+"RTN","XTMLT4",10,0)
+ S ROOT=$NA(ROOTVAL(TSTNAME,"APPENDER","MYAPPENDER"))
+"RTN","XTMLT4",11,0)
+ S @ROOT@("LAYOUT.CONVERSIONPATTERN")="%5p [%t] - %m%n"
+"RTN","XTMLT4",12,0)
+ S INFO("PRIORITY")="DEBUG"
+"RTN","XTMLT4",13,0)
+ S INFO("$H")="59443,57959",INFO("COUNT")=5,INFO("LOCATION")="ENTRY+5^ROUNAME"
+"RTN","XTMLT4",14,0)
+ S XX=$$FORMAT^XTMLOG1(ROOT,.INFO,"Text of message")
+"RTN","XTMLT4",15,0)
+ D CHKEQ^%ut("DEBUG ["_$J_"] - Text of message",XX,"Did not format correctly")
+"RTN","XTMLT4",16,0)
+ ;
+"RTN","XTMLT4",17,0)
+ S INFO("PRIORITY")="INFO"
+"RTN","XTMLT4",18,0)
+ S XX=$$FORMAT^XTMLOG1(ROOT,.INFO,"Text of message")
+"RTN","XTMLT4",19,0)
+ D CHKEQ^%ut(" INFO ["_$J_"] - Text of message",XX,"Did not right justify correctly")
+"RTN","XTMLT4",20,0)
+ ;
+"RTN","XTMLT4",21,0)
+ S @ROOT@("LAYOUT.CONVERSIONPATTERN")="%-5p [%t] - %m%n"
+"RTN","XTMLT4",22,0)
+ S XX=$$FORMAT^XTMLOG1(ROOT,.INFO,"Text of message")
+"RTN","XTMLT4",23,0)
+ D CHKEQ^%ut("INFO  ["_$J_"] - Text of message",XX,"Did not left justify correctly")
+"RTN","XTMLT4",24,0)
+ ;
+"RTN","XTMLT4",25,0)
+ S @ROOT@("LAYOUT.CONVERSIONPATTERN")="%-5p [%t] {%M} [%L] [%F] - %m%n"
+"RTN","XTMLT4",26,0)
+ S XX=$$FORMAT^XTMLOG1(ROOT,.INFO,"Text of message")
+"RTN","XTMLT4",27,0)
+ D CHKEQ^%ut("INFO  ["_$J_"] {ENTRY} [ENTRY+5] [ROUNAME] - Text of message",XX,"Did not handle locations correctly")
+"RTN","XTMLT4",28,0)
+ ;
+"RTN","XTMLT4",29,0)
+ S @ROOT@("LAYOUT.CONVERSIONPATTERN")="%d{dd MMM yyyy HH:mm:ss,SSS} ^ %-5p [%t] - %m%n"
+"RTN","XTMLT4",30,0)
+ S XX=$$FORMAT^XTMLOG1(ROOT,.INFO,"Text of message")
+"RTN","XTMLT4",31,0)
+ D CHKEQ^%ut("01 OCT 2003 16:05:59, ^ INFO  ["_$J_"] - Text of message",XX,"Did not handle date format correctly")
+"RTN","XTMLT4",32,0)
+ Q
+"RTN","XTMLT4",33,0)
+ ;
+"RTN","XTMLT4",34,0)
+LOGGING ;
+"RTN","XTMLT4",35,0)
+ N X
+"RTN","XTMLT4",36,0)
+ S X=$$INITNONE^XTMLOG("JLITEST")
+"RTN","XTMLT4",37,0)
+ D EN^%ut("XTMLT2")
+"RTN","XTMLT4",38,0)
+ D ENDLOG^XTMLOG("JLITEST")
+"RTN","XTMLT4",39,0)
+ Q
+"RTN","XTMLT4",40,0)
+ ;
+"RTN","XTMLT4",41,0)
+XTROU ;
+"RTN","XTMLT4",42,0)
+ ;;XTMLT1;TESTS FOR XTMLOG
+"RTN","XTMLT4",43,0)
+XTENT ;
+"RTN","XTMLT4",44,0)
+ ;;FORMAT;TEST FORMAT HANDLING
+"SEC","^DIC",8992.7,8992.7,0,"AUDIT")
+@
+"SEC","^DIC",8992.7,8992.7,0,"DD")
+@
+"SEC","^DIC",8992.7,8992.7,0,"DEL")
+@
+"SEC","^DIC",8992.7,8992.7,0,"LAYGO")
+@
+"SEC","^DIC",8992.7,8992.7,0,"RD")
+@
+"SEC","^DIC",8992.7,8992.7,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",8992.7,8992.7,0)
+FIELD^^.06^13
+"^DD",8992.7,8992.7,0,"DDA")
+N
+"^DD",8992.7,8992.7,0,"DT")
+3160905
+"^DD",8992.7,8992.7,0,"IX","B",8992.7,.01)
+
+"^DD",8992.7,8992.7,0,"NM","LOG4M CONFIG")
+
+"^DD",8992.7,8992.7,0,"VRPK")
+XT
+"^DD",8992.7,8992.7,.01,0)
+NAME^RF^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",8992.7,8992.7,.01,1,0)
+^.1
+"^DD",8992.7,8992.7,.01,1,1,0)
+8992.7^B
+"^DD",8992.7,8992.7,.01,1,1,1)
+S ^XTV(8992.7,"B",$E(X,1,30),DA)=""
+"^DD",8992.7,8992.7,.01,1,1,2)
+K ^XTV(8992.7,"B",$E(X,1,30),DA)
+"^DD",8992.7,8992.7,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",8992.7,8992.7,.01,21,0)
+^^6^6^3121220^
+"^DD",8992.7,8992.7,.01,21,1,0)
+This field holds the NAME used to identify a particular LOG4M CONFIG
+"^DD",8992.7,8992.7,.01,21,2,0)
+entry. The NAME is used within source code to specify logging startup, if
+"^DD",8992.7,8992.7,.01,21,3,0)
+the NAME exists within the LOG4M CONFIG file and if the ACTIVE field 
+"^DD",8992.7,8992.7,.01,21,4,0)
+(#.02) is set to a YES value (there are two choices for YES) then logging
+"^DD",8992.7,8992.7,.01,21,5,0)
+would be initiated.  If the file entry for a specific NAME does not exist,
+"^DD",8992.7,8992.7,.01,21,6,0)
+or if the ACTIVE field is set to NO, then no logging will be performed.
+"^DD",8992.7,8992.7,.01,23,0)
+^^14^14^3100114^
+"^DD",8992.7,8992.7,.01,23,1,0)
+The NAME field of the LOG4M CONFIG file is used within source code to 
+"^DD",8992.7,8992.7,.01,23,2,0)
+identify a specific logging session and to control whether logging is 
+"^DD",8992.7,8992.7,.01,23,3,0)
+initiated or not.  
+"^DD",8992.7,8992.7,.01,23,4,0)
+ 
+"^DD",8992.7,8992.7,.01,23,5,0)
+The easiest way to initiate logging is to use the FILEINIT entry tag in 
+"^DD",8992.7,8992.7,.01,23,6,0)
+the XTMLOG routine and the NAME field for an entry in the LOG4M CONFIG 
+"^DD",8992.7,8992.7,.01,23,7,0)
+file as an argument to specify the configuration for the logging. The
+"^DD",8992.7,8992.7,.01,23,8,0)
+logging is terminated with a call to the ENDLOG tag again with the NAME 
+"^DD",8992.7,8992.7,.01,23,9,0)
+value as an argument.
+"^DD",8992.7,8992.7,.01,23,10,0)
+ 
+"^DD",8992.7,8992.7,.01,23,11,0)
+   DO FILEINIT^XTMLOG(NAME)
+"^DD",8992.7,8992.7,.01,23,12,0)
+   ....
+"^DD",8992.7,8992.7,.01,23,13,0)
+   .... 
+"^DD",8992.7,8992.7,.01,23,14,0)
+   DO ENDLOG^XTMLOG(NAME)
+"^DD",8992.7,8992.7,.01,"DT")
+3121220
+"^DD",8992.7,8992.7,.02,0)
+ACTIVE^RS^N:NO;E:YES, EASY CONFIG;D:YES, DETAILED CONFIG;^0;2^Q
+"^DD",8992.7,8992.7,.02,3)
+Enter N to turn off this logging configuration.  It should be N while you are editing and then turned on. Use E for EASY config specs, D for Detailed in the Word Processing field.
+"^DD",8992.7,8992.7,.02,21,0)
+^^12^12^3100114^
+"^DD",8992.7,8992.7,.02,21,1,0)
+This field determines whether, on a call to FILEINIT^XTMLOG with the NAME 
+"^DD",8992.7,8992.7,.02,21,2,0)
+value for a file entry, the logging is started or not.  If the value for 
+"^DD",8992.7,8992.7,.02,21,3,0)
+the ACTIVE field is NO, logging is not started.  If the value is YES, 
+"^DD",8992.7,8992.7,.02,21,4,0)
+EASY CONFIG, then logging is started using the specifications in the EZ 
+"^DD",8992.7,8992.7,.02,21,5,0)
+ENTRY field (#.03) and EZ LEVEL field (#.04) to determine how the logging 
+"^DD",8992.7,8992.7,.02,21,6,0)
+will be handled and the level of logging effort.  If the value is YES, 
+"^DD",8992.7,8992.7,.02,21,7,0)
+DETAILED CONFIG, then logging is started using the specifications in the 
+"^DD",8992.7,8992.7,.02,21,8,0)
+DETAILED CONFIG field (#1), a word processing field that would contain 
+"^DD",8992.7,8992.7,.02,21,9,0)
+the specifications in the manner of a Log4J configuration file.
+"^DD",8992.7,8992.7,.02,21,10,0)
+ 
+"^DD",8992.7,8992.7,.02,21,11,0)
+It is recommended that the YES, EASY CONFIG be used to set the logging 
+"^DD",8992.7,8992.7,.02,21,12,0)
+ACTIVE.
+"^DD",8992.7,8992.7,.02,"DT")
+3121220
+"^DD",8992.7,8992.7,.03,0)
+EZ ENTRY^F^^0;3^K:$L(X)>40!($L(X)<1) X
+"^DD",8992.7,8992.7,.03,3)
+Answer must be 1-40 characters in length.
+"^DD",8992.7,8992.7,.03,21,0)
+^^19^19^3160905^
+"^DD",8992.7,8992.7,.03,21,1,0)
+The EASY ENTRY field (#.03) can be used to easily specify the type(s) of
+"^DD",8992.7,8992.7,.03,21,2,0)
+logging desired.  The value is a text string with semi-colon separated
+"^DD",8992.7,8992.7,.03,21,3,0)
+specifiers for logging modes.
+"^DD",8992.7,8992.7,.03,21,4,0)
+ 
+"^DD",8992.7,8992.7,.03,21,5,0)
+   C - indicates logging to the user's console.  Logging messages are sent
+"^DD",8992.7,8992.7,.03,21,6,0)
+       to the console as they are generated.
+"^DD",8992.7,8992.7,.03,21,7,0)
+   G - indicates logging to a global location and is followed by a comma
+"^DD",8992.7,8992.7,.03,21,8,0)
+       and an identifer for the global location under ^XTMP("XTMLOG", 
+"^DD",8992.7,8992.7,.03,21,9,0)
+       [e.g., G,TEST4 would result in data being stored under the global
+"^DD",8992.7,8992.7,.03,21,10,0)
+       location ^XTMP("TEST4",DUZ,yymmdd.hhmmss,$J, where DUZ is the
+"^DD",8992.7,8992.7,.03,21,11,0)
+       internal entry number for the user in the NEW PERSON file (#200),
+"^DD",8992.7,8992.7,.03,21,12,0)
+       and yymmdd.hhmmss is the date and time the logging was initialized,
+"^DD",8992.7,8992.7,.03,21,13,0)
+       and $J is the job number of the user's process].  When logging is
+"^DD",8992.7,8992.7,.03,21,14,0)
+       initialized for a subscript, such as TEST4, the lifetime for the
+"^DD",8992.7,8992.7,.03,21,15,0)
+       ^XTMP("TEST4" global is set or updated to a week from the current
+"^DD",8992.7,8992.7,.03,21,16,0)
+       date.
+"^DD",8992.7,8992.7,.03,21,17,0)
+   S - (E.g. S,127.0.0.1:60002) will stream logging data to a remote 
+"^DD",8992.7,8992.7,.03,21,18,0)
+       TCP/IP socket. This is useful when you are (for example) using CPRS
+"^DD",8992.7,8992.7,.03,21,19,0)
+       and want to see messages dynamically as they are generated.
+"^DD",8992.7,8992.7,.03,"DT")
+3160905
+"^DD",8992.7,8992.7,.04,0)
+EZ LEVEL^S^F:FATAL;E:ERROR;W:WARN;I:INFO;D:DEBUG;^0;4^Q
+"^DD",8992.7,8992.7,.04,3)
+Select the level of reporting desired. A lower level (e.g., DEBUG) would include that level and all above it.
+"^DD",8992.7,8992.7,.04,21,0)
+^^10^10^3121220^
+"^DD",8992.7,8992.7,.04,21,1,0)
+The EZ LEVEL field indicates the lowest level of reporting (generally with
+"^DD",8992.7,8992.7,.04,21,2,0)
+the highest detail logging) that is desired.  The order being from the
+"^DD",8992.7,8992.7,.04,21,3,0)
+highest level (lowest detail) of FATAL, then down through ERROR, WARN,
+"^DD",8992.7,8992.7,.04,21,4,0)
+INFO, and finally the lowest level (highest detail) of DEBUG.  The desired
+"^DD",8992.7,8992.7,.04,21,5,0)
+level of reporting in the logging code is indicated by the tag which is
+"^DD",8992.7,8992.7,.04,21,6,0)
+called [e.g., DO FATAL^XTMLOG(  or DO DEBUG^XTMLOG( , with desired
+"^DD",8992.7,8992.7,.04,21,7,0)
+arguments following the parentheses].  If a specific level above DEBUG, 
+"^DD",8992.7,8992.7,.04,21,8,0)
+(e.g., WARN) has been indicated, then calls into lower levels (e.g., 
+"^DD",8992.7,8992.7,.04,21,9,0)
+DEBUG) will not be logged, while levels (e.g., FATAL) above that specified
+"^DD",8992.7,8992.7,.04,21,10,0)
+will be logged as well as the specified level.
+"^DD",8992.7,8992.7,.04,"DT")
+3121220
+"^DD",8992.7,8992.7,.05,0)
+ROUTINE FILTER^F^^0;5^K:$L(X)>80!($L(X)<3) X
+"^DD",8992.7,8992.7,.05,3)
+Enter a list of comma separated routines, or namespaces followed by astericks which will be used for logging (3-80 characters).
+"^DD",8992.7,8992.7,.05,21,0)
+^^6^6^3121220^
+"^DD",8992.7,8992.7,.05,21,1,0)
+The ROUTINE FILTER field can be used to specify a series of comma 
+"^DD",8992.7,8992.7,.05,21,2,0)
+separated routines which will limit the logging to those logging calls 
+"^DD",8992.7,8992.7,.05,21,3,0)
+which are present in one of the routines in the list.  This can be used 
+"^DD",8992.7,8992.7,.05,21,4,0)
+to reduce significantly the amount of logging output if the area of 
+"^DD",8992.7,8992.7,.05,21,5,0)
+interest is limited to a specific group of routines instead of a larger 
+"^DD",8992.7,8992.7,.05,21,6,0)
+number of routines.
+"^DD",8992.7,8992.7,.05,"DT")
+3121220
+"^DD",8992.7,8992.7,.06,0)
+USER FILTER^F^^0;6^K:$L(X)>60!($L(X)<1) X
+"^DD",8992.7,8992.7,.06,3)
+Enter a series of comma separated DUZ values which will be used for logging (other users will NOT be logged) (1-60 characters).
+"^DD",8992.7,8992.7,.06,21,0)
+^^4^4^3070518^
+"^DD",8992.7,8992.7,.06,21,1,0)
+This is a list of user DUZ values (comma-separated) which indicates which 
+"^DD",8992.7,8992.7,.06,21,2,0)
+users should have logging turned on.  This provides the capability to 
+"^DD",8992.7,8992.7,.06,21,3,0)
+turn on logging of a highly used piece of code for only selected users 
+"^DD",8992.7,8992.7,.06,21,4,0)
+instead of everyone (which is the default if this entry is a null string).
+"^DD",8992.7,8992.7,.06,"DT")
+3121220
+"^DD",8992.7,8992.7,.07,0)
+OUTPUT ON CLOSE^S^N:NONE;P:PRINTER;M:MAIL MESSAGE;^0;7^Q
+"^DD",8992.7,8992.7,.07,3)
+ENTER M TO SEND OUTPUT TO A MAIL MESSAGE ON ENDING LOGGING OR P TO SEND OUTPUT TO A PRINTER (MUST ENTER SPECS IN 'OUTPUT SPECS' FIELD) OR N TO DO NOTHING
+"^DD",8992.7,8992.7,.07,21,0)
+^^11^11^3080213^
+"^DD",8992.7,8992.7,.07,21,1,0)
+This field may be used to specify an output option on endding the logging
+"^DD",8992.7,8992.7,.07,21,2,0)
+session.  A global listing of the output must have been specified as at 
+"^DD",8992.7,8992.7,.07,21,3,0)
+least one output option for the data, since it will be the global data 
+"^DD",8992.7,8992.7,.07,21,4,0)
+used as the source of the output.  The current options are M for Mail 
+"^DD",8992.7,8992.7,.07,21,5,0)
+Message or P for Printer.  Selection of N or no value will result in no 
+"^DD",8992.7,8992.7,.07,21,6,0)
+direct output when the logging session is terminated.  If Printer output 
+"^DD",8992.7,8992.7,.07,21,7,0)
+is selected, the desired output device must be specified in the 'OUTPUT 
+"^DD",8992.7,8992.7,.07,21,8,0)
+SPECS' field.  If Mail Message output is selected, a user may be specified
+"^DD",8992.7,8992.7,.07,21,9,0)
+in the 'OUTPUT SPECS' field by either internal entry number or e-mail
+"^DD",8992.7,8992.7,.07,21,10,0)
+address, or no specification results in the mail message being sent to the
+"^DD",8992.7,8992.7,.07,21,11,0)
+current active user.
+"^DD",8992.7,8992.7,.07,"DT")
+3080213
+"^DD",8992.7,8992.7,.08,0)
+OUTPUT SPECS^F^^0;8^K:$L(X)>25!($L(X)<1) X
+"^DD",8992.7,8992.7,.08,3)
+If Printer was specified for OUTPUT ON CLOSE enter the printer specification as a value for IOP.  If Mail Message was selected, enter DUZ number(s) separated by commas, max of 25 characters.
+"^DD",8992.7,8992.7,.08,21,0)
+^^11^11^3080213^
+"^DD",8992.7,8992.7,.08,21,1,0)
+This field may be used to enter specifications related to the OUTPUT ON 
+"^DD",8992.7,8992.7,.08,21,2,0)
+CLOSE field.  If printer output was specified, then this field must 
+"^DD",8992.7,8992.7,.08,21,3,0)
+contain the specification for the desired printer in the form that would 
+"^DD",8992.7,8992.7,.08,21,4,0)
+be used to set the IOP value.  If mail message output was specified, this 
+"^DD",8992.7,8992.7,.08,21,5,0)
+may contain the DUZ values for one or more users separated by commas, or 
+"^DD",8992.7,8992.7,.08,21,6,0)
+it may contain e-mail addresses, separated by commas.  If nothing is 
+"^DD",8992.7,8992.7,.08,21,7,0)
+entered for mail message output, then the output would go to the 
+"^DD",8992.7,8992.7,.08,21,8,0)
+currently active user.
+"^DD",8992.7,8992.7,.08,21,9,0)
+ 
+"^DD",8992.7,8992.7,.08,21,10,0)
+This field is ignored unless the OUTPUT ON CLOSE field contains either a 
+"^DD",8992.7,8992.7,.08,21,11,0)
+P or M.
+"^DD",8992.7,8992.7,.08,"DT")
+3080213
+"^DD",8992.7,8992.7,1,0)
+DETAILED CONFIG^8992.71^^1;0
+"^DD",8992.7,8992.7,2.01,0)
+PRINT LAYOUT^K^^2;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",8992.7,8992.7,2.01,3)
+To replace the default Print Layout enter a new one.  The Ans
+"^DD",8992.7,8992.7,2.01,21,0)
+^.001^45^45^3080220^^^^
+"^DD",8992.7,8992.7,2.01,21,1,0)
+The PRINT LAYOUT is a string of characters based on those used for Log4J 
+"^DD",8992.7,8992.7,2.01,21,2,0)
+to describe the data and order to be output for the log entries.  The 
+"^DD",8992.7,8992.7,2.01,21,3,0)
+type identifiers begin with % (%% will yield a literal %), are case 
+"^DD",8992.7,8992.7,2.01,21,4,0)
+sensitive and may have some positioning data before the type identifier.
+"^DD",8992.7,8992.7,2.01,21,5,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,6,0)
+  %n should be the final entry on the line and indicates the end of the 
+"^DD",8992.7,8992.7,2.01,21,7,0)
+     line.
+"^DD",8992.7,8992.7,2.01,21,8,0)
+  %p the priority (FATAL, ERROR, WARN, INFO, or DEBUG) of the log entry.
+"^DD",8992.7,8992.7,2.01,21,9,0)
+  %t the job number for the current job.
+"^DD",8992.7,8992.7,2.01,21,10,0)
+  %m the message to be displayed for the call to the logger..
+"^DD",8992.7,8992.7,2.01,21,11,0)
+  %L the location within the routine of the call to the logger (e.g., 
+"^DD",8992.7,8992.7,2.01,21,12,0)
+     TAG+3).
+"^DD",8992.7,8992.7,2.01,21,13,0)
+  %M the TAG entry within which the call to the logger occurs (note this 
+"^DD",8992.7,8992.7,2.01,21,14,0)
+     is included as part of %L).
+"^DD",8992.7,8992.7,2.01,21,15,0)
+  %F the name of the routine in which the call to the logger occurs.
+"^DD",8992.7,8992.7,2.01,21,16,0)
+  %d the date/time of the call to the logger if no format is supplied, the
+"^DD",8992.7,8992.7,2.01,21,17,0)
+     default format of yyyyMMdd.HHmmss will be used.  The format for date
+"^DD",8992.7,8992.7,2.01,21,18,0)
+     time is indicated by %d followed by one or more of the following
+"^DD",8992.7,8992.7,2.01,21,19,0)
+     indicators contained within curly braces { }.
+"^DD",8992.7,8992.7,2.01,21,20,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,21,0)
+       y  indicates a year digit yy or  yyyy would be the normal for two
+"^DD",8992.7,8992.7,2.01,21,22,0)
+          year digits or four digits
+"^DD",8992.7,8992.7,2.01,21,23,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,24,0)
+       M indicates a Month (MM is month digits, MMM is month 
+"^DD",8992.7,8992.7,2.01,21,25,0)
+         abbreviation and MMMM or more is the month name)
+"^DD",8992.7,8992.7,2.01,21,26,0)
+       d indicates the day number.
+"^DD",8992.7,8992.7,2.01,21,27,0)
+       H indicates hours.
+"^DD",8992.7,8992.7,2.01,21,28,0)
+       m indicates minutes
+"^DD",8992.7,8992.7,2.01,21,29,0)
+       s indicates seconds
+"^DD",8992.7,8992.7,2.01,21,30,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,31,0)
+  A hyphen following the % indicates left justified text, a number 
+"^DD",8992.7,8992.7,2.01,21,32,0)
+between the % and the parameter indicator is used to indicate a minimum 
+"^DD",8992.7,8992.7,2.01,21,33,0)
+character width for the data.  %-7p will show the PRIORITY in a minimum 
+"^DD",8992.7,8992.7,2.01,21,34,0)
+width of seven characters, with the text left justified.
+"^DD",8992.7,8992.7,2.01,21,35,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,36,0)
+Other text, spaces, etc. will be displayed as indicated in the print 
+"^DD",8992.7,8992.7,2.01,21,37,0)
+layout.
+"^DD",8992.7,8992.7,2.01,21,38,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,39,0)
+The default PRINT LAYOUT is
+"^DD",8992.7,8992.7,2.01,21,40,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,41,0)
+%d{yyyyMMdd.HHmmss} %-5p %L %F - %m%n
+"^DD",8992.7,8992.7,2.01,21,42,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,43,0)
+resulting in
+"^DD",8992.7,8992.7,2.01,21,44,0)
+ 
+"^DD",8992.7,8992.7,2.01,21,45,0)
+date/time priority(left justified in 5 chars) tag+offset routine - message
+"^DD",8992.7,8992.7,2.01,"DT")
+3080220
+"^DD",8992.7,8992.7,3.01,0)
+OUTPUT ON CLOSE^S^N:NONE;P:PRINTER;M:MAIL MESSAGE;^3;1^Q
+"^DD",8992.7,8992.7,3.01,3)
+Where should the output go? enter M to send output to a mail message or P to send output to a printer (must enter specs in the 'OUTPUT SPECS' field) or N to do neither (the default)
+"^DD",8992.7,8992.7,3.01,21,0)
+^^11^11^3121220^^
+"^DD",8992.7,8992.7,3.01,21,1,0)
+This field may be used to specify an output option on ending the logging
+"^DD",8992.7,8992.7,3.01,21,2,0)
+session.  A global listing of the output must have been specified as at 
+"^DD",8992.7,8992.7,3.01,21,3,0)
+least one output option for the data, since it will be the global data 
+"^DD",8992.7,8992.7,3.01,21,4,0)
+used as the source of the output.  The current options are M for Mail 
+"^DD",8992.7,8992.7,3.01,21,5,0)
+Message or P for Printer.  Selection of N or no value will result in no 
+"^DD",8992.7,8992.7,3.01,21,6,0)
+direct output when the logging session is terminated.  If Printer output 
+"^DD",8992.7,8992.7,3.01,21,7,0)
+is selected, the desired output device must be specified in the 'MAIL 
+"^DD",8992.7,8992.7,3.01,21,8,0)
+OUTPUT SPECS' field.  If Mail Message output is selected, a user may be 
+"^DD",8992.7,8992.7,3.01,21,9,0)
+specified in the 'MAIL OUTPUT SPECS' field by either internal entry number 
+"^DD",8992.7,8992.7,3.01,21,10,0)
+or e-mail address, or no specification results in the mail message being 
+"^DD",8992.7,8992.7,3.01,21,11,0)
+sent to the current active user.
+"^DD",8992.7,8992.7,3.01,"DT")
+3121220
+"^DD",8992.7,8992.7,3.02,0)
+MAIL OUTPUT SPECS^F^^3;2^K:$L(X)>25!($L(X)<1) X
+"^DD",8992.7,8992.7,3.02,3)
+If Mail Message was specified for OUTPUT ON CLOSE enter DUZ number(s) for the desired recipients separated by commas with a max of 25 characters.
+"^DD",8992.7,8992.7,3.02,21,0)
+^.001^6^6^3121229^^
+"^DD",8992.7,8992.7,3.02,21,1,0)
+This field may be used to enter specifications related to the OUTPUT ON 
+"^DD",8992.7,8992.7,3.02,21,2,0)
+CLOSE field for mail output. If mail output was specified, then this
+"^DD",8992.7,8992.7,3.02,21,3,0)
+field must contain the DUZ value(s) comma separated for the intended 
+"^DD",8992.7,8992.7,3.02,21,4,0)
+recipients.
+"^DD",8992.7,8992.7,3.02,21,5,0)
+ 
+"^DD",8992.7,8992.7,3.02,21,6,0)
+This field is ignored unless the OUTPUT ON CLOSE field contains an M.
+"^DD",8992.7,8992.7,3.02,"DT")
+3121220
+"^DD",8992.7,8992.7,3.03,0)
+PRINTER OUTPUT SPECS^F^^3;3^K:$L(X)>25!($L(X)<1) X
+"^DD",8992.7,8992.7,3.03,3)
+If PRINTER OUTPUT was specified for OUTPUT ON CLOSE enter the printer specification as if setting IOP with a max of 25 characters.
+"^DD",8992.7,8992.7,3.03,21,0)
+^.001^6^6^3121229^^
+"^DD",8992.7,8992.7,3.03,21,1,0)
+This field may be used to enter specifications related to the OUTPUT ON 
+"^DD",8992.7,8992.7,3.03,21,2,0)
+CLOSE field for printer output. If printer output was specified, then this
+"^DD",8992.7,8992.7,3.03,21,3,0)
+field must contain the specification for the desired printer in the form 
+"^DD",8992.7,8992.7,3.03,21,4,0)
+that would be used to set the IOP value.
+"^DD",8992.7,8992.7,3.03,21,5,0)
+ 
+"^DD",8992.7,8992.7,3.03,21,6,0)
+This field is ignored unless the OUTPUT ON CLOSE field contains a P.
+"^DD",8992.7,8992.7,3.03,"DT")
+3121220
+"^DD",8992.7,8992.71,0)
+DETAILED CONFIG SUB-FIELD^^.01^1
+"^DD",8992.7,8992.71,0,"DT")
+3070427
+"^DD",8992.7,8992.71,0,"NM","DETAILED CONFIG")
+
+"^DD",8992.7,8992.71,0,"UP")
+8992.7
+"^DD",8992.7,8992.71,.01,0)
+DETAILED CONFIG^WL^^0;1^Q
+"^DD",8992.7,8992.71,.01,3)
+This field is used to specify detailed configuration data based on the configuration for Log4J.  The entry may be either text or XML.
+"^DD",8992.7,8992.71,.01,"DT")
+3070427
+"^DIC",8992.7,8992.7,0)
+LOG4M CONFIG^8992.7
+"^DIC",8992.7,8992.7,0,"GL")
+^XTV(8992.7,
+"^DIC",8992.7,8992.7,"%D",0)
+^^15^15^3121220^
+"^DIC",8992.7,8992.7,"%D",1,0)
+This file is associated with the Log4M functionality which provides the 
+"^DIC",8992.7,8992.7,"%D",2,0)
+ability to include logging statements in code that can be left in when 
+"^DIC",8992.7,8992.7,"%D",3,0)
+released to the field.  There are several ways to control the logging, 
+"^DIC",8992.7,8992.7,"%D",4,0)
+but the best is through this file and using the Easy Config configuration 
+"^DIC",8992.7,8992.7,"%D",5,0)
+for the setup.  The functionality also includes the ability to specify 
+"^DIC",8992.7,8992.7,"%D",6,0)
+logging only for specific users (based on DUZ) and/or routines.  If 
+"^DIC",8992.7,8992.7,"%D",7,0)
+logging is specified but not turned on or only turned on for specific 
+"^DIC",8992.7,8992.7,"%D",8,0)
+users, the overhead is a call to the XTMLOG routine and the check for 
+"^DIC",8992.7,8992.7,"%D",9,0)
+existence of a specific variable which indicates that logging is active 
+"^DIC",8992.7,8992.7,"%D",10,0)
+for the session.  If the variable is not present, control returns 
+"^DIC",8992.7,8992.7,"%D",11,0)
+immediately to the calling routine.  Similarly, if a routine attempts to 
+"^DIC",8992.7,8992.7,"%D",12,0)
+initiate logging via reference to an entry in the file, the file entry is 
+"^DIC",8992.7,8992.7,"%D",13,0)
+checked  if it does not exist, or is turned off no logging is initiated.  
+"^DIC",8992.7,8992.7,"%D",14,0)
+Otherwise, logging is initiated at the level specified for the entry in 
+"^DIC",8992.7,8992.7,"%D",15,0)
+the file.
+"^DIC",8992.7,"B","LOG4M CONFIG",8992.7)
+
+**END**
+**END**

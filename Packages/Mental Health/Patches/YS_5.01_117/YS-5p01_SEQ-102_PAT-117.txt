@@ -1,0 +1,231 @@
+$TXT Created by              ELLIS at DEVESS.DOMAIN.EXT  (KIDS) on Tuesday, 10/28/14 at 11:19
+=============================================================================
+Run Date: JUN 13, 2018                     Designation: YS*5.01*117
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #102                   Status: Released
+                  Compliance Date: JUL 14, 2018
+=============================================================================
+
+Associated patches: (v)YS*5.01*107 <<= must be installed BEFORE `YS*5.01*117'
+
+Subject: MENTAL HEALTH (ICD10) DATA INTEGRITY FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 2 problems occur when using the "Enter Diagnosis" option under the VistA 
+ Mental Health [YSUSER] application menu.
+  
+ 1.      An UNDEFINED hard error occurs as an existing issue in an 
+ unremediated environment for VistA Mental Health and is carried over to 
+ the ICD-10 remediated environment (YS*5.01*107) for both ICD-9 and ICD-10 
+ diagnosis code searches.
+ 2.      A warning message loops in the remediated environment for both 
+ ICD-9 and ICD-10 code sets within the ICD diagnosis code search process.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ I9906584FY16 - Mental Health - Data Integrity
+ Duplicate(S): INC000001071348 (REMEDY)
+  
+  
+ Problem 1:
+ ----------
+ An "<UNDEFINED>" error has been encountered by Vista Mental Health
+ application users when prompted to "Enter ICD-9 DIAGNOSIS:" or 
+ "Enter ICD-10 DIAGNOSIS:"; and the error's text begins 
+ specifically with "<UNDEFINED>ICDP+2^YSDX3UA".
+  
+ Solution 1:
+ -----------
+ Modify routine ^YSDX3UA coding to maintain appropriate data per
+ the appropriate VistA Mental Health application data variable(s)
+  
+ Problem 2:
+ ----------
+ A continuous "message loop" has been encountered by Vista Mental 
+ Health application users after a diagnosis search had been done
+ and the user selected an "Invalid Diagnosis".  The VistA Mental
+ Health application displayed the appropriate warning message, 
+ but then continued to display that same warning message when a
+ subsequent "Valid Diagnosis" was selected.
+  
+ Solution 2:
+ -----------
+ Modify the VistA Mental Health application to display the 
+ "Invalid Diagnosis" warning message when appropriate.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+  
+ Leavenworth
+  
+ Honolulu
+  
+ Installation Instructions
+ =========================
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the 
+    Installation Menu.
+  
+ 4. From the Installation Menu, select the Backup a Transport Global and 
+    when prompted for the INSTALL NAME enter the patch YS*5.01*117.
+    This option will create a backup message of any routines exported with
+    this patch. It will not backup any other changes such as DDs or
+    templates. If for any reason the patch is to be rolled back, this
+    backup will be required to restore the patch's routine(s) to the
+    pre-installation version(s).
+  
+ 5. From the Installation Menu you may elect to use the following options. 
+    When prompted for the INSTALL NAME enter the patch YS*5.01*117:
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch is
+        installed. It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of  
+    Install? NO//' 
+  
+ 8. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+ 9. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//' 
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Patch Roll Back Instructions:
+ =============================
+ If the site needs to roll back the installed patch, it can be done by 
+ restoring from a backup copy of the routine. During the patch installation
+ the installer has the option of using the Backup a Transport Global 
+ option in the Installation menu. This creates a backup copy of the
+ routines in the patch and sends copies by MailMan to user(s) selected by
+ the patch installer. To restore from MailMan:
+  
+ 1. Enter the MailMan Menu [XMUSER]
+  
+ 2. At the Select MailMan Menu Option prompt select the Read/Manage 
+    Messages Option (RML).
+  
+ 3. At the Read mail in basket prompt: select the basket the routine backup
+    Message is stored in.
+  
+ 4. At the Enter message number or command: prompt select the message 
+    which has the routines.
+  
+ 5. At the Type <Enter> to continue or '^' to exit: prompt enter '^' to 
+    skip to the message action prompt.
+  
+ 6. At the Enter message action (in SELECTED basket): prompt type in X for
+    Xtract PackMan.
+  
+ 7. At the Select PackMan function: prompt type in 6 for INSTALL/CHECK
+    MASSAGE.
+  
+ 8. The user will be presented with the following warning and a prompt:
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// 
+  
+ At this prompt type in Y for YES to install the backup copies.
+  
+ 9. The user will be presented with the following message and a prompt:
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// 
+  
+ Answering yes to this prompt is optional. The site can reinstall the 
+ patch.
+  
+ If the user answers YES to this prompt:
+     9.1 At the Subject: prompt type in a descriptive subject.
+     9.2 At the Send mail to: prompt select the user to send this message.
+     9.3 At the Select basket to send to: prompt select the basket to
+         send this message. It will default to the IN basket.
+     9.4 At the And Send to: prompt select any additional user to send thi
+         Message to or hit enter to continue.
+  
+ A message similar to the following will be presented to the user. 
+ Building PackMan backup message with subject backup
+  
+  
+ PackMan backup message [99999999] sent.
+ Line 2    Message #99999999  Unloading Routine   YSDX3A (PACKMAN_BACKUP)
+  
+ If the user answers NO to this prompt, the user will be presented with a
+ message similar to this:
+  
+ Line 2    Message #99999999  Unloading Routine   YSDX3A (PACKMAN_BACKUP)
+  
+ 10. At the Enter message action (in SELECTED basket): prompt accept the
+ default of Ignore.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YSDX3A
+    Before: B10489909   After: B10504249  **33,107,117**
+ 
+Routine list of preceding patches: 107
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 20, 2014
+Completed By:                               Date Completed: JUN 12, 2018
+Released By :                               Date Released : JUN 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -46,7 +46,7 @@ class VistAMenuUtil(object):
     connection.send("1\r")
     index = connection.expect(["Select Systems Manager Menu ", "to continue"])
     if index == 1:
-      connection.send("1\r")
+      connection.send("\r")
       connection.expect("Select Systems Manager Menu ")
 
   def exitSystemMenu(self, vistAClient):

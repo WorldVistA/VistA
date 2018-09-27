@@ -1,0 +1,169 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 03/07/18 at 10:00
+=============================================================================
+Run Date: MAY 16, 2018                     Designation: PSJ*5*361
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #305                      Status: Released
+                  Compliance Date: JUN 16, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*361'
+                    (v)PSJ*5*349   <<= must be installed BEFORE `PSJ*5*361'
+
+Subject: SPECIAL INSTRUCTIONS / NEXT DOSE DUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1)  CA-SDM I18645262FY18       
+  
+ Special Instructions on edited order not copying correctly
+  
+ Problem: 
+ ========
+ An edit was made to an active Unit Dose order (starred field) which results
+ in a new order to be created, then the Special Instructions were modified
+ for the new order prior to Accepting.  When the order is accepted, the
+ new Special Instructions are not only stored in the new order, but also
+ overrides the original order with no activity log to show the change in
+ the original order.
+  
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJBCMA5 to check to see if a new
+ order is being created.  If so, do not update the original order 
+ with the new orders Special Instructions.
+  
+ 2)  CA-SDM  I18849802FY18
+      Duplicate: I19464956FY18
+  
+ Next Dose Due is not displaying correctly 
+  
+ Problem:
+ ========
+ When an Active unit dose orders START date/time is edited and there
+ are more than one admin times the display outputs can be incorrect 
+ and display corrupt data.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSJUTL so that the correct Next Dose
+ Due is displayed properly.
+  
+  
+ Test Sites:
+ ===========
+ Erie VAMC
+ West Palm Beach VAMC
+  
+ Patch Installation:
+  
+  
+ Installation Instructions:
+ ==========================
+ No options need to be disabled.  It is best to install this patch during
+ non-peak hours.  
+  
+ This patch should take less than 2 minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select 
+        the Installation Menu.  From this menu, you may elect to use the
+        following options. When prompted for the INSTALL NAME enter the
+        patch #PSJ*5.0*361:
+  
+   a.   Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch routines, 
+        DDs,templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond NO
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond NO
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in the patch
+ description.
+   
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSJ*5.0*361 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSJ*5.0*361 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA5
+    Before: B80438277   After: B80575447  **267,275,361**
+Routine Name: PSJUTL
+    Before:B137966319   After:B135053726  **9,47,58,80,110,136,157,177,
+                                           134,179,267,349,361**
+ 
+Routine list of preceding patches: 275, 349
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 23, 2018
+Completed By:                               Date Completed: MAY 16, 2018
+Released By :                               Date Released : MAY 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

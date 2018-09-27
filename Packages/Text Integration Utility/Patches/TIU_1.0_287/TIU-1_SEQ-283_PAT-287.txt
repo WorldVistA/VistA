@@ -1,0 +1,178 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/26/18 at 13:55
+=============================================================================
+Run Date: MAY 31, 2018                     Designation: TIU*1*287
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #283                      Status: Released
+                  Compliance Date: JUL 01, 2018
+=============================================================================
+
+Associated patches: (v)TIU*1*202   <<= must be installed BEFORE `TIU*1*287'
+                    (v)TIU*1*268   <<= must be installed BEFORE `TIU*1*287'
+
+Subject: MULTIPLE TIU [TEXT INTEGRATION UTILITIES] FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues:
+ 1) Document definition title not displaying properly
+ 2) TIU object TIU TPBN ACT OUT MEDS not initializing data
+  
+  
+ ASSOCIATED TICKETS:
+ ===================
+ 1) INC000000460134 - Document definition title displays incorrect title
+    Duplicates
+    I9933886FY16
+    I17755863FY18
+ 2) I7460078FY16 - TIU object TIU TPBN ACT OUT MEDS not initializing data
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ Patient Safety Issue:
+ =====================
+ PSPO #3102
+     
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ St. Cloud VA Medical Center, MN
+ Iowa City VA Health Care System, IA
+       
+  
+ TICKET OVERVIEW:
+ ================
+ 1) INC000000460134 
+  
+   Problem 1:
+   ----------
+ Document definition titles are not displaying properly in notes tab.  The list
+ of TIU documents on the notes tab in CPRS [Computerized Patient Record System] 
+ may show incorrect VHA [Veterans Health Administration] Standard Titles
+ when a note in TIU DOCUMENT (#8925) FILE has the same IEN [internal entry
+ number] as one defined in TIU DOCUMENT DEFINITION (#8925.1) FILE.  The
+ local title of the note is appended with an unrelated VHA Standard title.
+ This is a bug in patch TIU*1.0*211, which added the mapping of the VHA
+ Standard Titles. One of the intentions was to display the mapped VHA
+ Standard Title after the local title. The problem is also seen for every
+ local title that does not include the VHA Standard title on the notes tab
+ list panel.
+  
+   Resolution 1:
+   -------------
+ We found that displaying the mapped Standard Titles introduced by TIU*1.0*211 
+ was a result of VHA Directive 2005-044, and after initial complaints from the 
+ sites testing version 3 of this patch, it was found that VHA NOTICE 2017-50 
+ rescinded VHA Directive 2005-044. This means the requirement to display 
+ mapped Standard Titles in the titles is no longer in effect.  Routine TIUSRVLO
+ is modified to remove the [defective] logic that was intended to display the 
+ mapped Standard Tiles after the Local Titles. 
+  
+ 2) I7460078FY16 (PSPO #3102)
+  
+   Problem 2:
+   ----------
+ It was determined that the national object TIU TPBN ACT OUT MEDS was likely 
+ causing the previous patient's data to be included in the current patient's
+ note. We were unable to duplicate this issue but it is reasonable that the 
+ object initialize the data elements it will build before creating them. This 
+ object doesn't initialize the array to be returned and all other TIU objects do.
+  
+ Final assessment for patient risk was performed for PSPO #3102 on 5/16/16 by
+ the Informatics Patient Safety Office and is provided at: 
+ http://vaww.domain.ext/CHIO/includes/detail6.asp?offset=20&dbid=33557534 
+  
+   Resolution 2:
+   -------------
+ Modify TIUTPBN to initialize the TARGET variable at the beginning of entry
+ point AOPMEDS.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 minutes 
+ to install.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*287)
+    
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*287
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUSRVLO
+    Before: B87272122   After: B86284188  **1,15,19,63,108,122,181,194,
+                                           211,268,287**
+Routine Name: TIUTPBN
+    Before: B63654050   After: B64973702  **170,183,202,287**
+ 
+Routine list of preceding patches: 202, 268
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 12, 2014
+Completed By:                               Date Completed: MAY 31, 2018
+Released By :                               Date Released : MAY 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

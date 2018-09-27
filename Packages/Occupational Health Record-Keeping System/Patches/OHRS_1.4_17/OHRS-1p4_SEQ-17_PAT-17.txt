@@ -1,0 +1,129 @@
+
+=============================================================================
+Run Date: JUN 05, 2018                     Designation: OHRS*1.4*17
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #17                    Status: Released
+                  Compliance Date: JUL 09, 2018
+=============================================================================
+
+
+Subject: OHRS 1.4.17 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch announces the National Release of Occupational Health
+  Record-Keeping System (OHRS) version 1.4.17. No additional action is
+  necessary for sites except to communicate the below modifications of
+  OHRS 1.4.17 to users. 
+ 
+  The new OHRS 1.4.17 version addresses the changes to fix issues reported from
+  routine WASA scans (Web Application Security Scanner). These scans show that
+  the application when displaying Flash pages use an insecure Adobe Flash Player
+  download. After the patch install, these will be updated to a secure (SSL) c
+  connection. There are no new enhancements done on this release.
+  
+  This build also replaces the old copyright (2017) on the footer with the 
+  current year which is 2018 and replaces the  old version (1.4.16) of 
+  Occupational Health Record-Keeping System (OHRS) with version 1.4.17. 
+  
+  
+ Templates Associated:
+ ---------------------
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Task: Update for Configuration in OHRS to Make Website Secure
+        
+    Problem:
+    --------
+    Updates need to be made in the code to change URLS to secure websites: 
+    "https://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab"
+    as well as alternative text using this URL 
+    "http://www.adobe.com/go/getflash/" to be updated to
+    "https://www.adobe.com/go/getflash/"
+    in the index.jsp file within the OHRS code 
+    (OHRS_Parent\ohrsWeb\src\main\webapp\WEB-INF\jsp)
+  
+    Resolution:
+    -----------    
+    Modified URL from "HTTP" to "HTTPS" to make the OHRS website secure.
+ 
+ Testing:
+ ========
+ Testing and verification of the patch completed via UFT (User Functional
+ Testing).
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The User Guide is available on VA Documentation Library (VDL) at:
+     http://www.domain.ext/vdl/ in the HealtheVet section.
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Replace CISS-OHRS ear 1.4.16 files with the new version which is 1.4.17.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+   1) Stop CISS weblogic portal server and undeploy the old ciss.ear.
+   2) Stop OHRS weblogic portal server and undeploy the old ohrs.ear and
+      ohrsUnattended.ear
+   
+ Installation Instructions:
+ --------------------------
+   1) Redeploy the new ciss.ear
+   2) Redeploy the new ohrs.ear and ohrsUnattended.ear
+    
+ Post-Installation Instructions:
+ -------------------------------
+ 1) Start CISS weblogic portal server and once that is done, start the OHRS
+    weblogic portal server.
+ 2) Make sure that the weblogic portal servers for CISS and OHRS are running.
+ 3) Check if ciss.ear, ohrs.ear and ohrsUnattended.ear are in the Active stage.
+ 
+ Back-Out Strategy/Recovery:
+ ===========================
+ Replace CISS-OHRS ear 1.4.17 files with the old version, which is 1.4.16.
+ 
+ ADDITIONAL INFORMATION:
+ =======================
+ Problems associated with the OHRS application should be reported via CA Service
+ Desk by contacting the National Service Desk (NSD) at 1-855-673-4357 and
+ logging a CA SDM Ticket.
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2018
+Completed By:                               Date Completed: JUN 04, 2018
+Released By :                               Date Released : JUN 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

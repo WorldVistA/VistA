@@ -1,0 +1,398 @@
+
+=============================================================================
+Run Date: JUL 02, 2018                     Designation: PSS*1*224
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #193                      Status: Released
+                  Compliance Date: AUG 02, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*206   <<= must be installed BEFORE `PSS*1*224'
+
+Subject: MOCHA 2.1B WARRANTY ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Medication Order Check HealthCare Application (MOCHA) 2.1B patches 
+ implement Max Daily Dose Order Checks for simple medication orders 
+ entered through Computerized Patient Record System (CPRS), Inpatient 
+ Medications and Outpatient Pharmacy. If the Daily Dose exceeds the First 
+ Databank (FDB) recommended Max Daily Dose, a warning shall be displayed 
+ to the user. If the Max Daily Dose Order Check cannot be performed, an 
+ error message will be displayed to the user, along with general dosing 
+ information for the drug in most cases.
+  
+ This patch is part of the warranty period and includes minor fixes for the
+ MOCHA Enhancements 2.1B group of builds. A multiple package host file was
+ created to simplify installation at Veterans Health Administration (VHA)
+ facilities for the other portions. The combined host file
+ MOCHA_2_1_WARRANTY_OR_PSO_PSJ.KID contains OR*3.0*481, PSJ*5.0*358 and
+ PSO*7.0*518.  In addition, there is this standalone Pharmacy Data
+ Management patch, PSS*1.0*224, which must be installed in conjunction with
+ the other builds.
+  
+  
+ The Pharmacy Data Management MOCHA v2.1B warranty fixes will provide the
+ following corrections:
+  
+ When 'PRN' is appended to a Schedule, the frequency should be the same
+ as that schedule. The site reported this wasn't the case. This patch will
+ correct this issue.
+  
+ Certain generic messages for CPRS are combined in scenarios where they 
+ appeared redundant.
+  
+ The Recommended Frequency message, when displayed in Pharmacy, will now 
+ always be the last Dosing Order Check message to display.
+  
+ The entry 'PUMP(S)' will be added to the DOSE UNITS (#51.24) File. This 
+ will enable Dose Checks to occur on certain products where before they 
+ could not, for example a drug matched to the VA Product of TESTOSTERONE 
+ 1.62% 20.25MG/PUMP GEL,TOP.
+  
+ A scenario was discovered where the General Dosing Guidelines displayed
+ in Outpatient Pharmacy for a complex order when a combination of 'And'
+ and 'Then' conjunctions were used in the order. A change was made in
+ Pharmacy Data Management to never return General Dosing Guidelines to
+ Outpatient Pharmacy for display within a complex order.
+            
+  
+ Patch Components:
+ ================
+  
+  
+ Files & Fields Associated:
+ =========================
+ N/A
+  
+  
+ Forms Associated:
+ ================
+ N/A
+  
+  
+ Mail Groups Associated:
+ ======================
+ N/A
+  
+  
+ Options Associated:
+ ==================
+ N/A
+  
+  
+ Protocols Associated:
+ ====================
+ N/A
+  
+  
+ Security Keys Associated:
+ ========================
+ N/A
+                       
+  
+ Templates Associated:
+ ====================
+ N/A
+  
+  
+ Associated New Service Request(s):
+ =================================
+ N/A
+  
+  
+ Patient Safety Issues (PSI)s:
+ ============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+  
+ Blood Bank Clearance:
+ ====================
+ N/A
+  
+  
+ Test Sites:
+ ==========
+ CHARLESTON, SC
+ EASTERN COLORADO HCS
+ HEARTLAND WEST HCS
+ TENNESSEE VALLEY HCS
+ WEST PALM BEACH, FL
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Documentation includes:
+  
+ Title                                  File Name              SFTP Mode
+ -----------------------------------------------------------------------
+ Pharmacy Data Management               PSS_1_TM_R0618.PDF     binary
+ Technical Manual v1.0
+  
+ Pharmacy Data Management Dosing        PSS_1_DOSING_ORD_CK_   binary
+ Order Check User Manual                UM_R0618.PDF
+  
+ Vista to MOCHA v2.0                    PSS_1_VistA_to_        binary
+ Interface Document                     MOCHA_ID.PDF
+   
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ This patch must be installed just prior to the install of the combined
+ host file MOCHA_2_1_WARRANTY_OR_PSO_PSJ.KID.
+  
+  
+ Pre-Installation Instructions
+ =============================
+ This patch must be obtained from the ANONYMOUS.SOFTWARE directory at one 
+ of the OI Field Offices.  The preferred method is to SFTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT          
+  
+ The MOCHA 2.1b ENHANCEMENTS software distribution includes:
+  
+    File Name               Contents                  Retrieval Format
+    ---------------------   ----------------          ----------------
+    PSS_1_224.KID           PSS*1.0*224               ASCII
+  
+    MOCHA_2_1_WARRANTY_     PSJ*5.0*358               ASCII
+    OR_PSO_PSJ.KID          PSO*7.0*518
+                            OR*3.0*481
+  
+ Installation Considerations/Restrictions:
+ ========================================
+ These patches should be installed when Pharmacy applications are not in 
+ use, no other pharmacy patches are being installed, and when tasked jobs 
+ from Clinical Applications are not running. 
+  
+ Installation should also occur when CPRS usage is at a minimum, 
+ particularly medication activities.
+  
+ Installation should take less than one minute.
+  
+  
+ Installation Instructions
+ =========================
+ MOCHA Warranty software must be installed together in the following 
+ sequence:
+  
+      Component                       File Name
+    1 PSS*1.0*224                     PSS_1_224.KID
+    2 MOCHA Warranty Combined Build   MOCHA_2_1_WARRANTY_OR_PSO_PSJ.KID  
+  
+ 1. Download PSS_1_224.KID into your local directory.
+  
+ 2. From the Kernel Installation and Distribution System (KIDS) Menu, 
+    select the Installation menu.
+  
+ 3. Use Load a Distribution. You may need to prepend a directory 
+    name. When prompted for "Enter a Host File:", respond with
+    PSS_1_224.KID.
+  
+      Example: USER$:[ABC]PSS_1_224.KID
+  
+ 4. From the Installation menu, you may then select to use the following
+    three options. These options are optional. If used, when prompted for
+    the INSTALL NAME, enter PSS*1.0*224.
+  
+         Verify Checksums in Transport Global - This option will allow you 
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+         Print Transport Global - This option will allow you to view the 
+         components of the KIDS build.
+  
+         Compare Transport Global to Current System - This option will 
+         allow you to view all changes that will be made when this patch 
+         is installed.
+  
+ 5. Select the installation option Backup a Transport Global. This 
+    option will create a backup message of any routines exported with 
+    this patch in case you need to backout this patch. It will not backup
+    any other changes such as Data Dictionaries (DD's) or templates. It 
+    is important this step be followed, because if backout of this patch 
+    is necessary, having this backup will make the process much easier.
+  
+ 6. Select the Installation option Install Package(s). This is the 
+    step to start the installation of this KIDS patch: 
+   
+    a. Choose the Install Package(s) option to start the patch install 
+       and enter PSS*1.0*224 at the INSTALL NAME prompt.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer NO.
+  
+  
+ Post-Installation Instructions
+ ==============================
+  
+ Upon completion of the PSS*1.0*224 patch install, a VistA mail message is
+ sent to members of the 'PSS ORDER CHECKS' Mail Group and the patch 
+ installer. This mail message indicates whether or not the Post-Init 
+ routine successfully added the new Unit of PUMP(S) to the DOSE UNITS
+ (#51.24) File. You may continue with the installation of the MOCHA
+ combined build patch regardless, but if the process failed please follow
+ up with the National Help Desk to get assistance looking into the issue.
+  
+    Example Mail Message of a successful Post-Init:
+  
+ From: PSS*1.0*224 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ PSS*1.0*224 patch installation has completed.
+  
+ The new Dose Unit of PUMP(S) was successfully added to your DOSE
+ UNITS (#51.24) File, no further action is necessary.
+  
+  
+  
+    Example Mail Message of an unsuccessful Post-Init:
+  
+ From: PSS*1.0*224 INSTALL  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ PSS*1.0*224 patch installation has completed.
+  
+ A problem was encountered when adding/verifying the new PUMP(S) entry in
+ your DOSE UNITS (#51.24) File. It is OK to install the remaining Mocha 
+ 2.1b warranty patches, but contact the national help desk for assistance
+ with this Dose Unit problem. Refer to the PSS*1.0*224 patch installation
+ in the ticket.
+  
+  
+ Backout Procedures
+ ==================
+  
+ Back-out will be done only with the concurrence and participation of the 
+ development team, health product support and appropriate VA site/region 
+ personnel. The decision to back-out or rollback software will be a joint
+ decision between the development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing PSS*1.0*224, the site/region should have saved a
+ backup of the routines in a mail message using the Backup a Transport
+ Global [XPD BACKUP] menu option (this is done at time of install). The
+ message containing the backed up routines can be installed with the 
+ "Xtract PackMan" action at the Message Action prompt, then function 6 -
+ INSTALL/CHECK MESSAGE. If for some reason the backup is not available, one
+ can be provided by customer support or the development team. Please call
+ the national help desk or enter a helpdesk ticket if a backup is not
+ available.
+  
+  
+ ************************************* Note****************************** 
+ If patch PSS*1*224 is backed out, the MOCHA 2.1 COMBINED WARRANTY BUILD 
+ 1.0 will also need to be backed out. Use the following sequence if it is 
+ determined a back-out is necessary:
+  
+ 1.  Back-out of MOCHA 2.1 COMBINED WARRANTY BUILD 1.0
+ 2.  Back-out of PSS*1.0*224 ***must be done immediately after step 1***
+ 3.  List Templates replaced as soon as possible after step 2 but not
+     required to be immediate
+ **************************************************************************
+  
+  
+ When backing out PSS*1.0*224, also delete these new routines introduced 
+ by this patch:
+   
+    PSS224PI
+    PSSDSEXF
+  
+ These 2 routines can be deleted by using the following option:
+  
+    Select Routine Tools <TEST ACCOUNT> Option: Delete Routines
+  
+    ROUTINE DELETE
+  
+    All Routines? No => No
+  
+    Routine:   <ENTER ROUTINE NAME HERE>
+  
+  
+ Validation of Roll Back Procedure
+ =================================
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSS Routines contained in this patch using the First Line Routine
+ Print [XU FIRST LINE PRINT] option. Once the routines contained in the
+ PSS*1.0*224 patch have been rolled back, the second line of the 
+ Routines will no longer contain the designation of patch PSS*1.0*224.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS224PI
+    Before:       n/a   After: B12366053  **224**
+Routine Name: PSSDSAPI
+    Before:B210956246   After:B207814040  **117,160,173,178,206,224**
+Routine Name: PSSDSEXC
+    Before:B205557716   After:B207462933  **117,160,178,206,224**
+Routine Name: PSSDSEXD
+    Before:B178609917   After:B183481538  **178,206,224**
+Routine Name: PSSDSEXE
+    Before:B173941412   After:B212547613  **178,206,224**
+Routine Name: PSSDSEXF
+    Before:       n/a   After:  B6854669  **224**
+Routine Name: PSSDSUTA
+    Before:B132424539   After:B106422259  **178,224**
+Routine Name: PSSDSUTL
+    Before:B123713572   After:B133206578  **201,178,206,224**
+Routine Name: PSSHRQ23
+    Before:B265224277   After:B242124861  **136,178,206,224**
+Routine Name: PSSHRQ24
+    Before: B64768164   After: B64929944  **178,206,224**
+Routine Name: PSSHRVL1
+    Before:B239948287   After:B239921415  **136,169,160,173,178,224**
+ 
+Routine list of preceding patches: 206
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 18, 2018
+Completed By:                               Date Completed: JUL 02, 2018
+Released By :                               Date Released : JUL 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

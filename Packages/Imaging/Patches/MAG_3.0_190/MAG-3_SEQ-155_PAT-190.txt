@@ -1,0 +1,505 @@
+
+=============================================================================
+Run Date: JUL 18, 2018                     Designation: MAG*3*190
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #155                      Status: Released
+                  Compliance Date: AUG 18, 2018
+=============================================================================
+
+
+Subject: Upgrade DICOM Gateway to 2017c Edition of DICOM Standard
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*183.
+  
+  
+ Subject: VistA Imaging and Legacy DICOM Gateway (LDGW) Update 
+ ========
+  
+                    
+ Category: OTHER
+ =========
+  
+  
+ Description:
+ ============
+ Patch MAG*3.0*190 addresses the following issues with VistA Imaging & 
+ Legacy DICOM Gateway: 
+         Upgrade Legacy DICOM Gateway to meet the 2017c DICOM Standard
+  
+         2-8-2 Lock-Up Error on VistA Reconnect after Legacy DICOM Gateway 
+         (LDGW) service interruption. 
+         
+         Some DICOM Images are not getting transmitted through Release Of 
+         Information (ROI) from Clinical Display.
+  
+         Inactive router destinations being listed when starting the
+         routing transmission process on the Legacy DICOM Gateway.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 190_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P190_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Table 1: Software & Documentation Files for MAG*3.0*190
+ =======================================================
+  
+ File Name                          Description
+ =========                          ===========
+ MAG3_0P190.KID                     KIDS file for installation on VistA
+ MAG3_0P190_DICOM_SETUP.EXE         Executable install for Legacy DICOM 
+                                    Gateway
+ MAG3_0P190_PATCH_DESCRIPTION.PDF   Patch description - this document
+ MAG3_0P190_README.TXT              If present, is an informative file
+                                    associated with the patch.
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P190_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Field Associated:
+ =========================
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.  Task 561265 - Upgrade LDGW to meet 2017c DICOM Standard 
+  
+ Problem: 
+ ========
+ The existing VistA Imaging Legacy DICOM Gateway ELEMENT.DIC, TEMPLATE.DIC,
+ and UID.DIC dictionaries (MAG*3.0*162 and others) are based on the 2011
+ version of the DICOM Standard. The DICOM Standard has progressed over the
+ past six years and it is now necessary to update these dictionaries to the
+ 2017c version of the Standard, DICOM 2017c (July 2017).
+ For more information on the DICOM Standard, refer to the DICOM website:
+ http://www.dicomstandard.org/
+  
+ Resolution: 
+ ===========
+ VistA and Legacy DICOM Gateway code and files were updated to2017c Data 
+ Dictionaries and VRs (Value Representations). 
+  
+ 2.  Defect 420193 (Ticket I7126349FY16) Test Site (2-8-2 lockup on 
+ VistA Reconnect)
+  
+ Problem: 
+ ========
+ When the Transmit DICOM Images to Storage SCP (Option 2-8-2) is running 
+ on the Legacy DICOM Gateway and the Gateway needs to reconnect to VistA 
+ after a disruption in service, it returns to the Select Sites menu option.
+ This causes a disruption in service and a user intervention is required
+ before the images will continue processing.
+  
+ Resolution: 
+ ===========
+ The reentry point is set in MAGDIWB. The reentry point had a default 
+ timeout of 100000 seconds. The timeout was changed to 300 seconds, so 
+ that the process can quickly resume without user intervention in 10 
+ minutes (5 minute reconnect and 5-minute idle prompt time).
+  
+ 3.  Defect 615043 (Ticket R12189070FY17 / R18263762FY18/ INC0183576) 
+ DICOM Images are not getting transmitted through ROI from Clinical Display
+  
+ Problem: 
+ ========
+ Some of the DICOM Images are not getting transmitted through ROI from 
+ Clinical Display. The images are selected in Clinical Display and sent to 
+ a ROI device, but the images are not being transmitted to the device. 
+ Sites are still able to transmit the images manually using the LDGW 2-8-1 
+ option.
+  
+ Resolution: 
+ ===========
+ The accession number logic had been modified in P138 to support look up 
+ in the lab/anatomic pathology package. This modification broke the
+ accession look up for some consults. The MAGDRPC9 routine was modified to 
+ fix the consult accession number look up.
+  
+ 4.  Defect 601802 (Ticket R16534754FY17) Inactive router destinations
+ being listed when starting the routing transmission process on the Legacy 
+ DICOM Gateway
+  
+ Problem: 
+ ========
+ When starting the routing transmission process on the LDGW all the active 
+ and inactive router destinations are listed. Users do not realize that 
+ some of the destinations are inactive and select an inactive destination 
+ causing images not to be routed.
+  
+ Resolution: 
+ ===========
+ A filter was added to MAG DICOM ROUTE LIST DESTI RPC to filter out
+ inactive routing destinations.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         Gulf Coast Veterans Health Care System (Biloxi)
+         Fayetteville VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Additional documentation may be found also be found on the VA Software 
+ Documentation Library at:
+ http://www4.domain.ext/vdl
+  
+ Note:   Information about last-minute changes to this patch will be 
+ provided in a readme file. If present, this file will also be located in 
+ the MAG3_0P190 directory.
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+  
+ MAG*3.0*190 must be installed on the VistA System and on Legacy VistA 
+ Imaging DICOM Gateways. This patch must be installed by the compliance 
+ date to conform to VHA Directive 2001-023.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system. Installing the MAG*3.0*190 KIDS takes 2-5 
+ minutes.
+  
+ Note: 
+ Sites must first install the KIDS portion followed immediately by the 
+ DICOM Text Gateway(s).  The Legacy DICOM Image Gateways and Routing 
+ Gateways can then be upgraded at the site's convenience.
+  
+ *Note: HDIGs still use Legacy DICOM Gateway for Image processing. They 
+ should be upgraded as well at site's convenience.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*190.
+  
+  
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps 
+ ==================
+ The actual KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and 
+ Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+       load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P190.KID) of 
+       the Patch 190 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A Distribution
+    OK! message will be displayed when the load is complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+       option if you want to ensure the integrity of the routines in the 
+       patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you want
+       to create a backup message of any routines exported with the patch. 
+       It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*190".
+    c. Answer "NO" to the following prompts:
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be
+    displayed.
+  
+  
+ KIDS Installation Example
+ =========================
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+ Installation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\INSTALL\MAG3_0P190.KID
+  
+ KIDS Distribution saved on Apr 26, 2018@09:05:42
+ Comment: VistA Imaging V3.0 - Patch 190
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*190
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*190
+ Use INSTALL NAME: MAG*3.0*190 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*190      7/17/18@11:52:46
+      => VistA Imaging V3.0 - Patch 190  ;Created on Apr 26, 2018@09:05:42
+  
+ This Distribution was loaded on Jul 17, 2018@11:52:46 with header of
+    VistA Imaging V3.0 - Patch 190  ;Created on Apr 26, 2018@09:05:42
+    It consisted of the following Install(s):
+     MAG*3.0*190
+ Checking Install for Package MAG*3.0*190
+  
+ Install Questions for MAG*3.0*190
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// NO
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*190 :
+                Jul 17, 2018@11:55:39
+  
+ Build Distribution Date: Apr 26, 2018
+  
+  Installing Routines:....
+                Jul 17, 2018@11:55:39
+  
+  Running Post-Install Routine: ^MAGIP190.
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*190 Installed.
+                Jul 17, 2018@11:55:39
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+  
+ Post-Installation Instructions:
+ ===============================
+  
+ Legacy DICOM Gateway Installing and Updating
+ =============================================
+ For installing, updating, or uninstalling the Legacy DICOM Gateway, refer 
+ to the VistA Imaging DICOM Gateway Installation Guide. 
+  
+  
+ Uninstalling MAG*3.0*190:
+ =========================
+ If it is necessary to uninstall the MAG*3.0*190 VistA KIDS, you need to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see Installation Steps section, step 4c done 
+ before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1. Select the message shown below:
+ Backup of MAG*3.0*190 install on <mmm dd, yyyy> <user name>
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt. There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGGGTU4C 
+ (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ DICOM CheckSums:
+ ================
+ This section lists modified routines for the DICOM Setup build. For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 5;[Date]
+  
+ Table 5: Modified Routines for DICOM Setup Build
+ Routine        Checksum       Checksum      Patch List
+                Before         After
+ MAGDDR0        53556787       57333954      **1,10,51,54,190**
+ MAGDDR2A       94720705       97912369      **1,10,51,54,99,110,190**
+ MAGDDR3        44336406       46117255      **1,10,51,50,110,190**
+ MAGDDW3        35962080       36157236      **10,30,51,54,190**
+ MAGDDW4        73618612       82471058      **1,10,51,54,190**
+ MAGDIR6B       20102559       21857231      **11,30,51,54,53,99,123,190**
+ MAGDIR6C       42810392       45366757      **11,30,51,54,53,99,110,190**
+ MAGDIR6F       19332518       22472350      **11,30,51,54,190**
+ MAGDIR7C       87271244       89687601      **11,30,51,54,49,99,162,190**
+ MAGDIW2A       17267226       17353490      **10,11,30,51,50,54,123,110,
+                                             138,190**
+ MAGDIW3        20270812       20340399      **10,30,50,69,54,190**
+ MAGDIW3A       85967674       85967674      **50,69,110,190**
+ MAGDIWB1       81036736       82684636      **11,30,51,50,54,138,156,190**
+ MAGDMFB2       48221936       49214267      **21,30,51,69,190**
+ MAGDMFB3       41071819       41066270      **30,69,190**
+ MAGDIWBD       29567811       30843111      **50,54,110,156,190**
+  
+  
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Table 6: Modified Routines for VistA KIDS Build
+  
+ Routine        Checksum       Checksum      Patch List
+                Before         After
+ MAGDRPC5       81877416       84608025      **11,30,51,85,54,190**
+ MAGDRPC9       94046476       97395044      **50,54,53,49,123,118,138,
+                                             180,190**
+ MAGIP190       N/A            4110402       **190**
+  
+ Routine MAGIP190 is an installation routine that is automatically deleted 
+ after the KIDS installation. There are no other changes on VistA.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2017
+Completed By:                               Date Completed: JUL 17, 2018
+Released By :                               Date Released : JUL 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

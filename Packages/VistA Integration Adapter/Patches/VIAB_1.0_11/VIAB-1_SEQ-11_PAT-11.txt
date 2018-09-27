@@ -1,0 +1,257 @@
+$TXT Created by                      VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 05/01/18 at 08:31
+=============================================================================
+Run Date: MAY 16, 2018                     Designation: VIAB*1*11
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: EMERGENCY
+Version : 1        SEQ #11                      Status: Released
+                  Compliance Date: MAY 17, 2018
+=============================================================================
+
+Associated patches: (v)VIAB*1*10   <<= must be installed BEFORE `VIAB*1*11'
+
+Subject: VIAB*1*11 UPDATES TO VIA BMS
+
+Category: 
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This EMERGENCY patch is required to allow BMS to migrate off of MDWS to 
+ VIA per the White House Mandate and to remediate known security issues.
+  
+ NOTE: This patch creates new indexes on several files. 
+ It is recommended this patch be installed after normal work hours.
+  
+ A new index, "AC" was created on the .01 field of the PATIENT MOVEMENT 
+ FILE (#405).
+  
+ A new index, "AD" was added to the ENTERED ON field (#101) of the 
+ PATIENT MOVEMENENT FILE (#405) for performance reasons.
+  
+ A new index, "BMS", was added to the DATE ENTERED INTO FILE field 
+ (#.097) in the PATIENT FILE in order to improve the speed of the search.
+  
+ A new index "ADST" was added to TIME ENTERED INTO FILE (#1.4) of the
+ ED LOG FILE (#230) to support sorting output based on this field.
+  
+ This patch corrects performance issues for the following targets within 
+ the Bed Management System (BMS):
+  
+ 1.  GetPatientMovement
+ 2.  ListAdmittedPatients
+ 3.  ListAdmittedPatientsForUpdate
+ 4.  ListClinicAppointments
+ 5.  ListHospitalLocation
+ 6.  ListOrders
+ 7.  ListOrderActions
+ 8.  ListPatient
+ 9.  ListPatientMovement
+ 10. ListPatientMovementByAdmission
+  
+ Modifications were made to the following targets to standardize the MORE
+ field used for paging:
+  
+ 1. ListPatientAppointment
+ 2. ListPatientMovementbyAdmission
+ 3. ListPatientMovement
+ 4. ListPatientAppointment
+  
+ The returned data was modified for the following targets to match 
+ documentation from VIAB*1*8 patch:
+  
+ 1. GetPatientMovement
+ 2. ListAdmittedPatients
+ 3. ListAdmittedPatientsForUpdate
+ 4. ListCancelOrders
+ 5. ListOrderActions
+ 6. ListPatient
+ 7. ListPatientAppointment
+ 8. ListPatientMovement
+  
+ Routine VIABMS and VIABMS1 were modified, and a new routine VIABMS2 was 
+ added, to enhance this service.
+  
+ GETACTIVITY
+ ===========
+ This patch adds a new PATH 'GETACTIVITY' to the VIAB BMS RPC. Its purpose
+ is to retrieve entries from the ED LOG (#230) file based on date range. 
+ The output format is
+  
+ DISPOSITION TIME (#1.3) ^ PATIENT ID  (#.06) ^ FACILITY ID  (#.02) ^ 
+ COMPLAINT  (#1.1) ^ DIAGNOSIS TIME (#1.4)
+  
+  
+ EXCLUDE FROM FACILITY DIR
+ =========================
+ This patch also includes EXCLUDE FROM FACILITY DIR (#.109) in the output 
+ of GETPATIENT and LISTPATIENT (entry points GETPAT and LSTPAT, 
+ respectively).
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (#2)                DATE ENTERED INTO FILE (#.097) Modified
+ ED LOG (#230)               DISPOSITION TIME (#1.3)        Modified
+ PATIENT MOVEMENT (#405)     ENTERED ON (#101)              Modified
+ PATIENT MOVEMENT (#405)     DATE/TIME (#.01)               Modified
+  
+ (In each case, a new index was added, see above.)
+    
+ Forms Associated:
+ N/A   
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+   
+ Remote Procedure Calls:
+ -----------------------
+ VIABMS
+  
+ Additional Information:
+ -----------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ -------------------------  
+ N/A
+     
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+     
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+     
+ Test Sites:
+ -----------
+ St. Louis Veterans Health Care System
+ North Texas Veterans Health Care System
+ New York Harbor Healthcare System 
+ Gulf Coast Veterans Health Care System
+ Indianapolis VA Medical Center
+   
+ Patch Installation:
+ -------------------  
+     
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains both pre and post install instructions. 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ NOTE:  This patch creates a new cross reference on the PATIENT FILE (#2). 
+ It is recommended this patch be installed after normal work hours.
+  
+ This patch may be installed with users on the system. This patch should 
+ take approximately 30-60 minutes to install. The time to install will be 
+ impacted by the number of records in the PATIENT FILE (#2) and the ORDER 
+ (#100) file.
+  
+ No menu options need to be disabled.
+    
+ Installation Instructions:
+ -------------------------- 
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+    
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1*11:
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DDs, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+    
+   4.  From the Installation Menu, select the Install Package(s) option and
+       choose the patch (VIAB*1*11) to install.
+    
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? YES//', press <ENTER>. 
+   
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', press <ENTER>.
+    
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//', press <ENTER>.
+  
+   8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+     
+  Post-Installation Instructions:
+  -------------------------------
+  A post install routine, VIABPOST will run at the end of the 
+  installation. This routine loops thru the files and creates the cross 
+  references. This routine can be deleted after the install completes.
+  
+  NOTE:  Sites not currently using the clinical reminders index should 
+  build the ORDERS index using the option PXRM INDEX MANAGEMENT.
+  
+ Back-Out Plan:
+ --------------------
+ Install the backup that you create during installation of the patches.  
+ This will revert the VIABMS* routines back to the pre-install version. The
+ patch also creates five new cross-references: "BMS" on field .097 of the
+ PATIENT (#2) file, the "ADST" on field 1.3 of the ED LOG (#230) file, and
+ the "AC" and "AD" cross-references on the PATIENT MOVEMENT (#405) file, 
+ These cross-references may be deleted when backing out the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS
+    Before:B134965720   After:B223339724  **8,10,11**
+ Description of Changes:
+  This patch adds a new path "GETACTIVITY" which is used to retrieve 
+  entries from the ED LOG (#230) file. It also includes performance 
+  enhancements to "LISTPATIENT" and adds fields to the output of 
+  "GETPATIENT" and "LISTPATIENT".
+
+Routine Name: VIABMS1
+    Before:B138039577   After:B102801005  **8,11**
+Routine Name: VIABMS2
+    Before:       n/a   After: B66036191  **11**
+ Description of Changes:
+  This is a new routine and is a continuation of VIABMS1 and VIABMS2.
+
+Routine Name: VIABMS3
+    Before:       n/a   After: B44587535  **8,11**
+Routine Name: VIABPOST
+    Before:       n/a   After:  B1051585  **11**
+ Description of Changes:
+  This routine builds the cross-references introduced in this patch.
+
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2017
+Completed By:                               Date Completed: MAY 16, 2018
+Released By :                               Date Released : MAY 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,131 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/27/18 at 09:51
+=============================================================================
+Run Date: MAY 25, 2018                     Designation: PSB*3*107
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #86                      Status: Released
+                  Compliance Date: JUN 25, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*72    <<= must be installed BEFORE `PSB*3*107'
+
+Subject: PATIENT COVER SHEET HANGING FOR ODD SCHEDULE ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ R19023599FY18 - PSB GUI Context consuming a lot of CPU on Bay Pines VistA
+                 Front ends
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ R19023599FY18 - PSB GUI Context consuming a lot of CPU on Bay Pines VistA
+                 Front ends
+    
+ Problem: 
+ --------
+ An issue was discovered when loading the BCMA coversheet and the patient
+ has an order with an administration schedule that does not have a whole
+ number of hour(s) frequency between administrations (e.g., 7 TIMEs A DAY,
+ ONCE EVERY 3.5 HOURS, etc.). The reason is because the program that
+ calculates the next dose's administration date/time assumed the frequency to
+ be a whole number of hours like 4 or 6 and not 3.1466 or 3.5. Since the
+ program could not come up with a valid date/time it went into an infinite
+ loop which would freeze the BCMA application when the users tried to view the
+ patient's coversheet.
+     
+ Resolution:
+ -----------
+ The routine PSBCSUTX was modified at line tag NEXTADM+24 and NEXTADM+28 to
+ replace the call to $$SCH^XLFDT with a call to $$FMADD^XLFDT that will now
+ calculate the the next adminstration date/time by adding the number of
+ frequency minutes to the last administration date/time.
+      
+      
+ Test Sites:
+ -----------
+ UPSTATE NEW YORK HCS
+ BAY PINES HCS   
+  
+ Installation Instructions:
+ -------------------------- 
+ The Pharmacy Benefits Management (PBM) users should not be running the AMIS
+ Report while this patch is being installed. It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select the
+       Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSB*3.0*107:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', enter No.
+    
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', enter No. 
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBCSUTX
+    Before: B69934937   After: B69519749  **16,13,38,32,72,107**
+ 
+Routine list of preceding patches: 72
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 19, 2018
+Completed By:                               Date Completed: MAY 24, 2018
+Released By :                               Date Released : MAY 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

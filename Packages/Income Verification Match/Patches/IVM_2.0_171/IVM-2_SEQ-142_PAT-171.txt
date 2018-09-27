@@ -1,0 +1,258 @@
+$TXT Created by                at DEVVOO.DOMAIN.EXT  (KIDS) on Monday, 04/30/18 at 16:00
+=============================================================================
+Run Date: JUL 09, 2018                     Designation: IVM*2*171
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #142                      Status: Released
+                  Compliance Date: JUL 11, 2018
+=============================================================================
+
+Associated patches: (v)IVM*2*167   <<= must be installed BEFORE `IVM*2*171'
+
+Subject: PATCH FOR A PATCH - IVM*2.0*167 DEFECT FIX
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ Patch IVM*2.0*171 is being released to correct a defect found in patch 
+ IVM*2.0*167 (HOME PHONE AND FUTURE DISCHARGE DATE UPDATES) which is part 
+ of Host File DG_53_P935.KID (MEMBER ID, HEALTH BENEFIT PLAN, FUTURE 
+ DISCHARGE DATE UPDATES). Incidents INC0228910 and INC0157491 were the
+ reported issues.
+  
+ Patch IVM*2.0*167, which was released on 2/7/2018 by the Enrollment System 
+ Modernization (ESM) Project Team, included code to make the home phone
+ number upload directly to the PATIENT file (#2) and bypass the IVM
+ Demographics Upload tool. The defect associated with this functionality
+ and its resolution is described in the 'Defect Tracking System Ticket(s) &
+ Overview' section of this patch.
+  
+ Files & Fields
+ Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Incident INC0157491 - Referred to Tier 3. National ticket #INC0228910.
+    Incident INC0228910 - POSTMASTER REMOVES PHONE NUMBER FROM PATIENT
+    FILE VIA HL TASK RESTART/EAS ESR 595 ORU-Z05 CLIENT JOB - USER DOES NOT
+    WANT THIS.
+  
+ Problem:
+ --------
+ The routine for uploading the home phone number directly to the PATIENT
+ file (#2) was changed to follow the way the other communications data were
+ handled (cell phone number, email address and pager number). The logic
+ would delete the data in any of these fields in the PATIENT file (#2)
+ if an incoming HL7 Z05 message did not contain these fields specifically.
+ By including the home phone number in this logic, if a Z05 did not contain
+ a home phone number, the data in that field would be deleted in the
+ PATIENT file (#2). Then an outgoing Z07 message would be created without a
+ home phone number and sent to ES. ES would in turn send Z05 messages to
+ sites of record and these sites would also have the home phone number
+ deleted. This issue only affects the data of patients that are in more
+ than one hospital database.
+  
+ Resolution:
+ -----------
+ The logic was changed to no longer include the home phone number fields
+ where the communications fields were being deleted if the PID segment did 
+ not have these fields in it. If the home phone number sequence in the PID 
+ segment has a null for the home phone number and the home phone number 
+ change date/time stamp is more recent than what is in the PATIENT file 
+ (#2), the home phone number will be deleted. Additionally, if there is no
+ RF1 segment of "PHH" type, the home phone number will not be deleted.
+  
+ Test Sites:
+ -----------                                      
+ Boise VA Medical Center
+ Clement J. Zablocki VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ There is no new or updated documentation being released with this patch.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+     date/time.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped. Stop All Messaging
+     Background Processes by using the [HL STOP ALL] option on the Filer
+     and Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+  
+ 3.  No menu options need to be disabled during installation.
+     
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation & Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch #
+     (IVM*2.0*171):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. 
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].  
+  
+ Back-Out Plan
+ -------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a Your IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ 1. Back-out Procedure:
+  
+ Prior to installing this patch (IVM*2.0*171), the installer should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ 2. Validation of Roll Back Procedure:
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the IVM* routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ IVM*2.0*171 patch have been rolled back, the first two lines of the
+ routines will no longer contain the designation of patch IVM*2.0*171 in
+ the patch list section on line 2.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC6
+    Before:B155161380   After:B155993541  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151,152,165,167,
+                                           171**
+Routine Name: IVMPREC8
+    Before:B242938145   After:B259327625  **5,6,12,58,73,79,102,115,121,
+                                           148,151,152,168,167,171**
+ 
+Routine list of preceding patches: 167
+
+=============================================================================
+User Information:                          Hold Date     : JUL 09, 2018
+Entered By  :                               Date Entered  : APR 26, 2018
+Completed By:                               Date Completed: JUL 06, 2018
+Released By :                               Date Released : JUL 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

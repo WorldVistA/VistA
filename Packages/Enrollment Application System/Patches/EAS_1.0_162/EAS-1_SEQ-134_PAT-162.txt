@@ -1,0 +1,283 @@
+
+=============================================================================
+Run Date: MAY 21, 2018                     Designation: EAS*1*162
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #134                      Status: Released
+                  Compliance Date: JUN 21, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.2.2 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational Patch is to announce the release of the
+ Enrollment System (ES) 5.2.2. This release, developed in Java technology,
+ contains Enrollment System Modernization (ESM) development and upgrade 
+ efforts, including enhancements to support Community Care (CC) and ES 
+ Sustainment. The deployment of ES 5.2.2 is planned for May 17, 2018. 
+  
+ The following functionality is updated in this ES 5.2.2 release:
+  
+ ESM:
+ - ES Address Validation Service was changed from Electronic Contact 
+   Information Service (eCIS) to VET360.
+ - Veteran's On-Line Application (VOA) Demographics - VOA service to accept
+   the following demographic changes from Veteran Contact Center 
+   Modernization (VCCM): Residential Address, Permanent Mailing address,
+   Personal Email, Business Email, Home Phone Number, Mobile Phone Number.
+ - 739507: ESR application can't be deployed or restarted due to access to
+   Hibernate.org is blocked.
+  
+ ES Sustainment defect fixes:
+ - 192854: Insufficient permissions allow VOA to delete Preferred Language.
+ - 493120: 508_Community Care_Community Care Determination Page- "Time
+           Eligible Information" table is not recognized as a data table by
+           screen reader and read as a plain text.
+ - 594341: 508_CCN 4.0-Add/Update Community Care Network (CCN) Contractor
+           Page -Screen Reader does not announce that the highlighted
+           fields in red have errors.
+ - 594658: 508 CCN 4.0 ES_CCN Contractors Messaging Page-Screen Reader 
+           does not announce that the highlighted fields in red have
+           errors.
+ - 612646: 508 Expand Group eeSummary and Select eeSummary clickable images
+           are not keyboard accessible.
+ - 612882: 508 Dependency Factors table has incorrect summary.
+ - 690666; VET360 Source Date not saved in Emails and Phones.
+ - 704220: VET360 Phone Numbers are being ignored.
+ - 704226: Some Address updates are not sent to VET360.
+ - 707413: Error processing VET360 initiated changes.
+ - 707501: On VET360 initiated changes, the CI_TRANSACTION_LOG table
+           field  'ES_TXN_ID' is being set to a 'logID'.
+ - 713560: Phone and Email deletes are not being sent to VET360.
+ - 715730: Remediate Critical/High Fortify findings.
+ - 721634: The wsclient-contact log4j2.xml contains illegal root 
+           level setting (Root level = "error,info").
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+  
+ 717969  Problem:  Phones number and Email updated from VOA where it turned
+         the updates phone and email into deletes then adds and sent that 
+         to VET360.
+         Resolution: Removed the code that is sending deleted records.
+ 718256  Problem:  User only updates the Bad Address Reason on the 
+         permanent address.  The record did not send to VET360.
+         Resolution: Fixed sending of record to VET360 on Bad Address
+         change; also, updated the Address update date.
+ 718258  Problem:  VET360 CASS Certified type should not remain Processing 
+         status If ES received unexpected error Response from VET360.
+         Resolution: The transaction audit ID was checked for null but not
+         an empty string which caused a validation exception. To fix this,
+         an empty string check is being done. When the following event type
+         was received SYN_ACK_PERSON_EXCEPTION_THROWN the exception was not
+         getting routed to an update error. This is not modified to be
+         mapped using the message event type. The client code is sending
+         back the following event type ES_TO_VET360_EXCEPTION_THROWN but it
+         isn't being parsed and processed. This can be sent in the event
+         the client was unable to send a request to VET360. The reason for
+         this could be a validation exception reason, therefore a manual
+         parsing was added to retrieve the data from the incoming message
+         and set the CASS status to NOT_CHECKED.
+ 718641  Problem:  ES Site of Change field did not reflect to 200 CORP VBA 
+         or Corrected in Exception QUEUE.
+         Resolution: Fixed the issue with Site of change not showing the
+         Name. Also fixed the "Add New Phone" issue.  In addition, two
+         additional issues were also addressed:
+         1. If the existing address was from VET360 and the modified
+         address came in from a different source, the site_of_change in the
+         Address table needs to be deleted.
+         2. If the existing address was from a non-VET360 source, the new
+         modified address comes in from VET360, the STD-Institution needs
+         to be deleted from Address table.
+ 718965  Problem:  Null Pointer Exception Email Type.
+         Resolution: Code added to account for email type being null.
+ 721269  Problem:  When user just updates on Source of Change or/and Site 
+         of Change field, the address is sent to VET360 for validation.
+         Resolution: Took out ChangeSource, Change Site and VET360 Change
+         Site of the equals method so updates are not sent.
+ 721390  Problem: VET360-All four phone numbers receive new timestamp, and
+         New Value is shown for all four numbers on the History page when
+         only some of telephone numbers are updated via HCA.
+         Resolution: Added formatting in the incoming VET360 process so the
+         phone number is formatted before being saved to the database.
+ 721633  Problem:  ES transaction staying in received status.
+         Resolution: Set the new address.person to null. 
+ 721692  Problem:  Add A Person from ES Addresses remain in Processing 
+         Status.
+         Resolution: Added CI compare logic to process AAP and process Z07
+         in the Messaging Service for VET360 outbound messages.
+ 722489  Problem:  Email updates cause Address and Phone updates also.
+         Resolution: Added CI compare logic to process AAP and process Z07
+         in the Messaging Service for VET360 outbound messages.
+ 723882  Problem:  User updated email or phone, Addresses CASS Certified 
+         Date and CASS Update Date also got updated.
+         Resolution: Don't process updates from VET360 more than once, if
+         the existing CI_Tx_Log Status is COMPLETE, that TxAuditId change
+         has already been processed by ES.
+ 723989  Problem:  County field did not set to null on the ES UI when 
+         update from domestic to international address from VET360.
+         Resolution: Modified the county to be set when present if it is
+         USA address only. If the county received is null then we will be
+         resetting our address county to null since.
+ 724592  Problem:  Community Care Determination/Time Elig Information - 
+         JAWS reader reads 5 columns when 4 columns are displayed.
+         Resolution: Remove the extra column in the time eligible
+         information table.
+ 725130  Problem:  508 Residential Address corrected from VET360 Spectrum 
+         UI results to ES with a Bad Address Reason "Other".
+         Resolution: Bad Address Reason only updated on
+         Correspondence/Permanent addresses received from VET360.d Address
+         Reason.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Service Desk Manager (SDM):
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Host File and/or documentation describing the
+ new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.2.2 Release Notes          ES_5_2_2_Release_Notes.pdf     binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 26, 2018
+Completed By:                               Date Completed: MAY 18, 2018
+Released By :                               Date Released : MAY 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

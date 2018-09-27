@@ -1,0 +1,2851 @@
+Released OR*3*475 SEQ #405
+Extracted from mail message
+**KIDS**:OR*3.0*475^
+
+**INSTALL NAME**
+OR*3.0*475
+"BLD",10123,0)
+OR*3.0*475^ORDER ENTRY/RESULTS REPORTING^0^3180226^y
+"BLD",10123,1,0)
+^^1^1^3180110^
+"BLD",10123,1,1,0)
+Bug fixes to RTC Orders
+"BLD",10123,4,0)
+^9.64PA^101.41^1
+"BLD",10123,4,101.41,0)
+101.41
+"BLD",10123,4,101.41,222)
+n^n^f^^y^^y^o^n
+"BLD",10123,4,101.41,224)
+I +Y=391
+"BLD",10123,4,"B",101.41,101.41)
+
+"BLD",10123,6.3)
+40
+"BLD",10123,"ABPKG")
+n
+"BLD",10123,"INID")
+n
+"BLD",10123,"INIT")
+
+"BLD",10123,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10123,"KRN",.4,0)
+.4
+"BLD",10123,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",10123,"KRN",.401,0)
+.401
+"BLD",10123,"KRN",.402,0)
+.402
+"BLD",10123,"KRN",.403,0)
+.403
+"BLD",10123,"KRN",.5,0)
+.5
+"BLD",10123,"KRN",.84,0)
+.84
+"BLD",10123,"KRN",3.6,0)
+3.6
+"BLD",10123,"KRN",3.8,0)
+3.8
+"BLD",10123,"KRN",9.2,0)
+9.2
+"BLD",10123,"KRN",9.8,0)
+9.8
+"BLD",10123,"KRN",9.8,"NM",0)
+^9.68A^11^2
+"BLD",10123,"KRN",9.8,"NM",8,0)
+ORMBLDSD^^0^B17520894
+"BLD",10123,"KRN",9.8,"NM",11,0)
+ORMSD^^0^B98961984
+"BLD",10123,"KRN",9.8,"NM","B","ORMBLDSD",8)
+
+"BLD",10123,"KRN",9.8,"NM","B","ORMSD",11)
+
+"BLD",10123,"KRN",19,0)
+19
+"BLD",10123,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",10123,"KRN",19.1,0)
+19.1
+"BLD",10123,"KRN",101,0)
+101
+"BLD",10123,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",10123,"KRN",409.61,0)
+409.61
+"BLD",10123,"KRN",771,0)
+771
+"BLD",10123,"KRN",779.2,0)
+779.2
+"BLD",10123,"KRN",870,0)
+870
+"BLD",10123,"KRN",8989.51,0)
+8989.51
+"BLD",10123,"KRN",8989.51,"NM",0)
+^9.68A^^0
+"BLD",10123,"KRN",8989.52,0)
+8989.52
+"BLD",10123,"KRN",8989.52,"NM",0)
+^9.68A^^
+"BLD",10123,"KRN",8994,0)
+8994
+"BLD",10123,"KRN",8994,"NM",0)
+^9.68A^^0
+"BLD",10123,"KRN","B",.4,.4)
+
+"BLD",10123,"KRN","B",.401,.401)
+
+"BLD",10123,"KRN","B",.402,.402)
+
+"BLD",10123,"KRN","B",.403,.403)
+
+"BLD",10123,"KRN","B",.5,.5)
+
+"BLD",10123,"KRN","B",.84,.84)
+
+"BLD",10123,"KRN","B",3.6,3.6)
+
+"BLD",10123,"KRN","B",3.8,3.8)
+
+"BLD",10123,"KRN","B",9.2,9.2)
+
+"BLD",10123,"KRN","B",9.8,9.8)
+
+"BLD",10123,"KRN","B",19,19)
+
+"BLD",10123,"KRN","B",19.1,19.1)
+
+"BLD",10123,"KRN","B",101,101)
+
+"BLD",10123,"KRN","B",409.61,409.61)
+
+"BLD",10123,"KRN","B",771,771)
+
+"BLD",10123,"KRN","B",779.2,779.2)
+
+"BLD",10123,"KRN","B",870,870)
+
+"BLD",10123,"KRN","B",8989.51,8989.51)
+
+"BLD",10123,"KRN","B",8989.52,8989.52)
+
+"BLD",10123,"KRN","B",8994,8994)
+
+"BLD",10123,"PRE")
+
+"BLD",10123,"PRET")
+
+"BLD",10123,"QUES",0)
+^9.62^^
+"BLD",10123,"REQB",0)
+^9.611^1^1
+"BLD",10123,"REQB",1,0)
+OR*3.0*434^2
+"BLD",10123,"REQB","B","OR*3.0*434",1)
+
+"DATA",101.41,391,0)
+SD RTC^Return To Clinic^^D^280^1^16^1^0
+"DATA",101.41,391,4)
+K ORSDTISE,ORLEAD,ORTRAIL
+"DATA",101.41,391,5)
+^^^^175
+"DATA",101.41,391,10,0)
+^101.412IA^10^7
+"DATA",101.41,391,10,1,0)
+1^183^^Clinic Location: ^^1^0
+"DATA",101.41,391,10,1,.1)
+
+"DATA",101.41,391,10,1,2)
+5^^^Return to
+"DATA",101.41,391,10,1,4)
+I $$VALCLINC^ORCDSD(Y)
+"DATA",101.41,391,10,3,0)
+10^15820^^Return to clinic date: ^^1
+"DATA",101.41,391,10,3,2)
+15^^^@ORLEAD^@ORTRAIL
+"DATA",101.41,391,10,3,5)
+Q:$G(ORTYPE)'="Z"  I $G(ORDIALOG(PROMPT,INST))'["T" K DONE W $C(7),!,"Response must be relative date (e.g. TODAY, T+7D, T+3M)"
+"DATA",101.41,391,10,3,10)
+S ORLEAD="on or around (",ORTRAIL=")" S:$G(ORSDTISE)="1" ORLEAD="on or before ",ORTRAIL=""
+"DATA",101.41,391,10,4,0)
+20^396^^Number of Appointments: ^^1
+"DATA",101.41,391,10,4,2)
+20^^^for a total of ^appointment(s)^1
+"DATA",101.41,391,10,4,5)
+
+"DATA",101.41,391,10,4,7)
+S Y=1
+"DATA",101.41,391,10,4,10)
+I +$G(ORDIALOG(PROMPT,INST))=1 S ORDIALOG($$PTR^ORCD("OR GTX SCH INTERVAL"),INST)=""
+"DATA",101.41,391,10,5,0)
+20.5^395^^Interval: 
+"DATA",101.41,391,10,5,.1)
+
+"DATA",101.41,391,10,5,1)
+Select an interval between 1 and 30
+"DATA",101.41,391,10,5,2)
+30^^^with a frequency of every^day(s)
+"DATA",101.41,391,10,5,3)
+I +$$VAL^ORCD("NUMBER OF APPOINTMENTS")>1
+"DATA",101.41,391,10,5,6)
+
+"DATA",101.41,391,10,6,0)
+30^397^^Prerequisites: ^^0^1^^^^^99
+"DATA",101.41,391,10,6,.1)
+D PREREQV^ORCDSD
+"DATA",101.41,391,10,6,2)
+35^^^Prerequisites:^^1
+"DATA",101.41,391,10,6,3)
+I $$PREREQN^ORCDSD()>0
+"DATA",101.41,391,10,6,6)
+D PREREQH^ORCDSD
+"DATA",101.41,391,10,7,0)
+40^16266^^Comments: 
+"DATA",101.41,391,10,7,.1)
+I X[U W !,"Comment cannot contain an ^ character." K X
+"DATA",101.41,391,10,7,2)
+45^^^^^1
+"DATA",101.41,391,10,10,0)
+8^177^^Time sensitive: ^^1^0^^^^
+"DATA",101.41,391,10,10,1)
+Select Yes if this order is a time sensitive order.
+"DATA",101.41,391,10,10,2)
+^^^
+"DATA",101.41,391,10,10,10)
+S ORSDTISE=$G(ORDIALOG(PROMPT,INST))
+"DATA",101.41,391,99)
+64604,24088
+"FIA",101.41)
+ORDER DIALOG
+"FIA",101.41,0)
+^ORD(101.41,
+"FIA",101.41,0,0)
+101.41I
+"FIA",101.41,0,1)
+n^n^f^^y^^y^o^n
+"FIA",101.41,0,10)
+
+"FIA",101.41,0,11)
+I +Y=391
+"FIA",101.41,0,"RLRO")
+
+"FIA",101.41,0,"VR")
+3.0^OR
+"FIA",101.41,101.41)
+0
+"FIA",101.41,101.411)
+0
+"FIA",101.41,101.412)
+0
+"FIA",101.41,101.41218)
+0
+"FIA",101.41,101.415)
+0
+"FIA",101.41,101.416)
+0
+"FIA",101.41,101.4162)
+0
+"FRV1",101.41,"391,0",5)
+CLINIC SCHEDULING
+"FRV1",101.41,"391,0",5,"F")
+;ORD(100.98,
+"FRV1",101.41,"391,0",7)
+SCHEDULING
+"FRV1",101.41,"391,0",7,"F")
+;DIC(9.4,
+"FRV1",101.41,"391,10,1,0",2)
+OR GTX LOCATION
+"FRV1",101.41,"391,10,1,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,10,0",2)
+OR GTX YES/NO
+"FRV1",101.41,"391,10,10,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,3,0",2)
+OR GTX CLINICALLY INDICATED DATE
+"FRV1",101.41,"391,10,3,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,4,0",2)
+OR GTX APPT NUM
+"FRV1",101.41,"391,10,4,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,5,0",2)
+OR GTX SCH INTERVAL
+"FRV1",101.41,"391,10,5,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,6,0",2)
+OR GTX PRE REQ
+"FRV1",101.41,"391,10,6,0",2,"F")
+;ORD(101.41,
+"FRV1",101.41,"391,10,7,0",2)
+OR GTX SD COMMENT
+"FRV1",101.41,"391,10,7,0",2,"F")
+;ORD(101.41,
+"IX",101.41,101.41,"B",0)
+101.41^B^Regular B index using full field length^R^^F^IR^I^101.41^^^^^LS
+"IX",101.41,101.41,"B",1)
+S ^ORD(101.41,"B",$E(X,1,63),DA)=""
+"IX",101.41,101.41,"B",2)
+K ^ORD(101.41,"B",$E(X,1,63),DA)
+"IX",101.41,101.41,"B",2.5)
+K ^ORD(101.41,"B")
+"IX",101.41,101.41,"B",11.1,0)
+^.114IA^1^1
+"IX",101.41,101.41,"B",11.1,1,0)
+1^F^101.41^.01^63^1^F
+"MBREQ")
+0
+"PGL",101.41,0,5,5)
+DISPLAY GROUP^P100.98'^ORD(100.98,^0;5^Q
+"PGL",101.41,0,7,7)
+PACKAGE^P9.4'^DIC(9.4,^0;7^Q
+"PGL",101.412,0,2,2)
+ITEM^P101.41'X^ORD(101.41,^0;2^D TREE^ORDD41
+"PGL",101.412,0,11,1)
+PARENT^P101.41'^ORD(101.41,^0;11^Q
+"PGL",101.415,0,2,2)
+ITEM^P101.41'^ORD(101.41,^0;2^Q
+"PGL",101.416,0,2,.02)
+DIALOG^P101.41'^ORD(101.41,^0;2^Q
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+3.0^2971217^2980917^11712
+"PKG",170,22,1,"PAH",1,0)
+475^3180226
+"PKG",170,22,1,"PAH",1,1,0)
+^^1^1^3180226
+"PKG",170,22,1,"PAH",1,1,1,0)
+Bug fixes to RTC Orders
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ORMBLDSD")
+0^8^B17520894^B17436904
+"RTN","ORMBLDSD",1,0)
+ORMBLDSD ; SLC/MKB - Build outgoing SCHEDULING ORM msgs ;01/09/18
+"RTN","ORMBLDSD",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**434,475**;Dec 17, 1997;Build 40
+"RTN","ORMBLDSD",3,0)
+ ;
+"RTN","ORMBLDSD",4,0)
+ ;
+"RTN","ORMBLDSD",5,0)
+ ;
+"RTN","ORMBLDSD",6,0)
+ESC(STR) ;
+"RTN","ORMBLDSD",7,0)
+ Q $$ESC^ORHLESC(STR)
+"RTN","ORMBLDSD",8,0)
+ ;
+"RTN","ORMBLDSD",9,0)
+HL7DATE(DATE) ; -- FM -> HL7 format
+"RTN","ORMBLDSD",10,0)
+ Q $$FMTHL7^XLFDT(DATE)  ;**97
+"RTN","ORMBLDSD",11,0)
+ ;
+"RTN","ORMBLDSD",12,0)
+PTR(NAME) ; -- Returns ptr value of prompt in Dialog file
+"RTN","ORMBLDSD",13,0)
+ Q $O(^ORD(101.41,"AB",$E("OR GTX "_NAME,1,63),0))
+"RTN","ORMBLDSD",14,0)
+ ;
+"RTN","ORMBLDSD",15,0)
+DC ;
+"RTN","ORMBLDSD",16,0)
+ N OR0,ORDIALOG
+"RTN","ORMBLDSD",17,0)
+ S OR0=$G(^OR(100,+IFN,0)) Q:'$L(OR0)
+"RTN","ORMBLDSD",18,0)
+ S ORDIALOG=+$P(OR0,U,5) Q:'ORDIALOG
+"RTN","ORMBLDSD",19,0)
+ D GETDLG1^ORCD(ORDIALOG),GETORDER^ORCD(+IFN)
+"RTN","ORMBLDSD",20,0)
+ D EN("DC")
+"RTN","ORMBLDSD",21,0)
+ Q
+"RTN","ORMBLDSD",22,0)
+ ;
+"RTN","ORMBLDSD",23,0)
+EN(CODE) ; -- Segments for new Scheduling order
+"RTN","ORMBLDSD",24,0)
+ N A,ACT,DATEUPD,DAYS,ORNOW,APPTNUM,APPTINV,CLINIC,COMMENT,INC,INST,LOC,LOCSEG
+"RTN","ORMBLDSD",25,0)
+ N NODE,OFFSET,ORIFN,ORDER,PREREQ,PKGREF,PTR,ROOM,RTCDATE,SEGCNT,START,TIME,VALUE
+"RTN","ORMBLDSD",26,0)
+ N TEMP,WHOENTER,WHOSIGN,X0,X1,X2,X3,X8
+"RTN","ORMBLDSD",27,0)
+ S ACT=$S(IFN[";":$P(IFN,";",2),1:1),DATEUPD=0
+"RTN","ORMBLDSD",28,0)
+ S X0=$G(^OR(100,+IFN,0)),X3=$G(^OR(100,+IFN,3)),X8=$G(^OR(100,+IFN,8,ACT,0))
+"RTN","ORMBLDSD",29,0)
+ S PKGREF=$P($G(^OR(100,+IFN,4)),U)
+"RTN","ORMBLDSD",30,0)
+ S WHOSIGN=$P(X8,U,5)
+"RTN","ORMBLDSD",31,0)
+ S WHOENTER=$P(X0,U,6)
+"RTN","ORMBLDSD",32,0)
+ S WHOSIGN=$$WHOSIGN(X8)
+"RTN","ORMBLDSD",33,0)
+ I WHOSIGN="" S WHOSIGN=WHOENTER
+"RTN","ORMBLDSD",34,0)
+ ;I WHOSIGN'>0 S WHOSIGN=$P(X8,U,7)
+"RTN","ORMBLDSD",35,0)
+ S WHOSIGN=WHOSIGN_U_$$GET1^DIQ(200,WHOSIGN,.01)
+"RTN","ORMBLDSD",36,0)
+ S WHOENTER=WHOENTER_U_$$GET1^DIQ(200,WHOENTER,.01)
+"RTN","ORMBLDSD",37,0)
+ I CODE'="DC" S ORDER=$P(ORMSG(4),"|",3) K ORMSG(4)
+"RTN","ORMBLDSD",38,0)
+ S SEGCNT=$S(CODE="DC":3,1:4)
+"RTN","ORMBLDSD",39,0)
+ S LOC=+$P(X0,U,10),LOCSEG=""
+"RTN","ORMBLDSD",40,0)
+ I LOC>0 S LOCSEG=+LOC_":"_$$GET1^DIQ(44,LOC,.01)_U
+"RTN","ORMBLDSD",41,0)
+ I $P($G(^SC(LOC,0)),U,3)="W" S LOCSEG=LOCSEG_$P($G(^DPT(+ORVP,.101)),U)
+"RTN","ORMBLDSD",42,0)
+ S ORIFN=$S(IFN[";":IFN,1:IFN_";1")
+"RTN","ORMBLDSD",43,0)
+ ;I PKGREF'>0,CODE="XO" D
+"RTN","ORMBLDSD",44,0)
+ ;.S ORPREV=$P(X3,U,5) I ORPREV'>0 Q
+"RTN","ORMBLDSD",45,0)
+ ;.S PKGREF=$P($G(^OR(100,ORPREV,4)),U)
+"RTN","ORMBLDSD",46,0)
+ ;S ORMSG(SEGCNT)="ARQ|"_ORIFN_"^OR|"_PKGREF_"|||^followup^^^^|"_$S(CODE="DC":"S05",CODE="XO":"S03",1:"S01")_"||"
+"RTN","ORMBLDSD",47,0)
+ S ORMSG(SEGCNT)="ARQ|"_ORIFN_"^OR|"_PKGREF_"|||^followup^^^^|"_$S(CODE="DC":"S05",1:"S01")_"||"
+"RTN","ORMBLDSD",48,0)
+ S $P(ORMSG(1),"|",9)="SRM|"_ORIFN_U_$S(CODE="DC":"S05",CODE="XX":"S03",1:"S01")
+"RTN","ORMBLDSD",49,0)
+ S A=$G(ORDIALOG($$PTR("CLINICALLY INDICATED DATE"),1))
+"RTN","ORMBLDSD",50,0)
+ I A["+" D
+"RTN","ORMBLDSD",51,0)
+ . S ORNOW=$$NOW^XLFDT()
+"RTN","ORMBLDSD",52,0)
+ . S OFFSET=$$UP^XLFSTR($P(A,"+",2)) S DAYS=$S(OFFSET["W":+OFFSET*7,OFFSET["M":+OFFSET*30,1:+OFFSET)
+"RTN","ORMBLDSD",53,0)
+ . S X1=$P(ORNOW,"."),X2=DAYS D C^%DTC S A=X_$S(A?1"N".E:"."_$P(ORNOW,"."),1:"")
+"RTN","ORMBLDSD",54,0)
+ . ;S X1=$P(ORNOW,"."),X2=$P(A,"+",2) D C^%DTC S A=X_$S(A?1"N".E:"."_$P(ORNOW,"."),1:"")
+"RTN","ORMBLDSD",55,0)
+ . S ORDIALOG($$PTR("CLINICALLY INDICATED DATE"),1)=A,DATEUPD=1
+"RTN","ORMBLDSD",56,0)
+ S RTCDATE=$$HL7DATE(A)
+"RTN","ORMBLDSD",57,0)
+ S START=$P(X0,U,8),TIME=$G(ORDIALOG($$PTR("YES/NO"),1))
+"RTN","ORMBLDSD",58,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_$S(TIME=1:U_RTCDATE_"|T|",1:RTCDATE_U_"||")
+"RTN","ORMBLDSD",59,0)
+ I +TIME=1 S ORLEAD="no later than ",ORTRAIL="",DATEUPD=1
+"RTN","ORMBLDSD",60,0)
+ I +TIME=0 S ORLEAD="on or around (",ORTRAIL=")"
+"RTN","ORMBLDSD",61,0)
+ S APPTNUM=$G(ORDIALOG($$PTR("APPT NUM"),1))
+"RTN","ORMBLDSD",62,0)
+ S APPTINV=+$G(ORDIALOG($$PTR("SCH INTERVAL"),1))
+"RTN","ORMBLDSD",63,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_$S(APPTINV>0:"Q"_APPTINV_"D",1:"")_"|"
+"RTN","ORMBLDSD",64,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_APPTNUM_"|"
+"RTN","ORMBLDSD",65,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_WHOSIGN_"||||"
+"RTN","ORMBLDSD",66,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_WHOENTER_"||"
+"RTN","ORMBLDSD",67,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_LOCSEG_"|||"
+"RTN","ORMBLDSD",68,0)
+ S ORMSG(SEGCNT)=ORMSG(SEGCNT)_IFN_"|"_PKGREF_"|"
+"RTN","ORMBLDSD",69,0)
+AIL ;
+"RTN","ORMBLDSD",70,0)
+ S SEGCNT=SEGCNT+1
+"RTN","ORMBLDSD",71,0)
+ S CLINIC=$G(ORDIALOG($$PTR("LOCATION"),1))
+"RTN","ORMBLDSD",72,0)
+ S CLINIC=CLINIC_U_$$GET1^DIQ(44,CLINIC,.01)
+"RTN","ORMBLDSD",73,0)
+ S ORMSG(SEGCNT)="AIL|||"_CLINIC
+"RTN","ORMBLDSD",74,0)
+ S PTR=$$PTR("PRE REQ")
+"RTN","ORMBLDSD",75,0)
+ ;
+"RTN","ORMBLDSD",76,0)
+AIG ;
+"RTN","ORMBLDSD",77,0)
+ S INST=0 F  S INST=$O(ORDIALOG(PTR,INST)) Q:INST'>0  S PREREQ(INST)=ORDIALOG(PTR,INST)
+"RTN","ORMBLDSD",78,0)
+ I $D(PREREQ) D
+"RTN","ORMBLDSD",79,0)
+ .S SEGCNT=SEGCNT+1,INC=0
+"RTN","ORMBLDSD",80,0)
+ .S INST=0 F  S INST=$O(PREREQ(INST)) Q:INST'>0  D
+"RTN","ORMBLDSD",81,0)
+ ..S INC=INC+1
+"RTN","ORMBLDSD",82,0)
+ ..I INC=1 S ORMSG(SEGCNT)="AIG|"_INC_"|"_U_PREREQ(INST)_U_U_U_U_"|||||||||||" Q
+"RTN","ORMBLDSD",83,0)
+ ..I INC>1 S ORMSG(SEGCNT,INC-1)="AIG|"_INC_"|"_U_PREREQ(INST)_U_U_U_U_"|||||||||||"
+"RTN","ORMBLDSD",84,0)
+NXT ;
+"RTN","ORMBLDSD",85,0)
+ S COMMENT=$G(ORDIALOG($$PTR("SD COMMENT"),1))
+"RTN","ORMBLDSD",86,0)
+ I COMMENT'="" S SEGCNT=SEGCNT+1,ORMSG(SEGCNT)="NTE|6|P|"_$$ESC(COMMENT)
+"RTN","ORMBLDSD",87,0)
+ I DATEUPD=1 S ORIFN=+ORIFN K ^OR(100,ORIFN,4.5) D RESPONSE^ORCSAVE,ORDTEXT^ORCSAVE1(ORIFN_";"_ACT)
+"RTN","ORMBLDSD",88,0)
+ Q
+"RTN","ORMBLDSD",89,0)
+WHOSIGN(X8) ;
+"RTN","ORMBLDSD",90,0)
+ I $P(X8,U,5)>0 Q $P(X8,U,5)
+"RTN","ORMBLDSD",91,0)
+ I $P(X8,U,7)>0 Q $P(X8,U,7)
+"RTN","ORMBLDSD",92,0)
+ I $P(X8,U,3)>0 Q $P(X8,U,3)
+"RTN","ORMBLDSD",93,0)
+ I $P(X8,U,17)>0 Q $P(X8,U,17)
+"RTN","ORMBLDSD",94,0)
+ Q ""
+"RTN","ORMBLDSD",95,0)
+ ;
+"RTN","ORMSD")
+0^11^B98961984^B98846550
+"RTN","ORMSD",1,0)
+ORMSD ; SLC/AGP - Process Scheduling ORM msgs ;02/20/18
+"RTN","ORMSD",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**434,475**;Dec 17, 1997;Build 40
+"RTN","ORMSD",3,0)
+ ;
+"RTN","ORMSD",4,0)
+ ;EN builds an results array
+"RTN","ORMSD",5,0)
+ ;INPUTS("APPT IEN")=0
+"RTN","ORMSD",6,0)
+ ;INPUTS("APPT TYPE")="followup"
+"RTN","ORMSD",7,0)
+ ;INPUTS("CLINIC")="240^20 MINUTE"
+"RTN","ORMSD",8,0)
+ ;INPUTS("COMMENT")="This is the new comment field"
+"RTN","ORMSD",9,0)
+ ;INPUTS("ENTERED BY")="10000000195^PULEO,ANTHONY"
+"RTN","ORMSD",10,0)
+ ;INPUTS("INTERVAL")="Q7D"
+"RTN","ORMSD",11,0)
+ ;INPUTS("MSG ID")=""
+"RTN","ORMSD",12,0)
+ ;INPUTS("DISCONTINUE")=1
+"RTN","ORMSD",13,0)
+ ;INPUTS("ENTERED IN ERROR")=1
+"RTN","ORMSD",14,0)
+ ;INPUTS("NLT")=1
+"RTN","ORMSD",15,0)
+ ;INPUTS("NUMBER APPT")=4
+"RTN","ORMSD",16,0)
+ ;INPUTS("ORDER IEN")=14524362
+"RTN","ORMSD",17,0)
+ ;INPUTS("PATIENT")="346^"
+"RTN","ORMSD",18,0)
+ ;INPUTS("PREREQ",2)="XRAY"
+"RTN","ORMSD",19,0)
+ ;INPUTS("PREREQ",3)="VITALS"
+"RTN","ORMSD",20,0)
+ ;INPUTS("RTC DATE")=20170524
+"RTN","ORMSD",21,0)
+ ;INPUTS("SIGNED BY")=""
+"RTN","ORMSD",22,0)
+ ;
+"RTN","ORMSD",23,0)
+ ;
+"RTN","ORMSD",24,0)
+UNESC(STR) ;
+"RTN","ORMSD",25,0)
+ Q $$ESC^ORHLESC(STR)
+"RTN","ORMSD",26,0)
+ ;
+"RTN","ORMSD",27,0)
+CREATACT(NATURE) ;
+"RTN","ORMSD",28,0)
+ N IEN
+"RTN","ORMSD",29,0)
+ S IEN=$O(^ORD(100.02,"C",NATURE,"")) I IEN'>0 Q 0
+"RTN","ORMSD",30,0)
+ I +$P($G(^ORD(100.02,IEN,1)),U)=1 Q 1
+"RTN","ORMSD",31,0)
+ Q 0
+"RTN","ORMSD",32,0)
+ ;
+"RTN","ORMSD",33,0)
+EN(MSG) ; -- main entry point for OR RECEIVE where MSG contains HL7 msg
+"RTN","ORMSD",34,0)
+ N ACTION,AIG,AIL,ARQ,DATE,ENTER,ERROR,FAILMSA,FREQ,HASMSA,INST,MSH,NODE,NUM,NXT,ORMSG,PAT,RESULT,X,PID,PV1,SEG,SIGN
+"RTN","ORMSD",35,0)
+ S ERROR=""
+"RTN","ORMSD",36,0)
+ S ORMSG=$S($L($G(MSG)):MSG,1:"MSG") ; MSG="NAME" or MSG(#)=message
+"RTN","ORMSD",37,0)
+ I '$O(@ORMSG@(0)) D EN^ORERR("Missing HL7 message",.MSG) Q
+"RTN","ORMSD",38,0)
+ S MSH=0 F  S MSH=$O(@ORMSG@(MSH)) Q:MSH'>0  Q:$E(@ORMSG@(MSH),1,3)="MSH"
+"RTN","ORMSD",39,0)
+ I 'MSH D EN^ORERR("Missing or invalid MSH segment",.MSG)
+"RTN","ORMSD",40,0)
+ S X=0,FAILMSA=0,HASMSA=0 F  S X=$O(@ORMSG@(X)) Q:X'>0!(ERROR'="")!(HASMSA=1)  D
+"RTN","ORMSD",41,0)
+ .S SEG=$P(@ORMSG@(X),"|"),NODE=$P(@ORMSG@(X),"|",2,99)
+"RTN","ORMSD",42,0)
+ .I SEG="MSA" S HASMSA=1
+"RTN","ORMSD",43,0)
+ .S SEG=SEG_"(.RESULT,X,NODE,.ERROR)"
+"RTN","ORMSD",44,0)
+ .D @SEG
+"RTN","ORMSD",45,0)
+ I FAILMSA=1 D REJECT(.RESULT) G ENX
+"RTN","ORMSD",46,0)
+ I HASMSA=1 D ACCEPT(.RESULT) G ENX
+"RTN","ORMSD",47,0)
+ I $G(ERROR)'="" D SENDFAIL(.ERROR,.RESULT) G ENX
+"RTN","ORMSD",48,0)
+ I '$$VALIDATE(.RESULT,.ERROR) D SENDFAIL(.ERROR,.RESULT) G ENX
+"RTN","ORMSD",49,0)
+ D SAVEREC(.RESULT)
+"RTN","ORMSD",50,0)
+ D SENDOK(.RESULT)
+"RTN","ORMSD",51,0)
+ENX ;
+"RTN","ORMSD",52,0)
+ Q
+"RTN","ORMSD",53,0)
+ ;
+"RTN","ORMSD",54,0)
+LASTACT(ORIFN) ;
+"RTN","ORMSD",55,0)
+ N RESULT
+"RTN","ORMSD",56,0)
+ I ORIFN[";" S RESULT=$P(ORIFN,";",2) G LASTACTX
+"RTN","ORMSD",57,0)
+ S RESULT=$O(^OR(100,ORIFN,8,""),-1)
+"RTN","ORMSD",58,0)
+ I RESULT="" S RESULT=1
+"RTN","ORMSD",59,0)
+LASTACTX ;
+"RTN","ORMSD",60,0)
+ Q RESULT
+"RTN","ORMSD",61,0)
+ ;
+"RTN","ORMSD",62,0)
+MSH(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",63,0)
+ S RESULT("MSG ID")=$P(SEG,"|",9)
+"RTN","ORMSD",64,0)
+ S RESULT("MSG DATE/TIME")=$$HL7TFM^XLFDT($P(SEG,"|",6),"L")
+"RTN","ORMSD",65,0)
+ Q
+"RTN","ORMSD",66,0)
+ ;
+"RTN","ORMSD",67,0)
+MSA(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",68,0)
+ N STATUS
+"RTN","ORMSD",69,0)
+ I $P(SEG,"|")'="AR" D  Q
+"RTN","ORMSD",70,0)
+ .S STATUS=$P(SEG,"|",2)
+"RTN","ORMSD",71,0)
+ .S RESULT("APPT IEN")=$P(STATUS,U,2)
+"RTN","ORMSD",72,0)
+ S RESULT("REJECTION ERROR")=$P(SEG,"|",2) S FAILMSA=1
+"RTN","ORMSD",73,0)
+ ;S OREASON=RESULT("REJECTION ERROR")
+"RTN","ORMSD",74,0)
+ Q
+"RTN","ORMSD",75,0)
+ ;
+"RTN","ORMSD",76,0)
+SCH(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",77,0)
+ N TIME
+"RTN","ORMSD",78,0)
+ S RESULT("ORDER IEN")=$P(SEG,"|",2),RESULT("APPT IEN")=+$P(SEG,"|",1)
+"RTN","ORMSD",79,0)
+ S RESULT("APPT TYPE")=$P($P(SEG,"|",5),U,2)
+"RTN","ORMSD",80,0)
+ S ACTION=$P(SEG,"|",6) S RESULT($S($P(ACTION,U)="S15":"DISCONTINUE",1:"COMPLETE"))=1
+"RTN","ORMSD",81,0)
+ I $P(ACTION,U,2)="PARTIAL" S RESULT("PARTIAL")=1
+"RTN","ORMSD",82,0)
+ S DATE=$P(SEG,"|",8),TIME=$P(SEG,"|",9)
+"RTN","ORMSD",83,0)
+ I TIME="T" S RESULT("NLT")=1
+"RTN","ORMSD",84,0)
+ S RESULT("RTC DATE")=$$HL7TFM^XLFDT($S(TIME="T":$P(DATE,U,2),1:$P(DATE,U)),"L")
+"RTN","ORMSD",85,0)
+ S FREQ=$P(SEG,"|",10),NUM=+$P(SEG,"|",11)
+"RTN","ORMSD",86,0)
+ S RESULT("NUMBER APPT")=NUM I NUM>0 S RESULT("INTERVAL")=+$E(FREQ,2,3)
+"RTN","ORMSD",87,0)
+ S RESULT("SIGNED BY")=$P(SEG,"|",14)
+"RTN","ORMSD",88,0)
+ S RESULT("DISPOSITION BY")=$P(SEG,"|",16)
+"RTN","ORMSD",89,0)
+ Q
+"RTN","ORMSD",90,0)
+ ;
+"RTN","ORMSD",91,0)
+AIL(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",92,0)
+ S RESULT("CLINIC")=$P(SEG,"|",3)
+"RTN","ORMSD",93,0)
+ Q
+"RTN","ORMSD",94,0)
+AIG(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",95,0)
+ N INST,NODE
+"RTN","ORMSD",96,0)
+ S RESULT("PREREQ",$P(SEG,"|"))=$P($P(SEG,"|",2),U,2)
+"RTN","ORMSD",97,0)
+ S INST=0 F  S INST=$O(@ORMSG@(X,INST)) Q:INST'>0  D
+"RTN","ORMSD",98,0)
+ .S NODE=$P(@ORMSG@(X,INST),"|",2,99)
+"RTN","ORMSD",99,0)
+ .S RESULT("PREREQ",$P(NODE,"|"))=$P($P(NODE,"|",2),U,2)
+"RTN","ORMSD",100,0)
+ Q
+"RTN","ORMSD",101,0)
+ ;
+"RTN","ORMSD",102,0)
+NTE(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",103,0)
+ S RESULT("COMMENT")=$$UNESC($P(SEG,"|",3))
+"RTN","ORMSD",104,0)
+ Q
+"RTN","ORMSD",105,0)
+ ;
+"RTN","ORMSD",106,0)
+ ;
+"RTN","ORMSD",107,0)
+PID(RESULT,X,SEG,ERROR) ;
+"RTN","ORMSD",108,0)
+ S RESULT("PATIENT")=$P(SEG,"|",3)_U_$P(SEG,"|",5)
+"RTN","ORMSD",109,0)
+ Q
+"RTN","ORMSD",110,0)
+ ;
+"RTN","ORMSD",111,0)
+PV1(RESULT,X,SEG,ERROR) ; -- Gets Patient location info.
+"RTN","ORMSD",112,0)
+ ;    may not be needed for scheduling
+"RTN","ORMSD",113,0)
+ Q
+"RTN","ORMSD",114,0)
+ ;
+"RTN","ORMSD",115,0)
+FMDATE(Y) ; -- Convert HL7 date/time to FM format
+"RTN","ORMSD",116,0)
+ Q $$HL7TFM^XLFDT(Y)
+"RTN","ORMSD",117,0)
+ ;
+"RTN","ORMSD",118,0)
+REJECT(RESULT) ;
+"RTN","ORMSD",119,0)
+ N ORIFN,ORNATR
+"RTN","ORMSD",120,0)
+ S ORIFN=$P($G(RESULT("MSG ID")),U) Q:+ORIFN'>0
+"RTN","ORMSD",121,0)
+ S:'$G(ORNATR) ORNATR="X" ;Rejected
+"RTN","ORMSD",122,0)
+ S ^OR(100,+ORIFN,6)=$O(^ORD(100.02,"C",ORNATR,0))_U_U_+$E($$NOW^XLFDT,1,12)_U_U_RESULT("REJECTION ERROR")
+"RTN","ORMSD",123,0)
+ I $P($G(^OR(100,+ORIFN,3)),U,11)=2 N ORIG S ORIG=$P(^(3),U,5) S:ORIG $P(^OR(100,ORIG,3),U,6)="" ;remove fwd ptr if pending renewal
+"RTN","ORMSD",124,0)
+ S ORERR=RESULT("REJECTION ERROR")
+"RTN","ORMSD",125,0)
+ N ORDA S ORDA=+$P(ORIFN,";",2) I ORDA D
+"RTN","ORMSD",126,0)
+ . S $P(^OR(100,+ORIFN,8,ORDA,0),U,15)=13 ;request rejected
+"RTN","ORMSD",127,0)
+ . S:$L(RESULT("REJECTION ERROR")) ^OR(100,+ORIFN,8,ORDA,1)=RESULT("REJECTION ERROR")
+"RTN","ORMSD",128,0)
+ D STATUS^ORCSAVE2(+ORIFN,13)
+"RTN","ORMSD",129,0)
+ Q
+"RTN","ORMSD",130,0)
+ ;
+"RTN","ORMSD",131,0)
+ACCEPT(RESULT) ;
+"RTN","ORMSD",132,0)
+ N ORIFN
+"RTN","ORMSD",133,0)
+ S ORIFN=$P($G(RESULT("MSG ID")),U)
+"RTN","ORMSD",134,0)
+ I $P(RESULT("MSG ID"),U,2)'="S05" D  Q
+"RTN","ORMSD",135,0)
+ .S ^OR(100,+ORIFN,4)=$G(RESULT("APPT IEN"))
+"RTN","ORMSD",136,0)
+ .D STATUS^ORCSAVE2(+ORIFN,5)
+"RTN","ORMSD",137,0)
+ .D DATES^ORCSAVE2(+ORIFN,DT,"")
+"RTN","ORMSD",138,0)
+ D DCACK(+ORIFN,.RESULT)
+"RTN","ORMSD",139,0)
+ Q
+"RTN","ORMSD",140,0)
+ ;
+"RTN","ORMSD",141,0)
+DCACK(ORIFN,RESULT) ;
+"RTN","ORMSD",142,0)
+ N ORSTS
+"RTN","ORMSD",143,0)
+ ;set status to discontinue used as a variable for future code changes
+"RTN","ORMSD",144,0)
+ S ORSTS=1
+"RTN","ORMSD",145,0)
+ D EXPDT(ORIFN)
+"RTN","ORMSD",146,0)
+ D STATUS^ORCSAVE2(+ORIFN,ORSTS)
+"RTN","ORMSD",147,0)
+ I $G(RESULT("APPT IEN"))'="" S ^OR(100,+ORIFN,4)=RESULT("APPT IEN")
+"RTN","ORMSD",148,0)
+ Q
+"RTN","ORMSD",149,0)
+ ;
+"RTN","ORMSD",150,0)
+GETSTAT(RESULT) ;
+"RTN","ORMSD",151,0)
+ I +$G(RESULT("DISCONTINUE")) Q $O(^ORD(100.01,"B","DISCONTINUED",""))
+"RTN","ORMSD",152,0)
+ I +$G(RESULT("PARTIAL")) Q $O(^ORD(100.01,"B","PARTIAL RESULTS",""))
+"RTN","ORMSD",153,0)
+ Q $O(^ORD(100.01,"B","COMPLETE",""))
+"RTN","ORMSD",154,0)
+ ;
+"RTN","ORMSD",155,0)
+EXPDT(ORIFN) ; -- save exp date when dc'd
+"RTN","ORMSD",156,0)
+ N STOP S STOP=$P($G(^OR(100,+ORIFN,0)),U,9)
+"RTN","ORMSD",157,0)
+ I STOP,STOP<$$NOW^XLFDT,'$P($G(^OR(100,+ORIFN,6)),U,6) S $P(^(6),U,6)=STOP
+"RTN","ORMSD",158,0)
+ Q
+"RTN","ORMSD",159,0)
+ ;
+"RTN","ORMSD",160,0)
+VALIDATE(RESULT,ERROR) ;
+"RTN","ORMSD",161,0)
+ ;INPUTS("APPT IEN")=0
+"RTN","ORMSD",162,0)
+ ;INPUTS("APPT TYPE")="followup"
+"RTN","ORMSD",163,0)
+ ;INPUTS("CLINIC")="240^20 MINUTE"
+"RTN","ORMSD",164,0)
+ ;INPUTS("COMMENT")="This is the new comment field"
+"RTN","ORMSD",165,0)
+ ;INPUTS("ENTERED BY")="10000000195^PULEO,ANTHONY"
+"RTN","ORMSD",166,0)
+ ;INPUTS("INTERVAL")="Q7D"
+"RTN","ORMSD",167,0)
+ ;INPUTS("MSG ID")=""
+"RTN","ORMSD",168,0)
+ ;INPUTS("DISCONTINUE")=1
+"RTN","ORMSD",169,0)
+ ;INPUTS("ENTERED IN ERROR")=1
+"RTN","ORMSD",170,0)
+ ;INPUTS("NLT")=1
+"RTN","ORMSD",171,0)
+ ;INPUTS("NUMBER APPT")=4
+"RTN","ORMSD",172,0)
+ ;INPUTS("ORDER IEN")=14524362
+"RTN","ORMSD",173,0)
+ ;INPUTS("PATIENT")="346^"
+"RTN","ORMSD",174,0)
+ ;INPUTS("PREREQ",2)="XRAY"
+"RTN","ORMSD",175,0)
+ ;INPUTS("PREREQ",3)="VITALS"
+"RTN","ORMSD",176,0)
+ ;INPUTS("RTC DATE")=20170524
+"RTN","ORMSD",177,0)
+ ;INPUTS("SIGNED BY")=""
+"RTN","ORMSD",178,0)
+ N OK,ORIFN,OR3,STS
+"RTN","ORMSD",179,0)
+ S OK=1
+"RTN","ORMSD",180,0)
+ I +$G(RESULT("CLINIC"))'>0 S ERROR="Clinic location not defined" S OK=0 G VALIDATX
+"RTN","ORMSD",181,0)
+ I '$G(RESULT("COMPLETE")),'$G(RESULT("DISCONTINUE")) S ERROR="Status not defined" S OK=0 G VALIDATX
+"RTN","ORMSD",182,0)
+ I +$G(RESULT("PATIENT"))'>0 S ERROR="Patient is not defined" S OK=0 G VALIDATX
+"RTN","ORMSD",183,0)
+ I +$G(RESULT("PATIENT"))_";DPT("'=$P($G(^OR(100,RESULT("ORDER IEN"),0)),U,2) S ERROR="Patient doesn't match" S OK=0 G VALIDATX
+"RTN","ORMSD",184,0)
+ I '+$G(RESULT("DISPOSITION BY")) S ERROR="User who disposition the order not defined" S OK=0 G VALIDATX
+"RTN","ORMSD",185,0)
+ S ORIFN=RESULT("ORDER IEN") I +ORIFN'>0 S ERROR="Order number not defined" S OK=0 G VALIDATX
+"RTN","ORMSD",186,0)
+ S OR3=$G(^OR(100,+ORIFN,3)),STS=$P(OR3,U,3)
+"RTN","ORMSD",187,0)
+ I STS=1!(STS=2) S ERROR="Order with a status of "_$S(STS=1:"discontinued",1:"complete")_" cannot be changed" S OK=0 G VALIDATX
+"RTN","ORMSD",188,0)
+VALIDATX ;
+"RTN","ORMSD",189,0)
+ Q OK
+"RTN","ORMSD",190,0)
+ ;
+"RTN","ORMSD",191,0)
+SAVEREC(RESULT) ;
+"RTN","ORMSD",192,0)
+ N C,CREATACT,DISPBY,I,ID,ISTIME,OERR,ORDA,ORDG,ORDIALOG,ORIFN,ORNATR,ORNP,ORNOW,ORPKG,ORSTRT,ORVP,ORWHO,STATUS,TYPE,WHOSIGN,X0,X8
+"RTN","ORMSD",193,0)
+ N ORLEAD,ORTRAIL
+"RTN","ORMSD",194,0)
+ S ORWHO=+RESULT("DISPOSITION BY")
+"RTN","ORMSD",195,0)
+ S ORNP=ORWHO
+"RTN","ORMSD",196,0)
+ S ORNOW=+$E($$NOW^XLFDT,1,12)
+"RTN","ORMSD",197,0)
+ S ORDIALOG=+$O(^ORD(101.41,"AB","SD RTC",0))
+"RTN","ORMSD",198,0)
+ S ORDG=+$O(^ORD(100.98,"B","CLINIC SCHEDULING",0))
+"RTN","ORMSD",199,0)
+ S ORIFN=RESULT("ORDER IEN")
+"RTN","ORMSD",200,0)
+ S ORVP=+RESULT("PATIENT")_";DPT("
+"RTN","ORMSD",201,0)
+ S ORPKG=+$$PKG("SD") D GETDLG1^ORCD(ORDIALOG),GETORDER^ORCD(+ORIFN,"ORDIALOG")
+"RTN","ORMSD",202,0)
+ ;set ORDIALOG array to values returned from scheduling single instance
+"RTN","ORMSD",203,0)
+ ;D UPDRESP(ORIFN,.ORDIALOG)
+"RTN","ORMSD",204,0)
+ S ORDA=$P(ORIFN,";",2) I ORDA="" S ORDA=1
+"RTN","ORMSD",205,0)
+ S X0=$G(^OR(100,+ORIFN,0)),X8=$G(^OR(100,ORIFN,8,ORDA,0))
+"RTN","ORMSD",206,0)
+ ;get whosigned and start date for later
+"RTN","ORMSD",207,0)
+ S WHOSIGN=$P(X8,U,5),ORSTRT=$P(X0,U,8)
+"RTN","ORMSD",208,0)
+ ;update package reference
+"RTN","ORMSD",209,0)
+ S ^OR(100,+ORIFN,4)=$G(RESULT("APPT IEN"))
+"RTN","ORMSD",210,0)
+ ;create new order action
+"RTN","ORMSD",211,0)
+ ;set to complete status until next iteration of VSE
+"RTN","ORMSD",212,0)
+ ;S STATUS=$S(+$G(RESULT("DISCONTINUE")):$O(^ORD(100.01,"B","CANCELLED","")),1:$O(^ORD(100.01,"B","COMPLETE","")))
+"RTN","ORMSD",213,0)
+ ;S STATUS=$S(+$G(RESULT("DISCONTINUE")):$O(^ORD(100.01,"B","DISCONTINUED","")),+$G(RESULT("PARTIAL")):$O(^ORD(100.01,"B","PARTIAL RESULTS","")),1:$O(^ORD(100.01,"B","COMPLETE","")))
+"RTN","ORMSD",214,0)
+ S STATUS=$$GETSTAT(.RESULT)
+"RTN","ORMSD",215,0)
+ S TYPE=$S(+$G(RESULT("DISCONTINUE")):"DC",1:"XX")
+"RTN","ORMSD",216,0)
+ D STATUS^ORCSAVE2(ORIFN,STATUS)
+"RTN","ORMSD",217,0)
+ S CREATACT=$$CREATACT("I")
+"RTN","ORMSD",218,0)
+ I CREATACT=1 S ORDA=$$ACTION^ORCSAVE(TYPE,ORIFN,WHOSIGN,$S(TYPE="DC":"Per Scheduling",1:""),ORNOW,ORWHO)
+"RTN","ORMSD",219,0)
+ I CREATACT=0 S ORDA=$$LASTACT(ORIFN)
+"RTN","ORMSD",220,0)
+ ;if order is not created how to get this to expert system
+"RTN","ORMSD",221,0)
+ I ORDA'>0 S ORERR="Cannot create new order action" Q
+"RTN","ORMSD",222,0)
+ ;update status to compete set indexes
+"RTN","ORMSD",223,0)
+ ;I TYPE'="DC" D SETALL^ORDD100(ORIFN)
+"RTN","ORMSD",224,0)
+ D SETALL^ORDD100(ORIFN)
+"RTN","ORMSD",225,0)
+ ;set the order as it has been release to scheduling with the update
+"RTN","ORMSD",226,0)
+ D RELEASE^ORCSAVE2(ORIFN,ORDA,ORNOW,ORWHO,"I")
+"RTN","ORMSD",227,0)
+ S ORNATR="I"
+"RTN","ORMSD",228,0)
+ D SIGSTS^ORCSAVE2(+ORIFN,ORDA)
+"RTN","ORMSD",229,0)
+ ;update dates
+"RTN","ORMSD",230,0)
+ D DATES^ORCSAVE2(ORIFN,ORSTRT,ORNOW)
+"RTN","ORMSD",231,0)
+ ;set disposition fields
+"RTN","ORMSD",232,0)
+ N DA,DR,DIE
+"RTN","ORMSD",233,0)
+ S DA(1)=ORIFN,DA=ORDA
+"RTN","ORMSD",234,0)
+ S DIE="^OR(100,"_DA(1)_",8,"
+"RTN","ORMSD",235,0)
+ S DR="40////"_ORWHO_";41////"_RESULT("MSG DATE/TIME")
+"RTN","ORMSD",236,0)
+ D ^DIE
+"RTN","ORMSD",237,0)
+ S $P(^OR(100,+ORIFN,8,ORDA,0),U,14)=ORDA
+"RTN","ORMSD",238,0)
+ S $P(^OR(100,+ORIFN,3),U,7)=ORDA
+"RTN","ORMSD",239,0)
+ I TYPE="DC" D
+"RTN","ORMSD",240,0)
+ .D CANCEL^ORCSEND(+ORIFN)
+"RTN","ORMSD",241,0)
+ .D EN^ORB3(91,+RESULT("PATIENT"),ORIFN,"","Appointment Request Cancelled in Scheduling","NEW,"_ORIFN) Q
+"RTN","ORMSD",242,0)
+ ;Discontinue updates only
+"RTN","ORMSD",243,0)
+ ;I TYPE="DC" D  Q
+"RTN","ORMSD",244,0)
+ ;.S ORNATR="E"
+"RTN","ORMSD",245,0)
+ ;.;D SIGSTS^ORCSAVE2(+ORIFN,ORDA)
+"RTN","ORMSD",246,0)
+ ;.S $P(^OR(100,+ORIFN,3),U,7)=ORDA
+"RTN","ORMSD",247,0)
+ ;.D CANCEL^ORCSEND(+ORIFN)
+"RTN","ORMSD",248,0)
+ ;update responses 4.5 and SIG
+"RTN","ORMSD",249,0)
+ ;S ISTIME=+$G(ORDIALOG($$PTR($P("YES/NO",U)),1))
+"RTN","ORMSD",250,0)
+ S ISTIME=+$G(ORDIALOG($$PTR("YES/NO"),1))
+"RTN","ORMSD",251,0)
+ S ORLEAD=$S(ISTIME=1:"no later than ",1:"on or around ("),ORTRAIL=$S(ISTIME=1:"",1:")")
+"RTN","ORMSD",252,0)
+ K ^OR(100,+ORIFN,4.5) D RESPONSE^ORCSAVE,ORDTEXT^ORCSAVE1(+ORIFN_";"_ORDA)
+"RTN","ORMSD",253,0)
+ ;update the dialog and package fiels. This may have value in future version of VSE
+"RTN","ORMSD",254,0)
+ S $P(^OR(100,ORIFN,0),U,5)=ORDIALOG_";ORD(101.41,",$P(^(0),U,14)=ORPKG
+"RTN","ORMSD",255,0)
+ ;validate display group and update if needed
+"RTN","ORMSD",256,0)
+ I $P(^OR(100,ORIFN,0),U,11)'=ORDG D
+"RTN","ORMSD",257,0)
+ . N DA,DR,DIE
+"RTN","ORMSD",258,0)
+ . S DA=ORIFN,DR="23////"_ORDG,DIE="^OR(100," D ^DIE
+"RTN","ORMSD",259,0)
+ ;S $P(^(8,ORDA,0),U,14)=ORDA
+"RTN","ORMSD",260,0)
+ ;send back ack back, because scheduling is using a SRM message this code is branched from
+"RTN","ORMSD",261,0)
+ ;the standard OR HL7 message. This handle in the EN line tag of this routine.
+"RTN","ORMSD",262,0)
+ ;S ORIFN=ORIFN_";"_ORDA,ORDCNTRL="SN" ;to send NA msg back
+"RTN","ORMSD",263,0)
+ Q
+"RTN","ORMSD",264,0)
+ ;
+"RTN","ORMSD",265,0)
+UPDRESP(ORIFN,ORDIALOG) ;
+"RTN","ORMSD",266,0)
+ N C,I,ID,TYPE
+"RTN","ORMSD",267,0)
+ F ID="LOCATION","CLINICALLY","YN","SDNUM","SDINT","SDCOMMENT" D
+"RTN","ORMSD",268,0)
+ .S TYPE=$$PMPTMAP(ID) I ID="" Q
+"RTN","ORMSD",269,0)
+ .I ID="SDINT",+$G(ORDIALOG($$PTR($P(TYPE,U)),1))=0,$P($G(RESULT($P(TYPE,U,2))),U)=0 Q
+"RTN","ORMSD",270,0)
+ .I $P($G(RESULT($P(TYPE,U,2))),U)'="" S ORDIALOG($$PTR($P(TYPE,U)),1)=$P($G(RESULT($P(TYPE,U,2))),U) Q
+"RTN","ORMSD",271,0)
+ .I $G(ORDIALOG($$PTR($P(TYPE,U)),1))'="" S ORDIALOG($$PTR($P(TYPE,U)),1)="@"
+"RTN","ORMSD",272,0)
+ ;set ORDIALOG array to values returned from scheduling multiple instances
+"RTN","ORMSD",273,0)
+ ;I $D(RESULT("PREREQ")) D
+"RTN","ORMSD",274,0)
+ ;.S C=0,I=0 F  S I=$O(RESULT("PREREQ",I)) Q:I'>0  D
+"RTN","ORMSD",275,0)
+ ;..S C=C+1,ORDIALOG($$PTR("PRE REQ"),C)=$G(RESULT("PREREQ",I))
+"RTN","ORMSD",276,0)
+ Q
+"RTN","ORMSD",277,0)
+ ;
+"RTN","ORMSD",278,0)
+PMPTMAP(ID) ;
+"RTN","ORMSD",279,0)
+ I ID="CLINIC" Q "LOCATION"_U_"CLINIC"
+"RTN","ORMSD",280,0)
+ I ID="CLINICALLY" Q "CLINICALLY INDICATED DATE"_U_"RTC DATE"
+"RTN","ORMSD",281,0)
+ I ID="SDNUM" Q "APPT NUM"_U_"NUMBER APPT"
+"RTN","ORMSD",282,0)
+ I ID="SDINT" Q "SCH INTERVAL"_U_"INTERVAL"
+"RTN","ORMSD",283,0)
+ I ID="SDCOMMENT" Q "SD COMMENT"_U_"COMMENT"
+"RTN","ORMSD",284,0)
+ I ID="YN" Q "YES/NO"_U_"NLT"
+"RTN","ORMSD",285,0)
+ Q ""
+"RTN","ORMSD",286,0)
+ ;
+"RTN","ORMSD",287,0)
+SENDFAIL(ERROR,RESULT) ;
+"RTN","ORMSD",288,0)
+ N ORV
+"RTN","ORMSD",289,0)
+ S ORV("XQY0")="" D EN^ORERR(ERROR,.ORMSG,.ORV)
+"RTN","ORMSD",290,0)
+ ;Q:ORTYPE="ORR"  Q:'$L($G(ORNMSP))
+"RTN","ORMSD",291,0)
+ N OREMSG
+"RTN","ORMSD",292,0)
+ ;N ORVP,ORTS S:'$G(ORDUZ) ORDUZ=PAT_";DPT(" D:'$G(ORVP) PID
+"RTN","ORMSD",293,0)
+ S OREMSG(1)=$$MSH^ORMBLD("SRM","SD")_"|"_$G(RESULT("MSG ID"))
+"RTN","ORMSD",294,0)
+ S OREMSG(2)="MSA|AR|"_ERROR_"|||207^"_ERROR
+"RTN","ORMSD",295,0)
+ S OREMSG(3)="ERR|^^^"
+"RTN","ORMSD",296,0)
+ D MSG^XQOR("OR EVSEND SD",.OREMSG)
+"RTN","ORMSD",297,0)
+ Q
+"RTN","ORMSD",298,0)
+ ;
+"RTN","ORMSD",299,0)
+SENDOK(RESULT) ;
+"RTN","ORMSD",300,0)
+ N ORMSG
+"RTN","ORMSD",301,0)
+ S ORMSG(1)=$$MSH^ORMBLD("SRM","SD")_"|"_RESULT("MSG ID")
+"RTN","ORMSD",302,0)
+ S ORMSG(2)="MSA|AA|OK|||"
+"RTN","ORMSD",303,0)
+ D MSG^XQOR("OR EVSEND SD",.ORMSG)
+"RTN","ORMSD",304,0)
+ Q
+"RTN","ORMSD",305,0)
+ ;
+"RTN","ORMSD",306,0)
+PKG(NMSP) ; -- Return Package file ptr for NMSP
+"RTN","ORMSD",307,0)
+ N I S I=0
+"RTN","ORMSD",308,0)
+ F  S I=+$O(^DIC(9.4,"C",NMSP,I)) Q:I<1  Q:'$O(^(I,0))  ;no Addl Prefs
+"RTN","ORMSD",309,0)
+ Q I
+"RTN","ORMSD",310,0)
+ ;
+"RTN","ORMSD",311,0)
+PTR(X) ; -- Return ptr to prompt OR GTX X
+"RTN","ORMSD",312,0)
+ Q +$O(^ORD(101.41,"AB","OR GTX "_X,0))
+"RTN","ORMSD",313,0)
+ ;
+"RTN","ORMSD",314,0)
+VALUE(ID) ; -- Return value of ID in ^OR(100,+ORIFN,4.5,"ID")
+"RTN","ORMSD",315,0)
+ N I,Y I '$L($G(ID)) Q ""
+"RTN","ORMSD",316,0)
+ S I=+$O(^OR(100,+ORIFN,4.5,"ID",ID,0))
+"RTN","ORMSD",317,0)
+ S Y=$G(^OR(100,+ORIFN,4.5,I,1))
+"RTN","ORMSD",318,0)
+ Q Y
+"VER")
+8.0^22.2
+"^DD",101.41,101.41,0)
+FIELD^^99^30
+"^DD",101.41,101.41,0,"DDA")
+N
+"^DD",101.41,101.41,0,"DT")
+3170621
+"^DD",101.41,101.41,0,"IX","AB",101.41,.01)
+
+"^DD",101.41,101.41,0,"IX","AD",101.412,2)
+
+"^DD",101.41,101.41,0,"IX","AM",101.41,99)
+
+"^DD",101.41,101.41,0,"IX","AM2",101.41,2)
+
+"^DD",101.41,101.41,0,"IX","AM51",101.41,51)
+
+"^DD",101.41,101.41,0,"IX","AM52",101.41,52)
+
+"^DD",101.41,101.41,0,"IX","AMM",101.412,.01)
+
+"^DD",101.41,101.41,0,"IX","AMM2",101.412,2)
+
+"^DD",101.41,101.41,0,"IX","AMM3",101.412,3)
+
+"^DD",101.41,101.41,0,"IX","AMM4",101.412,4)
+
+"^DD",101.41,101.41,0,"IX","AMM5",101.412,5)
+
+"^DD",101.41,101.41,0,"IX","APKG",101.41,7)
+
+"^DD",101.41,101.41,0,"IX","C",101.41,2)
+
+"^DD",101.41,101.41,0,"NM","ORDER DIALOG")
+
+"^DD",101.41,101.41,0,"PT",100,2)
+
+"^DD",101.41,101.41,0,"PT",100,7)
+
+"^DD",101.41,101.41,0,"PT",100.045,.02)
+
+"^DD",101.41,101.41,0,"PT",100.5,4)
+
+"^DD",101.41,101.41,0,"PT",100.5,5)
+
+"^DD",101.41,101.41,0,"PT",100.95,3)
+
+"^DD",101.41,101.41,0,"PT",100.98,4)
+
+"^DD",101.41,101.41,0,"PT",101.412,1)
+
+"^DD",101.41,101.41,0,"PT",101.412,2)
+
+"^DD",101.41,101.41,0,"PT",101.415,2)
+
+"^DD",101.41,101.41,0,"PT",101.416,.02)
+
+"^DD",101.41,101.41,0,"PT",101.441,.01)
+
+"^DD",101.41,101.41,0,"PT",801.41,15)
+
+"^DD",101.41,101.41,0,"PT",801.4118,.01)
+
+"^DD",101.41,101.41,0,"PT",800001.05,.01)
+
+"^DD",101.41,101.41,0,"VRPK")
+OR
+"^DD",101.41,101.41,.01,0)
+NAME^RF^^0;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>63!($L(X)<3)!'(X'?1P.E) X
+"^DD",101.41,101.41,.01,1,0)
+^.1^^-1
+"^DD",101.41,101.41,.01,1,2,0)
+101.41^AB
+"^DD",101.41,101.41,.01,1,2,1)
+S ^ORD(101.41,"AB",$E(X,1,63),DA)=""
+"^DD",101.41,101.41,.01,1,2,2)
+K ^ORD(101.41,"AB",$E(X,1,63),DA)
+"^DD",101.41,101.41,.01,1,2,"%D",0)
+^^1^1^2971020^
+"^DD",101.41,101.41,.01,1,2,"%D",1,0)
+This is a regular index on the full 63 characters of the Name field.
+"^DD",101.41,101.41,.01,1,2,"DT")
+2971020
+"^DD",101.41,101.41,.01,3)
+Answer must be 3-63 characters in length.
+"^DD",101.41,101.41,.01,21,0)
+^^3^3^2971219^
+"^DD",101.41,101.41,.01,21,1,0)
+This is the name of the dialog; entries that were converted from the
+"^DD",101.41,101.41,.01,21,2,0)
+Protocol file will retain the same name.  Namespacing is not required,
+"^DD",101.41,101.41,.01,21,3,0)
+but still encouraged.
+"^DD",101.41,101.41,.01,"DT")
+2971020
+"^DD",101.41,101.41,2,0)
+DISPLAY TEXT^FX^^0;2^K:$L(X)>80!($L(X)<3)!($$CHKNAM^ORUTL(X)) X
+"^DD",101.41,101.41,2,1,0)
+^.1
+"^DD",101.41,101.41,2,1,1,0)
+101.41^C
+"^DD",101.41,101.41,2,1,1,1)
+S ^ORD(101.41,"C",$$UP^XLFSTR($E(X,1,63)),DA)=""
+"^DD",101.41,101.41,2,1,1,2)
+K ^ORD(101.41,"C",$$UP^XLFSTR($E(X,1,63)),DA)
+"^DD",101.41,101.41,2,1,1,"DT")
+2950112
+"^DD",101.41,101.41,2,1,2,0)
+101.41^AM2^MUMPS
+"^DD",101.41,101.41,2,1,2,1)
+D REDOM^ORDD41
+"^DD",101.41,101.41,2,1,2,2)
+D REDOM^ORDD41
+"^DD",101.41,101.41,2,1,2,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.41,2,1,2,"%D",1,0)
+Update TIMESTAMP whenever DISPLAY TEXT is changed.
+"^DD",101.41,101.41,2,1,2,"DT")
+2990210
+"^DD",101.41,101.41,2,3)
+Answer must be 3-80 characters and cannot contain an up-arrow (^) or semi-colon (;).
+"^DD",101.41,101.41,2,21,0)
+^.001^1^1^3010913^^^^
+"^DD",101.41,101.41,2,21,1,0)
+The text of this dialog's name as it appears on a menu or subheader.
+"^DD",101.41,101.41,2,"DT")
+3000823
+"^DD",101.41,101.41,3,0)
+DISABLE^F^^0;3^K:$L(X)>40!($L(X)<1) X
+"^DD",101.41,101.41,3,3)
+Enter a message here to disable this dialog, 1-40 characters in length.
+"^DD",101.41,101.41,3,21,0)
+^^3^3^2950112^
+"^DD",101.41,101.41,3,21,1,0)
+This field disables use of this dialog when it contains text.  The text
+"^DD",101.41,101.41,3,21,2,0)
+should be a short message explaining why use of this dialog has been
+"^DD",101.41,101.41,3,21,3,0)
+disabled, as it will be displayed if this dialog is selected.
+"^DD",101.41,101.41,3,"DT")
+2950112
+"^DD",101.41,101.41,4,0)
+TYPE^RS^P:prompt;D:dialog;Q:quick order;O:order set;M:menu;A:action;^0;4^Q
+"^DD",101.41,101.41,4,3)
+Specify a type for this dialog.
+"^DD",101.41,101.41,4,21,0)
+^^5^5^2950716^^^^
+"^DD",101.41,101.41,4,21,1,0)
+This field defines the type of order dialog to be processed.  Control
+"^DD",101.41,101.41,4,21,2,0)
+will be passed to the OE/RR Dialog Processor for dialog items; menu types
+"^DD",101.41,101.41,4,21,3,0)
+are used for displaying and selecting dialog items.  Action types will only
+"^DD",101.41,101.41,4,21,4,0)
+execute the entry and exit actions, ignoring any items that may exist; these
+"^DD",101.41,101.41,4,21,5,0)
+dialogs should not create entries in the Orders file.
+"^DD",101.41,101.41,4,"DT")
+2950716
+"^DD",101.41,101.41,5,0)
+DISPLAY GROUP^P100.98'^ORD(100.98,^0;5^Q
+"^DD",101.41,101.41,5,3)
+Enter the display group containing orderable items defined by this dialog.
+"^DD",101.41,101.41,5,21,0)
+^^3^3^2950112^
+"^DD",101.41,101.41,5,21,1,0)
+This field determines what display group this dialog has been defined for.
+"^DD",101.41,101.41,5,21,2,0)
+It will define which orderable items are selectable with this dialog,
+"^DD",101.41,101.41,5,21,3,0)
+as well as what service to send the order to when it is complete.
+"^DD",101.41,101.41,5,"DT")
+2950112
+"^DD",101.41,101.41,6,0)
+SIGNATURE REQUIRED^S^0:NONE;1:ORELSE;2:ORES;^0;6^Q
+"^DD",101.41,101.41,6,3)
+Enter the OR key required to sign orders created by this dialog
+"^DD",101.41,101.41,6,21,0)
+^^6^6^2970318^^
+"^DD",101.41,101.41,6,21,1,0)
+This field indicates what signature will be required for orders created by
+"^DD",101.41,101.41,6,21,2,0)
+this dialog, to be considered complete and ready to release to the service
+"^DD",101.41,101.41,6,21,3,0)
+for action.  If this flag is set to NO and the dialog contains a prompt
+"^DD",101.41,101.41,6,21,4,0)
+for item(s) from the Orderable Item file, the order created may still
+"^DD",101.41,101.41,6,21,5,0)
+require a signature if any of the items ordered are individually flagged
+"^DD",101.41,101.41,6,21,6,0)
+as requiring a signature.
+"^DD",101.41,101.41,6,"DT")
+3170621
+"^DD",101.41,101.41,7,0)
+PACKAGE^P9.4'^DIC(9.4,^0;7^Q
+"^DD",101.41,101.41,7,1,0)
+^.1
+"^DD",101.41,101.41,7,1,1,0)
+101.41^APKG
+"^DD",101.41,101.41,7,1,1,1)
+S ^ORD(101.41,"APKG",$E(X,1,30),DA)=""
+"^DD",101.41,101.41,7,1,1,2)
+K ^ORD(101.41,"APKG",$E(X,1,30),DA)
+"^DD",101.41,101.41,7,1,1,"DT")
+2970325
+"^DD",101.41,101.41,7,3)
+Enter the VISTA package that is to receive orders created by this dialog.
+"^DD",101.41,101.41,7,21,0)
+^^3^3^2950208^
+"^DD",101.41,101.41,7,21,1,0)
+This is the VISTA package that is intended to receive orders created by
+"^DD",101.41,101.41,7,21,2,0)
+this dialog; this is required for creating the HL7 messages to pass the
+"^DD",101.41,101.41,7,21,3,0)
+order.
+"^DD",101.41,101.41,7,"DT")
+2970325
+"^DD",101.41,101.41,8,0)
+VERIFY ORDER^S^1:YES;0:NO;^0;8^Q
+"^DD",101.41,101.41,8,3)
+Enter YES to have orders created by this dialog presented to the user before saving, with the opportunity to edit.
+"^DD",101.41,101.41,8,21,0)
+^^3^3^2950623^
+"^DD",101.41,101.41,8,21,1,0)
+This field is a flag, which determines if the order created by this dialog
+"^DD",101.41,101.41,8,21,2,0)
+will be presented to the user for verification before saving in the Orders
+"^DD",101.41,101.41,8,21,3,0)
+file; for most quick orders, this flag should be set to 0 (no).
+"^DD",101.41,101.41,8,"DT")
+3170621
+"^DD",101.41,101.41,9,0)
+ASK FOR ANOTHER ORDER^S^0:NO;1:YES;2:YES-DON'T ASK;^0;9^Q
+"^DD",101.41,101.41,9,3)
+Enter YES to have the user asked to enter another order from this dialog before exiting.
+"^DD",101.41,101.41,9,21,0)
+^^6^6^2970616^^^
+"^DD",101.41,101.41,9,21,1,0)
+This field allows the user to add another order from this dialog, when the
+"^DD",101.41,101.41,9,21,2,0)
+initial order is accepted and placed; if set to YES, the user will be
+"^DD",101.41,101.41,9,21,3,0)
+asked "Add another <dialog display text> order?" to allow for either
+"^DD",101.41,101.41,9,21,4,0)
+exiting the processor or adding an additional order of the same type.
+"^DD",101.41,101.41,9,21,5,0)
+This field can also be set to YES-DON'T ASK to force the processor to
+"^DD",101.41,101.41,9,21,6,0)
+automatically drop into prompting for another order without asking first.
+"^DD",101.41,101.41,9,"DT")
+2970616
+"^DD",101.41,101.41,10,0)
+ITEMS^101.412IA^^10;0
+"^DD",101.41,101.41,10,21,0)
+^^5^5^2990211^^^^
+"^DD",101.41,101.41,10,21,1,0)
+This field contains the components for dialogs:
+"^DD",101.41,101.41,10,21,2,0)
+     Dialogs      -> prompts
+"^DD",101.41,101.41,10,21,3,0)
+     Quick orders -> prompts (completed)
+"^DD",101.41,101.41,10,21,4,0)
+     Order sets   -> dialogs or quick orders
+"^DD",101.41,101.41,10,21,5,0)
+     Menus        -> dialogs, quick orders, or order sets
+"^DD",101.41,101.41,11,0)
+DATA TYPE^S^D:date/time;R:free text date/time;F:free text;N:numeric;S:set of codes;Y:yes/no;P:pointer;W:word processing;^1;1^Q
+"^DD",101.41,101.41,11,3)
+Enter the type of data to be collected at this prompt.
+"^DD",101.41,101.41,11,21,0)
+^^2^2^2950823^^
+"^DD",101.41,101.41,11,21,1,0)
+This is the type of data being prompted for; this field is used to define
+"^DD",101.41,101.41,11,21,2,0)
+a call to the reader (^DIR) in most cases.
+"^DD",101.41,101.41,11,23,0)
+^^1^1^2950823^^
+"^DD",101.41,101.41,11,23,1,0)
+Used with Prompt-type only.
+"^DD",101.41,101.41,11,"DT")
+2950407
+"^DD",101.41,101.41,12,0)
+DOMAIN^F^^1;2^K:$L(X)>235!($L(X)<1) X
+"^DD",101.41,101.41,12,3)
+Answer must be 1-235 characters in length.
+"^DD",101.41,101.41,12,21,0)
+^^3^3^2990225^^^^
+"^DD",101.41,101.41,12,21,1,0)
+This is a parameter that may be used to further specify the data type.
+"^DD",101.41,101.41,12,21,2,0)
+The string stored here should be appropriate for the second ^-piece of
+"^DD",101.41,101.41,12,21,3,0)
+DIR(0) when used with the data type field.
+"^DD",101.41,101.41,12,23,0)
+^^1^1^2990225^^^^
+"^DD",101.41,101.41,12,23,1,0)
+Used with Prompt-type only.
+"^DD",101.41,101.41,12,"DT")
+2990225
+"^DD",101.41,101.41,13,0)
+ID^F^^1;3^K:$L(X)>10!($L(X)<2) X
+"^DD",101.41,101.41,13,3)
+Answer must be 2-10 characters in length.
+"^DD",101.41,101.41,13,21,0)
+^.001^20^20^3010727^^
+"^DD",101.41,101.41,13,21,1,0)
+This field may contain a single word identifier which will be
+"^DD",101.41,101.41,13,21,2,0)
+stored with the user response in the Orders file #100, where it
+"^DD",101.41,101.41,13,21,3,0)
+will be indexed for quick reference to certain values in the
+"^DD",101.41,101.41,13,21,4,0)
+order dialog.  The following are some examples of values
+"^DD",101.41,101.41,13,21,5,0)
+currently in use:
+"^DD",101.41,101.41,13,21,6,0)
+ 
+"^DD",101.41,101.41,13,21,7,0)
+   START      -> Start date/time
+"^DD",101.41,101.41,13,21,8,0)
+   STOP       -> Stop date/time
+"^DD",101.41,101.41,13,21,9,0)
+   SCHEDULE   -> Administration Schedule
+"^DD",101.41,101.41,13,21,10,0)
+   ORDERABLE  -> Orderable Item
+"^DD",101.41,101.41,13,21,11,0)
+   DRUG       -> Dispense Drug
+"^DD",101.41,101.41,13,21,12,0)
+   CANCEL     -> Cancel Future Orders flag
+"^DD",101.41,101.41,13,21,13,0)
+   COMMENT    -> Word processing comments
+"^DD",101.41,101.41,13,21,14,0)
+ 
+"^DD",101.41,101.41,13,21,15,0)
+These values must be unique among entries within an order dialog
+"^DD",101.41,101.41,13,21,16,0)
+but do not need to be unique across the entire file.  Be sure to
+"^DD",101.41,101.41,13,21,17,0)
+check the IDs assigned to generic text entries to make sure that
+"^DD",101.41,101.41,13,21,18,0)
+all IDs are unique.  In order to avoid potential problems it's
+"^DD",101.41,101.41,13,21,19,0)
+recommended that you use unique IDs for any local entries that you
+"^DD",101.41,101.41,13,21,20,0)
+create.
+"^DD",101.41,101.41,13,"DT")
+2960215
+"^DD",101.41,101.41,17,0)
+VALIDATION^K^^7;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.41,17,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.41,17,9)
+@
+"^DD",101.41,101.41,17,21,0)
+^^3^3^2960912^
+"^DD",101.41,101.41,17,21,1,0)
+This is MUMPS code that will be executed at the time of releasing an
+"^DD",101.41,101.41,17,21,2,0)
+order created with this dialog; dialog responses may be checked again
+"^DD",101.41,101.41,17,21,3,0)
+here before releasing the order to the service.
+"^DD",101.41,101.41,17,"DT")
+2960912
+"^DD",101.41,101.41,19,0)
+ADDITIONAL TEXT^K^^9;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.41,19,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.41,19,9)
+@
+"^DD",101.41,101.41,19,21,0)
+^^3^3^2960405^^
+"^DD",101.41,101.41,19,21,1,0)
+This is MUMPS code that will be executed when order ORIFN created by this
+"^DD",101.41,101.41,19,21,2,0)
+dialog is about to be displayed; any string that should be appended to the
+"^DD",101.41,101.41,19,21,3,0)
+order text should be returned in Y.
+"^DD",101.41,101.41,19,"DT")
+2960405
+"^DD",101.41,101.41,20,0)
+DESCRIPTION^101.411^^2;0
+"^DD",101.41,101.41,20,21,0)
+^^1^1^2971219^
+"^DD",101.41,101.41,20,21,1,0)
+This is a description of the dialog and its uses.
+"^DD",101.41,101.41,21,0)
+RESPONSES^101.416^^6;0
+"^DD",101.41,101.41,21,21,0)
+^^2^2^2971219^
+"^DD",101.41,101.41,21,21,1,0)
+This multiple contains any responses to prompts that have been pre-answered
+"^DD",101.41,101.41,21,21,2,0)
+to create a quick order.
+"^DD",101.41,101.41,30,0)
+ENTRY ACTION^K^^3;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.41,30,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.41,30,9)
+@
+"^DD",101.41,101.41,30,21,0)
+^^4^4^2950425^
+"^DD",101.41,101.41,30,21,1,0)
+This is MUMPS code that will be executed at the top of a dialog, prior to
+"^DD",101.41,101.41,30,21,2,0)
+the execution of any prompts; it may perform functions such as listing
+"^DD",101.41,101.41,30,21,3,0)
+the recent Radiology exams before ordering a new one, or alerting the
+"^DD",101.41,101.41,30,21,4,0)
+user to an existing diet order before making a change.
+"^DD",101.41,101.41,30,"DT")
+2950425
+"^DD",101.41,101.41,31,0)
+QUICK SETUP^K^^3.1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.41,31,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.41,31,9)
+@
+"^DD",101.41,101.41,31,21,0)
+^^3^3^2970113^
+"^DD",101.41,101.41,31,21,1,0)
+This is MUMPS code that will be executed in the place of the Entry Action
+"^DD",101.41,101.41,31,21,2,0)
+when creating quick orders for this dialog; variables may be set here
+"^DD",101.41,101.41,31,21,3,0)
+instead to bypass the usual dependence on specific patient values.
+"^DD",101.41,101.41,31,"DT")
+2970113
+"^DD",101.41,101.41,40,0)
+EXIT ACTION^K^^4;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.41,40,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.41,40,9)
+@
+"^DD",101.41,101.41,40,21,0)
+^^2^2^2950622^
+"^DD",101.41,101.41,40,21,1,0)
+This is MUMPS code that will be executed upon completion of processing the
+"^DD",101.41,101.41,40,21,2,0)
+dialog; it is currently used only with dialog-type entries.
+"^DD",101.41,101.41,40,"DT")
+2950622
+"^DD",101.41,101.41,50,0)
+CONTROLS^101.415A^^50;0
+"^DD",101.41,101.41,51,0)
+COLUMN WIDTH^NJ3,0^^5;1^K:+X'=X!(X>240)!(X<20)!(X?.E1"."1N.N) X
+"^DD",101.41,101.41,51,1,0)
+^.1
+"^DD",101.41,101.41,51,1,1,0)
+101.41^AM51^MUMPS
+"^DD",101.41,101.41,51,1,1,1)
+D REDO^ORDD41
+"^DD",101.41,101.41,51,1,1,2)
+D REDO^ORDD41
+"^DD",101.41,101.41,51,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.41,51,1,1,"%D",1,0)
+Update TIMESTAMP whenever COLUMN WIDTH is changed.
+"^DD",101.41,101.41,51,1,1,"DT")
+2990210
+"^DD",101.41,101.41,51,3)
+Type a Number between 20 and 240, 0 Decimal Digits
+"^DD",101.41,101.41,51,21,0)
+^^2^2^2950623^
+"^DD",101.41,101.41,51,21,1,0)
+This is the width, in characters, for each column in a menu.  For example,
+"^DD",101.41,101.41,51,21,2,0)
+to have 3 columns on an 80 character device, enter a width of 26.
+"^DD",101.41,101.41,51,"DT")
+2990210
+"^DD",101.41,101.41,52,0)
+MNEMONIC WIDTH^NJ1,0^^5;2^K:+X'=X!(X>9)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101.41,101.41,52,1,0)
+^.1
+"^DD",101.41,101.41,52,1,1,0)
+101.41^AM52^MUMPS
+"^DD",101.41,101.41,52,1,1,1)
+D REDO^ORDD41
+"^DD",101.41,101.41,52,1,1,2)
+D REDO^ORDD41
+"^DD",101.41,101.41,52,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.41,52,1,1,"%D",1,0)
+Update TIMESTAMP whenever MNEMONIC WIDTH is changed.
+"^DD",101.41,101.41,52,1,1,"DT")
+2990210
+"^DD",101.41,101.41,52,3)
+Type a Number between 1 and 9, 0 Decimal Digits
+"^DD",101.41,101.41,52,21,0)
+^^2^2^2950623^
+"^DD",101.41,101.41,52,21,1,0)
+This field allows the width of item mnemonics to be varied; the default
+"^DD",101.41,101.41,52,21,2,0)
+value is 5.
+"^DD",101.41,101.41,52,"DT")
+2990210
+"^DD",101.41,101.41,53,0)
+PATH SWITCH^S^1:YES;0:NO;^5;3^Q
+"^DD",101.41,101.41,53,3)
+Enter YES if this menu should be redisplayed when traversing back up the menu tree.
+"^DD",101.41,101.41,53,21,0)
+^^5^5^2950623^
+"^DD",101.41,101.41,53,21,1,0)
+This switch allows the user, when traversing back UP the tree of menus and
+"^DD",101.41,101.41,53,21,2,0)
+items, to select a new path back down the tree.  In other words, the menu
+"^DD",101.41,101.41,53,21,3,0)
+is redisplayed when returning to that menu's level in the tree and
+"^DD",101.41,101.41,53,21,4,0)
+processing back down the tree is possible from that point.  If nothing is
+"^DD",101.41,101.41,53,21,5,0)
+selected from the menu, the path continues back up the tree.
+"^DD",101.41,101.41,53,"DT")
+2950623
+"^DD",101.41,101.41,54,0)
+LISTBOX TEXT^F^^5;4^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.41,54,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.41,54,"DT")
+2960524
+"^DD",101.41,101.41,55,0)
+WINDOW FORM ID^NJ4,0^^5;5^K:+X'=X!(X>9999)!(X<0)!(X?.E1"."1N.N) X
+"^DD",101.41,101.41,55,3)
+Type a Number between 0 and 9999, 0 Decimal Digits
+"^DD",101.41,101.41,55,21,0)
+^.001^23^23^3010727^^
+"^DD",101.41,101.41,55,21,1,0)
+This field tells the GUI DELPHI code which form to use to process the
+"^DD",101.41,101.41,55,21,2,0)
+order dialog.  Each number represents a unique form.  Following are some
+"^DD",101.41,101.41,55,21,3,0)
+of the more common codes and their corresponding form in DELPHI.
+"^DD",101.41,101.41,55,21,4,0)
+ 
+"^DD",101.41,101.41,55,21,5,0)
+    Form Name     Windows Form ID
+"^DD",101.41,101.41,55,21,6,0)
+    ---------     ---------------
+"^DD",101.41,101.41,55,21,7,0)
+  OD_ACTIVITY           100
+"^DD",101.41,101.41,55,21,8,0)
+  OD_ALLERGY            105
+"^DD",101.41,101.41,55,21,9,0)
+  OD_CONSULT            110
+"^DD",101.41,101.41,55,21,10,0)
+  OD_PROCEDURE          112
+"^DD",101.41,101.41,55,21,11,0)
+  OD_DIET_TXT           115
+"^DD",101.41,101.41,55,21,12,0)
+  OD_DIET               117
+"^DD",101.41,101.41,55,21,13,0)
+  OD_LAB                120
+"^DD",101.41,101.41,55,21,14,0)
+  OD_MEDINPT            130
+"^DD",101.41,101.41,55,21,15,0)
+  OD_MEDS               135
+"^DD",101.41,101.41,55,21,16,0)
+  OD_MEDOUTPT           140
+"^DD",101.41,101.41,55,21,17,0)
+  OD_NURSING            150
+"^DD",101.41,101.41,55,21,18,0)
+  OD_MISC               151
+"^DD",101.41,101.41,55,21,19,0)
+  OD_GENERIC            152
+"^DD",101.41,101.41,55,21,20,0)
+  OD_IMAGING            160
+"^DD",101.41,101.41,55,21,21,0)
+  OD_VITALS             171 
+"^DD",101.41,101.41,55,21,22,0)
+  OD_MEDIV              180
+"^DD",101.41,101.41,55,21,23,0)
+  OD_TEXTONLY           999
+"^DD",101.41,101.41,55,"DT")
+2960804
+"^DD",101.41,101.41,56,0)
+CREATE PARENT ORDER^S^1:YES;0:NO;^5;6^Q
+"^DD",101.41,101.41,56,3)
+Enter YES if a parent order should be created for this order set
+"^DD",101.41,101.41,56,21,0)
+^^6^6^2970227^
+"^DD",101.41,101.41,56,21,1,0)
+This flag indicates whether a parent order should be created to group
+"^DD",101.41,101.41,56,21,2,0)
+together all the orders created by this order set; this flag is only
+"^DD",101.41,101.41,56,21,3,0)
+valid with SET type order dialogs.  If this value is YES, a parent
+"^DD",101.41,101.41,56,21,4,0)
+order will be created, and only the parent will be presented on the
+"^DD",101.41,101.41,56,21,5,0)
+orders list for display and action; NO will prevent a parent from being
+"^DD",101.41,101.41,56,21,6,0)
+created and all orders will be created and displayed independently.
+"^DD",101.41,101.41,56,"DT")
+2970227
+"^DD",101.41,101.41,57,0)
+DISPLAY SUBHEADER^S^1:YES;0:NO;^5;7^Q
+"^DD",101.41,101.41,57,3)
+Enter YES if a subheader should be displayed as each order in this set is processed
+"^DD",101.41,101.41,57,21,0)
+^^3^3^2970227^
+"^DD",101.41,101.41,57,21,1,0)
+This flag indicates whether a subheader is to be displayed for each order
+"^DD",101.41,101.41,57,21,2,0)
+in this set as it is processed and placed; this flag is only valid with
+"^DD",101.41,101.41,57,21,3,0)
+SET type order dialogs.
+"^DD",101.41,101.41,57,"DT")
+2970227
+"^DD",101.41,101.41,58,0)
+AUTO-ACCEPT QUICK ORDER^S^1:YES;^5;8^Q
+"^DD",101.41,101.41,58,3)
+Enter 'Yes' if the order should be placed without displaying the dialog window.
+"^DD",101.41,101.41,58,21,0)
+^^2^2^2980902^
+"^DD",101.41,101.41,58,21,1,0)
+This can be set to yes for a quick order so that it can be placed simply
+"^DD",101.41,101.41,58,21,2,0)
+by clicking on it in the GUI (no ordering dialog is displayed).
+"^DD",101.41,101.41,58,"DT")
+2980902
+"^DD",101.41,101.41,99,0)
+TIMESTAMP^F^^99;1^K:$L(X)>15!($L(X)<1) X
+"^DD",101.41,101.41,99,1,0)
+^.1
+"^DD",101.41,101.41,99,1,1,0)
+101.41^AM^MUMPS
+"^DD",101.41,101.41,99,1,1,1)
+D SET^ORDD41(DA)
+"^DD",101.41,101.41,99,1,1,2)
+D KILL^ORDD41(DA)
+"^DD",101.41,101.41,99,1,1,"%D",0)
+^^2^2^2990210^
+"^DD",101.41,101.41,99,1,1,"%D",1,0)
+Recompiles order dialog menus in ^XUTL("XQORM",<dialog#>_";ORD(101.41,")
+"^DD",101.41,101.41,99,1,1,"%D",2,0)
+whenever fields necessary to displaying the menu are changed.
+"^DD",101.41,101.41,99,1,1,"DT")
+2990210
+"^DD",101.41,101.41,99,3)
+Answer must be 1-15 characters in length.
+"^DD",101.41,101.41,99,21,0)
+^^2^2^2980501^
+"^DD",101.41,101.41,99,21,1,0)
+For menus, this contains the $H time the menu was last compiled for use
+"^DD",101.41,101.41,99,21,2,0)
+with the Unwinder utility (^XQOR).
+"^DD",101.41,101.41,99,"DT")
+2990210
+"^DD",101.41,101.411,0)
+DESCRIPTION SUB-FIELD^^.01^1
+"^DD",101.41,101.411,0,"DT")
+2950407
+"^DD",101.41,101.411,0,"NM","DESCRIPTION")
+
+"^DD",101.41,101.411,0,"UP")
+101.41
+"^DD",101.41,101.411,.01,0)
+DESCRIPTION^W^^0;1^Q
+"^DD",101.41,101.411,.01,3)
+Enter a description of this dialog.
+"^DD",101.41,101.411,.01,21,0)
+^^1^1^2950425^^
+"^DD",101.41,101.411,.01,21,1,0)
+This field contains a description of the content and use of this dialog.
+"^DD",101.41,101.411,.01,"DT")
+2950407
+"^DD",101.41,101.412,0)
+ITEMS SUB-FIELD^^117^37
+"^DD",101.41,101.412,0,"DT")
+2971117
+"^DD",101.41,101.412,0,"ID","WRITE")
+N OR0,ORNM S OR0=^(0) I $P(OR0,U,2) S ORNM=$P($G(^ORD(101.41,+$P(OR0,U,2),0)),U) D:$L(ORNM) EN^DDIOL(ORNM,,"?10")
+"^DD",101.41,101.412,0,"IX","ATXT",101.412,21)
+
+"^DD",101.41,101.412,0,"IX","B",101.412,.01)
+
+"^DD",101.41,101.412,0,"IX","D",101.412,2)
+
+"^DD",101.41,101.412,0,"IX","DAD",101.412,1)
+
+"^DD",101.41,101.412,0,"IX","DAD1",101.412,.01)
+
+"^DD",101.41,101.412,0,"NM","ITEMS")
+
+"^DD",101.41,101.412,0,"UP")
+101.41
+"^DD",101.41,101.412,.01,0)
+SEQUENCE^MNJ5,1^^0;1^K:+X'=X!(X>999.9)!(X<.1)!(X?.E1"."2N.N) X
+"^DD",101.41,101.412,.01,1,0)
+^.1
+"^DD",101.41,101.412,.01,1,1,0)
+101.412^B
+"^DD",101.41,101.412,.01,1,1,1)
+S ^ORD(101.41,DA(1),10,"B",$E(X,1,30),DA)=""
+"^DD",101.41,101.412,.01,1,1,2)
+K ^ORD(101.41,DA(1),10,"B",$E(X,1,30),DA)
+"^DD",101.41,101.412,.01,1,2,0)
+101.412^DAD1^MUMPS
+"^DD",101.41,101.412,.01,1,2,1)
+N ORP S ORP=$P(^ORD(101.41,DA(1),10,DA,0),U,11) S:ORP ^ORD(101.41,DA(1),10,"DAD",ORP,X,DA)=""
+"^DD",101.41,101.412,.01,1,2,2)
+N ORP S ORP=$P(^ORD(101.41,DA(1),10,DA,0),U,11) K:ORP ^ORD(101.41,DA(1),10,"DAD",ORP,X,DA)
+"^DD",101.41,101.412,.01,1,2,"%D",0)
+^^1^1^2950511^
+"^DD",101.41,101.412,.01,1,2,"%D",1,0)
+Allows retrieval of 'child' prompts in sequence by parent.
+"^DD",101.41,101.412,.01,1,2,"DT")
+2950511
+"^DD",101.41,101.412,.01,1,3,0)
+101.41^AMM^MUMPS
+"^DD",101.41,101.412,.01,1,3,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,.01,1,3,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,.01,1,3,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,.01,1,3,"%D",1,0)
+Update TIMESTAMP whenever SEQUENCE is changed.
+"^DD",101.41,101.412,.01,1,3,"DT")
+2990210
+"^DD",101.41,101.412,.01,3)
+Type a Number between .1 and 999.9, 1 Decimal Digit
+"^DD",101.41,101.412,.01,21,0)
+^^2^2^2971117^^^^
+"^DD",101.41,101.412,.01,21,1,0)
+This field specifies the order in which this item will be displayed or
+"^DD",101.41,101.412,.01,21,2,0)
+processed.
+"^DD",101.41,101.412,.01,"DT")
+2990210
+"^DD",101.41,101.412,.1,0)
+INPUT TRANSFORM^K^^.1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,.1,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,.1,9)
+@
+"^DD",101.41,101.412,.1,21,0)
+^^2^2^2950816^
+"^DD",101.41,101.412,.1,21,1,0)
+This is code that will be used as the third piece of DIR(0) when asking
+"^DD",101.41,101.412,.1,21,2,0)
+this prompt.
+"^DD",101.41,101.412,.1,"DT")
+2950816
+"^DD",101.41,101.412,1,0)
+PARENT^P101.41'^ORD(101.41,^0;11^Q
+"^DD",101.41,101.412,1,1,0)
+^.1
+"^DD",101.41,101.412,1,1,1,0)
+101.412^DAD^MUMPS
+"^DD",101.41,101.412,1,1,1,1)
+S ^ORD(101.41,DA(1),10,"DAD",X,$P(^ORD(101.41,DA(1),10,DA,0),U),DA)=""
+"^DD",101.41,101.412,1,1,1,2)
+K ^ORD(101.41,DA(1),10,"DAD",X,$P(^ORD(101.41,DA(1),10,DA,0),U),DA)
+"^DD",101.41,101.412,1,1,1,"%D",0)
+^^1^1^2950511^^
+"^DD",101.41,101.412,1,1,1,"%D",1,0)
+Allows retrieval of 'child' prompts in sequence by parent.
+"^DD",101.41,101.412,1,1,1,"DT")
+2950511
+"^DD",101.41,101.412,1,3)
+If this prompt is subordinate to another in this dialog, enter the parent prompt here
+"^DD",101.41,101.412,1,21,0)
+^^4^4^2950511^
+"^DD",101.41,101.412,1,21,1,0)
+This field controls the behavior of this prompt.  If a parent is defined
+"^DD",101.41,101.412,1,21,2,0)
+here, this prompt will be asked from within the parent's dialog; when it
+"^DD",101.41,101.412,1,21,3,0)
+is invoked independently based on its position sequence number, the child
+"^DD",101.41,101.412,1,21,4,0)
+prompt will be ignored.
+"^DD",101.41,101.412,1,"DT")
+2950511
+"^DD",101.41,101.412,2,0)
+ITEM^P101.41'X^ORD(101.41,^0;2^D TREE^ORDD41
+"^DD",101.41,101.412,2,1,0)
+^.1
+"^DD",101.41,101.412,2,1,1,0)
+101.41^AD
+"^DD",101.41,101.412,2,1,1,1)
+S ^ORD(101.41,"AD",$E(X,1,30),DA(1),DA)=""
+"^DD",101.41,101.412,2,1,1,2)
+K ^ORD(101.41,"AD",$E(X,1,30),DA(1),DA)
+"^DD",101.41,101.412,2,1,1,"DT")
+2950123
+"^DD",101.41,101.412,2,1,2,0)
+101.412^D
+"^DD",101.41,101.412,2,1,2,1)
+S ^ORD(101.41,DA(1),10,"D",$E(X,1,30),DA)=""
+"^DD",101.41,101.412,2,1,2,2)
+K ^ORD(101.41,DA(1),10,"D",$E(X,1,30),DA)
+"^DD",101.41,101.412,2,1,2,"DT")
+2950411
+"^DD",101.41,101.412,2,1,3,0)
+101.41^AMM2^MUMPS
+"^DD",101.41,101.412,2,1,3,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,2,1,3,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,2,1,3,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,2,1,3,"%D",1,0)
+Update TIMESTAMP whenever ITEM is changed.
+"^DD",101.41,101.412,2,1,3,"DT")
+2990210
+"^DD",101.41,101.412,2,3)
+Enter an order dialog; a dialog that is an ancestor may not also be a sub-item.
+"^DD",101.41,101.412,2,21,0)
+^^3^3^2950123^
+"^DD",101.41,101.412,2,21,1,0)
+This field points to an order dialog which is subordinate to this dialog.
+"^DD",101.41,101.412,2,21,2,0)
+NOTE:  The parent dialog menu or one of its ancestors may not be entered
+"^DD",101.41,101.412,2,21,3,0)
+as an item.
+"^DD",101.41,101.412,2,"DT")
+2990217
+"^DD",101.41,101.412,3,0)
+MNEMONIC^FX^^0;3^K:$L(X)>4!($L(X)<1)!(+X=X&($L(X,".")>1))!($$CHKMNE^ORUTL(X)) X
+"^DD",101.41,101.412,3,1,0)
+^.1
+"^DD",101.41,101.412,3,1,1,0)
+101.41^AMM3^MUMPS
+"^DD",101.41,101.412,3,1,1,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,3,1,1,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,3,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,3,1,1,"%D",1,0)
+Update TIMESTAMP whenever MNEMONIC is changed.
+"^DD",101.41,101.412,3,1,1,"DT")
+2990210
+"^DD",101.41,101.412,3,3)
+Enter a mnemonic to be used when this dialog is displayed for selection, 1-4 characters in length with no decimal places if numeric. Standard list manager mnemonics may not be used.
+"^DD",101.41,101.412,3,21,0)
+^.001^2^2^3010727^^^^
+"^DD",101.41,101.412,3,21,1,0)
+This is a short abbreviation for this item dialog to be used when this
+"^DD",101.41,101.412,3,21,2,0)
+dialog is displayed for selection.
+"^DD",101.41,101.412,3,"DT")
+3000822
+"^DD",101.41,101.412,4,0)
+DISPLAY TEXT^FX^^0;4^K:$L(X)>80!($L(X)<1)!($$CHKNAM^ORUTL(X)) X
+"^DD",101.41,101.412,4,1,0)
+^.1
+"^DD",101.41,101.412,4,1,1,0)
+101.41^AMM4^MUMPS
+"^DD",101.41,101.412,4,1,1,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,4,1,1,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,4,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,4,1,1,"%D",1,0)
+Update TIMESTAMP whenever DISPLAY TEXT is changed.
+"^DD",101.41,101.412,4,1,1,"DT")
+2990210
+"^DD",101.41,101.412,4,3)
+Answer must be 1-80 characters in length and cannot contain an up-arrow (^) or semi-colon (;).
+"^DD",101.41,101.412,4,21,0)
+^.001^2^2^3010419^^^^
+"^DD",101.41,101.412,4,21,1,0)
+This field allows the text that normally appears for this item to be
+"^DD",101.41,101.412,4,21,2,0)
+replaced with alternate text for use in this dialog or menu.
+"^DD",101.41,101.412,4,"DT")
+3000823
+"^DD",101.41,101.412,5,0)
+DISPLAY ONLY?^S^0:NO;1:YES;2:YES-HEADER;^0;5^Q
+"^DD",101.41,101.412,5,1,0)
+^.1
+"^DD",101.41,101.412,5,1,1,0)
+101.41^AMM5^MUMPS
+"^DD",101.41,101.412,5,1,1,1)
+D REDOX^ORDD41
+"^DD",101.41,101.412,5,1,1,2)
+D REDOX^ORDD41
+"^DD",101.41,101.412,5,1,1,"%D",0)
+^^1^1^2990210^
+"^DD",101.41,101.412,5,1,1,"%D",1,0)
+Update TIMESTAMP whenever DISPLAY ONLY? is changed.
+"^DD",101.41,101.412,5,1,1,"DT")
+2990210
+"^DD",101.41,101.412,5,3)
+Enter YES if this item is text for display only and not a selectable item.
+"^DD",101.41,101.412,5,21,0)
+^^3^3^2970409^^^^
+"^DD",101.41,101.412,5,21,1,0)
+This field identifies an item as being free text for display purposes
+"^DD",101.41,101.412,5,21,2,0)
+only.  The text in the Display Text field will be displayed, but it
+"^DD",101.41,101.412,5,21,3,0)
+is not selectable; if designated as a header, the text will be underlined.
+"^DD",101.41,101.412,5,"DT")
+2990210
+"^DD",101.41,101.412,6,0)
+REQUIRED^S^1:YES;0:NO;^0;6^Q
+"^DD",101.41,101.412,6,3)
+Enter YES if a response to this prompt is mandatory.
+"^DD",101.41,101.412,6,21,0)
+^^1^1^2950407^
+"^DD",101.41,101.412,6,21,1,0)
+This field indicates that the user must enter a response to this prompt.
+"^DD",101.41,101.412,6,"DT")
+2950407
+"^DD",101.41,101.412,7,0)
+MULTIPLE VALUED^S^1:YES;0:NO;^0;7^Q
+"^DD",101.41,101.412,7,3)
+Enter YES if this prompt is to be asked multiple times.
+"^DD",101.41,101.412,7,21,0)
+^^3^3^2950407^
+"^DD",101.41,101.412,7,21,1,0)
+This field determines if this prompt will be allowed to have multiple
+"^DD",101.41,101.412,7,21,2,0)
+values, or be prompted for only once; if this prompt is a sub-dialog,
+"^DD",101.41,101.412,7,21,3,0)
+the entire dialog will be asked once or many times, as a group.
+"^DD",101.41,101.412,7,"DT")
+2950407
+"^DD",101.41,101.412,7.1,0)
+MAX NUMBER OF MULTIPLES^NJ2,0^^0;12^K:+X'=X!(X>99)!(X<2)!(X?.E1"."1N.N) X
+"^DD",101.41,101.412,7.1,3)
+Type a Number between 2 and 99, 0 Decimal Digits
+"^DD",101.41,101.412,7.1,21,0)
+^^4^4^2950815^
+"^DD",101.41,101.412,7.1,21,1,0)
+This is the maximum number of values that may be entered for this prompt,
+"^DD",101.41,101.412,7.1,21,2,0)
+if it is flagged as being multiple-valued.  For example, a diet order may
+"^DD",101.41,101.412,7.1,21,3,0)
+have up to 5 diet modifications entered, where 5 is the maximum allowed
+"^DD",101.41,101.412,7.1,21,4,0)
+that would be entered here.
+"^DD",101.41,101.412,7.1,"DT")
+2950815
+"^DD",101.41,101.412,7.2,0)
+TITLE^F^^0;13^K:$L(X)>30!($L(X)<3) X
+"^DD",101.41,101.412,7.2,3)
+Answer must be 3-30 characters in length.
+"^DD",101.41,101.412,7.2,21,0)
+^^8^8^2970430^^
+"^DD",101.41,101.412,7.2,21,1,0)
+This is text that will be used in place of the prompt when the order is
+"^DD",101.41,101.412,7.2,21,2,0)
+displayed for place, edit, or cancel, or at the top of a multiple-valued
+"^DD",101.41,101.412,7.2,21,3,0)
+prompt.  The Display Text for the prompt will be used together with the
+"^DD",101.41,101.412,7.2,21,4,0)
+instance number to prompt for user input; for example if Title="Lab Tests:"
+"^DD",101.41,101.412,7.2,21,5,0)
+and Display Text="Test:" the user would see
+"^DD",101.41,101.412,7.2,21,6,0)
+  Lab Tests:
+"^DD",101.41,101.412,7.2,21,7,0)
+  1. Test:
+"^DD",101.41,101.412,7.2,21,8,0)
+  2. Test:
+"^DD",101.41,101.412,7.2,"DT")
+2950815
+"^DD",101.41,101.412,7.3,0)
+PROMPT^F^^0;14^K:$L(X)>10!($L(X)<1) X
+"^DD",101.41,101.412,7.3,3)
+Answer must be 1-10 characters in length.
+"^DD",101.41,101.412,7.3,21,0)
+^^3^3^2970618^
+"^DD",101.41,101.412,7.3,21,1,0)
+This field contains text that will be appended to the beginning of the
+"^DD",101.41,101.412,7.3,21,2,0)
+display text when prompting for additional values; if this field is
+"^DD",101.41,101.412,7.3,21,3,0)
+empty, then "Another " will be used.
+"^DD",101.41,101.412,7.3,"DT")
+2970618
+"^DD",101.41,101.412,8,0)
+ASK ON EDIT ONLY^S^1:YES;0:NO;^0;8^Q
+"^DD",101.41,101.412,8,3)
+Enter YES if this prompt should not be asked initially when creating this order, only if the user chooses to edit the order.
+"^DD",101.41,101.412,8,21,0)
+^^4^4^2960112^^^
+"^DD",101.41,101.412,8,21,1,0)
+This field determines the behaviour of the dialog driver for this prompt;
+"^DD",101.41,101.412,8,21,2,0)
+if no value or the defined default is usually correct for this prompt,
+"^DD",101.41,101.412,8,21,3,0)
+enter YES here to have this prompt skipped on the first pass through this
+"^DD",101.41,101.412,8,21,4,0)
+dialog when creating an order.
+"^DD",101.41,101.412,8,"DT")
+2950407
+"^DD",101.41,101.412,9,0)
+ASK ON ACTION^F^^0;9^K:$L(X)>3!($L(X)<1) X
+"^DD",101.41,101.412,9,3)
+Answer must be 1-3 characters in length.
+"^DD",101.41,101.412,9,21,0)
+^^6^6^2970708^^^
+"^DD",101.41,101.412,9,21,1,0)
+This field determines the behaviour of the dialog driver for this prompt
+"^DD",101.41,101.412,9,21,2,0)
+when taking a particular action on an order created by this dialog.  If
+"^DD",101.41,101.412,9,21,3,0)
+this string contains "R", this prompt will be asked when renewing an order;
+"^DD",101.41,101.412,9,21,4,0)
+if this string contains "C", this prompt will be asked when changing an
+"^DD",101.41,101.412,9,21,5,0)
+order; if this string contains "W", this prompt will be asked when
+"^DD",101.41,101.412,9,21,6,0)
+rewriting an order.
+"^DD",101.41,101.412,9,"DT")
+2970708
+"^DD",101.41,101.412,10,0)
+INDEX^F^^0;10^K:$L(X)>25!($L(X)<1) X
+"^DD",101.41,101.412,10,3)
+Answer must be 1-25 characters in length.
+"^DD",101.41,101.412,10,21,0)
+^^3^3^2950713^^^
+"^DD",101.41,101.412,10,21,1,0)
+For pointer-type prompts, this is the index to use when searching the file;
+"^DD",101.41,101.412,10,21,2,0)
+it must be in the form of a regular cross-reference.  To search on multiple
+"^DD",101.41,101.412,10,21,3,0)
+indices, enter a string of index names separated by semi-colons, i.e. "B;C".
+"^DD",101.41,101.412,10,"DT")
+2950713
+"^DD",101.41,101.412,11,0)
+HELP MESSAGE^F^^1;1^K:$L(X)>160!($L(X)<1) X
+"^DD",101.41,101.412,11,3)
+Answer must be 1-160 characters in length.
+"^DD",101.41,101.412,11,21,0)
+^^2^2^2970609^^
+"^DD",101.41,101.412,11,21,1,0)
+This field contains the help message to be presented when the user enters
+"^DD",101.41,101.412,11,21,2,0)
+a question mark at this prompt.
+"^DD",101.41,101.412,11,"DT")
+2970609
+"^DD",101.41,101.412,12,0)
+SPECIAL LOOKUP ROUTINE^F^^1;2^K:$L(X)>20!($L(X)<3) X
+"^DD",101.41,101.412,12,3)
+Enter the routine to use instead of DIC to do this lookup, as [TAG;]ROUTINE
+"^DD",101.41,101.412,12,21,0)
+^^3^3^2970609^
+"^DD",101.41,101.412,12,21,1,0)
+This field contains a routine to execute that will replace the standard
+"^DD",101.41,101.412,12,21,2,0)
+DIC lookup for this prompt; it must be entered here as LINETAG;ROUTINE
+"^DD",101.41,101.412,12,21,3,0)
+using a ; instead of ^ and where LINETAG is optional.
+"^DD",101.41,101.412,12,"DT")
+2970609
+"^DD",101.41,101.412,13,0)
+ASK ON CONDITION^K^^3;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,13,3)
+This is MUMPS code that sets $T to determine if this prompt should be asked, or given a default value and bypassed.
+"^DD",101.41,101.412,13,9)
+@
+"^DD",101.41,101.412,13,21,0)
+^^5^5^2950407^
+"^DD",101.41,101.412,13,21,1,0)
+This is MUMPS code that sets $T to determine if this prompt should be asked
+"^DD",101.41,101.412,13,21,2,0)
+or simply given a default value and presented to the user for acceptance
+"^DD",101.41,101.412,13,21,3,0)
+or editing.  For example, the prompt "Pregnant: " may have code here to
+"^DD",101.41,101.412,13,21,4,0)
+check the sex of the current patient, i.e. I ORSEX="F" will allow it to be
+"^DD",101.41,101.412,13,21,5,0)
+asked only for female patients.
+"^DD",101.41,101.412,13,"DT")
+2950407
+"^DD",101.41,101.412,14,0)
+SCREEN^K^^4;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,14,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,14,9)
+@
+"^DD",101.41,101.412,14,21,0)
+^^2^2^2950407^
+"^DD",101.41,101.412,14,21,1,0)
+For pointer-type prompts, this field may contain MUMPS code that will be
+"^DD",101.41,101.412,14,21,2,0)
+set into DIC("S") to screen the possible choices in the pointed-to file.
+"^DD",101.41,101.412,14,"DT")
+2950407
+"^DD",101.41,101.412,15,0)
+POST-SELECTION ACTION^K^^5;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,15,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,15,9)
+@
+"^DD",101.41,101.412,15,21,0)
+^^3^3^2970923^^^^
+"^DD",101.41,101.412,15,21,1,0)
+This is code that will be executed after a response is entered to this
+"^DD",101.41,101.412,15,21,2,0)
+prompt; if this prompt should be re-asked, kill the variable DONE.
+"^DD",101.41,101.412,15,21,3,0)
+If execution of the ordering dialog should be stopped, set ORQUIT=1.
+"^DD",101.41,101.412,15,"DT")
+2970923
+"^DD",101.41,101.412,16,0)
+XECUTABLE HELP^K^^6;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,16,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,16,9)
+@
+"^DD",101.41,101.412,16,21,0)
+^^2^2^2950407^
+"^DD",101.41,101.412,16,21,1,0)
+This is code that is to be executed when the user enters two or more
+"^DD",101.41,101.412,16,21,2,0)
+question marks at this prompt.
+"^DD",101.41,101.412,16,"DT")
+2950407
+"^DD",101.41,101.412,17,0)
+DEFAULT^K^^7;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,17,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,17,9)
+@
+"^DD",101.41,101.412,17,21,0)
+^^2^2^2971219^^^^
+"^DD",101.41,101.412,17,21,1,0)
+This is code that is to be executed to determine the appropriate default
+"^DD",101.41,101.412,17,21,2,0)
+value for this prompt, setting Y=internal form of this value.
+"^DD",101.41,101.412,17,"DT")
+2950519
+"^DD",101.41,101.412,18,0)
+DEFAULT WORD-PROCESSING TEXT^101.41218^^8;0
+"^DD",101.41,101.412,18,21,0)
+^^1^1^2971219^
+"^DD",101.41,101.412,18,21,1,0)
+This is default text to be stuffed into this word-processing prompt.
+"^DD",101.41,101.412,19,0)
+ENTRY ACTION^K^^9;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,19,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,19,9)
+@
+"^DD",101.41,101.412,19,21,0)
+^^3^3^2970609^
+"^DD",101.41,101.412,19,21,1,0)
+This is code that will be executed at the beginning of the processing of
+"^DD",101.41,101.412,19,21,2,0)
+this prompt, before the Default and Ask on Condition fields are executed;
+"^DD",101.41,101.412,19,21,3,0)
+any special setup required for this field should be done here.
+"^DD",101.41,101.412,19,"DT")
+2970609
+"^DD",101.41,101.412,20,0)
+EXIT ACTION^K^^10;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,20,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,20,9)
+@
+"^DD",101.41,101.412,20,21,0)
+^^3^3^2970609^
+"^DD",101.41,101.412,20,21,1,0)
+This is code that will be executed at the very end of the processing of
+"^DD",101.41,101.412,20,21,2,0)
+this prompt, after prompting and the Validation field is executed;
+"^DD",101.41,101.412,20,21,3,0)
+any special cleanup should be done here.
+"^DD",101.41,101.412,20,"DT")
+2970609
+"^DD",101.41,101.412,21,0)
+ORDER TEXT SEQUENCE^NJ5,2^^2;1^K:+X'=X!(X>99.99)!(X<1)!(X?.E1"."3N.N) X
+"^DD",101.41,101.412,21,1,0)
+^.1
+"^DD",101.41,101.412,21,1,1,0)
+101.412^ATXT
+"^DD",101.41,101.412,21,1,1,1)
+S ^ORD(101.41,DA(1),10,"ATXT",$E(X,1,30),DA)=""
+"^DD",101.41,101.412,21,1,1,2)
+K ^ORD(101.41,DA(1),10,"ATXT",$E(X,1,30),DA)
+"^DD",101.41,101.412,21,1,1,"%D",0)
+^^1^1^2960226^
+"^DD",101.41,101.412,21,1,1,"%D",1,0)
+Used to build order text.
+"^DD",101.41,101.412,21,1,1,"DT")
+2960226
+"^DD",101.41,101.412,21,3)
+Enter the order in which this value should be added to the order text, as a number between 1 and 99.99; leave this field blank to prevent this value from being included
+"^DD",101.41,101.412,21,21,0)
+^^3^3^2970607^^^
+"^DD",101.41,101.412,21,21,1,0)
+This field indicates the order in which values will be concatenated
+"^DD",101.41,101.412,21,21,2,0)
+together to build the order text; this may differ from the prompting
+"^DD",101.41,101.412,21,21,3,0)
+order defined in the .01 Sequence field.
+"^DD",101.41,101.412,21,"DT")
+2960226
+"^DD",101.41,101.412,22,0)
+FORMAT^F^^2;2^K:$L(X)>10!($L(X)<1) X
+"^DD",101.41,101.412,22,3)
+Answer must be 1-10 characters in length.
+"^DD",101.41,101.412,22,21,0)
+^^15^15^2971207^^^^
+"^DD",101.41,101.412,22,21,1,0)
+This is a string of characters that will define any exceptions to how
+"^DD",101.41,101.412,22,21,2,0)
+the external form of this value is generated.  Possible values include:
+"^DD",101.41,101.412,22,21,3,0)
+  Pointer         -> <field #>~<piece in RPC list of field #>, default =.01
+"^DD",101.41,101.412,22,21,4,0)
+  Set of Codes    -> 1~<piece in RPC list of code> to use code for name
+"^DD",101.41,101.412,22,21,5,0)
+  Date/Time       -> Format string to pass $$FMTE^XLFDT (default = 2)
+"^DD",101.41,101.412,22,21,6,0)
+  
+"^DD",101.41,101.412,22,21,7,0)
+  Suppress value  -> @
+"^DD",101.41,101.412,22,21,8,0)
+  Replace value   -> @<ptr> where ptr is the Dialog IEN of the prompt
+"^DD",101.41,101.412,22,21,9,0)
+                      whose value, when present, supersedes this value
+"^DD",101.41,101.412,22,21,10,0)
+  Required value  -> *<ptr> where ptr is the Dialog IEN of the prompt
+"^DD",101.41,101.412,22,21,11,0)
+                      whose value is required to be present to include
+"^DD",101.41,101.412,22,21,12,0)
+                      this value
+"^DD",101.41,101.412,22,21,13,0)
+  Ignore if same  -> =<ptr> where ptr is the Dialog IEN of the prompt
+"^DD",101.41,101.412,22,21,14,0)
+                      whose value, if the external form is the same,
+"^DD",101.41,101.412,22,21,15,0)
+                      supersedes this value
+"^DD",101.41,101.412,22,"DT")
+2960226
+"^DD",101.41,101.412,23,0)
+OMIT TEXT^F^^2;3^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.412,23,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.412,23,21,0)
+^^3^3^2970829^^^^
+"^DD",101.41,101.412,23,21,1,0)
+This is the external form of a value that is not to be included when building
+"^DD",101.41,101.412,23,21,2,0)
+the order text.  E.g. to include the urgency in the order text unless it
+"^DD",101.41,101.412,23,21,3,0)
+is routine, enter "ROUTINE" here.
+"^DD",101.41,101.412,23,"DT")
+2970829
+"^DD",101.41,101.412,24,0)
+LEADING TEXT^F^^2;4^K:$L(X)>80!($L(X)<1) X
+"^DD",101.41,101.412,24,3)
+Answer must be 1-80 characters in length.
+"^DD",101.41,101.412,24,21,0)
+^^3^3^2970724^^^^
+"^DD",101.41,101.412,24,21,1,0)
+This field contains text that will be appended to the order text
+"^DD",101.41,101.412,24,21,2,0)
+immediately in front of this value, e.g. "Instructions:".  If this text
+"^DD",101.41,101.412,24,21,3,0)
+is contained in a variable, enter @NAME where NAME is the variable name.
+"^DD",101.41,101.412,24,"DT")
+2970724
+"^DD",101.41,101.412,25,0)
+TRAILING TEXT^F^^2;5^K:$L(X)>80!($L(X)<1) X
+"^DD",101.41,101.412,25,3)
+Answer must be 1-80 characters in length.
+"^DD",101.41,101.412,25,21,0)
+^^3^3^2970724^^^^
+"^DD",101.41,101.412,25,21,1,0)
+This field contains text that will be appended to the order text
+"^DD",101.41,101.412,25,21,2,0)
+immediately following this value, e.g. "refills".  If this text is
+"^DD",101.41,101.412,25,21,3,0)
+contained in a variable, enter @NAME where NAME is the variable name.
+"^DD",101.41,101.412,25,"DT")
+2970724
+"^DD",101.41,101.412,26,0)
+START NEW LINE^S^1:YES;0:NO;^2;6^Q
+"^DD",101.41,101.412,26,3)
+Enter YES if this value should begin on a new line in the order text.
+"^DD",101.41,101.412,26,21,0)
+0^^2^2^2970911^
+"^DD",101.41,101.412,26,21,1,0)
+This field determines if this value is concatenated onto the current line
+"^DD",101.41,101.412,26,21,2,0)
+when building the order text, or if a new line is started with this value.
+"^DD",101.41,101.412,26,"DT")
+2970911
+"^DD",101.41,101.412,27,0)
+WORD-WRAP^S^1:DON'T WRAP;0:WRAP;^2;7^Q
+"^DD",101.41,101.412,27,3)
+Enter 'Don't Wrap' to have the text be added line-by-line as it is stored; the default formatting is 'Wrap'.
+"^DD",101.41,101.412,27,21,0)
+^^3^3^2970926^^^
+"^DD",101.41,101.412,27,21,1,0)
+This field determines if this text should be wrapped when added to the
+"^DD",101.41,101.412,27,21,2,0)
+order text, or appended line by line as stored in the file; this is only
+"^DD",101.41,101.412,27,21,3,0)
+used for word-processing type prompts.
+"^DD",101.41,101.412,27,"DT")
+2970926
+"^DD",101.41,101.412,101,0)
+WINDOWS CONTROL^F^^W;1^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.412,101,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.412,101,21,0)
+^^2^2^2950715^
+"^DD",101.41,101.412,101,21,1,0)
+Stores the type of Windows control necessary to get the data for this
+"^DD",101.41,101.412,101,21,2,0)
+prompt.
+"^DD",101.41,101.412,101,"DT")
+2960517
+"^DD",101.41,101.412,102,0)
+API NAME^F^^W;2^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.412,102,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.412,102,21,0)
+^^3^3^2950715^
+"^DD",101.41,101.412,102,21,1,0)
+This is the API that should be called when the control is used.  How the API
+"^DD",101.41,101.412,102,21,2,0)
+is used varys with the control.  Examples are: filling list boxes, getting
+"^DD",101.41,101.412,102,21,3,0)
+boilerplate text, etc.
+"^DD",101.41,101.412,102,"DT")
+2951002
+"^DD",101.41,101.412,103,0)
+API PARAMETER #1^F^^W;3^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.412,103,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.412,103,21,0)
+^^1^1^2950715^
+"^DD",101.41,101.412,103,21,1,0)
+A parameter that is used by the API call may be stored here.
+"^DD",101.41,101.412,103,"DT")
+2950715
+"^DD",101.41,101.412,113,0)
+WINDOWS CONDITION^K^^W3;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,113,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,113,9)
+@
+"^DD",101.41,101.412,113,21,0)
+^^3^3^2950715^
+"^DD",101.41,101.412,113,21,1,0)
+This is silent code that is executed when building the dialog for windows.
+"^DD",101.41,101.412,113,21,2,0)
+It identifies which prompts should be included in the dialog.  The condition
+"^DD",101.41,101.412,113,21,3,0)
+should leave $T false if the prompt should not be asked.
+"^DD",101.41,101.412,113,"DT")
+2950715
+"^DD",101.41,101.412,117,0)
+WINDOWS DEFAULT^K^^W7;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",101.41,101.412,117,3)
+This is Standard MUMPS code.
+"^DD",101.41,101.412,117,9)
+@
+"^DD",101.41,101.412,117,21,0)
+^^2^2^2950715^
+"^DD",101.41,101.412,117,21,1,0)
+This code should silently set the default value of a prompt when it is 
+"^DD",101.41,101.412,117,21,2,0)
+selected.
+"^DD",101.41,101.412,117,"DT")
+2950715
+"^DD",101.41,101.41218,0)
+DEFAULT WORD-PROCESSING TEXT SUB-FIELD^^.01^1
+"^DD",101.41,101.41218,0,"DT")
+2950407
+"^DD",101.41,101.41218,0,"NM","DEFAULT WORD-PROCESSING TEXT")
+
+"^DD",101.41,101.41218,0,"UP")
+101.412
+"^DD",101.41,101.41218,.01,0)
+DEFAULT WORD-PROCESSING TEXT^W^^0;1^Q
+"^DD",101.41,101.41218,.01,3)
+Enter the default response for a word-processing type prompt.
+"^DD",101.41,101.41218,.01,21,0)
+^^2^2^2950407^
+"^DD",101.41,101.41218,.01,21,1,0)
+This field contains the text to be presented as the default for this prompt,
+"^DD",101.41,101.41218,.01,21,2,0)
+for word-processing type prompts.
+"^DD",101.41,101.41218,.01,"DT")
+2950407
+"^DD",101.41,101.415,0)
+CONTROLS SUB-FIELD^^14^14
+"^DD",101.41,101.415,0,"DT")
+2960202
+"^DD",101.41,101.415,0,"IX","AC",101.415,3)
+
+"^DD",101.41,101.415,0,"IX","B",101.415,.01)
+
+"^DD",101.41,101.415,0,"NM","CONTROLS")
+
+"^DD",101.41,101.415,0,"UP")
+101.41
+"^DD",101.41,101.415,.01,0)
+LOGICAL NAME^MF^^0;1^K:$L(X)>8!($L(X)<1)!'(X?1.8U) X
+"^DD",101.41,101.415,.01,1,0)
+^.1
+"^DD",101.41,101.415,.01,1,1,0)
+101.415^B
+"^DD",101.41,101.415,.01,1,1,1)
+S ^ORD(101.41,DA(1),50,"B",$E(X,1,30),DA)=""
+"^DD",101.41,101.415,.01,1,1,2)
+K ^ORD(101.41,DA(1),50,"B",$E(X,1,30),DA)
+"^DD",101.41,101.415,.01,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,.01,21,0)
+^^1^1^2960202^
+"^DD",101.41,101.415,.01,21,1,0)
+This is the name by which controls can refer to each other.
+"^DD",101.41,101.415,.01,"DT")
+2960202
+"^DD",101.41,101.415,2,0)
+ITEM^P101.41'^ORD(101.41,^0;2^Q
+"^DD",101.41,101.415,2,"DT")
+2960202
+"^DD",101.41,101.415,3,0)
+CREATE SEQUENCE^NJ2,0^^0;3^K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101.41,101.415,3,1,0)
+^.1
+"^DD",101.41,101.415,3,1,1,0)
+101.415^AC
+"^DD",101.41,101.415,3,1,1,1)
+S ^ORD(101.41,DA(1),50,"AC",$E(X,1,30),DA)=""
+"^DD",101.41,101.415,3,1,1,2)
+K ^ORD(101.41,DA(1),50,"AC",$E(X,1,30),DA)
+"^DD",101.41,101.415,3,1,1,"%D",0)
+^^2^2^2960202^
+"^DD",101.41,101.415,3,1,1,"%D",1,0)
+The 'AC' cross-reference puts in window controls in order by creation 
+"^DD",101.41,101.415,3,1,1,"%D",2,0)
+sequence.
+"^DD",101.41,101.415,3,1,1,"DT")
+2960202
+"^DD",101.41,101.415,3,3)
+Type a Number between 1 and 99, 0 Decimal Digits
+"^DD",101.41,101.415,3,"DT")
+2960202
+"^DD",101.41,101.415,4,0)
+CONTROL TYPE^S^0:Label;1:Button;2:Edit;3:Memo;4:ListBox;5:SimpleCombo;6:DropDownList;7:LongCombo;^0;4^Q
+"^DD",101.41,101.415,4,"DT")
+2960202
+"^DD",101.41,101.415,5,0)
+LABEL^F^^0;5^K:$L(X)>30!($L(X)<1) X
+"^DD",101.41,101.415,5,3)
+Answer must be 1-30 characters in length.
+"^DD",101.41,101.415,5,"DT")
+2960202
+"^DD",101.41,101.415,6,0)
+BESIDE^F^^0;6^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,6,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,6,"DT")
+2960202
+"^DD",101.41,101.415,7,0)
+BELOW^F^^0;7^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,7,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,7,"DT")
+2960202
+"^DD",101.41,101.415,8,0)
+WIDTH^NJ6,4^^0;8^K:+X'=X!(X>1)!(X<0)!(X?.E1"."5N.N) X
+"^DD",101.41,101.415,8,3)
+Type a Number between 0 and 1, 4 Decimal Digits
+"^DD",101.41,101.415,8,"DT")
+2960202
+"^DD",101.41,101.415,9,0)
+LEFT CONTROL^F^^0;9^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,9,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,9,"DT")
+2960202
+"^DD",101.41,101.415,10,0)
+RIGHT CONTROL^F^^0;10^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,10,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,10,"DT")
+2960202
+"^DD",101.41,101.415,11,0)
+HEIGHT^NJ2,0^^0;11^K:+X'=X!(X>15)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101.41,101.415,11,3)
+Type a Number between 1 and 15, 0 Decimal Digits
+"^DD",101.41,101.415,11,"DT")
+2960202
+"^DD",101.41,101.415,12,0)
+UPPER CONTROL^F^^0;12^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,12,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,12,"DT")
+2960202
+"^DD",101.41,101.415,13,0)
+LOWER CONTROL^F^^0;13^K:$L(X)>8!($L(X)<1) X
+"^DD",101.41,101.415,13,3)
+Answer must be 1-8 characters in length.
+"^DD",101.41,101.415,13,"DT")
+2960202
+"^DD",101.41,101.415,14,0)
+TAB SEQUENCE^NJ2,0^^0;14^K:+X'=X!(X>89)!(X<0)!(X?.E1"."1N.N) X
+"^DD",101.41,101.415,14,3)
+Type a Number between 0 and 89, 0 Decimal Digits
+"^DD",101.41,101.415,14,"DT")
+2960202
+"^DD",101.41,101.416,0)
+RESPONSES SUB-FIELD^^2^5
+"^DD",101.41,101.416,0,"DT")
+2960717
+"^DD",101.41,101.416,0,"IX","D",101.416,.02)
+
+"^DD",101.41,101.416,0,"NM","RESPONSES")
+
+"^DD",101.41,101.416,0,"UP")
+101.41
+"^DD",101.41,101.416,.01,0)
+ITEM ENTRY^MNJ7,0^^0;1^K:+X'=X!(X>9999999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101.41,101.416,.01,1,0)
+^.1^^0
+"^DD",101.41,101.416,.01,3)
+Type a Number between 1 and 9999999, 0 Decimal Digits
+"^DD",101.41,101.416,.01,21,0)
+^^2^2^2971219^^^
+"^DD",101.41,101.416,.01,21,1,0)
+This is the internal entry number of the prompt in the Item multiple
+"^DD",101.41,101.416,.01,21,2,0)
+by which this response was obtained.
+"^DD",101.41,101.416,.01,"DT")
+2961118
+"^DD",101.41,101.416,.02,0)
+DIALOG^P101.41'^ORD(101.41,^0;2^Q
+"^DD",101.41,101.416,.02,1,0)
+^.1
+"^DD",101.41,101.416,.02,1,1,0)
+101.416^D
+"^DD",101.41,101.416,.02,1,1,1)
+S ^ORD(101.41,DA(1),6,"D",$E(X,1,30),DA)=""
+"^DD",101.41,101.416,.02,1,1,2)
+K ^ORD(101.41,DA(1),6,"D",$E(X,1,30),DA)
+"^DD",101.41,101.416,.02,1,1,"DT")
+2961118
+"^DD",101.41,101.416,.02,3)
+Select the dialog prompt from which this response was generated.
+"^DD",101.41,101.416,.02,21,0)
+^^2^2^2960717^
+"^DD",101.41,101.416,.02,21,1,0)
+This is a pointer to the dialog prompt, which is in the Order Dialog file
+"^DD",101.41,101.416,.02,21,2,0)
+as type prompt.
+"^DD",101.41,101.416,.02,"DT")
+2961118
+"^DD",101.41,101.416,.03,0)
+INSTANCE^NJ7,0^^0;3^K:+X'=X!(X>9999999)!(X<1)!(X?.E1"."1N.N) X
+"^DD",101.41,101.416,.03,3)
+Type a Number between 1 and 9999999, 0 Decimal Digits
+"^DD",101.41,101.416,.03,21,0)
+^^2^2^2960717^
+"^DD",101.41,101.416,.03,21,1,0)
+In the case of multiple answers for the same item, this identifies the
+"^DD",101.41,101.416,.03,21,2,0)
+individual instance.
+"^DD",101.41,101.416,.03,"DT")
+2960717
+"^DD",101.41,101.416,1,0)
+VALUE^FO^^1;1^K:$L(X)>245!($L(X)<1) X
+"^DD",101.41,101.416,1,2)
+S Y(0)=Y S Y=$$OUTPUT^ORCMEDT5(Y)
+"^DD",101.41,101.416,1,2.1)
+S Y=$$OUTPUT^ORCMEDT5(Y)
+"^DD",101.41,101.416,1,3)
+Answer must be 1-245 characters in length.
+"^DD",101.41,101.416,1,21,0)
+^^2^2^2971219^^
+"^DD",101.41,101.416,1,21,1,0)
+This contains the actual response, unless the value is a word processing
+"^DD",101.41,101.416,1,21,2,0)
+type.
+"^DD",101.41,101.416,1,"DT")
+2980717
+"^DD",101.41,101.416,2,0)
+TEXT^101.4162^^2;0
+"^DD",101.41,101.416,2,21,0)
+^^1^1^2971219^
+"^DD",101.41,101.416,2,21,1,0)
+This contains the actual response, for word-processing type prompts.
+"^DD",101.41,101.416,2,"DT")
+2960717
+"^DD",101.41,101.4162,0)
+TEXT SUB-FIELD^^.01^1
+"^DD",101.41,101.4162,0,"DT")
+2960717
+"^DD",101.41,101.4162,0,"NM","TEXT")
+
+"^DD",101.41,101.4162,0,"UP")
+101.416
+"^DD",101.41,101.4162,.01,0)
+TEXT^WL^^0;1^Q
+"^DD",101.41,101.4162,.01,21,0)
+^^1^1^2960717^^
+"^DD",101.41,101.4162,.01,21,1,0)
+This contains responses to items that are a word processing type.
+"^DD",101.41,101.4162,.01,"DT")
+2960717
+"^DIC",101.41,101.41,0)
+ORDER DIALOG^101.41
+"^DIC",101.41,101.41,0,"GL")
+^ORD(101.41,
+"^DIC",101.41,101.41,"%D",0)
+^^2^2^2960819^^
+"^DIC",101.41,101.41,"%D",1,0)
+This file contains the information needed to define how to prompt for each
+"^DIC",101.41,101.41,"%D",2,0)
+order, what values are acceptable, etc.
+"^DIC",101.41,"B","ORDER DIALOG",101.41)
+
+"BLD",10123,6)
+^405
+**END**
+**END**
+

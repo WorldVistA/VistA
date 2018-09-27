@@ -1,0 +1,190 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/27/18 at 14:22
+=============================================================================
+Run Date: JUN 06, 2018                     Designation: PRC*5.1*205
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #180                    Status: Released
+                  Compliance Date: JUL 07, 2018
+=============================================================================
+
+
+Subject: UNDEFINED VARIABLES CAUSING ERROR IN CHECK ORDER ITEMS MENU
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue with the Distribution Order Processing
+ [PRCP DIST ORDER PROCESSING] option when an item quantity is null or 0 which
+ leads to an undefined error.
+   
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R17975807FY18 - <UNDEFINED>BLDARRAY+2^PRCPOPL
+  
+    Problem:
+    --------
+    AEU (Affected End User) is getting an undefined error when selecting the CO
+    Check Order/Items menu, under the Distribution Order Processing [PRCP
+    DIST ORDER PROCESSING] option, when an item(s) quantity is null or 0.
+    This occurs because the process fails to pass the necessary data needed
+    to populate the screen if there isn't an item quantity.
+  
+    Resolution:
+    -----------
+    Routine PRCPOPER has been modified to correctly pass in the variables to
+    routine PRCPOPL.
+  
+  
+  
+ TEST SITES:
+ -----------
+ Manchester VAMC
+ VA North Texas HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch PRC*5.1*205:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':',hit enter.
+     
+         Enter: Distribution Order Processing  [PRCP DIST ORDER PROCESSING]
+  
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCPOPER
+    Before: B12002742   After: B12692800  **205**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 21, 2018
+Completed By:                               Date Completed: JUN 06, 2018
+Released By :                               Date Released : JUN 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

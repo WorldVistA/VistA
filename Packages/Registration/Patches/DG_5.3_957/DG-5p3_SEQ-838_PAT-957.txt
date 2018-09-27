@@ -1,0 +1,192 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/28/18 at 14:35
+=============================================================================
+Run Date: JUN 21, 2018                     Designation: DG*5.3*957
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #838                    Status: Released
+                  Compliance Date: JUL 22, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*71   <<= must be installed BEFORE `DG*5.3*957'
+
+Subject: DATE/TIME VALUE BEING REPORTED AS INVALID
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*957 addresses an issue with the Scheduled Admissions List
+ [DG SCHED ADMIT PRINT] option where the DATE/TIME value will be invalid
+ after the release of patch DI*22.2*14.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.     I18624786FY18 - DATE/TIME value being reported as invalid
+ Duplicate: I19379660FY18 - VistA Print Issues
+  
+    Problem:
+    --------
+    The DATE/TIME value calculated for the Scheduled Admissions List
+    [DG SCHED ADMIT PRINT] option will be invalid after the release of
+    patch DI*22.2*14, and cause sites to incur an error when running
+    the report.
+  
+  
+    Resolution:
+    -----------
+    Routine DGSCHAD3 has been modified to pass in valid FileMan dates when
+    calculating the 'to' and 'from' dates for the report.
+  
+  
+ TEST SITES:
+ -----------
+ Altoona - James E. Van Zandt VA Medical Center
+ Upstate New York Health Care System (Buffalo, Batavia, Canandaigua, 
+ Syracuse, Bath, Albany)
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DG*5.3*957:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':
+  
+      Enter:   Scheduled Admissions List [DG SCHED ADMIT PRINT]
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGSCHAD3
+    Before: B16478024   After: B17118934  **60,71,957**
+ 
+Routine list of preceding patches: 71
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2018
+Completed By:                               Date Completed: JUN 14, 2018
+Released By :                               Date Released : JUN 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

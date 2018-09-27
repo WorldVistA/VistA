@@ -1,0 +1,267 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 12/13/17 at 16:42
+=============================================================================
+Run Date: MAY 16, 2018                     Designation: RT*2*47
+Package : RT - RECORD TRACKING                Priority: Mandatory
+Version : 2        SEQ #44                      Status: Released
+                  Compliance Date: JUN 16, 2018
+=============================================================================
+
+
+Subject: EPIP RT REMEDIATION 1.0
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ RT*2.0*47 provides the following enhancements to VistA:
+  
+ - Modifies the default response to the "ISSUE REQUEST FOR RECORDS?" 
+ prompt in the Appointment Management [SDAM APPT MGT], Register a Patient
+ [DG REGISTER PATIENT], and Admitting Area Chart Request [RT
+ MAS-ADMIT-CHART-REQUEST] options in the Record Tracking package from 
+ "YES" to "NO." This prompt is used to determine whether hard copy 
+ appointment record requests are printed to a file room printer. The 
+ printing is deemed unnecessary at many sites and leads to wasted paper. 
+ Prior to CPRS implementation, hard copy records were necessary for 
+ appointments. The use of CPRS removes the need to print a hard copy for 
+ the vast majority of appointments, thus making "NO" the logical default.
+  
+ - Modifies the Requests Pending for a Borrower [RT
+ RPT-REQUEST-BY-BORROWER] option in the Management Reports menu to display 
+ the last four digits of each patient's Social Security Number (SSN). This 
+ option displays a list of pending requests for patient records from a 
+ particular borrower. Not including the SSN in this list makes it time 
+ consuming to check patient records to obtain this information.
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)            Field Name (Number)  New/Modified/Deleted
+ ------------------            ------------------   --------------------
+ N/A
+  
+ Forms Associated:               
+  
+ Form Name                     File #           New/Modified/Deleted
+ ---------                     ------           --------------------
+ N/A                     
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A                       
+  
+ Option Associated
+  
+ Option Name                            TYPE       New/Modified/Deleted
+ -----------                            ------     --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name          New/Modified/Deleted
+ -------------          -------------------- 
+ N/A              
+  
+ Parameters Associated: 
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name          Type    File Name (Number)     
+ New/Modified/Deleted 
+ -------------          ----    ------------------     --------------------
+ N/A
+  
+ Additional Information:
+ ----------------------- 
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20170311 Change Default for Issue Request for Records Prompt
+ 20170321 Add SSN to Requests Pending for Borrower
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ---------- 
+ VA Loma Linda Healthcare System, Loma Linda, CA
+ VA Nebraska-Western Iowa Health Care System, Omaha, NE
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.  
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/.
+  
+ Title                                                 File Name   FTP Mode
+ --------------------------------------------------------------------------
+ Record Tracking User Manual   rtuser1.doc                      Binary
+ Record Tracking User Manual   rtuser1.pdf                      Binary
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ The following options should be disabled during installation:
+ Admitting Area Chart Request [RT MAS-ADMIT-CHART-REQUEST]
+ Appointment Management [SDAM APPT MGT]
+ Register a Patient [DG REGISTER PATIENT]
+ Requests Pending for a Borrower [RT RPT-REQUEST-BY-BORROWER]
+  
+ Installation Instructions:
+ --------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number RT*2.0*47.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? YES//', press <Enter>.
+  
+       a. When prompted 'Enter options you wish to mark as 'out of order':'
+          enter the options:
+          Admitting Area Chart Request [RT MAS-ADMIT-CHART-REQUEST]
+          Appointment Management [SDAM APPT MGT]
+          Register a Patient [DG REGISTER PATIENT]
+          Requests Pending for a Borrower [RT RPT-REQUEST-BY-BORROWER]
+  
+ 7.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8.      If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the RT routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the RT routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch RT*2.0*47 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Record Tracking;**[Patch List]**;10/22/91 ;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RTQ3
+    Before: B10274502   After: B10274660  **47**
+Routine Name: RTRPT1
+    Before: B12382017   After: B12724792  **47**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 26, 2017
+Completed By:                               Date Completed: MAY 15, 2018
+Released By :                               Date Released : MAY 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,193 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 05/03/18 at 08:35
+=============================================================================
+Run Date: JUL 12, 2018                     Designation: EC*2*143
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #135                      Status: Released
+                  Compliance Date: AUG 12, 2018
+=============================================================================
+
+Associated patches: (v)EC*2*142    <<= must be installed BEFORE `EC*2*143'
+
+Subject: FY19 EC PROCEDURE REASON (#720.4) FILE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will address 1 issue:
+  
+  1. This patch will update the EC PROCEDURE REASON (#720.4) file by 
+     adding 1 new procedure reason to the file.
+   
+       
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. INC0266506 - Event Capture Procedure Reason Update request
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to the EC 
+     PROCEDURE REASON (#720.4) file. The request is to add 1 new procedure 
+     reason to the file.
+    
+    
+     Resolution:
+     -----------
+     Routine EC2P143 in this patch will update the EC PROCEDURE REASON (#720.4)
+     file by adding 1 new procedure reason to the file.
+       
+     The entries that will be added to the file are:
+  
+        Procedure Reason
+        ----------------- 
+        CHAP WHOLE HEALTH
+  
+  
+ TEST SITES:
+ -----------
+ Cincinnati VA Medical Center 
+ Robley Rex VA Medical Center (Louisville)     
+    
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*143)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*143.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//" respond NO.
+  
+      7. Review the installation message for notifications.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine EC2P143 from your production system after the 
+ patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by deleting the CHAP WHOLE HEALTH entry in the 
+ EC PROCEDURE REASON (#720.4) file via FileMan.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P143
+    Before:       n/a   After:  B2247262  **143**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2018
+Completed By:                               Date Completed: JUL 11, 2018
+Released By :                               Date Released : JUL 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

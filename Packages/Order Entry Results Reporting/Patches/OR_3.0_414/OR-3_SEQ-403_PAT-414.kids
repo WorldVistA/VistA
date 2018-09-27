@@ -1,0 +1,961 @@
+Released OR*3*414 SEQ #403
+Extracted from mail message
+**KIDS**:OR*3.0*414^
+
+**INSTALL NAME**
+OR*3.0*414
+"BLD",10697,0)
+OR*3.0*414^ORDER ENTRY/RESULTS REPORTING^0^3180418^y
+"BLD",10697,1,0)
+^^13^13^3170707^
+"BLD",10697,1,1,0)
+This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+"BLD",10697,1,2,0)
+package:
+"BLD",10697,1,3,0)
+ 
+"BLD",10697,1,4,0)
+1. Orderable Items with a value in the Type field of Neither appear as an
+"BLD",10697,1,5,0)
+   available lab test when ordering in CPRS.
+"BLD",10697,1,6,0)
+ 
+"BLD",10697,1,7,0)
+2. When the last creatinine lab has a "canc" result then the CrCL
+"BLD",10697,1,8,0)
+   calculation will skip all results with the same specimen and go on to
+"BLD",10697,1,9,0)
+   look at lab results for other specimens. 
+"BLD",10697,1,10,0)
+ 
+"BLD",10697,1,11,0)
+3. When a weight or height entry in to the patient's vitals is marked as
+"BLD",10697,1,12,0)
+   Pass, Unavailable or Refused the CrCL value for the patient disappears
+"BLD",10697,1,13,0)
+   even though there is a previous valid entry.
+"BLD",10697,4,0)
+^9.64PA^101.43^1
+"BLD",10697,4,101.43,0)
+101.43
+"BLD",10697,4,101.43,2,0)
+^9.641^101.439^1
+"BLD",10697,4,101.43,2,101.439,0)
+SET MEMBERSHIP  (sub-file)
+"BLD",10697,4,101.43,2,101.439,1,0)
+^9.6411^.01^1
+"BLD",10697,4,101.43,2,101.439,1,.01,0)
+SET
+"BLD",10697,4,101.43,222)
+y^y^p^^^^n^^n
+"BLD",10697,4,101.43,224)
+
+"BLD",10697,4,"APDD",101.43,101.439)
+
+"BLD",10697,4,"APDD",101.43,101.439,.01)
+
+"BLD",10697,4,"B",101.43,101.43)
+
+"BLD",10697,6)
+3^
+"BLD",10697,6.3)
+8
+"BLD",10697,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10697,"KRN",.4,0)
+.4
+"BLD",10697,"KRN",.401,0)
+.401
+"BLD",10697,"KRN",.402,0)
+.402
+"BLD",10697,"KRN",.403,0)
+.403
+"BLD",10697,"KRN",.5,0)
+.5
+"BLD",10697,"KRN",.84,0)
+.84
+"BLD",10697,"KRN",3.6,0)
+3.6
+"BLD",10697,"KRN",3.8,0)
+3.8
+"BLD",10697,"KRN",9.2,0)
+9.2
+"BLD",10697,"KRN",9.8,0)
+9.8
+"BLD",10697,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10697,"KRN",9.8,"NM",1,0)
+ORQQVI^^0^B42659899
+"BLD",10697,"KRN",9.8,"NM",2,0)
+ORQQLR1^^0^B16256943
+"BLD",10697,"KRN",9.8,"NM","B","ORQQLR1",2)
+
+"BLD",10697,"KRN",9.8,"NM","B","ORQQVI",1)
+
+"BLD",10697,"KRN",19,0)
+19
+"BLD",10697,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10697,"KRN",19.1,0)
+19.1
+"BLD",10697,"KRN",101,0)
+101
+"BLD",10697,"KRN",409.61,0)
+409.61
+"BLD",10697,"KRN",771,0)
+771
+"BLD",10697,"KRN",779.2,0)
+779.2
+"BLD",10697,"KRN",870,0)
+870
+"BLD",10697,"KRN",8989.51,0)
+8989.51
+"BLD",10697,"KRN",8989.52,0)
+8989.52
+"BLD",10697,"KRN",8994,0)
+8994
+"BLD",10697,"KRN","B",.4,.4)
+
+"BLD",10697,"KRN","B",.401,.401)
+
+"BLD",10697,"KRN","B",.402,.402)
+
+"BLD",10697,"KRN","B",.403,.403)
+
+"BLD",10697,"KRN","B",.5,.5)
+
+"BLD",10697,"KRN","B",.84,.84)
+
+"BLD",10697,"KRN","B",3.6,3.6)
+
+"BLD",10697,"KRN","B",3.8,3.8)
+
+"BLD",10697,"KRN","B",9.2,9.2)
+
+"BLD",10697,"KRN","B",9.8,9.8)
+
+"BLD",10697,"KRN","B",19,19)
+
+"BLD",10697,"KRN","B",19.1,19.1)
+
+"BLD",10697,"KRN","B",101,101)
+
+"BLD",10697,"KRN","B",409.61,409.61)
+
+"BLD",10697,"KRN","B",771,771)
+
+"BLD",10697,"KRN","B",779.2,779.2)
+
+"BLD",10697,"KRN","B",870,870)
+
+"BLD",10697,"KRN","B",8989.51,8989.51)
+
+"BLD",10697,"KRN","B",8989.52,8989.52)
+
+"BLD",10697,"KRN","B",8994,8994)
+
+"BLD",10697,"QUES",0)
+^9.62^^
+"BLD",10697,"REQB",0)
+^9.611^2^2
+"BLD",10697,"REQB",1,0)
+OR*3.0*143^1
+"BLD",10697,"REQB",2,0)
+OR*3.0*286^1
+"BLD",10697,"REQB","B","OR*3.0*143",1)
+
+"BLD",10697,"REQB","B","OR*3.0*286",2)
+
+"FIA",101.43)
+ORDERABLE ITEMS
+"FIA",101.43,0)
+^ORD(101.43,
+"FIA",101.43,0,0)
+101.43
+"FIA",101.43,0,1)
+y^y^p^^^^n^^n
+"FIA",101.43,0,10)
+
+"FIA",101.43,0,11)
+
+"FIA",101.43,0,"RLRO")
+
+"FIA",101.43,0,"VR")
+3.0^OR
+"FIA",101.43,101.43)
+1
+"FIA",101.43,101.43,9)
+
+"FIA",101.43,101.439)
+1
+"FIA",101.43,101.439,.01)
+
+"MBREQ")
+0
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+414^3180418^520824660
+"PKG",188,22,1,"PAH",1,1,0)
+^^13^13^3180418
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch corrects 3 issues within the ORDER ENTRY/RESULTS REPORTING 
+"PKG",188,22,1,"PAH",1,1,2,0)
+package:
+"PKG",188,22,1,"PAH",1,1,3,0)
+ 
+"PKG",188,22,1,"PAH",1,1,4,0)
+1. Orderable Items with a value in the Type field of Neither appear as an
+"PKG",188,22,1,"PAH",1,1,5,0)
+   available lab test when ordering in CPRS.
+"PKG",188,22,1,"PAH",1,1,6,0)
+ 
+"PKG",188,22,1,"PAH",1,1,7,0)
+2. When the last creatinine lab has a "canc" result then the CrCL
+"PKG",188,22,1,"PAH",1,1,8,0)
+   calculation will skip all results with the same specimen and go on to
+"PKG",188,22,1,"PAH",1,1,9,0)
+   look at lab results for other specimens. 
+"PKG",188,22,1,"PAH",1,1,10,0)
+ 
+"PKG",188,22,1,"PAH",1,1,11,0)
+3. When a weight or height entry in to the patient's vitals is marked as
+"PKG",188,22,1,"PAH",1,1,12,0)
+   Pass, Unavailable or Refused the CrCL value for the patient disappears
+"PKG",188,22,1,"PAH",1,1,13,0)
+   even though there is a previous valid entry.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ORQQLR1")
+0^2^B16256943^B15053517
+"RTN","ORQQLR1",1,0)
+ORQQLR1 ; slc/CLA - Extrinsic functions and procedures which return patient lab results ; 7/10/17 5:45pm
+"RTN","ORQQLR1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**6,51,74,143,414**;Dec 17, 1997;Build 8
+"RTN","ORQQLR1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","ORQQLR1",4,0)
+ ;
+"RTN","ORQQLR1",5,0)
+ ;DBIA reference section
+"RTN","ORQQLR1",6,0)
+ ;2387  ^LAB(60
+"RTN","ORQQLR1",7,0)
+ ;2503  RR^LR7OR1
+"RTN","ORQQLR1",8,0)
+ ;10103 FMTE^XLFDT
+"RTN","ORQQLR1",9,0)
+ ;
+"RTN","ORQQLR1",10,0)
+OETOLAB(ORNUM) ;extrinsic funct to get a lab order number from an oe/rr number
+"RTN","ORQQLR1",11,0)
+ N LRNUM
+"RTN","ORQQLR1",12,0)
+ S LRNUM=$G(^OR(100,ORNUM,4))
+"RTN","ORQQLR1",13,0)
+ Q +LRNUM
+"RTN","ORQQLR1",14,0)
+ ;
+"RTN","ORQQLR1",15,0)
+PRINTNAM(LRIEN) ;extrinsic function to return the print name for an entry in the Lab file [#60]
+"RTN","ORQQLR1",16,0)
+ Q:+$G(LRIEN)<1 ""
+"RTN","ORQQLR1",17,0)
+ N NODE,NAME
+"RTN","ORQQLR1",18,0)
+ S NODE=$G(^LAB(60,LRIEN,.1))
+"RTN","ORQQLR1",19,0)
+ Q:'$L(NODE) ""
+"RTN","ORQQLR1",20,0)
+ S NAME=$P(NODE,U)
+"RTN","ORQQLR1",21,0)
+ Q NAME
+"RTN","ORQQLR1",22,0)
+ ;
+"RTN","ORQQLR1",23,0)
+OIRES(PT,OILR,SPEC) ;extrinsic function to return pt's most recent lab results for a lab orderable item in the format:
+"RTN","ORQQLR1",24,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",25,0)
+ N RSLT,ORZ
+"RTN","ORQQLR1",26,0)
+ S ORZ=""
+"RTN","ORQQLR1",27,0)
+ S RSLT=$$GETDATA^OCXCACHE(.ORZ,"$$OIRESC^ORQQLR1("_PT_","_OILR_","_SPEC_")",PT,)
+"RTN","ORQQLR1",28,0)
+ Q ORZ
+"RTN","ORQQLR1",29,0)
+ ;
+"RTN","ORQQLR1",30,0)
+OIRESC(PT,OILR,SPEC) ;extrinsic function to return pt's most recent lab results for a lab orderable item in the format:
+"RTN","ORQQLR1",31,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",32,0)
+ N ORY,ORX,ORN,ORLR,SUB,INVDT,SEQ,ORDG,RESULT
+"RTN","ORQQLR1",33,0)
+ S SUB="",INVDT=0,SEQ=0,ORY=""
+"RTN","ORQQLR1",34,0)
+ ;check to make sure the OI is in DG lab
+"RTN","ORQQLR1",35,0)
+ Q:'$L($G(PT))!('$L($G(OILR))) ORY
+"RTN","ORQQLR1",36,0)
+ Q:'$L($G(^ORD(101.43,OILR,0))) ORY
+"RTN","ORQQLR1",37,0)
+ I +$G(SPEC)<1 S SPEC=""
+"RTN","ORQQLR1",38,0)
+ S ORDG=$$DG^ORQOR1("LAB")
+"RTN","ORQQLR1",39,0)
+ Q:'$L($G(ORDG)) ORY
+"RTN","ORQQLR1",40,0)
+ Q:$P(^ORD(101.43,OILR,0),U,5)'=ORDG ORY  ;quit if display grp is not lab
+"RTN","ORQQLR1",41,0)
+ ;get lab test ien
+"RTN","ORQQLR1",42,0)
+ S ORX=$P(^ORD(101.43,OILR,0),U,2)
+"RTN","ORQQLR1",43,0)
+ S ORLR=$S(ORX["~":$P(ORX,"~"),1:$P(ORX,";"))
+"RTN","ORQQLR1",44,0)
+ ;get lab results
+"RTN","ORQQLR1",45,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",46,0)
+ D RR^LR7OR1(PT,"","","","",ORLR,"L",1,SPEC) I $D(^TMP("LRRR",$J,PT)) D
+"RTN","ORQQLR1",47,0)
+ .S SUB=$O(^TMP("LRRR",$J,PT,SUB)) Q:SUB=""
+"RTN","ORQQLR1",48,0)
+ .S INVDT=$O(^TMP("LRRR",$J,PT,SUB,INVDT)) Q:'INVDT
+"RTN","ORQQLR1",49,0)
+ .S SEQ=$O(^TMP("LRRR",$J,PT,SUB,INVDT,SEQ)) Q:'SEQ  D
+"RTN","ORQQLR1",50,0)
+ ..S RESULT=^(SEQ),ORY=$P(RESULT,U)_U_$P(RESULT,U,15)_U_$P(RESULT,U,2)_U_$P(RESULT,U,4)_U_$P(RESULT,U,3)_U_$P(RESULT,U,5)_U_(9999999-INVDT)
+"RTN","ORQQLR1",51,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",52,0)
+ Q ORY
+"RTN","ORQQLR1",53,0)
+ ;
+"RTN","ORQQLR1",54,0)
+NATL(PT,NID,SPEC) ;extrinsic function to return pt's most recent lab results for a lab national id in the format:
+"RTN","ORQQLR1",55,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",56,0)
+ N RSLT,ORZ
+"RTN","ORQQLR1",57,0)
+ S ORZ=""
+"RTN","ORQQLR1",58,0)
+ S RSLT=$$GETDATA^OCXCACHE(.ORZ,"$$NATLC^ORQQLR1("_PT_","_NID_","_SPEC_")",PT,)
+"RTN","ORQQLR1",59,0)
+ Q ORZ
+"RTN","ORQQLR1",60,0)
+ ;
+"RTN","ORQQLR1",61,0)
+NATLC(PT,NID,SPEC) ;extrinsic function to return pt's most recent lab results for a lab national id in the format:
+"RTN","ORQQLR1",62,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",63,0)
+ N ORY,ORX,ORN,ORLR,SUB,INVDT,SEQ,ORDG
+"RTN","ORQQLR1",64,0)
+ S SUB="",INVDT=0,SEQ=0,ORY=""
+"RTN","ORQQLR1",65,0)
+ I +$G(SPEC)<1 S SPEC=""
+"RTN","ORQQLR1",66,0)
+ ;get lab results
+"RTN","ORQQLR1",67,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",68,0)
+ D RR^LR7OR1(PT,"","","","",NID,"N",1,SPEC) I $D(^TMP("LRRR",$J,PT)) D
+"RTN","ORQQLR1",69,0)
+ .S SUB=$O(^TMP("LRRR",$J,PT,SUB)) Q:SUB=""
+"RTN","ORQQLR1",70,0)
+ .S INVDT=$O(^TMP("LRRR",$J,PT,SUB,INVDT)) Q:'INVDT
+"RTN","ORQQLR1",71,0)
+ .S SEQ=$O(^TMP("LRRR",$J,PT,SUB,INVDT,SEQ)) Q:'SEQ  D
+"RTN","ORQQLR1",72,0)
+ ..S RESULT=^(SEQ),ORY=$P(RESULT,U)_U_$P(RESULT,U,15)_U_$P(RESULT,U,2)_U_$P(RESULT,U,4)_U_$P(RESULT,U,3)_U_$P(RESULT,U,5)_U_(9999999-INVDT)
+"RTN","ORQQLR1",73,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",74,0)
+ Q ORY
+"RTN","ORQQLR1",75,0)
+ ;
+"RTN","ORQQLR1",76,0)
+LOCL(PT,LID,SPEC) ;extrinsic function to return pt's most recent lab results for a lab local id in the format:
+"RTN","ORQQLR1",77,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",78,0)
+ N RSLT,ORZ
+"RTN","ORQQLR1",79,0)
+ S ORZ=""
+"RTN","ORQQLR1",80,0)
+ S RSLT=$$GETDATA^OCXCACHE(.ORZ,"$$LOCLC^ORQQLR1("_PT_","_LID_","_SPEC_")",PT,)
+"RTN","ORQQLR1",81,0)
+ Q ORZ
+"RTN","ORQQLR1",82,0)
+ ;
+"RTN","ORQQLR1",83,0)
+LOCLC(PT,LID,SPEC) ;extrinsic function to return pt's most recent lab results for a lab local id in the format:
+"RTN","ORQQLR1",84,0)
+ ; test id^abbrev test name^result^units^flag^collection d/t
+"RTN","ORQQLR1",85,0)
+ N ORY,ORX,SUB,INVDT,SEQ,RESULT
+"RTN","ORQQLR1",86,0)
+ S SUB="",INVDT=0,SEQ=0,ORY=""
+"RTN","ORQQLR1",87,0)
+ ;get lab results
+"RTN","ORQQLR1",88,0)
+ I +$G(SPEC)<1 S SPEC=""
+"RTN","ORQQLR1",89,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",90,0)
+ D RR^LR7OR1(PT,"","","","",LID,"L",,SPEC) I $D(^TMP("LRRR",$J,PT)) D
+"RTN","ORQQLR1",91,0)
+ .S SUB=$O(^TMP("LRRR",$J,PT,SUB)) Q:SUB=""
+"RTN","ORQQLR1",92,0)
+ .S INVDT="" F  S INVDT=$O(^TMP("LRRR",$J,PT,SUB,INVDT)) Q:'INVDT  D
+"RTN","ORQQLR1",93,0)
+ ..S SEQ="" F  S SEQ=$O(^TMP("LRRR",$J,PT,SUB,INVDT,SEQ)) Q:'SEQ!(+$G(RESULT)>0)  D
+"RTN","ORQQLR1",94,0)
+ ...S ORX=^(SEQ)
+"RTN","ORQQLR1",95,0)
+ ...I $P(ORX,U,2)'="canc" D  ;if results were not cancelled in lab:
+"RTN","ORQQLR1",96,0)
+ ....S RESULT=$P(ORX,U,2)
+"RTN","ORQQLR1",97,0)
+ ....S ORY=$P(ORX,U)_U_$P(ORX,U,15)_U_$P(ORX,U,2)_U_$P(ORX,U,4)
+"RTN","ORQQLR1",98,0)
+ ....S ORY=ORY_U_$P(ORX,U,3)_U_$P(ORX,U,5)_U_(9999999-INVDT)
+"RTN","ORQQLR1",99,0)
+ K ^TMP("LRRR",$J)
+"RTN","ORQQLR1",100,0)
+ Q ORY
+"RTN","ORQQLR1",101,0)
+ ;
+"RTN","ORQQLR1",102,0)
+LOCLFORM(PT,LID,SPEC) ;extrinsic function to return formatted most recnt lab
+"RTN","ORQQLR1",103,0)
+ ;rtn format: 1 (if results)^<print name> <value> <units> <high/low flag>
+"RTN","ORQQLR1",104,0)
+ ;               (<reference range>) <collection date/time>
+"RTN","ORQQLR1",105,0)
+ N FRCNT,X
+"RTN","ORQQLR1",106,0)
+ S X=$$LOCL(PT,LID,SPEC)
+"RTN","ORQQLR1",107,0)
+ Q:'$L(X) "^No results found."
+"RTN","ORQQLR1",108,0)
+ S FRCNT="1^"_$P(X,U,2)_" "_$P(X,U,3)_" "_$P(X,U,4)_" "_$P(X,U,5)
+"RTN","ORQQLR1",109,0)
+ S FRCNT=FRCNT_" ("_$P(X,U,6)_") "_$$FMTE^XLFDT($P(X,U,7),"2P")
+"RTN","ORQQLR1",110,0)
+ Q FRCNT
+"RTN","ORQQVI")
+0^1^B42659899^B35437287
+"RTN","ORQQVI",1,0)
+ORQQVI ; slc/STAFF - Functions which return patient vital and I/O data ; 7/10/17 5:45pm
+"RTN","ORQQVI",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,198,215,250,260,285,286,414**;Dec 17, 1997;Build 8
+"RTN","ORQQVI",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","ORQQVI",4,0)
+ ;
+"RTN","ORQQVI",5,0)
+ ;DBIA reference section
+"RTN","ORQQVI",6,0)
+ ;  1446   ^GMRVUT0
+"RTN","ORQQVI",7,0)
+ ;  3647   ^GMVPXRM
+"RTN","ORQQVI",8,0)
+ ; 10061   ^UTILITY
+"RTN","ORQQVI",9,0)
+ ;  2051   FIND1^DIC
+"RTN","ORQQVI",10,0)
+ ;
+"RTN","ORQQVI",11,0)
+VITALS(ORY,DFN,ORSDT,OREDT) ; return patient's vital measurements taken between start date/time and end date/time
+"RTN","ORQQVI",12,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",13,0)
+ ;     vital measurement ien^vital type^date/time taken^rate
+"RTN","ORQQVI",14,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",15,0)
+ ;ORSDT: start date/time in Fileman format
+"RTN","ORQQVI",16,0)
+ ;OREDT: end date/time in Fileman format
+"RTN","ORQQVI",17,0)
+ ;DBIA for PXRMINDX(120.5 is 4290
+"RTN","ORQQVI",18,0)
+ ;DBIA for ^GMVPXRM is 3647
+"RTN","ORQQVI",19,0)
+ ;DBIA for ^GMRVUT0 is 1446
+"RTN","ORQQVI",20,0)
+ K ^UTILITY($J,"GMRVD")
+"RTN","ORQQVI",21,0)
+ S GMRVSTR="BP;HT;WT;T;R;P;PN" ;dee 2/12/99 added PN
+"RTN","ORQQVI",22,0)
+ S GMRVSTR(0)=ORSDT_"^"_OREDT_"^"_"^"
+"RTN","ORQQVI",23,0)
+ D EN1^GMRVUT0
+"RTN","ORQQVI",24,0)
+ N ORT,ORD,ORI,I
+"RTN","ORQQVI",25,0)
+ S ORT="",ORD=0,ORI=0,I=0
+"RTN","ORQQVI",26,0)
+ F  S ORT=$O(^UTILITY($J,"GMRVD",ORT)) Q:ORT=""  D
+"RTN","ORQQVI",27,0)
+ .F  S ORD=$O(^UTILITY($J,"GMRVD",ORT,ORD)) Q:ORD<1  D
+"RTN","ORQQVI",28,0)
+ ..F  S ORI=$O(^UTILITY($J,"GMRVD",ORT,ORD,ORI)) Q:ORI<1  D
+"RTN","ORQQVI",29,0)
+ ...S I=I+1
+"RTN","ORQQVI",30,0)
+ ...S ORY(I)=ORI_"^"_ORT_"^"_$P(^UTILITY($J,"GMRVD",ORT,ORD,ORI),"^",8)_"^"_$P(^(ORI),"^")
+"RTN","ORQQVI",31,0)
+ I I=0 S ORY(1)="^No vitals found."
+"RTN","ORQQVI",32,0)
+ K GMRVSTR
+"RTN","ORQQVI",33,0)
+ Q
+"RTN","ORQQVI",34,0)
+ ;
+"RTN","ORQQVI",35,0)
+XFASTVIT(ORY,DFN,F1,F2) ; return patient's most recent vital measurements
+"RTN","ORQQVI",36,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",37,0)
+ ;     vital measurement ien^vital type^rate^date/time taken
+"RTN","ORQQVI",38,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",39,0)
+ ; F1 & F2 are ignored
+"RTN","ORQQVI",40,0)
+ ;
+"RTN","ORQQVI",41,0)
+ N CNT
+"RTN","ORQQVI",42,0)
+ S CNT=0
+"RTN","ORQQVI",43,0)
+ D LSTVITAL("TEMPERATURE","T",DFN,.ORY,.CNT)
+"RTN","ORQQVI",44,0)
+ D LSTVITAL("PULSE","P",DFN,.ORY,.CNT)
+"RTN","ORQQVI",45,0)
+ D LSTVITAL("RESPIRATION","R",DFN,.ORY,.CNT)
+"RTN","ORQQVI",46,0)
+ D LSTVITAL("BLOOD PRESSURE","BP",DFN,.ORY,.CNT)
+"RTN","ORQQVI",47,0)
+ D LSTVITAL("HEIGHT","HT",DFN,.ORY,.CNT)
+"RTN","ORQQVI",48,0)
+ D LSTVITAL("WEIGHT","WT",DFN,.ORY,.CNT)
+"RTN","ORQQVI",49,0)
+ D LSTVITAL("PAIN","PN",DFN,ORY,.CNT) ;dee 2/11/99
+"RTN","ORQQVI",50,0)
+ Q
+"RTN","ORQQVI",51,0)
+ ;
+"RTN","ORQQVI",52,0)
+XVITAL(VITAL,ABBREV,DFN,ORY,CNT) ; get vital measurement
+"RTN","ORQQVI",53,0)
+ N DATA,IDT,IEN,OK,VTYPE
+"RTN","ORQQVI",54,0)
+ S VTYPE=$$FIND1^DIC(120.51,"","BX",VITAL,"","","ERR")
+"RTN","ORQQVI",55,0)
+ I 'VTYPE Q
+"RTN","ORQQVI",56,0)
+ S OK=0,IDT=0 F  S IDT=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT),-1) Q:IDT<1  D  Q:OK
+"RTN","ORQQVI",57,0)
+ .S IEN="" F  S IEN=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT,IEN)) Q:$L(IEN)<1  D  Q:OK
+"RTN","ORQQVI",58,0)
+ ..D EN^GMVPXRM(.DATA,IEN,"I")
+"RTN","ORQQVI",59,0)
+ ..I $P(DATA(1),U)=-1 Q
+"RTN","ORQQVI",60,0)
+ ..S CNT=CNT+1,OK=1
+"RTN","ORQQVI",61,0)
+ ..S ORY(CNT)=IEN_U_ABBREV_U_$P(DATA(7),U)_U_$P(DATA(1),U)
+"RTN","ORQQVI",62,0)
+ Q
+"RTN","ORQQVI",63,0)
+ ;
+"RTN","ORQQVI",64,0)
+NOTEVIT(ORY,DFN,NOTEIEN) ;
+"RTN","ORQQVI",65,0)
+ N VSTR,NOTEDATE
+"RTN","ORQQVI",66,0)
+ D NOTEVSTR^ORWPCE(.VSTR,NOTEIEN)
+"RTN","ORQQVI",67,0)
+ Q:$P(VSTR,";",2)=""
+"RTN","ORQQVI",68,0)
+ D FASTVIT(.ORY,DFN,$P(VSTR,";",2))
+"RTN","ORQQVI",69,0)
+ Q
+"RTN","ORQQVI",70,0)
+ ;
+"RTN","ORQQVI",71,0)
+FASTVIT(ORY,DFN,F1,F2) ; return patient's most recent vital measurements
+"RTN","ORQQVI",72,0)
+ ; in date range
+"RTN","ORQQVI",73,0)
+ ;ORY: return variable, results are returned in the format:
+"RTN","ORQQVI",74,0)
+ ;     vital measurement ien^vital type^rate^date/time taken
+"RTN","ORQQVI",75,0)
+ ;DFN: patient identifier from Patient File [#2]
+"RTN","ORQQVI",76,0)
+ ; F1: starting date/time range
+"RTN","ORQQVI",77,0)
+ ; F2: ending date/time range
+"RTN","ORQQVI",78,0)
+ ;
+"RTN","ORQQVI",79,0)
+ N CNT,DT1,DT2
+"RTN","ORQQVI",80,0)
+ S CNT=0
+"RTN","ORQQVI",81,0)
+ I $G(F1)>0 D
+"RTN","ORQQVI",82,0)
+ . I $G(F2)="",F1["." S DT1=$P(F1,".",1)_"."_$E($P(F1,".",2),1,4)
+"RTN","ORQQVI",83,0)
+ . E  S DT1=F1
+"RTN","ORQQVI",84,0)
+ E  S DT1=1
+"RTN","ORQQVI",85,0)
+ S DT2=$S($G(F2)>0:F2,DT1>1:DT1,1:9999998)
+"RTN","ORQQVI",86,0)
+ ;
+"RTN","ORQQVI",87,0)
+ D LSTVITAL("TEMPERATURE","T",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",88,0)
+ D LSTVITAL("PULSE","P",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",89,0)
+ D LSTVITAL("RESPIRATION","R",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",90,0)
+ D LSTVITAL("BLOOD PRESSURE","BP",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",91,0)
+ D LSTVITAL("HEIGHT","HT",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",92,0)
+ D LSTVITAL("WEIGHT","WT",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",93,0)
+ D LSTVITAL("PAIN","PN",DFN,.ORY,.CNT,DT1,DT2) ;dee 2/11/99
+"RTN","ORQQVI",94,0)
+ D LSTVITAL("PULSE OXIMETRY","PO2",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",95,0)
+ D LSTVITAL("CENTRAL VENOUS PRESSURE","CVP",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",96,0)
+ D LSTVITAL("CIRCUMFERENCE/GIRTH","CG",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",97,0)
+ D LSTVITAL("BODY MASS INDEX","BMI",DFN,.ORY,.CNT,DT1,DT2)
+"RTN","ORQQVI",98,0)
+ Q
+"RTN","ORQQVI",99,0)
+ ;
+"RTN","ORQQVI",100,0)
+VITAL(VITAL,ABBREV,DFN,ORY,CNT,F1,F2) ;
+"RTN","ORQQVI",101,0)
+ ; get most recent *valid* vital measurement 
+"RTN","ORQQVI",102,0)
+ N STOP
+"RTN","ORQQVI",103,0)
+ S STOP=0 F  D  Q:STOP
+"RTN","ORQQVI",104,0)
+ .D LSTVITAL(VITAL,ABBREV,DFN,.ORY,.CNT,F1,F2)
+"RTN","ORQQVI",105,0)
+ .I $D(ORY)=0 S STOP=1 Q  ;if no vital, exit
+"RTN","ORQQVI",106,0)
+ .;if not a valid vital, search for earlier entry
+"RTN","ORQQVI",107,0)
+ .I "Pass,Unavailable,Refused"[$P(ORY(1),U,3) D  Q
+"RTN","ORQQVI",108,0)
+ ..S F2=$P(ORY(1),U,4)-.0000001
+"RTN","ORQQVI",109,0)
+ ..K ORY
+"RTN","ORQQVI",110,0)
+ ..S CNT=0
+"RTN","ORQQVI",111,0)
+ .S STOP=1 Q  ;for the moment just use any value.
+"RTN","ORQQVI",112,0)
+ Q
+"RTN","ORQQVI",113,0)
+ ;
+"RTN","ORQQVI",114,0)
+LSTVITAL(VITAL,ABBREV,DFN,ORY,CNT,F1,F2) ;
+"RTN","ORQQVI",115,0)
+ ;get most recent vital measurement in date range
+"RTN","ORQQVI",116,0)
+ I ABBREV="BMI" D BMILAST^ORWGAPIX(DFN,.ORY,.CNT) Q
+"RTN","ORQQVI",117,0)
+ N DATA,IDT,ENDIDT,IEN,LOOP,OK,QUALS,VTYPE,MVAL,VALUE
+"RTN","ORQQVI",118,0)
+ S VTYPE=$$FIND1^DIC(120.51,"","BX",VITAL,"","","ERR")
+"RTN","ORQQVI",119,0)
+ I 'VTYPE Q
+"RTN","ORQQVI",120,0)
+ S OK=0
+"RTN","ORQQVI",121,0)
+ S IDT=F2+$S(F2#1:.0000001,1:.7)
+"RTN","ORQQVI",122,0)
+ S ENDIDT=F1-.0000001
+"RTN","ORQQVI",123,0)
+ F  S IDT=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT),-1) Q:IDT<ENDIDT!'IDT  D  Q:OK
+"RTN","ORQQVI",124,0)
+ .S IEN="" F  S IEN=$O(^PXRMINDX(120.5,"PI",DFN,VTYPE,IDT,IEN)) Q:$L(IEN)<1  D  Q:OK
+"RTN","ORQQVI",125,0)
+ ..D EN^GMVPXRM(.DATA,IEN,"B")
+"RTN","ORQQVI",126,0)
+ ..I $P(DATA(1),U)=-1 Q
+"RTN","ORQQVI",127,0)
+ ..S CNT=CNT+1,OK=1,VALUE=$P(DATA(7),U)
+"RTN","ORQQVI",128,0)
+ ..S QUALS(CNT)=""
+"RTN","ORQQVI",129,0)
+ ..F LOOP=1:1 Q:'$D(DATA(12,LOOP))  D
+"RTN","ORQQVI",130,0)
+ ...S QUALS(CNT)=QUALS(CNT)_$S(QUALS(CNT)="":"",1:",")_$P(DATA(12,LOOP),U,2)
+"RTN","ORQQVI",131,0)
+ ..; changed to display 'POX' rather than 'PO2' per CQ 10592
+"RTN","ORQQVI",132,0)
+ ..S ORY(CNT)=IEN_U_$S(ABBREV="PO2":"POX",1:ABBREV)_U_VALUE_U_$P(DATA(1),U)
+"RTN","ORQQVI",133,0)
+ ..I $P(ORY(CNT),"^",2)="T" D  ; Temperature.
+"RTN","ORQQVI",134,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" F",1:"")
+"RTN","ORQQVI",135,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",136,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",137,0)
+ ...S MVAL=MVAL-32
+"RTN","ORQQVI",138,0)
+ ...S MVAL=$J((MVAL*(5/9)),3,1)
+"RTN","ORQQVI",139,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" C)"
+"RTN","ORQQVI",140,0)
+ ..I $P(ORY(CNT),"^",2)="P" D  ; Pulse.
+"RTN","ORQQVI",141,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",142,0)
+ ..I $P(ORY(CNT),"^",2)="R" D  ; Respiration.
+"RTN","ORQQVI",143,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",144,0)
+ ..I $P(ORY(CNT),"^",2)="BP" D  ; Blood Pressure.
+"RTN","ORQQVI",145,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",146,0)
+ ..I $P(ORY(CNT),"^",2)="HT" D  ; Height.
+"RTN","ORQQVI",147,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" in",1:"")
+"RTN","ORQQVI",148,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",149,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",150,0)
+ ...S MVAL=$J((MVAL*2.54),3,2)
+"RTN","ORQQVI",151,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" cm)"
+"RTN","ORQQVI",152,0)
+ ..I $P(ORY(CNT),"^",2)="WT" D  ; Weight.
+"RTN","ORQQVI",153,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE_$S($E(VALUE):" lb",1:"")
+"RTN","ORQQVI",154,0)
+ ...S MVAL=+VALUE
+"RTN","ORQQVI",155,0)
+ ...Q:'MVAL
+"RTN","ORQQVI",156,0)
+ ...; changed 2.2 to 2.20462262 per CQ 10637
+"RTN","ORQQVI",157,0)
+ ...S MVAL=$J((MVAL/2.20462262),3,2)
+"RTN","ORQQVI",158,0)
+ ...S ORY(CNT)=ORY(CNT)_"^("_MVAL_" kg)"
+"RTN","ORQQVI",159,0)
+ ..I $P(ORY(CNT),"^",2)="PN" D   ; Pain
+"RTN","ORQQVI",160,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_VALUE
+"RTN","ORQQVI",161,0)
+ ..; looks for 'POX' rather than 'PO2' due to change for CQ 10592 above
+"RTN","ORQQVI",162,0)
+ ..I $P(ORY(CNT),"^",2)="POX" D  ; Pulse Oximetry.
+"RTN","ORQQVI",163,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",164,0)
+ ...S $P(ORY(CNT),U,8)=$P(DATA(8),U)
+"RTN","ORQQVI",165,0)
+ ..I $P(ORY(CNT),"^",2)="CVP" D  ; Central Venous Pressure.
+"RTN","ORQQVI",166,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",167,0)
+ ...S MVAL=$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",168,0)
+ ...I MVAL'=+MVAL,+MVAL=0 S ORY(CNT)=ORY(CNT)_"^",$P(ORY(CNT),U,7)="" Q
+"RTN","ORQQVI",169,0)
+ ...S MVAL=$J((MVAL/1.36),3,1)
+"RTN","ORQQVI",170,0)
+ ...S ORY(CNT)=ORY(CNT)_" cmH20^("_MVAL_" mmHg)"
+"RTN","ORQQVI",171,0)
+ ..I $P(ORY(CNT),"^",2)="CG" D  ; Circumference Girth.
+"RTN","ORQQVI",172,0)
+ ...S ORY(CNT)=ORY(CNT)_"^"_$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",173,0)
+ ...S MVAL=$P(ORY(CNT),"^",3)
+"RTN","ORQQVI",174,0)
+ ...I MVAL'=+MVAL,+MVAL=0 S ORY(CNT)=ORY(CNT)_"^",$P(ORY(CNT),U,7)="" Q
+"RTN","ORQQVI",175,0)
+ ...S MVAL=$J((MVAL*2.54),3,1)
+"RTN","ORQQVI",176,0)
+ ...S ORY(CNT)=ORY(CNT)_" in^("_MVAL_" cm)"
+"RTN","ORQQVI",177,0)
+ ..S $P(ORY(CNT),U,7)=QUALS(CNT)
+"RTN","ORQQVI",178,0)
+ Q
+"UP",101.43,101.439,-1)
+101.43^9
+"UP",101.43,101.439,0)
+101.439
+"VER")
+8.0^22.2
+"^DD",101.43,101.43,9,0)
+SET MEMBERSHIP^101.439A^^9;0
+"^DD",101.43,101.43,9,21,0)
+^^3^3^3180412^^
+"^DD",101.43,101.43,9,21,1,0)
+This field contains the names of sets to which this orderable item belongs.
+"^DD",101.43,101.43,9,21,2,0)
+When a set name is entered here, a cross-reference of the format "S.name"
+"^DD",101.43,101.43,9,21,3,0)
+is created, allowing rapid lookups on this file.
+"^DD",101.43,101.439,0)
+SET MEMBERSHIP SUB-FIELD^^2^2
+"^DD",101.43,101.439,0,"NM","SET MEMBERSHIP")
+
+"^DD",101.43,101.439,.01,0)
+SET^MFJ8^^0;1^K:$L(X)>8!($L(X)<2) X
+"^DD",101.43,101.439,.01,1,0)
+^.1
+"^DD",101.43,101.439,.01,1,1,0)
+101.439^B
+"^DD",101.43,101.439,.01,1,1,1)
+S ^ORD(101.43,DA(1),9,"B",$E(X,1,30),DA)=""
+"^DD",101.43,101.439,.01,1,1,2)
+K ^ORD(101.43,DA(1),9,"B",$E(X,1,30),DA)
+"^DD",101.43,101.439,.01,1,2,0)
+101.43^S^MUMPS
+"^DD",101.43,101.439,.01,1,2,1)
+Q:",O,N,"[(","_$P($G(^ORD(101.43,DA(1),"LR")),U,7)_",")  N NM,IN S NM=$P(^(0),U),IN=$G(^(.1)) S:$L(NM) ^ORD(101.43,"S."_X,$$UP^XLFSTR(NM),DA(1))=U_NM_U_IN
+"^DD",101.43,101.439,.01,1,2,2)
+N NM S NM=$P(^ORD(101.43,DA(1),0),U) K:$L(NM) ^ORD(101.43,"S."_X,$$UP^XLFSTR(NM),DA(1))
+"^DD",101.43,101.439,.01,1,2,"%D",0)
+^.101^1^1^3180418^^^^
+"^DD",101.43,101.439,.01,1,2,"%D",1,0)
+Allows retrieval of orderable items by set.
+"^DD",101.43,101.439,.01,1,2,"DT")
+3180418
+"^DD",101.43,101.439,.01,1,3,0)
+101.43^SS1^MUMPS
+"^DD",101.43,101.439,.01,1,3,1)
+D SS2^ORDD43
+"^DD",101.43,101.439,.01,1,3,2)
+D SK2^ORDD43
+"^DD",101.43,101.439,.01,1,3,"%D",0)
+^^1^1^2960806^^^^
+"^DD",101.43,101.439,.01,1,3,"%D",1,0)
+Allows retrieval of items by synonym via the Set "S" xrefs.
+"^DD",101.43,101.439,.01,1,3,"DT")
+2960806
+"^DD",101.43,101.439,.01,1,4,0)
+101.43^C1^MUMPS
+"^DD",101.43,101.439,.01,1,4,1)
+N CD,NM,IN S NM=$P(^ORD(101.43,DA(1),0),U),CD=$P(^(0),U,3),IN=$G(^(.1)) S:$L(CD) ^ORD(101.43,"C."_X,$$UP^XLFSTR(CD_" "_NM),DA(1))=U_(CD_" "_NM)_U_IN
+"^DD",101.43,101.439,.01,1,4,2)
+N CD,NM S NM=$P(^ORD(101.43,DA(1),0),U),CD=$P(^(0),U,3) K:$L(CD) ^ORD(101.43,"C."_X,$$UP^XLFSTR(CD_" "_NM),DA(1))
+"^DD",101.43,101.439,.01,1,4,"%D",0)
+^^1^1^2960806^^^^
+"^DD",101.43,101.439,.01,1,4,"%D",1,0)
+Allows retrieval of items by code within Sets.
+"^DD",101.43,101.439,.01,1,4,"DT")
+2950713
+"^DD",101.43,101.439,.01,3)
+Answer must be 2-8 characters in length.
+"^DD",101.43,101.439,.01,"DT")
+3180418
+"BLD",10697,6)
+^403
+**END**
+**END**
+

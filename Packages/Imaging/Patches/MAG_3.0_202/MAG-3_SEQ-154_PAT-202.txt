@@ -1,0 +1,523 @@
+
+=============================================================================
+Run Date: JUN 29, 2018                     Designation: MAG*3*202
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #154                      Status: Released
+                  Compliance Date: JUL 30, 2018
+=============================================================================
+
+
+Subject: Update MAG Index Terms
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*163.
+  
+ Subject: VISTA - INDEX TERM UPDATES 
+ ========
+  
+ Category: OTHER
+ =========
+ Description:
+ ==============
+ MAG*3.0*202 will update the current MAG VistA Imaging Index Term files for
+ the Veterans Health Administration (VHA) sites. The MAG Index Terms are
+ used in VistA Imaging Capture to index images, which allow clinicians to
+ apply sort filters when viewing or researching images. Sites must have the
+ most recent Index Terms, otherwise they might encounter issues when images
+ are viewed across sites or the Veterans Integrated Service Network (VISN).
+  
+ Patch Components:
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 202_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch. 
+ MAG3_0P202_README.txt, if present, is an informative file associated with 
+ the patch.
+ Software
+ =========
+ File Name       Description
+ =========       ===========
+ MAG3_0P202.KID  Kernel Installation and Distribution System (KIDS) build 
+ for Patch 202
+  
+ Documentation:
+ ============== 
+ This document, MAG3_0P202_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 625290 (Trouble Ticket I17397323FY18) New Index Terms 
+ needed
+  
+ Problem:
+ ========
+ The MAG Index Terms are used in VistA Imaging Capture to index images,
+ which allows clinicians to apply sort filters when viewing or researching 
+ images. Sites must have the most recent Index Terms, otherwise they might 
+ encounter issues when images are viewed across sites or the Veterans 
+ Integrated Service Network (VISN).
+ MAG*3.0*202 will update the current MAG VistA Imaging Index Term files 
+ for the Veterans Health Administration (VHA) sites accordingly. The 
+ following MAG Index Term will be address in this patch: 
+ 1.  Create a new entry in file #2005.84 IMAGE INDEX FOR 
+ SPECIALTY/SUBSPECIALTY FILE 
+         Called: Genetics
+ 2.  Create a new entry in file #2005.85 IMAGE INDEX FOR PROCEDURE/EVENT
+ FILE  
+         Called: Genetic Counseling and associate it with the new 
+ Specialty of Genetics.
+ 3.  Create a new entry in file #2005.85 IMAGE INDEX FOR PROCEDURE/EVENT
+ FILE  
+         Called: Dermatologic Procedure and associate it with the 
+ Specialty of Dermatology.
+ 4.   Modify the entry in file #2005.85 IMAGE INDEX FOR PROCEDURE/EVENT 
+ FILE  
+         Called: Visit and associate it with the Specialty of Radiation 
+ Oncology
+  
+ Resolution:
+ ===========
+ Created/modified entries 2005.85 IMAGE INDEX FOR PROCEDURE/EVENT FILE. 
+ Also, a new entry in file #2005.84 IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY 
+ FILE was created. 
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         Hunter Holmes McGuire VA Medical Center - Richmond, VA
+         St. Cloud VA Health Care System
+         VA Puget Sound Health Care System - Seattle Division 
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location        Site
+ Hines           domain.ext 
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl 
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ ===============================
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system. Installing the MAG*3.0*202 KIDS takes 1-5 
+ minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this
+ document have been previously installed.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*202.
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps 
+ ==================
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD 
+ MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+ load the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P202.KID) of 
+ the Patch 202 KIDS file that was downloaded from the Download Server.
+   c.  When prompted to continue with the load, enter "YES". A 
+ Distribution OK! Message will be displayed when the load is complete.
+ 4.  Install the KIDS files by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter MAG*3.0*202.
+   c. Answer NO to the following prompts, if they appear:
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+ 5.  After performing the environmental check steps, PRE^MAGIP202, the 
+ MAG Index Terms update will continue after the user enters "Y" for yes or 
+ press <Enter> for the following confirm step to generate a restore code 
+ for the restore/backup old MAG Index terms.
+   a. Update Imaging Index Terms with the latest Distribution (Y/N)? 
+   b. Record the displayed restore code. (It will also be emailed to 
+ the person responsible for installing MAG*3.0*202.) Hit enter to continue 
+ the installation.
+ Running Pre-Install Routine: PRE^MAGIP202.
+  
+ Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ Backup****
+  
+ Restore Code: 5462942169
+  
+ Record restore code and hit <enter>:
+  
+ Installing Data Dictionaries: .....
+         Jan 25, 2018@10:30:35
+  
+  Installing Data:
+         Jan 25, 2018@10:30:35
+  
+  Running Post-Install Routine: POS^MAGIP202.
+  
+ Post Install Mail Message: Jan 25, 2018@10:30:36
+  
+  Updating Routine file......
+  
+  Updating KIDS files....... 
+ 6.  When the installation has finished, an Install Completed message 
+ will be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If the user has already installed the patch and is installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ the output will be different.
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+ installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ You've got PRIORITY mail!
+   
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\MAG3_0P202.KID
+  
+ KIDS Distribution saved on Jun 05, 2018@13:57:10
+ Comment: VistA Imaging 3.0* - MAG*3.0*P202
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ Build MAG*3.0*202 has been loaded before, here is when:
+       MAG*3.0*202   Install Completed
+                     was loaded on Jun 05, 2018@07:44:59
+ OK to continue with Load? NO// YES
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*202
+ Use INSTALL NAME: MAG*3.0*202 to install this Distribution.
+   
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ You've got PRIORITY mail!
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*202      6/5/18@15:06:11
+      => VistA Imaging 3.0* - MAG*3.0*P202  ;Created on Jun 05, 
+ 2018@13:57:10
+  
+ This Distribution was loaded on Jun 05, 2018@15:06:11 with header of
+    VistA Imaging 3.0* - MAG*3.0*P202  ;Created on Jun 05, 2018@13:57:10
+    It consisted of the following Install(s):
+     MAG*3.0*202
+ Checking Install for Package MAG*3.0*202
+  
+ Install Questions for MAG*3.0*202
+  
+ Incoming Files:
+  
+  
+    2005.82   IMAGE INDEX FOR CLASS  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR CLASS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.83   IMAGE INDEX FOR TYPES  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR TYPES' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.84   IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.85   IMAGE INDEX FOR PROCEDURE/EVENT  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR PROCEDURE/EVENT' File.
+ I will OVERWRITE your data with mine.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*202 :
+                Jun 05, 2018@15:06:36
+  
+ Build Distribution Date: Jun 05, 2018
+  
+  Installing Routines:..
+                Jun 05, 2018@15:06:36
+  
+  Running Pre-Install Routine: PRE^MAGIP202.
+ Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ backup****
+  
+  
+ Restore Code: 5599119999
+  
+ Record restore code and hit <enter>:
+  
+  Installing Data Dictionaries: .....
+                Jun 05, 2018@15:06:44
+  
+  Installing Data:
+                Jun 05, 2018@15:06:45
+  
+  Running Post-Install Routine: POST^MAGIP202.
+  
+ Post Install Mail Message: Jun 05, 2018@15:06:45
+  
+ Restore Code Mail Message: Jun 05, 2018@15:06:45
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*202 Installed.
+                Jun 05, 2018@15:06:45
+  
+  Not a production UCI
+  
+ NO Install Message sent
+  
+   1   Load a Distribution
+   2   Verify Checksums in Transport Global
+   3   Print Transport Global
+   4   Compare Transport Global to Current System
+   5   Backup a Transport Global
+   6   Install Package(s)
+      Restart Install of Package(s)
+      Unload a Distribution
+  
+ You have PENDING ALERTS
+      Enter "VA to jump to VIEW ALERTS option
+  
+ You've got PRIORITY mail!
+ Select Installation <TEST ACCOUNT> Option: 
+  
+      Enter "VA to jump to VIEW ALERTS option
+  
+ You've got PRIORITY mail!
+ Select Installation <TEST ACCOUNT> Option: 
+ MAG*3.0*202 installation is complete.
+  
+ NOTE: For a VHA VistA site, make sure the new Entries are displayed using 
+ the VistA Imaging Capture Application (Procedure/Event and 
+ Specialty/Subspecialty) listing after MAG*3.0*202 is installed (e.g., 
+ Genetics, Genetic Counseling, Dermatologic Procedure and Visit, etc.).
+ Specialty/Subspecialty - Genetics 
+ Specialty/Subspecialty - Genetic Counseling
+ Procedure/Event - Dermatologic Procedure
+ Procedure/Event - VISIT
+  
+  
+ Back-Out Plan
+ =============
+  
+ Uninstalling VistA Imaging MAG*3.0*202
+ ======================================
+ NOTE: MAG*3.0*202 only comes with a KIDS update; there is not a Client 
+ APP update.
+ If the KIDS installation fails and it becomes necessary to uninstall 
+ MAG*3.0*202, use the following uninstall instructions. Please follow the 
+ restore procedures to restore the Index Terms files
+  
+ Rolling Back a File Update 
+ ===========================
+ The menu option Image Index Terms Restore [MAG INDEX TERMS RESTORE], can 
+ be used to roll back an update to the files as performed using the above 
+ methods. This may be necessary if you encounter any errors. The menu 
+ option is locked by the security key MAG SYSTEM. 
+ (Select Restore menu option) 
+ Select Image Index Conversion Menu Option: UTIL Conversion Utilities 
+ Select Conversion Utilities Option: IDXR Image Index Terms Restore 
+ Image Index Terms Restore
+ To UnDo the Index Term updates and restore this site's Index Term files 
+ you need
+ the Restore Code that was included in the last INDEX TERMS UPDATE #
+ INSTALLATION message.
+  
+ Enter Restore Code: 5592462726
+ Continue to restore Index Terms? N// YES
+ Done.
+  
+ Change the status of Image Index (Specialty, Procedure) 
+ The menu options Image Index Specialty/Subspecialty Status [MAG INDEX 
+ SPECIALTY/SUBSPECIALTY], and MAG Image Index Procedure/Event Status [MAG 
+ INDEX PROCEDURE/EVENT] are used to inactivate or activate a status. The 
+ menu option is also locked by the security key MAG SYSTEM. 
+ The example displays when using the menu option to inactive one of the 
+ Procedure index. 
+  
+ Select Image Index Conversion Menu Option: UTIL Conversion Utilities 
+ SET File Setup 
+ MAP Mapping File Edit 
+ INDX Image Index Edit 
+ STAT View Conversion Status 
+ IDXU Image Index Terms Update 
+ IDXR Image Index Terms Restore 
+ IDXS Image Index Specialty/Subspecialty Status 
+ IDXP Image Index Procedure/Event Status 
+ Select Conversion Utilities Option: XXXXXX XXXXXXXX
+ Select IMAGE INDEX FOR PROCEDURE/EVENT NAME: XXXXXXX 
+  
+ CHOOSE 1 
+ STATUS: ? 
+ Choose from: 
+ A ACTIVE 
+ I INACTIVE 
+ STATUS: I INACTIVE 
+ Select IMAGE INDEX FOR PROCEDURE/EVENT NAME:
+ Go to the MAG SYS MENU: Imaging System Manager Menu?IX Image Index 
+ Conversion Menu...?UTIL Conversion Utilities...?IDXR  Image Index Terms 
+ Restore.
+  The menu choices will be displayed as shown below.
+ MAG SYS MENU   Imaging System Manager Menu
+  
+   HL7  Imaging HL7 Messaging Maintenance ...
+   IX   Image Index Conversion Menu ...
+   LS   Edit Network Location STATUS
+   TR   Telereader Menu ...
+      Ad hoc Enterprise Site Report
+      Configure AE Security Matrix Settings
+      Delete Image Group
+      . . .        
+      Importer Menu ...
+      Track Offline Jukebox Images
+ Next, select the Imaging System Manager Menu Option: IX Image Index 
+ Conversion Menu.(shown above) and then select the Image Index Conversion 
+ Menu Option: UTIL Conversion Utilities... (shown below).
+ GEN  Generate Image Indices
+ EXP  Export Image Index Data
+ RPT  Print Image Index Report
+ COMM  Commit Image Indices
+ UTIL  Conversion Utilities ...
+ VAL  Image Index Validate Menu ...
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]** ; Mar 19, 2002;Build 12
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine      Checksum      Checksum      Patch List
+              Before        After
+ MAGIP202     NA           30858854        **202**
+ Routine MAGIP202 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 13;Feb 9, 2018
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP202
+    Before:       n/a   After:  B4237315  **196**
+ 
+Routine list of preceding patches: 196
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 27, 2017
+Completed By:                               Date Completed: JUN 28, 2018
+Released By :                               Date Released : JUN 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

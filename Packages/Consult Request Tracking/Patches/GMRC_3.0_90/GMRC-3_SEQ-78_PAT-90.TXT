@@ -1,0 +1,232 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 08/10/17 at 13:39
+=============================================================================
+Run Date: AUG 18, 2017                     Designation: GMRC*3*90
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #78                      Status: Released
+                  Compliance Date: SEP 18, 2017
+=============================================================================
+
+Associated patches: (v)GMRC*3*73   <<= must be installed BEFORE `GMRC*3*90'
+                    (v)GMRC*3*75   <<= must be installed BEFORE `GMRC*3*90'
+                    (v)GMRC*3*86   <<= must be installed BEFORE `GMRC*3*90'
+
+Subject: CALL TO HMP API TO SYNC CONSULT COMMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ GMRC*3.0*90 is a defect remediation release that adds a call to a Health 
+ Management Platform (HMP) API to initiate an unsolicited sync action to
+ send a comment as it is added to the consult.
+  
+ During site testing, a display issue was discovered in the eHMP UI. If a
+ patient with a large number of notes was initially selected, some of that
+ verbiage was incorrectly placed in the Consults details view window under
+ "Activities". This is not a VistA defect caused by GMRC*3.0*90 as data is
+ retrieved correctly.   The display issue in the eHMP UI has been resolved
+ and verified through the eHMP defect process as DE7925.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ N/A
+   
+ Forms Associated:
+ -----------------
+ N/A
+   
+ Mail Groups Associated:
+ -----------------------
+ N/A
+   
+ Options Associated:
+ -------------------
+ N/A
+   
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ Defect Number      Routine         Description
+ -------------      -------         -----------
+ DE6745             GMRCGUIB        Documents: "Added Comment"
+                                    Activity created within CPRS
+                                    missing within eHMP Consult
+                                    detail view
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Indianapolis, IL
+ Loma Linda, CA
+ San Diego, CA
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users. This patch should take less than 5
+ minutes to install.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System [XPD MAIN]
+     menu, select the Installation [XPD INSTALLATION MENU] menu.  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL enter the patch # (GMRC*3.0*90)
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        This option will allow you to view all changes that will be made
+        when this patch is installed.  It compares all components of this
+        patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+        This option will allow you to ensure the integrity of the routines
+        that are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter GMRC*3.0*90.
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+  
+ Sample Installation
+ -------------------
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    GMRC*3.0*90    7/11/17@11:39:33
+      => Modifications to send comments to eHMP  ;Created on Jul 10,
+ 2017@13:09
+  
+ This Distribution was loaded on Jul 11, 2017@11:39:33 with header of 
+    Modifications to send comments to eHMP  ;Created on Jul 10, 
+ 2017@13:09:49
+    It consisted of the following Install(s):
+     GMRC*3.0*90
+ Checking Install for Package GMRC*3.0*90
+  
+ Install Questions for GMRC*3.0*90
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+  Install Started for GMRC*3.0*90 : 
+                Jul 11, 2017@11:42:25
+  
+ Build Distribution Date: Jul 10, 2017
+  
+  Installing Routines:
+                Jul 11, 2017@11:42:25
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  GMRC*3.0*90 Installed. 
+                Jul 11, 2017@11:42:26
+  
+ Install Completed
+  
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision 
+ to back-out or rollback software will be a joint decision between 
+ development team, VA site/region personnel and other appropriate VA 
+ personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded 
+ with the "Xtract PackMan" function at the Message Action prompt. The 
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the 
+ backed up routines onto the VistA System. 
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the GMRC Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ GMRC*3.0*90 patch have been rolled back the first two lines of the 
+ routines will no longer contain the designation of patch 90 in the patch 
+ list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCGUIB
+    Before: B52185635   After: B53899117  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46,75,86,90**
+ 
+Routine list of preceding patches: 86
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 04, 2017
+Completed By:                               Date Completed: AUG 18, 2017
+Released By :                               Date Released : AUG 18, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

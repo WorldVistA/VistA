@@ -1,0 +1,84 @@
+
+=============================================================================
+Run Date: JUN 13, 2018                     Designation: HDS*1*19
+Package : HDS - HEALTH DATA REPOSITORY        Priority: Mandatory
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: JUL 14, 2018
+=============================================================================
+
+
+Subject: Subject:  HDR 3.21, Build 21.0 Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ HDR Release 3.21, Build 21.0 includes the following enhancements and
+ defect fixes:
+  
+ * Home Telehealth (HTH) client 
+   - Updates to National Distribution Survey Read reports
+   - Updates to Patient Satisfaction Survey Read reports
+   - Removal of VR-12 and Patient Satisfaction v1.0 Survey Writes
+   - Update Survey transformation for correct Survey types and versions
+   - Update Survey Message Transmission for unique control identifiers
+   - Update Survey Transmission for unique survey submission per patient
+   - Update Survey Message Transformation for active vendor validation
+   - Update Survey Transformation for Facility Identifier validation
+  
+ * VAMC Call Center Modernization (VCCM) client
+   - Support Additional Signers for TIU documents
+  
+ * Defect Fixes
+   - 701719 - HTH Vitals Acknowledgments sent from Socket Adapter to HTH
+     are sent with incorrect Sending Facility MSH 4
+   - 701724 - HTH Census Acknowledgments sent from Socket Adapter to HTH
+     are sent with incorrect Sending Facility MSH 4
+   - 701725 - HTH Survey Acknowledgments sent from Socket Adapter to HTH
+     are sent with incorrect Sending Facility MSH 4
+   - 706484 - Client Defect:  HTH Vitals Retry mechanism is not working
+     correctly
+   - 707213 - FHIR read - Appointments are not being logged in the 
+     CDS_AUDIT_LOG3 file HTH Census Acknowledgments sent from Socket 
+     Adapter to HTH are sent with incorrect Sending Facility MSH 4
+   - 708243 - Defect: Response to the vendor incorrect when survey type
+     and version are mismatched
+   - 715393 - SQA defect - getting unknown entity error for valid PS 2.0
+     and empty CDS response/no errors for invalid PS 2.0/PS.1.0/ADL
+   - 716560 - SQA defect - HTH survey writes: getting empty response and
+     no errors for VR-12 or Patient Satisfaction 1.0
+   - 724600 - HTH survey writes: getting incorrect errors for unknown
+     Patient Satisfaction Survey Type and Version
+   - 735784 - Production issue where appointments are returning but 
+     there are empty elements - Multi DFN issue
+   
+ The HTH client supports the Veterans in their homes with biometric 
+ monitoring and measurement technologies to help maintain their 
+ independent living capability, reduce hospital admissions, and improve
+ health outcomes and writes results to the HDR database.
+  
+ The VCCM client reads VistA and DoD data via HDR services. HDR supports
+ the VCCM client by providing access to multiple VCCM-desired domains via
+ HDR services to their user interface. 
+  
+ The deployment date for HDR 3.21 Build 21.0 Release is scheduled June 12, 
+ 2018 by the AITC.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 21, 2018
+Completed By:                               Date Completed: JUN 12, 2018
+Released By :                               Date Released : JUN 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

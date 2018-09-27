@@ -1,0 +1,157 @@
+
+=============================================================================
+Run Date: JUL 06, 2018                     Designation: GMRC*3*100
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #86                      Status: Released
+                  Compliance Date: AUG 06, 2018
+=============================================================================
+
+
+Subject: CONSULT TOOLBOX INFORMATIONAL PATCH GUI ENHANCEMENTS 
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch explaining changes in Consult Toolbox.
+ NOTE: This patch is loaded on individual PC workstations via SCCM 
+ software update push from local/regional OIT. 
+ There is nothing that local sites can or need to do besides  communicate 
+ Changes to the clinical users. No code changes were made to the Consult 
+ application to accommodate these enhancements. 
+ **************************************************************************
+  
+ This software was created by the Atlanta VA Medical Center in response to 
+ a need to manage the process of consult management. During the life of a 
+ consult, there are prescribed steps of actions to be taken, and there is 
+ a need to be able track these steps at an individual patient level. 
+ Additionally, there is a need to be able to understand the overall status 
+ of consult management at a macro level, and identify specific services 
+ needing attention or resources. Without opening and reading a patient 
+ medical record, it is difficult to identify which patients have had which 
+ scheduling steps completed.
+  
+ This software does several things. First, it makes it very easy for staff 
+ to document actions completed quickly and consistently. Second, it uses 
+ consistent verbiage to document these steps. Third, it eliminates the 
+ need to take a second action or make a separate entry to track scheduling 
+ steps. Fourth, this consistent verbiage allows software analysis of 
+ records without needing to have software changes to VistA or CPRS.
+  
+ A separate process using corporate data warehouse queries and reports 
+ allows creation of views showing such things as patients who have not had 
+ first call, second call, scheduling letter sent or how much time has 
+ passed between these events.
+  
+ Together, these allow tracking and managing consults without the need to 
+ keep a separate list or other workflow to know which consults need 
+ attention.
+  
+ Additional Information:
+ -------------------- 
+ The software installs in the PC at the Windows level, and resides in the 
+ system tray. It watches keyboard and mouse activity, and comes to life 
+ when certain conditions occur.
+  
+ The first is it only activates when the currently active windows title 
+ "Receive Consult", "Add Comment to Consult" or "Discontinue Consult." 
+ Otherwise it does nothing.
+  
+ The second is when the user initiates a trigger event when either of 
+ these windows have the focus, then depending on the open window a menu 
+ appears for the user to select the appropriate action, then the software 
+ inserts the appropriate text into the comment box.
+  
+ The defined trigger is a right mouse click in the supported CPRS consult 
+ actions.
+  
+ **************************************************************************
+ Version 1.8.01 adds the following features:
+ - Add New control to the Receive Consult Panel "If no appt. slot is  
+   available within 30 days: Forward to Community Care Office"
+ - Add ability to select Category of Care from a drop-down on Community 
+   Care Panel, Tab 3
+ - Add ability to filter SEOCs based on Category of Care drop-down on 
+   Community Care Panel, Tab 3
+ - Add ability to view and select "Scheduled using traditional Non-VA Care"
+   on Community Care Comments panel, Tab 5
+ - Rename the EWL-VCL-Choice tab to Community Care Eligibility
+ - Change "Opt-in/Opt-out for Choice" to "Opt-in/Opt-out for Community 
+   Care" on the Community Care Eligibility tab
+ - Change Opt-in control selections and as requested
+ - Move "Veteran declined/refused" options from Scheduler Options tab 2 to
+   tab 1
+ - Add "Provider was contacted for Alternate Plan of Care" check box to 
+   Community Care Comments panel, Tab 2
+ - Remove the phrase "(Veteran present VC Viewer)" from the CC MSA Elig. 
+   Verification tab
+ - Add the ability to track and document a provider's preference on how 
+   they would like to receive their referral package
+ - Add the ability to automatically populate the Veteran's contact time of 
+   day preference when it has been previously indicated
+ - Add the ability to minimze the Consult Toolbox window
+ - Add the ability to distinguish entries between in-house & Local Office
+   of Community Care usage on tab 1 of the Scheduler panel
+  
+ **************************************************************************
+  
+ INSTALLATION INSTRUCTIONS:
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview::
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ Anchorage, Alaska
+ Salisbury, North Carolina
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is being released via SCCM package to ESE.  User Guide will be 
+ placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.pdf    Binary
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.docx   Binary 
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide   consult_toolbox_1_0_p100_ig.pdf    Binary
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide   consult_toolbox_1_0_p100_ig.docx   Binary
+  
+ Patch Installation
+ --------------------
+ Installation of this Windows feature update via a SCCM software push to 
+ PCs via a Local/ Regional process. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2018
+Completed By:                               Date Completed: JUL 05, 2018
+Released By :                               Date Released : JUL 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

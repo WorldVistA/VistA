@@ -1,0 +1,494 @@
+
+=============================================================================
+Run Date: JUN 15, 2018                     Designation: TBI*2*19
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #18                      Status: Released
+                  Compliance Date: JUL 16, 2018
+=============================================================================
+
+
+Subject: HRE TBI DME BUILD 3
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+ The updates from this patch were applied to the server on 4/25/18.
+  
+ This is to announce that Traumatic Brain Injury Patch TBI*2.0*19 will be 
+ deployed to the production server for national release on February 6, 
+ 2018 at 9 p.m. Eastern.
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located there 
+ using a pre-approved Request for Change Order and Implementation Plan.
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ TBI Patch 2.0*19 contains code enhancements to the TBI Registry.  These 
+ changes are Work Items that were recorded and tracked in the Registries 
+ Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed during Builds 1, 2 and 3 
+ for the 02/06/2018 production deployment.
+  
+ TBI Patch 2.0*19 includes the TBI Registry Work Items listed below.
+  
+ 1) 571241 TBIe - Develop PROMIS-Physical Function with Mobility Aid 
+           Instrument Form 
+ 2) 571235 TBIe - Develop PROMIS-Pain Interference Short Form 6am 
+           Instrument Form
+ 3) 571239 TBIe - Develop PROMIS -Upper Extremity Short Form 7A 
+ 4) 571242 TBIe - Create New Fields on PGIC Instrument Form 
+ 5) 571245 TBIe - Merge R15 SUS Code with latest HRE TBI code
+ 6) 573206 Create SQL Scripts to add New Questions and Answers to PGIC 
+           Instrument
+ 7) 573208 UI Editing to add the new PGIC Instrument form questions and 
+           answers to the website.
+ 8) 573211 SQL creation for all questions and answers to the DB for the 
+           new Pain Interference Short Form 6a
+ 9) 573214 Web UI creation for all questions and answers for the new Pain 
+           Interference Short Form 6a Instrument
+ 10) 573219 SQL creation to create all form questions and answers for the 
+           new Physical Function w Mobility Aid Instrument
+ 11) 573223 Web UI creation for all questions and answers from for the new 
+           Physical Function w Mobility Aid Instrument
+ 12) 573231 SQL creation to create all form questions and answers for the 
+           new Upper Extremity - Short Form 7a Instrument
+ 13) 573234 Web UI creation for all questions and answers from for the new 
+           Upper Extremity Short Form 7a Instrument
+ 14) 528311 TBI Instruments -COMPREHENSIVE TBI EVALUATION - In the below 
+           screen shot Q4, 13, 14 and 21 has OND repeated twice
+ 15) 528329 TBI Instruments - REHABILITATION AND REINTEGRATION PLAN  - For 
+           question 10 there is an option OEF/OIF case manager; here it
+           should be changed to "OEF/OIF/OND"
+ 16) 528321 TBI Instruments - Optimal 1.1 Follow-up - "Not Applicable" 
+            selections are not saved as part of the survey. Immediately
+            after saving a survey with "Not Applicable", you can see those
+            values are unchecked 17) 567555 TBIe - M2PI and CTBIE Form Load
+            and Save Index was outside the bounds of the array error
+ 18) 582550 Defect: Instrument Form 6A Save and Prepare Note
+ 19) 582544 Defect: Instrument Form 6A Draft not Saving
+ 20) 582635 Defect: Instrument Form 7A Numbered Choices Not Centered
+ 21) 582646 Defect: Instrument Form 7A Answers on Instrument Form Being 
+            Reverted To A Different Choice
+ 22) 582643 Defect: Instrument Form 7A TBI Survey Summary Page Not 
+            Displaying Results
+ 23) 582639 Defect: Instrument Form 7a Save Draft Values Not Saving
+ 24) 582692 Defect: Instrument Form Mobility Aid Raw Score Not Being 
+            Calculated
+ 25) 582687 Defect: Instrument Form Mobility Aid Numbered Choices Off 
+            Centered
+ 26) 582698 Defect: Instrument Form Mobility Aid Clicking Cancel After 
+            Saving and Preparing Note Reverts Choices 
+ 27) 582700 Defect: Instrument Form Mobility Aid Note Type Greyed Out
+ 28) 500562 TBIe - 508 compliance
+ 29) 636950 508 Defect: Tab Order Not Focused on LCI-5 Instrument Form
+ 30) 636901 508 Defect: No Skip Navigation Link on Comprehensive TBI 
+            Evaluation Instrument Form
+ 31) 636903 508 Defect: No Skip Navigation Link on LCI-5 Instrument Form
+ 32) 636905 508 Defect: No Skip Navigation Link on M2PI Instrument Form
+ 33) 636908 508 Defect: No Skip Navigation Link on Optimal 1.1 Instrument 
+            Form
+ 34) 636912 508 Defect: No Skip Navigation Link on Optimal 1.1 Follow Up 
+            Instrument Form
+ 35) 636920 508 Defect: No Skip Navigation Link on Rehabilitation Follow 
+            Up Instrument Form
+ 36) 636921 508 Defect: No Skip Navigation Link on PGIC Instrument Form
+ 37) 636926 508 Defect: No Skip Navigation Link on Short Form 6a 
+            Instrument Form
+ 38) 636930 508 Defect: No Skip Navigation Link on Physical Function With 
+            Mobility Aid Instrument Form
+ 39) 636935 508 Defect: No Skip Navigation Link on Short Form 7a 
+            Instrument Form
+ 40) 636938 508 Defect: No Skip Navigation Link on 
+            PatientInstrumentsMain.aspx
+ 41) 636939 508 Defect: No Skip Navigation Link on Instruments.aspx
+ 42) 636944 508 Defect: No Skip Navigation Link on 
+            InstrumentSummaryNote.aspx
+ 43) 636958 508 Defect: Tab Order Not Focused on Physical Function With 
+            Mobility Aid Instrument Form
+ 44) 625120 New:  HRE - Merging Sustainment 15B Code into TBIe source
+ 45) 616450 Phase1 Follow-up: Rehab Follow Up - New Form
+ 46) 616449 Phase1 Follow-up: Optimal - New Form
+ 47) 616447 Phase1 Follow-up: M2PI Instrument Type
+ 48) 616445 Phase1 Follow-up: LCI-5 Revisions
+ 49) 616444 Phase1 Follow-up: CTBIE Revisions
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*19
+  
+ 1) 571241 TBIe
+    Develop PROMIS-Physical Function with Mobility Aid Instrument Form
+    Solution: Creation of the new Instrument named PROMIS - Physical
+              Function with Mobility Aid
+  
+ 2) 571235 TBIe
+    Develop PROMIS-Pain Interference Short Form 6am Instrument Form
+    Solution: Creation of the new Instrument named PROMIS - Pain 
+              Interference Short Form 6a
+  
+ 3) 571239 TBIe- Develop PROMIS-Upper Extremity Short Form 7A 
+    Solution: Creation of the new Instrument named PROMIS-Upper Extremity
+              Short Form 7A
+  
+ 4) 571242 TBIe- Create New Fields on PGIC Instrument Form
+    Solution: Creation of new questions and question answers on the
+              existing PGIC Instrument web form
+  
+ 5) 571245 TBIe- Merge R15 SUS Code with latest HRE TBI code
+    Solution: The merging of the release 15 sustainment code into the new
+              HRE code base
+  
+ 6) 573206 Create SQL Scripts to add New Questions and Answers to PGIC
+           Instrument
+    Solution: Creation of SQL scripts to add new questions and question 
+              choices to the database.
+  
+ 7) 573208 UI Editing to add the new PGIC Instrument form questions and 
+           answers to the website.
+    Solution: Editing existing question choices on the web form.
+  
+ 8) 573211 SQL creation for all questions and answers to the DB for the 
+           new Pain Interference Short Form 6a
+    Solution: Creation of SQL scripts to add the new questions, and 
+              question answers for the new PROMIS-Pain Interference Short
+              Form 6a 
+  
+ 9) 573214 Web UI creation for all questions and
+           answers for the new Pain Interference Short Form 6a Instrument
+    Solution: Creation of web page for the new PROMIS-Pain Interference
+              Short Form 6a
+  
+ 10) 573219 SQL creation to create all form questions and answers for the 
+            new Physical Function w Mobility Aid Instrument
+     Solution: Creation of SQL scripts to add the new questions, and 
+               question answers for the new PROMIS- Physical Function w
+               Mobility Aid Instrument
+  
+ 11) 573223 Web UI creation for all questions and answers from for the new 
+            Physical Function w Mobility Aid Instrument Solution: Creation
+            of web page for the new PROMIS Physical Function w Mobility Aid
+            Instrument
+  
+ 12) 573231 SQL creation to create all form questions and answers for the 
+            new Upper Extremity - Short Form 7a Instrument
+     Solution: Creation of SQL scripts to add the new questions, and 
+               question answers for the new PROMIS- Upper Extremity - Short
+               Form 7a Instrument
+  
+ 13) 573234 Web UI creation for all questions and answers from for the new 
+            Upper Extremity Short Form 7a Instrument
+     Solution: Creation of web page for the new PROMIS- Upper Extremity 
+               Short Form 7a Instrument
+  
+ 14) 528311 TBI Instruments -COMPREHENSIVE TBI EVALUATION - In the below 
+            screen shot Q4, 13, 14 and 21 has OND repeated twice
+     Solution: Removed the replication of OND for questions 4, 13, 14 and 
+               21 on the CTBIE Instrument form
+  
+ 15) 528329 TBI Instruments - REHABILITATION AND REINTEGRATION PLAN  - For 
+            question 10 there is an option OEF/OIF case manager; here it
+            should be changed to "OEF/OIF/OND"
+     Solution: Changed the R&R Instrument forms' question 10 text to 
+               include '/OND'
+  
+ 16) 528321 TBI Instruments - Optimal 1.1 Follow-up - "Not Applicable" 
+            selections are not saved as part of the survey. Immediately
+            after saving a survey with "Not Applicable", you can see those
+            values are unchecked 
+     Solution: With SQL scripting, created a script to add another
+               question answer for the questions that contain Not
+               Applicable and assign a value to this choice for
+               calculations.
+  
+ 17) 567555 TBIe - M2PI and CTBIE Form Load and Save Index was outside the
+            bounds of the array error
+     Solution: Altered the save function to save when particular questions 
+               are not needed to be answered by the user.
+  
+ 18) 582550 Defect: Instrument Form 6A Save and Prepare Note
+     Solution: Fixed the save draft to work like the save survey but not 
+               leave the page or error
+  
+ 19) 582544 Defect: Instrument Form 6A Draft not Saving
+     Solution: Fixed the save draft to work like the save survey but not 
+               leave the page or error
+  
+ 20) 582635 Defect: Instrument Form 7A Numbered Choices Not Centered
+     Solution: Via the web source, re-aligned and centered the 7A Question 
+               Number choices
+  
+ 21) 582646 Defect: Instrument Form 7A Answers on Instrument Form Being 
+            Reverted To A Different Choice
+     Solution: Fixed the web logic for the PROMIS 7A form question choices 
+               to not revert to a different question choice on err.
+  
+ 22) 582643 Defect: Instrument Form 7A TBI Survey Summary Page Not 
+            Displaying Results
+     Solution: Corrected web source to display the correct 7A question 
+               choices chosen by the user.
+  
+ 23) 582639 Defect: Instrument Form 7a Save Draft Values Not Saving
+     Solution: Corrected web source to save options selected by the user 
+               on PROMIS 7A Instrument form.
+  
+ 24) 582692 Defect: Instrument Form Mobility Aid Raw Score Not Being 
+            Calculated
+     Solution: Corrected web source to correctly calculate the raw score 
+               for the Instrument Form Mobility Aid Raw Score 
+  
+ 25) 582687 Defect: Instrument Form Mobility Aid Numbered Choices Off 
+            Centered
+     Solution: Via the web source, re-aligned and centered the Instrument 
+               Form Mobility Aid Question Number choices
+  
+ 26) 582698 Defect: Instrument Form Mobility Aid Clicking Cancel After 
+            Saving and Preparing Note Reverts Choices 
+     Solution: The web source was altered to not revert answer choices when
+               the user clicks cancel on the note summary page.
+  
+ 27) 582700 Defect: Instrument Form Mobility Aid Note Type Greyed Out
+     Solution: Fixed the note type logic per the web logic for the PROMIS
+               Mobility form
+  
+ 28) 500562 TBIe - 508 compliance
+     Solution: Testing and fixes internal 508 defects found in internal
+               testing
+  
+ 29) 636950 508 Defect: Tab Order Not Focused on LCI-5 Instrument Form
+     Solution: On the LCI-5 Instrument form focus was added to the tab
+               order on form load.
+  
+ 30) 636901 508 Defect: No Skip Navigation Link on Comprehensive TBI 
+            Evaluation Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               CTBIE 
+  
+ 31) 636903 508 Defect: No Skip Navigation Link on LCI-5 Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               LCI-5 Instrument
+  
+ 32) 636905 508 Defect: No Skip Navigation Link on M2PI Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               M2PI Instrument
+  
+ 33) 636908 508 Defect: No Skip Navigation Link on Optimal 1.1 Instrument 
+            Form
+     Solution: In the web source, added the skip navigation link to the
+               Optimal 1.1 Instrument Form
+  
+ 34) 636912 508 Defect: 
+     No Skip Navigation Link on Optimal 1.1 Follow Up Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               Optimal 1.1 Follow up Instrument Form
+  
+ 35) 636920 508 Defect: 
+     No Skip Navigation Link on Rehabilitation Follow Up Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               Rehabilitation Follow up Instrument Form
+  
+ 36) 636921 508 Defect: 
+     No Skip Navigation Link on PGIC Instrument Form 
+     Solution: In the web source, added the skip navigation link to the
+               PGIC Instrument Form
+  
+ 37) 636926 508 Defect:
+     No Skip Navigation Link on Short Form 6a Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               PROMIS Short Form 6A Instrument Form
+  
+ 38) 636930 508 Defect: 
+     No Skip Navigation Link on Physical Function With Mobility Aid
+     Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               PROMIS Physical Function With Mobility Aid Instrument Form
+  
+ 39) 636935 508 Defect: 
+     No Skip Navigation Link on Short Form 7a Instrument Form
+     Solution: In the web source, added the skip navigation link to the
+               PROMIS Short Form 7a Instrument Form
+  
+ 40) 636938 508 Defect: 
+     No Skip Navigation Link on PatientInstrumentsMain.aspx
+     Solution: In the web source, added the skip navigation link to the
+               Patient Instruments Main Form
+  
+ 41) 636939 508 Defect: 
+     No Skip Navigation Link on Instruments.aspx
+     Solution: In the web source, added the skip navigation link to the
+               Instruments Form
+  
+ 42) 636944 508 Defect: 
+     No Skip Navigation Link on InstrumentSummaryNote.aspx
+     Solution: In the web source, added the skip navigation link to the
+               Instrument Summary Note Web Page
+  
+ 43) 636958 508 Defect: 
+     Tab Order Not Focused on Physical Function With Mobility Aid
+     Instrument Form
+     Solution: In the web source, added the skip navigation link Physical
+               Function with Mobility Aid Instrument Form
+  
+ 44) 625120 New:  HRE - Merging Sustainment 15B Code into TBIe source
+     Solution: Merging the Sustainment Performance Fixes into the HRE TBIe
+               source code
+  
+ 45) 616450 Phase1 Follow-up:
+     Rehab Follow Up - New Form 
+     Solution: Corrected the Save functions, and note summary display for
+               the Rehabilitation Follow up Instrument form
+  
+ 46) 616449 Phase1 Follow-up: Optimal - New Form
+     Solution: In the web source, added the Copyright notation to the form,
+               note summary, and CPRS note and also altered the web source
+               to correct the difficulty question choices.
+  
+ 47) 616447 Phase1 Follow-up: M2PI Instrument Type
+     Solution: Added the ability for Instance of Care logic for note types
+               on the M2PI Instrument form
+  
+ 48) 616445 Phase1 Follow-up: LCI-5 Revisions
+     Solution: In the web source, corrected the basic, advanced, and total
+               scoring to the 'highest' total value that the questions add
+               up to upon selecting the question choices.
+  
+ 49) 616444 Phase1 Follow-up: CTBIE Revisions
+     Solution: Corrected the following question choices, and saving of said
+               choices.
+  
+     a) Corrected that the following Question #'s "I", 4, 13, 14, 21 and 22
+        now display 'OEF/OIF/OND' instead of displaying 'OEF/OIF'
+     b) Corrected the Question #6A has correct spelling in responses.
+     c) Corrected the Response '1.' - 'less then 5 minutes' now displays
+        'less than 5 minutes'.
+     d) Corrected the Response '2.' displays 'less than 30 minutes'.
+     e) Corrected the Response '3.' displays 'less than 6 hours'.
+     f) Corrected the Response '6.' displays 'More than one week'.
+     g) Corrected the following questions to be removed from the
+        instrument:
+        #12A, #13, #17, #17A, #18B, #18C, #23, #24, #25, #26, #29A, #29B,
+        #29B1, #29C, #29D, #29D1,  #29E, #29F, #29G, #29H, #29I, #29I1.
+     h) Corrected the spelling on word 'Irritability' on question #15U.
+     i) Corrected the verbiage 'IV. Conclusion' does not display between 
+        panels for Question #19 and Question #20.
+     j) Corrected the there is a multiline textbox for Question 20.
+     k) Corrected the Question #22A displays 'List additional Diagnosis'.
+     l) Corrected the question #23A1 displays a label of 'Treatment'.
+     m) Corrected the questions to #23A1 displayed properly based on the 
+        attachment
+     n) Corrected the Response has a mandatory Yes/No radio button group
+        with the exception of 'h' which only has a textbox. Response 'e'
+        will contain a textbox as well as the yes/no radio button group.
+     o) Corrected the that there is a question 'Education' Radio button
+        Yes/No
+     p) Corrected the Consult Checkbox displays properly using the Table 5 
+        attachment
+     q) Corrected the Question #23A1f "Was a Medication Reconciliation 
+        Performed?" displayed
+     r) Corrected the Yes Button displayed for Reconciliation
+     s) Corrected that there is "Was a printed medication list given to the
+        patient? Yes/No" displaying on the page
+     t) Corrected that No Displayed for the Printed Medication List
+     u) Corrected the text box labeled "Please explain in free text box
+        below:"
+     v) Corrected the question #23A2 "Veteran diagnosed with TBI. An 
+        Individualized Rehabilitation and Community Reintegration Plan of
+        Care is:"
+     w) Corrected that the application displays "Required and the 
+        TBI/PolyTrauma Case Manager has been notified Yes/No."
+     x) Corrected Question #21 and #23A1g to have a YES response and any 
+        "Consult" question in 23A1j1 "consult requested with" a thru f
+        have a YES response then default 23A2 to yes.
+     y) Corrected the following display: YES- "Required and the TBI/(No 
+        Suggestions) Case Manager has been notified".
+     z) Corrected the NO- "Not required" - display radio buttons for the 
+        following in the next 2 steps:
+        "There are no skilled therapy needs related to TBI".
+        "There is no need for case management".
+    aa) Corrected the Question #24 'Details of Plan' to a Multi-line
+        textbox.
+  
+ Additional Information:
+ ---------------------------
+   
+ **********************************************************************
+ ***NOTE: The TBI Polytrauma and Instrument User Guides were updated to 
+ include the new instruments and new instrument questions and question 
+ choices***
+  
+ **********************************************************************
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines         : domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                    File Name               FTP Mode 
+ -------------------------------------------------------------------------
+ Deployment, Installation, Back-Out,      TBIIG.3.3.16.PDF        Binary
+ and Rollback Guide
+     
+ Traumatic Brain Injury (TBI)Instruments  TBIINSUM.PDF            Binary
+ User Manual 
+  
+ Traumatic Brain Injury (TBI)Polytrauma   TBIPTUM.PDF             Binary
+ Edition User Manual
+           
+  
+  
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+  
+  
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ There are no Remedy Tickets associated with this patch.
+   
+ Test Sites:
+ ----------
+ San Antonio, TX
+ Lebanon, PA
+ Tampa, FL
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 25, 2018
+Completed By:                               Date Completed: JUN 15, 2018
+Released By :                               Date Released : JUN 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

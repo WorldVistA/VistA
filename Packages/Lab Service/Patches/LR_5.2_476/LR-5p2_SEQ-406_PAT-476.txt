@@ -1,0 +1,523 @@
+$TXT Created by                    VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 11/29/17 at 15:57
+=============================================================================
+Run Date: MAY 11, 2018                     Designation: LR*5.2*476
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #406                    Status: Released
+                  Compliance Date: JUN 11, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*153  <<= must be installed BEFORE `LR*5.2*476'
+
+Subject: EPIP LR REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+       IMPORTANT INFORMATION - PLEASE READ
+  
+  
+ This patch adds the following execute codes in the EXECUTE CODE file 
+ (#62.07):
+  
+ PRELIMINARY BACT COMMENT (#1) sub-field for Bacteriology accessions
+ PRELIMINARY MYCOLOGY COMMENT (#20.5) sub-field for Mycology accessions
+ PRELIMINARY TB COMMENT (#26.5) sub-field for Mycobacteriology accessions
+  
+  
+ The EXECUTE codes to be modified by this patch are: 
+ - BACTERIOLOGY, 
+ - MYCOLOGY, 
+ - TB BACTERIOLOGY
+  
+ Data in these entries will be saved in the Install File Print log in case
+ local modifications were made.
+  
+ Below is a sample of the Install File Print log for the EXECUTE CODE
+ field before and after the patch installation (codes may differ by site).
+ The patch will capture any local changes it finds in the field, but it
+ will not reinstall them. Notice that the patch is exporting the original
+ national Execute Codes. 
+  
+  
+ Installing FUNCTION
+                Nov 28, 2017@15:05:15
+  
+  Running Post-Install Routine: POST^LR52P476
+  
+ Starting Post-Initialization for LR*5.2*476 ...
+  
+ Execute Code for Bacteriology before changes:
+  
+ S DR="11.55////"_DUZ_";.055;.05;.99;11.6;11.5;S 
+ LRSPEC=$P(LRBG0,U,5),Y=$S(LRSPEC=71:11.57,LRSPEC=68:11.58,1:0);11.57;S 
+ Y=0;11.58",LREND=0 D ^DIE S:$D(Y) LREND=1 Q:$D(Y)  D ^LRMIBUG Q:LREND  S
+ DR="13;11" D ^DIE Q
+  
+ Execute Code for Bacteriology after changes:
+  
+ S DR="11.55////"_DUZ_";.055;.05;.99;11.6;11.5;1;S 
+ LRSPEC=$P(LRBG0,U,5),Y=$S(LRSPEC=71:11.57,LRSPEC=68:11.58,1:0);11.57;S 
+ Y=0;11.58",LREND=0 D ^DIE S:$D(Y) LREND=1 Q:$D(Y)  D ^LRMIBUG Q:LREND  S
+ DR="13;11" D ^DIE Q
+  
+ ============================================================
+  
+ Execute Code for TB Bacteriology before changes:
+  
+ S DR="25.5////"_DUZ_";.05;.99;23;24;25;26;27;22",DR(2,63.39)=".01;1:99" D 
+ ^DIE Q
+  
+ Execute Code for TB Bacteriology after changes:
+  
+ S 
+ DR="25.5////"_DUZ_";.05;.99;23;24;25;26;26.5;27;22",DR(2,63.39)=".01;1:99"
+ D ^DIE Q
+  
+ ============================================================
+  
+ Execute Code for Mycology before changes:
+  
+ S DR="19.5////"_DUZ_";.05;.99;19;19.2;20;21;18",DR(2,63.37)=".01:99" D 
+ ^DIE Q
+  
+ Execute Code for Mycology after changes:
+  
+ S DR="19.5////"_DUZ_";.05;.99;19;19.2;20;20.5;21;18",DR(2,63.37)=".01:99" 
+ D ^DIE Q
+  
+ Post-initialization of LR*5.2*476 completed!
+  
+ ==========================================================================
+  
+  
+ LR*5.2*476 provides the following enhancements to VistA:
+  
+ - Adds a new FileMan function, LRRESULT, to the FUNCTION (#.5) file. This
+ function enables reporting on lab results for a specific patient, specimen
+ type, and lab test, looking back over a specified number of days. This
+ enhancement applies only to lab tests with verified results for patients
+ currently admitted.
+  
+ Users must be familiar with FileMan file structure and commands to create 
+ and run a report. The four input parameters required to execute the
+ function must be entered in the following sequence:
+   a) Patient number from the PATIENT (#2) file, entered as NUMBER
+   b) Specimen type internal entry number (IEN) from the TOPOGRAPHY
+      FIELD (#61) file
+   c) IEN of the lab test in the LABORATORY TEST (#60) file
+   d) Look-back number of days
+  
+ The new entry in the FUNCTION file is defined as follows:
+  
+ NAME: LRRESULT
+   MUMPS CODE: S X=$$GETLAB^LRFRSLT(X,X1,X2,X3)
+   NUMBER OF ARGUMENTS: 4
+   EXPLANATION: Lab result retriever -- used with the format of 
+ LRFRSLT(a,b,c,d) where a is referenced as INTERNAL(PATIENT), b is the 
+ specimen file 61 IEN, c is the lab file 60 test IEN, and d is the number
+ of days to search back
+  
+ LRRESULT and the new routine LRFRSLT have been created to support this 
+ enhancement. Following is an abbreviated example of how to run the report 
+ for a verified lab test.
+  
+ Example #1 from the PATIENT file:
+  
+ VISTAS1:VISTA>D P^DI
+  
+ VA FileMan 22.2
+  
+ Select OPTION: PRINT FILE ENTRIES  
+  
+ Output from what File: EXECUTE CODE// 2  PATIENT  (85282 entries)
+ Sort by: NAME// @CURRENT ADMISSION  
+ Start with CURRENT ADMISSION: FIRST// T-2500  (DEC 26, 2010)
+ Go to CURRENT ADMISSION: LAST// T  (OCT 30, 2017)
+   Within CURRENT ADMISSION, Sort by: 
+ First Print FIELD: CURRENT ADMISSION;L20  
+ Then Print FIELD: .01;L20  NAME
+ Then Print FIELD: LRRESULT(NUMBER,70,71,2500);"TEST RESULT"
+ Then Print FIELD: 
+ Heading (S/C): PATIENT List// 
+ STORE PRINT LOGIC IN TEMPLATE: 
+ START at PAGE: 1// 
+ DEVICE: ;80;999  HOME  (CRT)
+ PATIENT List                               OCT 30, 2017@07:48   PAGE 1
+                                             TEST
+ CURRENT ADMISSION     NAME                  RESULT
+ -----------------------------------------------------------------------
+  
+ JAN 13,2011@10:16:57  SQDYSE,HAD AHH        0.0 %;1/6/11@07:00
+ FEB 4,2011@14:05:40   OIDA,KXNI L CU        1.7 %;2/15/11@07:00
+ FEB 11,2011@20:22:57  PXAHB,HIZRYI P        11.1 fL;3/7/11@07:00
+ FEB 15,2011@10:46     HRSZLJEHU,BHUZDS F    12.1 %;2/14/11@07:00
+ FEB 23,2011@10:13:29  PUXL,TLRA G           1.8 %;1/14/11@10:15
+ FEB 23,2011@15:07:16  MLJELDY,FDAKHUSX S    8.9 fL;3/7/11@07:00:01
+ ================================================================== 
+  
+ The function can also be invoked from the PRESCRIPTION file (#52) for a 
+ given drug, as shown below. Note that the patient number is referenced
+ as INTERNAL(PATIENT).
+  
+ Example #2 from the PRESCRIPTION file:
+  
+ Print File Entries
+  
+ Output from what File: PRESCRIPTION//     (10490531 entries)
+ Sort by: RX #// 'ISSUE DATE  
+ Start with ISSUE DATE: FIRST// 4/2/2007  (APR 02, 2007)
+ Go to ISSUE DATE: LAST// 4/2/2007  (APR 02, 2007)
+   Within ISSUE DATE, Sort by: DRUG["IBUPROFEN"
+ First Print FIELD: .01  RX #
+ Then Print FIELD: 1  ISSUE DATE
+ Then Print FIELD: 6  DRUG
+ Then Print FIELD: LRRESULT(INTERNAL(PATIENT),72,1603,720);"Creatinine
+ -720 days"
+ Then Print FIELD: 
+ Heading (S/C): PRESCRIPTION List// 
+ STORE PRINT LOGIC IN TEMPLATE: 
+ START at PAGE: 1// 
+ DEVICE:   HOME (CRT)    Right Margin: 80// 
+ PRESCRIPTION List                      NOV 20, 2017@16:17    PAGE 1
+                                                           Creatinine
+ RX #         ISSUE DATE   DRUG                            -720 days
+ --------------------------------------------------------------------------
+  
+ #######      APR 2,2007   IBUPROFEN 800MG TAB               1.25 
+ mg/dL;4/11/16@09:07:56
+ #######      APR 2,2007   IBUPROFEN 800MG TAB               1.25 
+ mg/dL;4/11/16@09:07:56
+ #######      APR 2,2007   IBUPROFEN 800MG TAB               1.13 
+ mg/dL;3/28/16@12:30
+ #######      APR 2,2007   IBUPROFEN 800MG TAB               NONE FOUND IN 
+ LAST 720DAYS
+ =========================================================================
+  
+ - Modifies data in the EXECUTE CODE (#62.07) file to enable batch entry 
+ of preliminary comments for designated accession numbers. When a 
+ microbiology technologist needs to enter preliminary comments for 
+ accessions with negative cultures in VistA, this enhancement enables the 
+ technologist to enter the same comment for multiple accession numbers. 
+ For example, a site might process hundreds of urine cultures daily. 
+ Currently, the technologist must enter "No growth after 24 hours" as a 
+ preliminary result individually for each applicable accession. With this 
+ modification, technologists can enter the same preliminary result for all 
+ applicable accessions at once, thereby reducing the time and effort 
+ required to make preliminary results available for clinical use.  
+  
+ To accomplish this, the modification adds data to the BACTERIOLOGY, 
+ MYCOLOGY, and TB BACTERIOLOGY records in the EXECUTE CODE file, EXECUTE 
+ CODE (#1) field. The data is taken from sub-fields located in the LAB 
+ DATA (#63) file, MICROBIOLOGY (#63.05) sub-file, MICROBIOLOGY (#5) field. 
+ The sub-fields are:
+  
+ PRELIMINARY BACT COMMENT (#1) sub-field for Bacteriology accessions
+ PRELIMINARY MYCOLOGY COMMENT (#20.5) sub-field for Mycology accessions
+ PRELIMINARY TB COMMENT (#26.5) sub-field for Mycobacteriology accessions
+  
+ Using the Results Entry (Batch) [LRMISTUF] option, the technologist can
+ select a sub-field and enter a preliminary comment for multiple accession 
+ numbers. Once the comment is entered, routine LRMISTF updates the 
+ corresponding BACTERIOLOGY, MYCOLOGY, or TB BACTERIOLOGY data record in 
+ the EXECUTE CODE file. 
+  
+ The existing BACTERIOLOGY, MYCOLOGY, and TB BACTERIOLOGY data records in 
+ the EXECUTE CODE file must be modified to accept new preliminary comment 
+ entries. This modification is performed at the end of patch installation 
+ by the post-installation routine LR52P476. The installation history for 
+ the patch will capture the before and after data for the EXECUTE CODE 
+ field so that it can be referenced for comparison if needed. The history 
+ of the patch installation can be reviewed with the Install File Print 
+ [XPD PRINT INSTALL FILE] option under the KIDS UTILITIES submenu. Routine 
+ LR52P476 is deleted automatically at the end of the patch installation.
+  
+  
+ Blood Bank Clearance:
+ =====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*476 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*476 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*476 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Patch Components: 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)  New/Modified/Deleted 
+ -------------       ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ Function Name              File Name (Number)   New/Modified/Deleted
+ -------------              ------------------   --------------------
+ LRRESULT                   FUNCTION (.5)        New
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20090305 LAB RESULT REPORT FUNCTION Fileman
+ NSR20161009 Batch Entry of Microbiology Preliminary Comments
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Hunter Holmes McGuire VA Medical Center, Richmond, VA
+ VA San Diego Healthcare System, San Diego, CA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a KIDS build and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following Field Offices:
+  
+ Hines:             domain.ext  
+ Salt Lake City:    domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ (VDL) at: https://www.domain.ext/vdl/.
+  
+  
+ Title                                    File Name            FTP Mode
+ -----------------------------------------------------------------------
+ Laboratory User Manual Version 5.2       lab5_2um.pdf         Binary
+ Laboratory User Manual Version 5.2       lab5_2um.doc         Binary
+ Laboratory Technical Manual Version 5.2  lab5_2tm.pdf         Binary
+ Laboratory Technical Manual Version 5.2  lab5_2tm.doc         Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number LR*5.2*476.
+  
+ a. Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b. Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c. Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d. Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', enter 'YES' and press <Enter>.
+  
+    a) When prompted 'Enter options you wish to mark as "Out of Order":', 
+       enter the following:
+  
+       Results entry (batch)             [LRMISTUF]
+  
+    b) When prompted 'Enter protocols you wish to mark as "Out of
+       Order":', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Invoke 'INQUIRE TO FILE ENTRIES' in FileMan to display the EXECUTE 
+ CODE (#1) field in the EXECUTE CODE (#62.07) file for the names
+ BACTERIOLOGY, MYCOLOGY, and TB BACTERIOLOGY. Verify that the new codes 
+ #1, #20.5, and #26.5 are assigned to the corresponding names:
+  
+ D P^DI
+  
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: INQUIRY TO FILE ENTRIES  
+  
+ NAME: BACTERIOLOGY                      TYPE: EDIT
+   EXECUTE CODE: S DR="11.55////"_DUZ_";.055;.05;.99;11.6;11.5;1;S 
+ LRSPEC=$P(
+ LRBG0,U,5),Y=$S(LRSPEC=71:11.57,LRSPEC=68:11.58,1:0);11.57;S 
+ Y=0;11.58",LREND=0 D ^DIE S:$D(Y) LREND=1 Q:$D(Y)  D ^LRMIBUG Q:LREND  S
+ DR="13;11" D ^DIE Q
+  
+ NAME: MYCOLOGY                          TYPE: EDIT
+   EXECUTE CODE: S 
+ DR="19.5////"_DUZ_";.05;.99;19;19.2;20;20.5;21;18",DR(2,63
+ .37)=".01:99" D ^DIE Q
+  
+ NAME: TB BACTERIOLOGY                   TYPE: EDIT
+   EXECUTE CODE: S 
+ DR="25.5////"_DUZ_";.05;.99;23;24;25;26;26.5;27;22",DR(2,6
+ 3.39)=".01;1:99" D ^DIE Q
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a CA Technologies Service Desk Manager (CA SDM) ticket. The development 
+ team will then assist with the backout process.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the LR routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the LR routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch LR*5.2*476 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR52P476
+    Before:       n/a   After: B16441615  **476**
+Routine Name: LRFRSLT
+    Before:       n/a   After:  B1675070  **476**
+Routine Name: LRMISTF
+    Before: B13980655   After: B14531968  **153,476**
+ 
+Routine list of preceding patches: 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: MAY 08, 2018
+Released By :                               Date Released : MAY 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

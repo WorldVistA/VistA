@@ -1,0 +1,230 @@
+$TXT Created by                  CPRS31A.DOMAIN.EXT  (KIDS) on Thursday, 10/12/17 at 11:24
+=============================================================================
+Run Date: MAY 15, 2018                     Designation: OR*3*452
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #401                      Status: Released
+                  Compliance Date: JUN 15, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*329    <<= must be installed BEFORE `OR*3*452'
+                    (v)OR*3*424    <<= must be installed BEFORE `OR*3*452'
+                    (v)OR*3*454    <<= must be installed BEFORE `OR*3*452'
+
+Subject: TIERED CO-PAY DISPLAY AND CONSULT ALERT RECIPIENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ 1. This patch introduces the display of the drug cost tier co-pay on the 
+ dosage selection screen for Outpatient medications in the Computerized 
+ Patient Record System.
+  
+ 2. This patch adds a $ symbol in front of the cost values for the 
+ different dispense drugs when ordering a medication in CPRS.
+  
+ 3. This patch along with patch GMRC*3.0*91 introduces changes so that 
+ users who are specifically identified to receive an alert by the person 
+ making a comment on a consult will receive the alert regardless of 
+ whether the alert is enabled or disabled for them.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20150208 Tiered Medication Copayment Structure
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee MC
+ Portland HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                   FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version  cprsguium.pdf/doc           Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the patch 
+    #OR*3.0*452:
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup any 
+       other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch  
+       is installed.  It compares all components of this patch routines, DDs, 
+       templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//' 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//' 
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3
+    Before:B140213780   After:B141411958  **31,74,91,105,139,190,220,253,
+                                           265,296,348,350,452**
+Routine Name: ORB31
+    Before: B34930090   After: B35605938  **6,31,88,105,139,173,220,215,
+                                           329,452**
+Routine Name: ORWDPS2
+    Before: B66201174   After: B68292926  **85,116,125,131,132,148,141,
+                                           195,215,258,243,424,420,454,
+                                           452**
+ 
+Routine list of preceding patches: 329, 350, 454
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 08, 2017
+Completed By:                               Date Completed: MAY 10, 2018
+Released By :                               Date Released : MAY 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

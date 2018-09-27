@@ -1,0 +1,305 @@
+$TXT Created by                VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 10/10/17 at 06:43
+=============================================================================
+Run Date: JUN 21, 2018                     Designation: PSB*3*100
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #87                      Status: Released
+                  Compliance Date: JUL 22, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*70    <<= must be installed BEFORE `PSB*3*100'
+
+Subject: MISSING DOSE REPORT BY DIVISION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch PSB*3.0*100 enables Pharmacy personnel to display unresolved 
+ missing dose requests for a single division within a multidivisional site 
+ when using the Missing Dose Followup [PSB MISSING DOSE FOLLOWUP] option 
+ in VistA. Division selection is enabled when the site is defined as 
+ multidivisional in the MAS PARAMETER (#43) file. If the site is 
+ multidivisional, then the user can select one or all divisions when 
+ displaying missing dose requests. If the site is not multidivisional, 
+ then there is no change to existing functionality; reporting procedures 
+ and results for single-division sites are not affected by this patch.
+  
+ If a user at a multidivisional site enters "O" (One) at the "Do you want 
+ 'A'll Divisions or just 'O'ne Division:" prompt, then VistA displays
+ the "Select Division:" prompt. The prompt defaults to the division used 
+ for VistA log in. The user can accept the default or enter "?" to choose 
+ from a list of site divisions. The divisions available for selection are 
+ those in the MEDICAL CENTER DIVISION (#40.8) file. If a multidivisional 
+ user selects all divisions, then missing dose requests for all divisions 
+ in the MEDICAL CENTER DIVISION file are displayed.
+  
+ Currently, the Missing Dose Followup option lists missing dose requests 
+ for patients across all divisions at a multidivisional site. Users must 
+ manually search through multiple screens to select patients from their 
+ division who require follow-up. This enhancement adds the new DIVAS cross 
+ reference for the BCMA MISSING DOSE REQUEST (#53.68) file, enabling the 
+ Missing Dose Followup option to sort and present file entries by status 
+ (Unresolved) and division. At the end of the installation process, this 
+ file will be re-indexed with the new cross reference. No user action is 
+ required to start the re-indexing operation.
+  
+ By filtering the display of missing dose requests by division, this 
+ modification helps ensure the timely reporting and administration of 
+ missed medication doses.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:                                    
+  
+ File Name (Number)         Field Name (Number)    New/Modified/Deleted
+ ------------------         -------------------    --------------------
+ BCMA MISSING DOSE          DIVISION (.04)         Modified
+ REQUEST (53.68)            STATUS (.07)           Modified
+  
+  
+ Forms Associated:
+  
+ Form Name       File #         New/Modified/Deleted
+ ---------       ------         --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                New/Modified/Deleted
+ ---------------                --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type    New/Modified/Deleted
+ -----------            ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                  New/Modified/Deleted
+ -------------                  -------------------- 
+ N/A
+  
+  
+ Parameters Associated:
+  
+ Parameter Name                 New/Modified/Deleted
+ -------------                  -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20161208 Missing Dose Report by Division 
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA New Jersey Health Care System, East Orange, NJ
+ Syracuse VA Medical Center, Syracuse, NY
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a KIDS build and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:               domain.ext  
+ Salt Lake City:      domain.ext
+  
+ Documentation can also be found in the VA Software Document Library 
+ (VDL) at: http://www4.domain.ext/vdl/.
+  
+  
+ Title                             File Name                      FTP Mode
+ --------------------------------------------------------------------------
+ BCMA Pharmacy CHUI User Manual    psb_3_pharm_chui_um.doc  Binary
+ BCMA Pharmacy CHUI User Manual    psb_3_pharm_chui_um.pdf  Binary
+ BCMA Manager's User Manual        psb_3_man_um.doc         Binary
+ BCMA Manager's User Manual        psb_3_man_um.pdf         Binary 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ At the end of the installation process, the routine PSB3P100 runs to 
+ re-index the entire BCMA MISSING DOSE REQUEST (#53.68) file with the 
+ 'DIVAS' New-Style Regular cross reference. Once the process is completed, 
+ the routine is deleted automatically. No additional user action is
+ required for this process to complete.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+ The site/region should save a copy of the DIVISION (#.04) field and the 
+ STATUS (#.07) field from the BCMA MISSING DOSE REQUEST (#53.68) file.
+  
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the
+ following options. When prompted for the INSTALL NAME, enter the patch
+ number PSB*3.0*100.
+  
+    a. Verify Checksums in Transport Global - This option will help ensure
+    the integrity of the routines that are in the transport global.
+  
+    b. Print Transport Global - This option will enable viewing the
+    components of the KIDS build.
+  
+    c. Compare Transport Global to Current System - This option will 
+    enable viewing all changes that will be made when this patch is 
+    installed. It compares all components of this patch (routines, data 
+    dictionaries, templates, etc.).
+  
+    d. Back up a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not back up
+    any other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a CA Technologies Service Desk Manager (CA SDM) ticket. The development 
+ team will then assist with the backout process.
+  
+ The site/region should also save a copy of the DIVISION (#.04) field and 
+ the STATUS (#.07) field from the BCMA MISSING DOSE REQUEST (#53.68) file.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSB routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSB routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSB*3.0*100 on line 2 in the patch list section. 
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+  
+ The site/region must manually restore the two fields from file #53.68 
+ modified by this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P100
+    Before:       n/a   After:   B721273  **100**
+Routine Name: PSBMD
+    Before: B90525242   After:B151152763  **23,42,70,100**
+ 
+Routine list of preceding patches: 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 16, 2017
+Completed By:                               Date Completed: JUN 20, 2018
+Released By :                               Date Released : JUN 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
