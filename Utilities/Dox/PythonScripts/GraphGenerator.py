@@ -189,6 +189,7 @@ class GraphGenerator:
         if not routine.getPackage():
             return
         routineName = routine.getName()
+        escapedName = routineName.replace("%","\%")
         packageName = routine.getPackage().getName()
         if isDependency:
             depRoutines = routine.getCalledRoutines()
@@ -220,25 +221,25 @@ class GraphGenerator:
 #        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
         if routine.getPackage() not in depRoutines:
             output.write("\tsubgraph \"cluster_%s\"{\n" % (routine.getPackage()))
-            output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
+            output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
             output.write("\t}\n")
         for (package, callDict) in depRoutines.iteritems():
             output.write("\tsubgraph \"cluster_%s\"{\n" % (package))
             for routine in callDict.keys():
-                output.write("\t\t\"%s\" [penwidth=2 %s URL=\"%s\" tooltip=\"%s\"];\n" % (routine,
+                output.write("\t\t\"%s\" [penwidth=2 %s URL=\"%s\" tooltip=\"%s\"];\n" % (routine.getName().replace("%","\%"),
                                                          findDotColor(routine),
                                                          getPackageObjHtmlFileName(routine),
                                                          getPackageObjHtmlFileName(routine)
                                                         ))
                 if str(package) == packageName:
-                    output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % routineName)
+                    output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
             output.write("\t\tlabel=\"%s\";\n" % package)
             output.write("\t}\n")
             for (routine, tags) in callDict.iteritems():
                 if isDependency:
-                    output.write("\t\t\"%s\"->\"%s\"" % (routineName, routine))
+                    output.write("\t\t\"%s\"->\"%s\"" % (escapedName, routine.getName().replace("%","\%")))
                 else:
-                    output.write("\t\t\"%s\"->\"%s\"" % (routine, routineName))
+                    output.write("\t\t\"%s\"->\"%s\"" % (routine.getName().replace("%","\%"), escapedName))
                 output.write(";\n")
         output.write("}\n")
         output.close()
