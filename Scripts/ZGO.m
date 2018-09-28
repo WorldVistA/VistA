@@ -1,6 +1,6 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/6/16 4:01pm
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 10/2/18 10:34am
  ;---------------------------------------------------------------------------
- ; Copyright 2011 The Open Source Electronic Health Record Agent
+ ; Copyright 2018 The Open Source Electronic Health Record Agent
  ;
  ; Licensed under the Apache License, Version 2.0 (the "License");
  ; you may not use this file except in compliance with the License.
@@ -74,10 +74,14 @@ CONFIG ; Obtain configuration for Open and obtaining globals
  ;
  I $ZV["Cache" D  Q
  . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
+ . S CONFIG("OPENIOR")="O IO:(""RS""):0"
  . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
+ . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  I $ZV["GT.M" D  Q
  . S CONFIG("OPENIORW")="D GTMIOW(IO)"
+ . S CONFIG("OPENIOR")="O IO:readonly:0"
  . S CONFIG("GLOBALS")="S G=""^%"" F  S G=$O(@G) Q:G=""""  S:$D(^%) G(""^%"")="""" I G'?.E1L.E S GLOBALS(G)="""""
+ . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  W "ZGO does not support "_$ZV,!
  Q
 GTMIOW(IO) ; GT.M open-for-output impl.
@@ -97,6 +101,15 @@ WRITEHDR(VAL) ; Writes out the date/time in the header
  . S Y=$TR($ZDATE($HOROLOG,2,MLIST)," ","-")_" "_$ZTIME($P($HOROLOG,",",2))
  Q 0
 DUMPALL ; Dump All globals
+ ; Do we have globals already?
+ N X,Y S Y="" S X=DIR_"*" X CONFIG("LISTF")
+ I Y]"" D
+ . W *27,"[41;37m"
+ . W DIR," already contains files. I won't overwrite them.",!
+ . W "Delete them if you want to export everything from scratch."
+ . W *27,"[0m",!
+ . H 2
+ . ;
  S ^XTMP("ZGO",0)=$$DT^XLFDT_"^"_$$DT^XLFDT_"^"_"Children for extraction^"_DIR
  I $G(ZGODEBUG) D  QUIT
  . D FILES,GLOBALS
@@ -174,7 +187,9 @@ RUNJOBS ; [Private] Run child workers
  . D VISIT(G)
  . K ^XTMP("ZGO","GLOBALS",G) ; Kill it so nobody else tries to loop through it.
  . K ^XTMP("ZGO","FILES",G) ; This is just cosmetic
+ . L +FILEROOTS:2 ; If mutiple people do this, we get crashes as they kill nodes being examined in other jobs
  . N I F I=0:0 S I=$O(^XTMP("ZGO","FILEROOTS",I)) Q:'I  K:$NA(@^(I),0)=G ^(I) ; cosmetic again
+ . L -FILEROOTS
  . L -^XTMP("ZGO","GLOBALS",G) ; Unlock
  L -^ZGO($J)
  QUIT
@@ -195,12 +210,22 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. n fileNumber s fileNumber=@fileRef
  .. n fileGlobal s fileGlobal=FILEROOTS(fileNumber)
  .. s tracker(fileGlobal)=""
- .. n fDev s fDev=$$OPENFILE(fileRef)
- .. I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
- .. I $L($SY,":")=2 d  ; On Cache, ZWRITE is really slow
- ... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
- ... d DUMP(fDev,fileGlobal)
- .. d CLOSE(fDev)
+ .. ; See if file was exported already
+ .. S IO=$$HOSTFILE(fileRef)
+ .. X CONFIG("OPENIOR")
+ .. ;
+ .. I  D
+ ... U $P W IO_" Exported already",! ; Succeeded; don't export again
+ ... C IO
+ .. ;
+ .. E  D
+ ... n fDev s fDev=$$OPENFILE(fileRef)
+ ... I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
+ ... I $L($SY,":")=2 d  ; On Cache, ZWRITE is really slow
+ .... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
+ .... d DUMP(fDev,fileGlobal)
+ ... d CLOSE(fDev)
+ .. ;
  .. i $d(FILES(G))=1 s done=1
  .. k @fileRef,FILEROOTS(fileNumber)
  ;
@@ -233,23 +258,32 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  ; Stanza: Export leftovers
  ; Stuff still remains... okay then, no choice.
  n orig s orig=$na(^TMP($J))
- i $d(FILES(G))=1 s gDev=$$OPENFILE($NA(FILES(G))) i 1 ; ^DIC
- e  s gDev=$$OPENGBL(G)
- i $d(@orig)#2 D WRITE(gDev,G)
- n notSaved s notSaved=orig
- ; loop through every node in ^TMP, find the corresponding node in G, and export that.
- f  s notSaved=$Q(@notSaved) q:notSaved=""  q:$na(@notSaved,1)'=orig  d
- . n fullSubs s fullSubs=""
- . n i f i=2:1:$ql(notSaved) d
- .. n sub s sub=$qs(notSaved,i)
- .. i sub?1.N,+sub=sub
- .. e  s sub=q_sub_q
- .. s fullSubs=fullSubs_sub_","
- . s $e(fullSubs,$l(fullSubs))=""
- . n gNode s gNode=G_"("_fullSubs_")"
- . I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
- . I $L($SY,":")=2 D WRITE(gDev,gNode)
- D CLOSE(gDev)
+ ;
+ ; Reexport guard
+ i $d(FILES(G))=1 s IO=$$HOSTFILE($NA(FILES(G)))
+ e  s IO=$$HOSTPATH($E(G,2,$L(G)))
+ X CONFIG("OPENIOR")
+ I  D
+ . U $P W IO_" Exported already",! ; Succeeded; don't export again
+ . C IO
+ E  D
+ . i $d(FILES(G))=1 s gDev=$$OPENFILE($NA(FILES(G))) i 1 ; ^DIC
+ . e  s gDev=$$OPENGBL(G)
+ . i $d(@orig)#2 D WRITE(gDev,G)
+ . n notSaved s notSaved=orig
+ . ; loop through every node in ^TMP, find the corresponding node in G, and export that.
+ . f  s notSaved=$Q(@notSaved) q:notSaved=""  q:$na(@notSaved,1)'=orig  d
+ .. n fullSubs s fullSubs=""
+ .. n i f i=2:1:$ql(notSaved) d
+ ... n sub s sub=$qs(notSaved,i)
+ ... i sub?1.N,+sub=sub
+ ... e  s sub=q_sub_q
+ ... s fullSubs=fullSubs_sub_","
+ .. s $e(fullSubs,$l(fullSubs))=""
+ .. n gNode s gNode=G_"("_fullSubs_")"
+ .. I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
+ .. I $L($SY,":")=2 D WRITE(gDev,gNode)
+ . D CLOSE(gDev)
  quit
  ;
 DUMP(IO,G) ; Dump everything under node G, excluding G itself
@@ -286,9 +320,20 @@ CLOSE(IO) ;
  C IO
  Q
 WRITE(IO,G) ;
- ;U IO W $$ENCODE(G)_"="_$$VALUE(@G),!
+ N $ET,$ES  ; Protect against corrupt Cache Globals
+ S $ET="D WRITEERR"
  W $$ENCODE(G)_"="_$$VALUE(@G),!
  Q
+WRITEERR ;
+ I $EC=",ZSYNTAX," D  S $EC="" G UNWIND
+ . U $P W "Cache reports syntax error at ",G,! U IO
+ QUIT
+ ;
+UNWIND ;
+ S $ET="Q:$ES  S $EC="""""
+ S $EC=",U-UNWIND,"
+ QUIT
+ ;
 VALUE(V) ; Encode value V
  S V=$NAME(%(V)),V=$E(V,3,$L(V)-1)
  I $E(V,1)'="""" S V=""""_V_""""
