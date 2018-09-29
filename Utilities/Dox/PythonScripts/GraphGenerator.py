@@ -19,7 +19,7 @@ import argparse
 import os
 import subprocess
 
-from LogManager import logger
+from LogManager import logger, initLogging
 
 from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
@@ -301,8 +301,6 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-dot', required=True,
                         help='path to the folder containing dot excecutable')
-    parser.add_argument('-lf', '--outputLogFileName', required=False,
-                        help='the output Logging file')
     parser.add_argument('-icr','--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
     parser.add_argument('-st','--sortTemplateDep', required=True,
@@ -313,11 +311,7 @@ if __name__ == '__main__':
                         help='CSV formatted "Relational Jump" field data for Print Templates')
     result = parser.parse_args();
 
-    if not result.outputLogFileName:
-      outputLogFile = getTempLogFile("GraphGen.log")
-    else:
-      outputLogFile = result.outputLogFileName
-    initLogging(outputLogFile)
-    logger.debug (result)
+    initLogging("GraphGen.log")
+    logger.debug(result)
 
     run(result)

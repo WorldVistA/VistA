@@ -35,7 +35,7 @@ from CrossReference import CrossReference, Routine, Package, Global
 from CrossReference import PlatformDependentGenericRoutine
 from CrossReference import FileManField, FileManFile, FileManFieldFactory
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 
 """
   need to ignore some dialog function

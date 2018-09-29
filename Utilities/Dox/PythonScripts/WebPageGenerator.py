@@ -31,7 +31,7 @@ import urllib
 import cgi
 
 from operator import itemgetter
-from LogManager import logger
+from LogManager import logger, initLogging
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogether
 from reportlab.platypus import Table, TableStyle, Image
@@ -1072,7 +1072,7 @@ class WebPageGenerator:
                 if globalVar.getFileNo():
                   jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.','_')+".json")
                   if os.path.isfile(jsonFile):
-                    print "Checking %s for entries" % jsonFile
+                    logger.info("Checking %s for entries" % jsonFile)
                     with open(jsonFile,"r") as entryData:
                       try:
                         globalVals = json.load(entryData)
@@ -3906,8 +3906,6 @@ if __name__ == '__main__':
     parser.add_argument('-is', '--includeSource', required=False,
                         default=False, action='store_true',
                         help='generate routine source code page?')
-    parser.add_argument('-lf', '--outputLogFileName', required=False,
-                        help='the output Logging file')
     parser.add_argument('-rj','--rtnJson', required=True,
                         help='routine reference in VistA data file in JSON format')
     parser.add_argument('-icr','--icrJsonFile', required=True,
@@ -3926,11 +3924,7 @@ if __name__ == '__main__':
                         help='Repository information in JSON format')
     result = parser.parse_args();
 
-    if not result.outputLogFileName:
-      outputLogFile = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
-    else:
-      outputLogFile = result.outputLogFileName
-    initLogging(outputLogFile)
-    logger.debug (result)
+    initLogging(DEFAULT_OUTPUT_LOG_FILE_NAME)
+    logger.debug(result)
 
     run(result)

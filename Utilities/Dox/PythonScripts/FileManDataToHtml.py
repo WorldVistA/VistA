@@ -17,7 +17,6 @@ import os
 import sys
 import re
 from datetime import datetime
-import logging
 import glob
 import cgi
 import re
@@ -42,6 +41,7 @@ from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeaderRows
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
+from LogManager import logger
 
 class OSEHRAEncoder(JSONEncoder):
   def default(self, o):
@@ -106,7 +106,7 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
     elif len(fields) == 2:
       value = 'File: %s, IEN: %s' % (fields[0], fields[1])
     else:
-      logging.error("Unknown File Pointer Value %s" % value)
+      logger.error("Unknown File Pointer Value %s" % value)
   return value
 
 """ Requires extra information to be made available on the run of the object.
@@ -284,7 +284,7 @@ def convertFilePointerToHtml(inputValue):
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
     name = value
   else:
-    logging.error("Unknown File Pointer Value %s" % inputValue)
+    logger.error("Unknown File Pointer Value %s" % inputValue)
   return value, name
 
 
@@ -323,7 +323,7 @@ class FileManDataToHtml(object):
           allRpcs = []
           for package in allPackages.itervalues():
             if package.rpcs:
-              logging.info("generating RPC list for package: %s"
+              logger.info("generating RPC list for package: %s"
                            % package.getName())
               self._generateRPCListHtml(package.rpcs, package.getName(),fileNo)
               allRpcs.extend(package.rpcs)
@@ -348,12 +348,12 @@ class FileManDataToHtml(object):
                 allProtoMenuList.append(dataEntry)
           for package in allPackages.itervalues():
             if package.hl7:
-              logging.info("generating HL7 list for package: %s"
+              logger.info("generating HL7 list for package: %s"
                            % package.getName())
               self._generateHL7ListByPackage(package.hl7, package.getName(),fileNo)
               allHl7s.extend(package.hl7)
             if package.protocol:
-              logging.info("generating Protocol list for package: %s"
+              logger.info("generating Protocol list for package: %s"
                            % package.getName())
               self._generateProtocolListByPackage(package.protocol, package.getName(), fileNo)
           if allHl7s:
@@ -369,7 +369,7 @@ class FileManDataToHtml(object):
           allHLOs = []
           for package in allPackages.itervalues():
             if package.hlo:
-              logging.info("generating HLO list for package: %s"
+              logger.info("generating HLO list for package: %s"
                            % package.getName())
               self._generateHLOListByPackage(package.hlo, package.getName(),gblDataParser,fileNo)
               allHLOs.extend(package.hlo)
@@ -395,7 +395,7 @@ class FileManDataToHtml(object):
             elif(dataEntry.fields['4'].value == 'server'):
               serverMenuList.append(dataEntry);
           else:
-            logging.error("ien: %s of file 19 does not have a type" % ien)
+            logger.error("ien: %s of file 19 does not have a type" % ien)
 
         self._generateDataListByPackage(allOptionList, "All", option_list_fields,
                                         "Option",
@@ -424,7 +424,7 @@ class FileManDataToHtml(object):
                                       [x[0] for x in option_list_fields],
                                       ["Name", "Lock"],fileNo)
       with open(os.path.join(self.outDir,"dox","%s.json" % fileNo.replace('.','_')), 'w') as output:
-                logging.info("Generate File: %s" % output.name)
+                logger.info("Generate File: %s" % output.name)
                 json.dump(outJSON, output,ensure_ascii=False,cls=OSEHRAEncoder)
       self._generateDataTableHtml(fileManData, fileNo)  # Data List
       self._convertFileManDataToHtml(fileManData)
@@ -524,10 +524,10 @@ class FileManDataToHtml(object):
               self.synonymMap[(dataEntry.name, menuDict[childIen].name)] =  "[" + subEntry.fields['2'].value+ "]"
             if childIen in menuDict:
               menuDepDict[dataEntry].add(menuDict[childIen])
-              logging.info("Adding %s to %s" % (menuDict[childIen].name,
+              logger.info("Adding %s to %s" % (menuDict[childIen].name,
                                                 dataEntry.name))
             else:
-              logging.error("Could not find %s: value: %s" % (childIen, value))
+              logger.error("Could not find %s: value: %s" % (childIen, value))
     """ discard any menu does not have any child """
     leafMenus = set()
     for entry in menuDepDict:
@@ -540,9 +540,9 @@ class FileManDataToHtml(object):
     rootSet = set(allMenuList) - allChildSet
     leafSet = allChildSet - set(allMenuList)
     for rootMenu in rootSet:
-      logging.info("Root Menu: %s, %s" % (rootMenu.name, rootMenu.ien))
+      logger.info("Root Menu: %s, %s" % (rootMenu.name, rootMenu.ien))
     for leafMenu in leafSet:
-      logging.info("leaf Menu: %s, %s" % (leafMenu.name, leafMenu.ien))
+      logger.info("leaf Menu: %s, %s" % (leafMenu.name, leafMenu.ien))
 
     """ generate the json file based on root menu """
     for item in rootSet:
@@ -561,7 +561,7 @@ class FileManDataToHtml(object):
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson, item)
       with open(os.path.join(outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
-        logging.info("Generate File: %s" % output.name)
+        logger.info("Generate File: %s" % output.name)
         json.dump(outJson, output)
 
   def _addChildMenusToJson(self, children, menuDepDict, outJson, parent):
@@ -583,7 +583,7 @@ class FileManDataToHtml(object):
         childDict['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict, item)
-      logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
+      logger.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
       outJson.setdefault('_children',[]).append(childDict)
 
   def _generateRPCListHtml(self, dataEntryLst, pkgName, fileNo):
@@ -729,7 +729,7 @@ class FileManDataToHtml(object):
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           if not dataEntry.name:
-            logging.warn("no name for %s" % dataEntry)
+            logger.warn("no name for %s" % dataEntry)
             continue
           name = dataEntry.name
           if isFilePointerType(dataEntry):
@@ -749,7 +749,7 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write ("</body></html>\n")
     if isLargeFile:
-      logging.info("Ajax source file: %s" % ajexSrc)
+      logger.info("Ajax source file: %s" % ajexSrc)
       """ Write out the data file in JSON format """
       outJson = {"aaData": []}
       with open(os.path.join(outDir, ajexSrc), 'w') as output:
@@ -757,7 +757,7 @@ class FileManDataToHtml(object):
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           if not dataEntry.name:
-            logging.warn("no name for %s" % dataEntry)
+            logger.warn("no name for %s" % dataEntry)
             continue
           name = dataEntry.name
           if isFilePointerType(dataEntry):
@@ -774,7 +774,7 @@ class FileManDataToHtml(object):
       tName = "%s-%s" % (fileManData.fileNo.replace(".","_"), ien)
       dataEntry = fileManData.dataEntries[ien]
       if not dataEntry.name:
-        logging.warn("no name for %s" % dataEntry)
+        logger.warn("no name for %s" % dataEntry)
         continue
       name = dataEntry.name
       if dataEntry.fileNo:

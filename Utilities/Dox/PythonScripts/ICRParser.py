@@ -21,7 +21,7 @@ from ICRFileToJson import convertICRToJson
 from ICRJsonToHtml import convertJson
 import ICRSchema
 
-from LogManager import initConsoleLogging
+from LogManager import initLogging, logger
 
 # Note: The parameter names in the generate_<...> functions
 # must match the argument names *exactly*
@@ -53,8 +53,6 @@ def generate_all(icrFile=None, icrJsonFile=None, MRepositDir=None,
 def _generate(icrFile, icrJsonFile, MRepositDir=None, patchRepositDir=None,
               generateHTML=False, generatePDF=False,
               outDir=None, pdfOutDir=None, local=False):
-    initConsoleLogging()
-
     generate_json(icrFile, icrJsonFile)
     if generateHTML or generatePDF:
         # Look for date file was created
@@ -117,6 +115,8 @@ def create_arg_parser():
 if __name__ == '__main__':
     arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
+    initLogging("ICRParser.log")
+    logger.debug(args)
     kargs = vars(args)
     func = kargs["func"]
     del kargs["func"]

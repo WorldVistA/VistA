@@ -53,7 +53,7 @@ execute_process(COMMAND
   @GENERATE_LOCAL_LINKS@
   ${GENERATE_ALL}
   ${fileNos}
-  OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
+  ERROR_VARIABLE error RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
-  message(FATAL_ERROR "Error running FileMan Global Data Parser:\n\n${output}")
+  message(FATAL_ERROR "Error running FileMan Global Data Parser:\n\n${error}")
 endif()

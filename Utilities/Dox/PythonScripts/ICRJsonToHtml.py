@@ -173,7 +173,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
             pkgLink = getPackageHtmlFileName(pkg.getName())
             return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
         else:
-            logger.warn('Can not find mapping for package: [%s]', pkgName)
+            logger.debug('Can not find mapping for package: [%s]', pkgName)
     return pkgName
 
 

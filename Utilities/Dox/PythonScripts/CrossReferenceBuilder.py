@@ -27,6 +27,7 @@ from DataDictionaryParser import createDataDictionaryAugumentParser
 from FileManDbCallParser import parseFileManDBJSONFile
 from FileManDbCallParser import createFileManDBFileAugumentParser
 
+from LogManager import logger
 
 def createCrossReferenceLogArgumentParser():
     initCrossRefParser = createInitialCrossRefGenArgParser()

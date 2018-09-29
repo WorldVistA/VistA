@@ -3,10 +3,8 @@ import argparse
 import os.path
 import cgi
 import sys
-import logging
-import pprint
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
@@ -176,7 +174,7 @@ class RequirementsConverter:
                             output.write("<td>%s</td>\n" %  reqSummary[idx])
                     output.write("</tr>\n")
             else:
-                logging.info("Ajax source file: %s" % ajaxSrc)
+                logger.info("Ajax source file: %s" % ajaxSrc)
                 """ Write out the data file in JSON format """
                 outJson = {"aaData": []}
                 with open(os.path.join(outDir, ajaxSrc), 'w') as ajaxOut:

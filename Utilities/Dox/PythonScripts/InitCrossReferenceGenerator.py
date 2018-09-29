@@ -197,8 +197,8 @@ class InitCrossReferenceGenerator(object):
       if fileNo not in fileNoSet:
         fileNoSet.add(fileNo)
       else:
-        logger.error ("Error, duplicated file No [%s,%s,%s,%s] file:%s " %
-               (fileNo, globalName, globalDes, packageName, file))
+        logger.error("Duplicated file No [%s,%s,%s,%s] file:%s " %
+                      (fileNo, globalName, globalDes, packageName, file))
       zwrFile.close()
     logger.info ("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
            (len(allPackages), len(allGlobals), len(skipFile), len(fileNoSet)))

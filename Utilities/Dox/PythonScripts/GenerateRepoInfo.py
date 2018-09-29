@@ -18,6 +18,7 @@ import os
 import subprocess
 from datetime import datetime
 
+from LogManager import initLogging, logger
 
 def run(result):
     with open(result.outputfile, 'w') as file:
@@ -46,8 +47,8 @@ def createArgParser():
 
 
 if __name__ == '__main__':
-    from LogManager import initConsoleLogging
-    initConsoleLogging(formatStr='%(asctime)s %(message)s')
     parser = createArgParser()
     result = parser.parse_args()
+    initLogging("GenerateRepoInfo.log")
+    logger.debug(result)
     run(result)
