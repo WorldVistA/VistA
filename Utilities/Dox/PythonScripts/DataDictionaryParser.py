@@ -33,7 +33,7 @@ from CrossReference import CrossReference, Routine, Package, Global, PlatformDep
 from CrossReference import FileManField, FileManFile, FileManFieldFactory
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 
 class IDDSectionParser:
     def __init__(self):
@@ -622,22 +622,6 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 return section
         return None
 
-def testOutput(DDFileParser):
-  #DDFileParser.printGlobal("^DIBT")
-  DDFileParser.printGlobal("^DPT")
-  #DDFileParser.printGlobal("^GECS(2100")
-  #DDFileParser.printGlobal("^ONCO(165.5")
-  #DDFileParser.printGlobal("^ORD(100.99")
-  #DDFileParser.printGlobal("^ICD9")
-  #DDFileParser.printGlobal("^YSD(627.8")
-  logger.info("Total FileMan Field Note Title is %d" % len(FileManFieldSectionParser.totalFieldNotes))
-  for item in FileManFieldSectionParser.totalFieldNotes:
-      logger.info(item)
-
-import logging
-from CallerGraphParser import createCallGraphLogAugumentParser
-from CallerGraphParser import parseAllCallGraphLogWithArg
-
 def parseDataDictionaryLogFile(crossRef, fileSchemaDir):
     DDFileParser = DataDictionaryListFileLogParser(crossRef)
     DDFileParser.parseAllDataDictionaryListLog(fileSchemaDir, "*.schema")
@@ -650,15 +634,3 @@ def createDataDictionaryAugumentParser():
     argGroup.add_argument('-fs', '--fileSchemaDir', required=True,
                           help='VistA File Man Schema log Directory')
     return parser
-if __name__ == '__main__':
-    callLogArgParser = createCallGraphLogAugumentParser()
-    dataDictArgParser = createDataDictionaryAugumentParser()
-    parser = argparse.ArgumentParser(
-          description='VistA Cross-Reference Data Dictionary Log Files Parser',
-          parents=[callLogArgParser, dataDictArgParser])
-    result = parser.parse_args();
-    initConsoleLogging()
-    logFileParser = parseAllCallGraphLogWithArg(result)
-    DDFileParser = parseDataDictionaryLogFile(logFileParser.getCrossReference(),
-                                              result.fileSchemaDir)
-    testOutput(DDFileParser)

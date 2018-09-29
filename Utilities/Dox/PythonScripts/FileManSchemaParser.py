@@ -500,49 +500,11 @@ class FileManSchemaParser(object):
                 logging.debug('Adding subType %s to %r' % (subType, detail))
                 detail.addSubType(subType)
 
-  def parseSchemaFieldAttributes(self, zeroFields, rootNode):
-    """ handle extra attributes"""
-    if len(zeroFields) >= 5 and zeroFields[4]:
-      inputTrans = ""
-      for txt in zeroFields[4:]:
-        inputTrans += txt
-      print "\tInput Transform: %s" % inputTrans
-    if "3" in rootNode and rootNode["3"].value is not None:
-      print "\tHELP-PROMPT: %s" % rootNode['3'].value
-    if "DT" in rootNode and rootNode["DT"].value is not None:
-      print "\tLast Modified: %s" % rootNode["DT"].value
-    if "9.1" in rootNode and rootNode["9.1"].value is not None:
-      print "\tCompute Algorithm: %s" % rootNode["9.1"].value
-    if "1" in rootNode:
-      if '0' in rootNode["1"]:
-        parseCrossReference(rootNode)
-    if "21" in rootNode:
-      print "Description:"
-      parsingWordProcessingNode(rootNode['21'])
-    if '7.5' in rootNode:
-      print "PRE-LOOKUP: %s" % "".join(rootNode['7.5'].value)
-    if "DEL" in rootNode:
-      print "DELETE TEST:"
-      parsingDelTest(rootNode['DEL'])
-
 def createArgParser():
   import argparse
   parser = argparse.ArgumentParser(description='FileMan Schema Parser')
   parser.add_argument('ddFile', help='path to ZWR file contains DD global')
   return parser
-
-def testDDZWRFile():
-  parser = createArgParser()
-  result = parser.parse_args();
-  schemaParse = FileManSchemaParser()
-  #allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
-  allSchemaDict = schemaParse.parseSchemaDDFileV2(result.ddFile)
-  # Find all the word processing multiple
-  # printAllSchemas(allSchemaDict)
-  #allSchemaDict['44.003'].printFileManInfo()
-  #allSchemaDict['101'].printFileManInfo()
-  #allSchemaDict['2'].printFileManInfo()
-  #allSchemaDict['1'].printFileManInfo()
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
@@ -564,25 +526,12 @@ def parsingVariablePointer(vpRoot):
         outVptr.append(value)
   return outVptr
 
-def parsingDelTest(globalRoot):
-  intKey = getKeys(globalRoot)
-  for key in intKey:
-    if '0' in globalRoot[key]:
-      print "\t%s,0)= %s" % (key, globalRoot[key]['0'].value)
-
 def parsingWordProcessingNode(globalNode, level=1):
   indent = "\t"*level
   logging.debug("Processing Word Processing Data")
   for key in sorted(globalNode, key=lambda x: int(x)):
     if "0" in globalNode[key]:
       logging.info ("%s%s" % (indent, globalNode[key]["0"].value))
-
-def test_parseFieldTypeSpecifier():
-  for typeField in (".2LAP", "M66.021A", "MP200'X",
-                    "Cm", "BC", "9002313.59902PA", "RF",
-                    "WL", "200.34P", "*P21'Xa", "*P8'X", "CD8"):
-    logging.info("%s: %s" % (typeField,
-                  FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
 def strongly_connected_components(vertice, edges):
   """
@@ -620,25 +569,3 @@ def strongly_connected_components(vertice, edges):
     if v not in index:
       for scc in visit(v):
         yield scc
-
-def test_strongly_connected_components():
-  vertices = [1, 2, 3, 4, 5, 6, 7, 8]
-  edges = {1: set([2]), 2: set([3, 8]), 3: [4, 7], 4: [5],
-           5: [3, 6], 6: [], 7: [4, 6], 8: [1, 7]}
-  expectedRet = [set([6]), set([3,4,5,7]), set([8,1,2])];
-  for scc in  strongly_connected_components(vertices, edges):
-    expRet =  expectedRet.pop(0)
-    print scc, expRet
-    #assert scc == expRet
-
-def unit_test():
-  #test_parseFieldTypeSpecifier()
-  test_strongly_connected_components()
-
-def main():
-  from LogManager import initConsoleLogging
-  initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  testDDZWRFile()
-
-if __name__ == '__main__':
-  main()

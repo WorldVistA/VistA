@@ -97,43 +97,6 @@ def getMumpsRoutine(mumpsCode):
         yield (routine, tag, start)
   raise StopIteration
 
-def test_getMumpsRoutine():
-  for input in (
-    ('D ^TEST1', [('TEST1','',3)]),
-    ('D ^%ZOSV', [('%ZOSV','',3)]),
-    ('D TAG^TEST2',[('TEST2','TAG',6)]),
-    ('Q $$TST^%RRST1', [('%RRST1','TST',8)]),
-    ('D ACKMSG^DGHTHLAA',[('DGHTHLAA','ACKMSG',9)]),
-    ('S XQORM(0)="1A",XQORM("??")="D HSTS^ORPRS01(X)"',[('ORPRS01','HSTS',36)]),
-    ('I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
-     [
-       ('ABCD','TEST',9),
-       ('EST','',17),
-       ('%INDX','ENG',29)
-     ]
-    ),
-    ('S DUZ=1 K ^XUTL(0)', None),
-    ("""W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
-     [('%ZTLOAD','TM',8)]
-    ),
-    ("""W "This is a Test",$$TM^ZTLOAD()""",[('ZTLOAD','TM',24)]),
-    ("""D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",
-     [
-       ('PSIVXU','',3),
-       ('PSIVSTAT','EN',27),
-       ('%DTC','NOW',40)
-     ]
-    ),
-    ("""D ^TEST1,EN^TEST2""",
-     [
-       ('TEST1','',3),
-       ('TEST2','EN',12)
-     ]
-    ),
-  ):
-    for idx, (routine,tag,pos) in enumerate(getMumpsRoutine(input[0])):
-      assert (routine, tag, pos) == input[1][idx], "%s: %s" % ((routine, tag, pos), input[1][idx])
-
 class FileManFileData(json.JSONEncoder):
   """
     Class to represent FileMan File data WRT
@@ -221,56 +184,6 @@ class FileManDataField(json.JSONEncoder):
     self._value = value
   def __repr__(self):
     return "%s: %s" % (self._name, self._value)
-
-def printFileManFileData(fileManData, level=0):
-  curIndent = "\t"*(level+1)
-  if level == 0:
-    print "File#: %s, Name: %s" % (fileManData.fileNo, fileManData.name)
-  for ien in getKeys(fileManData.dataEntries.keys(), float):
-    dataEntry = fileManData.dataEntries[ien]
-    printFileManDataEntry(dataEntry, ien, level)
-
-def printFileManDataEntry(dataEntry, ien, level):
-  curIndent = "\t"*(level+1)
-  if level == 0:
-    print "FileEntry#: %s, Name: %s" % (ien, dataEntry.name)
-  else:
-    print
-  for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
-    dataField = dataEntry.fields[fldId]
-    if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-      if dataField.value and dataField.value.dataEntries:
-        print "%s%s:" % (curIndent, dataField.name)
-        printFileManFileData(dataField.value, level+1)
-    elif dataField.type == FileManField.FIELD_TYPE_WORD_PROCESSING:
-      wdList = dataField.value
-      if wdList:
-        print "%s%s:" % (curIndent, dataField.name)
-        for item in wdList:
-          print "%s\t%s" % (curIndent, item)
-    else:
-      print "%s%s: %s" % (curIndent, dataField.name, dataField.value)
-  print
-
-def test_FileManDataEntry():
-  fileManData = FileManFileData('1', 'TEST FILE 1')
-  dataEntry = FileManDataEntry("Test",1)
-  dataEntry.addField(FileManDataField('0.1', 0, 'NAME', 'Test'))
-  dataEntry.addField(FileManDataField('1', 0, 'TAG', 'TST'))
-  dataEntry.addField(FileManDataField('2', 1, 'ROUTINE', 'TEST1'))
-  dataEntry.addField(FileManDataField('3', 2, 'INPUT TYPE', '1'))
-  subFileData = FileManFileData('1.01', 'TEST FILE SUB-FIELD')
-  subDataEntry = FileManDataEntry("1.01", 1)
-  subDataEntry.addField(FileManDataField('.01',0,  'NAME', 'SUBTEST'))
-  subDataEntry.addField(FileManDataField('1', 1, 'DATA', '0'))
-  subFileData.addFileManDataEntry('1', subDataEntry)
-  subDataEntry = FileManDataEntry("1.01", 2)
-  subDataEntry.addField(FileManDataField('.01', 0, 'NAME', 'SUBTEST1'))
-  subDataEntry.addField(FileManDataField('1', 1, 'DATA', '1'))
-  subFileData.addFileManDataEntry('2', subDataEntry)
-  dataEntry.addField(FileManDataField('4', 9, 'SUB-FIELD', subFileData))
-  fileManData.addFileManDataEntry('1', dataEntry)
-  printFileManFileData(fileManData)
 
 def sortSchemaByLocation(fileSchema):
   locFieldDict = {}
@@ -945,13 +858,6 @@ def horologToDateTime(input):
   days, seconds = input.split(',')
   return originDt + timedelta(int(days), int(seconds))
 
-def test_horologToDateTime():
-  input = (
-      ('57623,29373', datetime(1998,10,7,8,9,33)),
-  )
-  for one, two in input:
-    assert horologToDateTime(one) == two, "%s, %s" % (one, two)
-
 def normalizeGlobalLocation(input):
   if not input:
     return input
@@ -961,15 +867,6 @@ def normalizeGlobalLocation(input):
   if input[-1] == ',':
     result = result[0:-1]
   return result
-
-def test_normalizeGlobalLocation():
-  input = (
-      ('DIPT(', '^DIPT('),
-      ('^DIPT(', '^DIPT('),
-      ('DIPT("IX",', '^DIPT("IX"'),
-  )
-  for one, two in input:
-    assert normalizeGlobalLocation(one) == two, "%s, %s" % (one, two)
 
 def createArgParser():
   import argparse
@@ -986,16 +883,9 @@ def createArgParser():
                       help='Use links to local DOX pages')
   return parser
 
-def unit_test():
-  test_normalizeGlobalLocation()
-  test_horologToDateTime()
-  test_getMumpsRoutine()
-  #test_FileManDataEntry()
-
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  #unit_test()
   parser = createArgParser()
   result = parser.parse_args()
   run(result)

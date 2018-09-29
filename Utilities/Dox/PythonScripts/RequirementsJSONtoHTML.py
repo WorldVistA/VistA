@@ -12,6 +12,7 @@ from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 
+
 def createArgParser():
     parser = argparse.ArgumentParser(description='VistA Requirements JSON to Html')
     parser.add_argument('reqJsonFile', help='path to the VistA Requirements JSON file')
@@ -218,12 +219,3 @@ class RequirementsConverter:
         for NSRKey in nsrSummary.keys():
           self._generateRequirementsSummaryPageImpl(nsrSummary, 'Requirement List', NSRKey, False)
         self._generateRequirementsSummaryPageImpl(allReqs, 'Requirement List', "All", True)
-if __name__ == '__main__':
-    parser = createArgParser()
-    result = parser.parse_args()
-    initConsoleLogging()
-    # pprint.pprint(set(crossRef.getAllPackages().keys()))
-    # initConsoleLogging(logging.DEBUG)
-    if result.reqJsonFile:
-      requirementConverter = RequirementsConverter(result.outDir)
-      requirementConverter.convertJsonToHtml(result.reqJsonFile)

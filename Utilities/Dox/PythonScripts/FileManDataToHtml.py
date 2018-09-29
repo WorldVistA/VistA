@@ -62,11 +62,6 @@ class OSEHRAEncoder(JSONEncoder):
     else:
       JSONEncoder.default(self,o)
 
-def test_sub():
-  print data_table_large_list_init_setup.substitute(ajexSrc="Test", tableName="Test")
-  print data_table_list_init_setup.substitute(tableName="Test")
-  print data_table_record_init_setup.substitute(tableName="Test")
-
 def getDataEntryHtmlFile(ien, fileNo):
   return ("%s-%s" % (fileNo, ien)) + ".html"
 
@@ -292,10 +287,6 @@ def convertFilePointerToHtml(inputValue):
     logging.error("Unknown File Pointer Value %s" % inputValue)
   return value, name
 
-def test_convertFilePointerToHtml():
-  input = ('1^345^Testing', '2^345', '5')
-  for one in input:
-    print convertFilePointerToHtml(one)
 
 class FileManDataToHtml(object):
   """
@@ -863,42 +854,3 @@ class FileManDataToHtml(object):
         #output.write ("<dd>%s</dd>\n" % value)
     if not isRoot:
       output.write("</li>\n")
-
-def test_safeElementId():
-  for input in ("01", "1.0", "99999.4"):
-    print safeElementId(input)
-
-def test_getRoutineName():
-  for input in (
-      ('%ZTLOAD', '%ZTLOAD'),
-      ('^%ZTLOAD1', '%ZTLOAD1'),
-      ('TST^ZNTLFF', 'ZNTLFF'),
-      ):
-    assert getRoutineName(input[0]) == input[1], "%s, %s" % (input[0], input[1])
-
-def test_getMumpsRoutineHtmlLink():
-  for input in (
-    'D ^TEST1',
-    'D ^%ZOSV',
-    'D TAG^TEST2',
-    'Q $$TST^%RRST1',
-    'D ACKMSG^DGHTHLAA',
-    'S XQORM(0)="1A",XQORM("??")="D HSTS^ORPRS01(X)"',
-    'I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
-    'S DUZ=1 K ^XUTL(0)',
-    """W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
-    """W "This is a Test",$$TM^ZTLOAD()""",
-    """D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",
-    """D ^TEST1,EN^TEST2""",
-  ):
-    print getMumpsRoutineHtmlLinks(input)
-
-def main():
-  test_sub()
-  test_safeElementId()
-  test_convertFilePointerToHtml()
-  test_getMumpsRoutineHtmlLink()
-  test_getRoutineName()
-
-if __name__ == '__main__':
-  main()
