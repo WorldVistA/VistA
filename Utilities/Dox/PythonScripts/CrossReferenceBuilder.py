@@ -15,8 +15,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#---------------------------------------------------------------------------
 
-import os
 import argparse
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
@@ -26,6 +26,8 @@ from DataDictionaryParser import parseDataDictionaryLogFile
 from DataDictionaryParser import createDataDictionaryAugumentParser
 from FileManDbCallParser import parseFileManDBJSONFile
 from FileManDbCallParser import createFileManDBFileAugumentParser
+
+from LogManager import logger
 
 def createCrossReferenceLogArgumentParser():
     initCrossRefParser = createInitialCrossRefGenArgParser()
@@ -37,63 +39,48 @@ def createCrossReferenceLogArgumentParser():
                                               callLogArgParser,
                                               dataDictLogArgParser,
                                               filemanDBJsonArgParser])
+    parser.add_argument('-o', '--outdir', required=True,
+                        help='Output Web Page directory')
     return parser
+
 class CrossReferenceBuilder(object):
     def __init__(self):
         pass
-    def buildCrossReferenceWithArgs(self, arguments, pkgDepJson=None, icrJson=None,inputTemplateDeps=None,sortTemplateDeps=None,printTemplateDeps=None):
+
+    def buildCrossReferenceWithArgs(self, arguments, icrJson=None,
+                                    inputTemplateDeps=None,
+                                    sortTemplateDeps=None,
+                                    printTemplateDeps=None):
         return self.buildCrossReference(arguments.xindexLogDir,
                                         arguments.MRepositDir,
                                         arguments.patchRepositDir,
                                         arguments.fileSchemaDir,
                                         arguments.filemanDbJson,
-                                        pkgDepJson,
                                         icrJson,
                                         arguments.outdir,
-                                        inputTemplateDeps=inputTemplateDeps,sortTemplateDeps=sortTemplateDeps,printTemplateDeps=printTemplateDeps)
+                                        inputTemplateDeps=inputTemplateDeps,
+                                        sortTemplateDeps=sortTemplateDeps,
+                                        printTemplateDeps=printTemplateDeps)
+
     def buildCrossReference(self, xindexLogDir, MRepositDir,
-                            patchRepositDir, fileSchemaDir=None,
-                            filemanDbJson=None, pkgDepJson=None, icrJson=None,outdir=None,
-                            inputTemplateDeps=None,sortTemplateDeps=None,printTemplateDeps=None):
+                            patchRepositDir, fileSchemaDir,
+                            filemanDbJson, icrJson,
+                            outdir, inputTemplateDeps,
+                            sortTemplateDeps, printTemplateDeps):
 
         crossRef = parseCrossReferenceGeneratorArgs(MRepositDir,
                                                     patchRepositDir)
-        crossRef.outDir= outdir
+        crossRef.outDir = outdir
         crossRef._inputTemplateDeps = inputTemplateDeps
-        crossRef._sortTemplateDeps  = sortTemplateDeps
-        crossRef._printTemplateDeps  = printTemplateDeps
+        crossRef._sortTemplateDeps = sortTemplateDeps
+        crossRef._printTemplateDeps = printTemplateDeps
 
-        if fileSchemaDir:
-            crossRef = parseDataDictionaryLogFile(crossRef,
-                                       fileSchemaDir).getCrossReference()
-        if xindexLogDir:
-            crossRef = parseAllCallGraphLog(xindexLogDir,
-                crossRef, icrJson).getCrossReference()
-        if filemanDbJson:
-            crossRef = parseFileManDBJSONFile(crossRef,
-                                   filemanDbJson).getCrossReference()
-        crossRef.generateAllPackageDependencies(pkgDepJson)
+        crossRef = parseDataDictionaryLogFile(crossRef, fileSchemaDir).getCrossReference()
+
+        crossRef = parseAllCallGraphLog(xindexLogDir, crossRef, icrJson).getCrossReference()
+
+
+        crossRef = parseFileManDBJSONFile(crossRef, filemanDbJson).getCrossReference()
+
+        crossRef.generateAllPackageDependencies()
         return crossRef
-    def buildCrossReferenceFromMongoDB(self):
-        pass
-
-def main():
-    crossRefParse = createCrossReferenceLogArgumentParser()
-    parser = argparse.ArgumentParser(
-          description='VistA Cross-Reference Builder',
-          parents=[crossRefParse])
-    parser.add_argument('-pj', '--pkgDepJson',
-                        help='Output JSON file for package dependencies')
-    parser.add_argument('-o', '--outdir', required=True,
-                        help='Output Web Page directory')
-    result = parser.parse_args()
-    from LogManager import initConsoleLogging
-    initConsoleLogging()
-    crossRefBlder = CrossReferenceBuilder()
-    crossRefBlder.buildCrossReferenceWithArgs(result, result.pkgDepJson)
-
-"""
-    main entry
-"""
-if __name__ == '__main__':
-    main()
