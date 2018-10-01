@@ -25,7 +25,7 @@ from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
-from UtilityFunctions import getDOXURL
+from UtilityFunctions import getDOXURL, getViViaNURL
 from LogManager import initLogging, logger
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -797,6 +797,7 @@ def run(args):
 
   crossRef = parseCrossRefGeneratorWithArgs(args)
   _doxURL = getDOXURL(args.local)
+  _vivianURL = getViViaNURL(False)
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
@@ -809,7 +810,7 @@ def run(args):
   glbDataParser.outdir = args.outDir
 
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, args.outDir, _doxURL)
+  htmlGen = FileManDataToHtml(crossRef, args.outDir, _doxURL, _vivianURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:

@@ -19,10 +19,12 @@ import re
 from datetime import datetime
 import glob
 import cgi
+import urllib
 import re
 import json
 
 DOX_URL = None
+VIV_URL = None
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
@@ -292,11 +294,13 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, outDir, doxURL):
+  def __init__(self, crossRef, outDir, doxURL, vivURL):
     global DOX_URL
+    global VIV_URL
     self.crossRef = crossRef
     self.outDir = outDir
     DOX_URL = doxURL
+    VIV_URL = vivURL
     # a map of a tuple of menu options (parent, child) which point to the synonym for the child option
     #
     #  Example: ('DGBT BENE TRAVEL MENU', 'DGBT TRAVEL REPORTS MENU') : [RPTS]
@@ -792,6 +796,9 @@ class FileManDataToHtml(object):
         output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
                                                           fileManData.name,
                                                           fileManData.fileNo))
+        if dataEntry.fileNo in ['19','101']:
+          # Todo: Check if the object exists in options/menus first.
+          output.write("<a style='font-size: 15px;' href='%s../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" % (VIV_URL, dataEntry.fileNo, urllib.quote_plus(name)))
         outputFileEntryTableList(output, tName)
         """ table body """
         output.write("<tbody>\n")
