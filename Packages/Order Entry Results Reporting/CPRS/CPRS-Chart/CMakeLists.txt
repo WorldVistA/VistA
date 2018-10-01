@@ -13,12 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-add_delphi_project(CPRSChart)
-#add_dependencies(CPRSChart ORDateLibXE3)
 
+option(LOCALIZE_USING_KRYVICH "Use Kryvich Framework for Localization" OFF)
+
+if(${LOCALIZE_USING_KRYVICH})
+  set(USE_KRYVICH_UNITS "  uFreeLocalizer in '${CMAKE_CURRENT_SOURCE_DIR}\\Translation-Frameworks\\kryvich\\uFreeLocalizer.pas',   uStringUtils in   '${CMAKE_CURRENT_SOURCE_DIR}\\Translation-Frameworks\\kryvich\\uStringUtils.pas',")
+  set(USE_KRYVICH_INIT "FreeLocalizer.AutoTranslate := True; FreeLocalizer.LanguageFile := 'CPRSChart.ko.lng';")
+endif()
+
+add_delphi_project(CPRSChart)
 
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/CPRSChart.TLB" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/CPRSChart.ridl" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+if(${LOCALIZE_USING_KRYVICH})
+  file(GLOB TRANSLATIONS "${CMAKE_CURRENT_SOURCE_DIR}/Translations/kryvich/*.lng")
+  file(COPY ${TRANSLATIONS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endif()
 set(BUILD_DELPHI_XuDigSig_DIR "${CMAKE_CURRENT_SOURCE_DIR}/XuDigSig" CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
 if(NOT BUILD_DELPHI_XuDigSig_DIR)
   message(WARNING "The CPRSv29 source on the FOIA site contained code that was
