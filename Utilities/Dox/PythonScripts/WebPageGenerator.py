@@ -3885,8 +3885,8 @@ def run(args):
     logger.info ("Starting generating web pages....")
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
-                                  args.outdir,
-                                  args.pdfOutdir,
+                                  args.outDir,
+                                  args.pdfOutDir,
                                   args.MRepositDir,
                                   doxDir,
                                   args.includeSource,
@@ -3901,7 +3901,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='VistA Visual Cross-Reference Documentation Generator',
         parents=[crossRefArgParse])
-    parser.add_argument('-po', '--pdfOutdir', required=True,
+    parser.add_argument('-po', '--pdfOutDir', required=True,
                         help='Output PDF directory')
     parser.add_argument('-is', '--includeSource', required=False,
                         default=False, action='store_true',
@@ -3924,7 +3924,7 @@ if __name__ == '__main__':
                         help='Repository information in JSON format')
     result = parser.parse_args();
 
-    initLogging(DEFAULT_OUTPUT_LOG_FILE_NAME)
+    initLogging(result.logFileDir, DEFAULT_OUTPUT_LOG_FILE_NAME)
     logger.debug(result)
 
     run(result)

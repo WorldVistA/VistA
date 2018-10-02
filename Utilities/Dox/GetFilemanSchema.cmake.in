@@ -45,7 +45,9 @@ make_directory(@CALLER_GRAPH_LOG_DIR@)
 foreach(file ${masterfilelist})
   file(TO_NATIVE_PATH "@FILEMAN_SCHEMA_DIR@/${file}.schema" schemafile)
   file(TO_NATIVE_PATH "@CALLER_GRAPH_LOG_DIR@/${file}.log" slogfile)
-  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@SCRIPT_OUTPUT_DIR@/FilemanGlobalAttributes.py" "${file}" "${schemafile}" "${slogfile}" RESULT_VARIABLE retValue ERROR_VARIABLE errCode)
+  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@SCRIPT_OUTPUT_DIR@/FilemanGlobalAttributes.py"
+                    "${file}" "${schemafile}" "${slogfile}" @LOG_OUTPUT_DIR@
+                    RESULT_VARIABLE retValue ERROR_VARIABLE errCode)
   if(NOT retValue EQUAL 0)
     list(APPEND erroredFiles ${file})
   endif()

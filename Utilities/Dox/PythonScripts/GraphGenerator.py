@@ -288,7 +288,7 @@ def run(args):
                                                                  )
   logger.info ("Starting generating graphs....")
   graphGenerator = GraphGenerator(crossRef,
-                                  args.outdir,
+                                  args.outDir,
                                   doxDir,
                                   args.dot)
   graphGenerator.generateGraphs()
@@ -311,7 +311,7 @@ if __name__ == '__main__':
                         help='CSV formatted "Relational Jump" field data for Print Templates')
     result = parser.parse_args();
 
-    initLogging("GraphGen.log")
+    initLogging(result.logFileDir, "GraphGen.log")
     logger.debug(result)
 
     run(result)

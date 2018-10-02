@@ -45,20 +45,23 @@ def run(args):
       urllib.urlretrieve("http://%s" % quotedURL,"oldRequirements.json")
       pastDataFileName = "oldRequirements.json"
 
-    args.ReqJsonFile = os.path.join(args.outdir, "requirements.json")
+    args.ReqJsonFile = os.path.join(args.outDir, "requirements.json")
     filename = os.path.basename(xlsfileName)[:-5] # Remove '.txt'
     curDate = filename[filename.rfind("_")+1:]
     RequirementsXLStoJSON.convertExcelToJson(xlsfileName, args.ReqJsonFile, pastDataFileName, curDate)
-    converter = RequirementsJSONtoHTML.RequirementsConverter(os.path.join(args.outdir,"requirements"))
+    converter = RequirementsJSONtoHTML.RequirementsConverter(os.path.join(args.outDir, "requirements"))
     converter.convertJsonToHtml(args.ReqJsonFile)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA Requirements Parser')
-    parser.add_argument('-o','--outdir', help='path to the output web page directory')
-    parser.add_argument('-lr','--localReq', help='path to a local requirements file')
+    parser.add_argument('-o','--outDir', help='path to the output web page directory')
+    parser.add_argument('-lf', '--logFileDir', required=True,
+                        help='Logfile directory')
+    parser.add_argument('-lr','--localReq',
+                        help='path to a local requirements file')
     parser.add_argument('-lp','--localPast',
                         help='path to a local JSON of the previous requirements information')
     result = parser.parse_args()
-    initLogging("RequirementsParser.log")
+    initLogging(result.logFileDir, "RequirementsParser.log")
     logger.debug(result)
     run(result)

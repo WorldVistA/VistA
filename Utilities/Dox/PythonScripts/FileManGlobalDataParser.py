@@ -806,10 +806,10 @@ def run(args):
     assert fileNo in glbDataParser.globalLocationMap
   del glbDataParser.outFileManData['1']
 
-  glbDataParser.outdir = args.outdir
+  glbDataParser.outdir = args.outDir
 
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, args.outdir, _doxURL)
+  htmlGen = FileManDataToHtml(crossRef, args.outDir, _doxURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
@@ -874,8 +874,10 @@ def createArgParser():
   parser = argparse.ArgumentParser(description='FileMan Global Data Parser',
                                    parents=[initParser])
   parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
-  parser.add_argument('-outdir', required=True,
+  parser.add_argument('-o', '--outDir', required=True,
                       help='top directory to generate output in html')
+  parser.add_argument('-lf', '--logFileDir', required=True,
+                      help='Logfile directory')
   parser.add_argument('-all', action='store_true',
                       help='generate all dependency files ')
   parser.add_argument('-local', action='store_true',
@@ -885,7 +887,7 @@ def createArgParser():
 def main():
   parser = createArgParser()
   result = parser.parse_args()
-  initLogging("FileManGlobalDataParser.log")
+  initLogging(result.logFileDir, "FileManGlobalDataParser.log")
   logger.debug(result)
   run(result)
 

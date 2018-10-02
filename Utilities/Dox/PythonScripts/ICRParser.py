@@ -69,6 +69,8 @@ def create_arg_parser():
     base_parser = argparse.ArgumentParser(add_help=False)
     base_parser.add_argument('icrFile',  help='path to the VistA ICR file')
     base_parser.add_argument('icrJsonFile', help='path to the output JSON file')
+    base_parser.add_argument('-lf', '--logFileDir', required=True,
+                             help='Logfile directory')
 
     subparsers = parser.add_subparsers()
     # Create the parser for the "json" command
@@ -115,9 +117,10 @@ def create_arg_parser():
 if __name__ == '__main__':
     arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
-    initLogging("ICRParser.log")
+    initLogging(args.logFileDir, "ICRParser.log")
     logger.debug(args)
     kargs = vars(args)
+    del kargs['logFileDir']
     func = kargs["func"]
     del kargs["func"]
     func(**kargs)

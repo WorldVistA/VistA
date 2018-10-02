@@ -42,6 +42,8 @@ def createArgParser():
                         help='VistA M Component Git Repository Directory')
     parser.add_argument('-outputfile', required=True,
                         help='Full path to output file')
+    parser.add_argument('-lf', '--logFileDir', required=True,
+                        help='Logfile directory')
     parser.add_argument('-git', required=True, help='Git executable')
     return parser
 
@@ -49,6 +51,6 @@ def createArgParser():
 if __name__ == '__main__':
     parser = createArgParser()
     result = parser.parse_args()
-    initLogging("GenerateRepoInfo.log")
+    initLogging(result.logFileDir, "GenerateRepoInfo.log")
     logger.debug(result)
     run(result)

@@ -21,7 +21,7 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista',
             '${VISTA_SOURCE_DIR}/Utilities/Dox/PythonScripts'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
-#from LogManager import initLogging, logger
+from LogManager import initLogging, logger
 
 def listFileManFileAttributes(FileManNo, outputFile, logFile):
   logger.info("Processing file %s ..." % FileManNo)
@@ -139,9 +139,9 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     logger.error(e)
 
 if __name__ == '__main__':
-  initLogging("FileManGlobalAttributes.log")
-  if len(sys.argv) <= 1:
-    loger.error('Need at least two arguments')
+  if len(sys.argv) != 5:
+    print 'Wrong number of arguments'
     sys.exit()
+  initLogging(sys.argv[4], "FileManGlobalAttributes.log")
   listFileManFileAttributes(sys.argv[1],
                             sys.argv[2], sys.argv[3])

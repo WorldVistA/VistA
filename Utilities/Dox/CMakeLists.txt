@@ -83,8 +83,9 @@ if (NOT GENERATE_DOX AND GENERATE_PDF_BUNDLE)
 endif()
 
 set(SCRIPT_OUTPUT_DIR "${CMAKE_BINARY_DIR}/Docs/CallerGraph")
-# 0. Install the Enhanced XINDEX patch
+set(LOG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/Log")
 
+# 0. Install the Enhanced XINDEX patch
 if (GENERATE_DOX OR GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXInstall.cmake.in ${SCRIPT_OUTPUT_DIR}/XINDEXInstall.cmake @ONLY)
   add_test(XINDEX_Install ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/XINDEXInstall.cmake)

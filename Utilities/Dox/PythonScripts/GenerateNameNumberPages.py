@@ -77,12 +77,14 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(
         description='VistA Visual Namespace and Numberspace Generator',
         parents=[initParser])
-  parser.add_argument('-o', '--outdir', required=True,
+  parser.add_argument('-o', '--outDir', required=True,
                       help='Output Web Page directory')
+  parser.add_argument('-lf', '--logFileDir', required=True,
+                      help='Logfile directory')
   parser.add_argument('-nn','--NameNumberdir', required=True,
                       help='Path to directory with Name/Numberspace listing')
   result = parser.parse_args()
-  initLogging("GenerateNameNumberPages.log")
+  initLogging(result.logFileDir, "GenerateNameNumberPages.log")
   logger.debug(result)
 
   for file in glob.glob(os.path.join(result.NameNumberdir,"*.json")):
@@ -91,4 +93,4 @@ if __name__ == '__main__':
     if "Number" in dataType:
       dataType = "Numberspace"
     crossRef = parseCrossRefGeneratorWithArgs(result)
-    generateListingPage(result.outdir,jsonData,dataType)
+    generateListingPage(result.outDir, jsonData, dataType)

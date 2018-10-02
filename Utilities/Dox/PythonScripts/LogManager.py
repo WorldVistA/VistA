@@ -20,7 +20,6 @@
 import logging
 import os
 import sys
-import tempfile
 
 logger = logging.getLogger()
 
@@ -34,19 +33,22 @@ FORMAT_STRING = '%(asctime)s %(levelname)s %(message)s'
 # DEBUG
 # NOTSET (default, all others)
 
-def initLogging(outputFileName):
+def initLogging(outputDir, outputFileName):
     # Set root logging level. This level is checked first and then the
     # individual handers' levels are checked.
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter(FORMAT_STRING)
-    _setupFileLogging(outputFileName, logging.DEBUG, formatter)
-    _setupConsoleLogging(logging.DEBUG, formatter)
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+    _setupFileLogging(os.path.join(outputDir, outputFileName),
+                      logging.DEBUG, formatter)
+    _setupConsoleLogging(logging.WARNING, formatter)
 
 def _getTempLogFile(filename):
     return os.path.join(tempfile.gettempdir(), filename)
 
 def _setupFileLogging(filename, level, formatter):
-    fileHandler = logging.FileHandler(_getTempLogFile(filename), 'w')
+    fileHandler = logging.FileHandler(filename, 'a')
     fileHandler.setLevel(level)
     fileHandler.setFormatter(formatter)
     logger.addHandler(fileHandler)

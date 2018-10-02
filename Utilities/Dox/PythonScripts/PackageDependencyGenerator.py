@@ -88,7 +88,7 @@ def main():
                         help='Output JSON file for package dependencies')
     result = parser.parse_args()
 
-    initLogging("GeneratePackageDep.log")
+    initLogging(result.logFileDir, "GeneratePackageDep.log")
     logger.debug(result)
 
     crossRefBlder = CrossReferenceBuilder()

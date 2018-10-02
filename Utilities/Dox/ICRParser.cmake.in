@@ -50,6 +50,7 @@ execute_process(COMMAND
   "@PYTHONSCRIPTS_DIR@/ICRParser.py"
   ${COMMAND}
   ${ARGS}
+  -lf @LOG_OUTPUT_DIR@
   @ICR_FILE@
   @ICR_JSON_FILE@
   ERROR_VARIABLE error RESULT_VARIABLE retValue)
