@@ -714,6 +714,19 @@ procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
   ClientVer, ServerVer, ServerReq, SAN: string;
+
+resourcestring
+  RS_PROBLEMS = 'Problems';
+  RS_MEDS =     'Meds';
+  RS_ORDERS =   'Orders';
+  RS_NOTES =    'Notes';
+  RS_CONSULTS = 'Consults';
+  RS_SURGERY =  'Surgery';
+  RS_DCSUMM =   'D/C Summ';
+  RS_LABS =     'Labs';
+  RS_REPORTS =  'Reports';
+  RS_COVER =    'Cover Sheet';
+
 begin
   FJustEnteredApp := false;
   SizeHolder := TSizeHolder.Create;
@@ -877,16 +890,16 @@ begin
   // load all the tab pages
   FCreateProgress := FCP_FORMS;
   //CreateTab(TObject(frmProblems), TfrmProblems, CT_PROBLEMS, 'Problems');
-  CreateTab(CT_PROBLEMS, 'Problems');
-  CreateTab(CT_MEDS,     'Meds');
-  CreateTab(CT_ORDERS,   'Orders');
-  CreateTab(CT_NOTES,    'Notes');
-  CreateTab(CT_CONSULTS, 'Consults');
-  if ShowSurgeryTab then CreateTab(CT_SURGERY,  'Surgery');
-  CreateTab(CT_DCSUMM,   'D/C Summ');
-  CreateTab(CT_LABS,     'Labs');
-  CreateTab(CT_REPORTS,  'Reports');
-  CreateTab(CT_COVER,    'Cover Sheet');
+  CreateTab(CT_PROBLEMS, RS_PROBLEMS);
+  CreateTab(CT_MEDS,     RS_MEDS);
+  CreateTab(CT_ORDERS,   RS_ORDERS);
+  CreateTab(CT_NOTES,    RS_NOTES);
+  CreateTab(CT_CONSULTS, RS_CONSULTS);
+  if ShowSurgeryTab then CreateTab(CT_SURGERY,  RS_SURGERY);
+  CreateTab(CT_DCSUMM,   RS_DCSUMM);
+  CreateTab(CT_LABS,     RS_LABS);
+  CreateTab(CT_REPORTS,  RS_REPORTS);
+  CreateTab(CT_COVER,    RS_COVER);
   ShowHideChartTabMenus(mnuViewChart);
   //  We defer calling LoadUserPreferences to UMInitiate, so that the font sizing
   // routines recognize this as the application's main form (this hasn't been

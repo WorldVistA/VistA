@@ -333,11 +333,11 @@ uses
   uGlobalVar in '@SOURCE@\uGlobalVar.pas',
   ORExtensions in '@SOURCE@\ORExtensions.pas',
   fFocusedControls in '@SOURCE@\fFocusedControls.pas' {fFocusedControls},
+@USE_KRYVICH_UNITS@
   mTreeGrid in '@SOURCE@\mTreeGrid.pas' {TreeGridFrame: TFrame},
   mColumnTree in '@SOURCE@\mColumnTree.pas' {ColumnTreeFrame: TFrame},
   mDrawers in '@SOURCE@\mDrawers.pas' {fraDrawers: TFrame},
   mRadioListView in '@SOURCE@\mRadioListView.pas' {RadioLVFrame: TFrame};
-  
 
 {$R *.TLB}
 
@@ -348,6 +348,8 @@ begin
   if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
 //    RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
   Application.Initialize;
+
+@USE_KRYVICH_INIT@
 
   frmSplash := nil;
   if ParamSearch('SPLASH') <> 'OFF' then
