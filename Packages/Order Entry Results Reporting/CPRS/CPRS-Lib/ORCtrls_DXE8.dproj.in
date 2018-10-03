@@ -3,7 +3,7 @@
         <ProjectGuid>{FA988881-FD16-4E79-8ED4-1DC294D78665}</ProjectGuid>
         <MainSource>ORCtrls_DXE8.dpk</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
         <FrameworkType>VCL</FrameworkType>
