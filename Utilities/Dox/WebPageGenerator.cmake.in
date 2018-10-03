@@ -29,6 +29,7 @@ execute_process(COMMAND
   -fs @FILEMAN_SCHEMA_DIR@
   -db @FILEMANDBCALL_JSON@
   -o @DOCUMENT_VISTA_DOX_OUTPUT_DIR@
+  -lf @LOG_OUTPUT_DIR@
   -po @DOCUMENT_VISTA_PDF_OUTPUT_DIR@
   -is
   -rj @ROUTINEREF_JSON@
@@ -39,8 +40,7 @@ execute_process(COMMAND
   -fj @FILESINFO_JSON@
   @GENERATE_PDF@
   @GENERATE_LOCAL_LINKS@
-
-  OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
+  ERROR_VARIABLE output RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
   message(FATAL_ERROR "Error running WebPageGenerator:\n\n${output}")
 endif()

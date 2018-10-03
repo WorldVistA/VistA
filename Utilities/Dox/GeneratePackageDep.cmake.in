@@ -25,8 +25,8 @@ execute_process(COMMAND
   -db @FILEMANDBCALL_JSON@
   -pj @PACKAGEDEP_JSON@
   -o @DOCUMENT_VISTA_DOX_OUTPUT_DIR@
-
-  OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
+  -lf @LOG_OUTPUT_DIR@
+  ERROR_VARIABLE error RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
-  message(FATAL_ERROR "Error running PackageDependencyGenerator:\n\n${output}")
+  message(FATAL_ERROR "Error running PackageDependencyGenerator:\n\n${error}")
 endif()

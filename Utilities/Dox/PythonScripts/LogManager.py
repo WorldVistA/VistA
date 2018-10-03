@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# A Python model to manage the logging, placeholder
+# A Python model to manage the logging
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
 #
@@ -15,15 +15,46 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#---------------------------------------------------------------------------
+
 import logging
+import os
 import sys
+
 logger = logging.getLogger()
 
-def initConsoleLogging(defaultLevel=logging.INFO,
-                       formatStr = '%(asctime)s %(levelname)s %(message)s'):
-    logger.setLevel(defaultLevel)
+FORMAT_STRING = '%(asctime)s %(levelname)s %(message)s'
+
+# Logging Levels
+# CRITICAL
+# ERROR
+# WARNING (default, root)
+# INFO
+# DEBUG
+# NOTSET (default, all others)
+
+def initLogging(outputDir, outputFileName):
+    # Set root logging level. This level is checked first and then the
+    # individual handers' levels are checked.
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter(FORMAT_STRING)
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+    _setupFileLogging(os.path.join(outputDir, outputFileName),
+                      logging.DEBUG, formatter)
+    _setupConsoleLogging(logging.WARNING, formatter)
+
+def _getTempLogFile(filename):
+    return os.path.join(tempfile.gettempdir(), filename)
+
+def _setupFileLogging(filename, level, formatter):
+    fileHandler = logging.FileHandler(filename, 'a')
+    fileHandler.setLevel(level)
+    fileHandler.setFormatter(formatter)
+    logger.addHandler(fileHandler)
+
+def _setupConsoleLogging(level, formatter):
     consoleHandler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter(formatStr)
-    consoleHandler.setLevel(defaultLevel)
+    consoleHandler.setLevel(level)
     consoleHandler.setFormatter(formatter)
     logger.addHandler(consoleHandler)

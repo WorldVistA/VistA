@@ -13,15 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
 from __future__ import with_statement
 import sys
 import os
-sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista',
+            '${VISTA_SOURCE_DIR}/Utilities/Dox/PythonScripts'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
+from LogManager import initLogging, logger
 
 def listFileManFileAttributes(FileManNo, outputFile, logFile):
-  print "Processing file", FileManNo, "..."
+  logger.info("Processing file %s ..." % FileManNo)
   VistA=ConnectToMUMPS(sys.argv[3],'${VISTA_CACHE_INSTANCE}','${VISTA_CACHE_NAMESPACE}')
   if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
     VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
@@ -47,7 +50,7 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     VistA.write(FileManNo)
     index = VistA.multiwait(["START WITH",'GO TO'])
     if index == 0:
-      print 'No file to be found'
+      logger.error('No file to be found')
       sys.exit(1)
     VistA.write(FileManNo)
     while True:
@@ -95,7 +98,7 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
             VistA.write('')
             continue
           else:
-            print ('Unexpected index value %d, send \'\\r\'' % idx)
+            logger.warning('Unexpected index value %d, send \'\\r\'' % idx)
             VistA.write('')
             continue
         continue
@@ -126,18 +129,19 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
         VistA.write('')
         continue
       if index == 3:
-        print "ERROR: Something went wrong with processing this file: %s" % FileManNo
+        logger.error("Something went wrong with processing this file: %s" % FileManNo)
         sys.exit(1)
     VistA.wait('Select OPTION:')
     VistA.write('')
     VistA.wait(PROMPT)
     VistA.write('HALT')
-  except EOFError:
-    print 'Error'
+  except EOFError, e:
+    logger.error(e)
 
 if __name__ == '__main__':
-  if len(sys.argv) <= 1:
-    print ('Need at least two arguments')
+  if len(sys.argv) != 5:
+    print 'Wrong number of arguments'
     sys.exit()
+  initLogging(sys.argv[4], "FileManGlobalAttributes.log")
   listFileManFileAttributes(sys.argv[1],
                             sys.argv[2], sys.argv[3])

@@ -17,11 +17,9 @@ import os
 import sys
 import re
 from datetime import datetime
-import logging
 import glob
 import cgi
 import re
-import glob
 import json
 import argparse
 
@@ -35,6 +33,7 @@ from CrossReference import CrossReference
 from UtilityFunctions import getPackageHtmlFileName
 from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader, outputDataTableFooter
 from DataTableHtml import outputDataListTableHeader
+from LogManager import initLogging, logger
 
 def generateListingPage(outDir, pageData, dataType):
     outDir = os.path.join(outDir, dataType.replace(".","_"))
@@ -72,20 +71,26 @@ def generateListingPage(outDir, pageData, dataType):
       output.write("</div>\n")
       output.write("</div>\n")
       output.write ("</body></html>\n")
-if __name__ == '__main__':
 
+if __name__ == '__main__':
   initParser = createInitialCrossRefGenArgParser()
   parser = argparse.ArgumentParser(
         description='VistA Visual Namespace and Numberspace Generator',
         parents=[initParser])
-  parser.add_argument('-o', '--outdir', required=True,
+  parser.add_argument('-o', '--outDir', required=True,
                       help='Output Web Page directory')
-  parser.add_argument('-nn','--NameNumberdir', required=True, help='Path to directory with Name/Numberspace listing')
-  result = parser.parse_args();
+  parser.add_argument('-lf', '--logFileDir', required=True,
+                      help='Logfile directory')
+  parser.add_argument('-nn','--NameNumberdir', required=True,
+                      help='Path to directory with Name/Numberspace listing')
+  result = parser.parse_args()
+  initLogging(result.logFileDir, "GenerateNameNumberPages.log")
+  logger.debug(result)
+
   for file in glob.glob(os.path.join(result.NameNumberdir,"*.json")):
     jsonData = json.load(open(file,"r"))
     dataType = jsonData["headers"][0]
     if "Number" in dataType:
       dataType = "Numberspace"
     crossRef = parseCrossRefGeneratorWithArgs(result)
-    generateListingPage(result.outdir,jsonData,dataType)
+    generateListingPage(result.outDir, jsonData, dataType)

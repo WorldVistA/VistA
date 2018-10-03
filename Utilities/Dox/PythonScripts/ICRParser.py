@@ -21,7 +21,7 @@ from ICRFileToJson import convertICRToJson
 from ICRJsonToHtml import convertJson
 import ICRSchema
 
-from LogManager import initConsoleLogging
+from LogManager import initLogging, logger
 
 # Note: The parameter names in the generate_<...> functions
 # must match the argument names *exactly*
@@ -53,8 +53,6 @@ def generate_all(icrFile=None, icrJsonFile=None, MRepositDir=None,
 def _generate(icrFile, icrJsonFile, MRepositDir=None, patchRepositDir=None,
               generateHTML=False, generatePDF=False,
               outDir=None, pdfOutDir=None, local=False):
-    initConsoleLogging()
-
     generate_json(icrFile, icrJsonFile)
     if generateHTML or generatePDF:
         # Look for date file was created
@@ -71,6 +69,8 @@ def create_arg_parser():
     base_parser = argparse.ArgumentParser(add_help=False)
     base_parser.add_argument('icrFile',  help='path to the VistA ICR file')
     base_parser.add_argument('icrJsonFile', help='path to the output JSON file')
+    base_parser.add_argument('-lf', '--logFileDir', required=True,
+                             help='Logfile directory')
 
     subparsers = parser.add_subparsers()
     # Create the parser for the "json" command
@@ -117,7 +117,10 @@ def create_arg_parser():
 if __name__ == '__main__':
     arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
+    initLogging(args.logFileDir, "ICRParser.log")
+    logger.debug(args)
     kargs = vars(args)
+    del kargs['logFileDir']
     func = kargs["func"]
     del kargs["func"]
     func(**kargs)

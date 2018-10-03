@@ -35,7 +35,7 @@ from CrossReference import CrossReference, Routine, Package, Global
 from CrossReference import PlatformDependentGenericRoutine
 from CrossReference import FileManField, FileManFile, FileManFieldFactory
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 
 """
   need to ignore some dialog function
@@ -121,12 +121,6 @@ class FileManDbCallParser(object):
                     logger.error("file #%s[%s] is not a valid fileman file, for"
                         " routine [%s]" % (fileNo, callDetail, routine))
 
-""" main entry """
-from CallerGraphParser import createCallGraphLogAugumentParser
-from CallerGraphParser import parseAllCallGraphLogWithArg
-from DataDictionaryParser import createDataDictionaryAugumentParser
-from DataDictionaryParser import parseDataDictionaryLogFile
-
 
 def createFileManDBFileAugumentParser(isRequired=True):
     parser = argparse.ArgumentParser(add_help=False) # no help page
@@ -139,19 +133,3 @@ def parseFileManDBJSONFile(crossRef, fileManJsonFile, isRequired=True):
     fileDbCallParser = FileManDbCallParser(crossRef)
     fileDbCallParser.parseFileManDbJSONFile(fileManJsonFile)
     return fileDbCallParser
-
-if __name__ == '__main__':
-    callLogArgParser = createCallGraphLogAugumentParser()
-    dataDictArgParser = createDataDictionaryAugumentParser()
-    filemanDBJsonArgParser = createFileManDBFileAugumentParser()
-    parser = argparse.ArgumentParser(
-          description='VistA Cross-Reference FileMan DB Call JSON Files Parser',
-          parents=[callLogArgParser, dataDictArgParser, filemanDBJsonArgParser])
-    result = parser.parse_args();
-    initConsoleLogging()
-    logFileParser = parseAllCallGraphLogWithArg(result)
-    crossRef = logFileParser.getCrossReference()
-    DDFileParser = parseDataDictionaryLogFile(crossRef, result.fileSchemaDir)
-    fileDbCallParser = parseFileManDBJSONFile(crossRef, result.filemanDbJson)
-    logger.info("Total # of fileman subfiles are %s" %
-                len(crossRef.getAllFileManSubFiles()))

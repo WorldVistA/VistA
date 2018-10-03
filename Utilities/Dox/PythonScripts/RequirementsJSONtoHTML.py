@@ -3,14 +3,13 @@ import argparse
 import os.path
 import cgi
 import sys
-import logging
-import pprint
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
+
 
 def createArgParser():
     parser = argparse.ArgumentParser(description='VistA Requirements JSON to Html')
@@ -175,7 +174,7 @@ class RequirementsConverter:
                             output.write("<td>%s</td>\n" %  reqSummary[idx])
                     output.write("</tr>\n")
             else:
-                logging.info("Ajax source file: %s" % ajaxSrc)
+                logger.info("Ajax source file: %s" % ajaxSrc)
                 """ Write out the data file in JSON format """
                 outJson = {"aaData": []}
                 with open(os.path.join(outDir, ajaxSrc), 'w') as ajaxOut:
@@ -218,12 +217,3 @@ class RequirementsConverter:
         for NSRKey in nsrSummary.keys():
           self._generateRequirementsSummaryPageImpl(nsrSummary, 'Requirement List', NSRKey, False)
         self._generateRequirementsSummaryPageImpl(allReqs, 'Requirement List', "All", True)
-if __name__ == '__main__':
-    parser = createArgParser()
-    result = parser.parse_args()
-    initConsoleLogging()
-    # pprint.pprint(set(crossRef.getAllPackages().keys()))
-    # initConsoleLogging(logging.DEBUG)
-    if result.reqJsonFile:
-      requirementConverter = RequirementsConverter(result.outDir)
-      requirementConverter.convertJsonToHtml(result.reqJsonFile)

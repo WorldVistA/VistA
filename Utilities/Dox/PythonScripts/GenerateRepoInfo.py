@@ -18,6 +18,7 @@ import os
 import subprocess
 from datetime import datetime
 
+from LogManager import initLogging, logger
 
 def run(result):
     with open(result.outputfile, 'w') as file:
@@ -41,13 +42,15 @@ def createArgParser():
                         help='VistA M Component Git Repository Directory')
     parser.add_argument('-outputfile', required=True,
                         help='Full path to output file')
+    parser.add_argument('-lf', '--logFileDir', required=True,
+                        help='Logfile directory')
     parser.add_argument('-git', required=True, help='Git executable')
     return parser
 
 
 if __name__ == '__main__':
-    from LogManager import initConsoleLogging
-    initConsoleLogging(formatStr='%(asctime)s %(message)s')
     parser = createArgParser()
     result = parser.parse_args()
+    initLogging(result.logFileDir, "GenerateRepoInfo.log")
+    logger.debug(result)
     run(result)

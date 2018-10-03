@@ -119,7 +119,7 @@ class ICRFileToJson(object):
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
                     if len(line.strip()) == 0 and not isWordProcessingField(self._curField):
-                        logger.warn('Ignore blank line for current field: [%s]', self._curField)
+                        logger.debug('Ignore blank line for current field: [%s]', self._curField)
                         continue
                     self._appendWordsFieldLine(line)
                 else:
@@ -259,7 +259,7 @@ class ICRFileToJson(object):
     def isIgnoredLine(self, line):
         for regEx in LINES_TO_IGNORE:
             if regEx.match(line):
-                logger.warn('Ignore line %s', line)
+                logger.debug('Ignore line %s', line)
                 return True
         return False
 

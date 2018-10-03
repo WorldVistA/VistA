@@ -17,7 +17,8 @@ import os
 import sys
 import re
 from datetime import datetime
-import logging
+
+from LogManager import logger
 
 class ItemValue(object):
   def __init__(self, value):
@@ -99,7 +100,7 @@ class GlobalNode(object):
 def printGlobal(gNode):
   if gNode is not None:
     if gNode.value is not None: # skip intermediate node
-      logging.info(gNode)
+      logger.info(gNode)
     for item in sorted(gNode, cmp=sortDataEntryFloatFirst):
       printGlobal(gNode[item])
   else:
@@ -135,28 +136,6 @@ def convertToType(data1, convertFunc):
   except ValueError:
     return False
 
-def testGlobalNode():
-  gn = GlobalNode("root^test", "^ZZTEST")
-  assert gn.value == 'root^test'
-  assert gn.subscript == "^ZZTEST"
-  assert gn.isRoot
-  assert gn.getRootSubscript() == gn.subscript
-  gn['test'] = GlobalNode("-1")
-  for i in xrange(0,5):
-    gn['test'][i] = GlobalNode(str(i)+'^')
-    for j in xrange(0,5):
-      gn['test'][i][j] = GlobalNode("^".join([str(i), str(j)]))
-    assert len(ItemValue(gn['test'][i].value)) == 2
-  assert gn['test'].get(6) == None
-  assert gn['test'][2].value == '2^'
-  assert 2 in gn['test']
-  assert countGlobal(gn) == 32
-
-def test_sortDataEntryFloatFirst():
-  initLst = ['PRE', 'DIST', '22', '1', '0', 'INIT', 'VERSION', '4', 'INI', '%D', '%']
-  sortedLst = sorted(initLst, cmp=sortDataEntryFloatFirst)
-  print initLst, sortedLst
-
 def getKeys(globalRoot, func=int):
   outKey = []
   for key in globalRoot:
@@ -190,22 +169,13 @@ def getCommonSubscript(one, two):
       break
   return lessOne[0:idx]
 
-def test_getCommonSubscript():
-  testOne = [0,1,2,3]
-  testTwo = [0,3]
-  testThree = [-1,1]
-  testFour = None
-  assert getCommonSubscript(testOne, testTwo) == [0]
-  assert getCommonSubscript(testOne, testThree) == []
-  assert getCommonSubscript(testOne, testFour) == []
-
 def resetGlobalIndex(subscripts, glbRootSub):
   index = 1
   if len(subscripts) == 1:
-    logging.info("reset index to 0")
+    logger.info("reset index to 0")
     index = 0
   elif glbRootSub == '^DD' and subscripts[0] == '0':
-    logging.info("reset index to 0")
+    logger.info("reset index to 0")
     index = 0
   return index
 
@@ -273,14 +243,14 @@ class DefaultZWRRootGenerator(object):
     retNode = None
     subscripts, value, rootSub = findSubscriptValue(line)
     if not subscripts: # must have some subscripts
-      logging.info("no subscription found %s" % line)
+      logger.info("no subscription found %s" % line)
       return None
     if not self.rootSub:
       self.rootSub = rootSub
     if rootSub != self.rootSub: # not under the same root, ignore
       retNode = self.curRoot
       if self.glbLoc:
-        logging.warn("Different root, expected: %s, real: %s, ignore for now" %
+        logger.warn("Different root, expected: %s, real: %s, ignore for now" %
                       (self.rootSub, rootSub))
         self.curRoot = None
         return True
@@ -296,7 +266,7 @@ class DefaultZWRRootGenerator(object):
         else:
           return True
     if self.commonSubscript and subscripts[0:self.index] != self.commonSubscript:
-      logging.warn("Different subsript, expected: %s, real: %s, ignore for now" %
+      logger.warn("Different subsript, expected: %s, real: %s, ignore for now" %
           (self.commonSubscript, subscripts[0:self.index]))
       retNode = self.curRoot
       self.curRoot = None
@@ -308,7 +278,7 @@ class DefaultZWRRootGenerator(object):
       else:
         return True
     curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
-    #logging.debug(curCommonScript, self.curCommonSub)
+    #logger.debug(curCommonScript, self.curCommonSub)
     if self.curCommonSub is None or self.curCommonSub == curCommonScript:
       if self.curCommonSub is None:
         self.curCommonSub = subscripts[0:self.index+1]
@@ -349,7 +319,7 @@ def readGlobalNodeFromZWRFile(inputFileName):
       curCommonScript = getCommonSubscript(subscripts, commonSubscript)
       if not curCommonScript:
         commonSubscript = subscripts[0:index+1]
-        logging.debug("com sub: %s, index is %s" % (commonSubscript, index))
+        logger.debug("com sub: %s, index is %s" % (commonSubscript, index))
       if curCommonScript != commonSubscript:
         retNode = curRoot
         if curCommonScript:
@@ -366,42 +336,6 @@ def readGlobalNodeFromZWRFile(inputFileName):
     """
     if curRoot:
       yield curRoot
-
-def test_createGlobalNodeByZWRFile(inputFileName):
-  logging.info("start parsing file: %s" % inputFileName)
-  outGlobal = createGlobalNodeByZWRFile(inputFileName)
-  print "Total Global is %s" % countGlobal(outGlobal)
-  print "Total size of Global is %s" % countGlobalSize(outGlobal)
-  logging.info("end parsing file: %s" % inputFileName)
-
-def test_readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
-  logging.info("Start reading file: %s" % inputFileName)
-  totalEntry = 0
-  for globalRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-    if globalRoot:
-      totalEntry += 1
-      logging.info("Current Entry#: %s" % totalEntry)
-      logging.info("Curent subscript is %s" % globalRoot.subscript)
-      printGlobal(globalRoot)
-      del globalRoot
-      globalRoot = None
-      pass
-  logging.info("Total # of entries: %s" % totalEntry)
-  logging.info("End reading file: %s" % inputFileName)
-def test_readGlobalNodeFromZWRFile(inputFileName):
-  logging.info("Start reading file: %s" % inputFileName)
-  totalEntry = 0
-  for globalRoot in readGlobalNodeFromZWRFile(inputFileName):
-    if globalRoot:
-      totalEntry += 1
-      logging.info("Current Entry#: %s" % totalEntry)
-      logging.info("Curent subscript is %s" % globalRoot.subscript)
-      del globalRoot
-      globalRoot = None
-      pass
-  logging.info("Total # of entries: %s" % totalEntry)
-  logging.info("End reading file: %s" % inputFileName)
-  totalEntry = 0
 
 def findSubscriptValue(inputLine):
   """
@@ -423,20 +357,6 @@ def findSubscriptValue(inputLine):
     nodeIndex = [x.strip('"') for x in inputLine[start+1:].split(",")]
     return nodeIndex, None, inputLine[:start]
 
-def test_findSubscriptValue():
-  for line in [
-    ('''^DD(0,0)="ATTRIBUTE^N^^35"''',
-      (['0','0'], 'ATTRIBUTE^N^^35', '^DD')),
-    ('''^DD(0,0,"IX","SB",0,.2)=""''',
-      (['0','0','IX','SB','0','.2'], '', '^DD')),
-    ('''^DD("IX"''', (['IX'],None,'^DD')),
-    ('''^DD''', (None, None,'^DD')),
-    ('''^DD(''', (None, None,'^DD')),
-  ]:
-    result = findSubscriptValue(line[0])
-    print line[0], result
-    assert result == line[1]
-
 def createGlobalNode(inputLine, globalRoot=None):
   """
     create Global Node based on the input
@@ -449,15 +369,15 @@ def createGlobalNode(inputLine, globalRoot=None):
     if nodeValue and len(nodeValue) > 0:
       nodeValue = nodeValue.replace('""', '"')
     if not globalRoot:
-      logging.debug("Creating a new globalRoot %s" % inputLine)
+      logger.debug("Creating a new globalRoot %s" % inputLine)
       retRoot = GlobalNode(subscript=nodeRoot)
       nodeIdx = retRoot
     else:
-      logging.debug("finding a new globalRoot")
+      logger.debug("finding a new globalRoot")
       nodeIdx = retRoot.getRootNode()
-      logging.debug("The root is %s" % nodeIdx.subscript)
+      logger.debug("The root is %s" % nodeIdx.subscript)
       if nodeIdx.subscript != nodeRoot:
-        logging.error("Global Node root subscript mismatch: %s, %s" %
+        logger.error("Global Node root subscript mismatch: %s, %s" %
                       (nodeRoot, nodeIdx.subscript))
     for idx in nodeIndex[:-1]:
       if idx not in nodeIdx:
@@ -465,36 +385,3 @@ def createGlobalNode(inputLine, globalRoot=None):
       nodeIdx = nodeIdx[idx]
     nodeIdx[nodeIndex[-1]] = GlobalNode(nodeValue)
   return retRoot
-
-def test_createGlobalNode():
-  for line in [
-    '''^DD(0,0)="ATTRIBUTE^N^^35"''',
-    '''^DD(0,0,"IX","SB",0,.2)=""''',
-    '''^DD("IX"''',
-  ]:
-    curNode = createGlobalNode(line)
-    printGlobal(curNode)
-
-def test_UtilitiesFunctions():
-  testGlobalNode()
-  test_getCommonSubscript()
-  test_findSubscriptValue()
-  test_createGlobalNode()
-
-def main():
-  from LogManager import initConsoleLogging
-  import sys
-  from datetime import datetime
-  import argparse
-  initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  test_UtilitiesFunctions()
-  #test_createGlobalNodeByZWRFile(sys.argv[1])
-  parser = argparse.ArgumentParser(description='VistA ZWR Global Parser')
-  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
-  parser.add_argument('-glbRoot', help='Global root location for FileMan file')
-  result = parser.parse_args()
-  test_readGlobalNodeFromZWRFileV2(result.gdFile, result.glbRoot)
-  #test_readGlobalNodeFromZWRFile(sys.argv[1])
-
-if __name__ == '__main__':
-  main()

@@ -1,3 +1,18 @@
+# ---------------------------------------------------------------------------
+# Copyright 2018 The Open Source Electronic Health Record Alliance
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ---------------------------------------------------------------------------
 
 import glob
 import re
@@ -12,7 +27,7 @@ if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 
 ARoutineEx = re.compile("^A[0-9][^ ]+$")
 
@@ -182,8 +197,8 @@ class InitCrossReferenceGenerator(object):
       if fileNo not in fileNoSet:
         fileNoSet.add(fileNo)
       else:
-        logger.error ("Error, duplicated file No [%s,%s,%s,%s] file:%s " %
-               (fileNo, globalName, globalDes, packageName, file))
+        logger.error("Duplicated file No [%s,%s,%s,%s] file:%s " %
+                      (fileNo, globalName, globalDes, packageName, file))
       zwrFile.close()
     logger.info ("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
            (len(allPackages), len(allGlobals), len(skipFile), len(fileNoSet)))
@@ -264,16 +279,3 @@ def createInitialCrossRefGenArgParser():
     argGroup.add_argument('-pr', '--patchRepositDir', required=True,
                           help="VistA Git Repository Directory")
     return parser
-
-def main():
-  initParser = createInitialCrossRefGenArgParser()
-  parser = argparse.ArgumentParser(
-              description='VistA Cross-Reference Call Graph Log Files Parser',
-              parents=[initParser])
-  initConsoleLogging()
-  result = parser.parse_args();
-  crossRefGen = parseCrossReferenceGeneratorArgs(result.MRepositDir,
-                                                 result.patchRepositDir)
-
-if __name__ == '__main__':
-  main()

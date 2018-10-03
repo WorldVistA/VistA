@@ -18,26 +18,9 @@ import xlrd
 from xlrd import open_workbook,cellname,xldate_as_tuple
 from datetime import datetime, date, time
 import csv
-import logging
 import json
 import re
 import sys
-
-def test_sheet(test_xls):
-  book = open_workbook(test_xls)
-  sheet0 = book.sheet_by_index(0)
-  for rx in range(sheet0.nrows):
-    for col_index in range(sheet0.ncols):
-      print sheet0.cell(rx, col_index)
-  # print sheet0.row(0)
-  # print sheet0.col(0)
-  # print
-  # print sheet0.row_slice(0,1)
-  # print sheet0.row_slice(0,1,2)
-  # print sheet0.row_values(0,1)
-  # print sheet0.row_values(0,1,2)
-  # print sheet0.row_types(0,1)
-  # print sheet0.row_types(0,1,2)
 
 rootNode = {}
 rootNode["None"] = []
@@ -202,17 +185,3 @@ def convertExcelToJson(input, output,pastData,curDate):
 
   with open(output, "w") as outputJson:
     json.dump(rootNode, outputJson)
-
-def main():
-  import argparse
-  parser = argparse.ArgumentParser("Convert Requirements Excel SpreadSheet to JSON")
-  parser.add_argument('input', help='input Requirements excel spreadsheet')
-  parser.add_argument('output', help='output JSON file')
-  parser.add_argument('-p','--pastData',help="The Previous version of the requirements JSON", required=False)
-  parser.add_argument('-d','--curDate',help="The date to use as the information for the updated files", required=True)
-  result = parser.parse_args()
-  curDate = result.curDate
-  convertExcelToJson(result.input, result.output, result.pastData, curDate)
-
-if __name__ == '__main__':
-  main()

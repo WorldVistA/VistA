@@ -39,8 +39,10 @@ def createCrossReferenceLogArgumentParser():
                                               callLogArgParser,
                                               dataDictLogArgParser,
                                               filemanDBJsonArgParser])
-    parser.add_argument('-o', '--outdir', required=True,
+    parser.add_argument('-o', '--outDir', required=True,
                         help='Output Web Page directory')
+    parser.add_argument('-lf', '--logFileDir', required=True,
+                        help='Logfile directory')
     return parser
 
 class CrossReferenceBuilder(object):
@@ -57,7 +59,7 @@ class CrossReferenceBuilder(object):
                                         arguments.fileSchemaDir,
                                         arguments.filemanDbJson,
                                         icrJson,
-                                        arguments.outdir,
+                                        arguments.outDir,
                                         inputTemplateDeps=inputTemplateDeps,
                                         sortTemplateDeps=sortTemplateDeps,
                                         printTemplateDeps=printTemplateDeps)

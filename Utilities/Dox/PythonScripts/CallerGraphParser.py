@@ -33,7 +33,7 @@ from CrossReference import CrossReference, Routine, Package, Global, PlatformDep
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
 from CrossReference import RoutineCallInfo, getAlternateGlobalName, getTopLevelGlobalName
 
-from LogManager import logger, initConsoleLogging
+from LogManager import logger
 
 #Routines starts with A followed by a number
 ARoutineEx = re.compile("^A[0-9][^ ]+$")
@@ -955,17 +955,3 @@ def parseAllCallGraphLog(xindexLogDir, crossRef, icrJson):
     xindexLogParser = CallerGraphLogFileParser(crossRef,icrJson)
     xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
     return xindexLogParser
-
-import logging
-if __name__ == '__main__':
-    from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
-    initParser = createInitialCrossRefGenArgParser()
-    xindexLogParser = createCallGraphLogAugumentParser()
-    parser = argparse.ArgumentParser(
-                description='VistA Cross-Reference Call Graph Log Files Parser',
-                parents=[initParser, xindexLogParser])
-    initConsoleLogging()
-    result = parser.parse_args();
-    crossRef = parseAllCallGraphLogWithArg(result)
-    logParser = parseAllCallGraphLogWithArg(result)
-    runRegressionTestingCases(logParser)

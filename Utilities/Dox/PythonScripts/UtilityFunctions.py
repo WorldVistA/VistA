@@ -17,10 +17,8 @@
 import csv
 import json
 import logging
-import os
 import re
 import sys
-import tempfile
 import urllib
 from LogManager import logger
 
@@ -93,28 +91,6 @@ sectionLinkObj = {
     "Input_Template": {"number":".402","color":"color=skyblue"},
     "Print_Template": {"number":".4","color":"color=yellowgreen"},
     }
-
-
-###############################################################################
-# Logging
-
-def getTempLogFile(filename):
-    return os.path.join(tempfile.gettempdir(), filename)
-
-def initLogging(outputFileName):
-    logger.setLevel(logging.DEBUG)
-    fileHandle = logging.FileHandler(outputFileName, 'w')
-    fileHandle.setLevel(logging.DEBUG)
-    formatStr = '%(asctime)s %(message)s'
-    formatter = logging.Formatter(formatStr)
-    fileHandle.setFormatter(formatter)
-    #set up the stream handle (console)
-    consoleHandle = logging.StreamHandler(sys.stdout)
-    consoleHandle.setLevel(logging.INFO)
-    consoleFormatter = logging.Formatter(formatStr)
-    consoleHandle.setFormatter(consoleFormatter)
-    logger.addHandler(fileHandle)
-    logger.addHandler(consoleHandle)
 
 ###############################################################################
 

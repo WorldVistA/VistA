@@ -58,8 +58,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
                 generateHTML, generatePDF, outDir=None, pdfOutDir=None,
                 local=False):
     if not generateHTML and not generatePDF:
-        logger.error("Nothing to generate!")
-        return
+        raise Exception("Nothing to generate!")
 
     global DOX_URL
     global VIVIAN_URL
@@ -68,16 +67,14 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
 
     if generateHTML:
         if not outDir:
-            logger.error("Must specify Output directory")
-            return
+            raise Exception("Must specify Output directory")
         if not os.path.exists(outDir):
             # Will also create intermediate directories if needed
             os.makedirs(outDir)
 
     if generatePDF:
         if not pdfOutDir:
-            logger.error("Must specify PDF Output directory")
-            return
+            raise Exception("Must specify PDF Output directory")
         # Will also create intermediate directories if needed
         if not os.path.exists(pdfOutDir):
             os.makedirs(pdfOutDir)
@@ -173,7 +170,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
             pkgLink = getPackageHtmlFileName(pkg.getName())
             return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
         else:
-            logger.warn('Can not find mapping for package: [%s]', pkgName)
+            logger.debug('Can not find mapping for package: [%s]', pkgName)
     return pkgName
 
 

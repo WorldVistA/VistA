@@ -24,10 +24,10 @@ execute_process(COMMAND
   "@PYTHON_EXECUTABLE@"
   "@PYTHONSCRIPTS_DIR@/RequirementsParser.py"
   -o @DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR@
+  -lf @LOG_OUTPUT_DIR@
   -lr "@DOCUMENT_VISTA_REQUIREMENTS_INPUT@"
   -lp "@DOCUMENT_VISTA_REQUIREMENTS_PASTDATA@"
-  OUTPUT_VARIABLE output ERROR_VARIABLE output RESULT_VARIABLE retValue)
-message(${output})
+  ERROR_VARIABLE error RESULT_VARIABLE retValue)
 if(NOT retValue EQUAL 0)
-  message(FATAL_ERROR "Error running Requirements Parser:\n\n${output}")
+  message(FATAL_ERROR "Error running Requirements Parser:\n\n${error}")
 endif()
