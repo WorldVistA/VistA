@@ -177,17 +177,11 @@ class FileManSchemaParser(object):
 
   def _updateFileDepSet(self, file, deps, exclude):
     for depFile in [x for x in deps]:
-      if depFile not in self._fileDep:
-        logger.info("no dep information for file %s" % depFile)
-        continue
-      if depFile in exclude:
-        logger.info("%s is in exclude list" % depFile)
+      if depFile not in self._fileDep or depFile in exclude:
         continue
       exclude.add(depFile)
       self._updateFileDepSet(depFile, self._fileDep[depFile], exclude)
-      logger.info("defore update deps: %s" % deps)
       deps.update(self._fileDep[depFile])
-      logger.info("after update deps: %s" % deps)
 
   def _updateFileDep(self):
     exclude = set()
@@ -208,14 +202,11 @@ class FileManSchemaParser(object):
     allFilesWithPointedTo = [x for x in depDict if self._allSchema[x].isRootFile()]
     allFilesWithoutPointedTo = sorted(set(allFiles) - set(allFilesWithPointedTo), key=lambda x: float(x))
     logger.info("Total # of Files that is not pointed to by any files: %s" % len(allFilesWithoutPointedTo))
-    logger.debug("Files that is not pointed to by any files: %s" % allFilesWithoutPointedTo)
     allFilePointerTo = reduce(set.union, depDict.itervalues())
     allFileNoPointerTo = set(allFiles) - allFilePointerTo
     logger.info("Total # of files that does not have file pointer: %s" % len(allFileNoPointerTo))
-    logger.debug("Files that does not have pointer to files: %s" % allFileNoPointerTo)
     self._isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
     logger.info("Total # of Isolated Files: %s" % len(self._isolatedFile))
-    logger.info("Isolated File List: %s" % sorted(self._isolatedFile, key=lambda x: float(x)))
 
   def _updateFileDepByFile(self, file, exclude):
     exclude.add(file)
@@ -265,7 +256,6 @@ class FileManSchemaParser(object):
 
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
-    logger.debug("Parsing files %s" % files)
     for file in files:
       if file not in self._allSchema:
         self._allSchema[file] = Global("", file, "")
@@ -274,7 +264,6 @@ class FileManSchemaParser(object):
   def _parseSubFilesNode(self, rootNode, fileNo):
     """ Get the subFiles used in the file """
     for key in getKeys(rootNode['SB'], float):
-      logger.debug("Checking subfiles: %s" % key)
       assert key in self._allSchema
       assert self._allSchema[key].isSubFile()
       assert self._allSchema[key].getParentFile().getFileNo() == fileNo
@@ -313,10 +302,8 @@ class FileManSchemaParser(object):
       elif location.split(';')[-1] == '0': # 0 means multiple
         multipleType = FileManField.FIELD_TYPE_SUBFILE_POINTER
         if not types:
-          logger.debug('Set type to be multiple for %s' % zeroFields)
           types = [multipleType]
         if multipleType in types and types[0] != multipleType:
-          logger.debug('Change type to be multiple for %s' % zeroFields)
           types.remove(multipleType)
           types.insert(0, multipleType)
           if not subFile: subFile = filePointedTo
@@ -328,13 +315,10 @@ class FileManSchemaParser(object):
       if subFile and subFile == fileSchema.getFileNo():
         logger.error("recursive subfile pointer for %s" % subFile)
         types = [FileManField.FIELD_TYPE_NONE]
-    logger.debug('%s is %s, %s, %s, %s' %
-                 (zeroFields[1], types, specifier, filePointedTo, subFile))
     fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0],
                                                 types[0], location)
     if specifier:
       fileField.setSpecifier(specifier)
-      logger.debug("Adding specifier: %s to %r" % (specifier, fileField))
     self._setFieldSpecificData(zeroFields, fileField, rootNode,
                               fileSchema, filePointedTo, subFile)
     return fileField
@@ -342,8 +326,6 @@ class FileManSchemaParser(object):
   def _addToFileDepDict(self, fileNo, pointedToFile):
     if fileNo == pointedToFile:
       return # ignore self pointed files
-    logger.debug("File: %s - Adding Pointed to file %s"
-                  % (fileNo, pointedToFile))
     self._fileDep.setdefault(fileNo, set()).add(pointedToFile)
 
   def _setFieldSpecificData(self, zeroFields, fileField, rootNode,
@@ -400,7 +382,6 @@ class FileManSchemaParser(object):
         vptrs = parsingVariablePointer(rootNode['V'])
         vpFileSchemas = []
         if vptrs:
-          logger.debug("variable points: %s" % vptrs)
           for x in vptrs:
             if x not in self._allSchema:
               self._allSchema[x] = Global("", x, "")
@@ -444,7 +425,6 @@ class FileManSchemaParser(object):
       if (FileManField.FIELD_TYPE_SUBFILE_POINTER not in types and
          FileManField.FIELD_TYPE_COMPUTED not in types):
         types.insert(0, FileManField.FIELD_TYPE_SUBFILE_POINTER)
-        logger.debug("Set to subFile type for %s" % type)
     return types, specifier, filePointedTo, subFile
 
   def _updateMultiple(self):
@@ -452,7 +432,6 @@ class FileManSchemaParser(object):
     for file, schema in allSchemaDict.iteritems():
       allFields = schema.getAllFileManFields()
       if not allFields:
-        logger.debug("file: %s does not have any fields" % file)
         continue
       for field, detail in schema.getAllFileManFields().iteritems():
         if detail.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
@@ -463,7 +442,6 @@ class FileManSchemaParser(object):
               subType = subFile.getField('.01').getType()
               if (not detail.hasSubType(subType) and
                   subType != FileManField.FIELD_TYPE_NONE):
-                logger.debug('Adding subType %s to %r' % (subType, detail))
                 detail.addSubType(subType)
 
 def createArgParser():

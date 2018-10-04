@@ -160,7 +160,6 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
         pkg = crossRef.getPackageByName(pkgName)
         if not pkg:
             pkgRename = _normalizeName(pkgName).title()
-            # logger.warn('[%s] renamed as [%s]', pkgName, pkgRename)
             pkg = crossRef.getPackageByName(pkgRename)
         if not pkg:
             pkgRename = _normalizeName(pkgName)
@@ -170,7 +169,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
             pkgLink = getPackageHtmlFileName(pkg.getName())
             return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
         else:
-            logger.debug('Can not find mapping for package: [%s]', pkgName)
+            logger.warning('Cannot find mapping for package: [%s]', pkgName)
     return pkgName
 
 
@@ -182,11 +181,10 @@ def _getFileManFileHRefLink(fileNo, icrEntry, **kargs):
         fileInfo = crossRef.getGlobalByFileNo(fileNo)
         if fileInfo:
             linkName = getGlobalHtmlFileNameByName(fileInfo.getName())
-            logger.debug('link is [%s]', linkName)
             # _addToPackageMap(icrEntry, fileInfo.getPackage().getName())
             return '<a href=\"%s%s\">%s</a>' % (DOX_URL, linkName, fileNo)
         else:
-            logger.debug('Can not find file: [%s]', fileNo)
+            logger.warning('Cannot find file: [%s]', fileNo)
     return fileNo
 
 
@@ -197,14 +195,12 @@ def _getRoutineHRefLink(rtnName, icrEntry, **kargs):
     if crossRef:
         routine = crossRef.getRoutineByName(rtnName)
         if routine:
-            logger.debug('Routine Name is %s, package: %s', routine.getName(), routine.getPackage())
             # _addToPackageMap(icrEntry, routine.getPackage().getName())
             return '<a href=\"%s%s\">%s</a>' % (DOX_URL,
                                                 getRoutineHtmlFileName(routine.getName()),
                                                 rtnName)
         else:
             logger.debug('Cannot find routine [%s]', rtnName)
-            logger.debug('After Categorization: routine: [%s], info: [%s]', rtnName, crossRef.categorizeRoutineByNamespace(rtnName))
     return rtnName
 
 
@@ -640,9 +636,6 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
 
 
 def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
-    logger.debug('subFile is %s', subFile)
-    # TODO: Is 'icrJson' the correct name for this variable?
-    logger.debug('icrJson is %s', icrJson)
     fieldList = SUBFILE_FIELDS[subFile]
     if subFile not in fieldList:
         fieldList.append(subFile)
@@ -651,9 +644,7 @@ def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
         for field in fieldList:
             if field in icrEntry: # we have this field
                 value = icrEntry[field]
-                logger.debug('current field is %s', field)
                 if isSubFile(field) and field != subFile: # avoid recursive subfile for now
-                    logger.debug('field is a subfile %s', field)
                     output.write ("<dl><dt>%s:</dt>\n" % field)
                     output.write ("<dd>\n")
                     output.write ("<ol>\n")
@@ -688,7 +679,6 @@ def _convertIndividualFieldValue(field, icrEntry, value, crossRef):
         return value
     if field in FIELD_CONVERT_MAP:
         if type(value) is list:
-            logger.warn('field: [%s], value:[%s], icrEntry: [%s]', field, value, icrEntry)
             return value
         value = FIELD_CONVERT_MAP[field](value, icrEntry, crossRef=crossRef)
         return value
@@ -739,9 +729,8 @@ def _addToPackageMap(icrEntry, pkgName):
         icrPkg = icrEntry['CUSTODIAL PACKAGE']
         if icrPkg not in PACKAGE_MAP:
             PACKAGE_MAP[icrPkg] = pkgName
-            logger.debug('[%s] ==> [%s]', icrPkg, pkgName)
         elif PACKAGE_MAP[icrPkg] != pkgName:
-            logger.debug('[%s] mapped to [%s] and [%s]', icrPkg, PACKAGE_MAP[icrPkg], pkgName)
+            logger.warning('[%s] mapped to [%s] and [%s]', icrPkg, PACKAGE_MAP[icrPkg], pkgName)
 
 def _normalizeName(name):
     return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')

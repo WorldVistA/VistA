@@ -1208,7 +1208,6 @@ class WebPageGenerator:
 #
 #===============================================================================
     def __generateFileManSubFilePage__(self, subFile):
-        logger.debug("Start generating individual subfile [%s]" % subFile.getFileNo())
         indexList = ["Info", "Details"]
         outputFile = open(os.path.join(self._outDir,
                                        getFileManSubFileHtmlFileName(subFile)), 'wb')
@@ -1289,8 +1288,6 @@ class WebPageGenerator:
             pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
                                        getFileManSubFilePDFFileNameByName(subFile))
             self.__writePDFFile__(pdf, pdfFileName)
-
-        logger.debug("End of generating individual subFile [%s]" % subFile.getFileNo())
 
 #===============================================================================
 #
@@ -2089,7 +2086,7 @@ class WebPageGenerator:
                                                     packageName,
                                                     self._repDir)
         if not os.path.exists(sourcePath):
-            logger.error("Souce file:[%s] does not exist\n" % sourcePath)
+            logger.error("Source file:[%s] does not exist\n" % sourcePath)
             return
         sourceFile = open(sourcePath, 'r')
         if not justComment:
@@ -2190,7 +2187,6 @@ class WebPageGenerator:
                     continue
                 # check for platform dependent routine
                 if not self._crossRef.routineHasSourceCodeByName(routineName):
-                    logger.debug("Routine:%s does not have source code" % routineName)
                     continue
                 sourceCodeName = routine.getOriginalName()
                 self.__generateSourceCodePageByName__(sourceCodeName, routine, justComment)

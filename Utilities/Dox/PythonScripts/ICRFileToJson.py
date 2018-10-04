@@ -106,8 +106,6 @@ class ICRFileToJson(object):
                         self._curField = fieldName
                         self._startOfSubFile(match, line)
                     else:
-                        logger.debug('field name is: %s', fieldName)
-                        logger.debug('cur field is: %s', self._curField)
                         """ Check to see if fieldName is already in the out list """
                         if isWordProcessingField(self._curField):
                             if self._ignoreKeywordInWordProcessingFields(fieldName):
@@ -119,7 +117,7 @@ class ICRFileToJson(object):
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
                     if len(line.strip()) == 0 and not isWordProcessingField(self._curField):
-                        logger.debug('Ignore blank line for current field: [%s]', self._curField)
+                        # Ignore blank line
                         continue
                     self._appendWordsFieldLine(line)
                 else:
@@ -128,12 +126,10 @@ class ICRFileToJson(object):
                             continue
                         logger.debug('No field associated with line %s: %s ' %
                                       (curLineNo, line))
-        logger.debug('End of file now')
         if len(self._curStack) > 0:
             self._curField = None
             self._rewindStack()
         if self._curRecord:
-            logger.debug('Add last record: %s', self._curRecord)
             self._outObject.append(self._curRecord)
         outputDir = os.path.dirname(outputFilename)
         if not os.path.exists(outputDir):
@@ -143,7 +139,6 @@ class ICRFileToJson(object):
             json.dump(self._outObject,out_file, indent=4)
 
     def _startOfNewItem(self, matchObj, line):
-        logger.debug('Starting of new item: %s', self._curStack)
         self._curField = None
 
         self._rewindStack()
@@ -209,47 +204,35 @@ class ICRFileToJson(object):
             reset _curRecord to be a new one, and push old one into the stack
         """
         subFile = match.group('name')
-        logger.debug('Start parsing subFile: %s, %s', subFile, line)
         while len(self._curStack) > 0: # we are in subfile mode
             prevSubFile = self._curStack[-1][1]
             if prevSubFile == subFile: # just continue with more of the same subfile
                 self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord) # append the previous result
-                logger.debug('append previous record the current stack')
                 break;
             else: # this is a different subfile # now check if it is a nested subfile
                 if isSubFileField(prevSubFile, subFile): # this is a nested subFile, push to stack
-                    logger.debug('Nested subFile, push to the stack')
                     self._curStack.append((self._curRecord, subFile))
-                    logger.debug('Nested subFile, stack is %s', self._curStack)
                     break;
                 else: # this is a different subFile now:
-                    logger.debug('different subFile')
                     preStack = self._curStack.pop()
-                    logger.debug('Pop stack')
                     preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                     self._curRecord = preStack[0]
-                    logger.debug('different subFile, stack is %s', self._curStack)
         if len(self._curStack) == 0:
             self._curStack.append((self._curRecord, subFile)) # push a tuple, the first is the record, the second is the subFile field
-            # logger.debug('push to stack: %s', self._curStack)
         self._curRecord = {}
         self._findKeyValueInLine(match, line, self._curRecord)
 
     def _rewindStack(self):
-        logger.debug('rewindStack is called')
         while len(self._curStack) > 0: # we are in subFile Mode
             if not isSubFileField(self._curStack[-1][1], self._curField):
                 preStack = self._curStack.pop()
-                # logger.debug('pop previous stack item: %s', preStack)
                 preStack[0].setdefault(preStack[1],[]).append(self._curRecord)
-                # logger.debug('reset current record: %s', preStack)
                 self._curRecord = preStack[0]
             else:
-                logger.debug('in subFile Fields: %s, record: %s', self._curField, self._curRecord)
                 break
+
     """ This will append the line in word processing fields """
     def _appendWordsFieldLine(self, line):
-        logger.debug('append line [%s] to word processing field: [%s]', line, self._curField)
         if not (type(self._curRecord[self._curField]) is list):
             preVal = self._curRecord[self._curField]
             self._curRecord[self._curField] = []
@@ -269,9 +252,7 @@ class ICRFileToJson(object):
             the keyword is not part of the subFile, we assume it is part of word processing field
             if any of the parent field already has that field.
         """
-        logger.debug('current field is [%s]', self._curField)
         if self._curRecord and fieldName in self._curRecord:
-            logger.warn('fieldName: [%s] is already parsed, ignore fields', fieldName)
             return True
         """ This is some special logic to ignore some of the fields in word processing field """
         if fieldName == 'ROUTINE':
@@ -279,10 +260,8 @@ class ICRFileToJson(object):
             if self._curStack and len(self._curStack) > 0: # we are in subfile mode and it is a world processing field
                 recordToCheck = self._curStack[0][0]
             if 'REMOTE PROCEDURE' in recordToCheck:
-                logger.warn('Ignore ROUTINE field as it is a REMOTE PROCEDURE type')
                 return True
         for stackItem in self._curStack:
             if fieldName in stackItem[0]:
-                logger.warn('fieldName: [%s] is already parsed in [%s], ignore the words fields', fieldName, stackItem[1])
                 return True
         return False

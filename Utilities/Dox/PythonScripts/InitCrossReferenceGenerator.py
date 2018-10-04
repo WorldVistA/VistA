@@ -68,7 +68,6 @@ class InitCrossReferenceGenerator(object):
       if len(packageName) > 0:
         currentPackage = crossRef.getPackageByName(packageName)
         if not currentPackage:
-          logger.debug ("Package [%s] not found" % packageName)
           crossRef.addPackageByName(packageName)
         currentPackage = crossRef.getPackageByName(packageName)
         currentPackage.setOriginalName(row['Package Name'])
@@ -77,13 +76,13 @@ class InitCrossReferenceGenerator(object):
           currentPackage.setDocLink(getVDLHttpLinkByID(vdlId))
       else:
         if not currentPackage:
-          logger.warn ("row is not under any package: %s" % row)
+          logger.warn("row is not under any package: %s" % row)
           continue
       if len(row['Prefixes']):
         currentPackage.addNamespace(row['Prefixes'])
       if len(row['Globals']):
         currentPackage.addGlobalNamespace(row['Globals'])
-    logger.info ("Total # of Packages is %d" % (len(crossRef.getAllPackages())))
+    logger.info("Total # of Packages is %d" % (len(crossRef.getAllPackages())))
 
   def parsePlatformDependentRoutineFile(self, routineCSVFile):
     routineFile = open(routineCSVFile, "rb")
@@ -127,7 +126,6 @@ class InitCrossReferenceGenerator(object):
       packageName = os.path.dirname(file)
       packageName = packageName[packageName.index("Packages") + 9:packageName.index("Globals") - 1]
       if not crossReference.hasPackage(packageName):
-        logger.info ("Package: %s is new" % packageName)
         crossReference.addPackageByName(packageName)
       package = allPackages.get(packageName)
       zwrFile = open(file, 'r')
@@ -147,7 +145,7 @@ class InitCrossReferenceGenerator(object):
         else:
             continue
       globalName = "" # find out the global name by parsing the global file
-      logger.debug ("Parsing file: %s" % file)
+      logger.debug("Parsing file: %s" % file)
       for line in zwrFile:
         if lineNo == 0:
           globalDes = line.strip()
@@ -155,7 +153,7 @@ class InitCrossReferenceGenerator(object):
           # to tell if it needs to be added or skipped
           globalDes = globalDes.replace("OSEHRA ZGO Export: ",'')
           if globalDes.startswith("^"):
-            logger.info ("No Description: Skip this file: %s" % file)
+            logger.info("No Description: Skip this file: %s" % file)
             skipFile.append(file)
             namespace = globalDes[1:]
             package.addGlobalNamespace(namespace)
@@ -177,18 +175,16 @@ class InitCrossReferenceGenerator(object):
           else:
               continue
         lineNo = lineNo + 1
-      logger.debug ("globalName: %s, Des: %s, fileNo: %s, package: %s" %
-                    (globalName, globalDes, fileNo, packageName))
       if len(fileNo) == 0:
         if file not in skipFile:
-          logger.warn ("Warning: No FileNo found for file %s" % file)
+          logger.warn("Warning: No FileNo found for file %s" % file)
         continue
       globalVar = Global(globalName, fileNo, globalDes,
                          allPackages.get(packageName))
       try:
         fileNum = float(globalVar.getFileNo())
       except ValueError, es:
-        logger.error ("error: %s, globalVar:%s file %s" % (es, globalVar, file))
+        logger.error("error: %s, globalVar:%s file %s" % (es, globalVar, file))
         continue
 #            crossReference.addGlobalToPackage(globalVar, packageName)
       # only add to allGlobals dict as we have to change the package later on
@@ -200,7 +196,7 @@ class InitCrossReferenceGenerator(object):
         logger.error("Duplicated file No [%s,%s,%s,%s] file:%s " %
                       (fileNo, globalName, globalDes, packageName, file))
       zwrFile.close()
-    logger.info ("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
+    logger.info("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
            (len(allPackages), len(allGlobals), len(skipFile), len(fileNoSet)))
 
     sortedKeyList = sorted(allGlobals.keys(),
@@ -238,7 +234,6 @@ class InitCrossReferenceGenerator(object):
         assert(routine)
         routine.setOriginalName(origName)
       if ARoutineEx.search(routineName):
-        logger.debug("A Routines %s should be exempted" % routineName)
         pass
     logger.info("Total package is %d and Total Routines are %d" %
                 (len(allPackages), len(allRoutines)))

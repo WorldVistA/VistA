@@ -286,7 +286,7 @@ class PatchOrderGenerator(object):
       """ only add to list for info that is related to a Patch"""
       installName = patchInfo.installName
       if installName not in self._kidsInstallNameDict:
-        logger.warn("no KIDS file related to %s" % patchInfo)
+        logger.warn("no KIDS file related to %s (%s)" % (installName, kidsInfoFile))
         if installName in self._missKidsBuildDict:
           logger.warn("duplicated kids install name")
           if kidsInfoFile != self._missKidsBuildDict[installName].kidsInfoPath:
@@ -627,7 +627,6 @@ class PatchOrderGenerator(object):
       try:
         verifiedTime = datetime.strptime(row['VERIFY_DT'], "%d-%b-%y")
       except ValueError as ex:
-        logger.debug(ex)
         verifiedTime = datetime.strptime(row['VERIFY_DT'], "%Y-%m-%d")
       """ check the seq # field """
       seqNo = row['SEQ#'].strip()

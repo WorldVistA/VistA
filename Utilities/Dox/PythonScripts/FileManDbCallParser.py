@@ -55,7 +55,7 @@ class FileManDbCallParser(object):
                     rtnName = rtn['name']
                     routine = self._crossRef.getRoutineByName(rtnName)
                     if not routine:
-                        logger.warn("Can not find routine [%s]" % rtnName)
+                        logger.warn("Cannot find routine [%s]" % rtnName)
                         continue
                     fileManGlobals = rtn['Globals']
                     self._addFileManGlobals(routine, fileManGlobals)
@@ -69,8 +69,6 @@ class FileManDbCallParser(object):
                 fileManGblAlt = fileManGbl[:-1]
                 fileManFile = self._crossRef.getGlobalByName(fileManGblAlt)
             if fileManFile:
-                logger.debug("Classic: Adding fileMan:[%s] to routine:[%s]" %
-                    (fileManFile, routine.getName()))
                 routine.addFilemanDbCallGlobal(fileManFile)
             else: # ignore non-fileman global, could be false positive
                 logger.error("global [%s] is not a valid Fileman file for"
@@ -86,27 +84,21 @@ class FileManDbCallParser(object):
     def _addFileManDBCalls(self, routine, callLists):
         for callDetail in callLists:
             if self.isFunctionIgnored(callDetail):
-                logger.debug("Ignore call detail %s" % callDetail)
                 continue
             fnIdx = callDetail.find('(')
             if fnIdx < 0:
-                logger.error("Can not extract fileman number from %s" %
-                    callDetail)
+                logger.error("Cannot extract fileman number from %s" % callDetail)
                 continue
             callTag = callDetail[:fnIdx]
             fileNo = callDetail[fnIdx+1:]
             fileManFile = self._crossRef.getGlobalByFileNo(fileNo)
             if fileManFile:
-                logger.debug("FileMan: Adding fileMan:[%s] to routine:[%s]" %
-                    (fileNo, routine.getName()))
                 routine.addFilemanDbCallGlobal(fileManFile, callTag)
             else:
                 if self._crossRef.isFileManSubFileByFileNo(fileNo): # subfile
                     subFile = self._crossRef.getFileManSubFileByFileNo(fileNo)
                     rootFile = self._crossRef.getSubFileRootByFileNo(fileNo)
                     assert rootFile
-                    logger.debug("FileMan: Adding subFile:[%s] to routine:[%s]" %
-                        (subFile, routine.getName()))
                     routine.addFilemanDbCallGlobal(subFile, callTag)
                 else:
                     logger.error("file #%s[%s] is not a valid fileman file, for"

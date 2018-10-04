@@ -125,7 +125,6 @@ def readIntoDictionary(infileName):
     dialect = sniffer.sniff(templateData.read(1024))
     templateData.seek(0)
     hasHeader = sniffer.has_header(templateData.read(1024))
-    logger.info ("hasHeader: %s" % hasHeader)
     templateData.seek(0)
     for index, line in enumerate(csv.reader(templateData,dialect)):
       if index == 0:

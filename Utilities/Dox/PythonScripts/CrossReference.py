@@ -1112,8 +1112,6 @@ class Package(object):
                     for fileManFile in fileManFiles:
                         self.__checkFileManPointerField__(field, fileManFile, Global, subFile)
                     continue
-        else:
-            logger.debug("[%s] does not have any fields" % currentGlobal)
         if not subFile:
             # get all subfiles of current globals
             allSubFiles = Global.getAllSubFiles()
@@ -1325,8 +1323,6 @@ class CrossReference:
         if self.getGlobalByName(globalName): return # already exists
         topLevelName = getTopLevelGlobalName(globalName)
         (namespace, package) = self.categorizeGlobalByNamespace(topLevelName)
-        logger.debug("Global: %s, namespace: %s, package: %s" %
-                     (globalName, namespace, package))
         if not package:
             package = self.getPackageByName("Uncategorized")
             self.addToOrphanGlobalByName(globalName)

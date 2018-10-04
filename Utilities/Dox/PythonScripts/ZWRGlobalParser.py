@@ -154,10 +154,8 @@ def getCommonSubscript(one, two):
 def resetGlobalIndex(subscripts, glbRootSub):
   index = 1
   if len(subscripts) == 1:
-    logger.info("reset index to 0")
     index = 0
   elif glbRootSub == '^DD' and subscripts[0] == '0':
-    logger.info("reset index to 0")
     index = 0
   return index
 
@@ -225,7 +223,6 @@ class DefaultZWRRootGenerator(object):
     retNode = None
     subscripts, value, rootSub = findSubscriptValue(line)
     if not subscripts: # must have some subscripts
-      logger.info("no subscription found %s" % line)
       return None
     if not self.rootSub:
       self.rootSub = rootSub
@@ -260,7 +257,6 @@ class DefaultZWRRootGenerator(object):
       else:
         return True
     curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
-    #logger.debug(curCommonScript, self.curCommonSub)
     if self.curCommonSub is None or self.curCommonSub == curCommonScript:
       if self.curCommonSub is None:
         self.curCommonSub = subscripts[0:self.index+1]
@@ -311,13 +307,10 @@ def createGlobalNode(inputLine, globalRoot=None):
     if nodeValue and len(nodeValue) > 0:
       nodeValue = nodeValue.replace('""', '"')
     if not globalRoot:
-      logger.debug("Creating a new globalRoot %s" % inputLine)
       retRoot = GlobalNode(subscript=nodeRoot)
       nodeIdx = retRoot
     else:
-      logger.debug("finding a new globalRoot")
       nodeIdx = retRoot.getRootNode()
-      logger.debug("The root is %s" % nodeIdx.subscript)
       if nodeIdx.subscript != nodeRoot:
         logger.error("Global Node root subscript mismatch: %s, %s" %
                       (nodeRoot, nodeIdx.subscript))

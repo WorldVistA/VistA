@@ -50,7 +50,6 @@ class DescriptionSectionParser(IDDSectionParser):
         self._curLine = None
         self._section = IDataDictionaryListFileLogParser.DESCRIPTION_SECTION
     def onSectionStart(self, line, section, Global, CrossReference):
-        logger.debug("Section %d started" % section)
         self._lines=[]
         self._curLine = ""
     def onSectionEnd(self, line, section, Global, CrossReference):
@@ -58,10 +57,8 @@ class DescriptionSectionParser(IDDSectionParser):
             self._lines.append(self._curLine)
         Global.setDescription(self._lines)
     def parseLine(self, line, Global, CrossReference):
-        logger.debug("Current Description line is [%s]" % line)
-        if len(line.strip()) == 0: # assume this is the paragrahp break
-            logger.debug("Found Break in Description %s" % Global)
-            if len(self._curLine) > 0:
+        if not line.strip(): # assume this is the paragraph break
+            if not self._curLine:
                 self._lines.append(self._curLine)
                 self._curLine = ""
         else:
@@ -150,7 +147,6 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._field = None
         self._isSubFile = False
     def onSectionStart(self, line, section, Global, CrossReference):
-        logger.debug("[%s]" % line)
         self._lines = []
         result = DataDictionaryListFileLogParser.FILEMAN_FIELD_START.search(line)
         assert result
@@ -158,7 +154,6 @@ class FileManFieldSectionParser(IDDSectionParser):
         fieldNo = result.group("FieldNo")
         self._isSubFile = float(fileNo) != float(Global.getFileNo())
         if self._isSubFile:
-            logger.debug("%s is a subfile" % fileNo)
             self._curFile = Global.getSubFileByFileNo(fileNo)
             assert self._curFile, "Could not find subFile [%s] in file [%s] line [%s]" % (fileNo, Global.getFileNo(), line)
         else:
@@ -167,7 +162,8 @@ class FileManFieldSectionParser(IDDSectionParser):
         startIdent = self.DEFAULT_NAME_INDENT
         defaultIdentLevel = self.__getDefaultIndentLevel__(self._curFile, self.DEFAULT_NAME_INDENT)
         if restOfLineStart > defaultIdentLevel:
-            logger.debug("FileNo: %s, FieldNo: %s, line: %s, may not be a valid field no, %d, %d" % (fileNo, fieldNo, line, restOfLineStart, defaultIdentLevel))
+            logger.warning("FileNo: %s, FieldNo: %s, line: %s, may not be a valid field no, %d, %d" %
+                            (fileNo, fieldNo, line, restOfLineStart, defaultIdentLevel))
             try:
                 floatValue = float(fieldNo)
             except ValueError:
@@ -175,12 +171,9 @@ class FileManFieldSectionParser(IDDSectionParser):
                 fieldNo = line[line.find(",")+1:defaultIdentLevel]
                 floatValue = float(fieldNo)
         restOfLine = line[line.find("," + fieldNo) + len(fieldNo)+1:].strip()
-        logger.debug("Parsing [%s]" % restOfLine)
         result = self.NAME_LOC_TYPE_REGEX.search(restOfLine)
         fName, fType, fLocation = None, None, None
         if result:
-            logger.debug("FileNo: %s, Field#: %s, Name: %s, Loc %s, Type %s" %
-            (fileNo, fieldNo, result.group('Name').rstrip(), result.group('Loc'), result.group('Type')))
             fName = result.group('Name').strip()
             fLocation = result.group('Loc').strip()
             if fLocation == ";":
@@ -192,19 +185,16 @@ class FileManFieldSectionParser(IDDSectionParser):
                 logger.warn("Missing Type information [%s]" % line)
                 result = self.NAME_LOC_REGEX.search(restOfLine)
                 if result:
-                    logger.debug("Name: %s, Loc %s" % (result.group('Name'), result.group('Loc')))
                     fName = result.group('Name').strip()
                     fLocation = result.group('Loc').strip()
                 else:
                     logger.error("Could not parse [%s]" % restOfLine)
                     return
             else: # missing location, assume at least two space seperate name and type
-                logger.warn("Missing location information [%s]" % line)
                 result = self.NAME_TYPE_REGEX.search(restOfLine)
                 if result:
                     fName = result.group('Name').strip()
                     fType = result.group('Type').strip()
-                    logger.debug("Name: %s, Type %s" % (result.group('Name'), result.group('Type')))
                 else:
                     logger.warn("Guessing Name: %s at line [%s]" % (restOfLine.strip(), line))
         stripedType = ""
@@ -214,7 +204,6 @@ class FileManFieldSectionParser(IDDSectionParser):
             self.__createFieldByType__(fieldNo, stripedType, fName, fLocation, line, Global, CrossReference)
         else:
             self._field = FileManFieldFactory.createField(fieldNo, fName, FileManField.FIELD_TYPE_NONE, fLocation)
-        logger.debug("Add field %s to File %s" % (fName, self._curFile.getFileNo()))
         self._curFile.addFileManField(self._field)
         if len(stripedType) > 0 :
             self.__parseFieldAttributes__(fType)
@@ -248,7 +237,6 @@ class FileManFieldSectionParser(IDDSectionParser):
                 if result:
                     if curCaption:
                         self._field.addProp(curCaption, curValues)
-                        logger.debug("Add Prop: %s value: [%s]" % (curCaption, curValues))
                     curCaption = caption
                     curValues = []
                     if result.group('Value'):
@@ -262,7 +250,7 @@ class FileManFieldSectionParser(IDDSectionParser):
                 curValues.append(line.strip())
         if curCaption:
             self._field.addProp(curCaption, curValues)
-            logger.debug("Add Prop: %s value: [%s]" % (curCaption, curValues))
+
     def __findTotalSubFileds__(self):
         if not self._lines or len(self._lines) == 0:
             pass
@@ -273,8 +261,8 @@ class FileManFieldSectionParser(IDDSectionParser):
                 name = result.group('Name')
                 if name.startswith("SCREEN ON FILE "): name = "SCREEN ON FILE"
                 if name not in self.totalFieldNotes:
-                    logger.info("NEW FIELD NOTE TITLE: [%s]" % name)
                     self.totalFieldNotes.add(name)
+
     def __getDefaultIndentLevel__(self, pointedToSubFile, startIndent):
         retValue = startIndent
         startFile = pointedToSubFile
@@ -289,7 +277,6 @@ class FileManFieldSectionParser(IDDSectionParser):
         indentValue = self.__getDefaultIndentLevel__(self._pointedToSubFile,
                                                      self.DEFAULT_VALUE_INDENT)
         for index in range(len(self._lines)):
-            logger.debug("%s " % self._lines[index])
             if desPos == -1:
                 desPos = self._lines[index].find("DESCRIPTION:")
             else:
@@ -345,7 +332,6 @@ class FileManFieldSectionParser(IDDSectionParser):
                         fileList.append(filePointedTo)
         self._field.setPointedToFiles(fileList)
     def __createFieldByType__(self, fieldNo, fType, fName, fLocation, line, Global, CrossReference):
-        logger.debug("Current Type is [%s]" % fType)
         result = self.UNDEFINED_POINTER.search(fType)
         if result:
             self._field = FileManFieldFactory.createField(fieldNo, fName,
@@ -369,12 +355,10 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field = FileManFieldFactory.createField(fieldNo, fName,
                                 FileManField.FIELD_TYPE_SUBFILE_POINTER, fLocation)
             fileNo = result.group('File')
-            logger.debug("Pointer to subFile %s" % fileNo)
             subFile = Global.getSubFileByFileNo(fileNo)
             if not subFile: # this is a new subfile
                 subFile = FileManFile(fileNo, fName, self._curFile)
                 self._curFile.addFileManSubFile(subFile)
-                logger.debug("Added subFile %s to File %s" % (fileNo, self._curFile.getFileNo()))
                 if self._isSubFile:
                     Global.addFileManSubFile(subFile)
             self._field.setPointedToSubFile(subFile)
@@ -390,7 +374,6 @@ class FileManFieldSectionParser(IDDSectionParser):
               fType = line[self.MAXIMIUM_TYPE_START_INDEX:]
               if fLocation:
                   fLocation = line[line.find(fLocation):self.MAXIMIUM_TYPE_START_INDEX]
-              logger.warn("new Type is [%s], loc is [%s]" % (fType, fLocation))
               self.__createFieldByType__(fieldNo, fType, fName, fLocation, line, Global, CrossReference)
         assert self._field, "Could not find the right type for %s, %s, %s, %s, %s" % (fType, fLocation, fieldNo, line, self._curFile.getFileNo())
 
@@ -399,7 +382,6 @@ class FileManFieldSectionParser(IDDSectionParser):
         for nameAttr in self.FieldAttributesInfoList:
             if outType.find(nameAttr[0]) != -1:
                 outType = outType.replace(nameAttr[0],"")
-        logger.debug("[%s]" % outType)
         return outType.strip()
 
     def __parseFieldAttributes__(self, fType):
@@ -408,7 +390,6 @@ class FileManFieldSectionParser(IDDSectionParser):
                 fType = fType.replace(nameAttr[0],"")
                 self._field.__setattr__(nameAttr[1], True)
         fType.strip()
-        logger.debug("Final Type Name is %s" % fType)
         self._field.setTypeName(fType)
 
     def __resetVar__(self):
@@ -439,18 +420,14 @@ class PointedToBySectionParser(IDDSectionParser):
         if len(strippedLine) == 0:
             return
         value = strippedLine[self.POINTED_TO_BY_VALUE_INDEX:]
-        logger.debug("Parsing line [%s]" % value)
         result = self.POINTED_TO_BY_VALUE.search(value)
         if result:
             fileManNo = result.group("FileNo")
             fieldNo = result.group('fieldNo')
             subFileNo = result.group('subFieldNo')
-            logger.debug("File # %s, field # %s, sub-field # %s" % (fileManNo, fieldNo, subFileNo))
             pointedByGlobal = CrossReference.getGlobalByFileNo(fileManNo)
             if pointedByGlobal:
                 self._global.addPointedToByFile(pointedByGlobal, fieldNo, subFileNo)
-                logger.debug("added global to pointed list: %s, %s, %s" %
-                            (fileManNo, fieldNo, subFileNo))
             else:
                 logger.warning("Could not find global based on %s, %s" %
                                (fileManNo, result.group("Name")))
@@ -593,8 +570,6 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 continue
             section = self.__isSectionHeader__(line)
             if section:
-                if section != self.FILEMAN_FIELD_SECTION:
-                    logger.debug("Current Section is %d [%s]" % (section, line))
                 if self._curSect and self._curParser:
                     self._curParser.onSectionEnd(line, self._curSect, self._curGlobal, self._crossRef)
                 self._curSect = section
@@ -603,6 +578,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                     self._curParser.onSectionStart(line, self._curSect, self._curGlobal, self._crossRef)
             elif self._curSect and self._curParser:
                 self._curParser.parseLine(line, self._curGlobal, self._crossRef)
+
     def __isSectionHeader__(self, curLine):
         for (regex, section) in self._sectionHeaderRegEx.iteritems():
             if regex.search(curLine):

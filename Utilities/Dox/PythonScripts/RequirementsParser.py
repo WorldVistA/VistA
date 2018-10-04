@@ -30,7 +30,6 @@ def run(args):
       xlsfileName = args.localReq
     else:
       # First, acquire pages from http://code.osehra.org
-      logger.info("NOT LOCAL!")
       xlsfileName="Open Needs_Epics with BFFs (for Open Source)_Feb2018.xlsx"
       logger.info("Downloading %s from http://code.osehra.org" % xlsfileName)
       quotedURL = urllib.quote("code.osehra.org/files/requirements/"+xlsfileName)

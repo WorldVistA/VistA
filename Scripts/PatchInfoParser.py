@@ -58,21 +58,14 @@ def extractInfoFromInstallName(installName):
 """ utility function to extract patch information from install name """
 def setPatchInfoFromInstallName(installName, patchInfo):
   (namespace, ver, patch) = extractInfoFromInstallName(installName)
-  logger.debug((namespace, ver, patch, installName))
-  logger.debug((patchInfo))
   if patchInfo.namespace:
     if patchInfo.namespace != namespace:
-      logger.error((namespace, ver, patch))
-      logger.error(installName)
-      logger.error(patchInfo)
+      logger.error("Namespace mismatch. Expected %s. Found %s" % (namespace, patchInfo.namespace))
   else:
     patchInfo.namespace = namespace
   if patchInfo.version:
-    if (float(patchInfo.version) !=
-        float(ver)):
-      logger.error((namespace, ver, patch))
-      logger.error(installName)
-      logger.error(patchInfo)
+    if (float(patchInfo.version) != float(ver)):
+      logger.error("Version mismatch. Expected %s. Found %s" % (ver, patchInfo.version))
   else:
     patchInfo.version = ver
   patchInfo.patchNo = patch
@@ -208,7 +201,6 @@ class PatchInfoParser(object):
       ret = self.PACKAGE_PRIORITY_REGEX.search(line)
       if ret:
         package = ret.group('name').strip()
-        logger.debug(package)
         (namespace, name) = package.split(" - ", 1) # split on first -
         patchInfo.namespace = namespace.strip()
         patchInfo.package = name.strip()
@@ -246,14 +238,13 @@ class PatchInfoParser(object):
     setPatchInfoFromInstallName(patchInfo.installName,
                                 patchInfo)
     return patchInfo
+
   """ parsing the associated KIDS build part """
   def parseAssociatedPart(self, infoString, patchInfo):
     pos = infoString.find("<<= must be installed BEFORE")
     if pos >=0:
       installName = convertToInstallName(infoString[3:pos].strip())
       patchInfo.depKIDSBuild.add(installName)
-    else:
-      logger.warn(infoString)
 
 def testPatchInfoParser():
   print ("sys.argv is %s" % sys.argv)

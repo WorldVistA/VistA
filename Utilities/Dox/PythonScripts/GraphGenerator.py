@@ -144,7 +144,6 @@ class GraphGenerator:
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-        logger.debug("command is %s" % command)
         retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))
@@ -253,7 +252,6 @@ class GraphGenerator:
                                                                outputName,
                                                                outputmap,
                                                                inputName)
-        logger.debug("command is %s" % command)
         retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))
@@ -266,7 +264,6 @@ class GraphGenerator:
                                                     os.path.join(self._outDir,"colorLegend.png"),
                                                     os.path.join(self._outDir,"colorLegend.cmapx"),
                                                     os.path.join(self._docRepDir,'callerGraph_color_legend.dot'))
-        logger.debug("command is %s" % command)
         retCode = subprocess.call(command, shell=True)
         if retCode != 0:
             logger.error("calling dot with command[%s] returns %d" % (command, retCode))

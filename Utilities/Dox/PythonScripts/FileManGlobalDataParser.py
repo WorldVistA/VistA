@@ -293,12 +293,12 @@ class FileManGlobalDataParser(object):
   def generateFileIndex(self, inputFileName, fileNumber):
     schemaFile = self._allSchemaDict[fileNumber]
     if not schemaFile.hasField('.01'):
-      logger.error("File does not have a .01 field, ignore")
+      logger.error("File %s does not have a .01 field, ignore" % fileNumber)
       return
     keyField = schemaFile.getFileManFieldByFieldNo('.01')
     keyLoc = keyField.getLocation()
     if not keyLoc:
-      logger.error(".01 field does not have a location")
+      logger.error("File %s .01 field does not have a location, ignore" % fileNumber)
       return
     self._curFileNo = fileNumber
     if fileNumber in self._glbLocMap:
@@ -310,10 +310,6 @@ class FileManGlobalDataParser(object):
         (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
         if detail:
           self._addFileKeyIndex(fileNumber, ien, detail)
-        elif ien:
-          logger.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
-        else:
-          logger.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
 
   """
   Generate a map Field Value => IEN
@@ -336,15 +332,10 @@ class FileManGlobalDataParser(object):
       (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
       if detail:
         fieldMap[detail] = ien
-      elif ien:
-        logger.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
-      else:
-        logger.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
     return fieldMap
 
   def _getKeyNameBySchema(self, dataRoot, keyLoc, keyField):
     floatKey = getKeys(dataRoot, float)
-    logger.debug('Total # of entry is %s' % len(floatKey))
     for ien in floatKey:
       if float(ien) <=0:
         continue
@@ -375,9 +366,6 @@ class FileManGlobalDataParser(object):
     self._curFileNo = fileNumber
     if not glbLoc:
       glbLoc = self._glbLocMap.get(fileNumber)
-      logger.info("File: %s global loc: %s" % (fileNumber, glbLoc))
-    elif fileNumber in self._glbLocMap:
-      logger.info("global loc %s, %s" % (glbLoc, self._glbLocMap[fileNumber]))
     for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
       if not dataRoot:
         continue
@@ -415,8 +403,7 @@ class FileManGlobalDataParser(object):
         self._crossRef.__categorizeVariableNameByNamespace__(entryName)
       if package:
         package.hlo.append(hloEntry)
-        logger.info("Adding hlo: %s to Package: %s" %
-                     (entryName, package.getName()))
+
 
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
@@ -426,14 +413,11 @@ class FileManGlobalDataParser(object):
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
         if (type != 'event driver' and type != 'subscriber'):
-          logger.info("Adding Protocol Entry of type: %s" % (type))
           entryName = protocolEntry.name
           namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(entryName)
           if package:
             package.protocol.append(protocolEntry)
-            logger.info("Adding Protocol Entry: %s to Package: %s" %
-                         (entryName, package.getName()))
         # only care about the event drive and subscriber type
         elif (type == 'event driver' or type == 'subscriber'):
           entryName = protocolEntry.name
@@ -441,8 +425,6 @@ class FileManGlobalDataParser(object):
             self._crossRef.__categorizeVariableNameByNamespace__(entryName)
           if package:
             package.hl7.append(protocolEntry)
-            logger.info("Adding HL7: %s to Package: %s" %
-                         (entryName, package.getName()))
           elif '12' in protocolEntry.fields: # check the packge it belongs
             pass
           else:
@@ -470,9 +452,6 @@ class FileManGlobalDataParser(object):
         self._crossRef.__categorizeVariableNameByNamespace__(rpcEntry.name)
         if package:
           package.rpcs.append(rpcEntry)
-          logger.info("Adding RPC: %s to Package: %s" %
-                      (rpcEntry.name, package.getName()))
-
         if '.03' in rpcEntry.fields:
           rpcRoutine = rpcEntry.fields['.03'].value
         else:
@@ -482,8 +461,6 @@ class FileManGlobalDataParser(object):
             self._crossRef.__categorizeVariableNameByNamespace__(rpcRoutine)
             if package:
               package.rpcs.append(rpcEntry)
-              logger.info("Adding RPC: %s to Package: %s based on routine calls" %
-                          (rpcEntry.name, package.getName()))
           else:
             logger.error("Cannot find package for RPC: %s" %
                           (rpcEntry.name))
@@ -538,7 +515,6 @@ class FileManGlobalDataParser(object):
     patchOrderGen = PatchOrderGenerator()
     patchOrderGen.analyzeVistAPatchDir(self.patchDir +"/Packages")
     with open(output, 'w') as installDataOut:
-      logger.warn("inside the _updateInstallReference")
       for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
         installItem = {}
         installEntry = installData.dataEntries[ien]
@@ -547,7 +523,6 @@ class FileManGlobalDataParser(object):
         if package not in installJSONData:
           installJSONData[package]={}
         if installEntry.name:
-          logger.warn("Gathering info for: %s" % installEntry.name)
           installItem['name'] = installEntry.name
           installItem['ien'] = installEntry.ien
           installItem['label'] = installEntry.name
@@ -587,7 +562,7 @@ class FileManGlobalDataParser(object):
           package = self._findInstallPackage(packageList, installName)
           multibuildItem['children'].append({"name": installName, "package": package});
         installJSONData['MultiBuild'][os.path.basename(multiBuildFile)] = multibuildItem
-      logger.warn("About to dump data into %s" % output)
+      logger.info("About to dump data into %s" % output)
       json.dump(installJSONData,installDataOut)
 
   def _resolveSelfPointer(self):
@@ -713,8 +688,6 @@ class FileManGlobalDataParser(object):
             fieldDetail = '^'.join((fieldDetail, str(idxes[-1])))
         elif fileNo == self._curFileNo:
           pointerFileNo = fileNo
-        else:
-          logger.debug("Cannot find value for %s, %s" % (ien, fileNo))
     elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
@@ -760,7 +733,6 @@ class FileManGlobalDataParser(object):
       ienDict[ien] = value
 
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
-    logger.debug ("%s" % (fieldAttr.getName() + ':'))
     subFile = fieldAttr.getPointedToSubFile()
     if fieldAttr.hasSubType(FileManField.FIELD_TYPE_WORD_PROCESSING):
       outLst = self._parsingWordProcessingNode(dataRoot)
@@ -777,7 +749,7 @@ class FileManGlobalDataParser(object):
                                         fieldAttr.getName(),
                                         subFileData))
     else:
-      logger.info("Do not know how to intepret the schema %s" % fieldAttr)
+      logger.warning("Do not know how to intepret the schema %s" % fieldAttr)
 
   def _parsingWordProcessingNode(self, dataRoot):
     outLst = []
@@ -837,7 +809,6 @@ def run(args):
       for file in fileSet:
         zwrFile = glbDataParser.allFiles[file]['path']
         globalSub = glbDataParser.allFiles[file]['name']
-        logger.info("Generate file key index for: %s at %s" % (file, zwrFile))
         glbDataParser.generateFileIndex(zwrFile, file)
     for file in fileSet:
       zwrFile = glbDataParser.allFiles[file]['path']
@@ -893,6 +864,7 @@ def main():
   initLogging(result.logFileDir, "FileManGlobalDataParser.log")
   logger.debug(result)
   run(result)
+  logger.debug("DONE")
 
 if __name__ == '__main__':
   main()

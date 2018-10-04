@@ -151,7 +151,6 @@ class AbstractSectionParser (ISectionParser):
     def __handleSuspiousCases__(self, Routine, CrossReference):
         if not self._suspiousLine:
             return
-        logger.debug("Handling [%s] with value field [%d] in Routine:[%s]" % (self._varName, self._valueStartIdx, Routine))
         self._varValue = self._varName[self._valueStartIdx - DEFAULT_NAME_FIELD_START_INDEX:]
         self._varName = self._varName[:self._valueStartIdx - DEFAULT_NAME_FIELD_START_INDEX]
         if self._addVarToRoutine:
@@ -287,7 +286,6 @@ class GlobalVarSectionParser (AbstractSectionParser):
            altName = getAlternateGlobalName(self._varName)
            globalVar = CrossReference.getGlobalByName(altName)
            if globalVar:
-              logger.debug("Changing global name from %s to %s" % (self._varName, altName))
               self._varName = altName
         Routine.addGlobalVariables(GlobalVariable(self._varName,
                                                   self._varPrefix,
@@ -633,7 +631,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
     # implementation of section parser interface for Routine Section
     def onSectionStart(self, line, section,crossRef):
         if section != IXindexLogFileParser.ROUTINE:
-            logger.error("Invalid section Header")
+            logger.error("Invalid section Header --> %s", line)
             return False
         routineName = RoutineStart.search(line).group('name')
         if validRoutineName.search(routineName)!= None: #, "Invalid RoutineName: [%s] Line: [%s]" % (routineName, line)
@@ -644,7 +642,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
           if self._crossRef.routineNeedRename(routineName):
               renamedRoutineName = self._crossRef.getRenamedRoutineName(routineName)
           if not self._crossRef.hasRoutine(renamedRoutineName):
-              logger.error("Invalid Routine: %s: rename Routine %s" %
+              logger.error("Invalid Routine: '%s': Rename Routine '%s'" %
                            (routineName, renamedRoutineName))
               return False
           self._curRoutine = self._crossRef.getRoutineByName(renamedRoutineName)

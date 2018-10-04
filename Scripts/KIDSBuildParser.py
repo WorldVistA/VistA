@@ -523,12 +523,11 @@ class KIDSBuildParser(object, ISectionParser):
         if lineNum == 1:
           self.__parseKIDSHeader__(lines)
         elif self._end: # should not be any more lines after end section
-          for line in lines:
-            logger.warn("Extra line %d:[%s]" % (lineNum, line))
+          pass
         else:
           section, parser = self.__isSectionLine__(curLine)
           if section == None: # could not find a valid section
-            logger.warn("Can not parse %s" % lines[0])
+            logger.warn("Cannot parse %s" % lines[0])
             self.__resetCurrentSection__(section, parser, lines)
           else: # find a section
             if section != self._curSection:

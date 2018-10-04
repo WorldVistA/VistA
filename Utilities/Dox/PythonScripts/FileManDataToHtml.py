@@ -327,8 +327,6 @@ class FileManDataToHtml(object):
           allRpcs = []
           for package in allPackages.itervalues():
             if package.rpcs:
-              logger.info("generating RPC list for package: %s"
-                           % package.getName())
               self._generateRPCListHtml(package.rpcs, package.getName(),fileNo)
               allRpcs.extend(package.rpcs)
           if allRpcs:
@@ -352,13 +350,9 @@ class FileManDataToHtml(object):
                 allProtoMenuList.append(dataEntry)
           for package in allPackages.itervalues():
             if package.hl7:
-              logger.info("generating HL7 list for package: %s"
-                           % package.getName())
               self._generateHL7ListByPackage(package.hl7, package.getName(),fileNo)
               allHl7s.extend(package.hl7)
             if package.protocol:
-              logger.info("generating Protocol list for package: %s"
-                           % package.getName())
               self._generateProtocolListByPackage(package.protocol, package.getName(), fileNo)
           if allHl7s:
             self._generateHL7ListByPackage(allHl7s, "All",fileNo)
@@ -373,8 +367,6 @@ class FileManDataToHtml(object):
           allHLOs = []
           for package in allPackages.itervalues():
             if package.hlo:
-              logger.info("generating HLO list for package: %s"
-                           % package.getName())
               self._generateHLOListByPackage(package.hlo, package.getName(),gblDataParser,fileNo)
               allHLOs.extend(package.hlo)
           if allHLOs:
@@ -528,8 +520,6 @@ class FileManDataToHtml(object):
               self.synonymMap[(dataEntry.name, menuDict[childIen].name)] =  "[" + subEntry.fields['2'].value+ "]"
             if childIen in menuDict:
               menuDepDict[dataEntry].add(menuDict[childIen])
-              logger.info("Adding %s to %s" % (menuDict[childIen].name,
-                                                dataEntry.name))
             else:
               logger.error("Could not find %s: value: %s" % (childIen, value))
     """ discard any menu does not have any child """
@@ -543,10 +533,6 @@ class FileManDataToHtml(object):
     allChildSet = reduce(set.union, menuDepDict.itervalues())
     rootSet = set(allMenuList) - allChildSet
     leafSet = allChildSet - set(allMenuList)
-    for rootMenu in rootSet:
-      logger.info("Root Menu: %s, %s" % (rootMenu.name, rootMenu.ien))
-    for leafMenu in leafSet:
-      logger.info("leaf Menu: %s, %s" % (leafMenu.name, leafMenu.ien))
 
     """ generate the json file based on root menu """
     for item in rootSet:
@@ -587,7 +573,6 @@ class FileManDataToHtml(object):
         childDict['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict, item)
-      logger.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
       outJson.setdefault('_children',[]).append(childDict)
 
   def _generateRPCListHtml(self, dataEntryLst, pkgName, fileNo):
@@ -753,7 +738,7 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write ("</body></html>\n")
     if isLargeFile:
-      logger.info("Ajax source file: %s" % ajexSrc)
+      logger.info("Writing Ajax file: %s" % ajexSrc)
       """ Write out the data file in JSON format """
       outJson = {"aaData": []}
       with open(os.path.join(outDir, ajexSrc), 'w') as output:
@@ -761,7 +746,7 @@ class FileManDataToHtml(object):
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           if not dataEntry.name:
-            logger.warn("no name for %s" % dataEntry)
+            logger.warn("No name for %s" % dataEntry)
             continue
           name = dataEntry.name
           if isFilePointerType(dataEntry):
