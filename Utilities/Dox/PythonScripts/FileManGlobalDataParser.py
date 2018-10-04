@@ -21,7 +21,7 @@ from datetime import datetime
 import json
 
 from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
+from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
@@ -817,7 +817,9 @@ def run(args):
       gdFile = glbDataParser.allFiles[fileNo]['path']
       logger.info("Parsing file: %s at %s" % (fileNo, gdFile))
       glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
+
       htmlGen.outputFileManDataAsHtml(glbDataParser)
+
       del glbDataParser.outFileManData[fileNo]
   else:
     # Generate all required files

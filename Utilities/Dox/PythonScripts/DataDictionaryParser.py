@@ -165,8 +165,6 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._curFile = Global
         restOfLineStart = line.find("," + fieldNo) + len(fieldNo)
         startIdent = self.DEFAULT_NAME_INDENT
-        #if len(fileNo) + 4 > startIdent:
-        #    startIdent = self
         defaultIdentLevel = self.__getDefaultIndentLevel__(self._curFile, self.DEFAULT_NAME_INDENT)
         if restOfLineStart > defaultIdentLevel:
             logger.debug("FileNo: %s, FieldNo: %s, line: %s, may not be a valid field no, %d, %d" % (fileNo, fieldNo, line, restOfLineStart, defaultIdentLevel))
@@ -564,18 +562,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         self._sectionParserDict[self.POINTED_TO_BY_SECTION] = PointedToBySectionParser()
         self._sectionParserDict[self.DESCRIPTION_SECTION] = DescriptionSectionParser()
         self._sectionParserDict[self.FILEMAN_FIELD_SECTION] = FileManFieldSectionParser()
-    def printResult(self):
-        logger.debug("Total Routines are %d" % len(self._crossRef.getAllRoutines()))
 
-    def printGlobal(self, globalName, visitor=None):
-        globalVar = self._crossRef.getGlobalByName(globalName)
-        if globalVar:
-            if visitor:
-                visitor.visitGlobal(globalVar)
-            else:
-                globalVar.printResult()
-        else:
-            logger.error ("Global: %s Not Found!" % globalName)
     def getCrossReference(self):
         return self._crossRef
     #===========================================================================

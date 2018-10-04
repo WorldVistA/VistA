@@ -735,9 +735,6 @@ class CallerGraphLogFileParser(object):
         self._crossRef = crossRef
         self._crossRef._icrJson = icrJson
 
-    def printResult(self):
-        logger.info("Total Routines are %d" % len(self._crossRef.getAllRoutines()))
-
     def getCrossReference(self):
         return self._crossRef
     def getAllRoutines(self):
@@ -802,140 +799,14 @@ class CallerGraphLogFileParser(object):
         for logFileName in allFiles:
             logger.info("Start parsing log file [%s]" % logFileName)
             XindexParser.parseXindexLogFile(logFileName)
-    def printAllNamespaces(self):
-        crossRef = self._crossRef
-        allPackages = crossRef.getAllPackages()
-        namespaces = set()
-        excludeNamespace = set()
-        for package in allPackages.itervalues():
-            for namespace in package.getNamespaces():
-                if (namespace.startswith("!")):
-                    excludeNamespace.add(namespace)
-                else:
-                    namespaces.add(namespace)
-        sortedSet = sorted(namespaces)
-        sortedExclude = sorted(excludeNamespace)
-        logger.info("Total # of namespace: %d" % len(sortedSet))
-        logger.info("Total # of excluded namespaces: %d" % len(sortedExclude))
-        logger.info(sortedSet)
-        logger.info(sortedExclude)
-        for item in excludeNamespace:
-            if item[1:] not in sortedSet:
-                logger.warn("item: %s not in the namespace set" % item[1:])
+
     def getRoutinePackageNameSpace(self, routineName):
         return self._crossRef.categorizeRoutineByNamespace(routineName)
+
     def getGlobalPackageNameSpace(self, globalName):
         return self._crossRef.categorizeGlobalByNamespace(globalName)
 # end of class CallerGraphLogFileParser
 
-#===============================================================================
-# Section for unit/regression testing routines
-#===============================================================================
-#Testing Constants
-# Unit test of categorizing routine based on namespace
-RoutineNamespaceMappingTestDict = {"%ZTLOAD": ("%Z", Package("Kernel")),
-                                   "PRC0A": ("PRC", Package("IFCAP")),
-                                   "PRCABIL1": ("PRCA", Package("Accounts Receivable")),
-                                   "RGUTALR": ("RGUT", Package("Run Time Library")),
-                                   "IBQL356": ("IBQ", Package("Utilization Management Rollup")),
-                                   "A1B2OSR": (None,None)}
-
-def testingRoutineNamespaceMapping(loggerParser, testMapping):
-    for (routineName, expectedValue) in testMapping.iteritems():
-        result = loggerParser.getRoutinePackageNameSpace(routineName)
-        assert result == expectedValue, "result: %s, expect: %s" % (result, expectedValue)
-
-# regression testing functions
-# dict in the format of routinename as key, a list of variables as value
-localVarRegressionTest = {"ONCBPC1":['''TABLE("DURATION OF SMOKE-FREE HISTORY"''',
-                                     '''TABLE("DURATION OF SMOKING HISTORY"''',
-                                     '''TABLE("FAMILY HISTORY OF CANCER"''',
-                                     '''TABLE("ACCESSION/SEQUENCE NUMBER"''',
-                                     '''I''',
-                                     '''DR'''],
-                          "AFJXTRF":['''XMY("G.AFJX PATID FILTER BLOCK"''',
-                                     '''AXPID("NAME"''',
-                                     '''AXDREC'''],
-                          "MAGXIDXU":['''XMY("G.MAG SERVER"''',
-                                      '''CNT'''],
-                          "MAGBRTE4":['''KEYWORD("CONDITION"'''],
-                          "XTERSUM4":['''ZTSAVE("XTERMAX"'''],
-                          #"XTINEND":['''XMY("G.KERNEL_INSTALL@ISC-SF.VA.GOV"'''],
-                          "XTHC10A":['''DFLTHDR("CONTENT-LENGTH"''','''DFLTHDR("USER-AGENT"'''],
-                          "RCCPW":['''ZTSAVE("SITE"''','''ZTSAVE("^TMP(""RCCPW"",$J,"'''],
-                          "PRCARPS":['''ZTSAVE("PRCA(""BILLN"")"''','''ZTSAVE("PRCA(""BILLN"")"'''],
-                          "XINDX8":['''ZTSAVE("^UTILITY($J,"''','''IND("CMD"''']
-}
-globalVarRegressionTest = {"MAGGA03":['''^TMP("MAGGA03A.NAME"'''],
-                           "MAGGTMC":['''^XUSEC("MAGCAP MED "'''],
-                           "MAGXIDXU":['''^XTMP("MAG INDEX TERMS BACKUP"'''],
-                           "MAGBRTE4":['''^XTMP("MAGEVALSTUDY"'''],
-                           "XOBWD":['''^TMP("XOBW WSDL FILING"'''],
-                           "PRCAI162":['''^TMP("PRCAI162REPAY"''','''^PRCA(430'''],
-                           "RCDPE8NZ":['''^TMP("RCDPE8NZZ_EFT"''','''^RCY(344'''],
-                           "PXRMHF":['''^PXRMINDX(9000010.23''','''^TMP("PXRMXMZ"'''],
-                           "ORWGAPI4":['''^PXRMINDX(9000010.18''', '''^PXRMINDX(9000010.16''',
-                                       '''^PXRMINDX(9000010.13''','''^PXRMINDX(9000010.07''',
-                                       '''^PXRMINDX(9000010.11''', '''^PXRMINDX(9000010.12'''],
-                           "PXPXRMI1":['''^PXRMINDX(9000010.11''', '''^PXRMINDX(9000010.18''',
-                                       '''^PXRMINDX(9000010.23''', '''^AUTTIMM''']
-}
-routineInvokeRegressionTest = {}
-nakedGlobalsRegressionTest = {"FSCCLEAN":['''^("STATUS HIST"''',
-                                          '''^("STU ALERT"''']}
-markedItemRegressionTest = {"XINDX11":['''$T(RTN^XTRUTL1'''],
-                            "RCRJRBDT":['''$T(FOOTNOTE+%'''],
-                            "IBDFN6":['''$T(ALL^IBCNS1''', '''$T(INSURED^IBCNS1'''],
-                            "KMPRUTL":['''$T(ELEMENTS+I''', '''$T('''],
-                            "IBTRKR41":['''$T(CLDATA+(3)'''],
-                            "XGFDEMO1":['''$T(KEYBOARD+%''', '''$T(CURSOR+%'''],
-                            "ZTM0":['''$T(ACTJ^%ZOSV''']}
-def regressionTestingLocalVarParsing(localVarDict, crossRef):
-    for (routineName, resultList) in localVarDict.iteritems():
-        if crossRef.hasRoutine(routineName):
-            routine = crossRef.getRoutineByName(routineName)
-            assert routine, "Can not find routine: %s" % routineName
-            localVars = routine.getLocalVariables()
-            for item in resultList:
-                assert item in localVars, "localVar: %s not found in routine %s" % (item, routineName)
-                assert len(localVars[item].getLineOffsets()[0]) > 0
-
-def regressionTestingGlobalVarParsing(globalVarDict, crossRef):
-    for (routineName, resultList) in globalVarDict.iteritems():
-        if crossRef.hasRoutine(routineName):
-            routine = crossRef.getRoutineByName(routineName)
-            assert routine, "Can not find routine: %s" % routineName
-            globalVars = routine.getGlobalVariables()
-            for item in resultList:
-                assert item in globalVars, "GlobalVar: %s not found in routine %s" % (item, routineName)
-                assert len(globalVars[item].getLineOffsets()[0]) > 0, "GlobalVar: %s tag + offset is empty in routine: %s" % (item, routineName)
-
-def regressionTestingNakedGLobalParsing(markedItemDict, crossRef):
-    for (routineName, resultList) in markedItemDict.iteritems():
-        if crossRef.hasRoutine(routineName):
-            routine = crossRef.getRoutineByName(routineName)
-            assert routine, "Can not find routine: %s" % routineName
-            nakedGlobals = routine.getNakedGlobals()
-            for item in resultList:
-                assert item in nakedGlobals, "NakedGlobal: %s not found in routine %s" % (item, routineName)
-                assert len(nakedGlobals[item].getLineOffsets()[0]) > 0
-
-def regressionTestingMarkedItemParsing(markedItemDict, crossRef):
-    for (routineName, resultList) in markedItemDict.iteritems():
-        if crossRef.hasRoutine(routineName):
-            routine = crossRef.getRoutineByName(routineName)
-            assert routine, "Can not find routine: %s" % routineName
-            markedItems = routine.getMarkedItems()
-            for item in resultList:
-                assert item in markedItems, "Marked Items: %s not found in routine %s" % (item, routineName)
-                assert len(markedItems[item].getLineOffsets()[0]) > 0
-
-def runRegressionTestingCases(logFileParser):
-    testingRoutineNamespaceMapping(logFileParser, RoutineNamespaceMappingTestDict)
-    regressionTestingLocalVarParsing(localVarRegressionTest, logFileParser.getCrossReference())
-    regressionTestingGlobalVarParsing(globalVarRegressionTest, logFileParser.getCrossReference())
-    regressionTestingNakedGLobalParsing(nakedGlobalsRegressionTest, logFileParser.getCrossReference())
-    regressionTestingMarkedItemParsing(markedItemRegressionTest, logFileParser.getCrossReference())
 
 """ generate argument parse for Parsing log related parameters """
 def createCallGraphLogAugumentParser():
@@ -947,9 +818,6 @@ def createCallGraphLogAugumentParser():
                           help='Input XINDEX log files directory, nomally under'
                              '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
     return parser
-
-def parseAllCallGraphLogWithArg(arguments):
-    return parseAllCallGraphLog(arguments.xindexLogDir,CrossReference(),None)
 
 def parseAllCallGraphLog(xindexLogDir, crossRef, icrJson):
     xindexLogParser = CallerGraphLogFileParser(crossRef,icrJson)

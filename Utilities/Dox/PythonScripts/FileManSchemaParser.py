@@ -20,8 +20,8 @@ from datetime import datetime
 
 from CrossReference import FileManFile, FileManFieldFactory
 from CrossReference import FileManField, Global
-from ZWRGlobalParser import createGlobalNodeByZWRFile, getKeys
-from ZWRGlobalParser import readGlobalNodeFromZWRFileV2, printGlobal
+from ZWRGlobalParser import getKeys
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from LogManager import logger
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -175,12 +175,6 @@ class FileManSchemaParser(object):
   def isolatedFiles(self):
     return self._isolatedFile
 
-  def _readZeroFile(self, inputDDZWRFile):
-    for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
-      if '0' in globalRoot:
-        printGlobal(globalRoot)
-        break
-
   def _updateFileDepSet(self, file, deps, exclude):
     for depFile in [x for x in deps]:
       if depFile not in self._fileDep:
@@ -204,21 +198,11 @@ class FileManSchemaParser(object):
       self._updateFileDepSet(file, deps, exclude)
 
   def _generateNoPointerToFileList(self):
-    depDict = self._fileDep
-    noPointedToBy = sorted(reduce(set.union, depDict.itervalues()) -
-                            set(depDict.iterkeys()), key=lambda x: float(x))
-    # remove subfiles
-    allNoPointedToBy = noPointedToBy
-    noPointedToBy = [x for x in noPointedToBy if self._allSchema[x].isRootFile()]
-    logger.info("SubFiles are %s" % (set(allNoPointedToBy) - set(noPointedToBy)))
-    logger.info("Total # of Files that is not pointed to by any files: %s" %
-                  len(noPointedToBy))
-    logger.debug("List of files that is not pointed to by any files: %s" % noPointedToBy)
-
     """
       generate list of files that does not have any pointer
       and is not pointed by any files
     """
+    depDict = self._fileDep
     allFiles = [x for x in self._allSchema if self._allSchema[x].isRootFile()]
     logger.info("Total # of Files: %s" % len(allFiles))
     allFilesWithPointedTo = [x for x in depDict if self._allSchema[x].isRootFile()]
@@ -240,15 +224,6 @@ class FileManSchemaParser(object):
   def _topologicSort(self):
     from PatchOrderGenerator import topologicSort
     result = topologicSort(self._fileDep, '2')
-
-  def parseSchemaDDFile(self, inputDDZWRFile):
-    self._ddRoot = createGlobalNodeByZWRFile(inputDDZWRFile)
-    assert self._ddRoot.subscript == "^DD"
-    #self._generateFileZeroSchema()
-    self._generateSchema()
-    self._updateMultiple()
-    self._updateFileDep()
-    return self._allSchema
 
   def _generateSCCSet(self):
     """
@@ -287,12 +262,6 @@ class FileManSchemaParser(object):
       totalFiles += len(scc)
     return self._allSchema
 
-  def _generateFileZeroSchema(self):
-    while (len(self._zeroFiles) > 0):
-      file = self._zeroFiles.pop(0)
-      if file not in self._allSchema:
-        self._allSchema[file] = Global("", file, "")
-      self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
 
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
@@ -402,7 +371,7 @@ class FileManSchemaParser(object):
           if not globalName:
             pointedToFile.setName(fileGlobalRoot)
           elif globalName != fileGlobalRoot:
-            logger.error("%s: FileMan global root mismatch %s: %s" %
+            logger.error("%s: FileMan global root mismatch '%s' : '%s'" %
                           (zeroFields, globalName, fileGlobalRoot))
         else:
           logger.info("@TODO, find file global root for # %s" % filePointedTo)
@@ -448,10 +417,6 @@ class FileManSchemaParser(object):
                                      pointedToFile.getFileNo())
             vpFileSchemas.append(self._allSchema[x])
           fileField.setPointedToFiles(vpFileSchemas)
-    elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
-      if len(zeroFields) >= 5:
-        logger.debug("Computed Mumps Code: %s for %r" %
-                      ("".join(zeroFields[4:]), fileField))
 
   @staticmethod
   def parseFieldTypeSpecifier(type):
@@ -507,15 +472,6 @@ def createArgParser():
   parser.add_argument('ddFile', help='path to ZWR file contains DD global')
   return parser
 
-def printAllSchemas(allSchemaDict):
-  files = getKeys(allSchemaDict.keys(), float)
-  for file in files:
-    allSchemaDict[file].printFileManInfo()
-
-def parseCrossReference(globalRoot):
-  pass
-  #printGlobal(globalRoot['1'])
-
 def parsingVariablePointer(vpRoot):
   intKey = getKeys(vpRoot)
   outVptr = []
@@ -526,13 +482,6 @@ def parsingVariablePointer(vpRoot):
         value = value.split('^')[0]
         outVptr.append(value)
   return outVptr
-
-def parsingWordProcessingNode(globalNode, level=1):
-  indent = "\t"*level
-  logger.debug("Processing Word Processing Data")
-  for key in sorted(globalNode, key=lambda x: int(x)):
-    if "0" in globalNode[key]:
-      logger.info ("%s%s" % (indent, globalNode[key]["0"].value))
 
 def strongly_connected_components(vertice, edges):
   """

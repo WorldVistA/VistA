@@ -286,7 +286,7 @@ def convertFilePointerToHtml(inputValue):
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
     name = value
   else:
-    logger.error("Unknown File Pointer Value %s" % inputValue)
+    logger.error("Unknown File Pointer Value '%s'" % inputValue)
   return value, name
 
 

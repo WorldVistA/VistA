@@ -295,16 +295,5 @@ def main():
       result.size*EXTERNAL_DATA_SIZE_THRESHOLD)
   converter.convertCurrentDir(result.inputDir)
 
-""" -------- TEST CODE SECTION -------- """
-TEST_INPUT_STRING = "LR*5.2*334"
-def test_generateSha1SumCommon(inputString=TEST_INPUT_STRING):
-  import StringIO
-  stringIo = StringIO.StringIO(inputString) # convert string to stringIO
-  print generateSha1SumCommon(stringIo)
-
-TEST_INPUT_FILE = "../Packages/MultiBuilds/CPRS28_RELATED.KID"
-def test_generateSha1Sum(inputFile=TEST_INPUT_FILE):
-  print generateSha1Sum(inputFile)
-
 if __name__ == '__main__':
   main()

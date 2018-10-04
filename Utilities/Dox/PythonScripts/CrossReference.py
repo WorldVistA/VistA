@@ -22,9 +22,7 @@ from LogManager import logger
 import csv
 import json
 from operator import itemgetter, attrgetter
-#some constants
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
-write = sys.stdout.write
 MUMPS_ROUTINE_PREFIX = "Mumps"
 
 BoolDict = {True:"Y", False:"N"}
@@ -272,56 +270,7 @@ class Routine(object):
         return self._hasSourceCode
     def setHasSourceCode(self, hasSourceCode):
         self._hasSourceCode = hasSourceCode
-    def printVariables(self, name, variables):
-        write("%s: \n" % name)
-        allVars = sorted(variables.iterkeys())
-        for varName in allVars:
-            var = variables[varName]
-            write("%s %s %s\n" % (var.getPrefix(), varName, var.getLineOffsets()))
-        write("\n")
-    def printExternalReference(self):
-        write("External References:\n")
-        output = self.getExternalReference()
-        allVar = sorted(output.iterkeys(), key = itemgetter(0,1))
-        for nameTag in allVar:
-            value = output[nameTag]
-            write("%s %s\n" % (nameTag[1]+"^"+nameTag[0],value))
-        write("\n")
-    def printCallRoutines(self, isCalledRoutine=True):
-        if isCalledRoutine:
-            callRoutines = self._calledRoutines
-            title = "Called Routines:"
-            write("%s: Total: %d\n" % (title, self._totalCalled))
-        else:
-            callRoutines = self._callerRoutines
-            title = "Caller Routines:"
-            write("%s: Total: %d\n" % (title, self._totalCaller))
-        sortedDepRoutines = sorted(sorted(callRoutines.keys()),
-                                 key=lambda item: len(callRoutines[item]),
-                                 reverse=True)
-        for package in sortedDepRoutines:
-            write ("Package: %s Total: %d" % (package, len(callRoutines[package])))
-            for (routine, tagDict) in callRoutines[package].iteritems():
-                write(" %s " % routine)
-                for (tag, lineOccurences) in tagDict.iteritems():
-                        write("%s: %s\n" % (tag, lineOccurences))
-        write("\n")
-    def printResult(self):
-        write ("Routine Name: %s\n" % (self._name))
-        if self.isRenamed():
-            write("Original Name: %s\n" % self._originalName)
-        if self._package:
-            write("Package Name: %s\n" % self._package.getName())
-        write("Renamed: %s, hasSource: %s\n" % (self.isRenamed(),
-                                              self.hasSourceCode()))
-        self.printVariables("Global Vars", self._globalVariables)
-        self.printVariables("Local Vars", self._localVariables)
-        self.printVariables("Naked Globals", self._nakedGlobals)
-        self.printVariables("Marked Globals", self._markedItems)
-        self.printVariables("Label References", self._labelReference)
-        self.printExternalReference()
-        self.printCallRoutines(True)
-        self.printCallRoutines(False)
+
     #===========================================================================
     # operator
     #===========================================================================
@@ -413,8 +362,7 @@ class PlatformDependentGenericRoutine(Routine):
         pass
     def hasSourceCode(self):
         return False
-    def printVariables(self, name, variables):
-        pass
+
     def addPlatformRoutines(self, mappingList):
         for item in mappingList:
             if item[0] not in self._platformRoutines:
@@ -513,36 +461,7 @@ class FileManFile(Routine):
         if package not in self._fileManDbCallRoutines:
             self._fileManDbCallRoutines[package] = set()
         self._fileManDbCallRoutines[package].add(routine)
-    def printFileManInfo(self):
-        self.printFileManDescription()
-        self.printFileManFields()
-        self.printFileManSubFiles()
-    def printFileManDescription(self):
-        if not self._description or len(self._description) == 0:
-            return
-        write("\n################################################\n")
-        write("%s %s\n" % (self._fileNo, "Description"))
-        for line in self._description:
-            write(line + "\n")
-    def printFileManFields(self):
-        if not self._fields or len(self._fields) == 0:
-            return
-        write("################################################\n")
-        write("%s: Total # of FileMan Fields: %d\n" % (self._fileNo, len(self._fields)))
-        for fieldNo in sorted(self._fields.keys(), key=float):
-            self._fields[fieldNo].printResult()
-        write("\n")
-    def printFileManSubFiles(self):
-        if not self._subFiles or len(self._subFiles) == 0:
-            return
-        write("\n################################################\n")
-        write("%s: Total # of FileMan SubFiles: %d\n" % (self._fileNo, len(self._subFiles)))
-        for subFile in self._subFiles.itervalues():
-            write(" %s(%s) " % (subFile.getFileNo(), subFile.getParentFile().getFileNo()))
-        write("\n")
-        for subFile in self._subFiles.itervalues():
-            subFile.printFileManInfo()
-        write("\n")
+
     #===========================================================================
     # operator
     #===========================================================================
@@ -682,16 +601,7 @@ class FileManField(json.JSONEncoder):
         return None
     def getPropList(self):
         return self._propList
-    def printResult(self):
-        write("%r\n" % self)
-        self.printPropList()
-    def printPropList(self):
-        if not self._propList or len(self._propList) <= 0:
-            return
-        for (name, values) in self._propList:
-            write("%s:  " % name)
-            for value in values:
-                write("%s\n" % value)
+
     # type checking method
     def isFilePointerType(self):
         return self._type == self.FIELD_TYPE_FILE_POINTER
@@ -934,36 +844,6 @@ class Global(FileManFile):
         return self.getFileNo() != None
     def getPackage(self):
         return self._package
-    def printResult(self):
-        write("Name:[%s], FileNo:[%s]: FileManName:[%s], Package:[%s]\n" %
-              (self._name, self._fileNo, self._fileManName, self._package))
-        #self.printReferencedRoutines()
-        self.printFileManFileDependencies()
-        if self.isFileManFile:
-            self.printFileManInfo()
-    def printReferencedRoutines(self):
-        write("Referenced By Routines: %d\n" % self._totalReferencedRoutines)
-        for (package, routineSet) in self._referencesRoutines.iteritems():
-            write("Package: %s Total: %d" % (package, len(routineSet)))
-            for routine in routineSet:
-                write(" %s" % routine)
-            write("\n")
-        write("################################################\n")
-    def printFileManFileDependencies(self):
-        write("Pointed By FileMan Files: %d\n" % self._totalReferredGlobals)
-        for (package, filePointerDict) in self._filePointedBy.iteritems():
-            write("Package: %s Total: %d" % (package, len(filePointerDict)))
-            for (Global, detailList) in filePointerDict.iteritems():
-                write(" %s:%s" % (Global.getFileNo(), detailList))
-            write("\n")
-        write("################################################\n")
-        write("Pointers to FileMan Files: %d\n" % self._totalReferencedGlobals)
-        for (package, filePointerDict) in self._filePointers.iteritems():
-            write("Package: %s Total: %d" % (package, len(filePointerDict)))
-            for (Global, detailList) in filePointerDict.iteritems():
-                write(" %s:%s" % (Global.getFileNo(), detailList))
-            write("\n")
-        write("\n")
     #===========================================================================
     # operator
     #===========================================================================
@@ -1302,85 +1182,6 @@ class Package(object):
         self._docLink = docLink
     def setMirrorLink(self, docMirrorLink):
         self._docMirrorLink = docMirrorLink
-    def printRoutineDependency(self, dependencyList=True):
-        if dependencyList:
-            header = "Routine Dependencies list"
-            depPackages = self._routineDependencies
-        else:
-            header = "Routine Dependents list"
-            depPackages = self._routineDependents
-        write("Package %s: \n" % header)
-        for package, depRoutineTuple in depPackages.iteritems():
-            write(" %s: Total caller Routines: %d [ " % (package, len(depRoutineTuple[0])))
-            for routine in depRoutineTuple[0]:
-                write (" %s " % (routine))
-            write("]\n")
-            write(" %s: Total called Rouintes: %d [ " % (package, len(depRoutineTuple[1])))
-            for routine in depRoutineTuple[1]:
-                write (" %s " % (routine))
-            write("]\n")
-        write("\n")
-    def printGlobalDependency(self, dependencyList=True):
-        if dependencyList:
-            header = "Global Dependencies list"
-            depPackages = self._globalDependencies
-        else:
-            header = "Global Dependents list"
-            depPackages = self._globalDependents
-        write("Package %s: \n" % header)
-        for package, depGlobalTuple in depPackages.iteritems():
-            write(" %s: Total Caller Routines: %d [ " % (package, len(depGlobalTuple[0])))
-            for globalVar in depGlobalTuple[0]:
-                write (" %s " % (globalVar))
-            write("]\n")
-            write(" %s: Total Referred Globals: %d [ " % (package, len(depGlobalTuple[1])))
-            for globalVar in depGlobalTuple[1]:
-                write (" %s " % (globalVar))
-            write("]\n")
-        write("\n")
-    def printFileManFileDependency(self, dependencyList=True):
-        if dependencyList:
-            header = "FileMan File Dependencies list"
-            depPackages = self._fileManDependencies
-        else:
-            header = "FileMan File Dependents list"
-            depPackages = self._fileManDependents
-        write("Package %s: \n" % header)
-        for package, depFileManTuple in depPackages.iteritems():
-            write(" %s: Total Files Pointed To By: %d [ " % (package, len(depFileManTuple[0])))
-            for globalVar in depFileManTuple[0]:
-                write (" %s " % (globalVar))
-            write("]\n")
-            write(" %s: Total File Pointer To : %d [ " % (package, len(depFileManTuple[1])))
-            for globalVar in depFileManTuple[1]:
-                write (" %s " % (globalVar))
-            write("]\n")
-        write("\n")
-    def printResult(self):
-        write("Package :%s, total Num of Routines: %d, Total Num of Globals: %d\n" %
-              (self, len(self._routines), len(self._globals)))
-        if len(self._origName) > 0:
-            write("Original Name is: %s\n" % self._origName)
-        if len(self._namespaces) > 0:
-            write("Namespaces: ")
-            for namespace in self._namespaces:
-                write(" [%s]" % namespace)
-            write("\n")
-        if len(self._globalNamespace) > 0:
-            write("Global Namespaces:")
-            for namespace in self._globalNamespace:
-                write(" [%s]" % namespace)
-            write("\n")
-        self.printRoutineDependency(True)
-        self.printRoutineDependency(False)
-        self.printGlobalDependency(True)
-        self.printGlobalDependency(False)
-        self.printFileManFileDependency(True)
-        self.printFileManFileDependency(False)
-        write("Options")
-        write( " [%s]" % self.getAllOptions())
-        write("Functions")
-        write(" [%s]" % self.getAllFunctions())
     #===========================================================================
     # operator
     #===========================================================================

@@ -19,18 +19,9 @@
 #----------------------------------------------------------------
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-import glob
-import re
-import os
-import os.path
-import sys
-import subprocess
-import re
-import csv
 import argparse
 import json
 
-from datetime import datetime, date, time
 from CrossReference import CrossReference, Routine, Package, Global
 from CrossReference import PlatformDependentGenericRoutine
 from CrossReference import FileManField, FileManFile, FileManFieldFactory
