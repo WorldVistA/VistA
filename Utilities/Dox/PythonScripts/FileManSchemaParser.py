@@ -280,7 +280,8 @@ class FileManSchemaParser(object):
                                                   filePointedTo,
                                                   "")
         pointedToFile = self._allSchema[filePointedTo]
-        assert pointedToFile.isRootFile()
+        if not pointedToFile.isRootFile():
+          logger.warn("Pointed to file: %s is not a root file" % filePointedTo)
         fileField.setPointedToFile(pointedToFile)
         globalName = pointedToFile.getName()
         fileNo = fileSchema.getFileNo()
@@ -314,7 +315,15 @@ class FileManSchemaParser(object):
         logger.warn("No subfile is set for file:%s, field:%r 0-index:%s" %
                      (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SET and not subFile and zeroFields[2]:
-      setDict = dict([x.split(':') for x in zeroFields[2].rstrip(';').split(';')])
+      setDict=dict()
+      for x in zeroFields[2].rstrip(';').split(';'):
+        dictPair = x.split(':', 1)
+        # If len == 1, DD is malformed and we append an empty string to it
+        # Example:
+        #  DD-1+0.zwr:^DD("63.04",1115010,0)="HERPES SIMPLEX VIRUS TYPE 1^S^N:NEGATIVE;P:POSITIVE;E:EQUIVOCAL;BORDERLINE;^1115010;1^Q"
+        if len(dictPair) == 1:
+          dictPair = ['',x]
+        setDict[dictPair[0]] = dictPair[1]
       fileField.setSetMembers(setDict)
     elif fileField.getType() == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER:
       if "V" in rootNode: # parsing variable pointer

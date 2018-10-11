@@ -500,7 +500,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
     REFERENCED_BY_START = re.compile("^REFERENCED BY:")
     INDEXED_BY_START = re.compile("^INDEXED BY: ")
     PRIMARY_KEY_START = re.compile("^PRIMARY KEY: ")
-    FILEMAN_FIELD_START = re.compile("(?P<FileNo>^[.0-9]+),(?P<FieldNo>[.0-9]+)")
+    FILEMAN_FIELD_START = re.compile("(?P<FileNo>^[.0-9]+),(?P<FieldNo>([0-9]+)?(\.[0-9]+)?)")
     FILES_POINTED_TO_START = re.compile("^ +FILES POINTED TO +FIELDS$")
     FILE_RECORD_INDEXED_START = re.compile("^File #[.0-9]+$")
     SUBFILE_RECORD_INDEXED_START = re.compile("^Subfile #[.0-9]+$")

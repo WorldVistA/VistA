@@ -459,10 +459,10 @@ class PackageInfoSectionParser (AbstractSectionParser):
             self._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
             self._varValue = match.groups()[1]
             self._varName = match.groups()[0].strip()
-            if self._localHandler._addVarToRoutine:
-                self._localHandler._addVarToRoutine(self._curRoutine, CrossReference)
-            if self._localHandler._postParsingRoutine:
-                self._localHandler._postParsingRoutine(self._curRoutine, CrossReference)
+            if self._addVarToRoutine:
+                self._addVarToRoutine(self._curRoutine, CrossReference)
+            if self._postParsingRoutine:
+                self._postParsingRoutine(self._curRoutine, CrossReference)
             return
           if self._suspiousLine:
               self.__handleSuspiousCases__(Routine, CrossReference)

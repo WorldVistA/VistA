@@ -946,6 +946,7 @@ class WebPageGenerator:
 
         for package in self._allPackages.itervalues():
             packageName = package.getName()
+            fileManDbCallRtns = None
             for (globalName, globalVar) in package.getAllGlobals().iteritems():
                 isFileManFile = globalVar.isFileManFile()
                 if isFileManFile:
