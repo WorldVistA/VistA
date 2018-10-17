@@ -15,8 +15,10 @@
 #---------------------------------------------------------------------------
 
 from __future__ import with_statement
-import sys
 import os
+import sys
+import time
+
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista',
             '${VISTA_SOURCE_DIR}/Utilities/Dox/PythonScripts'] + sys.path
 
@@ -64,7 +66,12 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
         VistA.write('1')
         break
     firstStartWithField = True
+
+    timeout = time.time() + 60*5 # 5 minutes
     while True:
+      if time.time() > timeout:
+        logger.error("Timed out processing file: %s" % FileManNo)
+        sys.exit(1)
       index = VistA.multiwait(['ALPHABETICALLY BY LABEL?',
                             'Start with field:',
                             'DEVICE:',
