@@ -2559,24 +2559,23 @@ class WebPageGenerator:
         table = []
         if headerList:
             table.append(generatePDFTableHeader(headerList, False))
-        if itemList and len(itemList) > 0:
-            for itemRow in itemList:
-                row = []
-                for data in itemRow:
-                    if isString:
-                        # Make sure data is a string...
-                        data = str(data)
-                        # ... and then remove html markup
-                        data = data.replace("<para>", "")
-                        data = data.replace("</para>", "")
-                        data = data.replace("<BR>", "")
-                        data = re.sub(r'<a href=".*?\.html">', "", data)
-                        data = data.replace("</a>", "")
-                        data = re.sub(r'<.*?>', "", data)
-                        data = re.sub(r'<.*?', "", data)
-                        row.append(generateParagraph((data)))
-                    else:
-                        row.append(data)
+        for itemRow in itemList:
+            row = []
+            for data in itemRow:
+                if isString:
+                    # Make sure data is a string...
+                    data = str(data)
+                    # ... and then remove html markup
+                    data = data.replace("<para>", "")
+                    data = data.replace("</para>", "")
+                    data = data.replace("<BR>", "")
+                    data = re.sub(r'<a href=".*?\.html">', "", data)
+                    data = data.replace("</a>", "")
+                    data = re.sub(r'<.*?>', "", data)
+                    data = re.sub(r'<.*?', "", data)
+                    row.append(generateParagraph((data)))
+                else:
+                    row.append(data)
                 table.append(row)
         t = self.__generatePDFTable__(table, columnWidths)
         pdf.append(t)

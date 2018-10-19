@@ -116,17 +116,17 @@ class ICRFileToJson(object):
                         self._rewindStack();
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
-                    if len(line.strip()) == 0 and not isWordProcessingField(self._curField):
+                    if not line.strip() and not isWordProcessingField(self._curField):
                         # Ignore blank line
                         continue
                     self._appendWordsFieldLine(line)
                 else:
                     if self._curRecord:
-                        if len(line.strip()) == 0:
+                        if not line.strip():
                             continue
                         logger.debug('No field associated with line %s: %s ' %
                                       (curLineNo, line))
-        if len(self._curStack) > 0:
+        if not self._curStack:
             self._curField = None
             self._rewindStack()
         if self._curRecord:
@@ -204,7 +204,7 @@ class ICRFileToJson(object):
             reset _curRecord to be a new one, and push old one into the stack
         """
         subFile = match.group('name')
-        while len(self._curStack) > 0: # we are in subfile mode
+        while self._curStack: # we are in subfile mode
             prevSubFile = self._curStack[-1][1]
             if prevSubFile == subFile: # just continue with more of the same subfile
                 self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord) # append the previous result
@@ -217,13 +217,13 @@ class ICRFileToJson(object):
                     preStack = self._curStack.pop()
                     preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                     self._curRecord = preStack[0]
-        if len(self._curStack) == 0:
+        if not self._curStack:
             self._curStack.append((self._curRecord, subFile)) # push a tuple, the first is the record, the second is the subFile field
         self._curRecord = {}
         self._findKeyValueInLine(match, line, self._curRecord)
 
     def _rewindStack(self):
-        while len(self._curStack) > 0: # we are in subFile Mode
+        while self._curStack: # we are in subFile Mode
             if not isSubFileField(self._curStack[-1][1], self._curField):
                 preStack = self._curStack.pop()
                 preStack[0].setdefault(preStack[1],[]).append(self._curRecord)
@@ -257,7 +257,7 @@ class ICRFileToJson(object):
         """ This is some special logic to ignore some of the fields in word processing field """
         if fieldName == 'ROUTINE':
             recordToCheck = self._curRecord
-            if self._curStack and len(self._curStack) > 0: # we are in subfile mode and it is a world processing field
+            if self._curStack: # we are in subfile mode and it is a world processing field
                 recordToCheck = self._curStack[0][0]
             if 'REMOTE PROCEDURE' in recordToCheck:
                 return True

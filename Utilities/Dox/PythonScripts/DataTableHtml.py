@@ -319,10 +319,11 @@ data_table_clear_filters = Template("""
 </script>
 """)
 
-data_table_record_init_setup = Template("""
+def data_table_record_init_setup(tableName):
+  return """
 <script type="text/javascript" id="js">
-  $$(document).ready(function() {
-      $$("#${tableName}").dataTable({
+  $(document).ready(function() {
+      $("#%s").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -331,7 +332,7 @@ data_table_record_init_setup = Template("""
         "bFilter": false
       });
 }); </script>
-""")
+""" % tableName
 
 """ Some Utilitity functions for some TablelizedData
 """
@@ -339,7 +340,7 @@ def outputDataListTableHeader(output, tName, columns=None,
                               searchColumnNames=None, hideColumnNames=None):
   output.write("%s\n" % data_table_reference)
   if columns is None:
-    initSet = data_table_list_init_setup.substitute(tableName=tName,downloadTitle=tName)
+    initSet = data_table_list_init_setup.substitute(tableName=tName, downloadTitle=tName)
   else:
     columnNames = []
     for col in columns:
@@ -369,8 +370,8 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
   output.write("%s\n" % data_table_reference)
   if columns is None and searchColumnNames is None and hideColumnNames is None:
     initSet = data_table_large_list_init_setup.substitute(ajaxSrc=src,
-                                                          tableName=tName
-                                                          ,downloadTitle=tName)
+                                                          tableName=tName,
+                                                          downloadTitle=tName)
   else:
     columnNames = []
     for col in columns:
@@ -394,7 +395,7 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
 
 def outputDataRecordTableHeader(output, tName):
   output.write("%s\n" % data_table_reference)
-  initSet = data_table_record_init_setup.substitute(tableName=tName,downloadTitle=tName)
+  initSet = data_table_record_init_setup(tName)
   output.write("%s\n" % initSet)
 
 def outputDataTableHeader(output, name_list, tName):
@@ -415,15 +416,19 @@ def outputDataTableFooter(output, name_list, tName):
   output.write("</tr>\n")
   output.write("</tfoot>\n")
 
+# TODO: __writePackageComponentSourceSection__() in WebPageGenerator.py
+# Assumes that these lines will be written with no indentation...
 def outputFileEntryTableList(output, tName):
-  output.write("<div id=\"demo\">")
-  output.write("<table id=\"%s\" class=\"display\">\n" % tName.replace(" ", ""))
-  output.write("<thead>\n")
-  output.write("<tr>\n")
-  for name in ("Name", "Value"):
-    output.write("<th>%s</th>\n" % name)
-  output.write("</tr>\n")
-  output.write("</thead>\n")
+  output.write("""
+<div id="demo">
+<table id="%s" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+""" % tName.replace(" ", ""))
 
 # This function expects a list of header names
 def outputCustomDataTableHeader(output, name_list, tName):

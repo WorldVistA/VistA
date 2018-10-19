@@ -123,7 +123,8 @@ def getKeys(globalRoot, func=int):
       outKey.append(key)
     except ValueError:
       pass
-  return sorted(outKey, key=lambda x: func(x))
+  outKey.sort()
+  return outKey
 
 def createGlobalNodeByZWRFile(inputFileName):
   globalRoot = None
@@ -138,18 +139,6 @@ def createGlobalNodeByZWRFile(inputFileName):
       #       Should be doing something with the return value?
       #createGlobalNode(line, globalRoot)
   return globalRoot
-
-def getCommonSubscript(one, two):
-  if not one or not two:
-    return []
-  lessOne, moreOne = one, two
-  if len(one) > len(two):
-    lessOne, moreOne = two, one
-  for idx, sub in enumerate(lessOne, 1):
-    if moreOne[idx-1] != sub:
-      idx = idx - 1
-      break
-  return lessOne[0:idx]
 
 def resetGlobalIndex(subscripts, glbRootSub):
   index = 1
@@ -236,7 +225,7 @@ class DefaultZWRRootGenerator(object):
       else:
         self.rootSub = rootSub
         self.curCommonSub = subscripts[0:self.index+1]
-        self.curRoot = createGlobalNode(line)
+        self.curRoot = createGlobalNode(subscripts, value, rootSub)
         if retNode:
           retNode = retNode.getRootNode()
           for sub in self.curCommonSub:
@@ -256,11 +245,13 @@ class DefaultZWRRootGenerator(object):
         return retNode
       else:
         return True
-    curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
-    if self.curCommonSub is None or self.curCommonSub == curCommonScript:
-      if self.curCommonSub is None:
-        self.curCommonSub = subscripts[0:self.index+1]
-      self.curRoot = createGlobalNode(line, self.curRoot)
+    if self.curCommonSub is None:
+      self.curCommonSub = subscripts[0:self.index+1]
+      self.curRoot = createGlobalNode(subscripts, value, rootSub, self.curRoot)
+      return True
+    curCommonScript = os.path.commonprefix([subscripts, self.curCommonSub])
+    if self.curCommonSub == curCommonScript:
+      self.curRoot = createGlobalNode(subscripts, value, rootSub, self.curRoot)
       return True
     else:
       retNode = self.curRoot
@@ -268,7 +259,7 @@ class DefaultZWRRootGenerator(object):
         retNode = retNode.getRootNode()
         for subscript in curCommonScript:
           retNode = retNode[subscript]
-      self.curRoot = createGlobalNode(line)
+      self.curRoot = createGlobalNode(subscripts, value, rootSub)
       self.curCommonSub = curCommonScript + subscripts[len(curCommonScript):self.index+1]
       return retNode
 
@@ -295,14 +286,13 @@ def findSubscriptValue(inputLine):
     nodeIndex = [x.strip('"') for x in inputLine[start+1:].split(",")]
     return nodeIndex, None, inputLine[:start]
 
-def createGlobalNode(inputLine, globalRoot=None):
+def createGlobalNode(nodeIndex, nodeValue, nodeRoot, globalRoot=None):
   """
     create Global Node based on the input
     if globalRoot is None, it should result the root
     node created.
   """
   retRoot = globalRoot
-  nodeIndex, nodeValue, nodeRoot = findSubscriptValue(inputLine)
   if nodeIndex:
     if nodeValue and len(nodeValue) > 0:
       nodeValue = nodeValue.replace('""', '"')

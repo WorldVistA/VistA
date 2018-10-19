@@ -57,9 +57,9 @@ class RequirementsConverter:
     def _convertReqEntryToSummaryInfo(self, reqEntry):
         summaryInfo = [""]*len(summary_list_fields)
         for idx, id in enumerate(summary_list_fields):
-            if id[1] and id[1] in reqEntry.keys():
+            if id[1] and id[1] in reqEntry:
                 summaryInfo[idx] = reqEntry[id[1]]
-            elif id[0] in reqEntry.keys():
+            elif id[0] in reqEntry:
                 summaryInfo[idx] = reqEntry[id[0]]
             if summaryInfo[idx] and id[2]:
                 summaryInfo[idx] = id[2](summaryInfo[idx], reqEntry)

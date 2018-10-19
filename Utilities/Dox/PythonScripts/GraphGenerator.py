@@ -200,9 +200,7 @@ class GraphGenerator:
             totalDep = routine.getTotalCaller()
         # do not generate graph if no dep routines or
         # totalDep routines > max_dependency_list
-        if (not depRoutines
-            or len(depRoutines) == 0
-            or  totalDep > MAX_DEPENDENCY_LIST_SIZE):
+        if (not depRoutines or  totalDep > MAX_DEPENDENCY_LIST_SIZE):
             logger.debug("No called Routines found! for routine:%s package:%s" % (routineName, packageName))
             return
         try:
