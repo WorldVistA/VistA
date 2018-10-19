@@ -29,6 +29,9 @@ SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
+FILE_REGEX = re.compile("P(?P<file>[0-9.]+)('?)")
+SUBFILE_REGEX = re.compile("(?P<subFile>^[0-9.]+)")
+
 """
   Utility Function to set the Type/Specifier
 """
@@ -406,7 +409,7 @@ class FileManSchemaParser(object):
       return [FileManField.FIELD_TYPE_NONE], None, None, None
     types, specifier = [], []
     filePointedTo = None # Handle specific case of pointed to file
-    result = re.search("P(?P<file>[0-9.]+)('?)", typeField)
+    result = FILE_REGEX.search(typeField)
     if result:
       types.append(FileManField.FIELD_TYPE_FILE_POINTER)
       filePointedTo = result.group('file')
@@ -419,7 +422,7 @@ class FileManSchemaParser(object):
         setTypeAndSpecifer(types, specifier, args)
         typeField = typeField.replace(match,'') # get rid of the match
     subFile = None
-    result = re.search("(?P<subFile>^[0-9.]+)", typeField)
+    result = SUBFILE_REGEX.search(typeField)
     if result:
       subFile = result.group('subFile')
       if (FileManField.FIELD_TYPE_SUBFILE_POINTER not in types and
