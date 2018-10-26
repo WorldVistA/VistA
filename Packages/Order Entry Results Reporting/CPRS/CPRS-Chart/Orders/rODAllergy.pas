@@ -375,7 +375,7 @@ end;
 
 function GetAllergyTitleText: string;
 begin
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(floatToStr(FMToday))) +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(floatToStr(FMToday))) +
               '  ' + 'Adverse React/Allergy' + ', ' + Encounter.LocationName + ', ' + User.Name;
 end;
 

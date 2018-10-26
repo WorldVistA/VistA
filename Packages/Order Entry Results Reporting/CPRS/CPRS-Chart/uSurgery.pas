@@ -57,7 +57,7 @@ var
   x: string;
 begin
   x := InputString;
-  x := FormatFMDateTime('mmm dd yyyy', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
+  x := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
        ', ' + Piece(Piece(x, U, 4), ';', 2) + ', ' + 'Case #: ' + Piece(x, u, 1);
   Result := x;
 end;
@@ -67,7 +67,7 @@ var
   x: string;
 begin
   x := RawText;
-  x := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
+  x := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
        ' (#' + Piece(x, U, 1) + '), ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2);
   Result := x;
 end;

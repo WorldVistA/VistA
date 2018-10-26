@@ -398,7 +398,7 @@ begin
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
-      x := Piece(x, U, 1) + U + FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) +
+      x := Piece(x, U, 1) + U + FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3))) +
            U + Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2) +
            U + Piece(x, U, 11) + U + Piece(x, U, 8) + U + Piece(x, U, 3);
       Results[i] := x;
@@ -439,7 +439,7 @@ begin
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
-      x := Piece(x, U, 1) + U + FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3)))
+      x := Piece(x, U, 1) + U + FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3)))
            + U + Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2);
       Results[i] := x;
     end; {for}

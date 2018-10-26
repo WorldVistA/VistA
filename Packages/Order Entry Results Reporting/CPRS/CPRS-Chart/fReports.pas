@@ -1794,9 +1794,9 @@ begin
             if (d1 = -1) or (d2 = -1) then x1 := ''
             else
               begin
-                y := FormatFMDateTime('mmm dd,yyyy',d1);
+                y := FormatFMDateTime('dddddd',d1);
                 if strToInt(Copy(y,8,4)) < 1925 then y := 'EARLIEST RESULT';
-                z := FormatFMDateTime('mmm dd,yyyy',d2);
+                z := FormatFMDateTime('dddddd',d2);
                 x1 := ' [From: ' + y + ' to ' + z + ']';
               end;
           end;

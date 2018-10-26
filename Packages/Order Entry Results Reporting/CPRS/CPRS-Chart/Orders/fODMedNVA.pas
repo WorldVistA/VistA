@@ -1847,7 +1847,7 @@ begin
 
     FLD_COMMENT   : Result := memComment.Text;
 
-    FLD_START     : Result := FormatFMDateTime('mmm dd,yy',calStart.FMDateTime);
+    FLD_START     : Result := FormatFMDateTime('dddddd',calStart.FMDateTime);
 
     FLD_STATEMENTS : with lbStatements do
                      for stmt := 0 to lbStatements.Items.Count-1 do
@@ -1914,9 +1914,9 @@ begin
     ShowText := 'Expected First Dose: ';
     Interval := Trunc(FMDateTimeToDateTime(AdminTime) - FMDateTimeToDateTime(FMToday));
     case Interval of
-    0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-    1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-    else ShowText := ShowText + FormatFMDateTime('mmm dd, yy at hh:nn', AdminTime);
+    0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+    1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+    else ShowText := ShowText + FormatFMDateTime('dddddd at hh:nn', AdminTime);
     end;
   lblAdminTime.Caption := ShowText;
   FAdminTimeLbl := lblAdminTime.Caption;

@@ -483,7 +483,7 @@ begin
       if dlgReactionDateTime.FMDateTime > FMNow then
         InfoBox(TX_NO_FUTURE_DATES, TX_CAP_FUTURE, MB_OK)
       else
-        Items[ItemIndex] := Items[ItemIndex] + U + FloatToStr(dlgReactionDateTime.FMDateTime) + U + FormatFMDateTime('mmm dd,yyyy@hh:nn', dlgReactionDateTime.FMDateTime);
+        Items[ItemIndex] := Items[ItemIndex] + U + FloatToStr(dlgReactionDateTime.FMDateTime) + U + FormatFMDateTime('yyyy/mm/dd@hh:nn', dlgReactionDateTime.FMDateTime);
     end;
 end;
 

@@ -657,8 +657,8 @@ begin
                    with DateRange do if Changed then
                    begin
                      FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) + ' to ' +
-                                         FormatFMDateTime('mmm dd,yy', FMEndDate) + ': Signed Notes';
+                     stNotes.Caption := FormatFMDateTime('dddddd', FMBeginDate) + ' to ' +
+                                         FormatFMDateTime('dddddd', FMEndDate) + ': Signed Notes';
                      FCurrentContext.BeginDate     := BeginDate;
                      FCurrentContext.EndDate       := EndDate;
                      FCurrentContext.FMBeginDate   := FMBeginDate;
@@ -1964,7 +1964,7 @@ function TfrmNotes.GetTitleText(AnIndex: Integer): string;
 { returns non-tabbed text for the title of a note given the ItemIndex in lstNotes }
 begin
   if (lstNotes.Items.Count > AnIndex) then begin
-    Result := FormatFMDateTime('mmm dd,yy',
+    Result := FormatFMDateTime('dddddd',
       MakeFMDateTime(Piece(lstNotes.Items[AnIndex], U, 3))) + '  ' +
       Piece(lstNotes.Items[AnIndex], U, 2) + ', ' + Piece(lstNotes.Items[AnIndex], U, 6) + ', ' +
       Piece(Piece(lstNotes.Items[AnIndex], U, 5), ';', 2);
@@ -2269,8 +2269,8 @@ begin
                    with DateRange do if Changed then
                    begin
                      FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) + ' to ' +
-                                         FormatFMDateTime('mmm dd,yy', FMEndDate) + ': Signed Notes';
+                     stNotes.Caption := FormatFMDateTime('dddddd', FMBeginDate) + ' to ' +
+                                         FormatFMDateTime('dddddd', FMEndDate) + ': Signed Notes';
                      FCurrentContext.BeginDate     := BeginDate;
                      FCurrentContext.EndDate       := EndDate;
                      FCurrentContext.FMBeginDate   := FMBeginDate;
@@ -2797,7 +2797,7 @@ begin
       stTitle.Caption := Piece(Piece(Items[ItemIndex], U, 8), ';', 1) + #9 +
         Piece(Items[ItemIndex], U, 2) + ', ' + Piece(Items[ItemIndex], U, 6) +
         ', ' + Piece(Piece(Items[ItemIndex], U, 5), ';', 2) + '  (' +
-        FormatFMDateTime('mmm dd,yy@hh:nn',
+        FormatFMDateTime('dddddd@hh:nn',
         MakeFMDateTime(Piece(Items[ItemIndex], U, 3))) + ')';
       LoadDocumentText(memNote.Lines, ItemIEN);
       memNote.SelStart := 0;
@@ -2863,13 +2863,13 @@ begin
     lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
   with lblNewTitle do
     bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
-  stRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
+  stRefDate.Caption := FormatFMDateTime('dddddd@hh:nn', FEditNote.DateTime);
   stAuthor.Caption := FEditNote.AuthorName;
   if uPCEEdit.Inpatient then
     X := 'Adm: '
   else
     X := 'Vst: ';
-  X := X + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
+  X := X + FormatFMDateTime('ddddd', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
   lblVisit.Caption := X;
   if Length(FEditNote.CosignerName) > 0 then
     stCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName

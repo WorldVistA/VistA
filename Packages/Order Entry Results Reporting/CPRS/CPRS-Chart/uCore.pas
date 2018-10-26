@@ -1046,7 +1046,7 @@ begin
       if (FVisitCategory = 'H') //FInpatient
         then FLocationText := FLocationText + ' ' + RoomBed
         else FLocationText := FLocationText + ' ' +
-          FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
+          FormatFMDateTime('dddddd hh:nn', FDateTime);
     end
     else FLocationText := '';
     if Length(ProviderName) > 0  // ProviderName is the field in EncounterText

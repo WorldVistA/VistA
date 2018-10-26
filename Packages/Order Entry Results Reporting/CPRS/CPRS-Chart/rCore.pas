@@ -713,7 +713,7 @@ begin
         x := tmplst[i];
         ATime := Piece(x, U, 4);
         APlace := Piece(x, U, 3);
-        ATime := FormatFMDateTime('hh:nn  mmm dd, yyyy', MakeFMDateTime(ATime));
+        ATime := FormatFMDateTime('hh:nn  dddddd', MakeFMDateTime(ATime));
         SetPiece(x, U, 3, ATime);
         x := x + U + APlace;
         tmplst[i] := x;
@@ -787,7 +787,7 @@ begin
       x := Results[i];
       ATime := Piece(x, U, 4);
       APlace := Piece(x, U, 3);
-      ATime := FormatFMDateTime('hh:nn  mmm dd, yyyy', MakeFMDateTime(ATime));
+      ATime := FormatFMDateTime('hh:nn  dddddd', MakeFMDateTime(ATime));
       SetPiece(x, U, 3, ATime);
       x := x + U + APlace;
       Results[i] := x;
@@ -1038,7 +1038,7 @@ begin
     DOB  := Piece(x, U, 2);
     Age  := '';
     if IsSSN(SSN)    then SSN := FormatSSN(Piece(x, U, 1));                // SSN (PID)
-    if IsFMDate(DOB) then DOB := FormatFMDateTimeStr('mmm dd,yyyy', DOB);  // Date of Birth
+    if IsFMDate(DOB) then DOB := FormatFMDateTimeStr('dddddd', DOB);  // Date of Birth
     //Age := IntToStr(CalcAge(MakeFMDateTime(Piece(x, U, 2))));            // Age
     Sex := Piece(x, U, 3);                                                 // Sex
     if Length(Sex) = 0 then Sex := 'U';
@@ -1252,7 +1252,7 @@ begin
     begin
       x := Results[i];
       ATime := Piece(x, U, 1);
-      ATime := FormatFMDateTime('mmm dd, yyyy hh:nn', MakeFMDateTime(ATime));
+      ATime := FormatFMDateTime('dddddd hh:nn', MakeFMDateTime(ATime));
       SetPiece(x, U, 5, ATime);
       Results[i] := x;
     end;

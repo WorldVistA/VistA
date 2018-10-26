@@ -874,7 +874,7 @@ begin
   else
   if(Patient.DateDied > 0) and (GafDate > Patient.DateDied) then
   begin
-    Result := 'This patient died ' + FormatFMDateTime('mmm dd, yyyy hh:nn', Patient.DateDied) +
+    Result := 'This patient died ' + FormatFMDateTime('dddddd hh:nn', Patient.DateDied) +
            '.  Date GAF determined can not ' + CRLF +
            'be later than the date of death, and has been changed to ' + DateMsg + '.';
     GafDate := OKDate;
@@ -2249,7 +2249,7 @@ begin
     //if (FProcedures.Count > 0) or (FVisitType.Code <> '') then FCPTRequired := False;  
 
     // update the Changes object
-    EncName := FormatFMDateTime('mmm dd,yy hh:nn', FileDate);
+    EncName := FormatFMDateTime('yyyy/mm/dd@hh:nn', FileDate);
     x := StrVisitType;
     if Length(x) > 0 then Changes.Add(CH_PCE, 'V' + AVisitStr, x, EncName, CH_SIGN_NA);
     x := StrProcedures;

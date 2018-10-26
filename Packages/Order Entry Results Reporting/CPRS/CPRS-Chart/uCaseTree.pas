@@ -108,7 +108,7 @@ begin
                           x1 := '** No Date **';
                         end
                       else
-                        x1 := FormatFMDateTime('mmm dd,yyyy', StrToFloat(x2));  // Proc date
+                        x1 := FormatFMDateTime('dddddd', StrToFloat(x2));  // Proc date
                       if MyParent = IntToStr(Context) then
                         SetPiece(x, U, 14, MyParent + x2);
                       x3 := x2 + U + MixedCase(x1) + U + IntToStr(Context);
@@ -407,7 +407,7 @@ begin
           DocID           := Piece(x, U, 1);
           DocTitle        := Piece(x, U, 2);
           DocFMDate       := Piece(x, U, 3);
-          DocDate         := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3)));
+          DocDate         := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3)));
           Author          := Piece(x, U, 5);
           Location        := Piece(x, U, 6);
           Status          := Piece(x, U, 7);

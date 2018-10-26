@@ -1083,7 +1083,7 @@ begin  {BODY }
     alist.Add('NEW' + v + '80001' + v + Piece(prob, u, 6) + u + Piece(prob, u, 6)); {SCT Concept}
   if Piece(prob, u, 7) <> '' then
     alist.Add('NEW' + v + '80002' + v + Piece(Piece(prob, u, 7), '|', 1) + u + Piece(Piece(prob, u, 7), '|', 1)); {SCT Designation}
-  alist.add('NEW' + v + '80201' + v + Piece(FloatToStr(EncounterDate),'.',1) + u + FormatFMDateTime('mmm dd yyyy',EncounterDate));   {Code Date/Date of Interest}
+  alist.add('NEW' + v + '80201' + v + Piece(FloatToStr(EncounterDate),'.',1) + u + FormatFMDateTime('yyyy/mm/dd',EncounterDate));   {Code Date/Date of Interest}
   alist.add('NEW' + v + '80202' + v + Encounter.GetICDVersion);   {Code System}
 end;
 

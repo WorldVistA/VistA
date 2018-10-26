@@ -246,7 +246,7 @@ begin
     ProbRec.RespProvider.DHCPtoKeyVal(IntToStr(Encounter.Provider) + u + Encounter.ProviderName);
     if Encounter.DateTime = 0 then DateOfInt := FMNow
     else DateOfInt := Encounter.DateTime;
-    ProbRec.CodeDateStr := FormatFMDateTime('mm/dd/yy', DateOfInt);
+    ProbRec.CodeDateStr := FormatFMDateTime('yyyy/mm/dd', DateOfInt);
     AList.Clear;
     FastAssign(EditSave(ProbRec.PIFN, User.DUZ, User.StationNumber, '1', ProbRec.FilerObject, ''), AList);
   finally

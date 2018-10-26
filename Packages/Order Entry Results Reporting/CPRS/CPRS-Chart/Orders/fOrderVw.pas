@@ -167,7 +167,7 @@ end;
 
 procedure TfrmOrderView.UpdateViewName;
 const
-  FMT_TIME = 'mm/dd/yy';
+  FMT_TIME = 'ddddd';
 var
   DateText, FilterText: string;
 begin

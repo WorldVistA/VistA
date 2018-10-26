@@ -123,9 +123,9 @@ begin
   cboTab.SetFocus;
   rpcGetRangeForMeds(FstartDt, FstopDt);
   if FstartDt > 1 then
-    dtStart.Text := FormatFMDateTime('mmm d, yyyy',FstartDt);
+    dtStart.Text := FormatFMDateTime('dddddd',FstartDt);
   if FstopDt > 1 then
-    dtStop.Text  := FormatFMDateTime('mmm d, yyyy', FstopDt);
+    dtStop.Text  := FormatFMDateTime('dddddd', FstopDt);
   rpcGetRangeForEncs(FEncDefStartDays, FEncDefStopDays, True); // True gets params settings above User/Service level.
   if FEncDefStartDays < 1 then
     FEncDefStartDays := 0;

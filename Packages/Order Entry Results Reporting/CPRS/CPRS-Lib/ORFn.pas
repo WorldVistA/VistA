@@ -267,75 +267,14 @@ end;
 function FormatFMDateTime(AFormat: string; ADateTime: TFMDateTime): string;
 { formats a Fileman Date/Time using (mostly) the same format string as Delphi FormatDateTime }
 var
-  x: string;
-  y, m, d, h, n, s: Integer;
+  Julian: TDateTime;
 
-  function TrimFormatCount: Integer;
-  { delete repeating characters and count how many were deleted }
-  var
-    c: Char;
-  begin
-    Result := 0;
-    c := AFormat[1];
-    repeat
-      Delete(AFormat, 1, 1);
-      Inc(Result);
-    until CharAt(AFormat, 1) <> c;
-  end;
-
-begin {FormatFMDateTime}
+begin
   Result := '';
   if not (ADateTime > 0) then Exit;
-  x := FloatToStrF(ADateTime, ffFixed, 15, 6) + '0000000';
-  y := StrToIntDef(Copy(x,  1, 3), 0) + 1700;
-  m := StrToIntDef(Copy(x,  4, 2), 0);
-  d := StrToIntDef(Copy(x,  6, 2), 0);
-  h := StrToIntDef(Copy(x,  9, 2), 0);
-  n := StrToIntDef(Copy(x, 11, 2), 0);
-  s := StrToIntDef(Copy(x, 13, 2), 0);
-  while Length(AFormat) > 0 do
-    case UpCase(AFormat[1]) of
-    '"': begin                                                                 // literal
-           Delete(AFormat, 1, 1);
-           while not (CharInSet(CharAt(AFormat, 1), [#0, '"'])) do
-           begin
-             Result := Result + AFormat[1];
-             Delete(AFormat, 1, 1);
-           end;
-           if CharAt(AFormat, 1) = '"' then Delete(AFormat, 1, 1);
-         end;
-    'D': case TrimFormatCount of                                               // day/date
-         1: if d > 0 then Result := Result + IntToStr(d);
-         2: if d > 0 then Result := Result + FormatFloat('00', d);
-         end;
-    'H': case TrimFormatCount of                                               // hour
-         1: Result := Result + IntToStr(h);
-         2: Result := Result + FormatFloat('00', h);
-         end;
-    'M': case TrimFormatCount of                                               // month
-         1: if m > 0 then Result := Result + IntToStr(m);
-         2: if m > 0 then Result := Result + FormatFloat('00', m);
-         3: if m in [1..12] then Result := Result + MONTH_NAMES_SHORT[m];
-         4: if m in [1..12] then Result := Result + MONTH_NAMES_LONG[m];
-         end;
-    'N': case TrimFormatCount of                                               // minute
-         1: Result := Result + IntToStr(n);
-         2: Result := Result + FormatFloat('00', n);
-         end;
-    'S': case TrimFormatCount of                                               // second
-         1: Result := Result + IntToStr(s);
-         2: Result := Result + FormatFloat('00', s);
-         end;
-    'Y': case TrimFormatCount of                                               // year
-         2: if y > 0 then Result := Result + Copy(IntToStr(y), 3, 2);
-         4: if y > 0 then Result := Result + IntToStr(y);
-         end;
-    else begin                                                                 // other
-           Result := Result + AFormat[1];
-           Delete(AFormat, 1, 1);
-         end;
-    end; {case}
-end; {FormatFMDateTime}
+  Julian := FMDateTimeToDateTime(ADateTime);
+  DateTimeToString(Result, AFormat, Julian);
+end;
 
 function FormatFMDateTimeStr(const AFormat, ADateTime: string): string;
 var

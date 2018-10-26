@@ -3420,12 +3420,12 @@ procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
           if Piece(datax, '^', 2) = item then
           begin
             dtdata1 := strtofloatdef(Piece(datax, '^', 3), -1);
-            fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
+            fmdate1 := FormatFMDateTime('c', dtdata1);
             fmdate1 := StringReplace(fmdate1, ' 00:00', '', [rfReplaceAll]);
             dtdata2 := strtofloatdef(Piece(datax, '^', 4), -1);
             if DatesInRange(uDateStart, uDateStop, dtdata1, dtdata2) then
             begin
-              fmdate2 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata2);
+              fmdate2 := FormatFMDateTime('c', dtdata2);
               fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
               cnt := cnt + 1;
               linestring := inttostr(cnt);
@@ -3463,7 +3463,7 @@ begin
       StrForHeader := StrForHeader + aHeader[i] + #13;
   ShortHeader := Patient.Name + '         ' + Patient.SSN + '          '
          + Encounter.LocationName + '                            '
-         + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')'
+         + FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')'
          + #13 + TXT_COPY_DISCLAIMER;
   StrForFooter := aTitle + '                    *** WORK COPY ONLY ***                            '
                 + 'Printed: ' + FormatDateTime('mmm dd, yyyy  hh:nn', Now) + #13;
@@ -3849,10 +3849,10 @@ begin
       if (length(date2)> 0) then    // date/times of episodes
       begin
         dtdata1 := strtofloatdef(date1, -1);
-        fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
+        fmdate1 := FormatFMDateTime('c', dtdata1);
         fmdate1 := StringReplace(fmdate1, ' 00:00', '', [rfReplaceAll]);
         dtdata2 := strtofloatdef(date2, -1);
-        fmdate2 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata2);
+        fmdate2 := FormatFMDateTime('c', dtdata2);
         fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
         if (dtdata2 > dt1) and (dtdata1 < dt2) then
         begin
@@ -3886,9 +3886,9 @@ begin
           if (dtdata >= dt1) and (dtdata < dt2) then
           begin
             if length(Piece(date1, '.', 2)) > 0 then
-              dttm := FormatFMDateTime('mm/dd/yy hh:nn', dtdata)
+              dttm := FormatFMDateTime('c', dtdata)
             else
-              dttm := FormatFMDateTime('mm/dd/yy', dtdata);
+              dttm := FormatFMDateTime('ddddd', dtdata);
             newdata := date1 + '^' +
             itemnum + '^' +
             itemvalue + '^' +
@@ -4468,7 +4468,7 @@ begin
   titleitem := ItemName(Piece(aTypeItem, '^', 1), Piece(aTypeItem, '^', 2));
   rpcDetailDay(tmpList, Patient.DFN, date1, date2, aTypeItem, true);
   NotifyApps(tmpList);
-  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.Name + ' for ' + FormatFMDateTime('mmm d, yyyy', date1), True);
+  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.Name + ' for ' + FormatFMDateTime('dddddd', date1), True);
   tmpList.Free;
 end;
 
@@ -4506,12 +4506,12 @@ begin
     Add(' ');
     tmpStr := Patient.Name + '   ' + Patient.SSN;
     tmpItem := tmpStr + StringOfChar(' ', 39 - Length(tmpStr)) + Encounter.LocationName;
-    tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+    tmpStr := FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
     tmpItem := tmpItem + StringOfChar(' ', 74 - (Length(tmpItem) + Length(tmpStr))) + tmpStr;
     Add(tmpItem);
     Add(StringOfChar('=', 74));
     Add(' *** WORK COPY ONLY *** ' + StringOfChar(' ', 24) + 'Printed: '
-      + FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
+      + FormatFMDateTime('dddddd  hh:nn', FMNow));
     Add('  ' + TXT_COPY_DISCLAIMER);
     Add(StringOfChar(' ', (74 - Length(DateRange)) div 2) + DateRange);
     Add(StringOfChar(' ', (74 - Length(Warning)) div 2) + Warning);
@@ -4532,7 +4532,7 @@ begin
     Add(' ');
     tmpItem := Patient.Name + '         ' + Patient.SSN + '          '
              + Encounter.LocationName + '                            '
-             + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+             + FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
     Add(tmpItem);
     Add(TXT_COPY_DISCLAIMER);
     Add(DateRange);

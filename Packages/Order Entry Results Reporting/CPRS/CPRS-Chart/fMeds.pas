@@ -852,13 +852,13 @@ begin
   case Column of
     0: result := GetActionText(AMed);
     1: result := GetInstructText(AMed, Detail);
-    2: result := FormatFMDateTime('mm/dd/yy', AMed.StopDate);
+    2: result := FormatFMDateTime('ddddd', AMed.StopDate);
     3: result :=  AMed.Status;
     4:
      begin
        if AMed.Inpatient then
          result := MixedCase(AMed.Location)
-       else  result := FormatFMDateTime('mmm dd,yy', AMed.LastFill);
+       else  result := FormatFMDateTime('dddddd', AMed.LastFill);
      end;
     5: result := AMed.Refills;
     else

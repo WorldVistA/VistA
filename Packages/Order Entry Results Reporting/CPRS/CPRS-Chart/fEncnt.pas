@@ -219,7 +219,7 @@ begin
   begin
     Text := FLocationName + '  ';
     if (FVisitCategory <> 'H') and (FDateTime <> 0) then
-      Text := Text + FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
+      Text := Text + FormatFMDateTime('dddddd hh:nn', FDateTime);
   end
   else Text := '< Select a location from the tabs below.... >';
   OKPressed := False;
@@ -356,7 +356,7 @@ begin
     with txtLocation do
     begin
       Text := FLocationName + '  ';
-      if FDateTime <> 0 then Text := Text + FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
+      if FDateTime <> 0 then Text := Text + FormatFMDateTime('dddddd hh:nn', FDateTime);
     end;
   end;
 end;
@@ -389,7 +389,7 @@ begin
     with txtLocation do
     begin
       Text := FLocationName + '  ';
-      if FDateTime <> 0 then Text := Text + FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
+      if FDateTime <> 0 then Text := Text + FormatFMDateTime('dddddd hh:nn', FDateTime);
     end;
   end;
 end;
@@ -529,7 +529,7 @@ begin
     with txtLocation do
     begin
       Text := FLocationName + '  ';
-      if FDateTime <> 0 then Text := Text + FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
+      if FDateTime <> 0 then Text := Text + FormatFMDateTime('dddddd hh:nn', FDateTime);
     end;
   end;
 end;

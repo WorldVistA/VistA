@@ -1404,7 +1404,7 @@ begin
 
                       AddXMLList(Data, nil, '', efBoilerplate, Boiler);
 
-                      tmp := WrapText('Imported on ' + FormatFMDateTime('mmm dd yyyy hh:nn', FMNow) +
+                      tmp := WrapText('Imported on ' + FormatFMDateTime('dddddd hh:nn', FMNow) +
                                       ' from Word Document: ' + AFileName, #13#10, [' '], MAX_ENTRY_WIDTH);
 
                       AddXMLList(Data, nil, '', efDescription, tmp);

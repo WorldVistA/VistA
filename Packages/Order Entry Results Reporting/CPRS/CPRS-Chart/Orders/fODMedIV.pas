@@ -481,10 +481,10 @@ end;
 
 function TfrmODMedIV.IVTypeHelpText: string;
 begin
-   result := 'Continuous Type:' + CRLF + '     IV’s that run at a specified “Rate” ( __ml/hr, __mcg/kg/min, etc)' +
+   result := 'Continuous Type:' + CRLF + '     IVs that run at a specified rate?( __ml/hr, __mcg/kg/min, etc)' +
              CRLF + CRLF + 'Intermittent Type:' + CRLF +
-             '     IV’s administered at scheduled intervals (Q4H, QDay) or One-Time only, ' +
-             CRLF + '     “over a specified time period” (e.g. “Infuse over 30 min.”).' + CRLF + CRLF +
+             '     IVs administered at scheduled intervals (Q4H, QDay) or One-Time only, ' +
+             CRLF + '     over a specified time period?(e.g. infuse over 30 min.?.' + CRLF + CRLF +
              'Examples:' + CRLF + 'Continuous = Infusion/drip' + CRLF + 'Intermittent = IVP/IVPB';
 end;
 
@@ -659,9 +659,9 @@ begin
         ShowText := 'Expected First Dose: ';
         Interval := Trunc(FMDateTimeToDateTime(AdminTime) - FMDateTimeToDateTime(FMToday));
         case Interval of
-        0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-        1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-        else ShowText := ShowText + FormatFMDateTime('mmm dd, yy at hh:nn', AdminTime);
+        0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+        1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+        else ShowText := ShowText + FormatFMDateTime('dddddd at hh:nn', AdminTime);
       end;
     end;
     self.lblFirstDose.Caption := ShowText;

@@ -286,7 +286,7 @@ begin
     end;
     for i := testcnt + 1 to testcnt + datecnt do
     begin
-      Cells[i - testcnt - 1, 0] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i], '^', 2)));
+      Cells[i - testcnt - 1, 0] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i], '^', 2)));
     end;
     for i := testcnt + datecnt + 1 to linecnt do
     begin

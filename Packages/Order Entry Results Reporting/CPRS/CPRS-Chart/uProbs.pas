@@ -354,7 +354,7 @@ end;
 
 function TComment.GetExtDateAdd:String;
 begin
-  result := FormatFMDateTime('mmm dd yyyy',StrToFloat(DateAdd)) ;
+  result := FormatFMDateTime('dddddd',StrToFloat(DateAdd)) ;
 end;
 
 function TComment.Getage:boolean;
@@ -416,7 +416,7 @@ end;
 function TPLPt.Today:string;
 {returns string in DHCP^mmm dd yyyy format}
 begin
-  result := Piece(FloatToStr(FMToday),'.',1) + u + FormatFMDateTime('mmm dd yyyy',FMToday) ;
+  result := Piece(FloatToStr(FMToday),'.',1) + u + FormatFMDateTime('dddddd',FMToday) ;
 end;
 
 {-------------------- TUserParams -------------------------------}
@@ -699,7 +699,7 @@ begin
       if first then {the first line is just a counter}
       begin
         first := false;
-        // 'NEWþ10,0þ-1^These notes are now in XHTML format and must be modified via CPRS-R.'
+        // 'NEW-10,0-1^These notes are now in XHTML format and must be modified via CPRS-R.'
         noedit := Piece(fNewRec[i], v, 3);
         if Piece(noedit, U, 1) = '-1' then
         begin
@@ -806,7 +806,7 @@ begin
       else
         begin
           df.intern := Piece(FloatToStr(fmresult),'.',1);
-          df.extern := FormatFMDateTime('mmm dd yyyy',fmresult);
+          df.extern := FormatFMDateTime('dddddd',fmresult);
         end ;
     end;
 end;
@@ -1293,7 +1293,7 @@ begin
   if fmresult = -1 then
     result := 'ERROR'
   else
-    result := FormatFMDateTime('mmm dd yyyy',fmresult) ;
+    result := FormatFMDateTime('dddddd',fmresult) ;
 end;
 
 function StripSpace(str: string): string;

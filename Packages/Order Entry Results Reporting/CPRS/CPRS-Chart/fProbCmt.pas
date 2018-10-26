@@ -84,7 +84,7 @@ begin
       end
       else
       begin
-        fCmtResult := '1^'+FormatFMDateTime('mmm dd yyyy',FMToday)+'^'+ edComment.Text + '^' + IntToStr(User.DUZ);
+        fCmtResult := '1^'+FormatFMDateTime('yyyy/mm/dd',FMToday)+'^'+ edComment.Text + '^' + IntToStr(User.DUZ);
         ModalResult := mrOK;
       end;
     end

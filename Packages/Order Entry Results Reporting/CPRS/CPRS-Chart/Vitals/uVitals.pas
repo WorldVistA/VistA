@@ -490,7 +490,7 @@ begin
       if(v = vtPain) and (Value = '99') then
         Value := 'Unable to respond.';
       Result := VitalFormatedDesc[v] + Value + '    ' +
-      FormatFmDateTime('mmm dd,yyyy hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate))));
+      FormatFmDateTime('dddddd hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate))));
     end
   end;
 end;
@@ -591,7 +591,7 @@ begin
       SkipFirst := FALSE;
     end
     else
-    ok := (InfoBox('Vital sign Date/Time entered (' + FormatFMDateTime('mmm dd yyyy hh:nn', ADate) +
+    ok := (InfoBox('Vital sign Date/Time entered (' + FormatFMDateTime('dddddd hh:nn', ADate) +
             ') cannot be in the future.' + CRLF +
             'If you do not change the entered date/time vitals information will be lost.' + CRLF +
             'Do you want to enter a new Date/Time?',

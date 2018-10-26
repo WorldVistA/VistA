@@ -343,6 +343,7 @@ type
     procedure NextButtonClick(Sender: TObject);
     procedure NextButtonMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    function GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
@@ -701,6 +702,21 @@ begin
   Result := (VitalsDLLHandle <> 0) or (MHDLLHandle <> 0);
 end;
 
+function TfrmFrame.GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
+var
+  Buffer : PChar;
+  Size : integer;
+begin
+  Size := GetLocaleInfo (LOCALE_USER_DEFAULT, LCType, nil, 0);
+  GetMem(Buffer, Size);
+  try
+    GetLocaleInfo (LOCALE_USER_DEFAULT, LCTYPE, Buffer, Size);
+    Result := string(Buffer);
+  finally
+    FreeMem(Buffer);
+  end;
+end;
+
 { Form Events (Create, Destroy) ----------------------------------------------------------- }
 
 
@@ -714,6 +730,8 @@ procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
   ClientVer, ServerVer, ServerReq, SAN: string;
+  fLocale: LangID;
+  sUserLang: string;
 
 resourcestring
   RS_PROBLEMS = 'Problems';
@@ -728,6 +746,22 @@ resourcestring
   RS_COVER =    'Cover Sheet';
 
 begin
+  // OSE/SMH - This block is for date internationalization
+  // For US users, apply backwards compatiblity with VistA Format
+  // All others will get the default internationlized long date format decided
+  // --> by Windows.
+  fLocale := GetSystemDefaultLCID;
+  sUserLang := self.GetWindowsLanguage(LOCALE_SABBREVLANGNAME);
+{$IFDEF DEBUG}
+  OutputDebugString(PChar('Non-Unicode Locale: ' + fLocale.ToString));
+  OutputDebugString(PChar('User Windows Language: ' + sUserLang));
+{$ENDIF}
+  if sUserLang = 'ENU' then          // English United States
+  begin
+    FormatSettings.LongDateFormat := 'mmm dd, yyyy';
+  end;
+  // OSE/SMH - End Date i18n block
+
   FJustEnteredApp := false;
   SizeHolder := TSizeHolder.Create;
   FOldActiveFormChange := Screen.OnActiveFormChange;
@@ -1424,7 +1458,7 @@ begin
     Application.ProcessMessages;
     lblPtName.Caption := Name + Status; //CQ #17491: Allow for the display of the patient status indicator in header bar.
     lblPtSSN.Caption := SSN;
-    lblPtAge.Caption := FormatFMDateTime('mmm dd,yyyy', DOB) + ' (' + IntToStr(Age) + ')';
+    lblPtAge.Caption := FormatFMDateTime('dddddd', DOB) + ' (' + IntToStr(Age) + ')';
     pnlPatient.Caption := lblPtName.Caption + ' ' + lblPtSSN.Caption + ' ' + lblPtAge.Caption;
     if Length(CWAD) > 0
       then lblPtPostings.Caption := 'Postings'
@@ -3028,7 +3062,7 @@ begin
           begin
             ASite := TRemoteSite(SiteList[i]);
             lstCIRNLocations.Items.Add(ASite.SiteID + U + ASite.SiteName + U +
-              FormatFMDateTime('mmm dd yyyy hh:nn', ASite.LastDate));
+              FormatFMDateTime('dddddd hh:nn', ASite.LastDate));
           end;
       end
     else
@@ -4710,5 +4744,3 @@ finalization
 
 
 end.
-
-

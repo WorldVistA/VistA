@@ -743,7 +743,7 @@ begin
   with AnObject^ do
     begin
       DocID           := Piece(x, U, 1);
-      DocDate         := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3)));
+      DocDate         := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3)));
       DocTitle        := Piece(x, U, 2);
       Location        := Piece(x, U, 6);
       NodeText        := MakeNoteDisplayText(x);
@@ -773,7 +773,7 @@ begin
   with AnObject^ do
     begin
       DocID            := Piece(x, U, 1);
-      DocDate          := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3)));
+      DocDate          := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3)));
       DocTitle         := Piece(x, U, 2);
       Location         := Piece(x, U, 6);
       NodeText         := MakeDCSummDisplayText(x);
@@ -802,7 +802,7 @@ begin
   with AnObject^ do
     begin
       DocID           := Piece(x, U, 1);
-      DocDate         := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3)));
+      DocDate         := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3)));
       DocTitle        := Piece(x, U, 2);
       Location        := Piece(x, U, 6);
       NodeText        := MakeConsultNoteDisplayText(x);

@@ -520,7 +520,7 @@ if not (Length(cboPatient.ItemID) > 0) then  //*DFN*
       NewDFN := DupDFN;
   if not AllowAccessToSensitivePatient(NewDFN, AccessStatus) then exit;
   DateDied := DateOfDeath(NewDFN);
-  if (DateDied > 0) and (InfoBox('This patient died ' + FormatFMDateTime('mmm dd,yyyy hh:nn', DateDied) + CRLF +
+  if (DateDied > 0) and (InfoBox('This patient died ' + FormatFMDateTime('dddddd hh:nn', DateDied) + CRLF +
      'Do you wish to continue?', 'Deceased Patient', MB_YESNO or MB_DEFBUTTON2) = ID_NO) then
     Exit;
   // 9/23/2002: Code used to check for changed pt. DFN here, but since same patient could be

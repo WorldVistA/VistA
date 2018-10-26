@@ -971,9 +971,9 @@ begin
           begin
             d1 := ValidDateTimeStr(piece(aRanges,';',1),'');
             d2 := ValidDateTimeStr(piece(aRanges,';',2),'');
-            y := FormatFMDateTime('mmm dd,yyyy',d1);
+            y := FormatFMDateTime('dddddd',d1);
             if strToInt(Copy(y,8,4)) < 1925 then y := 'EARLIEST RESULT';
-            z := FormatFMDateTime('mmm dd,yyyy',d2);
+            z := FormatFMDateTime('dddddd',d2);
             x1 := ' [From: ' + y + ' to ' + z + ']';
           end;
         if length(piece(aRanges,';',3)) > 0 then
@@ -1818,15 +1818,15 @@ begin
       begin
         DisplayDateTime := Piece(griddata[i + offset], '^', 2);
         if length(DisplayDateTime) > 7 then
-          Cells[0, i - testcnt] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(DisplayDateTime))
+          Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(DisplayDateTime))
         else if length(DisplayDateTime) > 0 then
-          Cells[0, i - testcnt] := FormatFMDateTime('mm/dd/yy',MakeFMDateTime(DisplayDateTime))
+          Cells[0, i - testcnt] := FormatFMDateTime('ddddd',MakeFMDateTime(DisplayDateTime))
         else
-          Cells[0, i - testcnt] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+          Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end
       else                             // If no lab patch in const "PSI_05_118", continue as is
       begin
-        Cells[0, i - testcnt] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+        Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end;
       //------------------------------------------------------------------------------------------
       Cells[1, i - testcnt] := MixedCase(Piece(griddata[i + offset], '^', 4)) + '  ' + Piece(griddata[i + offset], '^', 5);
@@ -1888,15 +1888,15 @@ begin
       begin
         DisplayDateTime := Piece(griddata[i + offset], '^', 2);
         if length(DisplayDateTime) > 7 then
-          Cells[i - testcnt, 0] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(DisplayDateTime))
+          Cells[i - testcnt, 0] := FormatFMDateTime('c',MakeFMDateTime(DisplayDateTime))
         else if length(DisplayDateTime) > 0 then
-          Cells[i - testcnt, 0] := FormatFMDateTime('mm/dd/yy',MakeFMDateTime(DisplayDateTime))
+          Cells[i - testcnt, 0] := FormatFMDateTime('ddddd',MakeFMDateTime(DisplayDateTime))
         else
-          Cells[i - testcnt, 0] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+          Cells[i - testcnt, 0] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end
       else                             // If no lab patch in const "PSI_05_118", continue as is
       begin
-        Cells[i - testcnt, 0] := FormatFMDateTime('mm/dd/yy hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+        Cells[i - testcnt, 0] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end;
       //------------------------------------------------------------------------------------------
       Cells[i - testcnt, 1] := MixedCase(Piece(griddata[i + offset], '^', 4)) + ' ' + Piece(griddata[i + offset], '^', 5);
@@ -2034,17 +2034,17 @@ begin
       begin
         DisplayDate := Piece(tmpList[0], '^', 3);
         if length(DisplayDate) > 7 then
-          lblDate.Caption := FormatFMDateTime('MMM DD, YYYY hh:nn', strtofloat(DisplayDate))
+          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(DisplayDate))
         else if length(DisplayDate) > 0 then
-          lblDate.Caption := FormatFMDateTime('MMM DD, YYYY', strtofloat(DisplayDate))
+          lblDate.Caption := FormatFMDateTime('dddddd', strtofloat(DisplayDate))
         else
           if length(lblDateFloat.Caption) > 0 then
-            lblDate.Caption := FormatFMDateTime('MMM DD, YYYY hh:nn', strtofloat(lblDateFloat.Caption));
+            lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption));
       end
       else                             // If no lab patch in const "PSI_05_118", continue as is
       begin
         if length(lblDateFloat.Caption) > 0 then
-          lblDate.Caption := FormatFMDateTime('MMM DD, YYYY hh:nn', strtofloat(lblDateFloat.Caption));
+          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption));
       end;
       //------------------------------------------------------------------------------------------
       if length(lblDateFloat.Caption) < 1

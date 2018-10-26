@@ -336,8 +336,8 @@ uses
 {$R ORDtTm}
 
 const
-  FMT_DATETIME = 'mmm d,yyyy@hh:nn';
-  FMT_DATEONLY = 'mmm d,yyyy';
+  FMT_DATETIME = 'dddddd@hh:nn';
+  FMT_DATEONLY = 'dddddd';
   AdjVertSize = 8;
   FontHeightText = 'BEFHILMSTVWXZfgjmpqtyk';
 
@@ -505,7 +505,7 @@ end;
 
 procedure TORfrmDtTm.calSelectChange(Sender: TObject);
 begin
-  lblDate.Caption := FormatDateTime('mmmm d, yyyy', calSelect.CalendarDate);
+  lblDate.Caption := FormatDateTime('dddddd', calSelect.CalendarDate);
   FNowPressed := False;
   if ScreenReaderSystemActive then
   begin
@@ -725,8 +725,8 @@ const
     InfoBox(Format(fmtOutOfRange, [aSelection])
 {$IFDEF DEBUG}
     + CRLF + CRLF
-    + 'Min date:time ' + FormatDateTime('mm:dd:yyyy hh:nn',calSelect.fValidRange.MinDate) + CRLF
-    + 'Max date:time ' + FormatDateTime('mm:dd:yyyy hh:nn',calSelect.fValidRange.MaxDate) + CRLF
+    + 'Min date:time ' + FormatDateTime('c',calSelect.fValidRange.MinDate) + CRLF
+    + 'Max date:time ' + FormatDateTime('c',calSelect.fValidRange.MaxDate) + CRLF
 {$ENDIF}
     , 'Invalid Time', MB_OK);
   end;
@@ -747,7 +747,7 @@ begin
               dt := trunc(dt) + tm;
               if not calSelect.IsBetweenMinAndMax(dt) then
                 {$IFDEF DEBUG}
-                ReportError(formatDateTime('dd-mm-yyyy hh:nn',dt))
+                ReportError(formatDateTime('c',dt))
                 {$ELSE}
                 ReportError(txtTime.Text)
                 {$ENDIF}
@@ -836,9 +836,9 @@ var
       if Assigned(self.DateRange) then
       begin
         if (self.DateRange.MinDate <> -1) or (self.DateRange.MaxDate <> -1) then
-          Caption := Caption + ' between ' + FormatDateTime('mmm dd,YY@hh:nn ',
+          Caption := Caption + ' between ' + FormatDateTime('dddddd@hh:nn',
             self.DateRange.MinDate) + ' and ' +
-            FormatDateTime('mmm dd,YY@hh:nn', self.DateRange.MaxDate);
+            FormatDateTime('dddddd@hh:nn', self.DateRange.MaxDate);
         calSelect.ValidRange := self.DateRange;
         calSelect.CalendarDate := self.DateTime;
         setButtonStatus;
@@ -852,7 +852,7 @@ begin
   try
     with frmDtTm do
     begin
-      lblDate.Caption := FormatDateTime('mmmm d, yyyy',FDateTime);
+      lblDate.Caption := FormatDateTime('dddddd',FDateTime);
       setRange; // NSR20071216 AA 2016-01-22
 
       if Frac(FDateTime) > 0
@@ -1140,11 +1140,12 @@ end;
 procedure TORDateBox.Validate(var ErrMsg: string);
 var
   dt: TDateTime;
+  dateToVistA: string;
 const
-  fmtDT = 'mm/dd/yyyy hh:nn:ss';
+  fmtDT = 'c';
 begin
   ErrMsg := '';
-  if Length(Text) > 0 then
+  if DateSelected > 0 then
   begin
     {
       !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
@@ -1152,7 +1153,8 @@ begin
       if FRequireTime and ((Pos('@', Text) = 0) or (Length(Piece(Text, '@', 1)) = 0)) then
       ErrMsg := 'Date Required';
     }
-    FFMDateTime := ServerParseFMDate(Text);
+    DateTimeToString(dateToVistA, 'yyyy/mm/dd@hh:mm', DateSelected);
+    FFMDateTime := ServerParseFMDate(dateToVistA);
     if FFMDateTime <= 0 then
       ErrMsg := 'Invalid Date/Time';
     if FRequireTime and (Frac(FFMDateTime) = 0) then

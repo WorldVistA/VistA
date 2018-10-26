@@ -859,7 +859,7 @@ begin
               begin
                 x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(DateTime) + U +
                      Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
-                     'Adm: ' + FormatFMDateTime('mmm dd,yyyy', VisitDate) + ';' + FloatToStr(VisitDate) + U + U +
+                     'Adm: ' + FormatFMDateTime('yyyy/mm/dd', VisitDate) + ';' + FloatToStr(VisitDate) + U + U +
                      U + U + U + U + U + U;
               end;
             lstNotes.Items.Insert(0, x);
@@ -2307,8 +2307,8 @@ begin
                      with DateRange do if Changed then
                        begin
                         FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                        lblConsults.Caption := FormatFMDateTime('mmm dd,yy', StrToFMDateTime(BeginDate)) + ' to ' +
-                                               FormatFMDateTime('mmm dd,yy', StrToFMDateTime(EndDate));
+                        lblConsults.Caption := FormatFMDateTime('dddddd', StrToFMDateTime(BeginDate)) + ' to ' +
+                                               FormatFMDateTime('dddddd', StrToFMDateTime(EndDate));
                         FCurrentContext.BeginDate := BeginDate;
                         FCurrentContext.EndDate   := EndDate;
                         FCurrentContext.Ascending := Ascending;
@@ -3961,10 +3961,10 @@ begin
   if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0)
     then lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
   with lblNewTitle do bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
-  lblRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
+  lblRefDate.Caption := FormatFMDateTime('dddddd@hh:nn', FEditNote.DateTime);
   lblAuthor.Caption  := FEditNote.AuthorName;
   if uPCEEdit.Inpatient then x := 'Adm: ' else x := 'Vst: ';
-  x := x + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
+  x := x + FormatFMDateTime('ddddd', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
   lblVisit.Caption   := x;
   if Length(FEditNote.CosignerName) > 0
     then lblCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName

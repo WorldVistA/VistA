@@ -646,11 +646,11 @@ begin
       Add(' ');
       tmpStr := Patient.Name + '   ' + Patient.SSN;
       tmpItem := tmpStr + StringOfChar(' ', 39 - Length(tmpStr)) + Encounter.LocationName;
-      tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+      tmpStr := FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
       tmpItem := tmpItem + StringOfChar(' ', 74 - (Length(tmpItem) + Length(tmpStr))) + tmpStr;
       Add(tmpItem);
       Add(StringOfChar('=', 74));
-      Add('*** WORK COPY ONLY ***' + StringOfChar(' ', 24) + 'Printed: ' + FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
+      Add('*** WORK COPY ONLY ***' + StringOfChar(' ', 24) + 'Printed: ' + FormatFMDateTime('dddddd  hh:nn', FMNow));
       Add(' ');
       Add(' ');
     end;
