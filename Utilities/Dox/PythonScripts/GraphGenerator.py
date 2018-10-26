@@ -27,6 +27,9 @@ from CrossReference import PlatformDependentGenericRoutine
 
 from UtilityFunctions import *
 
+from multiprocessing import Pool
+from multiprocessing.dummy import Pool as ThreadPool
+
 # Do not generate the graph if have more than 30 nodes
 MAX_DEPENDENCY_LIST_SIZE = 30
 
@@ -37,6 +40,7 @@ class GraphGenerator:
         self._outDir = outDir
         self._docRepDir = docRepDir
         self._dot = dot
+        self._isDependency = False
 
     def generateGraphs(self):
         self.generatePackageDependenciesGraph()
@@ -50,14 +54,14 @@ class GraphGenerator:
     #==========================================================================
     def generatePackageDependenciesGraph(self, isDependency=True):
         # generate all dot file and use dot to generated the image file format
-        if isDependency:
+        if self._isDependency:
             name = "dependencies"
         else:
             name = "dependents"
         logger.info("Start generating package %s......" % name)
         logger.info("Total Packages: %d" % len(self._allPackages))
         for package in self._allPackages.values():
-            self.generatePackageDependencyGraph(package, isDependency)
+            self.generatePackageDependencyGraph(package)
         logger.info("End of generating package %s......" % name)
 
     #==========================================================================
@@ -69,12 +73,10 @@ class GraphGenerator:
     #==========================================================================
     ## Method to generate the package dependency/dependent graph
     #==========================================================================
-    def generatePackageDependencyGraph(self, package, dependencyList=True):
+    def generatePackageDependencyGraph(self, package):
         # merge the routine and package list
-        depPackages, depPackageMerged = mergeAndSortDependencyListByPackage(
-                                                                      package,
-                                                                      dependencyList)
-        if dependencyList:
+        depPackages, depPackageMerged = mergeAndSortDependencyListByPackage(package, self._isDependency)
+        if self._isDependency:
             packageSuffix = "_dependency"
         else:
             packageSuffix = "_dependent"
@@ -114,7 +116,7 @@ class GraphGenerator:
             edgeLinkArch = packageName
             toolTipStartPackage = packageName
             toolTipEndPackage = depPackageName
-            if not dependencyList:
+            if not self._isDependency:
                 edgeStartNode = normalizedDepPackName
                 edgeEndNode = normalizedName
                 edgeLinkArch = depPackageName
@@ -153,27 +155,31 @@ class GraphGenerator:
     #===============================================================================
     def generateRoutineCallGraph(self, isCalled=True):
         logger.info("Start Routine generating call graph......")
+        self._isDependency = isCalled
+
+        # Make a list of all routines we want to process
+        allRoutines = []
         for package in self._allPackages.itervalues():
             routines = package.getAllRoutines()
             for routine in routines.itervalues():
                 isPlatformGenericRoutine = self._crossRef.isPlatformGenericRoutineByName(routine.getName())
-                if isCalled and isPlatformGenericRoutine:
-                    self.generatePlatformGenericDependencyGraph(routine, isCalled)
+                if self._isDependency and isPlatformGenericRoutine:
+                    platformRoutines = routine.getAllPlatformDepRoutines()
+                    for routineInfo in platformRoutines.itervalues():
+                        allRoutines.append(routineInfo[0])
                 else:
-                    self.generateRoutineDependencyGraph(routine, isCalled)
-        logger.info("End of generating call graph......")
+                    allRoutines.append(routine)
 
-    #==========================================================================
-    # Method to generate routine caller graph for platform dependent routines
-    #==========================================================================
-    def generatePlatformGenericDependencyGraph(self, genericRoutine, isDependency):
-        assert genericRoutine
-        assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
-        if not isDependency:
-            return
-        platformRoutines = genericRoutine.getAllPlatformDepRoutines()
-        for routineInfo in platformRoutines.itervalues():
-            self.generateRoutineDependencyGraph(routineInfo[0], isDependency)
+        # Make the Pool of workers
+        pool = ThreadPool(4)
+        # Create graphs in their own threads
+        # and return the results
+        results = pool.map(self.generateRoutineDependencyGraph, allRoutines)
+        # close the pool and wait for the work to finish
+        pool.close()
+        pool.join()
+
+        logger.info("End of generating call graph......")
 
     #==========================================================================
     #
@@ -184,13 +190,13 @@ class GraphGenerator:
     #==========================================================================
     ## generate all dot file and use dot to generated the image file format
     #==========================================================================
-    def generateRoutineDependencyGraph(self, routine, isDependency=True):
+    def generateRoutineDependencyGraph(self, routine):
         if not routine.getPackage():
             return
         routineName = routine.getName()
         escapedName = routineName.replace("%","\%")
         packageName = routine.getPackage().getName()
-        if isDependency:
+        if self._isDependency:
             depRoutines = routine.getCalledRoutines()
             routineSuffix = "_called"
             totalDep = routine.getTotalCalled()
@@ -223,8 +229,7 @@ class GraphGenerator:
         for (package, callDict) in depRoutines.iteritems():
             output.write("\tsubgraph \"cluster_%s\"{\n" % (package))
             for routine in callDict.keys():
-                output.write("\t\t\"%s\" [penwidth=2 %s URL=\"%s\" tooltip=\"%s\"];\n" % (routine.getName().replace("%","\%"),
-                                                         findDotColor(routine),
+                output.write("\t\t\"%s\" [penwidth=2 color=black URL=\"%s\" tooltip=\"%s\"];\n" % (routine.getName().replace("%","\%"),
                                                          getPackageObjHtmlFileName(routine),
                                                          getPackageObjHtmlFileName(routine)
                                                         ))
@@ -233,7 +238,7 @@ class GraphGenerator:
             output.write("\t\tlabel=\"%s\";\n" % package)
             output.write("\t}\n")
             for (routine, tags) in callDict.iteritems():
-                if isDependency:
+                if self._isDependency:
                     output.write("\t\t\"%s\"->\"%s\"" % (escapedName, routine.getName().replace("%","\%")))
                 else:
                     output.write("\t\t\"%s\"->\"%s\"" % (routine.getName().replace("%","\%"), escapedName))
@@ -287,7 +292,9 @@ def run(args):
                                   args.outDir,
                                   doxDir,
                                   args.dot)
+
   graphGenerator.generateGraphs()
+
   logger.info ("End of generating graphs")
 
 if __name__ == '__main__':
