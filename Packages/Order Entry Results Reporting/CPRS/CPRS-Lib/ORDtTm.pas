@@ -1153,16 +1153,18 @@ begin
       if FRequireTime and ((Pos('@', Text) = 0) or (Length(Piece(Text, '@', 1)) = 0)) then
       ErrMsg := 'Date Required';
     }
-    DateTimeToString(dateToVistA, 'yyyy/mm/dd@hh:mm', DateSelected);
+
+    dt := FMDateTimeToDateTime(self.FMDateTime);
+
+    DateTimeToString(dateToVistA, 'yyyy/mm/dd@hh:mm', dt);
     FFMDateTime := ServerParseFMDate(dateToVistA);
     if FFMDateTime <= 0 then
       ErrMsg := 'Invalid Date/Time';
     if FRequireTime and (Frac(FFMDateTime) = 0) then
       ErrMsg := ErrMsg + 'Time Required' + CRLF;
+    (* OSE/SMH - Seems non-sensical!
     if FDateOnly and (Frac(FFMDateTime) > 0) then
-      ErrMsg := ErrMsg + 'Time not Required' + CRLF;
-
-    dt := FMDateTimeToDateTime(FFMDateTime);
+      ErrMsg := ErrMsg + 'Time not Required' + CRLF; *)
 
     // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
     if (fDateRange.MinDate > 0) and (dt < fDateRange.MinDate) then

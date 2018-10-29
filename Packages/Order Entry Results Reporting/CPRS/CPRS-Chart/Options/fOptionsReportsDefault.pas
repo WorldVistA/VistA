@@ -263,9 +263,9 @@ var
 begin
   today := FMToday;
   rpcGetDefaultReportsSetting(startDate,endDate,maxOcurs);
-  odcDfStart.text := DateToStr(FMDateTimeToDateTime(FMDateTimeOffsetBy(today, startDate)));
+  odcDfStart.FMDateTime := FMDateTimeOffsetBy(today, startDate);
   sDate := odcDfStart.Text;
-  odcDfStop.text := DateToStr(FMDateTimeToDateTime(FMDateTimeOffsetBy(today, endDate)));
+  odcDfStop.FMDateTime := FMDateTimeOffsetBy(today, endDate);
   eDate := odcDfStop.Text;
   if maxOcurs <> 0 then
     begin
