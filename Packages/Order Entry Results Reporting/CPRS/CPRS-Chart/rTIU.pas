@@ -375,7 +375,7 @@ begin
   //MixedCaseList(RPCBrokerV.Results);
   { remove first returned string, it is just a count }
   if RPCBrokerV.Results.Count > 0 then RPCBrokerV.Results.Delete(0);
-  SetListFMDateTime('mmm dd,yy hh:nn', TStringList(RPCBrokerV.Results), U, 2);
+  SetListFMDateTime('dddddd hh:nn', TStringList(RPCBrokerV.Results), U, 2);
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 

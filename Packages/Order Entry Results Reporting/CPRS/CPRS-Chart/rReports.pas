@@ -81,7 +81,7 @@ begin
   begin
     SortByPiece(TStringList(Results), U, 2);
     InvertStringList(TStringList(Results));
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 2);
+    SetListFMDateTime('dddddd', TStringList(Results), U, 2);
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
@@ -221,7 +221,7 @@ begin
   CallV('ORWRA IMAGING EXAMS1', [Patient.DFN]);
   with RPCBrokerV do
   begin
-    SetListFMDateTime('mm/dd/yyyy hh:nn', TStringList(Results), U, 3);
+    SetListFMDateTime('dddddd hh:nn', TStringList(Results), U, 3);
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];

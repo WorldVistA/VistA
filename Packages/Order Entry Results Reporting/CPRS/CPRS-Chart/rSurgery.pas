@@ -189,7 +189,7 @@ begin
       begin
        SortByPiece(TStringList(Results), U, 3);
        InvertStringList(TStringList(Results));
-       SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Results), U, 3);
+       SetListFMDateTime('dddddd hh:nn', TStringList(Results), U, 3);
        FastAssign(Results, Dest);
      end
     else

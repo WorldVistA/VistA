@@ -1217,7 +1217,7 @@ begin
   begin
     InvertStringList(TStringList(Results));
     MixedCaseList(Results);
-    SetListFMDateTime('mmm dd,yyyy hh:nn', TStringList(Results), U, 2);
+    SetListFMDateTime('dddddd hh:nn', TStringList(Results), U, 2);
     FastAssign(Results, Dest);
   end;
   (*
