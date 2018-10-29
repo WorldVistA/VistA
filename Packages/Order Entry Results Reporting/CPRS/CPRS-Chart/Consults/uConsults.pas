@@ -226,7 +226,7 @@ begin
       if Piece(x, U, 5) = 'Consult' then SetPiece(x, U, 10, 'Consult')
       else SetPiece(x, U, 10, 'Procedure');
     end;
-  x := Piece(x, U, 1) + U + FormatFMDateTime('yyyy/mm/dd', MakeFMDateTime(Piece(x, U, 2))) + '  ' + U + '(' + Piece(x, U, 3) + ')' + U + Piece(x, U, 6) + Piece(x, U, 7) + U +
+  x := Piece(x, U, 1) + U + FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 2))) + '  ' + U + '(' + Piece(x, U, 3) + ')' + U + Piece(x, U, 6) + Piece(x, U, 7) + U +
        'Consult #: ' + Piece(x, U, 1) + U + Piece(x, U, 8) + U + U + U + Piece(x, U, 10) + U + Piece(x, U, 4)+ U +
        Piece(x, U, 2) + U + Piece(x, U, 9);
   Result := x;
@@ -250,7 +250,7 @@ begin
     x := Piece(x, U, 2)
   else
     begin
-      x := FormatFMDateTime('yyyy/mm/dd', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
+      x := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
            ' (#' + Piece(Piece(x, U, 1), ';', 1) + ')';
       if not (Copy(Piece(Piece(RawText, U, 1), ';', 2), 1, 4) = 'MCAR') then
         x := x + ', ' + Piece(RawText, U, 6) + ', ' + Piece(Piece(RawText, U, 5), ';', 2);

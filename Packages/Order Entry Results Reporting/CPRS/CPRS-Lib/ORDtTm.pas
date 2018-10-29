@@ -1145,7 +1145,7 @@ const
   fmtDT = 'c';
 begin
   ErrMsg := '';
-  if DateSelected > 0 then
+  if self.FMDateTime > 0 then
   begin
     {
       !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!

@@ -859,7 +859,7 @@ begin
               begin
                 x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(DateTime) + U +
                      Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
-                     'Adm: ' + FormatFMDateTime('yyyy/mm/dd', VisitDate) + ';' + FloatToStr(VisitDate) + U + U +
+                     'Adm: ' + FormatFMDateTime('dddddd', VisitDate) + ';' + FloatToStr(VisitDate) + U + U +
                      U + U + U + U + U + U;
               end;
             lstNotes.Items.Insert(0, x);
