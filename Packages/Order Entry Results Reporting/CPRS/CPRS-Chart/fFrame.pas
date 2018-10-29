@@ -759,6 +759,10 @@ begin
   if sUserLang = 'ENU' then          // English United States
   begin
     FormatSettings.LongDateFormat := 'mmm dd, yyyy';
+  end
+  else // Don't separate out long and short date formats for other languages
+  begin
+    FormatSettings.LongDateFormat := FormatSettings.ShortDateFormat;
   end;
   // OSE/SMH - End Date i18n block
 
