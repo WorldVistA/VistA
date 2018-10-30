@@ -8,7 +8,7 @@ uses
 
 const
   fComStart=4;
-  v:char = #254;
+  v:char = '|';
   PL_OP_VIEW:char = 'C';
   PL_IP_VIEW:char = 'S';
   PL_UF_VIEW:char = 'U';
