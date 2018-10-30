@@ -32,6 +32,7 @@ function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
 function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
 function FMDateTimeOffsetBy(ADateTime: TFMDateTime; DaysDiff: Integer): TFMDateTime;
 function FormatFMDateTime(AFormat: string; ADateTime: TFMDateTime): string;
+function ImpreciseFMDateTime(ADateTime: TFMDateTime): boolean;
 function FormatFMDateTimeStr(const AFormat, ADateTime: string): string;
 function IsFMDateTime(x: string): Boolean;
 function MakeFMDateTime(const AString: string): TFMDateTime;
@@ -265,15 +266,44 @@ begin
 end;
 
 function FormatFMDateTime(AFormat: string; ADateTime: TFMDateTime): string;
-{ formats a Fileman Date/Time using (mostly) the same format string as Delphi FormatDateTime }
+{ OSE/SMH - Completely rewritten for Plan-vi }
 var
   Julian: TDateTime;
+  year: Integer;
+  month: Integer;
+  sDateTime: string;
 
 begin
   Result := '';
   if not (ADateTime > 0) then Exit;
-  Julian := FMDateTimeToDateTime(ADateTime);
-  DateTimeToString(Result, AFormat, Julian);
+  if ImpreciseFMDateTime(ADateTime) then
+  begin
+    sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6);
+    year := StrToInt(Copy(sDateTime, 1, 3)) + 1700;
+    month := StrToInt(Copy(sDateTime, 4, 2));
+    if month > 0 then
+      Result := year.ToString + FormatSettings.DateSeparator + month.ToString
+    else
+      Result := year.ToString;
+  end
+  else
+  begin
+    Julian := FMDateTimeToDateTime(ADateTime);
+    DateTimeToString(Result, AFormat, Julian);
+  end
+
+end;
+
+function ImpreciseFMDateTime(ADateTime: TFMDateTime): boolean;
+var
+  sDateTime: string;
+  month, day: Integer;
+begin
+  sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6);
+  month := StrToInt(Copy(sDateTime, 4, 2));
+  day   := StrToInt(Copy(sDateTime, 6, 2));
+  if (month > 0) and (day > 0) then Result := False
+  else Result := True;
 end;
 
 function FormatFMDateTimeStr(const AFormat, ADateTime: string): string;
