@@ -442,8 +442,6 @@ type
     procedure Switch;
     procedure ViewDefinition(profile: string; amemo: TRichEdit);
     procedure ViewSelections;
-
-    function FMToDateTime(FMDateTime: string): TDateTime;
   end;
 
 var
@@ -4579,19 +4577,6 @@ begin
     end;
 end;
 
-function TfrmGraphs.FMToDateTime(FMDateTime: string): TDateTime;
-var
-  Year, x: string;
-begin
-  { Note: TDateTime cannot store month only or year only dates }
-  x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x, 1, 7) + '.2359';
-  Year := IntToStr(17 + StrToInt(Copy(x, 1, 1))) + Copy(x, 2, 2);
-  x := Copy(x, 4, 2) + '/' + Copy(x, 6, 2) + '/' + Year + ' ' + Copy(x, 9, 2) + ':' + Copy(x, 11, 2);
-  Result := StrToDateTime(x);
-end;
-
 function TfrmGraphs.GraphTypeNum(aType: string): integer;
 var
   i: integer;
@@ -6295,7 +6280,7 @@ end;
 procedure TfrmGraphs.HighLow(fmtime, fmtime1: string; aChart: TChart; var adatetime, adatetime1: TDateTime);
 begin
   adatetime1 := 0;
-  adatetime := FMToDateTime(fmtime);
+  adatetime := FMDateTimeToDateTime(fmtime);
   if adatetime > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime;
   if adatetime < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime;
   if aChart = chartDatelineTop then
@@ -6310,7 +6295,7 @@ begin
   end;
   if fmtime1 <> '' then
   begin
-    adatetime1 := FMToDateTime(fmtime1);
+    adatetime1 := FMDateTimeToDateTime(fmtime1);
     if adatetime1 > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime1;
     if adatetime1 < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime1;
     if aChart = chartDatelineTop then

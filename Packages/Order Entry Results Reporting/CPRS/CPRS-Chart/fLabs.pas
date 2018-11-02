@@ -274,7 +274,6 @@ type
     function AllowContextChange(var WhyNot: string): Boolean; override;
     procedure DisplayPage; override;
     procedure SetFontSize(NewFontSize: Integer); override;
-    function FMToDateTime(FMDateTime: string): TDateTime;
     procedure RequestPrint; override;
     procedure SaveUserSettings(var posD, posH, posL, posV: integer);
     procedure LoadUserSettings(posD, posH, posL, posV: integer);
@@ -1449,7 +1448,7 @@ begin
         lstDates.ItemIndex := -1;
     end;
   end;
-  today := FMToDateTime(floattostr(FMToday));
+  today := FMDateTimeToDateTime(FMToday);
   if lstDates.ItemIEN > 0 then
     begin
       daysback := lstDates.ItemIEN;
@@ -1818,15 +1817,15 @@ begin
       begin
         DisplayDateTime := Piece(griddata[i + offset], '^', 2);
         if length(DisplayDateTime) > 7 then
-          Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(DisplayDateTime))
+          Cells[0, i - testcnt] := FormatFMDateTime('ddddd hh:nn',MakeFMDateTime(DisplayDateTime))
         else if length(DisplayDateTime) > 0 then
           Cells[0, i - testcnt] := FormatFMDateTime('ddddd',MakeFMDateTime(DisplayDateTime))
         else
-          Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+          Cells[0, i - testcnt] := FormatFMDateTime('ddddd hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end
       else                             // If no lab patch in const "PSI_05_118", continue as is
       begin
-        Cells[0, i - testcnt] := FormatFMDateTime('c',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
+        Cells[0, i - testcnt] := FormatFMDateTime('ddddd hh:nn',MakeFMDateTime(Piece(griddata[i + offset], '^', 2)));
       end;
       //------------------------------------------------------------------------------------------
       Cells[1, i - testcnt] := MixedCase(Piece(griddata[i + offset], '^', 4)) + '  ' + Piece(griddata[i + offset], '^', 5);
@@ -2329,14 +2328,14 @@ begin
     if OKFloatValue(high) then
     begin
 //      inc(refcount);
-      serHigh.AddXY(FMToDateTime(start), strtofloat(high), '',clTeeColor);
-      serHigh.AddXY(FMToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
     end;
     if OKFloatValue(low) then
     begin
 //      inc(refcount);
-      serLow.AddXY(FMToDateTime(start), strtofloat(low), '',clTeeColor);
-      serLow.AddXY(FMToDateTime(stop), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low), '',clTeeColor);
     end;
     numspec := Piece(specimen, '^', 1);
     chtChart.Legend.Color := grdLab.Color;
@@ -2354,7 +2353,7 @@ begin
           if OkFloatValue(value) then
           begin
             labvalue := strtofloat(value);
-            datevalue := FMToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
+            datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
             serTest.AddXY(datevalue, labvalue, '', clTeeColor);
             inc(valuecount);
           end;
@@ -2469,19 +2468,6 @@ begin
   if ScreenReaderActive then lbl508Footer.Height := lblFooter.Height;
 end;
 
-function TfrmLabs.FMToDateTime(FMDateTime: string): TDateTime;
-var
-  x, Year: string;
-begin
-  { Note: TDateTime cannot store month only or year only dates }
-  x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x,1,7) + '.2359';
-  Year := IntToStr(17 + StrToInt(Copy(x,1,1))) + Copy(x,2,2);
-  x := Copy(x,4,2) + '/' + Copy(x,6,2) + '/' + Year + ' ' + Copy(x,9,2) + ':' + Copy(x,11,2);
-  Result := StrToDateTime(x);
-end;
-
 procedure TfrmLabs.chkValuesClick(Sender: TObject);
 begin
   inherited;
@@ -2514,13 +2500,13 @@ begin
     serHigh.Clear;  serLow.Clear;  serTest.Clear;
     if high <> '' then
     begin
-      serHigh.AddXY(FMToDateTime(start), strtofloat(high), '',clTeeColor);
-      serHigh.AddXY(FMToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
     end;
     if low <> '' then
     begin
-      serLow.AddXY(FMToDateTime(start), strtofloat(low), '',clTeeColor);
-      serLow.AddXY(FMToDateTime(stop), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low), '',clTeeColor);
     end;
     chtChart.LeftAxis.Title.Caption := units;
     serTest.Title := Piece(test, '^', 2) + '  (' + MixedCase(specimen) + ')';
@@ -2530,7 +2516,7 @@ begin
     begin
       value := Piece(aitems[i], '^', 2);
       labvalue := strtofloat(value);
-      datevalue := FMToDateTime(Piece(aitems[i], '^', 1));
+      datevalue := FMDateTimeToDateTime(Piece(aitems[i], '^', 1));
       serTest.AddXY(datevalue, labvalue, '', clTeeColor);
     end;
   end;
@@ -3542,7 +3528,7 @@ var
   today, datetime1, datetime2: TDateTime;
   relativedate: string;
 begin
-  today := FMToDateTime(floattostr(FMToday));
+  today := FMDateTimeToDateTime(FMToday);
   relativedate := Piece(lstDates.ItemID, ';', 1);
   relativedate := Piece(relativedate, '-', 2);
   ADaysBack := strtointdef(relativedate, 0);
