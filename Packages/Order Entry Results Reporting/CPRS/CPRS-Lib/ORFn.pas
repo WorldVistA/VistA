@@ -29,7 +29,9 @@ type
 
 { Date/Time functions }
 function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
-function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
+function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime; overload;
+function FMDateTimeToDateTime(ADateTime: string): TDateTime; overload;
+function FMDateTimeToDateTimeCommon(DatePart, TimePart: string): TDateTime;
 function FMDateTimeOffsetBy(ADateTime: TFMDateTime; DaysDiff: Integer): TFMDateTime;
 function FormatFMDateTime(AFormat: string; ADateTime: TFMDateTime): string;
 function ImpreciseFMDateTime(ADateTime: TFMDateTime): boolean;
@@ -240,11 +242,27 @@ end;
 function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
 { converts a Fileman date/time (type double) to a Delphi date/time }
 var
-  ADate, ATime: TDateTime;
   DatePart, TimePart: string;
 begin
   DatePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6), '.', 1);
   TimePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6), '.', 2) + '000000';
+  Result   := FMDateTimeToDateTimeCommon(DatePart, TimePart);
+end;
+
+function FMDateTimeToDateTime(ADateTime: string): TDateTime;
+{ converts a Fileman date/time (type string) to a Delphi date/time }
+var
+  DatePart, TimePart: string;
+begin
+  DatePart := Piece(ADateTime, '.', 1);
+  TimePart := Piece(ADateTime, '.', 2) + '000000';
+  Result   := FMDateTimeToDateTimeCommon(DatePart, TimePart);
+end;
+
+function FMDateTimeToDateTimeCommon(DatePart, TimePart: string): TDateTime;
+var
+  ADate, ATime: TDateTime;
+begin
   if Length(DatePart) <> 7 then raise EFMDateTimeError.Create('Invalid Fileman Date');
   if Copy(TimePart, 1, 2) = '24' then TimePart := '23595959';
   ADate := EncodeDate(StrToInt(Copy(DatePart, 1, 3)) + 1700,
