@@ -3,11 +3,11 @@
         <ProjectGuid>{1FDD71ED-4EC3-481B-80E2-B99869825618}</ProjectGuid>
         <MainSource>Vitals.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>17.2</ProjectVersion>
+        <ProjectVersion>18.4</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -82,9 +82,14 @@
         <VerInfo_Build>0</VerInfo_Build>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <Icon_MainIcon>Vitals_Icon.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <VerInfo_Build>2</VerInfo_Build>
@@ -94,9 +99,10 @@
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*27;FileVersion=5.0.27.4;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.27.4;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=XE8 / 2FA Build</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*27;FileVersion=5.0.27.4;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.27.4;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=XE8 / 2FA Build;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Build>4</VerInfo_Build>
         <Debugger_RunParams>s=127.00.0.1 p=9640</Debugger_RunParams>
+        <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -107,6 +113,7 @@
         <VerInfo_Build>0</VerInfo_Build>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_UnitSearchPath>..\..\CCR-COMPONENTS;..\..\Orpheus;..\..\Orpheus\source</DCC_UnitSearchPath>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">

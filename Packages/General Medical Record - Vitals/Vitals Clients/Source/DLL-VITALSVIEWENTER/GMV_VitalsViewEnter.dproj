@@ -3,11 +3,11 @@
         <ProjectGuid>{E2965859-1B8B-4555-9EA9-5A0647CB1569}</ProjectGuid>
         <MainSource>GMV_VitalsViewEnter.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Library</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>17.2</ProjectVersion>
+        <ProjectVersion>18.4</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -49,7 +49,7 @@
         <SanitizedProjectName>GMV_VitalsViewEnter</SanitizedProjectName>
         <Manifest_File>None</Manifest_File>
         <VerInfo_DLL>true</VerInfo_DLL>
-        <DCC_UnitSearchPath>C:\Data\cprs\Broker\Source;..\..\ORCTRL;..\..\CCR-Components\D6;..\..\ORPHEUSLITE\D6;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\Users\Hp\Documents\Embarcadero\10.2\Projects\VistA\Packages\RPC Broker\BDK\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_E>false</DCC_E>
         <VerInfo_Release>28</VerInfo_Release>
@@ -61,7 +61,7 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;$(DCC_Namespace)</DCC_Namespace>
         <DCC_DcuOutput>..\..\bin\dcu_dll_vitalsViewEnter</DCC_DcuOutput>
-        <DCC_ExeOutput>C:\Program Files (x86)\Vista\Common files</DCC_ExeOutput>
+        <DCC_ExeOutput>C:\Users\Hp\Documents\Embarcadero\10.2\Projects\VistA\build\CPRS\CPRS-Chart</DCC_ExeOutput>
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
         <GenDll>true</GenDll>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOffice2k;XWB_R70;sabd5;$(DCC_UsePackage)</DCC_UsePackage>
@@ -90,17 +90,17 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
         <VerInfo_Build>5</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.5;Comments=;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002;PreviousVersion=GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.5;Comments=;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002;PreviousVersion=GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.5;Comments=v. 11/05/13 10:00;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.5;Comments=v. 11/05/13 10:00;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_Build>5</VerInfo_Build>
-        <Debugger_RunParams>s=127.00.0.1 p=9030</Debugger_RunParams>
-        <DCC_ExeOutput>C:\Program Files (x86)\Vista\Common Files\</DCC_ExeOutput>
+        <Debugger_RunParams>s=127.0.0.1 p=9000 ccow=disable ac=sm1234 vc=sm1234!! showrpcs</Debugger_RunParams>
+        <Debugger_HostApplication>C:\Users\Hp\Documents\Embarcadero\10.2\Projects\VistA\build\CPRS\CPRS-Chart\CPRSChart.exe</Debugger_HostApplication>
         <BRCC_Defines>SHOWLOG;AANTEST;$(BRCC_Defines)</BRCC_Defines>
     </PropertyGroup>
     <ItemGroup>
@@ -256,8 +256,8 @@
                     <VersionInfoKeys Name="VAReleaseDate">October 2002</VersionInfoKeys>
                 </VersionInfoKeys>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k170.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp170.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp250.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
