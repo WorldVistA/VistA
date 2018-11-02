@@ -1,0 +1,45 @@
+package Ovc7D;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Orpheus Lite'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  designide,
+  Ovc7R;
+
+contains
+  ovcreg in 'ovcreg.pas',
+  Ovcabot0 in 'Ovcabot0.pas' {OvcfrmAboutForm},
+  ovcstat0 in 'ovcstat0.pas',
+  ovccmdp1 in 'ovccmdp1.pas' {OvcfrmScanOrder},
+  ovccmdp0 in 'ovccmdp0.pas' {OvcfrmCmdTable},
+  ovcdock0 in 'ovcdock0.pas' {OvcfrmDock};
+
+end.

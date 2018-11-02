@@ -1,0 +1,545 @@
+{* ***** BEGIN LICENSE BLOCK *****                                            *}
+{* Version: MPL 1.1                                                           *}
+{*                                                                            *}
+{* The contents of this file are subject to the Mozilla Public License        *}
+{* Version 1.1 (the "License"); you may not use this file except in           *}
+{* compliance with the License. You may obtain a copy of the License at       *}
+{* http://www.mozilla.org/MPL/                                                *}
+{*                                                                            *}
+{* Software distributed under the License is distributed on an "AS IS" basis, *}
+{* WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License   *}
+{* for the specific language governing rights and limitations under the       *}
+{* License.                                                                   *}
+{*                                                                            *}
+{* The Original Code is TurboPower Orpheus                                    *}
+{*                                                                            *}
+{* The Initial Developer of the Original Code is TurboPower Software          *}
+{*                                                                            *}
+{* Portions created by TurboPower Software Inc. are Copyright (C) 1995-2002   *}
+{* TurboPower Software Inc. All Rights Reserved.                              *}
+{*                                                                            *}
+{* Contributor(s):                                                            *}
+{*                                                                            *}
+{* ***** END LICENSE BLOCK *****                                              *}
+
+$B+  //Auto-increment build number (b)
+$C-  //Generate Delphi test project (c)
+$E-  //Generate a component registration unit (e)
+$R-  //Save DFM as resource (r)
+$V+  //Generate version information (v)
+$Z-  //Generate console app (z)
+
+COMPILER OvcRvExp
+
+DELPHI
+
+  USES (INTERFACE) OvcRvExpDef
+
+  PRIVATE
+    FRootNode : TOvcRvExpression;
+
+    procedure Init;
+    procedure Final;
+
+  PUBLIC
+    property RootNode : TOvcRvExpression read FRootNode write FRootNode;
+  CREATE
+    FRootNode := nil;
+  DESTROY
+  ERRORS
+    200 : Result := 'Text after end of valid expression';
+END_DELPHI
+
+(* Arbitrary Code *)
+
+procedure T-->Grammar<--.Init;
+begin
+  fRootNode := nil;
+end;
+
+procedure T-->Grammar<--.Final;
+begin
+end;
+
+(* End of Arbitrary Code *)
+
+IGNORE CASE
+
+CHARACTERS
+  eol     = CHR(13) .
+  Special = '"' + "%&'()*+,-./:;<=>?|[]".
+  Digit   = "0123456789" .
+  Letter  = CHR(33)..CHR(255) - Special - Digit .
+  noQuote = ANY - "'" - eol .
+  noDblQuote = ANY - '"' - eol .
+
+TOKENS
+  ident     = Letter { Letter | Digit }.
+  integer_  = Digit { Digit }.
+  float     = Digit { Digit } "." Digit { Digit } .
+  SQLString = "'" { noQuote | "''" } "'" .
+
+COMMENTS FROM "/*" TO "*/" NESTED
+COMMENTS FROM "--" TO eol
+COMMENTS FROM "//" TO eol
+
+IGNORE CHR(1)..CHR(32)
+
+PRODUCTIONS
+
+OvcRvExp (. var Expression : TOvcRvExpression; .)
+          =                       (. Init .)
+
+            CondExp<nil, Expression> (. RootNode := Expression; .)
+                                  (. if fCurrentInputSymbol <> EOFSYMB then
+                                       SynError(200);
+                                     Final .)
+          .
+
+Aggregate <Parent: TOvcRvExpNode; var Aggregate : TOvcRvExpAggregate>
+                                  (. var SimpleExpression : TOvcRvExpSimpleExpression; .)
+          =
+                                  (.
+                                     Aggregate := TOvcRvExpAggregate.Create(Parent) .)
+             (
+              (
+               "COUNT" "(" "*" ")" (. Aggregate.AgFunction := agCount .)
+              )
+             |(
+               ("MIN"             (. Aggregate.AgFunction := agMin .)
+               | "MAX"            (. Aggregate.AgFunction := agMax .)
+               | "SUM"            (. Aggregate.AgFunction := agSum .)
+               | "AVG"            (. Aggregate.AgFunction := agAvg .)
+               )
+               "("
+                  SimpleExpression <Aggregate, SimpleExpression>
+                                  (. Aggregate.SimpleExpression := SimpleExpression;
+                                     if Aggregate.SimpleExpression.IsAggregateExpression then
+                                       SynError(201) .)
+               ")"
+              )
+             )
+          .
+
+FieldRef <Parent: TOvcRvExpNode; var FieldRef: TOvcRvExpFieldRef>
+          =                       (. FieldRef := TOvcRvExpFieldRef.Create(Parent); .)
+          ident                   (. FieldRef.FieldName := LexString .)
+          .
+
+CondExpList<Parent: TOvcRvExpNode;
+                      var CondExpList: TOvcRvExpressionList>
+                                  (. var CondExp : TOvcRvExpression; .)
+          =                       (. CondExpList := TOvcRvExpressionList.Create(Parent) .)
+            CondExp<CondExpList, CondExp>
+                                  (. CondExpList.AddExpression(CondExp) .)
+                { ","
+                  CondExp<CondExpList, CondExp>
+                                  (. CondExpList.AddExpression(CondExp) .)
+                }
+             .
+
+CondExp <Parent: TOvcRvExpNode;
+         var CondExp: TOvcRvExpression>
+                                  (. var CondTerm : TOvcRvExpCondTerm; .)
+          =                       (. CondExp := TOvcRvExpression.Create(Parent) .)
+  CondTerm <CondExp, CondTerm>    (. CondExp.AddCondTerm(CondTerm) .)
+  { "OR"
+     CondTerm <CondExp, CondTerm> (. CondExp.AddCondTerm(CondTerm) .)
+  }
+           .
+
+CondTerm <Parent: TOvcRvExpNode;
+          var CondTerm : TOvcRvExpCondTerm>
+                                  (. var CondFactor : TOvcRvExpCondFactor; .)
+           =                      (. CondTerm := TOvcRvExpCondTerm.Create(Parent) .)
+  CondFactor <CondTerm, CondFactor>
+                                  (. CondTerm.AddCondFactor(CondFactor) .)
+  { "AND"
+    CondFactor <CondTerm, CondFactor>
+                                  (. CondTerm.AddCondFactor(CondFactor) .)
+  }
+           .
+
+CondFactor <Parent: TOvcRvExpNode;
+            var CondFactor: TOvcRvExpCondFactor>
+                                  (. var CondPrimary : TOvcRvExpCondPrimary; .)
+          =                       (. CondFactor := TOvcRvExpCondFactor.Create(Parent) .)
+           ["NOT"                 (. CondFactor.UnaryNot := True .)
+           ]
+            CondPrimary <CondFactor, CondPrimary>
+                                  (. CondFactor.CondPrimary := CondPrimary .)
+          .
+
+CondPrimary <Parent: TOvcRvExpNode;
+             var CondPrimary : TOvcRvExpCondPrimary>
+                                  (. var SimpleExpression : TOvcRvExpSimpleExpression;
+                                     var RelOp : TOvcRvExpRelop;
+                                     var BetweenClause : TOvcRvExpBetweenClause;
+                                     var LikeClause : TOvcRvExpLikeClause;
+                                     var InClause: TOvcRvExpInClause;
+                                     var IsTest: TOvcRvExpIsTest; .)
+          =                       (. CondPrimary := TOvcRvExpCondPrimary.Create(Parent);
+                                     RelOp := roNone .)
+      (
+       (
+        SimpleExpression <CondPrimary, SimpleExpression>
+                                  (. CondPrimary.SimpleExp1 := SimpleExpression .)
+         [
+          (
+           ("="                   (. RelOp := roEQ .)
+            | "<="                (. RelOp := roLE .)
+            | "<"                 (. RelOp := roL .)
+            | ">"                 (. RelOp := roG .)
+            | ">="                (. RelOp := roGE .)
+            | "<>"                (. RelOp := roNE .)
+           )                      (. CondPrimary.RelOp := RelOp .)
+          ( SimpleExpression<CondPrimary, SimpleExpression>
+                                  (. CondPrimary.SimpleExp2 := SimpleExpression .)
+           )
+            | BetweenClause <CondPrimary, BetweenClause, False>
+                                  (. CondPrimary.BetweenClause := BetweenClause .)
+            | InClause <CondPrimary, InClause, False>
+                                  (. CondPrimary.InClause := InClause .)
+            | LikeClause <CondPrimary, LikeClause, False>
+                                  (. CondPrimary.LikeClause := LikeClause .)
+            | "NOT"
+              (
+               BetweenClause <CondPrimary, BetweenClause, True>
+                                  (. CondPrimary.BetweenClause := BetweenClause .)
+               | LikeClause <CondPrimary, LikeClause, True>
+                                  (. CondPrimary.LikeClause := LikeClause .)
+              )
+           )
+          | IsTest<CondPrimary, IsTest>
+                                  (. CondPrimary.IsTest := IsTest;
+                                     CondPrimary.RelOp := RoNone .)
+         ]
+        )
+       )
+          .
+
+IsTest <Parent: TOvcRvExpNode;
+        var IsTest: TOvcRvExpIsTest>
+           =
+  "IS"                            (. IsTest := TOvcRvExpIsTest.Create(Parent) .)
+    ["NOT"                        (. IsTest.UnaryNot := True .)
+    ] ("NULL"                     (. IsTest.IsOp := ioNull .)
+       | "TRUE"                   (. IsTest.IsOp := ioTrue .)
+       | "FALSE"                  (. IsTest.IsOp := ioFalse .)
+       | "UNKNOWN"                (. IsTest.IsOp := ioUnknown .)
+      )
+           .
+
+BetweenClause <Parent: TOvcRvExpNode;
+               var BetweenClause: TOvcRvExpBetweenClause;
+               Negated: Boolean>
+                                  (. var SimpleExpression : TOvcRvExpSimpleExpression; .)
+           =                      (. BetweenClause := TOvcRvExpBetweenClause.Create(Parent);
+                                     BetweenClause.Negated := Negated .)
+              "BETWEEN" SimpleExpression <BetweenClause, SimpleExpression>
+                                  (. BetweenClause.SimpleLow := SimpleExpression .)
+                "AND" SimpleExpression <BetweenClause, SimpleExpression>
+                                  (. BetweenClause.SimpleHigh := SimpleExpression .)
+          .
+
+LikeClause <Parent: TOvcRvExpNode;
+            var LikeClause: TOvcRvExpLikeClause;
+            Negated: Boolean>
+                                  (. var SimpleExpression : TOvcRvExpSimpleExpression; .)
+          =                       (. LikeClause := TOvcRvExpLikeClause.Create(Parent) .)
+                                  (. LikeClause.Negated := Negated .)
+              "LIKE" SimpleExpression <LikeClause, SimpleExpression>
+                                  (. LikeClause.SimpleExp := SimpleExpression .)
+              ["ESCAPE" SimpleExpression <LikeClause, SimpleExpression>
+                                  (. LikeClause.EscapeExp := SimpleExpression .)
+              ]
+          .
+
+InClause <Parent: TOvcRvExpNode;
+          var InClause: TOvcRvExpInClause;
+          Negated: Boolean>
+                                  (. var SimpleExpressionList : TOvcRvExpSimpleExpressionList; .)
+          =                       (. InClause := TOvcRvExpInClause.Create(Parent) .)
+                                  (. InClause.Negated := Negated .)
+              "IN" "("
+                  SimpleExpressionList <InClause, SimpleExpressionList>
+                                  (. Inclause.SimpleExpList := SimpleExpressionList .)
+                 ")"
+          .
+
+SimpleExpressionList <Parent: TOvcRvExpNode;
+                      var SimpleExpressionList: TOvcRvExpSimpleExpressionList>
+                                  (. var SimpleExpression : TOvcRvExpSimpleExpression; .)
+          =                       (. SimpleExpressionList := TOvcRvExpSimpleExpressionList.Create(Parent) .)
+            SimpleExpression <SimpleExpressionList, SimpleExpression>
+                                  (. SimpleExpressionList.AddExpression(SimpleExpression) .)
+                { ","
+                  SimpleExpression <SimpleExpressionList, SimpleExpression>
+                                  (. SimpleExpressionList.AddExpression(SimpleExpression) .)
+                }
+             .
+
+SimpleExpression <Parent: TOvcRvExpNode;
+                  var SimpleExpression : TOvcRvExpSimpleExpression>
+                                  (. var Term : TOvcRvExpTerm;
+                                     var AO : TOvcRvExpAddOp; .)
+          =                       (. SimpleExpression := TOvcRvExpSimpleExpression.Create(Parent) .)
+    Term <SimpleExpression, Term, aoPlus>
+                                  (. SimpleExpression.AddTerm(Term) .)
+      {
+      ("+"                        (. AO := aoPlus .)
+       |
+       "-"                        (. AO := aoMinus .)
+       |
+       "||"                       (. AO := aoConcat .)
+       )
+      Term <SimpleExpression, Term, AO>
+                                  (. SimpleExpression.AddTerm(Term) .)
+      }
+                 .
+
+Term <Parent: TOvcRvExpNode; var Term : TOvcRvExpTerm; AddOp : TOvcRvExpAddOp>
+                                  (. var Factor : TOvcRvExpFactor;
+                                     var MO : TOvcRvExpMulOp; .)
+         =
+                                  (. Term := TOvcRvExpTerm.Create(Parent);
+                                     Term.AddOp := AddOp               .)
+
+  Factor <Term, Factor, moMul>    (. Term.AddFactor(Factor) .)
+    { ("*"                        (. MO := moMul .)
+       | "/"                      (. MO := moDiv .)
+      )
+      Factor <Term, Factor, MO>   (. Term.AddFactor(Factor) .)
+    }
+     .
+
+Factor <Parent: TOvcRvExpNode;
+        var Factor : TOvcRvExpFactor;
+        MulOp: TOvcRvExpMulOp>
+                                  (. var FieldRef : TOvcRvExpFieldRef;
+                                     var CondExp : TOvcRvExpression;
+                                     var Literal : TOvcRvExpLiteral;
+                                     var Agg : TOvcRvExpAggregate;
+                                     var Func : TOvcRvExpScalarFunc; .)
+          =                       (. Factor :=  TOvcRvExpFactor.Create(Parent);
+                                     Factor.MulOp := MulOp .)
+    [ "-"                         (. Factor.UnaryMinus := True .)
+      ]
+     ( "("
+      (
+        CondExp <Factor, CondExp> (. Factor.CondExp := CondExp .)
+       )
+       ")"
+         | FieldRef <Factor, FieldRef>
+                                  (. Factor.FieldRef := FieldRef .)
+         | Literal <Factor, Literal>
+                                  (. Factor.Literal := Literal .)
+         | Aggregate <Factor, Agg>
+                                  (. Factor.Aggregate := Agg .)
+         | ScalarFunction <Factor, Func>
+                                  (. Factor.ScalarFunc := Func .)
+     )
+          .
+
+ScalarFunction <Parent: TOvcRvExpNode;
+                var Func: TOvcRvExpScalarFunc>
+                                  (. var CondExp: TOvcRvExpression;
+                                     var Exp : TOvcRvExpSimpleExpression;
+                                     var ExpList: TOvcRvExpressionList;
+                                     var CaseExp : TOvcRvExpCaseExpression; .)
+          =                       (. Func := TOvcRvExpScalarFunc.Create(Parent) .)
+       (
+            "CASE"
+            CaseExpression <Func, CaseExp>
+                                  (. Func.CaseExp := CaseExp .)
+                                  (. Func.SQLFunction := sfCase .)
+         |  ("CHARACTER_LENGTH"
+             | "CHAR_LENGTH")
+             "(" SimpleExpression <Func, Exp> ")"
+                                  (. Func.SQLFunction := sfCharLen .)
+                                  (. Func.Arg1 := Exp .)
+         | "LOWER" "(" SimpleExpression <Func, Exp> ")"
+                                  (. Func.SQLFunction := sfLower .)
+                                  (. Func.Arg1 := Exp .)
+         | "UPPER"
+           "("
+              SimpleExpression <Func, Exp> ")"
+                                  (. Func.SQLFunction := sfUpper;
+                                     Func.Arg1 := Exp .)
+         | "POSITION"
+           "("
+              SimpleExpression <Func, Exp>
+                                  (. Func.SQLFunction := sfPosition;
+                                     Func.Arg1 := Exp .)
+              "," SimpleExpression <Func, Exp>
+                                  (. Func.Arg2 := Exp .)
+           ")"
+         | "SUBSTRING"
+           "("
+              SimpleExpression <Func, Exp>
+                                  (. Func.SQLFunction := sfSubstring;
+                                     Func.Arg1 := Exp .)
+              "FROM"
+              SimpleExpression <Func, Exp>
+                                  (. Func.Arg2 := Exp .)
+              [ "FOR"
+                SimpleExpression <Func, Exp>
+                                  (. Func.Arg3 := Exp .)
+              ]
+           ")"
+
+         | "TRIM" "("             (. Func.SQLFunction := sfTrim;
+                                     Func.LTB := ltbBoth .)
+           ["LEADING"             (. Func.LTB := ltbLeading .)
+            |"TRAILING"           (. Func.LTB := ltbTrailing .)
+            | "BOTH"
+           ]
+           [SimpleExpression <Func, Exp>
+                                  (. Func.Arg1 := Exp .)]
+           [ "FROM"
+             SimpleExpression <Func, Exp>
+                                  (. Func.Arg2 := Exp .)
+           ]
+           ")"
+         | "FORMATNUMBER" "("       (. Func.SQLFunction := sfFormatFloat .)
+             SimpleExpression<Func, Exp> (. Func.Arg1 := Exp .)
+             "," SimpleExpression<Func, Exp> (.Func.Arg2 := Exp .)
+             [ "," CondExp<Func, CondExp> (. Func.CondArg1 := CondExp .)
+             ]
+             ")"
+         | "FORMATDATETIME" "("    (. Func.SQLFunction := sfFormatDateTime .)
+             SimpleExpression<Func, Exp> (.Func.Arg1 := Exp .)
+             "," SimpleExpression<Func, Exp> (.Func.Arg2 := Exp .)
+             ")"
+         | "INTTOHEX" "("           (. Func.SQLFunction := sfIntToHex .)
+             SimpleExpression<Func, Exp> (.Func.Arg1 := Exp .)
+             ["," SimpleExpression<Func, Exp> (.Func.Arg2 := Exp .)
+             ]
+             ")"
+         | "EXTERN" "("             (. Func.SQLFunction := sfExtern .)
+             CondExpList<Func, ExpList> (. Func.ExpList := ExpList .)
+             ")"
+       )
+          .
+
+CaseExpression <Parent: TOvcRvExpNode;
+                var CaseExp: TOvcRvExpCaseExpression>
+                                  (. var WhenClauseList : TOvcRvExpWhenClauseList;
+                                     var  Exp : TOvcRvExpSimpleExpression; .)
+          =
+                                  (. CaseExp := TOvcRvExpCaseExpression.Create(Parent) .)
+    WhenClauseList <CaseExp, WhenClauseList>
+                                  (. CaseExp.WhenClauseList := WhenClauseList .)
+    ["ELSE"
+      ("NULL"
+        | SimpleExpression <CaseExp, Exp>
+                                  (. CaseExp.ElseExp := Exp .)
+      )
+    ]
+    "END"
+    .
+
+WhenClauseList <Parent: TOvcRvExpNode;
+               var WhenClauseList : TOvcRvExpWhenClauseList>
+                                  (. var WhenClause : TOvcRvExpWhenClause; .)
+    =
+                                  (. WhenClauseList := TOvcRvExpWhenClauseList.Create(Parent) .)
+    WhenClause <WhenClauseList, WhenClause>
+                                  (. WhenClauseList.AddWhenClause(WhenClause) .)
+     { WhenClause <WhenClauseList, WhenClause>
+                                  (. WhenClauseList.AddWhenClause(WhenClause) .) }
+    .
+
+WhenClause <Parent : TOvcRvExpNode;
+            var WhenClause : TOvcRvExpWhenClause>
+                                  (. var CondExp : TOvcRvExpression;
+                                     Exp : TOvcRvExpSimpleExpression; .)
+    =
+                                  (. WhenClause := TOvcRvExpWhenClause.Create(Parent) .)
+    "WHEN" CondExp <WhenClause, CondExp>
+                                  (. WhenClause.WhenExp := CondExp .)
+    "THEN"
+      ("NULL"
+        | SimpleExpression <WhenClause, Exp>
+                                  (. WhenClause.ThenExp := Exp .)
+      )
+    .
+
+Literal <Parent: TOvcRvExpNode;
+         var Literal: TOvcRvExpLiteral>
+                                  (. var FloatLiteral : TOvcRvExpFloatLiteral;
+                                     var IntegerLiteral : TOvcRvExpIntegerLiteral;
+                                     var StringLiteral : TOvcRvExpStringLiteral;
+                                     var DateLiteral : TOvcRvExpDateLiteral;
+                                     var TimeLiteral : TOvcRvExpTimeLiteral;
+                                     var TimestampLiteral : TOvcRvExpTimestampLiteral;
+                                     var BooleanLiteral : TOvcRvExpBooleanLiteral; .)
+                                                                       //!!.01
+  =                               (. Literal := TOvcRvExpLiteral.Create(Parent) .)
+     (
+     FloatLiteral <Literal, FloatLiteral>
+                                  (. Literal.FloatLiteral := FloatLiteral .)
+     | IntegerLiteral <Literal, IntegerLiteral>
+                                  (. Literal.IntegerLiteral := IntegerLiteral .)
+     | StringLiteral <Literal, StringLiteral>
+                                  (. Literal.StringLiteral := StringLiteral .)
+     | DateLiteral <Literal, DateLiteral>
+                                  (. Literal.DateLiteral := DateLiteral .)
+     | TimeLiteral <Literal, TimeLiteral>
+                                  (. Literal.TimeLiteral := TimeLiteral .)
+     | TimestampLiteral <Literal, TimestampLiteral>
+                                  (. Literal.TimestampLiteral := TimestampLiteral .)
+     | BooleanLiteral <Literal, BooleanLiteral>                        //!!.02
+                                  (. Literal.BooleanLiteral := BooleanLiteral .) //!!.02
+     )
+     .
+
+BooleanLiteral<Parent: TOvcRvExpNode; var BooleanLiteral: TOvcRvExpBooleanLiteral>
+  = (. BooleanLiteral := TOvcRvExpBooleanLiteral.Create(Parent) .)
+    (
+    'TRUE' (. BooleanLiteral.Value := True .)
+    |
+    'FALSE'
+    )
+  .
+
+FloatLiteral <Parent: TOvcRvExpNode;
+              var FloatLiteral: TOvcRvExpFloatLiteral>
+     =                            (. FloatLiteral := TOvcRvExpFloatLiteral.Create(Parent) .)
+             float                (. FloatLiteral.Value := LexString .)
+     .
+
+IntegerLiteral <Parent: TOvcRvExpNode;
+                var IntegerLiteral: TOvcRvExpIntegerLiteral>
+     =                            (. IntegerLiteral := TOvcRvExpIntegerLiteral.Create(Parent) .)
+       integer_                   (. IntegerLiteral.Value := LexString .)
+     .
+
+StringLiteral <Parent: TOvcRvExpNode;
+               var StringLiteral: TOvcRvExpStringLiteral>
+     =                            (. StringLiteral := TOvcRvExpStringLiteral.Create(Parent) .)
+       SQLString                  (. StringLiteral.Value := LexString .)
+              .
+
+DateLiteral <Parent: TOvcRvExpNode;
+             var DateLiteral: TOvcRvExpDateLiteral>
+     =                            (. DateLiteral := TOvcRvExpDateLiteral.Create(Parent) .)
+       "DATE"
+       SQLString                  (. DateLiteral.Value := LexString .)
+     .
+
+TimeLiteral <Parent: TOvcRvExpNode;
+            var TimeLiteral: TOvcRvExpTimeLiteral>
+     =                            (. TimeLiteral := TOvcRvExpTimeLiteral.Create(Parent) .)
+       "TIME"
+       SQLString                  (. TimeLiteral.Value := LexString .)
+              .
+
+TimestampLiteral <Parent: TOvcRvExpNode;
+                  var TimestampLiteral: TOvcRvExpTimestampLiteral>
+     =                            (. TimestampLiteral := TOvcRvExpTimestampLiteral.Create(Parent) .)
+       "TIMESTAMP"
+       SQLString                  (. TimestampLiteral.Value := LexString .)
+              .
+
+END OvcRvExp.

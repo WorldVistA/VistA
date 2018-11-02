@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6837DCA8-F879-4020-90E8-F3A8E885E083}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="OrpheusCR.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusCD.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusDBCR.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusDBCD.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="OrpheusCR">
+        <MSBuild Projects="OrpheusCR.cbproj"/>
+    </Target>
+    <Target Name="OrpheusCR:Clean">
+        <MSBuild Projects="OrpheusCR.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusCR:Make">
+        <MSBuild Projects="OrpheusCR.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusCD">
+        <MSBuild Projects="OrpheusCD.cbproj"/>
+    </Target>
+    <Target Name="OrpheusCD:Clean">
+        <MSBuild Projects="OrpheusCD.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusCD:Make">
+        <MSBuild Projects="OrpheusCD.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusDBCR">
+        <MSBuild Projects="OrpheusDBCR.cbproj"/>
+    </Target>
+    <Target Name="OrpheusDBCR:Clean">
+        <MSBuild Projects="OrpheusDBCR.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDBCR:Make">
+        <MSBuild Projects="OrpheusDBCR.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusDBCD">
+        <MSBuild Projects="OrpheusDBCD.cbproj"/>
+    </Target>
+    <Target Name="OrpheusDBCD:Clean">
+        <MSBuild Projects="OrpheusDBCD.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDBCD:Make">
+        <MSBuild Projects="OrpheusDBCD.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="OrpheusCR;OrpheusCD;OrpheusDBCR;OrpheusDBCD"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="OrpheusCR:Clean;OrpheusCD:Clean;OrpheusDBCR:Clean;OrpheusDBCD:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="OrpheusCR:Make;OrpheusCD:Make;OrpheusDBCR:Make;OrpheusDBCD:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

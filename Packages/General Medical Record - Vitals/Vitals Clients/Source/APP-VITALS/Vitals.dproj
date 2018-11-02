@@ -1,0 +1,296 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1FDD71ED-4EC3-481B-80E2-B99869825618}</ProjectGuid>
+        <MainSource>Vitals.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Release</Config>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <ProjectVersion>17.2</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>Vitals</SanitizedProjectName>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Icon_MainIcon>Vitals_Icon.ico</Icon_MainIcon>
+        <DCC_UnitSearchPath>..\..\CCR-COMPONENTS;..\..\Orpheus;..\..\Orpheus\source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_K>false</DCC_K>
+        <DCC_E>false</DCC_E>
+        <VerInfo_Release>27</VerInfo_Release>
+        <DCC_S>false</DCC_S>
+        <DebugSourcePath>..\..\CCR-Components;$(DebugSourcePath)</DebugSourcePath>
+        <DCC_Define>RORCCOW;CQ6942;METRIC-CONVERSION;NO-3D;NOVTREE;NOTMSPACK;TOP-CCOWINDICATOR;T20;R144925;xAANTEST;USEVSMONITOR;xV5021;xSHOWLOG;xIGNOREEXENAME;PATCH_5_0_23;xPATCH_5_0_22;$(DCC_Define)</DCC_Define>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_F>false</DCC_F>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_PentiumSafeDivide>true</DCC_PentiumSafeDivide>
+        <DCC_DcuOutput>..\..\bin\dcu_APP_VITALS</DCC_DcuOutput>
+        <DCC_ExeOutput>..\..\bin</DCC_ExeOutput>
+        <DCC_WriteableConstants>true</DCC_WriteableConstants>
+        <DCC_UsePackage>vcl;rtl;vclx;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;VclSmp;dbrtl;dbexpress;vcldb;dsnap;adortl;visualclx;visualdbclx;vclactnband;bdertl;sabd5;indy;soaprtl;dbxcds;inetdb;vcldbx;teeui;teedb;tee;ibxpress;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOffice2k;XWB_R70;$(DCC_UsePackage)</DCC_UsePackage>
+        <VerInfo_Build>2</VerInfo_Build>
+        <DCC_Alignment>4</DCC_Alignment>
+        <DCC_N>true</DCC_N>
+        <VerInfo_Debug>true</VerInfo_Debug>
+        <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+        <VerInfo_MajorVer>5</VerInfo_MajorVer>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*27;FileVersion=5.0.27.2;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.27.2;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=XE3 Build</VerInfo_Keys>
+        <DCC_Optimize>false</DCC_Optimize>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_Build>0</VerInfo_Build>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Icon_MainIcon>Vitals_Icon.ico</Icon_MainIcon>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <VerInfo_Build>2</VerInfo_Build>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*27;FileVersion=5.0.27.4;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.27.4;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=XE8 / 2FA Build</VerInfo_Keys>
+        <VerInfo_Build>4</VerInfo_Build>
+        <Debugger_RunParams>s=127.00.0.1 p=9640</Debugger_RunParams>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_Build>0</VerInfo_Build>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_UnitSearchPath>..\..\CCR-COMPONENTS;..\..\Orpheus;..\..\Orpheus\source</DCC_UnitSearchPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="fGMV_UserMain.pas">
+            <Form>frmGMV_UserMain</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsPatient\fGMV_PtSelect.pas">
+            <Form>frmGMV_PtSelect</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsUtils\uGMV_Utils.pas"/>
+        <DCCReference Include="..\VitalsCommon\uGMV_FileEntry.pas"/>
+        <DCCReference Include="..\VitalsUtils\uGMV_Const.pas"/>
+        <DCCReference Include="..\VitalsUtils\uGMV_GlobalVars.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_Splash.pas">
+            <Form>frmGMV_Splash</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\fGMV_AboutDlg.pas">
+            <Form>frmGMV_AboutDlg</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\uGMV_User.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_TimeOutManager.pas">
+            <Form>frmGMV_TimeOutManager</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsPatient\fGMV_PtInfo.pas">
+            <Form>fraGMV_PatientInfo</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsPatient\fGMV_ReportOptions.pas">
+            <Form>frmGMV_ReportOptions</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsDataEntry\fGMV_EnteredInError.pas">
+            <Form>frmGMV_EnteredInError</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsDataEntry\uGMV_QualifyBox.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_UserSettings.pas">
+            <Form>frmGMV_UserSettings</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\fGMV_SelectColor.pas">
+            <Form>frmGMV_SelectColor</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\uGMV_SaveRestore.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_DateRange.pas">
+            <Form>frmGMV_DateRange</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsView\fGMV_ShowSingleVital.pas">
+            <Form>frmGMV_ShowSingleVital</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsDataEntry\mGMV_InputOne2.pas">
+            <Form>fraGMV_InputOne2</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\VitalsDataEntry\fGMV_SupO2.pas">
+            <Form>frmGMV_SupO2</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsDataEntry\fGMV_Qualifiers.pas">
+            <Form>frmGMV_Qualifiers</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\fGMV_DateTimeDLG.pas">
+            <Form>fGMV_DateTime</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsView\mGMV_GridGraph.pas">
+            <Form>fraGMV_GridGraph</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\uGMV_Patient.pas"/>
+        <DCCReference Include="..\VitalsDataEntry\fGMV_InputLite.pas">
+            <Form>frmGMV_InputLite</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\mGMV_MDateTime.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_EditUserTemplates.pas"/>
+        <DCCReference Include="..\VitalsCommon\mGMV_EditTemplate.pas">
+            <Form>fraGMV_EditTemplate</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\fGMV_AddVCQ.pas">
+            <Form>frmGMV_AddVCQ</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsUtils\uGMV_Common.pas"/>
+        <DCCReference Include="..\VitalsUtils\uGMV_CRC32.pas"/>
+        <DCCReference Include="..\VitalsUtils\uGMV_VersionInfo.pas"/>
+        <DCCReference Include="..\VitalsCommon\uGMV_VitalTypes.pas"/>
+        <DCCReference Include="..\VS_Monitors\RS232.pas"/>
+        <DCCReference Include="..\VS_Monitors\uVHA_ATE740X.pas"/>
+        <DCCReference Include="..\ROR\uROR_RPCBroker.pas"/>
+        <DCCReference Include="..\ROR\fROR_PCall.pas">
+            <Form>RPCErrorForm</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsUtils\uGMV_EXEVersion.pas"/>
+        <DCCReference Include="..\VitalsUtils\uGMV_Engine.pas"/>
+        <DCCReference Include="..\VitalsDataEntry\uGMV_Template.pas"/>
+        <DCCReference Include="..\VitalsCommon\uGMV_Setup.pas"/>
+        <DCCReference Include="..\VitalsPatient\fGMV_PatientSelector.pas">
+            <Form>frmGMV_PatientSelector</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsUtils\uGMV_DLLCommon.pas"/>
+        <DCCReference Include="..\VitalsUtils\uXML.pas"/>
+        <DCCReference Include="..\VitalsCommon\fGMV_HospitalSelector2.pas">
+            <Form>frmGMV_HospitalSelector2</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\fGMV_RPCLog.pas">
+            <Form>frmGMV_RPCLog</Form>
+        </DCCReference>
+        <DCCReference Include="..\VitalsCommon\mGMV_PrinterSelector.pas">
+            <Form>frGMV_PrinterSelector</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\VS_Monitors\uGMV_Monitor.pas"/>
+        <DCCReference Include="..\COMPONENTS\uGMV_ScrollListBox.pas"/>
+        <DCCReference Include="..\VS_Monitors\fGMV_Waiting.pas">
+            <Form>frmWaiting</Form>
+        </DCCReference>
+        <DCCReference Include="..\VITALSCOMMON\fGMV_RoomSelector.pas">
+            <Form>frmRoomSelector</Form>
+        </DCCReference>
+        <DCCReference Include="..\VITALSCOMMON\mGMV_DefaultSelector.pas">
+            <Form>frDefaultSelector</Form>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\VITALSCOMMON\uGMV_RPC_Names.pas"/>
+        <DCCReference Include="..\VITALSCOMMON\uGMV_Log.pas"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">Vitals.dpr</Source>
+                </Source>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+                    <VersionInfo Name="MajorVer">5</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">23</VersionInfo>
+                    <VersionInfo Name="Build">8</VersionInfo>
+                    <VersionInfo Name="Debug">True</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1033</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription">5.0 Patch GMRV*5.0*23</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">5.0.23.8</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName">Vitals Client 5.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright">© Department of Veterans Affairs 2002-2008</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName">Vitals</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductVersion">5.0.23.8</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments">v. 08/11/09 15:00</VersionInfoKeys>
+                    <VersionInfoKeys Name="VAReleaseDate">October 2002</VersionInfoKeys>
+                    <VersionInfoKeys Name="VANamespace">GMRV</VersionInfoKeys>
+                    <VersionInfoKeys Name="VASourceInformation">Developed by the Department of Veterans Affairs</VersionInfoKeys>
+                    <VersionInfoKeys Name="DeveloperInfo">Build 8: Entered In Error of CliO record fix. Update 1.</VersionInfoKeys>
+                </VersionInfoKeys>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k220.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp220.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

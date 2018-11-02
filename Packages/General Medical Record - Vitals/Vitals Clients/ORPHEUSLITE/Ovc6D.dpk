@@ -1,0 +1,43 @@
+package Ovc6D;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Orpheus Lite'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  designide,
+  vclx,
+  Ovc6R;
+
+contains
+  ovcreg in 'ovcreg.pas',
+  Ovcabot0 in 'Ovcabot0.pas' {OvcfrmAboutForm},
+  ovcstat0 in 'ovcstat0.pas',
+  ovccmdp1 in 'ovccmdp1.pas' {OvcfrmScanOrder},
+  ovccmdp0 in 'ovccmdp0.pas' {OvcfrmCmdTable},
+  ovcdock0 in 'ovcdock0.pas' {OvcfrmDock};
+
+end.

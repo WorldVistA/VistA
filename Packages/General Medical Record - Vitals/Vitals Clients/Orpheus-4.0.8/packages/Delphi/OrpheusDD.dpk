@@ -1,0 +1,102 @@
+{* ***** BEGIN LICENSE BLOCK *****                                            *}
+{* Version: MPL 1.1                                                           *}
+{*                                                                            *}
+{* The contents of this file are subject to the Mozilla Public License        *}
+{* Version 1.1 (the "License"); you may not use this file except in           *}
+{* compliance with the License. You may obtain a copy of the License at       *}
+{* http://www.mozilla.org/MPL/                                                *}
+{*                                                                            *}
+{* Software distributed under the License is distributed on an "AS IS" basis, *}
+{* WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License   *}
+{* for the specific language governing rights and limitations under the       *}
+{* License.                                                                   *}
+{*                                                                            *}
+{* The Original Code is TurboPower Orpheus                                    *}
+{*                                                                            *}
+{* The Initial Developer of the Original Code is TurboPower Software          *}
+{*                                                                            *}
+{* Portions created by TurboPower Software Inc. are Copyright (C) 1995-2002   *}
+{* TurboPower Software Inc. All Rights Reserved.                              *}
+{*                                                                            *}
+{* Contributor(s):                                                            *}
+{*                                                                            *}
+{* ***** END LICENSE BLOCK *****                                              *}
+
+PACKAGE OrpheusDD;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'TurboPack Orpheus Delphi designtime package'}
+{$LIBSUFFIX '230'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  Vcl,
+  Vclx,
+  designide,
+  OrpheusDR;
+
+contains
+  Ovcabot0 in '..\..\source\Ovcabot0.pas' {OvcfrmAboutForm},
+  ovcaepe in '..\..\source\ovcaepe.pas' {OvcfrmAeRange},
+  ovcbtnh0 in '..\..\source\ovcbtnh0.pas',
+  ovccmdp0 in '..\..\source\ovccmdp0.pas',
+  ovccmdp1 in '..\..\source\ovccmdp1.pas',
+  ovccolr0 in '..\..\source\ovccolr0.pas',
+  ovcdock0 in '..\..\source\ovcdock0.pas' {OvcfrmDock},
+  Ovcdrpve in '..\..\source\Ovcdrpve.pas' {OvcfrmRvDataItemEditor},
+  OvcEfPe in '..\..\source\OvcEfPe.pas',
+  ovcfnpe in '..\..\source\ovcfnpe.pas',
+  ovcfxfpe in '..\..\source\ovcfxfpe.pas',
+  ovclbl0 in '..\..\source\ovclbl0.pas' {OvcLabelFrm},
+  ovclbl1 in '..\..\source\ovclbl1.pas' {SaveSchemeFrm},
+  ovclbl2 in '..\..\source\ovclbl2.pas',
+  ovclkou0 in '..\..\source\ovclkou0.pas',
+  ovclkou1 in '..\..\source\ovclkou1.pas' {OvcfrmLkOutEd},
+  ovcnbk0 in '..\..\source\ovcnbk0.pas',
+  OvcNfPe in '..\..\source\OvcNfPe.pas',
+  Ovcoutle in '..\..\source\Ovcoutle.pas' {OvcfrmOLItemsEditor},
+  o32vldpe in '..\..\source\o32vldpe.pas' {TO32FrmValidatorExpression},
+  ovcreg in '..\..\source\ovcreg.pas',
+  ovcrvced in '..\..\source\ovcrvced.pas' {RVCmpEd},
+  ovcrvped in '..\..\source\ovcrvped.pas' {RVCmpEd2},
+  OvcSfPe in '..\..\source\OvcSfPe.pas',
+  ovcstat0 in '..\..\source\ovcstat0.pas' {OvcfrmPropsDlg},
+  ovctbpe1 in '..\..\source\ovctbpe1.pas' {OvcfrmRowEditor},
+  ovctbpe2 in '..\..\source\ovctbpe2.pas' {OvcfrmColEditor},
+  ovctcpe in '..\..\source\ovctcpe.pas' {OvcfrmTCRange},
+  ovcxfrc0 in '..\..\source\ovcxfrc0.pas',
+  ovcxfrc1 in '..\..\source\ovcxfrc1.pas',
+  ovcpfpe in '..\..\source\ovcpfpe.pas' {OvcfrmPictureMask},
+  ovccole0 in '..\..\source\ovccole0.pas' {OvcfrmCollEditor},
+  O32LobEd in '..\..\source\O32LobEd.pas' {O32frmLkOutEd},
+  o32coled in '..\..\source\o32coled.pas' {O32frmCollEditor},
+  O32IGridEditor1 in '..\..\source\O32IGridEditor1.pas',
+  O32IGridItemEd in '..\..\source\O32IGridItemEd.pas' {FormIGridItemEditor};
+
+end.
+

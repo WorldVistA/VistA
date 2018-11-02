@@ -1,0 +1,30 @@
+object OvcFileViewerForm: TOvcFileViewerForm
+  Left = 0
+  Top = 0
+  Caption = 'OvcFileViewerForm'
+  ClientHeight = 187
+  ClientWidth = 261
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object OvcFileViewer: TOvcFileViewer
+    Left = 8
+    Top = 6
+    Width = 243
+    Height = 169
+    Caret.CaretHeight = 12
+    FixedFont.Color = clWindowText
+    FixedFont.Name = 'Terminal'
+    FixedFont.Size = 8
+    FixedFont.Style = []
+    HighlightColors.BackColor = clHighlight
+    HighlightColors.TextColor = clHighlightText
+    TabOrder = 0
+  end
+end

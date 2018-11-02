@@ -1,0 +1,84 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C92A393F-BA72-42A0-A7A8-E04F281F6211}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="OrpheusDR.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusDD.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusDBDR.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="OrpheusDBDD.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\source\dunit\OrpheusTests.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="OrpheusDR">
+        <MSBuild Projects="OrpheusDR.dproj"/>
+    </Target>
+    <Target Name="OrpheusDR:Clean">
+        <MSBuild Projects="OrpheusDR.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDR:Make">
+        <MSBuild Projects="OrpheusDR.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusDD">
+        <MSBuild Projects="OrpheusDD.dproj"/>
+    </Target>
+    <Target Name="OrpheusDD:Clean">
+        <MSBuild Projects="OrpheusDD.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDD:Make">
+        <MSBuild Projects="OrpheusDD.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusDBDR">
+        <MSBuild Projects="OrpheusDBDR.dproj"/>
+    </Target>
+    <Target Name="OrpheusDBDR:Clean">
+        <MSBuild Projects="OrpheusDBDR.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDBDR:Make">
+        <MSBuild Projects="OrpheusDBDR.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusDBDD">
+        <MSBuild Projects="OrpheusDBDD.dproj"/>
+    </Target>
+    <Target Name="OrpheusDBDD:Clean">
+        <MSBuild Projects="OrpheusDBDD.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusDBDD:Make">
+        <MSBuild Projects="OrpheusDBDD.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OrpheusTests">
+        <MSBuild Projects="..\..\source\dunit\OrpheusTests.dproj"/>
+    </Target>
+    <Target Name="OrpheusTests:Clean">
+        <MSBuild Projects="..\..\source\dunit\OrpheusTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OrpheusTests:Make">
+        <MSBuild Projects="..\..\source\dunit\OrpheusTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="OrpheusDR;OrpheusDD;OrpheusDBDR;OrpheusDBDD;OrpheusTests"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="OrpheusDR:Clean;OrpheusDD:Clean;OrpheusDBDR:Clean;OrpheusDBDD:Clean;OrpheusTests:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="OrpheusDR:Make;OrpheusDD:Make;OrpheusDBDR:Make;OrpheusDBDD:Make;OrpheusTests:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

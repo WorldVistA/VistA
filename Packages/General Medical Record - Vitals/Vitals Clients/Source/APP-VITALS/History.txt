@@ -1,0 +1,157 @@
+ToDo:
+        1. Get rid of FRAMES
+        2. Get rid of CPRS controls
+        3. CDS as a data source for the graph
+
+        4. Update User preferences DLG
+
+Version T17 (GMV_VITALSVIEWENTER.DLL:v. 01/20/06 09:08)
+
+ClearQuest tickets fixed in T17 include:
+
+HDS00010773 - When you view the graph in 3D, the dots separate from
+        the lines making it confusing and difficult to read.
+
+        NOTE: 3D is not available if the "Time scale" is not checked.
+
+HDS00010365 - CCOW and Vitals user if you select rejoin from vitals user
+        and user this application's data CPRS greys out.
+
+HDS00010542 - Vitals out-of-range error message does not specify which
+        vital sign is out of range. The error message appears
+        upon saving the vitals, not upon entering the out-of-range value.
+
+HDS00010619 - Essentially if I select a pt without any existing vitals data,
+        and Time Scale is NOT checked prior to entering data
+        once the value is entered it wont display on graph until I place
+        a check mark in Time Scale. Once I toggle back to NO time scale
+        the display has been corrected.
+
+HDS00010790,
+HDS00010791 - GMRV*5*3 t16 error identified during internal testing.
+        The Vitals dll message alerting the user that there is
+        an incompatibility in the vitals dll version includes a spelling
+        error, Vitals "Viever"
+
+HDS00009888 - GMRV*5*3 t12
+        148) VOLPP,BRYAN D (MAC)  11/04/05@19:04  7 lines
+        We have CPRS 26.49 and GMRV 5*3T12 in Live.  If I open Vitals from the
+        TOOLS menu in CPRS, I have user context but the patient is not selected
+        in Vitals.  If I change patients in CPRS, then Vitals gets the patient
+        context and displays the patient name
+
+Also:
+- Help files fixed for Vitals User and Manager
+- 1b = 0.45359237 kg
+- Admitions list filtered - no records with balnk hospital IDs (HDS00010555-?)
+- CCOW=PATIENTONLY is not working - fixed
+- CCOW - join the context using the Global Data - Fixed
+- No blue line in "NO DATA" case
+- "Hieght" >> "Height"
+
+Version T16 (GMV_VITALSVIEWENTER.DLL:v. 12/29/05 16:20)
+- Dummy parameter added to the getCurrentDateTime
+
+
+
+Version T16 (GMV_VITALSVIEWENTER.DLL:v. 12/29/05 16:20)
+
+1. (?) Selection of the Hospital by Name is using the old RPC - fixed
+2. (9830) Hints were added to the "File|CCOW" section of the main menu.
+        "Join Context and continue to work with the same Patient"
+        "Join Context and switch to the patient corrently in the Context"
+3. Splash screen updated to include new Vitals logo
+4. About box updated to include new Vitals logo
+5. About box could be closed with "ESC" button
+6. (10346) Location, User not shown at the Vitals data grid - fixed
+
+7. Help file added
+8. Zoom/UnZoom/Restore panel included into Graph Options panel
+9. Print Size updated.
+10. "List Index out of bounds" message at the template editor (15a-2) - fixed
+11. Enter Vitals button disabled at startup (15a-5) - fixed
+12. 13 items in the graph(15a-4) - fixed
+13. (10523) Value of "99" is replaced with "0" in the pain graph - fixed
+14. CRC value is not calculated in the DLL - fixed.
+15. (10569)The select button to move the user into the Vitals Lite Enter window
+        is inactive and grayed-out. - Fixed
+16. '_prod' suffix added to the CCOW patient subject if the application is
+        started in production account - fixed. No suffix added for production accounts.
+
+- (10393) - When I mark one vital as "Entered in Error", all items on graph are removed.
+        - Fixed.
+
+- (10132) - Vitals: Warning message with toggle from Time Scale ON to Time Scale OFF on BP/Weight graph
+        - worked as designed. Message was because of the corrupted data.
+        Updated message format to include date and time
+
+- (10398) - During the 12/15 CPRS GUI v26 Test Site call,
+        Bryan Volpp as if it would be possible to include decimals in the BMI graph.
+        PRC updated by Frank
+
+- (10144) - Vitals: Date range, whether custom or default not displaying entire range on graph
+        - we have no control over the way  Grapg  displayes its labels
+        Left "as is"
+
+
+Version T15
+1. c.c. changed to ml in Intake and Output
+2. Spelling correction "dialstolic" -> "diastolic"
+3. Symbols at the Graph Title are drawn correctly
+4. Print Button for "Quick Reference" window
+5. "Save As..." button for "Quick Reference" window
+6. Updated Hospital Selection dialog
+
+
+
+- Trap for GMVUTL7/8 errors (GMV GET VITAL TYPE IEN, GMV GET CURRENT TIME)
+9888 - Patient is not picked up after Vitals started up from the Tools menu
+10132 -
+10144 aka 9595 - fixed
+9927 - returned
+9810 - ?
+9774 - Negative values for CVP are not displayed in the fraph
+        immidiatly after input - fixed
+
+
+
+2005-11-22
+Version T14
+1. 120/  - added as legal value for BP
+2. BP graph seems cluttered with the mean BP (9170) - fixed
+3. "All Results" added to the Range list (QC 9927)
+4. Anavailable CCOW commands are grayed out in the menu (QC 9595)
+5. Negative CVP are graphed (QC 9774)
+6. Help window "Quick Reference" added to the DLL
+7. Entered VS data for Pulse Ox with current date.
+   Doesn't display on graph unless select at least T-30(QC 9776)
+8. When selecting large date range Vitals are squashed to the right end side (QC 9927) - fixed
+
+
+2005-10-18
+Version updated to t11,
+DLL version: "GMV_VITALSVIEWENTER.DLL:v. 10/18/05 10:50"
+
+10. Conversion Warning check box   (Hidden)
+11. Save/Restore WARD/TEAM/UNIT/CLINIC lists
+12. Help Files updated
+
+13. About Dialog Added to the DLL
+
+
+2005-10-11
+
+1. PositionForm procedure added to U_Common
+	- adjust position of the window according to the current WorkArea limits.
+2. Version Info is taken from the resource file, not from the string
+3. Help file support for the DLL
+4. No more parameter for "GMV Get Server Time"
+
+5.TIMING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+6. PainNo99 procedure - excludes the 99s vrom values
+7. {$IFDEF METRICCONVERSION} - controls the converiton on the metric change
+8. CCOW=PATIENTONLY
+9. Temperature is limited to 2 digits after the decimal.
+
+
