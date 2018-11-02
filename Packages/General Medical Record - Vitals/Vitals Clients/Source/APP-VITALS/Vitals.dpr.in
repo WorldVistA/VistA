@@ -1,0 +1,104 @@
+program Vitals;
+
+uses
+  SysUtils,
+  Forms,
+  fGMV_UserMain in '@SOURCE@\fGMV_UserMain.pas' {frmGMV_UserMain},
+  fGMV_PtSelect in '@SOURCE@\..\VitalsPatient\fGMV_PtSelect.pas' {frmGMV_PtSelect},
+  uGMV_Utils in '@SOURCE@\..\VitalsUtils\uGMV_Utils.pas',
+  uGMV_FileEntry in '@SOURCE@\..\VitalsCommon\uGMV_FileEntry.pas',
+  uGMV_Const in '@SOURCE@\..\VitalsUtils\uGMV_Const.pas',
+  uGMV_GlobalVars in '@SOURCE@\..\VitalsUtils\uGMV_GlobalVars.pas',
+  fGMV_Splash in '@SOURCE@\..\VitalsCommon\fGMV_Splash.pas' {frmGMV_Splash},
+  fGMV_AboutDlg in '@SOURCE@\..\VitalsCommon\fGMV_AboutDlg.pas' {frmGMV_AboutDlg},
+  uGMV_User in '@SOURCE@\..\VitalsCommon\uGMV_User.pas',
+  fGMV_TimeOutManager in '@SOURCE@\..\VitalsCommon\fGMV_TimeOutManager.pas' {frmGMV_TimeOutManager},
+  fGMV_PtInfo in '@SOURCE@\..\VitalsPatient\fGMV_PtInfo.pas' {fraGMV_PatientInfo},
+  fGMV_ReportOptions in '@SOURCE@\..\VitalsPatient\fGMV_ReportOptions.pas' {frmGMV_ReportOptions},
+  fGMV_EnteredInError in '@SOURCE@\..\VitalsDataEntry\fGMV_EnteredInError.pas' {frmGMV_EnteredInError},
+  uGMV_QualifyBox in '@SOURCE@\..\VitalsDataEntry\uGMV_QualifyBox.pas',
+  fGMV_UserSettings in '@SOURCE@\..\VitalsCommon\fGMV_UserSettings.pas' {frmGMV_UserSettings},
+  fGMV_SelectColor in '@SOURCE@\..\VitalsCommon\fGMV_SelectColor.pas' {frmGMV_SelectColor},
+  uGMV_SaveRestore in '@SOURCE@\..\VitalsCommon\uGMV_SaveRestore.pas',
+  fGMV_DateRange in '@SOURCE@\..\VitalsCommon\fGMV_DateRange.pas' {frmGMV_DateRange},
+  fGMV_ShowSingleVital in '@SOURCE@\..\VitalsView\fGMV_ShowSingleVital.pas' {frmGMV_ShowSingleVital},
+  mGMV_InputOne2 in '@SOURCE@\..\VitalsDataEntry\mGMV_InputOne2.pas' {fraGMV_InputOne2: TFrame},
+  fGMV_SupO2 in '@SOURCE@\..\VitalsDataEntry\fGMV_SupO2.pas' {frmGMV_SupO2},
+  fGMV_Qualifiers in '@SOURCE@\..\VitalsDataEntry\fGMV_Qualifiers.pas' {frmGMV_Qualifiers},
+  fGMV_DateTimeDLG in '@SOURCE@\..\VitalsCommon\fGMV_DateTimeDLG.pas' {fGMV_DateTime},
+  mGMV_GridGraph in '@SOURCE@\..\VitalsView\mGMV_GridGraph.pas' {fraGMV_GridGraph: TFrame},
+  uGMV_Patient in '@SOURCE@\..\VitalsCommon\uGMV_Patient.pas',
+  fGMV_InputLite in '@SOURCE@\..\VitalsDataEntry\fGMV_InputLite.pas' {frmGMV_InputLite},
+  mGMV_MDateTime in '@SOURCE@\..\VitalsCommon\mGMV_MDateTime.pas',
+  fGMV_EditUserTemplates in '@SOURCE@\..\VitalsCommon\fGMV_EditUserTemplates.pas',
+  mGMV_EditTemplate in '@SOURCE@\..\VitalsCommon\mGMV_EditTemplate.pas' {fraGMV_EditTemplate: TFrame},
+  fGMV_AddVCQ in '@SOURCE@\..\VitalsCommon\fGMV_AddVCQ.pas' {frmGMV_AddVCQ},
+  uGMV_Common in '@SOURCE@\..\VitalsUtils\uGMV_Common.pas',
+  uGMV_CRC32 in '@SOURCE@\..\VitalsUtils\uGMV_CRC32.pas',
+  uGMV_VersionInfo in '@SOURCE@\..\VitalsUtils\uGMV_VersionInfo.pas',
+  uGMV_VitalTypes in '@SOURCE@\..\VitalsCommon\uGMV_VitalTypes.pas',
+  RS232 in '@SOURCE@\..\VS_Monitors\RS232.pas',
+  uVHA_ATE740X in '@SOURCE@\..\VS_Monitors\uVHA_ATE740X.pas',
+  uROR_RPCBroker in '@SOURCE@\..\ROR\uROR_RPCBroker.pas',
+  fROR_PCall in '@SOURCE@\..\ROR\fROR_PCall.pas' {RPCErrorForm},
+  uGMV_EXEVersion in '@SOURCE@\..\VitalsUtils\uGMV_EXEVersion.pas',
+  uGMV_Engine in '@SOURCE@\..\VitalsUtils\uGMV_Engine.pas',
+  uGMV_Template in '@SOURCE@\..\VitalsDataEntry\uGMV_Template.pas',
+  uGMV_Setup in '@SOURCE@\..\VitalsCommon\uGMV_Setup.pas',
+  fGMV_PatientSelector in '@SOURCE@\..\VitalsPatient\fGMV_PatientSelector.pas' {frmGMV_PatientSelector},
+  uGMV_DLLCommon in '@SOURCE@\..\VitalsUtils\uGMV_DLLCommon.pas',
+  uXML in '@SOURCE@\..\VitalsUtils\uXML.pas',
+  fGMV_HospitalSelector2 in '@SOURCE@\..\VitalsCommon\fGMV_HospitalSelector2.pas' {frmGMV_HospitalSelector2},
+  fGMV_RPCLog in '@SOURCE@\..\VitalsCommon\fGMV_RPCLog.pas' {frmGMV_RPCLog},
+  mGMV_PrinterSelector in '@SOURCE@\..\VitalsCommon\mGMV_PrinterSelector.pas' {frGMV_PrinterSelector: TFrame},
+  uGMV_Monitor in '@SOURCE@\..\VS_Monitors\uGMV_Monitor.pas',
+  uGMV_ScrollListBox in '@SOURCE@\..\COMPONENTS\uGMV_ScrollListBox.pas',
+  fGMV_Waiting in '@SOURCE@\..\VS_Monitors\fGMV_Waiting.pas' {frmWaiting},
+  fGMV_RoomSelector in '@SOURCE@\..\VITALSCOMMON\fGMV_RoomSelector.pas' {frmRoomSelector},
+  mGMV_DefaultSelector in '@SOURCE@\..\VITALSCOMMON\mGMV_DefaultSelector.pas' {frDefaultSelector: TFrame},
+  uGMV_RPC_Names in '@SOURCE@\..\VITALSCOMMON\uGMV_RPC_Names.pas',
+  uGMV_Log in '@SOURCE@\..\VITALSCOMMON\uGMV_Log.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+
+  GMVSplash := TfrmGMV_Splash.Create(application);
+  GMVSplash.Show;
+  GMVSplash.UpdateMessage('Establishing VistA Connection...');
+
+  Application.CreateForm(TfrmGMV_UserMain, frmGMV_UserMain);
+  Application.CreateForm(TfrmRoomSelector, frmRoomSelector);
+  if not frmGMV_UserMain.RestoreConnection then // will create Broker
+      begin
+        FreeAndNil(frmGMV_UserMain);
+        FreeAndNil(GMVSplash);
+        Exit;
+      end;
+  GMVSplash.Hide;
+
+  Application.Title := 'Vitals';
+  Application.HelpFile := '';
+
+  InitTimeOut(nil);
+  UpdateTimeOutInterval(GMVUser.DTime);
+
+  Application.BringToFront;
+  Application.Run;
+  ShutDownTimeOut;
+
+  FreeAndNil(GMVDefaultTemplates);
+  FreeAndNil(GMVClinics);
+  FreeAndNil(GMVTeams);
+  FreeAndNil(GMVWardLocations);
+  FreeAndNil(GMVNursingUnits);
+  FreeAndNil(GMVCats);
+  FreeAndNil(GMVQuals);
+  FreeAndNil(GMVTypes);
+
+  FreeAndNil(GMVUser);
+  FreeAndNil(RPCBroker);
+//  FreeAndNil(GMVSplash);
+
+end.
