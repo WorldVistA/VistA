@@ -1487,10 +1487,10 @@ function TfrmOrders.GetStartStopText(StartTime: string; StopTime: string): strin
 var
   y: string;
 begin
-  result := FormatFMDateTimeStr('c', StartTime);
+  result := FormatFMDateTimeStr('ddddd hh:nn', StartTime);
   if IsFMDateTime(StartTime) and (Length(StartTime) = FM_DATE_ONLY) then result := Piece(result, ' ', 1);
   if Length(result) > 0 then result := 'Start: ' + result;
-  y := FormatFMDateTimeStr('c', StopTime);
+  y := FormatFMDateTimeStr('ddddd hh:nn', StopTime);
   if IsFMDateTime(StopTime)  and (Length(StopTime)  = FM_DATE_ONLY) then y := Piece(y, ' ', 1);
   if Length(y) > 0 then result := result + CRLF + 'Stop: ' + y;
 end;
