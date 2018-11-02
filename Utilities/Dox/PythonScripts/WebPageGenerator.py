@@ -18,7 +18,6 @@
 # limitations under the License.
 
 import argparse
-import bisect
 import json
 import os
 import os.path
@@ -212,7 +211,7 @@ XINDEXLegend = """
 
 PCLegend = """
   <div>
-    <h4>Package Component Superscript legend</h4>
+    <h3>Package Component Superscript legend</h3>
     <table>
       <tbody>
         <tr>
@@ -448,47 +447,6 @@ def getRoutineSourceHtmlFileNameUnquoted(routineName):
 
 def getRoutineSourceHtmlFileName(routineName):
     return urllib.quote(getRoutineSourceHtmlFileNameUnquoted(routineName))
-
-# generate Indexed Page Table Row
-def generateIndexedTableRow(outputFile, inputList, httpLinkFunction,
-                            nameFunc=None, indexSet=set(char for char in string.uppercase)):
-    if not inputList or len(inputList) == 0:
-        return
-    outputFile.write("<tr>")
-    for item in inputList:
-        if len(item) == 1 and item in indexSet:
-            outputFile.write("<td><a name='%s'></a>" % item)
-            outputFile.write("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">")
-            outputFile.write("<tr><td><div class=\"ah\">&nbsp;&nbsp;%s&nbsp;&nbsp;</div></td></tr>" % item)
-            outputFile.write("</table></td>")
-            indexSet.remove(item)
-        else:
-            displayName = item
-            if nameFunc:
-                displayName = nameFunc(item)
-            outputFile.write("<td><a class=\"el\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;</td>" %
-                             (httpLinkFunction(item),
-                              displayName))
-    outputFile.write("</tr>\n")
-
-def generateIndexedPackageTableRow(outputFile, inputList,
-                                   nameFunc=None, indexSet=set(char for char in string.uppercase)):
-    generateIndexedTableRow(outputFile, inputList, getPackageHtmlFileName,
-                            nameFunc, indexSet)
-
-def generateIndexedRoutineTableRow(outputFile, inputList,
-                                   nameFunc=None, indexSet=set(char for char in string.uppercase)):
-    generateIndexedTableRow(outputFile, inputList, getRoutineHtmlFileName,
-                            nameFunc, indexSet)
-def generateIndexedPackageComponentTableRow(outputFile, inputList,
-                                   nameFunc=None, indexSet=set(char for char in string.uppercase)):
-    generateIndexedTableRow(outputFile, inputList, getPackageObjHtmlFileName,
-                            nameFunc, indexSet)
-def generateIndexedGlobalTableRow(outputFile, inputList,
-                                  nameFunc=None, indexSet=set(char for char in string.uppercase)):
-    generateIndexedTableRow(outputFile, inputList, getGlobalHtmlFileNameByName,
-                            nameFunc, indexSet)
-
 
 
 def getPackagePackageDependencyHyperLink(packageName, depPackageName, name,
@@ -730,10 +688,6 @@ class WebPageGenerator:
               # Generate list of printable sections
               writePDFCustomization(outputFile, printList)
 
-    def generateIndexNavigationBar(self, outputFile, inputList):
-        self.generateNavigationBar(outputFile, inputList, printButton=False,
-                                   allButton=False)
-
     # Navigation Bar + footer
     def generateFooterWithNavigationBar(self, outputFile, indexList,
                                         archList=None):
@@ -790,6 +744,7 @@ class WebPageGenerator:
         self.generatePackagePackageInteractionDetail()
         self.generatePackageInformationPages()
         self.generateIndividualPackagePage()
+        self.generatePackageComponentListIndexPage()
 
         self.copyFilesToOutputDir()
         if self._generatePDFBundle:
@@ -877,36 +832,72 @@ class WebPageGenerator:
 #===============================================================================
 #
 #===============================================================================
-    def generateGlobalNameIndexPage(self):
-        outputFile = open(os.path.join(self._outDir, "globals.html"), 'w')
-        self.__includeHeader__(outputFile)
-        self._writeIndexTitleBlock("Global", outputFile)
-        self.generateIndexNavigationBar(outputFile, string.uppercase)
+
+    def _generateIndexPage(self, filename, title, numCol, sortedItems,
+                           httpLinkFunction, nameFunc, indexes):
+        with open(os.path.join(self._outDir, filename), 'w') as outputFile:
+            self.__includeHeader__(outputFile)
+            self._writeIndex(outputFile, title, numCol, sortedItems,
+                             httpLinkFunction, nameFunc, indexes)
+            outputFile.write(FOOTER)
+
+    def _writeIndex(self, outputFile, title, numCol, sortedItems,
+                    httpLinkFunction, nameFunc, indexes):
+        self._writeIndexTitleBlock(title, outputFile)
+        self.generateNavigationBar(outputFile, indexes, printButton=False,
+                                   allButton=False)
         outputFile.write("<div class=\"contents\">\n")
+        outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
+        totalNumItems = len(sortedItems)
+        numPerCol = totalNumItems / numCol + 1
+        for i in range(numPerCol):
+            itemsPerRow = []
+            for j in range(numCol):
+                if (i + numPerCol * j) < totalNumItems:
+                    itemsPerRow.append(sortedItems[i + numPerCol * j])
+            self._generateIndexedTableRow(outputFile, itemsPerRow,
+                                          httpLinkFunction,
+                                          nameFunc, indexes)
+        outputFile.write("</table>\n</div>\n")
+        self.generateNavigationBar(outputFile, indexes, printButton=False,
+                                   allButton=False)
+
+    def _generateIndexedTableRow(self, outputFile, inputList, httpLinkFunction,
+                                 nameFunc, indexList):
+        outputFile.write("<tr>")
+        for item in inputList:
+            if item in indexList:
+                outputFile.write("<td><a name='%s'></a>" % item)
+                outputFile.write("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">")
+                outputFile.write("<tr><td><div class=\"ah\">&nbsp;&nbsp;%s&nbsp;&nbsp;</div></td></tr>" % item)
+                outputFile.write("</table></td>")
+            else:
+                displayName = item
+                if nameFunc:
+                    displayName = nameFunc(item)
+                outputFile.write("<td><a class=\"el\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;</td>" %
+                                    (httpLinkFunction(item), displayName))
+        outputFile.write("</tr>\n")
+
+#===============================================================================
+#
+#===============================================================================
+    def generateGlobalNameIndexPage(self):
+        indexList = [char for char in string.uppercase]
         sortedGlobals = [] # a list of list
+        for letter in indexList:
+            sortedGlobals.append([letter, letter])
         for globalVar in self._allGlobals.itervalues():
             sortedName = globalVar.getName()[1:] # get rid of ^
-            if sortedName.startswith('%'): # get rid of %
+            if sortedName.startswith('%') or sortedName.startswith('$'): # get rid of % and $
                 sortedName = sortedName[1:]
             sortedGlobals.append([sortedName, globalVar.getName()])
-        sortedGlobals = sorted(sortedGlobals,
-                             key=lambda item: item[0])
-        for letter in string.uppercase:
-            bisect.insort_left(sortedGlobals, [letter, letter])
-        totalGlobals = len(sortedGlobals)
+        sortedGlobals = sorted(sortedGlobals, key=lambda item: item[0].lower())
+        sortedGlobals = [item[1] for item in sortedGlobals]
         totalCol = 4
-        numPerCol = totalGlobals / totalCol + 1
-        outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
-        for i in range(numPerCol):
-            itemsPerRow = [];
-            for j in range(totalCol):
-                if (i + numPerCol * j) < totalGlobals:
-                    itemsPerRow.append(sortedGlobals[i + numPerCol * j][1]);
-            generateIndexedGlobalTableRow(outputFile, itemsPerRow)
-        outputFile.write("</table>\n</div>\n")
-        self.generateIndexNavigationBar(outputFile, string.uppercase)
-        outputFile.write(FOOTER)
-        outputFile.close()
+        self._generateIndexPage("globals.html", "Global", totalCol,
+                                sortedGlobals, getGlobalHtmlFileNameByName,
+                                None, indexList)
 
 #===============================================================================
 #
@@ -2198,7 +2189,7 @@ class WebPageGenerator:
         routineName = routine.getName()
         if "componentType" in dir(routine):
           if routine.componentType.strip() in componentTypeDict:
-              return "%s<sup>(%s)</sup>" % (routineName,componentTypeDict[routine.componentType.strip()])
+              return "%s<sup>(%s)</sup>" % (routineName, componentTypeDict[routine.componentType.strip()])
         return routineName
 #===============================================================================
 # utility method to show routine name
@@ -2224,45 +2215,20 @@ class WebPageGenerator:
 # Method to generate routine Index page
 #===============================================================================
     def generateRoutineIndexPage(self):
-        outputFile = open(os.path.join(self._outDir, "routines.html"), 'w')
-        self.__includeHeader__(outputFile)
-        self._writeIndexTitleBlock("Routine", outputFile)
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
-        indexSet = sorted(set(indexList))
-        self.generateIndexNavigationBar(outputFile, indexList)
-        outputFile.write("<div class=\"contents\">\n")
-        sortedRoutines = []
+        indexList.insert(0, "$")
+        indexList.sort()
+        routinesList = []
         for routine in self._allRoutines.itervalues():
-            sortedRoutines.append(routine.getName())
-        sortedRoutines = sorted(sortedRoutines)
-        for letter in indexList:
-            bisect.insort_left(sortedRoutines, letter)
-        totalRoutines = len(sortedRoutines)
+            routinesList.append(routine.getName())
+        sortedItems = indexList + routinesList
+        sortedItems = sorted(sortedItems, key=lambda s: s.lower())
         totalCol = 4
-        numPerCol = totalRoutines / totalCol + 1
-        outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
-        for i in range(numPerCol):
-            itemsPerRow = [];
-            for j in range(totalCol):
-                if (i + numPerCol * j) < totalRoutines:
-                    item = sortedRoutines[i + numPerCol * j]
-                    itemsPerRow.append(item);
-            generateIndexedRoutineTableRow(outputFile, itemsPerRow,
-                                           self.getRoutineDisplayNameByName,
-                                           indexSet)
-        outputFile.write("</table>\n</div>\n")
-        self.generateIndexNavigationBar(outputFile, indexList)
-        outputFile.write(FOOTER)
-        outputFile.close()
+        self._generateIndexPage("routines.html", "Routine", totalCol,
+                                sortedItems, getRoutineHtmlFileName,
+                                self.getRoutineDisplayNameByName, indexList)
 
-#===============================================================================
-#
-#===============================================================================
-    def generatePackageInformationPages(self):
-        self.generatePackageComponentListPage()
-        for keyVal in sectionLinkObj.keys():
-          self.generateAllIndividualPackageComponentPage(keyVal)
 #===============================================================================
 #
 #===============================================================================
@@ -2285,31 +2251,15 @@ class WebPageGenerator:
 #
 #===============================================================================
     def generatePackageIndexPage(self):
-        outputFile = open(os.path.join(self._outDir, "packages.html"), 'w')
-        self.__includeHeader__(outputFile)
-        self._writeIndexTitleBlock("Package", outputFile)
-        self.generateIndexNavigationBar(outputFile, string.uppercase)
-        outputFile.write("<div class=\"contents\">\n")
-        #generated the table
-        totalNumPackages = len(self._allPackages) + len(string.uppercase)
+        packagesList = self._allPackages.keys()
+        indexList = [char for char in string.uppercase]
+        indexList.insert(0, '0-9')
+        indexList.sort()
+        sortedItems = indexList + packagesList
+        sortedItems = sorted(sortedItems, key=lambda s: s.lower())
         totalCol = 3
-        # list in three columns
-        numPerCol = totalNumPackages / totalCol + 1
-        sortedPackages = sorted(self._allPackages.keys())
-        for letter in string.uppercase:
-            bisect.insort_left(sortedPackages, letter)
-        # write the table first
-        outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
-        for i in range(numPerCol):
-            itemsPerRow = [];
-            for j in range(totalCol):
-                if (i + numPerCol * j) < totalNumPackages:
-                    itemsPerRow.append(sortedPackages[i + j * numPerCol]);
-            generateIndexedPackageTableRow(outputFile, itemsPerRow)
-        outputFile.write("</table>\n</div>\n")
-        self.generateIndexNavigationBar(outputFile, string.uppercase)
-        outputFile.write(FOOTER)
-        outputFile.close()
+        self._generateIndexPage("packages.html", "Package", totalCol,
+                                sortedItems, getPackageHtmlFileName, None, indexList)
 
 #=======================================================================
 # Method to generate package dependency/dependent section info
@@ -3578,10 +3528,7 @@ class WebPageGenerator:
           outputFile.write("<div><p %s>Source Info Missing</p></div>" % classid)
         writeSectionEnd(outputFile)
 
-    def __generatePackageComponentPage__(self, routine, platform=None,
-                                         fileNameGenerator=getRoutineHtmlFileNameUnquoted,
-                                         DEFAULT_HEADER_LIST=DEFAULT_VARIABLE_SECTION_HEADER_LIST):
-            assert routine
+    def __generatePackageComponentPage__(self, routine):
             routineName = routine.getName()
             # This is a list sections that might be applicable to a routine
             sectionGenLst = [
@@ -3629,7 +3576,7 @@ class WebPageGenerator:
                          "name": "External References", # this is also the link name
                          "data" : routine.getExternalReference, # the data source
                          "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [DEFAULT_HEADER_LIST,
+                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                                        self.__convertExternalReferenceToTableData__], # extra argument
                          "classid"  :"external"
                        },
@@ -3693,7 +3640,7 @@ class WebPageGenerator:
                          "name": "Naked Globals", # this is also the link name
                          "data" : routine.getNakedGlobals, # the data source
                          "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [DEFAULT_HEADER_LIST,
+                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                                        self.__convertNakedGlobaToTableData__], # extra argument
                          "classid"  :"naked"
                        },
@@ -3702,7 +3649,7 @@ class WebPageGenerator:
                          "name": "Local Variables", # this is also the link name
                          "data" : routine.getLocalVariables, # the data source
                          "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [DEFAULT_HEADER_LIST,
+                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                                        self.__convertVariableToTableData__], # extra argument
                          "classid"  :"local"
                        },
@@ -3711,17 +3658,17 @@ class WebPageGenerator:
                          "name": "Marked Items", # this is also the link name
                          "data" : routine.getMarkedItems, # the data source
                          "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [DEFAULT_HEADER_LIST,
+                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                                        self.__convertMarkedItemToTableData__], # extra argument
                          "classid"  :"marked"
                        },
             ]
             package = routine.getPackage()
             packageName = package.getName()
-            outputFile = open(os.path.join(self._outDir,fileNameGenerator(routine, routine._title)), 'w')
+            outputFile = open(os.path.join(self._outDir,getPackageObjHtmlFileName(routine, routine._title)), 'w')
             if self._generatePDFBundle:
                 pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
-                                           fileNameGenerator(routine, routine._title).replace("html","pdf"))
+                                           getPackageObjHtmlFileName(routine, routine._title).replace("html","pdf"))
                 self.__setupPDF__()
                 pdf = []
             else:
@@ -3756,56 +3703,39 @@ class WebPageGenerator:
             if self._generatePDFBundle:
                 self.__writePDFFile__(pdf, pdfFileName)
 
-    def generateAllIndividualPackageComponentPage(self, keyVal):
-        logger.info("Start generating all individual "+keyVal+"......")
-        for package in self._allPackages.itervalues():
-          for routine in package.getAllPackageComponents(keyVal).itervalues():
-            routine._title = keyVal
-            self.__generatePackageComponentPage__(routine,fileNameGenerator=getPackageObjHtmlFileName,DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
-        logger.info("End of generating all individual "+keyVal+"......")
+    def generatePackageInformationPages(self):
+        for keyVal in sectionLinkObj.keys():
+          logger.info("Start generating all individual "+keyVal+"......")
+          for package in self._allPackages.itervalues():
+            for routine in package.getAllPackageComponents(keyVal).itervalues():
+              routine._title = keyVal
+              self.__generatePackageComponentPage__(routine)
+          logger.info("End of generating all individual "+keyVal+"......")
 
     def generatePackageComponentIndexPage(self, keyVal, outputFile):
         outputFile.write('<div class="componentList" style="display: none;" id=%s>' % keyVal)
         title = keyVal.replace("_"," ")
-        self._writeIndexTitleBlock(title, outputFile)
+
         indexList = [char for char in string.uppercase]
         indexList.insert(0, "%")
-        indexSet = sorted(set(indexList))
-        self.generateIndexNavigationBar(outputFile, indexList)
-        outputFile.write("<div class=\"contents\">\n")
-        sortedComponents = []
-        objectDict = {}
+        indexList.insert(0, '0-9')
+        indexList.sort()
+        components = []
         for package in self._allPackages.itervalues():
             for object in package.getAllPackageComponents(keyVal).itervalues():
-                sortedComponents.append(object.getName())
-                objectDict[object.getName()] = object
-        sortedComponents = sorted(sortedComponents)#, key=lambda x:x.getName())
-        for letter in indexList:
-            bisect.insort_left(sortedComponents, letter)
-        for value in sortedComponents:
-          if value in objectDict.keys():
-            sortedComponents[sortedComponents.index(value)] = objectDict[value]
-        totalComponents = len(sortedComponents)
+                components.append(self.getPackageComponentDisplayName(object))
+        sortedComponents = indexList + components
+        sortedComponents = sorted(sortedComponents, key=lambda s: s.lower())
+
         totalCol = 4
-        numPerCol = totalComponents / totalCol + 1
-        outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
-        for i in range(numPerCol):
-            itemsPerRow = [];
-            for j in range(totalCol):
-                if (i + numPerCol * j) < totalComponents:
-                    item = sortedComponents[i + numPerCol * j]
-                    itemsPerRow.append(item);
-            generateIndexedPackageComponentTableRow(outputFile, itemsPerRow,
-                                           self.getPackageComponentDisplayName,
-                                           indexSet)
-        outputFile.write("</table>\n</div>\n")
-        self.generateIndexNavigationBar(outputFile, indexList)
+        self._writeIndex(outputFile, title, totalCol, sortedComponents,
+                         getPackageObjHtmlFileName, None, indexList)
         outputFile.write('</div>')
 
-    def generatePackageComponentListPage(self):
-        outputFile = open(os.path.join(self._outDir,"PackageComponents.html"), 'w')
-        self.__includeHeader__(outputFile)
-        outputFile.write("""
+    def generatePackageComponentListIndexPage(self):
+        with open(os.path.join(self._outDir,"PackageComponents.html"), 'w') as outputFile:
+            self.__includeHeader__(outputFile)
+            outputFile.write("""
 <script type='text/javascript'>
 $( document ).ready(function() {
   $(".componentList").first().show()
@@ -3815,20 +3745,18 @@ $( document ).ready(function() {
   })
 })
 </script>
-        """)
-        self._writeIndexTitleBlock("Package Components", outputFile)
-        outputFile.write("<h3>Legends:</h3>")
-        outputFile.write(PCLegend)
-        outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
-        allObjects = sorted(sectionLinkObj.keys())
-        outputFile.write("<select id='componentSelector'>")
-        for objectKey in allObjects:
-            outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))
-        outputFile.write("</select>\n")
-        for objectKey in allObjects:
-            self.generatePackageComponentIndexPage(objectKey, outputFile)
-        outputFile.write(FOOTER)
-        outputFile.close()
+            """)
+            self._writeIndexTitleBlock("Package Component", outputFile)
+            outputFile.write(PCLegend)
+            outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
+            allObjects = sorted(sectionLinkObj.keys())
+            outputFile.write("<select id='componentSelector'>")
+            for objectKey in allObjects:
+                outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))
+            outputFile.write("</select>\n")
+            for objectKey in allObjects:
+                self.generatePackageComponentIndexPage(objectKey, outputFile)
+            outputFile.write(FOOTER)
 
 #===============================================================================
 # Method to generate all individual routine pages
