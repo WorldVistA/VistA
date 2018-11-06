@@ -1088,26 +1088,31 @@ begin
     try
       sDateTime := getCurrentDateTime;
       dtpDate.Date := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime)); // 10/08/2002 AAN
-       dtpDate.MaxDate := dtpDate.Date;
       dtpTime.DateTime := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime));
 {$IFDEF DLL}
       chkbCloseOnSave.Visible := False; // zzzzzzandria 050209
       btnSaveAndExit.Visible := True;
 
       // CurrentTime := Now;
+      // OSE/SMH - There may be an i18n bug in the date time control as after
+      // setting the MaxDate once we cannot reset it. So I moved all the sets
+      // to happen only once.
       if aDateTime <> 0 then
         begin
           CurrentTime := aDateTime; // zzzzzzandra 20081008 fixing discepency between PC and VistA
-           dtpDate.MaxDate := 0; // Gotta reset MaxDate here since the datetime came from the DLL Client
           dtpDate.Date := CurrentTime;
-           dtpDate.MaxDate := CurrentTime;
+          dtpDate.MaxDate := CurrentTime;
           dtpTime.DateTime := CurrentTime;
         end
       else
-        CurrentTime := dtpDate.Date;
+        begin
+          dtpDate.MaxDate := dtpDate.Date;
+          CurrentTime := dtpDate.Date;
+        end;
       dtpTimeChange(nil);
 {$ELSE}
       CurrentTime := dtpTime.DateTime;
+      dtpDate.MaxDate := dtpDate.Date;
 {$ENDIF}
     except
       on E: EConvertError do
