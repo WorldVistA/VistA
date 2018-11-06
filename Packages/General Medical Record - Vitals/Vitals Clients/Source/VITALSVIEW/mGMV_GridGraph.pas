@@ -931,7 +931,7 @@ var
   begin
     try
       ss := grdVitals.Cells[aCol, rHeader];
-      ss := ReplaceStr(ss,'-','/');
+      // ss := ReplaceStr(ss,'-','/'); {OSE/SMH - DON'T DO THIS FOR I18N DATES!}
       // zzzzzzandria 061228 - replacement for chart only. to fix position
       ss := ReplaceStr(ss,'24:00:00','23:59:59');
 
@@ -2603,7 +2603,6 @@ var
       ss := grdVitals.Cells[aCol, rHeader];
       if ss <>'' then
         begin
-          ss := ReplaceStr(ss,'-','/');
           if pos(' 24:',sS)>0 then
             ss := piece(ss,' ',1);
           Result := StrToDateTime(ss);

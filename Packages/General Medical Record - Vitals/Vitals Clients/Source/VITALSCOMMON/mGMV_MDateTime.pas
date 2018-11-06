@@ -75,8 +75,8 @@ uses uGMV_Common, Sysutils, Controls, fGMV_DateRange
 constructor TMDateTime.Create;
 begin
   inherited;
-  DateTimeFormat := 'mm/dd/yy hh:nn:ss';
-  DateFormat := 'mm/dd/yy';
+  DateTimeFormat := 'ddddd hh:nn:ss';
+  DateFormat := 'ddddd';
   TimeFormat := 'hh:nn:ss';
 end;
 
@@ -92,7 +92,7 @@ end;
 
 function TMDateTime.getWSLong:String;
 begin
-  Result := FormatDateTime('dddd mmmm mm, yyyy',FDateTime);
+  Result := FormatDateTime('dddddd',FDateTime);
 end;
 
 procedure TMDateTime.setWDate(aDateTime:TDateTime);

@@ -111,7 +111,6 @@ type
     procedure GetStartStop(var start, stop: string; aitems: TStrings);
   public
     { Public declarations }
-    function FMToDateTime(FMDateTime: string): TDateTime;
   end;
 
 
@@ -162,9 +161,9 @@ function getVitalsStartDate : String;
 begin
   result := '';
   if Patient.Inpatient then
-    result := FormatDateTime('mm/dd/yy',Now - 7)
+    result := FormatDateTime('ddddd',Now - 7)
   else
-    result := FormatDateTime('mm/dd/yy',IncMonth(Now,-6));
+    result := FormatDateTime('ddddd',IncMonth(Now,-6));
 end;
 
 procedure SelectVitals(VitalType: String);
@@ -191,7 +190,7 @@ begin
                   Patient.DFN,
                   IntToStr(Encounter.Location),
                   getVitalsStartDate(),
-                  FormatDateTime('mm/dd/yy',Now),
+                  FormatDateTime('ddddd',Now),
                   GMV_APP_SIGNATURE,
                   GMV_CONTEXT,
                   GMV_CONTEXT,
@@ -328,7 +327,7 @@ begin
         lstDates.ItemIndex := -1;
     end;
   end;
-  today := FMToDateTime(floattostr(FMToday));
+  today := FMDateTimeToDateTime(FMToday);
   if lstDates.ItemIEN > 0 then
   begin
     daysback := lstDates.ItemIEN;
@@ -371,19 +370,6 @@ end;
 procedure TfrmVitals.FormDestroy(Sender: TObject);
 begin
   tmpGrid.free;
-end;
-
-function TfrmVitals.FMToDateTime(FMDateTime: string): TDateTime;
-var
-  x, Year: string;
-begin
-  { Note: TDateTime cannot store month only or year only dates }
-  x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x,1,7) + '.2359';
-  Year := IntToStr(17 + StrToInt(Copy(x,1,1))) + Copy(x,2,2);
-  x := Copy(x,4,2) + '/' + Copy(x,6,2) + '/' + Year + ' ' + Copy(x,9,2) + ':' + Copy(x,11,2);
-  Result := StrToDateTime(x);
 end;
 
 procedure TfrmVitals.lstVitalsClick(Sender: TObject);
@@ -477,7 +463,7 @@ begin
               high := value1;
               labvalue1 := strtofloat(value1);
               labvalue2 := strtofloat(value2);
-              datevalue := FMToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
+              datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
               serTest.AddXY(datevalue, labvalue1, '', clTeeColor);
               serTestX.AddXY(datevalue, labvalue2, '', clTeeColor);
               inc(valuecount);
@@ -504,15 +490,15 @@ begin
             begin
               high := value;
               labvalue := strtofloat(value);
-              datevalue := FMToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
+              datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
               serTest.AddXY(datevalue, labvalue, '', clTeeColor);
               inc(valuecount);
             end;
           end;
         serTest.Title := lstVitals.Items[lstVitals.ItemIndex];
       end;   // not blood pressure
-      serTime.AddXY(FMToDateTime(start), strtofloat(high), '',clTeeColor);
-      serTime.AddXY(FMToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serTime.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
+      serTime.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
     end;   // numtest > 0
     if chkZoom.Checked and chtChart.Visible then
     begin
@@ -670,14 +656,14 @@ begin
   Screen.Cursor := crHourGlass;
   if chtChart.Tag > 0 then
   begin
-    strdate1 := FormatDateTime('mm/dd/yyyy', uDate1);
-    strdate2 := FormatDateTime('mm/dd/yyyy', uDate2);
+    strdate1 := FormatDateTime('ddddd', uDate1);
+    strdate2 := FormatDateTime('ddddd', uDate2);
     uDate1 := StrToDateTime(strdate1);
     uDate2 := StrToDateTime(strdate2);
     date1 := DateTimeToFMDateTime(uDate1 + 1);
     date2 := DateTimeToFMDateTime(uDate2);
-    StatusText('Retrieving data for ' + FormatDateTime('dddd, mmmm d, yyyy', uDate2) + '...');
-    ReportBox(VitalsMemo(Patient.DFN, date1, date2, lstVitals.Items), 'Vitals on ' + Patient.Name + ' for ' + FormatDateTime('dddd, mmmm d, yyyy', uDate2), True);
+    StatusText('Retrieving data for ' + FormatDateTime('dddddd', uDate2) + '...');
+    ReportBox(VitalsMemo(Patient.DFN, date1, date2, lstVitals.Items), 'Vitals on ' + Patient.Name + ' for ' + FormatDateTime('dddddd', uDate2), True);
   end
   else
   begin
@@ -705,7 +691,7 @@ procedure TfrmVitals.chtChartClickSeries(Sender: TCustomChart;
 begin
     uDate1 := Series.XValue[ValueIndex];
     uDate2 := uDate1;
-    chtChart.Hint := 'Details - Vitals for ' + FormatDateTime('dddd, mmmm d, yyyy', Series.XValue[ValueIndex]) + '...';
+    chtChart.Hint := 'Details - Vitals for ' + FormatDateTime('dddddd', Series.XValue[ValueIndex]) + '...';
     chtChart.Tag := ValueIndex + 1;
   if Button <> mbRight then  popDetailsClick(self);
 end;
@@ -762,7 +748,7 @@ var
   today, datetime1, datetime2: TDateTime;
   relativedate: string;
 begin
-  today := FMToDateTime(floattostr(FMToday));
+  today := FMDateTimeToDateTime(FMToday);
   relativedate := Piece(lstDates.ItemID, ';', 1);
   relativedate := Piece(relativedate, '-', 2);
   ADaysBack := strtointdef(relativedate, 0);

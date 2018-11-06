@@ -1008,12 +1008,14 @@ var
   i: Integer;
   d: double;
 begin
+  (* OSE/SMH - Don't do that! i18n dates break
   i := pos('-',s);
   while i > 0 do
     begin
       s := copy(s,1,i-1)+'/'+copy(s,i+1,Length(s));
       i := pos('-',s);
     end;
+  *)
   try
     d := StrToDateTime(s);
   except

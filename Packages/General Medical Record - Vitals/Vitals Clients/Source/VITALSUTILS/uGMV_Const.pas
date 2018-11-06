@@ -115,8 +115,8 @@ const
   GMV_WEBSITE = 'http://domaindomain.ext/ClinicalSpecialties/vitals/';
   MetricList = 'HEIGHT TEMPERATURE WEIGHT CIRCUMFERENCE/GIRTH CENTRAL VENOUS PRESSURE'; // zzzzzzandria 060725 HD0000000149958
 
-  GMV_DateTimeFormat = 'mm/dd/yyyy hh:nn:ss';
-  GMV_DateFormat = 'mm/dd/yyyy';
+  GMV_DateTimeFormat = 'ddddd hh:nn:ss';
+  GMV_DateFormat = 'ddddd';
   GMV_TimeFormat = 'hh:nn:ss';
 
 implementation
