@@ -250,4 +250,24 @@ There are two other minor changes that need to be mentioned:
   ``ConvertSidToStringSidW``, which gives you the correct UTF-16 string for the
   Security Identifier.
 
-That's it for this monograph.
+End Result
+----------
+Here are some screenshots to show you the result of the work. This screenshot is
+of `Markus Kuhn's UTF-8 sample file
+<https://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-demo.txt>`_ entered into
+the Introductory Text in VistA. Note that some glyphs show up as just rectangles--
+that is due to the fact that the font doesn't support the glyph.
+
+.. figure::
+   images/intro.png
+   :align: center
+   :alt: Intro Text
+
+The following is a few patients entered in VistA, in the following languages (below
+the line indictating the previously selected patient): Icelandic, English, Thai,
+Japanese Hiragana, Japanese Kanji/Chinese and Korean.
+
+.. figure::
+   images/patients.png
+   :align: center
+   :alt: List of Patients in different languages

@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{d008760c-d3c7-4922-b5ca-7134478bce35}</ProjectGuid>
         <MainSource>CPRSTesting.dpr</MainSource>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <DCC_DependencyCheckOutputName>..\Bin\$(Configuration)\CPRSTesting.exe</DCC_DependencyCheckOutputName>
         <FrameworkType>VCL</FrameworkType>

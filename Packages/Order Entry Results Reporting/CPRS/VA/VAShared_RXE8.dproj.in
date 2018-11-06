@@ -3,7 +3,7 @@
         <ProjectGuid>{C43FA8B9-3C40-4735-B689-4BF5A959209E}</ProjectGuid>
         <MainSource>VAShared_RXE8.dpk</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
         <FrameworkType>VCL</FrameworkType>

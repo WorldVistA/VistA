@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{B429C4E1-5937-4474-95F0-CF59EB2EB80F}</ProjectGuid>
         <MainSource>XWB_DXE8.dpk</MainSource>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>18.1</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>

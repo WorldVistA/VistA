@@ -3,7 +3,7 @@
         <ProjectGuid>{8F0EB2F9-754A-4CEC-8601-90E150C83DB0}</ProjectGuid>
         <MainSource>CPRSChart.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>

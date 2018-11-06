@@ -8,7 +8,10 @@ uses
 
 const
   fComStart=4;
-  v:char = #254;
+  {OSE/SMH - v used to be $C(254); but that caused problems with UTF-8 communication
+   with VistA as $C(254) is not a valid UTF-8 codepoint. I chose "|" instead as
+   it is not commonly used in VistA expect in Word Processing fields as placeholders.}
+  v:char = '|';
   PL_OP_VIEW:char = 'C';
   PL_IP_VIEW:char = 'S';
   PL_UF_VIEW:char = 'U';

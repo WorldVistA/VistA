@@ -3,7 +3,7 @@
         <ProjectGuid>{E69A3D49-1401-4990-ACD7-30F55F76D420}</ProjectGuid>
         <MainSource>VA508Access_DXE8.dpk</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
         <FrameworkType>VCL</FrameworkType>
