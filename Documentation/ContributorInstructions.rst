@@ -12,12 +12,20 @@ Setup
 
 Before you begin, perform initial setup:
 
-* Register OSEHRA `Code Review Access`_
-* Clone the repository:
+* Create GitHub account
+* Fork the OSEHRA/VistA Repository
+
+  * Visit https://github.com/OSEHRA/VistA
+
+  * Click on "Fork" button in upper-right corner
+
+  * Elect to fork to the user's account.
+
+* Clone the newly forked repository:
 
   .. parsed-literal::
 
-    $ git clone git://code.osehra.org/VistA.git
+    $ git clone https://github.com/<username>/VistA.git
 
 * Run the developer setup script to prepare your work tree and create Git
   command aliases used below:
@@ -25,8 +33,6 @@ Before you begin, perform initial setup:
   .. parsed-literal::
 
     $ Scripts/`SetupForDevelopment.sh`_
-
-Enter the Gerrit user name registered above when prompted.
 
 Workflow
 --------
@@ -41,7 +47,7 @@ steps:
 
 2. Code Review
 
-  a. Share a Topic (requires `Code Review Access`_)
+  a. Share a Topic
   b. Revise a Topic
 
 3. Integrate Changes
@@ -84,7 +90,7 @@ Share a Topic
 ++++++++++++++
 
 When a topic is ready for review and possible inclusion, share it by pushing to
-Gerrit. Be sure you have registered for `Code Review Access`_.
+OSEHRA.
 
 Checkout the topic if it is not your current branch:
 
@@ -92,7 +98,7 @@ Checkout the topic if it is not your current branch:
 
   $ git `checkout`_ my-topic
 
-Check what commits will be pushed to Gerrit for review:
+Check what commits will be pushed to GitHub for review:
 
 .. parsed-literal::
 
@@ -102,15 +108,53 @@ Push commits in your topic branch for review by the community:
 
 .. parsed-literal::
 
-  $ git `gerrit-push`_
+  $ git push origin HEAD
 
-Find your change in the OSEHRA Gerrit instance and add reviewers.
+Generate Pull Request
+
+Visit the web page of the forked repository and click the "Pull Requests" tab
+
+.. figure::
+   http://code.osehra.org/content/named/SHA1/3ef997c6-prTab.png
+   :align: center
+   :alt: Screenshot of website with Pull Request tab highlighted
+
+and then click on "New pull request" button.
+
+.. figure::
+   http://code.osehra.org/content/named/SHA1/832dedce-newPr.png
+   :align: center
+   :alt: Screenshot of website with new pull request button highlighted
+
+Once the page loads, select the proper forks and branches for the pull request:
+
++-----------------+-----------------+
+|     Option      |     Value       |
++=================+=================+
+|   base fork     |  OSEHRA/VistA   |
++-----------------+-----------------+
+|      base       |     master      |
++-----------------+-----------------+
+|   head fork     |<username>/VistA |
++-----------------+-----------------+
+|    compare      |    my-topic     |
++-----------------+-----------------+
+
+A properly set up branch would look as follows:
+
+.. figure::
+   http://code.osehra.org/content/named/SHA1/58472476-selectBranches.png
+   :align: center
+   :alt: Screenshot of website highlights on needed objects to create pull request
+
+Clicking on "Create pull request" will send an email to the administrators and kick off a
+CI build of the incoming branch.
 
 Revise a Topic
 ++++++++++++++
 
-If a topic is approved during Gerrit review, skip to the next step. Otherwise,
-revise the topic and push it back to Gerrit for another review.
+If a topic is approved during code review, skip to the next step. Otherwise,
+revise the topic and push it back to code for another review.
 
 Checkout the topic if it is not your current branch:
 
@@ -134,12 +178,12 @@ Return to the previous step to share the revised topic.
 Merge a Topic
 +++++++++++++
 
-After a topic has been reviewed and approved in Gerrit it may be submitted to
+After a topic has been reviewed and approved in GitHub it may be submitted to
 the upstream repository.
 
 **Only developers authorized by OSEHRA may perform this step.**
 
-Use the "Submit Patch Set" button that appears on the change review page.
+Use the "Merge pull request" button that appears on the change review page.
 
 Delete a Topic
 ++++++++++++++

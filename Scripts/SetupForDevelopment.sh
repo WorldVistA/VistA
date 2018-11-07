@@ -18,9 +18,7 @@
 cd "${BASH_SOURCE%/*}/.." &&
 Scripts/GitSetup/setup-user && echo &&
 Scripts/GitSetup/setup-hooks && echo &&
-Scripts/GitSetup/SetupGitAliases.sh && echo &&
-(Scripts/GitSetup/setup-gerrit ||
- echo 'Failed to setup Gerrit.  Run this again to retry.') && echo &&
+Scripts/GitSetup/SetupGitAliases.sh && echo && echo &&
 Scripts/GitSetup/tips
 
 # Rebase master by default
