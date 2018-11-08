@@ -260,7 +260,7 @@ begin
     if Piece(InputList[i], U, 2) = '1' then InputList.Delete(i);
   if InputList.Count > 0 then
   begin
-    SetListFMDateTime('mmm dd, yyyy@hh:nn', TStringList(InputList), U, 1);
+    SetListFMDateTime('dddddd@hh:nn', TStringList(InputList), U, 1);
     with OutputList do
     begin
       Add(TX0);
@@ -314,7 +314,7 @@ begin
           Add(StringOfChar('-', k + 4));
           AList.Clear;
           ExtractItems(AList, InputList, 'ORDER_' + IntToStr(i));
-          SetListFMDateTime('mmm dd, yyyy@hh:nn', AList, U, 1);
+          SetListFMDateTime('dddddd@hh:nn', AList, U, 1);
           for j := 0 to AList.Count - 1 do
             OutputList.Add(Piece(AList[j], U, 1) + #9 + Piece(AList[j], U, 3));
         end;

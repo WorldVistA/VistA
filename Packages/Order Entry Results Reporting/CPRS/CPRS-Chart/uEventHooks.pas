@@ -352,7 +352,7 @@ end;
 
 function TCPRSState.PatientDOB: WideString;
 begin
-  Result := FormatFMDateTime('mm/dd/yyyy', Patient.DOB);
+  Result := FormatFMDateTime('ddddd', Patient.DOB);
 end;
 
 function TCPRSState.PatientName: WideString;

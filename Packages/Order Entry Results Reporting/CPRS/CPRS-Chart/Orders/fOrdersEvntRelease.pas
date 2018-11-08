@@ -312,7 +312,7 @@ begin
     for idx := 1 to grdEvtList.RowCount-1 do
     begin
       grdEvtList.Cells[0,idx] := Piece(fevtList[idx-1],'^',2)+ TAB + Piece(fevtList[idx-1],'^',1);
-      grdEvtList.Cells[1,idx] := FormatFMDateTime('mm/dd/yy hh:nn',StrToFloat(Piece(fevtList[idx-1],'^',3)));
+      grdEvtList.Cells[1,idx] := FormatFMDateTime('c',StrToFloat(Piece(fevtList[idx-1],'^',3)));
     end;
   end;
 end;

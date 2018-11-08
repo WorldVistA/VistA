@@ -222,7 +222,7 @@ begin
     UcboVitchanging := False; //prevents entering code in CheckVitalUnit
   end;
 
-  txtMeasDate.Text := FormatFMDateTime('mmm dd,yy@hh:nn', FMNOW);
+  txtMeasDate.Text := FormatFMDateTime('dddddd@hh:nn', FMNOW);
 
   if (UvitalOld.text = '') then
     PopulateLastVital;
@@ -242,43 +242,43 @@ begin
     if piece(strings[i],U,2) = 'T' then
     begin
       lblLastTemp.Caption := piece(strings[i],U,3);
-      lblDateTemp.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateTemp.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'P' then
     begin
       lblLastPulse.Caption := piece(strings[i],U,3);
-      lblDatePulse.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDatePulse.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'R' then
     begin
       lblLastResp.Caption := piece(strings[i],U,3);
-      lblDateResp.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateResp.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'BP' then
     begin
       lblLastBP.Caption := piece(strings[i],U,3);
-      lblDateBP.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateBP.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'HT' then
     begin
       lblLastHeight.Caption := piece(strings[i],U,3);
-      lblDateHeight.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateHeight.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'WT' then
     begin
       lblLastWeight.Caption := piece(strings[i],U,3);
-      lblDateWeight.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateWeight.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'PN' then             {*RAB*}
     begin
       lblLastPain.Caption := piece(strings[i],U,3);  {*RAB*}
-      lblDatePain.Caption := FormatFMDateTime('mmm dd,yy', {*RAB*}
+      lblDatePain.Caption := FormatFMDateTime('dddddd', {*RAB*}
         StrToFloat(piece(strings[i],U,4)));           {*RAB*}
 
     end;

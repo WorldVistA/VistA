@@ -204,7 +204,7 @@ begin
       else
         begin
           CallV('ORQQPX REMINDERS LIST', [Patient.DFN]);
-          SetListFMDateTime('mmm dd,yy', TStringList(RPCBrokerV.Results), U, 3, TRUE);
+          SetListFMDateTime('dddddd', TStringList(RPCBrokerV.Results), U, 3, TRUE);
         end;
         FastAssign(RPCBrokerV.Results, Dest);
       exit;
@@ -237,9 +237,9 @@ begin
     if ADatePiece > 0 then
       begin
         if ADateFormat = 'D' then
-          SetListFMDateTime('mmm dd,yyyy', TStringList(tmplist), U, ADatePiece, TRUE)
+          SetListFMDateTime('dddddd', TStringList(tmplist), U, ADatePiece, TRUE)
         else
-          SetListFMDateTime('mmm dd,yyyy hh:nn', TStringList(tmplist), U, ADatePiece, TRUE);
+          SetListFMDateTime('dddddd hh:nn', TStringList(tmplist), U, ADatePiece, TRUE);
       end;
     if Length(ADetail) > 0 then
       begin
@@ -291,7 +291,7 @@ begin
   with RPCBrokerV do
   begin
     MixedCaseList(Results);
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 3);
+    SetListFMDateTime('dddddd', TStringList(Results), U, 3);
     FastAssign(Results, Dest);
   end;
 end;
@@ -305,7 +305,7 @@ begin
     else
     begin
       CallV('ORQQPX REMINDERS LIST', [Patient.DFN]);
-      SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 3, TRUE);
+      SetListFMDateTime('dddddd', TStringList(Results), U, 3, TRUE);
     end;
 //    MixedCaseList(Results);
     FastAssign(Results, Dest);
@@ -324,7 +324,7 @@ begin
   with RPCBrokerV do
   begin
     MixedCaseList(Results);
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 3);
+    SetListFMDateTime('dddddd', TStringList(Results), U, 3);
     FastAssign(Results, Dest);
   end;
 end;
@@ -334,7 +334,7 @@ begin
   CallV('ORQQVI VITALS', [Patient.DFN]);            // nulls are start/stop dates
   with RPCBrokerV do
   begin
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 4);
+    SetListFMDateTime('dddddd', TStringList(Results), U, 4);
     if Results.Count = 0 then Results.Add('0^No vitals found');
     FastAssign(Results, Dest);
   end;
@@ -347,7 +347,7 @@ begin
   begin
     InvertStringList(TStringList(Results));
     MixedCaseList(Results);
-    SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Results), U, 2);
+    SetListFMDateTime('dddddd hh:nn', TStringList(Results), U, 2);
     FastAssign(Results, Dest);
   end;
 end;
@@ -381,10 +381,10 @@ var
     if(SectionID <> 'VITL') and (SectionID <> 'RMND') then MixedCaseList(tmplst);
     if SectionID <> 'PROB' then
     begin
-      if SectionID = 'VSIT' then SetListFMDateTime('mmm dd,yy hh:nn', tmplst, U, 2)
-      else if SectionID = 'VITL' then SetListFMDateTime('mmm dd,yy hh:nn', tmplst, U, 4)
+      if SectionID = 'VSIT' then SetListFMDateTime('dddddd hh:nn', tmplst, U, 2)
+      else if SectionID = 'VITL' then SetListFMDateTime('dddddd hh:nn', tmplst, U, 4)
       else if (SectionID <> 'RMND') or (not InteractiveRemindersActive) then
-        SetListFMDateTime('mmm dd,yy', tmplst, U, 3, (SectionID = 'RMND'));
+        SetListFMDateTime('dddddd', tmplst, U, 3, (SectionID = 'RMND'));
     end
     else for i := 0 to tmplst.Count - 1 do    // capitalize SC exposures for problems
     begin

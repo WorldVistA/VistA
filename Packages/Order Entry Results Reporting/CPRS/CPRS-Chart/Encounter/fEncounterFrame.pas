@@ -389,7 +389,7 @@ begin
       (not Encounter.NeedVisit)) then
       uEncPCEData.UseEncounter := TRUE;
     frmEncounterFrame.Caption := 'Encounter Form for ' + ExternalName(uEncPCEData.Location, 44) +
-                                  '  (' + FormatFMDateTime('mmm dd,yyyy@hh:nn', uEncPCEData.VisitDateTime) + ')';
+                                  '  (' + FormatFMDateTime('dddddd@hh:nn', uEncPCEData.VisitDateTime) + ')';
 
     uProviders.Assign(uEncPCEData.Providers);
     SetDefaultProvider(uProviders, uEncPCEData);

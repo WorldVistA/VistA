@@ -442,8 +442,6 @@ type
     procedure Switch;
     procedure ViewDefinition(profile: string; amemo: TRichEdit);
     procedure ViewSelections;
-
-    function FMToDateTime(FMDateTime: string): TDateTime;
   end;
 
 var
@@ -3420,12 +3418,12 @@ procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
           if Piece(datax, '^', 2) = item then
           begin
             dtdata1 := strtofloatdef(Piece(datax, '^', 3), -1);
-            fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
+            fmdate1 := FormatFMDateTime('c', dtdata1);
             fmdate1 := StringReplace(fmdate1, ' 00:00', '', [rfReplaceAll]);
             dtdata2 := strtofloatdef(Piece(datax, '^', 4), -1);
             if DatesInRange(uDateStart, uDateStop, dtdata1, dtdata2) then
             begin
-              fmdate2 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata2);
+              fmdate2 := FormatFMDateTime('c', dtdata2);
               fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
               cnt := cnt + 1;
               linestring := inttostr(cnt);
@@ -3463,7 +3461,7 @@ begin
       StrForHeader := StrForHeader + aHeader[i] + #13;
   ShortHeader := Patient.Name + '         ' + Patient.SSN + '          '
          + Encounter.LocationName + '                            '
-         + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')'
+         + FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')'
          + #13 + TXT_COPY_DISCLAIMER;
   StrForFooter := aTitle + '                    *** WORK COPY ONLY ***                            '
                 + 'Printed: ' + FormatDateTime('mmm dd, yyyy  hh:nn', Now) + #13;
@@ -3849,10 +3847,10 @@ begin
       if (length(date2)> 0) then    // date/times of episodes
       begin
         dtdata1 := strtofloatdef(date1, -1);
-        fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
+        fmdate1 := FormatFMDateTime('c', dtdata1);
         fmdate1 := StringReplace(fmdate1, ' 00:00', '', [rfReplaceAll]);
         dtdata2 := strtofloatdef(date2, -1);
-        fmdate2 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata2);
+        fmdate2 := FormatFMDateTime('c', dtdata2);
         fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
         if (dtdata2 > dt1) and (dtdata1 < dt2) then
         begin
@@ -3886,9 +3884,9 @@ begin
           if (dtdata >= dt1) and (dtdata < dt2) then
           begin
             if length(Piece(date1, '.', 2)) > 0 then
-              dttm := FormatFMDateTime('mm/dd/yy hh:nn', dtdata)
+              dttm := FormatFMDateTime('c', dtdata)
             else
-              dttm := FormatFMDateTime('mm/dd/yy', dtdata);
+              dttm := FormatFMDateTime('ddddd', dtdata);
             newdata := date1 + '^' +
             itemnum + '^' +
             itemvalue + '^' +
@@ -4468,7 +4466,7 @@ begin
   titleitem := ItemName(Piece(aTypeItem, '^', 1), Piece(aTypeItem, '^', 2));
   rpcDetailDay(tmpList, Patient.DFN, date1, date2, aTypeItem, true);
   NotifyApps(tmpList);
-  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.Name + ' for ' + FormatFMDateTime('mmm d, yyyy', date1), True);
+  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.Name + ' for ' + FormatFMDateTime('dddddd', date1), True);
   tmpList.Free;
 end;
 
@@ -4506,12 +4504,12 @@ begin
     Add(' ');
     tmpStr := Patient.Name + '   ' + Patient.SSN;
     tmpItem := tmpStr + StringOfChar(' ', 39 - Length(tmpStr)) + Encounter.LocationName;
-    tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+    tmpStr := FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
     tmpItem := tmpItem + StringOfChar(' ', 74 - (Length(tmpItem) + Length(tmpStr))) + tmpStr;
     Add(tmpItem);
     Add(StringOfChar('=', 74));
     Add(' *** WORK COPY ONLY *** ' + StringOfChar(' ', 24) + 'Printed: '
-      + FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
+      + FormatFMDateTime('dddddd  hh:nn', FMNow));
     Add('  ' + TXT_COPY_DISCLAIMER);
     Add(StringOfChar(' ', (74 - Length(DateRange)) div 2) + DateRange);
     Add(StringOfChar(' ', (74 - Length(Warning)) div 2) + Warning);
@@ -4532,7 +4530,7 @@ begin
     Add(' ');
     tmpItem := Patient.Name + '         ' + Patient.SSN + '          '
              + Encounter.LocationName + '                            '
-             + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+             + FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
     Add(tmpItem);
     Add(TXT_COPY_DISCLAIMER);
     Add(DateRange);
@@ -4577,19 +4575,6 @@ begin
           else GtslTemp.Add(GtslData[i]);         // add in non micro, ap
       end;
     end;
-end;
-
-function TfrmGraphs.FMToDateTime(FMDateTime: string): TDateTime;
-var
-  Year, x: string;
-begin
-  { Note: TDateTime cannot store month only or year only dates }
-  x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x, 1, 7) + '.2359';
-  Year := IntToStr(17 + StrToInt(Copy(x, 1, 1))) + Copy(x, 2, 2);
-  x := Copy(x, 4, 2) + '/' + Copy(x, 6, 2) + '/' + Year + ' ' + Copy(x, 9, 2) + ':' + Copy(x, 11, 2);
-  Result := StrToDateTime(x);
 end;
 
 function TfrmGraphs.GraphTypeNum(aType: string): integer;
@@ -6295,7 +6280,7 @@ end;
 procedure TfrmGraphs.HighLow(fmtime, fmtime1: string; aChart: TChart; var adatetime, adatetime1: TDateTime);
 begin
   adatetime1 := 0;
-  adatetime := FMToDateTime(fmtime);
+  adatetime := FMDateTimeToDateTime(fmtime);
   if adatetime > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime;
   if adatetime < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime;
   if aChart = chartDatelineTop then
@@ -6310,7 +6295,7 @@ begin
   end;
   if fmtime1 <> '' then
   begin
-    adatetime1 := FMToDateTime(fmtime1);
+    adatetime1 := FMDateTimeToDateTime(fmtime1);
     if adatetime1 > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime1;
     if adatetime1 < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime1;
     if aChart = chartDatelineTop then

@@ -45,8 +45,8 @@ implementation
 {$R *.DFM}
 
 const
-  FMT_DATETIME = 'mmm d,yy@hh:nn';
-  FMT_DATEONLY = 'mmm d,yy';
+  FMT_DATETIME = 'dddddd@hh:nn';
+  FMT_DATEONLY = 'dddddd';
 
 { TORDateRangeDlg --------------------------------------------------------------------------- }
 

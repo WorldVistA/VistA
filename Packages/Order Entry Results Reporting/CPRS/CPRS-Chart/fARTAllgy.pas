@@ -484,7 +484,7 @@ begin
         begin
           x := Items[ItemIndex];
           x := ORFn.Pieces(x, U, 1, 2) + U + FloatToStr(SymptomDateBox.FMDateTime) + U +
-                            FormatFMDateTime('mmm dd,yyyy@hh:nn', SymptomDateBox.FMDateTime);
+                            FormatFMDateTime('yyyy/mm/dd@hh:nn', SymptomDateBox.FMDateTime);
           Items[ItemIndex] := x;
         end;
     end;

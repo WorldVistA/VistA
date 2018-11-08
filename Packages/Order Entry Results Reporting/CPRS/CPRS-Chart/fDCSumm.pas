@@ -790,8 +790,8 @@ begin
               begin
                 x := IntToStr(CreatedSumm.IEN) + U + TitleName + U + FloatToStr(DischargeDateTime) + U +
                      Patient.Name + U + IntToStr(Dictator) + ';' + DictatorName + U + LocationName + U + 'new' + U +
-                     'Adm: ' + FormatFMDateTime('mmm dd,yyyy', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
-                     'Dis: ' + FormatFMDateTime('mmm dd,yyyy', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
+                     'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
+                     'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
                      U + U + U + U + U + U;
               end;
             lstSumms.Items.Insert(0, x);
@@ -904,8 +904,8 @@ begin
         begin
           x := IntToStr(CreatedSumm.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DischargeDateTime) + U +
                Patient.Name + U + IntToStr(Dictator) + ';' + DictatorName + U + LocationName + U + 'new' + U +
-               'Adm: ' + FormatFMDateTime('mmm dd,yyyy', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
-               'Dis: ' + FormatFMDateTime('mmm dd,yyyy', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
+               'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
+               'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
                U + U + U + U + U + U;
         end;
       lstSumms.Items.Insert(0, x);
@@ -997,7 +997,7 @@ function TfrmDCSumm.TitleText(AnIndex: Integer): string;
 { returns non-tabbed text for the title of a Summ given the ItemIndex in lstSumms }
 begin
   with lstSumms do
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
               ' ' + Piece(Items[AnIndex], U, 2);
 end;
 
@@ -1251,8 +1251,8 @@ begin
                    with DateRange do if Changed then
                    begin
                      FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     lblSumms.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) + ' to ' +
-                                         FormatFMDateTime('mmm dd,yy', FMEndDate) + ': Signed Summaries';
+                     lblSumms.Caption := FormatFMDateTime('dddddd', FMBeginDate) + ' to ' +
+                                         FormatFMDateTime('dddddd', FMEndDate) + ': Signed Summaries';
                      FCurrentContext.BeginDate     := BeginDate;
                      FCurrentContext.EndDate       := EndDate;
                      FCurrentContext.FMBeginDate   := FMBeginDate;
@@ -2433,7 +2433,7 @@ function TfrmDCSumm.GetTitleText(AnIndex: Integer): string;
 { returns non-tabbed text for the title of a note given the ItemIndex in lstSumms }
 begin
   with lstSumms do
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
               '  ' + Piece(Items[AnIndex], U, 2) + ', ' + Piece(Items[AnIndex], U, 6) + ', ' +
               Piece(Piece(Items[AnIndex], U, 5), ';', 2)
 end;
@@ -2461,11 +2461,11 @@ begin
   if (FEditDCSumm.Addend > 0)  and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0) then
     lblNewTitle.Caption := 'Addendum to: ' + lblNewTitle.Caption;
   with lblNewTitle do bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
-  lblRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditDCSumm.DischargeDateTime);
+  lblRefDate.Caption := FormatFMDateTime('dddddd@hh:nn', FEditDCSumm.DischargeDateTime);
   lblDictator.Caption  := FEditDCSumm.DictatorName;
-  x := 'Adm: ' + FormatFMDateTime('mm/dd/yy', FEditDCSumm.AdmitDateTime) + '  ' + FEditDCSumm.LocationName;
+  x := 'Adm: ' + FormatFMDateTime('ddddd', FEditDCSumm.AdmitDateTime) + '  ' + FEditDCSumm.LocationName;
   lblVisit.Caption   := x;
-  x := '  Dis: ' + FormatFMDateTime('mm/dd/yy', FEditDCSumm.DischargeDateTime);
+  x := '  Dis: ' + FormatFMDateTime('ddddd', FEditDCSumm.DischargeDateTime);
   lblDischarge.Caption := x;
   if Length(FEditDCSumm.AttendingName) > 0
     then lblCosigner.Caption := 'Attending: ' + FEditDCSumm.AttendingName

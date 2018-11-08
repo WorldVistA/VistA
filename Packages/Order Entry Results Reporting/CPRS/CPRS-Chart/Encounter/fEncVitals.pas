@@ -159,7 +159,7 @@ begin
   end;
 
   if txtMeasDate.Text = '' then
-    txtMeasDate.Text := FormatFMDateTime('mmm dd,yy@hh:nn', uEncPCEData.VisitDateTime);
+    txtMeasDate.Text := FormatFMDateTime('dddddd@hh:nn', uEncPCEData.VisitDateTime);
   if (UvitalOld.text = '') then
     PopulateLastVital;
 end;
@@ -177,44 +177,44 @@ begin
     if piece(strings[i],U,2) = 'T' then
     begin
       lblLastTemp.Caption := ConvertVitalData(piece(strings[i],U,3), vtTemp);
-      lblDateTemp.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateTemp.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'P' then
     begin
       lblLastPulse.Caption := piece(strings[i],U,3);
-      lblDatePulse.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDatePulse.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'R' then
     begin
       lblLastResp.Caption := piece(strings[i],U,3);
-      lblDateResp.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateResp.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'BP' then
     begin
       lblLastBP.Caption := piece(strings[i],U,3);
-      lblDateBP.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateBP.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'HT' then
     begin
       lblLastHeight.Caption := ConvertVitalData(piece(strings[i],U,3), vtHeight);
-      lblDateHeight.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateHeight.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
     if piece(strings[i],U,2) = 'WT' then
     begin
       lblLastWeight.Caption := ConvertVitalData(piece(strings[i],U,3), vtWeight);
-      lblDateWeight.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDateWeight.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
 
     end;
    if piece(strings[i],U,2) = 'PN' then
     begin
       lblLastPain.Caption := piece(strings[i],U,3);
-      lblDatePain.Caption := FormatFMDateTime('mmm dd,yy',
+      lblDatePain.Caption := FormatFMDateTime('dddddd',
         StrToFloat(piece(strings[i],U,4)));
     end;
   end;
@@ -511,7 +511,7 @@ begin
   Result := TRUE;
   if(HasData and (abs(txtMeasDate.FMDateTime) <= 0.0000000000001)) then
   begin
-    Result := (InfoBox(TX_VDATE_REQ1 + FormatFMDateTime('mmm dd,yy@hh:nn', uEncPCEData.DateTime) +
+    Result := (InfoBox(TX_VDATE_REQ1 + FormatFMDateTime('dddddd@hh:nn', uEncPCEData.DateTime) +
                        TX_VDATE_REQ2, TC_VDATE_REQ, MB_YESNO or MB_ICONWARNING) = IDYES);
     if Result then
       txtMeasDate.FMDateTime := uEncPCEData.DateTime

@@ -183,7 +183,7 @@ begin
     InfoBox(TX_NODEVICE, TX_NODEVICE_CAP, MB_OK);
     Exit;
   end;
-  today := frmLabs.FMToDateTime(floattostr(FMToday));
+  today := FMDateTimeToDateTime(FMToday);
   if frmLabs.lstDates.ItemIEN > 0 then
     begin
       daysback := frmLabs.lstDates.ItemIEN;

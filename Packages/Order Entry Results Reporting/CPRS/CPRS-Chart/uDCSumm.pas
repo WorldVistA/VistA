@@ -75,7 +75,7 @@ begin
   if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     Result := Piece(x, U, 2)
   else
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(x, U, 3))) + '  ' +
               Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2) +
               '  (' + Piece(x,U,7) + '), ' + Piece(Piece(x, U, 8), ';', 1) + ', ' +
               Piece(Piece(x, U, 9), ';', 1);

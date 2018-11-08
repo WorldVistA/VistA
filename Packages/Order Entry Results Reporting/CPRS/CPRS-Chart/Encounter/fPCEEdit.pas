@@ -82,13 +82,13 @@ begin
       else
       begin
         NewTxt := 'Edit Encounter for ' + Encounter.LocationName + ' on ' +
-                  FormatFMDateTime('mmm dd yyyy hh:nn', Encounter.DateTime);
+                  FormatFMDateTime('dddddd hh:nn', Encounter.DateTime);
         BtnTxt := 'Edit Current Encounter';
       end;
       frmPCEEdit.lblNew.Text := NewTxt;
       frmPCEEdit.btnNew.Caption := BtnTxt;
       frmPCEEdit.lblNote.Text := 'Edit Note Encounter for ' + ExternalName(NoteData.Location, 44) + ' on ' +
-                  FormatFMDateTime('mmm dd yyyy hh:nn', NoteData.VisitDateTime);
+                  FormatFMDateTime('dddddd hh:nn', NoteData.VisitDateTime);
       ans := frmPCEEdit.ShowModal;
     finally
       frmPCEEdit.Free;

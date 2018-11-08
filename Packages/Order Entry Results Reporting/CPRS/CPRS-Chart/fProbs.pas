@@ -1051,8 +1051,8 @@ begin  {Body}
       SetGridPieces('2,3,4,5,7,8,9');
     if Alist.count > 1 then Alist.delete(0); {get rid of first element - it is a list count}
     SortByPiece(AList, u, 6); { Sort by FM date/time }
-    SetListFMDateTime('MMM dd yyyy',AList, u, 6);      { Change FM date to MM/DD/YY  }
-    SetListFMDateTime('MMM dd yyyy',AList, u, 5);      { Change FM date to MM/DD/YY  }
+    SetListFMDateTime('dddddd',AList, u, 6);      { Change FM date to MM/DD/YY  }
+    SetListFMDateTime('dddddd',AList, u, 5);      { Change FM date to MM/DD/YY  }
     if PLUser.usReverseChronDisplay then {reverse chron order if required}
       ReverseList(Alist);
     {populate the grid}

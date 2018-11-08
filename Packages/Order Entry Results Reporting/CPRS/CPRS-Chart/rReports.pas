@@ -81,7 +81,7 @@ begin
   begin
     SortByPiece(TStringList(Results), U, 2);
     InvertStringList(TStringList(Results));
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 2);
+    SetListFMDateTime('dddddd', TStringList(Results), U, 2);
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
@@ -221,7 +221,7 @@ begin
   CallV('ORWRA IMAGING EXAMS1', [Patient.DFN]);
   with RPCBrokerV do
   begin
-    SetListFMDateTime('mm/dd/yyyy hh:nn', TStringList(Results), U, 3);
+    SetListFMDateTime('dddddd hh:nn', TStringList(Results), U, 3);
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
@@ -646,11 +646,11 @@ begin
       Add(' ');
       tmpStr := Patient.Name + '   ' + Patient.SSN;
       tmpItem := tmpStr + StringOfChar(' ', 39 - Length(tmpStr)) + Encounter.LocationName;
-      tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+      tmpStr := FormatFMDateTime('dddddd', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
       tmpItem := tmpItem + StringOfChar(' ', 74 - (Length(tmpItem) + Length(tmpStr))) + tmpStr;
       Add(tmpItem);
       Add(StringOfChar('=', 74));
-      Add('*** WORK COPY ONLY ***' + StringOfChar(' ', 24) + 'Printed: ' + FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
+      Add('*** WORK COPY ONLY ***' + StringOfChar(' ', 24) + 'Printed: ' + FormatFMDateTime('dddddd  hh:nn', FMNow));
       Add(' ');
       Add(' ');
     end;

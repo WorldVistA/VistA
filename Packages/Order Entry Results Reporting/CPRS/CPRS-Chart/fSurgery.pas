@@ -815,7 +815,7 @@ function TfrmSurgery.GetTitleText(AnIndex: Integer): string;
 { returns non-tabbed text for the title of a note given the ItemIndex in lstNotes }
 begin
   with lstNotes do if ItemIndex > -1 then
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(Piece(Items[AnIndex], U, 3))) +
               '  ' + Piece(Items[AnIndex], U, 2) + ', ' + Piece(Items[AnIndex], U, 6) + ', ' +
               Piece(Piece(Items[AnIndex], U, 5), ';', 2)
 end;
@@ -1340,10 +1340,10 @@ begin
   if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0)
     then lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
   with lblNewTitle do bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
-  lblRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
+  lblRefDate.Caption := FormatFMDateTime('dddddd@hh:nn', FEditNote.DateTime);
   lblAuthor.Caption  := FEditNote.AuthorName;
   if uPCEEdit.Inpatient then x := 'Adm: ' else x := 'Vst: ';
-  x := x + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
+  x := x + FormatFMDateTime('ddddd', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
   lblVisit.Caption   := x;
   if Length(FEditNote.CosignerName) > 0
     then lblCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName

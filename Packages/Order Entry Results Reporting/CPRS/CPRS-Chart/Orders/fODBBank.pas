@@ -2224,7 +2224,7 @@ begin
           calCollTime.Text := ValidCollTime(FLastColltime);
           if IsFMDateTime(calCollTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
+              calCollTime.Text := FormatFMDateTime('dddddd@hh:nn', StrToFMDateTime(calColltime.Text));
               calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
@@ -2233,7 +2233,7 @@ begin
           calCollTime.Text := ValidCollTime(tmpORECALLTime);
           if IsFMDateTime(calCollTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
+              calCollTime.Text := FormatFMDateTime('dddddd@hh:nn', StrToFMDateTime(calColltime.Text));
               calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
@@ -2262,7 +2262,7 @@ begin
           calCollTime.Text := ValidColltime(FLastColltime);
           if IsFMDateTime(calCollTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
+              calCollTime.Text := FormatFMDateTime('dddddd@hh:nn', StrToFMDateTime(calColltime.Text));
               calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
@@ -2271,7 +2271,7 @@ begin
           calCollTime.Text := ValidColltime(tmpORECALLTime);
           if IsFMDateTime(calCollTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
+              calCollTime.Text := FormatFMDateTime('dddddd@hh:nn', StrToFMDateTime(calColltime.Text));
               calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
@@ -2328,12 +2328,12 @@ begin
       if tmpTime > tmpImmTime then
         begin
           calCollTime.FMDateTime := tmpTime;
-          txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', tmpTime);
+          txtImmedColl.Text      := FormatFMDateTime('dddddd@hh:nn', tmpTime);
         end
       else
         begin
           calCollTime.FMDateTime := GetDefaultImmCollTime;
-          txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', calCollTime.FMDateTime);
+          txtImmedColl.Text      := FormatFMDateTime('dddddd@hh:nn', calCollTime.FMDateTime);
         end;
       if (havetest = false) and (RemoveCollTimeDefault = True) then
         begin
@@ -3501,7 +3501,7 @@ begin
       else if FLastCollTime = 'NOW' then
         calCollTime.Text := FLastCollTime
       else if FLastCollTime <> '' then
-        calCollTime.Text := FormatFMDateTime('mmm dd,yyyy@hh:nn',StrToFMDateTime(FLastCollTime));
+        calCollTime.Text := FormatFMDateTime('dddddd@hh:nn',StrToFMDateTime(FLastCollTime));
     end;
   if (FLastCollType <> '') and (length(cboCollType.Text) < 1) then
     cboCollType.SelectByID(FLastCollType);

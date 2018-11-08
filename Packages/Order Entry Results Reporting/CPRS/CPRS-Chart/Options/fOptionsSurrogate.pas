@@ -214,11 +214,11 @@ begin
       Stop := 0;
     end;
     if Start > 0 then
-      lblStart.Caption := 'from: ' + FormatFMDateTime('mmm d,yyyy@hh:nn', Start)
+      lblStart.Caption := 'from: ' + FormatFMDateTime('dddddd@hh:nn', Start)
     else
       lblStart.Caption := 'from: <now>';
     if Stop > 0 then
-      lblStop.Caption := 'until: ' + FormatFMDateTime('mmm d,yyyy@hh:nn', Stop)
+      lblStop.Caption := 'until: ' + FormatFMDateTime('dddddd@hh:nn', Stop)
     else
       lblStop.Caption := 'until: <changed>';
   end;

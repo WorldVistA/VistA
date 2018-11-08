@@ -2418,7 +2418,7 @@ begin
       (ValFor(COL_SEQUENCE, 1)<>''))  then
       begin
         text := 'By switching to the Dosage Tab, ' ;
-         if (InfoBox(text +'you will lose all data on this screen. Click “OK” to continue or “Cancel”','Warning',MB_OKCANCEL)=IDCANCEL) then
+         if (InfoBox(text +'you will lose all data on this screen. Click OK to continue or Cancel','Warning',MB_OKCANCEL)=IDCANCEL) then
             begin
              if tabDose.TabIndex = 1 then tabDose.TabIndex := 0
              else tabDose.TabIndex := 1;
@@ -4735,9 +4735,9 @@ begin
     ShowText := 'Expected First Dose: ';
     Interval := Trunc(FMDateTimeToDateTime(AdminTime) - FMDateTimeToDateTime(FMToday));
     case Interval of
-    0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-    1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(mmm dd, yy) at hh:nn', AdminTime);
-    else ShowText := ShowText + FormatFMDateTime('mmm dd, yy at hh:nn', AdminTime);
+    0: ShowText := ShowText + 'TODAY ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+    1: ShowText := ShowText + 'TOMORROW ' + FormatFMDateTime('(dddddd) at hh:nn', AdminTime);
+    else ShowText := ShowText + FormatFMDateTime('dddddd at hh:nn', AdminTime);
     end;
 
     if (Pos('PRN',Piece(CurSchedule,'^',1))>0) and ((pnlXSchedule.Tag = 1) or chkPrn.Checked ) then
