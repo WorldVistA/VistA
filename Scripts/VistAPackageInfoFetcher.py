@@ -368,36 +368,46 @@ class VistAPackageInfoFetcher(object):
   def getInstallationStatus(self, installName):
     connection = self._testClient.getConnection()
     result = -1 # default is not installed
-    menuUtil = VistAMenuUtil(duz=1)
-    menuUtil.gotoFileManInquireFileEntryMenu(self._testClient)
-    connection.send("9.7\r") # Package file with fileman #9.7
-    connection.expect("Select INSTALL NAME:")
-    connection.send("%s\r" % installName)
-    while True:
-      index = connection.expect(["Select INSTALL NAME: ",
-                                 re.compile("ANOTHER ONE: ", re.I),
-                                 "CHOOSE 1-[0-9]+: "])
-      if index == 0:
+    if not self.isPatchInstalled(installName):
+        menuUtil = VistAMenuUtil(duz=1)
+        menuUtil.gotoFileManSearchFileEntryMenu(self._testClient)
+        connection.send("9.7\r") # Package file with fileman #9.7
+        connection.expect("SEARCH FOR")
+        connection.send("NAME\r")
+        connection.expect("CONDITION:")
+        connection.send("EQUALS\r")
+        connection.expect("EQUALS")
+        connection.send("%s\r" % installName)
+        connection.expect("SEARCH FOR")
         connection.send("\r")
-        break
-      elif index == 1:
-        txtToSearch = connection.before.replace("\r\n","")
-        logger.debug(txtToSearch)
-        result = indexOfInstallStatus(txtToSearch)
-        connection.send("^\r")
-        break
-      # handle if the install has multiple install status
-      elif index == 2:
+        connection.expect("IF:")
+        connection.send("\r")
+        connection.expect("IN TEMPLATE")
+        connection.send("\r")
+        connection.expect(re.compile("SORT BY: ", re.I))
+        connection.send("\r")
+        connection.expect("Start with")
+        connection.send("\r")
+        connection.expect("First Print")
+        connection.send("STATUS\r")
+        connection.expect("Then Print")
+        connection.send("\r")
+        connection.expect("Heading")
+        connection.send("\r")
+        connection.expect("DEVICE:")
+        connection.send(";132;99999\r")
+        connection.expect("Select OPTION: ")
         linesToSearch = connection.before.split("\r\n")
         for line in linesToSearch: # only care the the first line
           line = line.strip("\r\n ")
           tmpResult = indexOfInstallStatus(line)
           if tmpResult > result:
             result=tmpResult
-        connection.send("^\r")
-        continue
-    menuUtil.exitFileManMenu(self._testClient)
-    return result
+        connection.send("?\r")
+        menuUtil.exitFileManMenu(self._testClient)
+        return result
+    else:
+        return 3
   """ use Kernel KIDS API to check the installation status.
       This method might not work if install name does not
       belong to a namespace, like "ECLAIM BUNDLE 1.0".
@@ -554,10 +564,13 @@ class PatchInstallLog(object):
           historyLine[:datetimeIndent].strip())
       return
     patchPart = historyLine[self.PATCH_VERSION_START_INDEX:datetimeIndent]
-    seqIndex = patchPart.find("SEQ #")
+    seqIndex = -1
+    regexMatch = re.search("SEQ[ ]?#(?P<seqNo> [0-9]+)", patchPart)
+    if regexMatch:
+        seqIndex = regexMatch.start()
     if seqIndex >= 0:
       self.patchNo = int(patchPart[:seqIndex].strip())
-      self.seqNo = int(patchPart[seqIndex+5:].strip())
+      self.seqNo = int(regexMatch.group("seqNo"))
     else:
       try:
         self.patchNo = int(patchPart.strip())
