@@ -213,14 +213,7 @@ set(VendorArgs "")
 SetVendorArgs(VendorArgs)
 foreach(PyUnitTest ${PyUnitTests})
   get_filename_component(PyUnitTestName "${PyUnitTest}" NAME_WE)
-  if(${PyUnitTestName} STREQUAL "TestSSEP")
-    set(ARGUMENTS
-      "-ha" "${VISTA_TCP_HOST}"
-      "-hp" "${VISTA_TCP_PORT}"
-      "-l"  "${CMAKE_CURRENT_BINARY_DIR}/Temporary/TestSSEP.log"
-      "${VendorArgs}"
-      )
-  elseif("${PyUnitTestName}" MATCHES "TestClient$")
+  if("${PyUnitTestName}" MATCHES "TestClient$")
     set(ARGUMENTS "${VendorArgs}")
   endif()
   add_test(PyUnitTest_${PyUnitTestName} ${PYTHON_EXECUTABLE} ${PyUnitTest} ${ARGUMENTS})
