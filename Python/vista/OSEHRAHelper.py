@@ -414,6 +414,8 @@ class ConnectLinuxGTM(ConnectMUMPS):
 
   def startCoverage(self, routines=['*']):
     self.write('K ^ZZCOVERAGE VIEW "TRACE":1:"^ZZCOVERAGE"')
+    os.environ["ydb_trace_gbl_name"] = "^ZZCOVERAGE"
+    os.environ["gtm_trace_gbl_name"] = "^ZZCOVERAGE"
     self.coverageRoutines = routines
 
   def stopCoverage(self, path, humanreadable='OFF'):
