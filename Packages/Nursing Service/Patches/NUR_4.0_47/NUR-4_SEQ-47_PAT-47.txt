@@ -1,0 +1,139 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 06/29/18 at 10:12
+=============================================================================
+Run Date: AUG 14, 2018                     Designation: NUR*4*47
+Package : NUR - NURSING SERVICE               Priority: Mandatory
+Version : 4        SEQ #47                      Status: Released
+                  Compliance Date: SEP 14, 2018
+=============================================================================
+
+
+Subject: CRASH AT MILITARY STATUS PROMPT
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ VistA crashes when a "?" is entered at the Military Status query.
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)      New/Modified/Deleted
+ ------------------     -------------------      --------------------
+ NURS STAFF (#210)      MILITARY STATUS (#.01)   Modified
+ MILITARY STATUS
+ (Subfile #210.06)         
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC0672637 - Error on Military Status field.
+  
+ Problem:
+ --------
+ In the Nursing package when editing a nursing staff record and typing a 
+ question mark at the "MILITARY STATUS" prompt, the user gets a hard error:
+ <UNDEFINED>10+8^DICQ1 *X.
+  
+ Resolution:
+ -----------
+ The Military Status field has screen code to transform the input to
+ uppercase. This code was modified to check for a null input.
+ The screen code was changed from:
+         X:$D(^%ZOSF("UPPERCASE")) "N Y X ^%ZOSF(""UPPERCASE"") S X=Y Q"
+ to:
+         I $D(^%ZOSF("UPPERCASE")),$D(X) X "N Y X ^%ZOSF(""UPPERCASE"") S 
+         X=Y Q"
+ The data in the field is not affected by the DD and does not need to be 
+ converted.
+  
+  
+ Test Sites:
+ -----------
+ Central Arkansas Veterans HCS (Little Rock)
+ Miami VA HCS 
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be installed when Nursing package users are on the system. 
+ This patch can be queued for installation. The install time for this patch
+ is less than 2 minutes.
+  
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option to load the KIDS patch
+    onto your system.
+  
+ 3. From the Kernel Installation & Distribution System Menu (KIDS), select
+    the Installation Menu.
+  
+ 4. From this menu, you may elect to use the following option. When 
+    prompted for the INSTALL NAME enter the patch NUR*4.0*47:
+  
+     a. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     b. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch (routines,
+        DDs, templates, etc.).
+  
+     No routines are in this patch so no backup is needed.
+  
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+    respond 'NO'.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, And
+    Protocols? NO//', respond 'NO'.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. Because this patch contains data 
+ dictionary changes, back-out must be done with the participation of the
+ sustainment team.
+  
+ The back-out plan is to restore the MILITARY STATUS field's screen code 
+ and can be provided upon request. Please call the national help desk or
+ enter a help desk ticket, if required.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the MILITARY STATUS 
+ field's screen code no longer matches the patch version.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2018
+Completed By:                               Date Completed: AUG 14, 2018
+Released By :                               Date Released : AUG 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

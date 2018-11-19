@@ -1,0 +1,356 @@
+$TXT Created by                  MHA-DEVA.DOMAIN.EXT  (KIDS) on Thursday, 12/14/17 at 00:27
+=============================================================================
+Run Date: MAY 02, 2018                     Designation: YS*5.01*121
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #100                   Status: Released
+                  Compliance Date: JUN 02, 2018
+=============================================================================
+
+Associated patches: (v)YS*5.01*119 <<= must be installed BEFORE `YS*5.01*121'
+
+Subject: NEW AND UPDATED MENTAL HEALTH INSTRUMENTS
+
+Category: 
+  - Routine
+  - Other
+  - Print Template
+  - Data Dictionary
+
+Description:
+============
+
+ This patch adds new instruments for use with the Mental Health Assistant
+ (MHA).  These new instruments will help clinicians and administrators 
+ analyze the effectiveness of treatment, help clarify diagnoses and provide
+ empirical measures for treatment outcomes.
+  
+  New Mental Health Instruments: 
+  ------------------------------
+  Alcohol Smoking and Substance Involvement Screening
+  - NIDA modified version                              ASSIST-NIDA
+  Brief Resiliency Scale                               BRS
+  Cross-Cutting Symptom Assessment for DSM-5           CCSA-DSM5
+  Client Evaluation of Motivational Interviewing       CEMI
+  Couple Satisfaction Index                            CSI
+  Couple Satisfaction Index - 4 Item                   CSI-4
+  Couple Satisfaction Index Partner Version            CSI PARTNER VERSION
+  Couple Satisfaction Index - 4 Item Partner Version   CSI-4 PARTNER
+                                                       VERSION
+  Geriatric Anxiety Inventory                          GAI
+  Insomnia Severity Index                              ISI
+  Modified Katz Index of ADLs                          KATZ-ADL-6PT
+  Pain Stages of Change Questionnaire                  PSOCQ
+  Perceived Stress Scale                               PSS
+  Restless Legs Syndrome Rating Scale                  RLS
+  Smith Morning-Evening Scale                          SMEQ
+  Sleep Need Questionnaire                             SNQ
+  Snoring, Tired, Observed, Blood Pressure             STOP
+  
+  The following existing instruments are modified:
+  ------------------------------------------------
+  The Alcohol, Smoking and Substance Involvement
+  Screening Test                                       ASSIST-WHOV3
+  -- Prior to this patch, this instrument name was ASSIST.
+     Now it is ASSIST-WHOV3.
+  
+  Clinical Institute Withdrawal Assessment - Alcohol
+  Revised                                              CIWA-AR-
+  -- This instrument is modified to include the missing text and 
+  displays the information in the correct order. This instrument
+  replaces CIWA-AR.
+  
+  Katz Index of Independence in Activities of Daily 
+  Living                                               KATZ-ADL-18PT
+  -- Prior to this patch, this instrument name was INDEX OF ADL.
+     Now it is KATZ-ADL-18PT.
+  
+  Patient Health Questionnaire Depression Scale        PHQ9
+  -- The report was updated to include additional text beneath the score
+     to indicate additional assessment is required if question 9 is
+     answered in the positive direction.
+  
+  Working Alliance Inventory-Short Revised             WAI-SR
+  -- A scoring error has been corrected.
+   
+ This patch also changes the cut off point for the Posttraumatic Stress 
+ Disorder Checklist 5 (PCL-5) instrument from 38 to 33.  This affects the
+ text that is displayed with using PCL-5 from a reminder dialog.  
+ Recent PCL-5 results are now included in the PTSD reminder dialogs.
+  
+ The reports for Addiction Severity Index (ASI) and Seclusion/Restraints 
+ have been updated to use the last 4 of the SSN instead of the full SSN.
+  
+ A new option has been added to the YTQ MHA3 MENU called Instrument 
+ Exchange. This allow updated instrument definitions to be loaded from a
+ file or web site and viewed or installed.
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)                Field Name (Number)   New/Mod/Del
+ ------------------                ------------------    -----------
+ MH SCORING KEYS (#601.91)         Target (#3)           Modified
+ MH INSTRUMENT EXCHANGE (#601.95)                        New File
+ SECLUSION/RESTRAINT (#615.2)      LAST4 SSN (#9)        New Field
+  
+ REMINDER EXCHANGE (#811.8) is included to transport an entry to update
+ reminder fields related to PCL-5.  No DD updates are made.
+  
+ Forms Associated:
+  
+ Form Name                  File #                       New/Mod/Del
+ ---------                  ------                       -----------
+ N/A
+  
+ HL7 Application Parameters Associated:
+  
+ HL7 Application Parameter Name                          New/Mod/Del
+ ------------------------------                          -----------
+ N/A
+  
+ List Templates Associated:
+  
+ List Template Name                                      New/Mod/Del
+ ------------------                                      -----------
+ YTXCHG MAIN                                             New
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                         New/Mod/Del
+ ---------------                                         -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                       Type                  New/Mod/Del
+ -----------                       ----                  -----------
+ YTQ INSTRUMENT EXCHANGE           action                New
+ YTQ MHA3 MENU                     menu                  Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     Type                  New/Mod/Del
+ -------------                     ----                  -----------
+ YTXCHG BROWSE SPEC                action                New
+ YTXCHG CREATE ENTRY               action                New
+ YTXCHG DELETE ENTRY               action                New
+ YTXCHG DRYRUN                     action                New
+ YTXCHG INSTALL                    action                New
+ YTXCHG LOAD HOST                  action                New
+ YTXCHG LOAD URL                   action                New
+ YTXCHG MAIN MENU                  menu                  New
+ YTXCHG REBUILD ENTRY              action                New
+ YTXCHG SAVE HOST                  action                New
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name                                   New/Mod/Del
+ ---------------------                                   -----------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name               Type    File Name (Number)  New/Mod/Del 
+ -------------               ----    ------------------  -----------
+ YS ASI BY SSN               Print   ADDICTION SEVERITY  New
+                                     INDEX (#604)
+ YS ASI INTERVIEWER BY DATE  Print   ADDICTION SEVERITY  New
+                                     INDEX (#604)
+ YS ASI NAME BY DATE         Print   ADDICTION SEVERITY  New
+                                     INDEX (#604)
+ YSSR 10-2683 PRINT          Print   SECLUSION/RESTRAINT New
+                                     (#615.2)
+ YSSR PT INQ HEADER          Print   SECLUSION/RESTRAINT New
+                                     (#615.2)
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20150509: Posttraumatic Stress Disorder (PTSD) Checklist 5 (PCL-5) 
+ and Mental Health Assistant Stabilization (MHAS)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ HD0000000872183 - CIWA-AR
+ Problem: Some text was missing from the instrument presentation. Also, 
+ some text was presented in incorrect order. 
+ Solution: This instrument is modified to include the missing text and 
+ displays the information in the correct order.
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee
+ Orlando
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+     YS_501_121_IG.pdf       MHA3 Patch 121 Install Guide    BINARY
+     YS_TM.PDF               MHA3 Technical Manual           BINARY
+     YS_MHA_UM.PDF           MHA3 User Manual                BINARY
+  
+  
+ Installation:
+ ============= 
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 5 minutes.
+   
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+   
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*121):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+   
+ 4.  Use the Install Package(s) option and select the package
+     YS*5.01*121.
+  
+     a.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+         of Install? NO//", answer NO.
+     b.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     c.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+  
+ Back-Out Plan
+ -------------
+ For information about back out steps see this document:
+  
+   YS_501_121_IG.pdf
+  
+ in the VistA Documentation Library at: http://www.domain.ext/vdl/
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 61
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS121PST
+    Before:       n/a   After: B27760708  **121**
+Routine Name: YSASA2
+    Before: B23828407   After: B24374661  **24,30,32,38,121**
+Routine Name: YSASFM
+    Before: B12459768   After: B13567691  **24,30,32,37,38,55,76,121**
+Routine Name: YSASGPH
+    Before:  B9594402   After: B10438975  **24,30,37,121**
+Routine Name: YSASLIB
+    Before: B12975057   After: B13582273  **24,37,121**
+Routine Name: YSASOL
+    Before: B29236654   After: B30117483  **24,30,32,38,121**
+Routine Name: YSASPRT
+    Before:  B4817471   After:  B5189916  **24,30,38,76,121**
+Routine Name: YSASRU
+    Before: B24470974   After: B24477197  **24,30,32,38,55,106,121**
+Routine Name: YSASRU1
+    Before:  B6081972   After:  B6409525  **24,30,32,38,121**
+Routine Name: YSASSEL
+    Before: B23674748   After: B27844186  **24,30,38,76,121**
+Routine Name: YSASU
+    Before: B22089171   After: B23877912  **38,121**
+Routine Name: YSASU1
+    Before:  B7082344   After:  B7521838  **38,121**
+Routine Name: YTQAPI1
+    Before: B28272751   After: B28881859  **85,119,121**
+Routine Name: YTQAPI14
+    Before: B30749913   After: B31797790  **85,97,96,103,119,121**
+Routine Name: YTQAPI2
+    Before: B23429482   After: B24402405  **85,96,119,121**
+Routine Name: YTQAPI2A
+    Before:       n/a   After: B20357821  **121**
+Routine Name: YTQAPI8
+    Before: B32771511   After: B33168164  **85,121**
+Routine Name: YTQAPI9
+    Before: B29675237   After: B30004209  **85,96,119,121**
+Routine Name: YTXCHG
+    Before:       n/a   After: B53596106  **121**
+Routine Name: YTXCHGE
+    Before:       n/a   After: B29307956  **121**
+Routine Name: YTXCHGI
+    Before:       n/a   After: B54913462  **121**
+Routine Name: YTXCHGL
+    Before:       n/a   After: B41031528  **121**
+Routine Name: YTXCHGM
+    Before:       n/a   After: B68668785  **121**
+Routine Name: YTXCHGP
+    Before:       n/a   After: B14086583  **121**
+Routine Name: YTXCHGS
+    Before:       n/a   After:   B897882  **121**
+Routine Name: YTXCHGT
+    Before:       n/a   After: B19049216  **121**
+Routine Name: YTXCHGU
+    Before:       n/a   After: B33209921  **121**
+Routine Name: YTXCHGV
+    Before:       n/a   After: B28434999  **121**
+Routine Name: YTXUTL
+    Before:       n/a   After:  B4333737  **121**
+ 
+Routine list of preceding patches: 76, 106, 119
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 16, 2015
+Completed By:                               Date Completed: APR 20, 2018
+Released By :                               Date Released : MAY 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

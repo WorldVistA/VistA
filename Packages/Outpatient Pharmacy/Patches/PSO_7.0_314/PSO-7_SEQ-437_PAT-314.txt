@@ -1,0 +1,58 @@
+
+=============================================================================
+Run Date: SEP 14, 2018                     Designation: PSO*7*314
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #437                      Status: Released
+                  Compliance Date: OCT 15, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*213   <<= must be installed BEFORE `PSO*7*314'
+                    (v)PSO*7*294   <<= must be installed BEFORE `PSO*7*314'
+
+Subject: CORRECTIONS TO MEDICATION RECONCILIATION  
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch enhances the API PEN^PSO5241 to return additional information
+ about pending RXs. This enhancement will be utilized by the Medication
+ Reconciliation Tool #1. This patch supports GMTS*2.7*94 and will be
+ released along with it as a combined build.
+  
+  
+ Test Sites:
+ ===========
+ Tennessee Valley VAMC
+ Sheridan VAMC
+  
+  
+ Installation Instructions:
+ ==========================
+ Please refer to patch GMTS*2.7*94 for installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO5241
+    Before:  B6238122   After:  B7033088  **213,314**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 13, 2008
+Completed By:                               Date Completed: SEP 13, 2018
+Released By :                               Date Released : SEP 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

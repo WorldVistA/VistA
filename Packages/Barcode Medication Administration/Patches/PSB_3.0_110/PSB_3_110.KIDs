@@ -1,0 +1,974 @@
+KIDS Distribution saved on Jul 10, 2018@11:37:35
+PSB*3*110
+**KIDS**:PSB*3.0*110^
+
+**INSTALL NAME**
+PSB*3.0*110
+"BLD",11137,0)
+PSB*3.0*110^BAR CODE MED ADMIN^0^3180710^y
+"BLD",11137,1,0)
+^^39^39^3180702^^
+"BLD",11137,1,1,0)
+This patch will resolve the following issue.
+"BLD",11137,1,2,0)
+ 
+"BLD",11137,1,3,0)
+INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+"BLD",11137,1,4,0)
+             discharged/deceased
+"BLD",11137,1,5,0)
+INC1002829 - BCBU patient census not updating
+"BLD",11137,1,6,0)
+(Duplicate)
+"BLD",11137,1,7,0)
+    
+"BLD",11137,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",11137,1,9,0)
+--------------------------------------------
+"BLD",11137,1,10,0)
+INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+"BLD",11137,1,11,0)
+             discharged/deceased
+"BLD",11137,1,12,0)
+INC1002829 - BCBU patient census not updating
+"BLD",11137,1,13,0)
+(Duplicate)
+"BLD",11137,1,14,0)
+       
+"BLD",11137,1,15,0)
+Problem: 
+"BLD",11137,1,16,0)
+--------
+"BLD",11137,1,17,0)
+An issue was discovered with the Barcode Medication Administration (BCMA) 
+"BLD",11137,1,18,0)
+Backup System (BCBU) after the installation of patch PSB*3*105. After the
+"BLD",11137,1,19,0)
+patient is discharged or a date of death is entered for him/her the patient
+"BLD",11137,1,20,0)
+data is not being properly removed from the BCBU workstation. In the case of
+"BLD",11137,1,21,0)
+discharged patient that are later admitted or have a clinic appointment their
+"BLD",11137,1,22,0)
+orders from their previous admission are still visible on the BCBU
+"BLD",11137,1,23,0)
+workstation and are listed on the patient's Medication Administration Reports
+"BLD",11137,1,24,0)
+(MAR).
+"BLD",11137,1,25,0)
+     
+"BLD",11137,1,26,0)
+Resolution:
+"BLD",11137,1,27,0)
+-----------
+"BLD",11137,1,28,0)
+Removed the filter introduced by PSB*3*110 to prevent alerts from being
+"BLD",11137,1,29,0)
+generated for patient movements if the patient is no longer inpatient. The
+"BLD",11137,1,30,0)
+reason is because such filter prevented patient discharge events, which are
+"BLD",11137,1,31,0)
+handled as patient movements, from removing he patient's data from the 
+"BLD",11137,1,32,0)
+BCBU workstation. The filter was re-introduced at the Alert generation point
+"BLD",11137,1,33,0)
+and exclude patient discharge movements.
+"BLD",11137,1,34,0)
+ 
+"BLD",11137,1,35,0)
+Technical Resolution:
+"BLD",11137,1,36,0)
+---------------------
+"BLD",11137,1,37,0)
+Changed the routine ALPBCBU to remove the filter from the PMOV line tag and
+"BLD",11137,1,38,0)
+placed a check in the ERRLOG line tag to prevent Alerts for patient movement
+"BLD",11137,1,39,0)
+events after the patient had already been discharged. 
+"BLD",11137,4,0)
+^9.64PA^^
+"BLD",11137,6.3)
+3
+"BLD",11137,"ABPKG")
+n
+"BLD",11137,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11137,"KRN",.4,0)
+.4
+"BLD",11137,"KRN",.401,0)
+.401
+"BLD",11137,"KRN",.402,0)
+.402
+"BLD",11137,"KRN",.403,0)
+.403
+"BLD",11137,"KRN",.5,0)
+.5
+"BLD",11137,"KRN",.84,0)
+.84
+"BLD",11137,"KRN",3.6,0)
+3.6
+"BLD",11137,"KRN",3.8,0)
+3.8
+"BLD",11137,"KRN",9.2,0)
+9.2
+"BLD",11137,"KRN",9.8,0)
+9.8
+"BLD",11137,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",11137,"KRN",9.8,"NM",1,0)
+ALPBCBU^^0^B8929939
+"BLD",11137,"KRN",9.8,"NM",2,0)
+ALPBUTL1^^0^B36918988
+"BLD",11137,"KRN",9.8,"NM","B","ALPBCBU",1)
+
+"BLD",11137,"KRN",9.8,"NM","B","ALPBUTL1",2)
+
+"BLD",11137,"KRN",19,0)
+19
+"BLD",11137,"KRN",19.1,0)
+19.1
+"BLD",11137,"KRN",101,0)
+101
+"BLD",11137,"KRN",409.61,0)
+409.61
+"BLD",11137,"KRN",771,0)
+771
+"BLD",11137,"KRN",779.2,0)
+779.2
+"BLD",11137,"KRN",870,0)
+870
+"BLD",11137,"KRN",8989.51,0)
+8989.51
+"BLD",11137,"KRN",8989.52,0)
+8989.52
+"BLD",11137,"KRN",8994,0)
+8994
+"BLD",11137,"KRN","B",.4,.4)
+
+"BLD",11137,"KRN","B",.401,.401)
+
+"BLD",11137,"KRN","B",.402,.402)
+
+"BLD",11137,"KRN","B",.403,.403)
+
+"BLD",11137,"KRN","B",.5,.5)
+
+"BLD",11137,"KRN","B",.84,.84)
+
+"BLD",11137,"KRN","B",3.6,3.6)
+
+"BLD",11137,"KRN","B",3.8,3.8)
+
+"BLD",11137,"KRN","B",9.2,9.2)
+
+"BLD",11137,"KRN","B",9.8,9.8)
+
+"BLD",11137,"KRN","B",19,19)
+
+"BLD",11137,"KRN","B",19.1,19.1)
+
+"BLD",11137,"KRN","B",101,101)
+
+"BLD",11137,"KRN","B",409.61,409.61)
+
+"BLD",11137,"KRN","B",771,771)
+
+"BLD",11137,"KRN","B",779.2,779.2)
+
+"BLD",11137,"KRN","B",870,870)
+
+"BLD",11137,"KRN","B",8989.51,8989.51)
+
+"BLD",11137,"KRN","B",8989.52,8989.52)
+
+"BLD",11137,"KRN","B",8994,8994)
+
+"BLD",11137,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11137,"QUES",0)
+^9.62^^
+"BLD",11137,"REQB",0)
+^9.611^2^2
+"BLD",11137,"REQB",1,0)
+PSB*3.0*105^2
+"BLD",11137,"REQB",2,0)
+PSB*3.0*37^2
+"BLD",11137,"REQB","B","PSB*3.0*105",1)
+
+"BLD",11137,"REQB","B","PSB*3.0*37",2)
+
+"MBREQ")
+0
+"PKG",550,-1)
+1^1
+"PKG",550,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",550,20,0)
+^9.402P^^
+"PKG",550,22,0)
+^9.49I^1^1
+"PKG",550,22,1,0)
+3.0^3040224^3040311^66481
+"PKG",550,22,1,"PAH",1,0)
+110^3180710
+"PKG",550,22,1,"PAH",1,1,0)
+^^39^39^3180710
+"PKG",550,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",550,22,1,"PAH",1,1,2,0)
+ 
+"PKG",550,22,1,"PAH",1,1,3,0)
+INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+"PKG",550,22,1,"PAH",1,1,4,0)
+             discharged/deceased
+"PKG",550,22,1,"PAH",1,1,5,0)
+INC1002829 - BCBU patient census not updating
+"PKG",550,22,1,"PAH",1,1,6,0)
+(Duplicate)
+"PKG",550,22,1,"PAH",1,1,7,0)
+    
+"PKG",550,22,1,"PAH",1,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",550,22,1,"PAH",1,1,9,0)
+--------------------------------------------
+"PKG",550,22,1,"PAH",1,1,10,0)
+INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+"PKG",550,22,1,"PAH",1,1,11,0)
+             discharged/deceased
+"PKG",550,22,1,"PAH",1,1,12,0)
+INC1002829 - BCBU patient census not updating
+"PKG",550,22,1,"PAH",1,1,13,0)
+(Duplicate)
+"PKG",550,22,1,"PAH",1,1,14,0)
+       
+"PKG",550,22,1,"PAH",1,1,15,0)
+Problem: 
+"PKG",550,22,1,"PAH",1,1,16,0)
+--------
+"PKG",550,22,1,"PAH",1,1,17,0)
+An issue was discovered with the Barcode Medication Administration (BCMA) 
+"PKG",550,22,1,"PAH",1,1,18,0)
+Backup System (BCBU) after the installation of patch PSB*3*105. After the
+"PKG",550,22,1,"PAH",1,1,19,0)
+patient is discharged or a date of death is entered for him/her the patient
+"PKG",550,22,1,"PAH",1,1,20,0)
+data is not being properly removed from the BCBU workstation. In the case of
+"PKG",550,22,1,"PAH",1,1,21,0)
+discharged patient that are later admitted or have a clinic appointment their
+"PKG",550,22,1,"PAH",1,1,22,0)
+orders from their previous admission are still visible on the BCBU
+"PKG",550,22,1,"PAH",1,1,23,0)
+workstation and are listed on the patient's Medication Administration Reports
+"PKG",550,22,1,"PAH",1,1,24,0)
+(MAR).
+"PKG",550,22,1,"PAH",1,1,25,0)
+     
+"PKG",550,22,1,"PAH",1,1,26,0)
+Resolution:
+"PKG",550,22,1,"PAH",1,1,27,0)
+-----------
+"PKG",550,22,1,"PAH",1,1,28,0)
+Removed the filter introduced by PSB*3*110 to prevent alerts from being
+"PKG",550,22,1,"PAH",1,1,29,0)
+generated for patient movements if the patient is no longer inpatient. The
+"PKG",550,22,1,"PAH",1,1,30,0)
+reason is because such filter prevented patient discharge events, which are
+"PKG",550,22,1,"PAH",1,1,31,0)
+handled as patient movements, from removing he patient's data from the 
+"PKG",550,22,1,"PAH",1,1,32,0)
+BCBU workstation. The filter was re-introduced at the Alert generation point
+"PKG",550,22,1,"PAH",1,1,33,0)
+and exclude patient discharge movements.
+"PKG",550,22,1,"PAH",1,1,34,0)
+ 
+"PKG",550,22,1,"PAH",1,1,35,0)
+Technical Resolution:
+"PKG",550,22,1,"PAH",1,1,36,0)
+---------------------
+"PKG",550,22,1,"PAH",1,1,37,0)
+Changed the routine ALPBCBU to remove the filter from the PMOV line tag and
+"PKG",550,22,1,"PAH",1,1,38,0)
+placed a check in the ERRLOG line tag to prevent Alerts for patient movement
+"PKG",550,22,1,"PAH",1,1,39,0)
+events after the patient had already been discharged. 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","ALPBCBU")
+0^1^B8929939
+"RTN","ALPBCBU",1,0)
+ALPBCBU ;OIFO-DALLAS/SED/KC/MW  BCMA-BCBU INPT TO HL7 ;5/2/2002
+"RTN","ALPBCBU",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,102,105,110**;Mar 2004;Build 3
+"RTN","ALPBCBU",3,0)
+ ;
+"RTN","ALPBCBU",4,0)
+ ; Reference/IA
+"RTN","ALPBCBU",5,0)
+ ; EN^PSJBCBU/3876
+"RTN","ALPBCBU",6,0)
+ ;
+"RTN","ALPBCBU",7,0)
+ ;This is the main routine for the BCBU software.
+"RTN","ALPBCBU",8,0)
+ ;It handles all the entries points for the BCBU software. 
+"RTN","ALPBCBU",9,0)
+ ;It also handles error checking.
+"RTN","ALPBCBU",10,0)
+IPH(ALPMSG) ;CAPTURE MESSAGE ARRAY FROM PHARMACY
+"RTN","ALPBCBU",11,0)
+ N ALPRSLT,HL,HLA,HLECH,HLQ
+"RTN","ALPBCBU",12,0)
+ Q:'$D(ALPMSG)
+"RTN","ALPBCBU",13,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",14,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",15,0)
+ S ALPRSLT=$$IPH^ALPBINP(.ALPMSG)
+"RTN","ALPBCBU",16,0)
+ ;I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",17,0)
+ Q
+"RTN","ALPBCBU",18,0)
+MEDL(ALPML) ;Use this entry to send MedLog messages
+"RTN","ALPBCBU",19,0)
+ N ALPRSLT
+"RTN","ALPBCBU",20,0)
+ ;ALPML is the IEN of the MedLog for file #53.79
+"RTN","ALPBCBU",21,0)
+ Q:'$D(ALPML)
+"RTN","ALPBCBU",22,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",23,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",24,0)
+ S ALPRSLT=$$MEDL^ALPBINP(ALPML)
+"RTN","ALPBCBU",25,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",26,0)
+ Q
+"RTN","ALPBCBU",27,0)
+NURV(ALDFN,ALPORD) ;Use this entry to send verifying nursing.
+"RTN","ALPBCBU",28,0)
+ N ALPRSLT
+"RTN","ALPBCBU",29,0)
+ ;ALDFN is the IEN of the patient
+"RTN","ALPBCBU",30,0)
+ ;ALPORDR is the order number
+"RTN","ALPBCBU",31,0)
+ Q:'$D(ALDFN)
+"RTN","ALPBCBU",32,0)
+ Q:'$D(ALPORD)
+"RTN","ALPBCBU",33,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",34,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",35,0)
+ K ALPB
+"RTN","ALPBCBU",36,0)
+ D EN^PSJBCBU(ALDFN,ALPORD,.ALPB)
+"RTN","ALPBCBU",37,0)
+ S ALPBI=0
+"RTN","ALPBCBU",38,0)
+ F  S ALPBI=$O(ALPB(ALPBI)) Q:ALPBI'>0  D
+"RTN","ALPBCBU",39,0)
+ . I $E(ALPB(ALPBI),1,3)="MSH" S MSH=ALPBI
+"RTN","ALPBCBU",40,0)
+ . I $E(ALPB(ALPBI),1,3)="PID" S PID=ALPBI
+"RTN","ALPBCBU",41,0)
+ . I $E(ALPB(ALPBI),1,3)="PV1" S PV1=ALPBI
+"RTN","ALPBCBU",42,0)
+ . I $E(ALPB(ALPBI),1,3)="ORC" S ORC=ALPBI
+"RTN","ALPBCBU",43,0)
+ I +$G(MSH)'>0 Q   ;MISSING MSH SEGMENT BAD MESSAGE
+"RTN","ALPBCBU",44,0)
+ S MSCTR=$E(ALPB(MSH),4,8)
+"RTN","ALPBCBU",45,0)
+ S ALPRSLT=$$INI^ALPBINP()
+"RTN","ALPBCBU",46,0)
+ K ALPB,ALPBI
+"RTN","ALPBCBU",47,0)
+ Q
+"RTN","ALPBCBU",48,0)
+PMOV ;Entry Point to send patient movement
+"RTN","ALPBCBU",49,0)
+ N ALPRSLT
+"RTN","ALPBCBU",50,0)
+ ;CHECK IF BCBU IS ACTIVE AT PACKAGE LEVEL
+"RTN","ALPBCBU",51,0)
+ Q:+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP ONLINE",1,"Q")'>0
+"RTN","ALPBCBU",52,0)
+ Q:'$D(DFN)!'$D(DGPMTYP)!'$D(DGPMUC)
+"RTN","ALPBCBU",53,0)
+ ;Screen out Lodgers
+"RTN","ALPBCBU",54,0)
+ Q:DGPMUC["LODGER"
+"RTN","ALPBCBU",55,0)
+ S ALPRSLT=$$PMOV^ALPBINP(DFN,DGPMTYP,DGPMUC,$P($G(DGPMA),U))
+"RTN","ALPBCBU",56,0)
+ I $P(ALPRSLT,U,2)'="" D ERRLG
+"RTN","ALPBCBU",57,0)
+ Q
+"RTN","ALPBCBU",58,0)
+ERRLG ;Error Log Message
+"RTN","ALPBCBU",59,0)
+ ; Retrieving the Patient's division name to include on the alert
+"RTN","ALPBCBU",60,0)
+ N ALPDFN,ALPDIV,ALPDIVST,ALPINST
+"RTN","ALPBCBU",61,0)
+ S ALPDIVST=""
+"RTN","ALPBCBU",62,0)
+ S ALPDFN=+$P($G(^PSB(53.79,+$G(ALPML),0)),U,1)
+"RTN","ALPBCBU",63,0)
+ ;If Patient Movement (not discharge), checking if the patient is still admitted, if not, QUIT
+"RTN","ALPBCBU",64,0)
+ I $D(DGPMTYP),'$G(PSJDCA) D INP^VADPT I '$P($G(VAIN(4)),"^") Q
+"RTN","ALPBCBU",65,0)
+ ; If Patient is deceased don't generate alert
+"RTN","ALPBCBU",66,0)
+ I $$DECEASED(ALPDFN) Q
+"RTN","ALPBCBU",67,0)
+ I ALPDFN>0 D
+"RTN","ALPBCBU",68,0)
+ . S ALPDIV=$$DIV^ALPBUTL1(ALPDFN,0)
+"RTN","ALPBCBU",69,0)
+ . I 'ALPDIV,$G(ALPML) S ALPDIV=$$CDIV^ALPBINP(ALPML)
+"RTN","ALPBCBU",70,0)
+ . S ALPDIVST=$$GET1^DIQ(40.8,ALPDIV,1)
+"RTN","ALPBCBU",71,0)
+ I ALPDIVST="" S ALPINST=+$$GET1^DIQ(53.79,+$G(ALPML),.03,"I"),ALPDIVST=$$GET1^DIQ(4,ALPINST,99)
+"RTN","ALPBCBU",72,0)
+ ;Alert
+"RTN","ALPBCBU",73,0)
+ K XQA,XQAMSG,XQAOPT,XQAROU,XQAID,XQADATA,XQAFLAG
+"RTN","ALPBCBU",74,0)
+ S XQA("G.PSB BCBU ERRORS")=""
+"RTN","ALPBCBU",75,0)
+ S XQAMSG="BCBU Contingency Error"_$S(ALPDIVST:" / Site: "_ALPDIVST,1:"")_$S(ALPDFN:" / DFN: "_ALPDFN,1:"")
+"RTN","ALPBCBU",76,0)
+ S XQADATA=ALPRSLT
+"RTN","ALPBCBU",77,0)
+ S XQAROU="PERR^ALPBCBU"
+"RTN","ALPBCBU",78,0)
+ D SETUP^XQALERT
+"RTN","ALPBCBU",79,0)
+ Q
+"RTN","ALPBCBU",80,0)
+PERR ;Process the error
+"RTN","ALPBCBU",81,0)
+ W @IOF,!,"PSB BCBU Contingency Error",!
+"RTN","ALPBCBU",82,0)
+ W ?10,$P(XQADATA,U,2)_" / "_$P(XQADATA,U,3)
+"RTN","ALPBCBU",83,0)
+ Q
+"RTN","ALPBCBU",84,0)
+ ;
+"RTN","ALPBCBU",85,0)
+DECEASED(DFN) ; Patient Deceased?
+"RTN","ALPBCBU",86,0)
+ ; Return: 1 (YES) or 0 (NO)
+"RTN","ALPBCBU",87,0)
+ N VADM
+"RTN","ALPBCBU",88,0)
+ D DEM^VADPT
+"RTN","ALPBCBU",89,0)
+ Q $S('$G(VADM(6)):0,1:1)
+"RTN","ALPBUTL1")
+0^2^B36918988
+"RTN","ALPBUTL1",1,0)
+ALPBUTL1 ;OIFO-DALLAS MW,SED,KC-BCBU BACKUP REPORT FUNCTIONS AND UTILITIES  ;01/01/03
+"RTN","ALPBUTL1",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**8,37,110**;Mar 2004;Build 3
+"RTN","ALPBUTL1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ALPBUTL1",4,0)
+ ;
+"RTN","ALPBUTL1",5,0)
+ ; Reference/IA
+"RTN","ALPBUTL1",6,0)
+ ; INP^VADPT/10061
+"RTN","ALPBUTL1",7,0)
+ ; DIC(42/10039
+"RTN","ALPBUTL1",8,0)
+ ; DIC(42/2440
+"RTN","ALPBUTL1",9,0)
+ ;
+"RTN","ALPBUTL1",10,0)
+ERRBLD(SEG,MSG,ERR) ; build an error array for non-FileMan-related errors...
+"RTN","ALPBUTL1",11,0)
+ ; SEG = HL7 segment name
+"RTN","ALPBUTL1",12,0)
+ ; MSG = a message that will be used in the error text portion of the array (optional -- if not passed, the
+"RTN","ALPBUTL1",13,0)
+ ;       default will be used)
+"RTN","ALPBUTL1",14,0)
+ ; ERR = array passed by reference in which error will be returned
+"RTN","ALPBUTL1",15,0)
+ ; note:  code 999 is a code indicating a non-FileMan error for filing the error message in file 53.71
+"RTN","ALPBUTL1",16,0)
+ S ERR("DIERR")=1
+"RTN","ALPBUTL1",17,0)
+ S ERR("DIERR",1)=999
+"RTN","ALPBUTL1",18,0)
+ S ERR("DIERR",1,"TEXT",1)=$S($G(MSG)'="":MSG,1:"Invalid parameter passed to "_SEG_" module in routine ALPBHL1U")
+"RTN","ALPBUTL1",19,0)
+ Q
+"RTN","ALPBUTL1",20,0)
+ ;
+"RTN","ALPBUTL1",21,0)
+ERRLOG(IEN,OIEN,MSGREC,SEGNAME,SEGDATA,ERRTEXT) ; log filing errors...
+"RTN","ALPBUTL1",22,0)
+ ; this module logs error data in the BCMA BACKUP PARAMETERS file (53.71).  These
+"RTN","ALPBUTL1",23,0)
+ ; errors usually occur as the result of missing or bad data passed to one of the
+"RTN","ALPBUTL1",24,0)
+ ; File Manager DBS calls used by this package.
+"RTN","ALPBUTL1",25,0)
+ ; 
+"RTN","ALPBUTL1",26,0)
+ ; IEN       = the patient's record number in file 53.7
+"RTN","ALPBUTL1",27,0)
+ ; OIEN      = the order number's sub-file record number in file 53.7
+"RTN","ALPBUTL1",28,0)
+ ; MSGREC    = the HL7 message's record number in file 772
+"RTN","ALPBUTL1",29,0)
+ ; SEGNAME   = the HL7 segment associated with the error (optional)
+"RTN","ALPBUTL1",30,0)
+ ; SEGDATA   = the HL7 segment's data (optional)
+"RTN","ALPBUTL1",31,0)
+ ; ERRTEXT   = an array passed by reference which contains the error
+"RTN","ALPBUTL1",32,0)
+ ;             code (numeric) and the error text to be filed.  It is
+"RTN","ALPBUTL1",33,0)
+ ;             expected that this is usually the error array returned
+"RTN","ALPBUTL1",34,0)
+ ;             from a FileMan DBS call, so the format is specific:
+"RTN","ALPBUTL1",35,0)
+ ;
+"RTN","ALPBUTL1",36,0)
+ ;             ERRTEXT("DIERR",n)=error code (numeric)
+"RTN","ALPBUTL1",37,0)
+ ;             ERRTEXT("DIERR",n,"TEXT",1)=first line of error text
+"RTN","ALPBUTL1",38,0)
+ ;             ERRTEXT("DIERR",n,"TEXT",2)=second line of error text
+"RTN","ALPBUTL1",39,0)
+ ;             ERRTEXT("DIERR",n,"TEXT",n)=last line of error text
+"RTN","ALPBUTL1",40,0)
+ ;
+"RTN","ALPBUTL1",41,0)
+ ;             However, any error message can be passed to this module
+"RTN","ALPBUTL1",42,0)
+ ;             as long as the above format is used.
+"RTN","ALPBUTL1",43,0)
+ N ALPBCODE,ALPBFERR,ALPBFILE,ALPBLOGD,ALPBN1,ALPBN2,ALPBPIEN,ALPBTEXT,ALPBX
+"RTN","ALPBUTL1",44,0)
+ S ALPBLOGD=$$NOW^XLFDT()
+"RTN","ALPBUTL1",45,0)
+ S ALPBPIEN=+$O(^ALPB(53.71,0))
+"RTN","ALPBUTL1",46,0)
+ I ALPBPIEN=0 D
+"RTN","ALPBUTL1",47,0)
+ .S X="ONE"
+"RTN","ALPBUTL1",48,0)
+ .S DIC="^ALPB(53.71,"
+"RTN","ALPBUTL1",49,0)
+ .S DIC(0)="LZ"
+"RTN","ALPBUTL1",50,0)
+ .S DIC("DR")="1///^S X=3"
+"RTN","ALPBUTL1",51,0)
+ .S DINUM=1
+"RTN","ALPBUTL1",52,0)
+ .S DLAYGO=53.71
+"RTN","ALPBUTL1",53,0)
+ .D FILE^DICN K DIC
+"RTN","ALPBUTL1",54,0)
+ .S ALPBPIEN=+Y
+"RTN","ALPBUTL1",55,0)
+ I ALPBPIEN'>0 Q
+"RTN","ALPBUTL1",56,0)
+ S ALPBN1=+$O(^ALPB(53.71,ALPBPIEN,1," "),-1)+1
+"RTN","ALPBUTL1",57,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",.01)=ALPBLOGD
+"RTN","ALPBUTL1",58,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",1)=+$G(IEN)
+"RTN","ALPBUTL1",59,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",2)=+$G(OIEN)
+"RTN","ALPBUTL1",60,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",3)=+$G(MSGREC)
+"RTN","ALPBUTL1",61,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",3.1)=$G(SEGNAME)
+"RTN","ALPBUTL1",62,0)
+ S ALPBFILE(53.713,"+"_ALPBN1_","_ALPBPIEN_",",3.2)=$G(SEGDATA)
+"RTN","ALPBUTL1",63,0)
+ D UPDATE^DIE("","ALPBFILE","ALPBN1","ALPBFERR")
+"RTN","ALPBUTL1",64,0)
+ K ALPBFERR,ALPBFILE
+"RTN","ALPBUTL1",65,0)
+ S ALPBX=0
+"RTN","ALPBUTL1",66,0)
+ F  S ALPBX=$O(ERRTEXT("DIERR",ALPBX)) Q:'ALPBX  D
+"RTN","ALPBUTL1",67,0)
+ .S ALPBCODE=ERRTEXT("DIERR",ALPBX)
+"RTN","ALPBUTL1",68,0)
+ .; file the error code...
+"RTN","ALPBUTL1",69,0)
+ .S ALPBN2=+$O(^ALPB(53.71,ALPBPIEN,1,ALPBN1,2," "),-1)+1
+"RTN","ALPBUTL1",70,0)
+ .S ALPBFILE(53.7135,"+"_ALPBN2_","_ALPBN1_","_ALPBPIEN_",",.01)=ALPBCODE
+"RTN","ALPBUTL1",71,0)
+ .D UPDATE^DIE("","ALPBFILE","ALPBN2","ALPBFERR")
+"RTN","ALPBUTL1",72,0)
+ .K ALPBFERR,ALPBFILE
+"RTN","ALPBUTL1",73,0)
+ .; file the error text...
+"RTN","ALPBUTL1",74,0)
+ .M ALPBTEXT=ERRTEXT("DIERR",ALPBX,"TEXT")
+"RTN","ALPBUTL1",75,0)
+ .D WP^DIE(53.7135,ALPBN2_","_ALPBN1_","_ALPBPIEN_",",1,"","ALPBTEXT","ALPBFERR")
+"RTN","ALPBUTL1",76,0)
+ .;S ALPBFILE(53.7135,"+"_ALPBN2_","_ALPBN1_","_ALPBPIEN_",",1)=ALPBTEXT
+"RTN","ALPBUTL1",77,0)
+ .;D UPDATE^DIE("","ALPBFILE","ALPBN2","ALPBFERR")
+"RTN","ALPBUTL1",78,0)
+ .K ALPBCODE,ALPBFERR,ALPBFILE,ALPBN2,ALPBTEXT
+"RTN","ALPBUTL1",79,0)
+ Q
+"RTN","ALPBUTL1",80,0)
+ ;
+"RTN","ALPBUTL1",81,0)
+CLEAN(IEN) ; check error log records to see if the patients' whose records
+"RTN","ALPBUTL1",82,0)
+ ; are noted still exist in file 53.7.  if not, delete the error log
+"RTN","ALPBUTL1",83,0)
+ ; record(s) in file 53.71...
+"RTN","ALPBUTL1",84,0)
+ ; IEN = patient record number in file 53.7
+"RTN","ALPBUTL1",85,0)
+ ; Note:  this function is also called from DELPT^ALPBUTL when a patient's
+"RTN","ALPBUTL1",86,0)
+ ; record is deleted (as a result of a discharge action) from 53.7.
+"RTN","ALPBUTL1",87,0)
+ ;
+"RTN","ALPBUTL1",88,0)
+ N ALPBX,ALPBY,DA,DIK,X,Y
+"RTN","ALPBUTL1",89,0)
+ ; patient still has record in 53.7?  if so, quit...
+"RTN","ALPBUTL1",90,0)
+ I $G(^ALPB(53.7,IEN,0))'="" Q
+"RTN","ALPBUTL1",91,0)
+ S ALPBX=0
+"RTN","ALPBUTL1",92,0)
+ F  S ALPBX=$O(^ALPB(53.71,"C",IEN,ALPBX)) Q:'ALPBX  D
+"RTN","ALPBUTL1",93,0)
+ .S ALPBY=0
+"RTN","ALPBUTL1",94,0)
+ .F  S ALPBY=$O(^ALPB(53.71,"C",IEN,ALPBX,ALPBY)) Q:'ALPBY  D
+"RTN","ALPBUTL1",95,0)
+ ..S DA=ALPBY
+"RTN","ALPBUTL1",96,0)
+ ..S DA(1)=ALPBX
+"RTN","ALPBUTL1",97,0)
+ ..S DIK="^ALPB(53.71,"_DA(1)_",1,"
+"RTN","ALPBUTL1",98,0)
+ ..D ^DIK
+"RTN","ALPBUTL1",99,0)
+ ..K DA,DIK
+"RTN","ALPBUTL1",100,0)
+ .K ALPBY
+"RTN","ALPBUTL1",101,0)
+ K ALPBX
+"RTN","ALPBUTL1",102,0)
+ Q
+"RTN","ALPBUTL1",103,0)
+ ;
+"RTN","ALPBUTL1",104,0)
+DELERR(ERRIEN) ; delete an error log entry from file 53.71...
+"RTN","ALPBUTL1",105,0)
+ ; ERRIEN = error log entry's internal record number
+"RTN","ALPBUTL1",106,0)
+ N ALPBPARM,DA,DIK,X,Y
+"RTN","ALPBUTL1",107,0)
+ S ALPBPARM=+$O(^ALPB(53.71,0))
+"RTN","ALPBUTL1",108,0)
+ I ALPBPARM'>0 Q
+"RTN","ALPBUTL1",109,0)
+ S DA=ERRIEN
+"RTN","ALPBUTL1",110,0)
+ S DA(1)=ALPBPARM
+"RTN","ALPBUTL1",111,0)
+ S DIK="^ALPB(53.71,"_DA(1)_",1,"
+"RTN","ALPBUTL1",112,0)
+ D ^DIK
+"RTN","ALPBUTL1",113,0)
+ Q
+"RTN","ALPBUTL1",114,0)
+ ;
+"RTN","ALPBUTL1",115,0)
+PTLIST(LTYPE,RESULTS) ; get list of patients in file 53.7...
+"RTN","ALPBUTL1",116,0)
+ ; LTYPE   = passed = "ALL" to list all patients or
+"RTN","ALPBUTL1",117,0)
+ ;                  = <wardname> to list patients on a selected ward
+"RTN","ALPBUTL1",118,0)
+ ; RESULTS = an array passed by reference in which data will be returned
+"RTN","ALPBUTL1",119,0)
+ N ALPBDATA,ALPBIEN,ALPBPTN,ALPBX
+"RTN","ALPBUTL1",120,0)
+ I $G(LTYPE)="" S LTYPE="ALL"
+"RTN","ALPBUTL1",121,0)
+ S ALPBX=0
+"RTN","ALPBUTL1",122,0)
+ I LTYPE="ALL" D
+"RTN","ALPBUTL1",123,0)
+ .S ALPBPTN=""
+"RTN","ALPBUTL1",124,0)
+ .F  S ALPBPTN=$O(^ALPB(53.7,"B",ALPBPTN)) Q:ALPBPTN=""  D
+"RTN","ALPBUTL1",125,0)
+ ..S ALPBIEN=0
+"RTN","ALPBUTL1",126,0)
+ ..F  S ALPBIEN=$O(^ALPB(53.7,"B",ALPBPTN,ALPBIEN)) Q:'ALPBIEN  D
+"RTN","ALPBUTL1",127,0)
+ ...S ALPBDATA=$G(^ALPB(53.7,ALPBIEN,0))
+"RTN","ALPBUTL1",128,0)
+ ...I ALPBDATA="" K ALPBDATA Q
+"RTN","ALPBUTL1",129,0)
+ ...S ALPBX=ALPBX+1
+"RTN","ALPBUTL1",130,0)
+ ...S RESULTS(ALPBX)=ALPBPTN_"^"_$P(ALPBDATA,"^",2)_"^"_$P(ALPBDATA,"^",5)_"^"_$P(ALPBDATA,"^",6)_"^"_$P(ALPBDATA,"^",7)
+"RTN","ALPBUTL1",131,0)
+ ...K ALPBDATA
+"RTN","ALPBUTL1",132,0)
+ ..K ALPBIEN
+"RTN","ALPBUTL1",133,0)
+ .K ALPBPTN
+"RTN","ALPBUTL1",134,0)
+ I LTYPE'="ALL" D
+"RTN","ALPBUTL1",135,0)
+ .S ALPBPTN=""
+"RTN","ALPBUTL1",136,0)
+ .F  S ALPBPTN=$O(^ALPB(53.7,"AW",LTYPE,ALPBPTN)) Q:ALPBPTN=""  D
+"RTN","ALPBUTL1",137,0)
+ ..S ALPBIEN=0
+"RTN","ALPBUTL1",138,0)
+ ..F  S ALPBIEN=$O(^ALPB(53.7,"AW",LTYPE,ALPBPTN,ALPBIEN)) Q:'ALPBIEN  D
+"RTN","ALPBUTL1",139,0)
+ ...S ALPBDATA=$G(^ALPB(53.7,ALPBIEN,0))
+"RTN","ALPBUTL1",140,0)
+ ...I ALPBDATA="" K ALPBDATA Q
+"RTN","ALPBUTL1",141,0)
+ ...S ALPBX=ALPBX+1
+"RTN","ALPBUTL1",142,0)
+ ...S RESULTS(ALPBX)=ALPBPTN_"^"_$P(ALPBDATA,"^",2)_"^"_$P(ALPBDATA,"^",5)_"^"_$P(ALPBDATA,"^",6)_"^"_$P(ALPBDATA,"^",7)
+"RTN","ALPBUTL1",143,0)
+ ...K ALPBDATA
+"RTN","ALPBUTL1",144,0)
+ ..K ALPBIEN
+"RTN","ALPBUTL1",145,0)
+ .K ALPBPTN
+"RTN","ALPBUTL1",146,0)
+ Q
+"RTN","ALPBUTL1",147,0)
+ ;
+"RTN","ALPBUTL1",148,0)
+STAT(ST) ;This will return the value of a status code for pharmacy
+"RTN","ALPBUTL1",149,0)
+ I $G(ST)="" Q ""
+"RTN","ALPBUTL1",150,0)
+ I $L($T(@ST)) G @ST
+"RTN","ALPBUTL1",151,0)
+ Q ""
+"RTN","ALPBUTL1",152,0)
+IP Q "pending"
+"RTN","ALPBUTL1",153,0)
+CM Q "finished/verified by pharmacist(active)"
+"RTN","ALPBUTL1",154,0)
+DC Q "discontinued"
+"RTN","ALPBUTL1",155,0)
+RP Q "replaced"
+"RTN","ALPBUTL1",156,0)
+HD Q "on hold"
+"RTN","ALPBUTL1",157,0)
+ZE Q "expired"
+"RTN","ALPBUTL1",158,0)
+ZS Q "suspended(active)"
+"RTN","ALPBUTL1",159,0)
+ZU Q "un-suspended(active)"
+"RTN","ALPBUTL1",160,0)
+ZX Q "unreleased"
+"RTN","ALPBUTL1",161,0)
+ZZ Q "renewed"
+"RTN","ALPBUTL1",162,0)
+ ;
+"RTN","ALPBUTL1",163,0)
+STAT2(CODE) ; convert order status code for output...
+"RTN","ALPBUTL1",164,0)
+ ; this function is used primarily by the workstation software
+"RTN","ALPBUTL1",165,0)
+ ; CODE = an order status code
+"RTN","ALPBUTL1",166,0)
+ ; returns printable status code
+"RTN","ALPBUTL1",167,0)
+ I $G(CODE)="" Q "Unknown"
+"RTN","ALPBUTL1",168,0)
+ I CODE="IP"!(CODE="ZX") Q "Pending"
+"RTN","ALPBUTL1",169,0)
+ I CODE="CM"!(CODE="ZU")!(CODE="ZZ") Q "Active"
+"RTN","ALPBUTL1",170,0)
+ I CODE="HD"!(CODE="ZS") Q "Hold"
+"RTN","ALPBUTL1",171,0)
+ I CODE="DC"!(CODE="RP")!(CODE="ZE") Q "Expired"
+"RTN","ALPBUTL1",172,0)
+ Q "Unknown"
+"RTN","ALPBUTL1",173,0)
+ ;
+"RTN","ALPBUTL1",174,0)
+DIV(DFN,ALPBMDT) ;get the Division for a patient
+"RTN","ALPBUTL1",175,0)
+ I +$G(DFN)'>0 Q ""
+"RTN","ALPBUTL1",176,0)
+ N ALPBDIV,ALPWRD,VAIN,VAINDT,VAIP
+"RTN","ALPBUTL1",177,0)
+ S:+$G(ALPBMDT)>0 VAINDT=$P(ALPBMDT,".",1)
+"RTN","ALPBUTL1",178,0)
+ K ALPBMDT
+"RTN","ALPBUTL1",179,0)
+ D INP^VADPT
+"RTN","ALPBUTL1",180,0)
+ S ALPWRD=$P($G(VAIN(4)),U,1)
+"RTN","ALPBUTL1",181,0)
+ ; Patient is not currently admitted ('ALPWRD) because he is being discharged (PSJDCA=1), get last ward he was located in
+"RTN","ALPBUTL1",182,0)
+ I 'ALPWRD,$G(PSJDCA) D
+"RTN","ALPBUTL1",183,0)
+ . S VAIP("D")="L" D IN5^VADPT S ALPWRD=$P($G(VAIP(5)),U,1)
+"RTN","ALPBUTL1",184,0)
+ Q:+ALPWRD'>0 ""
+"RTN","ALPBUTL1",185,0)
+ ;Check to see if ward is a DOMICILIARY 
+"RTN","ALPBUTL1",186,0)
+ I $P($G(^DIC(42,ALPWRD,0)),U,3)="D",+$$GET^XPAR("PKG.BAR CODE MED ADMIN","PSB BKUP DOM FILTER",1,"Q")>0 Q "DOM"
+"RTN","ALPBUTL1",187,0)
+ S ALPBDIV=$P($G(^DIC(42,ALPWRD,0)),U,11)
+"RTN","ALPBUTL1",188,0)
+ Q:+ALPBDIV'>0 ""
+"RTN","ALPBUTL1",189,0)
+ Q ALPBDIV
+"RTN","ALPBUTL1",190,0)
+ ;
+"RTN","ALPBUTL1",191,0)
+CNV(A,B,X) ;CONVERT A STRING
+"RTN","ALPBUTL1",192,0)
+ ;This API will take a HL7 segment and convert characters
+"RTN","ALPBUTL1",193,0)
+ ;defined in the input
+"RTN","ALPBUTL1",194,0)
+ ;Example:
+"RTN","ALPBUTL1",195,0)
+ ;Single encoding characters can be converted such as ^ to ~
+"RTN","ALPBUTL1",196,0)
+ ;or multiple encoding characters can be converted such as
+"RTN","ALPBUTL1",197,0)
+ ;  |~^@/ to ^~|/@
+"RTN","ALPBUTL1",198,0)
+ ;A is the string of HL7 encoding characters to be converted
+"RTN","ALPBUTL1",199,0)
+ ;B is the string of HL7 encoding characters to be converted to
+"RTN","ALPBUTL1",200,0)
+ ;X is te message string to be converted
+"RTN","ALPBUTL1",201,0)
+ I A=""!B=""!X="" Q ""
+"RTN","ALPBUTL1",202,0)
+ F I=1:1:$L(A) S A(I)=$E(A,I,I),A(I,1)=""
+"RTN","ALPBUTL1",203,0)
+ F I=1:1:$L(B) S B(I)=$E(B,I,I)
+"RTN","ALPBUTL1",204,0)
+ S J=0
+"RTN","ALPBUTL1",205,0)
+ F  S J=$O(A(J)) Q:+J'>0  D
+"RTN","ALPBUTL1",206,0)
+ . F I=1:1:$L(X) S:$E(X,I,I)=A(J) A(J,1)=A(J,1)_I_U
+"RTN","ALPBUTL1",207,0)
+ S J=0
+"RTN","ALPBUTL1",208,0)
+ F  S J=$O(A(J)) Q:+J'>0  D
+"RTN","ALPBUTL1",209,0)
+ . Q:'$D(A(J,1))!'$D(B(J))
+"RTN","ALPBUTL1",210,0)
+ . F I=1:1:$L(A(J,1),U) S C=$P(A(J,1),U,I) S:+C>0 $E(X,C,C)=B(J)
+"RTN","ALPBUTL1",211,0)
+ Q X
+"VER")
+8.0^22.2
+**END**
+**END**

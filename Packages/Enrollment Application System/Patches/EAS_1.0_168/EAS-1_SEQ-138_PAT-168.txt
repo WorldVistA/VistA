@@ -1,0 +1,151 @@
+
+=============================================================================
+Run Date: AUG 27, 2018                     Designation: EAS*1*168
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #138                      Status: Released
+                  Compliance Date: SEP 27, 2018
+=============================================================================
+
+
+Subject: Informational Patch for Emergency Release ES 5.3.0.07001.
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the 
+ emergency release build ES 5.3.0.07001. This release, developed in Java 
+ technology, contains ESM P2 development and upgrade efforts, including 
+ enhancements to support Community Care (CC) and ES Sustainment.
+  
+ This software is being installed at AITC and no action is required by the 
+ sites.
+  
+ The following functionality is updated in this ES ES 5.3.0.07001 build:
+ ES emergency defect fixes:
+  
+ Production defect: A ORUZ10 Transmission failure occurs due to the Social 
+ Security Number (SSN) data stripped from the ZDP segment.
+  
+  
+ Routine Information:
+ ====================
+  
+ No routines included.
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+            
+ Rational Team Concert (RTC):
+ ----------------------------
+  
+ RTC #       Defect / Fix:
+ --------    --------------------
+ 810016      Defect: Production defect: A ORUZ10 transmission failure
+             occurs due to the Social Security Number (SSN) data stripped
+             from the ZDP segment. Sites are recording 
+             <SUBSCRIPT>IX+1^DIE1 errors when attempting to process HL7
+             ORUZ10 financial updates sent from ES.
+  
+             Fix: 
+             Code changes to remove the following method and method calls 
+             that was removing the SSN from the ZDP segment and setting it
+             to an empty string:
+             cleanupSensitiveData(message.getSegments()).
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the defect fixed by this
+ release is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         ES_5_3_0_07001_RN.PDF       (binary)
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 24, 2018
+Completed By:                               Date Completed: AUG 27, 2018
+Released By :                               Date Released : AUG 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

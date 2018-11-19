@@ -1,0 +1,233 @@
+
+=============================================================================
+Run Date: AUG 31, 2018                     Designation: SD*5.3*706
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #574                    Status: Released
+                  Compliance Date: OCT 01, 2018
+=============================================================================
+
+
+Subject:   Connect Patch SD*5.3*701 to the PACKAGE File (#9.4)
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this patch is to correct an omission with the SD*5.3*701 patch.
+  
+ Rational #810988: Patch SD*5.3*701 did not have the PACKAGE file (#9.4) linked
+ properly
+  
+  The SD*5.3*701 patch did not have the proper package link. FileMan can be used 
+ to connect the SD*5.3*701 to the Scheduling entry in the PACKAGE File (#9.4).
+  
+  Before you begin the process of editing these files, please do an inquiry 
+ into FileMan.
+  There are two pieces of information you will require.
+  1. INSTALL COMPLETE TIME:
+  2. INSTALLED BY:
+  
+  This is an example of the steps to follow to find this information:
+  
+  Select OPTION: INQUIRE TO FILE ENTRIES
+  
+  Output from what File: INSTALL//          (11382 entries)
+  Select INSTALL NAME: SD*5.3*701      8/2/18@16:07:14
+       => SD 5.3 701  ;Created on Apr 01, 2014@15:15:45  Another one:
+  Standard Captioned Output? Yes//   (Yes)
+  Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed  Fields
+  
+  NAME: SD*5.3*701                        PACKAGE FILE LINK: SCHEDULING
+    DATE LOADED: AUG 02, 2018@16:06:48    STARTING PACKAGE: SD*5.3*701
+    INSTALL ORDER: 1                      REQUIRED TO CONTINUE: NO
+    SETNAME: SD*5.3*701                   STATUS: Install Completed
+    DISABLE OPTION DELAY: 0               INSTALLED BY: LORD,BRIAN
+    INSTALL START TIME: AUG 02, 2018@16:07:14
+    ROUTINE INSTALL TIME: AUG 02, 2018@16:07:14
+    INSTALL COMPLETE TIME: AUG 02, 2018@16:07:14
+  
+                                                              
+  Follow these steps to connect patch 701 to the Scheduling Package. 
+  
+  Step 1.  Modify the file link in the INSTALL file (#9.7) with FileMan:
+  
+  Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  Input to what File: INSTALL//             (11382 entries)
+  EDIT WHICH FIELD: ALL// PACKAGE FILE LINK  THEN EDIT FIELD:
+  
+  Select INSTALL NAME:    SD*5.3*701    8/2/18@16:07:14  
+       => SD 5.3 701  ;Created on Apr 01, 2014@15:15:45  PACKAGE FILE LINK:
+ SCHEDULING
+       1   SCHEDULING       SD
+       2   SCHEDULING CALENDAR VIEW       MBAA
+       3   SCHEDULING MAINTENANCE 10/1/94       SDYM
+  CHOOSE 1-3: 1  SCHEDULING     SD
+  
+  Select INSTALL NAME: <Enter a carriage return this step is done>
+  
+  Step 2. Modify the Patch Application History field in the PACKAGE file (#9.4) 
+ with FileMan:
+  
+  Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  Input to what File: package
+       1   PACKAGE                          (454 entries)
+       2   PACKAGE INTERFACE                (189 entries)
+       3   PACKAGE SIZE                     (5273 entries)
+       4   PACKAGE TYPE                     (529 entries)
+  CHOOSE 1-4: 1  PACKAGE                    (454 entries)
+  EDIT WHICH FIELD: ALL// VERSION    (multiple)
+     EDIT WHICH VERSION SUB-FIELD: ALL//
+  THEN EDIT FIELD:
+   
+  Select PACKAGE NAME:    SCHEDULING     SD
+  Select VERSION: 5.3//
+    VERSION: 5.3//
+    DATE DISTRIBUTED: AUG 13,1993//
+    DATE INSTALLED AT THIS SITE: AUG 24,1993//
+    INSTALLED BY:
+    DESCRIPTION OF ENHANCEMENTS:
+      Edit? NO//
+    Select PATCH APPLICATION HISTORY: 679// 701 SEQ #571
+    Are you adding '701 SEQ #571' as   
+      a new PATCH APPLICATION HISTORY (the 500TH for this VERSION)? No// Y 
+ (Yes)
+      DATE APPLIED: 8/2/18@16:07:14  (AUG 02, 2018@16:07:14)     <<< This the 
+  INSTALL COMPLETE TIME: from the install file query
+      APPLIED BY:                 BL   <<< This is the INSTALLED BY from the
+  install file query 
+      DESCRIPTION:
+        Edit? NO//
+  Select PATCH APPLICATION HISTORY:  <<< you are done. Exit FileMan
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+  
+ Problem:
+ -------
+ Patch SD*5.3*701 did not have the PACKAGE file (#9.4) linked properly. 
+  
+ Resolution:
+ ----------
+ This informational patch gives directions on how to correct the problem with
+ the PACKAGE file (#9.4) link.
+  
+  
+ Test Sites:
+ ----------
+ Tomah
+ Fayetteville
+ Orlando
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+ N/A
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ N/A
+  
+ Routine Information:
+ --------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 06, 2018
+Completed By:                               Date Completed: AUG 31, 2018
+Released By :                               Date Released : AUG 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

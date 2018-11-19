@@ -1,0 +1,571 @@
+Released ICD*18*94 SEQ #85
+Extracted from mail message
+**KIDS**:ICD*18.0*94^
+
+**INSTALL NAME**
+ICD*18.0*94
+"BLD",11031,0)
+ICD*18.0*94^DRG GROUPER^0^3180720^y
+"BLD",11031,1,0)
+^^2^2^3180719^
+"BLD",11031,1,1,0)
+This patch prevents a runtime error from occurring when the user enters 
+"BLD",11031,1,2,0)
+"??" during the ICD Code Inquiry [ICD INQUIRY] menu option.
+"BLD",11031,4,0)
+^9.64PA^^
+"BLD",11031,6.3)
+5
+"BLD",11031,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11031,"KRN",.4,0)
+.4
+"BLD",11031,"KRN",.401,0)
+.401
+"BLD",11031,"KRN",.402,0)
+.402
+"BLD",11031,"KRN",.403,0)
+.403
+"BLD",11031,"KRN",.5,0)
+.5
+"BLD",11031,"KRN",.84,0)
+.84
+"BLD",11031,"KRN",3.6,0)
+3.6
+"BLD",11031,"KRN",3.8,0)
+3.8
+"BLD",11031,"KRN",9.2,0)
+9.2
+"BLD",11031,"KRN",9.8,0)
+9.8
+"BLD",11031,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",11031,"KRN",9.8,"NM",1,0)
+ICDSELDS^^0^B42680042
+"BLD",11031,"KRN",9.8,"NM","B","ICDSELDS",1)
+
+"BLD",11031,"KRN",19,0)
+19
+"BLD",11031,"KRN",19.1,0)
+19.1
+"BLD",11031,"KRN",101,0)
+101
+"BLD",11031,"KRN",409.61,0)
+409.61
+"BLD",11031,"KRN",771,0)
+771
+"BLD",11031,"KRN",779.2,0)
+779.2
+"BLD",11031,"KRN",870,0)
+870
+"BLD",11031,"KRN",8989.51,0)
+8989.51
+"BLD",11031,"KRN",8989.52,0)
+8989.52
+"BLD",11031,"KRN",8994,0)
+8994
+"BLD",11031,"KRN","B",.4,.4)
+
+"BLD",11031,"KRN","B",.401,.401)
+
+"BLD",11031,"KRN","B",.402,.402)
+
+"BLD",11031,"KRN","B",.403,.403)
+
+"BLD",11031,"KRN","B",.5,.5)
+
+"BLD",11031,"KRN","B",.84,.84)
+
+"BLD",11031,"KRN","B",3.6,3.6)
+
+"BLD",11031,"KRN","B",3.8,3.8)
+
+"BLD",11031,"KRN","B",9.2,9.2)
+
+"BLD",11031,"KRN","B",9.8,9.8)
+
+"BLD",11031,"KRN","B",19,19)
+
+"BLD",11031,"KRN","B",19.1,19.1)
+
+"BLD",11031,"KRN","B",101,101)
+
+"BLD",11031,"KRN","B",409.61,409.61)
+
+"BLD",11031,"KRN","B",771,771)
+
+"BLD",11031,"KRN","B",779.2,779.2)
+
+"BLD",11031,"KRN","B",870,870)
+
+"BLD",11031,"KRN","B",8989.51,8989.51)
+
+"BLD",11031,"KRN","B",8989.52,8989.52)
+
+"BLD",11031,"KRN","B",8994,8994)
+
+"BLD",11031,"QDEF")
+^^^^^^^^^^YES
+"BLD",11031,"QUES",0)
+^9.62^^
+"BLD",11031,"REQB",0)
+^9.611^1^1
+"BLD",11031,"REQB",1,0)
+ICD*18.0*64^2
+"BLD",11031,"REQB","B","ICD*18.0*64",1)
+
+"MBREQ")
+0
+"PKG",151,-1)
+1^1
+"PKG",151,0)
+DRG GROUPER^ICD^DRG GROUPER
+"PKG",151,20,0)
+^9.402P^^
+"PKG",151,22,0)
+^9.49I^1^1
+"PKG",151,22,1,0)
+18.0^3001024^3010118^66481
+"PKG",151,22,1,"PAH",1,0)
+94^3180720
+"PKG",151,22,1,"PAH",1,1,0)
+^^2^2^3180720
+"PKG",151,22,1,"PAH",1,1,1,0)
+This patch prevents a runtime error from occurring when the user enters 
+"PKG",151,22,1,"PAH",1,1,2,0)
+"??" during the ICD Code Inquiry [ICD INQUIRY] menu option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ICDSELDS")
+0^1^B42680042^B42651368
+"RTN","ICDSELDS",1,0)
+ICDSELDS ;ALB/SJA/SS/KUM - Select ICD DIAGNOSIS FROM LEXICON UTILITY LIST ;12/07/2011
+"RTN","ICDSELDS",2,0)
+ ;;18.0;DRG Grouper;**64,94**;Oct 20, 2000;Build 5
+"RTN","ICDSELDS",3,0)
+ ;
+"RTN","ICDSELDS",4,0)
+ ;
+"RTN","ICDSELDS",5,0)
+ ;
+"RTN","ICDSELDS",6,0)
+ ; Input   
+"RTN","ICDSELDS",7,0)
+ ; 
+"RTN","ICDSELDS",8,0)
+ ;     X     Length of list to display (default 5)
+"RTN","ICDSELDS",9,0)
+ ;    .ICDSRL   Local array passed by reference
+"RTN","ICDSELDS",10,0)
+ ;               
+"RTN","ICDSELDS",11,0)
+ ;             ICDSRL()   Input Array from ICDSRCH^LEX10CS
+"RTN","ICDSELDS",12,0)
+ ;               
+"RTN","ICDSELDS",13,0)
+ ;             ICDSRL(0)=# found ^ Pruning Indicator
+"RTN","ICDSELDS",14,0)
+ ;             ICDSRL(1,0)=Code ^ Code IEN ^ date
+"RTN","ICDSELDS",15,0)
+ ;             ICDSRL(1,"IDL")=ICD-9/10 Description, Long
+"RTN","ICDSELDS",16,0)
+ ;             ICDSRL(1,"IDL",1)=ICD-9/10 IEN ^ date
+"RTN","ICDSELDS",17,0)
+ ;             ICDSRL(1,"IDS")=ICD-9/10 Description, Short
+"RTN","ICDSELDS",18,0)
+ ;             ICDSRL(1,"IDS",1)=ICD-9/10 IEN ^ date
+"RTN","ICDSELDS",19,0)
+ ;             ICDSRL(1,"LEX")=Lexicon Description
+"RTN","ICDSELDS",20,0)
+ ;             ICDSRL(1,"LEX",1)=Expression IEN ^ date
+"RTN","ICDSELDS",21,0)
+ ;             ICDSRL(1,"SYN",1)=Synonym #1
+"RTN","ICDSELDS",22,0)
+ ;             ICDSRL(1,"SYN",m)=Synonym #m
+"RTN","ICDSELDS",23,0)
+ ;             ...
+"RTN","ICDSELDS",24,0)
+ ;               
+"RTN","ICDSELDS",25,0)
+ ; Output
+"RTN","ICDSELDS",26,0)
+ ;               
+"RTN","ICDSELDS",27,0)
+ ;    $$SEL  Two Piece "^" delimited string same as
+"RTN","ICDSELDS",28,0)
+ ;           Fileman's Y output variable
+"RTN","ICDSELDS",29,0)
+ ;               
+"RTN","ICDSELDS",30,0)
+ ;             1  Lexicon IEN
+"RTN","ICDSELDS",31,0)
+ ;             2  Lexicon Term
+"RTN","ICDSELDS",32,0)
+ ;               
+"RTN","ICDSELDS",33,0)
+ ;    ICDSRL    Local array passed by reference
+"RTN","ICDSELDS",34,0)
+ ;               
+"RTN","ICDSELDS",35,0)
+ ;             ICDSRL(0)=Code ^ Code IEN ^ date
+"RTN","ICDSELDS",36,0)
+ ;             ICDSRL("IDL")=ICD-9/10 Description, Long
+"RTN","ICDSELDS",37,0)
+ ;             ICDSRL("IDL",1)=ICD-9/10 IEN ^ date
+"RTN","ICDSELDS",38,0)
+ ;             ICDSRL("IDS")=ICD-9/10 Description, Short
+"RTN","ICDSELDS",39,0)
+ ;             ICDSRL("IDS",1)=ICD-9/10 IEN ^ date
+"RTN","ICDSELDS",40,0)
+ ;             ICDSRL("LEX")=Lexicon Description
+"RTN","ICDSELDS",41,0)
+ ;             ICDSRL("LEX",1)=Expression IEN ^ date
+"RTN","ICDSELDS",42,0)
+ ;               
+"RTN","ICDSELDS",43,0)
+ ;    or ^ on error 
+"RTN","ICDSELDS",44,0)
+ ;    or -1 for non-selection
+"RTN","ICDSELDS",45,0)
+ ;    or -2 if "^" was entered
+"RTN","ICDSELDS",46,0)
+ ;               
+"RTN","ICDSELDS",47,0)
+SEL(ICDSRL,X) ; Select from List
+"RTN","ICDSELDS",48,0)
+ N ICDGOUP S ICDGOUP=0
+"RTN","ICDSELDS",49,0)
+ S X=+($G(X))
+"RTN","ICDSELDS",50,0)
+ S:X'>0 X=5
+"RTN","ICDSELDS",51,0)
+ S X=$$ASK(.ICDSRL,X)
+"RTN","ICDSELDS",52,0)
+ I ICDGOUP=1 Q -2
+"RTN","ICDSELDS",53,0)
+ Q X
+"RTN","ICDSELDS",54,0)
+ ;
+"RTN","ICDSELDS",55,0)
+ASK(ICDSRL,X) ; Ask for Selection
+"RTN","ICDSELDS",56,0)
+ N DTOUT,DUOUT,DIROUT
+"RTN","ICDSELDS",57,0)
+ N ICDLIT,ICDLL,ICDLTOT
+"RTN","ICDSELDS",58,0)
+ S ICDLL=+($G(X))
+"RTN","ICDSELDS",59,0)
+ S:ICDLL'>0 ICDLL=5
+"RTN","ICDSELDS",60,0)
+ S ICDLIT=0,ICDLTOT=$O(ICDSRL(" "),-1)
+"RTN","ICDSELDS",61,0)
+ Q:+ICDLTOT'>0 "^"
+"RTN","ICDSELDS",62,0)
+ K X
+"RTN","ICDSELDS",63,0)
+ S:+ICDLTOT=1 X=$$ONE(ICDLL,.ICDSRL)
+"RTN","ICDSELDS",64,0)
+ S:+ICDLTOT>1 X=$$MUL(.ICDSRL,ICDLL)
+"RTN","ICDSELDS",65,0)
+ S:'$D(DTOUT)&('$D(DUOUT))&('$D(DIROUT))&(+($G(X))'>0) X=-1
+"RTN","ICDSELDS",66,0)
+ Q X
+"RTN","ICDSELDS",67,0)
+ONE(X,ICDSRL) ; One Entry Found
+"RTN","ICDSELDS",68,0)
+ Q:+($G(ICDLIT))>0 "^^"
+"RTN","ICDSELDS",69,0)
+ N DIR,ICDLC,ICDLEX,ICDLFI,ICDLIT,ICDLSO,ICDLNC
+"RTN","ICDSELDS",70,0)
+ N ICDLSP,ICDLTX,ICDLC,Y,ICDCNT1
+"RTN","ICDSELDS",71,0)
+ S ICDLFI=$O(ICDSRL(0)) Q:+ICDLFI'>0 "^"  S ICDLSP=$J(" ",11)
+"RTN","ICDSELDS",72,0)
+ S ICDLSO=$P(ICDSRL(1,0),"^",1),ICDLNC=$P(ICDSRL(1,0),"^",3)
+"RTN","ICDSELDS",73,0)
+ S:+ICDLNC>0 ICDLNC=" ("_ICDLNC_")" S ICDLEX=$G(ICDSRL(1,"MENU"))
+"RTN","ICDSELDS",74,0)
+ S ICDLC=$S($D(ICDSRL(1,"CAT")):"-",1:"")
+"RTN","ICDSELDS",75,0)
+ S ICDLTX(1)=ICDLSO_ICDLC_$J(" ",(9-$L(ICDLSO)))_" "_ICDLEX_ICDLNC
+"RTN","ICDSELDS",76,0)
+ D PR(.ICDLTX,64) S DIR("A",1)=" One match found",DIR("A",2)=" "
+"RTN","ICDSELDS",77,0)
+ S DIR("A",3)=" "_$G(ICDLTX(1))
+"RTN","ICDSELDS",78,0)
+ S ICDLC=3
+"RTN","ICDSELDS",79,0)
+ F ICDCNT1=2:1 Q:$G(ICDLTX(ICDCNT1))=""  S ICDLC=ICDLC+1,DIR("A",ICDLC)=ICDLSP_$G(ICDLTX(ICDCNT1))
+"RTN","ICDSELDS",80,0)
+ S ICDLC=ICDLC+1,DIR("A",ICDLC)=" ",ICDLC=ICDLC+1
+"RTN","ICDSELDS",81,0)
+ S DIR("A")=" OK? (Yes/No) ",DIR("B")="Yes",DIR(0)="YAO" W !
+"RTN","ICDSELDS",82,0)
+ D ^DIR Q:'$D(DTOUT)&('$D(DUOUT))&('$D(DIROUT))&(+($G(Y))'>0) -1
+"RTN","ICDSELDS",83,0)
+ S:X["^^"!($D(DTOUT)) ICDLIT=1
+"RTN","ICDSELDS",84,0)
+ I X["^^"!(+($G(ICDLIT))>0) K ICDSRL Q "^^"
+"RTN","ICDSELDS",85,0)
+ S X=$S(+Y>0:$$X(1,.ICDSRL),1:-1)
+"RTN","ICDSELDS",86,0)
+ Q X
+"RTN","ICDSELDS",87,0)
+MUL(ICDSRL,Y) ; Multiple Entries Found
+"RTN","ICDSELDS",88,0)
+ Q:+($G(ICDLIT))>0 "^^"
+"RTN","ICDSELDS",89,0)
+ N ICDSRLE,ICDLL,ICDLMAX,ICDLSS,ICDLX,X
+"RTN","ICDSELDS",90,0)
+ S (ICDLMAX,ICDLSS,ICDLIT)=0,ICDLL=+($G(Y)),U="^" S:+($G(ICDLL))'>0 ICDLL=5
+"RTN","ICDSELDS",91,0)
+ S ICDLX=$O(ICDSRL(" "),-1),ICDLSS=0
+"RTN","ICDSELDS",92,0)
+ G:+ICDLX=0 MULQ W ! W:+ICDLX>1 !," ",ICDLX," matches found"
+"RTN","ICDSELDS",93,0)
+ F ICDSRLE=1:1:ICDLX Q:((ICDLSS>0)&(ICDLSS<(ICDSRLE+1)))  Q:ICDLIT  D  Q:ICDLIT
+"RTN","ICDSELDS",94,0)
+ . W:ICDSRLE#ICDLL=1 ! D MULW
+"RTN","ICDSELDS",95,0)
+ . S ICDLMAX=ICDSRLE W:ICDSRLE#ICDLL=0 !
+"RTN","ICDSELDS",96,0)
+ . S:ICDSRLE#ICDLL=0 ICDLSS=$$MULS(ICDLMAX,ICDSRLE,.ICDSRL) S:ICDLSS["^" ICDLIT=1
+"RTN","ICDSELDS",97,0)
+ I ICDSRLE#ICDLL'=0,+ICDLSS<=0 D
+"RTN","ICDSELDS",98,0)
+ . W ! S ICDLSS=$$MULS(ICDLMAX,ICDSRLE,.ICDSRL) S:ICDLSS["^" ICDLIT=1
+"RTN","ICDSELDS",99,0)
+ G MULQ
+"RTN","ICDSELDS",100,0)
+ Q X
+"RTN","ICDSELDS",101,0)
+MULW ; Write Multiple
+"RTN","ICDSELDS",102,0)
+ N ICDLEX,ICDLI1,ICDLSO,ICDLNC,ICDLT2,ICDLTX S ICDLSO=$P(ICDSRL(+ICDSRLE,0),"^",1)
+"RTN","ICDSELDS",103,0)
+ S ICDLNC=$P(ICDSRL(+ICDSRLE,0),"^",3) S:+ICDLNC>0 ICDLNC=" ("_ICDLNC_")"
+"RTN","ICDSELDS",104,0)
+ S ICDLEX=$G(ICDSRL(+ICDSRLE,"MENU")),ICDLTX(1)=ICDLSO
+"RTN","ICDSELDS",105,0)
+ S ICDLTX(1)=ICDLTX(1)_$S($D(ICDSRL(+ICDSRLE,"CAT")):"-",1:" ")_$J(" ",(9-$L(ICDLSO)))_" "_ICDLEX_ICDLNC
+"RTN","ICDSELDS",106,0)
+ D PR(.ICDLTX,60) W !,$J(ICDSRLE,5),".  ",$G(ICDLTX(1))
+"RTN","ICDSELDS",107,0)
+ F ICDLI1=2:1:5 S ICDLT2=$G(ICDLTX(ICDLI1)) W:$L(ICDLT2) !,$J(" ",19),ICDLT2
+"RTN","ICDSELDS",108,0)
+ Q
+"RTN","ICDSELDS",109,0)
+MULS(X,Y,ICDSRL) ; Select from Multiple Entries
+"RTN","ICDSELDS",110,0)
+ N DIR,DIRB,ICDLFI,ICDLHLP,ICDLLST,ICDLMAX,ICDLS1 ;@#$ not sure ICDLS1 is  needed here
+"RTN","ICDSELDS",111,0)
+ Q:+($G(ICDLIT))>0 "^^"  S ICDLMAX=+($G(X)),ICDLLST=+($G(Y))
+"RTN","ICDSELDS",112,0)
+ Q:ICDLMAX=0 -1 S ICDLFI=$O(ICDSRL(0)) Q:+ICDLFI'>0 -1
+"RTN","ICDSELDS",113,0)
+ I +($O(ICDSRL(+ICDLLST)))>0 D
+"RTN","ICDSELDS",114,0)
+ . S DIR("A")=" Press <RETURN> for more, ""^"" to exit, or Select 1-"
+"RTN","ICDSELDS",115,0)
+ . S DIR("A")=DIR("A")_ICDLMAX_": "
+"RTN","ICDSELDS",116,0)
+ I +($O(ICDSRL(+ICDLLST)))'>0 D
+"RTN","ICDSELDS",117,0)
+ . S DIR("A")=" Select 1-"_ICDLMAX_": "
+"RTN","ICDSELDS",118,0)
+ S ICDLHLP=" Answer must be from 1 to "
+"RTN","ICDSELDS",119,0)
+ S ICDLHLP=ICDLHLP_ICDLMAX_", or <Return> to continue"
+"RTN","ICDSELDS",120,0)
+ S DIR("PRE")="S:X[""?"" X=""??"""
+"RTN","ICDSELDS",121,0)
+ S (DIR("?"),DIR("??"))="^D MULSH^ICDSELDS"
+"RTN","ICDSELDS",122,0)
+ S DIR(0)="NAO^1:"_ICDLMAX_":0" D ^DIR
+"RTN","ICDSELDS",123,0)
+ S:X="^" ICDGOUP=1
+"RTN","ICDSELDS",124,0)
+ Q:'$D(DTOUT)&('$D(DUOUT))&('$D(DIROUT))&(+($G(Y))'>0) -1
+"RTN","ICDSELDS",125,0)
+ S:X["^^"!($D(DTOUT)) ICDLIT=1,X="^^" I X["^^"!(+($G(ICDLIT))>0) Q "^^"
+"RTN","ICDSELDS",126,0)
+ K DIR Q:$D(DTOUT)!(X[U) "^^"
+"RTN","ICDSELDS",127,0)
+ Q $S(+Y>0:+Y,1:"-1")
+"RTN","ICDSELDS",128,0)
+MULSH ; Select from Multiple Entries Help
+"RTN","ICDSELDS",129,0)
+ I $L($G(ICDLHLP)) W !,$G(ICDLHLP) Q
+"RTN","ICDSELDS",130,0)
+ Q
+"RTN","ICDSELDS",131,0)
+MULQ ; Quit Multiple
+"RTN","ICDSELDS",132,0)
+ I +ICDLSS'>0,$G(ICDLSS)="^" Q "^"
+"RTN","ICDSELDS",133,0)
+ S X=-1 S:+($G(ICDLIT))'>0 X=$$X(+ICDLSS,.ICDSRL)
+"RTN","ICDSELDS",134,0)
+ Q X
+"RTN","ICDSELDS",135,0)
+X(X,ICDSRL) ; Set X and Output Array
+"RTN","ICDSELDS",136,0)
+ N ICDLEX,ICDSRFI,ICDLIEN,ICDLN1,ICDLNC,ICDLNN,ICDLRN,ICDLS1,ICDLSO
+"RTN","ICDSELDS",137,0)
+ S ICDLS1=+($G(X))
+"RTN","ICDSELDS",138,0)
+ S ICDSRFI=$O(ICDSRL(0)) ;@#$ not used?
+"RTN","ICDSELDS",139,0)
+ S ICDLSO=$P($G(ICDSRL(ICDLS1,0)),"^",1),ICDLEX=$G(ICDSRL(ICDLS1,"MENU"))
+"RTN","ICDSELDS",140,0)
+ S ICDLIEN=$S($D(ICDSRL(ICDLS1,"CAT")):"99:CAT;"_$P($G(ICDSRL(ICDLS1,0)),"^"),1:$P($G(ICDSRL(ICDLS1,"LEX",1)),"^")_";"_$P($G(ICDSRL(ICDLS1,0)),"^")) Q:'$L(ICDLSO) "^"
+"RTN","ICDSELDS",141,0)
+ Q:'$L(ICDLEX) "^"  Q:+ICDLIEN'>0 "^" S X=ICDLIEN_"^"_ICDLEX
+"RTN","ICDSELDS",142,0)
+ S ICDLNN="ICDSRL("_+ICDLS1_")",ICDLNC="ICDSRL("_+ICDLS1_","
+"RTN","ICDSELDS",143,0)
+ F  S ICDLNN=$Q(@ICDLNN) Q:'$L(ICDLNN)!(ICDLNN'[ICDLNC)  D
+"RTN","ICDSELDS",144,0)
+ . S ICDLRN="ICDLN1("_$P(ICDLNN,"(",2,299) S @ICDLRN=@ICDLNN
+"RTN","ICDSELDS",145,0)
+ K ICDSRL S ICDLNN="ICDLN1("_+ICDLS1_")",ICDLNC="ICDLN1("_+ICDLS1_","
+"RTN","ICDSELDS",146,0)
+ F  S ICDLNN=$Q(@ICDLNN) Q:'$L(ICDLNN)!(ICDLNN'[ICDLNC)  D
+"RTN","ICDSELDS",147,0)
+ . S ICDLRN="ICDSRL("_$P(ICDLNN,"(",2,299),@ICDLRN=@ICDLNN
+"RTN","ICDSELDS",148,0)
+ Q X
+"RTN","ICDSELDS",149,0)
+ ; 
+"RTN","ICDSELDS",150,0)
+ ; Miscellaneous
+"RTN","ICDSELDS",151,0)
+CL ; Clear
+"RTN","ICDSELDS",152,0)
+ K ICDLIT
+"RTN","ICDSELDS",153,0)
+ Q
+"RTN","ICDSELDS",154,0)
+PR(ICDSRL,X) ; Parse Array
+"RTN","ICDSELDS",155,0)
+ N DIW,DIWF,DIWI,DIWL,DIWR,DIWT,DIWTC,DIWX,ICDDN,I,Z,%,%D,ICDLC,ICDLI1,ICDLL
+"RTN","ICDSELDS",156,0)
+ K ^UTILITY($J,"W")
+"RTN","ICDSELDS",157,0)
+ Q:'$D(ICDSRL)
+"RTN","ICDSELDS",158,0)
+ S ICDLL=+($G(X))
+"RTN","ICDSELDS",159,0)
+ S:+ICDLL'>0 ICDLL=79
+"RTN","ICDSELDS",160,0)
+ S ICDLC=+($G(ICDSRL))
+"RTN","ICDSELDS",161,0)
+ S:+($G(ICDLC))'>0 ICDLC=$O(ICDSRL(" "),-1)
+"RTN","ICDSELDS",162,0)
+ Q:+ICDLC'>0
+"RTN","ICDSELDS",163,0)
+ S DIWL=1,DIWF="C"_+ICDLL
+"RTN","ICDSELDS",164,0)
+ S ICDLI1=0
+"RTN","ICDSELDS",165,0)
+ F  S ICDLI1=$O(ICDSRL(ICDLI1)) Q:+ICDLI1=0  S X=$G(ICDSRL(ICDLI1)) D ^DIWP
+"RTN","ICDSELDS",166,0)
+ K ICDSRL
+"RTN","ICDSELDS",167,0)
+ S (ICDLC,ICDLI1)=0
+"RTN","ICDSELDS",168,0)
+ F  S ICDLI1=$O(^UTILITY($J,"W",1,ICDLI1)) Q:+ICDLI1=0  D
+"RTN","ICDSELDS",169,0)
+ . S ICDSRL(ICDLI1)=$$TM($G(^UTILITY($J,"W",1,ICDLI1,0))," "),ICDLC=ICDLC+1
+"RTN","ICDSELDS",170,0)
+ S:$L(ICDLC) ICDSRL=ICDLC
+"RTN","ICDSELDS",171,0)
+ K ^UTILITY($J,"W")
+"RTN","ICDSELDS",172,0)
+ Q
+"RTN","ICDSELDS",173,0)
+TM(ICDX,ICDY) ; Trim Character Y - Default " "
+"RTN","ICDSELDS",174,0)
+ S ICDX=$G(ICDX) Q:ICDX="" ICDX S ICDY=$G(ICDY) S:'$L(ICDY) ICDY=" "
+"RTN","ICDSELDS",175,0)
+ F  Q:$E(ICDX,1)'=ICDY  S ICDX=$E(ICDX,2,$L(ICDX))
+"RTN","ICDSELDS",176,0)
+ F  Q:$E(ICDX,$L(ICDX))'=ICDY  S ICDX=$E(ICDX,1,($L(ICDX)-1))
+"RTN","ICDSELDS",177,0)
+ Q ICDX
+"VER")
+8.0^22.2
+"BLD",11031,6)
+^85
+**END**
+**END**
+

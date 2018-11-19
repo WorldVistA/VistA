@@ -1,0 +1,256 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/16/18 at 11:41
+=============================================================================
+Run Date: AUG 21, 2018                     Designation: OOPS*2*31
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #30                      Status: Released
+                  Compliance Date: SEP 21, 2018
+=============================================================================
+
+Associated patches: (v)OOPS*2*30   <<= must be installed BEFORE `OOPS*2*31'
+
+Subject: ASISTS GUI OSHA300A DATE ISSUES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ **NOTE: The release OOPS*2*31 includes a new dependent ASISTS Graphical 
+ User Interface (GUI) v2.31.1.0.  ASIST GUI v2.31.1.0 is required after 
+ OOPS*2*31 has been installed.  Therefore the installation of OOPS*2*31 
+ must be closely coordinated with the deployment of ASIST GUI v2.31.1.0  
+ and must be performed within the same maintenance window.  A Solution 
+ Delivery (SD) deployment package (VA ASIST 2.31.1.0) is available for 
+ sites who deploy ASIST GUI to client desktop workstations.**
+ **************************************************************************
+  
+ When attempting to update Occupational Safety and Health Administration 
+ (OSHA) 300 Summary Data in ASISTS, adding new entries are supposed to
+ select the next month and year in sequence, but depending on the year of
+ the currently selected record, the year can be set to a previous year.  
+ Also, ASISTS does not enforce the date restrictions when editing of OSHA
+ 300A Summary if the current month is January or February.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. R18284899FY18    URGENT - OSHA Requirement not met in Asists
+   
+    Problem: 
+    --------
+    When adding data for the "Enter/Edit OSHA 300A Summary Data" form, 
+    if the selected row is for a previous year, it will incorrectly
+    calculate the next entry date using the year from the selected row.
+   
+    Resolution:
+    -----------
+    Ensure the month/year calculation is done correctly so that the next
+    sequential month and date is used when adding new entries.
+  
+  
+  
+ 2. I19278432FY18   ASISTS does not enforce OSHA 300 add/edit time 
+                    restrictions
+   
+    Problem: 
+    --------
+    The monthly OSHA 300A Summary information can be edited for the current 
+    year until the end of February of the next year. Beginning on March 
+    1st of next year, the previous year's information can be viewed but not
+    edited. However, when adding/editing data for the "Enter/Edit OSHA 300A
+    Summary Data" form, if the current month is January or February, ASISTS
+    will allow you to add/edit data prior to the previous year.
+   
+    Resolution:
+    -----------
+    ASISTS will enforce the documented date restriction and only allow 
+    adding/editing of data for the previous year only through February
+    of the following year.
+  
+ ROUTINE: OOPSGUI1
+  
+ Test Sites:
+ ----------
+ Martinsburg VA Medical Center
+ Asheville VA Medical Center 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+ OI Field Offices:
+  
+ Hines:    domain.ext  
+ Salt Lake City:    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                  File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ASISTS ZIP file        oops2_p31.zip                  BINARY
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+   
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter OOPS*2.0*31)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        OOPS*2.0*31.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+  
+   
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ The backup from step 3d of the installation instructions have to be installed 
+ to restore routine OOPSGUI1 to its previous state.  Once OOPSGUI1 is 
+ restored, the previous GUI OOPS*2.0*30 can be used.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34497332   After: B34497330  **4,8,7,11,15,18,20,21,23,28,
+                                           29,30,31**
+ 
+Routine list of preceding patches: 30
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 23, 2018
+Completed By:                               Date Completed: AUG 20, 2018
+Released By :                               Date Released : AUG 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

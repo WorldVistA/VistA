@@ -1,0 +1,196 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 06/04/18 at 15:19
+=============================================================================
+Run Date: SEP 25, 2018                     Designation: OR*3*487
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #409                      Status: Released
+                  Compliance Date: OCT 26, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*471    <<= must be installed BEFORE `OR*3*487'
+                    (v)PSS*1*229   <<= must be installed BEFORE `OR*3*487'
+
+Subject: PHARMACY ORDERABLE ITEM QUICK ORDER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects several issues involving errors and quick order 
+ restrictions being removed during execution of Additives File [PSSJI 
+ DRUG] and Primary Solution File (IV) [PSSJI SOLN] options.
+  
+ Associated CA-SDM Ticket(s): 
+ ============================
+ 1. INC0371095 - Option PSSJI DRUG (Additives) Issues
+    Duplicates
+    INC0291993
+    INC0381340
+    INC0393508
+ 2. INC0292614: Option PSSJI SOLN (Solutions) Issues 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Cincinnati VA Medical Center, OH
+ Clement J. Zablocki Veterans Affairs Medical Center (Milwaukee, WI)
+  
+ TICKET OVERVIEW:
+ ================ 
+ 1. INC0371095 - Option PSSJI DRUG (Additives) Issues
+ Problem 1:
+ ----------
+ When invoking Additives File [PSSJI DRUG] option and if the selected 
+ additive is defined to have "UNIT DOSE MEDICATIONS" usage set as "Quick
+ Order only" in the ORDERABLE ITEMS (#101.43) file, one of two errors will
+ occur.
+  
+    1) The first error encountered results in the removal of the
+       designation as an additive in the ORDERABLE ITEMS (#101.43) file,
+       which renders the additive unorderable in both CPRS and VistA.
+  
+    2) The second error encountered after invoking the PSSJI DRUG option 
+       again for the same additive, results in restoration of the
+       designation as an additive in the ORDERABLE ITEMS (#101.43) file,
+       but fails to restore any "IV ADDITIVES" or "IV MEDICATIONS" quick
+       order restrictions that may have originally been in place.
+  
+ If the usage "UNIT DOSE MEDICATIONS" is not defined as "Quick Order Only"
+ but the "IV ADDITIVES" and/or "IV MEDICATIONS" usages are defined as
+ "Quick Order Only", an error does not occur.  However, the "Quick Order
+ Only" restriction(s) are removed from the corresponding ORDERABLE ITEMS
+ (#101.43) file entry.
+  
+ 2. INC0292614: Option PSSJI SOLN (Solutions) Issues
+ Problem 2:
+ --------- 
+ When invoking "Primary Solution File (IV) [PSSJI SOLN]" option and if the
+ selected solution is defined to have "UNIT DOSE MEDICATIONS" usage set as
+ "Quick Order only" in the ORDERABLE ITEMS (#101.43) file, one of two
+ errors will occur.
+  
+    1) The first error encountered results in the removal of the 
+       designation as a solution in the ORDERABLE ITEMS (#101.43) file,
+       which renders the solution unorderable in both CPRS and VistA.
+  
+    2) The second error encountered after invoking PSSJI SOLN again for 
+       the same solution results in restoration of the designation as a
+       solution in the ORDERABLE ITEMS (#101.43) file, but fails to restore
+       any "IV SOLUTIONS" or "IV MEDICATIONS" quick order restrictions that
+       may have originally been in place.
+  
+ If the usage "UNIT DOSE MEDICATIONS" is not defined as "Quick Order Only"
+ but the "IV SOLUTIONS" and/or "IV MEDICATIONS" usages are defined as
+ "Quick Order Only", an error does not occur.  However, the "Quick Order
+ Only" restriction(s) are removed from the corresponding ORDERABLE ITEMS
+ (#101.43) file entry.
+  
+ Resolution 1 & 2:
+ -----------------
+ Modified routines PSSVIDRG and ORMFN to prevent the errors and also 
+ preserve quick order settings on additives and solutions.  
+  
+ NOTE: Routine PSSVIDRG is included in patch PSS*1.0*229 which will be
+ installed before this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: The companion patch to this patch is PSS*1.0*229. PSS*1.0*229 must
+         be installed before OR*3.0*487.
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'OR*3.0*487'.
+  
+       When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//', choose 'NO'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', choose 'NO'.
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+ Compare the checksum of routine ORMFN to the "After" checksum listed in
+ the patch description.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make 
+ the decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ ORMFN included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine ORMFN from the backup
+ created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMFN
+    Before: B53240029   After: B51851880  **26,97,94,176,215,243,280,350,
+                                           471,487**
+ 
+Routine list of preceding patches: 471
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 03, 2018
+Completed By:                               Date Completed: SEP 20, 2018
+Released By :                               Date Released : SEP 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

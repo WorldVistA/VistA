@@ -1,0 +1,185 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/20/17 at 17:22
+=============================================================================
+Run Date: SEP 27, 2018                     Designation: LR*5.2*499
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #411                    Status: Released
+                  Compliance Date: OCT 29, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*161  <<= must be installed BEFORE `LR*5.2*499'
+                    (v)LR*5.2*458  <<= must be installed BEFORE `LR*5.2*499'
+                    (v)LR*5.2*461  <<= must be installed BEFORE `LR*5.2*499'
+
+Subject: LAB LABEL AND RESULT VERIFICATION ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) VistA Laboratory issues related to:
+  (1) accession labels being skipped or the printing process generating
+     duplicate labels endlessly
+  (2) results being verified when the user has no initials on file in the
+     New Person (#200) file.
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ None
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*499 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*499 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*499 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Participating Test Sites:
+ =========================
+ Puget Sound Health Care System
+ Washington DC - VA Medical Center
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ CA-SDM R17009922FY18 - Lab Label Discrepancies
+  
+ Problem:
+ -------
+  
+ Under certain conditions, the lab order date variable (LRODT) can be 
+ improperly modified leading to skipped accession labels or an endless loop
+ of duplicate accession labels. 
+    
+ Resolution: 
+ ----------
+  
+ The routine LRLABXOL is modified to save the proper value of LRODT and 
+ restore it properly after each label is generated.
+  
+ Routine: LRLABXOL
+  
+ CA-SDM I17092880FY18 - Result Verification Issue
+  
+ Problem:
+ -------
+  
+ If a user goes to enter, verify or modify Lab orders, when they attempt 
+ to approve it for release, if no initials have been stored in the New 
+ Person (#200) file for that user, when they are prompted to enter their 
+ initials and they leave the field blank and press "enter", the results 
+ will be verified, even though their initials are missing.  Results should 
+ not be verified if no initials are entered during the resulting process.
+    
+ Resolution: 
+ ----------
+  
+ Modify routines LRVER3 and LRVR3 to require that users enter initials in 
+ order to verify results. The modifications correct the issue for manual 
+ entry, instrumentation entry, and Laboratory Electronic Data Interchange
+ (LEDI) entry of results.
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*499'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRLABXOL
+    Before:  B5111104   After:  B5325882  **11,121,161,499**
+Routine Name: LRVER3
+    Before: B75852172   After: B75975061  **42,100,121,140,171,153,221,
+                                           286,291,406,350,461,499**
+Routine Name: LRVR3
+    Before:B108418700   After:B108508518  **42,121,153,286,291,350,458,499**
+ 
+Routine list of preceding patches: 161, 458, 461
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 14, 2017
+Completed By:                               Date Completed: SEP 14, 2018
+Released By :                               Date Released : SEP 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

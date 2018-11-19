@@ -1,0 +1,122 @@
+
+=============================================================================
+Run Date: AUG 30, 2018                     Designation: PREN*3*4
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 3         SEQ #4                      Status: Released
+                  Compliance Date: SEP 29, 2018
+=============================================================================
+
+
+Subject: PPS-N 3.0.3 FIX FOR COPAY TIER EFFECTIVE DATE ISSUE
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ The PPS-N application performs the following major business functions:
+  
+ * Add/edit/approve medication and supply information
+ * Synchronize changes in PPS-N with VistA sites
+ * Output various reports
+ * Process additions and updates from First DataBank (FDB)
+ * Search for and add drug information from First DataBank
+  
+ PPS-N v3.0.3 contains the fix for ONE Service Now Ticket.
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC0473775 - Issue with the Copay Tier Effective date.   
+  
+  
+ Problem:
+ ========
+ The system is looking at the date the Product is being entered and then 
+ rounding off to the 2nd following month.  Meaning, a product entered 
+ today (May 2nd) will have a copay tier effective date of JULY 1st.  It 
+ was designed this way because of the lag time with the KIDS Patches.  Now 
+ that we are using the .DAT update process, the 30-45 day lag time has 
+ been eliminated.   So, the customer would like the copay tier effective 
+ date to default to the Product creation date (that is, the current date).
+  
+ Resolution:
+ ===========
+ Changed the code to default the Copay Tier Effective date to the date the 
+ Product is created. Changed the code to remove the Effective date warning.
+  
+  
+ Test Sites:
+ ===========
+ PBM Team 
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------
+  
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to retrieve files 
+ from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+    OI FIELD OFFICE     ADDRESS                        DIRECTORY
+    Hines               DOMAIN.EXT        
+    Salt Lake City      DOMAIN.EXT          
+   
+ The documentation distribution includes:
+  
+  
+ FILE NAME                               DESCRIPTION
+ ---------------------------------------------------------------------
+  
+ PREN_3_0P4_V3_0_3_IG.PDF                PPS-N v3.0.3 Installation Guide
+ PREN_3_0P4_V3_0_3_UM.PDF                PPS-N v3.0.3 User Guide
+                
+ Pre-Installation Instructions:
+ ------------------------------ 
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 23, 2018
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

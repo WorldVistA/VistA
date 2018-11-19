@@ -1,0 +1,244 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/25/18 at 14:14
+=============================================================================
+Run Date: AUG 14, 2018                     Designation: SD*5.3*685
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #573                    Status: Released
+                  Compliance Date: SEP 14, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*654  <<= must be installed BEFORE `SD*5.3*685'
+
+Subject: CORRECT SDRR PRINT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch SD*5.3*685 corrects an undefined error when selecting 'Print
+ Cards by Team' from the Clinic Recall Print Menu [SDRR PRINT MENU]
+ option.
+  
+ This patch also corrects an alignment issue when printing  
+ patient's confidential address for recall letters and cards.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. I18373344FY18 - CORRECT ERROR IN SDRR PRINT CARDS BY TEAM
+  
+    Problem:
+    --------
+    When selecting 'Print Cards by Team' from the Clinic Recall Print  
+    Menu [SDRR PRINT MENU] option, if any patients on the team have a   
+    bad address, the error <UNDEFINED>DQT+1^SDRRRECP is received.
+  
+    Resolution:
+    -----------
+    Routine SDRRRECP was modified to remove the extra line of code 
+    'D ^%ZISC G QUIT' at line DQT+19^SDRRRECP.
+  
+ 2. INC0250508 - CLASS I RECALL LETTERS DO NOT INDENT FIRST LINE OF 
+                 CONFIDENTIAL ADDRESS
+  
+    Problem:
+    --------
+    When printing recall letters or cards, the starting position for the
+    first line of a patient's confidential address is not aligned with 
+    other lines of the address.
+  
+    Resolution:
+    -----------
+    Routines SDRRTSK, SDRRTSK1, SDRRRECL, and SDRRRECP were modified to
+    change the starting position of the first line of a patient's 
+    confidential address from position 12 to 20 to match with other address
+    lines.
+  
+  
+ TEST SITES:
+ -----------
+ West Palm Beach VAMC
+ VA Connecticut HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please DO NOT install this patch when scheduled Recall Reminder task job 
+ are running. These scheduled jobs include:
+  
+         Auto Print for Recall Reminder          [SDRR TASK JOB]
+         Auto Print for Recall Reminder Cards    [SDRR TASK JOB CARD]
+  
+ It is recommended that the Recall Reminder users be off the system. Other 
+ VistA users will not be affected.
+  
+ This patch should take less than 5 minutes to install.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch SD*5.3*685:
+  
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+     4. From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+    
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+     
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//" respond YES.
+  
+        When prompted, 'Enter options you wish to mark as 'Out of Order':',
+        enter:
+  
+              Clinic Recall Print Menu [SDRR PRINT MENU]
+              Auto Print for Recall Reminder [SDRR TASK JOB]
+              Auto Print for Recall Reminder Cards [SDRR TASK JOB CARD]
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out of 
+        Order':', enter: <ENTER>.
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/PackMan message 
+ created from the installation instructions, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRRECL
+    Before:B146201896   After:B146305019  **536,561,569,579,654,685**
+Routine Name: SDRRRECP
+    Before:B109867057   After:B109959368  **536,569,579,654,685**
+Routine Name: SDRRTSK
+    Before: B25995311   After: B26048403  **536,579,643,654,685**
+Routine Name: SDRRTSK1
+    Before: B17550007   After: B17602412  **536,579,643,654,685**
+ 
+Routine list of preceding patches: 654
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2018
+Completed By:                               Date Completed: AUG 14, 2018
+Released By :                               Date Released : AUG 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,193 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/01/18 at 12:35
+=============================================================================
+Run Date: SEP 26, 2018                     Designation: PSO*7*514
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #438                      Status: Released
+                  Compliance Date: OCT 27, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*362   <<= must be installed BEFORE `PSO*7*514'
+                    (v)PSO*7*440   <<= must be installed BEFORE `PSO*7*514'
+                    (v)PSO*7*463   <<= must be installed BEFORE `PSO*7*514'
+                    (v)PSO*7*515   <<= must be installed BEFORE `PSO*7*514'
+
+Subject: VERIFICATION SCREEN/QTY RECALCULATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. I9914421FY16 - all prescription information is not displayed on the
+                   Pharmacy verification screen
+ 2. R18151128FY18 - QTY Recalculation when Drug Changed
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I9914421FY16 - all prescription information is not displayed on the
+                   Pharmacy verification screen
+   
+ Problem: 
+ --------
+ There's a problem with the final screen seen when verifying a
+ prescription, scrolling back is required to get a final look at
+ prescription data. 
+ This may be occurring when a patient has several Service Connected (SC)
+ conditions, though there seems to still be plenty of room to allow the
+ view of all prescription data.
+  
+ Resolution:
+ -----------
+ The fix will be to add a 'Press Return to Continue' after displaying the
+ prescription information for verification if there is not enough room on
+ the screen to display all of the information.  The drug name will also be
+ added at the top of the screen where the remainder of the disabilities
+ are displayed.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routines PSOMLLD2, PSORN52, PSORENW3,PSOCPB
+  
+  
+ 2. R18151128FY18 - QTY Recalculation when Drug Changed
+  
+ Problem:
+ --------
+ Phoenix VAMC reported they have some of their bulk and Unit Dose drug
+ entries marked for both Outpatient (OP) and Inpatient(IP) packages to
+ allow the finishing pharmacist to change between the 2 items of the same
+ strength and be able to either take from the inpatient vault or the
+ outpatient vault (different physical locations). This used to not be a
+ problem and they were able to finish a pending order exactly as entered by
+ the provider.
+  
+ After the installation of patch PSO*7.0*422, when the finishing pharmacist
+ changes the dispense drug, they are now forced to review the instructions
+ and at the end the quantity sometimes recalculates to a different amount
+ than was entered by the provider.  This happens when the ordered quantity
+ is less than or more than what is defined by the entered SIG. This can
+ create the opportunity to dispense the wrong quantity.
+   
+ Solution:
+ ---------
+ Changed the Patient Prescription Processing [PSO LM BACKDOOR ORDERS] and
+ Complete Orders from OERR [PSO LMOE FINISH] options to no longer re-calculate
+ the Quantity when the Dispense Drug is edited for Controlled Substance 
+ (CS) single dose pending orders or active prescriptions if they are marked
+ "PRN" (as needed). Instead, the following message will be displayed:
+   
+           The QTY (999) has not been changed.  
+           Please, review and update it if necessary.  
+    
+ Technical Solution:
+ -------------------
+ Changed line tag QTY in the PSOSIG routine to prevent re-calculation of Quantity
+  for CS pending orders marked PRN when the Dispense Drug is edited.
+  
+ Test Sites:
+ -----------
+ Phoenix HCS
+ Oscar G. Johnson VAMC (Iron Mountain)
+  
+ Installation Instructions:
+ --------------------------
+  
+ Users should not be processing prescriptions while the patch is being 
+ installed.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSO*7.0*514:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+       respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//' respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation
+ of the development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision
+ between the development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the
+ Backup a Transport Global [XPD BACKUP] menu option (this is done at
+ time of install). The message containing the backed up routines can
+ be loaded with the "Xtract PackMan" function at the Message Action
+ prompt. The Packman function "INSTALL/CHECK MESSAGE" is then used
+ to install the backed up routines onto the VistA System. 
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCPB
+    Before: B93273887   After: B93317750  **72,71,85,185,143,219,239,201,
+                                           263,303,431,476,463,514**
+Routine Name: PSOMLLD2
+    Before: B30902022   After: B38199463  **143,219,239,225,431,514**
+Routine Name: PSORENW3
+    Before: B41233677   After: B41588780  **11,20,46,100,117,444,440,514**
+Routine Name: PSORN52
+    Before: B44851851   After: B45172995  **1,11,27,37,46,79,71,100,117,
+                                           157,143,219,148,239,201,225,
+                                           303,358,251,387,379,362,514**
+Routine Name: PSOSIG
+    Before: B95915445   After:B103751531  **46,99,114,391,313,282,455,
+                                           446,402,500,515,514**
+ 
+Routine list of preceding patches: 362, 440, 463, 515
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 16, 2018
+Completed By:                               Date Completed: SEP 25, 2018
+Released By :                               Date Released : SEP 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

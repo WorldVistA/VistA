@@ -1,0 +1,421 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 05/01/18 at 09:24
+=============================================================================
+Run Date: AUG 06, 2018                     Designation: PSO*7*505
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #434                      Status: Released
+                  Compliance Date: SEP 06, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*225   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*313   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*372   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*391   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*446   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*467   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*488   <<= must be installed BEFORE `PSO*7*505'
+                    (v)PSO*7*504   <<= must be installed BEFORE `PSO*7*505'
+
+Subject: MEDICATION PERMISSIONS/DISPENSING UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Outpatient pharmacy is being enhanced to provide new and updated 
+ functionality. Certain fields in controlled substance prescriptions can 
+ no longer be edited (such as Provider, Orderable Item, and Drug). 
+ Controlled substance prescriptions will now require the patient to have 
+ a zip code on file in order for the order to be written or dispensed 
+ through the 'Patient Prescription Processing' option [PSO LM BACKDOOR] or 
+ the 'Complete Orders from OERR option [PSO LMOE FINISH]. 
+ Titration/Maintenance functionality is now being blocked for all 
+ controlled substance prescriptions. Outpatient pharmacy now allows 
+ leading zeros in fractional quantity prescriptions, allowing users to
+ accurately dispense outpatient medications.
+  
+ New sorting/filtering criteria have been added to 'Complete Orders from 
+ OERR' [PSO LMOE FINISH] to allow pharmacist more flexibility in 
+ selecting the prescriptions they wish to finish. These changes will 
+ improve efficiency during the process of finishing prescriptions. A new 
+ secondary sort criteria is being introduced, allowing another level of 
+ restriction on the list of prescriptions being provided to the user. Two 
+ new options within controlled substance sorting have been added as well. 
+ These are NON-CS + SCHEDULES III-IV, and NON-CS. Supply item sorting has 
+ also been incorporated into the sort/filter process.
+  
+ The current email generated from the scheduled option 'Expire 
+ Prescriptions' [PSO EXPIRE PRESCRIPTIONS] has been modified to a new 
+ format to include the facility name/institution file internal entry 
+ number. This is being done to provide better information to the user 
+ receiving the email.
+  
+ Finally, the HL7 logic has been modified so that 'EL' for Electronic will 
+ be sent to the Outpatient Pharmacy Automation Interface (OPAI) if a
+ controlled substance prescription has been digitally signed. This 
+ enhancement provides the authorization type in the ORC segment allowing 
+ the dispensing device to consume the authorization type. The dispensing 
+ device can then make use of the authorization type to inform the 
+ pharmacist whether or not a hard-copy prescription needs to be collated 
+ with the medication.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20130711
+  
+ Item #1:
+ --------
+ Prevent the use of titration/maintenance functionality on all controlled
+ substance prescriptions, so it is consistent between Electronic 
+ Prescriptions for Controlled Substances (EPCS) prescriptions and paper
+ prescriptions.
+  
+ Resolution:
+ -----------
+ Routine PSOOTMRX has been modified to check and prevent the use of the
+ titration functionality on all controlled substance prescriptions.
+  
+ Item #2:
+ --------
+ Enhance outpatient pharmacy to allow leading zeros in fractional 
+ quantity prescriptions. This will allow users to finish and dispense
+ outpatient medications accurately.
+  
+ Resolution:
+ -----------
+ Modified PSODIR1 to add a 0 (zero) in front of the decimal place for 
+ fractional quantity prescriptions.
+  
+ Added logic to NFILE^PSON52 to ensure a leading zero is attached to 
+ fractional quantity prescriptions.
+  
+ Modified PSOORNEW to remove the + from the quantity display so leading 
+ zeros will display for fractional quantity prescriptions.
+  
+ Item #3:
+ --------
+ Enhance messaging to the Outpatient Pharmacy Automation Interface
+ (OPAI) to include an indicator if a prescription was digitally signed.
+  
+ Resolution:
+ -----------
+ Routine PSOHLDS4 has been modified to pass 'EL' in the ORC | 30 segment 
+ if the prescription is a controlled substance and has been digitally 
+ signed.
+  
+ Item #4:
+ --------
+ Modify the edit logic for pending Schedule II-V orders to stop the editing
+ process if one of the fields in the selection range is an uneditable
+ field that would create a new prescription.
+  
+ Resolution:
+ -----------
+ Routines PSOOREDT and PSOORNEW have been modified to check each 
+ individual field when being edited. If the field is an uneditable field 
+ for a controlled substance prescription, those fields will not be 
+ available to the user during their editing.
+  
+ Item #5:
+ --------
+ Add legend drugs (non-controlled substances) and controlled substances
+ C-III through C-V (the lower schedules of controlled substances) to the
+ sort filter functionality in 'Complete Orders from OERR' [PSO LMOE
+ FINISH].
+  
+ Resolution:
+ -----------
+ Routine PSOORFI5 has been modified to now include legend drugs and 
+ controlled substances C-III through C-V and non-controlled substances.
+  
+ Item #6:
+ --------
+ Add the ability to select supply items as a sort filter in 'Complete 
+ Orders from OERR' [PSO LMOE FINISH].
+  
+ Resolution:
+ -----------
+ Enhanced the filter selection prompt in PSOORFIN to now include supply
+ items.
+  
+ Enhanced help text in ST^PSOORFI1 to include supply items.
+  
+ Added a new linetag to PSOORFI5 that controlls processing of supply items.
+  
+ Item #7:
+ --------
+ Add a secondary sort filter selection in 'Complete Orders from OERR'
+ [PSO LMOE FINISH].
+  
+ Resolution:
+ -----------
+ Routines PSOORFIN, PSOORFI5, PSOORFI3, and PSOORFI6 have been modified to 
+ now allow a user to select a primary and a secondary sort criteria. After 
+ selecting a primary sort criteria, the user will not be able to select 
+ the same criteria as the secondary sort.
+  
+ Item #8:
+ --------
+ Prevent users from dispensing controlled substance medications if the
+ patient is missing a zip code in the patient address information.
+ DEA regulation 21 CFR 1306.05(a) compliance.
+  
+ Resolution:
+ -----------
+ Routine PSOORNEW has been modified to block the Finish action when 
+ finishing a prescription that is a controlled substance when the patient 
+ does not have zip code on file.
+  
+ Item #9:
+ --------
+ Modify the subject and body of the expiring DEA mail message so the
+ user has more comprehensive information about an expriring DEA number.
+  
+ Resolution:
+ -----------
+ Modified routine PSOHLEXP to update the subject and body of the email 
+ message being sent.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ New York Harbor
+ Kansas City 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ ------------------------------------------------------------------------
+ Outpatient Pharmacy Technical Manual/Security Guide
+                               PSO_7_TM_R0818.pdf                Binary
+  
+ Outpatient Pharmacy Manager's User Manual
+                               PSO_7_UM_R0818.pdf                Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7*505.
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*505 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*505 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 39
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR1
+    Before: B93842245   After: B95371987  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391,
+                                           444,446,505**
+Routine Name: PSOHELP
+    Before: B49812789   After: B50313084  **3,23,29,48,46,117,131,222,
+                                           268,206,276,282,444,505**
+Routine Name: PSOHLDS4
+    Before: B16602666   After: B16987762  **156,255,279,385,505**
+Routine Name: PSOHLEXP
+    Before: B22400492   After: B24025393  **10,22,36,73,148,257,391,505**
+Routine Name: PSON52
+    Before: B98826270   After:B102819042  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408,
+                                           473,504,505**
+Routine Name: PSOOREDT
+    Before: B82334396   After: B91171061  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391,313,427,411,
+                                           505**
+Routine Name: PSOORFI1
+    Before: B82061614   After: B86566158  **7,15,23,27,32,44,51,46,71,
+                                           90,108,131,152,186,210,222,258,
+                                           260,225,391,408,444,467,505**
+Routine Name: PSOORFI3
+    Before: B74671626   After: B77499735  **15,27,32,46,84,99,130,117,
+                                           139,172,225,300,384,372,505**
+Routine Name: PSOORFI5
+    Before: B48135325   After: B76809208  **225,315,266,391,372,416,504,505**
+Routine Name: PSOORFI6
+    Before: B23497771   After:B120103085  **225,505**
+Routine Name: PSOORFIN
+    Before: B64024579   After: B72047260  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391,372,416,446,505**
+Routine Name: PSOORNE6
+    Before: B50160901   After: B50434819  **46,103,117,156,210,488,505**
+Routine Name: PSOORNEW
+    Before: B98552577   After:B112662411  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486,446,505**
+Routine Name: PSOOTMRX
+    Before: B20486782   After: B23201302  **313,505**
+ 
+Routine list of preceding patches: 385, 446, 467, 488, 504
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2017
+Completed By:                               Date Completed: AUG 01, 2018
+Released By :                               Date Released : AUG 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

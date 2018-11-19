@@ -1,0 +1,206 @@
+
+=============================================================================
+Run Date: SEP 24, 2018                     Designation: EAS*1*167
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #139                      Status: Released
+                  Compliance Date: OCT 25, 2018
+=============================================================================
+
+
+Subject: Enrollment System (ES) 5.3.1 Sustainment Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.3.1. This release, developed in 
+ Java technology, contains Enrollment System Modernization Phase 2 (ESM P2)
+ defect fixes to support Community Care (CC) and ES Sustainment.
+  
+ This software is being installed at AITC and no action is required by the 
+ sites.
+  
+ ES 5.3.1 was successfully deployed on Saturday, September 22nd, 2018.
+  
+ The following functionality is updated in this ES 5.3.1 release:
+  
+ - Due to code changes included in the ES emergency release ES 5.3.0.07001,
+   ES 5.3.1 includes the following modification: Create an ES batch utility
+   to be able to send Z10 messages on demand (RTC #811546).
+  
+ ES Sustainment defect fixes:
+  
+ - 442640: ES is rejecting the Military Service data from the Electronic 
+           Military Information Service (eMIS) due to unknown values for
+           the country codes.
+ - 752784: The CC Determination Page is blank due to Residential Address 
+           table structure issues (INC0822948).
+ - 801939: VET360 status NO_CHANGES_DETECTED leaves the Coding Accuracy 
+           Support System (CASS) status not updating during the processing
+           of the job.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ --------- --------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+            
+ Rational Team Concert (RTC):
+ ----------------------------
+  
+ RTC #       Problem / Resolution:
+ --------    ---------------------
+ 442640  Problem: ES is rejecting the Military Service data from eMIS due 
+         to unknown values for the country codes.
+  
+         Resolution: Code changes were made to add logic to set the country
+         to 'ZZ' (Unknown) if an unrecognized country code is received.
+  
+ 752784  Problem: CC Determination Page is blank due to Residential Address
+         table structure issues (INC0822948).
+  
+         Resolution: The table structure was corrected and additional
+         'activeagg' data handling was added.
+  
+ 801939  Problem: VET360 status NO_CHANGES_DETECTED leaves the CASS status 
+         not updating during the processing of the job.
+  
+         Resolution: Fixed the 'Acknowledgement Message' to allow the CASS
+         status to change to the 'certified' status once the CASS
+         processing ends.
+  
+ Test Sites:
+ -----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the modification and defects fixed by 
+ this release is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         ES_5_3_1_RN.PDF         (binary)
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 21, 2018
+Completed By:                               Date Completed: SEP 24, 2018
+Released By :                               Date Released : SEP 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

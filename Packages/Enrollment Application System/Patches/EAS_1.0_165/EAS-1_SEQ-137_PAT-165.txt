@@ -1,0 +1,226 @@
+
+=============================================================================
+Run Date: AUG 20, 2018                     Designation: EAS*1*165
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #137                      Status: Released
+                  Compliance Date: SEP 20, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.3 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.3. This release, developed in Java
+ technology, contains Enrollment System Modernization Phase 2 (ESM P2) 
+ development and upgrade efforts, including enhancements to support 
+ Community Care (CC) and ES Sustainment.
+  
+ The following functionality is updated in this ES 5.3 release:
+  
+ ESM:
+ 1. Functionality is added to have a Pre-closure Letter mailed to Veterans
+   who were mailed an initial pending letter between March and November
+   2016 informing them of their record closure.
+ 2. The Mail Responses from Initial Mailing and Pre-closure Letter mailing
+   is imported to the ES Communications Log.
+ 3. A batch job is created to set enrollment applications to "Closed 
+   Application" status and apply an enrollment end date based on a file 
+   provided by the business which contains ICNs and enrollment end dates
+   for each application to be closed.
+ 4. A reusable option is configured to mail a final closure letter on
+   demand when their application is closed by the new "Closed Application"
+   batch job.
+  
+  
+ ESCC:
+ 1. The following new functionality is added to set the Effective Dates for
+   Veterans Choice Eligibility (VCE) Distance Parameters: 
+     - Set the Effective Dates for VCE Wait Time Parameters so that changes
+       to these wait time parameters are used to determine VCE for Veterans
+       on the intended date and time.
+     - Add On-Demand VCE Distance Parameters configuration that
+       specifies how far a Veteran's residential address must be from a
+       Veterans Access, Choice, and Accountability Act (VACAA) facility to
+       be eligible for the Veterans Choice program.
+     - Add configuration to exclude VCE Distance and Wait Time
+       Parameters, so that each parameter may be excluded in determining
+       VCE based on a configurable effective date set.
+     - Add configuration to capture VCE Parameters audit history.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 549184      Problem: The generated error message "Stop Communications has 
+             been selected" is not read immediately by screen reader on the
+             Stop Communication Letter status page.
+             Resolution: Modified the Information and Error Messages HTML
+             Code, so that the screen readers detect and read the messages
+             when the message box is in focus.
+  
+ 556256      Problem: Station Name from CDW is different than in SDS table.
+             Resolution: Code changes were made to add CDW_STATION_NAME
+             column to WQAITTIME table.
+  
+ 690211      Problem: Reason For Early Separation is NOT getting updated
+             when the 'Narrative Reason For Separation Txt' received from
+             eMIS is different from the text displayed in ES. 
+             Resolution: Code changes were made to handle the "noncached" 
+             lookup for the narrativeReasonType on the lookupDAO table.
+  
+ 724204      Problem: The site of change field displays correctly in main 
+             address GUI.  But on the historical page, site of change 
+             displays empty.
+             Resolution: Code changes were made to ensure that the correct
+             site of change value is being used on the Historical Address
+             screen.
+  
+ 748790      Problem: Station number in wait time information is displaying
+             only a 3-digit number.
+             Resolution: Code changes were made to the ETL job to extract
+             the station name and number from CDW.
+  
+ 771209      Problem: ORUZ11 message is not getting triggered when there is
+             a mismatch in Period of Service vs MSE Service Period.
+             Resolution: Code changes were made to attach the person
+             object by loading person at the start of the transaction.
+  
+ 771942      Problem: Production defect - PLC extract job is not executing
+             as scheduled.
+             Resolution: Code changes were made to add the PCL extract job
+             to the common.scheduledJobs.triggers file to be executed as
+             scheduled.
+  
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.3 Release Notes            ES_5_3_RN.PDF                  binary
+ ES 5.3 User Guide               ES_5_3_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 02, 2018
+Completed By:                               Date Completed: AUG 20, 2018
+Released By :                               Date Released : AUG 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,171 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/21/18 at 09:27
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: LR*5.2*507
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #410                    Status: Released
+                  Compliance Date: SEP 29, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*459  <<= must be installed BEFORE `LR*5.2*507'
+
+Subject: LAB PANEL DISPLAYS INCORRECTLY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ When a lab panel (cosmic) test is set up so the atomic tests in the panel
+ split to separate accession areas (e.g. one Chemistry and one Toxicology),
+ results of the ordered panel test do not display all of the results of the
+ atomic tests in the panel when viewed in Computerized Patient Record
+ System (CPRS) from the Orders tab or from the Cover Sheet.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. CA-SDM I19238962FY18 - Lab Panel Displays Incorrectly
+  
+ Problem:
+ --------
+ When there are two accessions created during the accessioning process, the
+ date.time value used to store data about the tests in the LAB DATA file
+ (#63) can be slightly different (e.g. 6819595.864069 and 6819595.86407).
+ Only one date.time value is stored in the ORDER file (#100). Invariably, a
+ $ORDER based on those parameters will exceed the end date (or be beyond
+ the start date) after the first pass and then it will QUIT. Consequently,
+ only one set of results will be returned.
+  
+ Resolution:
+ -----------
+ The routine ^LR7OR1 is modified to initiate the search in the LAB DATA 
+ file (#63) with a date.time value slightly lower than the value stored in
+ the ORDER file (#100).
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*507 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*507 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*507 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Test Sites:
+ -----------
+ William S. Middleton Memorial Veterans Hospital (Madison)
+ Cheyenne VAMC
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be installed when Laboratory users are on the system. The 
+ install time for this patch is less than 2 minutes.
+  
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option to load the KIDS patch
+    into a Transport Global on your system.
+  
+ 3. From the Kernel Installation & Distribution System Menu (KIDS), select
+    the Installation Menu.
+  
+ 4. From the Installation Menu, select the Backup a Transport Global 
+    option and when prompted for the INSTALL NAME enter the patch
+    LR*5.2*507. This option will create a backup message of any routines
+    exported with this patch. It will not backup any other changes such as
+    DDs or templates.
+     
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch LR*5.2*507.
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    enter the patch LR*5.2*507.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//', respond 'NO'.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility Chief Information 
+ Officer may make the decision to back-out the patch.
+  
+ The back-out plan is to restore the routine from the backup created.  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The PackMan
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ To verify the back-out completed successfully, ensure the checksum matches
+ the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OR1
+    Before: B34879723   After: B34970506  **121,187,219,230,256,310,340,
+                                           348,350,427,459,507**
+ 
+Routine list of preceding patches: 459
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2018
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

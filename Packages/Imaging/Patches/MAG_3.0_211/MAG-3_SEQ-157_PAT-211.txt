@@ -1,0 +1,436 @@
+
+=============================================================================
+Run Date: AUG 03, 2018                     Designation: MAG*3*211
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #157                      Status: Released
+                  Compliance Date: SEP 07, 2018
+=============================================================================
+
+
+Subject: Clinical Capture Issue
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*189.
+  
+ Subject: CLINICAL CAPTURE ISSUE
+ ========
+  
+ Category: ROUNTINE
+ =========
+  
+ Description:
+ ============
+ MAG*3.0*211 resolves two issues for the Clinical Capture Client. First,
+ there is an issue with the single page color PDF images. When the user 
+ performs batch capture of single page color pdf image, the system throws 
+ an error message that the image had issues loading. This issue happens 
+ only when users save it on a desktop or upload the image from their local 
+ drive. When the user uploads the single page pdf from VistA 
+ Imaging/network drive, the issue will not occur. Some image(s) will need 
+ to be edited, so the user needs to save the image locally or on a desktop.
+ If the user does not use batch capture, there is a chance of creating
+ duplicate uploads. 
+  
+ The second issue occurs when some users delete temporary files. This error
+ causes the Capture application to freeze.  The user must open Task
+ Manager, and use the 'End Task' function to close the application. 
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 211_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P211_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ File Name                                 Description
+ =========                                 ===========
+ MAG3_0P211.KID                            Kernel Installation and
+                                           Distribution System (KIDS) build
+                                           for Patch 211
+ MAG3_0P211_Clinical_Capture_ Setup.exe    Clinical Capture client 
+                                           installation file
+ MAG3_0P211_Clinical_Capture_Install.msi   Clinical Capture push 
+                                           installation file
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P211_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 679299 (Trouble Ticket # I15923209FY17) Issue with Batch 
+ Capture
+ Problem: 
+ ========
+ When the user performs batch capture of a single page color pdf image, the
+ system throws an error message that the image had issues loading. This
+ issue happens only when users save it on a desktop or upload from their
+ local drive. When the user uploads the single page color pdf from VistA
+ Imaging/network drive, the issue will not occur. Some images need to be
+ edited, so the user needs to save the image locally or on a desktop. If
+ the user does not use batch capture, there is a chance of creating
+ duplicate uploads. 
+ The problem with selecting the documents from the Vista Imaging Network 
+ Drive is that the documents cannot be edited. When scanning in a document 
+ with multiple pages, for instance, and one page is sideways or needs to 
+ be deleted, it turns all pages, not just the one selected and the page 
+ cannot be deleted. In other words, when scanned into the desktop folder, 
+ the images can be edited using Adobe Acrobat.
+  
+ Resolution: 
+ ===========
+ The Batch Capture function was modified. The function now clears the 
+ ImageGear control that had previously opened the PDF file. This action
+ clears the handle to the temporary image, allowing it to be deleted by the
+ application in the process of capturing the image to the image network
+ location.
+  
+ 2. Defect 737628 (Trouble Ticket # I18701954FY18) Indian Health 
+ Service(IHS): File Access denied error when Clinical Capture is closed
+  
+ Problem: 
+ ========
+ On Clinical Capture when a user closes or exits Clinical Capture, the
+ system throws the File Access denied error. In certain situations, an
+ error occurs in the Clinical Capture application when temporary files are 
+ deleted. This error causes the Capture application to freeze.  The user 
+ must open Task Manager, and use the 'End Task' function to close the 
+ application. 
+  
+ Resolution: 
+ ===========
+ The application was modified to catch any exception that occurs due to 
+ file access denied. Now when the application closes, any exception is 
+ 'caught' and the capture application closes cleanly.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+    Northern Arizona VA Health Care System
+    VA Southern Nevada Healthcare System
+    IHS Site 
+    o Kewa (Albuquerque Area)
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location        Site
+ ========        ====
+ Hines           domain.ext 
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*211 is released, the list of supported versions of Clinical 
+ Capture will change:
+ Supported Versions      No Longer Supported
+ ==================      ===================
+ 3.0.211                 3.0.140
+ 3.0.189                 3.0.129
+ 3.0.178                 3.0.122
+ 3.0.151                 3.0.117
+                         3.0.106
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*211 must be installed on the VistA System and on 64-bit
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system. Installing the MAG*3.0*211 KIDS takes 1-5 
+ minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:
+ =====
+ All previously released VistA Imaging patches must be installed on 
+ the VistA system before installing MAG*3.0*211.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1. Access the Kernel Installation and Distribution System Menu [XPD 
+ MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+    load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P211.KID) of 
+    the Patch 211 KIDS file that was downloaded from the Download Server.
+    c. When prompted to continue with the load, enter "YES". A 
+    Distribution OK! Message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify 
+    the contents of the patch. 
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+    this option if you want to ensure the integrity of the routines in the 
+    patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO 
+    SYSTEM]- Run this option if you want to view all the changes that will
+    be made when the patch is installed. All components (routines, options,
+    and so on) in the patch will be compared.
+    c. Back up a Transport Global [XPD BACKUP] - Run this option if you 
+    want to create a backup message of any routines exported with the
+    patch. The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, 
+    install the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*211.
+    c. Answer NO to the following prompts, if they appear:
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+ 6. When the installation has finished, an Install Completed message 
+    will be displayed.
+  
+ KIDS Installation Example
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If the user has already installed the patch and is installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ the output will be different.
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:  MAG*3.0*211  5/16/18@13:33:18
+    => VistA Imaging V 3 - Patch 211 - Capture Issues ;Created on May 15,
+  
+ This Distribution was loaded on May 16, 2018@13:33:18 with header of
+   VistA Imaging V 3 - Patch 211 - Capture Issues ;Created on May 15, 
+ 2018@1
+ 6:51:39
+   It consisted of the following Install(s):
+   MAG*3.0*211
+ Checking Install for Package MAG*3.0*211
+  
+ Install Questions for MAG*3.0*211
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  HERE
+  
+  
+ Running Pre-Install Routine: PRE^MAGIP211
+  
+  Running Post-Install Routine: POS^MAGIP211
+  
+ Post Install Mail Message: May 16, 2018@13:33:26
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*211 Installed.
+         May 16, 2018@13:33:26
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Install Completed
+  
+ Post-Installation Instructions:
+ ===============================
+ VistA Imaging Clinical Capture Client Installation Instructions
+ The Clinical Imaging Capture client software can be updated using one of 
+ the methods outlined below:
+         Manual installation
+         Automatic installation using other methods (SMS, PSexec, etc.)
+ Note: 
+ =====
+ The Clinical Capture Application is only supported on a Windows 7 
+ operating system. Other operating systems are not officially supported.
+ Clinical Capture is distributed as an MSI and EXE installation. The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool). The EXE is intended for use to install on a single 
+ workstation. 
+ After the client installation is complete, log into an updated 
+ workstation and use the Help About menu option to verify that the version 
+ number is 3.0.211.1.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P211_Clinical_Capture_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Uninstalling Clinical Capture Client MAG*3.0*211
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*211 client, use the Uninstall 
+ option from Windows Control Panel to uninstall: "VistA Imaging Clinical 
+ Capture". Then install the previous version of Clinical Capture which was 
+ included in MAG*3.0*189.
+  
+ Uninstalling Clinical Capture KIDS MAG*3.0*211
+ ==============================================
+ If it is necessary to uninstall the MAG*3.0*211 VistA KIDS, you need to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see Installation Steps section, step 4c done 
+ before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1. Select the message shown below:
+ Backup of MAG*3.0*211 install on <mmm dd, yyyy>  <user name>
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt. There is no need to back up the 
+    backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning:
+ ========
+ Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2  Message #42925   Unloading Routine  MAGGGTU4C (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]** ; Mar 19, 2002;Build 31;Sep 06, 2017
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum      Patch List
+                 Before          After
+ MAGIP211        NA              4256572       **211**
+ MAGGTU4C        5350343         5150767       **93,94,106,117,122,
+                                               129,140,151,178,189,
+                                               211**
+ Routine MAGIP211 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 34;May 15, 2018
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTU4C
+    Before:  B5350343   After:  B5150767  **93,94,106,117,122,129,140,
+                                           151,178,189,211**
+Routine Name: MAGIP211
+    Before:       n/a   After:  B4256572  **211**
+ 
+Routine list of preceding patches: 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 10, 2018
+Completed By:                               Date Completed: AUG 02, 2018
+Released By :                               Date Released : AUG 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

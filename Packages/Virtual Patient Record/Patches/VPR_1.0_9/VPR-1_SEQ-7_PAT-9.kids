@@ -1,0 +1,475 @@
+Released VPR*1*9 SEQ #7
+Extracted from mail message
+**KIDS**:VPR*1.0*9^
+
+**INSTALL NAME**
+VPR*1.0*9
+"BLD",10855,0)
+VPR*1.0*9^VIRTUAL PATIENT RECORD^0^3180802^y
+"BLD",10855,1,0)
+^^2^2^3180730^
+"BLD",10855,1,1,0)
+This patch address one ticket: INC1583647. The problem is that the 
+"BLD",10855,1,2,0)
+Radiology Contrast Media allergy isn't showing up on the JLV display.
+"BLD",10855,4,0)
+^9.64PA^^
+"BLD",10855,6)
+1^
+"BLD",10855,6.3)
+3
+"BLD",10855,"ABPKG")
+n
+"BLD",10855,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10855,"KRN",.4,0)
+.4
+"BLD",10855,"KRN",.401,0)
+.401
+"BLD",10855,"KRN",.402,0)
+.402
+"BLD",10855,"KRN",.403,0)
+.403
+"BLD",10855,"KRN",.5,0)
+.5
+"BLD",10855,"KRN",.84,0)
+.84
+"BLD",10855,"KRN",3.6,0)
+3.6
+"BLD",10855,"KRN",3.8,0)
+3.8
+"BLD",10855,"KRN",9.2,0)
+9.2
+"BLD",10855,"KRN",9.8,0)
+9.8
+"BLD",10855,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10855,"KRN",9.8,"NM",1,0)
+VPRDGMRA^^0^B22400572
+"BLD",10855,"KRN",9.8,"NM","B","VPRDGMRA",1)
+
+"BLD",10855,"KRN",19,0)
+19
+"BLD",10855,"KRN",19.1,0)
+19.1
+"BLD",10855,"KRN",101,0)
+101
+"BLD",10855,"KRN",409.61,0)
+409.61
+"BLD",10855,"KRN",771,0)
+771
+"BLD",10855,"KRN",779.2,0)
+779.2
+"BLD",10855,"KRN",870,0)
+870
+"BLD",10855,"KRN",8989.51,0)
+8989.51
+"BLD",10855,"KRN",8989.52,0)
+8989.52
+"BLD",10855,"KRN",8994,0)
+8994
+"BLD",10855,"KRN","B",.4,.4)
+
+"BLD",10855,"KRN","B",.401,.401)
+
+"BLD",10855,"KRN","B",.402,.402)
+
+"BLD",10855,"KRN","B",.403,.403)
+
+"BLD",10855,"KRN","B",.5,.5)
+
+"BLD",10855,"KRN","B",.84,.84)
+
+"BLD",10855,"KRN","B",3.6,3.6)
+
+"BLD",10855,"KRN","B",3.8,3.8)
+
+"BLD",10855,"KRN","B",9.2,9.2)
+
+"BLD",10855,"KRN","B",9.8,9.8)
+
+"BLD",10855,"KRN","B",19,19)
+
+"BLD",10855,"KRN","B",19.1,19.1)
+
+"BLD",10855,"KRN","B",101,101)
+
+"BLD",10855,"KRN","B",409.61,409.61)
+
+"BLD",10855,"KRN","B",771,771)
+
+"BLD",10855,"KRN","B",779.2,779.2)
+
+"BLD",10855,"KRN","B",870,870)
+
+"BLD",10855,"KRN","B",8989.51,8989.51)
+
+"BLD",10855,"KRN","B",8989.52,8989.52)
+
+"BLD",10855,"KRN","B",8994,8994)
+
+"BLD",10855,"QUES",0)
+^9.62^^
+"BLD",10855,"REQB",0)
+^9.611^1^1
+"BLD",10855,"REQB",1,0)
+VPR*1.0*1^2
+"BLD",10855,"REQB","B","VPR*1.0*1",1)
+
+"MBREQ")
+0
+"PKG",654,-1)
+1^1
+"PKG",654,0)
+VIRTUAL PATIENT RECORD^VPR^Utilities to manage a virtual copy of the patient record
+"PKG",654,20,0)
+^9.402P^^
+"PKG",654,22,0)
+^9.49I^1^1
+"PKG",654,22,1,0)
+1.0^3110804^3110912^520736406
+"PKG",654,22,1,"PAH",1,0)
+9^3180802^520824645
+"PKG",654,22,1,"PAH",1,1,0)
+^^2^2^3180802
+"PKG",654,22,1,"PAH",1,1,1,0)
+This patch address one ticket: INC1583647. The problem is that the 
+"PKG",654,22,1,"PAH",1,1,2,0)
+Radiology Contrast Media allergy isn't showing up on the JLV display.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","VPRDGMRA")
+0^1^B22400572^B22392321
+"RTN","VPRDGMRA",1,0)
+VPRDGMRA ;SLC/MKB -- Allergy/Reaction extract ;Aug 02, 2018@13:10:03
+"RTN","VPRDGMRA",2,0)
+ ;;1.0;VIRTUAL PATIENT RECORD;**1,9**;Sep 01, 2011;Build 3
+"RTN","VPRDGMRA",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","VPRDGMRA",4,0)
+ ;
+"RTN","VPRDGMRA",5,0)
+ ; External References          DBIA#
+"RTN","VPRDGMRA",6,0)
+ ; -------------------          -----
+"RTN","VPRDGMRA",7,0)
+ ; ^VA(200                      10060
+"RTN","VPRDGMRA",8,0)
+ ; %DT                          10003
+"RTN","VPRDGMRA",9,0)
+ ; GMRADPT                      10099
+"RTN","VPRDGMRA",10,0)
+ ; EN1^GMRAOR2                   2422
+"RTN","VPRDGMRA",11,0)
+ ; PSN50P41                      4531
+"RTN","VPRDGMRA",12,0)
+ ; PSN50P65                      4543
+"RTN","VPRDGMRA",13,0)
+ ;
+"RTN","VPRDGMRA",14,0)
+ ; ------------ Get reactions from VistA ------------
+"RTN","VPRDGMRA",15,0)
+ ;
+"RTN","VPRDGMRA",16,0)
+EN(DFN,BEG,END,MAX,IFN) ; -- find patient's allergies/reactions
+"RTN","VPRDGMRA",17,0)
+ N GMRA,GMRAL,VPRN,VPRITM,VPRCNT
+"RTN","VPRDGMRA",18,0)
+ S DFN=+$G(DFN) Q:DFN<1
+"RTN","VPRDGMRA",19,0)
+ S BEG=$G(BEG,1410101),END=$G(END,4141015),MAX=$G(MAX,9999),VPRCNT=0
+"RTN","VPRDGMRA",20,0)
+ D EN1^GMRADPT
+"RTN","VPRDGMRA",21,0)
+ ;
+"RTN","VPRDGMRA",22,0)
+ ; get one reaction
+"RTN","VPRDGMRA",23,0)
+ I $G(IFN) D EN1(IFN,.VPRITM),XML(.VPRITM) Q
+"RTN","VPRDGMRA",24,0)
+ ;
+"RTN","VPRDGMRA",25,0)
+ ; get all reactions
+"RTN","VPRDGMRA",26,0)
+ I 'GMRAL D  Q
+"RTN","VPRDGMRA",27,0)
+ . S VPRITM("assessment")=$S(GMRAL=0:"nka",1:"not done")
+"RTN","VPRDGMRA",28,0)
+ . S VPRITM("facility")=$$FAC^VPRD ;local stn#^name
+"RTN","VPRDGMRA",29,0)
+ . D XML(.VPRITM)
+"RTN","VPRDGMRA",30,0)
+ S VPRN=0 F  S VPRN=+$O(GMRAL(VPRN)) Q:VPRN<1  D  Q:VPRCNT'<MAX
+"RTN","VPRDGMRA",31,0)
+ . K VPRITM D EN1(VPRN,.VPRITM) Q:'$D(VPRITM)
+"RTN","VPRDGMRA",32,0)
+ . D XML(.VPRITM) S VPRCNT=VPRCNT+1
+"RTN","VPRDGMRA",33,0)
+ Q
+"RTN","VPRDGMRA",34,0)
+ ;
+"RTN","VPRDGMRA",35,0)
+EN1(ID,REAC) ; -- return a reaction in REAC("attribute")=value
+"RTN","VPRDGMRA",36,0)
+ ;          from EN: expects GMRAL(ID)
+"RTN","VPRDGMRA",37,0)
+ N VPRY,GMRA,I,J,X,Y,SEV,TXT,SEV K REAC
+"RTN","VPRDGMRA",38,0)
+ S GMRA=$G(GMRAL(ID)) D EN1^GMRAOR2(ID,"VPRY")
+"RTN","VPRDGMRA",39,0)
+ S X=$P(VPRY,U,10) I $L(X) S X=$$DATE(X) Q:X<BEG  Q:X>END  S REAC("entered")=X
+"RTN","VPRDGMRA",40,0)
+ S REAC("facility")=$$FAC^VPRD ;local stn#^name
+"RTN","VPRDGMRA",41,0)
+ S REAC("id")=ID,REAC("name")=$P(VPRY,U) I $P(GMRA,U,9) D
+"RTN","VPRDGMRA",42,0)
+ . S X=$P(GMRA,U,9),Y=+$P(X,"(",2) I 'Y,X["PSDRUG" S Y=50
+"RTN","VPRDGMRA",43,0)
+ . S REAC("localCode")=X,REAC("vuid")=$$VUID^VPRD(+X,Y)
+"RTN","VPRDGMRA",44,0)
+ S X=$P(VPRY,U,6) S:$L(X) REAC("mechanism")=X
+"RTN","VPRDGMRA",45,0)
+ S X=$P(VPRY,U,5),REAC("source")=$E(X)
+"RTN","VPRDGMRA",46,0)
+ S REAC("type")=$S($L(GMRA):$P(GMRA,U,7),1:$$DFO($P(VPRY,U,7)))_U_$P(VPRY,U,7)
+"RTN","VPRDGMRA",47,0)
+ I $P(VPRY,U,4)="VERIFIED",$P(VPRY,U,9) S REAC("verified")=$P(VPRY,U,9)
+"RTN","VPRDGMRA",48,0)
+ S I=0,SEV="" F  S I=$O(VPRY("O",I)) Q:I<1  S X=$P(VPRY("O",I),U,2) S:X]SEV SEV=X ;find highest severity
+"RTN","VPRDGMRA",49,0)
+ S:$L(SEV) REAC("severity")=SEV
+"RTN","VPRDGMRA",50,0)
+ ; reactions
+"RTN","VPRDGMRA",51,0)
+ S I=0 F  S I=$O(GMRAL(ID,"S",I)) Q:I<1  D
+"RTN","VPRDGMRA",52,0)
+ . S X=$G(GMRAL(ID,"S",I)),Y=+$P(X,";",2)
+"RTN","VPRDGMRA",53,0)
+ . S REAC("reaction",I)=$P(X,";")_U_$$VUID^VPRD(Y,120.83)
+"RTN","VPRDGMRA",54,0)
+ ; comments
+"RTN","VPRDGMRA",55,0)
+ S I=0 F  S I=$O(VPRY("C",I)) Q:I<1  D
+"RTN","VPRDGMRA",56,0)
+ . S X=$G(VPRY("C",I)) K TXT
+"RTN","VPRDGMRA",57,0)
+ . S Y=$$VA200($P(X,U,3))_U_$P(X,U)
+"RTN","VPRDGMRA",58,0)
+ . S Y=Y_U_$S($L($P(X,U,2)):$E($P(X,U,2)),1:"E")
+"RTN","VPRDGMRA",59,0)
+ . S J=0 F  S J=$O(VPRY("C",I,J)) Q:J<1  S X=$G(VPRY("C",I,J,0)),TXT(J)=X
+"RTN","VPRDGMRA",60,0)
+ . K X S X=$$STRING^VPRD(.TXT)
+"RTN","VPRDGMRA",61,0)
+ . S REAC("comment",I)=Y_U_X ;ien^name^date^type^text
+"RTN","VPRDGMRA",62,0)
+ ; drug info
+"RTN","VPRDGMRA",63,0)
+ I $D(VPRY("I")) D
+"RTN","VPRDGMRA",64,0)
+ . N ROOT S ROOT=$$B^PSN50P41
+"RTN","VPRDGMRA",65,0)
+ . S I=0 F  S I=$O(VPRY("I",I)) Q:I<1  S X=$G(VPRY("I",I)) D
+"RTN","VPRDGMRA",66,0)
+ .. N IEN S IEN=$O(@ROOT@(X,0))
+"RTN","VPRDGMRA",67,0)
+ .. S REAC("drugIngredient",I)=X_U_$$VUID^VPRD(IEN,50.416)
+"RTN","VPRDGMRA",68,0)
+ I $D(VPRY("V")) D
+"RTN","VPRDGMRA",69,0)
+ . S I=0 F  S I=$O(VPRY("V",I)) Q:I<1  S X=$G(VPRY("V",I)) D
+"RTN","VPRDGMRA",70,0)
+ .. D C^PSN50P65("",$P(X,U,2),"PSN")
+"RTN","VPRDGMRA",71,0)
+ .. N IEN S IEN=+$O(^TMP($J,"PSN","C",$P(X,U),0))
+"RTN","VPRDGMRA",72,0)
+ .. S REAC("drugClass",I)=$P(X,U,2)_U_$$VUID^VPRD(IEN,50.605)
+"RTN","VPRDGMRA",73,0)
+ I GMRA="" S REAC("removed")=1 ;entered in error
+"RTN","VPRDGMRA",74,0)
+ Q
+"RTN","VPRDGMRA",75,0)
+ ;
+"RTN","VPRDGMRA",76,0)
+VA200(NAME) ; -- Return ien^name from #200
+"RTN","VPRDGMRA",77,0)
+ N Y S NAME=$G(NAME),Y="^"
+"RTN","VPRDGMRA",78,0)
+ I $L(NAME) S Y=+$O(^VA(200,"B",NAME,0))_U_NAME
+"RTN","VPRDGMRA",79,0)
+ Q Y
+"RTN","VPRDGMRA",80,0)
+ ;
+"RTN","VPRDGMRA",81,0)
+DATE(X) ; -- Return internal form of date X
+"RTN","VPRDGMRA",82,0)
+ N %DT,Y
+"RTN","VPRDGMRA",83,0)
+ S %DT="TXS" D ^%DT
+"RTN","VPRDGMRA",84,0)
+ Q Y
+"RTN","VPRDGMRA",85,0)
+ ;
+"RTN","VPRDGMRA",86,0)
+DFO(X) ; -- Return 'DFO' string for mechanism name(s)
+"RTN","VPRDGMRA",87,0)
+ N I,P,Y S Y=""
+"RTN","VPRDGMRA",88,0)
+ F I=1:1:$L(X,",") S P=$P(X,",",I),Y=Y_$S($E(P)=" ":$E(P,2),1:$E(P))
+"RTN","VPRDGMRA",89,0)
+ S:Y="" Y=$G(X)
+"RTN","VPRDGMRA",90,0)
+ Q Y
+"RTN","VPRDGMRA",91,0)
+ ;
+"RTN","VPRDGMRA",92,0)
+ ; ------------ Return data to middle tier ------------
+"RTN","VPRDGMRA",93,0)
+ ;
+"RTN","VPRDGMRA",94,0)
+XML(REAC) ; -- Return patient reaction as XML
+"RTN","VPRDGMRA",95,0)
+ ;  as <element code='123' displayName='ABC' />
+"RTN","VPRDGMRA",96,0)
+ N ATT,X,Y,I,P,NM,TAG
+"RTN","VPRDGMRA",97,0)
+ D ADD("<allergy>") S VPRTOTL=$G(VPRTOTL)+1
+"RTN","VPRDGMRA",98,0)
+ S ATT="" F  S ATT=$O(REAC(ATT)) Q:ATT=""  D  D:$L(Y) ADD(Y)
+"RTN","VPRDGMRA",99,0)
+ . I ATT="comment" D  S Y="" Q
+"RTN","VPRDGMRA",100,0)
+ .. S I=0,Y="<comments>" D ADD(Y)
+"RTN","VPRDGMRA",101,0)
+ .. F  S I=$O(REAC(ATT,I)) Q:I<1  S X=$G(REAC(ATT,I)) D
+"RTN","VPRDGMRA",102,0)
+ ... S Y="<comment id='"_I
+"RTN","VPRDGMRA",103,0)
+ ... S:$L($P(X,U,3)) Y=Y_"' entered='"_$P(X,U,3)
+"RTN","VPRDGMRA",104,0)
+ ... S:$L($P(X,U,2)) Y=Y_"' enteredBy='"_$$ESC^VPRD($P(X,U,2))
+"RTN","VPRDGMRA",105,0)
+ ... S:$L($P(X,U,4)) Y=Y_"' commentType='"_$P(X,U,4)
+"RTN","VPRDGMRA",106,0)
+ ... S:$L($P(X,U,5)) Y=Y_"' commentText='"_$$ESC^VPRD($P(X,U,5))
+"RTN","VPRDGMRA",107,0)
+ ... S Y=Y_"' />" D ADD(Y)
+"RTN","VPRDGMRA",108,0)
+ .. D ADD("</comments>")
+"RTN","VPRDGMRA",109,0)
+ . I $O(REAC(ATT,0)) D  S Y="" Q
+"RTN","VPRDGMRA",110,0)
+ .. S NM=ATT_$S($E(ATT,$L(ATT))="s":"es",1:"s") D ADD("<"_NM_">")
+"RTN","VPRDGMRA",111,0)
+ .. S I=0 F  S I=$O(REAC(ATT,I)) Q:I<1  D
+"RTN","VPRDGMRA",112,0)
+ ... S X=$G(REAC(ATT,I)),Y="<"_ATT_" "
+"RTN","VPRDGMRA",113,0)
+ ... F P=1:1 S TAG=$P("name^vuid^severity^Z",U,P) Q:TAG="Z"  I $L($P(X,U,P)) S Y=Y_TAG_"='"_$$ESC^VPRD($P(X,U,P))_"' "
+"RTN","VPRDGMRA",114,0)
+ ... S Y=Y_"/>" D ADD(Y)
+"RTN","VPRDGMRA",115,0)
+ .. D ADD("</"_NM_">")
+"RTN","VPRDGMRA",116,0)
+ . S X=$G(REAC(ATT)),Y="" Q:'$L(X)
+"RTN","VPRDGMRA",117,0)
+ . I X'["^" S Y="<"_ATT_" value='"_$$ESC^VPRD(X)_"' />" Q
+"RTN","VPRDGMRA",118,0)
+ . I $L(X)>1 D  S Y=""
+"RTN","VPRDGMRA",119,0)
+ .. S Y="<"_ATT_" "
+"RTN","VPRDGMRA",120,0)
+ .. F P=1:1 S TAG=$P("code^name^Z",U,P) Q:TAG="Z"  I $L($P(X,U,P)) S Y=Y_TAG_"='"_$$ESC^VPRD($P(X,U,P))_"' "
+"RTN","VPRDGMRA",121,0)
+ .. S Y=Y_"/>" D ADD(Y)
+"RTN","VPRDGMRA",122,0)
+ D ADD("</allergy>")
+"RTN","VPRDGMRA",123,0)
+ Q
+"RTN","VPRDGMRA",124,0)
+ ;
+"RTN","VPRDGMRA",125,0)
+ADD(X) ; Add a line @VPR@(n)=X
+"RTN","VPRDGMRA",126,0)
+ S VPRI=$G(VPRI)+1
+"RTN","VPRDGMRA",127,0)
+ S @VPR@(VPRI)=X
+"RTN","VPRDGMRA",128,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10855,6)
+^7
+**END**
+**END**
+

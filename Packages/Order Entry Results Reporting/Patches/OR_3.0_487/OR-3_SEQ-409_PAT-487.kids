@@ -1,0 +1,691 @@
+Released OR*3*487 SEQ #409
+Extracted from mail message
+**KIDS**:OR*3.0*487^
+
+**INSTALL NAME**
+OR*3.0*487
+"BLD",11113,0)
+OR*3.0*487^ORDER ENTRY/RESULTS REPORTING^0^3180604^y
+"BLD",11113,1,0)
+^^28^28^3180603^
+"BLD",11113,1,1,0)
+Issues:
+"BLD",11113,1,2,0)
+ 
+"BLD",11113,1,3,0)
+1. When invoking option PSSJI DRUG:
+"BLD",11113,1,4,0)
+ 
+"BLD",11113,1,5,0)
+   a) An error occurs if an additive is defined to have "UNIT DOSE 
+"BLD",11113,1,6,0)
+      MEDICATIONS" usage defined as "quick order only".
+"BLD",11113,1,7,0)
+ 
+"BLD",11113,1,8,0)
+   b) Quick order restrictions are removed if "IV MEDICATIONS" and/or 
+"BLD",11113,1,9,0)
+      "IV ADDITIVES" usages are defined as "quick order only.
+"BLD",11113,1,10,0)
+ 
+"BLD",11113,1,11,0)
+2. When invoking option PSSJI SOLN:
+"BLD",11113,1,12,0)
+ 
+"BLD",11113,1,13,0)
+   a) An error occurs if a solution is defined to have 'UNIT DOSE 
+"BLD",11113,1,14,0)
+      MEDICATIONS" usage defined as "quick order only".
+"BLD",11113,1,15,0)
+ 
+"BLD",11113,1,16,0)
+   b) Quick order restrictions are removed if "IV MEDICATIONS" and/or 
+"BLD",11113,1,17,0)
+      "IV SOLUTIONS" usages are defined as "quick order only".
+"BLD",11113,1,18,0)
+ 
+"BLD",11113,1,19,0)
+Resolution:
+"BLD",11113,1,20,0)
+----------
+"BLD",11113,1,21,0)
+ 
+"BLD",11113,1,22,0)
+Modified routines PSSVIDRG and ORMFN to preserve quick order settings on 
+"BLD",11113,1,23,0)
+additives and solutions.  These changes also prevented the error which 
+"BLD",11113,1,24,0)
+occurred when a solution or additive was defined to have unit doses as 
+"BLD",11113,1,25,0)
+"quick order only".
+"BLD",11113,1,26,0)
+ 
+"BLD",11113,1,27,0)
+Routine PSSVIDRG is included in patch PSS*1.0*229 which will be installed 
+"BLD",11113,1,28,0)
+along with routine ORMFN in this patch.
+"BLD",11113,4,0)
+^9.64PA^^
+"BLD",11113,6.3)
+2
+"BLD",11113,"ABPKG")
+n
+"BLD",11113,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11113,"KRN",.4,0)
+.4
+"BLD",11113,"KRN",.401,0)
+.401
+"BLD",11113,"KRN",.402,0)
+.402
+"BLD",11113,"KRN",.403,0)
+.403
+"BLD",11113,"KRN",.5,0)
+.5
+"BLD",11113,"KRN",.84,0)
+.84
+"BLD",11113,"KRN",3.6,0)
+3.6
+"BLD",11113,"KRN",3.8,0)
+3.8
+"BLD",11113,"KRN",9.2,0)
+9.2
+"BLD",11113,"KRN",9.8,0)
+9.8
+"BLD",11113,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",11113,"KRN",9.8,"NM",1,0)
+ORMFN^^0^B51851880
+"BLD",11113,"KRN",9.8,"NM","B","ORMFN",1)
+
+"BLD",11113,"KRN",19,0)
+19
+"BLD",11113,"KRN",19.1,0)
+19.1
+"BLD",11113,"KRN",101,0)
+101
+"BLD",11113,"KRN",409.61,0)
+409.61
+"BLD",11113,"KRN",771,0)
+771
+"BLD",11113,"KRN",779.2,0)
+779.2
+"BLD",11113,"KRN",870,0)
+870
+"BLD",11113,"KRN",8989.51,0)
+8989.51
+"BLD",11113,"KRN",8989.52,0)
+8989.52
+"BLD",11113,"KRN",8994,0)
+8994
+"BLD",11113,"KRN","B",.4,.4)
+
+"BLD",11113,"KRN","B",.401,.401)
+
+"BLD",11113,"KRN","B",.402,.402)
+
+"BLD",11113,"KRN","B",.403,.403)
+
+"BLD",11113,"KRN","B",.5,.5)
+
+"BLD",11113,"KRN","B",.84,.84)
+
+"BLD",11113,"KRN","B",3.6,3.6)
+
+"BLD",11113,"KRN","B",3.8,3.8)
+
+"BLD",11113,"KRN","B",9.2,9.2)
+
+"BLD",11113,"KRN","B",9.8,9.8)
+
+"BLD",11113,"KRN","B",19,19)
+
+"BLD",11113,"KRN","B",19.1,19.1)
+
+"BLD",11113,"KRN","B",101,101)
+
+"BLD",11113,"KRN","B",409.61,409.61)
+
+"BLD",11113,"KRN","B",771,771)
+
+"BLD",11113,"KRN","B",779.2,779.2)
+
+"BLD",11113,"KRN","B",870,870)
+
+"BLD",11113,"KRN","B",8989.51,8989.51)
+
+"BLD",11113,"KRN","B",8989.52,8989.52)
+
+"BLD",11113,"KRN","B",8994,8994)
+
+"BLD",11113,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11113,"QUES",0)
+^9.62^^
+"BLD",11113,"REQB",0)
+^9.611^2^2
+"BLD",11113,"REQB",1,0)
+OR*3.0*471^2
+"BLD",11113,"REQB",2,0)
+PSS*1.0*229^2
+"BLD",11113,"REQB","B","OR*3.0*471",1)
+
+"BLD",11113,"REQB","B","PSS*1.0*229",2)
+
+"MBREQ")
+0
+"PKG",174,-1)
+1^1
+"PKG",174,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",174,20,0)
+^9.402P^^
+"PKG",174,22,0)
+^9.49I^1^1
+"PKG",174,22,1,0)
+3.0^2971217^2990325^66481
+"PKG",174,22,1,"PAH",1,0)
+487^3180604
+"PKG",174,22,1,"PAH",1,1,0)
+^^28^28^3180604
+"PKG",174,22,1,"PAH",1,1,1,0)
+Issues:
+"PKG",174,22,1,"PAH",1,1,2,0)
+ 
+"PKG",174,22,1,"PAH",1,1,3,0)
+1. When invoking option PSSJI DRUG:
+"PKG",174,22,1,"PAH",1,1,4,0)
+ 
+"PKG",174,22,1,"PAH",1,1,5,0)
+   a) An error occurs if an additive is defined to have "UNIT DOSE 
+"PKG",174,22,1,"PAH",1,1,6,0)
+      MEDICATIONS" usage defined as "quick order only".
+"PKG",174,22,1,"PAH",1,1,7,0)
+ 
+"PKG",174,22,1,"PAH",1,1,8,0)
+   b) Quick order restrictions are removed if "IV MEDICATIONS" and/or 
+"PKG",174,22,1,"PAH",1,1,9,0)
+      "IV ADDITIVES" usages are defined as "quick order only.
+"PKG",174,22,1,"PAH",1,1,10,0)
+ 
+"PKG",174,22,1,"PAH",1,1,11,0)
+2. When invoking option PSSJI SOLN:
+"PKG",174,22,1,"PAH",1,1,12,0)
+ 
+"PKG",174,22,1,"PAH",1,1,13,0)
+   a) An error occurs if a solution is defined to have 'UNIT DOSE 
+"PKG",174,22,1,"PAH",1,1,14,0)
+      MEDICATIONS" usage defined as "quick order only".
+"PKG",174,22,1,"PAH",1,1,15,0)
+ 
+"PKG",174,22,1,"PAH",1,1,16,0)
+   b) Quick order restrictions are removed if "IV MEDICATIONS" and/or 
+"PKG",174,22,1,"PAH",1,1,17,0)
+      "IV SOLUTIONS" usages are defined as "quick order only".
+"PKG",174,22,1,"PAH",1,1,18,0)
+ 
+"PKG",174,22,1,"PAH",1,1,19,0)
+Resolution:
+"PKG",174,22,1,"PAH",1,1,20,0)
+----------
+"PKG",174,22,1,"PAH",1,1,21,0)
+ 
+"PKG",174,22,1,"PAH",1,1,22,0)
+Modified routines PSSVIDRG and ORMFN to preserve quick order settings on 
+"PKG",174,22,1,"PAH",1,1,23,0)
+additives and solutions.  These changes also prevented the error which 
+"PKG",174,22,1,"PAH",1,1,24,0)
+occurred when a solution or additive was defined to have unit doses as 
+"PKG",174,22,1,"PAH",1,1,25,0)
+"quick order only".
+"PKG",174,22,1,"PAH",1,1,26,0)
+ 
+"PKG",174,22,1,"PAH",1,1,27,0)
+Routine PSSVIDRG is included in patch PSS*1.0*229 which will be installed 
+"PKG",174,22,1,"PAH",1,1,28,0)
+along with routine ORMFN in this patch.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ORMFN")
+0^1^B51851880^B53240029
+"RTN","ORMFN",1,0)
+ORMFN ; SLC/MKB - MFN msg router ;June 03, 2018@20:00
+"RTN","ORMFN",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**26,97,94,176,215,243,280,350,471,487**;Dec 17, 1997;Build 2
+"RTN","ORMFN",3,0)
+ ;
+"RTN","ORMFN",4,0)
+ ;
+"RTN","ORMFN",5,0)
+ ;
+"RTN","ORMFN",6,0)
+EN(MSG) ; -- main entry point for OR ITEM RECEIVE
+"RTN","ORMFN",7,0)
+ N ORMSG,ORNMSP,ORDG,LEN,MSH,MFI,MFE,ZPKG,ZSY,NTE,ORMFE,ORDITEM,ORACTION,ORDIFN,ORFIEN,ORFLD,ORFDA,NUM,VALUE,X,Y,DA,DIC,DIK,SYS,ZLC,LAST,NAME,ID,INACTIVE,I,ORY,NEXT,DD,DO
+"RTN","ORMFN",8,0)
+ ;AGP Create a before and after temp global for compares by other protocols
+"RTN","ORMFN",9,0)
+ K ^TMP($J,"OR OI BEFORE"),^TMP($J,"OR OI AFTER"),^TMP($J,"OR OI NEW")
+"RTN","ORMFN",10,0)
+ S ORMSG=$G(MSG,"MSG") Q:'$O(@ORMSG@(0))  ; msg array root
+"RTN","ORMFN",11,0)
+ N ORNOW S ORNOW=$$NOW^XLFDT ;M ^XTMP("OR ITEM RECEIVE",ORNOW)=@ORMSG
+"RTN","ORMFN",12,0)
+MSH S MSH=0 F  S MSH=$O(@ORMSG@(MSH)) Q:MSH'>0  Q:$E(@ORMSG@(MSH),1,3)="MSH"
+"RTN","ORMFN",13,0)
+ Q:'MSH  S MSH=MSH_U_@ORMSG@(MSH)
+"RTN","ORMFN",14,0)
+ S X=$P(MSH,"|",3) S:X="RADIOLOGY" X="IMAGING"
+"RTN","ORMFN",15,0)
+ S ORDG=$O(^ORD(100.98,"B",X,0)),ORNMSP=$$NMSP(X) Q:'$L(ORNMSP)
+"RTN","ORMFN",16,0)
+ S MFI=$O(@ORMSG@(+MSH)) Q:$E(@ORMSG@(MFI),1,3)'="MFI"  ; error
+"RTN","ORMFN",17,0)
+MFE S MFE=+MFI ; ** loop through each MFE segment
+"RTN","ORMFN",18,0)
+ F  S MFE=$O(@ORMSG@(+MFE)) Q:MFE'>0  I $E(@ORMSG@(MFE),1,3)="MFE" D
+"RTN","ORMFN",19,0)
+ . K ORFLD,ORFDA
+"RTN","ORMFN",20,0)
+ . S MFE=MFE_U_@ORMSG@(MFE),ORMFE=$P(MFE,"|",2),INACTIVE=$P(MFE,"|",4)
+"RTN","ORMFN",21,0)
+ . S ORDITEM=$P(MFE,"|",5),NAME=$TR($P(ORDITEM,U,5),"~"," ")
+"RTN","ORMFN",22,0)
+ . ;AGP remove automatic stripping of trailing spaces
+"RTN","ORMFN",23,0)
+ . ;S LEN=$L(NAME) I $E(NAME,LEN)=" " S NAME=$E(NAME,1,(LEN-1))
+"RTN","ORMFN",24,0)
+ . S ID=$P(ORDITEM,U,4)_";"_$P(ORDITEM,U,6)
+"RTN","ORMFN",25,0)
+ . S ORDIFN=+$O(^ORD(101.43,"ID",ID,0)),ORFIEN=ORDIFN_","
+"RTN","ORMFN",26,0)
+ . S ORACTION=$S(ORMFE="MAD":1,(ORMFE="MAC")&('ORDIFN):1,(ORMFE="MUP")&('ORDIFN):1,'ORDIFN:0,ORMFE="MAC":2,ORMFE="MUP":2,ORMFE="MDC":3,ORMFE="MDL":3,1:0) ; 1=add, 2=change, 3=delete (inactivate)
+"RTN","ORMFN",27,0)
+ . Q:'ORACTION  ; 0=error
+"RTN","ORMFN",28,0)
+ . I ORACTION=3 S ORFDA(101.43,ORFIEN,.1)=$S(INACTIVE:$$HL7TFM^XLFDT(INACTIVE),1:$$NOW^XLFDT) D FILE^DIE("K","ORFDA") Q
+"RTN","ORMFN",29,0)
+ADD . I ORACTION=1,'ORDIFN D  Q:'ORDIFN  ;create item if it doesn't exist
+"RTN","ORMFN",30,0)
+ . . S ORDIFN=$$CREATE(NAME),ORFIEN=ORDIFN_","
+"RTN","ORMFN",31,0)
+ . . S ORFDA(101.43,ORFIEN,5)=+ORDG
+"RTN","ORMFN",32,0)
+ . . I ORDIFN>0 S ^TMP($J,"OR OI NEW",ORDIFN)=""
+"RTN","ORMFN",33,0)
+ . I '$D(^TMP($J,"OR OI NEW",ORDIFN)) M ^TMP($J,"OR OI BEFORE",ORDIFN)=^ORD(101.43,ORDIFN)
+"RTN","ORMFN",34,0)
+ . S ORFLD(.01)=NAME,ORFLD(1.1)=NAME,ORFLD(2)=ID,ORFLD(3)=$P(ORDITEM,U)
+"RTN","ORMFN",35,0)
+ . I $D(^TMP($J,"OR OI BEFORE",ORDIFN,9,"AQO")) D
+"RTN","ORMFN",36,0)
+ . . ;save orderable item quick order restriction
+"RTN","ORMFN",37,0)
+ . . M ^TMP($J,"ORCM QO",ORDIFN)=^TMP($J,"OR OI BEFORE",ORDIFN,9,"AQO")
+"RTN","ORMFN",38,0)
+ . S SYS=$P(ORDITEM,U,3),ORFLD(4)=$S(+SYS=99:$E(SYS,3,99),1:SYS)
+"RTN","ORMFN",39,0)
+ . S ORFLD(.1)=$S(ORMFE="MAC":"@",(ORMFE="MUP")&('INACTIVE):"@",INACTIVE:$$HL7TFM^XLFDT(INACTIVE),1:"")
+"RTN","ORMFN",40,0)
+ . F NUM=.01,.1,1.1,2,3,4 S VALUE=$S(ORFLD(NUM)="":"@",1:ORFLD(NUM)) D VAL^DIE(101.43,ORFIEN,NUM,"F",VALUE,.ORY,"ORFDA")
+"RTN","ORMFN",41,0)
+ZPKG . S LAST=+MFE,ZPKG=$O(@ORMSG@(+MFE))
+"RTN","ORMFN",42,0)
+ . I ZPKG,$E(@ORMSG@(ZPKG),1,3)=("Z"_ORNMSP) S ZPKG=ZPKG_U_@ORMSG@(ZPKG),LAST=+ZPKG D @ORNMSP ; ZXX segment
+"RTN","ORMFN",43,0)
+ . D FILE^DIE("K","ORFDA") ; file data
+"RTN","ORMFN",44,0)
+ZLC . S NEXT=$O(@ORMSG@(LAST)) I NEXT,$E(@ORMSG@(NEXT),1,3)="ZLC" D
+"RTN","ORMFN",45,0)
+ . . N COMP,CID,CODE,CSYS
+"RTN","ORMFN",46,0)
+ . . K DA,^ORD(101.43,ORDIFN,10) ;S DIC("P")=$P(^DD(101.43,10,0),U,2)
+"RTN","ORMFN",47,0)
+ . . S DA(1)=ORDIFN,DIC="^ORD(101.43,"_DA(1)_",10,",DIC(0)="L",ZLC=LAST
+"RTN","ORMFN",48,0)
+ . . F  S ZLC=$O(@ORMSG@(ZLC)) Q:ZLC'>0  Q:$E(@ORMSG@(ZLC),1,3)'="ZLC"  D
+"RTN","ORMFN",49,0)
+ . . . S COMP=$P(@ORMSG@(ZLC),"|",5),X=$P(COMP,U,5) I X="" S LAST=ZLC Q
+"RTN","ORMFN",50,0)
+ . . . S CID=$P(COMP,U,4)_";"_$P(COMP,U,6) K DIC("DR"),DO,DD
+"RTN","ORMFN",51,0)
+ . . . S CODE=$P(COMP,U),CSYS=$P(COMP,U,3) S:+CSYS=99 CSYS=$E(CSYS,3,99)
+"RTN","ORMFN",52,0)
+ . . . S DIC("DR")="2///^S X=CID;3///^S X=CODE;4///^S X=CSYS"
+"RTN","ORMFN",53,0)
+ . . . D FILE^DICN S LAST=ZLC
+"RTN","ORMFN",54,0)
+ZSY . I $D(^ORD(101.43,ORDIFN,2)) D  ; kill old ones first
+"RTN","ORMFN",55,0)
+ . . S DA(1)=ORDIFN,DIK="^ORD(101.43,"_DA(1)_",2,"
+"RTN","ORMFN",56,0)
+ . . S DA=0 F  S DA=$O(^ORD(101.43,DA(1),2,DA)) Q:DA'>0  D ^DIK
+"RTN","ORMFN",57,0)
+ . . K ^ORD(101.43,ORDIFN,2),DIK,DA
+"RTN","ORMFN",58,0)
+ . S NEXT=$O(@ORMSG@(LAST)) I NEXT,$E(@ORMSG@(NEXT),1,3)="ZSY" D
+"RTN","ORMFN",59,0)
+ . . K DA,DIC S DA(1)=ORDIFN,DIC="^ORD(101.43,"_DA(1)_",2,"
+"RTN","ORMFN",60,0)
+ . . S DIC(0)="L",ZSY=LAST ;,DIC("P")=$P(^DD(101.43,1,0),U,2)
+"RTN","ORMFN",61,0)
+ . . F  S ZSY=$O(@ORMSG@(+ZSY)) Q:ZSY'>0  Q:$E(@ORMSG@(ZSY),1,3)'="ZSY"  D
+"RTN","ORMFN",62,0)
+ . . . S X=$P(@ORMSG@(ZSY),"|",3),LAST=ZSY
+"RTN","ORMFN",63,0)
+ . . . K DD,DO D:$L(X) FILE^DICN
+"RTN","ORMFN",64,0)
+NTE . K ^ORD(101.43,ORDIFN,8) ; replace text
+"RTN","ORMFN",65,0)
+ . S NEXT=$O(@ORMSG@(LAST)) I NEXT,$E(@ORMSG@(NEXT),1,3)="NTE" D
+"RTN","ORMFN",66,0)
+ . . S NTE=LAST,DA=0
+"RTN","ORMFN",67,0)
+ . . F  S NTE=$O(@ORMSG@(NTE)) Q:NTE'>0  Q:$E(@ORMSG@(NTE),1,3)'="NTE"  S DA=DA+1,^ORD(101.43,ORDIFN,8,DA,0)=$P(@ORMSG@(NTE),"|",4) I $O(@ORMSG@(NTE,0)) D
+"RTN","ORMFN",68,0)
+ . . . S I=0 F  S I=$O(@ORMSG@(NTE,I)) Q:I'>0  S DA=DA+1,^ORD(101.43,ORDIFN,8,DA,0)=@ORMSG@(NTE,I)
+"RTN","ORMFN",69,0)
+ . . S ^ORD(101.43,ORDIFN,8,0)="^^"_DA_U_DA_U_DT_U
+"RTN","ORMFN",70,0)
+ . I '$D(^TMP($J,"OR OI NEW",ORDIFN)) M ^TMP($J,"OR OI AFTER",ORDIFN)=^ORD(101.43,ORDIFN)
+"RTN","ORMFN",71,0)
+ . ;
+"RTN","ORMFN",72,0)
+ . ;if orderable item quick order restriction previously on orderable item, replace it
+"RTN","ORMFN",73,0)
+ . ;
+"RTN","ORMFN",74,0)
+ . ;QO section is called repeatedly for IV entries
+"RTN","ORMFN",75,0)
+ . ;At final call to this section, PSSQOX is set to 0 by routine PSSVIDRG.
+"RTN","ORMFN",76,0)
+ . ;
+"RTN","ORMFN",77,0)
+ . I $D(^TMP($J,"ORCM QO",ORDIFN)),'$G(PSSQOX) D QO
+"RTN","ORMFN",78,0)
+ Q
+"RTN","ORMFN",79,0)
+ ;
+"RTN","ORMFN",80,0)
+QO ;replace quick order restriction(s)
+"RTN","ORMFN",81,0)
+ N ORGRPX,DA,DIR,DIE,DR
+"RTN","ORMFN",82,0)
+ S ORGRPX=""
+"RTN","ORMFN",83,0)
+ F  S ORGRPX=$O(^TMP($J,"ORCM QO",ORDIFN,ORGRPX)) Q:ORGRPX=""  D
+"RTN","ORMFN",84,0)
+ . Q:$D(^ORD(101.43,ORDIFN,9,"AQO",ORGRPX))
+"RTN","ORMFN",85,0)
+ . S DA=$P(ORGRPX,"S.",2),DA=$O(^ORD(101.43,ORDIFN,9,"B",DA,0))
+"RTN","ORMFN",86,0)
+ . Q:DA=""
+"RTN","ORMFN",87,0)
+ . S DA(1)=ORDIFN
+"RTN","ORMFN",88,0)
+ . S DR="2///YES",DIE="^ORD(101.43,"_DA(1)_",9,"
+"RTN","ORMFN",89,0)
+ . D ^DIE
+"RTN","ORMFN",90,0)
+ K ^TMP($J,"ORCM QO",ORDIFN)
+"RTN","ORMFN",91,0)
+ Q 
+"RTN","ORMFN",92,0)
+ ;
+"RTN","ORMFN",93,0)
+NMSP(NAME) ; -- returns namespace for package
+"RTN","ORMFN",94,0)
+ I NAME="RADIOLOGY" Q "RA"
+"RTN","ORMFN",95,0)
+ I NAME="IMAGING" Q "RA"
+"RTN","ORMFN",96,0)
+ I NAME="LABORATORY" Q "LR"
+"RTN","ORMFN",97,0)
+ I NAME="DIETETICS" Q "FH"
+"RTN","ORMFN",98,0)
+ I NAME="PHARMACY" Q "PS"
+"RTN","ORMFN",99,0)
+ I NAME="CONSULTS" Q "CS"
+"RTN","ORMFN",100,0)
+ I NAME="PROCEDURES" Q "CS"
+"RTN","ORMFN",101,0)
+ Q ""
+"RTN","ORMFN",102,0)
+ ;
+"RTN","ORMFN",103,0)
+CREATE(X) ; -- Create new item in #101.43
+"RTN","ORMFN",104,0)
+ Q:'$L($G(X)) 0 N HDR,LAST,TOTAL,I
+"RTN","ORMFN",105,0)
+ L +^ORD(101.43,0):1 Q:'$T 0
+"RTN","ORMFN",106,0)
+ S HDR=$G(^ORD(101.43,0)) Q:HDR="" 0
+"RTN","ORMFN",107,0)
+ S LAST=$P(HDR,U,3),TOTAL=$P(HDR,U,4)
+"RTN","ORMFN",108,0)
+ F I=(LAST+1):1 Q:'$D(^ORD(101.43,I,0))
+"RTN","ORMFN",109,0)
+ S ^ORD(101.43,I,0)=X,X=$E(X,1,30),^ORD(101.43,"B",$$UP^XLFSTR(X),I)=""
+"RTN","ORMFN",110,0)
+ S $P(^ORD(101.43,0),U,3,4)=I_U_(TOTAL+1)
+"RTN","ORMFN",111,0)
+ L -^ORD(101.43,0)
+"RTN","ORMFN",112,0)
+ Q I
+"RTN","ORMFN",113,0)
+ ;
+"RTN","ORMFN",114,0)
+FH ; -- Dietetics
+"RTN","ORMFN",115,0)
+ S X=$P(ZPKG,"|",2),ORFLD(111.1)=$S(X="":"@",1:X)
+"RTN","ORMFN",116,0)
+ S X=$P(ZPKG,"|",3),ORFLD(111.2)=$S(X="":"@",1:X)
+"RTN","ORMFN",117,0)
+ S X=$P(ZPKG,"|",5),ORFLD(111.3)=$S(X="":"@",1:X)
+"RTN","ORMFN",118,0)
+ F NUM=111.1,111.2,111.3 D VAL^DIE(101.43,ORFIEN,NUM,"F",ORFLD(NUM),.ORY,"ORFDA")
+"RTN","ORMFN",119,0)
+ K ^ORD(101.43,ORDIFN,8) S X=$P(ZPKG,"|",4)
+"RTN","ORMFN",120,0)
+ I $L(X) S ^ORD(101.43,ORDIFN,8,0)="^^1^1^"_DT_U,^(1,0)=X
+"RTN","ORMFN",121,0)
+ Q
+"RTN","ORMFN",122,0)
+ ;
+"RTN","ORMFN",123,0)
+LR ; -- Laboratory
+"RTN","ORMFN",124,0)
+ S X=$P(ZPKG,"|",2),ORFLD(60.1)=$S(X="":"@",1:X)
+"RTN","ORMFN",125,0)
+ S X=$P(ZPKG,"|",3),ORFLD(60.2)=$S(X="":"@",1:X)
+"RTN","ORMFN",126,0)
+ ;S X=$P(ZPKG,"|",4),ORFLD(60.3)=$S(X="":"@",1:X)
+"RTN","ORMFN",127,0)
+ S X=$P(ZPKG,"|",5),ORFLD(60.6)=$S(X="":"@",1:X)
+"RTN","ORMFN",128,0)
+ S X=$P(ZPKG,"|",6),ORFLD(60.4)=$S(X="":"@",1:X)
+"RTN","ORMFN",129,0)
+ S X=$P(ZPKG,"|",7),ORFLD(60.5)=$S(X="":"@",1:X)
+"RTN","ORMFN",130,0)
+ S X=$P(ZPKG,"|",8),ORFLD(6)=$S(X="":"@",1:X)
+"RTN","ORMFN",131,0)
+ S X=$P(ZPKG,"|",9),ORFLD(60.7)=$S(X="":"@",1:X)
+"RTN","ORMFN",132,0)
+ F NUM=6,60.1,60.2,60.4,60.5,60.6,60.7 D VAL^DIE(101.43,ORFIEN,NUM,"F",ORFLD(NUM),.ORY,"ORFDA")
+"RTN","ORMFN",133,0)
+ Q
+"RTN","ORMFN",134,0)
+ ;
+"RTN","ORMFN",135,0)
+PS ; -- Pharmacy
+"RTN","ORMFN",136,0)
+ N ROUTE,PSO,S3,ORPSVAC,ORPSOI
+"RTN","ORMFN",137,0)
+ K ^TMP("$J","ORMFN")
+"RTN","ORMFN",138,0)
+ S X=$P(ZPKG,"|",2)
+"RTN","ORMFN",139,0)
+ ;S ORFDA(101.43,ORFIEN,50.1)=$S(X'["I":0,$L($P($P(ORDITEM,U,5),"~",3)):2,1:1)
+"RTN","ORMFN",140,0)
+ S ORFDA(101.43,ORFIEN,50.1)=$S(X["V":2,X["I":1,1:0) ;inpt or iv med
+"RTN","ORMFN",141,0)
+ S ORFDA(101.43,ORFIEN,50.2)=(X["O") ;outpt med
+"RTN","ORMFN",142,0)
+ S ORFDA(101.43,ORFIEN,50.3)=(X["B") ;fluid base/soln
+"RTN","ORMFN",143,0)
+ S ORFDA(101.43,ORFIEN,50.4)=(X["A") ;fluid additive
+"RTN","ORMFN",144,0)
+ S ORFDA(101.43,ORFIEN,50.7)=(X["N") ;non-VA med
+"RTN","ORMFN",145,0)
+ ;Supply Items
+"RTN","ORMFN",146,0)
+ D
+"RTN","ORMFN",147,0)
+ . S ORPSOI=+$P($P(MFE,"|",5),"^",4) D DRGIEN^PSS50P7(ORPSOI,"","ORMFN")
+"RTN","ORMFN",148,0)
+ . I ^TMP($J,"ORMFN",0)'>0 Q
+"RTN","ORMFN",149,0)
+ . S S3=0,ORFDA(101.43,ORFIEN,50.5)=0
+"RTN","ORMFN",150,0)
+ . F  S S3=$O(^TMP($J,"ORMFN",S3)) Q:'S3  D
+"RTN","ORMFN",151,0)
+ .. D ZERO^PSS50(S3,,,,,"ORMFN")
+"RTN","ORMFN",152,0)
+ .. I ^TMP($J,"ORMFN",0)'>0 Q
+"RTN","ORMFN",153,0)
+ .. S ORPSVAC=$G(^TMP($J,"ORMFN",S3,2))
+"RTN","ORMFN",154,0)
+ .. I ORPSVAC?1"XA".E!(ORPSVAC?1"XX".E)!(ORPSVAC="DX900"&($G(^TMP($J,"ORMFN",S3,3))["S")) S ORFDA(101.43,ORFIEN,50.5)=1
+"RTN","ORMFN",155,0)
+ S X=$P(ZPKG,"|",3),ORFDA(101.43,ORFIEN,50.6)=$S(X:1,1:0)
+"RTN","ORMFN",156,0)
+ ;Check for default med route
+"RTN","ORMFN",157,0)
+ ;S ROUTE=$$MEDROUTE
+"RTN","ORMFN",158,0)
+ ;I ROUTE>0 S ORFDA(101.43,ORFIEN,50.8)=ROUTE
+"RTN","ORMFN",159,0)
+ Q
+"RTN","ORMFN",160,0)
+ ;
+"RTN","ORMFN",161,0)
+MEDROUTE() ;
+"RTN","ORMFN",162,0)
+ N CNT,ROUTE
+"RTN","ORMFN",163,0)
+ S CNT=0,ROUTE=0
+"RTN","ORMFN",164,0)
+ F  S CNT=$O(@ORMSG@(CNT)) Q:CNT'>0  D
+"RTN","ORMFN",165,0)
+ .I $P($G(@ORMSG@(CNT)),"|")'="ZPB" Q
+"RTN","ORMFN",166,0)
+ .S ROUTE=+$P($G(@ORMSG@(CNT)),"|",4)
+"RTN","ORMFN",167,0)
+ Q ROUTE
+"RTN","ORMFN",168,0)
+ ;
+"RTN","ORMFN",169,0)
+RA ; -- Radiology/Nuc Medicine
+"RTN","ORMFN",170,0)
+ S X=$P(ZPKG,"|",4),ORFLD(6)=$S(X="":"@",1:X)
+"RTN","ORMFN",171,0)
+ S X=$P(ZPKG,"|",5),ORFLD(71.1)=$S(X="":"@",1:X)
+"RTN","ORMFN",172,0)
+ S X=$P(ZPKG,"|",7),ORFLD(71.2)=$S(X="":"@",1:X)
+"RTN","ORMFN",173,0)
+ S X=$P(ZPKG,"|",2),ORFLD(71.3)=$S(X="":"@",1:X)
+"RTN","ORMFN",174,0)
+ S ORFLD(71.4)=$S($P(ZPKG,"|",6)="Y":1,1:0)
+"RTN","ORMFN",175,0)
+ S ORFLD(7)=$S($P(ZPKG,"|",3)="Y":2,1:1)
+"RTN","ORMFN",176,0)
+ F NUM=6,7,71.1,71.2,71.3,71.4 D VAL^DIE(101.43,ORFIEN,NUM,"F",ORFLD(NUM),.ORY,"ORFDA")
+"RTN","ORMFN",177,0)
+ Q
+"RTN","ORMFN",178,0)
+ ;
+"RTN","ORMFN",179,0)
+CS ; -- Consults/Requests
+"RTN","ORMFN",180,0)
+ S X=$P(ZPKG,"|",2),ORFLD(123.1)=$S(X="":"@",1:X)
+"RTN","ORMFN",181,0)
+ D VAL^DIE(101.43,ORFIEN,123.1,"F",ORFLD(123.1),.ORY,"ORFDA")
+"RTN","ORMFN",182,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11113,6)
+^409
+**END**
+**END**
+

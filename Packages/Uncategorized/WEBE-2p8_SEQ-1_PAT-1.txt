@@ -1,0 +1,184 @@
+
+=============================================================================
+Run Date: SEP 12, 2018                     Designation: WEBE*2.8*1
+Package : WEBE - COMMUNITY VIEWER             Priority: Mandatory
+Version : 2.8         SEQ #1                    Status: Released
+                  Compliance Date: OCT 12, 2018
+=============================================================================
+
+
+Subject: Community Viewer 2.8
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 2.8 of the Community Viewer (CV) will be promoted to the      *
+ * production server for national release on 9/11/18                     *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National CV server. There is        *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users and download the updated manuals and documents       *
+ * from the SFTP site.                                                   *
+ *                                                                       *
+ *************************************************************************
+  
+ CV version 2.8 includes the following changes:
+  
+ VA Administrative Staff:
+ - Ability for all VistA users to be automatically granted access to 
+   CCPM with valid VistA access credentials: VistA Access Code and Verify 
+   Code.
+   
+ Community Viewer Portal Administrators Users: 
+ - Ability for all VistA users to be automatically granted access to CCPM 
+   with valid VistA access credentials: VistA Access Code and Verify Code
+ - Ability for CV Portal Administrators to create usage reports from CCPM 
+   users that list the following information: 
+   - The CCPM user's name
+   - VISN
+   - Facility Name
+   - Facility Short Name
+   - Station Number
+   - Number of Logins
+   - Number of Patients Assigned
+   - Date of First Entry
+   - Number of Users
+ - Ability for CV Portal Administrators to filter CCPM usage reports by:
+   - Start date and end date, or VISN(s) or Facility(s)
+ - Ability for CV Portal Administrators to create usage reports from CCP
+   users that list the following information:
+   - The Provider's Name
+   - Provider Group
+   - Provider City
+   - Provider State
+   - Number of Logins
+   - Number of Patients Viewed
+   - Date of  First Entry
+ - Ability for CV Portal Administrators to filter CCP usage reports by:
+   - start date and end date
+ - Ability to export CCPM, CCP or Patient Usage Report data to CSV
+   File.
+ - Ability to create a Patient Usage Report with the following Indentifiers
+   used in the search:
+   - Last Name
+   - Patient First Name
+   - Last 4 of SSN
+   - DOB
+   - Provider
+   - Provider Group
+   - Provider City
+   - Provider State
+   - Number of times record viewed
+   - Date and Time the record was viewed
+ - Ability to filter Patient Usage Reports at an enterprise level by:
+   - SSN and Last Name
+   - First Name
+   - DOB
+   - Start date and end date
+   
+ Community Viewer Tier 1 users:
+ - Ability for all VistA users to be automatically granted access to 
+   CCPM with valid VistA access credentials: VistA Access Code and Verify
+   Code
+ - Ability for all CCPM Tier 1 users to search and assisng paients at an
+   enterprise level
+  
+ Community Providers:
+ - Ability for CCP users to view Pain Management Widget with tabs that 
+   includes:
+   - Outpatient Medications
+   - Inpatient Medications
+   - Progress Notes
+ - Ability for CCP users to:
+   - View up-to-date list of inpatient and outpatient pain management
+     treatment
+   - View current and prior pain medications.
+   - Apply a single date filter across all tabs in the Pain Management 
+     Widget Filter by  entering 'Start Date' and ' End Date
+   - Sort each column in the Pain Management Widget by ascending and 
+     descending order
+   - Expand the Pain Management widget
+   - Page through multiple pages
+   - View the Interface Status(es) for the data sources for the Pain
+     Management Widget
+   - Refresh data by Clicking the refresh icon on the Pain Management
+     Widget
+   - Hide or show columns in the Pain Management Widget.
+   
+ User Acceptance Testing (UAT):
+ =========================
+ User Acceptance Tests: Anchorage, Hines, and Phoenix -
+ Julie Reloza-Keating (Anchorage), Luzviminda Clamana (Hines), 
+ and Carlotta Nez (Phoenix) have signed off following completion of UAT.
+  
+ JR Ruble, CV Business PM, on behalf of the user acceptance 
+ testers, has concurred that the UAT was successful and that CV 2.8 is 
+ ready for production deployment.
+  
+ The requirements planned for the CV 2.8 Sprints 1-4 were verified and 
+ validated during the Development Independent Testing (DIT) phase of 
+ testing. All requirements mapped to the test scripts. The scripts are 
+ designed to be end-to-end functional tests of the system to evaluate 
+ all the technical requirements including the testing of external 
+ interfaces where appropriate.
+  
+ The DIT cycle consisted of smoke testing and the formal DIT. Before 
+ starting the DIT cycle, a Community Viewer Web application baseline is 
+ installed on the system. Tests are then run against this software 
+ baseline. Any issues found and potential resolutions are assessed for 
+ possible inclusion in the software baseline.
+  
+ During DIT, the test team validated the requirements provided in the 
+ RM requirements collection using the test scripts and the test cases.
+   
+ Any issue encountered is recorded as a defect in Rational CCM.
+  
+ Defect Tracking System Ticket(s):
+ =================================
+ N/A
+  
+ Documentation Instructions:
+ ==========================
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+   
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ File Name                                 Contents               
+ ---------                                 --------               
+ CV_2_8_VA_STAFF_USER_GUIDE_APPROVED.PDF   CV User Guide for VA Staff
+ CV_2_8_CCP_USER_GUIDE_APPROVED.PDF        CV User Guide for 
+                                           Community Providers
+  
+ Installation Instructions:
+ ==========================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : SEP 11, 2018
+Entered By  :                               Date Entered  : AUG 30, 2018
+Completed By:                               Date Completed: SEP 11, 2018
+Released By :                               Date Released : SEP 12, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

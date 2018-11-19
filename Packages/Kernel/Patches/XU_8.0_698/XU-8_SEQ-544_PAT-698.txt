@@ -1,0 +1,227 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 07/26/18 at 16:08
+=============================================================================
+Run Date: AUG 07, 2018                     Designation: XU*8*698
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #544                      Status: Released
+                  Compliance Date: AUG 09, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*678    <<= must be installed BEFORE `XU*8*698'
+
+Subject: CLEAN UP DUPLICATE PARENT FACILITY
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+  
+ ---------------------------------------------------------------------
+ Note: 
+ This patch applies to all sites that have or haven't installed patch 
+ XU*8.0*684.
+ ---------------------------------------------------------------------
+  
+ This patch cleans up entries in the INSTITUTION file (#4) that contain a 
+ duplicated PARENT FACILITY value in its ASSOCIATIONS multiple field (#14).
+ The duplicated values were caused after installing patch XU*8*684 during a
+ faulty post installation step.
+  
+ This patch addresses a reported problem that the local Institution file
+ (#4) didn't get updated correctly on three fields: FFECTIVE DATE/TIME
+ (#42), ASSOCIATIONS (#14), and NPI #41.99) the sites.
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC1341454 
+  
+ Problem:
+ --------
+ When Kernel patch XU*8*684 was recently installed, the post installation
+ step created an unintended duplicate in the ASSOCIATIONS multiple field
+ (#14) in some entries of the INSTITUION file (#4).
+  
+ For example, here is a duplicated PARENT FACILITY in the ASSOCIATION 
+ (#14) field for station #583 in the INSTITUTION file.
+  
+  NUMBER: 583                             NAME: RICHARD L. ROUDEBUSH VAMC
+ STATE: INDIANA                        DISTRICT: 15
+   STATUS: National                      STREET ADDR. 1: 1481 West 10th 
+ Street
+   CITY: INDIANAPOLIS                    ZIP: 46202-2803
+   FACILITY TYPE: VAMC                   DOMAIN: INDIANAPOLIS.DOMAIN.EXT
+ ASSOCIATIONS: VISN                      PARENT OF ASSOCIATION: VISN 10
+ ASSOCIATIONS: PARENT FACILITY
+   PARENT OF ASSOCIATION: RICHARD L. ROUDEBUSH VAMC
+ ASSOCIATIONS: PARENT FACILITY
+   PARENT OF ASSOCIATION: RICHARD L. ROUDEBUSH VAMC
+  ...
+  
+ Resolution:
+ -----------
+ This patch provides a post installation routine XU8P698 that will be run
+ at the end of installation to clean up those entries that contain a 
+ duplicated PARENT FACILITY.
+  
+ Test Sites:
+ -----------
+ -ANN ARBOR MI VAMC
+ -HINES IL VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.  There's no
+ updated Documentation being released with this patch.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: July 16, 2018  
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*698 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*698 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-routine XU8P698 will be deleted after the installation.
+ You may use the option [Verify Checksums in Transport Global] to verify 
+ the checksum if you wish.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch XU*8*698:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+     
+     5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N
+     
+     7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Optional: - Verify the routine XU8P698 is deleted.
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists one post routine XU8P698.
+ If assistance is needed to rollback/backout the patch, then please open a 
+ ServiceNow ticket so the development team can assist in this process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P698
+    Before:       n/a   After:  B4176443  **698**
+Routine Name: XUMF04H
+    Before: B32714425   After: B48910610  **549,678,698**
+ 
+Routine list of preceding patches: 678
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 11, 2018
+Completed By:                               Date Completed: AUG 07, 2018
+Released By :                               Date Released : AUG 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

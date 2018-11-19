@@ -1,0 +1,224 @@
+$TXT Created by                    SPPDEV-MHA.DOMAIN.EXT  (KIDS) on Thursday, 08/02/18 at 15:43
+=============================================================================
+Run Date: AUG 23, 2018                     Designation: YS*5.01*134
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #103                   Status: Released
+                  Compliance Date: SEP 13, 2018
+=============================================================================
+
+Associated patches: (v)YS*5.01*121 <<= must be installed BEFORE `YS*5.01*134'
+
+Subject: SUICIDE PREVENTION INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ Description:
+ $TXT Created by                   at FORUM.DOMAIN.EXT on Friday, 05/18/18 at 13:25
+  
+ ===========
+  This patch adds new instruments for use with the Mental Health Assistant
+ (MHA).  These new instruments will help clinicians and administrators 
+ analyze the effectiveness of treatment, help clarify diagnoses and provide
+ empirical measures for treatment outcomes.
+  
+  
+  New Mental Health Instruments: 
+  ------------------------------
+ Suicide and Depression Screening:
+ Patient Health Questionnaire-2 + Item9 (PHQ-2+I9)    PHQ-2+I9 
+ PTSD SCREEN - (PC PTSD 5)                            PC-PTSD-5
+ PTSD SCREEN +I9                                      PC-PTSD-5+I9
+ Patient Safety Screener 3 (PSS-3)                    PSS-3
+ Columbia Suicide Severity Rating Scale (C-SSRS)      C-SSRS 
+ World Health Organization Disability Assessment      WHODAS2.0-12 
+ Schedule 2.0 - 12-item (WHODAS2.0-12)
+  
+ Patch Components:
+ =================
+  Files & Fields Associated:
+  File Name (Number)                Field Name (Number)   New/Mod/Del
+ ------------------                ------------------    -----------
+ MH TEST AND SURVEYS (601.71)                  Modified
+ MH QUESTIONS (601.72)                         Modified
+ MH INTRODUCTIONS (601.73)                     Modified
+ MH INSTRUMENT CONTENT (601.76)                Modified
+ MH SKIPPED QUESTIONS (601.79)                 Modified
+ MH RULES (601.82)                             Modified
+ MH INSTRUMENT RULES (601.83)                  Modified
+ MH ANSWERS (601.85)                           Modified
+ MH SCALE GROUPS (601.86)                      Modified
+ MH SCALES (601.87)                            Modified
+ MH CHOICE IDENTIFIERS (601.89)                Modified
+ MH SCORING KEYS (601.91)          Target (#3) Modified
+ MH INSTRUMENT EXCHANGE (601.95)               Modified
+ Forms Associated:
+  Form Name                  File #                       New/Mod/Del
+ ---------                  ------                       -----------
+ N/A
+  
+ HL7 Application Parameters Associated:
+  HL7 Application Parameter Name                          New/Mod/Del
+ ------------------------------                          -----------
+ N/A
+  
+ List Templates Associated:
+  List Template Name                                      New/Mod/Del
+ ------------------                                      -----------
+ N/A
+  
+ Mail Groups Associated:
+  Mail Group Name                                         New/Mod/Del
+ ---------------                                         -----------
+ N/A
+  
+ Options Associated:
+  Option Name                       Type                  New/Mod/Del
+ N/A
+  
+  
+ Protocols Associated:
+ Protocol Name                     Type                  New/Mod/Del
+ -------------                     ----                  -----------
+ YTXCHG BROWSE SPEC                action                New
+ YTXCHG CREATE ENTRY               action                New
+ YTXCHG DELETE ENTRY               action                New
+ YTXCHG DRYRUN                     action                New
+ YTXCHG INSTALL                    action                New
+ YTXCHG LOAD HOST                  action                New
+ YTXCHG LOAD URL                   action                New
+ YTXCHG MAIN MENU                  menu                  New
+ YTXCHG REBUILD ENTRY              action                New
+ YTXCHG SAVE HOST                  action                New
+  
+ Remote Procedures Associated:
+  Remote Procedure Name                                   New/Mod/Del
+ ---------------------                                   -----------
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  Template Name               Type    File Name (Number)  New/Mod/Del 
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ MILWAUKEE
+ ORLANDO
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The documentation files are available on the following OI Field Offices' 
+ [ANONYMOUS.SOFTWARE] directories. Use the following FTP address to 
+ connect to the first available FTP server: download.vista.domain.ext
+  
+ OI FIELD OFFICE      FTP ADDRESS                DIRECTORY
+ ---------------------------------------------------------------
+ HINES            domain.ext       [ANONYMOUS.SOFTWARE]
+ SALT LAKE CITY   domain.ext         [ANONYMOUS.SOFTWARE]
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ Title                   File Name                     SFTP Mode
+ --------------------------------------------------------------------------
+ YS_501_134_IG.PDF       MHA3 Patch 134 Install Guide  BINARY
+ YS_MHA_TM.PDF           MHA3 Technical Manual         BINARY
+ YS_MHA_UM.PDF           MHA3 User Manual              BINARY
+  
+ Installation:
+ ============= 
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 5 minutes.
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+       Select Kernel Installation & Distribution System Option: 
+ Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*134):
+         a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  4.  Use the Install Package(s) option and select the package
+     YS*5.01*134.
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+ $TXT Created by                   at FORUM.DOMAIN.EXT on Friday, 05/18/18 at 13:25
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 230
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS134PST
+    Before:       n/a   After:  B1073474  **134**
+Routine Name: YTQAPI2A
+    Before: B20357821   After: B22322420  **121,134**
+Routine Name: YTQAPI2B
+    Before:       n/a   After:B119361091  **134**
+ 
+Routine list of preceding patches: 121
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 29, 2018
+Completed By:                               Date Completed: AUG 22, 2018
+Released By :                               Date Released : AUG 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

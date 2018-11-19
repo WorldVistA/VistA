@@ -1,0 +1,260 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 05/07/18 at 13:48
+=============================================================================
+Run Date: AUG 15, 2018                     Designation: DG*5.3*963
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #841                    Status: Released
+                  Compliance Date: SEP 15, 2018
+=============================================================================
+
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - DATE OF DEATH UPDATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       two VistA namespaces: DG and MPIF.
+       Patches DG*5.3*963 and MPIF*1.0*67 can be installed in any order
+       as there are NO dependencies between these patches.
+       (Do NOT install MPIF*1.0*67 on legacy sites or on the FORUM CLAIMS
+        system). 
+   
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*963 patch. MPIF*1.0*67 should NOT be installed on legacy
+       sites or on the FORUM CLAIMS system. 
+  
+ There are no required builds for patch DG*5.3*963.
+  
+ The following enhancement exported in this patch was requested by the
+ Healthcare Identity Management (HC IdM) business group in support of the
+ Master Veteran Index (MVI) application. 
+   
+ Enhancement
+ HC IdM has requested that the DESCRIPTION field (#50) in the SUPPORTING
+ DOCUMENTATION TYPES File (#47.75) for the following entries be updated
+ with the detailed information below:
+  
+    EVVE CERTIFICATION: 
+    Requires receipt of a successful identity match confirming a 
+    previously established Date of Death via the EVVE Death Certification 
+    Query. Retention of electronic or hard copy documentation of the death 
+    certification is required. (Currently available via the EVVE pilot 
+    program only)
+  
+    EVVE FACT OF DEATH QUERY:
+    Requires receipt of a successful identity match providing the 
+    confirmed Date of Death via one of the three search functions 
+    available within EVVE Fact of Death Query:  1) Insurance Regulatory 
+    Settlement Agreement, 2) SSN Exact Match, 3) Custom. Retention of
+    electronic or hard copy documentation of the returned data is 
+    required.  (Currently available via the EVVE pilot program only)
+    
+    UNDER VA AUSPICES:
+    Deaths under VA auspices include deaths where the VA receives a 
+    medical record from a non-VA provider documenting a death that occurs 
+    while the non-VA provider was furnishing authorized non-VA care; 
+    deaths occurring in a contract nursing home (i.e., a nursing home 
+    under contract with the VA to care for the individual); or deaths 
+    during a home visit when a VA provider is present. Documentation of 
+    the death should be received from the non-VA provider or VA provider 
+    and entered into the persons record.
+    
+   NOTE: This information will be displayed to the user when additional
+         help text is needed/requested (??) for the 'Supporting Document
+         Type' prompt when executing the Death Entry [DG DEATH ENTRY]
+         menu option. 
+      
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+   
+ Test Sites:
+ ----------
+ Bay Pines VAMC
+ Salt Lake City HCS
+  
+     
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-installation process will accomplish the following item:
+  
+  - Updating of the DESCRIPTION (#50) field for the following entries
+    in the SUPPORTING DOCUMENTATION TYPES File (#47.75):
+  
+         * EVVE CERTIFICATION
+         * EVVE FACT OF DEATH QUERY
+         * UNDER VA AUSPICES
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system. No options or protocols need
+ to be disabled and the installation may be queued.
+    
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*963):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Routine DG963PST can be deleted if desired once the patch has been
+ successfully installed.
+  
+ Back-Out Plan
+ -------------
+ The DG back-out procedure would consist of just restoring the original
+ DESCRIPTIONS (#50) in the SUPPORTING DOCUMENTATION TYPES File (#47.75)
+ using FileMan (FM). Upon coordination with the MVI development team,
+ the original descriptions will be provided.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG963PST
+    Before:       n/a   After: B20714942  **963**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 24, 2018
+Completed By:                               Date Completed: AUG 15, 2018
+Released By :                               Date Released : AUG 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

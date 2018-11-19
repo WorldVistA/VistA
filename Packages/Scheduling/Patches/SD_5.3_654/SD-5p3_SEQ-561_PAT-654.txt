@@ -1,0 +1,243 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 09/22/17 at 13:58
+=============================================================================
+Run Date: JAN 17, 2018                     Designation: SD*5.3*654
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #561                    Status: Released
+                  Compliance Date: FEB 17, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*643  <<= must be installed BEFORE `SD*5.3*654'
+
+Subject: SDRR CAN ADDR, MANUAL PRINT DATE SENT & BAI ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. Corrects the issue of updating the date sent fields when 
+    displaying patient's recall letters and cards to the computer
+    screen.
+ 2. Corrects the issue of no warning message being generated in
+    MailMan for a patient that has a bad address. 
+ 3. Corrects the verbiage in the subject line of the MailMan message
+    for patients with a bad address.
+ 4. Corrects Canadian address format.
+  
+  
+ Associated CA SDM Tickets:
+ ==========================
+  
+ 1. I9834903FY16 - Scheduling - Recall Reminder:
+   
+ 2. I9835477FY16 - Missing DFN when checking bad address indicator
+  
+ 3. I9836522FY16 - Word modification in the MailMan Message
+  
+ 4. I6076714FY16 - Recall reminder Letter Does Not Include Complete 
+                   Address
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Louis Stokes VAMC (Cleveland)
+ VA Connecticut HCS
+  
+  
+ CA SDM Ticket Overview:
+ =======================
+  
+ 1. I9834903FY16 - Scheduling - Recall Reminder:
+  
+    Problem:
+    --------
+    When manually reprinting recall notification letters or cards, the 
+    Recall Reminder Sent (DATE REMINDER SENT field (#6)) or the Date
+    Second Reminder Sent (SECOND PRINT field (#8)) of the RECALL
+    REMINDERS file (#403.5), would get updated even if the recall letter
+    or card is being sent to display to the computer screen.
+    
+    Resolution:
+    -----------
+    Routines SDRRRECL and SDRRRECP have been modified to not update the 
+    Recall Reminder Sent (DATE REMINDER SENT field (#6)) or Date Second
+    Reminder Sent (SECOND PRINT field (#8)) if the recall letter or
+    card is only displayed to the computer screen.
+    
+  
+ 2. I9835477FY16 - Missing DFN when checking bad address indicator
+  
+    Problem:
+    --------
+    If a patient's address is flagged with the Bad Address Indicator 
+    (BAI), a MailMan message does not get generated and sent to the
+    mail group, SDRR BAD ADDRESS, to warn users when manually reprinting
+    Recall Reminder letters and cards. 
+    
+    The notification letter or card is still printed and mailed to the 
+    patient with an invalid address.
+   
+    Resolution:
+    -----------
+    Routines SDRRRECL and SDRRRECP are modified to not print the patient's
+    recall letter or card if patient's bad address is indicated.
+  
+    Added a missing DFN when calling $$BADADR^DGUTL3 for properly creating
+    a MailMan message and quits printing if the patient has a bad address.
+  
+  
+ 3. I9836522FY16 - Word modification in the MailMan message
+  
+    Problem:
+    --------
+    When printing recall letters, and a patient's address is flagged with
+    a Bad Address Indicator, the subject line of the MailMan warning
+    message is incorrect. The subject line should indicate 'Bad Address
+    - letter will not be printed for:' not 'Bad Address- card will not be
+    printed for:'. 
+  
+    Resolution:
+    -----------
+    Routines SDRRTSK and SDRRRECL have been modified to change the word
+    from 'card' to 'letter' in the MailMan message if the patient has a Bad
+    Address Indicator set when printing letters.
+  
+  
+ 4. I6076714FY16 - Recall Reminder Letter Does Not Include Complete Address
+  
+    Problem:
+    --------
+    The recall reminder letter does not include the complete address for a 
+    Canadian veteran. In VistA, a Canadian address includes the Street 
+    Address [Line 1], City, Postal code, Province, and Country fields. The 
+    recall reminder letters print the Street Address and City only. The 
+    Postal code, Province, and Country fields are not included. Letters 
+    are returned back to the site as undeliverable.
+  
+    Resolution:
+    -----------
+    Modified routines SDRRRECL, SDRRRECP, SDRRTSK, and SDRRTSK1 to ensure
+    Canadian address is printed completely and correctly for Canadian 
+    veterans.
+  
+  
+ Installation Instructions:
+ ==========================
+ DO NOT install this patch when scheduled Recall Reminder task jobs are
+ running. These scheduled jobs include:
+  
+         Auto Print for Recall Reminder          [SDRR TASK JOB]
+         Auto Print for Recall Reminder Cards    [SDRR TASK JOB CARD]
+         Clean Up Clinic Recall Entries          [SDRR CLEAN-UP]
+  
+ It is recommended that the Recall Reminder users be off the system.      
+ Other VistA users will not be affected.
+  
+ Install Time - less than 3 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*654):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, 
+       DD's, templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//', answer YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          
+          Auto Print for Recall Reminder         [SDRR TASK JOB]
+          Clinic Recall Print Menu               [SDRR PRINT MENU]
+          Auto Print for Recall Reminder Cards   [SDRR TASK JOB CARD]
+          Recall Reminder Main Menu              [SDRR RECALL MAIN MENU]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRRECL
+    Before:B102965608   After:B146201896  **536,561,569,579,654**
+Routine Name: SDRRRECP
+    Before: B69269047   After:B109867057  **536,569,579,654**
+Routine Name: SDRRTSK
+    Before: B16926080   After: B25995311  **536,579,643,654**
+Routine Name: SDRRTSK1
+    Before:  B9951175   After: B17550007  **536,579,643,654**
+ 
+Routine list of preceding patches: 643
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 12, 2016
+Completed By:                               Date Completed: JAN 16, 2018
+Released By :                               Date Released : JAN 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,270 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/09/18 at 12:33
+=============================================================================
+Run Date: SEP 06, 2018                     Designation: DVBA*2.7*203
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #174                    Status: Released
+                  Compliance Date: OCT 06, 2018
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*5  <<= must be installed BEFORE `DVBA*2.7*203'
+
+Subject: 21-DAY CERTIFICATE FIXES AND ADAPTIVE MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address 2 issues:
+  
+  1. Update routine DVBACRMS to allow printing of 21 day certificates to 
+     the Compensation and Pension Record Interchange (CAPRI) Graphical 
+     User Interface (GUI).
+  
+  2. Automate the release process of 21 day certificates.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A                     N/A                  N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A             N/A     N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A             N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A             N/A     N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A             N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A             N/A     N/A                 N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I17494417FY18 - Issue with printing 21 day certificates in CAPRI GUI
+   
+     Problem:
+     --------
+     CAPRI report 21 Day Certificate Printing does not properly display 
+     certificates in the CAPRI GUI, and displays the message "No data found
+     for requested report criteria". The report does run successfully and
+     modifies the correct fields in the record, but the certificate is not
+     being displayed in the CAPRI GUI.
+  
+     Resolution:
+     -----------
+     Modified routine DVBACRMS to check for the variable DVBGUI before 
+     changing the value of the variable IO. The CAPRI GUI sets DVBGUI to 1.
+  
+  2. I14941635FY17 - CAPRI's 21 Day Certificate Printing report is not
+                     printing automatically
+  
+     Problem:
+     --------
+     Currently, 21 day certificates must be released manually through the
+     MAS Edit/Release of 21-day Certificates [DVBA RELEASE 21-DAY CERT] 
+     option before they can be printed by the Regional Office (RO). There
+     is a request to automate this process.
+  
+     There is also a defect in the background routine DVBACERT that will
+     prevent new 21 day certificate requests from being generated.
+  
+     Resolution:
+     -----------
+     Modified the background routine DVBACERT to automate the release of
+     21 day certificates. The release process will occur in the background
+     job that creates the certificates. This will make certificates
+     immediately available for printing by the RO once they are created.
+  
+     Modified DVBACERT to not include seconds in the date comparison 
+     between the admission date on the 21 day certificate request and the
+     admission date from the PATIENT MOVEMENT (#405) file.
+  
+ For more information regarding the 21-day certification, please review 
+ the following documents:
+  
+           https://www.domain.ext/vdl/application.asp?appid=133
+  
+ AMIE Technical Manual
+ AMIE MAS User Manual
+ CAPRI GUI User Manual
+  
+  
+ Test Sites:
+ ----------
+ Bedford VAMC
+ Fayetteville VAMC 
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it should 
+ be installed during non-peak hours to minimize potential disruption to 
+ users. This patch should take less than 2 minutes to install.
+  
+ For this process to work correctly, the Generate 21-day cert via Task Manager
+ [DVBA GENERATE 21-DAY CERTIF] option must be scheduled to run nightly and the
+ DEVICE FOR QUEUED JOB OUTPUT field in the Schedule/Unschedule Options 
+ [XUTM SCHEDULE] option, must be set to a valid and active device.
+  
+ For more information regarding the 21-day certification, please review 
+ the following documents found on the VDL link below:
+  
+           https://www.domain.ext/vdl/application.asp?appid=133
+  
+ AMIE Technical Manual
+ AMIE MAS User Manual
+ CAPRI GUI User Manual
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it should 
+ be installed during non-peak hours to minimize potential disruption to 
+ users. This patch should take less than 2 minutes to install.
+  
+ Menu Options to Disable:
+ Regional Office 21-day Certificate Printing [DVBA RO PRINT 21-DAY CERT]
+ Generate 21-day cert via Task Manager [DVBA GENERATE 21-DAY CERTIF]
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter DVBA*2.7*203)
+     
+           a.  Verify Checksums in Transport Global - This option will 
+               allow you to ensure the integrity of the routines that are
+               in the transport global.
+           b.  Print Transport Global - This option will allow you to 
+               view the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option
+               will allow you to view all changes that will be made when
+               this patch is installed. It compares all components of
+               this patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will
+               not backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package 
+         DVBA*2.7*203.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+             Regional Office 21-day Certificate Printing [DVBA RO PRINT
+             21-DAY CERT]
+             Generate 21-day cert via Task Manager [DVBA GENERATE 21-DAY 
+             CERTIF]
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ Backup a Transport Global - This option will create a backup            
+ message of any routines exported with this patch. It will not            
+ backup any other changes such as DD's or templates.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBACERT
+    Before: B25787909   After: B29556285  **5,203**
+Routine Name: DVBACRMS
+    Before: B11056104   After: B13359870  **203**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 22, 2017
+Completed By:                               Date Completed: SEP 06, 2018
+Released By :                               Date Released : SEP 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

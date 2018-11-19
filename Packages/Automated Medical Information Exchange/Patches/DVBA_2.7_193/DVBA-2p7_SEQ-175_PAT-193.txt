@@ -1,0 +1,626 @@
+$TXT Created by                 K at DEVFEX.DOMAIN.EXT  (KIDS) on Friday, 08/24/18 at 13:29
+=============================================================================
+Run Date: SEP 18, 2018                     Designation: DVBA*2.7*193
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #175                    Status: Released
+                  Compliance Date: OCT 11, 2018
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*168<<= must be installed BEFORE `DVBA*2.7*193'
+                    (v)DVBA*2.7*184<<= must be installed BEFORE `DVBA*2.7*193'
+                    (v)DVBA*2.7*185<<= must be installed BEFORE `DVBA*2.7*193'
+                    (v)DVBA*2.7*192<<= must be installed BEFORE `DVBA*2.7*193'
+                    (v)DVBA*2.7*194<<= must be installed BEFORE `DVBA*2.7*193'
+                    (v)DI*22.2*3   <<= must be installed BEFORE `DVBA*2.7*193'
+
+Subject: CAPRI C&P EXAMS, 2507 REQUESTS, DOD TAB, JLV
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses Change Requests, Remedy tickets, and CA SDM tickets
+  
+  
+ 1. Newly added routing locations to VistA will default to inactive in
+    CAPRI and code to manually activate the routing locations will be 
+    added to the Edit Exam List Parameters (MAS) menu.
+ 2. DoD Records tab disabled.
+ 3. Voc Rehab Tab is being modified to not appear inactive by color.
+ 4. CAPRI GUI V2.7 193.12 requires a Version Control check against
+    VistA patch DVBA*2.7*193 Version Control file that will ensure that
+    all VA Sites and CAPRI Users will be operating under CAPRI GUI v2.7
+    193 after DVBA*2.7*193 has been installed.
+ 5. Eliminated the parameter that activated the 2507 reroute functionality.
+ 6. VistA Web application is to be decommissioned.  The CAPRI GUI client 
+    link to VistA Web is being replaced by a link to the replacement Joint 
+    Legacy Viewer (JLV). 
+  
+ Patch Components:
+ -----------------
+ Bulletins:
+ Bulletin Name                           New/Modified/Deleted
+ ------------------                      -----------------------
+ DVBA CAPRI REROUTE                            New
+  
+ Files & Fields Associated:
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ REROUTE DATE/TIME(#396.34)                               New(multiple)
+                            REROUTE DATE/TIME(.01)        New  
+                            REROUTE TO SITE (.02)         New
+                            REROUTE REQUEST IEN (1)       New 
+                            REROUTE PATIENT IEN (2)       New
+                            REROUTE FROM SITE (3)         New
+                            REROUTE REASON (4)            New 
+                            REROUTE DESCRIPTION (5)       New
+                            REROUTE STATUS DATE/TIME (6)  New
+                            REROUTE USER (7)              New
+                            OLD DIVISION (8)              New
+                            REROUTE TO IEN (9)            New
+                            REROUTE TO DOMAIN (10)        New
+                            REROUTE FROM IEN (11)         New
+                            REROUTE FROM DOMAIN (12)      New
+                            REROUTE STATUS DATE/TIME(.01) New
+                            REROUTE STATUS CODE (1)       New
+                            REROUTE REJECTION REASON (2)  New
+ 2507 REROUTE CODE 
+ FILE (#396.55)                                                   
+                                                          New          
+                            REROUTE CODE (.01)            New
+                            STATUS (.02)                  New
+ 2507 STATUS FILE (#396.33)                               New
+                            NAME (.01)                    New
+                            CODE (.02)                    New
+ CAPRI REROUTE SITE 
+ FILE (#396.19)                                           New
+                            NAME (.01)                    New
+                            State (.02)                   New
+                            DOMAIN (.03)                  New
+   
+  
+  
+ Forms Associated:
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ DVBA C 2507 REROUTE     New
+  
+ Options Associated:
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ DVBA CAPRI GUI  GUI             Modified
+  
+  
+ Parameter:
+  
+ Parameter                            New/Modified
+ ------------                       ------------------
+ DVBAB CAPRI MINIMUM VERSION              Modified
+  
+ Protocols Associated:
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Remote Procedure Calls:
+ Remote Procedure Name:          New/Modified/Deleted
+ ---------------------           --------------------
+ DVBA CAPRI GET DIV COMMENT              New
+ DVBA CAPRI GET DIV EXAM                 New
+ DVBA CAPRI GET DIVISION                 New
+ DVBA CAPRI GET REROUTE                  New
+ DVBA CAPRI GET REROUTE CODE             New
+ DVBA CAPRI REROUTE INFO                 New
+ DVBA CAPRI REROUTE STATUS               New
+ DVBA CAPRI REROUTE VAMC                 New
+ DVBA CAPRI SEND REROUTE                 New
+ DVBA CHECK PATCH                        Modified
+  
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ DVBA CAPRI REROUTEREASONS
+  
+ Templates Associated:
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.) INC000001009153    CAPRI - Authorized Patient: 
+ Problem: 
+ --------
+ This particular issue happens because the low internal entry
+ number (ien) of the patient in the PATIENT file (example
+ 719).  This becomes problematic during a call to retrieve the
+ patient's exam requests because it passes the ien and looks for
+ PARTIAL matches.  Because of this it returns all requests and
+ tries to return all the requests for every patient ien that
+ contains 719. Assuming there 719,000 patients it tries to return
+ exams for ien 719000-719999.
+  
+ Resolution:
+ -----------
+ This is controlled by the "NUMBER" property for the 
+ FMExamRequestLister1 component which is currently "*".  The "*"
+ tells the FILEMAN call to retrieve every match. This has been 
+ changed to retrieve only the first 250 matches.
+  
+ 2.) INC000001022409    CAPRI - Other: 2507 e-mails erroneous 
+ Problem: 
+ --------
+ CAPRI sends Outlook notification e-mails to end users notifying
+ them when a 2507 is released, individual exams are released, or
+ exams are cancelled. Users have identified an issue where in the
+ right circumstances, some exams on a 2507 can be cancelled, other
+ exams on the same 2507 can be completed/released, and the only
+ e-mail the end users receives is a message stating that all exams
+ on the 2507 are cancelled. This is an erroneous and misleading
+ e-mail.  
+   
+ Resolution:
+ -----------
+ When a mix of cancelled or completed exams lead to the release of a
+ 2507 request, the email will reflect that both actions led to the
+ release.
+  
+ 3.) INC000001259707    CAPRI - Other:  
+ Problem: 
+ --------
+ When signing off on CAPRI templates and selecting a "TITLE", if
+ there are two options that have matching text then CAPRI can
+ potentially select the incorrect
+ TIU DOCUMENT DEFINITION when creating the TIU DOCUMENT.
+  
+ Resolution:
+ -----------
+ Change the matching process so that it no longer allows partial 
+ matching and fully evaluates the entire name of the "TITLE" being
+ selected.       
+  
+ 4.) INC000001074734    CAPRI - DBQs/Worksheets:  
+ Problem: 
+ --------
+ While in a 2507 Request, users are able to add a duplicate/existing 
+ exam type on the same 2507 Request if the preceding 2507 Exam is no
+ longer open even though two of the same exam types on a single 2507
+ Exam are not supposed to be allowed.
+  
+ Resolution:
+ -----------
+ Filter out existing exam types on that 2507 Request when presenting 
+ the user exam type options when they are adding additional exams to
+ that 2507 Request.
+  
+ 5.) INC000001288683    CAPRI - Other: clinical documents search issue   
+ Problem: 
+ --------
+ The issue occurs because regardless of the report criteria selected 
+ (Date Range, # Records, All) the code unconditionally passes the last
+ selected "max number" value to the Remote procedure code - 'TIU
+ DOCUMENTS BY CONTEXT' which restricts the number of returned records
+ regardless of the report format specified.
+  
+ Resolution:
+ -----------
+ Only restrict the number of records if that criterion is selected when
+ running the report
+  
+ 6.) INC000001299596    CAPRI - Other: 2507s not closing out correctly   
+ Problem: 
+ --------
+ If a user cancels the only exam on a request and then exits the "View 
+ C&P Exam" form by clicking the "X" in the upper right hand corner
+ rather than utilizing the "Close Window" button the code to update the
+ 2507 record is not executed and the status is not updated.
+  
+ Resolution:
+ -----------
+ Remove the ability to click the "X" and force the user to close the 
+ form/window using the available "Close Window".
+  
+ 7.) I6587267FY16    CAPRI: patching the provider signature function
+ Problem: 
+ --------
+ When signing off on a CAPRI template and linking it to a 2507 Exam, 
+ CAPRI fails to populate the CAPRI TEMPLATE ID field ((#1) in the 2507
+ EXAM file (#396.4).
+  
+ Resolution:
+ -----------
+ Add logic so that when the 2507 EXAM record is being updated, it also 
+ updates the CAPRI TEMPLATE ID field ((#1).
+  
+ 8.) I8233197FY16  CAPRI freezing
+ Problem: 
+ --------
+ When signing off on a CAPRI template if the main form is pushed off 
+ the screen, when the "Virtual VA" transmission form is displayed it is
+ displayed at the center of the form that is currently pushed off the
+ screen and since that is the active screen and the user is unable to
+ manipulate it (click buttons etc.) it gives the impression that CAPRI
+ has frozen.
+  
+ Resolution:
+ -----------
+ Rather than displaying the "Virtual VA" transmission form in the 
+ center of the main form, it will display in the middle of the screen
+ so the user will always be able to respond and complete the signature
+ process.
+  
+ 9.) I9000823FY16  CAPRI - cannot close exams on one patient
+ Problem: 
+ --------
+ While opening the "Manage C&P Request" form for a patient, the 
+ application makes a call to retrieve all partial matches by patient
+ for all 2507 requests using the patient internal entry number.  This
+ could potentially lead to thousands of irrelevant records being
+ returned which also causes CAPRI to freeze while processing the extra 
+ records.
+  
+ Resolution:
+ -----------
+ Rather than pulling all partial matches the number of results will be 
+ limited to 150.
+  
+ 10.) I18872737FY18  CAPRI's VistAWeb link will not connect to JLV service
+ Problem:
+ --------
+ VistA Web application is to be decommissioned. The CAPRI GUI client link 
+ to VistA Web must be replaced by link to the replacement JLV.  
+  
+ Resolution:
+ -----------
+ The CAPRI GUI client has been updated to replace the VistA Web 
+ integration (VistA Web tab) with JLV integration (JLV tab).    
+  
+ CAPRI End Users will encounter an error when attempting to access some 
+ external VA scanned documents and radiology images through the JLV Image 
+ Viewer. Users are able to access the images and Veteran information 
+ through other applications including CPRS, VistA Imaging, JLV 
+ directly, and VBMS.
+  
+  
+ 11.) INC0731818 - C&P Exam Button
+ Problem:
+ --------
+ Current placement of the button covers checkboxes and other items at the
+ end of the screen, so users are unable to select these items.
+  
+ Resolution:
+ -----------
+ Button has been moved to the top of the form and made static.
+  
+   
+  
+  
+  
+ Test Sites:
+ ------------
+ Minneapolis
+ Greater LA
+     
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                        File Name              FTP Mode
+ -----------------------------------------------------------------------
+ Patch Release Notes          DVBA_27_P193_RN.PDF     BINARY
+ CAPRI DVBA*2.7*193
+ GUI User Manual              DVBA_27_P193_UM.PDF     BINARY 
+   
+  
+  
+ Patch Installation:
+ Pre/Post Installation Overview:
+ -------------------------------
+ Post-Init routine DVBC193P can be deleted after install is completed
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ 1. Prior to installation create a backup of the 2507 REQUEST FILE (#396.3)
+    and store them in case the patch must be backed out.
+    a.   D ^%GOGEN
+    b.   At the Device prompt enter a file name
+    c.   Enter ^DVB(396.3
+  
+ 2. CAPRI GUI v2.7.193.12 has been made backward compatible with VistA  
+    patch DVBA*2.7*192.  It is highly recommended that CAPRI GUI
+    v2.7.193.12 be deployed to as many users as possible prior to
+    installing DVBA*2.7*193 in order to minimize and avoid disruptions of
+    service to the CAPRI National or Remote Users.
+    
+    Deployment schedule for the 24 day compliance window:
+    Day 1 - 22:  Deploy CAPRI GUI to all CAPRI GUI users
+    Day 22 - 24:  Install VistA Patch DVBA*2.7*193 into all production 
+    VistA Systems.
+    Please refer to the  Compensation and Pension Records Interchange 
+    (CAPRI) Deployment, Installation, Back-Out, and Rollback Guide for
+    details.
+  
+  
+ 3. VistA Patch DVBA*2.7*193
+  
+    a. The VistA server software is being distributed as a PackMan
+       patch message through the National Patch Module (NPM). The KIDS
+       build for this patch is DVBA*2.7*193.
+  
+ 4. CAPRI GUI v193 Client Software & User Documentation
+   
+    a. The CAPRI GUI v193 client software is being distributed as an
+       executable CAPRI.exe ([DVBA_27_P193_12.ZIP]). The installed
+       executable for this patch is client version 193.12 with a size
+       of 16.0 MB.
+            
+   
+       The CAPRI GUI v193 client software and documentation for this
+       patch may be retrieved directly using SFTP. The preferred
+       method is to SFTP the files from:download.vista.domain.ext
+       This transmits the files from the first available SFTP server.
+       Sites may also elect to retrieve software directly from a 
+       specific server as follows:
+   
+       OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+   
+       Hines            ftp.domain.ext   []
+       Salt Lake City   ftp.domain.ext     []
+   
+       The following files will be available:
+   
+       FILE NAME           RETRIEVAL FORMAT
+       ---------         ----------------------
+      DVBA_27_P193_12.ZIP     BINARY
+      
+      ZIP FILE CONTENTS          DESCRIPTION
+     -------------------         -------------
+      CAPRI.exe                  CAPRI v193 executable
+      VACAPRIVVA.dll             Virtual VA dynamically linked library
+      CAPRI_Help.chm             CAPRI On-line Help
+      CAPRI.map                  CAPRI error map
+      CAPRISession.rdox          Reflections session configuration
+      ssh_config                 Secure Shell configuration       
+      CAPRI_GUI_ISG.doc          CAPRI GUI Installation Supplemental Guide
+      Libeay32.dll               VLER /DAS dynamically linked library
+      Ssleay32.dll               VLER /DAS dynamically linked library
+      QPDF.exe                   Support PDF compression and Linearization
+      QPDF13.dll                 Support PDF compression and Linearization
+      LIBGCC_S_DW2-1.dll         Support PDF compression and Linearization
+      LIBSTDC++-6.dll            Support PDF compression and Linearization
+      CapriTerminalEmulators.ini CapriSession Configuration File
+  
+ This patch requires all CAPRI/AMIE users to be out of the systems and it 
+ is recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ No options are required to be disabled for install
+  
+  
+ Installation Instructions:
+ --------------------------
+ The installation of the patch will be introducing new files, updating 
+ routines, parameters, remote procedure calls and options.
+  
+ 1. Choose the PackMan message containing this patch.
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the patch 
+    DVBA*2.7*193):
+ a. Backup a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not backup
+    any other changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will 
+    allow you to view all changes that will be made when this patch is 
+    installed.  It compares all components of this patches routines, DDs, 
+    templates, etc.
+ c. Verify Checksums in Transport Global - This option will allow you    
+    to ensure the integrity of the routines that are in the transport
+    global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+    When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//NO
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//NO
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//NO 
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+ 8. If CAPRI GUI users have not already been upgraded to the new 
+    version of the CAPRI GUI v193 (CAPRI.exe [DVBA_27_P193_12.ZIP]),
+    they should be upgraded as soon as possible upon installation of this
+    patch.
+ 9. When prompted for Incoming Mail Group Coordinator, enter an IRM 
+    personnel.  This mail group is for future use.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. Log a ServiceNow helpdesk ticket so the 
+ development team can assist in this process.
+  
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 84
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAALRT
+    Before:  B1094381   After:  B1094180  **193**
+Routine Name: DVBAB1B
+    Before: B11312167   After: B11312167  **104,143,193**
+Routine Name: DVBAB1C
+    Before:       n/a   After: B26976785  **193**
+Routine Name: DVBAB2
+    Before: B31951617   After: B32705926  **35,42,149,184,193**
+Routine Name: DVBAB5
+    Before:  B2583661   After:  B2646999  **35,185,193**
+Routine Name: DVBAB58
+    Before: B15185844   After: B15547843  **35,193**
+Routine Name: DVBAB6
+    Before: B67138708   After: B69476368  **35,90,108,168,185,190,192,193**
+Routine Name: DVBAB70
+    Before: B38834112   After: B35957431  **35,42,57,136,143,149,193**
+Routine Name: DVBAB82
+    Before:B146075808   After:B149057820  **42,90,100,119,156,149,179,
+                                           181,184,185,192,196,193**
+Routine Name: DVBABEBD
+    Before: B13866320   After: B12975161  **57,108,185,190,192,193**
+Routine Name: DVBACRVA
+    Before:       n/a   After: B10866271  **193**
+Routine Name: DVBARSBD
+    Before:B142334503   After:B203061467  **179,185,189,190,192,193**
+Routine Name: DVBC193P
+    Before:       n/a   After:  B4711875  **193**
+Routine Name: DVBCADEX
+    Before:  B8221294   After:  B8659510  **184,193**
+Routine Name: DVBCBULL
+    Before: B29784919   After: B30257624  **42,184,189,193**
+Routine Name: DVBCCHKR
+    Before: B29025053   After: B29140314  **17,193,194**
+Routine Name: DVBCCNC1
+    Before: B14689531   After: B14797282  **193,194**
+Routine Name: DVBCCNCL
+    Before: B29391810   After: B28830312  **102,184,193,194**
+Routine Name: DVBCEDIT
+    Before: B19337111   After: B19786261  **7,193**
+Routine Name: DVBCENQ1
+    Before: B27237652   After: B24659456  **17,57,143,149,193**
+Routine Name: DVBCHLR
+    Before: B27159874   After: B27140318  **9,193**
+Routine Name: DVBCHS0
+    Before:  B7806176   After:  B8414277  **193**
+Routine Name: DVBCIRP2
+    Before: B81228394   After: B81927737  **192,193**
+Routine Name: DVBCIRPT
+    Before: B49088411   After: B49657590  **13,19,27,149,184,185,191,193**
+Routine Name: DVBCLABR
+    Before:  B7416408   After:  B7567469  **11,42,193**
+Routine Name: DVBCLOG
+    Before: B16688763   After: B16692467  **193**
+Routine Name: DVBCNTSC
+    Before: B13019940   After: B13108259  **2,19,193**
+Routine Name: DVBCPND1
+    Before: B23119648   After: B20124911  **17,168,193**
+Routine Name: DVBCPNDR
+    Before: B21488603   After: B23812225  **51,193**
+Routine Name: DVBCPRN1
+    Before: B19169531   After: B19322619  **31,193**
+Routine Name: DVBCPRNT
+    Before: B15307493   After: B15392745  **193**
+Routine Name: DVBCPURG
+    Before:  B3914601   After:  B3907504  **48,193**
+Routine Name: DVBCREDT
+    Before: B23640819   After: B24629709  **193**
+Routine Name: DVBCRELS
+    Before: B16425320   After: B16510562  **83,193**
+Routine Name: DVBCREQ3
+    Before:  B3240101   After:  B2435535  **193**
+Routine Name: DVBCREQP
+    Before: B20787575   After: B25484562  **193**
+Routine Name: DVBCROP1
+    Before:  B2247426   After:  B2251550  **193**
+Routine Name: DVBCROPN
+    Before: B27642320   After: B28631923  **42,193**
+Routine Name: DVBCRPON
+    Before: B16783860   After: B17053087  **2,32,193**
+Routine Name: DVBCRPRT
+    Before: B20397962   After: B20659083  **31,42,119,192,196,193**
+Routine Name: DVBCSCHD
+    Before: B20499986   After: B18709519  **17,193**
+Routine Name: DVBCTRN1
+    Before:  B4904198   After:  B5018237  **12,193**
+Routine Name: DVBCUTL3
+    Before: B23312372   After: B23964326  **132,193**
+Routine Name: DVBCUTL5
+    Before: B16842075   After: B17533926  **193**
+Routine Name: DVBCUTL8
+    Before: B17624545   After: B98535168  **193**
+Routine Name: DVBCXFR1
+    Before:       n/a   After: B11734137  **193**
+Routine Name: DVBCXFR2
+    Before:       n/a   After: B31249178  **193**
+Routine Name: DVBCXFRA
+    Before: B30546302   After: B30776087  **193**
+Routine Name: DVBCXFRB
+    Before: B16766311   After: B16864719  **149,193**
+Routine Name: DVBCXFRC
+    Before: B44128395   After: B92188379  **1,6,18,65,149,193**
+Routine Name: DVBCXFRD
+    Before: B17456538   After: B17669105  **18,193**
+Routine Name: DVBCXFRE
+    Before: B25183514   After: B25364359  **10,184,193**
+Routine Name: DVBCXFRS
+    Before: B10365515   After: B11515454  **10,193**
+ 
+Routine list of preceding patches: 7, 9, 12, 32, 48, 51, 83, 132, 191, 194
+                           196
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 02, 2015
+Completed By:                               Date Completed: SEP 18, 2018
+Released By :                               Date Released : SEP 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

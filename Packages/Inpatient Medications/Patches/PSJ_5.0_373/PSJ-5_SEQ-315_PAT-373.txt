@@ -1,0 +1,380 @@
+$TXT Created by              B at CPRS31A.DOMAIN.EXT  (KIDS) on Monday, 07/16/18 at 09:20
+=============================================================================
+Run Date: SEP 28, 2018                     Designation: PSJ*5*373
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #315                      Status: Released
+                  Compliance Date: OCT 28, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*194   <<= must be installed BEFORE `PSJ*5*373'
+                    (v)PSJ*5*256   <<= must be installed BEFORE `PSJ*5*373'
+                    (v)PSJ*5*304   <<= must be installed BEFORE `PSJ*5*373'
+                    (v)PSJ*5*329   <<= must be installed BEFORE `PSJ*5*373'
+                    (v)PSJ*5*334   <<= must be installed BEFORE `PSJ*5*373'
+                    (v)PSJ*5*338   <<= must be installed BEFORE `PSJ*5*373'
+
+Subject: 4 DIGIT YEARS/STOP & START DATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to implement the changes from NSR 20111103.
+  
+ Specifically, three changes are being made related to handling of 
+ Inpatient Medication orders:
+  
+ 1. In order entry options and selected reports, the year will now display 
+ in four digit format.
+ 2. When a stop date is being entered or edited, there will be a hard stop 
+ at 367 days. No stop date more than 367 from the start date will be 
+ allowed.
+ 3. When a start date is being entered or edited, there will be a warning 
+ given if the start date is more than seven days in the future.
+  
+ This patch also addresses three Defects:
+ 1. I13108353FY17     - There is an inconsistency for updating start date
+                        when editing a starred field and a non-starred
+                        field depending on when you perform the edit.
+ 2. RTC-Defect 561161 - Hard Error occurs when using Patient Profile 
+                        Report (IV)  [PSJI PROFILE REPORT] for most
+                        (but not all) Patient names.
+ 3. I8642889FY16      - Allergy Order Check related issue when one patient 
+                        has medications checked against another patient's
+                        allergies.
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20111103 - Pharmacy VISTA Orders to Display Dates in MM/DD/YYYY format, 
+ and Add a Hard Stop for Date Entry.
+  
+ Options affected by these enhancements are:
+ PSJ EXTP - Patient Profile (Extended)
+ PSJ LM EXTP - Patient Profile (Extended)
+ PSJ OE - Inpatient Order Entry
+ PSJ OR PAT PR - Inpatient Medications Profile
+ PSJ PR - Inpatient Profile
+ PSJI LM PAT PR - IV Medications Profile
+ PSJI ORDER - Order Entry (IV)
+ PSJI PROFILE REPORT - Patient Profile Report (IV)
+ PSJU LM PAT PR - Unit Dose Medications Profile
+ PSJU NE - Order Entry
+ PSJU PR - Patient Profile (Unit Dose)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I13108353FY17 - There is an inconsistency for updating start date when 
+                    editing a starred field and a non-starred field
+                    depending on when you perform the edit
+  
+     Problem:
+     --------
+     When a starred (*) field is edited on an active order with a past
+     start date, it creates a new order and the start date is updated to
+     today's date. However, if a non-starred field is edited first and then
+     the starred field is edited, the start date is not updated to today's
+     date. 
+  
+     Resolution:
+     ----------- 
+     Added line tag, CKDT^PSGOEE to routine PSJOE1 to check if a new 
+     start/stop dates should be calculated when the edit will create a new
+     order.
+  
+ 2. RTC-Defect 561161 - Hard Error occurs when using Patient Profile 
+                        Report (IV)  [PSJI PROFILE REPORT] for most
+                        (but not all) Patient names.
+  
+     Problem:
+     --------
+     An error will occur when the option 'PSJI PROFILE REPORT' is 
+     selected. Variable PSGP is undefined:
+  
+     <UNDEFINED>CHK+2^PSIVACT *PSGP
+  
+     The profile will not be created. 
+  
+     Resolution:
+     ----------- 
+     Added a set command to CHK^PSIVACT for the variable PSGP. It  
+     is set to the patient DFN. This variable is used to select
+     the patient's clinic.
+  
+ 3. I8642889FY16 - Allergy Order Check
+  
+  
+     Problem: 
+     --------
+     When processing unit dose orders for multiple patients, if the
+     preceding patient has an allergy to a medication from the prior
+     patients order, the user is receiving incorrect allergy order checks.
+  
+     Patient #1 - order for Penicillin, no allergy to this drug.  Patient
+     #2 has an allergy to Penicillin but was prescribed Acarbose.  Patient
+     #2 received an allergy order check for Penicillin.
+  
+  
+     Resolution:
+     -----------
+     A modification was made to ENKILL^PSJLMUDE to add the variable
+     PSJALLGY to the exit process, which kills the variable so that it will
+     no longer will be carried forward to the next patient.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ New York Harbor
+ Oklahoma City 
+  
+ Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following:
+  
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                      File Name                          FTP Mode
+ -----------------------------------------------------------------------
+ Inpatient Medications      psj_5_nurse_um_r0918.pdf           Binary
+  Nurse's User Manual
+ Inpatient Medications      psj_5_phar_um_r0918.pdf            Binary
+  Pharmacist's User Manual
+ Pharmacy Data Management   pss_1_dosing_ord_ck_um_r0918.pdf   Binary
+  Dosing Order Check User
+  Manual 
+ Inpatient Medications      psj_5_supr_um_r0918.pdf            Binary
+  Supervisor's User Manual
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter the
+         patch PSJ*5.0*373: 
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates. 
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         routines, DDs, templates, etc. 
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.  Note that there may be a Before Checksum mismatch
+         reported that is likely caused by the fact that PSJ*5.0*373 was
+         copied from PSJ*5.0*336 which is now Entered In Error status, but
+         was previously Released. However, there should be no Failures
+         reported with the 22 routines checked. The values in the patch 
+         description are correct.
+  
+ 4.      From the Installation Menu, select the Install Package(s)
+         option and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', respond NO.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', respond NO.
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out, Rollback Instructions:
+ --------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGO
+    Before: B35277270   After: B41234695  **4,58,110,181,275,373**
+Routine Name: PSGOE41
+    Before: B97532648   After:B102492308  **50,63,64,69,58,111,136,113,
+                                           267,315,334,373**
+Routine Name: PSGOE81
+    Before:B107958906   After:B115959656  **26,50,64,58,82,110,111,136,
+                                           113,267,315,334,373**
+Routine Name: PSGOE91
+    Before:B114633409   After:B121528275  **50,64,58,110,111,136,113,179,
+                                           265,267,285,315,334,373**
+Routine Name: PSGOEE
+    Before:B103788427   After:B107177603  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281,315,338,373**
+Routine Name: PSGOEEW
+    Before: B28844185   After: B29287658  **7,58,111,315,373**
+Routine Name: PSGOEF
+    Before:B125998243   After:B126624363  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199,281,315,256,
+                                           373**
+Routine Name: PSGVW
+    Before: B32841979   After: B33609495  **50,58,85,80,104,110,267,315,373**
+Routine Name: PSIVACT
+    Before: B30388063   After: B31395934  **15,38,58,110,181,275,304,373**
+Routine Name: PSIVEDT1
+    Before:B113503135   After:B119441864  **3,7,41,47,50,64,58,116,110,
+                                           111,113,267,279,305,194,373**
+Routine Name: PSIVPRO
+    Before: B46921517   After: B51389266  **38,58,85,110,181,263,275,373**
+Routine Name: PSIVUTL
+    Before: B35163625   After: B45543984  **69,58,81,85,110,133,181,263,
+                                           275,279,373**
+Routine Name: PSJLIUTL
+    Before: B52930175   After: B58538062  **39,50,58,81,85,110,180,263,
+                                           267,373**
+Routine Name: PSJLIVFD
+    Before: B63243242   After: B65805635  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267,
+                                           228,279,305,256,373**
+Routine Name: PSJLIVMD
+    Before:B100202267   After:B103647845  **37,50,63,58,81,91,80,116,110,
+                                           111,180,134,209,254,267,275,
+                                           279,373**
+Routine Name: PSJLMGUD
+    Before: B31538493   After: B31955674  **25,58,85,116,110,111,267,275,
+                                           315,256,373**
+Routine Name: PSJLMPRI
+    Before: B22340639   After: B24538481  **58,85,118,110,133,154,181,275,373**
+Routine Name: PSJLMPRU
+    Before: B19004803   After: B25811546  **16,58,85,110,185,181,267,323,
+                                           317,373**
+Routine Name: PSJLMUDE
+    Before: B87296083   After: B97320744  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228,315,317,338,373**
+Routine Name: PSJLMUT1
+    Before: B74824116   After: B76113417  **4,27,29,49,58,107,110,146,
+                                           175,201,181,281,329,373**
+Routine Name: PSJO
+    Before: B32312057   After: B38311282  **31,58,110,181,267,275,317,373**
+Routine Name: PSJOE1
+    Before: B31376376   After: B32599287  **2,7,25,30,47,56,64,179,181,
+                                           252,281,315,338,373**
+ 
+Routine list of preceding patches: 194, 256, 304, 329, 334, 338
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2018
+Completed By:                               Date Completed: SEP 27, 2018
+Released By :                               Date Released : SEP 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

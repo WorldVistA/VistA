@@ -1,0 +1,219 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 06/19/18 at 13:11
+=============================================================================
+Run Date: AUG 01, 2018                     Designation: GMPL*2*52
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #46                      Status: Released
+                  Compliance Date: SEP 01, 2018
+=============================================================================
+
+Associated patches: (v)GMPL*2*36   <<= must be installed BEFORE `GMPL*2*52'
+
+Subject: PROBLEM LIST MENU OPTION GMPL NTRT F/U RPT ERRORS OUT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ The Problem List Mgt Menu [GMPL MGT MENU]'s report option, Problem List
+ NTRT Follow-Up Report [GMPL NTRT F/U RPT], errors out in VISTA.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. CA-SDM R18820037FY18 - Problem list menu report option errors out in
+    VISTA.
+  
+ Problem:
+ --------
+ When a Registered Nurse or a Licensed Practical Nurse (who has the ORELSE 
+ key but doesn't have the PROVIDER key) edits an encounter note (either by 
+ adding an addendum or by editing the encounter of a completed note), he 
+ or she selects an International Statistical Classification of Diseases and
+ Related Health Problems, 9th revision (ICD-9) code to update to a 10th
+ revision (ICD-10) code. After the ICD-10 code is selected, the nurse is
+ prompted for a Systematized Nomenclature of Medicine - Clinical Terms
+ (SNOMED CT) code. After the nurse clicks the OK button, the patient's
+ problem list is updated with the new codes. In addition, the Responsible
+ Provider for the edited problem is changed from its original value to
+ UNSPECIFIED (0) and saved to the updated problem record.
+  
+ If the updated problem record is flagged as needing a National 
+ Terminology Rapid Turnaround (NTRT) follow-up, it will appear in the
+ report. When the Problem List NTRT Follow-Up Report [GMPL NTRT F/U RPT] 
+ option is run and the Responsible Provider is UNSPECIFIED (0), the report
+ errors out and the user is forced out of VISTA.
+  
+ The Problem List NTRT Follow-up Report [GMPL NTRT F/U RPT] option runs the
+ routine GMPLNTRT. The report builds an array of records sorted by
+ Division, Responsible Provider and so on. When the Responsible Provider
+ is UNSPECIFIED (0), the variable used to build the index is set to null.
+ When the routine attempts to add a new record to this index, the variable
+ with the null value will cause the routine GMPLNTRT to crash.
+  
+ Resolution:
+ -----------
+ A modification was made to routine GMPLNTRT to test the value of the
+ variable used in building the array of records. If this variable's value
+ is UNSPECIFIED (0), the variable will be set to "n/a" and sorted with the
+ records in which the Responsible Provider is not known.
+  
+ Test Sites:
+ -----------
+ VA Illiana HCS (Danville)
+ VA Portland HCS
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the 
+    Installation Menu.
+  
+ 4. From the Installation Menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch GMPL*2.0*52. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+  
+ 5. From the Installation Menu you may elect to use the following options. 
+    When prompted for the INSTALL NAME enter the patch GMPL*2.0*52:
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//' respond 'NO'. 
+  
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Back-out/Rollback Strategy:
+ ===========================
+ If the site needs to roll back the installed patch, it can be done by 
+ restoring from a backup copy of the routine. During the patch installation
+ the installer has the option of using the Backup a Transport Global option
+ in the Installation menu. This creates a backup copy of the routines in
+ the patch and sends copies by MailMan to user(s) selected by the patch
+ installer. To restore from MailMan:
+  
+ 1. Enter the MailMan Menu [XMUSER]
+  
+ 2. At the Select MailMan Menu Option: prompt type in RML for the
+    Read/Manage Messages.
+  
+ 3. At the Read mail in basket: prompt select the basket the routine backup
+    Message is stored in.
+  
+ 4. At the Enter message number or command: prompt select the message 
+    that has the routines.
+  
+ 5. At the Type <Enter> to continue or '^' to exit: prompt enter '^' to 
+    skip to the message action prompt.
+  
+ 6. At the Enter message action (in SELECTED basket): prompt type in X for
+    Xtract KIDS.
+  
+ 7. At the Select PackMan function: prompt type in 6 for INSTALL/CHECK
+    MESSAGE.
+  
+ 8. The user will be presented with the following warning and a prompt:
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// 
+  
+ At this prompt type in Y for YES to install the backup copies.
+  
+ 9. The user will be presented with the following message and a prompt:
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// 
+  
+ Answering yes to this prompt is optional. The site can reinstall the 
+ patch.
+  
+ If the user answers YES to this prompt:
+     9.1 At the Subject: prompt type in a descriptive subject.
+     9.2 At the Send mail to: prompt select the user to send this message.
+     9.3 At the Select basket to send to: prompt select the basket to
+         send this message. It will default to the IN basket.
+     9.4 At the And Send to: prompt select any additional user to send the
+         Message to or hit enter to continue.
+  
+ A message similar to the following will be presented to the user: 
+ Building PackMan backup message with subject backup
+  
+ PackMan backup message [12648808] sent.
+ Line 2    Message #12636709  Unloading Routine   GMPLNTRT (PACKMAN_BACKUP)
+  
+ If the user answers NO to this prompt, the user will be presented with a
+ message similar to this:
+  
+ Line 2    Message #12636709  Unloading Routine   GMPLNTRT (PACKMAN_BACKUP)
+  
+ 10. At the Enter message action (in SELECTED basket): prompt accept the 
+ default of Ignore.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLNTRT
+    Before: B91442393   After: B92790041  **36,52**
+ 
+Routine list of preceding patches: 36
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2018
+Completed By:                               Date Completed: AUG 01, 2018
+Released By :                               Date Released : AUG 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,154 @@
+$TXT Created by                      VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 08/15/18 at 14:49
+=============================================================================
+Run Date: SEP 25, 2018                     Designation: VIAB*1*13
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: SEP 28, 2018
+=============================================================================
+
+Associated patches: (v)VIAB*1*11   <<= must be installed BEFORE `VIAB*1*13'
+
+Subject: VIA BMS ListPatientMovement RPC modifications
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains modifications for the BMS team.  A modification was
+ made to the ListPatientMovement target filtering on the (#.01) DATE/TIME 
+ field rather than the (#101) ENTERED ON field. It also contains a fix to 
+ ListOrderAction that prevents a rare <SUBSCRIPT> error when orders lack a 
+ 3-node.
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+    
+ Forms Associated:
+ N/A   
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+   
+ Remote Procedure Calls:
+ -----------------------
+ VIABMS
+  
+ Additional Information:
+ -----------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ -------------------------  
+ N/A
+     
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+     
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+     
+ Test Sites:
+ -----------
+ Gulf Coast Veterans Health Care System
+ St. Louis Veterans Health Care System
+ North Texas Veterans Health Care System
+   
+ Patch Installation:
+ -------------------  
+     
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch contains both pre and post install instructions. 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install.
+  
+ No menu options need to be disabled.
+    
+ Installation Instructions:
+ -------------------------- 
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+    
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch VIAB*1*13:
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DDs, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+    
+   4.  From the Installation Menu, select the Install Package(s) option and
+       choose the patch (VIAB*1*13) to install.
+    
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? YES//', press <ENTER>. 
+   
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', press <ENTER>.
+    
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//', press <ENTER>.
+  
+   8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+     
+  Post-Installation Instructions:
+  -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Install the backup that you create during installation of the patches.  
+ This will revert the VIABMS1, VIABMS2, and VIABMS3 routines back to the
+ pre-install version.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS1
+    Before:B102801005   After:B102618166  **8,11,13**
+Routine Name: VIABMS2
+    Before: B66036191   After: B66343764  **11,13**
+Routine Name: VIABMS3
+    Before: B44587535   After: B44625228  **8,11,13**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 20, 2018
+Completed By:                               Date Completed: SEP 25, 2018
+Released By :                               Date Released : SEP 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

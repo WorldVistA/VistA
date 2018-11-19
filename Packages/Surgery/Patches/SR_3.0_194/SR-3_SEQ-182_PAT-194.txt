@@ -1,0 +1,133 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 06/01/18 at 15:11
+=============================================================================
+Run Date: AUG 20, 2018                     Designation: SR*3*194
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #182                      Status: Released
+                  Compliance Date: SEP 19, 2018
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*194'
+
+Subject: HOSPITAL ADMISSION STATUS DEFAULT 
+
+Category: 
+  - Input Template
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ HOSPITAL ADMISSION STATUS field defaults to an inactive code.
+  
+  
+ Templates Associated:
+  
+ Template Name          Type    File Name (#)     New/Modified/Deleted
+ -------------          ----    --------------    --------------------
+ SRSCHED-UNREQUESTED-   input   SURGERY (#130)    Modified
+ ICD10
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC0757492 - HOSPITAL ADMISSION STATUS field defaults to an inactive code.
+  
+ Problem:
+ --------
+ When the HOSPITAL ADMISSION STATUS field (#.011) is not included in the
+ Surgery Site Parameter REQUIRED FIELDS FOR SCHEDULING: (MULTIPLE), running
+ the Schedule Unrequested Operations [SROSRES] option, the Hospital
+ Admission Status: prompt defaults to "I".
+  
+ Resolution:
+ -----------
+ A modification was made to the input template SRSCHED-UNREQUESTED-ICD10 to
+ remove the default value. This matches how the field functions when the
+ HOSPITAL ADMISSION STATUS (#.011) field IS included in the Surgery Site
+ Parameter REQUIRED FIELDS FOR SCHEDULING: (MULTIPLE).
+  
+  
+ Test Sites:
+ -----------
+ White River Junction VAMC
+ Durham VA HCS
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 1 minute to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.
+  
+ 4. From this menu, you may elect to use the following options. When 
+    prompted for the INSTALL NAME enter the patch SR*3.0*194:
+  
+     a. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+   
+     b. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch (routines,
+        DDs, templates, etc.).
+  
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//' respond 'NO'.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' respond 'NO'.
+  
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. Because this patch contains template changes, 
+ back-out must be done with the participation of the sustainment team.
+  
+ The back-out plan is to restore the template SRSCHED-UNREQUESTED-ICD10 which
+ can be provided upon request. Please call the national help desk or enter a 
+ help desk ticket, if required.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure template
+ SRSCHED-UNREQUESTED-ICD10 no longer matches the patch version.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 31, 2018
+Completed By:                               Date Completed: AUG 20, 2018
+Released By :                               Date Released : AUG 20, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

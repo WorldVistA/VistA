@@ -1,0 +1,360 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 05/29/18 at 10:17
+=============================================================================
+Run Date: AUG 15, 2018                     Designation: MPIF*1*67
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #64                      Status: Released
+                  Compliance Date: SEP 15, 2018
+=============================================================================
+
+Associated patches: (v)MPIF*1*61   <<= must be installed BEFORE `MPIF*1*67'
+                    (v)MPIF*1*66   <<= must be installed BEFORE `MPIF*1*67'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - DATE OF DEATH UPDATES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a Veterans
+       Affair Medical Center (VAMC) VistA system).
+  
+ MPIF*1.0*61 and MPIF*1.0*66 are the required builds for patch MPIF*1.0*67.
+   
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       two VistA namespaces: DG and MPIF.
+       Patches DG*5.3*963 and MPIF*1.0*67 can be installed in any order
+       as there are NO dependencies between these patches.
+       (Do NOT install MPIF*1.0*67 on legacy sites or on the FORUM CLAIMS
+        system). 
+   
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*963 patch. MPIF*1.0*67 should NOT be installed on legacy
+       sites or on the FORUM CLAIMS system.  
+   
+ The following Date of Death (DOD) activity checks and Enterprise 
+ Registration enhancements exported in this patch were requested by the
+ Healthcare Identity Management (HC IdM) business group in support of the
+ Master Veteran Index (MVI) application.
+  
+ Enhancement #1
+ HC IdM noted that there were task(s) being logged for a patient who had
+ a prescription login date/time that was greater than their date of death
+ (DOD). These false positives occurring in the DOD activity check process
+ are due to the fact that prescription login contains both a date and time 
+ value, whereas the DOD usually only has a date. The DOD activity check
+ process for prescription initial fills, partial fills and refills in
+ routine MPIFDODC has been enhanced to now only use the date portion of
+ the prescription login when comparing against the DOD when determining if
+ the patient still has future activities at the site.
+    
+ Enhancement #2
+ MPI has encountered appointment exceptions being generated when there are
+ no exceptions. These exceptions have been determined to be caused when
+ there is a correlation to the VistA site, but the VistA site doesn't have
+ the  corresponding record. This issue is causing the DOD activity checker
+ to return an indication of activity for the patient who doesn't actually
+ exist at the site. To prevent this false positive indication, routine
+ MPIFDODC has been enhanced to ensure that the patient actually exists at
+ the site prior to performing any of the DOD activity checks.
+  
+  Note: Ultimately the majority of these missing records at the site
+        are due to the Veterans Online Access (VOA) process issue that
+        has since been corrected in patch DG*5.3*950. 
+   
+ Enhancement #3
+ HC IdM has requested an enhancement to the DOD Activity Checker process
+ that will allow additional information from the Patient Treatment File
+ (PTF) [#45] to be returned, which will assist them in their analysis of
+ these reported activities when they occur. The PTF information returned
+ from the DOD Activity Check in routine MPIFDODC has been enhanced to now
+ append the following text to the results:
+  
+                  "PTF file (#45) IEN=nnn" 
+  
+  Note: nnn will be replaced with the Internal Entry Number (IEN) of the
+        PTF (#45) record entry.
+  
+ Enhancement #4
+ HC IdM has requested that MVI enhance the Register a Patient [DG REGISTER
+ PATIENT] menu option so that deceased patients are easily identifiable in
+ the returned search results. The marking of 'DECEASED' patient records
+ should result in a decrease of the number of possible wrong selections made
+ by users. Therefore, 'DECEASED' patients will now be marked with a
+ proceeding asterisk (*) in the search results and on the Date of Death (DOD)
+ when a request is made to display the details of a deceased patient. 
+ Finally, if the returned search list includes 'DECEASED' patients, then MVI
+ will also add the following disclaimer after the search results alerting the
+ user to the presence of deceased patients:
+  
+           *Candidate list includes a deceased patient             
+  
+  Example:
+      
+      Select PATIENT NAME: TEST, PATIENT A
+      Do you want to do an Enterprise Search? Y  (Yes)
+      Patient name components--
+      FAMILY (LAST) NAME: TEST// 
+      GIVEN (FIRST) NAME: PATIENT// 
+      MIDDLE NAME: A 
+      PREFIX: 
+      SUFFIX: 
+      DEGREE: 
+      Patient identifiers--
+      SOCIAL SECURITY NUMBER: 000000000
+      DATE OF BIRTH: 1/1/1975  (JAN 1, 1975)
+      SEX: MALE
+      MOTHER'S MAIDEN NAME: 
+      PLACE OF BIRTH [CITY]: 
+      PLACE OF BIRTH [STATE]: 
+      MULTIPLE BIRTH INDICATOR: 
+      PHONE NUMBER [RESIDENCE]: 
+   
+      Searching the MVI...
+       
+      --- Records meet the MATCH criteria ---                           BIRTH
+         ICN                NAME                   SSN        DOB        SEX
+      1) *1000000000V000000 TEST,PATIENT A         000000000  1/01/75     M
+      --- Records meet the POTENTIAL MATCH criteria ---                 BIRTH
+         ICN                NAME                   SSN        DOB        SEX
+      2) 1000000001V000001  TEST,PATIENT A         000000001  2/01/75     M
+                                                                        BIRTH
+         ICN                NAME                   SSN        DOB        SEX
+      3) 1000000002V000002  TEST,PATIENT A         000000002  2/02/75     M
+  
+      *Candidate list includes a deceased patient
+  
+      Enter the Number to display the details: 1
+      Please wait...
+  
+           ICN         : 1000000000V000000
+           Name        : TEST,PATIENT A 
+           SSN         : 000000000
+           DOB         : Jan 01, 1975
+           *DOD        : May 01, 2018
+           Birth Sex   : M
+           MMN         : 
+  
+      Would you like to see another record? NO//                         
+   
+      
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Bay Pines VAMC
+ Salt Lake City HCS
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*67):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+   
+ Back-Out Plan
+ -------------
+ The MPIF back-out procedure would consist of restoring the original
+ routines using the back-up message created during the patch installation,
+ as there are no additional components nor any other data modifications
+ being made in this patch.
+   
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFDODC
+    Before: B48253214   After: B51569177  **64,66,67**
+Routine Name: MPIFVER
+    Before: B55653915   After: B62395107  **61,62,65,66,67**
+Routine Name: MPIFXMLP
+    Before: B91197563   After: B94624059  **61,67**
+ 
+Routine list of preceding patches: 66
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2018
+Completed By:                               Date Completed: AUG 15, 2018
+Released By :                               Date Released : AUG 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

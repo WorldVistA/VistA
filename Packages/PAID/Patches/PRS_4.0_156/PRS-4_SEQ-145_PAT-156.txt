@@ -1,0 +1,256 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/21/18 at 20:41
+=============================================================================
+Run Date: AUG 14, 2018                     Designation: PRS*4*156
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #145                      Status: Released
+                  Compliance Date: SEP 14, 2018
+=============================================================================
+
+Associated patches: (v)PRS*4*155   <<= must be installed BEFORE `PRS*4*156'
+
+Subject: PAID HYBRID ADDITIONS FY18
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Hybrid table for Occupation
+ Series/Title Codes converting to Hybrid status.
+  
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC0303940 - PAID - New Hybrid Code Additions
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0101 
+ hybrid conversion:
+  
+        010126  LICEN PROF MNTAL HLTH CONSL ENTRY LEVEL
+        010127  LICENSED PROF MENTAL HELTH COUNSELOR
+        010128  LPMHC PROGRAM COORDINTOR
+        010129  LPMHC SUPERVISOR
+        010130  LPMHC PROGRAM MANAGER
+        010131  LPMHC CARE LINE MANAGER
+        010132  LPMHC VISN MANAGER
+        010133  LPMHC NATIONAL MANAGER
+        010144  LICENSED PRO MENTAL HLTH CON MSTER INTN
+        010147  LICENSED PROF MENTAL HEALTH COUNSELOR
+        010148  LICENSED PROF MENTL HLTH CNSL(PRO CORD)
+        010149  SUPV LICENSED PROF MENTAL COUNSELOR
+        010151  SENIOR LICENSED PROF MNTL HLTH COUNSEL
+        010152  LCNSD PROF MNTL HLTH CNSLR(CR LN MNG)
+        010153  LCNSD PROF MNTL HLTH CNSL(VISN COORD)
+        010154  LCNSD PROF MNTL HLTH COUNSELOR NTL PRG
+        010156  MARRIAGE AND FAMILY THERAPIST
+        010157  MARRIAGE AND FAMILY THERAPIST(ADVANCED)
+        010158  SUPERVISORY MARRIAGE & FAMILY THERAPIST
+        010159  MARRIAGE & FAMILY THERAPIST(PROG COORD)
+        010161  MARRIAGE AND FAMILY THERAPIST(PROG MAN)
+        010162  MARRIAGE&FAMILY THERAPIST PROG MGR LEAD
+        010163  LPMHC SENIOR
+        010164  MARRIAGE&FAMILY THERAPIST (CARE LINE MG)
+        010165  MARRIAGE&FAMILY THERAPIST (VISN MGR)
+  
+ Below are the occupations that were added in PAID for the 0633 
+ hybrid conversion:
+  
+        063304  PHYSICAL THERAPIST(CLINICAL SPECIALIST)
+        063305  PHYSICAL THERAPIST (PROG COORDINATOR)
+  
+ Below are the occupations that were added in PAID for the 0638 
+ hybrid conversion:
+  
+        063802  CREATIVE ARTS THERAPIST (MUSIC)
+        063803  CREATIVE ARTS THERAPIST (ART)
+        063804  RECREATION THERAPIST (ADVANCED)
+        063805  RECREATION THERAPIST(CLINICAL ED COORD)
+        063806  RECREATION THERAPIST (PROG COORDINATOR)
+        063807  LEAD RECREATION THERAPIST
+        063808  SUPERVISORY RECREATION THERAPIST
+        063809  RECREATION THERAPIST (ASSISTANT CHIEF)
+        063811  RECREATION THERAPIST (CLNCL RSRCH SPEC)
+        063812  CREATIVE ARTS THERAPIST, (ADVANCED/ART)
+        063813  CREATIVE ARTS THERAPIST(DANCE/MOVEMENT)
+        063814  CREATIVE ARTS THERAPIST(ADVND/DAN/MVMT)
+        063815  CREATIVE ARTS THERAPIST (DRAMA)
+        063816  CREATIVE ARTS THERAPIST,(DRAMA)(ADVAN)
+        063817  CREATIVE ARTS THERAPIST,(ADVAN/MUSIC)
+        063818  CRTV ART THRPST(CLCL ED CRD A/D/M/D/M)
+        063819  LEAD CRTV ART THRPT(ART/DAN/MVT/DRM/MUS)
+        063821  SUPV CRTV ART THRPST(ART/DN/MVT/DR/MUS)
+        063822  CRTV ART THPT(ASST CHF AT/DN/MVT/DRM/MU
+        063823  CRTV ART THRPT(ASST CH AT/DN/MVT/DRM/MU
+        063824  CRTV ART THRP CLNL RSCH SPEC A/D/M/D/M
+  
+ Below are the occupations that were added in PAID for the 0672
+ hybrid conversion:
+  
+        067203  PROSTHETIC REPRESENTATIVE (SERV CHIEF)
+        067204  PROSTHETIC REPRESENTATIVE(ASSIST CHIEF)
+        067208  SUPERVISORY PROSTHETIC REPRESENTATIVE
+        067209  DEPUTY VISN PROSTHETIC REPRESENTATIVE
+        067211  VISN PROSTHETIC REPRESENTATIVE
+        067212  PROSTHETIC REP (NATIONAL PROGM MANAGER)
+  
+  
+ Resolution:
+ -----------
+ The occupation series/title codes have been added to the hybrid table 
+ in routine PRSAENT1.
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Dayton VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ If installed during the normal workday, it is recommended that the PAID
+ users be off the system. 
+  
+ Install Time - less than 2 minutes.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter PRS*4.0*156)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package PRS*4.0*156.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? YES//", respond YES.
+  
+          When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter the following:
+   
+             Decompose Time      [PRSA PAY DECOMP]
+  
+         Enter protocols you wish to mark as 'Out Of Order'://
+  
+      7. Review the installation message for errors.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out by installing the backup created in step 3d from
+ the Installation Instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B93319655   After: B97451143  **96,130,135,138,141,143,147,
+                                           148,152,153,155,156**
+ 
+Routine list of preceding patches: 155
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 18, 2018
+Completed By:                               Date Completed: AUG 14, 2018
+Released By :                               Date Released : AUG 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

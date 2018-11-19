@@ -1,0 +1,205 @@
+
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: IB*2*591
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #569                      Status: Released
+                  Compliance Date: SEP 28, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*568    <<= must be installed BEFORE `IB*2*591'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 3 & 4
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*482
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*23
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*591
+  
+ All three of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS IB PSO BUNDLE 11.0
+   KIDS Host File name: BPS_1_23_IB_PSO.KID
+  
+  
+ This patch contains the following functionality:
+ ------------------------------------------------
+  
+   1. The system is being updated to allow for the new HIPAA regulatory
+      requirements that increase the length of the following fields:
+      Name of Insured, Group Number, Group Name, and Subscriber ID.
+  
+   2. Logic specific to ePharmacy is being pulled out of routine IBCBB11
+      and moved into the new routine IBCBB14 to reduce the risk of patch
+      dependencies in the future.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ IB NCPDP EVENT LOG (#366.14)
+   INSURANCE (sub-file) (#366.1412)                        Modified
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name           Type                                  Deleted
+ -----------           ----                                -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name              Type      File Name (Number)     Deleted
+ -------------              ----      ------------------   -------------
+ IBCNR GROUP PLAN MATCH     List      N/A                  Modified
+ IBCNR PLAN MATCH           List      N/A                  Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ *ECME Deploy Install Rollback Guide (BPS*1*23)
+                                        BPS_1_0_P23_IG.PDF       Binary
+  
+ *A single Release Notes document will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*23.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB11
+    Before:B125441111   After:B104877597  **51,343,363,371,395,392,401,
+                                           384,400,436,432,516,550,577,
+                                           568,591**
+Routine Name: IBCBB14
+    Before:       n/a   After:  B5240660  **591**
+Routine Name: IBCNRRP3
+    Before: B58130731   After: B58267824  **251,276,516,550,591**
+ 
+Routine list of preceding patches: 568
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2017
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

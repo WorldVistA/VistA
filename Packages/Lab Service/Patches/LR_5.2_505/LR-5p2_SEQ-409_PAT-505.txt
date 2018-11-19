@@ -1,0 +1,198 @@
+$TXT Created by             at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 07/10/18 at 09:15
+=============================================================================
+Run Date: AUG 08, 2018                     Designation: LR*5.2*505
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #409                    Status: Released
+                  Compliance Date: SEP 08, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*291      install with patch       `LR*5.2*505'
+
+Subject: NOTIFY HPS T3 Clinical DEV OF FILE 60 UNDEF IF PRESENT 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will aid in researching the following issue:
+      
+ When adding/editing Lab Tests in FILE 60 (LABORATORY TEST), 
+ occasionally a situation happens that causes the records to lose some 
+ of its data.  Once that data is lost, subsequent processing of FILE 60 
+ could produce an UNDEF Error causing a job to end abruptly and not 
+ complete its processing.
+      
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*505 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*505 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+      
+ RISK ANALYSIS: Changes made by patch LR*5.2*505 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+       
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+      
+ New Service Requests (NSRs):
+ ----------------------------  
+      
+ Patient Safety Issues (PSIs):
+ -----------------------------
+                     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Rational Work Items - 717838
+                                       717839
+ CA/SDM Ticket Numbers
+ R18921259FY18 <UNDEFINED>LAB+4^LRCAPPH3 ^LAB(60,101823,0
+ I19185899FY18 <UNDEFINED>LAB+4^LRCAPPH3 ^LAB(60,7140,0)
+      
+ Associated NSR(s):
+ =============
+ N/A
+       
+   Problem:
+   --------
+ When adding/editing Lab Tests in FILE 60 (LABORATORY TEST),
+ occasionally all of the needed data is not written to the file for a lab
+ test.  At this point in time, the problem cannot be recreated on 
+ demand.  
+              
+   Resolution:
+   ------------     
+ This patch is being used to capture the lab test and the user editing/adding
+ it and email the G.HPS T3 Clinical DEV in FORUM. This will give the 
+ HPS T3 Clinical DEV developers a more timely notification of the problem 
+ and then can follow up with site personnel to help determine the cause 
+ of the problem.  Processing will be permitted to continue without causing 
+ the UNDEF error.
+          
+ Test Sites:
+ ----------
+ Fayetteville VAMC
+ Pittsburgh VAMC     
+      
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+     
+ Patch Installation:
+      
+      
+ Pre/Post Installation Overview:
+ -------------------------------
+      
+ Pre-Installation Instructions:
+ ------------------------------    
+     
+ If installed during the normal workday, it is recommended that the 
+ the Lab users be off the system.  Other VISTA users
+ will not be affected.   Install Time - less than 2 minutes (unless 
+ otherwise indicated)
+      
+ Installation Instructions:
+ --------------------------     
+                
+ 1.  Load Transport Global 
+     ---------------------------
+       
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter LR*5.2*505):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer NO 
+      
+ Back-out/Rollback Strategy:
+ ====================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+        
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+      
+ The back-out plan is to restore the routine from the backup created.
+      
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+      
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+             
+ Post-Installation Instructions:
+ -------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPPH3
+    Before: B41949665   After: B57510272  **263,291,505**
+ 
+Routine list of preceding patches: 291
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2018
+Completed By:                               Date Completed: AUG 08, 2018
+Released By :                               Date Released : AUG 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

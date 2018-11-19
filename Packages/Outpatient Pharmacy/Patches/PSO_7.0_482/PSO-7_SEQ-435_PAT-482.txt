@@ -1,0 +1,358 @@
+
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: PSO*7*482
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #435                      Status: Released
+                  Compliance Date: SEP 28, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*318   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*409   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*459   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*500   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*509   <<= must be installed BEFORE `PSO*7*482'
+                    (v)PSO*7*513   <<= must be installed BEFORE `PSO*7*482'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 3 & 4
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ************************************************************************
+ * This patch is being released with a KNOWN DEFECT.  Please refer to   *
+ * item 7 in the list of enhancements below for a detailed explanation. *
+ ************************************************************************
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*482
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*23
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*591
+  
+ All three of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS IB PSO BUNDLE 11.0
+   KIDS Host File name: BPS_1_23_IB_PSO.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. The View Prescription screen has been updated to display, in the
+      'ECME Log' section, any 'Reject' comments entered by the user on
+      the Reject Information Screen.
+  
+   2. The functionality which determines if a prescription is CMOP,
+      Window, or Mail has been updated to disregard, for ePharmacy
+      purposes, any value other than 'C', 'M', and 'W'.
+  
+   3. New functionality was added to improve overall efficiency 
+      of the ePharmacy process by allowing the user to enter patient
+      billing comments to appear on the Reject Information and
+      Reject Notification Screens.
+  
+   4. The IGNORE THRESHOLD field was added to the PSO ePharmacy Site
+      Parameters.  Sites have an option to set a dollar value for the
+      field.  When the gross amount due for claims exceeds the set
+      amount, rejects are prevented from being Ignored by
+      users that do not hold the PSO ePharmacy Site Manager key.
+  
+   5. The prescription label functionality is being updated to add an 
+      entry to the ECME Developers Log containing the claim status, 
+      menu option, action (if available), and any open rejects. 
+      Updates are being made to the following outpatient pharmacy menu 
+      options and actions on the Medication Profile and Reject 
+      Worklists:  ED Edit, PP Pull Rx (OP), RES Resubmit Claim, 
+      OVR Submit Override Codes, CLA Submit Clarif.Code, ED Edit Rx, 
+      PA Submit Prior Auth. SMA Submit Multi. Actions.  Updates are 
+      also being made to the following stand-alone options: EDIT 
+      PRESCRIPTIONS [PSO RXEDIT] and PULL EARLY FROM SUSPENSE [PSO PNDRX].
+  
+   6. The printing of labels is being updated to not allow a label to be
+      printed for TRICARE or CHAMPVA patients if a reject is returned
+      resulting in 'Insurer Asleep'.
+   
+   7. The prescription label functionality is being updated to resolve 
+      label printing deficiencies.  Currently, there are several places
+      in the systems which permit the user to print a label when printing
+      of a label should not be allowed.  This patch adds checks necessary
+      to prevent the printing of a label for most of those scenarios.
+      Updates are being made to Edit Rx and the following actions on
+      Medication Profile and Reject Worklists:  ED (Edit), RES (Resubmit),
+      OVR (Submit Override Codes), CLA (Submit Clarification Code), PA
+      (Submit Prior Authorization) and SMA (Submit Multiple Actions).
+  
+      *****************************************************************
+      * This enhancement was unsuccessful in addressing all known     *
+      * scenarios in which the system erroneously allows the user to  *
+      * print a label.  This defect was identified in the course of   *
+      * IOC testing.  The scenario not successfully addressed by this *
+      * enhancement is rare, and when it does occur, the significance *
+      * is minor.  All processing completes correctly and the system  *
+      * continues to function as it did before this enhancement.  The *
+      * IOC sites all concurred that this defect should not delay the *
+      * release of this multi-build, and the product owner represen-  *
+      * tative agreed that this situation could be corrected in a     *
+      * future development effort.
+      *****************************************************************
+  
+   8. The system is being updated to allow for the new HIPAA regulatory
+      requirements that increase the length of the following fields: Name
+      of Insured, Group Number, Group Name and Subscriber ID.
+  
+   9. The ePharmacy Medication Profile is being added as an action to VER
+      View ePharmacy Rx.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ EPHARMACY SITE PARAMETERS (#52.86)
+                       IGNORE THRESHOLD (#7)               New
+  
+ PHARMACY PATIENT (#55)
+   PATIENT COMMENT  (sub-file) (#55.17)
+                       PATIENT COMMENT DATE (#.01)         New
+                       USER (#1)                           New
+                       ACTIVE (#2)                         New
+                       COMMENT (#3)                        New
+   PATIENT COMMENT HISTORY  (sub-file) (#55.174)
+                       HISTORY DATE (#.01)                 New
+                       USER (#1)                           New
+                       ACTIVITY (#2)                       New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ BPS RPT VIEW ECME RX           run routine                Modified
+ CMOP AND OPAI TESTING TOOL     menu                       Modified
+ PSO EPHARMACY MENU             menu                       Modified
+ PSO EPHARMACY PATIENT COMMENTS run routine                New
+ PSO IGNORED REJECTS REPORT     run routine                Modified
+ PSO NDC VALIDATE               run routine                Modified
+ PSO PMP                        action                     Modified
+ PSO PMP SITE PREFERENCES       action                     Modified
+ PSO PRODUCTIVITY REVENUE RPT   run routine                Modified
+ PSO REJECTS VIEW/PROCESS       run routine                Modified
+ PSO REJECTS WORKLIST           run routine                Modified
+ PSO TRI CVA OVERRIDE REPORT    run routine                Modified
+ PSO ePHARM SITE PARAMETERS     action                     Modified
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ PSO PATIENT COMMENT ACTIVATE                              New
+ PSO PATIENT COMMENT ADD                                   New
+ PSO PATIENT COMMENT DOWN A LINE                           New
+ PSO PATIENT COMMENT EXIT                                  New
+ PSO PATIENT COMMENT HIDDEN MENU                           New
+ PSO PATIENT COMMENT HISTORY                               New
+ PSO PATIENT COMMENT MENU                                  New
+ PSO PATIENT COMMENT NEXT SCREEN                           New
+ PSO PATIENT COMMENT PREVIOUS SCREEN                       New
+ PSO PATIENT COMMENT UP A LINE                             New
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+  
+ Templates Associated:
+  
+                                                           New/Modified/
+ Template Name              Type      File Name (Number)     Deleted
+ -------------              ----      ------------------   -------------
+ PSO PATIENT COMMENT        List      N/A                  Modified
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www4.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ User Manual - Manager - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P482_MAN_UM.PDF      Binary
+ User Manual - Pharmacist - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P482_PHAR_UM.PDF     Binary
+ Technical Manual/Security Guide - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P482_TM.PDF          Binary
+ *ECME Deploy Install Rollback Guide (BPS*1*23)
+                                     BPS_1_0_P23_IG.PDF           Binary
+  
+ *A single Install Rollback Guide will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*23.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBPSSL
+    Before: B90979558   After: B94150549  **421,427,482**
+Routine Name: PSOBPSSP
+    Before:B308796788   After:B316836860  **289,385,421,427,482**
+Routine Name: PSOBPSU1
+    Before:B113607101   After:B114078580  **148,260,281,287,303,289,290,
+                                           358,359,385,403,427,448,482**
+Routine Name: PSOBPSU2
+    Before: B59468645   After: B63271095  **260,287,289,341,290,358,359,
+                                           385,421,459,482**
+Routine Name: PSOBPSU3
+    Before: B16909866   After: B17460470  **448,482**
+Routine Name: PSOLBLN
+    Before: B63716659   After: B80788445  **16,36,71,107,110,117,135,233,
+                                           251,387,379,367,383,318,482**
+Routine Name: PSOORAL1
+    Before: B71524461   After:B120026363  **71,156,148,247,240,287,354,
+                                           367,408,482**
+Routine Name: PSOORAL2
+    Before: B25020405   After: B25016352  **258,260,386,427,454,482**
+Routine Name: PSOPMP0
+    Before: B89710024   After: B96962935  **260,281,303,289,382,313,427,
+                                           500,482**
+Routine Name: PSOPTC0
+    Before:       n/a   After: B69697728  **482**
+Routine Name: PSOREJP1
+    Before:B202372294   After:B202538328  **148,247,260,281,287,289,290,
+                                           358,359,385,403,421,427,448,
+                                           478,482**
+Routine Name: PSOREJP2
+    Before:B183401384   After:B199801855  **148,247,260,287,289,358,385,
+                                           403,421,427,448,482**
+Routine Name: PSOREJP3
+    Before:B184519079   After:B262665295  **260,287,289,290,358,359,385,
+                                           403,421,427,448,482**
+Routine Name: PSOREJU1
+    Before:B143063763   After:B163747187  **148,247,260,287,289,358,359,
+                                           385,403,421,482**
+Routine Name: PSOREJU3
+    Before:B107526662   After:B146070419  **287,290,358,359,385,421,427,
+                                           448,478,513,482**
+Routine Name: PSORXED
+    Before: B75008451   After: B83606769  **2,16,21,26,56,71,125,201,246,
+                                           289,298,366,385,403,421,482**
+Routine Name: PSORXEDT
+    Before: B52436750   After: B55389504  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313,427,422,402,
+                                           500,482**
+Routine Name: PSORXL1
+    Before: B54568133   After: B54060761  **36,46,148,260,274,287,289,
+                                           358,251,385,403,409,482**
+Routine Name: PSORXVW1
+    Before: B74770849   After: B75490408  **35,47,46,71,99,117,156,193,
+                                           210,148,258,260,240,281,359,
+                                           354,367,386,408,427,499,509,
+                                           482**
+ 
+Routine list of preceding patches: 318, 409, 454, 459, 500, 509, 513
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2017
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
