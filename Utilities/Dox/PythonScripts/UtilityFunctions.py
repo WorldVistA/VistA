@@ -77,20 +77,37 @@ PACKAGE_MAP = {
 } # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
 
 sectionLinkObj = {
-    "Option":{"number":"19", "color":"color=orangered"},
-    "Function":{"number":".5", "color":"color=royalblue"},
-    "List_Manager_Templates":{"number":"409.61", "color":"color=saddlebrown"},
-    "Dialog":{"number":".84", "color":"color=turquoise"},
-    "Key":{"number":"19.1", "color":"color=limegreen"},
-    "Remote_Procedure":{"number":"8994", "color":"color=firebrick"},
-    "Protocol":{"number":"101", "color":"color=indigo"},
-    "Help_Frame":{"number":"9.2", "color":"color=moccasin"},
-    "Form":{"number":".403", "color":"color=cadetblue"},
-    "Sort_Template":{"number":".401", "color":"color=salmon"},
-    "HL7_APPLICATION_PARAMETER":{"number":"771", "color":"color=violetred"},
-    "Input_Template": {"number":".402","color":"color=skyblue"},
-    "Print_Template": {"number":".4","color":"color=yellowgreen"},
-    }
+    "Option": "19",
+    "Function": ".5",
+    "List_Manager_Templates": "409.61",
+    "Dialog": ".84",
+    "Key": "19.1",
+    "Remote_Procedure": "8994",
+    "Protocol": "101",
+    "Help_Frame": "9.2",
+    "Form": ".403",
+    "Sort_Template": ".401",
+    "HL7_APPLICATION_PARAMETER": "771",
+    "Input_Template": ".402",
+    "Print_Template": ".4"
+}
+
+COLOR_MAP = {
+    "Option": "orangered",
+    "Function": "royalblue",
+    "List_Manager_Templates": "saddlebrown",
+    "Dialog": "turquoise",
+    "Key": "limegreen",
+    "Remote_Procedure": "firebrick",
+    "Protocol": "indigo",
+    "Help_Frame":  "moccasin",
+    "Form": "cadetblue",
+    "Sort_Template": "salmon",
+    "HL7_APPLICATION_PARAMETER": "violetred",
+    "Input_Template": "skyblue",
+    "Print_Template": "yellowgreen",
+    "Global": "magenta"
+}
 
 ###############################################################################
 
@@ -108,13 +125,8 @@ def getViViaNURL(local):
 
 ###############################################################################
 
-def findDotColor(object, title=""):
-  color = "color=black"
-  if "getObjectType" in dir(object):
-    color = sectionLinkObj[object.getObjectType()]["color"]
-  elif "Global" in str(type(object)):
-    color = "color=magenta"
-  return color
+def findDotColor(object):
+  return COLOR_MAP.get(object.getObjectType(), "black")
 
 ###############################################################################
 
@@ -203,8 +215,8 @@ def getPackageObjHtmlFileNameUnquoted(optionName, title=""):
       optionName = optionName.getName()
     return "%s_%s.html" % (title, re.sub("[ /.*?&<>:]",'_',optionName))
 
-def getPackageObjHtmlFileName(FunctionName, title=""):
-    return urllib.quote(getPackageObjHtmlFileNameUnquoted(FunctionName, title))
+def getPackageObjHtmlFileName(functionName, title=""):
+    return urllib.quote(getPackageObjHtmlFileNameUnquoted(functionName, title))
 
 def getPackageDependencyHtmlFile(packageName, depPackageName):
     firstName = normalizePackageName(packageName)

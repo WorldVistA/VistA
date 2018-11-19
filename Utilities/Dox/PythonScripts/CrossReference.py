@@ -208,9 +208,11 @@ class Routine(object):
             depRoutines[package][depRoutine][callTag] = lineOccurences.split(LINE_OFFSET_DELIM)
         else:
             depRoutines[package][depRoutine][callTag].extend(lineOccurences.split(LINE_OFFSET_DELIM))
+
     def addCalledRoutines(self, routine, callTag, lineOccurences):
         self.addCallDepRoutines(routine, callTag, lineOccurences, True)
         routine.addCallerRoutines(self, callTag, lineOccurences)
+
     def getCalledRoutines(self):
         return self._calledRoutines
 
@@ -688,7 +690,6 @@ class FileManFilePointerTypeField(FileManField):
         FileManField.__init__(self, fieldNo, name, fType ,location)
         self._filePointedTo = None
     def setPointedToFile(self, filePointedTo):
-        #assert isinstance(filePointedTo, FileManFile)
         self._filePointedTo = filePointedTo
     def getPointedToFile(self):
         return self._filePointedTo
@@ -717,8 +718,6 @@ class FileManSubFileTypeField(FileManField):
         FileManField.__init__(self, fieldNo, name, fType ,location)
         self._pointedToSubFile= None
     def setPointedToSubFile(self, pointedToSubFile):
-        assert isinstance(pointedToSubFile, FileManFile)
-        assert not pointedToSubFile.isRootFile()
         self._pointedToSubFile = pointedToSubFile
     def getPointedToSubFile(self):
         return self._pointedToSubFile
@@ -844,6 +843,8 @@ class Global(FileManFile):
         return self.getFileNo() != None
     def getPackage(self):
         return self._package
+    def getObjectType(self):
+        return "Global"
     #===========================================================================
     # operator
     #===========================================================================
@@ -1308,8 +1309,10 @@ class CrossReference:
         return self._allPackages.get(packageName)
     def getGlobalByName(self, globalName):
         return self._allGlobals.get(globalName)
+
     def getGlobalByFileNo(self, globalFileNo):
         return self._allFileManGlobals.get(float(globalFileNo))
+
     def addRoutineToPackageByName(self, routineName, packageName, hasSourceCode=True):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
@@ -1319,6 +1322,7 @@ class CrossReference:
         if not hasSourceCode:
             routine.setHasSourceCode(hasSourceCode)
         self._allPackages[packageName].addRoutine(routine)
+
     def addNonFileManGlobalByName(self, globalName):
         if self.getGlobalByName(globalName): return # already exists
         topLevelName = getTopLevelGlobalName(globalName)
@@ -1419,9 +1423,9 @@ class CrossReference:
     def getPlatformDependentRoutineByName(self, routineName):
         genericRoutine = self.getGenericPlatformDepRoutineByName(routineName)
         if genericRoutine:
-            assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
             return genericRoutine.getPlatformDepRoutineInfoByName(routineName)[0]
         return None
+
     # should be using trie structure for quick find, but
     # as python does not have trie and seems to be OK now
     def categorizeRoutineByNamespace(self, routineName):

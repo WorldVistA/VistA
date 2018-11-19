@@ -35,36 +35,35 @@ from CrossReference import RoutineCallInfo, getAlternateGlobalName, getTopLevelG
 
 from LogManager import logger
 
-#Routines starts with A followed by a number
-ARoutineEx = re.compile("^A[0-9][^ ]+$")
 
-nameValuePair = re.compile("(?P<prefix>^(>> |   ))(?P<name>[^ \"]+(\".*\")?) +(?P<value>[^ *!~]+)(?P<cond>[*!~]*),?")
-longName = re.compile("^(>> |   )[^ ]+(\".*\")? $")
-#RoutineStart = re.compile("^Routine: (?P<name>[^ ]+)$")
-RoutineStart = re.compile("^\*\*\*\*\* +INDEX OF (?P<name>[^ ]+) +\*\*\*\*\*$")
-localVarStart = re.compile("^Local Variables")
-globalVarStart = re.compile("^Global Variables")
-nakedGlobalStart = re.compile("^Naked Globals")
-markedItemStart = re.compile("^Marked Items")
-labelReferencesStart = re.compile("^Label References$")
-externalReferencesStart = re.compile("^External References$")
-routineInvokesStart = re.compile('Routine +Invokes')
-calledRoutineStart = re.compile("^Routine +is Invoked by:")
-routineDetailStart = re.compile("-+ with STRUCTURED ROUTINE LISTING -+")
-RoutineEnd = re.compile("[*-]+ +END +[*-]+")
-pressReturn = re.compile("Press return to continue:")
-crossRef = re.compile("\*\*\*\*\*   Cross Reference of all Routines")
-routineTag = re.compile("(?P<external>\$\$)?(?P<tag>[^$^]*)\^?(?P<name>.*)")
-variableCond = re.compile("( \* Changed  ! Killed  \~ Newed)")
-allDetailStart = re.compile("-+ CROSS-REFERENCING ALL ROUTINES -+")
+ROUTINE_START = re.compile("^\*\*\*\*\* +INDEX OF (?P<name>[^ ]+) +\*\*\*\*\*$")
+LOCAL_VAR_START = re.compile("^Local Variables")
+GLOBAL_VAR_START = re.compile("^Global Variables")
+NAKED_GLOBAL_START = re.compile("^Naked Globals")
+MARKED_ITEM_START = re.compile("^Marked Items")
+LABEL_REFERENCES_START = re.compile("^Label References$")
+EXTERNAL_REFERENCES_START = re.compile("^External References$")
+ROUTINE_DETAIL_START = re.compile("-+ with STRUCTURED ROUTINE LISTING -+")
+ROUTINE_END = re.compile("[*-]+ +END +[*-]+")
+PRESS_RETURN = re.compile("Press return to continue:")
+CROSS_REF = re.compile("\*\*\*\*\*   Cross Reference of all Routines")
+ROUTINE_TAG = re.compile("(?P<external>\$\$)?(?P<tag>[^$^]*)\^?(?P<name>.*)")
 # according to M(mumps) standard, the very first letter of a routine should be a letter or % sign followed by letters or digits.
-validRoutineName = re.compile("^(\$\&|\@)?[a-zA-Z%\(]?[a-zA-Z0-9\.%]*$")
-validObject = re.compile("[|](?P<name>[a-z0-9.]+)$")
-componentListStart = re.compile("[|](?P<name>[a-z]+)[ ]+[*] [*]")
-sectionHeaderRegex = []
+VALID_ROUTINE_NAME = re.compile("^(\$\&|\@)?[a-zA-Z%\(]?[a-zA-Z0-9\.%]*$")
+VALID_OBJECT = re.compile("[|](?P<name>[a-z0-9.]+)$")
+COMPONENT_LIST_START = re.compile("[|](?P<name>[a-z]+)[ ]+[*] [*]")
+LOCATION_INFO = re.compile("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)")
+
+COMPONENT_OBJECT = re.compile("(?P<objIEN>[0-9]+)[ ;]+ (?P<objName>[A-Z0-9 -]+) [-]")
+KEY_OBJECT = re.compile("[|](?P<name>[a-z]+)[ ]+[*;]")
+
+OPTION = re.compile("([ ]|^)(?P<optionIEN>[.0-9]+)(?P<optionLocation>.*?)[+](?P<_varValue>[0-9]+)")
+GLOBAL_NAME_LOCATION = re.compile("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)")
+
+SECTION_HEADER_REGEX = []
+
 sectHandleDict = []
 # some dicts for easy lookup
-
 PackageComponentInfoDict  = {
       "func": {"_fileNumber": ".5", "_nameLocation":".01", "_headerIndex":6, "_curKey":"Function"},
       "opt": {"_fileNumber": "19", "_nameLocation":".01", "_headerIndex":6, "_curKey":"Option"},
@@ -157,36 +156,36 @@ class AbstractSectionParser (ISectionParser):
             self._addVarToRoutine(Routine, CrossReference)
         if self._postParsingRoutine:
             self._postParsingRoutine(Routine, CrossReference)
+
     def __isNameValuePairLine__(self, line, pkgInfo=False):
+        if (line[DEFAULT_NAME_FIELD_START_INDEX] == ' ' or
+            line[-1] == '\"' or len(line) < self._valueStartIdx + 1):
+            return False
         numObjects = 2
         numSpaces = "1,13"
         # Add check for PACKAGE_OPTIONS section to limit the number
         # of spaces used to delimit the values
         if pkgInfo:
           numSpaces="3,"
-        if (line[DEFAULT_NAME_FIELD_START_INDEX] == ' ' or
-            line[-1] == '\"' or len(line) < self._valueStartIdx + 1):
-            return False
-        if len(re.split("[ ]{"+numSpaces+"}",line[3:].strip())) >= numObjects:
-            return True
-        return False
+        return len(re.split("[ ]{"+numSpaces+"}", line[3:].strip())) >= numObjects
+
     def __isLongNameLine__(self, line):
-        if (len(line) <= self._valueStartIdx):
-            return False
-        return True
+        return len(line) > self._valueStartIdx
+
     def __isValueOnlyLine__(self, line):
         return len(line.lstrip()) == len(line) - self._valueStartIdx
+
     def __ignoreLine__(self, line):
         if (line.rstrip() == "   NONE" or
             line.strip() == "( * Changed  ! Killed  ~ Newed)"):
             return True
-        if (line[0:DEFAULT_NAME_FIELD_START_INDEX] != "   " and
-            line[0:DEFAULT_NAME_FIELD_START_INDEX] != ">> "):
-            return True
-        return False
+        line = line[0:DEFAULT_NAME_FIELD_START_INDEX]
+        return line != "   " and line != ">> "
+
     def onSectionStart(self, line, section,crossRef):
         assert section == self._section
         self.__resetVar__()
+
     def onSectionEnd(self, line, section, Routine, CrossReference):
         assert section == self._section
         self.__handleSuspiousCases__(Routine, CrossReference)
@@ -204,8 +203,7 @@ class AbstractSectionParser (ISectionParser):
         # 1. continuation of the previous info with value info
         # 2. Name too long.
         # 3. normal name/value pair
-        result = self.__isNameValuePairLine__(line)
-        if result:
+        if self.__isNameValuePairLine__(line):
             if self._suspiousLine:
                 self.__handleSuspiousCases__(Routine, CrossReference)
                 self._suspiousLine = False
@@ -217,8 +215,8 @@ class AbstractSectionParser (ISectionParser):
             if self._postParsingRoutine:
                 self._postParsingRoutine(Routine, CrossReference)
             return
-        result = self.__isValueOnlyLine__(line)
-        if result:
+
+        if self.__isValueOnlyLine__(line):
             self._suspiousLine = False
             self._varValue = line[self._valueStartIdx:].strip()
             if not self._varName:
@@ -229,8 +227,8 @@ class AbstractSectionParser (ISectionParser):
             if self._postParsingRoutine:
                 self._postParsingRoutine(Routine, CrossReference)
             return
-        result = self.__isLongNameLine__(line)
-        if result:
+
+        if self.__isLongNameLine__(line):
             ''' Check that Global information doesn't happen to touch the rest of the info
               Global Variables  ( * Changed  ! Killed)
 
@@ -240,7 +238,7 @@ class AbstractSectionParser (ISectionParser):
 
                  ^TMP($J             LIST+6,LIST+10*,LIST+12,LIST+14,LIST+15*,LIST+16!
             '''
-            match = re.search("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)", line)
+            match = LOCATION_INFO.search(line)
             if match:
               self._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
               self._varValue = match.groups()[1]
@@ -345,19 +343,22 @@ class PackageInfoSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.PACKAGE_COMPONENT_SECTION)
         self._curPackage = None
+
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in sectionHeaderRegex.iteritems():
+        for (regex, section) in SECTION_HEADER_REGEX.iteritems():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
-                  routineName = RoutineStart.search(curLine).group('name')
-                  if validObject.search(routineName):
-                    if validObject.search(routineName).group("name") in [PackageComponentInfoDict[x]["_curKey"] for x in PackageComponentInfoDict]:
+                  routineName = ROUTINE_START.search(curLine).group('name')
+                  match = VALID_OBJECT.search(routineName)
+                  if match:
+                    if match.group("name") in [PackageComponentInfoDict[x]["_curKey"] for x in PackageComponentInfoDict]:
                       section = IXindexLogFileParser.PACKAGE_COMPONENT_SECTION
                 return section
         return None
+
     def onSectionStart(self, curLine, sectionHeader, CrossReference):
-      routineName = RoutineStart.search(curLine).group('name')[1:]
-      self._returnJSON={}
+      routineName = ROUTINE_START.search(curLine).group('name')[1:]
+      self._returnJSON = {}
       if routineName in PackageComponentInfoDict.keys():
         self._fileNumber = PackageComponentInfoDict[routineName]['_fileNumber']
         self._nameLocation = PackageComponentInfoDict[routineName]['_nameLocation']
@@ -393,8 +394,9 @@ class PackageInfoSectionParser (AbstractSectionParser):
             return
           for index, location in enumerate(self._varNames):
             if location != ' ':
-              match = re.search("([ ]|^)(?P<optionIEN>[.0-9]+)(?P<optionLocation>.*?)[+](?P<_varValue>[0-9]+)",location)
-              optionNumber, self._localHandler._varValue = match.group('optionIEN'),match.group('optionLocation')+match.group('_varValue')
+              match = OPTION.search(location)
+              optionNumber = match.group('optionIEN')
+              self._localHandler._varValue = match.group('optionLocation') + match.group('_varValue')
               optionText = optionNumber
               self.componentTypeStr = ''
               if optionText in self._returnJSON.keys():
@@ -423,11 +425,12 @@ class PackageInfoSectionParser (AbstractSectionParser):
               return
             for index, location in enumerate(self._varNames):
               if location != ' ':
-                match = re.search("([ ]|^)(?P<optionIEN>[.0-9]+)(?P<optionLocation>.*?)[+](?P<_varValue>[0-9]+)",location)
-                optionNumber, self._localHandler._varValue = match.group('optionIEN'),match.group('optionLocation')+match.group('_varValue')
+                match = OPTION.search(location)
+                optionNumber = match.group('optionIEN')
+                self._localHandler._varValue = match.group('optionLocation') + match.group('_varValue')
                 optionText = optionNumber
                 if optionText in self._returnJSON.keys():
-                  optionText =  self._returnJSON[optionText][self._nameLocation][self._headerIndex:]
+                  optionText = self._returnJSON[optionText][self._nameLocation][self._headerIndex:]
                 if optionNumber not in self._curGetAllFunction(self._curKey):
                   self._curAddFunction(self._curKey, self._curType(optionText, optionNumber, self._curPackage))
                   self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
@@ -451,7 +454,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
 
                ^TMP($J             LIST+6,LIST+10*,LIST+12,LIST+14,LIST+15*,LIST+16!
           '''
-          match = re.search("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)", line)
+          match = GLOBAL_NAME_LOCATION.search(line)
           if match:
             self._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
             self._varValue = match.groups()[1]
@@ -477,11 +480,12 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.EXTERNEL_REFERENCE,
                                              EXTERNAL_REFERENCE_VALUE_FIELD_START_INDEX)
         self.registerPostParsingRoutine(self.__postParsing__)
+
     def __postParsing__(self, Routine, CrossReference):
-        routineDetail = routineTag.search(self._varName.strip())
+        routineDetail = ROUTINE_TAG.search(self._varName.strip())
         if routineDetail:
             routineName = routineDetail.group('name')
-            if not validRoutineName.search(routineName):
+            if not VALID_ROUTINE_NAME.search(routineName):
                 logger.warning("invalid Routine Name: %s in routine:%s, package: %s" %
                              (routineName, Routine, Routine.getPackage()))
                 return
@@ -508,6 +512,7 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
                 CrossReference.addRoutineToPackageByName(routineName, defaultPackageName, False)
             routine = CrossReference.getRoutineByName(routineName)
             Routine.addCalledRoutines(routine, tag, self._varValue)
+
 #===============================================================================
 # Implementation of a Structured Routine Print section
 #===============================================================================
@@ -527,22 +532,24 @@ class RoutinePrintSectionParser (AbstractSectionParser):
 class PackageObjectListingSectionParser (AbstractSectionParser):
   def __init__(self):
     AbstractSectionParser.__init__(self, IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION)
+
   def onSectionStart(self, curLine, sectionHeader,crossRef):
-    self.componentObject    = re.compile("(?P<objIEN>[0-9]+)[ ;]+ (?P<objName>[A-Z0-9 -]+) [-]")
-    self.keyObject = re.compile("[|](?P<name>[a-z]+)[ ]+[*;]")
-    matchKey = self.keyObject.match(curLine.strip())
+    matchKey = KEY_OBJECT.match(curLine.strip())
     if matchKey:
       self.curKeyType = PackageComponentInfoDict[matchKey.group("name")]["_curKey"]
+
   def parseLine(self, line, Routine, CrossReference):
-    matchKey = self.keyObject.match(line.strip())
-    matchObjNo = self.componentObject.match(line.strip())
+    line = line.strip()
+    matchKey = KEY_OBJECT.match(line)
+    matchObjNo = COMPONENT_OBJECT.match(line)
     if matchKey:
       self.curKeyType = PackageComponentInfoDict[matchKey.group("name")]["_curKey"]
     elif matchObjNo:
-      self._curRoutine= PackageComponent(matchObjNo.groups()[1],matchObjNo.groups()[0],self._curPackage)
+      self._curRoutine = PackageComponent(matchObjNo.groups()[1], matchObjNo.groups()[0], self._curPackage)
       optionText = matchObjNo.groups()[1]
       checkCSVDeps(self, CrossReference, optionText,self.curKeyType)
       self._curPackage.addPackageComponent(self.curKeyType,self._curRoutine)
+
 #===============================================================================
 # Interface for a Xindex Log File Parser
 #===============================================================================
@@ -603,18 +610,20 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self.__initSectionHeaderRegex__()
         self.__initDefaultSectionHandler__()
         self._curRoutine = None
+
     def __initSectionHeaderRegex__(self):
-        self._sectionHeaderRegex[RoutineStart] = IXindexLogFileParser.ROUTINE
-        self._sectionHeaderRegex[localVarStart] = IXindexLogFileParser.LOCAL_VARIABLE
-        self._sectionHeaderRegex[globalVarStart] = IXindexLogFileParser.GLOBAL_VARIABLE
-        self._sectionHeaderRegex[nakedGlobalStart] = IXindexLogFileParser.NAKED_GLOBAL
-        self._sectionHeaderRegex[markedItemStart] = IXindexLogFileParser.MARKED_ITEMS
-        self._sectionHeaderRegex[labelReferencesStart] = IXindexLogFileParser.LABEL_REFERENCE
-        self._sectionHeaderRegex[externalReferencesStart] = IXindexLogFileParser.EXTERNEL_REFERENCE
-        self._sectionHeaderRegex[routineDetailStart] = IXindexLogFileParser.ROUTINE_PRINT
-        self._sectionHeaderRegex[componentListStart] = IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION
-        global sectionHeaderRegex
-        sectionHeaderRegex =  self._sectionHeaderRegex
+        self._sectionHeaderRegex[ROUTINE_START] = IXindexLogFileParser.ROUTINE
+        self._sectionHeaderRegex[LOCAL_VAR_START] = IXindexLogFileParser.LOCAL_VARIABLE
+        self._sectionHeaderRegex[GLOBAL_VAR_START] = IXindexLogFileParser.GLOBAL_VARIABLE
+        self._sectionHeaderRegex[NAKED_GLOBAL_START] = IXindexLogFileParser.NAKED_GLOBAL
+        self._sectionHeaderRegex[MARKED_ITEM_START] = IXindexLogFileParser.MARKED_ITEMS
+        self._sectionHeaderRegex[LABEL_REFERENCES_START] = IXindexLogFileParser.LABEL_REFERENCE
+        self._sectionHeaderRegex[EXTERNAL_REFERENCES_START] = IXindexLogFileParser.EXTERNEL_REFERENCE
+        self._sectionHeaderRegex[ROUTINE_DETAIL_START] = IXindexLogFileParser.ROUTINE_PRINT
+        self._sectionHeaderRegex[COMPONENT_LIST_START] = IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION
+        global SECTION_HEADER_REGEX
+        SECTION_HEADER_REGEX =  self._sectionHeaderRegex
+
     def __initDefaultSectionHandler__(self):
         self._sectHandleDict[IXindexLogFileParser.ROUTINE] = self
         self._sectHandleDict[IXindexLogFileParser.LOCAL_VARIABLE] = LocalVarSectionParser()
@@ -628,13 +637,14 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self._sectHandleDict[IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION] = PackageObjectListingSectionParser()
         global sectHandleDict
         sectHandleDict =  self._sectHandleDict
+
     # implementation of section parser interface for Routine Section
     def onSectionStart(self, line, section,crossRef):
         if section != IXindexLogFileParser.ROUTINE:
             logger.error("Invalid section Header --> %s", line)
             return False
-        routineName = RoutineStart.search(line).group('name')
-        if validRoutineName.search(routineName)!= None: #, "Invalid RoutineName: [%s] Line: [%s]" % (routineName, line)
+        routineName = ROUTINE_START.search(line).group('name')
+        if VALID_ROUTINE_NAME.search(routineName)!= None: #, "Invalid RoutineName: [%s] Line: [%s]" % (routineName, line)
           if self._crossRef.isPlatformDependentRoutineByName(routineName):
               self._curRoutine = self._crossRef.getPlatformDependentRoutineByName(routineName)
               return True
@@ -649,15 +659,17 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
           self._curRoutine._structuredCode = structuredSource
           self._curPackage = self._curRoutine.getPackage()
           return True
-        if validObject.search(routineName).group("name")[:2] == "dd":
-          fileNo = validObject.search(routineName).group("name")[2:]
+        match = VALID_OBJECT.search(routineName).group("name")
+        if match[:2] == "dd":
+          fileNo = match[2:]
           if '.' not in fileNo:
             fileNo += ".0"
           self._curRoutine = self._crossRef.getGlobalByFileNo(fileNo)
           if not self._curRoutine:
-            self._curRoutine= self._crossRef.getFileManSubFileByFileNo(fileNo)
+            self._curRoutine = self._crossRef.getFileManSubFileByFileNo(fileNo)
             if self._curRoutine:
               self._curRoutine.setPackage(self._curPackage)
+
     def onSectionEnd(self, line, section, Routine, CrossReference):
         if section != IXindexLogFileParser.ROUTINE:
             logger.error("Invalid section Header")
@@ -666,6 +678,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         return True
     def registerSectionHandle(self, section, AbstractSectionParser):
         self._sectHandleDict[section] = AbstractSectionParser
+
     def parseXindexLogFile(self, logFileName):
         if not os.path.exists(logFileName):
             logger.error("File: %s does not exist" % logFileName)
@@ -673,9 +686,9 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         logFile = open(logFileName, "rb")
         for curLine in logFile:
             curLine = curLine.rstrip("\r\n")
-            if pressReturn.search(curLine):
+            if PRESS_RETURN.search(curLine):
                 continue
-            if crossRef.match(curLine.strip()):
+            if CROSS_REF.match(curLine.strip()):
                 break
             # check to see if it is a section header or we just in the routine header part
             if not self._curSection or self._curSection == IXindexLogFileParser.ROUTINE:
@@ -702,21 +715,24 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
                 continue
             if self._curHandler:
                 self._curHandler.parseLine(curLine, self._curRoutine, self._crossRef)
+
     def __ignoreCurrentLine__(self, curLine):
-        return pressReturn.search(curLine) or crossRef.search(curLine)
+        return PRESS_RETURN.search(curLine) or CROSS_REF.search(curLine)
+
     def __isSectionHeader__(self, curLine):
         for (regex, section) in self._sectionHeaderRegex.iteritems():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
-                  routineName = RoutineStart.search(curLine).group('name')
-                  if validObject.search(routineName):
-                    if validObject.search(routineName).group("name") in PackageComponentInfoDict.keys():
-                      section = IXindexLogFileParser.PACKAGE_COMPONENT_SECTION
+                  routineName = ROUTINE_START.search(curLine).group('name')
+                  match = VALID_OBJECT.search(routineName)
+                  if match and match.group("name") in PackageComponentInfoDict:
+                    section = IXindexLogFileParser.PACKAGE_COMPONENT_SECTION
                 return section
         return None
+
     def __isEndOfSection__(self, curLine, section):
         if section in [IXindexLogFileParser.ROUTINE, IXindexLogFileParser.PACKAGE_COMPONENT_SECTION]:
-            return RoutineEnd.search(curLine)
+            return ROUTINE_END.search(curLine)
         else:
             # Check to see if we have gone through the whole structured source yet
             # A blank line after the section header but before the code makes this check necessary

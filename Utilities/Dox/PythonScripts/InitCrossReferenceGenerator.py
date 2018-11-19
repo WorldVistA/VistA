@@ -29,7 +29,9 @@ if SCRIPTS_DIR not in sys.path:
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from LogManager import logger
 
-ARoutineEx = re.compile("^A[0-9][^ ]+$")
+A_ROUTINE_EX = re.compile("^A[0-9][^ ]+$")
+ZWR_FILENO_REGEX = re.compile("(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$")
+ZWR_NAMESPACE_REGEX = re.compile("(?P<namespace>^[^.]+)\.zwr$")
 
 fileNoPackageMappingDict = {"18.02":"Web Services Client",
                    "18.12":"Web Services Client",
@@ -65,7 +67,7 @@ class InitCrossReferenceGenerator(object):
     index = 0
     for row in result:
       packageName = row['Directory Name']
-      if len(packageName) > 0:
+      if packageName:
         currentPackage = crossRef.getPackageByName(packageName)
         if not currentPackage:
           crossRef.addPackageByName(packageName)
@@ -100,7 +102,7 @@ class InitCrossReferenceGenerator(object):
       if hasHeader and index == 0:
         index += 1
         continue
-      if len(line[0]) > 0:
+      if line[0]:
         currentName = line[0]
         if line[0] not in routineDict:
             routineDict[currentName] = []
@@ -131,13 +133,13 @@ class InitCrossReferenceGenerator(object):
       zwrFile = open(file, 'r')
       lineNo = 0
       fileName = os.path.basename(file)
-      result = re.search("(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$", fileName)
+      result = ZWR_FILENO_REGEX.search(fileName)
       if result:
         fileNo = result.group('fileNo')
         if fileNo.startswith('0'): fileNo = fileNo[1:]
         globalDes = result.group('des')
       else:
-        result = re.search("(?P<namespace>^[^.]+)\.zwr$", fileName)
+        result = ZWR_NAMESPACE_REGEX.search(fileName)
         if result:
             namespace = result.group('namespace')
 #                    package.addGlobalNamespace(namespace)
@@ -158,8 +160,6 @@ class InitCrossReferenceGenerator(object):
             namespace = globalDes[1:]
             package.addGlobalNamespace(namespace)
             break
-        if lineNo == 1:
-          assert re.search('ZWR', line.strip())
         if lineNo >= 2:
           info = line.strip().split('=')
           globalName = info[0]
@@ -175,7 +175,7 @@ class InitCrossReferenceGenerator(object):
           else:
               continue
         lineNo = lineNo + 1
-      if len(fileNo) == 0:
+      if not fileNo:
         if file not in skipFile:
           logger.warn("Warning: No FileNo found for file %s" % file)
         continue
@@ -233,7 +233,7 @@ class InitCrossReferenceGenerator(object):
         routine = crossReference.getRoutineByName(routineName)
         assert(routine)
         routine.setOriginalName(origName)
-      if ARoutineEx.search(routineName):
+      if A_ROUTINE_EX.search(routineName):
         pass
     logger.info("Total package is %d and Total Routines are %d" %
                 (len(allPackages), len(allRoutines)))

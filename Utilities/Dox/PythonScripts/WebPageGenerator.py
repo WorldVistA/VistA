@@ -56,7 +56,7 @@ dataURLDict = {
   "HELP": "(HELP %s)"
 }
 
-componentTypeDict = {
+COMPONENT_TYPE_DICT = {
   "action" : "A",
   "extended action" : "Ea",
   "event driver" : "Ed",
@@ -96,6 +96,15 @@ PACKAGE_OBJECT_SECTION_HEADER_LIST = ["Name", "Field # of Occurrence",]
 LINE_TAG_PER_LINE = 10
 
 VIVIAN_URL = None
+
+ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
+COMMENT  = re.compile("^ ; ")
+READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
+WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
+
+SPLITVAL = re.compile("^[0-9.]+(?P<splitval>DATA|XRF|HELP)[0-9]*")
+CONDITIONAL = re.compile("^W(?!\w)($|(?P<conditional>\:.+)?)")
+SPLIT_LINE = re.compile(''' (?=(?:[^'"]|'[^']*'|"[^"]*")*$)''')
 
 # constants for html page
 GOOGLE_ANALYTICS_JS_CODE = """
@@ -209,24 +218,25 @@ XINDEXLegend = """
   </div>
 """
 
-PCLegend = """
+PC_LEGEND = """
   <div>
-    <h3>Package Component Superscript legend</h3>
+    <h4>Package Component Superscript legend</h4>
     <table>
       <tbody>
         <tr>
         """
-for key in componentTypeDict.keys():
-  PCLegend += """ <td class="IndexKey"> %s </td>
+for key, value in COMPONENT_TYPE_DICT.iteritems():
+  PC_LEGEND += """ <td class="IndexKey"> %s </td>
           <td class="IndexValue"> <sup>%s</sup> </td>
-          """ %(key,componentTypeDict[key])
-PCLegend += """
+          """ % (key, value)
+PC_LEGEND += """
         </tr>
       </tbody>
     </table>
     <br/>
   </div>
 """
+
 INDEX_HTML_PAGE_OSEHRA_IMAGE_PART = """
 <br/>
 <left>
@@ -485,19 +495,6 @@ def writeTableData(itemRow, outputFile):
 def writeListData(listData, outputFile, classid=""):
     outputFile.write(generateHtmlListData(listData, classid))
 
-def writeColorLegend(outDir, outputFile):
-    outputFile.write("<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.quote("colorLegend.png"),"Legend of Colors"))
-    cmapFile = open(os.path.join(outDir, "colorLegend.cmapx"), 'r')
-    for line in cmapFile:
-        outputFile.write(line)
-
-def writeLegends(outDir, outputFile):
-    outputFile.write("<h3>Legends:</h3>")
-    outputFile.write("<div class=\"contents colorLegendGrp\">\n")
-    writeColorLegend(outDir,outputFile)
-    outputFile.write(PCLegend.replace("<td class=\"","<td class=\"colorLegend " ))
-    outputFile.write("</div>\n")
-
 def generateHtmlListData(listData, classid=""):
     if not listData : return "<div></div>"
     output = "<div class=\"%s\"><ul>" % classid
@@ -568,7 +565,7 @@ def generateList(data):
 # class to generate the web page based on input
 class WebPageGenerator:
     def __init__(self, crossReference, outDir, pdfOutDir, repDir, docRepDir,
-                 includeSource, rtnJson, repoJson, generatePDF):
+                 rtnJson, repoJson, generatePDF):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
@@ -579,7 +576,6 @@ class WebPageGenerator:
             os.mkdir(self._pdfOutDir)
         self._repDir = repDir
         self._docRepDir = docRepDir
-        self._includeSource = includeSource
         self._header = self.__generateHtmlPageHeader__(isSource=False)
         self._source_header = self.__generateHtmlPageHeader__(isSource=True)
         with open(rtnJson, 'r') as jsonFile:
@@ -587,6 +583,7 @@ class WebPageGenerator:
         with open(repoJson, 'r') as jsonFile:
             self._repoJson = json.load(jsonFile)
         self._generatePDFBundle = generatePDF
+        self.__generateLegend__()
 
 
     def __includeHeader__(self, outputFile, indexList=""):
@@ -618,7 +615,6 @@ class WebPageGenerator:
                                    pagesize=letter,
                                   )
 
-
     def __writePDFFile__(self, pdf, pdfFileName):
       try:
         # Write the PDF to a file
@@ -628,6 +624,16 @@ class WebPageGenerator:
       except:
         self.failures.append(pdfFileName)
         pass
+
+    def __generateLegend__(self):
+      self.legend = "<h3>Legends:</h3>"
+      self.legend += "<div class=\"contents colorLegendGrp\">\n"
+      self.legend += "<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.quote("colorLegend.png"),"Legend of Colors")
+      cmapFile = open(os.path.join(self._outDir, "colorLegend.cmapx"), 'r')
+      for line in cmapFile:
+          self.legend += line
+      self.legend += PC_LEGEND.replace("<td class=\"","<td class=\"colorLegend ")
+      self.legend += "</div>\n"
 
 # -----------------------------------------------------------------------------
 # Generate page-specific navigation bar for *most* DOX pages. Allows navigation
@@ -645,7 +651,7 @@ class WebPageGenerator:
     def generateNavigationBar(self, outputFile, inputList, archList=None,
                               printButton=True, printList=None,
                               allButton=True, packageName=None):
-        if (not inputList) or len(inputList) == 0:
+        if not inputList:
             return
         hasArchList = archList and len(archList) == len(inputList)
         onClickOpenAccordion = "onclick=\"openAccordionVal(event)\""
@@ -717,14 +723,14 @@ class WebPageGenerator:
       #  example call queryICRInfo("ROUTINE","ROUTINE","SDAM1")
       #  Would return all "ROUTINE" types where the "ROUTINE" field equals 'SDAM1'
       #
-      if package in self._crossRef._icrJson.keys():
+      if package in self._crossRef._icrJson:
         for keyVal in self._crossRef._icrJson[package].keys():
           if type == "*":
               for keyEntry in self._crossRef._icrJson[package][keyVal].keys():
                 for entry in self._crossRef._icrJson[package][keyVal][keyEntry]:
                   icrList.append(entry)
           else:
-            if val in self._crossRef._icrJson[package][keyVal].keys():
+            if val in self._crossRef._icrJson[package][keyVal]:
               for entry in self._crossRef._icrJson[package][keyVal][val]:
                 icrList.append(entry)
       return icrList
@@ -739,7 +745,7 @@ class WebPageGenerator:
         self.generateFileManSubFileIndexPage()
         self.generatePackageIndexPage()
         self.generateRoutineIndexPage()
-        self.generateAllSourceCodePage(not self._includeSource)
+        self.generateAllSourceCodePage()
         self.generateAllIndividualRoutinePage()
         self.generatePackagePackageInteractionDetail()
         self.generatePackageInformationPages()
@@ -791,43 +797,43 @@ class WebPageGenerator:
 # Method to generate Package Namespace Mapping page
 #===============================================================================
     def generatePackageNamespaceGlobalMappingPage(self):
-        outputFile = open(os.path.join(self._outDir, "Packages_Namespace_Mapping.html"), 'wb')
-        self.__includeHeader__(outputFile)
-        outputFile.write("<title>Package Namespace Mapping</title>")
-        outputFile.write("<div><h1>%s</h1></div>\n" % "Package Namespace Mapping")
-        writeTableHeader(["PackageName",
-                          "Namespaces",
-                          "Additional Globals"],
-                         outputFile)
-        allPackage = sorted(self._allPackages.keys())
-        for packageName in allPackage:
-            package = self._allPackages[packageName]
-            namespaces = package.getNamespaces()
-            globalNamespaces = package.getGlobalNamespace()
-            totalCol = max(len(namespaces),
-                           len(globalNamespaces))
-            for index in range(totalCol):
-                outputFile.write("<tr>")
-                # write the package name
-                if index == 0:
-                    outputFile.write("<td class=\"IndexKey\">%s</td>" % getPackageHyperLinkByName(packageName))
-                else:
-                    outputFile.write("<td class=\"IndexKey\"></td>")
-                # write the namespace
-                if index <= len(namespaces) - 1:
-                    outputFile.write("<td class=\"IndexValue\">%s</td>" % namespaces[index])
-                else:
-                    outputFile.write("<td class=\"IndexValue\"></td>")
-                # write the additional globals
-                if index <= len(globalNamespaces) - 1:
-                    outputFile.write("<td class=\"IndexValue\">%s</td>" % globalNamespaces[index])
-                else:
-                    outputFile.write("<td class=\"IndexValue\"></td>")
-                outputFile.write("</tr>\n")
-        outputFile.write("</table>\n")
-        outputFile.write("<BR>\n")
-        outputFile.write(FOOTER)
-        outputFile.close()
+        filename = os.path.join(self._outDir, "Packages_Namespace_Mapping.html")
+        with open(filename, 'w') as outputFile:
+            self.__includeHeader__(outputFile)
+            outputFile.write("<title>Package Namespace Mapping</title>")
+            outputFile.write("<div><h1>%s</h1></div>\n" % "Package Namespace Mapping")
+            writeTableHeader(["PackageName",
+                              "Namespaces",
+                              "Additional Globals"],
+                             outputFile)
+            allPackage = sorted(self._allPackages.keys())
+            for packageName in allPackage:
+                package = self._allPackages[packageName]
+                namespaces = package.getNamespaces()
+                globalNamespaces = package.getGlobalNamespace()
+                totalCol = max(len(namespaces),
+                               len(globalNamespaces))
+                for index in range(totalCol):
+                    outputFile.write("<tr>")
+                    # write the package name
+                    if index == 0:
+                        outputFile.write("<td class=\"IndexKey\">%s</td>" % getPackageHyperLinkByName(packageName))
+                    else:
+                        outputFile.write("<td class=\"IndexKey\"></td>")
+                    # write the namespace
+                    if index <= len(namespaces) - 1:
+                        outputFile.write("<td class=\"IndexValue\">%s</td>" % namespaces[index])
+                    else:
+                        outputFile.write("<td class=\"IndexValue\"></td>")
+                    # write the additional globals
+                    if index <= len(globalNamespaces) - 1:
+                        outputFile.write("<td class=\"IndexValue\">%s</td>" % globalNamespaces[index])
+                    else:
+                        outputFile.write("<td class=\"IndexValue\"></td>")
+                    outputFile.write("</tr>\n")
+            outputFile.write("</table>\n")
+            outputFile.write("<BR>\n")
+            outputFile.write(FOOTER)
 
 #===============================================================================
 #
@@ -903,58 +909,58 @@ class WebPageGenerator:
 #
 #===============================================================================
     def generateGlobalFileNoIndexPage(self):
-        outputFile = open(os.path.join(self._outDir, "filemanfiles.html"), 'wb')
-        allFileManFilesList = []
-        for item in self._allGlobals.itervalues():
-            if item.isFileManFile():
-                allFileManFilesList.append(item)
-        self.__includeHeader__(outputFile)
-        outputFile.write("<title>FileMan Files List</title>")
-        outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Files List, Total: %d" % len(allFileManFilesList))
-        writeTableHeader(["FileMan Name",
-                          "FileMan FileNo",
-                          "Global Name"],
-                         outputFile)
-        sortedFileManList = sorted(allFileManFilesList, key=lambda item: float(item.getFileNo()))
-        for fileManFile in sortedFileManList:
-            outputFile.write("<tr>")
-            outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileManName(fileManFile))
-            outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileNo(fileManFile))
-            outputFile.write("<td class=\"IndexKey\">%s</td>" % getGlobalHypeLinkByName(fileManFile.getName()))
-            outputFile.write("</tr>\n")
-        outputFile.write("</table>\n")
-        outputFile.write("<BR>\n")
-        outputFile.write(FOOTER)
-        outputFile.close()
+        filename = os.path.join(self._outDir, "filemanfiles.html")
+        with open(filename, 'w') as outputFile:
+            allFileManFilesList = []
+            for item in self._allGlobals.itervalues():
+                if item.isFileManFile():
+                    allFileManFilesList.append(item)
+            self.__includeHeader__(outputFile)
+            outputFile.write("<title>FileMan Files List</title>")
+            outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Files List, Total: %d" % len(allFileManFilesList))
+            writeTableHeader(["FileMan Name",
+                              "FileMan FileNo",
+                              "Global Name"],
+                             outputFile)
+            sortedFileManList = sorted(allFileManFilesList, key=lambda item: float(item.getFileNo()))
+            for fileManFile in sortedFileManList:
+                outputFile.write("<tr>")
+                outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileManName(fileManFile))
+                outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileNo(fileManFile))
+                outputFile.write("<td class=\"IndexKey\">%s</td>" % getGlobalHypeLinkByName(fileManFile.getName()))
+                outputFile.write("</tr>\n")
+            outputFile.write("</table>\n")
+            outputFile.write("<BR>\n")
+            outputFile.write(FOOTER)
 
 #===============================================================================
 #
 #===============================================================================
     def generateFileManSubFileIndexPage(self):
-        outputFile = open(os.path.join(self._outDir, "filemansubfiles.html"), 'wb')
-        allSubFiles = self._crossRef.getAllFileManSubFiles()
-        self.__includeHeader__(outputFile)
-        outputFile.write("<title id=\"pageTitle\">Fileman Sub-Files</title>")
-        outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Sub-Files List, Total: %d" % len(allSubFiles))
-        writeTableHeader(["Sub-File Name",
-                          "Sub-File FileNo",
-                          "Package Name"],
-                         outputFile)
-        sortedSubFileList = sorted(allSubFiles.values(), key=lambda item: float(item.getFileNo()))
-        for subFile in sortedSubFileList:
-            outputFile.write("<tr>")
-            outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                getFileManSubFileHypeLinkWithName(subFile))
-            outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                getFileManSubFileHypeLinkByName(subFile))
-            package = subFile.getRootFile().getPackage()
-            outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                getPackageHyperLinkByName(package.getName()))
-            outputFile.write("</tr>\n")
-        outputFile.write("</table>\n")
-        outputFile.write("<BR>\n")
-        outputFile.write(FOOTER)
-        outputFile.close()
+        filename = os.path.join(self._outDir, "filemansubfiles.html")
+        with open(filename, 'w') as outputFile:
+            allSubFiles = self._crossRef.getAllFileManSubFiles()
+            self.__includeHeader__(outputFile)
+            outputFile.write("<title id=\"pageTitle\">Fileman Sub-Files</title>")
+            outputFile.write("<div><h1>%s</h1></div>\n" % "FileMan Sub-Files List, Total: %d" % len(allSubFiles))
+            writeTableHeader(["Sub-File Name",
+                              "Sub-File FileNo",
+                              "Package Name"],
+                             outputFile)
+            sortedSubFileList = sorted(allSubFiles.values(), key=lambda item: float(item.getFileNo()))
+            for subFile in sortedSubFileList:
+                outputFile.write("<tr>")
+                outputFile.write("<td class=\"IndexKey\">%s</td>" %
+                    getFileManSubFileHypeLinkWithName(subFile))
+                outputFile.write("<td class=\"IndexKey\">%s</td>" %
+                    getFileManSubFileHypeLinkByName(subFile))
+                package = subFile.getRootFile().getPackage()
+                outputFile.write("<td class=\"IndexKey\">%s</td>" %
+                    getPackageHyperLinkByName(package.getName()))
+                outputFile.write("</tr>\n")
+            outputFile.write("</table>\n")
+            outputFile.write("<BR>\n")
+            outputFile.write(FOOTER)
 
 #===============================================================================
 #
@@ -1049,141 +1055,146 @@ class WebPageGenerator:
                      "data" : globalVar.getMarkedItems, # the data source
                    }
                 ]
-                outputFile = open(os.path.join(self._outDir,
-                                               getGlobalHtmlFileNameByName(globalName)), 'wb')
-                self.__includeHeader__(outputFile)
 
-                icrList = self.queryICRInfo(packageName.upper(),"GLOBAL", globalName[1:])
-                if icrList:
-                    indexList.append("ICR Entries")
-                # Generate the listing of objects
-                entryList=[]
-                pdfEntryList=[]
-                pdfEntryRow = []
-                if globalVar.getFileNo():
-                  jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.','_')+".json")
-                  if os.path.isfile(jsonFile):
-                    logger.info("Checking %s for entries" % jsonFile)
-                    with open(jsonFile,"r") as entryData:
-                      try:
-                        globalVals = json.load(entryData)
-                        indexList.append("Found Entries")
-                        for entry in globalVals:
-                            globalVals[entry]["GlobalNum"] = globalVar.getFileNo()
-                            globalVals[entry]["IENum"] = entry
-                            for val in globalVals[entry]:
-                              globalVals[entry][val] = cgi.escape(globalVals[entry][val])
-                            entryList.append(globalVals[entry])
-                            pdfEntryRow.append(self.getGlobalEntryName(globalVals[entry]))
-                            if len(pdfEntryRow) == 8:
-                              pdfEntryList.append(pdfEntryRow)
-                              pdfEntryRow = []
-                      except ValueError:
-                        pass
-                    while len(pdfEntryRow) < 8:
-                      pdfEntryRow.append("")
-                    pdfEntryList.append(pdfEntryRow)
-                rtnIndexList, idxLst = findRelevantIndex(rtnIndexes,None)
-                indexList = indexList + rtnIndexList
-                outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
-                outputFile.write("")
-                self.generateNavigationBar(outputFile, indexList, printList=indexList)
-                title = "Global: %s" % globalName
-                self.writeTitleBlock(title, title, package, outputFile, pdf)
-                if isFileManFile:
-                    # Information
-                    self.writeSectionHeader("Information", "Info", outputFile,
-                                            pdf, isAccordion=False)
-                    infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
-                    itemList = [[globalVar.getFileNo(),
-                              globalVar.getFileManName(),
-                              getPackageHyperLinkByName(package.getName())]]
-                    self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
-                    if self._generatePDFBundle:
-                        self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
+                filename = os.path.join(self._outDir, getGlobalHtmlFileNameByName(globalName))
+                with open(filename, 'w') as outputFile:
+                    self.__includeHeader__(outputFile)
 
-                    # Description
-                    self.writeSectionHeader("Description", "Desc", outputFile,
-                                            pdf, isAccordion=False)
-                    # TODO: Write as a normal paragraph or series of paragraphs (i.e. not a list)
-                    writeListData(globalVar.getDescription(), outputFile, classid="description")
-                    if self._generatePDFBundle:
-                        pdf.append(generatePDFListData(globalVar.getDescription()))
-                    writeSectionEnd(outputFile)
+                    icrList = self.queryICRInfo(packageName.upper(),"GLOBAL", globalName[1:])
+                    if icrList:
+                        indexList.append("ICR Entries")
+                    # Generate the listing of objects
+                    entryList=[]
+                    pdfEntryList=[]
+                    pdfEntryRow = []
+                    if globalVar.getFileNo():
+                      jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.','_')+".json")
+                      if os.path.isfile(jsonFile):
+                        logger.info("Checking %s for entries" % jsonFile)
+                        with open(jsonFile,"r") as entryData:
+                          try:
+                            globalVals = json.load(entryData)
+                            indexList.append("Found Entries")
+                            for entry in globalVals:
+                                globalVals[entry]["GlobalNum"] = globalVar.getFileNo()
+                                globalVals[entry]["IENum"] = entry
+                                for val in globalVals[entry]:
+                                  globalVals[entry][val] = cgi.escape(globalVals[entry][val])
+                                entryList.append(globalVals[entry])
+                                pdfEntryRow.append(self.getGlobalEntryName(globalVals[entry]))
+                                if len(pdfEntryRow) == 8:
+                                  pdfEntryList.append(pdfEntryRow)
+                                  pdfEntryRow = []
+                          except ValueError:
+                            pass
+                        while len(pdfEntryRow) < 8:
+                          pdfEntryRow.append("")
+                        pdfEntryList.append(pdfEntryRow)
+                    rtnIndexList, idxLst = findRelevantIndex(rtnIndexes,None)
+                    indexList = indexList + rtnIndexList
+                    outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
+                    outputFile.write("")
+                    self.generateNavigationBar(outputFile, indexList, printList=indexList)
+                    title = "Global: %s" % globalName
+                    self.writeTitleBlock(title, title, package, outputFile, pdf)
+                    if isFileManFile:
+                        # Information
+                        self.writeSectionHeader("Information", "Info", outputFile,
+                                                pdf, isAccordion=False)
+                        infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
+                        itemList = [[globalVar.getFileNo(),
+                                  globalVar.getFileManName(),
+                                  getPackageHyperLinkByName(package.getName())]]
+                        self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
+                        if self._generatePDFBundle:
+                            self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
 
-                # Directly Accessed By Routines
-                if globalVar.getTotalNumberOfReferencedRoutines() > 0:
-                    self.writeSectionHeader("Directly Accessed By Routines, Total: %d" \
-                                                % globalVar.getTotalNumberOfReferencedRoutines(),
-                                            "Directly Accessed By Routines",
-                                            outputFile, pdf)
-                    self.generateGlobalRoutineDependentsSection(globalVar.getAllReferencedRoutines(),
-                                                                outputFile, pdf, classid="directCall")
-                    writeSectionEnd(outputFile)
-                # Accessed By FileMan Db Calls
-                if fileManDbCallRtns:
-                    DbCallRtnsNos = [len(x) for x in
-                                        fileManDbCallRtns.itervalues()]
-                    totalNumDbCallRtns = sum(DbCallRtnsNos)
-                    self.writeSectionHeader("Accessed By FileMan Db Calls, Total: %d" %
-                                            totalNumDbCallRtns,
-                                            "Accessed By FileMan Db Calls",
-                                            outputFile, pdf)
-                    self.generateGlobalRoutineDependentsSection(fileManDbCallRtns,
-                                                                outputFile,
-                                                                pdf,
-                                                                classid="gblRtnDep")
-                    writeSectionEnd(outputFile)
-                if isFileManFile:
-                    # Pointed to By FileMan Files
-                    if globalVar.getTotalNumberOfReferredGlobals() > 0:
-                        self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
-                                                    % globalVar.getTotalNumberOfReferredGlobals(),
-                                                "Pointed To By FileMan Files",
+                        # Description
+                        self.writeSectionHeader("Description", "Desc", outputFile,
+                                                pdf, isAccordion=False)
+                        # TODO: Write as a normal paragraph or series of paragraphs (i.e. not a list)
+                        writeListData(globalVar.getDescription(), outputFile, classid="description")
+                        if self._generatePDFBundle:
+                            pdf.append(generatePDFListData(globalVar.getDescription()))
+                        writeSectionEnd(outputFile)
+
+                    # Directly Accessed By Routines
+                    if globalVar.getTotalNumberOfReferencedRoutines() > 0:
+                        self.writeSectionHeader("Directly Accessed By Routines, Total: %d" \
+                                                    % globalVar.getTotalNumberOfReferencedRoutines(),
+                                                "Directly Accessed By Routines",
                                                 outputFile, pdf)
-                        self.generateGlobalPointedToSection(globalVar, outputFile,
-                                                            pdf, True,
-                                                            classid="gblPointedTo")
+                        self.generateGlobalRoutineDependentsSection(globalVar.getAllReferencedRoutines(),
+                                                                    outputFile, pdf, classid="directCall")
                         writeSectionEnd(outputFile)
-
-                    # Pointer To FileMan Files
-                    if globalVar.getTotalNumberOfReferencedGlobals() > 0:
-                        self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
-                                                    % globalVar.getTotalNumberOfReferencedGlobals(),
-                                                "Pointer To FileMan Files",
+                    # Accessed By FileMan Db Calls
+                    if fileManDbCallRtns:
+                        DbCallRtnsNos = [len(x) for x in
+                                            fileManDbCallRtns.itervalues()]
+                        totalNumDbCallRtns = sum(DbCallRtnsNos)
+                        self.writeSectionHeader("Accessed By FileMan Db Calls, Total: %d" %
+                                                totalNumDbCallRtns,
+                                                "Accessed By FileMan Db Calls",
                                                 outputFile, pdf)
-                        self.generateGlobalPointedToSection(globalVar, outputFile,
-                                                            pdf, False, classid="gblPointerTo")
+                        self.generateGlobalRoutineDependentsSection(fileManDbCallRtns,
+                                                                    outputFile,
+                                                                    pdf,
+                                                                    classid="gblRtnDep")
                         writeSectionEnd(outputFile)
+                    if isFileManFile:
+                        # Pointed to By FileMan Files
+                        if globalVar.getTotalNumberOfReferredGlobals() > 0:
+                            self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
+                                                        % globalVar.getTotalNumberOfReferredGlobals(),
+                                                    "Pointed To By FileMan Files",
+                                                    outputFile, pdf)
+                            self.generateGlobalPointedToSection(globalVar, outputFile,
+                                                                pdf, True,
+                                                                classid="gblPointedTo")
+                            writeSectionEnd(outputFile)
 
-                    # Fields
-                    if allFields:
-                        self.writeSectionHeader("Fields, Total: %d" % len(allFields),
-                                                "Fields", outputFile, pdf)
-                        self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
-                        writeSectionEnd(outputFile)
-                # Generate the listing of objects
-                if len(entryList) > 0:
-                  self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
-                                          "Found Entries", outputFile, pdf)
-                  self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)), outputFile,self.getGlobalEntryHTML,nameFunc=self.getGlobalEntryName, classid="gblEntry")
-                  if self._generatePDFBundle:
-                      columns = 8
-                      columnWidth = self.doc.width/columns
-                      colWidths = [columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth]
-                      self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf,isString=True,columnWidths=colWidths)
-                  writeSectionEnd(outputFile)
-                if icrList:
-                   self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
-                                           "ICR Entries", outputFile, pdf)
-                   self.generateGlobalICRSection(icrList, outputFile, pdf)
-                   writeSectionEnd(outputFile)
-                self.__generateIndividualRoutinePage__(globalVar, pdf,
-                                                       platform=None,
-                                                       existingOutFile=outputFile,
-                                                       DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
-                self.generateFooterWithNavigationBar(outputFile, indexList)
-                outputFile.close()
+                        # Pointer To FileMan Files
+                        if globalVar.getTotalNumberOfReferencedGlobals() > 0:
+                            self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
+                                                        % globalVar.getTotalNumberOfReferencedGlobals(),
+                                                    "Pointer To FileMan Files",
+                                                    outputFile, pdf)
+                            self.generateGlobalPointedToSection(globalVar, outputFile,
+                                                                pdf, False, classid="gblPointerTo")
+                            writeSectionEnd(outputFile)
+
+                        # Fields
+                        if allFields:
+                            self.writeSectionHeader("Fields, Total: %d" % len(allFields),
+                                                    "Fields", outputFile, pdf)
+                            self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
+                            writeSectionEnd(outputFile)
+                    # Generate the listing of objects
+                    if entryList:
+                      self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
+                                              "Found Entries", outputFile, pdf)
+                      self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)),
+                                                    outputFile, self.getGlobalEntryHTML,
+                                                    nameFunc=self.getGlobalEntryName,
+                                                    classid="gblEntry",
+                                                    useColor=False)
+                      if self._generatePDFBundle:
+                          columns = 8
+                          columnWidth = self.doc.width/columns
+                          colWidths = [columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth]
+                          self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf,isString=True,columnWidths=colWidths)
+                      writeSectionEnd(outputFile)
+                    if icrList:
+                       self.writeSectionHeader("ICR Entries, Total: %d" % len(icrList),
+                                               "ICR Entries", outputFile, pdf)
+                       self.generateGlobalICRSection(icrList, outputFile, pdf)
+                       writeSectionEnd(outputFile)
+                    self.__generateIndividualRoutinePage__(globalVar, pdf,
+                                                           platform=None,
+                                                           existingOutFile=outputFile,
+                                                           DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
+                    self.generateFooterWithNavigationBar(outputFile, indexList)
+
                 if self._generatePDFBundle:
                     self.__writePDFFile__(pdf, pdfFileName)
 
@@ -1200,80 +1211,79 @@ class WebPageGenerator:
 #===============================================================================
     def __generateFileManSubFilePage__(self, subFile):
         indexList = ["Info", "Details"]
-        outputFile = open(os.path.join(self._outDir,
-                                       getFileManSubFileHtmlFileName(subFile)), 'wb')
-
-        if self._generatePDFBundle:
-            self.__setupPDF__(isLandscape=True)
-            pdf = []
-        else:
-            pdf = None
-
-        # write the same _header file
-        self.__includeHeader__(outputFile)
-        self.generateNavigationBar(outputFile, indexList, printList=indexList)
-        # get the root file package
-        fileIter = subFile
-        topDownList=[fileIter]
-        while not fileIter.isRootFile():
-            fileIter = fileIter.getParentFile()
-            topDownList.append(fileIter)
-        topDownList.reverse()
-        package = fileIter.getPackage()
-        title = "Sub-Field: %s" % subFile.getFileNo()
-        # generate # link list
-        linkHtmlTxt = ""
-        if self._generatePDFBundle:
-            linkPDFTxt = ""
-        else:
-            linkPDFTxt = None
-        index = 0
-        for item in topDownList:
-            if index == 0:
-                linkHtmlTxt += getFileManFileHypeLink(item)
-                if self._generatePDFBundle:
-                    if not item.isFileManFile():
-                        linkPDFTxt += item.getName()
-                    if item.isSubFile():
-                        linkPDFTxt += getFileManSubFileHtmlFileNameByName(item.getFileNo())
-                    linkPDFTxt += getGlobalDisplayName(item)
+        filename = os.path.join(self._outDir,
+                                getFileManSubFileHtmlFileName(subFile))
+        with open(filename, 'w') as outputFile:
+            if self._generatePDFBundle:
+                self.__setupPDF__(isLandscape=True)
+                pdf = []
             else:
-                linkHtmlTxt += getFileManSubFileHypeLinkByName(item.getFileNo())
-                if self._generatePDFBundle:
-                    linkPDFTxt += item.getFileNo()
-            if index < len(topDownList) - 1:
-                linkHtmlTxt += "-->"
-                if self._generatePDFBundle:
-                    linkPDFTxt += "-->"
-            index += 1
-        self.writeTitleBlock(title, title, package, outputFile, pdf,
-                             linkHtmlTxt, linkPDFTxt)
-        packageName = package.getName();
+                pdf = None
 
-        # Information
-        self.writeSectionHeader("Information", "Info", outputFile, pdf,
-                                isAccordion=False)
-        infoHeader = ["Parent File", "Name", "Number", "Package"]
-        parentFile = subFile.getParentFile()
-        parentFileLink = ""
-        if parentFile.isRootFile():
-            parentFileLink = getFileManFileHypeLink(parentFile)
-        else:
-            parentFileLink =  getFileManSubFileHypeLinkByName(parentFile.getFileNo())
-        itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
-                     getPackageHyperLinkByName(packageName)]]
-        self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
-        writeSectionEnd(outputFile)
-        if self._generatePDFBundle:
-            self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
+            # write the same _header file
+            self.__includeHeader__(outputFile)
+            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            # get the root file package
+            fileIter = subFile
+            topDownList=[fileIter]
+            while not fileIter.isRootFile():
+                fileIter = fileIter.getParentFile()
+                topDownList.append(fileIter)
+            topDownList.reverse()
+            package = fileIter.getPackage()
+            title = "Sub-Field: %s" % subFile.getFileNo()
+            # generate # link list
+            linkHtmlTxt = ""
+            if self._generatePDFBundle:
+                linkPDFTxt = ""
+            else:
+                linkPDFTxt = None
+            index = 0
+            for item in topDownList:
+                if index == 0:
+                    linkHtmlTxt += getFileManFileHypeLink(item)
+                    if self._generatePDFBundle:
+                        if not item.isFileManFile():
+                            linkPDFTxt += item.getName()
+                        if item.isSubFile():
+                            linkPDFTxt += getFileManSubFileHtmlFileNameByName(item.getFileNo())
+                        linkPDFTxt += getGlobalDisplayName(item)
+                else:
+                    linkHtmlTxt += getFileManSubFileHypeLinkByName(item.getFileNo())
+                    if self._generatePDFBundle:
+                        linkPDFTxt += item.getFileNo()
+                if index < len(topDownList) - 1:
+                    linkHtmlTxt += "-->"
+                    if self._generatePDFBundle:
+                        linkPDFTxt += "-->"
+                index += 1
+            self.writeTitleBlock(title, title, package, outputFile, pdf,
+                                 linkHtmlTxt, linkPDFTxt)
+            packageName = package.getName();
 
-        # Details
-        self.writeSectionHeader("Details", "Details", outputFile, pdf)
-        self.__generateFileManFileDetails__(subFile, outputFile, pdf)
-        writeSectionEnd(outputFile)
+            # Information
+            self.writeSectionHeader("Information", "Info", outputFile, pdf,
+                                    isAccordion=False)
+            infoHeader = ["Parent File", "Name", "Number", "Package"]
+            parentFile = subFile.getParentFile()
+            parentFileLink = ""
+            if parentFile.isRootFile():
+                parentFileLink = getFileManFileHypeLink(parentFile)
+            else:
+                parentFileLink =  getFileManSubFileHypeLinkByName(parentFile.getFileNo())
+            itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
+                         getPackageHyperLinkByName(packageName)]]
+            self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid="information")
+            writeSectionEnd(outputFile)
+            if self._generatePDFBundle:
+                self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
 
-        self.generateFooterWithNavigationBar(outputFile, indexList)
-        outputFile.close()
+            # Details
+            self.writeSectionHeader("Details", "Details", outputFile, pdf)
+            self.__generateFileManFileDetails__(subFile, outputFile, pdf)
+            writeSectionEnd(outputFile)
+
+            self.generateFooterWithNavigationBar(outputFile, indexList)
 
         if self._generatePDFBundle:
             pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
@@ -1284,10 +1294,10 @@ class WebPageGenerator:
 #
 #===============================================================================
     def __generateFileManFileDetails__(self, fileManFile, outputFile, pdf):
-        assert isinstance(fileManFile, FileManFile)
         # sort the file man field by file #
         allFields = fileManFile.getAllFileManFields()
-        if not allFields or len(allFields) == 0: return
+        if not allFields:
+            return
         # sort the fields # by the float value
         sortedFields = sorted(allFields.keys(), key=lambda item: float(item))
         outputFieldsList = []
@@ -1397,7 +1407,7 @@ class WebPageGenerator:
         if not fileManField:
             return ""
         propList = fileManField.getPropList()
-        if not propList or len(propList) == 0:
+        if not propList:
             return ""
         output = "<p><ul>"
         for (name, values) in propList:
@@ -1413,7 +1423,7 @@ class WebPageGenerator:
         if not fileManField:
             return 0, None
         propList = fileManField.getPropList()
-        if not propList or len(propList) == 0:
+        if not propList:
             return 0, None
         if len(propList) <= 1:
             output = []
@@ -1493,7 +1503,7 @@ class WebPageGenerator:
                 if pdf and self._generatePDFBundle:
                     pdfData = getGlobalDisplayName(Global)
                 detailedList = globalDict[Global]
-                if not detailedList or len(detailedList) == 0:
+                if not detailedList:
                     continue
                 fieldLinkGlobal = Global
                 if not isPointedBy:
@@ -1797,11 +1807,11 @@ class WebPageGenerator:
         writeSubSectionHeader(summaryHeader, outputFile, classid="summary")
 
         # Print out the routine details
-        if len(callerRoutines) > 0 or len(calledRoutines) > 0:
+        if callerRoutines or calledRoutines:
             sectionHeader = "Routines --> Routines"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(callerRoutines) > 0:
+            if callerRoutines:
                 header = "Caller Routines List in %s : %s" % \
                           (packageHyperLink, totalCalledHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1809,8 +1819,9 @@ class WebPageGenerator:
                                               outputFile,
                                               getRoutineHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="callerRoutines")
-            if len(calledRoutines) > 0:
+                                              classid="callerRoutines",
+                                              useColor=False)
+            if calledRoutines:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, totalCallerHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1818,16 +1829,17 @@ class WebPageGenerator:
                                               outputFile,
                                               getRoutineHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="calledRoutines")
+                                              classid="calledRoutines",
+                                              useColor=False)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
         # print out the Global -> routine details
-        if len(globalRtnCallRoutines) > 0 or len(globalRtnCalledRoutines) > 0:
+        if globalRtnCallRoutines or globalRtnCalledRoutines:
             sectionHeader = "Globals --> Routines"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(globalRtnCallRoutines) > 0:
+            if globalRtnCallRoutines:
                 header = "Caller Global List in %s : %s" % \
                           (packageHyperLink, gblRtnCallerHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1835,7 +1847,7 @@ class WebPageGenerator:
                                               outputFile,
                                               getGlobalHtmlFileName,
                                               classid="rcallerGlobals")
-            if len(globalRtnCalledRoutines) > 0:
+            if globalRtnCalledRoutines:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, gblRtnCalledHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1843,16 +1855,17 @@ class WebPageGenerator:
                                               outputFile,
                                               getRoutineHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="gcalledRoutines")
+                                              classid="gcalledRoutines",
+                                              useColor=False)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
         # print out the Global -> global details
-        if len(globalGblCallRoutines) > 0 or len(globalGblCalledRoutines) > 0:
+        if globalGblCallRoutines or globalGblCalledRoutines:
             sectionHeader = "Globals --> Globals"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(globalGblCallRoutines) > 0:
+            if globalGblCallRoutines:
                 header = "Caller Global List in %s : %s" % \
                           (packageHyperLink, gblGblCallerHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1860,7 +1873,7 @@ class WebPageGenerator:
                                               outputFile,
                                               getGlobalHtmlFileName,
                                               classid="gCallerGlobals")
-            if len(globalGblCalledRoutines) > 0:
+            if globalGblCalledRoutines:
                 header = "Called Globals List in %s : %s" % \
                           (depPackageHyperLink, gblGblCalledHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1872,11 +1885,11 @@ class WebPageGenerator:
             writeSectionEnd(outputFile) # Close accordion
 
         # print out the Package Component details
-        if len(optionCallRoutines) > 0 or len(optionCalledRoutines) > 0:
+        if optionCallRoutines or optionCalledRoutines:
             sectionHeader = "Package Components List --> Routines"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(optionCallRoutines) > 0:
+            if optionCallRoutines:
                 header = "Caller Package Components List in %s : %s" % \
                           (packageHyperLink, optionCallerHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1885,7 +1898,7 @@ class WebPageGenerator:
                                               getPackageObjHtmlFileName,
                                               self.getPackageComponentDisplayName,
                                               classid="PCObjects")
-            if len(optionCalledRoutines) > 0:
+            if optionCalledRoutines:
                 header = "Called Routines in %s : %s" % \
                           (depPackageHyperLink, optionCalledHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1893,15 +1906,16 @@ class WebPageGenerator:
                                               outputFile,
                                               getPackageObjHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="PCcalledRoutines")
+                                              classid="PCcalledRoutines",
+                                              useColor=False)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
-        if len(referredRoutines) > 0 or len(referredGlobals) > 0:
+        if referredRoutines or referredGlobals:
             sectionHeader = "Routines --> Globals"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(referredRoutines) > 0:
+            if referredRoutines:
                 header = "Referred Routines List in %s : %s" % \
                           (packageHyperLink, totalReferredRoutineHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1909,8 +1923,9 @@ class WebPageGenerator:
                                               outputFile,
                                               getRoutineHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="referredRoutines")
-            if len(referredGlobals) > 0:
+                                              classid="referredRoutines",
+                                              useColor=False)
+            if referredGlobals:
                 header = "Referenced Globals List in %s : %s" % \
                           (depPackageHyperLink, totalReferredGlobalHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1921,11 +1936,11 @@ class WebPageGenerator:
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
-        if len(referredFileManFiles) > 0 or len(referencedFileManFiles) > 0:
+        if referredFileManFiles or referencedFileManFiles:
             sectionHeader = "FileMan Files --> FileMan Files"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(referredFileManFiles) > 0:
+            if referredFileManFiles:
                 header = "Referred FileMan Files List in %s : %s" % \
                           (packageHyperLink, totalReferredFileManFilesHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1934,7 +1949,7 @@ class WebPageGenerator:
                                               getGlobalHtmlFileName,
                                               getGlobalDisplayName,
                                               classid="referredFileManFiles")
-            if len(referencedFileManFiles) > 0:
+            if referencedFileManFiles:
                 header = "Referenced FileMan Files List in %s : %s" % \
                           (depPackageHyperLink, totalReferencedFileManFilesHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1946,11 +1961,11 @@ class WebPageGenerator:
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
-        if len(dbCallRoutines) > 0 or len(dbCallFileManFiles) > 0:
+        if dbCallRoutines or dbCallFileManFiles:
             sectionHeader = "FileMan Db Call Routines --> FileMan Files"
             self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
             writeSectionBegin(outputFile)
-            if len(dbCallRoutines) > 0:
+            if dbCallRoutines:
                 header = "FileMan Db Call Routines List in %s : %s" % \
                           (packageHyperLink, totalDbCallRoutinesHtml)
                 writeSubSectionHeader(header, outputFile)
@@ -1958,15 +1973,17 @@ class WebPageGenerator:
                                               outputFile,
                                               getRoutineHtmlFileName,
                                               self.getRoutineDisplayName,
-                                              classid="dbCallRoutines")
-            if len(dbCallFileManFiles) > 0:
+                                              classid="dbCallRoutines",
+                                              useColor=False)
+            if dbCallFileManFiles:
                 header = "FileMan Db Call Accessed FileMan Files List in %s : %s" % \
                           (depPackageHyperLink, totalDbCallFileManFilesHtml)
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(dbCallFileManFiles),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="dbCallFileManFiles")
+                                              classid="dbCallFileManFiles",
+                                              useColor=False)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
         outputFile.write("<br/>\n")
@@ -1975,47 +1992,46 @@ class WebPageGenerator:
 # method to generate the individual package/package interaction detail page
 #===============================================================================
     def generatePackageInteractionDetailPage(self, fileName, package, depPackage):
-        outputFile = open(os.path.join(self._outDir, fileName), 'w')
-        self.__includeHeader__(outputFile)
+        with open(os.path.join(self._outDir, fileName), 'w') as outputFile:
+            self.__includeHeader__(outputFile)
 
-        # Get package links
-        packageHyperLink = getPackageHyperLinkByName(package.getName())
-        depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
+            # Get package links
+            packageHyperLink = getPackageHyperLinkByName(package.getName())
+            depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
 
-        # Generate the index bar
-        inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
-                     "%s-->%s" % (depPackage.getName(), package.getName())]
-        archList = [package.getName(), depPackage.getName()]
-        self.generateNavigationBar(outputFile, inputList, archList)
+            # Generate the index bar
+            inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
+                         "%s-->%s" % (depPackage.getName(), package.getName())]
+            archList = [package.getName(), depPackage.getName()]
+            self.generateNavigationBar(outputFile, inputList, archList)
 
-        # Title and header
-        pageTitle = package.getName() + " : " + depPackage.getName()
-        outputFile.write("<title id=\"pageTitle\">" + pageTitle + "</title>")
-        outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
-                          (packageHyperLink, depPackageHyperLink))
+            # Title and header
+            pageTitle = package.getName() + " : " + depPackage.getName()
+            outputFile.write("<title id=\"pageTitle\">" + pageTitle + "</title>")
+            outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
+                              (packageHyperLink, depPackageHyperLink))
 
-        # Legends
-        writeLegends(self._outDir, outputFile)
+            # Legends
+            outputFile.write(self.legend)
 
-        # Accordion
-        outputFile.write(ACCORDION)
+            # Accordion
+            outputFile.write(ACCORDION)
 
-        # Package --> Dep. Package
-        self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
-                                package.getName(), outputFile,
-                                isAccordion=False)
-        self.generatePackageRoutineDependencyDetailPage(package, depPackage,
-                                                        outputFile, "_1")
-        writeSectionEnd(outputFile)
-        # Dep. Package --> Package
-        self.writeSectionHeader("%s-->%s :" % (depPackageHyperLink, packageHyperLink),
-                                depPackage.getName(), outputFile,
-                                isAccordion=False)
-        self.generatePackageRoutineDependencyDetailPage(depPackage, package,
-                                                        outputFile, "_2")
-        writeSectionEnd(outputFile)
-        self.generateFooterWithNavigationBar(outputFile, inputList, archList)
-        outputFile.close()
+            # Package --> Dep. Package
+            self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
+                                    package.getName(), outputFile,
+                                    isAccordion=False)
+            self.generatePackageRoutineDependencyDetailPage(package, depPackage,
+                                                            outputFile, "_1")
+            writeSectionEnd(outputFile)
+            # Dep. Package --> Package
+            self.writeSectionHeader("%s-->%s :" % (depPackageHyperLink, packageHyperLink),
+                                    depPackage.getName(), outputFile,
+                                    isAccordion=False)
+            self.generatePackageRoutineDependencyDetailPage(depPackage, package,
+                                                            outputFile, "_2")
+            writeSectionEnd(outputFile)
+            self.generateFooterWithNavigationBar(outputFile, inputList, archList)
 
     ###########################################################################
     def __parseReadCmd__(self, matchArray, routine, lineNo):
@@ -2038,11 +2054,11 @@ class WebPageGenerator:
 
     def __parseWriteCmd__(self,line, routine,lineNo):
       # splits the line into a space separated list which ignores spaces found within quotes
-      lineList =  re.split(''' (?=(?:[^'"]|'[^']*'|"[^"]*")*$)''', line)
+      lineList =  SPLIT_LINE.split(line)
       lastIndex = 0
       for i in lineList:
         # Captures the conditional value of the write, while trying to remove false matches like "WRITE" as an entry point
-        match = re.search("^W(?!\w)($|(?P<conditional>\:.+)?)",i)
+        match = CONDITIONAL.search(i)
         if match:
           interaction = {}
           # Make sure we aren't going to look past the end
@@ -2059,11 +2075,7 @@ class WebPageGenerator:
 #===============================================================================
 # Method to parse the source code and generate source code page or just extract comments
 #===============================================================================
-    def __generateSourceCodePageByName__(self, sourceCodeName, routine, justComment):
-        ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
-        COMMENT  = re.compile("^ ; ")
-        READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
-        WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
+    def __generateSourceCodePageByName__(self, sourceCodeName, routine):
         if not routine:
             logger.error("Routine can not be None")
             return
@@ -2073,76 +2085,76 @@ class WebPageGenerator:
             return
         packageName = package.getName()
         routineName = routine.getName()
-        sourcePath = getRoutineSourceCodeFileByName(sourceCodeName,
-                                                    packageName,
-                                                    self._repDir)
-        if not os.path.exists(sourcePath):
-            logger.error("Source file:[%s] does not exist\n" % sourcePath)
-            return
-        sourceFile = open(sourcePath, 'r')
-        if not justComment:
-            outputFile = open(os.path.join(self._outDir,
-                                         getRoutineSourceHtmlFileNameUnquoted(sourceCodeName)), 'wb')
-            self.__includeSourceHeader__(outputFile)
-            outputFile.write("<title id=\"pageTitle\">Routine: " + sourceCodeName + "</title>")
-            outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
-            outputFile.write("<div id='pageCommands' style='position:fixed; top:55; background: white;'>")
-            outputFile.write("  <a href=\"%s\">Go to the documentation of this file.</a>" %
-                             getRoutineHtmlFileName(routineName))
-            if routine._structuredCode:
-              outputFile.write(SWAP_VIEW_HTML)
-            outputFile.write('</div>')
-            outputFile.write("<xmp id=\"terseDisplay\" class=\"prettyprint lang-mumps linenums:1\">")
-        # Inititalize the new variables
-        lineNo = 0
-        entry = ""
-        entryOffset = 0
-        currentEntryPoint = routineName
-        comment=[]
-        icrJson=[]
-        inComment=False
-        for line in sourceFile:
-            if lineNo <= 1:
-                routine.addComment(line)
-            if ENTRY_POINT.search(line) and lineNo > 1:
-              if entry:
-                routine.addEntryPoint(entry, comment, icrJson)
-                comment=[]
-              inComment = True
-              foundLine = line.replace("\t"," ").split(" ",1)
-              if len(foundLine) > 1:
-                entry = foundLine[0]
-                commentString = foundLine[1]
-              else:
-                commentString = "@"
-                entry= line
-              currentEntryPoint= entry
-              entryOffset= 0
-              comment.append(commentString)
-              if not commentString[0]==";":
-                comment=[]
-                # if No comment on the first line, assume no other comments will follow it
-                inComment= False
-              icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
-            # Check for more comments that are 1 space in from the beginning of the line
-            elif COMMENT.search(line) and inComment:
-              comment.append(line)
-            else:
-              # If here, assume we have reached the code part of the entry point and stop checking for comments
-              inComment=False
-            if READ_CMD.search(line):
-                self.__parseReadCmd__(READ_CMD.findall(line), routine, currentEntryPoint+"+"+str(entryOffset))
-            if WRITE_CMD.search(line):
-                self.__parseWriteCmd__(line, routine, currentEntryPoint+"+"+str(entryOffset))
-            if justComment and lineNo > 1:
-               continue
-            if not justComment:
-                outputFile.write(line)
-            lineNo += 1
-            entryOffset += 1
-        sourceFile.close()
-        routine.addEntryPoint(entry, comment, icrJson)
-        if not justComment:
+        filename = os.path.join(self._outDir,
+                                 getRoutineSourceHtmlFileNameUnquoted(sourceCodeName))
+        with open(filename, 'w') as outputFile:
+            try:
+                sourcePath = getRoutineSourceCodeFileByName(sourceCodeName,
+                                                            packageName,
+                                                            self._repDir)
+                with open(sourcePath, 'r') as sourceFile:
+                    self.__includeSourceHeader__(outputFile)
+                    outputFile.write("<title id=\"pageTitle\">Routine: " + sourceCodeName + "</title>")
+                    outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
+                    outputFile.write("<div id='pageCommands' style='position:fixed; top:55; background: white;'>")
+                    outputFile.write("  <a href=\"%s\">Go to the documentation of this file.</a>" %
+                                     getRoutineHtmlFileName(routineName))
+                    if routine._structuredCode:
+                      outputFile.write(SWAP_VIEW_HTML)
+                    outputFile.write('</div>')
+                    outputFile.write("<xmp id=\"terseDisplay\" class=\"prettyprint lang-mumps linenums:1\">")
+                    # Inititalize the new variables
+                    lineNo = 0
+                    entry = ""
+                    entryOffset = 0
+                    currentEntryPoint = routineName
+                    comment=[]
+                    icrJson=[]
+                    inComment=False
+                    for line in sourceFile:
+                        if lineNo <= 1:
+                            routine.addComment(line)
+                        if lineNo > 1 and ENTRY_POINT.search(line):
+                          if entry:
+                            routine.addEntryPoint(entry, comment, icrJson)
+                            comment=[]
+                          inComment = True
+                          foundLine = line.replace("\t"," ").split(" ",1)
+                          if len(foundLine) > 1:
+                            entry = foundLine[0]
+                            commentString = foundLine[1]
+                          else:
+                            commentString = "@"
+                            entry = line
+                          currentEntryPoint= entry
+                          entryOffset= 0
+                          comment.append(commentString)
+                          if not commentString.startswith(";"):
+                            comment = []
+                            # if No comment on the first line, assume no other comments will follow it
+                            inComment =  False
+                          icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
+                        # Check for more comments that are 1 space in from the beginning of the line
+                        elif inComment and COMMENT.search(line):
+                          comment.append(line)
+                        else:
+                          # If here, assume we have reached the code part of the entry point and stop checking for comments
+                          inComment = False
+                        readCmdMatches = READ_CMD.findall(line)
+                        if readCmdMatches:
+                            self.__parseReadCmd__(readCmdMatches, routine, currentEntryPoint+"+"+str(entryOffset))
+                        if WRITE_CMD.search(line):
+                            self.__parseWriteCmd__(line, routine, currentEntryPoint+"+"+str(entryOffset))
+                        if lineNo > 1:
+                           continue
+                        outputFile.write(line)
+                        lineNo += 1
+                        entryOffset += 1
+            except Exception, e:
+                logger.error(e)
+                return
+            routine.addEntryPoint(entry, comment, icrJson)
+
             outputFile.write("</xmp>\n")
             if routine._structuredCode:
               outputFile.write("<xmp id=\"expandedDisplay\" class=\"prettyprint lang-mumps linenums:1\" style='display:none;'>")
@@ -2151,36 +2163,33 @@ class WebPageGenerator:
                   outputFile.write("%s \n" % line)
               outputFile.write("</xmp>\n")
             outputFile.write(FOOTER)
-            outputFile.close()
+
 
 #===============================================================================
 # Method to generate individual source code page for Platform Dependent Routines
 #===============================================================================
-    def __generatePlatformDependentRoutineSourcePage__(self, genericRoutine, justComment):
-        assert genericRoutine
-        assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
-        assert self._crossRef.isPlatformGenericRoutineByName(genericRoutine.getName())
+    def __generatePlatformDependentRoutineSourcePage__(self, genericRoutine):
         allRoutines = genericRoutine.getAllPlatformDepRoutines()
         for routineInfo in allRoutines.itervalues():
             routine = routineInfo[0]
             sourceCodeName = routine.getOriginalName()
-            self.__generateSourceCodePageByName__(sourceCodeName, routine, justComment)
+            self.__generateSourceCodePageByName__(sourceCodeName, routine)
 
 #===============================================================================
 # Method to generate individual source code page
 # sourceDir should be VistA-M git repository
 #===============================================================================
-    def generateAllSourceCodePage(self, justComment=True):
+    def generateAllSourceCodePage(self):
         for packageName in self._allPackages.iterkeys():
             for (routineName, routine) in self._allPackages[packageName].getAllRoutines().iteritems():
                 if self._crossRef.isPlatformGenericRoutineByName(routineName):
-                    self.__generatePlatformDependentRoutineSourcePage__(routine, justComment)
+                    self.__generatePlatformDependentRoutineSourcePage__(routine)
                     continue
                 # check for platform dependent routine
                 if not self._crossRef.routineHasSourceCodeByName(routineName):
                     continue
                 sourceCodeName = routine.getOriginalName()
-                self.__generateSourceCodePageByName__(sourceCodeName, routine, justComment)
+                self.__generateSourceCodePageByName__(sourceCodeName, routine)
 
 #===============================================================================
 # utility method to show component type
@@ -2188,8 +2197,9 @@ class WebPageGenerator:
     def getPackageComponentDisplayName(self, routine):
         routineName = routine.getName()
         if "componentType" in dir(routine):
-          if routine.componentType.strip() in componentTypeDict:
-              return "%s<sup>(%s)</sup>" % (routineName, componentTypeDict[routine.componentType.strip()])
+          componentType = routine.componentType.strip()
+          if componentType in COMPONENT_TYPE_DICT:
+              return "%s<sup>(%s)</sup>" % (routineName, componentType)
         return routineName
 #===============================================================================
 # utility method to show routine name
@@ -2204,10 +2214,11 @@ class WebPageGenerator:
         return self.getRoutineDisplayNameByName(routine.getName())
 
     def getGlobalEntryName(self, routine):
-        name = "Entry: %s" % routine["IENum"]
         if ".01" in routine:
-          name = routine['.01']
-        return name
+          return routine['.01']
+        else:
+          return "Entry: %s" % routine["IENum"]
+
     def getGlobalEntryHTML(self, routine):
         return "%s%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".","_"),routine["GlobalNum"],routine["IENum"])
 
@@ -2295,7 +2306,7 @@ class WebPageGenerator:
             # append the content of map outputFile
             for line in cmapFile:
                 outputFile.write(line)
-        except IOError:
+        except:
             pass
         totalPackages = len(depPackages)
         total = "%s, Total: %d " % (sectionListHeader, totalPackages)
@@ -2411,7 +2422,8 @@ class WebPageGenerator:
 # method to generate a tablized representation of data
 #===============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile, htmlMappingFunc,
-                                 nameFunc=None, totalCol=8, classid="", keyVal=None):
+                                 nameFunc=None, totalCol=8, classid="",
+                                 keyVal=None, useColor=True):
         if self._generatePDFBundle:
             pdfTable = []
         else:
@@ -2419,9 +2431,9 @@ class WebPageGenerator:
         totalNumRoutine = 0
         if sortedItemList:
             totalNumRoutine = len(sortedItemList)
-        numOfRow = totalNumRoutine / totalCol + 1
         if totalNumRoutine > 0:
             outputFile.write("<div class=\"contents\"><table>\n")
+            numOfRow = totalNumRoutine / totalCol + 1
             for index in range(numOfRow):
                 if self._generatePDFBundle:
                     pdfRow = []
@@ -2430,11 +2442,16 @@ class WebPageGenerator:
                     position = index * totalCol + i
                     if position < totalNumRoutine:
                         displayName = sortedItemList[position]
-                        linkName = htmlMappingFunc(sortedItemList[position])
-                        borderColorString = findDotColor(sortedItemList[position]).replace("color=",'')
-                        if keyVal:  linkName = htmlMappingFunc(sortedItemList[position],keyVal)
-                        if nameFunc: displayName = nameFunc(displayName)
-                        outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                        linkName = htmlMappingFunc(displayName)
+                        if useColor:
+                            borderColorString = findDotColor(displayName)
+                        else:
+                            borderColorString = "black"
+                        if keyVal:
+                            linkName = htmlMappingFunc(displayName, keyVal)
+                        if nameFunc:
+                            displayName = nameFunc(displayName)
+                        outputFile.write("<td style=\"border: 2px solid color=%s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
                                    % (borderColorString, linkName, displayName))
                         if self._generatePDFBundle:
                             # format name for pdf
@@ -2497,14 +2514,13 @@ class WebPageGenerator:
         else:
             pdf.append(Image(os.path.join(self._outDir, imageFileName)))
 
-    # TODO: Copy + paste from writeLegends()
     def __writePDFLegends__(self, pdf):
         pdf.append(Paragraph("Legends:", styles['Heading3']))
         # No color legend in PDFs
-        # TODO: Copy + paste from PCLegend
+        # TODO: Copy + paste from PC_LEGEND
         table = []
-        for key in componentTypeDict.keys():
-              table.append([key, componentTypeDict[key]])
+        for key, value in COMPONENT_TYPE_DICT.iteritems():
+              table.append([key, value])
         # TODO: Columns to fit contents + left aligned
         self.__writeGenericTablizedPDFData__(["Package Component", "Superscript"],
                                              table, pdf)
@@ -2525,7 +2541,7 @@ class WebPageGenerator:
 #===============================================================================
     def writeGenericTablizedHtmlData(self, headerList, itemList, outputFile, classid="" ):
         outputFile.write("<div><table>\n")
-        if headerList and len(headerList) > 0:
+        if headerList:
             outputFile.write("<tr class=\"%s\" >\n" % (classid))
             for header in headerList:
                 outputFile.write("<th class=\"IndexKey\">%s</th>\n" % ( header))
@@ -2541,7 +2557,7 @@ class WebPageGenerator:
     def __writeGenericTablizedPDFData__(self, headerList, itemList, pdf,
                                         columnWidths=None, isString=True):
         table = []
-        if headerList and len(headerList) > 0:
+        if headerList:
             table.append(generatePDFTableHeader(headerList, False))
         if itemList and len(itemList) > 0:
             for itemRow in itemList:
@@ -2619,89 +2635,88 @@ class WebPageGenerator:
                     generatePackageComponents = True
                     indexList.append(keyVal.replace("_"," "))
 
-            outputFile = open(os.path.join(self._outDir, getPackageHtmlFileName(packageName)), 'w')
+            filename = os.path.join(self._outDir, getPackageHtmlFileName(packageName))
+            with open(filename, 'w') as outputFile:
+                # Write the _header part
+                self.__includeHeader__(outputFile)
 
-            # Write the _header part
-            self.__includeHeader__(outputFile)
+                pdfList = indexList
+                if generatePackageComponents:
+                    pdfList.append("Legend Graph")
+                self.generateNavigationBar(outputFile, indexList,
+                                           printList=pdfList,
+                                           packageName=packageName)
 
-            pdfList = indexList
-            if generatePackageComponents:
-                pdfList.append("Legend Graph")
-            self.generateNavigationBar(outputFile, indexList,
-                                       printList=pdfList,
-                                       packageName=packageName)
+                # Title
+                title = "Package: %s" % packageName
+                self.writeTitleBlock(title, title, None, outputFile, pdf)
 
-            # Title
-            title = "Package: %s" % packageName
-            self.writeTitleBlock(title, title, None, outputFile, pdf)
-
-            # Namespace
-            # Note: We're passing the package here, NOT the packageName
-            self.generatePackageNamespaceSection(package, outputFile, pdf)
-
-            # Link to VA documentation (do not write in pdf)
-            # Note: We're passing the package here, NOT the packageName
-            self.generatePackageDocumentationSection(package, outputFile)
-
-            # Dependency Graph
-            if dependencyPackages:
-                self.generatePackageDependencySection(dependencyPackages,
-                                                      dependencyPackgesMerged,
-                                                      packageName,
-                                                      outputFile, pdf, True)
-            # Dependent Graph
-            if dependentPackages:
-                self.generatePackageDependencySection(dependentPackages,
-                                                      dependentPackagesMerged,
-                                                      packageName,
-                                                      outputFile, pdf, False)
-
-            # ICR Entries
-            if len(icrList) > 0:
-                sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
-                self.generatePackageSection("ICR Entries", getICRHtmlFileName,
-                                            getICRDisplayName, "icrVals",
-                                            sortedICRList, outputFile, pdf)
-
-            # FileMan files
-            if len(fileManList) > 0:
-                # sorted by fileMan file No
-                sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo()))
-                # Note: In generateTablizedItemList, number of columns is set to 8
-                self.generatePackageSection("FileMan Files",
-                                            getGlobalHtmlFileName,
-                                            getGlobalDisplayName, "fmFiles",
-                                            sortedFileManList, outputFile, pdf,
-                                            pdfColumnWidths=8)
-
-            # Non-FileMan Globals
-            if len(globalList) > 0:
-                # sorted by global Name
-                sortedGlobalList = sorted(globalList, key=lambda item: item.getName())
-                self.generatePackageSection("Non-FileMan Globals",
-                                            getGlobalHtmlFileName,
-                                            getGlobalDisplayName, "nonfmFiles",
-                                            sortedGlobalList, outputFile, pdf)
-
-            # Routines
-            if len(routinesList) > 0:
-                sortedRoutinesList = sorted(routinesList)
-                self.generatePackageSection("Routines", getRoutineHtmlFileName,
-                                            self.getRoutineDisplayNameByName,
-                                            "rtns", sortedRoutinesList,
-                                            outputFile, pdf)
-
-            # Package Components
-            if generatePackageComponents:
-                writeLegends(self._outDir, outputFile)
-                if self._generatePDFBundle:
-                    pdf.append(Spacer(1, 10))
-                    self.__writePDFLegends__(pdf)
+                # Namespace
                 # Note: We're passing the package here, NOT the packageName
-                self.generatePackageComponentsSections(package, outputFile, pdf)
+                self.generatePackageNamespaceSection(package, outputFile, pdf)
 
-            self.generateFooterWithNavigationBar(outputFile, indexList)
-            outputFile.close()
+                # Link to VA documentation (do not write in pdf)
+                # Note: We're passing the package here, NOT the packageName
+                self.generatePackageDocumentationSection(package, outputFile)
+
+                # Dependency Graph
+                if dependencyPackages:
+                    self.generatePackageDependencySection(dependencyPackages,
+                                                          dependencyPackgesMerged,
+                                                          packageName,
+                                                          outputFile, pdf, True)
+                # Dependent Graph
+                if dependentPackages:
+                    self.generatePackageDependencySection(dependentPackages,
+                                                          dependentPackagesMerged,
+                                                          packageName,
+                                                          outputFile, pdf, False)
+
+                # ICR Entries
+                if len(icrList) > 0:
+                    sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
+                    self.generatePackageSection("ICR Entries", getICRHtmlFileName,
+                                                getICRDisplayName, "icrVals",
+                                                sortedICRList, outputFile, pdf)
+
+                # FileMan files
+                if len(fileManList) > 0:
+                    # sorted by fileMan file No
+                    sortedFileManList = sorted(fileManList, key=lambda item: float(item.getFileNo()))
+                    # Note: In generateTablizedItemList, number of columns is set to 8
+                    self.generatePackageSection("FileMan Files",
+                                                getGlobalHtmlFileName,
+                                                getGlobalDisplayName, "fmFiles",
+                                                sortedFileManList, outputFile, pdf,
+                                                pdfColumnWidths=8)
+
+                # Non-FileMan Globals
+                if len(globalList) > 0:
+                    # sorted by global Name
+                    sortedGlobalList = sorted(globalList, key=lambda item: item.getName())
+                    self.generatePackageSection("Non-FileMan Globals",
+                                                getGlobalHtmlFileName,
+                                                getGlobalDisplayName, "nonfmFiles",
+                                                sortedGlobalList, outputFile, pdf)
+
+                # Routines
+                if len(routinesList) > 0:
+                    sortedRoutinesList = sorted(routinesList)
+                    self.generatePackageSection("Routines", getRoutineHtmlFileName,
+                                                self.getRoutineDisplayNameByName,
+                                                "rtns", sortedRoutinesList,
+                                                outputFile, pdf)
+
+                # Package Components
+                if generatePackageComponents:
+                    outputFile.write(self.legend)
+                    if self._generatePDFBundle:
+                        pdf.append(Spacer(1, 10))
+                        self.__writePDFLegends__(pdf)
+                    # Note: We're passing the package here, NOT the packageName
+                    self.generatePackageComponentsSections(package, outputFile, pdf)
+
+                self.generateFooterWithNavigationBar(outputFile, indexList)
 
             if self._generatePDFBundle:
                 pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
@@ -2726,7 +2741,8 @@ class WebPageGenerator:
                                                 htmlMappingFunction,
                                                 nameFunction,
                                                 keyVal = keyVal,
-                                                classid=classid)
+                                                classid=classid,
+                                                useColor=False)
         if pdfData and self._generatePDFBundle:
             table = self.__generatePDFTable__(pdfData, pdfColumnWidths)
             pdfSection.append(table)
@@ -2852,11 +2868,11 @@ class WebPageGenerator:
             output.append((name, tag))
         return output
 
-    def __convertVariableToTableData__(self, variables, isGlobal = False, routine=None):
+    def __convertVariableToTableData__(self, variables, isGlobal=False, routine=None):
         output = []
         allVars = sorted(variables.iterkeys())
         for varName in allVars:
-            if varName == None:
+            if varName is None:
               continue
             var = variables[varName]
             if isGlobal and varName in self._allGlobals:
@@ -2866,14 +2882,14 @@ class WebPageGenerator:
             output.append(((var.getPrefix()+varName).strip(), lineOccurencesString))
         return output
 
-    def __generateLineOccurencesString__(self, lineOccurences,routine):
+    def __generateLineOccurencesString__(self, lineOccurences, routine):
         lineOccurencesString = ""
         index = 0
         for offset in lineOccurences:
             offsetStr = offset
-            searchRes = re.search("^[0-9.]+(?P<splitval>DATA|XRF|HELP)[0-9]*", offset)
-            if searchRes:
-              if routine:
+            if routine:
+              searchRes = SPLITVAL.search(offset)
+              if searchRes:
                   offsetStr = self.__findDataURL__(offset,routine,searchRes.group("splitval"))
             if index > 0:
                 lineOccurencesString += ",&nbsp;"
@@ -2885,6 +2901,7 @@ class WebPageGenerator:
 
     def __convertGlobalVarToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=True, routine=routine)
+
     def __convertFileManDbCallToTableData__(self, variables, routine=None):
         output = []
         allVars = sorted(variables.keys())
@@ -2966,8 +2983,8 @@ class WebPageGenerator:
             outputFile.write("<div><p>")
             outputFile.write("<span class=\"information\">%s Information &lt;<a class=\"el\" href=\"%s%s/%s-%s.html\">%s</a>&gt;</span>"
                 % (routine._objType, VIVIAN_URL,
-                   sectionLinkObj[routine._objType]['number'].replace('.','_'),
-                   sectionLinkObj[routine._objType]['number'],
+                   sectionLinkObj[routine._objType].replace('.','_'),
+                   sectionLinkObj[routine._objType],
                    routine.getIEN(), routine.getOriginalName()))
             outputFile.write("</p></div>\n")
         else:
@@ -3179,25 +3196,28 @@ class WebPageGenerator:
         fileNamePrefix = routineName + routineSuffix
         fileName = os.path.join(self._outDir,
                                 packageName + "/" + fileNamePrefix + ".cmapx")
-        if os.path.exists(fileName):
-          if not isDependency:
-            writeLegends(self._outDir,outputFile)
-            if self._generatePDFBundle:
-                self.__writePDFLegends__(pdfSection)
-                pdfSection.append(Spacer(1, 10))
-          outputFile.write("<div class=\"contents\">\n")
-          imageFileName = packageName + "/" + fileNamePrefix + ".png"
-          outputFile.write("<img id=\"img%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
-                     % (routineSuffix,
-                        urllib.quote(imageFileName),
-                        header,
-                        fileNamePrefix))
-          if self._generatePDFBundle:
-            self.__writeImageToPDF__(imageFileName, pdfSection)
+        # Don't use os.path.join
+        imageFileName = packageName + "/" + fileNamePrefix + ".png"
+        try:
           # append the content of map outputFile
           with open(fileName, 'r') as cmapFile:
+            if not isDependency:
+              outputFile.write(self.legend)
+              if self._generatePDFBundle:
+                  self.__writePDFLegends__(pdfSection)
+                  pdfSection.append(Spacer(1, 10))
+            outputFile.write("<div class=\"contents\">\n")
+            outputFile.write("<img id=\"img%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
+                       % (routineSuffix,
+                          urllib.quote(imageFileName),
+                          header,
+                          fileNamePrefix))
+            if self._generatePDFBundle:
+              self.__writeImageToPDF__(imageFileName, pdfSection)
             for line in cmapFile:
                 outputFile.write(line)
+        except:
+          pass
         self.__writeRoutineDepListSection__(routine, data, header, link,
                                             outputFile, pdfSection, isDependency,
                                             classid=classid)
@@ -3445,8 +3465,6 @@ class WebPageGenerator:
 # Method to generate page for platform-dependent generic routine page
 #===============================================================================
     def __generatePlatformDependentGenericRoutinePage__(self, genericRoutine, pdf):
-        assert genericRoutine
-        assert isinstance(genericRoutine, PlatformDependentGenericRoutine)
         # generated the subpage for each platform routines
         platformDepRoutines = genericRoutine.getAllPlatformDepRoutines()
         for routineInfo in platformDepRoutines.itervalues():
@@ -3455,76 +3473,78 @@ class WebPageGenerator:
         indexList = ["Platform Dependent Routines", "Caller Graph", "Caller Routines"]
         routineName = genericRoutine.getName()
         package = genericRoutine.getPackage()
-        outputFile = open(os.path.join(self._outDir,
-                                       getRoutineHtmlFileNameUnquoted(routineName)), 'w')
-        self.__includeHeader__(outputFile)
-        self.generateNavigationBar(outputFile, indexList, printList=indexList)
-        title = "Routine: %s" % routineName
-        self.writeTitleBlock(title, title, package, outputFile, pdf,
-                             accordion=False)
-        self.writeSectionHeader("Platform Dependent Routines", "DepRoutines",
-                                outputFile, pdf)
-        # output the Platform part.
-        tableRowList = []
-        pdfTableRowList = []
-        for routineInfo in platformDepRoutines.itervalues():
-            tableRowList.append([getRoutineHypeLinkByName(routineInfo[0].getName()), routineInfo[1]])
-            pdfTableRowList.append([routineInfo[0].getName(), routineInfo[1]])
-        self.generateRoutineDependencySection(genericRoutine, outputFile, pdf, False)
-        if self._generatePDFBundle:
-            self.__writeGenericTablizedPDFData__(["Routine", "Platform"], tableRowList, pdf)
-        outputFile.write("<br/>\n")
-        self.generateFooterWithNavigationBar(outputFile, indexList)
-        outputFile.close()
+        filename = os.path.join(self._outDir,
+                                  getRoutineHtmlFileNameUnquoted(routineName))
+        with open(filename, 'w') as outputFile:
+            self.__includeHeader__(outputFile)
+            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            title = "Routine: %s" % routineName
+            self.writeTitleBlock(title, title, package, outputFile, pdf,
+                                 accordion=False)
+            self.writeSectionHeader("Platform Dependent Routines", "DepRoutines",
+                                    outputFile, pdf)
+            # output the Platform part.
+            tableRowList = []
+            pdfTableRowList = []
+            for routineInfo in platformDepRoutines.itervalues():
+                tableRowList.append([getRoutineHypeLinkByName(routineInfo[0].getName()), routineInfo[1]])
+                pdfTableRowList.append([routineInfo[0].getName(), routineInfo[1]])
+            self.generateRoutineDependencySection(genericRoutine, outputFile, pdf, False)
+            if self._generatePDFBundle:
+                self.__writeGenericTablizedPDFData__(["Routine", "Platform"], tableRowList, pdf)
+            outputFile.write("<br/>\n")
+            self.generateFooterWithNavigationBar(outputFile, indexList)
 
 #===============================================================================
 # Method to generate all individual Package Components pages
 #===============================================================================
     def __writePackageComponentSourceSection__(self, routine, data, header,
                                                link, outputFile, pdf, classid=""):
-        fileNo = sectionLinkObj[routine.getObjectType()]['number']
+        fileNo = sectionLinkObj[routine.getObjectType()]
         sourcePath = os.path.join(self._outDir,"..",fileNo.replace(".",'_'),fileNo+"-"+routine.getIEN()+".html")
         self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
-        if os.path.exists(sourcePath):
-          file = open(sourcePath, 'r')
-          fileLines = file.readlines()
-          outputFile.write("<div><table>")
-          if self._generatePDFBundle:
-              pdfRow =[]
-              pdfTableData = []
-          outrowString=""
-          inPre = False;
-          for line in fileLines[fileLines.index( '<thead>\n'):]:
-            if line.strip() == "":
-              continue
-            if inPre:
-              outrowString += line
-            if "<pre>" in line:
-              inPre = True
-            elif "</pre>" in line:
+        try:
+          with open(sourcePath, 'r') as file:
+              fileLines = file.readlines()
+              outputFile.write("<div><table>")
               if self._generatePDFBundle:
-                pdfRow[1] += outrowString
+                  pdfRow =[]
+                  pdfTableData = []
               outrowString=""
               inPre = False
-            if self._generatePDFBundle:
-                TDmatch = re.match("<td>(?P<val>.+)(<[/]td>)*", line)
-                DTmatch = re.match("<dt>(?P<val>.+)(<[/]dt>)*", line)
-                if TDmatch:
-                  pdfRow.append(TDmatch.groups()[0])
-                elif DTmatch:
-                  if len(pdfRow) == 1:
-                    pdfRow.append(DTmatch.groups()[0])
-                  else:
-                    pdfRow[1] += "\n\r" + DTmatch.groups()[0]
-            outputFile.write(line.replace('<tr>','<tr class="%s">' % classid).replace('<td>','<td class="IndexValue %s">' % classid).replace('<th>','<th class="indexkey %s">' % classid))
-            if self._generatePDFBundle and "</tr>" in line:
-              pdfTableData.append(pdfRow)
-              pdfRow = []
-          outputFile.write("</div></table>")
-          file.close()
+              # TODO: This is assumes no whitespace. Source file is generated by
+              #       FileManGlobalDataParser
+              #       (DataTableHtml.py --> outputFileEntryTableList()).
+              for line in fileLines[fileLines.index( '<thead>\n'):]:
+                if line.strip() == "":
+                  continue
+                if inPre:
+                  outrowString += line
+                if "<pre>" in line:
+                  inPre = True
+                elif "</pre>" in line:
+                  if self._generatePDFBundle:
+                    pdfRow[1] += outrowString
+                  outrowString=""
+                  inPre = False
+                if self._generatePDFBundle:
+                    TDmatch = re.match("<td>(?P<val>.+)(<[/]td>)*", line)
+                    DTmatch = re.match("<dt>(?P<val>.+)(<[/]dt>)*", line)
+                    if TDmatch:
+                      pdfRow.append(TDmatch.groups()[0])
+                    elif DTmatch:
+                      if len(pdfRow) == 1:
+                        pdfRow.append(DTmatch.groups()[0])
+                      else:
+                        pdfRow[1] += "\n\r" + DTmatch.groups()[0]
+                outputFile.write(line.replace('<tr>','<tr class="%s">' % classid).replace('<td>','<td class="IndexValue %s">' % classid).replace('<th>','<th class="indexkey %s">' % classid))
+                if self._generatePDFBundle and "</tr>" in line:
+                  pdfTableData.append(pdfRow)
+                  pdfRow = []
+              outputFile.write("</div></table>")
           if self._generatePDFBundle:
               self.__writeGenericTablizedPDFData__(["Name", "Value"], pdfTableData, pdf)
-        else:
+        except:
           outputFile.write("<div><p %s>Source Info Missing</p></div>" % classid)
         writeSectionEnd(outputFile)
 
@@ -3665,52 +3685,52 @@ class WebPageGenerator:
             ]
             package = routine.getPackage()
             packageName = package.getName()
-            outputFile = open(os.path.join(self._outDir,getPackageObjHtmlFileName(routine, routine._title)), 'w')
-            if self._generatePDFBundle:
-                pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
-                                           getPackageObjHtmlFileName(routine, routine._title).replace("html","pdf"))
-                self.__setupPDF__()
-                pdf = []
-            else:
-                pdf = None
-            self.__includeHeader__(outputFile)
-            indexList = []
-            idxLst = []
-            for idx, item in enumerate(sectionGenLst):
-              extraarg = item.get('dataarg', [])
-              if item['data'](*extraarg):
-                indexList.append(item['name'])
-                idxLst.append(idx)
-            self.generateNavigationBar(outputFile, indexList,
-                                       printList=indexList)
-            title = routine._title.replace("_"," ") + ": " + routineName
-            self.writeTitleBlock(title, title, package, outputFile, pdf,
-                                 accordion=False)
-            for idx in idxLst:
-              sectionGen = sectionGenLst[idx]
-              data = sectionGen['data'](*sectionGen.get('dataarg',[]))
-              link = sectionGen['name']
-              header = sectionGen.get('header', link)
-              geneargs = sectionGen.get('geneargs',[])
-              classID = sectionGen.get('classid', "")
-              sectionGen['generator'](routine, data, header, link, outputFile, pdf, classid=classID, *geneargs)
-              writeSectionEnd(outputFile)
-              if header == "Local Variables":
-                outputFile.write("</div>\n")
-            self.generateFooterWithNavigationBar(outputFile, indexList)
-            outputFile.close()
+            filename = os.path.join(self._outDir, getPackageObjHtmlFileName(routine, routine._title))
+            with open(filename, 'w') as outputFile:
+                if self._generatePDFBundle:
+                    pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
+                                               getPackageObjHtmlFileName(routine, routine._title).replace("html","pdf"))
+                    self.__setupPDF__()
+                    pdf = []
+                else:
+                    pdf = None
+                self.__includeHeader__(outputFile)
+                indexList = []
+                idxLst = []
+                for idx, item in enumerate(sectionGenLst):
+                  extraarg = item.get('dataarg', [])
+                  if item['data'](*extraarg):
+                    indexList.append(item['name'])
+                    idxLst.append(idx)
+                self.generateNavigationBar(outputFile, indexList,
+                                           printList=indexList)
+                title = routine._title.replace("_"," ") + ": " + routineName
+                self.writeTitleBlock(title, title, package, outputFile, pdf,
+                                     accordion=False)
+                for idx in idxLst:
+                  sectionGen = sectionGenLst[idx]
+                  data = sectionGen['data'](*sectionGen.get('dataarg',[]))
+                  link = sectionGen['name']
+                  header = sectionGen.get('header', link)
+                  geneargs = sectionGen.get('geneargs',[])
+                  classID = sectionGen.get('classid', "")
+                  sectionGen['generator'](routine, data, header, link, outputFile, pdf, classid=classID, *geneargs)
+                  writeSectionEnd(outputFile)
+                  if header == "Local Variables":
+                    outputFile.write("</div>\n")
+                self.generateFooterWithNavigationBar(outputFile, indexList)
 
             if self._generatePDFBundle:
                 self.__writePDFFile__(pdf, pdfFileName)
 
     def generatePackageInformationPages(self):
         for keyVal in sectionLinkObj.keys():
-          logger.info("Start generating all individual "+keyVal+"......")
+          logger.info("Start generating all individual %s......" % keyVal)
           for package in self._allPackages.itervalues():
             for routine in package.getAllPackageComponents(keyVal).itervalues():
               routine._title = keyVal
               self.__generatePackageComponentPage__(routine)
-          logger.info("End of generating all individual "+keyVal+"......")
+          logger.info("End of generating all individual %s......", keyVal)
 
     def generatePackageComponentIndexPage(self, keyVal, outputFile):
         outputFile.write('<div class="componentList" style="display: none;" id=%s>' % keyVal)
@@ -3747,7 +3767,7 @@ $( document ).ready(function() {
 </script>
             """)
             self._writeIndexTitleBlock("Package Component", outputFile)
-            outputFile.write(PCLegend)
+            outputFile.write(PC_LEGEND)
             outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
             allObjects = sorted(sectionLinkObj.keys())
             outputFile.write("<select id='componentSelector'>")
@@ -3813,7 +3833,6 @@ def run(args):
                                   args.pdfOutDir,
                                   args.MRepositDir,
                                   doxDir,
-                                  args.includeSource,
                                   args.rtnJson,
                                   args.filesJson,
                                   args.pdf)
@@ -3827,9 +3846,6 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-po', '--pdfOutDir', required=True,
                         help='Output PDF directory')
-    parser.add_argument('-is', '--includeSource', required=False,
-                        default=False, action='store_true',
-                        help='generate routine source code page?')
     parser.add_argument('-rj','--rtnJson', required=True,
                         help='routine reference in VistA data file in JSON format')
     parser.add_argument('-icr','--icrJsonFile', required=True,
@@ -3850,5 +3866,6 @@ if __name__ == '__main__':
 
     initLogging(result.logFileDir, DEFAULT_OUTPUT_LOG_FILE_NAME)
     logger.debug(result)
+
 
     run(result)

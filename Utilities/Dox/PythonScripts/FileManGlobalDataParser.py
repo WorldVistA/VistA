@@ -27,15 +27,14 @@ from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
 from UtilityFunctions import getDOXURL, getViViaNURL
 from LogManager import initLogging, logger
+from FileManDateTimeUtil import fmDtToPyDt
+from PatchOrderGenerator import PatchOrderGenerator
+import glob
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
-
-from FileManDateTimeUtil import fmDtToPyDt
-from PatchOrderGenerator import PatchOrderGenerator
-import glob
 
 """ These are used to capture install entries that don't use the
 package prefix as their install name or have odd capitalization
@@ -77,8 +76,12 @@ INSTALL_RENAME_DICT = {"Kernel Public Domain" : "Kernel",
                           }
 
 
-regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>"
+REGEX_RTN_CODE = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>"
                          "([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+ZWR_FILE_REGEX = re.compile("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$")
+PACKAGE_CHANGE_REGEX = re.compile("\*+")
+PACKAGE_NAME_VAL_REGEX = re.compile("(?P<packageName>[A-Z./ \&\-\']+) (?P<packageVal>[.0-9]+)")
+
 def getMumpsRoutine(mumpsCode):
   """
     For a given mumpsCode, parse the routine and tag information
@@ -87,7 +90,7 @@ def getMumpsRoutine(mumpsCode):
   """
   pos = 0
   endpos = 0
-  for result in regexRtnCode.finditer(mumpsCode):
+  for result in REGEX_RTN_CODE.finditer(mumpsCode):
     if result:
       routine = result.group('rtn')
       if routine:
@@ -278,7 +281,7 @@ class FileManGlobalDataParser(object):
         outFiles['0'] = {'name': 'Schema File',
                          'path': os.path.normpath(os.path.abspath(file))}
         continue
-      result = re.search("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$", fileName)
+      result = ZWR_FILE_REGEX.search(fileName)
       if result:
         if result.groups()[1]:
           logger.info("Ignore file %s" % fileName)
@@ -544,10 +547,10 @@ class FileManGlobalDataParser(object):
             installItem['numFiles'] = len(installEntry.fields['14'].value.dataEntries)
           # Checks for the absence of asterisks which usually denotes a package change, also make it more specific to
           # eliminate the multibuilds that are being marked as package changes
-          testMatch = re.search("\*+",installEntry.name)
+          testMatch = PACKAGE_CHANGE_REGEX.search(installEntry.name)
           if testMatch is None:
             # Assume a package switch name will be just a package name and a version
-            capture = re.match("(?P<packageName>[A-Z./ \&\-\']+) (?P<packageVal>[.0-9]+)",installEntry.name)
+            capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
             if capture:
                   checkPackage = self._findInstallPackage(packageList, capture.groups()[0],False)
                   if (not (checkPackage == "Unknown") or (len(capture.groups()[0]) <= 4 )):

@@ -23,13 +23,6 @@ import urllib
 import re
 import json
 
-DOX_URL = None
-VIV_URL = None
-FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-if SCRIPTS_DIR not in sys.path:
-  sys.path.append(SCRIPTS_DIR)
-
 from ZWRGlobalParser import getKeys
 from json import JSONEncoder
 from CrossReference import FileManField
@@ -44,6 +37,16 @@ from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 from LogManager import logger
+
+DOX_URL = None
+VIV_URL = None
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
+if SCRIPTS_DIR not in sys.path:
+  sys.path.append(SCRIPTS_DIR)
+
+ZZSERVER_SUBMENU_REGEX = re.compile("19\^[9]+")
+
 
 class OSEHRAEncoder(JSONEncoder):
   def default(self, o):
@@ -566,7 +569,7 @@ class FileManDataToHtml(object):
         childDict['name'] = synonym + item.fields['1'].value
         childDict['option'] = item.name
       # ZZSERVER submenus have a name of "19^99999*.  Prevent them from having a clickable link.
-      childDict['hasLink'] = False if re.search("19\^[9]+",item.name) else True
+      childDict['hasLink'] = False if ZZSERVER_SUBMENU_REGEX.search(item.name) else True
       if '3' in item.fields:
         childDict['lock'] = item.fields['3'].value
       if '4' in item.fields:

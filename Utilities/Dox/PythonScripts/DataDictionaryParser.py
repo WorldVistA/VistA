@@ -35,6 +35,15 @@ from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedIte
 
 from LogManager import logger
 
+NAME_LOC_TYPE_REGEX = re.compile("(?P<Name>^[^ ].*) +(?P<Loc>[^ ]*;[^ ]*) +(?P<Type>[^ ]+.*$)")
+NAME_LOC_REGEX = re.compile("(?P<Name>^[^ ].*) +(?P<Loc>[^ ]*;[^ ]*$)")
+NAME_TYPE_REGEX = re.compile("(?P<Name>^[^ ].*)  +(?P<Type>[^ ]+.*$)")
+POINTER_TO_REGEX = re.compile("^POINTER TO .* \(#(?P<File>[.0-9]+)\)")
+UNDEFINED_POINTER = re.compile("POINTER[ *]+ TO AN UNDEFINED FILE")
+SUBFILE_REGEX = re.compile("Multiple #(?P<File>[.0-9]+)")
+FILE_REGEX = re.compile("^ +(?P<File>[0-9\.]+) +")
+POINTED_TO_BY_VALUE_REGEX = re.compile("field \(#(?P<fieldNo>[0-9.]+)\) (of the .*? sub-field \(#(?P<subFieldNo>[0-9.]+)\))?.*of the (?P<Name>.*) File \(#(?P<FileNo>[0-9.]+)\)$")
+
 class IDDSectionParser:
     def __init__(self):
         pass
@@ -63,20 +72,15 @@ class DescriptionSectionParser(IDDSectionParser):
                 self._curLine = ""
         else:
             self._curLine += " " + line.strip()
+
 #===============================================================================
 # A class to parse Field # section in Data Dictionary schema log file output
 #===============================================================================
 class FileManFieldSectionParser(IDDSectionParser):
-    NAME_LOC_TYPE_REGEX = re.compile("(?P<Name>^[^ ].*) +(?P<Loc>[^ ]*;[^ ]*) +(?P<Type>[^ ]+.*$)")
-    NAME_LOC_REGEX = re.compile("(?P<Name>^[^ ].*) +(?P<Loc>[^ ]*;[^ ]*$)")
-    NAME_TYPE_REGEX = re.compile("(?P<Name>^[^ ].*)  +(?P<Type>[^ ]+.*$)")
-    POINTER_TO_REGEX = re.compile("^POINTER TO .* \(#(?P<File>[.0-9]+)\)")
-    UNDEFINED_POINTER = re.compile("POINTER[ *]+ TO AN UNDEFINED FILE")
-    SUBFILE_REGEX = re.compile("Multiple #(?P<File>[.0-9]+)")
     DEFAULT_VALUE_INDENT = 32
     DEFAULT_NAME_INDENT = 14
     MAXIMIUM_TYPE_START_INDEX = 50
-    totalFieldNotes = set() # for debugging purpose
+
     #Dictionary
     StringTypeMappingDict = {"COMPUTED":FileManField.FIELD_TYPE_COMPUTED,
                              "BOOLEAN COMPUTED":FileManField.FIELD_TYPE_COMPUTED,
@@ -146,6 +150,7 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._curFile = None
         self._field = None
         self._isSubFile = False
+
     def onSectionStart(self, line, section, Global, CrossReference):
         self._lines = []
         result = DataDictionaryListFileLogParser.FILEMAN_FIELD_START.search(line)
@@ -171,7 +176,7 @@ class FileManFieldSectionParser(IDDSectionParser):
                 fieldNo = line[line.find(",")+1:defaultIdentLevel]
                 floatValue = float(fieldNo)
         restOfLine = line[line.find("," + fieldNo) + len(fieldNo)+1:].strip()
-        result = self.NAME_LOC_TYPE_REGEX.search(restOfLine)
+        result = NAME_LOC_TYPE_REGEX.search(restOfLine)
         fName, fType, fLocation = None, None, None
         if result:
             fName = result.group('Name').strip()
@@ -183,7 +188,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             # handle three cases, 1. no location info 2. no type info 3. Both
             if restOfLine.find(";") != -1: # missing type info
                 logger.warn("Missing Type information [%s]" % line)
-                result = self.NAME_LOC_REGEX.search(restOfLine)
+                result = NAME_LOC_REGEX.search(restOfLine)
                 if result:
                     fName = result.group('Name').strip()
                     fLocation = result.group('Loc').strip()
@@ -191,7 +196,7 @@ class FileManFieldSectionParser(IDDSectionParser):
                     logger.error("Could not parse [%s]" % restOfLine)
                     return
             else: # missing location, assume at least two space seperate name and type
-                result = self.NAME_TYPE_REGEX.search(restOfLine)
+                result = NAME_TYPE_REGEX.search(restOfLine)
                 if result:
                     fName = result.group('Name').strip()
                     fType = result.group('Type').strip()
@@ -221,10 +226,12 @@ class FileManFieldSectionParser(IDDSectionParser):
         # this is to find out how many subfileds in the schema file
         #self.__findTotalSubFileds__()
         self.__resetVar__()
+
     def parseLine(self, line, Global, CrossReference):
         if not self._lines:
             self._lines=[]
         self._lines.append(line)
+
     def __parseFieldDetails__(self):
         if not self._lines or len(self._lines) <= 0:
             return
@@ -239,8 +246,9 @@ class FileManFieldSectionParser(IDDSectionParser):
                         self._field.addProp(curCaption, curValues)
                     curCaption = caption
                     curValues = []
-                    if result.group('Value'):
-                        curValues.append(result.group('Value').strip())
+                    value = result.group('Value')
+                    if value:
+                        curValues.append(value.strip())
                     else:
                         curValues.append("")
                     found = True
@@ -259,9 +267,8 @@ class FileManFieldSectionParser(IDDSectionParser):
             result = re.search("^ {%d,%d}(?P<Name>[A-Z][^:]+):" % (self.DEFAULT_NAME_INDENT, indentValue), line)
             if result:
                 name = result.group('Name')
-                if name.startswith("SCREEN ON FILE "): name = "SCREEN ON FILE"
-                if name not in self.totalFieldNotes:
-                    self.totalFieldNotes.add(name)
+                if name.startswith("SCREEN ON FILE "):
+                    name = "SCREEN ON FILE"
 
     def __getDefaultIndentLevel__(self, pointedToSubFile, startIndent):
         retValue = startIndent
@@ -270,6 +277,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             startFile = startFile.getParentFile()
             retValue += 2
         return retValue
+
     def __parsingSubFileDescription__(self):
         description = None
         index = 0
@@ -321,7 +329,7 @@ class FileManFieldSectionParser(IDDSectionParser):
                 if re.search("^ {%d,}$" % indentValue, self._lines[index]):
                     break
                 else:
-                    result = re.search("^ +(?P<File>[0-9\.]+) +", self._lines[index])
+                    result = FILE_REGEX.search(self._lines[index])
                     if result:
                         filePointedTo = CrossReference.getGlobalByFileNo(result.group('File'))
                         if not filePointedTo:
@@ -331,29 +339,32 @@ class FileManFieldSectionParser(IDDSectionParser):
                         if not fileList: fileList = []
                         fileList.append(filePointedTo)
         self._field.setPointedToFiles(fileList)
+
     def __createFieldByType__(self, fieldNo, fType, fName, fLocation, line, Global, CrossReference):
-        result = self.UNDEFINED_POINTER.search(fType)
+        result = UNDEFINED_POINTER.search(fType)
         if result:
             self._field = FileManFieldFactory.createField(fieldNo, fName,
                                FileManField.FIELD_TYPE_FILE_POINTER, fLocation)
             return
-        result = self.POINTER_TO_REGEX.search(fType)
+        result = POINTER_TO_REGEX.search(fType)
         if result:
             fileNo = result.group('File')
             filePointedTo = CrossReference.getGlobalByFileNo(fileNo)
             self._field = FileManFieldFactory.createField(fieldNo, fName,
-                               FileManField.FIELD_TYPE_FILE_POINTER, fLocation)
+                                                          FileManField.FIELD_TYPE_FILE_POINTER,
+                                                          fLocation)
             if not filePointedTo:
                 logger.error("Could not find file pointed to [%s], [%s], line:[%s]" % (fileNo, self._curFile, line))
             else:
                 self._field.setPointedToFile(filePointedTo)
             return
         # deal with file pointer to subFiles
-        result = self.SUBFILE_REGEX.search(fType)
+        result = SUBFILE_REGEX.search(fType)
         if result:
             # create a field for sub file type
             self._field = FileManFieldFactory.createField(fieldNo, fName,
-                                FileManField.FIELD_TYPE_SUBFILE_POINTER, fLocation)
+                                                          FileManField.FIELD_TYPE_SUBFILE_POINTER,
+                                                          fLocation)
             fileNo = result.group('File')
             subFile = Global.getSubFileByFileNo(fileNo)
             if not subFile: # this is a new subfile
@@ -397,13 +408,13 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._isSubFile = False
         self._curFile = None
         self._field = None
+
 #===============================================================================
 # A class to parse Pointed T By section in Data Dictionary schema log file output
 #===============================================================================
 class PointedToBySectionParser(IDDSectionParser):
-    # Useful constants
-    POINTED_TO_BY_VALUE = re.compile("field \(#(?P<fieldNo>[0-9.]+)\) (of the .*? sub-field \(#(?P<subFieldNo>[0-9.]+)\))?.*of the (?P<Name>.*) File \(#(?P<FileNo>[0-9.]+)\)$")
     POINTED_TO_BY_VALUE_INDEX = 15
+
     def __init__(self):
         self._global = None
         self._section = IDataDictionaryListFileLogParser.POINTED_TO_BY_SECTION
@@ -420,7 +431,7 @@ class PointedToBySectionParser(IDDSectionParser):
         if len(strippedLine) == 0:
             return
         value = strippedLine[self.POINTED_TO_BY_VALUE_INDEX:]
-        result = self.POINTED_TO_BY_VALUE.search(value)
+        result = POINTED_TO_BY_VALUE_REGEX.search(value)
         if result:
             fileManNo = result.group("FileNo")
             fieldNo = result.group('fieldNo')
@@ -506,6 +517,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         self._sectionParserDict = dict()
         self.__initSectionHeaderRegEx__()
         self.__initSectionParser__()
+
     def __initSectionHeaderRegEx__(self):
         self._sectionHeaderRegEx[self.DESCRIPTION_START] = self.DESCRIPTION_SECTION
         self._sectionHeaderRegEx[self.COMPILED_CROSS_REFERENCE_ROUTINE_START] = self.COMPILED_CROSS_REFERENCE_ROUTINE_SECTION
@@ -535,6 +547,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         self._sectionHeaderRegEx[self.PRINT_TEMPLATE_START] = self.PRINT_TEMPLATE_SECTION
         self._sectionHeaderRegEx[self.SORT_TEMPLATE_START] = self.SORT_TEMPLATE_SECTION
         self._sectionHeaderRegEx[self.FORM_BLOCKS_START] = self.FORM_BLOCKS_SECTION
+
     def __initSectionParser__(self):
         self._sectionParserDict[self.POINTED_TO_BY_SECTION] = PointedToBySectionParser()
         self._sectionParserDict[self.DESCRIPTION_SECTION] = DescriptionSectionParser()
