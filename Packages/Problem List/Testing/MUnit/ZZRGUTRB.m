@@ -108,19 +108,6 @@ GETCOMM ;
  D:CNT>1 CHKEQ^%ut("deletecomment",ORY(2),"Invalid comment returned")
  Q
  ;
-DUP ;
- N PRB,TRM,TXT,PROB1,PROB2,FLDS,DA,GMPIFN3
- D NISTPRBS^ZZRGUTCM(.PROB1,.PROB2)
- S TRM=5007062
- S TXT=$P(PROB2(.05),U,2)
- D ORARY^ZZRGUTCM(.PROB2,.FLDS)
- D ADDSAVE^ORQQPL1(.GMPIFN3,GMPDFN,GMPROV,GMPVAMC,.FLDS)
- D CHKTF^%ut(GMPIFN3>0,"DUP: save failed ("_$G(GMPIFN3(0))_")")
- S:GMPIFN3>0 GMPIFN3=$O(^AUPNPROB("%"),-1)
- D DUP^ORQQPL1(.PRB,GMPDFN,TRM,TXT)
- D CHKEQ^%ut(GMPIFN2_"^I",$G(PRB),"DUP: Wrong problem found.")
- Q
- ;
 INITUSER ;
  N RET,SITE
  D INITUSER^ORQQPL1(.RET,DUZ)
@@ -140,22 +127,6 @@ INITUSER ;
  D CHKEQ^%ut("1",$G(RET(12)),"INITUSER: Should comments display?")
  Q
  ;
-EDIT ;
- N RET,DTA,I
- D EDLOAD^ORQQPL1(.RET,GMPIFN1,GMPROV,GMPVAMC)
- D CHKEDLD^ZZRGUTCM(.RET)
- D SETARY^ZZRGUTCM(.RET,.DTA)
- S I=0
- F  S I=$O(DTA(I)) Q:(I="")!($P(DTA(I),"=")="GMPFLD(1.14)")
- S $P(DTA(I),"=",2)="""C^CHRONIC"""
- D EDSAVE^ORQQPL1(.RET,GMPIFN1,GMPROV,GMPVAMC,1,.DTA)
- K RET
- D EDLOAD^ORQQPL1(.RET,GMPIFN1,GMPROV,GMPVAMC)
- S I=0
- F  S I=$O(RET(I)) Q:(I="")!($P(RET(I),$C(254),2)="1.14")
- D CHKEQ^%ut("C^CHRONIC",$P($G(RET(I)),$C(254),3),"EDSAVE^ORQQPL1: Save failed")
- Q
- ;
 HISTORY ;
  N RET,EXTDT,DUZN,GMPNAME,CNT,I
  D HIST^ORQQPL2(.RET,GMPIFN2)
@@ -172,50 +143,6 @@ HISTORY ;
  D CHKEQ^%ut(4,CNT,"HIST^ORQQPL2: Only "_CNT_" out of 4 history entries match")
  Q
  ;
-LIST ;
- N RET,RET1,RET2,RET3,GMPIFN3
- D LIST^ORQQPL3(.RET,GMPDFN,"A")
- D CHKEQ^%ut(2,$G(RET(0)),"LIST^ORQQPL3: # of active entries")
- S GMPIFN3=+$O(^AUPNPROB("AC",+GMPDFN,""),-1)
- S RET1=GMPIFN1_"^A^Chronic Airway Obstruction, Not Elsewhere Classified"
- S RET2=GMPIFN3_"^A^Essential Hypertension"
- D CHKTF^%ut($G(RET(1))[RET1,"LIST^ORQQPL1: First entry")
- D CHKTF^%ut($G(RET(1))["^496.^3100404^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^A^1^^NSC^","LIST^ORQQPL: ENTRY 1A")
- D CHKTF^%ut($G(RET(2))[RET2,"LIST^ORQQPL1: Second entry")
- D CHKTF^%ut($G(RET(2))["^401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL1: Second entryA")
- ;
- K RET
- D LIST^ORQQPL3(.RET,GMPDFN,"I")
- S RET3=GMPIFN2_"^I^Essential Hypertension"
- D CHKEQ^%ut(1,$G(RET(0)),"LIST^ORQQPL3: # of inactive entries")
- D CHKTF^%ut($G(RET(1))[RET3,"LIST^ORQQPL3: Inactive entry")
- D CHKTF^%ut($G(RET(1))["401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL3: Inactive entry")
- Q
- ;
-USERLST ;
- N ULST
- S ULST=$$GETUSLST^ORQQPL3(DUZ,"")
- D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Current user's list")
- S ULST=$$GETUSLST^ORQQPL3(0,"")
- D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Invalid user and clinic") ;Returns user's list because GETUSLST ignores ORDUZ
- S ULST=$$GETUSLST^ORQQPL3("",GMPCLIN)
- D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Clinic's list")
- Q
- ;
-CTG ;
- N RET,RET1
- D CAT^ORQQPL3(.RET,DUZ,+GMPCLIN)
- S RET1=CATIEN_"^DIABETES"_DT_"^1"
- D CHKEQ^%ut(RET1,$G(RET(1)),"CAT^ORQQPL3: User's category list")
- Q
- ;
-PROB ;
- N RET,RET1
- D PROB^ORQQPL3(.RET,+CATIEN)
- S RET1="33572^Diabetes Insipidus" ;^253.5^875~^ICD9("
- D CHKTF^%ut($G(RET(1))[RET1,"PROB^ORQQPL3: List details")
- Q
- ;
 XTENT ;
  ;;ADDSAVE
  ;;INACT
@@ -224,13 +151,7 @@ XTENT ;
  ;;REPLACE
  ;;VERIFY
  ;;GETCOMM
- ;;DUP
- ;;LIST
- ;;EDIT
  ;;HISTORY
  ;;INITUSER
- ;;USERLST
- ;;CTG
- ;;PROB
  Q
  ;
