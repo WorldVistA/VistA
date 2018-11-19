@@ -1,5 +1,5 @@
 ﻿.. figure::
-   http://code.osehra.org/content/named/SHA1/50394d75-OSEHRAllianceLogo.png
+   http://code.osehra.org/content/named/SHA1/b0c675f8-OSEHRALogo_2018_Tiny.png
    :align: center
 
 **************************
