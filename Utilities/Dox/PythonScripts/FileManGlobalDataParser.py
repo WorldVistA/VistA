@@ -40,6 +40,7 @@ if SCRIPTS_DIR not in sys.path:
 package prefix as their install name or have odd capitalization
 after being passed through the title function
 """
+INSTALL_DEPENDENCY_DICT = {"MultiBuild": {} }
 INSTALL_PACKAGE_FIX = {"VA FILEMAN 22.0": "VA FileMan",
                        "DIETETICS 5.5" : "Dietetics"
                       }
@@ -387,6 +388,8 @@ class FileManGlobalDataParser(object):
       self._updateHL7Reference()
     if '779.2' in self._glbData:
       self._updateHLOReference()
+    if '9.6' in self._glbData:
+      self._updateBuildReference()
     if '9.7' in self._glbData:
       self._updateInstallReference()
 
@@ -396,6 +399,23 @@ class FileManGlobalDataParser(object):
       with open(os.path.join(self.outdir, "Routine-Ref.json"), 'w') as output:
         logger.info("Generate File: %s" % output.name)
         json.dump(self._rtnRefDict, output)
+
+  def _updateBuildReference(self):
+    build = self._glbData['9.6']
+    for ien in sorted(build.dataEntries.keys(),key=lambda x: float(x)):
+      if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT.keys():
+        INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name] = {"ien":ien, "multi": -1}
+      if '10' in build.dataEntries[ien].fields:
+        INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['multi']= 1
+        multibuilds = build.dataEntries[ien].fields['10'].value.dataEntries
+        INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['builds']= []
+        for data in multibuilds:
+          INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['builds'].append(multibuilds[data].fields['.01'].value)
+      if '11' in build.dataEntries[ien].fields:
+        INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['builds']= []
+        reqBuilds = build.dataEntries[ien].fields['11'].value.dataEntries
+        for data in reqBuilds:
+          INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['builds'].append(reqBuilds[data].fields['.01'].value)
 
   def _updateHLOReference(self):
     hlo = self._glbData['779.2']
@@ -515,8 +535,6 @@ class FileManGlobalDataParser(object):
     output = os.path.join(self.outdir, "install_information.json")
     installJSONData = {}
     packageList = self._crossRef.getAllPackages()
-    patchOrderGen = PatchOrderGenerator()
-    patchOrderGen.analyzeVistAPatchDir(self.patchDir +"/Packages")
     with open(output, 'w') as installDataOut:
       for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
         installItem = {}
@@ -531,12 +549,20 @@ class FileManGlobalDataParser(object):
           installItem['label'] = installEntry.name
           installItem['value'] = installEntry.name
           installItem['parent']= package
-          if installEntry.name in patchOrderGen._kidsDepBuildDict:
+          if installEntry.name in INSTALL_DEPENDENCY_DICT:
+            installItem['BUILD_ien'] = INSTALL_DEPENDENCY_DICT[installEntry.name]["ien"]
             installchildren = []
-            for child in patchOrderGen._kidsDepBuildDict[installEntry.name]:
-              childPackage = self._findInstallPackage(packageList,child)
-              installchildren.append({"name": child, "package": childPackage});
-            installItem['children'] = installchildren
+            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+              installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
+            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+                for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
+                  childPackage = self._findInstallPackage(packageList,child)
+                  childEntry = {"name": child, "package": childPackage}
+                  if child in INSTALL_DEPENDENCY_DICT.keys():
+                      if 'multi' in INSTALL_DEPENDENCY_DICT[child].keys():
+                        childEntry['multi'] = INSTALL_DEPENDENCY_DICT[child]['multi']
+                  installchildren.append(childEntry);
+                installItem['children'] = installchildren
           if '11' in installEntry.fields:
             installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
           if '1' in installEntry.fields:
@@ -556,15 +582,6 @@ class FileManGlobalDataParser(object):
                   if (not (checkPackage == "Unknown") or (len(capture.groups()[0]) <= 4 )):
                     installItem['packageSwitch'] = True
           installJSONData[package][installEntry.name] = installItem
-      installJSONData['MultiBuild']={}
-      for multiBuildFile in patchOrderGen._multiBuildDict:
-        multibuildItem = {}
-        multibuildItem['name']=os.path.basename(multiBuildFile);
-        multibuildItem['children'] = []
-        for installName in patchOrderGen._multiBuildDict[multiBuildFile]:
-          package = self._findInstallPackage(packageList, installName)
-          multibuildItem['children'].append({"name": installName, "package": package});
-        installJSONData['MultiBuild'][os.path.basename(multiBuildFile)] = multibuildItem
       logger.info("About to dump data into %s" % output)
       json.dump(installJSONData,installDataOut)
 
