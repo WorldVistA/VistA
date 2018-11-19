@@ -1,0 +1,418 @@
+
+=============================================================================
+Run Date: SEP 26, 2018                     Designation: MAG*3*197
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #160                      Status: Released
+                  Compliance Date: OCT 29, 2018
+=============================================================================
+
+
+Subject: VIXImage Viewer 2.01
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ MAG*3.0*185 KIDS must be installed before installing MAG*3.0*197 KIDS 
+ Subject: VIX IMAGE VIEWER VERSION 2.01 
+ Category: ROUTINE 
+ Description: 
+ --------------- 
+ This document describes MAG*3.0*197, the VIX Image Viewer 2.01 patch. 
+ This patch adds enhancements to the Zero footprint HTML 5 based image 
+ viewer. Major changes for this patch are summarized below.  
+ MAG*3.0*197 contains the following new features:
+   
+ - Support for MUSE EKGs
+ - HTML 5 optimizations
+ - SQL optimization
+ - Updates to SQL Express 2017 (Addresses issues found with Nessus scan)
+ - Cache image files from remote locations only
+ - Ability to copy an image to the clipboard
+ - Fortify remediations
+ - Newly supported SOP classes in MAG*3.0*197, as indicated in this 
+         document
+  
+ Patch Components:  
+ ----------------------- 
+ This patch includes the following files:  
+ File Name...............................   Description....................
+ MAG3_0P197.KID                             KIDS (Kernel Installation &
+                                            Distribution System) package
+                                            to be installed on the VistA
+                                            System. 
+ MAG3_0P197_VIX_Setup.msi                   Installation file for the VIX
+                                            software. 
+ MAG3_0P197_Patch_Description_Document.pdf  This document
+ MAG3_0P197_VIX_Installation_Guide.pdf      VIX Installation Guide for this
+                                            patch. 
+ MAG3_0P197_User_Guide.pdf                  User Guide for this patch. 
+ SQLExpress_x64-14.0.1000.169.zip           2017 SQL Express zip file
+ MAG3_0P197_README.txt                      MAG*3.0*197 Readme
+ SSMS-Setup-ENU.exe                         SQL Server Management Studio 17.4
+     
+ This patch installs the following versions:  
+ Apache Tomcat: 8.0.45 
+ Java: 1.80_121 
+ 2017 SQL Express (.zip file)  
+   
+ Documentation:  
+ This document provides an overview, explains the changes, and outlines the 
+ installation for this patch.  
+    
+ Files & Fields Associated:  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted 
+ -----------------------    -------------------       -------------------- 
+   
+ There are no files or fields associated with this patch.  
+   
+ Forms Associated:  
+ Form Name                   File #           New/Modified/Deleted
+ --------------              --------         --------------------   
+ There are no forms associated with this patch.  
+   
+ Mail Groups Associated:  
+ Mail Group Name             New/Modified/Deleted  
+ ----------------------      --------------------------- 
+   
+ There are no mail groups associated with this patch.  
+   
+ Options Associated:  
+ Option Name                Type                        New/Modified/Deleted
+ -----------------          ------                      --------------------  
+ There are no options associated with this patch.  
+   
+ Protocols Associated:  
+ Protocol Name                        New/Modified/Deleted 
+ ------------------                   ---------------------------   
+ There are no protocols associated with this patch.  
+   
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ There are no security keys associated with this patch. 
+   
+ Templates Associated: 
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+   
+ There are no templates associated with this patch. 
+   
+ Additional Information: 
+ There is no additional information associated with this patch. 
+   
+ New Service Requests (NSRs): 
+ ------------------------------------- 
+ This project is initiated by Requirement BR 8.0 of the Health Information 
+ Exchange Viewer BRD #01-02-03-05-08-003. 
+   
+ Patient Safety Issues (PSIs): 
+ ---------------------------------- 
+ There are no patient safety issues associated with this patch.  
+   
+ Supported SOP Classes 
+ --------------------------- 
+ The following table includes the newly supported SOP classes in 
+ MAG*3.0*197. The HDIG validates the objects associated with these classes 
+ and stores them in the new database that then can be viewed via the new 
+ Image Viewer.
+   
+ Each SOP class must be enabled individually to be stored. The patch is 
+ distributed with all SOP classes disabled as the default. To enable 
+ the storage of new SOP classes, please enter a ServiceNow ticket, or contact
+ the National Help Desk to request assistance from the CLIN3 Support Team. 
+   
+ NOTE: Newly Supported SOP Classes are not currently viewable with Clinical
+       Display or VistA RAD.  
+   
+ SOP Classes Newly Supported in MAG*3.0*197: 
+ SOP Class Name                 SOP Class UID
+ ----------------              -----------------------------
+ Mammography CAD SR            1.2.840.10008.5.1.4.1.1.88.50
+ 3D Angiographic Image Storage 1.2.840.10008.5.1.4.1.1.13.1.1
+ MR Image Storage              1.2.840.10008.5.1.4.1.1.4
+    
+ Defect Tracking System Ticket(s) & Overview: 
+ ------------------------------------------- 
+ 1.  Rational Defect 538648: Confirmed Image Compression NOT
+ working at all for the Image Viewer. 
+    
+ Problem:  
+ ------------ 
+ The Image Viewer was configured and tested for both compressed
+ and uncompressed images and the results were compared side by side.  
+ Compression configuration for Image Viewer was confirmed NOT working.  
+ Image files are the same size no matter if compression is enabled or 
+ disabled. The image files are of full size in both cases.  
+   
+ Resolution:  
+ -------------- 
+ Compressed file sizes confirmed image compression is working. 
+   
+ 2. Rational Defect 711568:  Several sites that have installed P185 on their VIX 
+ are reporting that Importer III stopped working. 
+   
+ Problem:
+ ----------
+ The Importer III is failing after installing P185 on VIX. 
+   
+ Resolution:
+ -------------
+ The 197 KIDS file will be updated to include registration of the RPC 
+ 'MAGVA GET ALL NETWORK LOCATIONS', also instructions provided in 
+ MAG3_0P197_README.TXT to address the Network Location entries w/o a Place field 
+ value. 
+  
+ Test Sites:  
+ ------------- 
+ Heartland East, MO 
+ Las Vegas, NV 
+ Hampton, VA 
+ Pittsburgh, PA 
+   
+ Software and Documentation Retrieval Instructions:  
+ -------------------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the 
+ new functionality introduced by this patch are available.  
+   
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also elect
+ to retrieve files directly from a specific server.  
+   
+ Sites may retrieve the software and/or documentation directly using Secure File
+ Transfer Protocol (SFTP) from the ANONYMOUS software directory at the following 
+ OI Field Offices:  
+   
+ Hines              domain.ext 
+ Salt Lake City     domain.ext 
+   
+   
+ Documentation can also be found on the VA Software Documentation Library at: 
+ http://www4.domain.ext/vdl/ 
+   
+ Title                        File Name                           FTP Mode 
+ ----------------------------------------------------------------------------------
+ MAG*3.0*197 KIDS         MAG3_0P197.KID                       ASCII 
+ MAG*3.0*197 VIX Setup    MAG3_0P197_VIX_Setup.msi             Binary 
+ MAG*3.0*197 Patch        MAG3_0P197_Patch Description         Binary 
+ Description                            _Document.pdf 
+ MAG*3.0*197 VIX          MAG3_0P197_VIX_Installation_         Binary 
+ Installation Guide                    Guide.pdf      
+ 2017 SQL Express ZIP     SQLExpress_x64-14.0.1000.169.zip     Binary 
+ File 
+ MAG*3.0*197 Readme       MAG3_0P197_README.txt                Binary 
+ *SQL Server Management   SSMS-Setup-ENU.exe                   Binary 
+ Studio 17.4    
+   
+ * Download of this file is optional. SQL Server Management Studio is intended
+ for debugging purposes if needed. Sites may wish to defer downloading this very
+ large file until actual need for it in the future.  
+     
+ Patch Installation:  
+ Pre/Post Installation Overview: 
+ --------------------------------------- 
+ See MAG*3.0*197 VIX Installation Guide for additional information.  
+   
+ Pre-Installation Instructions:  
+ ---------------------------------- 
+ Verify that the patches listed in the Associated Patches section of this
+ document have been previously installed.  
+   
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  
+   
+ There are no Menu Options to disable.  
+   
+ Installation Prerequisites 
+ Before installing this patch, you will need to download the  
+ MAG*3.0*197 files from the Anonymous SFTP site to a local storage location.  
+ Verify that required patches and any optional patches that support desired or
+ needed features have been installed. For a summary of associated patches, see
+ the Associated Patches section of this document.  
+   
+ Installation Instructions:  
+ ----------------------------- 
+ This patch contains a VIX installation and a KIDS installation. Installation
+ instructions for the VIX install of this patch can be found in the VIX 
+ Installation Guide. The KIDS build is to be installed on the VistA System
+ and the VIX client executable (.msi) should be installed on the VIX server. 
+ This patch must be installed by the compliance date to conform with 
+ VHA Directive 2001-023.  
+   
+ NOTE: All sites running VistA Imaging 3.0 must install both the KIDS 
+ portion as well as the VIX portion of this patch.  
+   
+ This patch may be loaded while VistA Imaging System is active.  
+ All Sites must install the KIDS build of this patch. The MAG*3.0*197 KIDS 
+ can be loaded while the VistA Imaging System is active. Installing the KIDS
+ will take less than one minute. After the KIDS portion of this patch is 
+ installed, sites will need to update their VIX. For detailed information, 
+ refer to the VIX installation Guide.  
+   
+ KIDS Installation 
+ All sites must install the KIDS portion of this patch.  
+   
+ Installing the KIDS Package 
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN]. 
+   
+ 2. Run the Installation option [XPD INSTALLATION MENU].  
+   
+ 3. Load the KIDS file by performing the following steps.  
+ a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load the 
+     KIDS distribution 
+ b. When prompted, enter the path and file name (MAG3_0P197.KID) of the
+     MAG*3.0*197 KIDS file that you downloaded from the Imaging FTP server.
+ c. When prompted to continue with the load, enter YES. A Distribution OK! 
+     message will be displayed when the load is complete.  
+   
+ 4. After loading the KIDS file, use the following options if you need to 
+ verify the contents of the patch and to back up any affected routines.  
+ a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this option
+     if you want to ensure the integrity of the routines in the patch. 
+ b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - Run 
+     this option if you want to view all changes that will be made when 
+  the patch is installed. All components (routines, options, and so on) 
+  in the patch will be compared. 
+ c. Backup a Transport Global [XPD BACKUP] - Run this option if you want to 
+     create a backup message of any routines exported with the patch. The option
+  will NOT back up any of the other changes. 
+   
+ 5. After performing the load and any optional verification steps, perform 
+ the following steps to install the KIDS file.  
+ a. Run the Install Package(s) option [XPD INSTALL BUILD] 
+ b. When prompted for the install name, enter MAG*3.0*197 
+ c. Answer NO to the following prompts: 
+     i. Want KIDS to INHIBIT LOGONs during the install? no//NO 
+     ii. Want to DISABLE Scheduled Options, Menu Options, and Protocols? //NO 
+   
+ 6. When installation has finished, an Install Complete message will be displayed.  
+   
+ Sample KIDS Installation  
+ This example shows the output when the KIDS file is installed for the first time.
+ If you have already installed the patch and are installing the KIDS file in 
+ a namespace on which it has previously been installed, your output may be different.  
+   
+ Select installation Option: 1  Load a Distribution 
+ Enter a Host File: /home/MAG3_0P197.KID 
+   
+ KIDS Distribution saved on Feb 23, 2018@16:30:37 
+ Comment: VistA Imaging V3.0 Patch 197 - Image Viewer v2.01 
+ 2/23/2018 04:30PM 
+   
+ This Distribution contains Transport Global for the following Package(s): 
+    MAG*3.0*197  
+   
+ Distribution OK!  
+   
+ Want to Continue with Load? YES// 
+ Loading Distribution ...
+   
+ MAG*3.0*197 
+ Use INSTALL NAME: MAG*3.0*197 to install this Distribution.  
+   
+ 1 Load a Distribution 
+ 2 Verify Checksums in Transport Global  
+ 3 Print Transport Global  
+ 4 Compare Transport Global to Current System  
+ 5 Backup a Transport Global  
+ 6 Install Package(s) 
+     Restart Install of Package(s) 
+     Unload a Distribution   
+   
+ Select Installation Option: install Package(s)  
+   
+ Select INSTALL NAME: MAG*3.0*197 3/14/18@10:27:39 
+     VistA Imaging v3.0 Patch 197 - Image Viewer v2.01 02/23/2018 04:30 
+   
+ This Distribution was loaded on Mar 14, 2018@10:27:39 with header of 
+    VistA Imaging v3.0 Patch 197  - Image Viewer v2.01 - 02/23/2018 
+ 04:30PM ;Created on Feb 23.2018@16:30:37 
+    It consisted of the following Install(s): 
+     MAG*3.0*197 
+ Checking Install for Package MAG*3.0*197 
+   
+ Install Questions for MAG*3.0*197   
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+   
+ Enter the Device you want to print the Install messages.  
+ You can queue the install by enter a 'Q' at the device prompt.  
+ Enter a '^' to abort the install.  
+   
+ DEVICE HOME// ;P-Other;999999  TELNET PORT 
+   
+ Install Started for MAG*3.0*197: 
+       Mar 14, 2018@10:27:58 
+    
+ Build Distribution Date: Feb 23, 2018 
+   
+ Installing Routines: 
+     Mar 14, 2018@10:27:58 
+   
+ Running Pre-Install Routine: PRE^MAGIP197. 
+   
+ Running Post-Install Routine: POS^MAGIP197. 
+   
+ Post Install Mail Message: Mar 14, 2018@10:27:58 
+   
+  Updating Routine file...... 
+   
+  Updating KIDS files...... 
+   
+  MAG*3.0*197 Installed 
+       Mar 14, 2018@10:27:58 
+   
+   
+ Post-Installation Instructions 
+ ------------------------------ 
+ See MAG*3.0*197 VIX Installation Guide  
+   
+ Back Out or Uninstall MAG*3.0*197 
+ ------------------------------------ 
+ If it is necessary to uninstall the MAG*3.0*197 VIX service, use the Uninstall 
+ option from Windows Control Panel to uninstall "VIX Service Installation 
+ Wizard 30.197.9.6101". Then install the previous version of VIX which was 
+ included in MAG*3.0*170 or 177. To back out the VIX and replace it with prior 
+ version, please see the MAG*3.0*197 VIX Installation Guide for more detail.  
+   
+ However, if it necessary to uninstall the MAG*3.0*197 VistA Kids, you need to 
+ select the "Kernel Installation & Distribution system" menu option, 
+ "Backup a Transport Global" (see KIDS installation section above, step 4), before
+ you install the new patch.  
+   
+ Administrators will need to use the PackMan function INSTALL/CHECK MESSAGE. 
+ Check your VistA MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function by these steps.  
+   
+ New Routine Information 
+ ----------------------- 
+ Routine Name   Old Checksum   New Checksum 
+ MAGIP197       N/A            4967967 
+ MAGNAN03       67374239       68058654 
+ MAGNVQ06       45830251       45900223 
+   
+ Routine MAGIP197 is an installation routine that is automatically deleted
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2017
+Completed By:                               Date Completed: SEP 26, 2018
+Released By :                               Date Released : SEP 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

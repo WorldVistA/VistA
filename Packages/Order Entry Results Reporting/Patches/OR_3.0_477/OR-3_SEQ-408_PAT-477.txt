@@ -1,0 +1,531 @@
+$TXT Created by                CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 07/20/18 at 16:21
+=============================================================================
+Run Date: SEP 24, 2018                     Designation: OR*3*477
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #408                      Status: Released
+                  Compliance Date: OCT 25, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*286    <<= must be installed BEFORE `OR*3*477'
+
+Subject: ORDERABLE ITEM FILE NAME FIELD LENGTH / ROOM-BED PRINT PARAMETERS
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses two (2) issues:
+  
+ 1.  The PHARMACY ORDERABLE ITEM file (#50.7) NAME field (#.01) is 
+     not always synced with ORDERABLE ITEM file (#101.43) NAME field
+     (#.01).
+ 2.  Room-Bed default printer parameters are ignored during the ordering 
+     process.
+  
+ Files & Fields Associated:
+ --------------------------
+                           
+ File Name (Number)           Field Name (Number)    New/Modified/Deleted
+ ------------------          -------------------     --------------------
+ ORDERABLE ITEMS (#101.43)   NAME (#.01)             Modified
+  
+ Parameter Definitions Associated:
+  
+ Parameter                             New/Modified/Deleted
+ ------------------------------        --------------------
+ ORPF CHART COPY PRINT DEVICE          Modified
+ ORPF LABEL PRINT DEVICE               Modified
+ ORPF REQUISITION PRINT DEVICE         Modified
+ ORPF WORK COPY PRINT DEVICE           Modified
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I7370452FY16 - PHARMACY ORDERABLE ITEMS / ORDERABLE ITEMS
+    I10581756FY16 (d) 
+  
+    Problem: 
+    --------
+    The PHARMACY ORDERABLE ITEMS file (#50.7) NAME field (#.01) is  
+    not always synced with the ORDERABLE ITEMS file (#101.43) NAME
+    field (#.01).
+  
+    The NAME field (#.01) in the ORDERABLE ITEMS file (#101.43) is  
+    a combination of the NAME field (#.01), max length 40, in the 
+    PHARMACY ORDERABLE ITEMS file (#50.7) and the NAME field (#.01), 
+    max length 30, in the DOSAGE FORM file (#50.606).  There is a  
+    space between the two fields and a space at the end of the field.
+    This could produce a NAME that is 72 characters in length.  
+  
+    The problem is that the maximum length for the NAME field (#.01)
+    in the ORDERABLE ITEMS file (#101.43) is 63 characters.  This  
+    can result in truncation, as well as failed update "pushes" when  
+    the combination of the Pharmacy Orderable Items Name and Dosage
+    Form Name is greater than 63 characters.
+  
+    The maximum field length for the NAME field (#.01) in the ORDERABLE
+    ITEMS file (#101.43) needs to be increased to 72 characters.
+  
+    Resolution:
+    -----------
+    A Data Dictionary update has been made to the NAME Field (#.01) in 
+    the ORDERABLE ITEM file (#101.43) to increase the maximum field 
+    length limit to 72 characters.
+  
+ 2. I17614498FY18 - ROOM-BED PRINT DEVICE PARAMETER ISSUES
+    
+    Problem:
+    --------
+  
+    If a default label printer is defined for a Room-Bed using any of the
+    parameters "ORPF CHART COPY PRINT DEVICE ", "ORPF LABEL PRINT DEVICE",
+    "ORPF REQUISITION PRINT DEVICE" and "ORPF WORK COPY PRINT DEVICE", the
+    parameter setting is ignored during the CPRS ordering process.
+  
+    Resolution:
+    -----------
+  
+    Modify routine ORWD2 to determine whether a parameter definition 
+    exists for the patient's Room-Bed. The "device" parameter descriptions 
+    were updated to clarify that the location(s) for each Room-Bed must
+    have the corresponding "prompt" parameter defined in order for the
+    Room-Bed device to display.  The CPRS Technical Manual was also updated
+    to include that clarification.
+  
+    Before install versions of Parameter Definition descriptions:
+    -------------------------------------------------------------
+  
+    NAME: ORPF CHART COPY PRINT DEVICE   DISPLAY TEXT: Chart Copy Print 
+                                                       Device
+    VALUE TERM: CHART COPY PRINT DEVICE   VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing chart copies.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the chart copy
+    should be printed.  If the field PROMPT FOR CHART COPY is 0 or 2, this
+    printer is automatically used to print the report.  If the field PROMPT
+    FOR CHART COPY is 1, the user is asked for device with the entry in
+    this field as a default.
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    NAME: ORPF LABEL PRINT DEVICE           DISPLAY TEXT: Label Print 
+                                                          Device
+    VALUE TERM: LABEL PRINT DEVICE        VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing labels.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the label should
+    be printed.  If the field PROMPT FOR LABELS is 0 or 2, this printer
+    is automatically used to print the labels.  If the field PROMPT FOR
+    LABELS is 1, the user is asked for device with the entry in this field
+    as a default.
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    NAME: ORPF REQUISITION PRINT DEVICE     DISPLAY TEXT: Requisition Print
+                                                          Device
+    VALUE TERM: REQUISITION PRINT DEVICE  VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing requisitions.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the requisition
+    should be printed.  If the field PROMPT FOR REQUISITIONS is 0 or 2,
+    this printer is automatically used to print the requisitions.  If the
+    field PROMPT FOR REQUISITIONS is 1, the user is asked for device with
+    the entry in this field as a default.
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED 
+  
+    NAME: ORPF WORK COPY PRINT DEVICE       DISPLAY TEXT: Work Copy Print 
+                                                          Device
+    VALUE TERM: WORK COPY PRINT DEVICE    VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing work copies.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the work copy
+    should be printed.  If the field PROMPT FOR WORK COPY is 0 or 2, this
+    printer is automatically used to print the report.  If the field
+    PROMPT FOR WORK COPY is 1, the user is asked for device with
+    the entry in this field as a default.
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    After install versions of Parameter Definition descriptions:
+    ------------------------------------------------------------
+    NAME: ORPF CHART COPY PRINT DEVICE      DISPLAY TEXT: Chart Copy Print 
+                                                          Device
+    VALUE TERM: CHART COPY PRINT DEVICE   VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing chart copies.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the chart copy
+    should be printed.  If the field PROMPT FOR CHART COPY (i.e. the 
+    parameter "ORPF PROMPT FOR CHART COPY") is 0 or 2, this printer is
+    automatically used to print the report.  If the field PROMPT FOR CHART
+    COPY is 1, the user is asked for device with the entry in this field as
+    a default.
+   
+    Room-Bed Notes:
+   
+    (1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR CHART
+        COPY parameter for the corresponding location(s) must be defined.
+        The prompt parameter cannot be defined at the Room-Bed level.
+    (2) If Room-Bed "device" configurations are needed, the parameter must
+        be edited directly through the CPRS Manager Menu / CPRS
+        Configuration (IRM) / General Parameter Tools menu. Room-Bed fields
+        are not available under the Print/Report Parameters menu.
+  
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    NAME: ORPF LABEL PRINT DEVICE           DISPLAY TEXT: Label Print
+                                                          Device
+    VALUE TERM: LABEL PRINT DEVICE        VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing labels.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the label should
+    be printed.  If the field PROMPT FOR LABELS (i.e. the parameter "ORPF 
+    PROMPT FOR LABELS") is 0 or 2, this printer is automatically used to 
+    print the labels. If the field PROMPT FOR LABELS is 1, the user is
+    asked for device with the entry in this field as a default.
+   
+    Room-Bed Notes:
+   
+    (1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR LABELS
+        parameter for the corresponding location(s) must be defined. The
+        prompt parameter cannot be defined at the Room-Bed level.
+    (2) If Room-Bed "device" configurations are needed, the parameter must 
+        be edited directly through the CPRS Manager Menu / CPRS 
+        Configuration (IRM) / General Parameter Tools menu. Room-Bed fields
+        are not available under the Print/Report Parameters menu.
+  
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    NAME: ORPF REQUISITION PRINT DEVICE     DISPLAY TEXT: Requisition Print
+                                                          Device
+    VALUE TERM: REQUISITION PRINT DEVICE  VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing requisitions.
+    DESCRIPTION:   
+  
+    This is the printer on the ward/clinic/other where the requisition
+    should be printed.  If the field PROMPT FOR REQUISITIONS (i.e. the 
+    parameter "ORPF PROMPT FOR REQUISITIONS") is 0 or 2, this printer is
+    automatically used to print the requisitions.  If the field PROMPT FOR
+    REQUISITIONS is 1, the user is asked for device with the entry in this
+    field as a default.
+   
+    Room-Bed Notes:
+   
+    (1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR
+        REQUISITIONS parameter for the corresponding location(s) must be 
+        defined. The prompt parameter cannot be defined at the Room-Bed 
+        level.
+    (2) If Room-Bed "device" configurations are needed, the parameter must 
+        be edited directly through the CPRS Manager Menu / CPRS 
+        Configuration (IRM) / General Parameter Tools menu. Room-Bed fields
+        are not available under the Print/Report Parameters menu.
+  
+        PRECEDENCE: 2                           ENTITY FILE: LOCATION
+        PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+    NAME: ORPF WORK COPY PRINT DEVICE       DISPLAY TEXT: Work Copy Print
+                                                          Device
+    VALUE TERM: WORK COPY PRINT DEVICE    VALUE DATA TYPE: pointer
+    VALUE DOMAIN: 3.5
+    VALUE HELP: Enter name of printer for printing work copies.
+    DESCRIPTION:   
+    This is the printer on the ward/clinic/other where the work copy
+    should be printed.  If the field PROMPT FOR WORK COPY (i.e. the 
+    parameter "ORPF PROMPT FOR WORK COPY") is 0 or 2, this printer is
+    automatically used to print the report.  If the field PROMPT FOR WORK 
+    COPY is 1, the user is asked for device with the entry in this field as
+    a default.
+   
+    Room-Bed Notes:
+   
+    (1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR WORK
+        COPY parameter for the corresponding location(s) must be defined.
+        The prompt parameter cannot be defined at the Room-Bed level.
+    (2) If Room-Bed "device" configurations are needed, the parameter must 
+        be edited directly through the CPRS Manager Menu / CPRS 
+        Configuration (IRM) / General Parameter Tools menu. Room-Bed fields
+        are not available under the Print/Report Parameters menu.
+  
+    PRECEDENCE: 2                           ENTITY FILE: LOCATION
+    PRECEDENCE: 1                           ENTITY FILE: ROOM-BED
+  
+  
+ Test Sites:
+ -----------
+ Philadelphia, PA
+ Palo Alto, CA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ The CPRS Technical Manual: GUI Version has been updated in the section
+ titled "Setting Up Orders Printing" and in Appendix E for the updated 
+ parameter definition descriptions
+  
+ The documentation changes introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines: domain.ext 
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ -----------------------------------------------------------------------
+ CPRS Technical Manual: GUI Version      cprsguitm.pdf         Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu. From this menu, you may elect to use the
+    following options.  When prompted for the INSTALL NAME enter
+    the patch # (ex. OR*3.0*477):
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch.  It will not 
+       backup any other changes such as DDs or templates.
+  
+    b. Compare Transport Global to Current System - This option will 
+       allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch:  
+       routines, DDs, templates, etc.
+  
+    c. Verify Checksums in Transport Global - This option will allow 
+       you to ensure the integrity of the routines that are in the
+       transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', respond NO. 
+  
+ 8. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ Installation Verification:
+ --------------------------
+ Compare the checksums of the routines to the "After" checksums listed in 
+ the patch description.
+  
+ FileMan can be used to validate successful installation of the Data
+ Dictionary change:
+  
+ (Note: Maximum length after installation should be 72 characters.)
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 8  DATA DICTIONARY UTILITIES
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: ORDERABLE ITEMS//   ([#] entries)
+       GO TO What File: ORDERABLE ITEMS//   ([#] entries)
+       Select SUB-FILE: 
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// NAME  
+ Go to field: NAME  
+ DEVICE: ;;99999  UCX/TELNET    Right Margin: 80// 
+ STANDARD DATA DICTIONARY #101.43--ORDERABLE ITEMS FILE [date]PAGE 1
+ STORED IN ^ORD(101.43, ([#] ENTRIES) SITE: [site]   UCI: [uci] 
+  
+ DATA           NAME     GLOBAL     DATA
+ ELEMENT        TITLE    LOCATION   TYPE
+ -------------------------------------------------------------------
+  
+ 101.43,.01     NAME     0;1        FREE TEXT (Required)
+  
+   INPUT TRANSFORM:  K:$L(X)>72!($L(X)<2)!($$CHKNAM^ORUTL(X,";")) X
+    MAXIMUM LENGTH:  72
+       LAST EDITED:  [date of installation] 
+       HELP-PROMPT:  Answer must be 2-72 characters in length 
+                     and cannot contain a semicolon (;). 
+       DESCRIPTION:  This is the name of this item that will
+                     be used for displaying and searching.  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ The routines can be restored to the previous versions by installing from
+ the backup MailMan message that was sent before installation.
+  
+ Since this patch contains a Data Dictionary change, FileMan can be used to
+ back out the patch:
+  
+ 1.) FileMan Edit
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 4  MODIFY FILE ATTRIBUTES
+ Do you want to use the screen-mode version? YES// n  NO
+  
+ Modify what File: ORDERABLE ITEMS//       ([#] entries)
+  
+ Select FIELD: NAME  
+ LABEL: NAME// 
+ TITLE: 
+ AUDIT: 
+ AUDIT CONDITION: 
+ READ ACCESS (OPTIONAL): 
+ DELETE ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+ This is the name of this item that will be used for displaying 
+ and searching.
+   Edit? NO// 
+  
+ TECHNICAL DESCRIPTION:
+   Edit? NO// 
+  
+ DATA TYPE OF NAME: FREE TEXT   (FIELD DEFINITION IS NOT EDITABLE)
+ MAXIMUM LENGTH OF 'NAME':  (1-250): 72// 63  <==Change needed here
+ IS NAME ENTRY MANDATORY (Y/N): Y//  
+ ....
+ 'HELP'-PROMPT: Answer must be 2-72 characters in length and cannot
+ contain a semicolon (;).  
+ Replace 72 With 63  Replace                  <==Change needed here
+    Answer must be 2-63 characters in length and cannot contain a 
+    semicolon (;).
+ XECUTABLE 'HELP': 
+  
+ SINCE YOU HAVE CHANGED THE FIELD DEFINITION,
+ EXISTING 'NAME' DATA WILL NOW BE CHECKED FOR INCONSISTENCIES
+ OK? Yes//   (Yes)
+  
+ DEVICE: HOME// ;;99999  
+  
+ VERIFY FIELDS REPORT
+ ORDERABLE ITEMS FILE (#101.43)           [date] [time]    PAGE 1
+ ----------------------------------------------------------------
+ --FIELD #.01 NAME--  (FREE TEXT)
+ (CHECKING CROSS-REFERENCE)
+  
+ NO PROBLEMS
+  
+ Select FIELD: 
+  
+ 2.) To modify the input transform code, copy the following and
+     paste at the programmer prompt:
+  
+ S ORX="NAME^RFXJ63^^0;1^K:$L(X)>63!($L(X)<2)!($$CHKNAM^ORUTL(X,"";"")) X"
+ S ^DD(101.43,.01,0)=ORX
+ K ORX
+  
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ Checksums of the routines can be compared to the "Before" values listed 
+ in the patch description.
+  
+ Since this patch contains a Data Dictionary change, a FileMan display can
+ be used to validate execution of a roll back:
+ (Note: Maximum length after roll back should be 63 characters.)
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 8  DATA DICTIONARY UTILITIES
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: ORDERABLE ITEMS//   ([#] entries)
+       GO TO What File: ORDERABLE ITEMS//   ([#] entries)
+       Select SUB-FILE: 
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// NAME  
+ Go to field: NAME  
+ DEVICE: ;;99999  UCX/TELNET    Right Margin: 80// 
+ STANDARD DATA DICTIONARY #101.43-ORDERABLE ITEMS FILE [date] PAGE 1
+ STORED IN ^ORD(101.43, ([#] ENTRIES) SITE: [site]   UCI: [uci] 
+  
+ DATA            NAME     GLOBAL      DATA
+ ELEMENT         TITLE    LOCATION    TYPE
+ --------------------------------------------------------------
+  
+ 101.43,.01      NAME     0;1         FREE TEXT (Required)
+  
+   INPUT TRANSFORM:  K:$L(X)>63!($L(X)<2)!($$CHKNAM^ORUTL(X,";")) X
+    MAXIMUM LENGTH:  63
+       LAST EDITED:  [date of back out] 
+       HELP-PROMPT:  Answer must be 2-63 characters in length 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWD2
+    Before: B33111344   After: B41689390  **10,215,286,477**
+ 
+Routine list of preceding patches: 286
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 18, 2018
+Completed By:                               Date Completed: SEP 13, 2018
+Released By :                               Date Released : SEP 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

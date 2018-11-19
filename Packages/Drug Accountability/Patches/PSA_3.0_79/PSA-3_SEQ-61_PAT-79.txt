@@ -1,0 +1,178 @@
+
+=============================================================================
+Run Date: AUG 22, 2018                     Designation: PSA*3*79
+Package : PSA - DRUG ACCOUNTABILITY           Priority: Mandatory
+Version : 3        SEQ #61                      Status: Released
+                  Compliance Date: SEP 21, 2018
+=============================================================================
+
+
+Subject: DAU 3.79
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch will update the log in procedure to the Drug Accountability 
+ Upload (DAU) Graphical User Interface (GUI) to use Two Factor
+ Authentication (2FA) which will require the use of a Personal Identity
+ Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the DAU GUI to Delphi version XE8 to implement the new Remote Procedure 
+ Call (RPC) Broker allowing compliance.
+  
+ PSA*3*79 does not update any VistA routines but does update the DAU GUI.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Philadelphia VAMC
+ Northern California Martinez VHCS  
+  
+  
+ ASSOCIATED TICKET:
+ ==================
+ N/A 
+  
+  
+ OVERVIEW:
+ =========
+  
+   Problem: 
+   --------
+   The Department of Veterans Affairs Cybersecurity Task Force has been 
+   tasked by the Chief Information Officer (CIO) and the Inspector General
+   (IG) to address identified material weaknesses. This task force has
+   mandated that all internal, user facing VA applications become Two
+   Factor Authentication (2FA) compliant by April 30, 2017.
+  
+   In order to be compliant, applications are required to authenticate
+   users via Personal Identity Verification (PIV) cards.
+  
+  
+   Note: Usernames and password will no longer be permitted for employees
+         and contractors to access VA applications.
+  
+  
+   Resolution:
+   -----------
+   The DAU program has been upgraded to Delphi XE8 to allow access 
+   to the latest version of the RPC Broker, implementing 2FA.
+  
+   The DAU Deployment, Installation, Back-Out and Rollback Guide v1.1 
+   and DAU User Manual have been updated.
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ================================================== 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+ ---------------     --------------------       ------------------
+ Hines               domain.ext        ANONYMOUS.SOFTWARE
+ Salt Lake City      domain.ext          ANONYMOUS.SOFTWARE
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+        
+ Filename                     Description
+ ========                     ===========
+ PSA_MCKESSON_UPLOAD_P79.ZIP  Contents below
+ PSA_MCKESSON_UPLOAD.exe      DAU Executable (the file properties will
+                                               report version 3.0.79)
+  
+ PSA_3_P79_UM.pdf             DAU User Manual
+  
+ PSA_3_P79_IG.pdf             Drug Accountability Upload Deployment,
+                              Installation, Back-Out, and Rollback Guide v
+                              1.1
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+       transfer mode.  The size of the file (PSA_MCKESSON_UPLOAD.exe), 
+       once downloaded, will be 2,991 KB
+  
+   
+    ================== CLIENT Installation Instructions ==================
+    Save and extract the PSA_MCKESSON_UPLOAD_P79.ZIP file to an 
+    accessible folder location. Check to make sure the size is correct  
+    PSA_MCKESSON_UPLOAD.exe will be 2,991 (KB)  KB.
+  
+    To install the application:
+  
+    ***Note for backup purposes, users can retrieve a backup copy of the 
+    previous PSA_MCKESSON_UPLOAD.exe Version 3.0.0.41 from the FTP site 
+    that is labeled PSA_MCKESSON_UPLOAD_41.ZIP ***
+  
+    Create a shortcut of the PSA_MCKESSON_UPLOAD.EXE Version 3.0.79. 
+    Add specific server and port information to the target properties. For
+    example:  C:\%folder
+    location%\PSA_MCKESSON_UPLOAD_79\PSA_MCKESSON_UPLOAD.exe
+    s=xxx-sup.vha.domain.ext p=190xxx
+  
+    Place a copy of the shortcut on the user's desktop.
+  
+    When this version of PSA_MCKESSON_UPLOAD.exe is launched it will show
+    the version as "3.0.79" on the about menu option. 
+  
+ Routine Information:
+ ====================
+  
+ No routines included.
+  
+ Backout Procedure:
+  ==================
+  Back-out will be done only with the concurrence and participation of the 
+  development team, the support team and appropriate VA site/region
+  personnel. The decision to back-out or rollback software will be a joint 
+  decision between these groups.
+  
+  If needed coordinate with the appropriate IT support, local and regional,
+  to schedule a time to restore the PSA_MCKESSON_UPLOAD 3.0.0.41
+  previous GUI executable.
+  
+ Back-Out Procedure:
+  
+  Back-out pertains to a return to the last known good operational state of
+  the software and appropriate settings. Retrieve the copy of the old 
+  PSA_MCKESSON_UPLOAD Version 3.0.0.41 and restore the version to the C:\.
+  
+ Back-Out Strategy:
+  
+  A decision to back out could be made during Site Mirror Testing, during 
+  Site Production Testing, or after National Release to the field (VAMCs). 
+  The best strategy decision is dependent on the stage of testing during 
+  which the decision is made.
+  
+  If a decision to back out is made after national release and within the 
+  designated support period a notification will be disseminated through the
+  NPM in Forum and will list all the necessary steps.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 02, 2018
+Completed By:                               Date Completed: AUG 22, 2018
+Released By :                               Date Released : AUG 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

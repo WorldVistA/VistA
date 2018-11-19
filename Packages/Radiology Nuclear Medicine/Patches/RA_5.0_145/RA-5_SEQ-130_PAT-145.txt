@@ -1,0 +1,137 @@
+$TXT Created by                     CLN1G2.AAC.DOMAIN.EXT  (KIDS) on Thursday, 06/07/18 at 11:49
+=============================================================================
+Run Date: AUG 28, 2018                     Designation: RA*5*145
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #130                      Status: Released
+                  Compliance Date: SEP 28, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*75     <<= must be installed BEFORE `RA*5*145'
+
+Subject: MULTIPLE ERRORS IN ERROR TRAP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+ 1. R18589477FY18 - Multiple errors in error trap. <UNDEFINED>EN1+63^RAO7RO
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. R18589477FY18 - Multiple errors in error trap. <UNDEFINED>EN1+63^RAO7RO
+  
+ Problem:
+ -------
+ An imaging order is placed in CPRS GUI. When the order is signed, it sends
+ the order to the Radiology package by a HL7 message. If the HL7 message 
+ does not have an Imaging Location included in the OBR message segment, an
+ Imaging Location will be located by using the location defined for the
+ Imaging Type. If this location has a REQUEST PRINTER NAME defined, but has
+ never had RAD/NUC MED DIVISION defined, the routine RAO7RO will generate a
+ system error.
+  
+ Resolution:
+ ----------
+ The data for the IMAGING LOCATIONS (#79.1) file is stored in the ^RA(79.1,
+ global. The RAD/NUC MED DIVISION (#25) field is stored in the global node:
+ ^RA(79.1,D0,"DIV"). A variable is set to the data value stored in this
+ node. If this node does not exist, the setting of the variable will fail,
+ generating the hard system error. Routine RAO7RO will be modified to
+ determine if this node exist. If it does not exist, the variable will set
+ to a null value.
+  
+ Test Sites:
+ ----------
+ Beckley VA Medical Center, WV
+ Martinsburg VA Medical Center, WV
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the patch #
+    RA*5.0*145:
+          
+      a. Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will 
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow 
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', respond NO.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAO7RO
+    Before: B38944723   After: B39607884  **1,2,13,15,75,145**
+ 
+Routine list of preceding patches: 75
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2018
+Completed By:                               Date Completed: AUG 22, 2018
+Released By :                               Date Released : AUG 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

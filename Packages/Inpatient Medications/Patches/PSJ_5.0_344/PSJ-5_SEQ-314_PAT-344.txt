@@ -1,0 +1,271 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/03/18 at 07:16
+=============================================================================
+Run Date: SEP 13, 2018                     Designation: PSJ*5*344
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #314                      Status: Released
+                  Compliance Date: OCT 13, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*347   <<= must be installed BEFORE `PSJ*5*344'
+
+Subject: UNDEFINED w/COPY/ Clinic IMO Order /Missing Actions
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses four (4) issues:
+  
+  
+ 1.  An UNDEFINED error is happening when copying a UD order, the user
+     changes the Orderable Item but "^" out at the dispense drug selection
+     all the way back to the profile, then picks another order to copy.
+  
+ 2.  A Clinic IMO order could not be processed.  The site was turned off
+     for Inpatient Meds between the time the order was placed and when it
+     was processed by pharmacy.
+  
+ 3.  A Non-Verified IV order was modified, a non-starred field, then another 
+     non-starred field was selected but the user cancelled the action (^).  
+     After the user Accepted the change the screen displayed the patient 
+     profile and not the accepted order to be verified.  (PSPO 3653)
+  
+ 4.  The verify action is not enabled immediately when a user accepts a 
+     unit dose order after verifying an iv fluid order for a different 
+     patient. Instead, the profile screen is displayed without the verify
+     action.
+  
+ New Service Requests NSR(s):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3653 - I18315561FY18
+  
+ Defect Tracking System Ticket(s) and Overview:
+ ----------------------------------------------
+  
+ 1. I17172905FY18 - UNDEFINED 101+3^PSGOE9 *%
+ 2. R15748857FY17 - Clinic IMO order cannot be processed
+       INC0560383(d)
+ 3. I18315561FY18 - Order actions missing after edit
+       I18526635FY18(d)
+       INC1035563 (d)
+ 4. I18615471FY18(o)- Verify action not enabled
+       I18495966FY18(d)
+       I18463620FY18(d)
+       R18495725FY18(d)
+       INC0794684 (d)
+  
+  
+  
+ 1. Problem:
+ -----------
+ When copying an active UD order and changing the orderable item to
+ an orderable item with multiple dispense drugs, the user "^" out
+ at the Select DISPENSE DRUG(S) for this order all the way back 
+ to the profile screen and selects a different active UD order and
+ proceeds to copy it as they did with the first order.  An undefined
+ error will occur when you attempt to change the orderable item on the
+ second order.
+  
+ This is happening because the variable PSGOROE1 is not getting killed
+ after the first order.
+  
+ Resolution:
+ -----------
+ A modification was made to routine PSJOE in tag NEWSEL to kill the 
+ variable PSGOROE1.
+  
+ 2. Problem: 
+ -----------
+ A Clinic IMO was created for an outpatient.  Before the pharmacist
+ was able to process the pending order the IMO Clinic site was turned
+ off for Inpatient Meds.  When attempting to process the order they 
+ received a screen message "Cannot process an Out-patient Unit Dose 
+ order for..."
+  
+ This situation only happens when the outpatient patient had a prior
+ admission to a VA facility.
+  
+ Resolution:
+ -----------
+ A modification was made to routine PSJOE to allow the processing of
+ The pending order.
+  
+ 3. Problem:
+ -----------
+ (PSPO 3653)
+  
+ A Non-Verified IV order was modified, a non-starred field, then
+ another non-starred field was selected but the user cancelled the 
+ action (^).  After the user accepted the change the screen 
+ displayed the patient profile and not the accepted order to be 
+ verified.
+  
+ Resolution:
+ -----------
+ A modification was made to routine PSJLIACT to allow the display 
+ of the accepted non-verified order so it can be verified.
+  
+ 4. Problem:
+ -----------
+ When a user finishes, accepts and verifies an inpatient order for
+ iv fluids for an inpatient and then in the same ordering session 
+ performs the following sequence for a different patient with a unit 
+ dose order: finishes, edits a field and then accepts the order, the 
+ screen navigates back to the patient profile screen instead of 
+ allowing the user to verify the unit dose order.
+  
+ Resolution:
+ -----------
+ A modification was made to DISACTIO^PSJOE to remove a flag that 
+ identifies an order as an IV fluid order when the current order 
+ being processed is a unit dose order.
+  
+  
+ Test Sites:
+ ----------- 
+ Oklahoma City VAMC
+ Reno VAMC
+      
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+  
+   
+ Patch Installation:
+  
+ Pre/Post Installation Overview:  
+ ------------------------------- 
+ It is not necessary to disable any options to install this patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernal Installtion and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    PSJ*5.0*344
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//", respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//'
+    respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ Installation Verification:
+ ------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJLIACT
+    Before: B59558968   After: B59279356  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257,299,
+                                           281,346,256,347,344**
+Routine Name: PSJOE
+    Before:B107308183   After:B108530036  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252,281,315,256,344**
+ 
+Routine list of preceding patches: 347
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 21, 2017
+Completed By:                               Date Completed: SEP 12, 2018
+Released By :                               Date Released : SEP 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

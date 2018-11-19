@@ -1,0 +1,124 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 06/01/18 at 06:19
+=============================================================================
+Run Date: AUG 13, 2018                     Designation: PSB*3*109
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #88                      Status: Released
+                  Compliance Date: SEP 13, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*109'
+
+Subject: BCMA MISSED MEDICATION REPORT ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC0328665 - Issue with BCMA Missed Medications Report
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC0328665 - Issue with BCMA Missed Medications Report
+       
+ Problem: 
+ --------
+ An issue was discovered with the Barcode Medication Administration (BCMA) 
+ Missed Medications Report for 'odd' (non-standard) schedule orders, e.g.
+ Q18H - ONCE EVERY 18 HOURS. When the report is run for a date range that
+ starts prior to the start date/time of such orders in some cases it will
+ mistakenly include these orders in the report even if the order does not
+ have any missing dose for the date range selected for the report.
+     
+ Resolution:
+ -----------
+ The routine PSBOMM was modified at line tag EN1+49 to prevent it from
+ calculating a dose date/time that is prior to the order start date/time.
+  
+       
+ Test Sites:
+ -----------
+ Upstate NY HCS
+ Sioux Falls VAMC   
+  
+ Installation Instructions:
+ -------------------------- 
+ Barcode Medication Administration (BCMA) users should not be running the
+ Missed Medication Report while this patch is being installed. It should take
+ less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select the
+       Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSB*3.0*109:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', enter No.
+    
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', enter No. 
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMM
+    Before:B187931933   After:B191635764  **26,32,56,52,58,70,76,83,109**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 22, 2018
+Completed By:                               Date Completed: AUG 13, 2018
+Released By :                               Date Released : AUG 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

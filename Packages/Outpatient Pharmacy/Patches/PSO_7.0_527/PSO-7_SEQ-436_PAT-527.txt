@@ -1,0 +1,445 @@
+$TXT Created by                LLOYD at NUMI.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 06/27/18 at 13:37
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: PSO*7*527
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #436                      Status: Released
+                  Compliance Date: SEP 29, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*467   <<= must be installed BEFORE `PSO*7*527'
+                    (v)PSO*7*520   <<= must be installed BEFORE `PSO*7*527'
+
+Subject: ERX MAINTENANCE PATCH #2
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ ========================================================================
+ Run Date: June 4, 2018                           Designation: PSO*7.0*527
+ Package: OUTPATIENT PHARMACY                     Priority: MANDATORY
+ Version: 7                                       Status: UNDER DEVELOPMENT
+ ==========================================================================
+                  
+  
+ Subject:  INBOUND ERX V2 MAINTENANCE RELEASE 2
+  
+ Category:  ROUTINE
+            DATA DICTIONARY
+  
+ Description:
+ ------------
+ Veterans' Health Administration (VHA) has requested a maintenance build 
+ be released to remedy the current high priority defects that persist in 
+ the Electronic Prescription(eRx) software. The installation of patch
+ PSO*7.0*527 will resolve performance issues, formatting inconsistencies,
+ as well as improve the overall workflow of the Inbound eRx software.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ ERX EXTERNAL PERSON        FIRST NAME (#.03)             MODIFIED
+ (#52.48)
+                            STREET ADDRESS LINE 1         MODIFIED
+                            (#4.1)
+ ERX HOLDING QUEUE          EXTERNAL PATIENT IDENTIFIER   MODIFIED
+ (#52.49)                   (#.04)
+                            EXTERNAL PROVIDER (#2.1)      MODIFIED    
+ OUTPATIENT SITE (#59)      ERX DEFAULT LOOKBACK DAYS       New
+                            (#10.2)
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Input Templates Associated:
+ ---------------------------
+ Template Name     Type        File Name(Number)     New/Modified/Deleted
+ -------------     ----        -----------------     --------------------
+ PSO SITE         Input        OUTPATIENT SITE (#59) Modified
+                      
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Option Name                          Type               
+ New/Modified/Deleted
+ -----------                          ----               
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ PSO ERX HQ MENU
+ PSO ERX HQ SEARCH
+ PSO ERX HQ SORT
+ PSO ERX HQ SELECT
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Rational Defects:
+ -----------------
+  
+ Defect: 679206
+ --------------
+ The ERX SERVICE REASON CODE "DRU02" in the ERX SERVICE REASON CODES File 
+ (#52.45) is displaying the contents of the BRIEF DESCRIPTION Field (#.02)
+ twice as "208 DRU02 Non-formulary drug/Non-formulary drug"
+  
+ Resolution:
+ -----------
+  
+ The data dictionary has been updated in the ERX SERVICE REASON CODES File 
+ (#52.45) to only display the contents of the BRIEF DESCRIPTION Field 
+ (#.02) of the ERX SERVICE REASON CODE "DRU02" once as "208 DRU02 
+ Non-formulary drug"
+  
+ Defect: 718661
+ --------------
+ The user is currently able to select the hidden action "RR-REFILL 
+ REQUEST" to send an outbound Refill Request, even though there is no 
+ logic that exists in version 2.0 to complete such a request.
+  
+ Resolution:
+ -----------
+ Routine PSOERXX1 has been modified to generate the message "Renewal 
+ Request is not available at this time", if the hidden action "RR" is
+ selected by the user.
+  
+ Defect: 600321
+ --------------
+ In the description of the FIRST NAME (#.03) Field of the ERX EXTERNAL 
+ PERSON (#52.48) File, the word "first" is misspelled as "fist".
+  
+ Resolution:
+ -----------
+ The misspelling of the word "first" has been corrected in the description 
+ of the FIRST NAME (#.03) Field of the ERX EXTERNAL PERSON (#52.48) File.
+  
+ Defect: 617434
+ --------------
+ If a patient's social security number is passed in by the incoming XML 
+ message containing hyphens, it will be displayed in the incorrect format.
+  
+ Resolution:
+ -----------
+ Routine PSOERXP1 has been modified to avoid adding hyphens to the social 
+ security number if the value passed in contains hyphens.
+  
+ Defect 738665:
+ --------------
+ When viewing the Patient Validation Screen, the eRx patient and the Vista 
+ patient display the STATE Field in different formats.
+  
+ Resolution:
+ -----------
+ Routine PSOERXP1 has been modified to ensure the eRx patient and the 
+ Vista patient now display the STATE Field in the correct format.
+  
+ Defect 738675:
+ --------------
+ When an eRx patient who has not been matched is being viewed on the
+ Patient Validation Screen, there is empty space being displayed in the
+ area that is reserved for the Patient Allergies.
+  
+ Resolution:
+ -----------
+ Routine PSOERXP1 has been modified to display the allergy fields on the 
+ Patient Validation Screen in the event the Patient Validation Screen is
+ being viewed on an unmatched patient.
+  
+ Defect 714113:
+ --------------
+ While editing a drug on the Validate Drug screen, a hard error occurs if 
+ a space is entered after a numeric, while being prompted for the specific 
+ fields the user would like to edit.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1A has been modified to prevent the user from entering a 
+ space while editing a drug.
+  
+ Defect 738671:
+ --------------
+ On the Validate Provider screen, empty lines are displayed in the event 
+ the provider does not have a supervisor or agent.
+  
+ Resolution:
+ -----------
+ Routine PSOERXR1 has been modified to display the supervisor and agent 
+ fields on the Validate Provider Screen instead of blank lines.
+  
+ Defect 596368:
+ --------------
+ When editing the provider on the Provider Validation screen, if the user 
+ answers "NO" when prompted to validate the selected provider, the default 
+ selection is "Next Screen".
+  
+ Resolution:
+ -----------
+ Routine PSOERX1A has been modified to make "Edit" the default selection 
+ after the user answers "NO" during the prompt to validate the selected 
+ provider.
+  
+ Defect 693267:
+ --------------
+ Under Prescriber Information on the Print screen, The full values for 
+ NPI, DEA, and State License are not displaying to the user.
+  
+ Resolution:
+ -----------
+ The full values for NPI, DEA, and State license are now being displayed 
+ to the user.
+  
+ Defect 559682:
+ --------------
+ If an invalid selection is entered in the eRx Holding Queue, such as a 
+ number greater than the number of selectable patients, the default
+ selection at the bottom of the screen is displayed as "SI   Select
+ Itemxt Screen// T".
+  
+ Resolution:
+ -----------
+ The column width of the action protocols in the eRx Holding Queue have 
+ been adjusted to correct this spacing issue. The default selection is now 
+ display as "Select Action:Next Screen//".
+  
+ Defect 740852:
+ --------------
+ While editing a patient on the Patient Validation screen, it is possible 
+ for the user to enter a new patient name into Vista.
+  
+ Resolution:
+ -----------
+ Routine PSOERXA1 has been modified to prevent the user from entering a 
+ new patient name into Vista.
+  
+ Defect 746275:
+ --------------
+ There is no eRx status that notifies the user when an eRx has received 
+ all three validations in Validate Patient, Validate Drug, and Validate 
+ Provider.
+  
+ Resolution:
+ -----------
+ A new status titled "W-Wait" has been added to the ERX SERVICE REASON 
+ CODES (#52.45) File. This status will be applied to any eRx that has 
+ received all three validations. Additional functionality has been added 
+ to Routine PSOERXH1 to ensure that if an eRx is removed from a "HOLD" 
+ status and has all three validations, the new "W-WAIT" status will be 
+ applied to the eRx.
+  
+ Defect 721629:
+ --------------
+ Performance and speed issues exist when using the search and sort 
+ functionality in the eRx Holding Queue.
+  
+ Resolution:
+ -----------
+ Additions to an existing option, PSO SITE PARAMTERS, have been made to
+ facilitate the need for faster processing speed in the eRx Holding Queue.
+ This parameter allows the user to select the number of days they would
+ like to look in the past before searching, sorting, or loading the eRx
+ Holding Queue, eliminating needless processing. Two new cross references,
+ "EPAT" and "EPROV", have been added to the ERX HOLDING QUEUE (#52.49)
+ File to aid in quick retrieval of records. A new field has also been added
+ to the OUTPATIENT SITE (#59) File, ERX DEFAULT LOOKBACK DAYS (#10.2),
+ which contains the number of days the user would like to look back before
+ loading the Holding Queue or completing a search or sort.
+  
+ Defect 758991:
+ --------------
+ Patch PSO*7*467 introduced a new field 'DEFAULT ERX CLINIC' (#10) to the 
+ OUTPATIENT SITE file (#59), however users are not able to access and edit
+ this field for their division.
+                               
+ Resolution:
+ -----------
+ Input template [PSO SITE] has been modified to now include the field 
+ DEFAULT ERX CLINIC. Users can now use the option 'Site Parameter
+ Enter/Edit' [PSO SITE PARAMETERS] to edit the default eRx clinic value for
+ their respective division.
+  
+ New Service Requests (NSRs):
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ Problem:
+ -------
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ Meds By Mail
+ Fayetteville, Arkansas
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ ------------------------------------------------------------------------
+ User Manual - Inbound ePrescribing (PSO*7*0*p527)
+                                                                Binary
+                               pso_7_0_p527_um.pdf
+                                                                
+  
+ Implementation Guide - Inbound ePrescribing (PSO*7*0*p527)
+  
+                                                                Binary
+                               pso_7_0_p527_img.pdf
+                       
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*527
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*527 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*527 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO527PO
+    Before:       n/a   After:  B3290055  **527**
+Routine Name: PSOERX
+    Before: B62148150   After: B70347933  **467,527**
+Routine Name: PSOERX1
+    Before: B78113313   After: B78477879  **467,520,527**
+Routine Name: PSOERX1A
+    Before:B116223189   After:B129260267  **467,527**
+Routine Name: PSOERX1B
+    Before:B154507607   After:B162952220  **467,506,520,527**
+Routine Name: PSOERX1C
+    Before: B40751092   After: B40194088  **467,520,527**
+Routine Name: PSOERXH1
+    Before: B14280628   After: B17222601  **467,527**
+Routine Name: PSOERXP1
+    Before: B27447625   After: B30549693  **467,520,527**
+Routine Name: PSOERXR1
+    Before: B31327096   After: B33604868  **467,520,527**
+Routine Name: PSOERXX1
+    Before: B45537071   After: B47206629  **467,520,527**
+ 
+Routine list of preceding patches: 520
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2018
+Completed By:                               Date Completed: AUG 27, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

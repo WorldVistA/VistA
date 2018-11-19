@@ -1,0 +1,143 @@
+$TXT Created by               at ROR1S1.AAC.DOMAIN.EXT  (KIDS) on Monday, 07/09/18 at 16:08
+=============================================================================
+Run Date: AUG 22, 2018                     Designation: PSJ*5*374
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #313                      Status: Released
+                  Compliance Date: SEP 22, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*287   <<= must be installed BEFORE `PSJ*5*374'
+                    (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*374'
+
+Subject: IV ORDER DISCONTINUE FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC0812930  SAG: Order action and comment display incorrectly in CPRS on 
+             orders tab, does not match order status
+  
+ Problem: 
+ ========
+ It was reported that during discontinuing of active IV order in backdoor 
+ using the DC action and if the pharmacist attempts to exit out of the 
+ discontinue action at the "Requesting PROVIDER:" prompt, software displays
+ "Order Unchanged." message but order appearing as discontinued in the 
+ orders column of the orders tab in CPRS. This cause confusion about the 
+ order status and the sequence of steps that lead to the order appearing as
+ discontinued in the orders column of the orders tab in CPRS.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSIVORA and PSIVOPT2 to not update 
+ CPRS if the pharmacist attempts to exit out the discontinue action using 
+ the "^" at the "Requesting PROVIDER" prompt.
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City, OK
+ Saginaw, MI      
+  
+  
+ Pre/Post Installation Overview:  
+ ------------------------------- 
+ It is not necessary to disable any options to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch should take less than 2 minutes to install.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter the patch
+    PSJ*5.0*374.
+  
+   a. Backup a Transport Global - This option will create a backup 
+      message of any routines exported with this patch. It will not backup
+      any other changes such as DDs or templates.
+  
+   b. Compare Transport Global to Current System - This option will allow
+      you to view all changes that will be made when this patch is
+      installed.  (It compares all components of this patch routines,
+      DDs, templates, etc.).
+  
+   c. Verify Checksums in Transport Global - This option will allow you 
+      to ensure the integrity of the routines that are in the transport
+      global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded 
+ with the "Xtract PackMan" function at the Message Action prompt. The
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVOPT2
+    Before: B38451894   After: B38512890  **23,29,58,110,127,133,135,157,
+                                           181,258,287,374**
+Routine Name: PSIVORA
+    Before: B29175721   After: B29596441  **29,41,110,134,299,374**
+ 
+Routine list of preceding patches: 287, 299
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 09, 2018
+Completed By:                               Date Completed: AUG 21, 2018
+Released By :                               Date Released : AUG 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

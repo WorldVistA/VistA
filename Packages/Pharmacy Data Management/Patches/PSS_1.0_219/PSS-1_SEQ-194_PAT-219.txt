@@ -1,0 +1,282 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Monday, 05/21/18 at 10:32
+=============================================================================
+Run Date: AUG 06, 2018                     Designation: PSS*1*219
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #194                      Status: Released
+                  Compliance Date: SEP 06, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*209   <<= must be installed BEFORE `PSS*1*219'
+
+Subject: BUPRENORPHINE TX OF PAIN XPAR UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ New functionality is being introduced to control the ability to prescribe
+ Buprenorphine medications. Previously, the logic was checking to see if a
+ drug contained the term 'BUPREN' and was of dosage form 'PATCH' to
+ determine whether or not a provider needs a DEA number to prescribe the
+ medication. Instead of using hard coded values, a new parameter is 
+ introduced to control the prescribing of Buprenorphine containing 
+ medication. Buprenorphine containing products may be ordered by providers 
+ who do not have a detox number if the products are being ordered for the 
+ treatment of pain.
+  
+ The new functionality introduces a multiple valued XPAR parameter to hold 
+ all of the possible dosage forms for utilization of products that contain 
+ Buprenorphine and are being used for the treatment of pain. The new XPAR
+ parameter 'Dosage Forms Buprenorphine Tx of Pain [PSS BURENORPHINE PAIN 
+ DFS] is being delivered and pre-populated with the dosage forms of 
+ 'PATCH' and 'FILM,BUCCAL'. In addition to the drug containing the term 
+ 'BUPREN', the new parameter is now used to determine a provider's ability
+ to prescribe a medication based on the pre-populated values in the
+ parameter.
+  
+ A new option 'Manage Buprenorphine Tx of Pain Dosage Forms' [PSS 
+ BUPRENORPHINE DOSAGE FORMS] has been created to allow users to manage 
+ the contents of the new parameter as the FDA approves additional dosage
+ forms in the future. This option is placed on the menu option 'Dosages'
+ [PSS DOSAGES MANAGEMENT] menu option.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ PSS DOSAGES MANAGEMENT          Menu                    Modified
+ PSS BUPRENORPHINE DOSAGE FORMS Action                     New
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20130711
+  
+ Item #1:
+ --------
+ Currently, the function DETOX^PSSOPKI is hard-coded to check for a dosage 
+ form of 'Film, Buccal' and 'Patch' to determine a provider's ability to 
+ prescribe a buprenorphine containing product.
+  
+ Resolution:
+ -----------
+ A new XPAR parameter 'Dosage Forms Buprenorphine Tx of Pain [PSS 
+ BUPRENORPHINE PAIN DFS] has been created with an instance type of 
+ 'sequence' and a 'value' type as a pointer to the DOSAGE FORM file 
+ (#50.606). DETOX^PSSOPKI has been modified to look at the values 
+ configured in the new XPAR parameter. The post-install will pre-populate 
+ the new parameter with the values 'FILM,BUCCAL' and 'PATCH' at the 
+ PACKAGE level for the parameter. This replaces the existing hard-coded 
+ logic with a parameter that can be updated with new dosage forms as they 
+ are identified for use in treatment of pain. Such products may be ordered 
+ by providers who do not have a detox number.
+  
+ The new option 'Manage Buprenorphine Tx of Pain Dosage Forms' [PSS 
+ BUPRENORPHINE DOSAGE FORMS] is now accessible through the 'Dosages' [PSS 
+ DOSAGES MANAGEMENT] menu option.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ XPAR Parameters:
+ -------------------
+  
+ Parameter Name                       New/Modified/Deleted
+ --------------                       --------------------
+ PSS BUPRENORPHINE PAIN DFS                   New
+  
+ Test Sites:
+ ----------
+ New York Harbor
+ Kansas City
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Pharmacy Data Management Technical Manual/Security Guide
+                               PSS_1_TM_R0818.pdf                Binary
+  
+ Pharmacy Data Management User Manual
+                               PSS_1_UM_R0818.pdf                Binary 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Patch PSS*1.0*219 will install updates to routine PSSOPKI, adds the new 
+ XPAR parameter, populates the parameter, and adds the new buprenorphine 
+ option appropriately.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSS*1.0*219.
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post installation routine will pre-populate the new XPAR parameter
+ with the proper dosage forms. No user interaction is required.
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket to
+ obtain this concurrence. The development team will then assist with the
+ backout process.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSS*1.0*219 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSS*1.0*219 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS219PO
+    Before:       n/a   After:   B486752  **219**
+Routine Name: PSSOPKI
+    Before: B14901481   After: B17312785  **61,69,166,183,209,219**
+ 
+Routine list of preceding patches: 209
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2017
+Completed By:                               Date Completed: AUG 01, 2018
+Released By :                               Date Released : AUG 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

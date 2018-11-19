@@ -1,0 +1,495 @@
+
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: BPS*1*23
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #21                      Status: Released
+                  Compliance Date: SEP 28, 2018
+=============================================================================
+
+Associated patches: (v)BPS*1*21    <<= must be installed BEFORE `BPS*1*23'
+                    (v)BPS*1*22    <<= must be installed BEFORE `BPS*1*23'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 3 & 4
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*482
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*23
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*591
+  
+ All three of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS IB PSO BUNDLE 11.0
+   KIDS Host File name: BPS_1_23_IB_PSO.KID
+  
+  
+ This patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. Several filters on the Change View (CV) action of ECME User Screen
+      are being updated to allow the user to select one, many, or all.
+      The user will also now be able to select a specific date range.
+  
+   2. The Rejected Claims Report is being modified to include three new
+      filter questions, and several of the existing filter questions are
+      being modified to allow selection of one, many, or all.  The excel
+      report is being modified to add new fields, truncate some fields,
+      and delete other fields to prevent wrapping to another line.  The
+      Prescriber filter question is being modified to default to "A".
+  
+   3. The system is being updated to support new and modified External
+      Code Lists (ECLs) for the NCPDP Telecommunications versions
+      published through October 2017.
+  
+   4. The ePharmacy Medication Profile is being added as an action to
+      VER View ePharmacy Rx.
+  
+   5. The system is being updated to allow for the new HIPAA regulatory
+      requirements that increase the length of the following fields: Name
+      of Insured, Group Number, Group Name and Subscriber ID. 
+  
+   6. When the system builds an outgoing claim request, it includes on the
+      claim only those fields appearing on the payer sheet provided by the
+      payer.  With this enhancement, the user will now be able to send 
+      additional fields not on the payer sheet via the RED Action from the
+      ECME User Screen.
+  
+   7. This enhancement adds logic to transmit the appropriate values on
+      secondary claims when the three fields are included on the payer
+      sheet.  Logic added to fields: Other Payer Patient Responsibility
+      Amount, Amount Qualifier, and Amount Count.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ BPS NCPDP OTHER PAYER AMT PAID QUAL (#9002313.2)          Modified
+  
+ BPS NCPDP RESULT OF SERVICE CODE (#9002313.22)            Modified
+  
+ BPS NCPDP CLARIFICATION CODES (#9002313.25)               Modified
+  
+ BPS PAYER RESPONSE OVERRIDES (#9002313.32)
+                       PATIENT PAY AMOUNT (#2.1)           New
+  
+ BPS NCPDP OVERRIDE (#9002313.511)
+   ADDL NCPDP FIELD  (sub-file) (#9002313.5112)
+                       ADDL NCPDP FIELD (#.01)             New
+                       SEGMENT (#.02)                      New
+  
+ BPS TRANSACTION (#9002313.59)
+   OTHER PAYER AMT PAID MULTIPLE  (sub-file) (#9002313.59141)
+                       OTHER PAYER-PATIENT RESP AMT (#.03) New
+  
+ BPS REQUESTS (#9002313.77)
+   OTHER PAYER AMT PAID MULTIPLE  (sub-file) (#9002313.7781)
+                       OTHER PAYER-PATIENT RESP AMT (#.03) New
+  
+ BPS NCPDP SEGMENTS (#9002313.9)                           New
+  
+ BPS NCPDP FIELD DEFS (#9002313.91)                        Modified
+  
+ BPS NCPDP REJECT CODES (#9002313.93)                      Modified
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ BPS VIEW ECME RX MENU                                     Modified
+ BPS VRX NAV BILL LIST                                     Modified
+ BPS VRX NAV BILLING EVENTS RPT                            Modified
+ BPS VRX NAV CRI                                           Modified
+ BPS VRX NAV DG ELIG STATUS                                Modified
+ BPS VRX NAV DG ELIG VERIFICATION                          Modified
+ BPS VRX NAV ECME CLAIM LOG                                Modified
+ BPS VRX NAV INS POL                                       Modified
+ BPS VRX NAV MED PROFILE                                   New
+ BPS VRX NAV PRINT REPORT                                  Modified
+ BPS VRX NAV TPJI AR ACCT PROFILE                          Modified
+ BPS VRX NAV TPJI AR COMMENT HISTORY                       Modified
+ BPS VRX NAV TPJI CLAIM INFORMATION                        Modified
+ BPS VRX NAV TPJI ECME RX INFO                             Modified
+ BPS VRX NAV VIEWRX                                        Modified
+ VALM BLANK 1                                              Modified
+ VALM BLANK 3                                              Modified
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                  File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A 
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at:  http://www4.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ ECME User Manual                       BPS_1_0_P23_UM.PDF       Binary
+ ECME Technical Manual/Security Guide   BPS_1_0_P23_TM.PDF       Binary
+ ECME Deploy Install Rollback Guide (BPS*1*23)
+                                        BPS_1_0_P23_IG.PDF       Binary
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a pre-install routine associated with this patch named
+ EN^BPS23PRE.  The purpose of the pre-install routine is to:
+  
+   1. Update Reject Code and Result of Service Code explanations.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ **************************** IMPORTANT NOTE ****************************
+ *                                                                      *
+ *  The ePharmacy Logical Links must be stopped before patch            *
+ *  installation.  This can be done with the option "Start/Stop Links"  *
+ *  [HL START].  The ePharmacy Logical Links which need to be stopped   *
+ *  are the following:                                                  *
+ *                                                                      *
+ *    BPS NCPDP                                                         *
+ *    EPHARM OUT                                                        *
+ *                                                                      *
+ *  To avoid disruptions, these patches should be installed during      *
+ *  non-peak hours when there is minimal activity on the system.        *
+ *  Avoid times when ECME claims are being transmitted.  Of particular  *
+ *  concern are the options below.                                      *
+ *                                                                      *
+ *    1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]        *
+ *       Do not install the patch when ECME claims are being generated  *
+ *       by the BPS Nightly Background Job option.  Wait for this job   *
+ *       to finish or Complete the installation before this job starts. *
+ *                                                                      *
+ *    2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and        *
+ *       Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS     *
+ *       Do not install the patch when prescriptions are being          *
+ *       transmitted to CMOP.  Wait for the CMOP transmissions to       *
+ *       finish or complete the installation before the transmissions   *
+ *       start.  Both the CS (Controlled Substances) and the non-CS     *
+ *       CMOP transmission options should be checked.  Check with       *
+ *       Pharmacy Service or your Pharmacy ADPAC to find out when CMOP  *
+ *       transmissions occur.                                           *
+ *                                                                      *
+ ************************************************************************
+  
+ This multi-build installation may take between 1 to 10 minutes to install 
+ depending on the amount of data in the files being converted.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_23_IB_PSO.KID, which contains the
+     following patches:
+  
+         BPS*1.0*23
+         IB*2.0*591
+         PSO*7.0*482
+  
+     Sites may retrieve VistA software from download.vista.domain.ext.  
+     This transmits the file from the first available server.  Sites may
+     also elect to retrieve this file directly from a specific server.
+  
+     Sites may retrieve the software directly using Secure File Transfer 
+     (SFTP) from the ANONYMOUS.SOFTWARE directory at the following Field
+     Offices:
+    
+         Hines:                  domain.ext    
+         Salt Lake City:         domain.ext
+  
+     File Name                            Transfer Mode
+     --------------------------------------------------
+     BPS_1_23_IB_PSO.KID                  ASCII
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where the host file BPS_1_23_IB_PSO.KID was saved (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_23_IB_PSO.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS IB PSO BUNDLE 11.0
+         BPS*1.0*23
+         PSO*7.0*482
+         IB*2.0*591
+  
+       Use INSTALL NAME: BPS IB PSO BUNDLE 11.0 to install this
+       Distribution.
+  
+ 4.  RUN INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS IB PSO BUNDLE 11.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS IB PSO BUNDLE 11.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS IB PSO 
+         BUNDLE 11.0.
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", press Enter to accept the default.
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", press Enter to accept the default.
+     e.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ ************************** IMPORTANT NOTE ******************************
+ *                                                                      *
+ *  Please re-start the ePharmacy Logical Links using the "Start/Stop   *
+ *  Links" [HL START] menu option.  The ePharmacy Logical Links are     *
+ *  the following:                                                      *
+ *                                                                      *
+ *    BPS NCPDP                                                         *
+ *    EPHARM OUT                                                        *
+ *                                                                      *
+ ************************************************************************ 
+  
+  
+ Back-Out Plan:
+ --------------
+ For a description of how to back-out this patch, please refer to the
+ ECME Deploy Install Rollback Guide listed above (BPS_1_0_P23_IG.PDF).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;JUN 2004;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS23PRE
+    Before:       n/a   After: B18511909  **23**
+Routine Name: BPSECX0
+    Before: B39590401   After: B40356172  **1,5,8,10,15,19,23**
+Routine Name: BPSFLD01
+    Before: B16636556   After: B16648261  **8,10,23**
+Routine Name: BPSOSCD
+    Before:B104057958   After:B106714458  **1,3,2,5,7,8,10,11,15,19,20,23**
+Routine Name: BPSOSCF
+    Before: B30984367   After: B36317164  **1,5,8,10,15,19,23**
+Routine Name: BPSOSH2
+    Before:B140036379   After:B181409797  **1,5,8,10,15,19,20,23**
+Routine Name: BPSOSHF
+    Before: B41365864   After: B45980918  **1,5,8,10,11,23**
+Routine Name: BPSOSRB
+    Before: B39920456   After: B42516960  **1,5,7,8,10,11,20,23**
+Routine Name: BPSOSRX3
+    Before:B119940068   After:B124478276  **7,8,10,11,23**
+Routine Name: BPSPRRX3
+    Before:B123904591   After:B127795834  **8,10,11,19,23**
+Routine Name: BPSPRRX6
+    Before:B114820084   After:B122123507  **8,10,11,19,23**
+Routine Name: BPSRES
+    Before:B205023095   After:B192481154  **3,5,7,8,10,11,20,21,23**
+Routine Name: BPSRES1
+    Before:       n/a   After: B51902398  **23**
+Routine Name: BPSRPT0
+    Before: B27167649   After: B64877834  **1,5,7,10,11,19,20,23**
+Routine Name: BPSRPT1
+    Before: B64732997   After: B82481306  **1,5,7,8,10,11,19,20,23**
+Routine Name: BPSRPT3
+    Before:B124301535   After:B232886550  **1,3,5,7,11,14,19,20,23**
+Routine Name: BPSRPT3A
+    Before:       n/a   After: B48335740  **23**
+Routine Name: BPSRPT4
+    Before: B99407580   After:B135691834  **1,5,7,8,10,11,19,23**
+Routine Name: BPSRPT5
+    Before:B167824717   After:B175946250  **1,3,5,7,8,10,11,19,23**
+Routine Name: BPSRPT6
+    Before: B66218478   After: B74397118  **1,3,5,7,8,23**
+Routine Name: BPSRPT7
+    Before:B164643275   After:B185034078  **1,3,5,7,8,10,11,19,20,23**
+Routine Name: BPSRPT8
+    Before:B149255320   After:B168765371  **1,3,5,7,8,10,11,19,20,23**
+Routine Name: BPSSCR01
+    Before: B17496726   After: B18234340  **1,5,11,20,23**
+Routine Name: BPSSCR03
+    Before: B67802855   After: B75749695  **1,5,7,8,10,11,20,23**
+Routine Name: BPSSCR05
+    Before:  B7623180   After:  B7667360  **7,23**
+Routine Name: BPSSCRCV
+    Before: B61968340   After:B116942528  **1,5,7,11,14,20,22,23**
+Routine Name: BPSSCRSL
+    Before: B16566806   After: B17169581  **1,7,11,20,22,23**
+Routine Name: BPSSCRU1
+    Before:  B1962116   After:  B4148479  **1,11,23**
+Routine Name: BPSSCRV1
+    Before:       n/a   After:B141217957  **23**
+Routine Name: BPSSCRV2
+    Before:       n/a   After: B90892572  **23**
+Routine Name: BPSTEST
+    Before:B227529281   After:B233813306  **6,7,8,10,11,15,19,20,22,23**
+Routine Name: BPSVRX
+    Before:B234422538   After:B237122038  **11,23**
+Routine Name: BPSVRX3
+    Before: B57551160   After:B134862445  **22,23**
+ 
+Routine list of preceding patches: 21, 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 18, 2017
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

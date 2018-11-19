@@ -1,0 +1,444 @@
+$TXT Created by               VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/25/18 at 12:39
+=============================================================================
+Run Date: AUG 30, 2018                     Designation: PSS*1*227
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #195                      Status: Released
+                  Compliance Date: SEP 30, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*195   <<= must be installed BEFORE `PSS*1*227'
+                    (v)PSS*1*213   <<= must be installed BEFORE `PSS*1*227'
+
+Subject: EPIP: DRUG FILE AUDITS / DRUG PRICE HISTORY
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ------------------------------------------------------------------------
+ PLEASE NOTE: Patch PSS*1.0*227 is a replacement patch for PSS*1.0*203 
+ and contains much of the same functionality. Before installing 
+ PSS*1.0*227, make sure that PSS*1.0*203 has not been installed at your 
+ site. If patch PSS*1.0*203 has been installed at your site, contact the 
+ National Service Desk (NSD) to submit a help desk ticket requesting 
+ backout of patch PSS*1.0*203. The development team will then assist with
+ the backout process.
+ ------------------------------------------------------------------------
+  
+ Patch PSS*1.0*227 provides the following enhancements to VistA:
+  
+      *  Enables auditing of drug file changes when a user modifies 
+         certain fields in the DRUG file (#50) through the Drug Enter/Edit 
+         [PSS DRUG ENTER/EDIT] menu option. This enhancement generates a 
+         message to a new mail group called PSS DEE AUDIT when these fields
+         are modified. The message shows the date/time of the change, the 
+         name of the user who made the change, and before/after 
+         descriptions of the changed field(s).
+  
+         In addition, a new Pharmacy Price Tracker function sends a 
+         separate audit message to the PSS DEE AUDIT mail group when the 
+         PRICE PER DISPENSE UNIT field (#16) is added or changed, or when 
+         the PRICE PER DISPENSE UNIT field is automatically updated by a 
+         change to the PRICE PER ORDER UNIT field (#13).
+  
+         Not all fields in the DRUG file are subject to audit. The
+         following list of auditable fields is stored internally in the
+         PSSDEEA routine:
+  
+         GENERIC NAME (#.01)
+         VA CLASSIFICATION (#2)
+         DEA, SPECIAL HDLG (#3)
+         MAXIMUM DOSE PER DAY (#4)
+         STANDARD SIG (#5)
+         FSN (#6)
+         WARNING LABEL (#8)
+         MESSAGE (#101)
+         PHARMACY ORDERABLE ITEM (#2.1)
+         RESTRICTION (#102)
+         APPLICATION PACKAGES' USE (#63)
+         NDC (#31)
+         CMOP DISPENSE (#213)
+         ATC MNEMONIC (#212.2)
+         REORDER LEVEL (#11)
+         ORDER UNIT (#12)
+         PRICE PER ORDER UNIT (#13)
+         PRICE PER DISPENSE UNIT (#16)
+         SOURCE OF SUPPLY (#17)
+         DISPENSE UNIT (#14.5)
+         CURRENT INVENTORY (#50)
+         DAW CODE (#81)
+         NCPDP DISPENSE UNIT (#82)
+         NCPDP QUANTITY MULTIPLIER (#83)
+         INACTIVE DATE (#100)
+         NATIONAL DRUG FILE ENTRY (#20)
+         VA PRODUCT NAME (#21)
+         PSNDF VA PRODUCT NAME ENTRY (#22)
+         PACKAGE SIZE (#23)
+         PACKAGE TYPE (#24)
+         NATIONAL DRUG CLASS (#25)
+         CMOP ID (#27)
+         NATIONAL FORMULARY INDICATOR (#29)
+         EPHARMACY BILLABLE (#84)
+         EPHARMACY BILLABLE (TRICARE) (#85)
+         EPHARMACY BILLABLE (CHAMPVA) (#86)
+         SENSITIVE DIAGNOSIS DRUG (#87)
+  
+         If a user makes changes to an auditable field, then the mail 
+         message Subject line displays the title DRUG ENTER/EDIT AUDIT
+         along with the Internal Entry Number (IEN) and name of the drug.
+         The message body shows the date/time of the change, the name of
+         the user who made the change, and before/after descriptions of the
+         changed field(s). 
+  
+         If a user makes changes to a non-auditable field, or views any
+         field but does not make changes, then the mail message Subject
+         line displays the title DRUG ENTER/EDIT ACCESS along with the drug
+         IEN and name. The message body indicates "No Audited Changes
+         Made." 
+  
+         After installation of this patch, a designated mail coordinator 
+         must modify the PSS DEE AUDIT mail group to include the necessary 
+         recipients. 
+  
+      *  Provides an audit history for price changes made in the 
+         DRUG file (#50). When the PRICE PER DISPENSE UNIT field (#16) is 
+         added or changed, or when the PRICE PER DISPENSE UNIT field is
+         automatically updated by a change to the PRICE PER ORDER UNIT
+         field (#13), the system will store the following data in the
+         DT/TM DISP UNIT PRICE CHANGED field (#50.095) in the DRUG file:
+         the date and time of the update; the user who updated the field;
+         and the new value in the PRICE PER DISPENSE UNIT field. The
+         DT/TM DISP UNIT PRICE CHANGED field is searchable via FileMan, and
+         is viewable using either FileMan or the Lookup into Dispense Drug
+         File [PSS LOOK] option.
+  
+         The new PSS DRUG AUDIT RETENTION MOS parameter, accessed 
+         through the Edit Parameter Values [XPAR EDIT PARAMETER] option
+         under the General Parameter Tools [XPAR MENU TOOLS] menu, is
+         used to limit the historical data held in the DT/TM DISP UNIT 
+         PRICE CHANGED field. This parameter can be set to a positive whole
+         number of retention months. The time period for retaining
+         historical data is based on the last date of a price change, minus
+         the parameter value (retention months) times 30 days. That is, the
+         retention period is based on 30-day months, counting back from the
+         last price change. Only those entries that fall within this time
+         period will be stored in the field. If the parameter is not set to
+         a whole number of retention months, then all entries in the DT/TM
+         DISP UNIT PRICE CHANGED field will be retained.
+  
+         This modification enables pharmacies to better manage drug prices 
+         by verifying that the price shown is up to date, and by providing
+         a price update history.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ DRUG (#50)                 PRICE PER ORDER UNIT      Modified
+                             (#13) 
+  
+                            DT/TM DISP UNIT PRICE     New
+                            CHANGED (#50.095) 
+  
+ Forms Associated:
+  
+ Form Name                  File #                   New/Modified/Deleted
+ ---------                  ------                   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ PSS DEE AUDIT              NEW
+  
+  
+ Options Associated:
+  
+ Option Name                Type                     New/Modified/Deleted
+ -----------                ----                     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name                                       New/Modified/Deleted
+ --------------                                       --------------------
+ PSS DRUG AUDIT RETENTION MOS                         NEW
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)  New/Modified/Deleted 
+ -------------       ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20150115 Audits for DRUG file 50 Changes
+ NSR20080714 Drug File Price Change Date/Time Stamp
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Nebraska-Western Iowa Health Care System, Omaha, NE
+ Dayton VA Medical Center, Dayton, OH
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan patch message and is distributed 
+ from FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL)
+ at: https://www.domain.ext/vdl/.
+  
+  
+ Title                                       File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management:  User Manual   pss_1_um_r082718.pdf      Binary
+ Pharmacy Data Management:  User Manual   pss_1_um_r082718.docx     Binary
+  
+ Pharmacy Data Management:  Technical     pss_1_tm_r082718.pdf      Binary
+                            Manual/Security Guide
+  
+ Pharmacy Data Management:  Technical     pss_1_tm_r082718.docx     Binary
+                            Manual/Security Guide
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ For both single and multi-divisional (integrated) sites, the installer
+ must identify a specific user as the Mail Group Coordinator. This
+ individual will coordinate the recipients of the MailMan messages. This is
+ usually a Pharmacy Informaticist or ADPAC. Once identified, the Mail Group
+ Coordinator will be able to add new users to the Mail Group PSS DEE AUDIT
+ to allow those users to receive Drug File Audit Mailman messages.
+        
+  
+ Installation Instructions:
+ --------------------------
+  
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) Menu,
+         select the Installation Menu.  From this menu, you may elect to
+         use the following options. When prompted for the INSTALL NAME,
+         enter the patch number PSS*1.0*227.
+  
+         a. Verify Checksums in Transport Global - This option will 
+         help ensure the integrity of the routines that are in the
+         transport global.
+  
+         b. Print Transport Global - This option will enable viewing the
+         components of the KIDS build.
+  
+         c. Compare Transport Global to Current System - This option will
+         enable viewing all changes that will be made when this patch is
+         installed. It compares all components of this patch (routines,
+         data dictionaries, templates, etc.).
+  
+         d. Back up a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', press <Enter>.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', press <Enter>.
+  
+ 7.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ The Mail Group Coordinator user identified during installation will need
+ to add new users to the PSS DEE AUDIT mail group in order for them to
+ receive Mailman messages regarding edits to the DRUG file (#50).  They
+ should use the EDIT MAIL GROUP (XMEDITMG) option to do this.  New users
+ may be entered as 'I' (Informational) or 'CC' (Carbon-copy) users, as
+ appropriate. The installer should notify the Mail Group Coordinator that
+ this task must be performed.
+  
+ Follow the steps below to set the PSS DRUG AUDIT RETENTION MOS parameter, 
+ if a time period for storing historical data is required. See the 
+ Description section above for more information on how this parameter is 
+ used. To set the parameter, contact a VistA programmer, Clinical 
+ Application Coordinator (CAC), or similar user with access to the General
+ Parameter Tools [XPAR MENU TOOLS] option in VistA.
+  
+    1. Log in to VistA.
+  
+    2. At the "Select OPTION NAME:" prompt, type XPAR MENU TOOLS and then 
+       press Enter.
+  
+    3. At the "Select General Parameter Tools Option:" prompt, type EP and 
+       then press Enter.
+  
+    4. At the "Select PARAMETER DEFINITION NAME:" prompt, type PSS DRUG 
+       AUDIT RETENTION MOS and then press Enter.
+  
+    5. At the "NUMBER OF MONTHS:" prompt, type the number of retention 
+       months and then press Enter.
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will then assist with the backout
+ process.
+  
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSS routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSS routines have been 
+ backed out, the first two lines of the routines will no longer contain the
+ designation of patch PSS*1.0*227 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+  
+ **************************NOTE ON ROUTINE INFORMATION*********************
+ Routines PSSDEEA and PSSPRICE are new with PSS*1*227 so most sites will 
+ not have a "before" checksum when running CHECK1^XTSUMBLD.  When running 
+ option "Verify Checksums in Transport Global [XPD PRINT CHECKSUM]", sites 
+ may see a "Not on current system" message for routines PSSDEEA and 
+ PSSPRICE.  If you see this message, this is normal and does not indicate 
+ any problem with the patch.  You may safely proceed with installation.  
+ This checksum message is a result from entered-in-error patch PSS*1*203 
+ which had previously updated the checksums for these routines.  
+ **************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before:B149682695   After:B151650966  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193,200,207,195,227**
+Routine Name: PSSDEEA
+    Before: B35151478   After: B35151478  **227**
+Routine Name: PSSLOOK
+    Before:B130410178   After:B137576490  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195,213,227**
+Routine Name: PSSP227
+    Before:       n/a   After:  B5754647  **227**
+Routine Name: PSSPRICE
+    Before:  B5179495   After:  B5169572  **227**
+ 
+Routine list of preceding patches: 213
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2018
+Completed By:                               Date Completed: AUG 30, 2018
+Released By :                               Date Released : AUG 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

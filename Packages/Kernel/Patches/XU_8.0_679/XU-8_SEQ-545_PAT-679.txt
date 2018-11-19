@@ -1,0 +1,401 @@
+$TXT Created by                    at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 06/06/18 at 14:40
+=============================================================================
+Run Date: AUG 22, 2018                     Designation: XU*8*679
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #545                      Status: Released
+                  Compliance Date: SEP 22, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*437    <<= must be installed BEFORE `XU*8*679'
+
+Subject: EPIP KERNEL REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch XU*8.0*679 restricts access to electronic signature fields in the 
+ NEW PERSON file (#200) for sites that elect to enable this patch 
+ functionality. Currently, any user can access the DEGREE (#10.6), 
+ SIGNATURE BLOCK PRINTED NAME (#20.2), and SIGNATURE BLOCK TITLE (#20.3) 
+ fields through the Electronic Signature options on the VistA User's 
+ Toolbox menu. If patch restrictions are enabled, then access to these
+ fields will be allowed only for users who are assigned the new XUSIG
+ security key.
+  
+ To enable restrictions, authorized site personnel must set new general
+ parameter XU SIG BLOCK DISABLE to a value of ON (1). The parameter
+ definition is stored in the PARAMETER DEFINITION file (#8989.51), and the
+ parameter data is stored in the PARAMETER file (#8989.5). If the parameter
+ is set to ON and the user has the XUSIG security key assigned in the NEW
+ PERSON file, then access to the restricted fields is allowed. If the
+ parameter is set to ON, but the user does not have security key XUSIG
+ assigned, then access to the restricted fields is not allowed. If the site
+ leaves the parameter set to OFF (0), then access to all electronic
+ signature fields is allowed.
+  
+ To set the XU SIG BLOCK DISABLE parameter to ON:
+  
+ 1. Log in to VistA with programmer access.
+  
+ 2. At the "Select OPTION NAME:" prompt, type XPAR MENU TOOLS and then
+ press Enter.
+  
+ 3. At the "Select General Parameter Tools Option:" prompt, type EP and 
+ then press Enter.
+  
+ 4. At the "Select PARAMETER DEFINITION NAME:" prompt, type XU SIG BLOCK 
+ DISABLE and then press Enter. 
+  
+ 5. At the "Sig Block Disable:" prompt, type YES and then press Enter.
+  
+ Two options on the VistA User's Toolbox menu are affected by this patch: 
+ the Electronic Signature Code Edit [XUSESIG] option and the Electronic 
+ Signature Block Edit [XUSESIG BLOCK] option. The [XUSESIG] option 
+ currently allows users to edit their own electronic signature, including 
+ the SIGNATURE BLOCK PRINTED NAME and SIGNATURE BLOCK TITLE fields. If XU
+ SIG BLOCK DISABLE is set to ON, then only supervisors holding the XUSIG
+ key can update those fields. The [XUSESIG BLOCK] option currently allows
+ supervisors to edit the SIGNATURE BLOCK PRINTED NAME and DEGREE fields for
+ other users. If XU SIG BLOCK DISABLE is set to ON, then only supervisors
+ holding the XUSIG key can update those fields. In addition, this patch 
+ enables access to the SIGNATURE BLOCK TITLE field through the [XUSESIG
+ BLOCK] option. This allows supervisors holding the XUSIG key to enter the
+ SIGNATURE BLOCK TITLE for other users after XU SIG BLOCK DISABLE is set 
+ to ON.
+  
+ To maintain valid educational credentials, DEGREE field entries
+ made through the [XUSESIG BLOCK] option will be restricted to valid
+ degrees stored in the EDUCATION file (#20.11). To support this
+ functionality, the patch adds new option [XUSESIG DEG] to the User 
+ Management menu [XUSER]. This option, which is locked by the XUSIG
+ security key, enables maintenance of DEGREE field entries in the EDUCATION
+ file. VistA will use these records to validate user entries when appending
+ one or more degrees to an electronic signature. This validation applies
+ even when XU SIG BLOCK DISABLE is set to OFF.
+  
+ Note: Because VistA automatically cross-references DEGREE field entries in
+ the NEW PERSON file with the DEGREE field (#6) in the NAME COMPONENTS file
+ (#20), any updates made directly to the DEGREE field in the NAME
+ COMPONENTS file will also be validated against degrees in the EDUCATION 
+ file.
+  
+ This enhancement is used to maintain valid electronic signatures that 
+ support billing. For example, when a new Nurse Anesthetist record is
+ loaded into VistA, 'CNA' (Certified Nursing Assistant) might be
+ incorrectly appended to the provider's name instead of 'CRNA' (Certified
+ Registered Nurse Anesthetist). As a result, Consolidated Patient Account
+ Centers (CPACs) would receive a National Provider Identifier (NPI)
+ Registry error when billing insurance carriers for services. The
+ Credentialing staff would then have to correct the credential so that the
+ CPAC could bill to collect revenue.
+  
+ BLOOD BANK Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*679 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*679 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components: 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ EDUCATION (#20.11)                              Modified
+ NEW PERSON (#200)       DEGREE (#10.6)          Modified
+ NAME COMPONENTS (#20)   DEGREE (#6)             Modified
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ XUSESIG BLOCK               Run Routine         Modified from type Edit
+                                                 to type Run Routine
+ XUSESIG DEG                 Edit                New
+ XUSER                       Menu                Modified
+ XUSESIG                     Run Routine         Modified
+                     
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name             New/Modified/Deleted
+ --------------             --------------------
+ XU SIG BLOCK DISABLE       New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ XUSIG
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)  New/Modified/Deleted 
+ -------------       ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20160405 Restrict User Editing of Signature and Title Fields upon e-Sig
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Bay Pines VA Healthcare System, Bay Pines, FL
+ Atlanta VA Medical Center, Decatur, GA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is being distributed as a PackMan message.
+  
+ Documentation describing the new functionality introduced by this patch 
+ is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Documentation Library 
+ (VDL) at: https://www.domain.ext/vdl/.
+  
+  
+ Title                           File Name                   FTP Mode
+ -----------------------------------------------------------------------
+  
+ Kernel Technical Manual         krn8_0tm.pdf                Binary
+ Kernel Technical Manual         krn8_0tm.doc                Binary
+ Kernel 8.0 & Kernel Toolkit 7.3 krn8_0sm.pdf                Binary
+ Systems Management Guide
+ Kernel 8.0 & Kernel Toolkit 7.3 krn8_0sm.docx               Binary
+ Systems Management Guide
+ Patient Data Exchange (PDX)     pdx1_5um.pdf                Binary
+ User Manual
+ Patient Data Exchange (PDX)     pdx1_5um.docx               Binary
+ User Manual
+ Controlled Substances (CS)      psd_3_nurse_um_r0818.pdf    Binary
+ Nurse's User Manual             
+ Controlled Substances (CS)      psd_3_nurse_um_r0818.doc    Binary
+ Nurse's User Manual
+ Controlled Substances (CS)      psd_3_cspharm_r0818.pdf     Binary
+ Pharmacist's User Manual        
+ Controlled Substances (CS)      psd_3_cspharm_r0818.doc     Binary
+ Pharmacist's User Manual        
+ Consult/Request Tracking User   consum.pdf                  Binary
+ Manual
+ Consult/Request Tracking User   consum.doc                  Binary
+ Manual
+ TIU Clinical Coordinator        tiuum.pdf                   Binary
+ and User Manual
+ TIU Clinical Coordinator        tiuum.doc                   Binary
+ and User Manual
+ CPRS Setup Guide                cprssetup.pdf               Binary
+ CPRS Setup Guide                cprssetup.doc               Binary
+ User Manual for Patient Funds   pfop_sup.pdf                Binary
+ Supervisor
+ User Manual for Patient Funds   pfop_sup.doc                Binary
+ Supervisor    
+ User Manual for Patient Funds   pfop_clerks.pdf             Binary
+ Clerks
+ User Manual for Patient Funds   pfop_clerks.doc             Binary
+ Clerks
+ IFCAP Control Point Official    ifcp5_1cp_official.pdf      Binary
+ User's Guide
+ IFCAP Control Point Official    ifcp5_1cp_official.doc      Binary
+ User's Guide
+ IFCAP Application Coordinator   ifcp_1application_coord.pdf Binary
+ User's Guide
+ IFCAP Application Coordinator   ifcp_1application_coord.doc Binary
+ User's Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Note: During pre-installation, routine XU8P679 will remove all entries in
+ the EDUCATION file (#20.11). This is necessary to remove duplicate records
+ previously entered in lower-case format. As the installation proceeds, the
+ EDUCATION file will be re-populated with entries in the correct upper-case
+ format. At the end of the installation process, the XU8P679 routine is
+ deleted automatically. No user action is required.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+         select the Installation Menu. From this menu, you may elect to use
+         the following options. When prompted for the INSTALL NAME, enter
+         the patch number XU*8.0*679.
+  
+         a. Verify Checksums in Transport Global - This option will help
+            ensure the integrity of the routines that are in the transport
+            global.
+  
+         b. Print Transport Global - This option will enable viewing the
+            components of the KIDS build.
+  
+         c. Compare Transport Global to Current System - This option will
+            enable viewing all changes that will be made when this patch is
+            installed. It compares all components of this patch (routines,
+            data dictionaries, templates, etc.).
+  
+         d. Back up a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            back up any other changes such as data dictionaries or
+            templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//', press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', press <Enter>.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', press <Enter>.
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+  
+ Post-Installation Instructions:
+  
+ If XU SIG BLOCK DISABLE is set to ON, compile a list of individuals who 
+ will have access to the menu options needed to maintain Electronic 
+ Signatures and the DEGREE field (#10.6) in the NEW PERSON file (#200). 
+ These individuals will need the XUSIG Security Key assigned to their NEW 
+ PERSON file entry.
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will then assist with the backout
+ process.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the XU routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the XU routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch XU*8.0*679 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P679
+    Before:       n/a   After:   B429199  **679**
+Routine Name: XUSESIG
+    Before: B11503633   After: B13254632  **14,55,437,679**
+Routine Name: XUSESIG2
+    Before:       n/a   After:  B3406621  **679**
+Routine Name: XUSESIG3
+    Before:       n/a   After:  B5931967  **679**
+ 
+Routine list of preceding patches: 437
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 18, 2016
+Completed By:                               Date Completed: AUG 21, 2018
+Released By :                               Date Released : AUG 22, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,222 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 07/05/18 at 12:26
+=============================================================================
+Run Date: SEP 24, 2018                     Designation: DG*5.3*961
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #843                    Status: Released
+                  Compliance Date: SEP 30, 2018
+=============================================================================
+
+
+Subject: INACTIVATE TREATING SPECIALTIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*961 will inactivate 4 Treating Specialty (TS) Codes per the
+ request of the Office of Mental Health with an inactivation date of 
+ 10/1/18.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) R19440913FY18-Registration-Inactivate Treating Specialties
+    
+    Problem:
+    --------
+    A request was made by the Office of Mental Health to inactivate 4
+    Treating Specialty (TS) Codes.
+  
+  
+    Resolution:
+    -----------
+    Created routine DG53P961 to inactivate 4 codes within the SPECIALTY
+    (#42.4) file and inactivate any FACILITY TREATING SPECIALTY (#45.7)
+    file entries that point to the 4 SPECIALTY (#42.4) codes as of 10/1/18.
+  
+  
+ The following Treating Specialty codes will become inactive as of 10/1/18:
+   
+   Treating Specialty Code     Treating Specialty Name     Inactive Date
+  ------------------------------------------------------------------------
+        1K                    PSYCH RESID REHAB PROG          10/01/18
+        1L                    PTSD RESID REHAB PROG           10/01/18
+        1M                    SUBSTANCE ABUSE RESID PROG      10/01/18
+        5                     GERONTOLOGY                     10/01/18
+  
+ ****************************************************************************
+ * NOTE: Sites should run a Treating Specialty Inpatient Report as close to *
+ *  9/30/18 as possible.  A Treating Specialty transfer will have to be     *
+ *  done if any patients have one of the inactivated specialties.           *
+ *                                                                          *
+ *  Please remember to move the patients that are assigned to these         *
+ *  Treating specialties to the appropriate Treating specialty before       *
+ *  installation of this patch.                                             *
+ *                                                                          *
+ *  Please review the installed messages to verify that all Treating        *
+ *  Specialty Codes updated correctly.                                      *
+ *                                                                          *
+ *  ***EXAMPLE***                                                           *
+ *  >>>Inactive date added to TS code 1M in the Specialty file.<<<          *
+ *                                                                          *
+ *  FACILITY TREATING SPECIALTY FILE being checked to see if any entries    *
+ *  are pointing to 1M.  If so, they will be inactivated.>>>                *
+ ****************************************************************************
+ 
+   
+  
+ TEST SITES:
+ -----------
+ VA Maryland HCS
+ Manchester VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DG*5.3*961:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+  
+      7. During install, verify that all codes have been inactivated
+        successfully. If an error is displayed, please create a ticket.  
+   
+      8. You may delete the routine DG53P961 from your production system 
+         after the patch has been successfully verified.
+  
+  
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ To back out of this patch, the entries added with effective date 10/1/18
+ can be deleted from the SPECIALTY (#42.4) file and FACILITY TREATING
+ SPECIALTY (#45.7) file via FileMan.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P961
+    Before:       n/a   After:  B5406365  **961**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2018
+Completed By:                               Date Completed: SEP 24, 2018
+Released By :                               Date Released : SEP 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

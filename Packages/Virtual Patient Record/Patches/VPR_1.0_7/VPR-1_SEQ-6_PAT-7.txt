@@ -1,0 +1,203 @@
+$TXT Created by                     FM2G2.AAC.DOMAIN.EXT  (KIDS) on Friday, 04/06/18 at 11:11
+=============================================================================
+Run Date: AUG 23, 2018                     Designation: VPR*1*7
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: SEP 23, 2018
+=============================================================================
+
+Associated patches: (v)GMRC*3*80   <<= must be installed BEFORE `VPR*1*7'
+                    (v)VPR*1*5     <<= must be installed BEFORE `VPR*1*7'
+
+Subject: RPC UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package updates the VPR GET 
+ PATIENT DATA and VPR GET PATIENT DATA JSON remote procedure calls (RPC) 
+ that extract patient health data from a Veterans Health Information Systems 
+ and Technology Architecture (VistA) database in Extensible Markup Language 
+ (XML) or JavaScript Object Notation (JSON) formats, respectively.
+  
+ Specific data domains have been updated to support creation of C-CDA 
+ documents for external patient care partners; these include:
+   * Consults
+   * Demographics
+   * Lab Orders
+   * Visits
+  
+ Additional data elements have been added to Consults and Demographics; see
+ the updated VPR Technical Manual for details.
+  
+ Historical encounters are now being included with the Visit extract.
+  
+ This patch also corrects a problem with Lab Orders, reported by the VistA
+ Health Information Exchange (VHIE) client. This extract previously attempted 
+ to organize lab results by the order that requested them; the VistA 
+ Laboratory application periodically purges the Lab Order File (#69),
+ however, making these links difficult if not impossible to recreate over
+ time. This patch changes the main loop to use the Orders File (#100)
+ instead, then calling Lab for the results of those tests included in each 
+ order.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:         N/A
+  
+ Forms Associated:                  N/A
+  
+ Mail Groups Associated:            N/A
+  
+ Options Associated:                N/A
+  
+ Protocols Associated:              N/A
+  
+ Remote Procedure Calls Associated: N/A
+   
+ Security Keys Associated:          N/A
+  
+ Templates Associated:              N/A
+  
+ New Service Requests:              N/A
+  
+ Patient Safety Issues:             N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach, FL
+ Walla Walla, WA 
+  
+   
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ This release also includes an updated VPR Technical Manual.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI&T Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ VPR Technical Manual          VPR_1_7_TM.PDF                  Binary
+                               VPR_1_7_TM.DOCX                 Binary 
+   
+ Backout and Rollback Procedure:
+ -------------------------------
+ During the VistA Installation Procedure of the KIDS build, the
+ installer should use the 'Backup a Transport Global' action (step 3a
+ in the Installations Instructions below). If rollback/backout is 
+ required, the installer can use the MailMan message to restore routines 
+ that were saved prior to installing the patch.
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ NOTE: This patch was created with VA FileMan 22.2, so please ensure 
+ the target system has also been upgraded to this version, otherwise 
+ installation will fail.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*7.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+ Post-Installation:
+ -----------------
+ The post-init routine will simply update the value of the VPR VERSION 
+ parameter to 1.07.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRDGMRC
+    Before: B10985584   After: B15053458  **1,4,5,7**
+Routine Name: VPRDJ00
+    Before: B58623073   After: B75961021  **2,7**
+Routine Name: VPRDJ03
+    Before: B49743518   After: B54129495  **2,7**
+Routine Name: VPRDJ04
+    Before: B48088220   After: B48510921  **2,5,7**
+Routine Name: VPRDLRO
+    Before: B34279293   After: B28036256  **2,5,7**
+Routine Name: VPRDPT
+    Before: B99429749   After:B114535256  **1,4,5,7**
+Routine Name: VPRDVSIT
+    Before:B106014987   After:B106024378  **1,2,4,5,7**
+Routine Name: VPRPATCH
+    Before:       n/a   After:   B532746  **7**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 25, 2017
+Completed By:                               Date Completed: AUG 21, 2018
+Released By :                               Date Released : AUG 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

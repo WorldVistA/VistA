@@ -1,0 +1,194 @@
+$TXT Created by                W at PREMV.FO-BIRM.DOMAIN.EXT  (KIDS) on Monday, 12/11/17 at 14:11
+=============================================================================
+Run Date: JAN 16, 2018                     Designation: PSO*7*506
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #417                      Status: Released
+                  Compliance Date: JAN 18, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*467   <<= must be installed BEFORE `PSO*7*506'
+
+Subject: INBOUND ERX DEFECT REMEDIATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ ***********patch PSO*7*467 must be installed before PSO*7*506**********
+  
+ This patch is being released as a follow-up to patch PSO*7*467 to resolve 
+ the error that occurs when a user attempts to edit a drug in the validate 
+ drug function of Inbound eRx. If the user selects a drug who's orderable 
+ item patient instructions contains a ';', a hard error occurs and the 
+ user is kicked out of the system. This patch is to be released 
+ immediately following patch PSO*7*467. Routines PSOERXD2 and PSOERX1B have
+ been modified to use the FILE^DIE call rather than the regular ^DIE call.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ CENTRAL ALABAMA VETERANS HEALTHCARE SYSTEM
+ VA OMAHA MEDICAL CENTER (CENTRAL PLAINS)
+ SIOUX FALLS VA HEALTHCARE SYSTEM
+ VETERANS HEALTH CARE SYSTEM OF THE OZARKS
+ HEALTH ADMINISTRATION CENTER (MEDS BY MAIL)
+ INDIANAPOLIS VA MEDICAL CENTER
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*506.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+   
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure:
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*506 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PS0*7.0*506 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOERX1B
+    Before:B200406933   After:B201661947  **467,506**
+Routine Name: PSOERXD2
+    Before:B205678720   After:B205488607  **467,506**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 20, 2017
+Completed By:                               Date Completed: JAN 10, 2018
+Released By :                               Date Released : JAN 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

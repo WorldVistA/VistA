@@ -1,0 +1,147 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 08/02/18 at 13:30
+=============================================================================
+Run Date: AUG 30, 2018                     Designation: VPR*1*9
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: SEP 30, 2018
+=============================================================================
+
+Associated patches: (v)VPR*1*1     <<= must be installed BEFORE `VPR*1*9'
+
+Subject: CORRECT MISSING CONTRAST ALLERGY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to address an issue with the Contrast Media 
+ allergy not properly appearing in the Joint Legacy Viewer (JLV) display.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3743 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC1583647 - New Virtual Patient Record (VPR) Code review for VPRDGMRA
+ - Contrast media allergies not displaying in JLV.
+  
+ Problem:
+ --------
+ When a patient had an allergy recorded in the Adverse Reaction Tracking 
+ (GMRA) application, it wasn't properly displaying when the patient was 
+ viewed in the JLV.
+  
+ Resolution:
+ -----------
+ The problem was that the routine that gathered the allergies to send to 
+ JLV wasn't appropriately handling a date/time that had seconds. Routine 
+ VPRDGMRA was modified to handle seconds.
+  
+ Test Sites:
+ -----------
+ DURHAM HCS
+ WILMINGTON VAMC
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no special Pre/Post Installation steps required. 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+       
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch VPR*1.0*9.
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will (allow
+       you to view all changes that will be made when this patch is
+       installed.  It compares all components of this patch routines, DDs,
+       templates, etc.). 
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//' respond NO. 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+    respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' respond NO. 
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+  
+ Routine Information:
+ --------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRDGMRA
+    Before: B22392321   After: B22400572  **1,9**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

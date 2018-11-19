@@ -1,0 +1,378 @@
+$TXT Created by               R at DEVESR.DOMAIN.EXT  (KIDS) on Thursday, 08/02/18 at 09:29
+=============================================================================
+Run Date: AUG 29, 2018                     Designation: PRCA*4.5*340
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #298                    Status: Released
+                  Compliance Date: SEP 05, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*168<<= must be installed BEFORE `PRCA*4.5*340'
+                    (v)PRCA*4.5*320<<= must be installed BEFORE `PRCA*4.5*340'
+                    (v)PRCA*4.5*339<<= must be installed BEFORE `PRCA*4.5*340'
+
+Subject: FY16 REVENUE ENHANCEMENTS MAINTENANCE, PART 2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+    ****** NOTICE OF SHORTENED COMPLIANCE PERIOD ******
+  
+ Please note the above compliance date for this patch. This patch is being 
+ released with a shorter-than-normal compliance period because of the 
+ persistent problems being corrected by this patch.
+  
+    ***************************************************
+  
+ This patch is a follow-up patch to PRCA*4.5*315. It contains a number of
+ minor defect repairs to the Reconciliation Report - Cross-Servicing [RCTCSP 
+ RECONCIL REPORT] and to the Enter/Edit Repayment Plan option [PRCAC ENTER EDIT
+ REPAYMENT]. In addition, this patch corrects some reported out-of-balance 
+ discrepancy issues.
+  
+ The following is a complete list of the specific issues corrected.
+  
+ 1. The old columns "AMOUNT PAID" and "AMOUNT OF FEES" on the Reconciliation 
+ Report - Cross-Servicing [RCTCSP RECONCIL REPORT] were inaccurate. Further 
+ investigation revealed that the data represented in these columns were not 
+ reliably available. As a result, these columns were removed from this report.
+  
+ 2. The header for the Recall Date in the Excel output of the Reconciliation 
+ Report - Cross-Servicing [RCTCSP RECONCIL REPORT] was incorrect. This was 
+ corrected.
+  
+ 3. Leading zeroes of the SSN were lost in the Excel output of the 
+ Reconciliation Report - Cross-Servicing [RCTCSP RECONCIL REPORT]. To correct 
+ this issue, the Excel output was changed to have the last 4 digits of the SSN 
+ preceded by the first initial of the last name to prevent the loss of the 
+ leading zeroes. The heading was changed from SSN to PT ID.
+  
+ 4. Device handler control variable IOP was being misused in the Reconciliation 
+ Report - Cross-Servicing [RCTCSP RECONCIL REPORT]. This issue was corrected by 
+ removing the usage of variable IOP.
+  
+ 5. When entering a repayment plan in the option Enter/Edit Repayment Plan 
+ [PRCAC ENTER EDIT REPAYMENT], the monthly payment amounts for a repayment plan 
+ only accepted whole dollar amounts, not dollars and cents. This was corrected.
+  
+ 6. The option Enter/Edit Repayment Plan [PRCAC ENTER EDIT REPAYMENT] did not 
+ locate active bills for non-patient debtors. In addition, the display of the 
+ payments received since the repayment plan date, did not show payments for 
+ non-patient debtors. Both of these issues were corrected.
+  
+ 7. The option Enter/Edit Repayment Plan [PRCAC ENTER EDIT REPAYMENT] was 
+ unable to display older repayment plan information when the old repayment plan 
+ data was filed incompletely in the database. A hard error detect was the 
+ result. This was corrected by making the software more resilient to old, 
+ incomplete repayment plan data that may exist in the database.
+  
+ 8. The option Enter/Edit Repayment Plan [PRCAC ENTER EDIT REPAYMENT] had an 
+ error when performing an Edit of an existing repayment plan. Under certain 
+ conditions, the old repayment plan data was not completely removed when 
+ filing the new repayment plan data. This led to inconsistent output in the 
+ Profile of Repayment Plan [PRCAC PROFILE REPAYMENT] option. This was fixed.
+  
+ 9. Because of new Cross-Servicing transaction types, multiple AR reports and
+ screens showed Out-of-Balance discrepancy errors. These AR menu options 
+ include Check Patient Account Balance [PRCA ACCOUNT CHECK], Statement 
+ Discrepancy Listing [PRCA DISC LIST], and Bill Transactions [RCDP BILL 
+ TRANSACTIONS]. Several routines were updated to recognize these new CS 
+ transaction types and to process them appropriately. 
+  
+ 10. New Cross-Servicing transaction types were also added into the monthly AR 
+ Data Collection (ARDC) and FMS transmission processes so all of the new 
+ transaction types which have dollar amounts are included.
+  
+ 11. Corrupted data in the repayment plan nodes of bills caused errors in 
+ Enter/Edit Repayment Plan. This was corrected.
+  
+ 12. Certain specific situations caused deleted repayment plans to leave 
+ data behind. This was corrected.
+  
+ 13. Transactions filed by the Repayment Plan software were inconsistent. 
+ Transactions are now filed for adding bills to repayment plans and 
+ deleting repayment plans, but not edits to repayment plans.
+  
+ 14. In Enter/Edit Repayment Plan, the word NONE was displayed for the
+ non-medical debt list even if payments were listed. This has been 
+ corrected.
+  
+ The following table shows the Rational Defect numbers and internal project 
+ issue numbers associated with the items above.
+  
+ Rational  Project
+ Defect#   Issue#   Description
+ --------  -------  -----------
+ 739298    222      CS - RECON REPORT AMOUNTS
+ 743801    223      CS - Recon Excel - Recall Date Column
+ 743809    224      CS - RECON EXCEL RPT - SSN LEADING ZEROES
+ 752051    225      CS - DEVICE HANDLER
+ 757271    226      REPAYMENT PLAN - Payment Amt
+ 767844    227      CS - ADJUSTMENT DESCREPANCIES
+ 768144    228      Repay Plan - non-medical debt
+ 808539    230      CS - ARDC ROUTINES NEED NEW CS TRANS TYPES
+ 781696    232      Error in Repayment Plan Summary Display
+ 786473    233      Repay Plan - Editing Cross-Serviced Debtor
+ 792056    234      Repay Plan - Transactions filing inappropriately
+ 792057    235      Repay Plan - Non-medical payments display issue
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1025385 - Out-of-Balance Discrepancies
+  
+   Problem:
+   -------
+   Sites have reported balance discrepancies on two reports. Check Patient 
+   Account Balance [PRCA ACCOUNT CHECK] and Statement Discrepancy Listing 
+   [PRCA DISC LIST]. The balance discrepancies all have one of the new 
+   Cross-Servicing transactions which have a dollar amount.
+  
+   Resolution:
+   ----------
+   Modify the code in functions TBAL^PRCAGT and TRANBAL^RCRJRCOT by adding 
+   new CS transactions #73 - CS INCREASE ADJ and #74 - CS ADMIN.COST 
+   CHARGE.
+  
+ 2. INC1080298 - Error in Enter/Edit Repayment Plan
+  
+   Problem:
+   -------
+   When attempting to view, edit, or delete an existing repayment plan 
+   which is not correctly filed into the database, the following error
+   detect can occur: <UNDEFINED>PLNDTL+18^PRCARPU *PLNFRST. This can 
+   happen when there is data on the 4 node in file 430, but missing data 
+   on the 5 node.
+  
+   Resolution:
+   ----------
+   Update the PLNDTL^PRCARPU subroutine to account for the data situation 
+   described above.
+  
+ 3. INC1157548 - Error in Repayment Plan for non-patient AR debtors
+  
+   Problem:
+   -------
+   The Enter/Edit Repayment Plan [PRCAC ENTER EDIT REPAYMENT] menu option 
+   is not able to process repayment plans for non-patient AR debtors. The 
+   software needs to be able to handle repayment plans for AR debtors which
+   are ex-employees, or vendors.
+  
+   Resolution:
+   ----------
+   Modify the software in routine PRCARPU to use a different 
+   cross-reference file to access non-patient AR debtors in addition to 
+   patient AR debtors. Now all types of AR debtors are able to process 
+   repayment plans using that menu option described above.
+  
+  
+ Test Sites:
+ ----------
+ Durham
+ Central Alabama
+ Upstate New York HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                      domain.ext
+ Hines:                       domain.ext
+ Salt Lake City:              domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                                File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ AR User Manual - Cross Servicing     PRCA_4_5_P340_AR_CS_UM.PDF  Binary   
+ Deployment, Installation, Back-Out,  PRCA_4_5_P340_IG.PDF        Binary
+   and Rollback Guide (PRCA*4.5*340)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 10 
+ seconds to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+   1. Choose the PackMan message containing this patch.
+  
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+   3. From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter
+      PRCA*4.5*340.
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not 
+         backup any other changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will 
+         allow you to view all changes that will be made when this patch is
+         installed. It compares all components of this patch routines, DDs,
+         templates, etc.
+  
+      c. Verify Checksums in Transport Global - This option will allow you 
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+   4. From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      Enter NO
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//' Enter NO
+  
+   7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAGT
+    Before: B22272453   After: B22402514  **100,162,165,169,219,301,340**
+Routine Name: PRCAHIS
+    Before: B26002669   After: B26384958  **110,198,233,315,340**
+Routine Name: PRCARPM
+    Before: B37026153   After: B50280653  **315,340**
+Routine Name: PRCARPU
+    Before:B188846893   After:B254883295  **315,340**
+Routine Name: RCRJRBD
+    Before: B76289018   After: B76750896  **101,139,170,193,203,215,220,
+                                           138,239,273,282,310,315,340**
+Routine Name: RCRJRCO1
+    Before: B23580968   After: B24338424  **68,96,101,120,103,153,156,
+                                           170,182,203,320,340**
+Routine Name: RCRJRCOB
+    Before: B22183979   After: B22540099  **68,96,103,153,156,320,340**
+Routine Name: RCRJRCOT
+    Before: B15500184   After: B16117128  **68,134,103,153,168,340**
+Routine Name: RCRJRTR1
+    Before: B39004257   After: B42250765  **68,340**
+Routine Name: RCRJRTRA
+    Before: B28869958   After: B30416869  **68,153,340**
+Routine Name: RCTCSP2
+    Before:B136606046   After:B128258214  **301,315,339,340**
+ 
+Routine list of preceding patches: 168, 320, 339
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2018
+Completed By:                               Date Completed: AUG 29, 2018
+Released By :                               Date Released : AUG 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,255 @@
+$TXT Created by               R at DEVESR.DOMAIN.EXT  (KIDS) on Tuesday, 07/10/18 at 16:59
+=============================================================================
+Run Date: AUG 21, 2018                     Designation: PRCA*4.5*341
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #297                    Status: Released
+                  Compliance Date: AUG 24, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*339<<= must be installed BEFORE `PRCA*4.5*341'
+
+Subject: CORRECT 5B RECORD FOR CROSS-SERVICING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow-up patch to PRCA*4.5*315. It contains an important
+ defect repairs to the 5B record in the Cross-Servicing file that reports 
+ veteran debt to the Treasury Department. There will be a shortened 
+ three-day compliance for installation of this patch to prevent incorrect 
+ reporting of Veteran debt.
+  
+ Problem:
+ --------
+ Defect #INC1333082 reported some veteran accounts that were paid in full
+ were showing balances in Cross-Servicing that were double the original
+ balance. It was determined that the payment transactions were being 
+ reported to the Treasury incorrectly.
+  
+ Resolution:
+ -----------
+ Modifications were made to record 5B code to ensure that all increase 
+ adjustments are sent as positive numbers and all other transactions are 
+ sent as negative numbers that will reduce the balance of the bill.
+  
+  
+ Problem:
+ --------
+ Defect I17391307FY18 reported that bills with First Party foreign
+ addresses are not passing correctly to Treasury causing a reject type 45.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the weekly TCSP batch run to ensure
+ that the correct country, state and zip code are set when a veteran
+ address is outside the United States and there is no address node in the
+ file AR DEBTOR (#340). The majority of these address issues deal with 
+ Canadian border VA sites (Upstate NY & Fort Harrison).
+  
+  
+ The following are the associated Rational tickets:
+  
+ Rational   
+ Defect#    YourIT Ticket  Description
+ --------   -------------  -----------
+ 775960     INC1333082     CS - 5B record incorrect
+ 776925     I17391307FY18  CS - Bills with foreign address not transmitting
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Durham
+ Central Alabama
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:                      domain.ext
+ Hines:                       domain.ext
+ Salt Lake City:              domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Deployment, Installation, Back-Out,    PRCA_4_5_P341_IG.PDF     Binary
+   and Rollback Guide (PRCA*4.5*341)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 10
+ seconds to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+   1. Choose the PackMan message containing this patch.
+  
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+   3. From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter
+      PRCA*4.5*341.
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch is
+         installed. It compares all components of this patch routines, DDs,
+         templates, etc.
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+   4. From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      Enter NO
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//' Enter NO
+  
+   7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTCSP1
+    Before:B172072875   After:B169151504  **301,331,315,339,341**
+Routine Name: RCTCSP1A
+    Before: B44615567   After: B44957628  **315,341**
+ 
+Routine list of preceding patches: 339
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 06, 2018
+Completed By:                               Date Completed: AUG 21, 2018
+Released By :                               Date Released : AUG 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

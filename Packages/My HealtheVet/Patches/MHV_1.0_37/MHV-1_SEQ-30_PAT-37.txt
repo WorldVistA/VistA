@@ -1,0 +1,235 @@
+
+=============================================================================
+Run Date: SEP 13, 2018                     Designation: MHV*1*37
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #30                      Status: Released
+                  Compliance Date: OCT 15, 2018
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2018.4.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The September Quarterly MyHealtheVet Release MHV_2018.4.0.0 will be promoted to
+ the MHV Production environment on Saturday, September 15, 2018 starting at 
+ 10:00 PM EDT.
+ 
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ SM ENHANCEMENTS
+ 
+ JAZZ 760289 - Delegation - SM Patient Functionality for Healthcare Proxy 
+  with Full Access - Provide the ability for Full Access Delegates to use 
+  the full SM functionality  
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ 
+ JAZZ 743764 - ChampVA Phase 3:  Existing Users with 741MM facility need to have
+  ChampVA relationship in the profile
+ JAZZ 758588 - ChampVA Phase 3:  Facility Batch Job updates - Run nightly job to
+  update ChampVA flag if 741MM is in the treatment facility list for Advanced 
+  and Premium Users
+ JAZZ 760286 - Delegation Phase 4:  MHV National Portal Self-Entered Information
+  (SEI) functionality for Users with Full and Read-Only Access - Ability for
+ Full
+  Access Delegates to use to enter/edit/delete SEI on the MHV National Portal  
+ JAZZ 771408 - Delegation Phase 4:  Health Information Card Full and Read only
+  access enhancements
+ JAZZ 757299 - Pharmacy GUI Updates - Content updates in multiple Pharmacy Pages
+  (Date of Birth in all pages, Glossary of terms in VA Prescription History and
+  VA Medication List, List of Allergies and Adverse reactions on all Pharmacy 
+  pages, system will include the Date of Birth of the user in the printer 
+  friendly pages for Refill VA Prescription page, VA Prescription History page,
+  VA Prescription Tracking Page, My Medication List Page and VA Medication List
+  page. System shall include all the page screen content in the printer friendly
+  pages, Glossary of Terms in all the printer friendly pages, Inclusion of
+  signature and hyperlink status field to Glossary, View Allergies button on all
+  pages changed to add View Allergies and Adverse Reactions in all printer 
+  friendly pages
+ JAZZ 742823 - Delegate Login - Display Expiration Date for Delegator Accounts -
+  User will now be able to view the Expiration Date when selecting a MHV account
+  to login
+ JAZZ 808342 - Update Help Files for Pharmacy Module
+ 
+ ADMIN PORTAL ENHANCEMENTS
+ 
+ JAZZ 685768 - Admin Portal TRM updates
+ 
+ MHV / SM NATIONAL PORTAL DEFECTS
+ 
+ JAZZ 752020 - PROD:  Investigate Ensemble alert from 
+  MHVPROD:MHVMPI.PatientUpdate.PatientUpdateBusProcREST -  ADT A43 MPI broadcast
+  messages were not processing properly in Ensemble
+ JAZZ 800577 - PROD:  In Case of Emergency Table Edit column displays MHV page
+  footer
+ JAZZ 795486 - PROD:  Pharmacy - SIG value - Only a portion of SIG value from
+  VistA is being saved to EVAULT Database
+ JAZZ 797456 - PROD - SM Patient - Patient's Name is being displayed in
+ incorrect
+  format 
+ 
+ DATABASE ENHANCEMENTS
+ 
+ JAZZ 757392 - Pharmacy GUI Updates (Implementation - Content updates in
+ multiple
+  Pharmacy pages)
+ JAZZ 810556 - Revert changes made to BBPRESCRIPTIONS and XBBPRESCRIPTIONS in 
+  18.3.4.1 for defect 802292
+ JAZZ 743793 - ChampVA Phase 3: Existing users with 741MM facility need to have
+  ChampVA relationship in the profile
+ JAZZ 757196 - Create view in the database to return ChampVA basic users
+ JAZZ 759175 - Modify procedure USER_PROFILE_FOR_FAC_UPDATE
+ JAZZ 771241 - Database work to support Delegation Phase 4 - SM functionality
+ for
+  users with full access
+ JAZZ 773172 - Database work to support PGD - Proof of concept prototype
+ 
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ 
+ JAZZ 746064    - Consolidated Clinical Document Architecture (CCDA) - Health
+  Summary Enhancements - Enhancements to Direct User Interface (UI) as well as 
+  other minor changes.  FAQ Links added - VA Health Summary User Guide, FAQ's,
+  what's in the VA Health Summary; changes to "Additional Tips" bullet added,
+  "Options to Retrieve Data" bullet wording change; updated content on Health
+  Summary Page, additional minor changes
+ JAZZ 773782    - Re-enable daily scheduling and execution of User Management
+  Batch Jobs
+ JAZZ 785841    - Batch Job updating to match current system design and
+  business processes
+ 
+ MHV ADMIN PORTAL ENHANCEMENTS
+ 
+ JAZZ 742870    - Admin Portal Enhancements - Add Terms and Conditions (T&C)
+  fields to In-Person Authentication (IPA) tab
+ JAZZ 746148    - Admin Portal - Batch job failed correlation with MVI -
+ Retires
+  accounts that failed correlation
+ 
+ DATABASE ENHANCEMENTS
+ 
+ JAZZ 803649 - Admin Portal - US07: Batch job for failed correlation
+ 
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ 
+ JAZZ 753202    - Homepage - Personalization of Welcome Banner -Welcome Bar
+  Personalization fields on profile page, personalize how user will be 
+  addressed, Personalize Welcome Bar with 2 Branches of Service, and Free Text
+  Other Field for Welcome Bar Personalization
+ JAZZ 753240    - Health Information Card -  Remove Primary Address Field from
+  Profiles page and add it to the Health Information Card and the field will
+  remain editable
+ JAZZ 746639    - Blue Button (BB)- VA Medical Images and Reports - 
+        1). If study is in CVIX and not matched, add View Report and utilize 
+             report from CVIX.  If User only has data from CVIX, present the
+             View Report link and system pulls report text from CVIX.  
+        2). Add Download link to screens with Images and Report Tab 
+        3). Change buttons to links 
+        4). Modify Instructions for Zip file  
+        5). Update email notification content 
+        6). Replace existing Thumbnail Image with a better-quality image 
+        7). Update content on Images Tab and 
+        8). Update User Guide Content
+ JAZZ 708480 - Upgrade PrimeFaces to Version 6.1 to comply with the VA TRM
+  requirements
+ JAZZ 683808 - Change MHV Search Page to remove Liferay Results and Modify
+  Remaining Results - Edits to labels
+ JAZZ 685687    - Nightly Background Job - Send Identifiers from MVI to
+  Pathways - Update Pathways Appointment Client to Use Resolved Identifiers
+  to Query the HDR Pathways Service
+ JAZZ 731753    - Removal of External Link Icon - The CSS for the 
+  usa-external_link class was updated to not display the external link.  So now,
+  any link with that class on it will just look like a normal link with no
+  external link symbol showing behind it.
+ 
+ MHV NATIONAL PORTAL DEFECTS
+ 
+ JAZZ 685678    - UAT:  Global Change Needed to Retain the User's Pagination
+  Selections
+ JAZZ 598736    - When Editing a My Links entry, once saved, there is now a
+  message confirming the edit
+ JAZZ 583232    - (PROD) -  Health Information Landing Page:  Comma is bolded
+  in the top text of Landing Page  
+ JAZZ 583230    - (PROD) - Space is needed between the period and the Extend
+  button on MHV National Portal Time-out banner
+ JAZZ 583235    - (PROD) -  Health History Content-- CDC Adult Immunization
+  Schedule' hyperlink navigates to the CDC site but it displays page not found
+ JAZZ 583341    - (PROD) - Added colon after the word "Living" on the add new
+  screen in Family Health History
+ JAZZ 583334    - PROD - Family Health History - Other Health Information
+  remaining on screen after saving on the edit screen.
+ 
+ DATABASE ENHANCEMENTS
+ 
+ JAZZ 752101 - Create New Clob to store report text from CVIX
+ JAZZ 755188 - BBMI_DOWNLOAD_REMINDER script updates
+ JAZZ 755900 - Add database column to support 'Welcome Bar Personalization
+  Fields on Profile Page'
+ JAZZ 758789 - BBMI enhancements: The BBMI report shows "&#160;" instead of
+  blank space VA Treatment Facility and Systems section of the report
+ JAZZ 758797 - BBMI enhancements: The BBMI email content corrections
+ JAZZ 759235 - Add new field END_DATE to PHR_STUDY_JOB and ARCHIVE table
+ JAZZ 762431 - Create an RX Mobile Application token
+        
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ 
+ JAZZ 807181 - Remediate Critical/Section 3.3.2 on Download My Data and
+  Compose a message screens
+ JAZZ 746899 - MHV is sending the incorrect client name to HDR
+ JAZZ 801801 - Users unable to update emergency contact information
+ JAZZ 738547 - When an account is match and correlated, the MHV account traits
+  are not getting updated with the traits returned from MVI
+ JAZZ 696727 - WASA - Resolve application vulnerability to Session Fixation
+ JAZZ 762805 - Auto Deactivation due to 4 or more traits not removing
+  authentication
+ JAZZ 731837 - Basic user updates account through profile update but not able
+  to access Pharmacy
+ JAZZ 794483 - When viewing Blue Button Report on screen, viewer screen turns
+  to small font/size
+ 
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ MHV Documentation can be found on the VA Software Documentation Library
+  at: http://www4.domain.ext/vdl/
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2018
+Completed By:                               Date Completed: SEP 13, 2018
+Released By :                               Date Released : SEP 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

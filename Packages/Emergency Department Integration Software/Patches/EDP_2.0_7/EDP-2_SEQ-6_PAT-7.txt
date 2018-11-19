@@ -1,0 +1,167 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 03/09/18 at 10:40
+=============================================================================
+Run Date: AUG 06, 2018                     Designation: EDP*2*7
+Package : EDP - EMERGENCY DEPARTMENT          Priority: Mandatory
+Version : 2         SEQ #6                      Status: Released
+                  Compliance Date: SEP 06, 2018
+=============================================================================
+
+Associated patches: (v)EDP*2*6     <<= must be installed BEFORE `EDP*2*7'
+
+Subject: ADD NURSE AND RESIDENT ROLES/SHIFT REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch EDP*2.0*7 addresses the following two (2) issues:
+  
+ 1. I10849240FY16 - Users who have never been assigned an EDIS staff role 
+    see Assess and Visit buttons in triplicate.
+  
+ 2. I10842158FY16 - The Shift Report is generating incorrect data.
+  
+  
+ Defect Tracking System Tickets(s) & Overview:
+ =============================================
+  
+ 1. I10849240FY16 - Emergency Department Integrated Software - GUI 
+                       Issue:
+  
+    Problem:
+    --------
+    Users who have been given EDIS access can log in to EDIS without being
+    assigned an EDIS staff role through the Assign Staff screen. When these
+    users enter into a patient's worksheet they see Assess and Visit 
+    buttons in triplicate.
+  
+    Technical Explanation:
+    ----------------------
+    EDIS is attempting to give these users access to all worksheets. It
+    goes through each role's worksheets and assigns them to the user. Since
+    the Assess and the Visit worksheets are assigned to all three roles
+    access is given three times and these buttons show up three times each.
+  
+    Resolution:
+    -----------
+    Routine EDPBWS has been modified to check that the Assess and Visit
+    worksheets are only given once per user.
+  
+    Routine:EDPBWS
+  
+ 2. I10842158FY16 - Emergency Department Integrated Software - Reports 
+                    Issue:
+  
+    Problem:
+    --------
+    The Shift Report is generating incorrect data because it is not
+    properly counting New Patients. The problem is due to a programming
+    error which causes the report to exit the code which calculates data
+    related to admissions.
+  
+    Technical Explanation:
+    ----------------------
+    Internally, the shift report code gives each shift column a written out
+    numeral title (ie "one" instead of "1") however a check point at the
+    start of the report only handles number values.
+  
+    Resolution:
+    -----------
+    Routine EDPRPT5 has been modified to correct the check point. 
+  
+    Routine:EDPRPT5
+  
+ Test Sites:
+ -----------
+ Lexington VAMC 
+ Overton Brooks VAMC (Shreveport)
+  
+  
+ Patch Installation:
+  
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      EDP*2.0*7:
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', answer NO.
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  7.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EMERGENCY DEPARTMENT;**[Patch List]**;Feb 24, 2012;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EDPBWS
+    Before:B229022529   After:B235189948  **6,7**
+ Description of Changes:
+  Routine EDPBWS has been modified to check that the Assess and Visit 
+  worksheets are only given once per user.
+
+Routine Name: EDPRPT5
+    Before: B52072453   After: B54053972  **7**
+ Description of Changes:
+  Routine EDPRPT5 has been modified to correct the check point.
+
+ 
+Routine list of preceding patches: 6
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2013
+Completed By:                               Date Completed: AUG 02, 2018
+Released By :                               Date Released : AUG 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

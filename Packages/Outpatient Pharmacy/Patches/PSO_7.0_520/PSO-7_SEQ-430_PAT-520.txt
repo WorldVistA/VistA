@@ -1,0 +1,468 @@
+$TXT Created by                LLOYD at NUMI.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 03/30/18 at 10:56
+=============================================================================
+Run Date: APR 24, 2018                     Designation: PSO*7*520
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #430                      Status: Released
+                  Compliance Date: APR 26, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*467   <<= must be installed BEFORE `PSO*7*520'
+                    (v)PSO*7*500   <<= must be installed BEFORE `PSO*7*520'
+                    (v)PSO*7*506   <<= must be installed BEFORE `PSO*7*520'
+
+Subject: INBOUND ERX V2 MAINTENANCE RELEASE 1
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ Description:
+ ------------
+ Veterans Health Administration (VHA) has requested a maintenance build 
+ be released to remedy the current high priority defects that persist in 
+ the Electronic Prescription(eRx) software released by the VA Pharmacy 
+ Re-Engineering(PRE) Inbound ePrescribing project. The installation of 
+ patch PSO*7*520 will resolve deficiencies ranging from user display 
+ errors to the method of gathering the necessary information to
+ successfully process and prescribe an eRx.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name(Number)          Field Name(Number)         New/Modified/Deleted
+ -----------------          ------------------         --------------------
+  
+ ERX EXTERNAL PATIENT (#52.46) GENDER(#.07)                   MODIFIED
+  
+ ERX HOLDING QUEUE (#52.49)    FACILITY NAME(#70.1)             NEW
+                               FACILITY ADDRESS LINE 1(#70.2)   NEW
+                               FACILITY ADDRESS LINE 2(#70.3)   NEW
+                               FACILITY CITY(#70.4)             NEW
+                               FACILITY STATE(#70.5)            NEW
+                               FACILITY ZIP CODE(#70.6)         NEW
+                               PLACE LOCATION QUALIFIER(#70.7)  NEW
+                               FACILITY IDENTIFICATION(#71)     NEW
+                               FACILITY COMMUNICATION(#72)      NEW 
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Option Name                          Type               
+ New/Modified/Deleted
+ -----------                          ----               
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Rational Defects:
+ -----------------
+  
+ Defect: 466698
+ --------------
+ Facility segment data and the payer name value included in the benefits 
+ coordination segment of the incoming XML message are not being filed
+ into the ERX HOLDING QUEUE file (#52.49).
+  
+ Resolution:
+ -----------
+ Routine PSOERXA1 has been modified to properly retrieve and file the 
+ payer name data and facility data into the appropriate fields in the ERX
+ HOLDING QUEUE file (#52.49).
+  
+ Defect: 607871
+ --------------
+ When using the 'Print' action in the eRx holding queue, the written date
+ is displaying the '@' character at the end of the date.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1C has been modified to move the written date to its own
+ line, and display the full date and time the prescription was written.
+  
+ Defect: 548724
+ --------------
+ When using the 'Print' action in the eRx holding queue, the prescriber 
+ name is being displayed in the format of first, middle, last. The
+ requirements state that the name should be displayed in the format of
+ last, first, middle.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1C has been modified to properly display the prescriber
+ name in the format of last, middle, first.
+  
+ Defect: 557356
+ --------------
+ The word "prescription" is misspelled during a dialog that is displayed 
+ to the user while trying to renew a prescription.
+  
+ Resolution:
+ -----------
+ Routine PSOERXX1 has been modified to correct the spelling of the word 
+ "prescription".
+  
+ Defect: 565020
+ --------------
+ When validating a drug, the prompt for the route does not require a 
+ response.
+  
+ Resolution:
+ -----------
+ Routine PSOERXD2 has been modified to change the prompt for the route to 
+ require a response.
+  
+ Defect: 588119
+ --------------
+ When validating a drug, the prompt for the schedule will currently file an
+ entry that is of a lower-case format.
+  
+ Resolution:
+ -----------
+ Routine PSOERXD2 has been modified so that the prompt for the schedule
+ will convert all lower-case responses to an upper-case format before
+ filing the entry into File Manager.
+  
+ Defect: 596352
+ --------------
+ The eRx holding queue display, eRx patient validation screen, and the 
+ print screen are not displaying the full 107 characters of the eRx patient
+ name.
+  
+ Resolution:
+ -----------
+ Routines PSOERXP1, PSOERX1, and PSOERX1C have been modified so that the 
+ eRx holding queue display, eRx patient validation screen, and the print
+ screen will all display the full 107 characters for the eRx patient name.
+  
+ Defect: 600269
+ --------------
+ Currently, the print screen does not display the prescriber's telephone
+ number, fax number, agent first name, agent last name, agent middle name,
+ or supervisor.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1C has been modified to display the prescriber's telephone
+ number, fax number, agent first name, agent last name, agent middle name,
+ and supervisor. 
+  
+ Defect: 617437
+ --------------
+ Allergy information is not displaying to the user on the patient
+ validation screen, the eRx summary screen, or the drug validation screen.
+  
+ Resolution:
+ -----------
+ Routines PSOERXU1, PSOERX1, and PSOERXP1 have been modified to retrieve
+ the allergy information and display this data to the user on the patient
+ validation screen, the eRx summary screen, and the drug validation screen.
+  
+ Defect: 619341
+ --------------
+ The patient validation screen is not displaying the gender option of 
+ "U"(UNKNOWN) to the user.
+  
+ Resolution:
+ -----------
+ A new code has been added to the GENDER (#.07) field of the ERX EXTERNAL
+ PATIENT file (#52.46), allowing the user to select the gender "U"(UNKNOWN)
+ when prompted for the gender.
+  
+ Defect: 619342
+ --------------
+ The patient validation screen is not displaying the full 35 characters for
+ the eRx patient name and city.
+  
+ Resolution:
+ -----------
+ PSOERXP1 has been modified to display the full 35 characters for the eRx 
+ patient name and city.
+  
+ Defect: 619355
+ --------------
+ The provider validation screen is not displaying the full 35 characters
+ for the NPI and DEA number.
+  
+ Resolution:
+ -----------
+ Routine PSOERXR1 has been modified so that the full 35 characters
+ of the NPI and DEA number are displayed to the user on the provider 
+ validation screen.
+  
+ Defect: 624018
+ --------------
+ The print screen is not displaying the full 35 characters for the 
+ quantity qualifier, strength, and drug form.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1C has been modified to display the full 35 characters for 
+ the quantity qualifier, strength, and drug form.
+  
+ Defect: 624536
+ --------------
+ The supervisor and agent last name are not displaying to the user on the 
+ provider validation screen.
+  
+ Resolution:
+ -----------
+ Routine PSOERXR1 has been modified to display the supervisor and agent 
+ last name on the provider validation screen.
+  
+ Defect: 541803
+ --------------
+ The software is asking to validate prescriptions that have already been 
+ accepted. 
+  
+ Resolution:
+ -----------
+ Routine PSOERX1B has been modified to no longer execute the bulk 
+ validation procedure on eRx prescriptions that have already been
+ processed.
+  
+ Defect: 684353
+ --------------
+ When a user is working on an eRx that does not have a refill value, the
+ 'Refills:' display is always blank. This needs to be changed to display
+ the refill qualifier in the event refills are blank.
+  
+ Resolution:
+ -----------
+ Routines PSOERX1, PSOERX1C, PSOERXD1, and PSOERXU1 have been modified to
+ first check the refill value. If no refill value is found, the display
+ will utilize the refill qualifier so the user is made fully aware of the
+ physicians intent for the prescription.
+  
+ Defect: 601026
+ --------------
+ When a user is validating a drug in the drug validation process, the 
+ quantity, days supply, and refill algorithms are not being used to
+ restrict the number of refills possible for the current medication.
+  
+ Resolution:
+ -----------
+ Modified PSOERXD2 and added QTYDSRFL^PSOERXU4 to properly invoke the logic
+ currently being used in the edit of prescriptions in outpatient pharmacy.
+ This will provide consistency and accuracy when editing the quantity, days
+ supply, and refill values.
+  
+ Defect: 619348
+ --------------
+ The NPI and state license number fields overlap on the provider 
+ validation screen. There is no space between them to create separation.
+  
+ Resolution:
+ -----------
+ Routine PSOERXR1 has been modified to move the display of the NPI and 
+ state license number to their own lines.
+  
+ Defect: 600729
+ --------------
+ On the pending queue screen, the display of street address line 1 and city
+ overlap. There is no space between them to create separation.
+  
+ Resolution:
+ -----------
+ Routine PSOERXU1 has been modified to display steet address line 1 and 
+ city on separate lines.
+  
+ Defect: 702742
+ --------------
+ When validating a drug and using a free text dosage, it has been found 
+ that scenarios exist which populate the QUANTITY/FORM (#.01) field of the
+ ERX HOLDING QUEUE sub-file QUANTITY/TIMING (#52.4921) With the "&"
+ character.
+  
+ Resolution:
+ -----------
+ PSOERXD2 has been modified to utilize an existing variable, P01,
+ instead of a separate calculation. During review it was determined the
+ variable P01 contains the information needed by the QUANTITY/FORM (#.01)
+ field of the ERX HOLDING QUEUE QUANTITY/TIMING sub-file (#52.4921).
+  
+ A post installation routine, PSO520PO, has been created to identify and
+ repair all entries in the PENDING OUTPATIENT ORDERS file (#52.41) and ERX
+ HOLDING QUEUE sub-file QUANTITY/TIMING (#59.4921).
+  
+ Defect: 708087
+ --------------
+ An undefined error is occurring in routine PSOERXA1 when the variable 
+ PNAME is not populated by the incoming XML message.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1A has been modified to ensure PNAME is initialized, 
+ preventing the possibility of an undefined error.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ Defect: 702330 (CA SDM Ticket Number: R19336791FY18)
+ ----------------------------------------------------
+ Problem:
+ --------
+ While using the EDIT action when validating a drug, an error occurs when 
+ the schedule is populated by the user.
+  
+ Resolution:
+ -----------
+ Replaced: 
+  S SCH=Y D SCH^PSOSIG I $G(SCH)']"" G SCH
+  S PSORXED("SCHEDULE",ENT)=SCH W " ("_SCHEX_")" K SCH,SCHEX,X,Y,PSOSCH
+ With: 
+  S SCH=$$SCHASL^PSOORED5(Y) D SCH^PSOSIG I 
+  $G(SCH)']""!($D(DTOUT))!($D(DUOUT)) G SCH
+  S PSORXED("SCHEDULE",ENT)=SCH IF $G(SCHEX)'="" W " ("_SCHEX_")" K 
+  SCH,SCHEX,X,Y,PSOSCH
+  
+ Test Sites:
+ ----------
+ MEDS BY MAIL
+ OZARKS
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*520.
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch PSO*7.0*520 to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include KIDS notice of incompletion or hard errors) resulting from the 
+ installation of this patch. You must have concurrence from  Health 
+ Product Support before a rollback can occur. Enter a CA helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 52
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO520PO
+    Before:       n/a   After:  B4838824  **520**
+Routine Name: PSOERX1
+    Before: B73483713   After: B78113313  **467,520**
+Routine Name: PSOERX1B
+    Before:B201661947   After:B154507607  **467,506,520**
+Routine Name: PSOERX1C
+    Before: B35864468   After: B40751092  **467,520**
+Routine Name: PSOERXA1
+    Before:B228588207   After:B233267035  **467,520**
+Routine Name: PSOERXA2
+    Before: B75232526   After:B104569280  **467,520**
+Routine Name: PSOERXD1
+    Before:B120565051   After:B127051416  **467,520**
+Routine Name: PSOERXD2
+    Before:B205488607   After:B211196189  **467,506,520**
+Routine Name: PSOERXO1
+    Before: B57309099   After: B64732722  **467,520**
+Routine Name: PSOERXP1
+    Before: B23837983   After: B27447625  **467,520**
+Routine Name: PSOERXR1
+    Before: B24483319   After: B31327096  **467,520**
+Routine Name: PSOERXU1
+    Before: B72865919   After: B88661299  **467,520**
+Routine Name: PSOERXU4
+    Before:       n/a   After: B35485114  **520**
+Routine Name: PSOERXX1
+    Before: B44864162   After: B45537071  **467,520**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 09, 2018
+Completed By:                               Date Completed: APR 24, 2018
+Released By :                               Date Released : APR 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

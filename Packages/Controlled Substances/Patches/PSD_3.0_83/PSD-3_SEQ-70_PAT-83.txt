@@ -1,0 +1,225 @@
+$TXT Created by                at VIPDEV31.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 05/01/18 at 09:29
+=============================================================================
+Run Date: AUG 01, 2018                     Designation: PSD*3*83
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #70                      Status: Released
+                  Compliance Date: SEP 01, 2018
+=============================================================================
+
+Associated patches: (v)PSD*3*73    <<= must be installed BEFORE `PSD*3*83'
+
+Subject: ECME # ON DIGITALLY SIGNED CS ORDERS REPORT/SUBOXONE REPORT COUNT FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Enhancements have been made to the Digitally Signed CS Orders Report [PSD 
+ DIGITALLY SIGNED ORDERS] to now include the Electronic Claims Management 
+ Engine (ECME) number. Additionally, the DEA DATA - Waived Practitioner 
+ Report [PSD DEA SUBOXONE] has been modified to correct the patient count 
+ in the summary view of the report. Previously, the summary view was 
+ counting the number of prescriptions, rather than the number of patients. 
+ New logic has been added to properly count the number of patients.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20130711
+  
+ Item #1:
+ --------
+ Enhance the report 'Digitally Signed CS Orders Report' 
+ [PSD DIGITALLY SIGNED ORDERS] so it includes the Electronic Claims 
+ Management Engine number (ECME) (when present). This allows users the
+ capability of demonstrating DEA compliance of controlled substance 
+ prescriptions.
+  
+ Resolution:
+ -----------
+ Routine PSDDSOR1 has been modified to include the ECME number in the 
+ report details.
+  
+ Item #2:
+ --------
+ The summary report incorrectly counted total prescriptions per provider 
+ instead of unique patients per provider.
+  
+ Resolution:
+ -----------
+ Routine PSDSUBOX has been modified to capture each unique patient per 
+ provider.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ New York Harbor
+ Kansas City
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ No documentation updates. 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Patch PSD*3.0*83 will update two routines, PSDDSOR1 and PSDSUBOX.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSD*3.0*83.
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+      
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSD*3.0*83 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSD*3.0*83 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;Feb 13,1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDDSOR1
+    Before: B31741433   After: B34383843  **40,67,73,83**
+Routine Name: PSDSUBOX
+    Before: B32552011   After: B34180714  **73,83**
+ 
+Routine list of preceding patches: 73
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2017
+Completed By:                               Date Completed: AUG 01, 2018
+Released By :                               Date Released : AUG 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

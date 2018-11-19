@@ -1,0 +1,242 @@
+$TXT Created by                   DEVVLD.DOMAIN.EXT  (KIDS) on Monday, 04/23/18 at 12:09
+=============================================================================
+Run Date: MAY 31, 2018                     Designation: PRCA*4.5*339
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #294                    Status: Released
+                  Compliance Date: JUL 01, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*315<<= must be installed BEFORE `PRCA*4.5*339'
+
+Subject: REVENUE ENHANCEMENTS MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow-up patch to PRCA*4.5*315. It contains some minor defect 
+ repairs to several of the reports on the Cross-Servicing Menu [RCTCSP MENU]. 
+ It also contains a defect repair for the Excel output of the Claims Matching 
+ Report [RCDP CLAIMS MATCH] and also fixes some device handling issues. 
+  
+ The following is a list of these minor defect repairs.
+  
+ Rational   Project
+ Defect#    Issue#    Description
+ --------   -------   -----------
+ 711497     217       CS-RECALL RPT DEBTOR RECALL USER ID DOES NOT DISPLAY
+ 712033     218       CS - PRINT CS RPT ^ NOT WORKING
+ 714460     219       CS - PRINT CS RPT MAILMAN QUEUE NOT WORKING
+ 720080     220       Claims Matching - Stack Error Excel by Care Type
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Durham
+ Central Alabama
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Albany:                      domain.ext
+ Hines:                       domain.ext  
+ Salt Lake City:              domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Deployment, Installation, Back-Out,    PRCA_4_5_P339_IG.PDF     Binary
+   and Rollback Guide (PRCA*4.5*339)      
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 10 seconds to 
+ install.
+  
+  
+ Installation Instructions:
+ --------------------------
+   1. Choose the PackMan message containing this patch.
+  
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+   3. From the Kernel Installation and Distribution System Menu, select the 
+      Installation Menu.  From this menu, you may elect to use the following 
+      options. When prompted for the INSTALL NAME enter PRCA*4.5*339.
+  
+      a. Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not backup
+         any other changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will allow you
+         to view all changes that will be made when this patch is installed.  It
+         compares all components of this patch routines, DDs, templates, etc.
+  
+      c. Verify Checksums in Transport Global - This option will allow you to
+         ensure the integrity of the routines that are in the transport global.
+  
+   4. From the Installation Menu, select the Install Package(s) option and 
+      choose the patch to install.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+      Enter NO
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//' Enter NO
+  
+   7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPRTEX
+    Before: B59632459   After: B61987931  **315,339**
+Routine Name: RCDPRTP
+    Before: B13526370   After: B14083064  **151,186,315,339**
+Routine Name: RCDPRTP0
+    Before: B47346688   After: B54155958  **151,315,339**
+Routine Name: RCDPRTP1
+    Before: B49619894   After: B48815425  **151,169,276,284,315,339**
+Routine Name: RCTCSJR
+    Before:B123788872   After:B124960188  **301,315,339**
+Routine Name: RCTCSP1
+    Before:B168089833   After:B172072875  **301,331,315,339**
+Routine Name: RCTCSP2
+    Before:B136461756   After:B136606046  **301,315,339**
+Routine Name: RCTCSP4
+    Before:B223432725   After:B221716971  **315,339**
+Routine Name: RCTCSP5
+    Before: B97137563   After:B102095526  **315,339**
+Routine Name: RCTCSPD4
+    Before: B88942969   After: B88898329  **315,339**
+Routine Name: RCTCSPD5
+    Before: B19971041   After: B19943104  **315,339**
+Routine Name: RCTCSWL1
+    Before: B54202527   After: B54064527  **315,339**
+ 
+Routine list of preceding patches: 315
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2018
+Completed By:                               Date Completed: MAY 29, 2018
+Released By :                               Date Released : MAY 31, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,219 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Wednesday, 04/25/18 at 09:02
+=============================================================================
+Run Date: AUG 15, 2018                     Designation: DG*5.3*955
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #842                    Status: Released
+                  Compliance Date: SEP 15, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*950  <<= must be installed BEFORE `DG*5.3*955'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ACTIVE DUAL CONSUMER (ADC)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ DG*5.3*950 is the only required build for patch DG*5.3*955.
+  
+ The following enhancement exported in this patch to incorporate the
+ Active DUAL Consumer (ADC) Health Level Seven (HL7) messaging process
+ that was previously implemented through the Bi-Directional Health
+ Information Exchange (BHIE) in the Master Veteran Index (MVI)
+ application, was requested by the MVI Architectural group. 
+  
+ Enhancement
+ To support the changes required to incorporate the HL7 messaging process
+ for ADC, routine VAFCPTAD was updated to now allow these specific record
+ additions to Station 200 (AUSTIN) to flow through the Remote Procedure
+ Call (RPC) [VAFC VOA ADD PATIENT]. The existing requirement in this RPC
+ for ensuring that the 'preferred facility' that the record is being added
+ to is a Veteran Affairs Medical Center (VAMC) has been removed when the
+ record addition is being transmitted to Station 200 (AUSTIN), because it
+ is NOT a VAMC. 
+    
+      
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+   
+ Test Sites:
+ ----------
+ Bay Pines VAMC
+ Salt Lake City HCS
+     
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes. 
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system, but it is recommended that
+ installation occur during off hours. No options or protocols need
+ to be disabled and the installation may be queued.
+    
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*955):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan
+ -------------
+ The DG back-out procedure would consist of just restoring the original
+ routine using the back-up message created during the patch installation.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VAFCPTAD
+    Before: B72347771   After: B73211296  **149,800,876,944,950,955**
+ 
+Routine list of preceding patches: 950
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2018
+Completed By:                               Date Completed: AUG 15, 2018
+Released By :                               Date Released : AUG 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

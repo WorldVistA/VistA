@@ -1,0 +1,404 @@
+
+=============================================================================
+Run Date: SEP 14, 2018                     Designation: GMTS*2.7*94
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #113                    Status: Released
+                  Compliance Date: OCT 15, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*294   <<= must be installed BEFORE `GMTS*2.7*94'
+
+Subject: MEDICATION RECONCILIATION HS COMPONENT TOOL #1 (MED RECON PROFILE)  
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The purpose of this patch is to correct a series of issues reported 
+ with the Medication Reconciliation Tool #1.
+  
+ This patch also creates a replica of this called Medication Reconciliation
+ No Glossary Tool #1. When the end user selects the Essential Med List For
+ Review option, it will generate similar report data but without the
+ glossary at the end.
+  
+ This patch is part of a multi-package build that contains the following 
+ two patches:
+     GMTS*2.7*94
+     PSO*7.0*314
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                       Type          New/Modified/Deleted
+ -----------                       ----          -------------------- 
+ GMTS PS MED RECON CONFIG CHECK    run routine   New
+ GMTS IRM/ADPAC MAINT MENU         menu          Modified
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO #1262 - Medications from remote VA data missing from Medication 
+ Reconciliation profile
+ PSPO #1861 - The CPRS Medication Reconciliation Report omits Inpatient 
+ Meds for Outpatient (IMO) IV orders with a schedule type of "On Call"
+ PSPO #1922 - Med Recon "Remote Data Object" active medications displaying 
+ incomplete prescription information from DoD - private pharmacy 
+ prescriptions retrieval
+ PSPO #2376 - Med Recon omits some expired medications
+ PSPO #2570 - Medication Reconciliation Health summary does not provide an 
+ inclusive list of all Expired/Discontinued medications from the last year
+ PSPO #2605 - several instances whereby the Medication Reconciliation 
+ Health Summary (from the CPRS Reports tab) printed/displayed erroneous 
+ prescription directions (SIG) for 'Pending' outpatient prescriptions
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  INC  290787 - Meds held from remote VA data are not being pulled in
+                   med reconciliation profile.
+     INC 1241749 - Health Summary - Other
+  
+ Problem:
+ -------
+ There was no (local) Inpatient order for simvastatin, but there was a 
+ remote Outpatient order that the clinical pharmacist using the report 
+ couldn't see. This was due to the fact the remote medication was on hold.
+  
+ Resolution:
+ ----------
+ Usage of data from other VA pharmacies via Remote Data Interoperability 
+ (RDI) updated to include prescriptions where the status is 'HOLD'.
+  
+ 2.  INC 296479 - Med Recon Tool #1 sometimes missing BCMA data
+  
+ Problem:
+ -------
+ In some cases, the BCMA last action is not reported for all items, 
+ particularly large volume IVs. 
+  
+ Resolution:
+ ----------
+ The issue was caused due to the structure of the code that was retrieving
+ order text information. For any order without certain order text, the 
+ processing would stop before retrieving the BCMA last action. The code has
+ been restructured to prevent this.
+  
+ 3.  INC 297716 - Medication Reconciliation Report
+  
+ Problem:
+ -------
+ Clinic Medications have no indication that they are clinic meds. They 
+ appear with 'INPT' as the service.
+  
+ Resolution:
+ ----------
+ A new Application Programming Interface (API) has been provided to allow 
+ the tool to determine if an order is a Clinic Medication. The clinic 
+ medications will now display 'CLIN', rather than 'INPT'.
+  
+ 4.  INC  297723 - Most recent order not showing on med reconciliation 
+                   report
+     INC  300608 - Wrong release date shown in med reconciliation tool #1
+     INC  314592 - Medication reconciliation summary not working as
+                   expected
+     INC  347375 - Medication missing from Med Rec HS
+     INC  439391 - Tool #1 Medication Reconciliation Profile - medication 
+                   not displaying
+     INC  528436 - Drugs displayed wrong on Meds tab
+     INC  812381 - Outpatient Pharmacy - Medication Reconciliation issue
+     INC 1001674 - Health Summary Medication Reconciliation Class I not 
+                   pulling all the data into this reports which is
+                   additionally affecting our local reports which depends
+                   on it.
+     INC 1000262 - Med Rec not displaying correct medication order
+  
+ Problem:
+ -------
+ There were two orders for the same medication but the one that displayed 
+ on the report was the older of the two.
+  
+ Resolution:
+ ----------
+ The program has been revised to look at the correct date field on the 
+ prescriptions and no longer infer that the latest expiration date implied 
+ the latest prescription.
+  
+ 5.  INC 413004 - Med Reconciliation Awkward for Provider Comments
+  
+ Problem:
+ -------
+ Provider comments that contained multiple lines were not printing 
+ correctly.
+  
+ Resolution:
+ ----------
+ The tool was modified to display multiple line provider comments in a 
+ more readable fashion. 
+  
+ 6.  INC 432276 - Remote Meds Object and DoD Meds
+     INC 620679 - RDIM pulls up old info which is still listed as active
+     INC 831528 - Old DoD order on med rec health summary
+  
+ Problem:
+ -------
+ The issue is caused due to the fact that the Clinical/Health Data 
+ Repository (CHDR) has no update that marks Department of Defense (DoD) 
+ prescriptions have expired.
+  
+ Resolution:
+ ----------
+ The program was updated to assume that DoD prescriptions with an issue 
+ date more than 1 year in the past must be, by definition, now expired or 
+ discontinued and will no longer be considered 'ACTIVE' even though that 
+ is precisely what is returned by the CHDR data.
+  
+ 7.  INC  469644 - Medication Reconciliation Component
+     INC 1019113 - Medication Reconciliation displaying wrong Sig for
+                   medication
+  
+ Problem:
+ -------
+ The section of the report that showed 'Other medications previously 
+ dispensed in the last year' was misleading. For example, prescriptions 
+ with no refills that were over 120 days old would not display at all. In 
+ some cases, this led to the belief that the Sig that was displaying was 
+ incorrect.
+  
+ Resolution:
+ ----------
+ The section in question has been removed from the report and the 
+ medications needed for the report were incorporated into the main body of 
+ the report.
+  
+ 8.  INC 616298 - IV Order with OC set does not show on Med Recon report
+  
+ Problem:
+ -------
+ Whenever an IV order was set to On Call (not the schedule On Call), then 
+ the order no longer appeared on the Medication Reconciliation Report.
+  
+ Resolution:
+ ----------
+ System was modified to recognize the On Call property flag for IV types 
+ of admixtures. 
+  
+  
+  
+ Test Sites:
+ ----------
+ Tennessee Valley VAMC
+ Sheridan VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ https://www.domain.ext/vdl/
+  
+  
+ Title                           File Name                     FTP Mode
+ -----------------------------------------------------------------------
+ Medication Reconciliation       GMTS_2_7_P94_PSO_7_P314_IG   Binary
+  Health Summary (HS) Component
+  (Tool #1) and Allergies/ADRs
+  Component (Tool #5)
+  Installation Guide
+ Health Summary User Manual      GMTS_2_7_UM.DOCX             Binary
+                                 GMTS_2_7_UM.PDF              Binary
+ Health Summary Technical Manual GMTS_2_7_TM.DOCX             Binary
+                                 GMTS_2_7_TM.PDF              Binary
+  
+  
+ The software is being released in a multi-package build:
+  
+ GMTS_2_7_94_PSO_7_314.KID                                    ASCII
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 10 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Load the host file using the "Load a Distribution" option 
+     on the VistA XPD Installation Menu.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter:
+     GMTS*2.7*94 / PSO*7.0*314 COMBINED BUILD
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.). 
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.  From the Installation Menu, select the Install Package(s)
+     option and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' 
+  
+ 6.   When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//'
+  
+ 7.   When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//' 
+  
+ 8.   If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The Post Installation routine GMTSPI94 can be manually deleted after it
+ runs; it does not get automatically deleted.
+  
+ Back-out / Rollback Strategy:
+ ----------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. In order to Back-out the patch, 
+ the following steps should be undertaken:
+  
+ 1. Use GMTS TYPE ENTER/EDIT VistA option to change the HS Type "Essential
+ Med List for Review" from the HEALTH SUMMARY TYPE (#142) File back to
+ "Medication Reconciliation."  Within the same option delete HS Components
+ MRT1 (or alternately MRR1) & MRT5 from this HS Type.  Then add back in
+ BADR, RART & MRP Components.
+ 2. Use the Disable/Enable Health Summary Component option underneath the 
+ Health Summary Maintenance menu [GMTS IRM/ADPAC MAINT MENU] to Disable the
+ HS Components MRT1, MRT4, MRT5 & MRR1 from the HEALTH SUMMARY COMPONENT
+ (#142.1) File. When prompted for DISABLE FLAG, choose P - permanent. 
+ Also, you must enter in an appropriate OUT OF ORDER MESSAGE such as
+ 'GMTS*2.7*94 / PSO*7*314 Backed Out per Facility CIO.'
+ 3. Modify VistA menu [GMTS IRM/ADPAC MAINT MENU] Health Summary 
+ Maintenance Menu to take out the call to [GMTS PS MED RECON CONFIG CHECK] 
+ Check Medication Reconciliation Configuration VistA option.
+ 4. Delete VistA option [GMTS PS MED RECON CONFIG CHECK] Check Medication 
+ Reconciliation Configuration.
+ 5. Use [XTRDEL] Delete Routines VistA option to delete GMTSGLOS, 
+ GMTSPI94, GMTSPSCK, GMTSPST1, GMTSPST4, GMTSPST5, GMTSPSTN and GMTSPSTR 
+ routines.
+ 6. From the Transport Global Backup, restore the PSO5241 routine to its 
+ original pre-PSO*7.0*314 version.
+  
+ There are no Rollback instructions for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSGLOS
+    Before:       n/a   After: B14557009  **94**
+Routine Name: GMTSPI94
+    Before:       n/a   After:  B7561147  **94**
+Routine Name: GMTSPSCK
+    Before:       n/a   After:  B5589868  **94**
+Routine Name: GMTSPST1
+    Before:       n/a   After:B167015680  **94**
+Routine Name: GMTSPST4
+    Before:       n/a   After: B17358718  **94**
+Routine Name: GMTSPST5
+    Before:       n/a   After: B13367450  **94**
+Routine Name: GMTSPSTN
+    Before:       n/a   After:B180171627  **94**
+Routine Name: GMTSPSTR
+    Before:       n/a   After:  B1733586  **94**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 19, 2009
+Completed By:                               Date Completed: SEP 13, 2018
+Released By :                               Date Released : SEP 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

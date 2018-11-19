@@ -1,0 +1,769 @@
+EMERGENCY Released PRC*5.1*208 SEQ #181
+Extracted from mail message
+**KIDS**:PRC*5.1*208^
+
+**INSTALL NAME**
+PRC*5.1*208
+"BLD",11156,0)
+PRC*5.1*208^IFCAP^0^3180718^y
+"BLD",11156,1,0)
+^^3^3^3180718^
+"BLD",11156,1,1,0)
+Modify $3500 limit to be $10000 for micro-purchase threshold for goods 
+"BLD",11156,1,2,0)
+and services. Also, the SPL was increased to $10000 for all PCards for 
+"BLD",11156,1,3,0)
+simplified orders.
+"BLD",11156,4,0)
+^9.64PA^^
+"BLD",11156,6.3)
+1
+"BLD",11156,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11156,"KRN",.4,0)
+.4
+"BLD",11156,"KRN",.401,0)
+.401
+"BLD",11156,"KRN",.402,0)
+.402
+"BLD",11156,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",11156,"KRN",.402,"NM",1,0)
+PRCHSIMP    FILE #442^442^0
+"BLD",11156,"KRN",.402,"NM","B","PRCHSIMP    FILE #442",1)
+
+"BLD",11156,"KRN",.403,0)
+.403
+"BLD",11156,"KRN",.5,0)
+.5
+"BLD",11156,"KRN",.84,0)
+.84
+"BLD",11156,"KRN",3.6,0)
+3.6
+"BLD",11156,"KRN",3.8,0)
+3.8
+"BLD",11156,"KRN",9.2,0)
+9.2
+"BLD",11156,"KRN",9.8,0)
+9.8
+"BLD",11156,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",11156,"KRN",9.8,"NM",1,0)
+PRCHNPO^^0^B63175174
+"BLD",11156,"KRN",9.8,"NM",2,0)
+PRCHCON1^^0^B27177150
+"BLD",11156,"KRN",9.8,"NM","B","PRCHCON1",2)
+
+"BLD",11156,"KRN",9.8,"NM","B","PRCHNPO",1)
+
+"BLD",11156,"KRN",19,0)
+19
+"BLD",11156,"KRN",19.1,0)
+19.1
+"BLD",11156,"KRN",101,0)
+101
+"BLD",11156,"KRN",409.61,0)
+409.61
+"BLD",11156,"KRN",771,0)
+771
+"BLD",11156,"KRN",779.2,0)
+779.2
+"BLD",11156,"KRN",870,0)
+870
+"BLD",11156,"KRN",8989.51,0)
+8989.51
+"BLD",11156,"KRN",8989.52,0)
+8989.52
+"BLD",11156,"KRN",8994,0)
+8994
+"BLD",11156,"KRN","B",.4,.4)
+
+"BLD",11156,"KRN","B",.401,.401)
+
+"BLD",11156,"KRN","B",.402,.402)
+
+"BLD",11156,"KRN","B",.403,.403)
+
+"BLD",11156,"KRN","B",.5,.5)
+
+"BLD",11156,"KRN","B",.84,.84)
+
+"BLD",11156,"KRN","B",3.6,3.6)
+
+"BLD",11156,"KRN","B",3.8,3.8)
+
+"BLD",11156,"KRN","B",9.2,9.2)
+
+"BLD",11156,"KRN","B",9.8,9.8)
+
+"BLD",11156,"KRN","B",19,19)
+
+"BLD",11156,"KRN","B",19.1,19.1)
+
+"BLD",11156,"KRN","B",101,101)
+
+"BLD",11156,"KRN","B",409.61,409.61)
+
+"BLD",11156,"KRN","B",771,771)
+
+"BLD",11156,"KRN","B",779.2,779.2)
+
+"BLD",11156,"KRN","B",870,870)
+
+"BLD",11156,"KRN","B",8989.51,8989.51)
+
+"BLD",11156,"KRN","B",8989.52,8989.52)
+
+"BLD",11156,"KRN","B",8994,8994)
+
+"BLD",11156,"QDEF")
+^^^^^^^^^^YES
+"BLD",11156,"QUES",0)
+^9.62^^
+"BLD",11156,"REQB",0)
+^9.611^1^1
+"BLD",11156,"REQB",1,0)
+PRC*5.1*192^2
+"BLD",11156,"REQB","B","PRC*5.1*192",1)
+
+"KRN",.402,1993,-1)
+0^1
+"KRN",.402,1993,0)
+PRCHSIMP^3180718.1416^^442^^^3151117
+"KRN",.402,1993,"DIAB",1,0,442,6)
+P.O. DATE//TODAY
+"KRN",.402,1993,"DIAB",2,0,442,7)
+PCDO VENDOR;REQ
+"KRN",.402,1993,"DIAB",2,0,442,8)
+FREE TEXT VENDOR;REQ
+"KRN",.402,1993,"DIAB",7,0,442,2)
+SUBSTATION;REQ
+"KRN",.402,1993,"DIAB",10,0,442,9)
+PURCHASE COST;REQ
+"KRN",.402,1993,"DR",1,442)
+Q:'$D(PRC("SITE"))  S (PRCHN("SVC"),PRCHN("CC"),PRCHN("SC"),PRCHN("INV"))="",PRCHN("SFC")=+$P(^PRC(442,DA,0),U,19),PRCHN("FOB")=$S($D(^(1)):$P(^(1),U,6),1:""),PRCHN(12)=$S($D(^PRC(442,DA,12)):^(12),1:"");
+"KRN",.402,1993,"DR",1,442,1)
+S PRCHPONO=$P(^PRC(442,DA,0),U,1),PRCHSTN=$P(PRCHPONO,"-") S PRCHIEN=DA;S PRCX=$O(^PRC(411,PRC("SITE"),1,0)) S:$G(PRCX)]"" PRCY=$P($G(^PRC(411,PRC("SITE"),1,PRCX,0)),U) K PRCX;S PRCHDUZ=$P(^VA(200,DUZ,0),U,1);16////^S X=DUZ;
+"KRN",.402,1993,"DR",1,442,2)
+56////^S X=DUZ;.02///^S X=25;48///^S X="S";63///^S X=1;54///^S X="N";I '$D(^PRC(411,"UP",PRC("SITE"))) S Y="@46";31R~;S SUB=X;I $D(SUB) S PRCX=$O(^PRC(411,SUB,1,0)) S:$G(PRCX)]"" PRCY=$P($G(^PRC(411,SUB,1,PRCX,0)),U) K PRCX;@46;
+"KRN",.402,1993,"DR",1,442,3)
+S PRCHCDNO=$P($G(^PRC(442,DA,23)),U,8);S PRCHNN=0 F PRCHII=1:1 S PRCHNN=$O(^PRC(440.5,"C",DUZ,PRCHNN)) Q:'PRCHNN  S PRCHCDF=$P(^PRC(440.5,PRCHNN,0),U);S PRCHCDFT="" I PRCHII=2 S PRCHCDFT=PRCHCDF;D LOOK^PRCSPC;
+"KRN",.402,1993,"DR",1,442,4)
+I (X="")!(X["^") S ERRFLG=1,Y=0;I $G(PRCHXXX)="" S ERRFLG=1,Y=0;46////^S X=$G(PRCHXXX);I PRCHCDNO'="",X'=PRCHCDNO W !,?5,"Please verify the accounting information for the new Purchase Card.",!;
+"KRN",.402,1993,"DR",1,442,5)
+I X]"" S PRCHP0=^PRC(440.5,X,0),PRCHFCP=$P(PRCHP0,U,2),PRCHCC=$P(PRCHP0,U,3),PRCHBOC1=$P(PRCHP0,U,4),PRCHDLOC=$P(PRCHP0,U,7),PRCHCD=$P(PRCHP0,U),PRCHCDNO=+X,PRCHHLDR=$P(PRCHP0,U,8);61////^S X=PRCHHLDR;55///^S X=PRCHCD;Q;
+"KRN",.402,1993,"DR",1,442,6)
+.1//^N %I,%H,% D NOW^%DTC;I +X<DT D REF^PRCSPC W $C(7),!!,"Enter TODAY or a future date only. Contact Fiscal or A&MM Service for ",!,"assistance with PO requiring prior date since an ET is required.",! S Y=.1;
+"KRN",.402,1993,"DR",1,442,7)
+S PRCHN("MP")=$S($D(^PRCD(442.5,+X,0)):$P(^(0),U,3),1:""),PRCHN("INV")=$S(PRCHN("INV")]"":PRCHN("INV"),1:"VA FSC");53R~;I $G(PRCFLAG)=1 S $P(^PRC(442,DA,23),U,14)="" K X S Y=53;S PRCHVEN=+X;5////^S X=PRCHVEN;
+"KRN",.402,1993,"DR",1,442,8)
+I $P($G(^PRC(440,PRCHVEN,0)),U)'="SIMPLIFIED" S Y=1;64R~;1//^S X=PRCHFCP;S PRC("CP")=X;I $$EN^PRCHNPOB(PRC("SITE"),PRC("CP")) S ERRFLG=99,Y=0;S PRCHN("SFC")=$P(^PRC(442,DA,0),U,19);@2;
+"KRN",.402,1993,"DR",1,442,9)
+I $G(PRC("BBFY"))="" S PRC("BBFY")=$$BBFY^PRCSUT(PRC("SITE"),PRC("FY"),$P(^PRC(442,DA,0),U,3));26///^S X=PRC("BBFY");D EN2^PRCHNPO3;2//^S X=PRCHCC;@88;K DIC("DR");K PRCHDUZ;52;@3;60R~;I X'="" S PRCHTOT=X;
+"KRN",.402,1993,"DR",1,442,10)
+I X>10000 W !,$C(7),"COST CANNOT EXCEED $10000.00 - YOU MUST USE DETAILED PURCHASE CARD!!" S Y="@3";5.4///^S X="SIMPLIFIED";S $P(^PRC(442,DA,0),"^",15)=PRCHTOT;
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",455,-1)
+1^1
+"PKG",455,0)
+IFCAP^PRC^IFCAP System Files
+"PKG",455,20,0)
+^9.402P^^
+"PKG",455,22,0)
+^9.49I^1^1
+"PKG",455,22,1,0)
+5.1
+"PKG",455,22,1,"PAH",1,0)
+208^3180718
+"PKG",455,22,1,"PAH",1,1,0)
+^^3^3^3180718
+"PKG",455,22,1,"PAH",1,1,1,0)
+Modify $3500 limit to be $10000 for micro-purchase threshold for goods 
+"PKG",455,22,1,"PAH",1,1,2,0)
+and services. Also, the SPL was increased to $10000 for all PCards for 
+"PKG",455,22,1,"PAH",1,1,3,0)
+simplified orders.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PRCHCON1")
+0^2^B27177150^B26064104
+"RTN","PRCHCON1",1,0)
+PRCHCON1 ;WISC/KMB/DL/DXH - CONV. TEMP 2237 TO PC ORDER ;7.29.99
+"RTN","PRCHCON1",2,0)
+V ;;5.1;IFCAP;**108,156,192,208**;Oct 20, 2000;Build 1
+"RTN","PRCHCON1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCHCON1",4,0)
+ ;
+"RTN","PRCHCON1",5,0)
+ ;PRC*5.1*192 Modify $3000 limit to be $3500, per FAR 2.101 as of 
+"RTN","PRCHCON1",6,0)
+ ;            10/1/2015 for micro purchase threshold for goods.  Also,
+"RTN","PRCHCON1",7,0)
+ ;            as of 10/1/2015 the SPL was increased to $3500 for all
+"RTN","PRCHCON1",8,0)
+ ;            PCards for simplified orders.
+"RTN","PRCHCON1",9,0)
+ ;
+"RTN","PRCHCON1",10,0)
+ ;PRC*5.1*208 Modify $3500 limit to be $10000 for micro-purchase threshold 
+"RTN","PRCHCON1",11,0)
+ ;            for goods and services. Also, the SPL was increased to $10000 
+"RTN","PRCHCON1",12,0)
+ ;            for all PCards for simplified orders.
+"RTN","PRCHCON1",13,0)
+ ;
+"RTN","PRCHCON1",14,0)
+ I '$D(^PRC(440.5,"C",DUZ)) W !!,"You are not authorized to use this option." Q
+"RTN","PRCHCON1",15,0)
+START ;   get transaction number, convert to regular 2237
+"RTN","PRCHCON1",16,0)
+ N PRC,Y,PRCSIP,PRCSQ,ODA,PNW,TRY,TX1,T1,T2,T3,T4,PRCSY,PRCSDIC,PRCSAPP
+"RTN","PRCHCON1",17,0)
+ N PRCHCV,PRCHCPD,PRCHQTDT
+"RTN","PRCHCON1",18,0)
+ I $G(QUIT)'="" K QUIT Q
+"RTN","PRCHCON1",19,0)
+ K PRC("SITE") W @IOF D EN3F^PRCSUT(1) G W5:'$D(PRC("SITE")) S:Y<0 QUIT=1 Q:Y<0
+"RTN","PRCHCON1",20,0)
+ D START1 G START
+"RTN","PRCHCON1",21,0)
+START1 ;
+"RTN","PRCHCON1",22,0)
+ W !!,"Select the existing transaction number to be converted",!
+"RTN","PRCHCON1",23,0)
+ ; don't select an order which is signed, or attached to PC already
+"RTN","PRCHCON1",24,0)
+ S DIC="^PRCS(410,",DIC(0)="AEFMQ"
+"RTN","PRCHCON1",25,0)
+ S DIC("S")="I $P(^(0),U,2)=""O"",$P(^(0),U,5)=PRC(""SITE""),$P(^(0),U,12)'=""A"",$D(^(3)),+$P(^(3),U)=+PRC(""CP""),$P($G(^(4)),U,5)="""""
+"RTN","PRCHCON1",26,0)
+ D ^DIC S:Y<0 QUIT=1 Q:Y<0  S (ODA,DA)=+Y,PRCSDIC=DIC
+"RTN","PRCHCON1",27,0)
+ S PRCHQTDT=$P($G(^PRCS(410,ODA,0)),U,11)
+"RTN","PRCHCON1",28,0)
+ I $P($G(^PRCS(410,DA,3)),U,4)="" W !,"This transaction has no entry in the Vendor File.",!,"Please edit this transaction's vendor before converting this order." H 4 Q
+"RTN","PRCHCON1",29,0)
+ I $P($G(^PRCS(410,DA,4)),U)>10000 W !,"The dollar amount for this transaction exceeds the $10000 purchase card cutoff." H 4 Q    ;PRC*5.1*208
+"RTN","PRCHCON1",30,0)
+ D W1^PRCSEB0 Q:%<0  S DIC=PRCSDIC
+"RTN","PRCHCON1",31,0)
+ L +^PRCS(410,DA):15 G:$T=0 START S T1=ODA,T2=^PRCS(410,DA,0),T4=$P(T2,"^",2),T2=$P(T2,"^"),T3=$P(^(3),"^")
+"RTN","PRCHCON1",32,0)
+ N REM,REM1 S REM=DA,REM1=+$P(PRC("CP")," ")
+"RTN","PRCHCON1",33,0)
+ L -^PRCS(410,DA) K DA,DIC,Y
+"RTN","PRCHCON1",34,0)
+ W !!,"Enter the information for the new transaction number",!
+"RTN","PRCHCON1",35,0)
+ D EN^PRCSUT3 Q:'$D(PRC("QTR"))  Q:'$D(PRC("CP"))
+"RTN","PRCHCON1",36,0)
+ S TX1=X,PRCSAPP=$P(^PRC(420,PRC("SITE"),1,+PRC("CP"),0),"^",3) I PRC("CP")'=T3,PRCSAPP["_" D PRCFY Q:PRCSAPP["_"
+"RTN","PRCHCON1",37,0)
+ S X=TX1 D EN1^PRCSUT3 Q:'X  S TX1=X,(DIC,DIE)="^PRCS(410,"
+"RTN","PRCHCON1",38,0)
+CK G:'+T2 CK1 K DA S DLAYGO=410,DIC="^PRCS(410,",DIC(0)="LXZ" D ^DIC K DLAYGO Q:Y'>0  S DA=+Y
+"RTN","PRCHCON1",39,0)
+ K ^PRCS(410,"B",TX1,DA),^PRCS(410,"B2",$P(TX1,"-",5),DA),^PRCS(410,"B3",$P(TX1,"-",2)_"-"_$P(TX1,"-",5),DA),^PRCS(410,"AE",$P(TX1,"-",1,4),DA)
+"RTN","PRCHCON1",40,0)
+ K ^PRCS(410,"B",T2,T1),^PRCS(410,"B2",$P(T2,"-",5),T1),^PRCS(410,"B3",$P(T2,"-",2)_"-"_$P(T2,"-",5),T1),^PRCS(410,"AE",$P(T2,"-",1,4),T1)
+"RTN","PRCHCON1",41,0)
+ ;Patch PRC*5.1*156 insures the running balance ('RB') index is killed for temp 2237
+"RTN","PRCHCON1",42,0)
+ I +PRCHQTDT>0 K ^PRCS(410,"RB",PRCHQTDT_"-"_$P(T2,"-")_"-"_$P(T2,"-",4)_"-"_$P(T2,"-",2)_"-"_$P(T2,"-",5),ODA)
+"RTN","PRCHCON1",43,0)
+ K PRCHQTDT
+"RTN","PRCHCON1",44,0)
+ S $P(^PRCS(410,DA,0),U)=T2 S (^PRCS(410,"B",T2,DA),^PRCS(410,"B2",$P(T2,"-",5),DA),^PRCS(410,"B3",$P(T2,"-",2)_"-"_$P(T2,"-",5),DA),^PRCS(410,"AE",$P(T2,"-",1,4),DA))=""
+"RTN","PRCHCON1",45,0)
+CK1 S $P(^PRCS(410,T1,0),U)=TX1 S (^PRCS(410,"B",TX1,T1),^PRCS(410,"B2",$P(TX1,"-",5),T1),^PRCS(410,"B3",$P(TX1,"-",2)_"-"_$P(TX1,"-",5),T1),^PRCS(410,"AE",$P(TX1,"-",1,4),T1))=""
+"RTN","PRCHCON1",46,0)
+ S $P(^PRCS(410,T1,6),"^",4)="" K ^PRCS(410,"K",REM1,REM)
+"RTN","PRCHCON1",47,0)
+ I '+T2 S DA=ODA,DIE="^PRCS(410,",DR=".5///"_PRC("SITE")_";S X=X;15///"_PRC("CP") D ^DIE G EN
+"RTN","PRCHCON1",48,0)
+ S DIE="^PRCS(410,",DR=".5///"_+T2_";S X=X;15///"_T3_";60///Transaction "_T2_" replaced by trans. "_TX1
+"RTN","PRCHCON1",49,0)
+ D ^DIE S $P(^PRCS(410,DA,0),U,2)="CA" D ERS410^PRC0G(DA_"^C"),W5^PRCSEB W !,"Old transaction "_T2_" is now cancelled.",!
+"RTN","PRCHCON1",50,0)
+ I $D(^PRC(443,ODA,0)) S DA=ODA,DIK="^PRC(443," D ^DIK K DA,DIK
+"RTN","PRCHCON1",51,0)
+EN W !!,"Transaction '"_T2_"' has been replaced by "_TX1,! S PNW=ODA,PNW(1)=TX1
+"RTN","PRCHCON1",52,0)
+ S TRY=0
+"RTN","PRCHCON1",53,0)
+RETRY ;
+"RTN","PRCHCON1",54,0)
+ S TRY=TRY+1 Q:TRY>3
+"RTN","PRCHCON1",55,0)
+ N A,B S DA=PNW L +^PRCS(410,DA):15 G:$T=0 RETRY
+"RTN","PRCHCON1",56,0)
+ S DA=PNW
+"RTN","PRCHCON1",57,0)
+ S A=TX1 D RBQTR
+"RTN","PRCHCON1",58,0)
+ S DA=PNW,DR=B_$S(+T2:"1///"_T4,1:"")_$S(PRC("SITE")'=+T2:";S X=X;.5///"_PRC("SITE"),1:"")_$S(PRC("CP")'=T3:";S X=X;15///"_PRC("CP"),1:"")_$S($D(PRCSIP):";4////"_PRCSIP,1:"")
+"RTN","PRCHCON1",59,0)
+ D ^DIE S PRC("ACC")=$$ACC^PRC0C(PRC("SITE"),PRC("CP")_"^"_PRC("FY")_"^"_PRC("BBFY"))
+"RTN","PRCHCON1",60,0)
+ S PRCSAPP=$P(PRC("ACC"),"^",11),$P(^PRCS(410,DA,3),U)=PRC("CP"),$P(^(3),"^",2)=PRCSAPP,$P(^(3),"^",12)=$P(PRC("ACC"),"^",3)
+"RTN","PRCHCON1",61,0)
+ S $P(^PRCS(410,DA,3),"^",11)=$P($$DATE^PRC0C(PRC("BBFY"),"E"),"^",7)
+"RTN","PRCHCON1",62,0)
+ N MYY S MYY="" D EN2B^PRCSUT3
+"RTN","PRCHCON1",63,0)
+ D K^PRCSUT1 K T1(1)
+"RTN","PRCHCON1",64,0)
+ L -^PRCS(410,DA)
+"RTN","PRCHCON1",65,0)
+ D ^PRCHCON2 QUIT
+"RTN","PRCHCON1",66,0)
+ ;;;;;;;;;;;;;;;;
+"RTN","PRCHCON1",67,0)
+PRCFY I '$D(PRC("FY")) D NOW^%DTC S PRC("FY")=$E(X,2,3) S:$E(X,4,5)>9 PRC("FY")=$E(100+PRC("FY")+1,2,3)
+"RTN","PRCHCON1",68,0)
+ S A=PRCSAPP I A["_/_" D FY2 G KILL
+"RTN","PRCHCON1",69,0)
+ I A["_" S PRCSAPP=$P(A,"_",1)_$E(PRC("FY"),$L(PRC("FY")))_$P(A,"_",2)
+"RTN","PRCHCON1",70,0)
+KILL K %DT,A,B,RES,X Q
+"RTN","PRCHCON1",71,0)
+FY2 ; two year appropriation
+"RTN","PRCHCON1",72,0)
+ W !!,"Enter first year of this two year appropriation: ",PRC("FY")," // " R RES:DTIME G:RES["^" FY21 I RES["?"!(RES'?.4N) W !,"Enter fiscal year in format '1' '81' or '1981'",!! G FY2
+"RTN","PRCHCON1",73,0)
+FY21 S:'RES RES=PRC("FY") S RES=$E(RES,$L(RES)),PRCSAPP=$P(A,"_",1)_RES_"/"_(RES+1#10)_$P(A,"_",3) Q
+"RTN","PRCHCON1",74,0)
+W5 W !!,"You are not an authorized control point user.",!,"Contact your control point official." R X:5
+"RTN","PRCHCON1",75,0)
+ Q
+"RTN","PRCHCON1",76,0)
+RBQTR N C,D S B="",B=$S(B="":$P(A,"-",2)_"^F",1:+$$DATE^PRC0C(B,"I")),C=$$QTRDT^PRC0G($P(A,"-",1)_"^"_$P(A,"-",4)_"^"_B)
+"RTN","PRCHCON1",77,0)
+ S D=$$QTRDATE^PRC0D($P(A,"-",2),$P(A,"-",3)),D=$P(D,"^",7)
+"RTN","PRCHCON1",78,0)
+ S B=$S(D<$P(C,"^",3):$P(C,"^",3),$P(C,"^",2)<D:$P(C,"^",2),1:D)
+"RTN","PRCHCON1",79,0)
+ S B="449////"_B_";"
+"RTN","PRCHCON1",80,0)
+ QUIT
+"RTN","PRCHNPO")
+0^1^B63175174^B63173747
+"RTN","PRCHNPO",1,0)
+PRCHNPO ;WISC/SC,ID/RSD/RHD/DGL/BGJ-ENTER NEW PURCHASE ORDER/REQUISITION ;4/2/01 1:50pm
+"RTN","PRCHNPO",2,0)
+V ;;5.1;IFCAP;**7,11,79,108,123,184,192,208**;Oct 20, 2000;Build 1
+"RTN","PRCHNPO",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCHNPO",4,0)
+ ;
+"RTN","PRCHNPO",5,0)
+ ;PRC*5.1*184 Added check for Purchase Card orders to insure there
+"RTN","PRCHNPO",6,0)
+ ;            are sufficient requsition sequence entries (>5) for
+"RTN","PRCHNPO",7,0)
+ ;            requistion created in file 410 for realted FCP used
+"RTN","PRCHNPO",8,0)
+ ;            and control for Running Balance Report.
+"RTN","PRCHNPO",9,0)
+ ;
+"RTN","PRCHNPO",10,0)
+ ;PRC*5.1*208 Changed order limit in opening message to $10000 at tag MSG
+"RTN","PRCHNPO",11,0)
+ ;
+"RTN","PRCHNPO",12,0)
+ S NOTCOMPL=0 ;Initialize for Incomplete Template.
+"RTN","PRCHNPO",13,0)
+ D SWITCH^PRCHUTL K ERRFLG ; SET LOG/ISMS SWITCH
+"RTN","PRCHNPO",14,0)
+ K PRCSIP ; Initialize Inventory point variable
+"RTN","PRCHNPO",15,0)
+ I $S('$G(PRCHPO):1,'$D(PRC("SITE")):1,1:0) G Q
+"RTN","PRCHNPO",16,0)
+ S DIE="^PRC(442,",DR="["_$S($D(PRCHNRQ):"PRCHNREQ",1:"PRCH2138")_"]",DIC("DR")="[PRCHVENDOR]"
+"RTN","PRCHNPO",17,0)
+ I $G(PRCPROST)=1 S DR="[PRCH PROSTHETIC]" D ^DIE QUIT
+"RTN","PRCHNPO",18,0)
+ I $G(PRCHPC)=1 S DR="[PRCHSIMP]"
+"RTN","PRCHNPO",19,0)
+ I $G(PRCHPC)=2 S DR="[PRCH DETAILED PURCHASE CARD]"
+"RTN","PRCHNPO",20,0)
+ I $G(PRCHPC)=3 S DR="[PRCH PC DIRECT DELIVERY]"
+"RTN","PRCHNPO",21,0)
+ I $G(PRCHDELV)=1,'$G(PRCHPHAM) S DR="[PRCH DELIVERY ORDER]"
+"RTN","PRCHNPO",22,0)
+ I $G(PRCHPHAM)=1 S DR="[PRCH DIRECT DELIVERY ORDER]"
+"RTN","PRCHNPO",23,0)
+ D ^DIE
+"RTN","PRCHNPO",24,0)
+ ;
+"RTN","PRCHNPO",25,0)
+ ; Check ERRFLG to see if the user entered an up-arrow to get out or
+"RTN","PRCHNPO",26,0)
+ ; did not select a credit card name. The flag ERRFLG is set at the
+"RTN","PRCHNPO",27,0)
+ ; input templates above.
+"RTN","PRCHNPO",28,0)
+ I $G(ERRFLG)=99 G ERR      ;PRC*5.1*184 Check for error flag coming from Input Template for Purchase Cards
+"RTN","PRCHNPO",29,0)
+ I $G(ERRFLG)=42 G ERR
+"RTN","PRCHNPO",30,0)
+ I $G(ERRFLG)=38 G ERR
+"RTN","PRCHNPO",31,0)
+ I $G(ERRFLG)=1 G ERR
+"RTN","PRCHNPO",32,0)
+ I $G(ERRFLG)=2 G ERR
+"RTN","PRCHNPO",33,0)
+ I $G(ERRFLG)=3 G ERR
+"RTN","PRCHNPO",34,0)
+ ;Look for incomplete Input-Template when PRCHPC is defined.
+"RTN","PRCHNPO",35,0)
+ I $D(PRCHPC)  D
+"RTN","PRCHNPO",36,0)
+ . I $D(Y)'=0 S NOTCOMPL=1
+"RTN","PRCHNPO",37,0)
+ I NOTCOMPL G INCMSG
+"RTN","PRCHNPO",38,0)
+ I $G(PRCHPC)=1 Q:$D(Y)  D  Q:$D(Y)
+"RTN","PRCHNPO",39,0)
+ . S:'$D(^PRC(442,PRCHPO,2,0)) $P(^PRC(442,PRCHPO,2,0),U,2)=$P(^DD(442,40,0),U,2)
+"RTN","PRCHNPO",40,0)
+ . S DA(1)=PRCHPO,DIE="^PRC(442,"_DA(1)_",2,",DA=1
+"RTN","PRCHNPO",41,0)
+ . S DR=".01///^S X=1;1;I '$D(^PRC(442,DA(1),2,DA,1)) W !,""Description is Required!!"" S Y=1;2///^S X=1;3///^S X=""EA"";5////^S X=PRCHTOT;3.1///^S X=1;9.7///^S X=1;9///^S X="""";8///^S X=9999;K PRCHBOCC;"
+"RTN","PRCHNPO",42,0)
+ . S DR(1,442.01,1)="I PRCHN(""SFC"")=2 S PRCHBOCC=2696;I '$G(PRCHBOCC) S Y=""@87"";"
+"RTN","PRCHNPO",43,0)
+ . S DR(1,442.01,2)="S PRCHBOCC=$P($G(^PRCD(420.2,PRCHBOCC,0)),U);3.5////^S X=PRCHBOCC;S Y=""@89"";@87;3.5//^S X=PRCHBOC1;@89;K PRCHBOCC"
+"RTN","PRCHNPO",44,0)
+ . D ^DIE Q:$D(Y)
+"RTN","PRCHNPO",45,0)
+ . S DIE="^PRC(442,",DA=PRCHPO,DR=20 D ^DIE
+"RTN","PRCHNPO",46,0)
+PROS I $P($G(^PRC(442,PRCHPO,23)),U,11)]"" Q:$D(Y)  D  Q:$D(Y)  Q:'$G(CDA)
+"RTN","PRCHNPO",47,0)
+ . S PODIE=DIE,PODA=DA
+"RTN","PRCHNPO",48,0)
+ . S CDA=$P($G(^PRC(442,PRCHPO,23)),U,23),PRC("CP")=$P($G(^PRC(442,PRCHPO,0)),U,3)
+"RTN","PRCHNPO",49,0)
+ . I +$G(PRC("CP"))'=0 S DA=PRCHPO D START^PRCH410 I $G(PRCRMPR)=1,$G(X)="#" Q
+"RTN","PRCHNPO",50,0)
+ . I '$G(PRCHPHAM),'$G(PRCPROST),+$G(PRC("CP"))'=0 S DIE="^PRCS(410,",DA=$P($G(^PRC(442,PRCHPO,23)),U,23),DR=16 D ^DIE
+"RTN","PRCHNPO",51,0)
+ . S DIE=PODIE,DA=PODA
+"RTN","PRCHNPO",52,0)
+ I $G(PRCRMPR)=1,X="#" Q
+"RTN","PRCHNPO",53,0)
+ S VEN=+$G(^PRC(442,PRCHPO,1))
+"RTN","PRCHNPO",54,0)
+ I '$P($G(^PRC(442,PRCHPO,23)),U,11),$P($G(PRCHNVF),U,3)!($G(^PRC(440.3,+$G(VEN),0))]"") D
+"RTN","PRCHNPO",55,0)
+ . I $P($G(^PRC(411,PRC("SITE"),9)),U,3)="Y" D  Q
+"RTN","PRCHNPO",56,0)
+ . . S PRCHXXDA=DA
+"RTN","PRCHNPO",57,0)
+ . . S PRCHXDIE=DIE
+"RTN","PRCHNPO",58,0)
+ . . S DA=VEN
+"RTN","PRCHNPO",59,0)
+ . . Q:$$NEW^PRCOVTST(VEN,PRC("SITE"),1)
+"RTN","PRCHNPO",60,0)
+ . . I $P($G(PRCHNVF),U,3) D
+"RTN","PRCHNPO",61,0)
+ . . . S %X="^PRC(440,DA,"
+"RTN","PRCHNPO",62,0)
+ . . . S %Y="^PRC(440.3,DA,"
+"RTN","PRCHNPO",63,0)
+ . . . D %XY^%RCR
+"RTN","PRCHNPO",64,0)
+ . . . Q
+"RTN","PRCHNPO",65,0)
+ . . S DIE="^PRC(440.3,",DR="47///^S X=1;48///^S X=VEN;49///^S X=PRC(""SITE"")"
+"RTN","PRCHNPO",66,0)
+ . . D ^DIE
+"RTN","PRCHNPO",67,0)
+ . . S DA=PRCHXXDA
+"RTN","PRCHNPO",68,0)
+ . . S DIE=PRCHXDIE
+"RTN","PRCHNPO",69,0)
+ . . K PRCHXXDA
+"RTN","PRCHNPO",70,0)
+ . . K PRCHXDIE
+"RTN","PRCHNPO",71,0)
+ . D NEW^PRCOVRQ(VEN,PRC("SITE"))
+"RTN","PRCHNPO",72,0)
+ K VEN
+"RTN","PRCHNPO",73,0)
+ L +^PRC(442,PRCHPO):0 G ERR:'$T S PRCHSTAT=$P($G(^PRC(442,PRCHPO,7)),U,2) S:$D(Y)&('$D(PRCHNRQ))&(PRCHSTAT'=22) PRCHER="" S (PRCH,PRCHEC,PRCHX)=0
+"RTN","PRCHNPO",74,0)
+ S PRCHSC="" I $D(^PRC(442,PRCHPO,1)),$D(^PRCD(420.8,+$P(^(1),U,7),0)) S PRCHSC=$P(^(0),U,1) S $P(^PRC(442,PRCHPO,1),U,14)=$S(PRCHSC="B":"*",1:"")
+"RTN","PRCHNPO",75,0)
+ ;K PRCHER F  S PRCH=$O(^PRC(442,PRCHPO,2,PRCH)) Q:PRCH=""!(PRCH'>0)  D  G ERR:$D(PRCHER)
+"RTN","PRCHNPO",76,0)
+ K PRCHER F  S PRCH=$O(^PRC(442,PRCHPO,2,PRCH)) Q:PRCH=""!(PRCH'>0)  D
+"RTN","PRCHNPO",77,0)
+ .S $P(^PRC(442,PRCHPO,2,PRCH,2),U,6)=""
+"RTN","PRCHNPO",78,0)
+ .S PRCHLN=$G(^PRC(442,PRCHPO,2,PRCH,0)) ;I PRCHLN="" D ERR2 Q
+"RTN","PRCHNPO",79,0)
+ .S SUBACC=$P(PRCHLN,U,4) ;I SUBACC="" D ERR2 Q
+"RTN","PRCHNPO",80,0)
+ .D ERR2
+"RTN","PRCHNPO",81,0)
+ .Q
+"RTN","PRCHNPO",82,0)
+ K ^PRC(442,PRCHPO,2,"B"),^("C"),^("AC"),^("AE"),^("AH")
+"RTN","PRCHNPO",83,0)
+ N PRCHCNYS,PRCHCNNO S (PRCHCNYS,PRCHCNNO)=0 ;FLGS FOR CONTRACT # ON ITEM
+"RTN","PRCHNPO",84,0)
+ S PRCH=0 F I=1:1 S PRCH=$O(^PRC(442,PRCHPO,2,PRCH)) Q:PRCH=""!(PRCH'>0)  D CHG I $D(^PRC(442,PRCHPO,2,PRCH,0)) D
+"RTN","PRCHNPO",85,0)
+ .S PRCHAM=+$P(^PRC(442,PRCHPO,2,PRCH,2),U,1),PRCHCN=$P(^(2),U,2) D CN:PRCHCN]"",OM:PRCHCN=""
+"RTN","PRCHNPO",86,0)
+ .I PRCHCN]"" S PRCHCNYS=1
+"RTN","PRCHNPO",87,0)
+ .E  S PRCHCNNO=1
+"RTN","PRCHNPO",88,0)
+ .S $P(^PRC(442,PRCHPO,2,PRCH,2),U,5)=""
+"RTN","PRCHNPO",89,0)
+ .Q
+"RTN","PRCHNPO",90,0)
+ S PRCHLCNT=I-1,$P(^PRC(442,PRCHPO,0),U,14)=PRCHLCNT S:$D(^PRC(442,PRCHPO,2,0)) $P(^(0),U,3,4)="1^"_PRCHLCNT I 'PRCHLCNT S PRCHER="" W !,"There are no line items listed in the Purchase Order."
+"RTN","PRCHNPO",91,0)
+ G ERRCHKS:'$D(^PRC(442,PRCHPO,1))!('$D(^(2)))
+"RTN","PRCHNPO",92,0)
+ I $P(^PRC(442,PRCHPO,0),U,3)=""!($P(^(0),U,4))="" W !!?5,"Fund Control Point is undefined  !",$C(7)
+"RTN","PRCHNPO",93,0)
+ S PRCHV=$P(^PRC(442,PRCHPO,1),U,1) I PRCHV="" W !!?5,"Vendor is undefined !",$C(7) ;G ERR
+"RTN","PRCHNPO",94,0)
+ERRCHKS S ERRFL=0 D ERRCHKS^PRCHNPO9 ;I ERRFL=0 K ERRFL G CONT
+"RTN","PRCHNPO",95,0)
+ ;K ERRFL G ERR
+"RTN","PRCHNPO",96,0)
+CONT ;
+"RTN","PRCHNPO",97,0)
+ S ERROR1="" D ^PRCHNPO9
+"RTN","PRCHNPO",98,0)
+ I ERROR1=1!(ERRFL>0)!($D(PRCHER)) G ERR
+"RTN","PRCHNPO",99,0)
+ D BBFY^PRCHNPO8(PRCHPO) I PRC("BBFY")'>0 W !!?5,"BBFY can not be checked/updated.",$C(7) G ERR
+"RTN","PRCHNPO",100,0)
+ S PRCH=0 F I=0:1 S PRCH=$O(PRCH("AM",PRCH)) Q:PRCH=""  S PRCH("COUNT",+PRCH("AM",PRCH),PRCH)=""
+"RTN","PRCHNPO",101,0)
+ I PRCHCNNO,PRCHCNYS D ASTR ; <<< only call on ASTR
+"RTN","PRCHNPO",102,0)
+ G:I=1 ^PRCHNRQ:$D(PRCHNRQ),^PRCHNPO1 S J=1 F PRCHJ=0:0 S PRCH=$O(PRCH("COUNT",PRCH)) Q:PRCH=""  D MISS
+"RTN","PRCHNPO",103,0)
+ G ^PRCHNRQ:$D(PRCHNRQ),^PRCHNPO1
+"RTN","PRCHNPO",104,0)
+ ;
+"RTN","PRCHNPO",105,0)
+LI S PRCHL0=$P(PRCH("AM",PRCHL3),U,3) Q:PRCHL0=""  F J=1:1 S PRCHL1=$E(PRCHL0,$L(PRCHL0)-J) Q:PRCHL1'=+PRCHL1
+"RTN","PRCHNPO",106,0)
+ S PRCHL2=$E(PRCHL0,$L(PRCHL0)-J+1,$L(PRCHL0)-1),PRCHL2=PRCHL2+1 I PRCHL2'=PRCHLI S PRCHLI=PRCHL0_PRCHLI Q
+"RTN","PRCHNPO",107,0)
+ I PRCHL1=":" S PRCHLI=$E(PRCHL0,1,$L(PRCHL0)-J)_PRCHLI Q
+"RTN","PRCHNPO",108,0)
+ S PRCHLI=$E(PRCHL0,1,$L(PRCHL0)-1)_":1:"_PRCHLI
+"RTN","PRCHNPO",109,0)
+ Q
+"RTN","PRCHNPO",110,0)
+ ;
+"RTN","PRCHNPO",111,0)
+CHG I '$P(^PRC(442,PRCHPO,2,PRCH,0),"^",5),'$O(^(1,0)) S $P(^PRC(442,PRCHPO,2,PRCH,2),U,4,6)="^^" W !,"Line item ",+^PRC(442,PRCHPO,2,PRCH,0)," is missing its description!" S PRCHER=""
+"RTN","PRCHNPO",112,0)
+ S $P(^PRC(442,PRCHPO,2,PRCH,0),U,1)=I,X=$P(^(0),U,5),X1=$P(^(0),U,4)
+"RTN","PRCHNPO",113,0)
+ S ^PRC(442,PRCHPO,2,"B",I,PRCH)="",^PRC(442,PRCHPO,2,"C",I,PRCH)="",^PRC(442,PRCHPO,2,"AH",+X1,I,PRCH)="",PRCHLI=I,PRCHX=PRCH S:X]"" ^PRC(442,PRCHPO,2,"AE",X,PRCH)=""
+"RTN","PRCHNPO",114,0)
+ Q
+"RTN","PRCHNPO",115,0)
+ ;
+"RTN","PRCHNPO",116,0)
+ERR2 I $S('$D(^PRC(442,PRCHPO,2,PRCH,2)):1,$P(^(2),U,1)="":1,1:0) S $P(^(2),U,1)="",$P(^(2),U,4,7)="" W !,"Line item ",+^(0)," is incomplete !",$C(7) S PRCHER=""
+"RTN","PRCHNPO",117,0)
+ I '$G(PRCHPC),$D(PRCHNRQ),PRCHSC'=9,$P(^PRC(442,PRCHPO,2,PRCH,0),U,13)="" W !,"Line item ",+^(0)," is missing NSN !",$C(7) S PRCHER=""
+"RTN","PRCHNPO",118,0)
+ I $P(^PRC(442,PRCHPO,2,PRCH,0),U,4)="" W !,"Line item ",+^(0)," is missing BOC !",!,$C(7) S PRCHER=""
+"RTN","PRCHNPO",119,0)
+ Q
+"RTN","PRCHNPO",120,0)
+ ;
+"RTN","PRCHNPO",121,0)
+CN S:'$D(PRCH("AM",PRCHCN)) PRCH("AM",PRCHCN)="",PRCHEC=PRCHEC+1 S PRCHL3=PRCHCN
+"RTN","PRCHNPO",122,0)
+ D LI S PRCH("AM",PRCHCN)=($P(PRCH("AM",PRCHCN),U,1)+1)_U_($P(PRCH("AM",PRCHCN),U,2)+PRCHAM)_U_PRCHLI_",",^PRC(442,PRCHPO,2,"AC",$E(PRCHCN,1,30),PRCH)=""
+"RTN","PRCHNPO",123,0)
+ Q
+"RTN","PRCHNPO",124,0)
+ ;
+"RTN","PRCHNPO",125,0)
+OM S:'$D(PRCH("AM",".OM")) PRCH("AM",".OM")="",PRCHEC=PRCHEC+1 S PRCHL3=".OM" D LI S PRCH("AM",".OM")=($P(PRCH("AM",".OM"),U,1)+1)_U_($P(PRCH("AM",".OM"),U,2)+PRCHAM)_U_PRCHLI_","
+"RTN","PRCHNPO",126,0)
+ Q
+"RTN","PRCHNPO",127,0)
+ ;
+"RTN","PRCHNPO",128,0)
+MISS S PRCHN=0 F K=1:1 S PRCHN=$O(PRCH("COUNT",PRCH,PRCHN)) Q:PRCHN=""!(J>(I-1))  S J=J+1,L=0,Y=$P(PRCH("AM",PRCHN),U,3),Y="F PRCHLI="_$E(Y,1,$L(Y)-1)_" S L=L+1 G ERR2:PRCHX<0" X Y
+"RTN","PRCHNPO",129,0)
+ Q
+"RTN","PRCHNPO",130,0)
+ ;
+"RTN","PRCHNPO",131,0)
+ASTR ;IF SOME ITEMS HAVE CN, SOME DO NOT, PLACE '*' ON DISPLAY OF PO
+"RTN","PRCHNPO",132,0)
+ N CN,ITM,DESC,ROOT
+"RTN","PRCHNPO",133,0)
+ S ROOT="^PRC(442,PRCHPO)"
+"RTN","PRCHNPO",134,0)
+ S CN=0 F M=1:1 S CN=$O(@ROOT@(2,"AC",CN)) Q:CN=""  S:$D(^(CN)) ITM=$O(^(CN,0)) S ^PRC(442,PRCHPO,2,"AC",CN,ITM)="*"
+"RTN","PRCHNPO",135,0)
+ S:PRCHSC="B" $P(^PRC(442,PRCHPO,1),U,14)="*"
+"RTN","PRCHNPO",136,0)
+ S DESC=0 F I=1:1 S DESC=$O(@ROOT@(2,DESC)) Q:DESC=""!(DESC'>0)  I $P(@ROOT@(2,DESC,2),U,2)']"" S $P(^PRC(442,PRCHPO,2,DESC,2),U,5)="*"
+"RTN","PRCHNPO",137,0)
+ ;S PRCHX=$O(^PRC(442,PRCHPO,2,"B",PRCHLI,0)) Q:PRCHX=""!('$D(^PRC(442,PRCHPO,2,PRCHX,2)))  S $P(^(2),U,5)=PRCHN("*") S:PRCHN'=".OM" ^PRC(442,PRCHPO,2,"AC",PRCHN,PRCHLI)=PRCHN("*")
+"RTN","PRCHNPO",138,0)
+ ;I PRCHSC="B",PRCHN=".OM",$D(^PRC(442,PRCHPO,1)),L=1 S ^(1)=$P(^(1),U,1,13)_U_PRCHN("*")_U_$P(^(1),U,15,99)
+"RTN","PRCHNPO",139,0)
+ Q
+"RTN","PRCHNPO",140,0)
+ ;
+"RTN","PRCHNPO",141,0)
+ERR ;
+"RTN","PRCHNPO",142,0)
+ W !!?5,$S($D(PRCHNRQ):"Requisition",1:"Purchase Order")_" is incomplete and must be re-edited !",$C(7)
+"RTN","PRCHNPO",143,0)
+INCMSG ;
+"RTN","PRCHNPO",144,0)
+ I '$D(NOTCOMPL)  D
+"RTN","PRCHNPO",145,0)
+ . S NOTCOMPL=0
+"RTN","PRCHNPO",146,0)
+ I NOTCOMPL  D
+"RTN","PRCHNPO",147,0)
+ . W !!,?5,"Incomplete transaction. It must be re-edited !",$C(7)
+"RTN","PRCHNPO",148,0)
+Q K ERRDEL,ERRPC,ERRPO,DR,NOTCOMPL,DRTY,IMF,IMFD,LI,MUL,MULMSG,PRCHDRTY,PRCHFSCD,PRCHLCNT,PRCHMUL,PRCHM10,PRCHMS10,PRCHMS11,PRCHUCF,PRTY,SUPUSR,UCF,UCFMSG,UFL,VND
+"RTN","PRCHNPO",149,0)
+ G Q^PRCHNPO4
+"RTN","PRCHNPO",150,0)
+ ;
+"RTN","PRCHNPO",151,0)
+MSG ;Call by the "ENTRY ACTION" for Simplified PC (PRC*5.1*79)
+"RTN","PRCHNPO",152,0)
+ NEW MSG
+"RTN","PRCHNPO",153,0)
+ S MSG(1)="*********************************************"
+"RTN","PRCHNPO",154,0)
+ S MSG(1,"F")="!!?15"
+"RTN","PRCHNPO",155,0)
+ S MSG(2)="*  IF THE ORDER IS MORE THAN $10000.00      *"     ;PRC*5.1*208
+"RTN","PRCHNPO",156,0)
+ S MSG(2,"F")="!?15"
+"RTN","PRCHNPO",157,0)
+ S MSG(3)="*  OR IS ON A CONTRACT, YOU CANNOT USE      *"
+"RTN","PRCHNPO",158,0)
+ S MSG(3,"F")="!?15"
+"RTN","PRCHNPO",159,0)
+ S MSG(4)="*        SIMPLIFIED PURCHASE CARD.          *"
+"RTN","PRCHNPO",160,0)
+ S MSG(4,"F")="!?15"
+"RTN","PRCHNPO",161,0)
+ S MSG(5)="*  YOU MUST USE DETAILED PURCHASE CARD!!    *"
+"RTN","PRCHNPO",162,0)
+ S MSG(5,"F")="!?15"
+"RTN","PRCHNPO",163,0)
+ S MSG(6)="*********************************************"
+"RTN","PRCHNPO",164,0)
+ S MSG(6,"F")="!?15"
+"RTN","PRCHNPO",165,0)
+ S MSG(7,"F")="!"
+"RTN","PRCHNPO",166,0)
+ ;
+"RTN","PRCHNPO",167,0)
+ D EN^DDIOL(.MSG)
+"RTN","PRCHNPO",168,0)
+ QUIT
+"VER")
+8.0^22.2
+"BLD",11156,6)
+^181
+**END**
+**END**
+

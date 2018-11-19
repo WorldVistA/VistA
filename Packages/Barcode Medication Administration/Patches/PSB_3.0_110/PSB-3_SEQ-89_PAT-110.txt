@@ -1,0 +1,208 @@
+
+=============================================================================
+Run Date: SEP 19, 2018                     Designation: PSB*3*110
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #89                      Status: Released
+                  Compliance Date: OCT 22, 2018
+=============================================================================
+
+Associated patches: (v)PSB*3*37    <<= must be installed BEFORE `PSB*3*110'
+                    (v)PSB*3*105   <<= must be installed BEFORE `PSB*3*110'
+
+Subject: BCBU NOT UPDATED AFTER PATIENT DISCHARGED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+              discharged/deceased
+ INC1002829 - BCBU patient census not updating
+ (Duplicate)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00003739
+     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC0962039 - WNY - Vista Not Updating BCBU orders when patients are
+              discharged/deceased
+ INC1002829 - BCBU patient census not updating
+ (Duplicate)
+        
+ Problem: 
+ --------
+ An issue was discovered with the Barcode Medication Administration (BCMA) 
+ Backup System (BCBU) after the installation of patch PSB*3*105. After the
+ patient is discharged or a date of death is entered for him/her the patient
+ data is not being properly removed from the BCBU workstation. In the case of
+ discharged patients that are later admitted or have a clinic appointment
+ their orders from their previous admission are still visible on the BCBU
+ workstation and are listed on the patient's Medication Administration Reports
+ (MAR).
+      
+ Resolution:
+ -----------
+ Removed the filter introduced by PSB*3*105 to prevent alerts from being
+ generated for patient movements if the patient is no longer inpatient. The
+ reason is because such filter prevented patient discharge events, which are
+ handled as patient movements, from removing the patient's data from the 
+ BCBU workstation. The filter was re-introduced at the Alert generation point
+ and excludes patient discharge movements.
+  
+ Technical Resolution:
+ ---------------------
+ Changed routines ALPBUTL1 & ALPBCBU to remove the filter from the PMOV
+ line tag and placed a check in the ERRLOG line tag to prevent Alerts for
+ patient movement events after the patient had already been discharged.
+  
+ Test Sites: 
+ -----------
+ Upstate NY HCS
+ Boston HCS   
+  
+ Pre-Installation Overview:
+ --------------------------
+ - Before installing this patch on BCMA Backup System (BCBU) workstations 
+   ensure that BCBU workstation is running with the latest cache.dat file.
+  
+ - If your site uses the BCMA Backup System (BCBU) you should install this
+   patch in all the BCBU workstations that are currently active at your site.
+  
+   
+ Patch retrieval Instructions: 
+ ----------------------------
+ 1. Retrieve the KIDS distribution host file. This patch will be
+    distributed in a host file. The name of the host file is:
+  
+         PSB_3_110.KID
+     
+     Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+     the OI Field Offices. The preferred method is to retrieve the file
+     using Secure File Transfer Protocol (SFTP) from
+     DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+     available server. Alternatively, sites may elect to retrieve the file
+     from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     -----------------------------------------------------------------
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Installation Instructions:
+ -------------------------- 
+ The BAR CODE MED ADMIN (BCMA) users should not be using the application
+ while this patch is being installed. It should take less than 2 minutes
+ to install this patch. 
+  
+    1. From the Kernel Installation & Distribution System menu, select
+       the LOAD DISTRIBUTION option and load PSB_3_110.KID  
+   
+    2. Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSB*3.0*110)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*110.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the patch
+ number in the [PATCH LIST] section.
+   
+ 3.0;BAR CODE MED ADMIN;**[PATCH LIST]**;MARCH, 2004
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run to
+ compare the routine checksums to what is documented in the patch description.
+  
+  
+ Post-Installation Overview
+ --------------------------
+ None. 
+  
+   
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of install).
+ The message containing the backed up routines can be loaded with the "Xtract
+ PackMan" function at the Message Action prompt. The Packman function
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines onto
+ the VistA System. 
+  
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of the
+ PSO Routines contained in this patch using the option First Line Routine
+ Print [XU FIRST LINE PRINT]. Once the routines contained in the PSB*3.0*110
+ patch have been rolled back, the first two lines of the Routines will no
+ longer contain the designation of patch PSB*3.0*110 in the patch list section
+ on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBCBU
+    Before:  B8290997   After:  B8929939  **8,102,105,110**
+Routine Name: ALPBUTL1
+    Before: B35747915   After: B36918988  **8,37,110**
+ 
+Routine list of preceding patches: 37, 105
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2018
+Completed By:                               Date Completed: SEP 14, 2018
+Released By :                               Date Released : SEP 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

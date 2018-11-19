@@ -1,0 +1,1087 @@
+Released OR*3*477 SEQ #408
+Extracted from mail message
+**KIDS**:OR*3.0*477^
+
+**INSTALL NAME**
+OR*3.0*477
+"BLD",10808,0)
+OR*3.0*477^ORDER ENTRY/RESULTS REPORTING^0^3180720^y
+"BLD",10808,1,0)
+^^61^61^3180717^^
+"BLD",10808,1,1,0)
+This patch addresses two (2) issues:
+"BLD",10808,1,2,0)
+ 
+"BLD",10808,1,3,0)
+1.  The PHARMACY ORDERABLE ITEM file (#50.7) NAME field (#.01) is 
+"BLD",10808,1,4,0)
+    not always synced with ORDERABLE ITEM file (#101.43) NAME field
+"BLD",10808,1,5,0)
+    (#.01).
+"BLD",10808,1,6,0)
+2.  Room-Bed default printer parameters are ignored during the ordering 
+"BLD",10808,1,7,0)
+    process.
+"BLD",10808,1,8,0)
+ 
+"BLD",10808,1,9,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10808,1,10,0)
+--------------------------------------------
+"BLD",10808,1,11,0)
+1. I7370452FY16 - PHARMACY ORDERABLE ITEMS / ORDERABLE ITEMS
+"BLD",10808,1,12,0)
+   I10581756FY16 (d) 
+"BLD",10808,1,13,0)
+ 
+"BLD",10808,1,14,0)
+   Problem: 
+"BLD",10808,1,15,0)
+   --------
+"BLD",10808,1,16,0)
+   The PHARMACY ORDERABLE ITEMS file (#50.7) NAME field (#.01) is  
+"BLD",10808,1,17,0)
+   not always synced with the ORDERABLE ITEMS file (#101.43) NAME
+"BLD",10808,1,18,0)
+   field (#.01).
+"BLD",10808,1,19,0)
+ 
+"BLD",10808,1,20,0)
+   The NAME field (#.01) in the ORDERABLE ITEMS file (#101.43) is  
+"BLD",10808,1,21,0)
+   a combination of the NAME field (#.01), max length 40, in the 
+"BLD",10808,1,22,0)
+   PHARMACY ORDERABLE ITEMS file (#50.7) and the NAME field (#.01), 
+"BLD",10808,1,23,0)
+   max length 30, in the DOSAGE FORM file (#50.606).  There is a  
+"BLD",10808,1,24,0)
+   space between the two fields and a space at the end of the field.
+"BLD",10808,1,25,0)
+   This could produce a NAME that is 72 characters in length.  
+"BLD",10808,1,26,0)
+ 
+"BLD",10808,1,27,0)
+   The problem is that the maximum length for the NAME field (#.01)
+"BLD",10808,1,28,0)
+   in the ORDERABLE ITEMS file (#101.43) is 63 characters.  This  
+"BLD",10808,1,29,0)
+   can result in truncation, as well as failed update "pushes" when  
+"BLD",10808,1,30,0)
+   the combination of the Pharmacy Orderable Items Name and Dosage
+"BLD",10808,1,31,0)
+   Form Name is greater than 63 characters.
+"BLD",10808,1,32,0)
+ 
+"BLD",10808,1,33,0)
+   The maximum field length for the NAME field (#.01) in the 
+"BLD",10808,1,34,0)
+   ORDERABLE ITEMS file (#101.43) needs to be increased to 72 
+"BLD",10808,1,35,0)
+   characters.
+"BLD",10808,1,36,0)
+ 
+"BLD",10808,1,37,0)
+   Resolution:
+"BLD",10808,1,38,0)
+   -----------
+"BLD",10808,1,39,0)
+   A Data Dictionary update has been made to the NAME Field (#.01) in 
+"BLD",10808,1,40,0)
+   the ORDERABLE ITEM file (#101.43) to increase the maximum field 
+"BLD",10808,1,41,0)
+   length limit to 72 characters.
+"BLD",10808,1,42,0)
+ 
+"BLD",10808,1,43,0)
+2. I17614498FY18 - ROOM-BED PRINT DEVICE PARAMETER ISSUES
+"BLD",10808,1,44,0)
+   
+"BLD",10808,1,45,0)
+   Problem:
+"BLD",10808,1,46,0)
+   --------
+"BLD",10808,1,47,0)
+ 
+"BLD",10808,1,48,0)
+   If a default label printer is defined for a Room-Bed using any of the
+"BLD",10808,1,49,0)
+   parameters "ORPF CHART COPY PRINT DEVICE ", "ORPF LABEL PRINT DEVICE",
+"BLD",10808,1,50,0)
+   "ORPF REQUISITION PRINT DEVICE" and "ORPF WORK COPY PRINT DEVICE", the
+"BLD",10808,1,51,0)
+   parameter setting is ignored during the CPRS ordering process.
+"BLD",10808,1,52,0)
+ 
+"BLD",10808,1,53,0)
+   Resolution:
+"BLD",10808,1,54,0)
+   -----------
+"BLD",10808,1,55,0)
+ 
+"BLD",10808,1,56,0)
+   Modify routine ORWD2 to determine whether a "device" parameter
+"BLD",10808,1,57,0)
+   definition exists for the patient's Room-Bed. The "device" parameter 
+"BLD",10808,1,58,0)
+   descriptions were updated to clarify that the location(s) for each 
+"BLD",10808,1,59,0)
+   Room-Bed must have the corresponding "prompt" parameter defined in
+"BLD",10808,1,60,0)
+   order for the Room-Bed device to display.  The CPRS Technical Manual
+"BLD",10808,1,61,0)
+   was also updated to include that clarification.
+"BLD",10808,4,0)
+^9.64PA^101.43^1
+"BLD",10808,4,101.43,0)
+101.43
+"BLD",10808,4,101.43,2,0)
+^9.641^101.43^1
+"BLD",10808,4,101.43,2,101.43,0)
+ORDERABLE ITEMS  (File-top level)
+"BLD",10808,4,101.43,2,101.43,1,0)
+^9.6411^.01^1
+"BLD",10808,4,101.43,2,101.43,1,.01,0)
+NAME
+"BLD",10808,4,101.43,222)
+y^n^p^^^^n^^n
+"BLD",10808,4,101.43,224)
+
+"BLD",10808,4,"APDD",101.43,101.43)
+
+"BLD",10808,4,"APDD",101.43,101.43,.01)
+
+"BLD",10808,4,"B",101.43,101.43)
+
+"BLD",10808,6)
+1^
+"BLD",10808,6.3)
+8
+"BLD",10808,"ABPKG")
+n
+"BLD",10808,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10808,"KRN",.4,0)
+.4
+"BLD",10808,"KRN",.401,0)
+.401
+"BLD",10808,"KRN",.402,0)
+.402
+"BLD",10808,"KRN",.403,0)
+.403
+"BLD",10808,"KRN",.5,0)
+.5
+"BLD",10808,"KRN",.84,0)
+.84
+"BLD",10808,"KRN",3.6,0)
+3.6
+"BLD",10808,"KRN",3.8,0)
+3.8
+"BLD",10808,"KRN",9.2,0)
+9.2
+"BLD",10808,"KRN",9.8,0)
+9.8
+"BLD",10808,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10808,"KRN",9.8,"NM",1,0)
+ORWD2^^0^B41689390
+"BLD",10808,"KRN",9.8,"NM","B","ORWD2",1)
+
+"BLD",10808,"KRN",19,0)
+19
+"BLD",10808,"KRN",19.1,0)
+19.1
+"BLD",10808,"KRN",101,0)
+101
+"BLD",10808,"KRN",409.61,0)
+409.61
+"BLD",10808,"KRN",771,0)
+771
+"BLD",10808,"KRN",779.2,0)
+779.2
+"BLD",10808,"KRN",870,0)
+870
+"BLD",10808,"KRN",8989.51,0)
+8989.51
+"BLD",10808,"KRN",8989.51,"NM",0)
+^9.68A^4^4
+"BLD",10808,"KRN",8989.51,"NM",1,0)
+ORPF CHART COPY PRINT DEVICE^^0
+"BLD",10808,"KRN",8989.51,"NM",2,0)
+ORPF LABEL PRINT DEVICE^^0
+"BLD",10808,"KRN",8989.51,"NM",3,0)
+ORPF REQUISITION PRINT DEVICE^^0
+"BLD",10808,"KRN",8989.51,"NM",4,0)
+ORPF WORK COPY PRINT DEVICE^^0
+"BLD",10808,"KRN",8989.51,"NM","B","ORPF CHART COPY PRINT DEVICE",1)
+
+"BLD",10808,"KRN",8989.51,"NM","B","ORPF LABEL PRINT DEVICE",2)
+
+"BLD",10808,"KRN",8989.51,"NM","B","ORPF REQUISITION PRINT DEVICE",3)
+
+"BLD",10808,"KRN",8989.51,"NM","B","ORPF WORK COPY PRINT DEVICE",4)
+
+"BLD",10808,"KRN",8989.52,0)
+8989.52
+"BLD",10808,"KRN",8994,0)
+8994
+"BLD",10808,"KRN","B",.4,.4)
+
+"BLD",10808,"KRN","B",.401,.401)
+
+"BLD",10808,"KRN","B",.402,.402)
+
+"BLD",10808,"KRN","B",.403,.403)
+
+"BLD",10808,"KRN","B",.5,.5)
+
+"BLD",10808,"KRN","B",.84,.84)
+
+"BLD",10808,"KRN","B",3.6,3.6)
+
+"BLD",10808,"KRN","B",3.8,3.8)
+
+"BLD",10808,"KRN","B",9.2,9.2)
+
+"BLD",10808,"KRN","B",9.8,9.8)
+
+"BLD",10808,"KRN","B",19,19)
+
+"BLD",10808,"KRN","B",19.1,19.1)
+
+"BLD",10808,"KRN","B",101,101)
+
+"BLD",10808,"KRN","B",409.61,409.61)
+
+"BLD",10808,"KRN","B",771,771)
+
+"BLD",10808,"KRN","B",779.2,779.2)
+
+"BLD",10808,"KRN","B",870,870)
+
+"BLD",10808,"KRN","B",8989.51,8989.51)
+
+"BLD",10808,"KRN","B",8989.52,8989.52)
+
+"BLD",10808,"KRN","B",8994,8994)
+
+"BLD",10808,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10808,"QUES",0)
+^9.62^^
+"BLD",10808,"REQB",0)
+^9.611^2^1
+"BLD",10808,"REQB",2,0)
+OR*3.0*286^2
+"BLD",10808,"REQB","B","OR*3.0*286",2)
+
+"FIA",101.43)
+ORDERABLE ITEMS
+"FIA",101.43,0)
+^ORD(101.43,
+"FIA",101.43,0,0)
+101.43
+"FIA",101.43,0,1)
+y^n^p^^^^n^^n
+"FIA",101.43,0,10)
+
+"FIA",101.43,0,11)
+
+"FIA",101.43,0,"RLRO")
+
+"FIA",101.43,0,"VR")
+3.0^OR
+"FIA",101.43,101.43)
+1
+"FIA",101.43,101.43,.01)
+
+"KRN",8989.51,131,-1)
+0^1
+"KRN",8989.51,131,0)
+ORPF CHART COPY PRINT DEVICE^Chart Copy Print Device^^^CHART COPY PRINT DEVICE
+"KRN",8989.51,131,1)
+P^3.5^Enter name of printer for printing chart copies.
+"KRN",8989.51,131,20,0)
+^^16^16^3180213^
+"KRN",8989.51,131,20,1,0)
+This is the printer on the ward/clinic/other where the chart copy
+"KRN",8989.51,131,20,2,0)
+should be printed.  If the field PROMPT FOR CHART COPY (i.e. the 
+"KRN",8989.51,131,20,3,0)
+parameter "ORPF PROMPT FOR CHART COPY") is 0 or 2, this printer is
+"KRN",8989.51,131,20,4,0)
+automatically used to print the report.  If the field PROMPT FOR CHART
+"KRN",8989.51,131,20,5,0)
+COPY is 1, the user is asked for device with the entry in this field as a
+"KRN",8989.51,131,20,6,0)
+default.
+"KRN",8989.51,131,20,7,0)
+ 
+"KRN",8989.51,131,20,8,0)
+Room-Bed Notes:
+"KRN",8989.51,131,20,9,0)
+ 
+"KRN",8989.51,131,20,10,0)
+(1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR CHART
+"KRN",8989.51,131,20,11,0)
+    COPY parameter for the corresponding location(s) must be defined.
+"KRN",8989.51,131,20,12,0)
+    The prompt parameter cannot be defined at the Room-Bed level.
+"KRN",8989.51,131,20,13,0)
+(2) If Room-Bed "device" configurations are needed, the parameter must 
+"KRN",8989.51,131,20,14,0)
+    be edited directly through the CPRS Manager Menu / CPRS Configuration
+"KRN",8989.51,131,20,15,0)
+    (IRM) / General Parameter Tools menu. Room-Bed fields are not 
+"KRN",8989.51,131,20,16,0)
+    available under the Print/Report Parameters menu.  
+"KRN",8989.51,131,30,0)
+^8989.513I^2^2
+"KRN",8989.51,131,30,1,0)
+2^44
+"KRN",8989.51,131,30,2,0)
+1^405.4
+"KRN",8989.51,132,-1)
+0^2
+"KRN",8989.51,132,0)
+ORPF LABEL PRINT DEVICE^Label Print Device^^^LABEL PRINT DEVICE
+"KRN",8989.51,132,1)
+P^3.5^Enter name of printer for printing labels.
+"KRN",8989.51,132,20,0)
+^^15^15^3180213^
+"KRN",8989.51,132,20,1,0)
+This is the printer on the ward/clinic/other where the label should
+"KRN",8989.51,132,20,2,0)
+be printed.  If the field PROMPT FOR LABELS (i.e. the parameter "ORPF 
+"KRN",8989.51,132,20,3,0)
+PROMPT FOR LABELS") is 0 or 2, this printer is automatically used to print
+"KRN",8989.51,132,20,4,0)
+the labels.  If the field PROMPT FOR LABELS is 1, the user is asked for
+"KRN",8989.51,132,20,5,0)
+device with the entry in this field as a default.
+"KRN",8989.51,132,20,6,0)
+ 
+"KRN",8989.51,132,20,7,0)
+Room-Bed Notes:
+"KRN",8989.51,132,20,8,0)
+ 
+"KRN",8989.51,132,20,9,0)
+(1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR LABELS
+"KRN",8989.51,132,20,10,0)
+    parameter for the corresponding location(s) must be defined.  The
+"KRN",8989.51,132,20,11,0)
+    prompt parameter cannot be defined at the Room-Bed level.
+"KRN",8989.51,132,20,12,0)
+(2) If Room-Bed "device" configurations are needed, the parameter must 
+"KRN",8989.51,132,20,13,0)
+    be edited directly through the CPRS Manager Menu / CPRS Configuration 
+"KRN",8989.51,132,20,14,0)
+    (IRM) / General Parameter Tools menu. Room-Bed fields are not 
+"KRN",8989.51,132,20,15,0)
+    available under the Print/Report Parameters menu.  
+"KRN",8989.51,132,30,0)
+^8989.513I^2^2
+"KRN",8989.51,132,30,1,0)
+2^44
+"KRN",8989.51,132,30,2,0)
+1^405.4
+"KRN",8989.51,133,-1)
+0^3
+"KRN",8989.51,133,0)
+ORPF REQUISITION PRINT DEVICE^Requisition Print Device^^^REQUISITION PRINT DEVICE
+"KRN",8989.51,133,1)
+P^3.5^Enter name of printer for printing requisitions.
+"KRN",8989.51,133,20,0)
+^^16^16^3180213^
+"KRN",8989.51,133,20,1,0)
+This is the printer on the ward/clinic/other where the requisition
+"KRN",8989.51,133,20,2,0)
+should be printed.  If the field PROMPT FOR REQUISITIONS (i.e. the 
+"KRN",8989.51,133,20,3,0)
+parameter "ORPF PROMPT FOR REQUISITIONS") is 0 or 2, this printer is
+"KRN",8989.51,133,20,4,0)
+automatically used to print the requisitions.  If the field PROMPT FOR
+"KRN",8989.51,133,20,5,0)
+REQUISITIONS is 1, the user is asked for device with the entry in this
+"KRN",8989.51,133,20,6,0)
+field as a default.
+"KRN",8989.51,133,20,7,0)
+ 
+"KRN",8989.51,133,20,8,0)
+Room-Bed Notes:
+"KRN",8989.51,133,20,9,0)
+ 
+"KRN",8989.51,133,20,10,0)
+(1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR
+"KRN",8989.51,133,20,11,0)
+    REQUISITIONS parameter for the corresponding location(s) must be 
+"KRN",8989.51,133,20,12,0)
+    defined. The prompt parameter cannot be defined at the Room-Bed level.
+"KRN",8989.51,133,20,13,0)
+(2) If Room-Bed "device" configurations are needed, the parameter must 
+"KRN",8989.51,133,20,14,0)
+    be edited directly through the CPRS Manager Menu / CPRS Configuration 
+"KRN",8989.51,133,20,15,0)
+    (IRM) / General Parameter Tools menu. Room-Bed fields are not 
+"KRN",8989.51,133,20,16,0)
+    available under the Print/Report Parameters menu.  
+"KRN",8989.51,133,30,0)
+^8989.513I^2^2
+"KRN",8989.51,133,30,1,0)
+2^44
+"KRN",8989.51,133,30,2,0)
+1^405.4
+"KRN",8989.51,174,-1)
+0^4
+"KRN",8989.51,174,0)
+ORPF WORK COPY PRINT DEVICE^Work Copy Print Device^^^WORK COPY PRINT DEVICE
+"KRN",8989.51,174,1)
+P^3.5^Enter name of printer for printing work copies.
+"KRN",8989.51,174,20,0)
+^^16^16^3180213^
+"KRN",8989.51,174,20,1,0)
+This is the printer on the ward/clinic/other where the work copy
+"KRN",8989.51,174,20,2,0)
+should be printed.  If the field PROMPT FOR WORK COPY (i.e. the 
+"KRN",8989.51,174,20,3,0)
+parameter "ORPF PROMPT FOR WORK COPY") is 0 or 2, this printer is
+"KRN",8989.51,174,20,4,0)
+automatically used to print the report.  If the field PROMPT FOR WORK COPY
+"KRN",8989.51,174,20,5,0)
+is 1, the user is asked for device with the entry in this field as a
+"KRN",8989.51,174,20,6,0)
+default.
+"KRN",8989.51,174,20,7,0)
+ 
+"KRN",8989.51,174,20,8,0)
+Room-Bed Notes:
+"KRN",8989.51,174,20,9,0)
+ 
+"KRN",8989.51,174,20,10,0)
+(1) If this parameter is set for Room-Bed, the ORPF PROMPT FOR WORK
+"KRN",8989.51,174,20,11,0)
+    COPY parameter for the corresponding location(s) must be defined.
+"KRN",8989.51,174,20,12,0)
+    The prompt parameter cannot be defined at the Room-Bed level.
+"KRN",8989.51,174,20,13,0)
+(2) If Room-Bed "device" configurations are needed, the parameter must 
+"KRN",8989.51,174,20,14,0)
+    be edited directly through the CPRS Manager Menu / CPRS Configuration 
+"KRN",8989.51,174,20,15,0)
+    (IRM) / General Parameter Tools menu. Room-Bed fields are not 
+"KRN",8989.51,174,20,16,0)
+    available under the Print/Report Parameters menu.
+"KRN",8989.51,174,30,0)
+^8989.513I^2^2
+"KRN",8989.51,174,30,1,0)
+2^44
+"KRN",8989.51,174,30,2,0)
+1^405.4
+"MBREQ")
+0
+"ORD",20,8989.51)
+8989.51;20;;;PAR1E1^XPDTA2;PAR1F1^XPDIA3;PAR1E1^XPDIA3;PAR1F2^XPDIA3;;PAR1DEL^XPDIA3(%)
+"ORD",20,8989.51,0)
+PARAMETER DEFINITION
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+477^3180720^520824662
+"PKG",188,22,1,"PAH",1,1,0)
+^^61^61^3180720
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch addresses two (2) issues:
+"PKG",188,22,1,"PAH",1,1,2,0)
+ 
+"PKG",188,22,1,"PAH",1,1,3,0)
+1.  The PHARMACY ORDERABLE ITEM file (#50.7) NAME field (#.01) is 
+"PKG",188,22,1,"PAH",1,1,4,0)
+    not always synced with ORDERABLE ITEM file (#101.43) NAME field
+"PKG",188,22,1,"PAH",1,1,5,0)
+    (#.01).
+"PKG",188,22,1,"PAH",1,1,6,0)
+2.  Room-Bed default printer parameters are ignored during the ordering 
+"PKG",188,22,1,"PAH",1,1,7,0)
+    process.
+"PKG",188,22,1,"PAH",1,1,8,0)
+ 
+"PKG",188,22,1,"PAH",1,1,9,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",188,22,1,"PAH",1,1,10,0)
+--------------------------------------------
+"PKG",188,22,1,"PAH",1,1,11,0)
+1. I7370452FY16 - PHARMACY ORDERABLE ITEMS / ORDERABLE ITEMS
+"PKG",188,22,1,"PAH",1,1,12,0)
+   I10581756FY16 (d) 
+"PKG",188,22,1,"PAH",1,1,13,0)
+ 
+"PKG",188,22,1,"PAH",1,1,14,0)
+   Problem: 
+"PKG",188,22,1,"PAH",1,1,15,0)
+   --------
+"PKG",188,22,1,"PAH",1,1,16,0)
+   The PHARMACY ORDERABLE ITEMS file (#50.7) NAME field (#.01) is  
+"PKG",188,22,1,"PAH",1,1,17,0)
+   not always synced with the ORDERABLE ITEMS file (#101.43) NAME
+"PKG",188,22,1,"PAH",1,1,18,0)
+   field (#.01).
+"PKG",188,22,1,"PAH",1,1,19,0)
+ 
+"PKG",188,22,1,"PAH",1,1,20,0)
+   The NAME field (#.01) in the ORDERABLE ITEMS file (#101.43) is  
+"PKG",188,22,1,"PAH",1,1,21,0)
+   a combination of the NAME field (#.01), max length 40, in the 
+"PKG",188,22,1,"PAH",1,1,22,0)
+   PHARMACY ORDERABLE ITEMS file (#50.7) and the NAME field (#.01), 
+"PKG",188,22,1,"PAH",1,1,23,0)
+   max length 30, in the DOSAGE FORM file (#50.606).  There is a  
+"PKG",188,22,1,"PAH",1,1,24,0)
+   space between the two fields and a space at the end of the field.
+"PKG",188,22,1,"PAH",1,1,25,0)
+   This could produce a NAME that is 72 characters in length.  
+"PKG",188,22,1,"PAH",1,1,26,0)
+ 
+"PKG",188,22,1,"PAH",1,1,27,0)
+   The problem is that the maximum length for the NAME field (#.01)
+"PKG",188,22,1,"PAH",1,1,28,0)
+   in the ORDERABLE ITEMS file (#101.43) is 63 characters.  This  
+"PKG",188,22,1,"PAH",1,1,29,0)
+   can result in truncation, as well as failed update "pushes" when  
+"PKG",188,22,1,"PAH",1,1,30,0)
+   the combination of the Pharmacy Orderable Items Name and Dosage
+"PKG",188,22,1,"PAH",1,1,31,0)
+   Form Name is greater than 63 characters.
+"PKG",188,22,1,"PAH",1,1,32,0)
+ 
+"PKG",188,22,1,"PAH",1,1,33,0)
+   The maximum field length for the NAME field (#.01) in the 
+"PKG",188,22,1,"PAH",1,1,34,0)
+   ORDERABLE ITEMS file (#101.43) needs to be increased to 72 
+"PKG",188,22,1,"PAH",1,1,35,0)
+   characters.
+"PKG",188,22,1,"PAH",1,1,36,0)
+ 
+"PKG",188,22,1,"PAH",1,1,37,0)
+   Resolution:
+"PKG",188,22,1,"PAH",1,1,38,0)
+   -----------
+"PKG",188,22,1,"PAH",1,1,39,0)
+   A Data Dictionary update has been made to the NAME Field (#.01) in 
+"PKG",188,22,1,"PAH",1,1,40,0)
+   the ORDERABLE ITEM file (#101.43) to increase the maximum field 
+"PKG",188,22,1,"PAH",1,1,41,0)
+   length limit to 72 characters.
+"PKG",188,22,1,"PAH",1,1,42,0)
+ 
+"PKG",188,22,1,"PAH",1,1,43,0)
+2. I17614498FY18 - ROOM-BED PRINT DEVICE PARAMETER ISSUES
+"PKG",188,22,1,"PAH",1,1,44,0)
+   
+"PKG",188,22,1,"PAH",1,1,45,0)
+   Problem:
+"PKG",188,22,1,"PAH",1,1,46,0)
+   --------
+"PKG",188,22,1,"PAH",1,1,47,0)
+ 
+"PKG",188,22,1,"PAH",1,1,48,0)
+   If a default label printer is defined for a Room-Bed using any of the
+"PKG",188,22,1,"PAH",1,1,49,0)
+   parameters "ORPF CHART COPY PRINT DEVICE ", "ORPF LABEL PRINT DEVICE",
+"PKG",188,22,1,"PAH",1,1,50,0)
+   "ORPF REQUISITION PRINT DEVICE" and "ORPF WORK COPY PRINT DEVICE", the
+"PKG",188,22,1,"PAH",1,1,51,0)
+   parameter setting is ignored during the CPRS ordering process.
+"PKG",188,22,1,"PAH",1,1,52,0)
+ 
+"PKG",188,22,1,"PAH",1,1,53,0)
+   Resolution:
+"PKG",188,22,1,"PAH",1,1,54,0)
+   -----------
+"PKG",188,22,1,"PAH",1,1,55,0)
+ 
+"PKG",188,22,1,"PAH",1,1,56,0)
+   Modify routine ORWD2 to determine whether a "device" parameter
+"PKG",188,22,1,"PAH",1,1,57,0)
+   definition exists for the patient's Room-Bed. The "device" parameter 
+"PKG",188,22,1,"PAH",1,1,58,0)
+   descriptions were updated to clarify that the location(s) for each 
+"PKG",188,22,1,"PAH",1,1,59,0)
+   Room-Bed must have the corresponding "prompt" parameter defined in
+"PKG",188,22,1,"PAH",1,1,60,0)
+   order for the Room-Bed device to display.  The CPRS Technical Manual
+"PKG",188,22,1,"PAH",1,1,61,0)
+   was also updated to include that clarification.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","ORWD2")
+0^1^B41689390^B33111344
+"RTN","ORWD2",1,0)
+ORWD2 ; SLC/KCM/REV - GUI Prints; 28-JAN-1999 12:51 ;1/9/06  00:35
+"RTN","ORWD2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,215,286,477**;Dec 17, 1997;Build 8
+"RTN","ORWD2",3,0)
+ ;
+"RTN","ORWD2",4,0)
+ ; DBIA 10061 IN5^VADPT
+"RTN","ORWD2",5,0)
+ ; PUBLIC CALLS
+"RTN","ORWD2",6,0)
+ ;
+"RTN","ORWD2",7,0)
+DEVINFO(LST,LOC,NATR,ORDERS)       ; Return device info when signing/releasing orders
+"RTN","ORWD2",8,0)
+ ; Y(0)=Prompt Chart ^ Prompt Label ^ Prompt Requisition ^ Prompt Work
+"RTN","ORWD2",9,0)
+ ;      ^ Chart Device ^ Label Device ^ Requisition Device ^ Work Device
+"RTN","ORWD2",10,0)
+ ; for Prompt X: *=no print, 0=autoprint, 1=prompt&dev 2=prompt only 
+"RTN","ORWD2",11,0)
+ ; Y(n)=ORIFN;ACT ^ Chart ^ Label ^ Requisition ^ Service ^ Work
+"RTN","ORWD2",12,0)
+ ; LOC=location (ptr 44), NATR=nature of order (ptr 100.02)
+"RTN","ORWD2",13,0)
+ ; ORDERS=ORIFN;ACT ^ R | S | E (released, signed, error)
+"RTN","ORWD2",14,0)
+ N NATCHT,NATWRK,WHENCHT,PRMTCHT,PRMTLBL,PRMTREQ,PRMTWRK
+"RTN","ORWD2",15,0)
+ N DOCHT,DOLBL,DOREQ,DOWRK,RELEASE,ORDERID,I,J,X
+"RTN","ORWD2",16,0)
+ N NDCR,NODE,NPCC,NPWC
+"RTN","ORWD2",17,0)
+ S (DOCHT,DOLBL,DOREQ,DOWRK,I,J)=0,LOC=+LOC_";SC("
+"RTN","ORWD2",18,0)
+ S NATR=$O(^ORD(100.02,"C",NATR,0))
+"RTN","ORWD2",19,0)
+ S NATCHT=+$P($G(^ORD(100.02,NATR,1)),U,2),NATWRK=+$P($G(^(1)),U,5)
+"RTN","ORWD2",20,0)
+ S WHENCHT=$$GET^XPAR("ALL^"_LOC,"ORPF PRINT CHART COPY WHEN",1,"I")
+"RTN","ORWD2",21,0)
+ I '$L(WHENCHT) S WHENCHT="R"
+"RTN","ORWD2",22,0)
+ S PRMTCHT=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR CHART COPY",1,"I")
+"RTN","ORWD2",23,0)
+ S PRMTLBL=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR LABELS",1,"I")
+"RTN","ORWD2",24,0)
+ S PRMTREQ=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR REQUISITIONS",1,"I")
+"RTN","ORWD2",25,0)
+ S PRMTWRK=$$GET^XPAR("ALL^"_LOC,"ORPF PROMPT FOR WORK COPY",1,"I")
+"RTN","ORWD2",26,0)
+ N BBPKG S BBPKG=+$O(^DIC(9.4,"B","VBECS",0))
+"RTN","ORWD2",27,0)
+ D INSRTBB(.ORDERS) ; insert any blood bank child lab orders into ORDERS array
+"RTN","ORWD2",28,0)
+ F  S I=$O(ORDERS(I)) Q:'I  I $P(ORDERS(I),U,2)'["E" D
+"RTN","ORWD2",29,0)
+ . S ORDERID=$P(ORDERS(I),U),RELEASE=($P(ORDERS(I),U,2)["R")
+"RTN","ORWD2",30,0)
+ . S J=J+1,LST(J)=ORDERID_"^^^^"
+"RTN","ORWD2",31,0)
+ . ;AGP this section check the order for DC Reason and grabs the print requirement
+"RTN","ORWD2",32,0)
+ . ;from the Nature of Order file.
+"RTN","ORWD2",33,0)
+ . S NPCC=1,NPWC=1
+"RTN","ORWD2",34,0)
+ . S NDCR=$P($G(^OR(100,+ORDERID,6)),U) I NDCR>0 D
+"RTN","ORWD2",35,0)
+ . .S NODE=$G(^ORD(100.02,NDCR,1))
+"RTN","ORWD2",36,0)
+ . .S NPCC=+$P(NODE,U,2)
+"RTN","ORWD2",37,0)
+ . .S NPWC=+$P(NODE,U,5)
+"RTN","ORWD2",38,0)
+ . ; skip chart copy if nature doesn't print, no match to 'print when',
+"RTN","ORWD2",39,0)
+ . ; prompt parameter says don't print, or is lab child of blood bank 
+"RTN","ORWD2",40,0)
+ . I NPCC,NATCHT,($P(ORDERS(I),U,2)[WHENCHT),(PRMTCHT'="*"),$$HASFMTC,$$NOTBB(+ORDERS(I)) S $P(LST(J),U,2)=1,DOCHT=1
+"RTN","ORWD2",41,0)
+ . ; skip label if not released, no label format, or prompt parameter
+"RTN","ORWD2",42,0)
+ . ; says don't print
+"RTN","ORWD2",43,0)
+ . I RELEASE,(PRMTLBL'="*"),$$HASFMTL S $P(LST(J),U,3)=1,DOLBL=1
+"RTN","ORWD2",44,0)
+ . ; skip requisition if not released, no requistion format, or the
+"RTN","ORWD2",45,0)
+ . ; prompt parameter says don't print
+"RTN","ORWD2",46,0)
+ . I RELEASE,(PRMTREQ'="*"),$$HASFMTR S $P(LST(J),U,4)=1,DOREQ=1
+"RTN","ORWD2",47,0)
+ . ; skip service copy if not releasing
+"RTN","ORWD2",48,0)
+ . I RELEASE S $P(LST(J),U,5)=1
+"RTN","ORWD2",49,0)
+ . ; skip work copy if nature doesn't print, not released, no work
+"RTN","ORWD2",50,0)
+ . ; copy format, or prompt parameter says don't print
+"RTN","ORWD2",51,0)
+ . I NPWC,NATWRK,RELEASE,(PRMTWRK'="*"),$$HASFMTW,$$NOTBB(+ORDERS(I)) S $P(LST(J),U,6)=1,DOWRK=1
+"RTN","ORWD2",52,0)
+ S LST(0)=$$DEFDEV
+"RTN","ORWD2",53,0)
+ Q
+"RTN","ORWD2",54,0)
+MANUAL(REC,LOC,ORDERS)   ; return device info for manual prints
+"RTN","ORWD2",55,0)
+ N DOCHT,DOLBL,DOREQ,DOWRK,ORDERID,I
+"RTN","ORWD2",56,0)
+ N PRMTCHT,PRMTLBL,PRMTREQ,PRMTWRK  ; (so undefined for DEFDEV call)
+"RTN","ORWD2",57,0)
+ S (DOCHT,DOLBL,DOREQ,DOWRK,I,J)=0,LOC=+LOC_";SC("
+"RTN","ORWD2",58,0)
+ N BBPKG S BBPKG=+$O(^DIC(9.4,"B","VBECS",0))
+"RTN","ORWD2",59,0)
+ D INSRTBB(.ORDERS) ; insert any blood bank child lab orders into ORDERS array
+"RTN","ORWD2",60,0)
+ F  S I=$O(ORDERS(I)) Q:'I  D  Q:DOCHT&DOLBL&DOREQ&DOWRK
+"RTN","ORWD2",61,0)
+ . S ORDERID=$P(ORDERS(I),U)
+"RTN","ORWD2",62,0)
+ . I $$HASFMTC,$$NOTBB(+ORDERS(I)) S DOCHT=1
+"RTN","ORWD2",63,0)
+ . I $$HASFMTL S DOLBL=1
+"RTN","ORWD2",64,0)
+ . I $$HASFMTR S DOREQ=1
+"RTN","ORWD2",65,0)
+ . I $$HASFMTW,$$NOTBB(+ORDERS(I)) S DOWRK=1
+"RTN","ORWD2",66,0)
+ S REC=$$DEFDEV
+"RTN","ORWD2",67,0)
+ Q
+"RTN","ORWD2",68,0)
+ ;
+"RTN","ORWD2",69,0)
+ ; PRIVATE CALLS
+"RTN","ORWD2",70,0)
+ ;
+"RTN","ORWD2",71,0)
+DEFDEV()        ; returns string of prompt flags & default devices
+"RTN","ORWD2",72,0)
+ ; called from DEVINFO & MANUAL
+"RTN","ORWD2",73,0)
+ ; expects LOC,DOCHT,DOLBL,DOREQ,DOWRK to be defined
+"RTN","ORWD2",74,0)
+ ; optionally expects PRMTCHT, PRMTLBL, PRMTREQ, PRMTWRK
+"RTN","ORWD2",75,0)
+ N X,DFN,VAIP,ROOMBED,PRINTDEV
+"RTN","ORWD2",76,0)
+ S (PRINTDEV,ROOMBED)=""
+"RTN","ORWD2",77,0)
+ I $G(ORDERID)]"" D
+"RTN","ORWD2",78,0)
+ . S DFN=+$P(^OR(100,+ORDERID,0),"^",2)
+"RTN","ORWD2",79,0)
+ . D IN5^VADPT
+"RTN","ORWD2",80,0)
+ . S ROOMBED=$P($G(VAIP(6)),"^")
+"RTN","ORWD2",81,0)
+ I DOCHT D
+"RTN","ORWD2",82,0)
+ . S $P(X,U,1)=$G(PRMTCHT,1)
+"RTN","ORWD2",83,0)
+ . S $P(X,U,5)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF CHART COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",84,0)
+ . I ROOMBED]"" D
+"RTN","ORWD2",85,0)
+ . . S PRINTDEV=$TR($$GET^XPAR("ALL^"_ROOMBED_";DG(405.4,","ORPF CHART COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",86,0)
+ . . I PRINTDEV]"" S $P(X,U,5)=PRINTDEV
+"RTN","ORWD2",87,0)
+ E  S $P(X,U,1)="*"
+"RTN","ORWD2",88,0)
+ I DOLBL D
+"RTN","ORWD2",89,0)
+ . S $P(X,U,2)=$G(PRMTLBL,1)
+"RTN","ORWD2",90,0)
+ . S $P(X,U,6)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF LABEL PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",91,0)
+ . I ROOMBED]"" D
+"RTN","ORWD2",92,0)
+ . . S PRINTDEV=$TR($$GET^XPAR("ALL^"_ROOMBED_";DG(405.4,","ORPF LABEL PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",93,0)
+ . . I PRINTDEV]"" S $P(X,U,6)=PRINTDEV
+"RTN","ORWD2",94,0)
+ E  S $P(X,U,2)="*"
+"RTN","ORWD2",95,0)
+ I DOREQ D
+"RTN","ORWD2",96,0)
+ . S $P(X,U,3)=$G(PRMTREQ,1)
+"RTN","ORWD2",97,0)
+ . S $P(X,U,7)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF REQUISITION PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",98,0)
+ . I ROOMBED]"" D
+"RTN","ORWD2",99,0)
+ . . S PRINTDEV=$TR($$GET^XPAR("ALL^"_ROOMBED_";DG(405.4,","ORPF REQUISITION PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",100,0)
+ . . I PRINTDEV]"" S $P(X,U,7)=PRINTDEV
+"RTN","ORWD2",101,0)
+ E  S $P(X,U,3)="*"
+"RTN","ORWD2",102,0)
+ I DOWRK D
+"RTN","ORWD2",103,0)
+ . S $P(X,U,4)=$G(PRMTWRK,1)
+"RTN","ORWD2",104,0)
+ . S $P(X,U,8)=$TR($$GET^XPAR("ALL^"_LOC,"ORPF WORK COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",105,0)
+ . I ROOMBED]"" D
+"RTN","ORWD2",106,0)
+ . . S PRINTDEV=$TR($$GET^XPAR("ALL^"_ROOMBED_";DG(405.4,","ORPF WORK COPY PRINT DEVICE",1,"B"),U,";")
+"RTN","ORWD2",107,0)
+ . . I PRINTDEV]"" S $P(X,U,8)=PRINTDEV
+"RTN","ORWD2",108,0)
+ E  S $P(X,U,4)="*"
+"RTN","ORWD2",109,0)
+ Q X
+"RTN","ORWD2",110,0)
+ ;
+"RTN","ORWD2",111,0)
+HASFMTC()       ; returns 1 if a chart copy format is available
+"RTN","ORWD2",112,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOLBL to be defined
+"RTN","ORWD2",113,0)
+ I DOCHT=1 Q 1  ; already know we're doing at least 1 label
+"RTN","ORWD2",114,0)
+ Q ''$$GET^XPAR("SYS","ORPF CHART COPY FORMAT",1,"I")
+"RTN","ORWD2",115,0)
+ ;
+"RTN","ORWD2",116,0)
+HASFMTL()       ; returns 1 if a label format is available
+"RTN","ORWD2",117,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOLBL to be defined
+"RTN","ORWD2",118,0)
+ I DOLBL=1 Q 1  ; already know we're doing at least 1 label
+"RTN","ORWD2",119,0)
+ N PKG S PKG=+$P($G(^OR(100,+ORDERID,0)),U,14)
+"RTN","ORWD2",120,0)
+ Q ''$$GET^XPAR("SYS","ORPF WARD LABEL FORMAT",PKG,"I")
+"RTN","ORWD2",121,0)
+ ;
+"RTN","ORWD2",122,0)
+HASFMTR()       ; returns 1 if a requisition format is available
+"RTN","ORWD2",123,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOREQ to be defined
+"RTN","ORWD2",124,0)
+ ;I DOREQ=1 Q 1  ; already know we're doing at least 1 requisition
+"RTN","ORWD2",125,0)
+ N PKG,DLG S PKG=+$P($G(^OR(100,+ORDERID,0)),U,14),DLG=+$P($G(^OR(100,+ORDERID,0)),U,5)
+"RTN","ORWD2",126,0)
+ I PKG=$O(^DIC(9.4,"B","DIETETICS",0)),DLG'=$O(^ORD(101.41,"B","FHW SPECIAL MEAL",0)) Q 0 ;no requisitions
+"RTN","ORWD2",127,0)
+ I DOREQ=1 Q 1  ; already know we're doing at least 1 requisition
+"RTN","ORWD2",128,0)
+ Q ''$$GET^XPAR("SYS","ORPF WARD REQUISITION FORMAT",PKG,"I")
+"RTN","ORWD2",129,0)
+ ;
+"RTN","ORWD2",130,0)
+HASFMTW()       ; returns 1 if a work copy format is available
+"RTN","ORWD2",131,0)
+ ; called from DEVINFO & MANUAL, expects ORDERID & DOWRK to be defined
+"RTN","ORWD2",132,0)
+ I DOWRK=1 Q 1  ; already know we're doing at least 1 work copy
+"RTN","ORWD2",133,0)
+ Q ''$$GET^XPAR("SYS","ORPF WORK COPY FORMAT",1,"I") ; not at pkg level
+"RTN","ORWD2",134,0)
+ ;
+"RTN","ORWD2",135,0)
+INSRTBB(ORDRLST) ; Insert child lab orders for any orders going to VBECS
+"RTN","ORWD2",136,0)
+ ; called from DEVINFO, MANUAL
+"RTN","ORWD2",137,0)
+ ; expects BBPKG to be defined
+"RTN","ORWD2",138,0)
+ Q:'BBPKG
+"RTN","ORWD2",139,0)
+ N I,LABPKG,SUBID,CHILD,ACT,KIND
+"RTN","ORWD2",140,0)
+ S LABPKG=+$O(^DIC(9.4,"B","LAB SERVICE",0)) Q:'LABPKG
+"RTN","ORWD2",141,0)
+ S I=0 F  S I=$O(ORDRLST(I)) Q:'I  I $P(ORDRLST(I),U,2)'["E" D
+"RTN","ORWD2",142,0)
+ . I $P($G(^OR(100,+ORDRLST(I),0)),U,14)'=BBPKG Q
+"RTN","ORWD2",143,0)
+ . S SUBID=.0001
+"RTN","ORWD2",144,0)
+ . S CHILD=0 F  S CHILD=$O(^OR(100,+ORDRLST(I),2,CHILD)) Q:'CHILD  D
+"RTN","ORWD2",145,0)
+ . . I $P($G(^OR(100,CHILD,0)),U,14)'=LABPKG Q
+"RTN","ORWD2",146,0)
+ . . S SUBID=SUBID+.0001,ACT=+$P(^OR(100,CHILD,3),U,7),KIND=$P(ORDRLST(I),U,2)
+"RTN","ORWD2",147,0)
+ . . S ORDRLST(I+SUBID)=CHILD_";"_ACT_U_KIND
+"RTN","ORWD2",148,0)
+ . S I=I+SUBID
+"RTN","ORWD2",149,0)
+ Q
+"RTN","ORWD2",150,0)
+NOTBB(CHILD) ; returns 1 if the order is not a blood bank child lab order
+"RTN","ORWD2",151,0)
+ ; called from DEVINFO, MANUAL
+"RTN","ORWD2",152,0)
+ ; expects BBPKG to be defined
+"RTN","ORWD2",153,0)
+ N PARENT S PARENT=$P(^OR(100,CHILD,3),U,9)
+"RTN","ORWD2",154,0)
+ I PARENT,$P(^OR(100,PARENT,0),U,14)=BBPKG Q 0
+"RTN","ORWD2",155,0)
+ Q 1
+"VER")
+8.0^22.2
+"^DD",101.43,101.43,.01,0)
+NAME^RFXJ72^^0;1^K:$L(X)>72!($L(X)<2)!($$CHKNAM^ORUTL(X,";")) X
+"^DD",101.43,101.43,.01,1,0)
+^.1^^-1
+"^DD",101.43,101.43,.01,1,1,0)
+101.43^B
+"^DD",101.43,101.43,.01,1,1,1)
+S ^ORD(101.43,"B",$E(X,1,30),DA)=""
+"^DD",101.43,101.43,.01,1,1,2)
+K ^ORD(101.43,"B",$E(X,1,30),DA)
+"^DD",101.43,101.43,.01,1,2,0)
+101.43^C2^MUMPS
+"^DD",101.43,101.43,.01,1,2,1)
+N CD,IN S CD=$P(^ORD(101.43,DA,0),U,3),IN=$G(^(.1)) D CS^ORDD43(X,CD,IN)
+"^DD",101.43,101.43,.01,1,2,2)
+N CD S CD=$P(^ORD(101.43,DA,0),U,3) D CK^ORDD43(X,CD)
+"^DD",101.43,101.43,.01,1,2,"%D",0)
+^^1^1^2990316^^^
+"^DD",101.43,101.43,.01,1,2,"%D",1,0)
+Allows retrieval of items by code within Sets.
+"^DD",101.43,101.43,.01,1,2,"DT")
+2950713
+"^DD",101.43,101.43,.01,1,3,0)
+101.43^S0^MUMPS
+"^DD",101.43,101.43,.01,1,3,1)
+N IN,TYP S IN=$G(^ORD(101.43,DA,.1)),TYP=$P($G(^("LR")),U,7) D SS^ORDD43(X,IN,TYP)
+"^DD",101.43,101.43,.01,1,3,2)
+D SK^ORDD43(X)
+"^DD",101.43,101.43,.01,1,3,"%D",0)
+^^2^2^2990316^^^^
+"^DD",101.43,101.43,.01,1,3,"%D",1,0)
+Allows retrieval of orderable items via the Set "S" xrefs:
+"^DD",101.43,101.43,.01,1,3,"%D",2,0)
+^ORD(101.43,"S.<set>",NAME,DA)
+"^DD",101.43,101.43,.01,1,3,"DT")
+2950810
+"^DD",101.43,101.43,.01,1,4,0)
+101.43^COMMON2^MUMPS
+"^DD",101.43,101.43,.01,1,4,1)
+N IT,CP S IT=$P($G(^ORD(101.43,DA,"RA")),U,3),CP=$P($G(^("RA")),U,4) D SETRA^ORDD43(X,IT,CP)
+"^DD",101.43,101.43,.01,1,4,2)
+N IT,CP S IT=$P($G(^ORD(101.43,DA,"RA")),U,3),CP=$P($G(^("RA")),U,4) D KILLRA^ORDD43(X,IT,CP)
+"^DD",101.43,101.43,.01,1,4,"%D",0)
+^^2^2^2990316^^^
+"^DD",101.43,101.43,.01,1,4,"%D",1,0)
+Allows retrieval of Radiology common procedures alphabetically within
+"^DD",101.43,101.43,.01,1,4,"%D",2,0)
+imaging types.
+"^DD",101.43,101.43,.01,1,4,"DT")
+2950725
+"^DD",101.43,101.43,.01,1,5,0)
+101.43^SS2^MUMPS
+"^DD",101.43,101.43,.01,1,5,1)
+N IN,TYP S IN=$G(^ORD(101.43,DA,.1)),TYP=$P($G(^("LR")),U,7) D SS1^ORDD43(X,IN,TYP)
+"^DD",101.43,101.43,.01,1,5,2)
+D SK1^ORDD43(X)
+"^DD",101.43,101.43,.01,1,5,"%D",0)
+^^2^2^2990316^^^
+"^DD",101.43,101.43,.01,1,5,"%D",1,0)
+Allows retrieval of items by synonym via the Set "S" xrefs:
+"^DD",101.43,101.43,.01,1,5,"%D",2,0)
+^ORD(101.43,"S.<set>",SYNONYM,DA)
+"^DD",101.43,101.43,.01,1,5,"DT")
+2950810
+"^DD",101.43,101.43,.01,3)
+Answer must be 2-72 characters in length and cannot contain a semicolon (;).
+"^DD",101.43,101.43,.01,21,0)
+2^.001^1^1^3180118^^^^
+"^DD",101.43,101.43,.01,21,1,0)
+This is the name of this item that will be used for displaying and searching.
+"^DD",101.43,101.43,.01,"DT")
+3180118
+"^DD",101.43,101.43,.01,"V",0)
+^.12P^1^1
+"^DD",101.43,101.43,.01,"V",1,0)
+60^LABORATORY TEST^1^LAB^^n
+"BLD",10808,6)
+^408
+**END**
+**END**
+
