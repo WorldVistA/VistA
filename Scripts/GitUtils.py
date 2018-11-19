@@ -107,7 +107,7 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
         if len(outLineStack):
           diffStack=[]
           out = difflib.ndiff(line[1:].split("^"), outLineStack[0][1:].split("^"))
-          outList = '|'.join(out).split("|")
+          outList = '**'.join(out).split("**")
           if len(outList) > 1:
             for i,s in enumerate(outList):
               if i == len(outList):
