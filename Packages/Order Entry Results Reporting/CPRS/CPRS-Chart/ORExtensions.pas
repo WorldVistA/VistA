@@ -1,3 +1,19 @@
+{
+  Most of Code is Public Domain.
+  Changes by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2018
+  Removed Clipboard scrubbing code as Server now supports Unicode
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+}
 unit ORExtensions;
 
 interface
@@ -50,7 +66,7 @@ implementation
 procedure ScrubTheClipboard;
 begin
  // NB: OSEHRA/SMH - Plan 6 - This method is no longer needed.
- // It converted everything to ASCII using a poor man's manual converter.
+ // It converted everything to ASCII using a poor mans manual converter.
 end;
 
 { TEdit }
