@@ -19,7 +19,7 @@ The most common format is the VistA standard format, MMM DD, YYYY: E.g. MAR 13,
 other format is mm/dd/yyyy; E.g.  03/11/2011, representing March 11, 2011--not
 the expected 3 November 2011 commonly expected in the rest of the world.
 
-While the dates in MMM DD, YYYY with English months are unequivical, they won't
+While the dates in MMM DD, YYYY with English months are unequivocal, they won't
 be easily readable by people who don't speak English. The mm/dd/yyyy format 
 can and does lead to medical errors.
 
@@ -29,7 +29,7 @@ date format that CPRS currently uses to provide continuity for current users.
 
 I spent several weeks over this issue and I came to this conclusion: There is
 no forethought on the format for VistA date display in CPRS, expect for two
-accomodations:
+accommodations:
 
 * Most dates match the VistA Date Display (MMM DD, YYYY)
 * mm/dd/yy was chosen as a date format in many instances because it's short
@@ -43,37 +43,42 @@ Some screenshots of previous CPRS Date Handling (i.e. previous to this work)
    images/date01-problem-detail.png
    :align: center
    :alt: Dates in Problem Detail
+
    Dates in Problem Detail
 
 .. figure::
    images/date02-vitals-lite.png
    :align: center
    :alt: Dates in Vitals Lite
+
    Dates in Vitals Lite
 
 .. figure::
    images/date03-reports-date-ranages.png
    :align: center
    :alt: Reports Date Ranges
+
    Reports Date Ranges
 
 .. figure::
    images/date04-orders-tab.png
    :align: center
    :alt: Orders Tab
+
    Orders Tab
  
 .. figure::
    images/date05-notes-tab.png
    :align: center
    :alt: Notes Tab
+
    Notes Tab
 
 First, a Detour
 ---------------
 Our previous work took us into making CPRS talk to the server in Unicode. It
 turns out that we missed a spot. I noticed that the Problem List tab
-occassionally crashed when I edited a problem. I actually was told about this
+occasionally crashed when I edited a problem. I actually was told about this
 problem by somebody else about 4 years ago when they ran VistA in UTF-8 mode
 with no other changes. I was surprised that I didn't find it till now. It turns
 out that CPRS and the server both had a delimiter of ASCII 255 ($C(255) in M)
@@ -104,9 +109,9 @@ in VistA to be culture sensitive. I described how to do this in another paper
 over here (http://www.smh101.com/articles/VISTAi18nl10n.html). I will repeat 
 here the overall strategy:
 
-The overall idea is to use a varaible set by the Kernel upon user log-in called
+The overall idea is to use a variable set by the Kernel upon user log-in called
 DUZ("LANG"), to represent the user's language. This mechanism is imperfect
-since date displays differ even if you use the same language: E.g. Americian
+since date displays differ even if you use the same language: E.g. American
 and British English; but by and large it will work for most users.
 
 To set DUZ("LANG"), you typically set the field "DEFAULT LANGUAGE" in the
@@ -125,7 +130,7 @@ If you know VistA well, you will notice a glaring omission: XLFDT. XLFDT was
 never changed to to internationalized output of dates. Since XLFDT is just a
 copy of DILIBF, we just redirect the output to come from there instead.
 
-Here are a few screenshots of the steps we need to take to swich VistA to the
+Here are a few screenshots of the steps we need to take to switch VistA to the
 Korean Locale:
 
 1. Go to EVE > Operations Management > Kernel Management Menu > Enter/Edit
@@ -135,6 +140,7 @@ Korean Locale:
    images/date06-ksp.png
    :align: center
    :alt: Kernel System Parameters
+
    Kernel System Parameters Change to Korean
 
 2. In the Language (#.85) file, for Korean, add these entries for fields
@@ -146,6 +152,7 @@ Korean Locale:
    images/date07-fm-lang-file-nodes.png
    :align: center
    :alt: Fileman Language Nodes
+
    Fileman Language Nodes
 
 3. The fields reference a new routine. Here are its contents. I came up with
@@ -155,6 +162,7 @@ Korean Locale:
    images/date08-ukoutl.png
    :align: center
    :alt: UKOUTL
+
    UKOUTL
 
 4. Fix XLFDT:
@@ -163,6 +171,7 @@ Korean Locale:
    images/date09-xlfdt.png
    :align: center
    :alt: XLFDT
+
    XLFDT
 
 The result looks like this: very nice, I must say!
@@ -171,12 +180,14 @@ The result looks like this: very nice, I must say!
    images/date10-result1.png
    :align: center
    :alt: Result 1
+
    Result 1
 
 .. figure::
    images/date11-result2.png
    :align: center
    :alt: Result 2
+
    Result 2
 
 This fixes a significant number of dates. But alas, much of the VistA code
@@ -213,12 +224,14 @@ codes for dates:
    images/date12-delphi-exp1.png
    :align: center
    :alt: Delphi Experiment 1
+
    First Screen
 
 .. figure::
    images/date13-dephi-exp2.png
    :align: center
    :alt: Delphi Experiment 2
+
    Second Screen
 
 From this experiment, you will notice that the short dates always include the 4
@@ -228,7 +241,7 @@ CPRS into the two standard formats for all locales?
 It took me a couple of weeks to come to this realization: The problem is not
 really solvable in the current format, as the dates for each country that
 Windows supplies do not map neatly to the formats that CPRS users. In any case,
-we want backwards compatilibity with the current way CPRS runs (i.e. it should
+we want backwards compatibility with the current way CPRS runs (i.e. it should
 not appear different); but there is no consistency in how dates are actually
 handled in CPRS. I found out that you can adjust the "Short Date" and "Long
 Date" format in Delphi--and I finally came up with a solution: for the US
@@ -238,7 +251,7 @@ locales, we will only use one date format, the one decided by Windows as the
 
 Step 3: Converting CPRS Date Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Chornologically I actually did part of this first to experiment with how
+Chronologically I actually did part of this first to experiment with how
 to change dates before coming to the short date/long date decision above.
 
 CPRS has code in ORFn.pas, FormatFMDateTime that is the central hub for
@@ -372,7 +385,7 @@ short date + hh:mm.
 More testing reveals that while I fixed all the date displays everywhere, there
 are 4 areas that still have problems: Labs, Graphing, Problem List, and Vitals.
 Labs and Graphing turn out to be easy: for some reason, they did not use the
-stardard ``FMDateTimeToDateTime`` call in ``ORFn.pas``. So it was a matter of
+standard ``FMDateTimeToDateTime`` call in ``ORFn.pas``. So it was a matter of
 simply changing all the calls from ``FMToDateTime`` to the former. Problems
 and Vitals were complicated enough--they demand their own sections.
 
@@ -428,7 +441,7 @@ here's the new code:
 
 Once I fixed this, I found my first Fileman bug: yyyy/mm is not interpreted by
 %DT as a valid date time; even though yyyy is, and yyyy/mm/dd is. We (OSEHRA)
-asked for Geroge Timson's help, and now we have a new version of %DT that
+asked for George Timson's help, and now we have a new version of %DT that
 supports imprecise dates in the yyyy/mm format 
 (OSEHRA-Sandbox/VistA-M@8b84302a44adcbb200ff403853928fbdce169044).
 
@@ -465,7 +478,7 @@ the external date as MM/YY, which when revalidated in VistA, can get converted
 to DD/MM. I noted the problem and I hope to fix it in the next phase of the
 project when I work again on CPRS.
 
-Overall, the solution is unsatistifactory. Most of CPRS sends Timson Formatted
+Overall, the solution is unsatisfactory. Most of CPRS sends Timson Formatted
 dates (a.k.a. Fileman dates) to the server, and that--like the Unix Epoch Format
 --does not change with locales as it is an internal storage format for dates.
 Problem List, while having all the Fileman dates at its disposal, does not use
@@ -522,30 +535,35 @@ Here are some nice screenshots.
    images/date14-final-cover-sheet.png
    :align: center
    :alt: Final Cover Sheet
+
    Final Cover Sheet
 
 .. figure::
    images/date15-final-vitals.png
    :align: center
    :alt: Final Vitals
+
    Final Vitals
 
 .. figure::
    images/date16-orders.png
    :align: center
    :alt: Final Orders
+
    Final Orders
 
 .. figure::
    images/date17-labs.png
    :align: center
    :alt: Final Labs
+
    Final Labs
 
 .. figure::
    images/date18-reports.png
    :align: center
    :alt: Final Reports
+
    Final Reports
 
 Remaining Bugs
@@ -559,7 +577,7 @@ fix them now; but I documented them in JIRA. Here they are:
   round tripping this from VistA and back, going through Delphi display, and
   going back to VistA.  E.g. 2011/08 will save into Vista as Aug 2011.  In US
   locale, will be displayed in Delphi as 11/08.  When resaved in VistA, will be
-  intepreted as Aug 8 2018 (current year).
+  interested as Aug 8 2018 (current year).
 * Order Summary Report (Reports Tab) still has US dates on it. Probably an M
   side issue.
 * Alert Dates do not show up correctly. The Delphi code mangles the dates from
@@ -678,7 +696,7 @@ felt to be the major issues, which are the following:
 2. CPRS Localization Strategy and Framework
 3. CPRS display of correct date format depending on Windows Locale
 
-There are some items that we couldn't do in the time alotted; but these should
+There are some items that we couldn't do in the time allotted; but these should
 be easy to fix
 
 1. Embedded strings in the source code were not converted to resourcestrings.
