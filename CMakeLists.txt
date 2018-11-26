@@ -44,6 +44,7 @@ endif()
 if(BUILD_DELPHI)
   include(Delphi)
   add_subdirectory("Packages/RPC Broker/BDK" BDK)
+  add_subdirectory("Packages/General Medical Record - Vitals/Vitals Clients" Vitals)
   add_subdirectory("Packages/Order Entry Results Reporting/CPRS" CPRS)
 endif()
 
