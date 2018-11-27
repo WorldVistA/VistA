@@ -119,7 +119,7 @@ def getDOXURL(local):
 
 def getViViaNURL(local):
     if local:
-        return "../"
+        return local
     else:
         return "https://code.osehra.org/vivian/files/"
 

@@ -789,7 +789,7 @@ def run(args):
 
   crossRef = parseCrossRefGeneratorWithArgs(args)
   _doxURL = getDOXURL(args.local)
-  _vivianURL = getViViaNURL(False)
+  _vivianURL = getViViaNURL(args.local)
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
@@ -874,8 +874,7 @@ def createArgParser():
                       help='Logfile directory')
   parser.add_argument('-all', action='store_true',
                       help='generate all dependency files ')
-  parser.add_argument('-local', action='store_true',
-                      help='Use links to local DOX pages')
+  parser.add_argument('-local', help='Use links to local DOX pages')
   return parser
 
 def main():
