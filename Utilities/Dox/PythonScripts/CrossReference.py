@@ -238,7 +238,7 @@ class Routine(object):
       for icrEntry in rtnJson:
         if 'COMPONENT/ENTRY POINT' in icrEntry:
           for entry in icrEntry['COMPONENT/ENTRY POINT']:
-            if 'COMPONENT/ENTRY POINT' in entry.keys():
+            if 'COMPONENT/ENTRY POINT' in entry:
               entryPtList = self.__generateEntryList__(entry['COMPONENT/ENTRY POINT'],entryPtList)
               if entryPt in entryPtList:
                 entryPtList.pop(entryPtList.index(entryPt))
@@ -423,8 +423,7 @@ class FileManFile(Routine):
         if not self._subFiles:
             self._subFiles = dict()
         self._subFiles[FileManSubFile.getFileNo()] = FileManSubFile
-    def hasSubFile(self):
-        return self._subFiles and len(self._subFiles) > 0
+
     def getAllSubFiles(self):
         return self._subFiles
     def isRootFile(self):

@@ -121,7 +121,7 @@ def checkReqForUpdate(curNode,pastJSONObj,curDate):
       noHistory=False;
       if BFFEntry in pastJSONObj:
         ret = filter(lambda x: x['name'] == curNode['name'] , pastJSONObj[BFFEntry])
-        if len(ret):
+        if ret:
           for entry in ret:
             diffFlag=False
             if "dateUpdated" in entry:

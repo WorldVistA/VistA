@@ -62,9 +62,10 @@ class DescriptionSectionParser(IDDSectionParser):
         self._lines=[]
         self._curLine = ""
     def onSectionEnd(self, line, section, Global, CrossReference):
-        if len(self._curLine) > 0:
+        if self._curLine:
             self._lines.append(self._curLine)
         Global.setDescription(self._lines)
+
     def parseLine(self, line, Global, CrossReference):
         if not line.strip(): # assume this is the paragraph break
             if not self._curLine:
@@ -205,15 +206,16 @@ class FileManFieldSectionParser(IDDSectionParser):
         stripedType = ""
         if fType:
             stripedType = self.__stripFieldAttributes__(fType)
-        if len(stripedType) > 0:
+        if stripedType:
             self.__createFieldByType__(fieldNo, stripedType, fName, fLocation, line, Global, CrossReference)
         else:
             self._field = FileManFieldFactory.createField(fieldNo, fName, FileManField.FIELD_TYPE_NONE, fLocation)
         self._curFile.addFileManField(self._field)
-        if len(stripedType) > 0 :
+        if stripedType:
             self.__parseFieldAttributes__(fType)
+
     def onSectionEnd(self, line, section, Global, CrossReference):
-        if not self._lines or len(self._lines) == 0:
+        if not self._lines:
             pass
         #elif self._isSubFilePointer and self._pointedToSubFile:
         #    self.__parsingSubFileDescription__()
@@ -233,7 +235,7 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._lines.append(line)
 
     def __parseFieldDetails__(self):
-        if not self._lines or len(self._lines) <= 0:
+        if not self._lines:
             return
         curCaption = None
         curValues = None
@@ -260,7 +262,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field.addProp(curCaption, curValues)
 
     def __findTotalSubFileds__(self):
-        if not self._lines or len(self._lines) == 0:
+        if not self._lines:
             pass
         indentValue = self.__getDefaultIndentLevel__(self._curFile, self.DEFAULT_NAME_INDENT)
         for line in self._lines:
@@ -428,7 +430,7 @@ class PointedToBySectionParser(IDDSectionParser):
     def parseLine(self, line, Global, CrossReference):
         assert self._global
         strippedLine = line.rstrip(" ")
-        if len(strippedLine) == 0:
+        if not strippedLine:
             return
         value = strippedLine[self.POINTED_TO_BY_VALUE_INDEX:]
         result = POINTED_TO_BY_VALUE_REGEX.search(value)
@@ -579,7 +581,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         for line in logFileHandle:
             # handle the empty line
             line = line.rstrip("\r\n")
-            if len(line) == 0: # ignore the empty line
+            if not line: # ignore the empty line
                 continue
             section = self.__isSectionHeader__(line)
             if section:

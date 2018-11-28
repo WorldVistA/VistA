@@ -362,8 +362,7 @@ class FileManGlobalDataParser(object):
         return (ien, self._parseIndividualFieldDetail(dataValue, keyField, None))
     return (None, None)
 
-  def parseZWRGlobalFileBySchemaV2(self, inputFileName,
-                                   fileNumber, glbLoc=None):
+  def parseZWRGlobalFileBySchemaV2(self, inputFileName, fileNumber, glbLoc=None):
     schemaFile = self._allSchemaDict[fileNumber]
     self._glbData[fileNumber] = FileManFileData(fileNumber,
                                                 self.getFileManFileNameByFileNo(fileNumber))
@@ -667,9 +666,9 @@ class FileManGlobalDataParser(object):
         self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
 
   def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
-    if not value.strip(' '):
-      return
     value = value.strip(' ')
+    if not value:
+      return
     fieldDetail = value
     pointerFileNo = None
     if fieldAttr.isSetType():

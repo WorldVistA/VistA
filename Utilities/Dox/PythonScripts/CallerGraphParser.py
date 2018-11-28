@@ -92,7 +92,7 @@ structuredSource=[]
 
 def checkCSVDeps(self,CrossReference,optionText,keyVal):
   if CrossReference._inputTemplateDeps:
-    if (keyVal == "Input_Template") and (optionText in CrossReference._inputTemplateDeps.keys()):
+    if (keyVal == "Input_Template") and (optionText in CrossReference._inputTemplateDeps):
       for entry in CrossReference._inputTemplateDeps[optionText]:
         foundGlobal = CrossReference.getGlobalByFileNo(entry[3])
         if foundGlobal:
@@ -100,7 +100,7 @@ def checkCSVDeps(self,CrossReference,optionText,keyVal):
                                       "",
                                       "RJ"))
   if CrossReference._sortTemplateDeps:
-    if (keyVal == "Sort_Template") and (optionText in CrossReference._sortTemplateDeps.keys()):
+    if (keyVal == "Sort_Template") and (optionText in CrossReference._sortTemplateDeps):
       for entry in CrossReference._sortTemplateDeps[optionText]:
         foundGlobal = CrossReference.getGlobalByFileNo(entry[3])
         if foundGlobal:
@@ -108,7 +108,7 @@ def checkCSVDeps(self,CrossReference,optionText,keyVal):
                                       "",
                                       "RJ"))
   if CrossReference._printTemplateDeps:
-    if (keyVal == "Print_Template") and (optionText in CrossReference._printTemplateDeps.keys()):
+    if (keyVal == "Print_Template") and (optionText in CrossReference._printTemplateDeps):
       for entry in CrossReference._printTemplateDeps[optionText]:
         foundGlobal = CrossReference.getGlobalByFileNo(entry[3])
         if foundGlobal:
@@ -359,7 +359,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
     def onSectionStart(self, curLine, sectionHeader, CrossReference):
       routineName = ROUTINE_START.search(curLine).group('name')[1:]
       self._returnJSON = {}
-      if routineName in PackageComponentInfoDict.keys():
+      if routineName in PackageComponentInfoDict:
         self._fileNumber = PackageComponentInfoDict[routineName]['_fileNumber']
         self._nameLocation = PackageComponentInfoDict[routineName]['_nameLocation']
         self._headerIndex = PackageComponentInfoDict[routineName]['_headerIndex']
@@ -399,7 +399,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
               self._localHandler._varValue = match.group('optionLocation') + match.group('_varValue')
               optionText = optionNumber
               self.componentTypeStr = ''
-              if optionText in self._returnJSON.keys():
+              if optionText in self._returnJSON:
                 optionText = self._returnJSON[optionNumber][self._nameLocation][self._headerIndex:]
                 if "4" in self._returnJSON[optionNumber]:
                   self.componentTypeStr = self._returnJSON[optionNumber]['4'][6:]
@@ -429,7 +429,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
                 optionNumber = match.group('optionIEN')
                 self._localHandler._varValue = match.group('optionLocation') + match.group('_varValue')
                 optionText = optionNumber
-                if optionText in self._returnJSON.keys():
+                if optionText in self._returnJSON:
                   optionText = self._returnJSON[optionText][self._nameLocation][self._headerIndex:]
                 if optionNumber not in self._curGetAllFunction(self._curKey):
                   self._curAddFunction(self._curKey, self._curType(optionText, optionNumber, self._curPackage))
@@ -706,7 +706,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
                     self._curHandler.onSectionEnd(curLine, self._curSection,
                                                   self._curRoutine, self._crossRef)
                 assert(self._curSection == self._sectionStack.pop())
-                if len(self._sectionStack) > 0:
+                if self._sectionStack:
                     self._curSection = self._sectionStack[-1]
                     self._curHandler = self._sectHandleDict[self._curSection]
                 else:

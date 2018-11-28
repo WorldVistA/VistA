@@ -141,7 +141,7 @@ def readIntoDictionary(infileName):
     for index, line in enumerate(csv.reader(templateData,dialect)):
       if index == 0:
         continue
-      if line[1] not in values.keys():
+      if line[1] not in values:
         values[line[1]] = []
       values[line[1]].append(line)
   return values
@@ -278,14 +278,14 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
     (edgeLabel, edgeToolTip, edgeStyle) = ("","","")
     metricValue = 0
     for i in range(0,7):
-        if depMetricsList[i*2] > 0:
-            if len(edgeLabel) == 0:
+        if depMetricsList[i*2]:
+            if not edgeLabel:
               edgeLabel = labelText[i]
             elif isEdgeLabel:
               edgeLabel = "%s\\n%s" % (edgeLabel, labelText[i])
             else:
               edgeLabel = "%s:%s" % (edgeLabel, labelText[i])
-            if len(edgeToolTip) > 0:
+            if edgeToolTip:
               edgeToolTip = "%s. %s" % (edgeToolTip, toolTip[i])
             else:
               edgeToolTip = toolTip[i]
