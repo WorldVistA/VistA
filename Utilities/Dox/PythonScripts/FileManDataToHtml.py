@@ -12,7 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#---------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
 import os
 import sys
 import re
@@ -29,12 +30,17 @@ from CrossReference import FileManField
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from UtilityFunctions import getRoutineHtmlFileName
 from UtilityFunctions import getPackageHtmlFileName, normalizePackageName
-from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
+from FileManGlobalDataParser import FileManDataEntry, FileManDataField
+from FileManGlobalDataParser import FileManFileData
 from DataTableHtml import data_table_list_init_setup
-from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
-from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeaderRows, outputDataTableFooter
+from DataTableHtml import data_table_large_list_init_setup
+from DataTableHtml import data_table_record_init_setup
+from DataTableHtml import outputDataTableHeader
+from DataTableHtml import outputCustomDataTableHeaderRows
+from DataTableHtml import outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
-from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
+from DataTableHtml import outputLargeDataListTableHeader
+from DataTableHtml import outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 from LogManager import logger
 
@@ -699,7 +705,6 @@ class FileManDataToHtml(object):
     return vals
 
   def _generateDataTableHtml(self, fileManData, fileNo):
-    outDir = self.outDir
     isLargeFile = len(fileManData.dataEntries) > 4500
     tName = normalizePackageName(fileManData.name)
     outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
@@ -718,20 +723,9 @@ class FileManDataToHtml(object):
       writeTableListInfo(output, tName)
       if not isLargeFile:
         output.write("<tbody>\n")
-        for ien in getKeys(fileManData.dataEntries.keys(), float):
-          dataEntry = fileManData.dataEntries[ien]
-          if not dataEntry.name:
-            logger.warn("no name for %s" % dataEntry)
-            continue
-          name = dataEntry.name
-          if isFilePointerType(dataEntry):
-            link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
-                                                          getDataEntryHtmlFile(ien, fileNo),
-                                                          name)
-          tableRow = [dataHtmlLink, dataEntry.ien]
+        rows = self._getTableRows(fileManData, fileNo)
+        for tableRow in rows:
           output.write("<tr>\n")
-          """ table body """
           for item in tableRow:
             output.write("<td>%s</td>\n" % item)
           output.write("</tr>\n")
@@ -743,22 +737,25 @@ class FileManDataToHtml(object):
     if isLargeFile:
       logger.info("Writing Ajax file: %s" % ajexSrc)
       """ Write out the data file in JSON format """
-      outJson = {"aaData": []}
+      outJson = {"aaData": self._getTableRows(fileManData, fileNo)}
       with open(os.path.join(outDir, ajexSrc), 'w') as output:
-        outArray =  outJson["aaData"]
-        for ien in getKeys(fileManData.dataEntries.keys(), float):
-          dataEntry = fileManData.dataEntries[ien]
-          if not dataEntry.name:
-            logger.warn("No name for %s" % dataEntry)
-            continue
-          name = dataEntry.name
-          if isFilePointerType(dataEntry):
-            link, name = convertFilePointerToHtml(dataEntry.name)
-          dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
-                                                          getDataEntryHtmlFile(ien, fileNo),
-                                                          str(name).replace("\xa0", ""))
-          outArray.append([dataHtmlLink, ien])
         json.dump(outJson, output)
+
+  def _getTableRows(self, fileManData, fileNo):
+    rows = []
+    for ien in getKeys(fileManData.dataEntries.keys(), float):
+      dataEntry = fileManData.dataEntries[ien]
+      if not dataEntry.name:
+        logger.warn("No name for %s" % dataEntry)
+        continue
+      name = dataEntry.name
+      if isFilePointerType(dataEntry):
+        link, name = convertFilePointerToHtml(dataEntry.name)
+      dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
+                                                      getDataEntryHtmlFile(ien, fileNo),
+                                                      str(name).replace("\xa0", ""))
+      rows.append([dataHtmlLink, ien])
+    return rows
 
   def _convertFileManDataToHtml(self, fileManData):
     for ien in getKeys(fileManData.dataEntries.keys(), float):
