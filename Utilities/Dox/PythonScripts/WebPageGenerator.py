@@ -3856,10 +3856,9 @@ if __name__ == '__main__':
                         help='CSV formatted "Relational Jump" field data for Input Templates')
     parser.add_argument('-pt','--printTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Print Templates')
+    parser.add_argument('-local', help='Use links to local DOX pages')
     parser.add_argument('-pdf', action='store_true',
                         help='generate html')
-    parser.add_argument('-local', action='store_true',
-                        help='Use links to local DOX pages')
     parser.add_argument('-fj','--filesJson', required=True,
                         help='Repository information in JSON format')
     result = parser.parse_args();
