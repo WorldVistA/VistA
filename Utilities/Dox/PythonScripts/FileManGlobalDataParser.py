@@ -20,6 +20,12 @@ import subprocess
 from datetime import datetime
 import json
 
+# Necessary to find FileManDateTimeUtil and PatchOrderGenerator for import
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
+if SCRIPTS_DIR not in sys.path:
+  sys.path.append(SCRIPTS_DIR)
+
 from CrossReference import FileManField
 from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
@@ -31,10 +37,6 @@ from FileManDateTimeUtil import fmDtToPyDt
 from PatchOrderGenerator import PatchOrderGenerator
 import glob
 
-FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-if SCRIPTS_DIR not in sys.path:
-  sys.path.append(SCRIPTS_DIR)
 
 """ These are used to capture install entries that don't use the
 package prefix as their install name or have odd capitalization
