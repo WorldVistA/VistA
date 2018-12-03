@@ -1,4 +1,4 @@
-ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 10/2/18 10:34am
+ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/3/18 9:21pm
  ;---------------------------------------------------------------------------
  ; Copyright 2018 The Open Source Electronic Health Record Agent
  ;
@@ -73,6 +73,7 @@ CONFIG ; Obtain configuration for Open and obtaining globals
  ZK ^DIC,^ECC,^ECT,^DIC,^LAC,^LEX,^LEXC,^PRPF,^PRPFT,^PSNDF,^PSNDF(0),^USC,^XIP
  ;
  I $ZV["Cache" D  Q
+ . N % S %=$System.Process.ScientificNotation(0) ; Disable lower e as scientific notation.
  . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
  . S CONFIG("OPENIOR")="O IO:(""RS""):0"
  . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
@@ -339,8 +340,8 @@ UNWIND ;
  QUIT
  ;
 VALUE(V) ; Encode value V
- S V=$NAME(%(V)),V=$E(V,3,$L(V)-1)
- I $E(V,1)'="""" S V=""""_V_""""
+ I +$P(V,"E")=V QUIT V ; Don't quote numerics (+ exponent protection)
+ S V=$NAME(%(V)),V=$E(V,3,$L(V)-1) ; This double quotes internal quotes and also adds quotes on the outside
  Q $$ENCODE(V)
 ENCODE(V) ; Convert control characters to $C() syntax
  Q:V'?.E1C.E V
