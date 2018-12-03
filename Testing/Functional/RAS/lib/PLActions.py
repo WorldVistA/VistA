@@ -121,7 +121,10 @@ class PLActions (Actions):
               else:
                 self.VistA.write("")
                 break
-            self.VistA.wait('PROBLEM')
+            index = self.VistA.multiwait(['O[Kk]','PROBLEM'])
+            if index == 0:
+              self.VistA.write('')
+              self.VistA.wait('PROBLEM')
             self.VistA.write('')
             self.VistA.wait('Select Action')
             self.VistA.write('QUIT')
@@ -228,8 +231,8 @@ class PLActions (Actions):
         else:
             self.VistA.write('')
         while True:
-          index = self.VistA.multiwait(["PROBLEM:","Select Item",'Select Action'])
-          if index == 2:
+          index = self.VistA.multiwait(["O[Kk]","PROBLEM:","Select Item",'Select Action'])
+          if index == 3:
             break
           self.VistA.write('')
         # optionally, check to make sure user entering the data can't also verify it
@@ -281,7 +284,10 @@ class PLActions (Actions):
             self.VistA.write('Save')
         elif rval == 1:
             self.VistA.write('Save')
-        self.VistA.wait('PROBLEM')
+        index = self.VistA.multiwait(['O[Kk]','PROBLEM'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('PROBLEM')
         self.VistA.write('')
         if vlist is not None:
             while True:
@@ -335,7 +341,10 @@ class PLActions (Actions):
             self.VistA.write('Save')
         elif rval == 1:
             self.VistA.write('Save')
-        self.VistA.wait('PROBLEM:')
+        index = self.VistA.multiwait(['O[Kk]','PROBLEM'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('PROBLEM')
         self.VistA.write('')
         self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
@@ -359,7 +368,7 @@ class PLActions (Actions):
         valIndex=0
         valList = [icd10,snomed]
         while True:
-          rval = self.VistA.multiwait(['Select Item', 'Ok','A suitable term','STOP or Select'])
+          rval = self.VistA.multiwait(['Select Item', 'O[Kk]','A suitable term','STOP or Select'])
           if rval == 0:
               self.VistA.write('SC')
               break
@@ -370,7 +379,10 @@ class PLActions (Actions):
               valIndex +=1
           elif rval == 3:
               self.VistA.write('1')
-        self.VistA.wait('Select Action')
+        index = self.VistA.multiwait(['O[Kk]','Select Action'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
         self.VistA.wait('Print a new problem list')
         self.VistA.write('N')
@@ -393,7 +405,10 @@ class PLActions (Actions):
         self.VistA.write(resdate)
         self.VistA.wait('Select Item')
         self.VistA.write('SC')
-        self.VistA.wait('Select Action')
+        index = self.VistA.multiwait(['O[Kk]','Select Action'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
         self.VistA.wait('Print a new problem list')
         self.VistA.write('N')
@@ -416,7 +431,10 @@ class PLActions (Actions):
         self.VistA.write(acutechronic)
         self.VistA.wait('Select Item')
         self.VistA.write('SC')
-        self.VistA.wait('Select Action')
+        index = self.VistA.multiwait(['O[Kk]','Select Action'])
+        if index == 0:
+          self.VistA.write('')
+          self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
         self.VistA.wait('Print a new problem list')
         self.VistA.write('N')
@@ -1218,7 +1236,7 @@ class PLActions (Actions):
         probList=[chgval,icd10,snomed]
         probIndex = 0
         while True:
-          rval = self.VistA.multiwait(['Select Item', 'Ok','A suitable term'])
+          rval = self.VistA.multiwait(['Select Item', 'O[kK]','A suitable term'])
           if rval == 0:
               self.VistA.write('SC')
               break
