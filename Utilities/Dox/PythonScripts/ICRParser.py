@@ -84,8 +84,7 @@ def create_arg_parser():
                                      help='VistA M Component Git Repository Directory')
     html_and_pdf_parser.add_argument('-pr', '--patchRepositDir', required=True,
                                      help="VistA Git Repository Directory")
-    html_and_pdf_parser.add_argument('-local', action='store_true',
-                                     help='Use links to local DOX pages')
+    html_and_pdf_parser.add_argument('-local', help='Use links to local DOX pages')
 
     # Create the parser for the "html" command
     html_parser = subparsers.add_parser('html', parents=[base_parser, html_and_pdf_parser],
