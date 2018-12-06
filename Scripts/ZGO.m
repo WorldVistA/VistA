@@ -79,13 +79,16 @@ CONFIG ; Obtain configuration for Open and obtaining globals
  . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  I $ZV["GT.M" D  Q
  . S CONFIG("OPENIORW")="D GTMIOW(IO)"
- . S CONFIG("OPENIOR")="O IO:readonly:0"
+ . S CONFIG("OPENIOR")="D GTMIOR(IO)"
  . S CONFIG("GLOBALS")="S G=""^%"" F  S G=$O(@G) Q:G=""""  S:$D(^%) G(""^%"")="""" I G'?.E1L.E S GLOBALS(G)="""""
  . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  W "ZGO does not support "_$ZV,!
  Q
 GTMIOW(IO) ; GT.M open-for-output impl.
  O IO:(newversion:noreadonly:nowrap:except="S IO=""""") I IO'=""
+ Q
+GTMIOR(IO) ; GT.M open-for-read impl.
+ O IO:(readonly:except="S IO="""""):0 I IO'=""
  Q
 ASKDIR ; Ask directory
  R !,!,"Host output directory: ",DIR,! Q:DIR["^"   G:'$$SLASH(DIR) ASKDIR
@@ -126,6 +129,7 @@ DUMPALL ; Dump All globals
  H 1
  L +^ZGO ; Wait until they are done.
  L ; Done
+ W !!!,"DONE",!
  Q
 DUMPONE ; Dump one global
  D FILES
