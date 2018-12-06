@@ -565,7 +565,7 @@ class PatchInstallLog(object):
       return
     patchPart = historyLine[self.PATCH_VERSION_START_INDEX:datetimeIndent]
     seqIndex = -1
-    regexMatch = re.search("SEQ[ ]?#(?P<seqNo> [0-9]+)", patchPart)
+    regexMatch = re.search("SEQ[ ]?#(?P<seqNo>[ ]?[0-9]+)", patchPart)
     if regexMatch:
         seqIndex = regexMatch.start()
     if seqIndex >= 0:
