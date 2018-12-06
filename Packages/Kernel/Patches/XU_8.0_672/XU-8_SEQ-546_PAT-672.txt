@@ -1,0 +1,460 @@
+$TXT Created by                    KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 09/24/18 at 06:09
+=============================================================================
+Run Date: OCT 11, 2018                     Designation: XU*8*672
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #546                      Status: Released
+                  Compliance Date: NOV 11, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*559    <<= must be installed BEFORE `XU*8*672'
+
+Subject: KIDS fixes
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch XU*8.0*672 contains the following issues for the Kernel Installation
+ and Distribution System (KIDS):
+  
+ 1.  KIDS not removing old parameters when template is changed
+ 2.  Remove AFFECTS RECORD MERGE & PRIMARY HELP FRAME from KIDS 
+ 3.  KIDS doesn't know an Install has been removed
+ 4.  Fix Patch Tracking Message for Global type Builds
+ 5.  PACKAGE file (#9.4) NAME field (#.01) only allows 30 characters
+ 6.  OPTION file (#19), DIQ(0) field (#82), doesn't support parameter 'R'
+     and 'B'
+ 7.  New DIALOG file (#.84) entries have incorrect internal entry number(IEN)
+ 8.  When updating REMOTE PROCEDURE file (#8994) INPUT PARAMETER multiple is
+     not deleted
+ 9.  Modify KIDS to support ENTITY file (#1.5)
+ 10. Modify KIDS to support POLICY file (#1.6), POLICY EVENT file (#1.61),
+     POLICY FUNCTION file (#1.62)
+ 11. Add 2 new KIDS Application Program Interfaces (APIs): LOCK^XPDMENU
+     and RLOCK^XPDMENU
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+                                                     New/Modified/
+ File Name (#)              Field Name (#)          Deleted
+ -------------              --------------          -------------
+ PACKAGE (9.4)              NAME (.01)              Modified
+ BUILD (9.6)                DELETE ENV
+                             ROUTINE (913.1)        Modified
+ OPTION (19)                DIQ(0) (82)             Modified
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ XPD EDIT BUILD             9.6                     Modified
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name    Type      File Name (Number)      New/Modified/Deleted
+ -------------    ----      ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Ticket #708856
+ Problem:
+ --------
+ KIDS doesn't remove old PARAMETERS, field (#10), when installing a
+ PARAMETER TEMPLATE file (#8989.52).
+  
+ Resolution:
+ ----------
+ Modified routine XPDIA3 to delete the PARAMETER multiple before installing
+ the updated template.
+   
+ 2. Ticket #962037
+ Problem:
+ --------
+ Remove outdated links to AFFECTS RECORD MERGE & PRIMARY HELP FRAME
+ in the KIDS edit screens.
+  
+ Resolution:
+ ----------
+ Modified the XPD EDIT BUILD screen 4 to remove the fields and links.
+  
+ 3. Ticket #615220
+ Problem:
+ --------
+ When an Install is delayed for later installation, KIDS allowed the user
+ to delete the Transport Global and then runs the install and no data is
+ installed.
+  
+ Resolution:
+ ----------
+ Modified routine XPDIJ to check if Transport Global still exists before 
+ installing.
+  
+ 4. Ticket #1029686
+ Problem:
+ --------
+ Global type Builds sending incomplete information in Patch Tracking 
+ message.
+  
+ Resolution:
+ ----------
+ Changed routine XPDIGP to add missing information to the Patch Tracking
+ message.
+  
+  
+ 5. Ticket none
+ Problem:
+ --------
+ PACKAGE file (#9.4), only allows names less than 31 characters.
+  
+ Resolution:
+ ----------
+ Modify NAME field (#.01) to allow 50 characters
+  
+  
+ 6. Ticket #I15302677FY17
+  
+ Problem:
+ --------
+ VA FileMan 22.2 Inquire options allows 'R' for Record Number(IEN) and 'B'
+ for Both Computed fields and Record Number.  The OPTION file (#19), DIQ(0)
+ field (#82), only allows 'C' for computed.  This field is used for Options
+ that are Inquires.  It should support the same as FM 22.2
+  
+ Resolution:
+ ----------
+ Modify DIQ(0) field to support 'R','B', and 'C' and modify routine XQ1 to
+ support new parameters.
+  
+  
+ 7. Ticket I15729979FY17
+  
+ Problem:
+ --------
+ When adding a new entry to DIALOG file (#.84), an incorrect IEN is used.
+ The DIALOG NUMBER field (#.01) is DINUMED and KIDS adds wrong number.
+  
+ Resolution:
+ ----------
+ Modify routines XPDIK and XPDE to use the .01 field as the IEN.
+   
+  
+ 8. Ticket I7702063FY16
+  
+ Problem:
+ --------
+ When updating a REMOTE PROCEDURE file, (#8994), entry, the INPUT PARAMETER
+ field, (#2), is merged with existing data.  This doesn't allow the developer
+ to delete an Input Parameter.
+  
+ Resolution:
+ ----------
+ KIDS will now kill the INPUT PARAMETER multiple before updating a Remote
+ Procedure.
+  
+  
+ 9. Ticket none
+  
+ Problem:
+ --------
+ KIDS doesn't support VA FileMan Web Service
+  
+ Resolution:
+ ----------
+ Modify KIDS to transport and install entries in the ENTITY file (#1.5).
+  
+  
+ 10. Ticket none
+  
+ Problem:
+ --------
+ KIDS doesn't support VA FileMan Data Access Control
+  
+ Resolution:
+ ----------
+ Modify KIDS to transport and install entries in the POLICY file (#1.6),
+ APPLICATION ACTION file (#1.61), and POLICY FUNCTION file (#1.62).
+   
+ 11. Ticket none
+  
+ Problem:
+ --------
+ Need API to set LOCK (#3) and REVERSE/NEGATIVE LOCK (#3.01) fields in the
+ OPTION file (#19).
+  
+ Resolution:
+ ----------
+ Added LOCK and RLOCK tags to the XPDMENU routine.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*672 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*672 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+   
+  
+ Test Sites:
+ -----------
+  West Palm Beach VAMC, FL
+  Charleston VAMC, SC
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.
+  
+ Documentation describing the new functionality introduced by this patch
+ are available. The preferred method is to retrieve files from
+ download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. Sites may
+ retrieve the documentation directly using Secure File Transfer Protocol(SFTP)
+ from the ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+  
+ Hines:               domain.ext
+ Salt Lake City:      domain.ext 
+  
+ Documentation can also be found on the VA Software Documentation
+ Library at:  http://www4.domain.ext/vdl/
+  
+ Title                                File Name          SFTP Mode
+ -----------------------------------------------------------------
+ Kernel 8.0 Developer's Guide         KRN8_0DG.PDF       Binary
+ Kernel 8.0 Technical Manual          KRN8_0TM.PDF       Binary
+  
+  
+ Patch Installation: 
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install. 
+  
+ This patch contains an Environment Check routine, XU8P672E.  It will
+ check for the existence of WORD LIST file #1.5.  This file was part of
+ the Class III application called LetterMan.  If the file exists, it will
+ be deleted during the Install. It will also remove LetterMan from the
+ ALTERNATE EDITOR file #1.2 and search for any users that have LetterMan
+ set as their PREFERRED EDITOR, field #31.3, in the NEW PERSON file #200.
+ If the file doesn't exists, then the Environment Check routine will
+ continue with the install.  The routine XU8P672 will be removed at the
+ completion of install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. From MAILMAN MENU:
+  
+ 2. Choose the PackMan message containing this patch.
+  
+ 3. Choose the INSTALL/CHECK MESSAGE PackMan option. (see example below  
+    to EXTRACT the KIDS):
+  
+    Go to ACTION and enter X - to extract the KIDS
+    Enter message action (in IN basket): Ignore// Xtract KIDS
+  
+    Select PackMan function: ?
+        Answer with PackMan function NUMBER, or NAME
+      Choose from:
+      1         ROUTINE LOAD
+      2         GLOBAL LOAD
+      3         PACKAGE LOAD
+      4         SUMMARIZE MESSAGE
+      5         PRINT MESSAGE
+      6         INSTALL/CHECK MESSAGE
+      7         INSTALL SELECTED ROUTINE(S)
+      8         TEXT PRINT/DISPLAY
+      9         COMPARE MESSAGE
+   Select PackMan function: INSTALL/CHECK MESSAGE  
+  
+   Message #56647    Unloading KIDS Distribution   XU*8.0*672
+     XU*8.0*672
+  
+   Want to Continue with Load? YES//
+   Loading Distribution...
+  
+     XU*8.0*672
+   Will first run the Environment Check Routine, XU8P672E
+  
+  
+ 4. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter XU*8.0*672:
+  a. Verify Checksums in Transport Global - This option will allow
+     you to ensure the integrity of the routines that are in the
+     transport global.
+  b. Print Transport Global - This option lets you print the contents
+     of a Transport Global that is currently loaded in the ^XTMP
+     global.
+  c. Compare Transport Global to Current System - This option will
+     allow you to view all changes that will be made when this patch
+     is installed.  It compares all components of this patch
+     (routines, DDs, templates, etc.).
+  d. Backup a Transport Global - This option will create a backup
+     message of any routines exported with this patch. It will not
+     backup any other changes such as Data Dictionaries (DDs) or
+     templates.
+  e. Install Package(s) - This option starts the install process for all
+     Packages in the Transport Global that are part of a distribution.
+  
+ 5. From the Installation Menu, select the Install Package(s) option and
+    When prompted for the INSTALL NAME, enter XU*8.0*672.
+  
+ 6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//' respond NO.
+  
+ 7. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//" respond NO.
+  
+ 8. If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//" respond NO. 
+  
+ 9. If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post install routine XU8P672 will check the PACKAGE file #9.4 for the
+ KERNEL package.  It will then delete any PATIENT MERGE data in the Kernel
+ Package.  This was local data that was accidentally sent out in a previous
+ Kernel patch.  The routine XU8P672 will be removed at the completion of
+ install.
+  
+ Back out and Rollback Procedure:
+ -------------------------------
+ This patch consists of routines, data dictionaries, and a form. During the
+ VistA Installation Procedure of the KIDS build, the installer should
+ back up the modified routines by the use of the 'Backup a Transport
+ Global' action (step 3a in the Installations Instructions below).
+  
+ If rollback/back out is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the patch.
+ The changes to the data dictionaries and form are backward compatible.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XPDE
+    Before: B45567472   After: B49613954  **2,15,21,44,51,68,131,182,201,
+                                           229,302,399,507,539,672**
+Routine Name: XPDET
+    Before: B32656156   After: B36528246  **15,39,41,44,51,58,66,137,229,
+                                           393,539,672**
+Routine Name: XPDIA
+    Before: B54051187   After: B57775447  **10,15,21,28,44,58,68,131,145,672**
+Routine Name: XPDIA0
+    Before:  B3762133   After: B34838028  **131,144,672**
+Routine Name: XPDIA1
+    Before: B72722233   After: B73300100  **2,44,51,58,68,85,131,146,182,
+                                           229,302,399,507,539,672**
+Routine Name: XPDIA3
+    Before: B10647739   After: B12998832  **201,302,393,498,672**
+Routine Name: XPDIGP
+    Before: B13701700   After: B15378428  **41,422,672**
+Routine Name: XPDIJ
+    Before: B23600088   After: B25041581  **2,21,28,41,44,68,81,95,108,
+                                           124,229,275,506,672**
+Routine Name: XPDIK
+    Before: B39787924   After: B45151148  **15,58,108,124,146,346,672**
+Routine Name: XPDIL
+    Before: B21320112   After: B21561860  **15,44,58,68,108,422,525,672**
+Routine Name: XPDIP
+    Before: B41486911   After: B36820171  **15,21,28,30,41,44,51,58,83,
+                                           92,100,108,137,229,350,393,517,
+                                           672**
+Routine Name: XPDIST
+    Before: B18641684   After: B18736775  **66,108,185,233,350,393,486,
+                                           539,547,672**
+Routine Name: XPDMENU
+    Before:  B3839322   After:  B5326422  **21,302,672**
+Routine Name: XPDT
+    Before: B82909490   After: B64186009  **2,10,28,41,44,51,58,66,68,
+                                           85,100,108,393,511,539,547,672**
+Routine Name: XPDTA2
+    Before:  B6421820   After: B18380713  **201,498,672**
+Routine Name: XPDTC
+    Before: B47613677   After: B46881298  **10,15,21,39,41,44,58,83,92,
+                                           95,100,108,124,131,463,511,517,
+                                           559,672**
+Routine Name: XPDUTL
+    Before: B24049764   After: B24086795  **21,28,39,81,100,108,137,181,
+                                           275,491,511,559,672**
+Routine Name: XQ1
+    Before: B38155212   After: B38427673  **1,15,59,67,46,151,170,242,446,672**
+Routine Name: XU8P672
+    Before:       n/a   After:  B2195161  **672**
+Routine Name: XU8P672E
+    Before:       n/a   After:  B7918706  **672**
+ 
+Routine list of preceding patches: 144, 145, 346, 446, 498, 506, 525, 547
+                           559
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2016
+Completed By:                               Date Completed: OCT 11, 2018
+Released By :                               Date Released : OCT 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
