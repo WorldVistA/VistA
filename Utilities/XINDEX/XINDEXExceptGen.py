@@ -35,36 +35,29 @@ import argparse
 import glob
 
 # Regular expression to grep routines from the log file
-Routine= re.compile('^(?P<routine>[A-Z|0-9][^ ]+) +\* \* .*[cC]hecksum:.*')
+Routine= re.compile('^(?P<routine>%?[a-zA-Z|0-9][^ ]+) +\* \* .*[cC]hecksum:.*')
 
 
 # Function to generate the XindexException File List
 # @logFileName, the logFileName generated during CTest XINDEX run.
-# @VistADir, the path to the VistA.git source tree
+# @packageDir, the path to the exception files for this package
 # @MType, set to 1 when generating for Cache, 2 for GT.M
 # @WarnFlag, a bool to control generation of "W -" exceptions. If true, warnings are generated
 # @routineSet, the routineSet that need to be added, if empty, then all need to be added
 
-def generateXindexExceptionList(logFileName, VistADir, MType, WarnFlag, routineSet=None):
+def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
+                                routineSet=None):
     # regular expression to grep error message from the log file
     if WarnFlag:
       ErrWarn=re.compile('W - |F -')
     else:
       ErrWarn=re.compile('F -')
-    # Exception File List key file name, value is the file handler
-    exceptionFileList=dict()
+    # Exception File List key file name, value is the file contents
+    exceptionFileList = dict()
+    newExceptions = dict()
     isSetEmpty = routineSet == None or len(routineSet)== 0
     packageLogFile = open(logFileName,'r')
-    packageName = os.path.basename(logFileName)
-    # assume the package name is in the following format
-    packageName=packageName[0:packageName.find("Test.log")]
-    currentRoutineName=""
-    try:
-      packagedir=os.path.join(VistADir,"Packages",packageName.replace('_',' '),"XINDEXException")
-      if not os.path.exists(packagedir):
-        os.mkdir(packagedir)
-    except OSError as founderror:
-      print founderror.strerror
+    currentRoutineName = ""
     for line in packageLogFile:
 #        find all the routines names
         newRoutineName=Routine.search(line)
@@ -72,8 +65,8 @@ def generateXindexExceptionList(logFileName, VistADir, MType, WarnFlag, routineS
             if (newRoutineName != currentRoutineName):
                 currentRoutineName=newRoutineName.group('routine')
         else:
-            ErrWarnLine =ErrWarn.search(line)
-            if(ErrWarnLine and (isSetEmpty or currentRoutineName in routineSet)):
+            ErrWarnLine = ErrWarn.search(line)
+            if ErrWarnLine and (isSetEmpty or currentRoutineName in routineSet):
                 # we found out the ErrWarnLine
                 # check if the file is already exist and open
                 if MType == "1":
@@ -81,17 +74,34 @@ def generateXindexExceptionList(logFileName, VistADir, MType, WarnFlag, routineS
                 else:
                   outputFilename="GTM." + currentRoutineName
                 if outputFilename in exceptionFileList:
-                    fileHandle=exceptionFileList[outputFilename]
+                    fileContents = exceptionFileList[outputFilename]
                 else:
-                    absPath = os.path.join(packagedir,outputFilename)
-                    fileHandle=open(absPath,'wb')
-                    exceptionFileList[outputFilename] = fileHandle
-                fileHandle.write(line.strip()+"\n")
+                    absPath = os.path.join(packageDir, outputFilename)
+                    existingFile = os.path.exists(absPath)
+                    if existingFile:
+                        with open(absPath, "rb") as file:
+                            # Read in file, remove all trailing whitespace
+                            exceptionFileList[outputFilename] = [exception.rstrip() for exception in file]
+                # Remove whitespace
+                line = line.strip()
+                # Look for this line *exactly* - case sensitive
+                if not existingFile or line not in exceptionFileList[outputFilename]:
+                    if outputFilename not in newExceptions:
+                        newExceptions[outputFilename] = []
+                    # Only add line to exception file once
+                    if line not in newExceptions[outputFilename]:
+                        newExceptions[outputFilename].append(line)
     packageLogFile.close()
-    #close the file handle associated with the package
-    while(len(exceptionFileList) > 0):
-        (k,v)=exceptionFileList.popitem()
-        v.close()
+
+    # Make sure the directory exists
+    if newExceptions and not os.path.exists(packageDir):
+        os.makedirs(packageDir)
+    # Write out the new exceptions
+    for filename, exceptionList in newExceptions.iteritems():
+        absPath = os.path.join(packageDir, filename)
+        with open(absPath, "ab") as file:  # Open in binary mode to preserve line endings
+            file.write("\r\n".join(exceptionList))
+            file.write("\r\n")  # Make sure there's a newline at the end of file
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='XIndex Exception List file generator')
@@ -111,12 +121,14 @@ if __name__ == '__main__':
     parser.add_argument('-r', nargs='*', dest='routinesNames',
                         help='Specified routines under one package')
     result = vars(parser.parse_args())
+
     searchFiles=[]
     routines=set()
     if (result['allPackage']):
         logFilenamePattern="*Test.log"
         searchFiles = glob.glob(os.path.join(result['logDir'],logFilenamePattern))
     else:
+        # If don't choose all packages, must specify package name
         if (not result['packageName']):
             exit -1;
         for package in result['packageName']:
@@ -124,5 +136,13 @@ if __name__ == '__main__':
         if (len(result['packageName']) == 1):
             routines=result['routinesNames']
 
+    vistADir = result['VistADir']
     for logFile in searchFiles:
-        generateXindexExceptionList(logFile, result['VistADir'], result['MType'], result['WarnFlag'], routines)
+        packageName = os.path.basename(logFile)
+        # assume the package name is in the following format
+        packageName = packageName[0:packageName.find("Test.log")]
+        if packageName == "Last":
+            # Skip 'LastTest.log'
+            continue
+        packageDir = os.path.join(vistADir, "Packages", packageName.replace('_',' '), "XINDEXException")
+        generateXindexExceptionList(logFile, packageDir, result['MType'], result['WarnFlag'], routines)
