@@ -2877,26 +2877,26 @@ class WebPageGenerator:
             if isGlobal and varName in self._allGlobals:
                 globalVar = self._allGlobals[varName]
                 varName = getFileManFileHyperLinkWithNameFileNo(globalVar)
-            lineOccurencesString = self.__generateLineOccurencesString__(var.getLineOffsets(), routine)
-            output.append(((var.getPrefix()+varName).strip(), lineOccurencesString))
+            lineOccurrencesString = self.__generateLineOccurrencesString__(var.getLineOffsets(), routine)
+            output.append(((var.getPrefix()+varName).strip(), lineOccurrencesString))
         return output
 
-    def __generateLineOccurencesString__(self, lineOccurences, routine):
-        lineOccurencesString = ""
+    def __generateLineOccurrencesString__(self, lineOccurrences, routine):
+        lineOccurrencesString = ""
         index = 0
-        for offset in lineOccurences:
+        for offset in lineOccurrences:
             offsetStr = offset
             if routine:
               searchRes = SPLITVAL.search(offset)
               if searchRes:
                   offsetStr = self.__findDataURL__(offset,routine,searchRes.group("splitval"))
             if index > 0:
-                lineOccurencesString += ",&nbsp;"
-            lineOccurencesString += offsetStr
+                lineOccurrencesString += ",&nbsp;"
+            lineOccurrencesString += offsetStr
             if (index + 1) % LINE_TAG_PER_LINE == 0:
-                lineOccurencesString +="<BR>"
+                lineOccurrencesString +="<BR>"
             index += 1
-        return lineOccurencesString
+        return lineOccurrencesString
 
     def __convertGlobalVarToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=True, routine=routine)
@@ -2941,9 +2941,9 @@ class WebPageGenerator:
         output = []
         allVars = sorted(variables.iterkeys(), key = itemgetter(0,1))
         for nameTag in allVars:
-            lineOccurencesString = self.__generateLineOccurencesString__(variables[nameTag], routine)
+            lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
             output.append((nameTag[1]+"^"+getRoutineHypeLinkByName(nameTag[0]),
-                           lineOccurencesString))
+                           lineOccurrencesString))
         return output
 
 #===============================================================================
