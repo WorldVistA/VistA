@@ -480,16 +480,18 @@ def writeTableHeader(headerList, outputFile, classid=""):
     for header in headerList:
         outputFile.write("<th class=\"IndexKey\">%s</th>\n" % header)
     outputFile.write("</tr>\n")
-def writeTableData(itemRow, outputFile):
-    outputFile.write("<tr>\n")
-    index = 0;
-    for data in itemRow:
-        if index == 0:
+
+def writeTableRow(itemRow, outputFile, rowClassId=None, firstColumnKey=False):
+    if rowClassId is None:
+        outputFile.write("<tr>\n")
+    else:
+        outputFile.write("<tr class=\"%s\" >\n" % rowClassId)
+    for index, data in enumerate(itemRow):
+        if firstColumnKey and index == 0:
             key = "IndexKey"
         else:
             key = "IndexValue"
         outputFile.write("<td class=\"%s\">%s</td>\n" % (key, data))
-        index += 1
     outputFile.write("</tr>\n")
 
 def writeListData(listData, outputFile, classid=""):
@@ -814,23 +816,23 @@ class WebPageGenerator:
                 totalCol = max(len(namespaces),
                                len(globalNamespaces))
                 for index in range(totalCol):
-                    outputFile.write("<tr>")
+                    row = []
                     # write the package name
                     if index == 0:
-                        outputFile.write("<td class=\"IndexKey\">%s</td>" % getPackageHyperLinkByName(packageName))
+                        row.append(getPackageHyperLinkByName(packageName))
                     else:
-                        outputFile.write("<td class=\"IndexKey\"></td>")
+                        row.append("")
                     # write the namespace
                     if index <= len(namespaces) - 1:
-                        outputFile.write("<td class=\"IndexValue\">%s</td>" % namespaces[index])
+                        row.append(namespaces[index])
                     else:
-                        outputFile.write("<td class=\"IndexValue\"></td>")
+                        row.append("")
                     # write the additional globals
                     if index <= len(globalNamespaces) - 1:
-                        outputFile.write("<td class=\"IndexValue\">%s</td>" % globalNamespaces[index])
+                        row.append(globalNamespaces[index])
                     else:
-                        outputFile.write("<td class=\"IndexValue\"></td>")
-                    outputFile.write("</tr>\n")
+                        row.append("")
+                    writeTableRow(row, outputFile, firstColumnKey=True)
             outputFile.write("</table>\n")
             outputFile.write("<BR>\n")
             outputFile.write(FOOTER)
@@ -924,11 +926,10 @@ class WebPageGenerator:
                              outputFile)
             sortedFileManList = sorted(allFileManFilesList, key=lambda item: float(item.getFileNo()))
             for fileManFile in sortedFileManList:
-                outputFile.write("<tr>")
-                outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileManName(fileManFile))
-                outputFile.write("<td class=\"IndexKey\">%s</td>" % getFileManFileHypeLinkWithFileNo(fileManFile))
-                outputFile.write("<td class=\"IndexKey\">%s</td>" % getGlobalHypeLinkByName(fileManFile.getName()))
-                outputFile.write("</tr>\n")
+                row = [getFileManFileHypeLinkWithFileManName(fileManFile),
+                       getFileManFileHypeLinkWithFileNo(fileManFile),
+                       getGlobalHypeLinkByName(fileManFile.getName())]
+                writeTableRow(row, outputFile)
             outputFile.write("</table>\n")
             outputFile.write("<BR>\n")
             outputFile.write(FOOTER)
@@ -949,15 +950,11 @@ class WebPageGenerator:
                              outputFile)
             sortedSubFileList = sorted(allSubFiles.values(), key=lambda item: float(item.getFileNo()))
             for subFile in sortedSubFileList:
-                outputFile.write("<tr>")
-                outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                    getFileManSubFileHypeLinkWithName(subFile))
-                outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                    getFileManSubFileHypeLinkByName(subFile))
                 package = subFile.getRootFile().getPackage()
-                outputFile.write("<td class=\"IndexKey\">%s</td>" %
-                    getPackageHyperLinkByName(package.getName()))
-                outputFile.write("</tr>\n")
+                row = [getFileManSubFileHypeLinkWithName(subFile),
+                       getFileManSubFileHypeLinkByName(subFile),
+                       getPackageHyperLinkByName(package.getName())]
+                writeTableRow(row, outputFile)
             outputFile.write("</table>\n")
             outputFile.write("<BR>\n")
             outputFile.write(FOOTER)
@@ -2546,12 +2543,8 @@ class WebPageGenerator:
             for header in headerList:
                 outputFile.write("<th class=\"IndexKey\">%s</th>\n" % ( header))
             outputFile.write("</tr>\n")
-        if itemList and len(itemList) > 0:
-            for itemRow in itemList:
-                outputFile.write("<tr class=\"%s\">\n" % (classid))
-                for data in itemRow:
-                    outputFile.write("<td class=\"IndexValue\">%s</td>\n" % (data))
-                outputFile.write("</tr>\n")
+        for itemRow in itemList:
+            writeTableRow(itemRow, outputFile, rowClassId=classid)
         outputFile.write("</table></div></div>\n")  # the second </div> closes the accordion
 
     def __writeGenericTablizedPDFData__(self, headerList, itemList, pdf,
