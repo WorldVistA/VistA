@@ -612,7 +612,7 @@ class WebPageGenerator:
                                    leftMargin=inch/2,
                                    topMargin=inch/2,
                                    bottomMargin=inch/2,
-                                   pagesize=letter,
+                                   pagesize=pagesize,
                                   )
 
     def __writePDFFile__(self, pdf, pdfFileName):
