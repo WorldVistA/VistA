@@ -50,12 +50,6 @@ from UtilityFunctions import *
 # constants
 DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"
 
-dataURLDict = {
-  "DATA": "(IEN:<a href=\"%s\">%s</a>)",
-  "XRF": "(XREF %s)",
-  "HELP": "(HELP %s)"
-}
-
 COMPONENT_TYPE_DICT = {
   "action" : "A",
   "extended action" : "Ea",
@@ -103,6 +97,12 @@ READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
 WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
 
 SPLITVAL = re.compile("^[0-9.]+(?P<splitval>DATA|XRF|HELP)[0-9]*")
+DATA_URL_DICT = {
+  "DATA": "(IEN:<a href=\"%s\">%s</a>)",
+  "XRF": "(XREF %s)",
+  "HELP": "(HELP %s)"
+}
+
 CONDITIONAL = re.compile("^W(?!\w)($|(?P<conditional>\:.+)?)")
 SPLIT_LINE = re.compile(''' (?=(?:[^'"]|'[^']*'|"[^"]*")*$)''')
 
@@ -1191,8 +1191,7 @@ class WebPageGenerator:
                        writeSectionEnd(outputFile)
                     self.__generateIndividualRoutinePage__(globalVar, pdf,
                                                            platform=None,
-                                                           existingOutFile=outputFile,
-                                                           DEFAULT_HEADER_LIST=PACKAGE_OBJECT_SECTION_HEADER_LIST)
+                                                           existingOutFile=outputFile)
                     self.generateFooterWithNavigationBar(outputFile, indexList)
 
                 if self._generatePDFBundle:
@@ -2837,16 +2836,6 @@ class WebPageGenerator:
 #===============================================================================
 # Method to generate routine variables sections such as Local Variables, Global Variables
 #===============================================================================
-    def __findDataURL__(self, name, routine, splitStr):
-      (field, ienVal) = name.split(splitStr)
-      dataLink = ienVal
-      if "+" in ienVal:
-        ien,loc = ienVal.split("+")
-      datafill = (ien)
-      if splitStr == "DATA":
-        datafill = (self.__getDataEntryDetailHtmlLink__(routine.getFileNo(),ien),ien)
-      dataLink = dataURLDict[splitStr] % datafill
-      return "<a href=\"#%s\">%s</a>%s" % (field,field,dataLink)
     def generateRoutineVariableSection(self, outputFile, routine, sectionTitle, headerList, variables,
                                        converFunc):
         self.writeSectionHeader(sectionTitle, sectionTitle, outputFile)
@@ -2855,8 +2844,10 @@ class WebPageGenerator:
 
     def __convertRPCDataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '8994')
+
     def __convertHL7DataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '101')
+
     def __convertRtnDataReference__(self, variables, fileNo):
         output = []
         for item in variables:
@@ -2867,9 +2858,29 @@ class WebPageGenerator:
             output.append((name, tag))
         return output
 
-    def __convertVariableToTableData__(self, variables, isGlobal=False, routine=None):
+    ###########################################################################
+
+    def __convertGlobalVarToTableData__(self, variables, routine=None):
+        return self.__convertVariableToTableData__(variables, isGlobal=True,
+                                                   routine=routine)
+
+    def __convertNakedGlobaToTableData__(self, variables, routine=None):
+        return self.__convertVariableToTableData__(variables, isGlobal=False,
+                                                   routine=routine)
+
+    def __convertMarkedItemToTableData__(self, variables, routine=None):
+        return self.__convertVariableToTableData__(variables, isGlobal=False,
+                                                   routine=routine)
+
+    def __convertLabelReferenceToTableData__(self, variables, routine=None):
+        return self.__convertVariableToTableData__(variables, isGlobal=False,
+                                                   routine=routine)
+
+    def __convertVariableToTableData__(self, variables, isGlobal=False,
+                                       routine=None):
         output = []
-        allVars = sorted(variables.iterkeys())
+        allVars = variables.keys()
+        allVars.sort()
         for varName in allVars:
             if varName is None:
               continue
@@ -2881,10 +2892,18 @@ class WebPageGenerator:
             output.append(((var.getPrefix()+varName).strip(), lineOccurrencesString))
         return output
 
+    def __convertExternalReferenceToTableData__(self, variables, routine=None):
+        output = []
+        allVars = sorted(variables.iterkeys(), key=itemgetter(0,1))
+        for nameTag in allVars:
+            lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
+            output.append(("%s^%s" %(nameTag[1], getRoutineHypeLinkByName(nameTag[0])),
+                           lineOccurrencesString))
+        return output
+
     def __generateLineOccurrencesString__(self, lineOccurrences, routine):
         lineOccurrencesString = ""
-        index = 0
-        for offset in lineOccurrences:
+        for index, offset in enumerate(lineOccurrences):
             offsetStr = offset
             if routine:
               searchRes = SPLITVAL.search(offset)
@@ -2894,12 +2913,21 @@ class WebPageGenerator:
                 lineOccurrencesString += ",&nbsp;"
             lineOccurrencesString += offsetStr
             if (index + 1) % LINE_TAG_PER_LINE == 0:
-                lineOccurrencesString +="<BR>"
-            index += 1
+                lineOccurrencesString += "<BR>"
         return lineOccurrencesString
 
-    def __convertGlobalVarToTableData__(self, variables, routine=None):
-        return self.__convertVariableToTableData__(variables, isGlobal=True, routine=routine)
+    def __findDataURL__(self, name, routine, splitStr):
+        (field, ienVal) = name.split(splitStr)
+        if "+" in ienVal:
+            ienVal = ienVal.split("+")[0]
+        if splitStr == "DATA":
+            datafill = (self.__getDataEntryDetailHtmlLink__(routine.getFileNo(), ienVal), ienVal)
+        else:
+            datafill = ienVal
+        dataLink = DATA_URL_DICT[splitStr] % datafill
+        return "<a href=\"#%s\">%s</a>%s" % (field, field, dataLink)
+
+    ###########################################################################
 
     def __convertFileManDbCallToTableData__(self, variables, routine=None):
         output = []
@@ -2929,21 +2957,6 @@ class WebPageGenerator:
                     callTagsStr += tag + '^' + getRoutineHypeLinkByName(rtn)
                 index += 1
             output.append((varName, callTagsStr))
-        return output
-
-    def __convertNakedGlobaToTableData__(self, variables, routine=None):
-        return self.__convertVariableToTableData__(variables, isGlobal=False,routine=routine)
-    def __convertMarkedItemToTableData__(self, variables, routine=None):
-        return self.__convertVariableToTableData__(variables, isGlobal=False,routine=routine)
-    def __convertLabelReferenceToTableData__(self, variables, routine=None):
-        return self.__convertVariableToTableData__(variables, isGlobal=False,routine=routine)
-    def __convertExternalReferenceToTableData__(self, variables, routine=None):
-        output = []
-        allVars = sorted(variables.iterkeys(), key = itemgetter(0,1))
-        for nameTag in allVars:
-            lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
-            output.append((nameTag[1]+"^"+getRoutineHypeLinkByName(nameTag[0]),
-                           lineOccurrencesString))
         return output
 
 #===============================================================================
@@ -3293,10 +3306,10 @@ class WebPageGenerator:
           paragraphs.append(t)
           pdf.append(KeepTogether(paragraphs))
 
+    # NOTE: When called with an existingOutFile, we're actually writing a
+    # GLOBAL page not a routine page
     def __generateIndividualRoutinePage__(self, routine, pdf, platform=None,
-                                          existingOutFile=None,
-                                          fileNameGenerator=getRoutineHtmlFileNameUnquoted,
-                                          DEFAULT_HEADER_LIST=DEFAULT_VARIABLE_SECTION_HEADER_LIST):
+                                          existingOutFile=None):
         assert routine
         routineName = routine.getName()
         # This is a list of sections that might be applicable to a routine
@@ -3345,7 +3358,7 @@ class WebPageGenerator:
              "name": "External References", # this is also the link name
              "data" : routine.getExternalReference, # the data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_HEADER_LIST,
+             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                            self.__convertExternalReferenceToTableData__], # extra argument
              "classid"  :"external"
            },
@@ -3409,7 +3422,7 @@ class WebPageGenerator:
              "name": "Naked Globals", # this is also the link name
              "data" : routine.getNakedGlobals, # the data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_HEADER_LIST,
+             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                            self.__convertNakedGlobaToTableData__], # extra argument
              "classid"  :"naked"
            },
@@ -3418,7 +3431,7 @@ class WebPageGenerator:
              "name": "Local Variables", # this is also the link name
              "data" : routine.getLocalVariables, # the data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_HEADER_LIST,
+             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                            self.__convertVariableToTableData__], # extra argument
              "classid"  :"local"
            },
@@ -3427,38 +3440,39 @@ class WebPageGenerator:
              "name": "Marked Items", # this is also the link name
              "data" : routine.getMarkedItems, # the data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [DEFAULT_HEADER_LIST,
+             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
                            self.__convertMarkedItemToTableData__], # extra argument
              "classid"  :"marked"
            },
         ]
         package = routine.getPackage()
         if existingOutFile:
-          outputFile = existingOutFile
+            outputFile = existingOutFile
         else:
-          outputFile = open(os.path.join(self._outDir,fileNameGenerator(routine, routine._title)), 'w')
-          self.__includeHeader__(outputFile)
+            outputFile = open(os.path.join(self._outDir, getRoutineHtmlFileNameUnquoted(routine, routine._title)), 'w')
+            self.__includeHeader__(outputFile)
         indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
         if not existingOutFile:
-          self.generateNavigationBar(outputFile, indexList, printList=indexList)
-          title = "Routine: %s" % routineName
-          routineHeader = title
-          if platform:
-              routineHeader += "Platform: %s" % platform
-          self.writeTitleBlock(title, routineHeader, package, outputFile, pdf)
+            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            title = "Routine: %s" % routineName
+            routineHeader = title
+            if platform:
+                routineHeader += " Platform: %s" % platform
+            self.writeTitleBlock(title, routineHeader, package,
+                                 outputFile, pdf)
         for idx in idxLst:
-          sectionGen = sectionGenLst[idx]
-          data = sectionGen['data'](*sectionGen.get('dataarg',[]))
-          link = sectionGen['name']
-          header = sectionGen.get('header', link)
-          geneargs = sectionGen.get('geneargs',[])
-          classid  = sectionGen.get('classid', "")
-          sectionGen['generator'](routine, data, header, link, outputFile,
-                                  pdf, classid=classid, *geneargs)
-          writeSectionEnd(outputFile)
+            sectionGen = sectionGenLst[idx]
+            data = sectionGen['data'](*sectionGen.get('dataarg',[]))
+            link = sectionGen['name']
+            header = sectionGen.get('header', link)
+            geneargs = sectionGen.get('geneargs',[])
+            classid  = sectionGen.get('classid', "")
+            sectionGen['generator'](routine, data, header, link, outputFile,
+                                    pdf, classid=classid, *geneargs)
+            writeSectionEnd(outputFile)
         if not existingOutFile:
-          self.generateFooterWithNavigationBar(outputFile, indexList)
-          outputFile.close()
+            self.generateFooterWithNavigationBar(outputFile, indexList)
+            outputFile.close()
 
 #===============================================================================
 # Method to generate page for platform-dependent generic routine page
