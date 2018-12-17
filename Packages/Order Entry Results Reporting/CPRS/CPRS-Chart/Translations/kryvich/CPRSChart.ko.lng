@@ -57,7 +57,7 @@ imgLblHealthFactorLabels.Labels.(29).Caption=COM 객체 템플릿 설치되지 �
 imgLblNotes.Labels.(0).Caption=상위 그룹화
 imgLblNotes.Labels.(1).Caption=하위 그룹화
 imgLblNotes.Labels.(2).Caption=하위 그룹화
-imgLblNotes.Labels.(3).Caption=노트wod
+imgLblNotes.Labels.(3).Caption=노트
 imgLblNotes.Labels.(4).Caption=부록이 있는 노트
 imgLblNotes.Labels.(5).Caption=학제 간 노트
 imgLblNotes.Labels.(6).Caption=학제 간 노트
@@ -147,9 +147,9 @@ pnlEncounter.pnlEncounters.lbEncounter.Items.Strings=면담
 pnlEncounter.pnlEncounters.lbEncounter.Caption=면담
 pnlReminder.btnReminder.Caption=리마인더
 pnlReminder.pnlReminders.tvReminders.Caption=리마인더
-pnlOrder.btnOrder.Caption=주문
-pnlOrder.pnlOrders.lbOrders.Items.Strings=주문
-pnlOrder.pnlOrders.lbOrders.Caption=주문
+pnlOrder.btnOrder.Caption=처방
+pnlOrder.pnlOrders.lbOrders.Items.Strings=처방
+pnlOrder.pnlOrders.lbOrders.Caption=처방
 al.acTemplates.Category=버튼
 al.acTemplates.Caption=템플릿
 al.acEncounter.Category=버튼
@@ -157,7 +157,7 @@ al.acEncounter.Caption=면담
 al.acReminders.Category=버튼
 al.acReminders.Caption=리마인더
 al.acOrders.Category=버튼
-al.acOrders.Caption=주문
+al.acOrders.Caption=처방
 al.acFind.Category=버튼
 al.acFind.Caption=찾기
 al.acCopyTemplateText.Category=TemplateMenu
@@ -241,8 +241,8 @@ lblOriginalFileName.Caption=lblOriginalFileName
 pnlLogo.Caption=pnlLogo
 
 [TfrmActivateDeactive]
-Caption=주문 갱신
-TActivate.Caption=보류 주문 배출
+Caption=처방 갱신
+TActivate.Caption=보류 처방 배출
 TDeactive.Caption=둘다 배출
 Memo1.Lines.Strings=메모1
 TCancel.Caption=취소-아무런 조치도 취하지 않음
@@ -287,9 +287,9 @@ pnlBase.btnRemoveAllAlertFwrd.Caption=모두 제거(&e)
 
 [TfrmAlertOrders]
 Caption=결과가 있을 때 알림
-Label1.Caption=다음 주문들은 결과가 있을 때 알림을 전송함 -
+Label1.Caption=다음 처방들은 결과가 있을 때 알림을 전송함 -
 lblAlertRecipient.Caption=알림 수신자:
-lstOrders.Caption=다음 주문들은 결과가 있을 때 알림을 전송함 -
+lstOrders.Caption=다음 처방들은 결과가 있을 때 알림을 전송함 -
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
 cboAlertRecipient.Caption=알림 수신자
@@ -373,7 +373,7 @@ Caption=기본 자동 페이지 크기조절
 Caption=frmAutoSz
 
 [TfrmBALocalDiagnoses]
-Caption=주문에 진단 부과
+Caption=처방에 진단 부과
 pnlTop.Caption=pnlTop
 pnlTop.lblPatientName.Caption=PatientName
 pnlMain.lblDiagSect.Caption=진단 섹션
@@ -391,7 +391,7 @@ pnlBottom.buCancel.Caption=취소(&C)
 pnlBottom.gbProvDiag.Caption=임시 진단
 pnlBottom.gbProvDiag.lvDxGrid.Columns.(0).Caption=질환 목록/임시 진단에 추가
 pnlBottom.gbProvDiag.lvDxGrid.Columns.(1).Caption=주요
-pnlBottom.gbProvDiag.lvDxGrid.Columns.(2).Caption=선택한 주문에 해당하는 진단
+pnlBottom.gbProvDiag.lvDxGrid.Columns.(2).Caption=선택한 처방에 해당하는 진단
 
 [TfrmBAOptionsDiagnoses]
 Caption=개인 진단 목록
@@ -456,10 +456,10 @@ pnlTop.lblExpireDate.Caption=만기일자:
 BitBtn1.Caption=승인
 
 [TfrmCompleteOrders]
-Caption=완료된 주문
-Label1.Caption=아래 주문은 완료됨으로 표시 될 것임
+Caption=완료된 처방
+Label1.Caption=아래 처방은 완료됨으로 표시 될 것임
 lblESCode.Caption=전자 서명 코드
-lstOrders.Caption=아래 주문은 완료됨으로 표시 될 것임
+lstOrders.Caption=아래 처방은 완료됨으로 표시 될 것임
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
 txtESCode.Caption=전자 서명 코드
@@ -573,7 +573,7 @@ mnuConsults.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuConsults.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuConsults.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuConsults.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuConsults.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuConsults.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuConsults.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuConsults.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuConsults.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -705,9 +705,9 @@ pnlBase.cboGroupBy.Items.Strings=^(none)\^T^Consults/Procedures\^V^Service\^S^St
 popStatus.popStatusSelectNone.Caption=아무것도 고르지 않음
 
 [TfrmCopyOrders]
-Caption=주문 복사
-pnlRadio.GroupBox1.radRelease.Caption=복사된 주문 즉시 배포(&R)
-pnlRadio.GroupBox1.radEvtDelay.Caption=복사된 주문 배포를 지연(&D)
+Caption=처방 복사
+pnlRadio.GroupBox1.radRelease.Caption=복사된 처방 즉시 배포(&R)
+pnlRadio.GroupBox1.radEvtDelay.Caption=복사된 처방 배포를 지연(&D)
 pnlRadio.GroupBox1.cmdOK.Caption=승인
 pnlRadio.GroupBox1.cmdCancel.Caption=취소
 pnlTop.pnlInfo.lblInstruction2.Caption=전송 사용: 입원환자가 한 병동이나 의료진 담당에서 다른 병동이나 의료진 담당으로 옮기는 경우
@@ -731,8 +731,8 @@ pnlBase.cmdCancel.Caption=취소
 pnlBase.cboCsltNote.Caption=이 조치에 대한 노트 선택
 
 [TfrmCSRemaining]
-Caption=처리되지 않은 제재약물 주문
-lblCSRemaining.Caption=다음 제재약물 주문은 처리되지 않을 것:
+Caption=처리되지 않은 제재약물 처방
+lblCSRemaining.Caption=다음 제재약물 처방은 처리되지 않을 것:
 cmdOK.Caption=승인
 
 [TfrmDateRange]
@@ -756,9 +756,9 @@ RadioButton1.Caption=현재 Symbol Table
 RadioButton2.Caption=전역 참조
 
 [TfrmDCOrders]
-Caption=주문 중단/취소
-Label1.Caption=다음 주문들이 취소될 것 -
-Panel1.lstOrders.Caption=다음 주문들이 취소될 것
+Caption=처방 중단/취소
+Label1.Caption=다음 처방들이 취소될 것 -
+Panel1.lstOrders.Caption=다음 처방들이 취소될 것
 Panel2.lblReason.Caption=중단 이유 (하나 선택)
 Panel2.lstReason.Caption=중단 이유 (하나 선택)
 Panel2.cmdOK.Caption=승인
@@ -799,7 +799,7 @@ mnuSumms.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuSumms.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuSumms.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuSumms.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuSumms.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuSumms.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuSumms.mnuView.mnuViewChart.mnuChartSumms.Caption=경과 노트(&N)
 mnuSumms.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuSumms.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -930,7 +930,7 @@ pnlBottom.btnOK.Caption=승인
 pnlBottom.btnCancel.Caption=취소
 
 [TfrmDeviceSelect]
-Caption=주문 인쇄 디바이스 선택
+Caption=처방 인쇄 디바이스 선택
 grpDevice.Caption=디바이스
 grpDevice.cboDevice.Caption=디바이스
 grpDevice.pnlGBBottom.lblMargin.Caption=우측 여백
@@ -1009,10 +1009,10 @@ pnlEncounterButton.Caption=면담
 pnlEncounterButton.sbEncounter.Caption=면담
 pnlTemplatesButton.Caption=템플릿
 pnlTemplatesButton.sbTemplates.Caption=템플릿
-pnlOrdersButton.Caption=주문
-pnlOrdersButton.sbOrders.Caption=주문
-lbOrders.Items.Strings=주문
-lbOrders.Caption=주문
+pnlOrdersButton.Caption=처방
+pnlOrdersButton.sbOrders.Caption=처방
+lbOrders.Items.Strings=처방
+lbOrders.Caption=처방
 lbEncounter.Items.Strings=면담
 lbEncounter.Caption=면담
 pnlTemplates.tvTemplates.Caption=템플릿
@@ -1126,7 +1126,7 @@ cmdCancel.Caption=취소
 
 [TfrmEncounter]
 Caption=의사 & 현재 조치 위치
-lblInstruct.Caption=이 노트나 주문과 관련된 예약이나 진료를 선택하시오.
+lblInstruct.Caption=이 노트나 처방과 관련된 예약이나 진료를 선택하시오.
 lblLocation.Caption=면담 위치
 lblProvider.Caption=면담 담당 의사
 cboPtProvider.Caption=면담 담당 의사
@@ -1224,7 +1224,7 @@ Label2.Caption=(시간이 소요될 수 있습니다)
 btnCancel.Caption=취소
 
 [TfrmFlagOrder]
-Caption=주문 표시하기
+Caption=처방 표시하기
 Label1.Caption=표시 이유 (목록에서 선택하거나 입력)
 lblAlertRecipient.Caption=수신자 알리기
 cmdOK.Caption=승인
@@ -1299,7 +1299,7 @@ mnuFrame.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuFrame.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuFrame.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuFrame.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuFrame.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuFrame.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuFrame.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuFrame.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuFrame.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -1553,9 +1553,9 @@ pnlBottom.btnOK.Caption=승인(&O)
 pnlBottom.btnCancel.Caption=취소(&C)
 
 [TfrmHoldOrders]
-Caption=주문 보류
-Label1.Caption=다음 주문들은 보류 될 예정 -
-lstOrders.Caption=다음 주문들은 보류 될 예정 -
+Caption=처방 보류
+Label1.Caption=다음 처방들은 보류 될 예정 -
+lstOrders.Caption=다음 처방들은 보류 될 예정 -
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
@@ -1658,13 +1658,13 @@ pnlMain.pnlLeft.lbSection.Caption=예방접종 섹션
 pnlMain.pnlLeft.btnOther.Caption=기타 예방 접종...
 
 [TfrmInvalidActionList]
-Caption=무효처리된 조치 주문
-pnlTop.Label1.Caption=다음 주문들에 이 조치를 취할 수 없다
-pnlTop.lstActDeniedOrders.Caption=다음 주문들에 이 행동을 취할 수 없다
-pnlTop.hdrAction.Sections.(0).Text=주문
+Caption=무효처리된 조치 처방
+pnlTop.Label1.Caption=다음 처방들에 이 조치를 취할 수 없다
+pnlTop.lstActDeniedOrders.Caption=다음 처방들에 이 행동을 취할 수 없다
+pnlTop.hdrAction.Sections.(0).Text=처방
 pnlTop.hdrAction.Sections.(1).Text=사유
-pnlBottom.Label2.Caption=다음 주문들에 대한 조취가 취해질 것이다:
-pnlBottom.lstValidOrders.Caption=다음 주문들은 조취가 취해질 것이다
+pnlBottom.Label2.Caption=다음 처방들에 대한 조취가 취해질 것이다:
+pnlBottom.lstValidOrders.Caption=다음 처방들은 조취가 취해질 것이다
 Panel1.btnOK.Caption=승인
 
 [TfrmIVRoutes]
@@ -1836,11 +1836,11 @@ cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
 [TfrmMedCopy]
-Caption=약물 주문 복사
+Caption=약물 처방 복사
 pnlTop.pnlInpatient.lblInstruction.Caption=입원 사용: 환자가 새로 병원이나 요양원에 입원 하는 경우
 pnlTop.pnlInpatient.lblInstruction2.Caption=전원 사용: 입원 환자가 한 병동/의료진담당에서 다른 병동/의료진담당으로 옮기는 경우.
-pnlMiddle.gboxMain.radDelayed.Caption=복사된 주문의 배포를 지연(&D)
-pnlMiddle.gboxMain.radRelease.Caption=복사된 주문들 즉시 배포(&R)
+pnlMiddle.gboxMain.radDelayed.Caption=복사된 처방의 배포를 지연(&D)
+pnlMiddle.gboxMain.radRelease.Caption=복사된 처방들 즉시 배포(&R)
 pnlMiddle.gboxMain.cmdOK.Caption=승인
 pnlMiddle.gboxMain.cmdCancel.Caption=취소
 
@@ -1872,7 +1872,7 @@ mnuMeds.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuMeds.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuMeds.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuMeds.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuMeds.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuMeds.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuMeds.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuMeds.mnuView.mnuViewChart.mnuChartCslts.Caption=면담(&)
 mnuMeds.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -1895,7 +1895,7 @@ mnuMeds.mnuView.mnuViewSortClass.Caption=보훈병원 약물 등급으로 정렬
 mnuMeds.mnuView.mnuViewDetail.Caption=세부사항...(&D)
 mnuMeds.mnuView.mnuViewSortName.Caption=약물 명으로 정렬(&N)
 mnuMeds.mnuView.mnuViewHistory.Caption=투약 전력...(&H)
-mnuMeds.mnuView.SortbyStatusthenLocation1.Caption=상황/만기일로 정렬(임상주문 먼저)
+mnuMeds.mnuView.SortbyStatusthenLocation1.Caption=상황/만기일로 정렬(임상처방 먼저)
 mnuMeds.mnuView.SortbyClinicOrderthenStatusthenStopDate1.Caption=상황 그룹/상황/장소/약물 명으로 정렬
 mnuMeds.mnuView.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption=약물명(알파벳순)으로 정렬, 활성 상태, 최근 만기 상태
 mnuMeds.mnuAct.Caption=조치(&A)
@@ -1906,7 +1906,7 @@ mnuMeds.mnuAct.mnuActUnhold.Caption=보류 해제...(&l)
 mnuMeds.mnuAct.mnuActUnhold.Hint=보류 해제
 mnuMeds.mnuAct.mnuActHold.Caption=보류...(&H)
 mnuMeds.mnuAct.mnuActRenew.Caption=갱신...(&w)
-mnuMeds.mnuAct.mnuActCopy.Caption=새 주문에 복사...(&p)
+mnuMeds.mnuAct.mnuActCopy.Caption=새 처방에 복사...(&p)
 mnuMeds.mnuAct.mnuActTransfer.Caption=~으로 옮기기...(&T)
 mnuMeds.mnuAct.mnuActRefill.Caption=재조제...(&e)
 mnuMeds.mnuAct.mnuActOneStep.Caption=한단계 클리닉 관리
@@ -2057,7 +2057,7 @@ mnuNotes.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuNotes.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuNotes.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuNotes.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuNotes.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuNotes.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuNotes.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuNotes.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuNotes.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -2211,13 +2211,13 @@ cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
 [TfrmOCAccept]
-Caption=주문 확인
-pnlBottom.cmdAccept.Caption=주문 승인
-pnlBottom.cmdCancel.Caption=주문 취소
+Caption=처방 확인
+pnlBottom.cmdAccept.Caption=처방 승인
+pnlBottom.cmdCancel.Caption=처방 취소
 pnlBottom.Button1.Caption=약물 상호작용 논문
 
 [TfrmOCMonograph]
-Caption=주문 확인을 위한 논문
+Caption=처방 확인을 위한 논문
 monoCmbLst.Text=monoCmbLst
 monoMemo.Lines.Strings=monoMemo
 cmdOK.Caption=승인
@@ -2225,25 +2225,25 @@ VA508StaticText1.Caption=보기 희망하는 논문을 선택하시오
 VA508StaticText2.Caption=논문 정보
 
 [TfrmOCSession]
-Caption=주문 확인
-pnlBottom.lblJustify.Caption=주문 확인을 덮어쓰는 이유를 입력하시오:
-pnlBottom.memNote.Lines.Strings=참고: 덮어쓰기는 추적목적이며 \^주문을 변경하거나 추가하지 않습니다.
-pnlBottom.txtJustify.Caption=중요 주문 확인 덮어쓰기를 위한 타당한 이유를 입력하시오 -
-pnlBottom.cmdCancelOrder.Caption=확인된 주문 취소
-pnlBottom.cmdContinue.Caption=주문 승인
-pnlBottom.btnReturn.Caption=주문으로 돌아가기
+Caption=처방 확인
+pnlBottom.lblJustify.Caption=처방 확인을 덮어쓰는 이유를 입력하시오:
+pnlBottom.memNote.Lines.Strings=참고: 덮어쓰기는 추적목적이며 \^처방을 변경하거나 추가하지 않습니다.
+pnlBottom.txtJustify.Caption=중요 처방 확인 덮어쓰기를 위한 타당한 이유를 입력하시오 -
+pnlBottom.cmdCancelOrder.Caption=확인된 처방 취소
+pnlBottom.cmdContinue.Caption=처방 승인
+pnlBottom.btnReturn.Caption=처방으로 돌아가기
 pnlBottom.cmdMonograph.Caption=약물 상호작용 논문
-pnlTop.lblHover.Caption=주문 확인 설명이 잘린 경우, 텍스트에 마우스를 올려놓아 전체 설명을 확인하십시오.
-pnlTop.lblInstr.Caption=주문을 취소하기 위해 확인란에 표시를 하고 "확인된 주문 취소" 버튼을 누르십시오.
+pnlTop.lblHover.Caption=처방 확인 설명이 잘린 경우, 텍스트에 마우스를 올려놓아 전체 설명을 확인하십시오.
+pnlTop.lblInstr.Caption=처방을 취소하기 위해 확인란에 표시를 하고 "확인된 처방 취소" 버튼을 누르십시오.
 
 [TfrmODActive]
-Caption=선택한 이벤트를 위한 활성화된 주문 복사 
-lblCaption.Caption=지연된 릴리즈 이벤트로 복사할 주문들 표시
+Caption=선택한 이벤트를 위한 활성화된 처방 복사 
+lblCaption.Caption=지연된 릴리즈 이벤트로 복사할 처방들 표시
 pnlClient.btnOK.Caption=승인
 pnlClient.btnCancel.Caption=취소
-pnlClient.lstActiveOrders.Caption=선택한 주문들 릴리즈 이벤트로 복사
+pnlClient.lstActiveOrders.Caption=선택한 처방들 릴리즈 이벤트로 복사
 pnlClient.hdControl.Sections.(0).Text=서비스
-pnlClient.hdControl.Sections.(1).Text=주문
+pnlClient.hdControl.Sections.(1).Text=처방
 pnlClient.hdControl.Sections.(2).Text=시작 / 정지
 pnlClient.hdControl.Sections.(3).Text=상황
 
@@ -2272,22 +2272,22 @@ btnRemove.Caption=제거
 btnDateTime.Caption=일시
 
 [TfrmODAuto]
-Caption=주문 자동 승인
-Label1.Caption=이 문서는 항시 보이지 않는다. 다른 주문과 동일하게 자동 주문 승인이 처리될 수 있게 합니다. 
+Caption=처방 자동 승인
+Label1.Caption=이 문서는 항시 보이지 않는다. 다른 처방과 동일하게 자동 처방 승인이 처리될 수 있게 합니다. 
 
 [TfrmODBase]
-cmdAccept.Caption=주문 승인
+cmdAccept.Caption=처방 승인
 cmdQuit.Caption=종료
 
 [TfrmODBBank]
-Caption=B혈액 성분 및 진단 검사 주문서
-pnlComments.lblOrdComment.Caption=주문 코멘트
+Caption=B혈액 성분 및 진단 검사 처방서
+pnlComments.lblOrdComment.Caption=처방 코멘트
 pnlComments.btnUpdateComments.Caption=코멘트 업데이트
 pnlComments.btnCancelComment.Caption=취소
 pgeProduct.TabInfo.Caption=환자 정보
 pgeProduct.TabInfo.edtInfo.Caption=환자 정보
-pgeProduct.TabDiag.Caption=혈액 은행 주문
-pgeProduct.TabDiag.pnlFields.Hint=이 필드들에 입력되는 데이터는 주문 전체에 적용됨.
+pgeProduct.TabDiag.Caption=혈액 은행 처방
+pgeProduct.TabDiag.pnlFields.Hint=이 필드들에 입력되는 데이터는 처방 전체에 적용됨.
 pgeProduct.TabDiag.pnlFields.lblDiagComment.Caption=코멘트
 pgeProduct.TabDiag.pnlFields.lblUrgency.Caption=긴급도*
 pgeProduct.TabDiag.pnlFields.lblReason.Caption=요청 이유
@@ -2312,7 +2312,7 @@ pgeProduct.TabDiag.pnlSelect.pnlBloodComponents.lblModifiers.Caption=수정자
 pgeProduct.TabDiag.pnlSelect.pnlBloodComponents.lblWanted.Caption=원하는 일시
 pgeProduct.TabDiag.pnlSelect.pnlBloodComponents.cboAvailComp.Caption=혈액 성분
 pgeProduct.TabDiag.pnlSelect.pnlBloodComponents.cboModifiers.Caption=수정자
-pgeProduct.TabDiag.GroupBox1.Caption=개인 빠른 주문
+pgeProduct.TabDiag.GroupBox1.Caption=개인 빠른 처방
 pgeProduct.TabDiag.pnlSelectedTests.Caption=선택한 성분과 검사들
 pgeProduct.TabDiag.pnlSelectedTests.lvSelectionList.Columns.(0).Caption=검사/성분
 pgeProduct.TabDiag.pnlSelectedTests.lvSelectionList.Columns.(1).Caption=양
@@ -2325,7 +2325,7 @@ pgeProduct.TabDiag.pnlSelectedTests.btnRemoveAll.Caption=모두 제거
 pgeProduct.TabResults.Caption=검사 결과
 
 [TfrmODChangeUnreleasedRenew]
-Caption=미출력된 갱신 주문 변경
+Caption=미출력된 갱신 처방 변경
 Panel2.lblRefill.Caption=재조제
 Panel2.lblPickUp.Caption=픽업
 Panel3.Label1.Caption=시작일
@@ -2336,14 +2336,14 @@ Panel1.btnOK.Caption=승인
 Panel1.btnCancel.Caption=취소
 
 [TfrmODChild]
-Caption=관련된 복잡한 주문
-lblWarning.Caption=복잡한 주문의 일부로 입력된 약물 주문을 중단하기로 요청하셨습니다. 아래 주문들은 같은 복잡한 주문과 과련된 주문들입니다. 이 모든 주문들을 중단하시길 원하십니까?
+Caption=관련된 복잡한 처방
+lblWarning.Caption=복잡한 처방의 일부로 입력된 약물 처방을 중단하기로 요청하셨습니다. 아래 처방들은 같은 복잡한 처방과 과련된 처방들입니다. 이 모든 처방들을 중단하시길 원하십니까?
 Panel2.btnOK.Caption=승인
 Panel2.btnCancel.Caption=취소
 
 [TfrmODCslt]
-Caption=진료 주문
-memOrder.Lines.Strings=주문 텍스트...\^----------------------------------------------\^--------------------------------\^주문 메시지가 여기 표시될 수 있음.
+Caption=진료 처방
+memOrder.Lines.Strings=처방 텍스트...\^----------------------------------------------\^--------------------------------\^처방 메시지가 여기 표시될 수 있음.
 pnlMain.lblService.Caption=서비스/전문분야 진료
 pnlMain.lblProvDiag.Caption=임시 진단
 pnlMain.lblUrgency.Caption=긴급도
@@ -2374,7 +2374,7 @@ popReason.popReasonPaste2.Caption=붙여넣기2
 popReason.popReasonReformat.Caption=단락 재구성
 
 [TfrmODDiet]
-Caption=규정식 주문
+Caption=규정식 처방
 nbkDiet.pgeDiet.Caption=규정식
 nbkDiet.pgeDiet.lblDietAvail.Caption=사용 가능한 규정식 요소
 nbkDiet.pgeDiet.lblDietSelect.Caption=선택한 규정식 요소
@@ -2428,7 +2428,7 @@ nbkDiet.pgeTubefeeding.cboProduct.Caption=관급식 제품
 nbkDiet.pgeTubefeeding.txtTFComment.Caption=특별 지시
 nbkDiet.pgeTubefeeding.grdSelected.Caption=선택한 제품
 nbkDiet.pgeTubefeeding.cmdTFRemove.Caption=제거
-nbkDiet.pgeTubefeeding.chkCancelTrays.Caption=향후 식판 주문 취소
+nbkDiet.pgeTubefeeding.chkCancelTrays.Caption=향후 식판 처방 취소
 nbkDiet.pgeTubefeeding.txtQuantity.Hint=양을 2000 K, 100 ML/HOUR, 8 OZ/TID 등의 형식으로 입력; 총량은 5000ml를 초과할 수 없음.
 nbkDiet.pgeTubefeeding.txtQuantity.Caption=수량
 nbkDiet.pgeTubefeeding.cboStrength.Items.Strings=1/4\^1/2\^3/4\^FULL
@@ -2460,16 +2460,16 @@ nbkDiet.pgeIsolations.lstIsolation.Caption=주의 사항 종류 선택
 nbkDiet.pgeIsolations.txtIPComment.Caption=설명
 nbkDiet.pgeIsolations.txtIPCurrent.Text=<없음>
 nbkDiet.pgeIsolations.txtIPCurrent.Caption=현재 격리
-nbkDiet.pgeAdditional.Caption=추가 주문
-nbkDiet.pgeAdditional.lblAddlOrder.Caption=추가 규정식 주문 입력
+nbkDiet.pgeAdditional.Caption=추가 처방
+nbkDiet.pgeAdditional.lblAddlOrder.Caption=추가 규정식 처방 입력
 nbkDiet.pgeAdditional.lblOPAOStart.Caption=시작일:
-nbkDiet.pgeAdditional.txtAOComment.Caption=추가 규정식 주문 입력
+nbkDiet.pgeAdditional.txtAOComment.Caption=추가 규정식 처방 입력
 nbkDiet.pgeAdditional.calOPAOStart.Caption=시작일:
 
 [TfrmODDietLT]
 Caption=늦은 식판?
 lblMealCutoff.Caption=아침 식사 제한시간을 넘겼습니다.
-Label2.Caption=늦은 식사를 주문하시겠습니까?
+Label2.Caption=늦은 식사를 처방하시겠습니까?
 GroupBox1.Caption=식사 시간
 cmdYes.Caption=네
 cmdNo.Caption=아니오
@@ -2477,10 +2477,10 @@ chkBagged.Caption=봉지에 담긴 식사
 
 [TfrmODGen]
 Caption=frmODGen
-lblOrderSig.Caption=주문 서명
+lblOrderSig.Caption=처방 서명
 
 [TfrmODLab]
-Caption=실험실 검사 주문
+Caption=실험실 검사 처방
 lblAvailTests.Caption=이용 가능한 실험실 검사
 lblCollTime.Caption=수집 일시
 lblCollSamp.Caption=샘플 수집
@@ -2493,7 +2493,7 @@ lblCollType.Caption=수집 종류
 txtImmedColl.Text=txtImmedColl
 pnlUrineVolume.lblUrineVolume.Caption=소변 용량을 입력하시오:
 pnlAntiCoagulation.lblAntiCoagulant.Caption=환자가 어떤 항응혈제를 사용중입니까?
-pnlOrderComment.lblOrderComment.Caption=주문 코멘트을 입력하시오:
+pnlOrderComment.lblOrderComment.Caption=처방 코멘트을 입력하시오:
 pnlDoseDraw.lblDose.Caption=마지막 투약 시간을 입력하시오:
 pnlDoseDraw.lblDraw.Caption=마지막 혈액 채취 시간을 입력하시오:
 pnlPeakTrough.lblPeakTrough.Caption=샘플 채취 시간:
@@ -2553,7 +2553,7 @@ cmdYes.Caption=네
 cmdNo.Caption=아니오
 
 [TfrmODMedIn]
-Caption=입원환자 약물 주문
+Caption=입원환자 약물 처방
 lblMedication.Caption=약물
 lblDosage.Caption=정량
 lblRoute.Caption=투약방법
@@ -2564,8 +2564,8 @@ lblPriority.Caption=우선도
 txtDosage.Caption=정량
 
 [TfrmODMedIV]
-Caption=주사 주문
-ScrollBox1.pnlForm.pnlB1.pnlBottom.Label1.Caption=주문 서명
+Caption=주사 처방
+ScrollBox1.pnlForm.pnlB1.pnlBottom.Label1.Caption=처방 서명
 ScrollBox1.pnlForm.pnlB1.pnlBottom.lbl508Required.Caption= * 필수 입력 필드를 가리킴
 ScrollBox1.pnlForm.pnlB1.lblFirstDose.Caption=첫 투여량
 ScrollBox1.pnlForm.pnlB1.lblAdminTime.Caption=투여 시간
@@ -2600,9 +2600,9 @@ ScrollBox1.pnlForm.pnlTop.pnlCombo.cboSolution.Caption=용액
 [TfrmODMedNVA]
 Caption=약초/일반/비보훈병원 약물 문서화
 pnlMeds.Caption=pnlMeds
-pnlMeds.lstQuick.Caption=빠른 주문
-pnlMeds.lstAll.Caption=모든 약물 주문
-txtMed.Text=(약물 이름을 입력하거나 아래 주문에서 고르시오)
+pnlMeds.lstQuick.Caption=빠른 처방
+pnlMeds.lstAll.Caption=모든 약물 처방
+txtMed.Text=(약물 이름을 입력하거나 아래 처방에서 고르시오)
 pnlFields.pnlTop.lblRoute.Caption=경로
 pnlFields.pnlTop.lblSchedule.Caption=일정
 pnlFields.pnlTop.lblGuideline.Caption=제한/지침 표시
@@ -2628,7 +2628,7 @@ btnPanel.cmdYes.Caption=네
 btnPanel.cmdNo.Caption=아니오
 
 [TfrmODMedOut]
-Caption=외래환자 약물 주문
+Caption=외래환자 약물 처방
 lblMedication.Caption=약물
 lblDosage.Caption=복용
 lblRoute.Caption=경로
@@ -2648,10 +2648,10 @@ txtRefills.Caption=리필
 cmdComplex.Caption=복잡한 정량...
 
 [TfrmODMeds]
-Caption=약물 주문
-pnlMeds.lstQuick.Caption=빠른 주문
-pnlMeds.lstAll.Caption=모든 약물 주문
-txtMed.Text=(약물 이름을 입력하거나 아래 주문에서 선택하시오)
+Caption=약물 처방
+pnlMeds.lstQuick.Caption=빠른 처방
+pnlMeds.lstAll.Caption=모든 약물 처방
+txtMed.Text=(약물 이름을 입력하거나 아래 처방에서 선택하시오)
 btnSelect.Caption=승인
 pnlFields.pnlTop.lblRoute.Caption=경로
 pnlFields.pnlTop.lblSchedule.Caption=일정
@@ -2690,8 +2690,8 @@ pnlFields.pnlBottom.grpPickup.radPickMail.Caption=우편(&M)
 pnlFields.pnlBottom.grpPickup.radPickClinic.Caption=병원(&C)
 pnlFields.pnlBottom.cboPriority.Caption=우선도
 pnlFields.pnlBottom.stcPI.Caption=환자 안내말
-pnlFields.pnlBottom.chkPtInstruct.Hint=이 상자를 체크하면 환자 안내말이 이 주문에 포함됩니다.
-pnlFields.pnlBottom.memPI.Hint=아래 상자를 체크하면 환자 안내말이 이 주문에 포함됩니다.
+pnlFields.pnlBottom.chkPtInstruct.Hint=이 상자를 체크하면 환자 안내말이 이 처방에 포함됩니다.
+pnlFields.pnlBottom.memPI.Hint=아래 상자를 체크하면 환자 안내말이 이 처방에 포함됩니다.
 pnlFields.pnlBottom.lblAdminTime.Caption=lblAdminTime
 pnlFields.cboXSequence.Caption=순서
 pnlFields.cboXSequence.Items.Strings=먼저\^이후에
@@ -2705,7 +2705,7 @@ popDuration.minutes1.Caption=분
 [TfrmODMessage]
 
 [TfrmODMisc]
-Caption=환자 간호 주문
+Caption=환자 간호 처방
 lblStart.Caption=시작 일시
 lblStop.Caption=종료 일시
 lblCare.Caption=환자 간호
@@ -2717,8 +2717,8 @@ calStop.Caption=종료 일시
 txtComment.Caption=설명
 
 [TfrmODProc]
-Caption=절차 주문
-memOrder.Lines.Strings=주문 텍스트...\^------------------------------------------------------------------------------\^여기 메시지가 표시될 것임.
+Caption=절차 처방
+memOrder.Lines.Strings=처방 텍스트...\^------------------------------------------------------------------------------\^여기 메시지가 표시될 것임.
 pnlMain.lblProc.Caption=절차
 pnlMain.lblService.Caption=이 절차를 이행할 의료분야
 pnlMain.lblReason.Caption=요청 이유
@@ -2749,14 +2749,14 @@ popReason.popReasonReformat.Caption=단락 재구성
 
 [TfrmODQuick]
 Caption=frmODQuick
-Label1.Caption=이 빠른 주문에 쓰일 이름을 입력하시오.
+Label1.Caption=이 빠른 처방에 쓰일 이름을 입력하시오.
 Label2.Caption=약물, 입원환자 공통 목록
-Edit1.Caption=이 빠른 주문에 쓰일 이름을 입력하시오.
+Edit1.Caption=이 빠른 처방에 쓰일 이름을 입력하시오.
 Button1.Caption=승인
 Button2.Caption=취소
 
 [TfrmODRad]
-Caption=이미징 절차 주문
+Caption=이미징 절차 처방
 pnlLeft.lblDrug.Caption=이미징 절차
 pnlLeft.lblAvailMod.Caption=사용가능한 수정자
 pnlLeft.lblImType.Caption=이미징 종류
@@ -2817,12 +2817,12 @@ pnlBase.cboImType.Caption=이미징 종류 입력/선택
 
 [TfrmODRTC]
 Caption=병원으로 돌아가기
-lblOrderSig.Caption=주문 서명
-memOrder.Caption=주문 서명
+lblOrderSig.Caption=처방 서명
+memOrder.Caption=처방 서명
 pnlRequired.lblClinic.Caption=병원 *
-pnlRequired.lblQO.Caption=내 빠른 주문
+pnlRequired.lblQO.Caption=내 빠른 처방
 pnlRequired.lblMoreInfo.Caption=추가 정보
-pnlRequired.stQuickOrdersDisabled.Caption=빠른 주문 복합 상자 비활성화됨
+pnlRequired.stQuickOrdersDisabled.Caption=빠른 처방 복합 상자 비활성화됨
 pnlRequired.stIntervalInDays.Caption=Interval in day(s) spin edit disabled
 pnlRequired.cboRTCClinic.Caption=병원
 pnlRequired.lblClinicallyIndicated.Caption=병원 날짜로 돌아가기*:
@@ -2833,21 +2833,21 @@ pnlRequired.lblPReReq.Caption=전제 조건: (해당사항 모두 체크)
 pnlRequired.lblComments.Caption=코멘트
 pnlRequired.txtInterval.Caption=일 단위 간격
 pnlRequired.chkTimeSensitve.Caption=긴급
-pnlRequired.cboPerQO.Caption=빠른 주문
+pnlRequired.cboPerQO.Caption=빠른 처방
 vacaPrerequisites.Caption=전제 조건: (해당사항 모두 체크)
 vacaMoreInformation.Caption=추가 정보
 
 [TfrmODText]
-Caption=텍스트 주문
-lblText.Caption=주문 텍스트 입력 -
+Caption=텍스트 처방
+lblText.Caption=처방 텍스트 입력 -
 lblStart.Caption=시작일시
 lblStop.Caption=종료일시
-lblOrderSig.Caption=주문 서명
+lblOrderSig.Caption=처방 서명
 txtStart.Caption=시작일시
 txtStop.Caption=종료일시
 
 [TfrmODVitals]
-Caption=활력징후 측정 주문
+Caption=활력징후 측정 처방
 lblMeasurement.Caption=측정치
 lblSchedule.Caption=일정
 lblStart.Caption=시작
@@ -2875,14 +2875,14 @@ chkCallHO.Caption=입원환자 책임자 호출
 Caption=frmOMAction
 
 [TfrmOMHTML]
-Caption=HTML 주문
+Caption=HTML 처방
 btnOK.Caption=승인
 btnCancel.Caption=취소
 btnBack.Caption=< 뒤로가기
 btnShow.Caption=선택사항 보기...
 
 [TfrmOMNavA]
-Caption=주문 메뉴
+Caption=처방 메뉴
 pnlTool.Caption=메뉴명/대화상자명
 pnlTool.cmdDone.Caption=완료
 pnlTool.cmdPrev.Caption=뒤로가기
@@ -2890,23 +2890,23 @@ pnlTool.cmdNext.Caption=넘어가기
 grdMenu.Caption=메뉴명/대화상자명
 
 [TfrmOMProgress]
-Caption=주문 세트 경과
-cmdStop.Caption=주문 세트 중지
+Caption=처방 세트 경과
+cmdStop.Caption=처방 세트 중지
 
 [TfrmOMSet]
-Caption=선택한 주문
-cmdInterupt.Caption=주문 세트 중지
+Caption=선택한 처방
+cmdInterupt.Caption=처방 세트 중지
 
 [TfrmOMVerify]
-Caption=신규 주문
+Caption=신규 처방
 cmdAccept.Caption=수락
 cmdEdit.Caption=수정
 cmdCancel.Caption=취소
 
 [TfrmOnChartOrders]
 Caption=차트상 서명
-Panel2.Label1.Caption=다음 주문들은 "차트에 서명됨"으로 표시된 후 배포될 것임 -
-Panel2.lstOrders.Caption=다음 주문들은 "차트에 서명됨"으로 표시된 후 배포될 것임
+Panel2.Label1.Caption=다음 처방들은 "차트에 서명됨"으로 표시된 후 배포될 것임 -
+Panel2.lstOrders.Caption=다음 처방들은 "차트에 서명됨"으로 표시된 후 배포될 것임
 Panel1.cmdOK.Caption=승인
 Panel1.cmdCancel.Caption=취소
 
@@ -2937,13 +2937,13 @@ pnlMain.pagOptions.tsNotifications.lvwNotifications.Columns.(1).Caption=켬/끔
 pnlMain.pagOptions.tsNotifications.lvwNotifications.Columns.(2).Caption=코멘트
 pnlMain.pagOptions.tsNotifications.lvwNotifications.Caption=필수 알림 제외 알림들은 끄거나 켤 수 있다.
 pnlMain.pagOptions.tsNotifications.btnNotificationsRemove.Caption=대기중 알림 제거...(&R)
-pnlMain.pagOptions.tsNotifications.chkNotificationsFlagged.Caption=신고된 주문에 대한 MailMan 게시판을 보내기
+pnlMain.pagOptions.tsNotifications.chkNotificationsFlagged.Caption=신고된 처방에 대한 MailMan 게시판을 보내기
 pnlMain.pagOptions.tsNotifications.btnSurrogate.Caption=대리인 설정...
-pnlMain.pagOptions.tsOrderChecks.Caption=주문 확인
-pnlMain.pagOptions.tsOrderChecks.lblOrderChecksDesc.Caption=주문 확인을 활성화/비활성화.
+pnlMain.pagOptions.tsOrderChecks.Caption=처방 확인
+pnlMain.pagOptions.tsOrderChecks.lblOrderChecksDesc.Caption=처방 확인을 활성화/비활성화.
 pnlMain.pagOptions.tsOrderChecks.lblOrderChecksView.Caption=필수 알림 제외 알림들은 끄거나 켤 수 있다.
-pnlMain.pagOptions.tsOrderChecks.lblOrderChecks.Caption=주문 확인
-pnlMain.pagOptions.tsOrderChecks.lvwOrderChecks.Columns.(0).Caption=주문 확인
+pnlMain.pagOptions.tsOrderChecks.lblOrderChecks.Caption=처방 확인
+pnlMain.pagOptions.tsOrderChecks.lvwOrderChecks.Columns.(0).Caption=처방 확인
 pnlMain.pagOptions.tsOrderChecks.lvwOrderChecks.Columns.(1).Caption=켬/끔
 pnlMain.pagOptions.tsOrderChecks.lvwOrderChecks.Columns.(2).Caption=코멘트
 pnlMain.pagOptions.tsOrderChecks.lvwOrderChecks.Caption=필수 알림 제외 알림들은 끄거나 켤 수 있다.
@@ -3072,7 +3072,7 @@ pnlBottom.btnCancel.Caption=취소
 Hint=시스템 디폴트 설정 사용
 Caption=다른 매개 변수
 HelpFile=CPRSWT.HLP
-lblMedsTab.Hint=약물 탭에서 약물 주문을 표시할 날짜 범위를 설정하십시오.
+lblMedsTab.Hint=약물 탭에서 약물 처방을 표시할 날짜 범위를 설정하십시오.
 lblMedsTab.Caption=약물 탭에서 표시할 날짜 범위를 설정하십시오:
 lblTab.Caption=CPRS 시작시 초기 탭:
 lblEncAppts.Hint=면담 예약용 날짜 범위를 설정하십시오.
@@ -3249,17 +3249,17 @@ cboDocumentTitles.Caption=문서 제목
 btnDown.Caption=v
 
 [TfrmOrders]
-Caption=주문 페이지
+Caption=처방 페이지
 HelpFile=overvw
-pnlLeft.OROffsetLabel1.Caption=주문 보기
-pnlLeft.lblWrite.Caption=주문 작성
-pnlLeft.lstSheets.Caption=주문 보기
-pnlLeft.lstWrite.Caption=주문 작성
-pnlLeft.btnDelayedOrder.Caption=지연된 주문 작성
-pnlRight.lblOrders.Caption=활성 주문
-pnlRight.imgHide.Hint=모든 활성 주문이 표시되지 않음
+pnlLeft.OROffsetLabel1.Caption=처방 보기
+pnlLeft.lblWrite.Caption=처방 작성
+pnlLeft.lstSheets.Caption=처방 보기
+pnlLeft.lstWrite.Caption=처방 작성
+pnlLeft.btnDelayedOrder.Caption=지연된 처방 작성
+pnlRight.lblOrders.Caption=활성 처방
+pnlRight.imgHide.Hint=모든 활성 처방이 표시되지 않음
 pnlRight.hdrOrders.Sections.(1).Text=서비스
-pnlRight.hdrOrders.Sections.(2).Text=주문
+pnlRight.hdrOrders.Sections.(2).Text=처방
 pnlRight.hdrOrders.Sections.(3).Text=시작 / 종료
 pnlRight.hdrOrders.Sections.(4).Text=의사
 pnlRight.hdrOrders.Sections.(5).Text=간호사
@@ -3267,13 +3267,13 @@ pnlRight.hdrOrders.Sections.(6).Text=사무원
 pnlRight.hdrOrders.Sections.(7).Text=차트
 pnlRight.hdrOrders.Sections.(8).Text=상황
 pnlRight.hdrOrders.Sections.(9).Text=장소
-pnlRight.lstOrders.Caption=활성 주문
+pnlRight.lstOrders.Caption=활성 처방
 mnuOrders.mnuView.Caption=보기(&V)
 mnuOrders.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuOrders.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuOrders.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuOrders.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuOrders.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuOrders.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuOrders.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuOrders.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuOrders.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -3290,13 +3290,13 @@ mnuOrders.mnuView.mnuViewInformation.mnuViewFlags.Caption=환자 요주의 사�
 mnuOrders.mnuView.mnuViewInformation.mnuViewRemoteData.Caption=원격 데이터...(&D)
 mnuOrders.mnuView.mnuViewInformation.mnuViewReminders.Caption=리마인더...(&R)
 mnuOrders.mnuView.mnuViewInformation.mnuViewPostings.Caption=공지...(&P)
-mnuOrders.mnuView.mnuViewActive.Caption=활성 주문(&A)(보류중인, 최근 활동 포함)
-mnuOrders.mnuView.mnuViewCurrent.Caption=현재 주문(&O)(활성/보류 만)
-mnuOrders.mnuView.EventRealeasedOrder1.Caption=자동 퇴원/release event 주문
-mnuOrders.mnuView.mnuViewExpiring.Caption=만기되는 주문(&E)
-mnuOrders.mnuView.mnuViewUnsigned.Caption=서명되지 않은 주문(&U)
-mnuOrders.mnuView.mnuViewExpired.Caption=최근 만기한 주문(&R)
-mnuOrders.mnuView.mnuViewCustom.Caption=사용자 지정 주문 보기...(&C)
+mnuOrders.mnuView.mnuViewActive.Caption=활성 처방(&A)(보류중인, 최근 활동 포함)
+mnuOrders.mnuView.mnuViewCurrent.Caption=현재 처방(&O)(활성/보류 만)
+mnuOrders.mnuView.EventRealeasedOrder1.Caption=자동 퇴원/release event 처방
+mnuOrders.mnuView.mnuViewExpiring.Caption=만기되는 처방(&E)
+mnuOrders.mnuView.mnuViewUnsigned.Caption=서명되지 않은 처방(&U)
+mnuOrders.mnuView.mnuViewExpired.Caption=최근 만기한 처방(&R)
+mnuOrders.mnuView.mnuViewCustom.Caption=사용자 지정 처방 보기...(&C)
 mnuOrders.mnuView.mnuViewDfltSave.Caption=디폴트 보기로 저장...(&S)
 mnuOrders.mnuView.mnuViewDfltShow.Caption=디폴트 보기로 돌아가기(&R)
 mnuOrders.mnuView.mnuViewDetail.Caption=세부사항...(&D)
@@ -3304,9 +3304,9 @@ mnuOrders.mnuView.mnuViewResult.Caption=결과...(&R)
 mnuOrders.mnuView.mnuViewResultsHistory.Caption=결과 내역...
 mnuOrders.mnuAct.Caption=조치(&A)
 mnuOrders.mnuAct.mnuActChange.Caption=변경...(&C)
-mnuOrders.mnuAct.mnuActCopy.Caption=새 주문으로 복사...(&N)
+mnuOrders.mnuAct.mnuActCopy.Caption=새 처방으로 복사...(&N)
 mnuOrders.mnuAct.mnuActDC.Caption=중단(&D) / 취소...
-mnuOrders.mnuAct.mnuActRel.Caption=보류된 주문 풀기
+mnuOrders.mnuAct.mnuActRel.Caption=보류된 처방 풀기
 mnuOrders.mnuAct.mnuActChgEvnt.Caption=Release Event 변경
 mnuOrders.mnuAct.mnuActHold.Caption=보류...(&H)
 mnuOrders.mnuAct.mnuActUnhold.Caption=버류 해제...(&l)
@@ -3322,15 +3322,15 @@ mnuOrders.mnuAct.mnuActOnChart.Caption=차트에 서명함...(&O)
 mnuOrders.mnuAct.mnuActSign.Caption=서명 고름...(&g)
 mnuOrders.mnuAct.mnuActOneStep.Caption=원스텝 시설 관리
 mnuOrders.mnuOpt.Caption=옵션(&O)
-mnuOrders.mnuOpt.mnuOptSaveQuick.Caption=빠른 주문으로 저장...(&S)
+mnuOrders.mnuOpt.mnuOptSaveQuick.Caption=빠른 처방으로 저장...(&S)
 mnuOrders.mnuOpt.mnuOptEditCommon.Caption=공통 목록 수정...(&E)
 popOrder.popOrderDetail.Caption=세부사항...(&l)
 popOrder.popOrderResult.Caption=결과...(&R)
 popOrder.popResultsHistory.Caption=결과 내역...
 popOrder.popOrderChange.Caption=변경...(&C)
-popOrder.popOrderRel.Caption=보류된 주문 배포
+popOrder.popOrderRel.Caption=보류된 처방 배포
 popOrder.mnuChgEvnt.Caption=Release Event 변경
-popOrder.popOrderCopy.Caption=새 주문에 복사...(&N)
+popOrder.popOrderCopy.Caption=새 처방에 복사...(&N)
 popOrder.popOrderDC.Caption=중단...(&D)
 popOrder.popOrderRenew.Caption=갱신...(&w)
 popOrder.popOrderVerify.Caption=확인...(&V)
@@ -3339,20 +3339,20 @@ popOrder.popOrderSign.Caption=서명...(&S)
 popOrder.mnuOptimizeFields.Caption=행 크기 조절
 
 [TfrmOrdersEvntRelease]
-Caption=자동 퇴원/Release Event 주문
+Caption=자동 퇴원/Release Event 처방
 pnlTop.Panel1.Panel2.btnApply.Caption=적용
 pnlTop.Panel1.Panel2.edtNumber.Hint=보고자 하는 이벤트 개수를 입력하시오
 pnlTop.Panel1.Panel3.Label2.Caption=  보고자 하는 이벤트 개수를 입력하시오
 pnlTop.Panel1.Panel3.Label3.Caption=  (모든 이벤트를 보기위해 "모두"를 입력하시오):
-pnlBottom.Label1.Caption=  에 의해서 배포되거나 중단된 주문
+pnlBottom.Label1.Caption=  에 의해서 배포되거나 중단된 처방
 pnlBottom.btnOK.Caption=승인
 pnlBottom.btnCancel.Caption=취소
-pnlBottom.grdEvtList.Caption=에 의해서 배포되거나 중단된 주문
+pnlBottom.grdEvtList.Caption=에 의해서 배포되거나 중단된 처방
 
 [TfrmOrdersPrint]
-Caption=주문 인쇄
+Caption=처방 인쇄
 pnlBase.lblDevice.Caption=장치에서 인쇄:
-pnlBase.lblPartOne.Lines.Strings=아래 중 하나 이상의 인쇄가 이 세트의 주문에 사용 가능하다. \^ \^원하는 박스에 체크를 하고 필요한 경우 장치를 선택하십시오.
+pnlBase.lblPartOne.Lines.Strings=아래 중 하나 이상의 인쇄가 이 세트의 처방에 사용 가능하다. \^ \^원하는 박스에 체크를 하고 필요한 경우 장치를 선택하십시오.
 pnlBase.lblPart2.Lines.Strings=강조 표시된 항목들은 이 위치에서 모든 \^경우에 자동 인쇄되도록 설정되었습니다. \^회색으로 표시된 항목은 사용할 \^수 없습니다.
 pnlBase.ckChartCopy.Caption=차트 사본
 pnlBase.ckLabels.Caption=라벨
@@ -3375,34 +3375,34 @@ pnlBottom.btnOK.Caption=승인
 pnlBottom.btnCancel.Caption=최소
 
 [TfrmOrdersTS]
-Caption=주문 풀기
+Caption=처방 풀기
 pnlTop.pnldif.lblUseAdmit.Caption=입원 사용: 환자가 병원/요양원에 신규 입원을 하는 경우
 pnlTop.pnldif.lblUseTransfer.Caption=전원 사용: 입원환자가 한 병동/담당의료진에서 다른 병동/담당의료진으로 옮기는 경우
-pnlBottom.grpChoice.radDelayed.Caption=다음까지 새 주문 푸는 것 보류(&D)
-pnlBottom.grpChoice.radReleaseNow.Caption=새 주문 즉시 풀기(&R)
+pnlBottom.grpChoice.radDelayed.Caption=다음까지 새 처방 푸는 것 보류(&D)
+pnlBottom.grpChoice.radReleaseNow.Caption=새 처방 즉시 풀기(&R)
 pnlBottom.cmdOK.Caption=승인
 pnlBottom.cmdCancel.Caption=취소
 
 [TfrmOrderView]
-Caption=사용자 지정 주문 보기
-pnlView.lblView.Caption=모든 서비스, 활성 주문
-pnlView.lbl508View.Caption=모든 서비스, 활성 주문
-Panel1.Panel2.lblFilter.Caption=주문 상태
-Panel1.Panel2.trFilters.Caption=주문 상태
+Caption=사용자 지정 처방 보기
+pnlView.lblView.Caption=모든 서비스, 활성 처방
+pnlView.lbl508View.Caption=모든 서비스, 활성 처방
+Panel1.Panel2.lblFilter.Caption=처방 상태
+Panel1.Panel2.trFilters.Caption=처방 상태
 Panel1.Panel3.lblService.Caption=서비스/섹션
 Panel1.Panel3.treService.Caption=서비스/섹션
-Panel4.chkDateRange.Caption=해당 기간에 들어간 주문만 표시
+Panel4.chkDateRange.Caption=해당 기간에 들어간 처방만 표시
 Panel4.GroupBox1.lblFrom.Caption=부터:
 Panel4.GroupBox1.lblThru.Caption=까지:
 Panel4.GroupBox1.calFrom.Caption=첫 날짜
 Panel4.GroupBox1.calThru.Caption=마지막 날짜
 Panel4.chkInvChrono.Caption=시간 역순
-Panel4.chkByService.Caption=서비스 별로 주문 그룹핑
+Panel4.chkByService.Caption=서비스 별로 처방 그룹핑
 Panel4.cmdOK.Caption=승인
 Panel4.cmdCancel.Caption=취소
 
 [TfrmOtherSchedule]
-Caption="기타" 일정으로 주문
+Caption="기타" 일정으로 처방
 Panel3.GroupBox1.Caption=요일선택
 Panel3.GroupBox1.cbo7.Caption=일
 Panel3.GroupBox1.cbo1.Caption=월
@@ -3554,7 +3554,7 @@ Caption=frmPrerequisites
 lblFontTest.Caption=lblFontTest
 memReport.Lines.Strings=memReport
 pnlButton.cmdContinue.Caption=계속
-pnlButton.cmdCancel.Caption=주문 취소
+pnlButton.cmdCancel.Caption=처방 취소
 cmdPrint.Caption=인쇄
 
 [TfrmPrintList]
@@ -3565,7 +3565,7 @@ cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
 [TfrmPrintLocation]
-Caption=주문 장소
+Caption=처방 장소
 lblEncounter.Caption=어디의 환자 데이터를 계속 처리하시겠습니까? 
 pnlTop.orpnlTopBottom.btnClinic.Caption=모든 시설
 pnlTop.orpnlTopBottom.btnWard.Caption=모든 병동
@@ -3636,7 +3636,7 @@ mnuProbs.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuProbs.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuProbs.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuProbs.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuProbs.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuProbs.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuProbs.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuProbs.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuProbs.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -3788,22 +3788,22 @@ cmdYes.Caption=네
 cmdNo.Caption=아니오
 
 [TfrmRefillOrders]
-Caption=주문 리필
+Caption=처방 리필
 pnlBottom.cmdOK.Caption=승인
 pnlBottom.cmdCancel.Caption=취소
 pnlBottom.grbPickUp.Caption= 픽업
 pnlBottom.grbPickUp.radWindow.Caption=창구에서(&W)
 pnlBottom.grbPickUp.radMail.Caption=우편으로(&M)
 pnlBottom.grbPickUp.radClinic.Caption=병원에서(&C)
-pnlClient.lblOrders.Caption=다음 주문에 대한 리필 요청 -
-pnlClient.lstOrders.Caption=다음 주문에 대한 리필 요청
+pnlClient.lblOrders.Caption=다음 처방에 대한 리필 요청 -
+pnlClient.lstOrders.Caption=다음 처방에 대한 리필 요청
 
 [TfrmReleaseOrders]
-Caption=서비스에 주문 풀기
+Caption=서비스에 처방 풀기
 Panel1.Caption=패널1
-Panel1.Label1.Caption=다음 주문들이 풀릴 것입니다 -
-Panel1.lstOrders.Caption=다음 주문들이 풀릴 것입니다
-Panel2.grpRelease.Caption=주문 특징
+Panel1.Label1.Caption=다음 처방들이 풀릴 것입니다 -
+Panel1.lstOrders.Caption=다음 처방들이 풀릴 것입니다
+Panel2.grpRelease.Caption=처방 특징
 Panel2.grpRelease.radVerbal.Caption=구두(&V)
 Panel2.grpRelease.radPhone.Caption=전화(&T)
 Panel2.grpRelease.radPolicy.Caption=정책(&P)
@@ -3929,8 +3929,8 @@ cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
 [TfrmRenewOrders]
-Caption=주문 갱신
-hdrOrders.Sections.(0).Text=갱신할 주문
+Caption=처방 갱신
+hdrOrders.Sections.(0).Text=갱신할 처방
 hdrOrders.Sections.(1).Text=시작/종료 시간
 pnlBottom.cmdCancel.Caption=취소
 pnlBottom.cmdOK.Caption=승인
@@ -3938,7 +3938,7 @@ pnlBottom.cmdChange.Caption=변경...
 
 [TfrmRenewOutMed]
 Caption=외래환자 약물 리필 변경
-memOrder.Caption=주문
+memOrder.Caption=처방
 pnlButtons.cmdOK.Caption=승인
 pnlButtons.cmdCancel.Caption=취소
 pnlMiddle.lblPickup.Caption=픽업
@@ -4052,12 +4052,12 @@ laDiagnosis.Caption=진단
 gbxDxLookup.Caption=진단 조회
 gbxDxLookup.buDiagnosis.Caption=진단(&D)
 pnlCombined.pnlReview.lstReview.Caption=체크된 항목에 서명이 적용될 것임
-pnlCombined.pnlReview.lblSig.Caption=전자 규제 약물 처방을 제외한 모든 주문
-pnlCombined.pnlCSReview.lblCSReview.Caption=전자 규제 약물 처방 주문
+pnlCombined.pnlReview.lblSig.Caption=전자 규제 약물 처방을 제외한 모든 처방
+pnlCombined.pnlCSReview.lblCSReview.Caption=전자 규제 약물 처방 처방
 pnlCombined.pnlCSReview.lblSmartCardNeeded.Caption=SMART 카드 필요
 pnlBottom.pnlSignature.lblESCode.Caption=전자서명 코드
 pnlBottom.pnlSignature.txtESCode.Caption=전자서명 코드
-pnlBottom.pnlOrderAction.Label1.Caption=주문의 경우 다음 중에서 선택:
+pnlBottom.pnlOrderAction.Label1.Caption=처방의 경우 다음 중에서 선택:
 pnlBottom.pnlOrderAction.radSignChart.Caption=차트에 서명됨(&S)
 pnlBottom.pnlOrderAction.radHoldSign.Caption=서명될 때까지 보류(&H)
 pnlBottom.pnlOrderAction.grpRelease.radVerbal.Caption=구두의(&V)
@@ -4163,8 +4163,8 @@ MainMenu.Options1.Caption=옵션(&O)
 
 [TfrmSaveQuickOrder]
 Caption=공통 목록에 추가 (약물, 입원환자)
-Panel1.lblDisplayName.Caption=이 빠른 주문에 쓰일 이름을 입력하시오.
-Panel1.txtDisplayName.Caption=이 빠른 주문에 쓰일 이름을 입력하시오.
+Panel1.lblDisplayName.Caption=이 빠른 처방에 쓰일 이름을 입력하시오.
+Panel1.txtDisplayName.Caption=이 빠른 처방에 쓰일 이름을 입력하시오.
 Panel2.lblQuickList.Caption=약물, 입원환자 공통 목록
 Panel2.lstQuickList.Caption=약물, 입원환자 공통 목록
 Panel2.pnlUpButton.Caption=선택한 약물 일찍 표시
@@ -4226,7 +4226,7 @@ Panel2.BitBtn1.Caption=승인(&O)
 RPCbiBroker.Server=BROKERSERVER
 
 [TfrmSignOrders]
-Caption=주문 서명
+Caption=처방 서명
 laDiagnosis.Caption=진단
 gbdxLookup.Caption=진단 조회
 gbdxLookup.buOrdersDiagnosis.Caption=진단(&D)
@@ -4235,11 +4235,11 @@ pnlEsig.lblESCode.Caption=전자 서명 코드
 pnlEsig.txtESCode.Caption=전자 서명 코드
 pnlEsig.cmdOK.Caption=서명
 pnlEsig.cmdCancel.Caption=취소
-pnlCombined.pnlOrderList.lblOrderList.Caption=전자 규제 약물 처방을 제외한 모든 주문
-pnlCombined.pnlOrderList.clstOrders.Caption=다음 주문들이 서명됩니다 -
-pnlCombined.pnlCSOrderList.lblCSOrderList.Caption=전자 규제 약물 처방 주문
+pnlCombined.pnlOrderList.lblOrderList.Caption=전자 규제 약물 처방을 제외한 모든 처방
+pnlCombined.pnlOrderList.clstOrders.Caption=다음 처방들이 서명됩니다 -
+pnlCombined.pnlCSOrderList.lblCSOrderList.Caption=전자 규제 약물 처방
 pnlCombined.pnlCSOrderList.lblSmartCardNeeded.Caption=SMART 카드 필요
-pnlCombined.pnlCSOrderList.clstCSOrders.Caption=다음 주문들이 서명됩니다 -
+pnlCombined.pnlCSOrderList.clstCSOrders.Caption=다음 처방들이 서명됩니다 -
 pnlTop.pnlProvInfo.lblProvInfo.Caption=의사 정보
 poBACopyPaste.Copy1.Caption=복사(&C)
 poBACopyPaste.Paste1.Caption=붙여넣기(&P)
@@ -4308,7 +4308,7 @@ mnuNotes.mnuView.mnuViewChart.Caption=차트 탭(&T)
 mnuNotes.mnuView.mnuViewChart.mnuChartCover.Caption=표지(&S)
 mnuNotes.mnuView.mnuViewChart.mnuChartProbs.Caption=질환 목록(&P)
 mnuNotes.mnuView.mnuViewChart.mnuChartMeds.Caption=약물(&M)
-mnuNotes.mnuView.mnuViewChart.mnuChartOrders.Caption=주문(&O)
+mnuNotes.mnuView.mnuViewChart.mnuChartOrders.Caption=처방(&O)
 mnuNotes.mnuView.mnuViewChart.mnuChartNotes.Caption=경과 노트(&N)
 mnuNotes.mnuView.mnuViewChart.mnuChartCslts.Caption=진료(&t)
 mnuNotes.mnuView.mnuViewChart.mnuChartSurgery.Caption=수술(&u)
@@ -4513,7 +4513,7 @@ pnlBottom.btnApply.Caption=적용
 pnlBottom.btnCancel.Caption=취소
 pnlBottom.btnOK.Caption=승인
 pnlBottom.cbEditShared.Caption=고융 템플릿 수정(&d)
-pnlBottom.cbNotes.Hint=템플릿 서랍에서 볼 수 있는 템플린 관련 노트 유지
+pnlBottom.cbNotes.Hint=템플릿 서랍에서 볼 수 있는 템플릿 관련 노트 유지
 pnlBottom.cbNotes.Caption=템플릿 노트 보이기(&o)
 pnlBottom.cbEditUser.Caption=사용자 템플릿 수정(&d)
 popTemplates.mnuNodeNew.Caption=새 템플릿(&N)
@@ -4735,16 +4735,16 @@ pnlBase.grpWhereEitherOf.ckTitle.Caption=제목
 pnlBase.grpWhereEitherOf.ckSubject.Caption=주제
 
 [TfrmUnflagOrder]
-Caption=주문 주의사항 없애기
+Caption=처방 주의사항 없애기
 Label1.Caption=코멘트 (선택)
 txtComment.Caption=코멘트 (선택)
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
 [TfrmUnholdOrders]
-Caption=주문 보류 풀기
-Label1.Caption=다음 주문들의 보류가 해지됩니다 -
-lstOrders.Caption=다음 주문들의 보류가 해지됩니다
+Caption=처방 보류 풀기
+Label1.Caption=다음 처방들의 보류가 해지됩니다 -
+lstOrders.Caption=다음 처방들의 보류가 해지됩니다
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
 
@@ -4757,9 +4757,9 @@ btnOK.Caption=승인(&O)
 btnCancel.Caption=취소(&C)
 
 [TfrmVerifyOrders]
-Caption=주문 확인
-Panel1.lblVerify.Caption=다음 주문들은 확인됨으로 표시됩니다 -
-Panel1.lstOrders.Caption=다음 주문들은 확인됨으로 표시됩니다
+Caption=처방 확인
+Panel1.lblVerify.Caption=다음 처방들은 확인됨으로 표시됩니다 -
+Panel1.lstOrders.Caption=다음 처방들은 확인됨으로 표시됩니다
 Panel2.lblESCode.Caption=전자 서명 코드
 Panel2.txtESCode.Caption=전자 서명 코드
 Panel2.cmdOK.Caption=승인
@@ -4769,7 +4769,7 @@ Panel2.cmdCancel.Caption=취소
 Caption=방문 선택
 pnlBase.lblSelect.Caption=예정된 병원 예약
 pnlBase.lblVisitDate.Caption=방문 일시
-pnlBase.lblInstruct.Caption=외래환자 면담을 위해서는 방문을 선택해야 주문이나 경과노트를 작성할 수 있습니다.
+pnlBase.lblInstruct.Caption=외래환자 면담을 위해서는 방문을 선택해야 처방이나 경과노트를 작성할 수 있습니다.
 pnlBase.pnlVisit.timVisitDate.Text=지금
 pnlBase.pnlVisit.grpCategory.Caption=방문 범례
 pnlBase.pnlVisit.grpCategory.ckbHistorical.Caption=방문 내역
@@ -4898,7 +4898,7 @@ btnCancel.Caption=취소(&C)
 btnNow.Caption=지금
 
 [TfrmWardComments]
-Caption=주문에 대한 코멘트
+Caption=처방에 대한 코멘트
 Label1.Caption=코멘트:
 cmdOK.Caption=승인
 cmdCancel.Caption=취소
@@ -4982,7 +4982,7 @@ Label1.Caption=기다려 주십시오...
 65056_fFrame_RS_COVER=표지
 65079_fFrame_RS_PROBLEMS=질환
 65080_fFrame_RS_MEDS=약물
-65081_fFrame_RS_ORDERS=주문
+65081_fFrame_RS_ORDERS=처방
 65082_fFrame_RS_NOTES=노트
 65083_fFrame_RS_CONSULTS=진찰
 65084_fFrame_RS_SURGERY=수술
