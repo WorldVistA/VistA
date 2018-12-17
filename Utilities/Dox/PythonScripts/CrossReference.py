@@ -188,7 +188,8 @@ class Routine(object):
                   else:
                     continue
           return output
-    def addCallDepRoutines(self, depRoutine, callTag, lineOccurences, isCalled=True):
+
+    def addCallDepRoutines(self, depRoutine, callTag, lineOccurrences, isCalled=True):
         if isCalled:
             depRoutines = self._calledRoutines
         else:
@@ -205,13 +206,13 @@ class Routine(object):
             else:
                 self._totalCaller += 1
         if callTag not in depRoutines[package][depRoutine]:
-            depRoutines[package][depRoutine][callTag] = lineOccurences.split(LINE_OFFSET_DELIM)
+            depRoutines[package][depRoutine][callTag] = lineOccurrences.split(LINE_OFFSET_DELIM)
         else:
-            depRoutines[package][depRoutine][callTag].extend(lineOccurences.split(LINE_OFFSET_DELIM))
+            depRoutines[package][depRoutine][callTag].extend(lineOccurrences.split(LINE_OFFSET_DELIM))
 
-    def addCalledRoutines(self, routine, callTag, lineOccurences):
-        self.addCallDepRoutines(routine, callTag, lineOccurences, True)
-        routine.addCallerRoutines(self, callTag, lineOccurences)
+    def addCalledRoutines(self, routine, callTag, lineOccurrences):
+        self.addCallDepRoutines(routine, callTag, lineOccurrences, True)
+        routine.addCallerRoutines(self, callTag, lineOccurrences)
 
     def getCalledRoutines(self):
         return self._calledRoutines
@@ -258,8 +259,8 @@ class Routine(object):
         self._interactionPoints.append(interactionDict)
     def getInteractionEntries(self):
         return self._interactionPoints
-    def addCallerRoutines(self, depRoutine, callTag, lineOccurences):
-        self.addCallDepRoutines(depRoutine, callTag, lineOccurences, False)
+    def addCallerRoutines(self, depRoutine, callTag, lineOccurrences):
+        self.addCallDepRoutines(depRoutine, callTag, lineOccurrences, False)
     def getCallerRoutines(self):
         return self._callerRoutines
     def setPackage(self, package):
@@ -1217,29 +1218,29 @@ class Package(object):
 ## Class represent a detailed call info NOT USED
 ##===============================================================================
 class RoutineCallDetails:
-    def __init__(self, callTag, lineOccurences):
+    def __init__(self, callTag, lineOccurrences):
         self._callDetails = callTag
-        self._lineOccurences = []
-        lineOccurs = lineOccurences.split(LINE_OFFSET_DELIM)
-        self._lineOccurences.extend(lineOccurs)
+        self._lineOccurrences = []
+        lineOccurs = lineOccurrences.split(LINE_OFFSET_DELIM)
+        self._lineOccurrences.extend(lineOccurs)
         self._isExtrinsic = callTag.startswith("$$")
     def getCallTag(self):
         return self._callDetails
-    def getLineOccurence(self):
-        return self._lineOccurences
+    def getLineOccurrence(self):
+        return self._lineOccurrences
     def isExtrinsic(self):
         return self._isExtrinsic
-    def appendLineOccurence(self, lineOccurences):
-        self._lineOccurences.extend(lineOccurences)
+    def appendLineOccurrence(self, lineOccurrences):
+        self._lineOccurrences.extend(lineOccurrences)
 #===============================================================================
 # A Class represent the call information between routine and called routine
 #===============================================================================
 class RoutineCallInfo(dict):
-    def addCallDetail(self, callTag, lineOccurences):
+    def addCallDetail(self, callTag, lineOccurrences):
         if callTag not in self:
-            self[callTag] = lineOccurences.split(LINE_OFFSET_DELIM)
+            self[callTag] = lineOccurrences.split(LINE_OFFSET_DELIM)
         else:
-            self[callTag].extend(lineOccurences.split(LINE_OFFSET_DELIM))
+            self[callTag].extend(lineOccurrences.split(LINE_OFFSET_DELIM))
 #===============================================================================
 # A Class represent all called/caller _calledRoutine Dictionary
 #===============================================================================
