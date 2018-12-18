@@ -2379,7 +2379,7 @@ class WebPageGenerator:
     def writeTitleBlock(self, pageTitle, title, package, outputFile, pdf,
                         extraHtmlHeader=None, extraPDFHeader=None,
                         accordion=True):
-        if pdf is not None and self._generatePDFBundle:
+        if self._generatePDFBundle:
             self.__writePDFTitleBlock__(title, package, pdf, extraPDFHeader)
 
         outputFile.write("<title id=\"pageTitle\">%s</title>\n" % pageTitle)
@@ -2802,33 +2802,6 @@ class WebPageGenerator:
                                         keyVal+"_data", sortedComponents,
                                         outputFile, pdf, 8, keyVal)
 
-#===============================================================================
-# method to generate Routine Dependency and Dependents page
-#===============================================================================
-    def generateRoutineDependencySection(self, routine, outputFile, pdf, isDependency=True):
-        routineName = routine.getName()
-        packageName = routine.getPackage().getName()
-        if isDependency:
-            depRoutines = routine.getCalledRoutines()
-            sectionGraphHeader = "Call Graph"
-            sectionListHeader = "Called Routines"
-            totalNum = routine.getTotalCalled()
-        else:
-            depRoutines = routine.getCallerRoutines()
-            sectionGraphHeader = "Caller Graph"
-            sectionListHeader = "Caller Routines"
-            routineSuffix = "_caller"
-            totalNum = routine.getTotalCaller()
-        if not depRoutines:
-          return
-        self.__writeRoutineDepGraphSection__(routine, depRoutines,
-                                             sectionGraphHeader,
-                                             sectionGraphHeader,
-                                             outputFile, pdf, isDependency)
-        self.__writeRoutineDepListSection__(routine, depRoutines,
-                                            sectionListHeader,
-                                            sectionListHeader,
-                                            outputFile, pdf, isDependency)
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
       return "%s%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.','_'), fileNo, ien)
@@ -3192,62 +3165,62 @@ class WebPageGenerator:
     ###########################################################################
     # Generator function
     def __writeRoutineDepGraphSection__(self, routine, data, header, link,
-                                        outputFile, pdf, isDependency=True, classid=""):
-        if self._generatePDFBundle:
-            pdfSection = []
-        else:
-            pdfSection = None
+                                        outputFile, pdf, isDependency=True,
+                                        classid=""):
+        pdfSection = []
         self.writeSectionHeader(header, link, outputFile, pdfSection,
                                 isAccordion=False)
-        routineName = routine.getName()
-        packageName = routine.getPackage().getName()
-        if isDependency:
-          routineSuffix = "_called"
-        else:
-          routineSuffix = "_caller"
-        fileNamePrefix = routineName + routineSuffix
-        fileName = os.path.join(self._outDir,
-                                packageName + "/" + fileNamePrefix + ".cmapx")
-        # Don't use os.path.join
-        imageFileName = packageName + "/" + fileNamePrefix + ".png"
-        try:
-          # append the content of map outputFile
-          with open(fileName, 'r') as cmapFile:
-            if not isDependency:
-              outputFile.write(self.legend)
-              if self._generatePDFBundle:
-                  self.__writePDFLegends__(pdfSection)
-                  pdfSection.append(Spacer(1, 10))
-            outputFile.write("<div class=\"contents\">\n")
-            outputFile.write("<img id=\"img%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
-                       % (routineSuffix,
-                          urllib.quote(imageFileName),
-                          header,
-                          fileNamePrefix))
-            if self._generatePDFBundle:
-              self.__writeImageToPDF__(imageFileName, pdfSection)
-            for line in cmapFile:
-                outputFile.write(line)
-        except:
-          pass
-        self.__writeRoutineDepListSection__(routine, data, header, link,
-                                            outputFile, pdfSection, isDependency,
-                                            classid=classid)
+        self.__writeRoutineDepGraph__(routine, header, outputFile, pdfSection,
+                                      isDependency)
+        self.__writeRoutineDepTable__(routine, data, header, link, outputFile,
+                                      pdfSection, isDependency, classid)
         if self._generatePDFBundle:
             pdf.append(KeepTogether(pdfSection))
 
-    ###########################################################################
+    def __writeRoutineDepGraph__(self, routine, header, outputFile, pdfSection,
+                                 isDependency):
+        routineName = routine.getName()
+        packageName = routine.getPackage().getName()
+        if isDependency:
+            routineSuffix = "called"
+        else:
+            routineSuffix = "caller"
+        fileNamePrefix = "%s_%s" % (routineName, routineSuffix)
+        fileName = os.path.join(self._outDir, packageName, fileNamePrefix + ".cmapx")
+        # Don't use os.path.join
+        imageFileName = packageName + "/" + fileNamePrefix + ".png"
+        try:
+            # append the content of map outputFile
+            with open(fileName, 'r') as cmapFile:
+                if not isDependency:
+                    # We don't have enough information to color-code dependency
+                    # (call) graphs. The legend is only generated for caller graphs.
+                    outputFile.write(self.legend)
+                    if self._generatePDFBundle:
+                        self.__writePDFLegends__(pdfSection)
+                        pdfSection.append(Spacer(1, 10))
+                outputFile.write("<div class=\"contents\">\n")
+                outputFile.write("<img id=\"img%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
+                           % (routineSuffix,
+                              urllib.quote(imageFileName),
+                              header,
+                              fileNamePrefix))
+                if self._generatePDFBundle:
+                    self.__writeImageToPDF__(imageFileName, pdfSection)
+                for line in cmapFile:
+                    outputFile.write(line)
+        except Exception, e:
+            logger.error(e)
 
-    def __writeRoutineDepListSection__(self, routine, data, header, link,
-                                       outputFile, pdf, isDependency=True,
-                                       classid=""):
+    def __writeRoutineDepTable__(self, routine, data, header, link,
+                                 outputFile, pdf, isDependency, classid):
       if isDependency:
           totalNum = routine.getTotalCalled()
       else:
           totalNum = routine.getTotalCaller()
       if self._generatePDFBundle:
-        paragraphs = []
-        paragraphs.append(Paragraph("%s Total: %d" % (header, totalNum), styles['Heading3']))
+          paragraphs = []
+          paragraphs.append(Paragraph("%s Total: %d" % (header, totalNum), styles['Heading3']))
       writeSubSectionHeader("%s Total: %d" % (header, totalNum), outputFile)
       tableHeader = ["Package", "Total", header]
       tableData = []  # html
@@ -3256,8 +3229,8 @@ class WebPageGenerator:
           pdfTableData.append(generatePDFTableHeader(tableHeader, False))
       # sort the key by Total # of routines
       sortedDepRoutines = sorted(sorted(data.keys()),
-                               key=lambda item: len(data[item]),
-                               reverse=True)
+                                 key=lambda item: len(data[item]),
+                                 reverse=True)
       for depPackage in sortedDepRoutines:
           routinePackageLink = getPackageHyperLinkByName(depPackage.getName())
           routineNameLink = ""
@@ -3266,38 +3239,31 @@ class WebPageGenerator:
           for depRoutine in sorted(data[depPackage].keys()):
               if isDependency: # append tag information for called routines
                   allTags = data[depPackage][depRoutine].keys()
-                  sortedTags = sorted(allTags)
+                  allTags.sort()
                   # format the tag
-                  tagString = ""
-                  if len(sortedTags) > 1:
-                      tagString = "("
-                  idx = 0
-                  for tag in sortedTags:
-                      if idx > 0:
-                          tagString += ","
-                      idx += 1
-                      tagString += tag
-                  if len(sortedTags) > 1:
-                      tagString += ")"
+                  tagString = ",".join(allTags)
+                  if len(allTags) > 1:
+                      tagString = "(%s)" % tagString
                   routineNameLink += tagString + "^"
                   routineName += tagString + "^"
-              routineName += depRoutine.getName()
-              routineName += "  "
               routineNameLink += "<a href=%s>%s</a>" % (getPackageObjHtmlFileName(depRoutine),depRoutine.getName())
               routineNameLink += "&nbsp;&nbsp;"
+              routineName += depRoutine.getName()
+              routineName += "  "
               if (index + 1) % 8 == 0:
                   routineNameLink += "<BR>"
               index += 1
-          if self._generatePDFBundle:
-              # No html links in PDF table
-              pdfRow = [depPackage.getName(), "%d" % len(data[depPackage]), routineName]
-              pdfTableData.append(generatePDFTableRow(pdfRow))
           row = []
           row.append(routinePackageLink)
           row.append("%d" % len(data[depPackage]))
           row.append(routineNameLink)
           tableData.append(row)
-      self.writeGenericTablizedHtmlData(tableHeader, tableData, outputFile, classid=classid)
+          if self._generatePDFBundle:
+              # No html links in PDF table
+              pdfRow = [depPackage.getName(), "%d" % len(data[depPackage]), routineName]
+              pdfTableData.append(generatePDFTableRow(pdfRow))
+      self.writeGenericTablizedHtmlData(tableHeader, tableData, outputFile,
+                                        classid=classid)
       if self._generatePDFBundle:
           columns = 10
           columnWidth = self.doc.width/columns
@@ -3306,6 +3272,7 @@ class WebPageGenerator:
           paragraphs.append(t)
           pdf.append(KeepTogether(paragraphs))
 
+    ###########################################################################
     # NOTE: When called with an existingOutFile, we're actually writing a
     # GLOBAL page not a routine page
     def __generateIndividualRoutinePage__(self, routine, pdf, platform=None,
@@ -3478,12 +3445,15 @@ class WebPageGenerator:
 # Method to generate page for platform-dependent generic routine page
 #===============================================================================
     def __generatePlatformDependentGenericRoutinePage__(self, genericRoutine, pdf):
-        # generated the subpage for each platform routines
+        # Generate the subpage for each platform routines
         platformDepRoutines = genericRoutine.getAllPlatformDepRoutines()
         for routineInfo in platformDepRoutines.itervalues():
-            routineInfo[0]._title="Routine"
-            self.__generateIndividualRoutinePage__(routineInfo[0], pdf, routineInfo[1])
-        indexList = ["Platform Dependent Routines", "Caller Graph", "Caller Routines"]
+            routineInfo[0]._title = "Routine"
+            self.__generateIndividualRoutinePage__(routineInfo[0], pdf,
+                                                   routineInfo[1])
+
+        # Generate page for the platform-dependent generic routine page
+        indexList = ["Platform Dependent Routines", "Caller Graph"]
         routineName = genericRoutine.getName()
         package = genericRoutine.getPackage()
         filename = os.path.join(self._outDir,
@@ -3494,17 +3464,32 @@ class WebPageGenerator:
             title = "Routine: %s" % routineName
             self.writeTitleBlock(title, title, package, outputFile, pdf,
                                  accordion=False)
-            self.writeSectionHeader("Platform Dependent Routines", "DepRoutines",
-                                    outputFile, pdf)
-            # output the Platform part.
+
+            # 'Platform Dependent Routines' section
+            self.writeSectionHeader("Platform Dependent Routines",
+                                    "DepRoutines", outputFile, pdf)
             tableRowList = []
             pdfTableRowList = []
             for routineInfo in platformDepRoutines.itervalues():
-                tableRowList.append([getRoutineHypeLinkByName(routineInfo[0].getName()), routineInfo[1]])
-                pdfTableRowList.append([routineInfo[0].getName(), routineInfo[1]])
-            self.generateRoutineDependencySection(genericRoutine, outputFile, pdf, False)
+                routineName = routineInfo[0].getName()
+                platform = routineInfo[1]
+                tableRowList.append([getRoutineHypeLinkByName(routineName), platform])
+                pdfTableRowList.append([routineName, platform])
+            headerList = ["Routine", "Platform"]
+            self.writeGenericTablizedHtmlData(headerList, tableRowList, outputFile)
             if self._generatePDFBundle:
-                self.__writeGenericTablizedPDFData__(["Routine", "Platform"], tableRowList, pdf)
+                self.__writeGenericTablizedPDFData__(headerList, pdfTableRowList, pdf)
+
+            # 'Caller Graph' and 'Caller Routines' sections
+            callerRoutines = genericRoutine.getCallerRoutines()
+            if callerRoutines:
+                sectionGraphHeader = "Caller Graph"
+                self.__writeRoutineDepGraphSection__(genericRoutine,
+                                                     callerRoutines,
+                                                     sectionGraphHeader,
+                                                     sectionGraphHeader,
+                                                     outputFile, pdf, False)
+
             outputFile.write("<br/>\n")
             self.generateFooterWithNavigationBar(outputFile, indexList)
 
@@ -3801,25 +3786,23 @@ $( document ).ready(function() {
         for package in self._allPackages.itervalues():
             packageName = package.getName()
             for routine in package.getAllRoutines().itervalues():
-                routineName = getRoutinePdfFileNameUnquoted(routine.getName())
                 if (routineIndex + 1) % PROGRESS_METER == 0:
                     logger.info("Processing %d of total %d" % (routineIndex, totalNoRoutines))
                 routineIndex += 1
                 if self._generatePDFBundle:
-                    pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
-                                               routineName)
                     self.__setupPDF__(isLandscape=True)
-                    pdf = []
-                else:
-                    pdf = None
-
-                routine._title="Routine"
+                pdf = []
+                routine._title = "Routine"
                 # handle the special case for platform dependent routine
                 if self._crossRef.isPlatformGenericRoutineByName(routine.getName()):
                     self.__generatePlatformDependentGenericRoutinePage__(routine, pdf)
                 else:
                     self.__generateIndividualRoutinePage__(routine, pdf)
+
                 if self._generatePDFBundle:
+                    pdfRoutineFileName = getRoutinePdfFileNameUnquoted(routine.getName())
+                    pdfPackageDir = self.__getPDFDirectory__(packageName)
+                    pdfFileName = os.path.join(pdfPackageDir, pdfRoutineFileNames)
                     self.__writePDFFile__(pdf, pdfFileName)
 
         logger.info("End of generating individual routines......")
