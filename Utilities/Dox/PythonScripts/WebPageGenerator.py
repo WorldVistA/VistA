@@ -2897,10 +2897,10 @@ class WebPageGenerator:
 
     def __convertFileManDbCallToTableData__(self, variables, routine=None):
         output = []
-        allVars = sorted(variables.keys())
-        for fileNo in allVars:
+        fileNos = variables.keys()
+        fileNos.sort()
+        for fileNo in fileNos:
             varInst, tags = variables[fileNo]
-            varName = None
             if varInst.getFileNo() and varInst.isSubFile():
                 varName = getFileManSubFileHypeLinkByName(varInst.getFileNo())
             else:
@@ -2910,16 +2910,10 @@ class WebPageGenerator:
             for item in tags:
                 if index > 0:
                     callTagsStr += ", &nbsp;"
-                if item == None:
+                if item is None:
                     callTagsStr += "Classic Fileman Calls"
                 else:
-                    tag, rtn = "", ""
-                    rst = item.split('^')
-                    if len(rst) == 0:
-                      rtn = rst[0]
-                    else:
-                      tag = rst[0]
-                      rtn = rst[1]
+                    tag, rtn = item.split('^')
                     callTagsStr += tag + '^' + getRoutineHypeLinkByName(rtn)
                 index += 1
             output.append((varName, callTagsStr))
@@ -3467,7 +3461,8 @@ class WebPageGenerator:
                 routineName = routineInfo[0].getName()
                 platform = routineInfo[1]
                 tableRowList.append([getRoutineHypeLinkByName(routineName), platform])
-                pdfTableRowList.append([routineName, platform])
+                if self._generatePDFBundle:
+                    pdfTableRowList.append([routineName, platform])
             headerList = ["Routine", "Platform"]
             self.writeGenericTablizedHtmlData(headerList, tableRowList, outputFile)
             if self._generatePDFBundle:
