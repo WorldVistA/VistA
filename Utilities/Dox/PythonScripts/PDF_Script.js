@@ -184,9 +184,7 @@ var titleDic  =  {
   "Routines":{"tag": "rtns","sep": /\s{4}/,"generator":getTableList,"numCols":8},
 
   //Package Components
-  "Component Source":{"tag": "source","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
-  "Remote Procedure":{"tag": "Option_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
-  "Sort Template":{"tag": "Function_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
+  "Source Information":{"tag": "source","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
   "List Manager Templates":{"tag": "List_Manager_Templates_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
   "Function":{"tag": "Function_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
   "Input Template":{"tag": "Input_Template_data","sep": /\s{4}/,"generator":getTableList,"numCols":8},
@@ -207,36 +205,36 @@ var titleDic  =  {
   // Global
   "GlobalInfo":{"tag": "information","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3, "header": "Information"},
   "Desc":{"tag": "description","sep": /\s{4}/,"generator": getText,"header":"Description"},
-  "Directly Accessed By Routines":{"tag": "directCall","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3, "columnSizes":[0,0,.60]},
+  "Directly Accessed By Routines":{"tag": "directCall","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3},
   "Accessed By FileMan Db Calls":{"tag": "gblRtnDep","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3},
   //
   "Pointed To By FileMan Files":{"tag": "gblPointedTo","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3},
-  "Pointer To FileMan Files":{"tag": "gblPointerTo","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3},
+  "Pointer To FileMan Files":{"tag": "gblPointerTo","generator":getTableListWithHeader,"numCols":3},
   "Fields":{"tag": "fmFields","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":5,"stretchColumn":4},
   // TODO: "Fields Referenced" need to be split into different lines
-  "ICR Entries":{"tag": "icrVals","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":4,"stretchColumn":3},
+  "ICR":{"tag": "icrVals","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":4,"stretchColumn":3},
   "Found Entries": {"tag": "gblEntry","sep": /\s{4}/,"generator":getTableList,"numCols":8},
 
   // Routine
   "RoutineInfo":{"tag": "information","sep": /\s{4}/,"generator": getText, "header": "Information"},
   "Source":{"tag": "sourcefile","sep": /\s{4}/,"generator": getText,"numCols":0, "header": "Source Code"},
-  "Call Graph":{"tag": "callG","sep": /\s{2}/,"numCols":3,"stretchColumn":2},
-  "Caller Graph":{"tag": "callerG","sep": /\s{2}/,"numCols":3,"stretchColumn":2},
+  "Call Graph":{"tag": "callG","sep": /\s{2}/,"generator":getTableListWithHeader,"numCols":3,"stretchColumn":2},
+  "Caller Graph":{"tag": "callerG","sep": /\s{2}/,"generator":getTableListWithHeader,"numCols":3,"stretchColumn":2},
   "Entry Points":{"tag": "entrypoint","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":3,"stretchColumn":1},
   "Used in HL7 Interface":{"tag": "hl7","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
-  "External References":{"tag": "external","sep": /\s{1}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
+  "External References":{"tag": "external","generator":getTableListWithHeader,"numCols":2},
   "Global Variables Directly Accessed":{"tag": "directAccess","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
   "Label References":{"tag": "label","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
-  "Naked Globals":{"tag": "naked","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
+  "Naked Globals":{"tag": "naked","generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
   // TODO: Legend for Local Variables
-  "Local Variables":{"tag": "local","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
+  "Local Variables":{"tag": "local","generator":getTableListWithHeader,"numCols":2},
   "Interaction Calls":{"tag": "interactioncalls","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
   "Marked Items":{"tag": "marked","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2,"stretchColumn":1},
   // TODO: Need an example that uses this section. Not tested
   "FileMan Files Accessed Via FileMan Db Call":{"tag": "dbcall","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
+  "Platform Dependent Routines":{"tag": "platformDepRoutines","sep": /\s{4}/,"generator":getTableListWithHeader,"numCols":2},
 
   // Summary Pages
-
   "Summary":{"tag": "summary","sep": /\s{4}/,"generator":getText,"numCols":8,"needsSplit":true,"header" : "Summary"},
   "Caller Routines":{"tag": "callerRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
   "Called Routines":{"tag": "calledRoutines","sep": /\s{4}/,"generator":getTableList,"numCols":8,"needsSplit":true},
@@ -255,6 +253,7 @@ var titleDic  =  {
   //multiple pages
   "Legend Graph":{"tag": "colorLegend","sep": /\s{2}/,"numCols":2,"stretchColumn":2}
   }
+
 function startWritePDF(event){
   $("#pdfSelection").dialog({
       modal: true,
@@ -335,7 +334,7 @@ function writePDF(event) {
                 var header = {text: test, style: "subheader"};
                 docDefinition.content.push(header);
                 var imageWidth;
-                if (test === "Caller Graph ") { imageWidth = callerGraphWidth; }
+                if (test === "Caller Graph") { imageWidth = callerGraphWidth; }
                 else if (test === "Call Graph") { imageWidth = callGraphWidth; }
                 else if (test === "Dependency Graph") { imageWidth = dependencyValWidth; }
                 else if (test === "Dependent Graph") { imageWidth = dependentValWidth; }

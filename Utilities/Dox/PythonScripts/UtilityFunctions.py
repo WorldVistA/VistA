@@ -16,11 +16,9 @@
 
 import csv
 import json
-import logging
 import re
-import sys
+import re
 import urllib
-from LogManager import logger
 
 from PDFUtilityFunctions import *
 
@@ -76,7 +74,7 @@ PACKAGE_MAP = {
     #  u'term.access'])
 } # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
 
-sectionLinkObj = {
+PACKAGE_COMPONENT_MAP = {
     "Option": "19",
     "Function": ".5",
     "List_Manager_Templates": "409.61",
@@ -91,6 +89,9 @@ sectionLinkObj = {
     "Input_Template": ".402",
     "Print_Template": ".4"
 }
+
+# Do not generate the graph if have more than 30 nodes
+MAX_DEPENDENCY_LIST_SIZE = 30
 
 COLOR_MAP = {
     "Option": "orangered",
@@ -181,10 +182,10 @@ def parseICRJson(icrJson):
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
   return parsedICRJSON
 
-def getRoutineHtmlFileName(routineName, title=""):
+def getRoutineHtmlFileName(routineName):
     return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
 
-def getRoutineHtmlFileNameUnquoted(routineName, title=""):
+def getRoutineHtmlFileNameUnquoted(routineName):
     return "Routine_%s.html" % routineName
 
 def getGlobalHtmlFileNameByName(globalName):
@@ -205,18 +206,19 @@ def normalizePackageName(packageName):
     newName = packageName.replace(' ', '_')
     return newName.replace('-', "_").replace('.', '_').replace('/', '_')
 
-def getPackageObjHtmlFileNameUnquoted(optionName, title=""):
-    title = "Routine"
-    if "getObjectType" in dir(optionName):
-      title = optionName.getObjectType()
-    elif "Global" in str(type(optionName)):
-      return getGlobalHtmlFileNameByName(optionName.getName())
-    if not isinstance(optionName,basestring):
-      optionName = optionName.getName()
-    return "%s_%s.html" % (title, re.sub("[ /.*?&<>:]",'_',optionName))
+def getPackageObjHtmlFileNameUnquoted(optionName):
+    if "Global" in str(type(optionName)):
+        return getGlobalHtmlFileNameByName(optionName.getName())
 
-def getPackageObjHtmlFileName(functionName, title=""):
-    return urllib.quote(getPackageObjHtmlFileNameUnquoted(functionName, title))
+    title = optionName.getObjectType()
+    optionName = optionName.getName()
+    return "%s_%s.html" % (title, normalizeName(optionName))
+
+def normalizeName(name):
+    return re.sub("[ /.*?&<>:]", '_', name)
+
+def getPackageObjHtmlFileName(functionName):
+    return urllib.quote(getPackageObjHtmlFileNameUnquoted(functionName))
 
 def getPackageDependencyHtmlFile(packageName, depPackageName):
     firstName = normalizePackageName(packageName)
