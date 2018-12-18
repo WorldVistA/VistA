@@ -346,6 +346,9 @@ class FileManDataToHtml(object):
           if allRpcs:
             self._generateRPCListHtml(allRpcs, "All", fileNoOutDir)
       elif fileNo == '101':
+        menuOutDir = os.path.join(self.outDir, "menus", "101")
+        if not os.path.exists(menuOutDir):
+          os.makedirs(menuOutDir)
         allProtoMenuList = []
         if crossRef:
           allPackages = crossRef.getAllPackages()
@@ -372,8 +375,7 @@ class FileManDataToHtml(object):
           if allProtocols:
             self._generateProtocolListByPackage(allProtocols, "All",
                                                 fileNoOutDir)
-        self._generateMenuDependency(allProtoMenuList, allProtocols,
-                                     os.path.join(self.outDir, "menus", "101"))
+        self._generateMenuDependency(allProtoMenuList, allProtocols,menuOutDir)
       elif fileNo == '779.2':
         if crossRef:
           allPackages = crossRef.getAllPackages()
@@ -391,6 +393,9 @@ class FileManDataToHtml(object):
         allMenuList = []
         serverMenuList = []
         outJSON = {}
+        menuOutDir = os.path.join(self.outDir, "menus", "19")
+        if not os.path.exists(menuOutDir):
+          os.makedirs(menuOutDir)
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           allOptionList.append(dataEntry)
@@ -416,8 +421,7 @@ class FileManDataToHtml(object):
 
 
         self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
-        self._generateMenuDependency(allMenuList, allOptionList,
-                                     os.path.join(self.outDir, "menus", "19"))
+        self._generateMenuDependency(allMenuList, allOptionList,menuOutDir)
 
       allObjectsList = []
       outJSON = {}
