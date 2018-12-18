@@ -1775,10 +1775,10 @@ class WebPageGenerator:
         totalReferencedFileManFilesHtml = "<span class=\"comment\">%d</span>" % len(referencedFileManFiles)
         totalDbCallRoutinesHtml = "<span class=\"comment\">%d</span>" % len(dbCallRoutines)
         totalDbCallFileManFilesHtml = "<span class=\"comment\">%d</span>" % len(dbCallFileManFiles)
-        summaryHeader = "Summary:<BR> Total %s routine(s) in %s called total %s routine(s) in %s" % (totalCalledHtml,
-                                                                                               packageHyperLink,
-                                                                                               totalCallerHtml,
-                                                                                               depPackageHyperLink)
+        summaryHeader = "Summary:<BR> Total %s routine(s) in %s called total %s routine(s) in %s" % (totalCallerHtml,
+                                                                                                     packageHyperLink,
+                                                                                                     totalCalledHtml,
+                                                                                                     depPackageHyperLink)
         summaryHeader += "<BR> Total %s Global(s) in %s called total %s routine(s) in %s" % (gblRtnCallerHtml,
                                                                                                packageHyperLink,
                                                                                                gblRtnCalledHtml,
@@ -1812,7 +1812,7 @@ class WebPageGenerator:
             writeSectionBegin(outputFile)
             if callerRoutines:
                 header = "Caller Routines List in %s : %s" % \
-                          (packageHyperLink, totalCalledHtml)
+                          (packageHyperLink, totalCallerHtml)
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(callerRoutines),
                                               outputFile,
@@ -1822,7 +1822,7 @@ class WebPageGenerator:
                                               useColor=False)
             if calledRoutines:
                 header = "Called Routines List in %s : %s" % \
-                          (depPackageHyperLink, totalCallerHtml)
+                          (depPackageHyperLink, totalCalledHtml)
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(calledRoutines),
                                               outputFile,
