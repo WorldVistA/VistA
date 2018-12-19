@@ -95,7 +95,11 @@ class Routine(object):
         self._originalName = routineName
         self._hasSourceCode = True
         self._structuredCode = []
-        self._objType="Routine"
+        self._objType = "Routine"
+
+    def getObjectType(self):
+        return self._objType
+
     def setName(self, routineName):
         self._name = routineName
     def getName(self):
@@ -766,6 +770,8 @@ class Global(FileManFile):
         self._totalReferencedRoutines = 0
         self._totalReferencedGlobals = 0
         self._totalReferredGlobals = 0
+        self._objType = "Global"
+
     def setName(self, globalName):
         self._name = globalName
     def getName(self):
@@ -843,8 +849,10 @@ class Global(FileManFile):
         return self.getFileNo() != None
     def getPackage(self):
         return self._package
+
     def getObjectType(self):
-        return "Global"
+        return self._objType
+
     #===========================================================================
     # operator
     #===========================================================================
@@ -1454,11 +1462,11 @@ class CrossReference:
             if hasMatch:
                 return (matchNamespace, package)
         return (None, None)
+
     def routineHasSourceCodeByName(self, routineName):
         routine = self.getRoutineByName(routineName)
-        if "getObjectType" in dir(routine):
-          return True
         return routine and routine.hasSourceCode()
+
     def __generatePlatformDependentRoutineDependencies__(self):
         for genericRoutine in self._platformDepRoutines.itervalues():
             genericRoutine.setHasSourceCode(False)
