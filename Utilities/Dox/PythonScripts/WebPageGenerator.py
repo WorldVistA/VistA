@@ -2943,20 +2943,11 @@ class WebPageGenerator:
                                       isAccordion=False):
         # Do not write source file link in PDF
         self.writeSectionHeader(header, link, outputFile, None, isAccordion)
-        if routine._objType in PACKAGE_COMPONENT_MAP:
-            outputFile.write("<div><p>")
-            outputFile.write("<span class=\"information\">%s Information &lt;<a class=\"el\" href=\"%s%s/%s-%s.html\">%s</a>&gt;</span>"
-                % (routine._objType, VIVIAN_URL,
-                   PACKAGE_COMPONENT_MAP[routine._objType].replace('.','_'),
-                   PACKAGE_COMPONENT_MAP[routine._objType],
-                   routine.getIEN(), routine.getOriginalName()))
-            outputFile.write("</p></div>\n")
-        else:
-            outputFile.write("<div class=\"%s\">" % classid)
-            outputFile.write("<p><span class=\"sourcefile\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>"
-                % (getRoutineSourceHtmlFileName(routine.getOriginalName()),
-                   routine.getOriginalName()))
-            outputFile.write("</div>\n")
+        outputFile.write("<div class=\"%s\">" % classid)
+        outputFile.write("<p><span class=\"sourcefile\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>"
+            % (getRoutineSourceHtmlFileName(routine.getOriginalName()),
+               routine.getOriginalName()))
+        outputFile.write("</div>\n")
 
     # Generate routine variables sections
     # (e.g. Local Variables or Global Variables)
@@ -3270,9 +3261,11 @@ class WebPageGenerator:
 
     ###########################################################################
     # NOTE: When called with an existingOutFile, we're actually writing a
-    # GLOBAL page not a routine page
+    # GLOBAL page. When 'isPackageComponent' is True, we're writing a
+    # PACKAGE COMPONENT page.
     def __generateIndividualRoutinePage__(self, routine, pdf, platform=None,
-                                          existingOutFile=None):
+                                          existingOutFile=None,
+                                          isPackageComponent=False):
         assert routine
         routineName = routine.getName()
         # Note: name must be different so section can be printed in PDF
@@ -3288,132 +3281,132 @@ class WebPageGenerator:
            # Name section
            {
              "name": "Info", # this is also the link name
-             "header" : "Information", # this is the actual display name
-             "data" : routine.getComment, # the data source
-             "generator" : self.__writeRoutineInfoSection__, # section generator
-             'classid': "header"
+             "header": "Information", # this is the actual display name
+             "data": routine.getComment, # the data source
+             "generator": self.__writeRoutineInfoSection__, # section generator
+             "classid": "header"
            },
            # Source section
            {
              "name": sourceName, # this is also the link name
-             "header" : "Source Information", # this is the actual display name
-             "data" : routine.hasSourceCode, # the data source
-             "generator" : self.__writeRoutineSourceSection__, # section generator
-             "classid":"source"
+             "header": "Source Information", # this is the actual display name
+             "data": routine.hasSourceCode, # the data source
+             "generator": sourceGenerator, # section generator
+             "classid": "source"
            },
            # Call Graph section
            {
              "name": "Call Graph", # this is also the link name
-             "data" : routine.getCalledRoutines, # the data source
-             "generator" : self.__writeRoutineDepGraphSection__, # section generator
-             "classid"  :"callG"
+             "data": routine.getCalledRoutines, # the data source
+             "generator": self.__writeRoutineDepGraphSection__, # section generator
+             "classid": "callG"
            },
            # Caller Graph section
            {
              "name": "Caller Graph", # this is also the link name
-             "data" : routine.getCallerRoutines, # the data source
-             "generator" : self.__writeRoutineDepGraphSection__, # section generator
-             "classid"  :"callerG",
-             "geneargs" : [False],
+             "data": routine.getCallerRoutines, # the data source
+             "generator": self.__writeRoutineDepGraphSection__, # section generator
+             "classid":"callerG",
+             "geneargs": [False]
            },
             # Entry Point section
            {
              "name": "Entry Points", # this is also the link name
-             "data" : routine.getEntryPoints, # the data source
-             "generator" : self.__writeEntryPointSection__, # section generator
-             "geneargs" : [ENTRY_POINT_SECTION_HEADER_LIST], # extra argument
-             "classid"  :"entrypoint"
+             "data": routine.getEntryPoints, # the data source
+             "generator": self.__writeEntryPointSection__, # section generator
+             "geneargs": [ENTRY_POINT_SECTION_HEADER_LIST], # extra argument
+             "classid": "entrypoint"
            },
            # External References section
            {
              "name": "External References", # this is also the link name
-             "data" : routine.getExternalReference, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                           self.__convertExternalReferenceToTableData__], # extra argument
-             "classid"  :"external"
+             "data": routine.getExternalReference, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [PACKAGE_OBJECT_SECTION_HEADER_LIST,
+                          self.__convertExternalReferenceToTableData__], # extra argument
+             "classid": "external"
            },
            # Interaction Code section
            {
              "name": "Interaction Calls", # this is also the link name
-             "data" : routine.getInteractionEntries, # the data source
-             "generator" : self.__writeInteractionSection__, # section generator
-             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST], # extra argument
-             "classid"  :"interactioncalls"
+             "data": routine.getInteractionEntries, # the data source
+             "generator": self.__writeInteractionSection__, # section generator
+             "geneargs": [DEFAULT_VARIABLE_SECTION_HEADER_LIST], # extra argument
+             "classid": "interactioncalls"
            },
            # Used in RPC section
            {
              "name": "Used in RPC", # this is also the link name
-             "data" : self.__getRpcReferences__, # the data source
-             "dataarg" : [routineName], # extra arguments for data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [RPC_REFERENCE_SECTION_HEADER_LIST,
-                           self.__convertRPCDataReference__], # extra argument
-             "classid"  :"rpc"
+             "data": self.__getRpcReferences__, # the data source
+             "dataarg": [routineName], # extra arguments for data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [RPC_REFERENCE_SECTION_HEADER_LIST,
+                          self.__convertRPCDataReference__], # extra argument
+             "classid": "rpc"
            },
            # Used in HL7 Interface section
            {
              "name": "Used in HL7 Interface", # this is also the link name
-             "data" : self.__getHl7References__, # the data source
-             "dataarg" : [routineName], # extra arguments for data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [HL7_REFERENCE_SECTION_HEADER_LIST,
-                           self.__convertHL7DataReference__], # extra argument
-             "classid"  :"hl7"
+             "data": self.__getHl7References__, # the data source
+             "dataarg": [routineName], # extra arguments for data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [HL7_REFERENCE_SECTION_HEADER_LIST,
+                          self.__convertHL7DataReference__], # extra argument
+             "classid": "hl7"
            },
            # FileMan Files Accessed Via FileMan Db Call section
            {
              "name": "FileMan Files Accessed Via FileMan Db Call", # this is also the link name
-             "data" : routine.getFilemanDbCallGlobals, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [FILENO_FILEMANDB_SECTION_HEADER_LIST,
-                           self.__convertFileManDbCallToTableData__], # extra argument
-             "classid"  :"dbCall"
+             "data": routine.getFilemanDbCallGlobals, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [FILENO_FILEMANDB_SECTION_HEADER_LIST,
+                          self.__convertFileManDbCallToTableData__], # extra argument
+             "classid": "dbCall"
            },
            # Global Variables Directly Accessed section
            {
              "name": "Global Variables Directly Accessed", # this is also the link name
-             "data" : routine.getGlobalVariables, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [GLOBAL_VARIABLE_SECTION_HEADER_LIST,
-                           self.__convertGlobalVarToTableData__], # extra argument
-             "classid"  :"directAccess"
+             "data": routine.getGlobalVariables, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [GLOBAL_VARIABLE_SECTION_HEADER_LIST,
+                          self.__convertGlobalVarToTableData__], # extra argument
+             "classid": "directAccess"
            },
            # Label References section
            {
              "name": "Label References", # this is also the link name
-             "data" : routine.getLabelReferences, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [LABEL_REFERENCE_SECTION_HEADER_LIST,
-                           self.__convertLabelReferenceToTableData__], # extra argument
-             "classid"  :"label"
+             "data": routine.getLabelReferences, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [LABEL_REFERENCE_SECTION_HEADER_LIST,
+                          self.__convertLabelReferenceToTableData__], # extra argument
+             "classid": "label"
            },
            # Naked Globals section
            {
              "name": "Naked Globals", # this is also the link name
-             "data" : routine.getNakedGlobals, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                           self.__convertNakedGlobaToTableData__], # extra argument
-             "classid"  :"naked"
+             "data": routine.getNakedGlobals, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [PACKAGE_OBJECT_SECTION_HEADER_LIST,
+                          self.__convertNakedGlobaToTableData__], # extra argument
+             "classid": "naked"
            },
            # Local Variables section
            {
              "name": "Local Variables", # this is also the link name
-             "data" : routine.getLocalVariables, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                           self.__convertVariableToTableData__], # extra argument
-             "classid"  :"local"
+             "data": routine.getLocalVariables, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [PACKAGE_OBJECT_SECTION_HEADER_LIST,
+                          self.__convertVariableToTableData__], # extra argument
+             "classid": "local"
            },
            # Marked Items section
            {
              "name": "Marked Items", # this is also the link name
-             "data" : routine.getMarkedItems, # the data source
-             "generator" : self.__writeRoutineVariableSection__, # section generator
-             "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                           self.__convertMarkedItemToTableData__], # extra argument
-             "classid"  :"marked"
+             "data": routine.getMarkedItems, # the data source
+             "generator": self.__writeRoutineVariableSection__, # section generator
+             "geneargs": [PACKAGE_OBJECT_SECTION_HEADER_LIST,
+                          self.__convertMarkedItemToTableData__], # extra argument
+             "classid": "marked"
            },
         ]
         package = routine.getPackage()
@@ -3426,18 +3419,32 @@ class WebPageGenerator:
                 htmlFileName = getRoutineHtmlFileNameUnquoted(routine)
             outputFile = open(os.path.join(self._outDir, htmlFileName), 'w')
             self.__includeHeader__(outputFile)
-        indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
+        if isPackageComponent:
+            indexList = []
+            idxLst = []
+            for idx, item in enumerate(sectionGenLst):
+                extraarg = item.get('dataarg', [])
+                if item['data'](*extraarg):
+                    indexList.append(item['name'])
+                    idxLst.append(idx)
+        else:
+            indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
         if not existingOutFile:
             self.generateNavigationBar(outputFile, indexList, printList=indexList)
-            title = "Routine: %s" % routineName
-            routineHeader = title
-            if platform:
-                routineHeader += " Platform: %s" % platform
+            if isPackageComponent:
+                title = routine._title.replace("_"," ") + ": " + routineName
+                routineHeader = title
+            else:
+                title = "Routine: %s" % routineName
+                routineHeader = title
+                if platform:
+                    routineHeader += " Platform: %s" % platform
             self.writeTitleBlock(title, routineHeader, package,
-                                 outputFile, pdf)
+                                 outputFile, pdf,
+                                 accordion=not isPackageComponent)
         for idx in idxLst:
             sectionGen = sectionGenLst[idx]
-            data = sectionGen['data'](*sectionGen.get('dataarg',[]))
+            data = sectionGen['data'](*sectionGen.get('dataarg', []))
             link = sectionGen['name']
             header = sectionGen.get('header', link)
             classid  = sectionGen.get('classid', "")
@@ -3445,6 +3452,8 @@ class WebPageGenerator:
             sectionGen['generator'](routine, data, header, link, outputFile,
                                     pdf, classid, *geneargs)
             writeSectionEnd(outputFile)
+            if isPackageComponent and header == "Local Variables":
+                outputFile.write("</div>\n")
         if not existingOutFile:
             self.generateFooterWithNavigationBar(outputFile, indexList)
             outputFile.close()
@@ -3554,183 +3563,8 @@ class WebPageGenerator:
           if self._generatePDFBundle:
               self.__writeGenericTablizedPDFData__(["Name", "Value"], pdfTableData, pdf)
         except:
-          outputFile.write("<div><p %s>Source Info Missing</p></div>" % classid)
+            outputFile.write("<div><p %s>Source Info Missing</p></div>" % classid)
         writeSectionEnd(outputFile)
-
-    def __generatePackageComponentPage__(self, routine):
-            routineName = routine.getName()
-            # This is a list sections that might be applicable to a routine
-            sectionGenLst = [
-                       # Name section
-                       {
-                         "name": "Info", # this is also the link name
-                         "header" : "Information", # this is the actual display name
-                         "data" : routine.getComment, # the data source
-                         "generator" : self.__writeRoutineInfoSection__, # section generator
-                         'classid': "header"
-                       },
-                       # Source section
-                       {
-                         "name": "Component Source", # this is also the link name
-                         "header" : "Source Information", # this is the actual display name
-                         "data" : routine.hasSourceCode, # the data source
-                         "generator" : self.__writePackageComponentSourceSection__, # section generator
-                         "classid":"source"
-                       },
-                       # Call Graph section
-                       {
-                         "name": "Call Graph", # this is also the link name
-                         "data" : routine.getCalledRoutines, # the data source
-                         "generator" : self.__writeRoutineDepGraphSection__, # section generator
-                         "classid"  :"callG"
-                       },
-                       # Caller Graph section
-                       {
-                         "name": "Caller Graph", # this is also the link name
-                         "data" : routine.getCallerRoutines, # the data source
-                         "generator" : self.__writeRoutineDepGraphSection__, # section generator
-                         "classid"  :"callerG",
-                         "geneargs" : [False],
-                       },
-                        # Entry Point section
-                       {
-                         "name": "Entry Points", # this is also the link name
-                         "data" : routine.getEntryPoints, # the data source
-                         "generator" : self.__writeEntryPointSection__, # section generator
-                         "geneargs" : [ENTRY_POINT_SECTION_HEADER_LIST], # extra argument
-                         "classid"  :"entrypoint"
-                       },
-                       # External References section
-                       {
-                         "name": "External References", # this is also the link name
-                         "data" : routine.getExternalReference, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                                       self.__convertExternalReferenceToTableData__], # extra argument
-                         "classid"  :"external"
-                       },
-                       # Interaction Code section
-                       {
-                         "name": "Interaction Calls", # this is also the link name
-                         "data" : routine.getInteractionEntries, # the data source
-                         "generator" : self.__writeInteractionSection__, # section generator
-                         "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST], # extra argument
-                         "classid"  :"interactioncalls"
-                       },
-                       # Used in RPC section
-                       {
-                         "name": "Used in RPC", # this is also the link name
-                         "data" : self.__getRpcReferences__, # the data source
-                         "dataarg" : [routineName], # extra arguments for data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [RPC_REFERENCE_SECTION_HEADER_LIST,
-                                       self.__convertRPCDataReference__], # extra argument
-                         "classid"  :"rpc"
-                       },
-                       # Used in HL7 Interface section
-                       {
-                         "name": "Used in HL7 Interface", # this is also the link name
-                         "data" : self.__getHl7References__, # the data source
-                         "dataarg" : [routineName], # extra arguments for data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [HL7_REFERENCE_SECTION_HEADER_LIST,
-                                       self.__convertHL7DataReference__], # extra argument
-                         "classid"  :"hl7"
-                       },
-                       # FileMan Files Accessed Via FileMan Db Call section
-                       {
-                         "name": "FileMan Files Accessed Via FileMan Db Call", # this is also the link name
-                         "data" : routine.getFilemanDbCallGlobals, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [FILENO_FILEMANDB_SECTION_HEADER_LIST,
-                                       self.__convertFileManDbCallToTableData__], # extra argument
-                         "classid"  :"dbCall"
-                       },
-                       # Global Variables Directly Accessed section
-                       {
-                         "name": "Global Variables Directly Accessed", # this is also the link name
-                         "data" : routine.getGlobalVariables, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [GLOBAL_VARIABLE_SECTION_HEADER_LIST,
-                                       self.__convertGlobalVarToTableData__], # extra argument
-                         "classid"  :"directAccess"
-                       },
-                       # Label References section
-                       {
-                         "name": "Label References", # this is also the link name
-                         "data" : routine.getLabelReferences, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [LABEL_REFERENCE_SECTION_HEADER_LIST,
-                                       self.__convertLabelReferenceToTableData__], # extra argument
-                         "classid"  :"label"
-                       },
-                       # Naked Globals section
-                       {
-                         "name": "Naked Globals", # this is also the link name
-                         "data" : routine.getNakedGlobals, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                                       self.__convertNakedGlobaToTableData__], # extra argument
-                         "classid"  :"naked"
-                       },
-                       # Local Variables section
-                       {
-                         "name": "Local Variables", # this is also the link name
-                         "data" : routine.getLocalVariables, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                                       self.__convertVariableToTableData__], # extra argument
-                         "classid"  :"local"
-                       },
-                       # Marked Items section
-                       {
-                         "name": "Marked Items", # this is also the link name
-                         "data" : routine.getMarkedItems, # the data source
-                         "generator" : self.__writeRoutineVariableSection__, # section generator
-                         "geneargs" : [PACKAGE_OBJECT_SECTION_HEADER_LIST,
-                                       self.__convertMarkedItemToTableData__], # extra argument
-                         "classid"  :"marked"
-                       },
-            ]
-            package = routine.getPackage()
-            packageName = package.getName()
-            filename = os.path.join(self._outDir, getPackageObjHtmlFileName(routine, routine._title))
-            with open(filename, 'w') as outputFile:
-                if self._generatePDFBundle:
-                    pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
-                                               getPackageObjHtmlFileName(routine, routine._title).replace("html","pdf"))
-                    self.__setupPDF__()
-                    pdf = []
-                else:
-                    pdf = None
-                self.__includeHeader__(outputFile)
-                indexList = []
-                idxLst = []
-                for idx, item in enumerate(sectionGenLst):
-                  extraarg = item.get('dataarg', [])
-                  if item['data'](*extraarg):
-                    indexList.append(item['name'])
-                    idxLst.append(idx)
-                self.generateNavigationBar(outputFile, indexList,
-                                           printList=indexList)
-                title = routine._title.replace("_"," ") + ": " + routineName
-                self.writeTitleBlock(title, title, package, outputFile, pdf,
-                                     accordion=False)
-                for idx in idxLst:
-                  sectionGen = sectionGenLst[idx]
-                  data = sectionGen['data'](*sectionGen.get('dataarg',[]))
-                  link = sectionGen['name']
-                  header = sectionGen.get('header', link)
-                  geneargs = sectionGen.get('geneargs',[])
-                  classID = sectionGen.get('classid', "")
-                  sectionGen['generator'](routine, data, header, link, outputFile, pdf, classid=classID, *geneargs)
-                  writeSectionEnd(outputFile)
-                  if header == "Local Variables":
-                    outputFile.write("</div>\n")
-                self.generateFooterWithNavigationBar(outputFile, indexList)
-
-            if self._generatePDFBundle:
-                self.__writePDFFile__(pdf, pdfFileName)
 
     def generatePackageInformationPages(self):
         for keyVal in PACKAGE_COMPONENT_MAP:
