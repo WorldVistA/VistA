@@ -17,7 +17,6 @@
 import csv
 import json
 import re
-import re
 import urllib
 
 from PDFUtilityFunctions import *
