@@ -2182,7 +2182,7 @@ class WebPageGenerator:
                     self.__generatePlatformDependentRoutineSourcePage__(routine)
                     continue
                 # check for platform dependent routine
-                if not self._crossRef.routineHasSourceCodeByName(routineName):
+                if not routine.hasSourceCode():
                     continue
                 sourceCodeName = routine.getOriginalName()
                 self.__generateSourceCodePageByName__(sourceCodeName, routine)
@@ -2202,13 +2202,16 @@ class WebPageGenerator:
 # utility method to show routine name
 #===============================================================================
     def getRoutineDisplayNameByName(self, routineName):
-        if self._crossRef.isPlatformGenericRoutineByName(routineName):
+        routine = self._crossRef.getRoutineByName(routineName)
+        return self.getRoutineDisplayName(routine)
+
+    def getRoutineDisplayName(self, routine):
+        routineName = routine.getName()
+        if isinstance(routine, PlatformDependentGenericRoutine):
             return "%s&sup1" % routineName # superscript 1
-        if not self._crossRef.routineHasSourceCodeByName(routineName):
+        if not routine.hasSourceCode():
             return "%s&sup2" % routineName # superscript 2
         return routineName
-    def getRoutineDisplayName(self, routine):
-        return self.getRoutineDisplayNameByName(routine.getName())
 
     def getGlobalEntryName(self, routine):
         if ".01" in routine:
@@ -2693,12 +2696,12 @@ class WebPageGenerator:
                                                 sortedGlobalList, outputFile, pdf)
 
                 # Routines
-                if len(routinesList) > 0:
+                if routinesList:
                     # sorted by routine Name
                     sortedRoutinesList = sorted(routinesList, key=lambda item: item.getName())
                     self.generatePackageSection("Routines",
                                                 getRoutineHtmlFileName,
-                                                self.getRoutineDisplayNameByName,
+                                                self.getRoutineDisplayName,
                                                 "rtns", sortedRoutinesList,
                                                 outputFile, pdf)
 
