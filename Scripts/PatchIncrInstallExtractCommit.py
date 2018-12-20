@@ -55,6 +55,7 @@ class PatchIncrInstallExtractCommit(object):
       testClientConfig = self._config['VistA_Connection']
       self._instance = testClientConfig.get('instance',DEFAULT_INSTANCE)
       self._useSudo = testClientConfig.get('useSudo', False)
+      self._duz = testClientConfig.get('duz', "17")
   def _createTestClient(self):
     testClientConfig = self._config['VistA_Connection']
     system = testClientConfig['system']
@@ -172,6 +173,7 @@ class PatchIncrInstallExtractCommit(object):
       with testClient:
         with testClient2:
           patchApply = PatchSequenceApply(testClient, patchLogDir,testClient2)
+          patchApply._duz= self._duz
           outPatchList = patchApply.generatePatchSequence(inputPatchDir)
           if not outPatchList:
             logger.info("No Patch needs to apply")

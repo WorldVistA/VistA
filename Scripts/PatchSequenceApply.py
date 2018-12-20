@@ -328,14 +328,16 @@ class PatchSequenceApply(object):
                                       seqNo, logFileName,
                                       multiBuildsList,
                                       files=associateFiles,
-                                      globals=associatedGlobals)
+                                      globals=associatedGlobals,
+                                      duz = self._duz)
 
     else:
       kidsInstaller = KIDSInstallerFactory.createKIDSInstaller(
                             kidsPath, installName, seqNo, logFileName,
                             multiBuildsList,
                             files=associateFiles,
-                            globals=associatedGlobals)
+                            globals=associatedGlobals,
+                            duz = self._duz)
     logger.info("Applying Patch %s" % patchInfo)
     assert kidsInstaller
     return kidsInstaller.runInstallation(self._testClient, self._testClient2)
@@ -406,6 +408,8 @@ def main():
   group.add_argument('-o', '--onlyPatch',
                      help='install specified patch and required patches only'
                           ', this option will ignore the CSV dependencies')
+  parser.add_argument('-d', '--duz', default=17, type=int,
+                help='installer\'s VistA instance\'s DUZ')
 
   result = parser.parse_args();
   print (result)
@@ -420,6 +424,7 @@ def main():
   initConsoleLogging()
   with testClient as vistAClient:
     patchSeqApply = PatchSequenceApply(vistAClient, outputDir)
+    patchSeqApply._duz = result.duz
     assert testClient2
     with testClient2 as vistAClient2:
       patchSeqApply._testClient2 = vistAClient2
