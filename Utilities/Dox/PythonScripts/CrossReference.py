@@ -1306,6 +1306,7 @@ class CrossReference:
     def addRoutineByName(self, routineName):
         if not self.hasRoutine(routineName):
             self._allRoutines[routineName] = Routine(routineName)
+
     def getRoutineByName(self, routineName):
         newRtnName = routineName
         if self.routineNeedRename(routineName):
@@ -1313,6 +1314,7 @@ class CrossReference:
         if self.isPlatformDependentRoutineByName(newRtnName):
             return self.getPlatformDependentRoutineByName(newRtnName)
         return self._allRoutines.get(newRtnName)
+
     def getPackageByName(self, packageName):
         return self._allPackages.get(packageName)
     def getGlobalByName(self, globalName):
@@ -1404,6 +1406,7 @@ class CrossReference:
         return self._renameRoutines.get(routineName)
     def isMumpsRoutine(self, routineName):
         return routineName in self._mumpsRoutines
+
     def addPlatformDependentRoutineMapping(self, routineName,
                                            packageName,
                                            mappingList):
@@ -1417,17 +1420,22 @@ class CrossReference:
         self._allPackages[packageName].addRoutine(routine)
         for item in mappingList:
             self._platformDepRoutineMappings[item[0]] = routineName
+
     def isPlatformDependentRoutineByName(self, routineName):
         return routineName in self._platformDepRoutineMappings
+
     def isPlatformGenericRoutineByName(self, routineName):
         return routineName in self._platformDepRoutines
+
     def getGenericPlatformDepRoutineNameByName(self, routineName):
         return self._platformDepRoutineMappings.get(routineName)
+
     def getGenericPlatformDepRoutineByName(self, routineName):
         genericName = self._platformDepRoutineMappings.get(routineName)
         if genericName:
             return self._platformDepRoutines[genericName]
         return None
+
     def getPlatformDependentRoutineByName(self, routineName):
         genericRoutine = self.getGenericPlatformDepRoutineByName(routineName)
         if genericRoutine:
@@ -1438,8 +1446,10 @@ class CrossReference:
     # as python does not have trie and seems to be OK now
     def categorizeRoutineByNamespace(self, routineName):
         return self.__categorizeVariableNameByNamespace__(routineName)
+
     def categorizeGlobalByNamespace(self, globalName):
         return self.__categorizeVariableNameByNamespace__(globalName, True)
+
     def __categorizeVariableNameByNamespace__(self, variableName, isGlobal = False):
         for package in self._allPackages.itervalues():
             hasMatch = False
@@ -1463,10 +1473,6 @@ class CrossReference:
                 return (matchNamespace, package)
         return (None, None)
 
-    def routineHasSourceCodeByName(self, routineName):
-        routine = self.getRoutineByName(routineName)
-        return routine and routine.hasSourceCode()
-
     def __generatePlatformDependentRoutineDependencies__(self):
         for genericRoutine in self._platformDepRoutines.itervalues():
             genericRoutine.setHasSourceCode(False)
@@ -1478,6 +1484,7 @@ class CrossReference:
                         value = routineDict.pop(routine)
                         newRoutine = self.getGenericPlatformDepRoutineByName(routineName)
                         routineDict[newRoutine] = value
+
     def __fixPlatformDependentRoutines__(self):
         for routineName in self._platformDepRoutineMappings:
             if routineName in self._allRoutines:
