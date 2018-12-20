@@ -2193,10 +2193,11 @@ class WebPageGenerator:
     def getPackageComponentDisplayName(self, routine):
         routineName = routine.getName()
         if "componentType" in dir(routine):
-          componentType = routine.componentType.strip()
-          if componentType in COMPONENT_TYPE_DICT:
-              return "%s<sup>(%s)</sup>" % (routineName, componentType)
+            componentType = routine.componentType.strip()
+            if componentType in COMPONENT_TYPE_DICT:
+                return "%s<sup>(%s)</sup>" % (routineName, COMPONENT_TYPE_DICT[componentType])
         return routineName
+
 #===============================================================================
 # utility method to show routine name
 #===============================================================================
@@ -2447,7 +2448,7 @@ class WebPageGenerator:
                             linkName = htmlMappingFunc(displayName, keyVal)
                         if nameFunc:
                             displayName = nameFunc(displayName)
-                        outputFile.write("<td style=\"border: 2px solid color=%s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                        outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
                                    % (borderColorString, linkName, displayName))
                         if self._generatePDFBundle:
                             # format name for pdf
@@ -2603,7 +2604,7 @@ class WebPageGenerator:
                 else:
                     globalList.append(globalVar)
             #
-            routinesList = package.getAllRoutines().keys()
+            routinesList = package.getAllRoutines().values()
 
             # Build list of sections with data
             indexList = ["Namespace", "Doc"]
@@ -2668,7 +2669,8 @@ class WebPageGenerator:
                     sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
                     self.generatePackageSection("ICR Entries", getICRHtmlFileName,
                                                 getICRDisplayName, "icrVals",
-                                                sortedICRList, outputFile, pdf)
+                                                sortedICRList, outputFile, pdf,
+                                                useColor=False)
 
                 # FileMan files
                 if len(fileManList) > 0:
@@ -2692,8 +2694,10 @@ class WebPageGenerator:
 
                 # Routines
                 if len(routinesList) > 0:
-                    sortedRoutinesList = sorted(routinesList)
-                    self.generatePackageSection("Routines", getRoutineHtmlFileName,
+                    # sorted by routine Name
+                    sortedRoutinesList = sorted(routinesList, key=lambda item: item.getName())
+                    self.generatePackageSection("Routines",
+                                                getRoutineHtmlFileName,
                                                 self.getRoutineDisplayNameByName,
                                                 "rtns", sortedRoutinesList,
                                                 outputFile, pdf)
@@ -2720,7 +2724,7 @@ class WebPageGenerator:
     def generatePackageSection(self, sectionName, htmlMappingFunction,
                                nameFunction, classid, sortedDataList,
                                outputFile, pdf, pdfColumnWidths=None,
-                               keyVal=None):
+                               keyVal=None, useColor=True):
         if self._generatePDFBundle:
             pdfSection = []
         else:
@@ -2731,9 +2735,9 @@ class WebPageGenerator:
         pdfData = self.generateTablizedItemList(sortedDataList, outputFile,
                                                 htmlMappingFunction,
                                                 nameFunction,
-                                                keyVal = keyVal,
                                                 classid=classid,
-                                                useColor=False)
+                                                keyVal = keyVal,
+                                                useColor=useColor)
         if pdfData and self._generatePDFBundle:
             table = self.__generatePDFTable__(pdfData, pdfColumnWidths)
             pdfSection.append(table)
