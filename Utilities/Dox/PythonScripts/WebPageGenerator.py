@@ -643,19 +643,25 @@ class WebPageGenerator:
 #   * footer: following all page-specific content
 #
 # There are three types of page-specific navigation bars:
-#   1. Index (no Print or All buttons). Header and footer are the same
+#   1. Index Header (no Print or All buttons; no 'open accordion' function)
 #   2. Non-Index header
 #     2a. Package headers also include a 'PDF' button, if generating PDFs
-#   3. Non-Index footer (no Print buttons)
+#   3. Non-Index footer (no Print buttons or open accordion function)
 # -----------------------------------------------------------------------------
     def generateNavigationBar(self, outputFile, inputList, archList=None,
                               printButton=True, printList=None,
-                              allButton=True, packageName=None):
+                              packageName=None, isIndex=False):
         if not inputList:
             return
+        if isIndex:
+            printButton = False
+        else:
+            outputFile.write(OPEN_ACCORDION_FUNCTION)
         hasArchList = archList and len(archList) == len(inputList)
-        onClickOpenAccordion = "onclick=\"openAccordionVal(event)\""
-        outputFile.write(OPEN_ACCORDION_FUNCTION)
+        if isIndex:
+            onClickOpenAccordion = ""
+        else:
+            onClickOpenAccordion = "onclick=\"openAccordionVal(event)\""
         outputFile.write("<div class=\"qindex\">\n")
         for i in range(len(inputList)):
             if hasArchList:
@@ -664,7 +670,7 @@ class WebPageGenerator:
                 archName = inputList[i]
             outputFile.write("<a %s class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" %
                 (onClickOpenAccordion, archName.split(" ")[0], archName, inputList[i]))
-        if allButton:
+        if not isIndex:
             outputFile.write("<a %s class=\"qindex Allaccord\" href=\"#%s\">%s</a>\n" %
                 (onClickOpenAccordion, "All","All"))
         outputFile.write("</div>\n")
@@ -838,7 +844,6 @@ class WebPageGenerator:
 #===============================================================================
 #
 #===============================================================================
-
     def _generateIndexPage(self, filename, title, numCol, sortedItems,
                            httpLinkFunction, nameFunc, indexes):
         with open(os.path.join(self._outDir, filename), 'w') as outputFile:
@@ -848,10 +853,12 @@ class WebPageGenerator:
             outputFile.write(FOOTER)
 
     def _writeIndex(self, outputFile, title, numCol, sortedItems,
-                    httpLinkFunction, nameFunc, indexes):
+                    httpLinkFunction, nameFunc, indexes, indexSuffix=""):
         self._writeIndexTitleBlock(title, outputFile)
-        self.generateNavigationBar(outputFile, indexes, printButton=False,
-                                   allButton=False)
+        linksList = ["%s%s" % (index, indexSuffix) for index in indexes]
+        self.generateNavigationBar(outputFile, indexes,
+                                   archList=linksList,
+                                   isIndex=True)
         outputFile.write("<div class=\"contents\">\n")
         outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
         totalNumItems = len(sortedItems)
@@ -863,17 +870,19 @@ class WebPageGenerator:
                     itemsPerRow.append(sortedItems[i + numPerCol * j])
             self._generateIndexedTableRow(outputFile, itemsPerRow,
                                           httpLinkFunction,
-                                          nameFunc, indexes)
+                                          nameFunc, indexes, indexSuffix)
         outputFile.write("</table>\n</div>\n")
-        self.generateNavigationBar(outputFile, indexes, printButton=False,
-                                   allButton=False)
+        self.generateNavigationBar(outputFile, indexes,
+                                   archList=linksList,
+                                   isIndex=True)
 
     def _generateIndexedTableRow(self, outputFile, inputList, httpLinkFunction,
-                                 nameFunc, indexList):
+                                 nameFunc, indexList, indexSuffix=""):
         outputFile.write("<tr>")
         for item in inputList:
             if item in indexList:
-                outputFile.write("<td><a name='%s'></a>" % item)
+                indexItem = "%s%s" % (item, indexSuffix)
+                outputFile.write("<td><a name='%s'></a>" % indexItem)
                 outputFile.write("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">")
                 outputFile.write("<tr><td><div class=\"ah\">&nbsp;&nbsp;%s&nbsp;&nbsp;</div></td></tr>" % item)
                 outputFile.write("</table></td>")
@@ -3602,7 +3611,8 @@ class WebPageGenerator:
         totalCol = 4
         self._writeIndex(outputFile, title, totalCol, sortedComponents,
                          getPackageObjHtmlFileName,
-                         self.getPackageComponentDisplayName, indexList)
+                         self.getPackageComponentDisplayName, indexList,
+                         indexSuffix="_%s" % keyVal)
         outputFile.write('</div>')
 
     def generatePackageComponentListIndexPage(self):
