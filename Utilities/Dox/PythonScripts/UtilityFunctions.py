@@ -187,7 +187,7 @@ def getRoutineHtmlFileName(routineName, title=""):
 def getRoutineHtmlFileNameUnquoted(routineName, title=""):
     return "Routine_%s.html" % routineName
 
-def getGlobalHtmlFileNameByName(globalName):
+def getGlobalHtmlFileNameByName(globalName, title=""):
     return ("Global_%s.html" %
                         normalizeGlobalName(globalName))
 
@@ -195,7 +195,7 @@ def normalizeGlobalName(globalName):
     import base64
     return base64.urlsafe_b64encode(globalName)
 
-def getPackageHtmlFileName(packageName):
+def getPackageHtmlFileName(packageName, title=""):
     return urllib.quote("Package_%s.html" %
                         normalizePackageName(packageName))
 
@@ -206,7 +206,6 @@ def normalizePackageName(packageName):
     return newName.replace('-', "_").replace('.', '_').replace('/', '_')
 
 def getPackageObjHtmlFileNameUnquoted(optionName, title=""):
-    title = "Routine"
     if "getObjectType" in dir(optionName):
       title = optionName.getObjectType()
     elif "Global" in str(type(optionName)):

@@ -352,10 +352,10 @@ def getGlobalPDFFileNameByName(globalName):
     return ("Global_%s.pdf" %
                         normalizeGlobalName(globalName))
 
-def getICRHtmlFileName(icrEntry):
+def getICRHtmlFileName(icrEntry, title=""):
     return ("%sICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
 
-def getGlobalHtmlFileName(globalVar):
+def getGlobalHtmlFileName(globalVar, title=""):
     if globalVar.isSubFile():
         return getFileManSubFileHtmlFileNameByName(globalVar.getFileNo())
     return getGlobalHtmlFileNameByName(globalVar.getName())
@@ -410,7 +410,7 @@ def getFileManFileHyperLinkWithNameFileNo(GlobalVar):
                                       GlobalVar.getFileNo()))
 
 # sub fileman files related functions
-def getFileManSubFileHtmlFileNameByName(subFileNo):
+def getFileManSubFileHtmlFileNameByName(subFileNo, title=""):
     return urllib.quote("SubFile_%s.html" % subFileNo)
 def getFileManSubFilePDFFileNameByName(subFileNo):
     return urllib.quote("SubFile_%s.pdf" % subFileNo)
@@ -865,13 +865,13 @@ class WebPageGenerator:
                     itemsPerRow.append(sortedItems[i + numPerCol * j])
             self._generateIndexedTableRow(outputFile, itemsPerRow,
                                           httpLinkFunction,
-                                          nameFunc, indexes)
+                                          nameFunc, indexes, title=title)
         outputFile.write("</table>\n</div>\n")
         self.generateNavigationBar(outputFile, indexes, printButton=False,
                                    allButton=False)
 
     def _generateIndexedTableRow(self, outputFile, inputList, httpLinkFunction,
-                                 nameFunc, indexList):
+                                 nameFunc, indexList, title="Routine"):
         outputFile.write("<tr>")
         for item in inputList:
             if item in indexList:
@@ -884,7 +884,7 @@ class WebPageGenerator:
                 if nameFunc:
                     displayName = nameFunc(item)
                 outputFile.write("<td><a class=\"el\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;</td>" %
-                                    (httpLinkFunction(item), displayName))
+                                    (httpLinkFunction(item, title), displayName))
         outputFile.write("</tr>\n")
 
 #===============================================================================
@@ -3741,7 +3741,7 @@ class WebPageGenerator:
         sortedComponents = sorted(sortedComponents, key=lambda s: s.lower())
 
         totalCol = 4
-        self._writeIndex(outputFile, title, totalCol, sortedComponents,
+        self._writeIndex(outputFile, keyVal, totalCol, sortedComponents,
                          getPackageObjHtmlFileName, None, indexList)
         outputFile.write('</div>')
 
