@@ -103,7 +103,7 @@ COLOR_MAP = {
     "Help_Frame":  "moccasin",
     "Form": "cadetblue",
     "Sort_Template": "salmon",
-    "HL7_APPLICATION_PARAMETER": "violetred",
+    "HL7_APPLICATION_PARAMETER": "mediumvioletred",
     "Input_Template": "skyblue",
     "Print_Template": "yellowgreen",
     "Global": "magenta"
