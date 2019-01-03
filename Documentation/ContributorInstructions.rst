@@ -12,7 +12,7 @@ Setup
 
 Before you begin, perform initial setup:
 
-* Create GitHub account
+* Create `GitHub account`_
 * Fork the OSEHRA/VistA Repository
 
   * Visit https://github.com/OSEHRA/VistA
@@ -90,7 +90,7 @@ Share a Topic
 ++++++++++++++
 
 When a topic is ready for review and possible inclusion, share it by pushing to
-OSEHRA.
+your GitHub fork of OSEHRA/VistA.
 
 Checkout the topic if it is not your current branch:
 
@@ -207,7 +207,7 @@ The branch ``-d`` command works only when the topic branch has been correctly
 merged. Use ``-D`` instead of ``-d`` to force the deletion of an unmerged topic
 branch (warning - you could lose commits).
 
-
+.. _`GitHub Account`: https://github.com/join
 .. _`repository page`: https://www.osehra.org/page/osehra-code-repository
 .. _`Code Review Access`: CodeReviewAccess.rst
 .. _`SetupForDevelopment.sh`: http://code.osehra.org/gitweb?p=VistA.git;a=blob;f=Scripts/SetupForDevelopment.sh;hb=HEAD
