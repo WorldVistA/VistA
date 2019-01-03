@@ -18,16 +18,20 @@
 #----------------------------------------------------------------
 import sys
 import types
-from LogManager import logger
 import csv
 import json
 from operator import itemgetter, attrgetter
+
+from LogManager import logger
+from UtilityFunctions import PACKAGE_COMPONENT_MAP
+
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
 MUMPS_ROUTINE_PREFIX = "Mumps"
 
 BoolDict = {True:"Y", False:"N"}
 
 LINE_OFFSET_DELIM = ","
+
 #===============================================================================
 # A Class to represent the variable in a _calledRoutine
 #===============================================================================
@@ -89,8 +93,6 @@ class Routine(object):
         self._refGlobals = dict()
         self._dbGlobals = dict()
         self._package = package
-        self._totalCaller = 0
-        self._totalCalled = 0
         self._comments = []
         self._originalName = routineName
         self._hasSourceCode = True
@@ -112,10 +114,7 @@ class Routine(object):
         self._comments.append(comment)
     def getComment(self):
         return self._comments
-    def getTotalCaller(self):
-        return self._totalCaller
-    def getTotalCalled(self):
-        return self._totalCalled
+
     def addLocalVariables(self, localVar):
         varName = localVar.getName()
         if varName not in self._localVariables:
@@ -205,10 +204,6 @@ class Routine(object):
             depRoutines[package] = dict()
         if depRoutine not in depRoutines[package]:
             depRoutines[package][depRoutine] = dict()
-            if isCalled:
-                self._totalCalled += 1
-            else:
-                self._totalCaller += 1
         if callTag not in depRoutines[package][depRoutine]:
             depRoutines[package][depRoutine][callTag] = lineOccurrences.split(LINE_OFFSET_DELIM)
         else:
@@ -913,8 +908,9 @@ class Package(object):
         self._routines = dict()
         self._globals = dict()
         self._namespaces = []
-        # ["Option","Function","Key","List","Protocol","Remote Procedure","Sort Template","Help Frame","Form",""]
-        self._objects = {"Key":{},"Dialog":{},"Function":{},"Option":{}, "List_Manager_Templates":{},"Protocol":{},"Remote_Procedure":{},"Sort_Template":{},"Help_Frame":{},"Form":{},"HL7_APPLICATION_PARAMETER":{},"Input_Template":{},"Print_Template":{}}
+        self._objects = dict()
+        for componentType in PACKAGE_COMPONENT_MAP:
+            self._objects[componentType] = dict()
         self._globalNamespace = []
         self._routineDependencies = dict()
         self._routineDependents = dict()
@@ -951,35 +947,25 @@ class Package(object):
         return self._routines
     def getAllGlobals(self):
         return self._globals
+
     #**************************************
     #* Package object functions
     #**************************************
-    def getPackageComponent(self, type,ien):
-      return self._objects[type][ien]
+    def getPackageComponent(self, type, ien):
+        return self._objects[type][ien]
+
     def getAllPackageComponents(self, type="*"):
       if type == "*":
-        return self._objects
+          return self._objects
       return self._objects[type]
-    def addPackageComponent(self, type, value):
-      value.addObjectType(type)
-      self._objects[type][value.getIEN()] = value
-    def getAllOptions(self):
-        return self._objects["opt"]
-    def getOption(self,ien):
-        return self._objects["opt"][ien]
-    def addOption(self,Option):
-      self._objects['opt'][Option.getIEN()] = Option
-    def getFunction(self,ien):
-        return self._objects["func"][ien]
-    def addFunction(self,function):
-      self._objects["func"][function.getIEN()] = function
-    def getAllFunctions(self):
-        return self._objects["func"]
 
-    def getRoutine(self, routineName):
-        return self._routines.get[routineName]
+    def addPackageComponent(self, type, value):
+        value.addObjectType(type)
+        self._objects[type][value.getIEN()] = value
+
     def hasRoutine(self, routineName):
         return routineName in self._routines
+
     def getName(self):
         return self._name
     def getOriginalName(self):
@@ -990,9 +976,10 @@ class Package(object):
         self.generatePackageComponentBasedDependencies()
         self.generateRoutineBasedDependencies()
         self.generateFileManFileBasedDependencies()
+
     def generatePackageComponentBasedDependencies(self):
         allObjs = self.getAllPackageComponents()
-        for key in allObjs.keys():
+        for key in allObjs:
           for obj in allObjs[key]:
             calledRoutines = allObjs[key][obj].getCalledRoutines()
             for package in calledRoutines.iterkeys():
@@ -1009,6 +996,7 @@ class Package(object):
                         package._objectDependents[self] = (set(), set())
                     package._objectDependents[self][0].add(allObjs[key][obj])
                     package._objectDependents[self][1].update(calledRoutines[package])
+
     def generateRoutineBasedDependencies(self):
         # build routine based dependencies
         for globalEntry in self._globals.itervalues():
