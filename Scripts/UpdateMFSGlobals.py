@@ -1,14 +1,15 @@
 # Update the globals that are updated by the Master File Server
 # in a running instance of VistA.
 #
-# The list of globals to update was taken from
-# http://www.vistapedia.com/index.php/MFS_list
+# The list of globals to update was originally taken from
+# http://www.vistapedia.com/index.php/MFS_list but has been updated
+# with information from file #4.001 of the December 2018 FOIA release.
 #
 # For detailed help information, please run
 #   python UpdateMFSGlobals.py -h
 #
 #---------------------------------------------------------------------------
-# Copyright 2016 The Open Source Electronic Health Record Agent
+# Copyright 2016-2018 OSEHRA
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
