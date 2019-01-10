@@ -1678,15 +1678,15 @@ class WebPageGenerator:
                 description += value
         row = [icrLink, subscribingPackage, fieldsReferenced, description]
         icrTable.append(row)
-        self.writeGenericTablizedHtmlData(headerList, icrTable, outfile, "icrVals")
-        if self._generatePDFBundle:
-            pdfRow = [icrLinkPDF, subscribingPackagesPDF,
-                      fieldsReferencedPDF, generateParagraph(description)]
-            icrTablePDF.append(pdfRow)
-            columns = 10
-            columnWidth = self.doc.width/columns
-            colWidths = [columnWidth, columnWidth * 2, columnWidth * 3, columnWidth * 4]
-            self.__writeGenericTablizedPDFData__(headerList, icrTablePDF, pdf,
+      self.writeGenericTablizedHtmlData(headerList, icrTable, outfile, "icrVals")
+      if self._generatePDFBundle:
+          pdfRow = [icrLinkPDF, subscribingPackagesPDF,
+                    fieldsReferencedPDF, generateParagraph(description)]
+          icrTablePDF.append(pdfRow)
+          columns = 10
+          columnWidth = self.doc.width/columns
+          colWidths = [columnWidth, columnWidth * 2, columnWidth * 3, columnWidth * 4]
+          self.__writeGenericTablizedPDFData__(headerList, icrTablePDF, pdf,
                                                   columnWidths=colWidths, isString=False)
 
     def _updatePackageDepDict(self, package, depDict, packDepDict):
