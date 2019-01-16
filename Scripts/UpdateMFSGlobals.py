@@ -85,10 +85,28 @@ class updateMFSGlobals():
   ("PCE Patient Care Encounter","9999999.04", "IMM MANUFACTURER"),
   ("PCE Patient Care Encounter","9999999.14", "IMMUNIZATION"),
   ("PCE Patient Care Encounter","9999999.28", "SKIN TEST")]
+
+  """ Deletes file from VistA. Returns true if file found and deleted; false if
+  not found """
+  def deleteFile(self, connection, fileNumber):
+      # Obtain Root of Global
+      connection.send('W $$ROOT^DILFD(' + fileNumber + ',"",1)' + "\n")
+      try:
+        index = connection.expect(["\n\^.*\n"],1)
+      except:
+        print "File %s does not exist in the instance, skipping..." % fileNumber
+	return False
+      myGlobal = connection.after.strip()
+      print "Killing Global " + myGlobal
+      connection.send("KILL " + myGlobal + "\n")
+      connection.expect(".*>.*")
+      return True
+      
   def installFile(self, vistaClient, connection, downloadedGblPath):
       print "Importing %s" % downloadedGblPath
+
       connection.send("D ^ZGI\r")
-      connection.expect("Device")
+      connection.expect("Device",1)
       connection.send(downloadedGblPath+"\r")
       if vistaClient.isCache():
         connection.expect("Parameters")
@@ -132,6 +150,7 @@ class updateMFSGlobals():
     connection = vistaClient.getConnection()
     # Go through each file from above and download it from the branch set above
     for MFS_info in self.MFS_list:
+      print ""
       zwrFile = urlRoot+"/Packages/%s/Globals/%s+%s.zwr" % (MFS_info[0], MFS_info[1],MFS_info[2].replace(")","").replace("(",""))
       print "Downloading the %s global from %s" % (MFS_info[2], zwrFile)
       downloadedGblPath = '%s/%s+%s.zwr' % (tmpDir,MFS_info[1],MFS_info[2])
@@ -144,10 +163,12 @@ class updateMFSGlobals():
       with open(downloadedGblPath,"r") as gblContent:
         gbl_first_line = gblContent.readline()
       if gbl_first_line.strip() == "404: Not Found":
+        print "Trying to see if global has split:"
         index = 1
+	didIDeleteTheFileAlready = False
         while True:
             splitZwrFile = urlRoot+"/Packages/%s/Globals/%s-%s+%s.zwr" % (MFS_info[0], MFS_info[1], index,MFS_info[2])
-            print "Trying to see if gobal has split: %s" % (splitZwrFile)
+            print "trying %s" % (splitZwrFile)
             downloadedSplitGblPath = '%s/%s-%s+%s.zwr' % (tmpDir, MFS_info[1], index,MFS_info[2])
             # Download from URL
             downloader = ExternalDataDownloader()
@@ -157,7 +178,9 @@ class updateMFSGlobals():
             if gbl_split_first_line.strip() == "404: Not Found":
               break
             if install:
-              self.installFile(vistaClient,connection,downloadedSplitGblPath)
+	      if didIDeleteTheFileAlready or self.deleteFile(connection, MFS_info[1]):
+	        didIDeleteTheFileAlready = True
+	        self.installFile(vistaClient,connection,downloadedSplitGblPath)
               os.remove(downloadedSplitGblPath)
             index = index+1
         os.remove(downloadedSplitGblPath)
@@ -168,7 +191,8 @@ class updateMFSGlobals():
         continue
     # Import the global using the ZGI routine
       if install:
-        self.installFile(vistaClient,connection,downloadedGblPath)
+        if self.deleteFile(connection, MFS_info[1]):
+          self.installFile(vistaClient,connection,downloadedGblPath)
         print "Deleting Download"
         os.remove(downloadedGblPath)
 
@@ -189,12 +213,15 @@ def main():
           help='input the filepath to a directory where GT.M stores its routines')
     parser.add_argument('-i', '--install', required=False, action="store_true",
           help='Attempt to install global files with ^ZGI?')
+    parser.add_argument('-l', '--log', required=False,
+          help='File to which I would log VistA communication')
     result = parser.parse_args();
 
     """ create the VistATestClient"""
     testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
     assert testClient
     initConsoleLogging()
+    if result.log: testClient.setLogFile(result.log)
     with testClient as vistaClient:
       update = updateMFSGlobals()
       update.updateMFSGlobalFiles(vistaClient,result.foiaBranch, result.foiaRemote,result.tmpDir, result.gtmDir, result.install)
