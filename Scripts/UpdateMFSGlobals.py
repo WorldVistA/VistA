@@ -51,12 +51,12 @@ from VistARoutineImport import VistARoutineImport
 class updateMFSGlobals():
   MFS_list = [
   ("Kernel","4.009","STANDARD TERMINOLOGY VERSION FILE"),
-  ("Pharmacy Data Management","50.416", "DRUG INGREDIENTS"),
-  ("National Drug File", "50.6", "VA GENERIC" ) ,
-  ("National Drug File","50.605", "VA DRUG CLASS") ,
-  ("National Drug File","50.68",  "VA PRODUCT" ) ,
-  ("Pharmacy Data Management","51.23","STANDARD MEDICATION ROUTES"),
-  ("Pharmacy Data Management","51.24", "DOSE UNITS"),
+  ("Registration","10.99", "RACE MASTER"),
+  ("Registration","11.99", "MASTER MARITAL STATUS"),
+  ("Registration","13.99", "MASTER RELIGION"),
+  ("National Drug File","50.60699", "MASTER DOSAGE FORM"),
+  ("Lab Service","66.3", "MASTER LABORATORY TEST"),
+  ("Radiology Nuclear Medicine","71.99", "MASTER RADIOLOGY PROCEDURE"),
   ("Lab Service", "95.3",  "LAB LOINC"),
   ("Order Entry Results Reporting","100.01","ORDER STATUS"),
   ("Order Entry Results Reporting","100.02","NATURE OF ORDER"),
@@ -65,8 +65,14 @@ class updateMFSGlobals():
   ("General Medical Record - Vitals","120.53","GMRV VITAL CATEGORY"),
   ("Adverse Reaction Tracking","120.82","GMR ALLERGIES"),
   ("Adverse Reaction Tracking","120.83","SIGN-SYMPTOMS"),
-  ("Clinical Procedures","704.101","TERM"),
-  ("Health Level Seven","779.004","COUNTRY CODE"),
+  ("Integrated Billing","355.99", "MASTER TYPE OF PLAN"),
+  ("PCE Patient Care Encounter","920", "VACCINE INFORMATION STATEMENT"),
+  ("PCE Patient Care Encounter","920.1", "IMMUNIZATION INFO SOURCE"),
+  ("PCE Patient Care Encounter","920.2", "IMM ADMINISTRATION ROUTE"),
+  ("PCE Patient Care Encounter","920.3", "IMM ADMINISTRATION SITE (BODY)"),
+  ("PCE Patient Care Encounter","920.4", "IMM CONTRAINDICATION REASONS"),
+  ("PCE Patient Care Encounter","920.5", "IMM REFUSAL REASONS"),
+  ("Health Data and Informatics","7118.11","HDIS TERM-CONCEPT VUID ASSOCIATION"),
   ("Text Integration Utility","8925.6", "TIU STATUS"),
   ("Text Integration Utility","8926.1", "TIU VHA ENTERPRISE STANDARD TITLE"),
   ("Text Integration Utility","8926.2", "TIU LOINC SUBJECT MATTER DOMAIN"),
@@ -74,29 +80,33 @@ class updateMFSGlobals():
   ("Text Integration Utility","8926.4", "TIU LOINC SETTING"),
   ("Text Integration Utility","8926.5", "TIU LOINC SERVICE"),
   ("Text Integration Utility","8926.6", "TIU LOINC DOCUMENT TYPE"),
-  ("Registration","10.99", "RACE MASTER"),
-  ("Registration","11.99", "MASTER MARITAL STATUS"),
-  ("Registration","13.99", "MASTER RELIGION"),
-  ("National Drug File","50.60699", "MASTER DOSAGE FORM"),
-  ("Lab Service","66.3", "MASTER LABORATORY TEST"),
-  ("Radiology Nuclear Medicine","71.99", "MASTER RADIOLOGY PROCEDURE"),
-  ("Integrated Billing","355.99", "MASTER TYPE OF PLAN"),
-  ("Lexicon Utility","757.33", "MAPPINGS"),
-  ("PCE Patient Care Encounter","920", "VACCINE INFORMATION STATEMENT"),
-  ("PCE Patient Care Encounter","920.1", "IMMUNIZATION INFO SOURCE"),
-  ("PCE Patient Care Encounter","920.2", "IMM ADMINISTRATION ROUTE"),
-  ("PCE Patient Care Encounter","920.3", "IMM ADMINISTRATION SITE (BODY)"),
-  ("PCE Patient Care Encounter","920.4", "IMM CONTRAINDICATION REASONS"),
-  ("PCE Patient Care Encounter","920.5", "IMM REFUSAL REASONS"),
-  ("Text Integration Utility","8926.6", "TIU LOINC DOCUMENT TYPE"),
   ("Kernel","8932.1", "PERSON CLASS"),
+  ("Toolkit","8985.1","XTID VUID FOR SET OF CODES"),
   ("PCE Patient Care Encounter","9999999.04", "IMM MANUFACTURER"),
   ("PCE Patient Care Encounter","9999999.14", "IMMUNIZATION"),
   ("PCE Patient Care Encounter","9999999.28", "SKIN TEST")]
+
+  """ Deletes file from VistA. Returns true if file found and deleted; false if
+  not found """
+  def deleteFile(self, connection, fileNumber):
+      # Obtain Root of Global
+      connection.send('W $$ROOT^DILFD(' + fileNumber + ',"",1)' + "\n")
+      try:
+        index = connection.expect(["\n\^.*\n"],1)
+      except:
+        print "File %s does not exist in the instance, skipping..." % fileNumber
+	return False
+      myGlobal = connection.after.strip()
+      print "Killing Global " + myGlobal
+      connection.send("KILL " + myGlobal + "\n")
+      connection.expect(".*>.*")
+      return True
+      
   def installFile(self, vistaClient, connection, downloadedGblPath):
       print "Importing %s" % downloadedGblPath
+
       connection.send("D ^ZGI\r")
-      connection.expect("Device")
+      connection.expect("Device",1)
       connection.send(downloadedGblPath+"\r")
       if vistaClient.isCache():
         connection.expect("Parameters")
@@ -140,6 +150,7 @@ class updateMFSGlobals():
     connection = vistaClient.getConnection()
     # Go through each file from above and download it from the branch set above
     for MFS_info in self.MFS_list:
+      print ""
       zwrFile = urlRoot+"/Packages/%s/Globals/%s+%s.zwr" % (MFS_info[0], MFS_info[1],MFS_info[2].replace(")","").replace("(",""))
       print "Downloading the %s global from %s" % (MFS_info[2], zwrFile)
       downloadedGblPath = '%s/%s+%s.zwr' % (tmpDir,MFS_info[1],MFS_info[2])
@@ -152,10 +163,12 @@ class updateMFSGlobals():
       with open(downloadedGblPath,"r") as gblContent:
         gbl_first_line = gblContent.readline()
       if gbl_first_line.strip() == "404: Not Found":
+        print "Trying to see if global has split:"
         index = 1
+	didIDeleteTheFileAlready = False
         while True:
             splitZwrFile = urlRoot+"/Packages/%s/Globals/%s-%s+%s.zwr" % (MFS_info[0], MFS_info[1], index,MFS_info[2])
-            print "Trying to see if gobal has split: %s" % (splitZwrFile)
+            print "trying %s" % (splitZwrFile)
             downloadedSplitGblPath = '%s/%s-%s+%s.zwr' % (tmpDir, MFS_info[1], index,MFS_info[2])
             # Download from URL
             downloader = ExternalDataDownloader()
@@ -165,7 +178,9 @@ class updateMFSGlobals():
             if gbl_split_first_line.strip() == "404: Not Found":
               break
             if install:
-              self.installFile(vistaClient,connection,downloadedSplitGblPath)
+	      if didIDeleteTheFileAlready or self.deleteFile(connection, MFS_info[1]):
+	        didIDeleteTheFileAlready = True
+	        self.installFile(vistaClient,connection,downloadedSplitGblPath)
               os.remove(downloadedSplitGblPath)
             index = index+1
         os.remove(downloadedSplitGblPath)
@@ -176,7 +191,8 @@ class updateMFSGlobals():
         continue
     # Import the global using the ZGI routine
       if install:
-        self.installFile(vistaClient,connection,downloadedGblPath)
+        if self.deleteFile(connection, MFS_info[1]):
+          self.installFile(vistaClient,connection,downloadedGblPath)
         print "Deleting Download"
         os.remove(downloadedGblPath)
 
@@ -197,12 +213,15 @@ def main():
           help='input the filepath to a directory where GT.M stores its routines')
     parser.add_argument('-i', '--install', required=False, action="store_true",
           help='Attempt to install global files with ^ZGI?')
+    parser.add_argument('-l', '--log', required=False,
+          help='File to which I would log VistA communication')
     result = parser.parse_args();
 
     """ create the VistATestClient"""
     testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
     assert testClient
     initConsoleLogging()
+    if result.log: testClient.setLogFile(result.log)
     with testClient as vistaClient:
       update = updateMFSGlobals()
       update.updateMFSGlobalFiles(vistaClient,result.foiaBranch, result.foiaRemote,result.tmpDir, result.gtmDir, result.install)
