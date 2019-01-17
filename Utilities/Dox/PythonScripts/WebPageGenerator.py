@@ -121,14 +121,14 @@ GOOGLE_ANALYTICS_JS_CODE = """
 
 TOP_INDEX_BAR_PART = """
 <center>
-<a href="index.html" class="qindex">Home</a>&nbsp;&nbsp;
-<a href="packages.html" class="qindex">Package List</a>&nbsp;&nbsp;
-<a href="routines.html" class="qindex">Routine Alphabetical List</a>&nbsp;&nbsp;
-<a href="globals.html" class="qindex">Global Alphabetical List</a>&nbsp;&nbsp;
-<a href="filemanfiles.html" class="qindex">FileMan Files List</a>&nbsp;&nbsp;
-<a href="filemansubfiles.html" class="qindex">FileMan Sub-Files List</a>&nbsp;&nbsp;
-<a href="PackageComponents.html" class="qindex">Package Component Lists</a>&nbsp;&nbsp;
-<a href="Packages_Namespace_Mapping.html" class="qindex">
+<a href="index.html" class="qindex" id="home">Home</a>&nbsp;&nbsp;
+<a href="packages.html" class="qindex" id="package_list">Package List</a>&nbsp;&nbsp;
+<a href="routines.html" class="qindex" id="routine_list">Routine Alphabetical List</a>&nbsp;&nbsp;
+<a href="globals.html" class="qindex" id="global_list">Global Alphabetical List</a>&nbsp;&nbsp;
+<a href="filemanfiles.html" class="qindex" id="fileman_files_list">FileMan Files List</a>&nbsp;&nbsp;
+<a href="filemansubfiles.html" class="qindex" id="fileman_subfiles_list">FileMan Sub-Files List</a>&nbsp;&nbsp;
+<a href="PackageComponents.html" class="qindex" id="package_component_list">Package Component Lists</a>&nbsp;&nbsp;
+<a href="Packages_Namespace_Mapping.html" class="qindex" id="package_namespace_mapping">
 Package-Namespace Mapping</a>&nbsp;&nbsp;
 <BR>
 </center>
