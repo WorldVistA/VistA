@@ -653,7 +653,7 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
     # local connections
     if sys.platform == 'win32':
       return ConnectWinCache(logfile, instance, namespace, location)
-    elif sys.platform == 'linux2':
+    elif (sys.platform == 'linux2' or sys.platform == 'cygwin'):
       if no_pexpect:
         raise no_pexpect
       if os.getenv('gtm_dist'):
