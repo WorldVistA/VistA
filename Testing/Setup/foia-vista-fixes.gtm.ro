@@ -1,0 +1,1335 @@
+Routines
+
+DGRPD
+DGRPD ;ALB/MRL,MLR,JAN,LBD,EG,BRM,JRC,BAJ,KUM - PATIENT INQUIRY (NEW) ;2018-06-22  12:29 PM
+ ;;5.3;Registration;**109,124,121,57,161,149,286,358,436,445,489,498,506,513,518,550,545,568,585,677,703,688,887,907,925,936,940,OSEHRA**;Aug 13, 1993;Build 11
+ ;  *286*  Newing variables X,Y in OKLINE subroutine
+ ;  *358*  If a patient is on a domiciliary ward, don't display MEANS
+ ;         TEST required/Medication Copayment Exemption messages
+ ;  *436*  If an inpatient is not on a domiciliary ward, don't display
+ ;         Medication Copayment Exemption message
+ ;  *545*  Add death information near the remarks field
+ ;  *677*  Added Emergency Response
+ ;  *688*  Modified to display Country and Foreign Address
+ ;  *936*  Modified to display Health Benefit Plans
+ ;  *940*  #879316,#879318 - Display Permanent & Total Disabled Status
+ ;
+ ;  Integration Agreements:
+ ;        6138 - DGHBPUTL API
+ ;
+ ; *OSEHRA Change is a single character change (remove space). (c) Sam Habiel 2018
+ ;
+SEL K DFN,DGRPOUT W ! S DIC="^DPT(",DIC(0)="AEQMZ" D ^DIC G Q:Y'>0 S DFN=+Y N Y W ! S DIR(0)="E" D ^DIR G SEL:$D(DTOUT)!($D(DUOUT)) D EN G SEL
+EN ;call to display patient inquiry - input DFN
+ ;MPI/PD CHANGE
+ S DGCMOR="UNSPECIFIED",DGMPI=$G(^DPT(+DFN,"MPI"))
+ S DGLOCATN=$$FIND1^DIC(4,"","MX","`"_+$P(DGMPI,U,3)),DGLOCATN=$S(+DGLOCATN>0:$P($$NS^XUAF4(DGLOCATN),U),1:"NOT LISTED")
+ I $D(DGMPI),$D(DGLOCATN) S DGCMOR=$P(DGLOCATN,"^")
+ ;END MPI/PD CHANGE
+ K DGRPOUT,DGHOW S DGABBRV=$S($D(^DG(43,1,0)):+$P(^(0),"^",38),1:0),DGRPU="UNSPECIFIED" D DEM^VADPT,HDR^DGRPD1 F I=0,.11,.13,.121,.122,.31,.32,.36,.361,.141,.3 S DGRP(I)=$S($D(^DPT(DFN,I)):^(I),1:"")
+ S DGAD=.11,(DGA1,DGA2)=1 D A^DGRPU S DGTMPAD=0 I $P(DGRP(.121),"^",9)="Y" S DGTMPAD=$S('$P(DGRP(.121),"^",8):1,$P(DGRP(.121),"^",8)'<DT:1,1:0) I DGTMPAD S DGAD=.121,DGA1=1,DGA2=2 D A^DGRPU
+ ;jam DG*5.3*925 RM#788099 Add/Edit Residential address - move addresses down 1 line below the field labels
+ ; and change labels to "Permanent Mailing Address" and "Temporary Mailing Address"
+ W ?1,"Permanent Mailing Address: ",?40,"Temporary Mailing Address: "
+ W !,?9,$S($D(DGA(1)):DGA(1),1:"NONE ON FILE"),?48,$S($D(DGA(2)):DGA(2),1:"NO TEMPORARY MAILING")
+ S I=2 F I1=0:0 S I=$O(DGA(I)) Q:I=""  W:(I#2)!($X>50) !?9 W:'(I#2) ?48 W DGA(I)
+ S DGCC=+$P(DGRP(.11),U,7),DGST=+$P(DGRP(.11),U,5),DGCC=$S($D(^DIC(5,DGST,1,DGCC,0)):$E($P(^(0),U,1),1,20)_$S($P(^(0),U,3)]"":" ("_$P(^(0),U,3)_")",1:""),1:DGRPU)
+ N DGCNTRY,DGFORGN S DGCNTRY=$P(DGRP(.11),"^",10),DGFORGN=$$FORIEN^DGADDUTL(DGCNTRY) I 'DGFORGN W !?2,"County: ",DGCC
+ S X="NOT APPLICABLE" I DGTMPAD S Y=$P(DGRP(.121),U,7) X:Y]"" ^DD("DD") S X=$S(Y]"":Y,1:DGRPU)_"-",Y=$P(DGRP(.121),U,8) X:Y]"" ^DD("DD") S X=X_$S(Y]"":Y,1:DGRPU)
+ N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """) ; *OSEHRA
+ W @DGSKIP,X,!?3,"Phone: ",$S($P(DGRP(.13),U,1)]"":$P(DGRP(.13),U,1),1:DGRPU),?44,"Phone: ",$S('DGTMPAD:X,$P(DGRP(.121),U,10)]"":$P(DGRP(.121),U,10),1:DGRPU) K DGTMPADW
+ W !?2,"Office: ",$S($P(DGRP(.13),U,2)]"":$P(DGRP(.13),U,2),1:DGRPU)
+ W !?4,"Cell: ",$S($P(DGRP(.13),U,4)]"":$P(DGRP(.13),U,4),1:DGRPU)
+ W !?2,"E-mail: ",$S($P(DGRP(.13),U,3)]"":$P(DGRP(.13),U,3),1:DGRPU)
+ W !,"Bad Addr: ",$$EXTERNAL^DILFD(2,.121,"",$$BADADR^DGUTL3(+DFN))
+ D CA
+ N DGEMER S DGEMER=$$EXTERNAL^DILFD(2,.181,"",$P($G(^DPT(DFN,.18)),"^"))
+ W:DGEMER]"" !?32,"Emergency Response: ",DGEMER
+ I 'DGABBRV W !!?4,"POS: ",$S($D(^DIC(21,+$P(DGRP(.32),"^",3),0)):$P(^(0),"^",1),1:DGRPU),?42,"Claim #: ",$S($P(DGRP(.31),"^",3)]"":$P(DGRP(.31),"^",3),1:"UNSPECIFIED")
+ I 'DGABBRV W !?2,"Relig: ",$S($D(^DIC(13,+$P(DGRP(0),"^",8),0)):$P(^(0),"^",1),1:DGRPU),?46,"Birth Sex: ",$S($P(VADM(5),"^",2)]"":$P(VADM(5),"^",2),1:"UNSPECIFIED") ; DG*5.3*907
+ I 'DGABBRV W ! D
+ .N RACE,ETHNIC,PTR,VAL,X,DIWL,DIWR,DIWF
+ .K ^UTILITY($J,"W")
+ .S PTR=0 F  S PTR=+$O(^DPT(DFN,.02,PTR)) Q:'PTR  D
+ ..S VAL=+$G(^DPT(DFN,.02,PTR,0))
+ ..Q:$$INACTIVE^DGUTL4(VAL,1)
+ ..S VAL=$$PTR2TEXT^DGUTL4(VAL,1) S:+$O(^DPT(DFN,.02,PTR)) VAL=VAL_", "
+ ..S X=VAL,DIWL=0,DIWR=30,DIWF="" D ^DIWP
+ .M RACE=^UTILITY($J,"W",0) S:$G(RACE(1,0))="" RACE(1,0)="UNANSWERED"
+ .K ^UTILITY($J,"W")
+ .S PTR=0 F  S PTR=+$O(^DPT(DFN,.06,PTR)) Q:'PTR  D
+ ..S VAL=+$G(^DPT(DFN,.06,PTR,0))
+ ..Q:$$INACTIVE^DGUTL4(VAL,2)
+ ..S VAL=$$PTR2TEXT^DGUTL4(VAL,2) S:+$O(^DPT(DFN,.06,PTR)) VAL=VAL_", "
+ ..S X=VAL,DIWL=0,DIWR=30,DIWF="" D ^DIWP
+ .M ETHNIC=^UTILITY($J,"W",0) S:$G(ETHNIC(1,0))="" ETHNIC(1,0)="UNANSWERED"
+ .K ^UTILITY($J,"W")
+ .W ?3,"Race: ",RACE(1,0),?40,"Ethnicity: ",ETHNIC(1,0)
+ .F X=2:1 Q:'$D(RACE(X,0))&'$D(ETHNIC(X,0))  W !,?9,$G(RACE(X,0)),?51,$G(ETHNIC(X,0))
+ I '$$OKLINE^DGRPD1(16) G Q
+ D LANGUAGE
+ I '$$OKLINE^DGRPD1(10) G Q
+ ;display cv status #4156
+ N DGCV S DGCV=$$CVEDT^DGCV(+DFN)
+ W !!,?2,"Combat Vet Status: "_$S($P(DGCV,U,3)=1:"ELIGIBLE",$P(DGCV,U,3)="":"NOT ELIGIBLE",1:"EXPIRED") I DGCV>0 W ?45,"End Date: "_$$FMTE^XLFDT($P(DGCV,U,2),"5DZ")
+ ;display primary eligibility
+ S X1=DGRP(.36),X=$P(DGRP(.361),"^",1) W !,"Primary Eligibility: ",$S($D(^DIC(8,+X1,0)):$P(^(0),"^",1)_" ("_$S(X="V":"VERIFIED",X="P":"PENDING VERIFICATION",X="R":"PENDING REVERIFICATION",1:"NOT VERIFIED")_")",1:DGRPU)
+ W !,"Other Eligibilities: " F I=0:0 S I=$O(^DIC(8,I)) Q:'I  I $D(^DIC(8,I,0)),I'=+X1 S X=$P(^(0),"^",1)_", " I $D(^DPT("AEL",DFN,I)) W:$X+$L(X)>79 !?21 W X
+ I '$$OKLINE^DGRPD1(16) G Q
+ ;employability status
+ W !?6,"Unemployable: ",$S($P(DGRP(.3),U,5)="Y":"YES",1:"NO")
+ I '$$OKLINE^DGRPD1(19) G Q
+ ; KUM DG*5.3*940 RM #879316,#879318 - Display Permanent & Total Disabled status
+ W !?6,"Permanent & Total Disabled: ",$S($P(DGRP(.3),U,4)="Y":"YES",1:"NO")
+ I '$$OKLINE^DGRPD1(19) G Q
+ ;display the catastrophic disability review date if there is one
+ D CATDIS^DGRPD1
+ I $G(DGPRFLG)=1 G Q:'$$OKLINE^DGRPD1(19) D
+ . N DGPDT,DGPTM
+ . W !,$$REPEAT^XLFSTR("-",78)
+ . S DGPDT="",DGPDT=$O(^DGS(41.41,"ADC",DFN,DGPDT),-1)
+ . W !,"[PRE-REGISTER DATE:]  "_$S(DGPDT]"":$$FMTE^XLFDT(DGPDT,"1D"),1:"NONE ON FILE")
+ . S DGPTM=$$PCTEAM^DGSDUTL(DFN)
+ . I $P(DGPTM,U,2)]"" W !,"[PRIMARY CARE TEAM:] "_$P(DGPTM,U,2)
+ . W !,$$REPEAT^XLFSTR("-",78)
+ ; Check if patient is an inpatient and on a DOM ward
+ ; If inpatient is on a DOM ward, don't display MT or CP messages
+ ; If inpatient is NOT on a DOM ward, don't display CP message
+ N DGDOM,DGDOM1,VAHOW,VAROOT,VAINDT,VAIP,VAERR
+ G Q:'$$OKLINE^DGRPD1(16)
+ D DOM^DGMTR
+ I '$G(DGDOM) D
+ .D DIS^DGMTU(DFN)
+ .D IN5^VADPT
+ .I $G(VAIP(1))="" D DISP^IBARXEU(DFN,DT,3,1)
+ ;I 'DGABBRV,$E(IOST,1,2)="C-" F I=$Y:1:20 W !
+ D DIS^EASECU(DFN)   ;Added for LTC III (DG*5.3*518)
+ S VAIP("L")=""
+ I $$OKLINE^DGRPD1(14) D INP
+ I '$G(DGRPOUT),($$OKLINE^DGRPD1(10)) D SA ;*KNR*
+ ;MPI/PD CHANGE
+Q D KVA^VADPT K %DT,D0,D1,DGA,DGA1,DGA2,DGABBRV,DGAD,DGCC,DGCMOR,DGDOM,DGLOCATN,DGMPI,DGRP,DGRPU,DGS,DGST,DGXFR0,DIC,DIR,DTOUT,DUOUT,DIRUT,DIROUT,I,I1,L,LDM,POP,SDCT,VA,X,X1,Y Q
+CA ;Confidential Address
+ W !!?1,"Confidential Address:  ",?44,"Confidential Address Categories:"
+ N DGCABEG,DGCAEND,DGA,DGARRAY,DGERROR
+ S DGCABEG=$P(DGRP(.141),U,7),DGCAEND=$P(DGRP(.141),U,8)
+ I 'DGCABEG!(DGCABEG>DT)!(DGCAEND&(DGCAEND<DT)) D  Q
+ .W !?9,"NO CONFIDENTIAL ADDRESS"
+ .W !?1,"From/To: NOT APPLICABLE"
+ S DGAD=.141,(DGA1,DGA2)=1
+ D AL^DGRPU(30)
+ D GETS^DIQ(2,DFN,".141*,","E","DGARRAY","DGERROR")
+ ;Format Confidential Address categories
+ N DGIEN,DGCAST
+ S DGIEN=0
+ S DGA2=2
+ F  S DGIEN=$O(DGARRAY(2.141,DGIEN)) Q:'DGIEN  D
+ .S DGA(DGA2)=DGARRAY(2.141,DGIEN,.01,"E")
+ .S DGCAST=DGARRAY(2.141,DGIEN,1,"E")
+ .S DGA(DGA2)=DGA(DGA2)_"("_$S(DGCAST="YES":"Active",1:"Inactive")_")"
+ .S DGA2=DGA2+2
+ S I=0 F I1=0:0 S I=$O(DGA(I)) Q:I=""  W:(I#2)!($X>43) !?9 W:'(I#2) ?44 W DGA(I)
+ W !?1,"From/To:  ",$$FMTE^XLFDT(DGCABEG)_"-"_$S(DGCAEND'="":$$FMTE^XLFDT(DGCAEND),1:"UNANSWERED")
+ Q
+INP S VAIP("D")="L" D INP^DGPMV10
+ S DGPMT=0
+ D CS^DGPMV10 K DGPMT,DGPMIFN K:'$D(DGSWITCH) DGPMVI,DGPMDCD Q
+SA F I=0:0 S I=$O(^DGS(41.1,"B",DFN,I)) G CL:'I S X=^DGS(41.1,I,0) I $P(X,"^",2)>(DT-1),$P(X,"^",13)']"",'$P(X,"^",17) S L=$P(X,"^",2) D:$$OKLINE^DGRPD1(17) SAA Q:$G(DGRPOUT)
+ Q
+SAA ;Scheduled Admit Data
+ W !!?14,"Scheduled Admit"
+ W:$D(^DIC(42,+$P(X,U,8),0)) " on ward "_$P(^(0),U)
+ W:$D(^DIC(45.7,+$P(X,U,9),0)) " for treating specialty "_$P(^(0),U)
+ W " on "_$$FMTE^XLFDT(L,"5DZ")
+ Q  ;SAA
+ ;
+CL G FA:$O(^DPT(DFN,"DE",0))="" S SDCT=0 F I=0:0 S I=$O(^DPT(DFN,"DE",I)) Q:'I  I $D(^(I,0)),$P(^(0),"^",2)'="I",$O(^(0)) S SDCT=SDCT+1 W:SDCT=1 !!,"Currently enrolled in " W:$X>50 !?22 W $S($D(^SC(+^(0),0)):$P(^(0),"^",1)_", ",1:"")
+ ;
+FA ;
+ N DGARRAY,SDCNT
+ S DGARRAY("FLDS")="1;2;3;18",DGARRAY(4)=DFN,DGARRAY(1)=DT,DGARRAY("SORT")="P"
+ S SDCNT=$$SDAPI^SDAMA301(.DGARRAY),CT=0 W !!,"Future Appointments: "
+ ;if there is lower subscripts hanging from the 101 node,
+ ;then it is a valid appointment, otherwise it is
+ ;an error eg 01/20/2005
+ ;G:'$$OKLINE^DGRPD1(13) RMK ;*///*
+ I $D(^TMP($J,"SDAMA301",101))=1 W "Appointment Database is Unavailable" G RMK
+ I $O(^TMP($J,"SDAMA301",DFN,DT))'>0 W "NONE" G RMK
+ ;
+ W ?22,"Date",?33,"Time",?39,"Clinic",!?22 F I=22:1:75 W "="
+ F FA=DT:0 S FA=$O(^TMP($J,"SDAMA301",DFN,FA)) G RMK:'FA D  Q:CT>5
+ .N STAT S STAT=$P($P(^TMP($J,"SDAMA301",DFN,FA),U,3),";")
+ .S C=+$P(^TMP($J,"SDAMA301",DFN,FA),U,2) I STAT'["C" D
+ ..D COV
+ ..N DGAPPT S DGAPPT=$$FMTE^XLFDT($E(FA,1,12),"5Z")
+ ..W !?22,$P(DGAPPT,"@"),?33,$P(DGAPPT,"@",2)
+ ..W ?39,$P($P(^TMP($J,"SDAMA301",DFN,FA),U,2),";",2)," ",COV
+ ..Q
+ I $O(^TMP($J,"SDAMA301",DFN,FA))>0 W !,"See Scheduling options for additional appointments."
+RMK I '$G(DGRPOUT),($$OKLINE^DGRPD1(15)) W !!,"Remarks: ",$P(^DPT(DFN,0),"^",10) ;*///*
+ D GETS^DIQ(2,DFN_",",".351;.353;.354;.355","E","PDTHINFO")
+ W !!
+ W "Date of Death Information"
+ W !,?5,"Date of Death: ",$G(PDTHINFO(2,DFN_",",.351,"E"))
+ W !,?5,"Source of Notification: ",$G(PDTHINFO(2,DFN_",",.353,"E"))
+ W !,?5,"Updated Date/Time: ",$G(PDTHINFO(2,DFN_",",.354,"E"))
+ W !,?5,"Last Edited By: ",$G(PDTHINFO(2,DFN_",",.355,"E")),!
+ I $$OKLINE^DGRPD1(14) D EC^DGRPD1
+ D HBP
+ K DGARRAY,SDCNT,^TMP($J,"SDAMA301"),ADM,L,TRN,DIS,SSN,FA,C,COV,NOW,CT,DGD,DGD1,I ;Y killed after dghinqky
+ Q
+ ; KUM DG*5.3*936 Display Health Benefit Plans assigned to Veteran
+HBP W !!,"Health Benefit Plans Currently Assigned to Veteran:"
+ N DGHBP,HBP,DGCOUNT
+ S DGCOUNT=0
+ D GETHBP^DGHBPUTL(DFN)
+ S DGHBP="" F  S DGHBP=$O(HBP("CUR",DGHBP)) Q:DGHBP=""  D
+ .W !,?3,DGHBP
+ .S DGCOUNT=DGCOUNT+1
+ I DGCOUNT=0 W !,?3,"None"
+ Q
+ ;
+COV S COV=$S(+$P(^TMP($J,"SDAMA301",DFN,FA),U,18)=7:" (Collateral) ",1:"")
+ S COV=COV_$S(STAT["NT":" * NO ACTION TAKEN *",STAT["N":" * NO-SHOW *",1:""),CT=CT+1 Q
+ Q
+ ;
+OREN S XQORQUIT=1 Q:'$D(ORVP)  S DFN=+ORVP D EN R !!,"Press RETURN to CONTINUE: ",X:DTIME
+ Q
+LANGUAGE ; Get language data *///*
+ S DGLANGDT=9999999,(DGPRFLAN,DGLANG0)=""
+ S DGLANGDT=$O(^DPT(DFN,.207,"B",DGLANGDT),-1)
+ I DGLANGDT="" G L1
+ S DGLANGDA=$O(^DPT(DFN,.207,"B",DGLANGDT,0))
+ S DGLANG0=$G(^DPT(DFN,.207,DGLANGDA,0)),Y=$P(DGLANG0,U),DGPRFLAN=$P(DGLANG0,U,2)
+ S Y=DGLANGDT X ^DD("DD") S DGLANGDT=Y
+L1 W !!,"Language Date/Time: ",$S(DGLANGDT="":"UNANSWERED",1:DGLANGDT),!
+ W ?1,"Preferred Language: ",$S(DGPRFLAN="":"UNANSWERED",1:DGPRFLAN)
+ K DGLANGDT,DGPRFLAN,DGLANG0,DGLANGDA
+ Q
+
+DIUTL
+DIUTL ;GFT  TIMSON'S UTILITIES;9MAY2018
+ ;;22.2;VA FileMan;;Jan 05, 2015;
+ ;;Submitted to OSEHRA 5 January 2015 by the VISTA Expertise Network.
+ ;;Based on Medsphere Systems Corporation's MSC Fileman 1051.
+ ;;Licensed under the terms of the Apache License, Version 2.0.
+ ;;GFT;**76,999,1003,1004,1023,1055,1057,1058,1059,1060**
+ ;
+TRIME(Y) ;
+ F  Q:$E(Y,$L(Y))'=" "  S Y=$E(Y,1,$L(Y)-1) ;IF STORED BY $EXTRACT, TRIM TRAILING SPACES
+ Q Y
+ ;
+ ;
+PLUS(Y) ;
+ S:Y'<0 Y="+"_Y
+ Q Y
+ ;
+ ;
+NAKED(DIUTLREF) ;The argument is evaluated and returned, while keeping the naked reference as it was!
+ N DIUTLNKD ;THIS WILL BE THE NAME OF THE NAKED
+ I 0 ;X "I $ZREFERENCE=""""" I  S DIUTLNKD="^TMP(""DI DUMMY"",0)"
+ E  S DIUTLNKD=$NA(^(0))
+ X "S DIUTLREF="_DIUTLREF
+ D  Q DIUTLREF
+ .I $D(@DIUTLNKD)
+ ;
+ ;
+DATE(Y) ;**CCO/NI   RETURN A DATE   22.2 CHANGED THIS BACK
+ I Y X ^DD("DD")
+ Q Y
+ ;
+ ;
+NOWINT() ;INTERNAL VERSION OF NOW
+ N %,%I,%H,%M,%D,%Y,X
+ D NOW^%DTC Q %
+ ;
+ ;
+NOW() ;EXTERNAL NOW
+ N X S X=$$NOWINT Q $$DATE(X-(X#.0001))
+ ;
+ ;
+WP(DIRF,DIWL,DIWR,DIWPUT) ;Write out WP field (if any) stored at DIRF, or put it in DIWPUT array
+ N DIWF,Z,A1,D,X,DIW,DIWT,DN,I,DIWI,DIWTC,DIWX
+ K ^UTILITY($J,"W")
+ S DIWF=$E("W",'$D(DIWPUT))_"|" S:'$G(IOM) IOM=80 S:'$G(DIWR) DIWR=IOM S:'$G(DIWL) DIWL=1
+ S A1=$P($G(@DIRF@(0)),U,3) F D=0:0 S D=$O(@DIRF@(D)) Q:D>A1&A1!'D  S X=^(D,0) D ^DIWP G QWP:$G(DN)=0
+ I $G(DIWPUT)]"" D  Q 1
+ .K @DIWPUT M @DIWPUT=^UTILITY($J,"W")
+ D ^DIWW
+QWP I $G(DN)'=0 Q 1
+ K DIOEND Q 0
+ ;
+IJ(N) ;build I & J arrays given subfile number N
+ N A K I,J
+ S J(0)=N,N=0
+0 I $D(^DIC(J(0),0,"GL")) S I(0)=^("GL") Q
+ S A=$G(^DD(J(0),0,"UP")) Q:A=""
+ S I=$O(^DD(A,"SB",J(0),0)) Q:'I
+ S I=$P($P($G(^DD(A,I,0)),U,4),";") Q:I=""
+ I +I'=I S I=""""_I_""""
+ F J=N:-1:0 S J(J+1)=J(J) S:J I(J+1)=I(J)
+ S J(0)=A,I(1)=I,N=N+1 G 0
+ ;
+ ;
+DIVR(DI,DIFLD) ;verify
+ N DIVZ,S,A,DA,DICL,V,Z,DDC,DR,N,Y,I,J,Q,W,V,T,DQI
+ K ^UTILITY("DIVR",$J),^DD(U,$J)
+ D IJ(DI)
+ I '$O(@(I(0)_"0)")) Q  ;File must have some entries!
+ S S=";",Q="""",V=$O(J(""),-1),A=DI,DA=DIFLD
+ S DR=$P(^DD(DI,DIFLD,0),U,2),Z=$P(^(0),U,3),$P(Y(0),U,4)=$P(^(0),U,4),DDC=$P(^(0),U,5,999)
+ Q:DR["W"!(DR["C")
+ F T="N","S","V","P","K","F" Q:DR[T
+ W !!,"SINCE YOU HAVE CHANGED THE FIELD DEFINITION,",!,"EXISTING '",$P(^(0),U),"' DATA WILL NOW BE CHECKED FOR INCONSISTENCIES",!,"OK"
+ S %=1 D YN^DICN Q:%-1
+ ;D ^%ZIS Q:POP
+ ;U IO   WON'T WORK BECAUSE Q+3^DIVR ASKS TO STORE IN TEMPLATE
+ D EN^DIVR(DI,DIFLD)
+ ;D ^%ZISC
+ Q
+ ;
+ ;
+CHKPT(DIFILE,DA,DIMSG) ;check if any entries points to this entry(DA) in file (DIFILE)
+ ;INPUT: DIFILE=file number, DA=ien of record, DIMSG=closed global root or local array
+ ;OUTPUT: DIMSG(0)=line count, DISMG(#)="Entry ien in FILE (file #) refers to it."
+ ;CODE CAME FROM DEL^DPTLK2
+ Q:$G(DIMSG)=""  S @DIMSG@(0)=0
+ Q:'$G(DA)  Q:$G(^DIC(+$G(DIFILE),0))=""
+ N I,J,K,L,A,B,C,G,T,Q S Q="""",C=0
+ ;find all files and fields that point to this file
+ F I=0:0 S I=$O(^DD(DIFILE,0,"PT",I)) Q:'I  F J=0:0 S J=+$O(^DD(DIFILE,0,"PT",I,J)),(B,T)=I Q:'J  D
+ .;check if multiple, find top file level = T
+ . F  S B=+$G(^DD(B,0,"UP")) S:B T=B I 'B S G=$G(^DIC(+T,0,"GL")) Q
+ .;pointing to file must have file level cross reference; file level (+A=T), not mumps
+ . F K=0:0 S K=$O(^DD(I,J,1,K)) Q:'K  S A=$G(^(K,0)) I +A=T,$L($P(A,U,2)),'$L($P(A,U,3)) D
+  .. Q:'$L(G)
+  ..; if variable pointer, then reset DA to contain global ref.  DA;gr
+  .. I $P(^DD(I,J,0),U,2)["V" S L=DA N DA S DA=Q_L_";"_$P($G(^DIC(DIFILE,0,"GL")),"^",2)_Q
+  .. F L=0:0 S L=$O(@(G_Q_$P(A,U,2)_Q_","_DA_",L)")) Q:'L  D
+  ... S C=C+1,@DIMSG@(C)="Entry "_L_" in "_$P($G(^DIC(T,0)),U)_" ("_T_") refers to it."
+  .. Q
+ . Q
+ S @DIMSG@(0)=C
+ Q
+
+HLCSTCP3
+HLCSTCP3 ;SFIRMFO/RSD - BI-DIRECTIONAL TCP ;2018-09-06  10:24 AM
+ ;;1.6;HEALTH LEVEL SEVEN;**76,77,133,122,153,157,OSEHRA**;OCT 13, 1995;Build 8
+ ;
+ ; Changes **OSEHRA** by Sam Habiel (c) 2018
+ ;
+OPENA ;
+ ; called from $$OPEN^HLCSTCP2 and this sub-routine OPENA
+ ;
+ ; **P153 START CJM
+ ; Reset the TCP Address incase DNS changed it without a successful connection
+ K HLDOM
+ S HLTCPADD=$P(^HLCS(870,HLDP,400),U)
+ ;
+RETRY ;
+ ; **P153 END CJM
+ ;
+ I $G(HLMSG),$D(^HLMA(HLMSG,"P")) S HLPORTA=+$P(^("P"),U,6)
+ S POP=1
+ ;
+ ; patch HL*1.6*122 start
+ ; variable HLDRETR=re-transmit attemps (#870,200.02)
+ ; variable HLTCPLNK("TIMEOUT")=timeout for 3rd parameter of CALL^%ZISTCP()
+ ; defined in HLCSTCP routine
+ ;
+ I '$G(HLDRETR("COUNT")) S HLDRETR("COUNT")=1
+ I '$G(HLTCPLNK("TIMEOUT")) S HLTCPLNK("TIMEOUT")=5
+ S HLDRETR("COUNT-2")=HLDRETR("COUNT")+HLDRETR
+ ; patch 133
+ ; I $G(HLDIRECT("OPEN TIMEOUT")) D
+ ; .S HLI=1
+ ; .D CALL^%ZISTCP(HLTCPADD,HLTCPORT,HLDIRECT("OPEN TIMEOUT"))
+ ; E  D
+ ; .F HLI=1:1:HLDRETR D CALL^%ZISTCP(HLTCPADD,HLTCPORT) Q:'POP
+ I $G(HLDIRECT("OPEN TIMEOUT")) D
+ . D MON^HLCSTCP("Open")
+ . D CALL^%ZISTCP(HLTCPADD,HLTCPORT,HLDIRECT("OPEN TIMEOUT"))
+ . ; give site one more chance to override the application setup
+ . I $G(POP),(HLTCPLNK("TIMEOUT")>HLDIRECT("OPEN TIMEOUT")) D
+ .. D CALL^%ZISTCP(HLTCPADD,HLTCPORT,HLTCPLNK("TIMEOUT"))
+ E  D
+ . N COUNT
+ . ; try to connect HLDRETR times
+ . F HLDRETR("COUNT")=HLDRETR("COUNT"):1:HLDRETR("COUNT-2") D  Q:('POP)!($$STOP^HLCSTCP)
+ .. D MON^HLCSTCP("Open")
+ .. ; D CALL^%ZISTCP(HLTCPADD,HLTCPORT)
+ .. D CALL^%ZISTCP(HLTCPADD,HLTCPORT,HLTCPLNK("TIMEOUT"))
+ .. ;open error
+ .. I POP D
+ ... D CC^HLCSTCP2("Openfail")
+ ... H $S(HLDRETR("COUNT")=1:0,HLDRETR("COUNT")<10:1,1:8)
+ ... I '$D(^XTMP("HL7-Openfail",$J)) D
+ .... S ^XTMP("HL7-Openfail",0)=$$FMADD^XLFDT($$NOW^XLFDT,3)_"^"_$$NOW^XLFDT
+ .... S ^XTMP("HL7-Openfail",$J,"COUNT","FIRST")=HLDRETR("COUNT")_"^"_$$NOW^XLFDT
+ ... S COUNT=$P($G(^XTMP("HL7-Openfail",$J,"COUNT","LAST")),"^")+1
+ ... S ^XTMP("HL7-Openfail",$J,"COUNT","LAST")=COUNT_"^"_$$NOW^XLFDT
+ ;
+ ;set # of opens back in msg
+ ; I $G(HLMSG),$D(^HLMA(HLMSG,"P")) S $P(^("P"),U,6)=HLPORTA+HLI
+ I $G(HLMSG),$D(^HLMA(HLMSG,"P")) S $P(^("P"),U,6)=HLDRETR("COUNT")
+ ; patch HL*1.6*122 end
+ ;
+ ;device open
+ I 'POP S HLPORT=IO D  Q $S($G(HLERROR)]"":0,1:1)
+ . N $ETRAP,$ESTACK S $ETRAP="D ERROR^HLCSTCP2" ;HL*1.6*77
+ . ;if address came from DNS, set back into LL
+ . I $D(HLIP) S $P(^HLCS(870,HLDP,400),U)=HLTCPADD
+ . ; write and read to check if still open
+ . ; patch HL*1.6*157: HLOS is from calling $$OS^%ZOSV
+ . ; Q:HLOS'["OpenM"  X "U IO:(::""-M"")" ; must be Cache/NT + use packet mode
+ . ; Q:(HLOS'["VMS")&(HLOS'["UNIX")  X "U IO:(::""-M"")" ; must be Cache + packet mode  ; **OSEHRA** -> This line crashes on GTM/YDB
+ . ; **OSEHRA** - begin replacement code
+ . Q:(HLOS'["VMS")&(HLOS'["UNIX")
+ . I ^%ZOSF("OS")["OpenM" U IO:(::"-M")
+ . E  I ^%ZOSF("OS")["GT.M"  U IO:(nowrap:nodelimiter)
+ . E  U IO
+ . Q:$P(^HLCS(870,HLDP,400),U,7)'="Y"  ; must want to SAY HELO
+ . U IO W "HELO "_$$KSP^XUPARAM("WHERE"),! R X:1
+ ;openfail-try DNS lookup
+ ;
+ ; patch HL*1.6*122 start
+ ;I '$D(HLDOM) S HLDOM=+$P(^HLCS(870,HLDP,0),U,7),HLDOM=$P($G(^DIC(4.2,HLDOM,0)),U) D:HLDOM]"" DNS
+ I '$D(HLDOM) D
+ . S HLDOM=+$P(^HLCS(870,HLDP,0),U,7),HLDOM=$P($G(^DIC(4.2,HLDOM,0)),U)
+ . S HLDOM("DNS")=$P($G(^HLCS(870,+$G(HLDP),0)),"^",8)
+ . D:HLDOM]""!($L(HLDOM("DNS"),".")>2) DNS
+ ;
+ Q:$$STOP^HLCSTCP 0
+ ;HLIP=ip add. from DNS call, get first one and try open again
+ ;
+ ; **P153 START CJM
+ ;I $D(HLIP) S HLTCPADD=$P(HLIP,","),HLIP=$P(HLIP,",",2,99) G:HLTCPADD OPENA
+ I $D(HLIP) S HLTCPADD=$P(HLIP,","),HLIP=$P(HLIP,",",2,99) G:HLTCPADD RETRY
+ ; **P153 END CJM
+ ;
+ ; open error
+ ;cleanup and close
+ ; patch 133
+ I $G(HLDIRECT("OPEN TIMEOUT")) D
+ . D MON^HLCSTCP("Openfail")
+ . I $D(HLPORT) D CLOSE^%ZISTCP K HLPORT
+ E  D
+ . D CC^HLCSTCP2("Openfail")
+ Q 0
+ ; patch HL*1.6*122 end
+ ;
+ ;
+ ;following code was removed, site's complained of to many alerts
+ ;couldn't open, send 1 alert
+ ;I '$G(HLPORTA) D
+ ;. ;send alert
+ ;. N XQA,XQAMSG,XQAOPT,XQAROU,XQAID,Z
+ ;. ;get mailgroup from file 869.3
+ ;. S Z=$P($$PARAM^HLCS2,U,8),HLPORTA="" Q:Z=""
+ ;. S XQA("G."_Z)="",XQAMSG=$$HTE^XLFDT($H,2)_" Logical Link "_$P(^HLCS(870,HLDP,0),U)_" exceeded Open Retries."
+ ;. D SETUP^XQALERT
+ ;open error
+ ;D CC("Openfail") H 3
+ ;Q 0
+ ;
+ ;
+DNS ;VA domains must have "med" inserted.
+ ;All domains must use port 5000 and are prepended with "HL7"
+ ;non-VA DNS lookups will succeed if site uses port 5000 and 
+ ;configure their local DNS with "HL7.yourdomain.com" and entries
+ ;are created in the logical link file and domain file.
+ D MON^HLCSTCP("DNS Lkup")
+ I HLDOM["DOMAIN.EXT"&(HLDOM'[".MED.") S HLDOM=$P(HLDOM,".DOMAIN.EXT")_".DOMAIN.EXT"
+ I HLTCPORT=5000 S HLDOM="HL7."_HLDOM
+ I HLTCPORT=5500 S HLDOM="MPI."_HLDOM
+ ;
+ ; patch HL*1.6*122 start
+ I $L($G(HLDOM("DNS")),".")>2 D
+ . S HLDOM=HLDOM("DNS")
+ ; patch HL*1.6*122 end
+ ;
+ S HLIP=$$ADDRESS^XLFNSLK(HLDOM)
+ K:HLIP="" HLIP
+ Q
+ ;
+
+ICDEX
+ICDEX ;SLC/KER - ICD Extractor - Main Entry Points ;Jan 15, 2019@11:35
+ ;;18.0;DRG Grouper;**57,67,OSEHRA**;Oct 20, 2000;Build 1
+ ;
+ ; *OSEHRA change: add missing QUIT in MD to prevent fallthrough error ,M11,
+ ;
+ ; Global Variables
+ ;    None
+ ;
+ ; External References
+ ;    None
+ ;
+ ; Parameters for listed APIs
+ ;
+ ;    ARY     A local array passed by reference .ARY
+ ;
+ ;    CDT     This is the Code Set Versioning Date (Fileman
+ ;            format) and is used to resolve the correct 
+ ;            entry of a file or sub-file.
+ ;
+ ;    EDT     External Date allowed by Fileman
+ ;
+ ;    CODE    This is an ICD Diagnostic or Procedural code
+ ;
+ ;    FIELD   This is a field number from either file 80 or 80.1
+ ;
+ ;    FILE    File Number 80 or 80.1
+ ;
+ ;    FMT     Input format "I"=Internal "E"=External
+ ;
+ ;    IEN     Internal Entry Number of file 80 or 80.1
+ ;
+ ;    IEN1    Internal Entry Number of a specified sub-file
+ ;
+ ;    IEN2    Internal Entry Number of file 80 or 80.1
+ ;
+ ;    LEN     Length of the string of text in an array.
+ ;            When passed, the short description or long
+ ;            description will be parsed into string
+ ;            lengths not to exceed the length passed.
+ ;
+ ;    MDC     Major Diagnostic Category (pointer to 
+ ;            file #80.3)
+ ;
+ ;    NUM     Converts a code to a numeric representation 
+ ;            of the code (used on the AN cross-reference)
+ ;            for the $$NEXT and $$PREV APIs
+ ;
+ ;    REV     Directionality flag for $ORDER
+ ;
+ ;               0    $Order Forwards (default)
+ ;               1    $Order in Reverse
+ ;
+ ;    ROOT    Global Root ^ICD9( or ^ICD0(
+ ;
+ ;    STD     Coding Standard
+ ;
+ ;               0    ICD (default)
+ ;               1    CPT/HCPCS
+ ;               2    DRG
+ ;               3    LEX
+ ;
+ ;    SYS     Coding System
+ ;
+ ;               1    ICD     ICD-9-CM
+ ;               2    ICP     ICD-9-PCS
+ ;              30    1OD     ICD-10-CM
+ ;              31    10P     ICD-10-PCS
+ ;
+ ;    TYPE    This is any identifier that can determine the
+ ;            type of ICD code (diagnosis or procedure) that
+ ;            is being used.  It can be a:
+ ;
+ ;              File Number           80 or 80.1
+ ;              Global Root           ^ICD9( or ^ICD0(
+ ;              Source Abbreviation   ICD, ICP, 10D OR 10P
+ ;              Coding System         1, 2, 30, 31
+ ;              Code                  250.01, B58.81, 50.11
+ ;
+ ;    TXT     Text String to search for in file 80/80.1
+ ;
+ ;    VER     Versioning flag
+ ;
+ ;               0  Unversioned search, return active/inactive codes
+ ;               1  Versioned search, return only active codes
+ ;
+ ;    WORD    This is a single word parsed from a string
+ ;
+EN ; Main Entry Point
+HELP ; Developer Help for an API
+ D EN^ICDEXH Q
+ ; 
+ ; Code APIs
+ICDDX(CODE,CDT,SYS,FMT,LOC) ; Dx Code Info
+ Q $$ICDDX^ICDEXC($G(CODE),$P($G(CDT),".",1),$G(SYS),$G(FMT),$G(LOC))
+ICDOP(CODE,CDT,SYS,FMT,LOC) ; Procedure Code Info
+ Q $$ICDOP^ICDEXC($G(CODE),$P($G(CDT),".",1),$G(SYS),$G(FMT),$G(LOC))
+ICDD(CODE,ARY,CDT,SYS,LEN) ; Description in Array
+ Q $$ICDD^ICDEXC($G(CODE),.ARY,$P($G(CDT),".",1),$G(SYS),+($G(LEN)))
+CODEN(CODE,FILE) ; IEN of code
+ Q $$CODEN^ICDEXC($G(CODE),$G(FILE))
+CODEC(FILE,IEN) ; Code from an IEN
+ Q $$CODE^ICDEXC($G(FILE),$G(IEN))
+CODEBA(CODE,ROOT) ; IEN from Code/Root
+ Q $$CODEBA^ICDEXC($G(CODE),$G(ROOT))
+CODEABA(CODE,ROOT,SYS) ; IEN from Code/Root/Coding System
+ Q $$CODEABA^ICDEXC($G(CODE),$G(ROOT),$G(SYS))
+RDX(CODE,CDT) ; Resolve Diagnosis Code Fragment
+ Q $$RDX^ICDEXC4($G(CODE),$G(CDT))
+ ;  
+ ; Code APIs (code data/versioned data)
+CODEFI(CODE) ; File for code
+ Q $$CODEFI^ICDEXC2($G(CODE))
+CODECS(CODE,FILE,CDT) ; Coding system for code/file
+ Q $$CODECS^ICDEXC2($G(CODE),$G(FILE),$P($G(CDT),".",1))
+CSI(FILE,IEN) ; Coding system for IEN
+ Q $$CSI^ICDEXC2($G(FILE),$G(IEN))
+VMDC(IEN,CDT,FMT) ; Major Diagnostic Category
+ Q $$VMDC^ICDEXC2($G(IEN),$P($G(CDT),".",1),$G(FMT))
+VAGEL(IEN,CDT,FMT) ; Age Low
+ Q $$VAGEL^ICDEXC2($G(IEN),$P($G(CDT),".",1),$G(FMT))
+VAGEH(IEN,CDT,FMT) ; Age High
+ Q $$VAGEH^ICDEXC2($G(IEN),$P($G(CDT),".",1),$G(FMT))
+VCC(IEN,CDT,FMT) ; Complication/Comorbidity
+ Q $$VCC^ICDEXC2($G(IEN),$P($G(CDT),".",1),$G(FMT))
+VCCP(IEN,CDT,FMT) ; CC Primary Flag
+ Q $$VCCP^ICDEXC2($G(IEN),$P($G(CDT),".",1),$G(FMT))
+VSEX(FILE,IEN,CDT,FMT) ; Sex for file
+ Q $$VSEX^ICDEXC2($G(FILE),$G(IEN),$P($G(CDT),".",1),$G(FMT))
+SAI(FILE,IEN,CDT) ; Status/Active/Inactive Dates
+ Q $$SAI^ICDEXC2($G(FILE),$G(IEN),$P($G(CDT),".",1))
+ ;  
+ ; Code APIs (text/strings)
+VST(FILE,IEN,CDT)     ; Short Text
+ Q $$VST^ICDEXC3($G(FILE),$G(IEN),$P($G(CDT),".",1))
+VLT(FILE,IEN,CDT) ; Long Text
+ Q $$VLT^ICDEXC3($G(FILE),$G(IEN),$P($G(CDT),".",1))
+VSTD(IEN,CDT)  ; Short Text - Diagnosis
+ Q $$VSTD^ICDEXC3($G(IEN),$P($G(CDT),".",1))
+VSTP(IEN,CDT) ; Short Text - Procedures
+ Q $$VSTP^ICDEXC3($G(IEN),$P($G(CDT),".",1))
+VLTD(IEN,CDT) ; Description - Diagnosis
+ Q $$VLTD^ICDEXC3($G(IEN),$P($G(CDT),".",1))
+VLTP(IEN,CDT) ; Description - Procedures
+ Q $$VLTP^ICDEXC3($G(IEN),$P($G(CDT),".",1))
+SD(FILE,IEN,CDT,ARY,LEN) ; Short Description (formatted)
+ Q $$SD^ICDEXC3($G(FILE),$G(IEN),$P($G(CDT),".",1),.ARY,$G(LEN))
+LD(FILE,IEN,CDT,ARY,LEN) ; Long Description (formatted)
+ Q $$LD^ICDEXC3($G(FILE),$G(IEN),$P($G(CDT),".",1),.ARY,$G(LEN))
+SDH(FILE,IEN,ARY) ; Short Description History
+ Q $$SDH^ICDEXC4($G(FILE),$G(IEN),.ARY)
+LDH(FILE,IEN,ARY) ; Long Description History
+ Q $$LDH^ICDEXC4($G(FILE),$G(IEN),.ARY)
+PAR(ARY,LEN) ; Parse Array
+ D PAR^ICDEXC3(.ARY,$G(LEN)) Q
+IEN(CODE,ROOT,SYS) ; IEN from Code/Root/Coding System
+ Q $$IEN^ICDEXC3($G(CODE),$G(ROOT),$G(SYS))
+ ;  
+ ; API Support
+STATCHK(CODE,CDT,SYS) ; Status of ICD Code
+ Q $$STATCHK^ICDEXA($G(CODE),$P($G(CDT),".",1),$G(SYS))
+DTBR(CDT,STD,SYS) ; Date Business Rules
+ Q $$DTBR^ICDEXA($P($G(CDT),".",1),$G(STD),$G(SYS))
+IMP(SYS,CDT) ; Implementation Date
+ Q $$IMP^ICDEXA($G(SYS),$P($G(CDT),".",1))
+MSG(CDT,STD,SYS) ; Warning Message
+ Q $$MSG^ICDEXA($P($G(CDT),".",1),$G(STD),$G(SYS))
+SEL(FILE,IEN) ; Entry is Selectable
+ Q $$SEL^ICDEXA($G(FILE),$G(IEN))
+NEXT(CODE,SYS,CDT) ; Next Code
+ Q $$NEXT^ICDEXA2($G(CODE),$G(SYS),$P($G(CDT),".",1))
+PREV(CODE,SYS,CDT) ; Previous Code
+ Q $$PREV^ICDEXA2($G(CODE),$G(SYS),$P($G(CDT),".",1))
+HIST(CODE,ARY,SYS) ; Activation History
+ Q $$HIST^ICDEXA2($G(CODE),.ARY,$G(SYS))
+PERIOD(CODE,ARY,SYS) ; Activation Periods
+ Q $$PERIOD^ICDEXA2($G(CODE),.ARY,$G(SYS))
+OBA(FILE,CODE,SYS,REV) ; $Order BA/ABA
+ Q $$OBA^ICDEXA3($G(FILE),$G(CODE),$G(SYS),$G(REV))
+OD(FILE,WORD,SYS,REV) ; $Order D/AD
+ Q $$OD^ICDEXA3($G(FILE),$G(WORD),$G(SYS),$G(REV))
+DLM(FILE,IEN,FIELD,CDT) ; Date Last Modified
+ Q $$DLM^ICDEXA3($G(FILE),$G(IEN),$G(FIELD),$P($G(CDT),".",1))
+CS(FILE,FMT,CDT) ; Select Coding System (lookup)
+ Q $$CS^ICDEXA3($G(FILE),$G(FMT),$P($G(CDT),".",1))
+ ;  
+ ; Data Extraction Support
+EFF(FILE,IEN,CDT) ; Effective date and status
+ Q $$EFF^ICDEXS($G(FILE),$G(IEN),$P($G(CDT),".",1))
+IA(FILE,IEN) ; Initial Activation Date
+ Q $$IA^ICDEXS($G(FILE),$G(IEN))
+LA(FILE,IEN,CDT) ; Last Activation Date
+ Q $$LA^ICDEXS($G(FILE),$G(IEN),$P($G(CDT),".",1))
+LI(FILE,IEN,CDT) ; Last Inactivation Date
+ Q $$LI^ICDEXS($G(FILE),$G(IEN),$P($G(CDT),".",1))
+LS(FILE,IEN,CDT,FMT) ; Last Status
+ Q $$LS^ICDEXS($G(FILE),$G(IEN),$P($G(CDT),".",1),$G(FMT))
+NUM(CODE) ; Convert Code to a Numeric
+ Q $$NUM^ICDEXS($G(CODE))
+COD(NUM) ; Convert Numeric to a Code
+ Q $$COD^ICDEXS($G(NUM))
+IE(CODE) ; Internal or External Format
+ Q $$IE^ICDEXS($G(CODE))
+FILE(SYS) ; File Number from System
+ Q $$FILE^ICDEXS($G(SYS))
+ROOT(SYS) ; Global Root
+ Q $$ROOT^ICDEXS($G(SYS))
+SYS(SYS,CDT,FMT) ; Resolve System (uses file 80.4)
+ Q $$SYS^ICDEXS($G(SYS),$P($G(CDT),".",1),$G(FMT))
+SINFO(SYS,CDT) ; System Info (uses file 80.4)
+ Q $$SINFO^ICDEXS($G(SYS),$P($G(CDT),".",1))
+SNAM(SYS) ; System Name from Coding System
+ Q $$SNAM^ICDEXS($G(SYS))
+SAB(SYS,CDT) ; Source Abbreviation
+ Q $$SAB^ICDEXS($G(SYS),$P($G(CDT),".",1))
+EXC(FILE,IEN) ; Exclude From lookup
+ Q $$EXC^ICDEXS($G(FILE),$G(IEN))
+VER(SYS,REL) ; Coding System Version
+ Q $$VER^ICDEXS2($G(SYS),$G(REL))
+HDR(FILE) ; File Header Node
+ Q $$HDR^ICDEXS2($G(FILE))
+ ;  
+ ; DRG Grouper Extraction Support
+ISA(IEN1,IEN2,FIELD) ; Is Code 1 a condition of Code 2 (ICDDRG)
+ Q $$ISA^ICDEXD($G(IEN1),$G(IEN2),$G(FIELD))
+ISVALID(FILE,IEN,CDT) ; Is an ICD code Valid
+ Q $$ISVALID^ICDEXD2($G(FILE),$G(IEN),$G(CDT))
+EXIST(IEN,FIELD) ; Does a condition Exist (ICDDRGX)
+ Q $$EXIST^ICDEXD($G(IEN),$G(FIELD))
+GETDRG(FILE,IEN,CDT,MDC) ; DRGs for an Fiscal Year (ICDGTDRG)
+ Q $$GETDRG^ICDEXD($G(FILE),$G(IEN),$P($G(CDT),".",1),$G(MDC))
+MD(FILE,IEN,CDT,ARY,FLAG) ; MDC DRGs
+ D MD^ICDEXD2($G(FILE),$G(IEN),$P($G(CDT),".",1),.ARY,$G(FLAG)) Q  ; *OSEHRA add Q
+EFM(EDT) ; Convert External Date to FM (ICDGTDRG)
+ Q $$EFM^ICDEXD6($G(EDT))
+FY(CDT) ; FY 4 digit year (ICDGTDRG)
+ Q $$FY^ICDEXD6($P($G(CDT),".",1))
+VMDCDX(IEN,CDT) ; Versioned MDC for DX (ICDREF)
+ Q $$VMDCDX^ICDEXD2($G(IEN),$P($G(CDT),".",1))
+VMDCOP(IEN,MDC,CDT) ; Versioned MDC for Op/Pro (ICDREF)
+ Q $$VMDCOP^ICDEXD2($G(IEN),$G(MDC),$P($G(CDT),".",1))
+REF(IEN,CDT) ; Return Reference Table (ICDREF)
+ Q $$REF^ICDEXD2($G(IEN),$G(CDT))
+MDCG(IEN,CDT,ARY) ; Set up array of MDCs (ICDDRG)
+ D MDCG^ICDEXD2($G(IEN),$P($G(CDT),".",1),.ARY) Q
+MDCT(IEN,CDT,ARY,FMT) ; For Multiple MDC DX Codes (ICDDRG)
+ Q $$MDCT^ICDEXD2($G(IEN),$P($G(CDT),".",1),.ARY,$G(FMT))
+MDCD(IEN,MDC,CDT) ; Check for default MDC (ICDDRG)
+ Q $$MDCD^ICDEXD2($G(IEN),$G(MDC),$G(CDT))
+MDCN(IEN) ; Major Diagnostic Category Name
+ Q $$MDCN^ICDEXD2(+($G(IEN)))
+MOR(IEN) ; Major O.R. Procedure (ICDDRG)
+ Q $$MOR^ICDEXD2($G(IEN))
+UPDX(IEN) ; Unacceptable as Principle DX
+ Q $$UPDX^ICDEXD6($G(IEN))
+POAE(IEN) ; Present on Admission Exempt
+ Q $$POAE^ICDEXD6($G(IEN))
+HAC(IEN) ; Hospital Acquired Conditions
+ Q $$HAC^ICDEXD6($G(IEN))
+NOT(IEN,SUB,FMT) ; Codes not Used With
+ Q $$NOT^ICDEXD3($G(IEN),$G(SUB),$G(FMT))
+REQ(IEN,SUB,FMT) ; Codes Required With
+ Q $$REQ^ICDEXD3($G(IEN),$G(SUB),$G(FMT))
+NCC(IEN,SUB,FMT) ; Codes not Considered CC With
+ Q $$NCC^ICDEXD3($G(IEN),$G(SUB),$G(FMT))
+ICDID(FILE,ID,CODE) ; Check if ICD identifier exist
+ Q $$ICDID^ICDEXD4($G(FILE),$G(ID),$G(CODE))
+IDSTR(FILE,IEN) ; ICD identifier string (legacy)
+ Q $$IDSTR^ICDEXD4($G(FILE),$G(IEN))
+ICDIDS(FILE,IEN,ARY) ; Returns array of ICD identifiers
+ Q $$ICDIDS^ICDEXD4($G(FILE),$G(IEN),.ARY)
+ISOWNCC(IEN,CDT,FMT) ; Return CC if DX is Own CC
+ Q $$ISOWNCC^ICDEXD4($G(IEN),$G(CDT),$G(FMT))
+ICDRGCC(DRG,CDT) ; Get CC/MCC flag from DRG
+ Q $$ICDRGCC^ICDEXD4($G(DRG),$G(CDT))
+INQ ; Inquire to the ICD Files
+ D INQ^ICDEXD4 Q
+EFD(X) ; Get Effective date in range (interactive)
+ Q $$EFD^ICDEXD6
+PDXE(IEN) ; Primary DX Exclusion Code
+ Q $$PDXE^ICDEXD3($G(IEN))
+DRG(CODE,CDT) ; Returns information about a DRG
+ Q $$DRG^ICDEXD5($G(CODE),$G(CDT))
+DRGW(IEN) ; DRG Weighted Work Unit (WWU)
+ Q $$DRGW^ICDEXD6($G(IEN))
+DRGDES(IEN,CDT,ARY,LEN) ; Formatted DRG Description
+ Q $$DRGDES^ICDEXD5($G(IEN),$G(CDT),.ARY,$G(LEN))
+DRGD(CODE,OUTARR,CDT) ; Unformatted DRG Description
+ Q $$DRGD^ICDEXD5($G(CODE),$G(OUTARR),$G(CDT))
+DRGN(CODE) ; Return the IEN of DRG
+ Q $$DRGN^ICDEXD6($G(CODE))
+DRGC(IEN) ; DRG Code
+ Q $$DRGC^ICDEXD6($G(IEN))
+GETDATE(IEN) ; Calculate Effective Date
+ Q $$GETDATE^ICDEXD5($G(IEN))
+ ;  
+ ; Lookup
+LK ; Special Lookup (called by DIC)
+ D LK^ICDEXLK Q
+LKTX(X,ROOT,CDT,SYS,VER,OUT) ; Lookup Text in ROOT (silent)
+ Q $$LK^ICDEXLK3($G(X),$G(ROOT),$P($G(CDT),".",1),$G(SYS),$G(VER),$G(OUT))
+Y(ROOT,IEN,CDT,FMT) ; Output Variable Y from Lookup
+ D Y^ICDEXLK2($G(ROOT),$G(IEN),$P($G(CDT),".",1),$G(FMT)) Q
+TOKEN(X,ROOT,SYS,ARY) ; Parse Text into Words
+ D TOKEN^ICDTOKN($G(X),$G(ROOT),$G(SYS),.ARY) Q
+WORD(X,ROOT,SYS) ; Word is Found
+ Q $$WORD^ICDEXLK3($G(X),$G(ROOT),$G(SYS))
+
+ICDEXA2
+ICDEXA2 ;SLC/KER - ICD Extractor - APIs/Utilities (cont) ;2018-06-21  3:57 PM
+ ;;18.0;DRG Grouper;**57,WVEHR**;Oct 20, 2000;Build 1
+ ; * WVEHR change (c) George Lilly and David Whitten 2015
+ ;                (c) Sam Habiel 2018 (bug fixes to $$PREV)
+ ; Licensed under Apache 2
+ ;               
+ ; Global Variables
+ ;    ^ICD0("AVA"         N/A
+ ;    ^ICD9("AVA"         N/A
+ ;               
+ ; External References
+ ;    $$DT^XLFDT          ICR  10103
+ ;
+ Q
+NEXT(CODE,SYS,CDT) ; Next ICD Code (active or inactive)
+ ;
+ ; Input:
+ ; 
+ ;    CODE   ICD Code or Null for the first code
+ ;    SYS    Coding System - see ^ICDS
+ ;              
+ ;              1 = ICD-9-CM
+ ;              2 = ICD-9-PCS
+ ;             30 = ICD-10-CM
+ ;             31 = ICD-10-PCS
+ ;             
+ ;   CDT   Code Date to check
+ ;         If CDT is passed, then the code
+ ;         returned is the next active code
+ ;         based on date.  If it is not 
+ ;         passed then the next code is
+ ;         returned regardless of status.
+ ;         
+ ; Output:
+ ; 
+ ;    The Next ICD Code, Null if none
+ ;
+ N ICDB,ICDC,ICDG,ICDF,ICDD,ICDE,ICDI,ICDR,ICDS,ICDO,ICDN,ICDY
+ S ICDC=$TR($G(CODE)," ",""),ICDD=$G(CDT),ICDB=ICDD?7N
+ S ICDY=$$SYS^ICDEX(+($G(SYS)))
+ S:ICDY'>0&($L(ICDC)) ICDY=$$SYS^ICDEX(ICDC)
+ S ICDF=$$FILE^ICDEX(+ICDY)
+ Q:'$L(ICDC)&(ICDY'>0) "" S ICDS=0,ICDE=""
+ S:+ICDY>0 ICDS=+ICDY I $L(ICDC) D
+ . S:"^80^80.1^"'[("^"_ICDF_"^") ICDF=$$CODEFI^ICDEX(ICDC)
+ . S ICDE=$P($$CODECS^ICDEX(ICDC,ICDF),"^",1) S:ICDS>0 ICDE=ICDS
+ Q:+ICDY>0&(+($G(ICDE))>0)&(+ICDY'=+($G(ICDE))) ""
+ S:+ICDS'>0&(+($G(ICDE))>0) ICDS=+($G(ICDE))
+ Q:+ICDS'>0 ""  S ICDR=$$ROOT^ICDEX(ICDS) Q:'$L(ICDR) ""
+ S ICDO=$$NUM^ICDEX(ICDC) Q:$L(ICDC)&(+ICDO'>0) ""
+ I 'ICDB S ICDC="" D  Q $S(ICDC="":"",1:ICDC)
+ . ;;Begin WorldVistA Change 8/2015 DJW - treat code as string
+ . ;was; S ICDN=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_")"))
+ . S ICDN=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""")"))
+ . ;was; S ICDC=$S(+ICDN>0:$$COD^ICDEX(+ICDN),1:"")
+ . S ICDC=$S($L(ICDN):$$COD^ICDEX(ICDN),1:"")
+ I ICDB S ICDC="" D  Q $S(ICDC="":"",1:ICDC)
+ . ;WAS ; N ICDA S ICDA="" F  S ICDO=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_")")) Q:+ICDO'>0  D  Q:$L(ICDC)
+ . N ICDA S ICDA="" F  S ICDO=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""")")) Q:+ICDO'>0  D  Q:$L(ICDC)
+ . . ;WAS; N ICDI S ICDI=0 F  S ICDI=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_","_+ICDI_")")) Q:+ICDI'>0  D  Q:$L(ICDC)
+ . . N ICDI S ICDI=0 F  S ICDI=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""","_+ICDI_")")) Q:+ICDI'>0  D  Q:$L(ICDC)
+ . . . N ICDE,ICDH S ICDE=$O(@(ICDR_+ICDI_",66,""B"","_(ICDD+.001)_")"),-1) Q:ICDE'?7N
+ . . . S ICDH=$O(@(ICDR_+ICDI_",66,""B"","_ICDE_","" "")"),-1) Q:+ICDH'>0
+ . . . S ICDA=$G(@(ICDR_+ICDI_",66,"_ICDH_",0)")),ICDA=+($P(ICDA,"^",2))
+ . . . ;WAS; S:+ICDA>0 ICDC=ICDO S ICDC=$S(+($G(ICDC))>0:$$COD^ICDEX(+ICDC),1:"")
+ . . . S:+ICDA>0 ICDC=ICDO S ICDC=$S($L(ICDC):$$COD^ICDEX(ICDC),1:"")
+ . ; End WorldVistA Change 8/2015
+ Q $S(ICDC="":"",1:ICDC)
+PREV(CODE,SYS,CDT) ; Previous ICD Code (active or inactive)
+ ;
+ ; Input:
+ ; 
+ ;    CODE   ICD Code or Null for the last code
+ ;    SYS    Coding System - see ^ICDS
+ ;              
+ ;              1 = ICD-9-CM
+ ;              2 = ICD-9-PCS
+ ;             30 = ICD-10-CM
+ ;             31 = ICD-10-PCS
+ ;             
+ ;   CDT   Code Date to check
+ ;         If CDT is passed, then the code
+ ;         returned is the previous active 
+ ;         code based on date.  If it is 
+ ;         not passed then the previous 
+ ;         code is returned regardless of 
+ ;         status.
+ ;         
+ ; Output:
+ ; 
+ ;    The Previous ICD Code, Null if none
+ ;
+ N ICDB,ICDC,ICDG,ICDF,ICDD,ICDE,ICDI,ICDR,ICDS,ICDO,ICDN,ICDY
+ S ICDC=$TR($G(CODE)," ",""),ICDD=$G(CDT),ICDB=ICDD?7N
+ S ICDY=$$SYS^ICDEX(+($G(SYS)))
+ S:ICDY'>0&($L(ICDC)) ICDY=$$SYS^ICDEX(ICDC)
+ S ICDF=$$FILE^ICDEX(+ICDY)
+ Q:'$L(ICDC)&(ICDY'>0) "" S ICDS=0,ICDE=""
+ S:+ICDY>0 ICDS=+ICDY I $L(ICDC) D
+ . S:"^80^80.1^"'[("^"_ICDF_"^") ICDF=$$CODEFI^ICDEX(ICDC)
+ . S ICDE=$P($$CODECS^ICDEX(ICDC,ICDF),"^",1) S:ICDS>0 ICDE=ICDS
+ Q:+ICDY>0&(+($G(ICDE))>0)&(+ICDY'=+($G(ICDE))) ""
+ S:+ICDS'>0&(+($G(ICDE))>0) ICDS=+($G(ICDE)) Q:+ICDS'>0 ""
+ S ICDR=$$ROOT^ICDEX(ICDS) Q:'$L(ICDR) ""
+ S ICDO=$$NUM^ICDEX(ICDC) Q:$L(ICDC)&(+ICDO'>0) ""
+ I 'ICDB D  Q $S(ICDC="":"",1:ICDC)
+ . ;;Begin WorldVistA Change 8/2015 DJW - treat code as string
+ . ;WAS; S:+ICDO'>0 ICDO=$O(@(ICDR_"""AN"","_+ICDS_","" "")"),-1)+1
+ . S:+ICDO'>0 ICDO="" ; **OSE/SMH - this line is different**
+ . S ICDN=0,ICDC=""
+ . ;WAS; S ICDN=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_")"),-1)
+ . S ICDN=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""")"),-1)
+ . ;WAS; S ICDC=$S(+ICDN>0:$$COD^ICDEX(+ICDN),1:"")
+ . S ICDC=$S($L(ICDN):$$COD^ICDEX(ICDN),1:"")
+ I ICDB S ICDC="" D  Q $S(ICDC="":"",1:ICDC)
+ . N ICDA S ICDA="" S:+ICDO'>0 ICDO="" ; **OSE/SMH - this line is different**
+ . ;WAS; F  S ICDO=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_")"),-1) Q:+ICDO'>0  D  Q:$L(ICDC)
+ . F  S ICDO=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""")"),-1) Q:+ICDO'>0  D  Q:$L(ICDC)
+ . . ;WAS; N ICDI S ICDI=0 F  S ICDI=$O(@(ICDR_"""AN"","_+ICDS_","_+ICDO_","_+ICDI_")")) Q:+ICDI'>0  D  Q:$L(ICDC)
+ . . N ICDI S ICDI=0 F  S ICDI=$O(@(ICDR_"""AN"","_+ICDS_","""_ICDO_""","_+ICDI_")")) Q:+ICDI'>0  D  Q:$L(ICDC)
+ . . . N ICDE,ICDH S ICDE=$O(@(ICDR_+ICDI_",66,""B"","_(ICDD+.001)_")"),-1) Q:ICDE'?7N
+ . . . S ICDH=$O(@(ICDR_+ICDI_",66,""B"","_ICDE_","" "")"),-1) Q:+ICDH'>0
+ . . . S ICDA=$G(@(ICDR_+ICDI_",66,"_ICDH_",0)")),ICDA=+($P(ICDA,"^",2))
+ . . . ;WAS ;S:+ICDA>0 ICDC=ICDO S ICDC=$S(+($G(ICDC))>0:$$COD^ICDEX(+ICDC),1:"")
+ . . . S:+ICDA>0 ICDC=ICDO S ICDC=$S($L(ICDC):$$COD^ICDEX(ICDC),1:"")
+ . ; End WorldVistA Change 8/2015
+ Q $S(ICDC="":"",1:ICDC)
+HIST(CODE,ARY,SYS)  ; Activation History
+ ;
+ ; Input:
+ ; 
+ ;    CODE   ICD Code                   (required)
+ ;    .ARY   Array, passed by Reference (required)
+ ;    SYS    Coding System - see ^ICDS
+ ;              
+ ;              1 = ICD-9-CM
+ ;              2 = ICD-9-PCS
+ ;             30 = ICD-10-CM
+ ;             31 = ICD-10-PCS
+ ;
+ ; Output:    Mirrors ARY(0) (or, -1 on error)
+ ; 
+ ;    ARY(0) = Number of Activation History Entries
+ ;    ARY(<date>) = status    where: 1 is Active
+ ;    ARY("IEN") = <ien>
+ ;
+ Q:$G(CODE)="" -1  K ARY
+ N ICDC,ICDF,ICDS,ICDE,ICDI,ICDA,ICDN,ICDD,ICDR,ICDF,ICDS,ICDY
+ S ICDC=$TR($G(CODE)," ","") Q:'$L(ICDC) -1  S ICDY=$$SYS^ICDEX($G(SYS))
+ S:+ICDY'>0 ICDY=$$SYS^ICDEX(ICDC)
+ S ICDS=0 S:+ICDY>0 ICDS=+ICDY
+ S ICDF=$$CODEFI^ICDEX(ICDC) Q:+ICDF'>0 -1
+ S ICDE=$P($$CODECS^ICDEX(ICDC,ICDF),"^",1) Q:+ICDE'>0 -1
+ S:+ICDS'>0&(+ICDE>0) ICDS=ICDE
+ Q:+ICDS>0&(ICDS'=+ICDE) -1
+ S ICDR=$$ROOT^ICDEX(ICDF) Q:'$L(ICDR) -1
+ S ICDI=$$CODEABA^ICDEX(ICDC,ICDR,+ICDS) Q:+ICDI'>0 -1
+ S ICDE=$P($G(@(ICDR_ICDI_",1)")),"^",1) Q:+ICDS>0&(ICDS'=+ICDE) -1
+ S ARY("IEN")=ICDI,ICDA="" M ICDA=@(ICDR_ICDI_",66)")
+ K ICDA("B") S ARY(0)=+($P($G(ICDA(0)),"^",4))
+ S:+ARY(0)=0 ARY(0)=-1 K:ARY(0)=-1 ARY("IEN")
+ S (ICDI,ICDC)=0 F  S ICDI=$O(ICDA(ICDI)) Q:+ICDI=0  D
+ . S ICDD=$P($G(ICDA(ICDI,0)),"^",1) Q:+ICDD=0
+ . S ICDF=$P($G(ICDA(ICDI,0)),"^",2) Q:'$L(ICDF)
+ . S ICDC=ICDC+1,ARY(0)=ICDC,ARY(ICDD)=ICDF
+ Q ARY(0)
+PERIOD(CODE,ARY,SYS) ; Return Activation/Inactivation Period in ARY
+ ;
+ ; Input:
+ ; 
+ ;    CODE   ICD Code (required)
+ ;    ARY    Array, passed by Reference (required)
+ ;    SYS    Coding System - see ^ICDS
+ ;              
+ ;              1 = ICD-9-CM
+ ;              2 = ICD-9-PCS
+ ;             30 = ICD-10-CM
+ ;             31 = ICD-10-PCS
+ ;
+ ; Output:  
+ ; 
+ ;          $$PERIOD  Number of activation periods found
+ ; 
+ ;          ARY(0) = IEN ^ Selectable ^ Error Message
+ ;          
+ ;            Where IEN = -1 if error
+ ;            Selectable = 0 for unselectable
+ ;            Error Message if applicable
+ ;            
+ ;          ARY(Activation Date) = Inactivation Date^Short Name
+ ;
+ ;            Where the Short Name is versioned as follows:
+ ;
+ ;            Period is active   - Text for TODAY's date
+ ;            Period is inactive - Text for inactivation date
+ ;
+ I $G(CODE)="" S ARY(0)="-1^0^Code not specified" Q 0
+ K ARY N ICD1,ICDC,ICDBA,ICDF,ICDG,ICDS,ICDE,ICDI,ICDI,ICDA,ICDN,ICDD,ICDR,ICDF,ICDS,ICDY,ICDP,ICDT
+ S ICDC=$TR($G(CODE)," ","") I '$L(ICDC) S ARY(0)="-1^0^Invalid Code specified" Q 0
+ I $D(^ICD9("AVA",(CODE_" ")))!($D(^ICD0("AVA",(CODE_" ")))) S ARY(0)="-1^0^Invalid Code specified" Q 0
+ S ICDY=$$SYS^ICDEX($G(SYS))
+ I +ICDY'>0 D
+ . N ICDF,ICDE S ICDF=$$CODEFI^ICDEX(ICDC) Q:+ICDF'>0
+ . S ICDE=$P($$CODECS^ICDEX(ICDC,ICDF),"^",1) Q:+ICDE'>0
+ . S ICDY=$$SYS^ICDEX(ICDE)
+ S ICDS=+($G(ICDY)) I +ICDS'>0 S ARY(0)="-1^0^Invalid or undetermined Coding System" Q 0
+ S ICDR=$$ROOT^ICDEX(ICDS) I '$L(ICDR) S ARY(0)="-1^0^Undetermined global root" Q 0
+ S ICDI=$$CODEABA^ICDEX(ICDC,ICDR,+ICDS) I +ICDI'>0 S ARY(0)="-1^0^IEN not found" Q 0
+ S ICDP=$S(ICDR["ICD9":3,1:4),ICD1=$G(@(ICDR_ICDI_",1)")),ICDN=$$MRST(ICDR,ICDI)
+ S ICDG=ICDR_ICDI_",67,",ICDT=$O(@(ICDG_"""B"","" "")"),-1),ICDT=$O(@(ICDG_"""B"","_+ICDT_","" "")"),-1)
+ S ICDT=$P($G(@(ICDG_+ICDT_",0)")),"^",2),ARY(0)=ICDI_"^"_'$P(ICD1,"^",7)
+ S (ICDA,ICDBA)=0,ICDG=ICDR_ICDI_",66,"
+ F  Q:ICDBA  D
+ . N ICDBI,ICDCA,ICDST,ICDV S ICDA=$O(@(ICDG_"""B"","_ICDA_")"))
+ . I ICDA="" S ICDBA=1 Q
+ . S ICDF=$O(@(ICDG_"""B"","_ICDA_",0)"))
+ . I '+ICDF S ICDBA=1 Q
+ . S ICDST=$P($G(@(ICDG_ICDF_",0)")),"^",2)
+ . Q:'ICDST  ;outer loop looks for active
+ . ; Versioned text for activation date
+ . S ICDV=$$MRST(ICDR,ICDI) S:$L(ICDV) ICDT=ICDV
+ . S ARY(ICDA)="^"_ICDT,ICDBI=0,ICDI=ICDA
+ . F  Q:ICDBI  D
+ . . S ICDI=$O(@(ICDG_"""B"","_ICDI_")"))
+ . . ; If no inactivation date for ICDA then use TODAY's text
+ . . I ICDI="" S ARY(ICDA)="^"_ICDN,(ICDBI,ICDBA)=1 Q
+ . . S ICDF=$O(@(ICDG_"""B"","_ICDI_",0)"))
+ . . ; If no effective date ICDF for ICDI then use TODAY's text
+ . . I '+ICDF S ARY(ICDA)="^"_ICDN,(ICDBI,ICDBA)=1 Q
+ . . S ICDST=$P($G(@(ICDG_ICDF_",0)")),"^",2)
+ . . ; If Status ICDST not Inactive then use TODAY's text
+ . . I ICDST S ARY(ICDA)="^"_ICDN,ICDBI=1 Q
+ . . ; Versioned text for inactive date
+ . . S ICDV=$$MRST(ICDR,+($G(ARY(0))),ICDI)
+ . . S:$L(ICDV) $P(ARY(ICDA),"^",2)=ICDV
+ . . S $P(ARY(ICDA),"^")=ICDI
+ . . S ICDBI=1,ICDA=ICDI,ICDCA=0
+ S (ICDI,ICDC)=0 F  S ICDI=$O(ARY(ICDI)) Q:+ICDI'>0  S ICDC=ICDC+1
+ S:ICDC'>0 ARY(0)="-1^0^No activation periods found"
+ Q ICDC
+MRST(ICD,X,Y) ; Most Recent Description from Date
+ N ICDI,ICDT,ICDE,ICDH,ICDR S ICDR=$G(ICD),ICDI=+($G(X)),ICDT=$G(Y)
+ Q:'$L(ICDR)!(ICDR'["^")!(ICDR'["(") ""  Q:+ICDI'>0 ""  I ICDT'>0 D  Q X
+ . N ICDE,ICDH S ICDE=+($O(@(ICDR_+ICDI_",67,""B"","" "")"),-1))
+ . S ICDH=+($O(@(ICDR_+ICDI_",67,""B"","_ICDE_","" "")"),-1))
+ . S X=$P($G(@(ICDR_+ICDI_",67,"_ICDH_",0)")),"^",2)
+ S ICDE=+($O(@(ICDR_+ICDI_",67,""B"","_+ICDT_")"),-1))
+ S ICDH=+($O(@(ICDR_+ICDI_",67,""B"","_ICDE_","" "")"),-1))
+ S X=$P($G(@(ICDR_+ICDI_",67,"_ICDH_",0)")),"^",2)
+ Q X
+
+MPIFXMLP
+MPIFXMLP ;OAK/ELZ - MPIF PROBLISTIC SEARCH ;2018-06-21  2:56 PM
+ ;;1.0;MASTER PATIENT INDEX VISTA;**61,OSEHRA**;30 Apr 99;Build 3
+ ;
+ ; *OSEHRA changes by Sam Habiel (c) 2018.
+ ; To test: DG REGISTER PATIENT; there should be no MPI lookup.
+ ;
+ZPATIENT(RETURN,MPIARR) ; - query for patients based on traits *OSEHRA rename PATIENT -> ZPATIENT to prevent MPI lookup
+ ;  MPIARR("")=""
+ ;
+ ;
+ N MPIXML,MPIXMLR,MPID,MPIPAT
+ K RETURN
+ S MPIXML=$$XMLBLD(.MPIARR)
+ D POST^MPIFHWSC(MPIXML,.MPIXMLR)
+ I '$D(MPIXMLR) S RETURN="-1^Query to Person Search returned nothing." Q
+ D PARSE(.RETURN,.MPIXMLR)
+ ;
+ ; convert dob to fm format
+ S MPIPAT=0 F  S MPIPAT=$O(RETURN(MPIPAT)) Q:'MPIPAT  I $D(RETURN(MPIPAT,"DOB")) S RETURN(MPIPAT,"DOB")=$$HL7TFM^XLFDT(RETURN(MPIPAT,"DOB"))
+ ;
+ ;
+ Q
+ ;
+XMLBLD(MPIARR) ; setup xml to search
+ ; MPIARR - Array of traits for seach
+ ;    Returns XML for the search
+ ;
+ ; $$SITE^VASITE - #10112
+ ;
+ N MPIXML,MPISITE,QUOTE,MPITHRES,MPIDT,MPIDUZ,MPIPRID
+ S QUOTE=""""
+ S MPISITE=$P($$SITE^VASITE,"^",3)
+ S MPIPRID=$P($$PARAM^HLCS2,"^",3)
+ S MPIDT=$$FMTHL7^XLFDT($$NOW^XLFDT)
+ S MPIDUZ=$P(^VA(200,DUZ,0),"^") D STDNAME^XLFNAME(.MPIDUZ,"C")
+ S MPITHRES=80
+ ;
+ ; heading
+ S MPIXML="<IDM_REQUEST type="_QUOTE_"SEARCH_PROFILE"_QUOTE_"><METADATA>"
+ S MPIXML=MPIXML_"<FIELD name="_QUOTE_"SENDINGFACILITY"_QUOTE_" value="
+ S MPIXML=MPIXML_QUOTE_MPISITE_QUOTE_"/><FIELD name="_QUOTE_"matchType"
+ S MPIXML=MPIXML_QUOTE_" value="_QUOTE_"VISTA_REG"_QUOTE_"/><FIELD name="
+ S MPIXML=MPIXML_QUOTE_"returnMax"_QUOTE_" value="_QUOTE_"100"_QUOTE_"/>"
+ S MPIXML=MPIXML_"<FIELD name="_QUOTE_"algorithm"_QUOTE_" value="_QUOTE
+ S MPIXML=MPIXML_"PROB"_QUOTE_"/><FIELD name="_QUOTE_"minScore"_QUOTE
+ S MPIXML=MPIXML_" value="_QUOTE_MPITHRES_QUOTE_"/><FIELD name="_QUOTE
+ S MPIXML=MPIXML_"scopingOrganization"_QUOTE_" value="_QUOTE_"VA_DOD"
+ S MPIXML=MPIXML_QUOTE_"/><FIELD name="_QUOTE_"versionCode"_QUOTE
+ S MPIXML=MPIXML_" value="_QUOTE_"3.0"_QUOTE_"/><FIELD name="_QUOTE
+ S MPIXML=MPIXML_"sendingApplicationName"_QUOTE_" value="_QUOTE
+ S MPIXML=MPIXML_"VISTA_REG"_QUOTE_"/><FIELD name="_QUOTE_"PROCESSINGID"
+ S MPIXML=MPIXML_QUOTE_" value="_QUOTE_MPIPRID_QUOTE_"/></METADATA>"
+ S MPIXML=MPIXML_"<ARGUMENTS><ARGUMENT name="_QUOTE
+ S MPIXML=MPIXML_"searchProfile"_QUOTE_"><IDMHEADER>"
+ S MPIXML=MPIXML_"<SENDING_APP>VISTA_REG</SENDING_APP><MSG_DATE_TIME>"
+ S MPIXML=MPIXML_MPIDT_"</MSG_DATE_TIME><MSG_CONTROL_ID>"_$J
+ S MPIXML=MPIXML_"</MSG_CONTROL_ID><PROCESSING_ID>"_MPIPRID
+ S MPIXML=MPIXML_"</PROCESSING_ID><TRIGGER><EVENT>Local Client</EVENT>"
+ S MPIXML=MPIXML_"<ACTOR>"_DUZ_"~PN~"_MPISITE_"~USVHA^"
+ S MPIXML=MPIXML_$G(MPIDUZ("FAMILY"))_"^"_$G(MPIDUZ("GIVEN"))_"</ACTOR>"
+ S MPIXML=MPIXML_"<DATETIME>"_MPIDT_"</DATETIME><SOURCE>VISTA</SOURCE>"
+ S MPIXML=MPIXML_"</TRIGGER></IDMHEADER><PROFILE>"
+ ;
+ ; name traits
+ S MPIXML=MPIXML_"<NAME type="_QUOTE_"L"_QUOTE_">"
+ D IFADD("FirstName",.MPIARR,.MPIXML,"FIRSTNAME")
+ D IFADD("MiddleName",.MPIARR,.MPIXML,"MIDDLENAME")
+ D IFADD("Suffix",.MPIARR,.MPIXML,"SUFFIX")
+ D IFADD("Surname",.MPIARR,.MPIXML,"LASTNAME")
+ S MPIXML=MPIXML_"</NAME>"
+ ;
+ ; other traits
+ I $G(MPIARR("SSN"))'="" D
+ . S MPIXML=MPIXML_"<IDENTIFIER type="_QUOTE_"SS"_QUOTE_" subtype="
+ . S MPIXML=MPIXML_QUOTE_"ACTIVE"_QUOTE_"><ID>"_MPIARR("SSN")
+ . S MPIXML=MPIXML_"</ID></IDENTIFIER>"
+ I $G(MPIARR("DOB"))'="" D
+ . S MPIXML=MPIXML_"<ATTRIBUTE type="_QUOTE_"DOB"_QUOTE_"><VALUE>"
+ . S MPIXML=MPIXML_$$FMTHL7^XLFDT(MPIARR("DOB"))_"</VALUE></ATTRIBUTE>"
+ I $G(MPIARR("Gender"))'="" D
+ . S MPIXML=MPIXML_"<ATTRIBUTE type="_QUOTE_"GENDER"_QUOTE_">"
+ . S MPIXML=MPIXML_"<VALUE>"_MPIARR("Gender")_"</VALUE></ATTRIBUTE>"
+ I $G(MPIARR("MMN"))'="" D
+ . S MPIXML=MPIXML_"<ATTRIBUTE type="_QUOTE_"MMN"_QUOTE_">"
+ . S MPIXML=MPIXML_"<VALUE>"_MPIARR("MMN")_"</VALUE></ATTRIBUTE>"
+ I $G(MPIARR("MBI"))'="" D
+ . S MPIXML=MPIXML_"<ATTRIBUTE type="_QUOTE_"MULTIBIRTH"_QUOTE_">"
+ . S MPIXML=MPIXML_"<VALUE>"_MPIARR("MBI")_"</VALUE></ATTRIBUTE>"
+ ;
+ ;POB stuff
+ S MPIARR("MPIVar")=$$CONV($G(MPIARR("POBCity")))
+ I MPIARR("MPIVar")'=""!($G(MPIARR("POBState"))'="") D
+ . S MPIXML=MPIXML_"<ADDRESS type="_QUOTE_"N"_QUOTE_">"
+ . D IFADD("MPIVar",.MPIARR,.MPIXML,"CITY")
+ . D IFADD("POBState",.MPIARR,.MPIXML,"STATE")
+ . S MPIXML=MPIXML_"</ADDRESS>"
+ ;
+ ;address stuff
+ I $G(MPIARR("ResAddL1"))'=""!($G(MPIARR("ResAddL2"))'="")!($G(MPIARR("ResAddCity"))'="")!($G(MPIARR("ResAddZip4"))'="")!($G(MPIARR("ResAddL3"))'="")!($G(MPIARR("ResAddState"))'="") D
+ . S MPIXML=MPIXML_"<ADDRESS type="_QUOTE_"P"_QUOTE_">"
+ . S MPIARR("MPIVar")=$$CONV($G(MPIARR("ResAddL1")))
+ . D IFADD("MPIVar",.MPIARR,.MPIXML,"STREET1")
+ . S MPIARR("MPIVar")=$$CONV($G(MPIARR("ResAddL2")))
+ . D IFADD("MPIVar",.MPIARR,.MPIXML,"STREET2")
+ . S MPIARR("MPIVar")=$$CONV($G(MPIARR("ResAddL3")))
+ . D IFADD("MPIVar",.MPIARR,.MPIXML,"STREET3")
+ . S MPIARR("MPIVar")=$$CONV($G(MPIARR("ResAddCity")))
+ . D IFADD("MPIVar",.MPIARR,.MPIXML,"CITY")
+ . D IFADD("ResAddState",.MPIARR,.MPIXML,"STATE")
+ . D IFADD("ResAddZip4",.MPIARR,.MPIXML,"ZIPCODE")
+ . D IFADD("ResAddProvince",.MPIARR,.MPIXML,"PROVINCECODE")
+ . D IFADD("ResAddPCode",.MPIARR,.MPIXML,"POSTALCODE")
+ . D IFADD("ResAddCountry",.MPIARR,.MPIXML,"COUNTRY")
+ . S MPIXML=MPIXML_"</ADDRESS>"
+ ;
+ ; phone
+ I $G(MPIARR("ResPhone"))'=""&($G(MPIARR("ResPhone"))'["""") D
+ . S MPIARR("MPIVar")=$$CONV($G(MPIARR("ResPhone")))
+ . I MPIARR("MPIVar")'="" D
+ .. S MPIXML=MPIXML_"<PHONE type="_QUOTE_"HOME"_QUOTE_"><NUMBER>"
+ .. S MPIXML=MPIXML_MPIARR("MPIVar")_"</NUMBER></PHONE>"
+ ;
+ ; dod
+ I $G(MPIARR("DOD"))'="" D
+ . S MPIXML=MPIXML_"<ATTRIBUTE type="_QUOTE_"DOD"_QUOTE_"><VALUE>"
+ . S MPIXML=MPIXML_$$FMTHL7^XLFDT(MPIARR("DOD"))_"</VALUE></ATTRIBUTE>"
+ ;
+ ; end data
+ S MPIXML=MPIXML_"</PROFILE></ARGUMENT></ARGUMENTS></IDM_REQUEST>"
+ K MPIARR("MPIVar")
+ Q MPIXML
+ ;
+IFADD(MPIVAR,MPIARR,MPIXML,MPIXMLN) ;check if there, if so add it to the XML
+ ; MPIVAR is the MPIARR variable name
+ ; MPIXMLN is the name of the XML to encase
+ ; modifies MPIXML to add if it is there
+ I $G(MPIARR(MPIVAR))'="" D
+ . S MPIXML=MPIXML_"<"_MPIXMLN_">"_MPIARR(MPIVAR)_"</"_MPIXMLN_">"
+ Q
+ ;
+CONV(FIELD) ;check for &, ', > and <
+ I FIELD["&" S FIELD=$P(FIELD,"&")_"&amp;"_$P(FIELD,"&",2)
+ I FIELD["'" S FIELD=$P(FIELD,"'")_"&apos;"_$P(FIELD,"'",2)
+ S:(FIELD["<") FIELD=$$CONVA(FIELD,"<")
+ S:(FIELD[">") FIELD=$$CONVA(FIELD,">")
+ Q FIELD
+ ;
+CONVA(FIELD,ENCHAR) ;handle <<pob city>>
+ N I,X,VAL
+ S VAL="",I=$L(FIELD,ENCHAR) F X=1:1:I S VAL=VAL_$P(FIELD,ENCHAR,X)
+ Q VAL
+ ;
+PARSE(MPIDATA,MPIXML) ; - parse the data
+ ;
+ ; EN^MXMLPRSE - #4149
+ ;
+ K ^TMP($J,"MPIFXMLP")
+ N MPICB,MPIUSE,MPIVAR,MPIPAT,MPIALIAS,MPILOC,MPIIDS
+ S (MPIPAT,MPIIDS)=0
+ S MPICB("STARTELEMENT")="SE^MPIFXMLP"
+ S MPICB("CHARACTERS")="VALUE^MPIFXMLP"
+ S ^TMP($J,"MPIFXMLP",1)=MPIXML
+ D EN^MXMLPRSE($NA(^TMP($J,"MPIFXMLP")),.MPICB)
+ K ^TMP($J,"MPIFXMLP")
+ Q
+ ;
+SE(MPIN,MPIA) ; - used for the parser to call back with STARTELEMENT
+ ;
+ ; just to protect the process
+ S MPIN=$G(MPIN)
+ S MPIA("type")=$G(MPIA("type"))
+ S MPIA("subtype")=$G(MPIA("subtype"))
+ S MPIA("name")=$G(MPIA("name"))
+ S MPIA("value")=$G(MPIA("value"))
+ ; my variable to protect
+ S MPIUSE=$G(MPIUSE)
+ ;
+ ; got a business rule error
+ I MPIN="RESULT",MPIA("type")="AA",MPIA("subtype")="QE" S MPIDATA("Result")="QE" Q
+ ; don't use these
+ I MPIN="IDM_RESPONSE"!(MPIN="METADATA")!(MPIN="IDATTR") Q
+ I MPIN="RESULT"!(MPIN="ISSUER")!(MPIN="STATUS") Q
+ I MPIN="EFFECTIVE"!(MPIN="BADADDRESSCODE")!(MPIN="BADADDRESSTEXT") Q
+ I MPIN="IDATTR",MPIA("type")="PSEUDO_SSN",MPIA("subtype")="CODE" Q
+ I MPIN="ASSOC",MPIA("type")="ALIAS_SSN" Q
+ ;
+ ; save some field data
+ I MPIN="FIELD" S:MPIA("name")]"" MPIDATA(MPIA("name"))=MPIA("value") Q
+ ;
+ I MPIN="PROFILE" S MPIPAT=MPIPAT+1,MPIALIAS=0,MPILOC="MPIDATA("_MPIPAT Q
+ I MPIN="NAME" D  Q
+ . S MPIUSE=MPIA("type")
+ . S:MPIUSE="A" MPIALIAS=MPIALIAS+1
+ I MPIN="FIRSTNAME",MPIUSE="L" S MPIVAR=",""FirstName"")" Q
+ I MPIN="LASTNAME",MPIUSE="L" S MPIVAR=",""Surname"")" Q
+ I MPIN="MIDDLENAME",MPIUSE="L" S MPIVAR=",""MiddleName"")" Q
+ I MPIN="SUFFIX",MPIUSE="L" S MPIVAR=",""Suffix"")" Q
+ I MPIN="PREFIX",MPIUSE="L" S MPIVAR=",""Prefix"")" Q
+ I MPIN="FIRSTNAME",MPIUSE="A" S MPIVAR=",""ALIAS"","_MPIALIAS_",""FirstName"")" Q
+ I MPIN="LASTNAME",MPIUSE="A" S MPIVAR=",""ALIAS"","_MPIALIAS_",""Surname"")" Q
+ I MPIN="MIDDLENAME",MPIUSE="A" S MPIVAR=",""ALIAS"","_MPIALIAS_",""MiddleName"")" Q
+ I MPIN="SUFFIX",MPIUSE="A" S MPIVAR=",""ALIAS"","_MPIALIAS_",""Suffix"")" Q
+ I MPIN="PREFIX",MPIUSE="A" S MPIVAR=",""ALIAS"","_MPIALIAS_",""Prefix"")" Q
+ I MPIN="IDENTIFIER" D  Q
+ . I MPIA("type")="SS",MPIA("subtype")="ALIAS" S MPIUSE="ALIASSSN" Q
+ . I MPIA("type")="SS" S MPIUSE="SSN" Q
+ . I MPIA("type")="NI",MPIA("subtype")="IDM" S MPIUSE="ICN" Q
+ . I MPIA("type")="NI",MPIA("subtype")="" S MPIIDS=MPIIDS+1,MPIUSE="IDS" Q
+ I MPIN="ID" D  Q
+ . I MPIUSE="ALIASSSN" S MPIVAR=",""ALIAS"","_MPIALIAS_",""SSN"")" Q
+ . I MPIUSE="SSN" S MPIVAR=",""SSN"")" K MPIUSE Q
+ . I MPIUSE="ICN" S MPIVAR=",""ICN"")" K MPIUSE Q
+ . I MPIUSE="EDIPI" S MPIVAR=",""EDIPI"")" K MPIUSE Q
+ . I MPIUSE="IDS" S MPIVAR=",""IDS"","_MPIIDS_",""ID"")" Q
+ I MPIN="SOURCE" S MPIVAR=",""IDS"","_MPIIDS_",""SOURCE"")" Q
+ I MPIN="ATTRIBUTE" D  Q
+ . I MPIA("type")="SCORE" S MPIUSE="Score" Q
+ . I MPIA("type")="MMN" S MPIUSE="MMN" Q
+ . I MPIA("type")="DOB" S MPIUSE="DOB" Q
+ . I MPIA("type")="GENDER" S MPIUSE="Gender" Q
+ I MPIN="VALUE" D  K MPIUSE Q
+ . I $L(MPIUSE) S MPIVAR=","""_MPIUSE_""")"
+ I MPIN="ADDRESS" D  Q
+ . I MPIA("type")="N" S MPIUSE="POB"
+ . I MPIA("type")="P" S MPIUSE="ResAdd"
+ . I MPIA("type")="BA" S MPIUSE="BA"
+ I MPIN="CITY" S MPIVAR=","""_MPIUSE_"City"")" Q
+ I MPIN="STATE" S MPIVAR=","""_MPIUSE_"State"")" Q
+ I MPIN="PROVINCECODE" S MPIVAR=","""_MPIUSE_"Province"")" Q
+ I MPIN="COUNTRY" S MPIVAR=","""_MPIUSE_"Country"")" Q
+ I MPIN="PHONE",MPIA("type")="Home" S MPIUSE="ResPhone" Q
+ I MPIN="NUMBER" S MPIVAR=","""_MPIUSE_""")" Q
+ I MPIN="STREET1" S MPIVAR=","""_MPIUSE_"L1"")" Q
+ I MPIN="STREET2" S MPIVAR=","""_MPIUSE_"L2"")" Q
+ I MPIN="STREET3" S MPIVAR=","""_MPIUSE_"L3"")" Q
+ I MPIN="ZIPCODE" S MPIVAR=","""_MPIUSE_"Zip4"")" Q
+ I MPIN="POSTALCODE" S MPIVAR=","""_MPIUSE_"PCode"")" Q
+ ;
+ Q
+ ;
+VALUE(MPIT) ; - used by the parser to call back with CHARACTERS
+ S:$D(MPIVAR) @(MPILOC_MPIVAR)=MPIT K MPIVAR Q
+ Q
+
+ORWORR1
+ORWORR1 ; SLC/JLI - Utilities for Retrieve Orders for Broker ;2018-06-21  4:23 PM
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**141,243,456,OSEHRA**;Dec 17, 1997;Build 2
+ ; *OSEHRA changed by OSE/Sam Habiel (c) 2018
+ ;Called from ORWORR
+ ;
+ ; External References
+ ;   DBIA  4834  GETUSER1^XQALDATA
+ ;   DBIA  2790  $$CURRSURO^XQALSURO
+ ;
+GET1 ; 
+ S TOT=^TMP("ORR",$J,ORLIST,"TOT") K ^TMP("ORR",$J,ORLIST,"TOT")
+ S I=.1 F  S I=$O(^TMP("ORR",$J,ORLIST,I)) Q:'I  S IFN=^(I) D
+ . ;was:I $G(ORRECIP)&&($G(FILTER)=12&&($$FLAGRULE(+IFN))) K ^TMP("ORR",$J,ORLIST,I) S TOT=TOT-1 Q  ; *OSEHRA*
+ . I $G(ORRECIP),$G(FILTER)=12,$$FLAGRULE(+IFN) K ^TMP("ORR",$J,ORLIST,I) S TOT=TOT-1 Q  ; *OSEHRA*
+ . I ORWTS,(+$P($G(^OR(100,+IFN,0)),U,13)'=ORWTS) K ^TMP("ORR",$J,ORLIST,I) S TOT=TOT-1 Q
+ . S PTEVTID=$P($G(^OR(100,+IFN,0)),U,17)
+ . S:PTEVTID>0 EVTNAME=$$NAME^OREVNTX(PTEVTID)
+ . S ^TMP("ORR",$J,ORLIST,I)=IFN_U_$P($G(^OR(100,+IFN,0)),U,11)_U_$P($G(^(8,+$P(IFN,";",2),0)),U)_U_PTEVTID_U_EVTNAME
+ S TXTVW=$S(MULT:0,FILTER=2:2,1:1) D:FILTER=2 ORYD^ORDD100
+ S ^TMP("ORR",$J,ORLIST,.1)=TOT_U_TXTVW_U_$G(ORYD,0)
+ S REF=$NA(^TMP("ORR",$J,ORLIST))
+ Q
+GET2 ; For AUTO DC/Event Release Orders
+ N JDND,JDIX,JDCNT,DCSPLIT
+ S JDCNT=1,DCSPLIT=0
+ S TOT=^TMP("ORR",$J,ORLIST,"TOT") K ^TMP("ORR",$J,ORLIST,"TOT")
+ F JDND="RL","DC" D
+ . S I=.1 F  S I=$O(^TMP("ORR",$J,ORLIST,I)) Q:'I  D
+ . . I '$D(^TMP("ORR",$J,ORLIST,I,JDND)) Q
+ . . S JDIX=0 F  S JDIX=$O(^TMP("ORR",$J,ORLIST,I,JDND,JDIX)) Q:'JDIX  S IFN=^(JDIX)  D
+ . . . I 'DCSPLIT,(JDND="DC") D
+ . . . . S ^TMP("ORRJD",$J,JDCNT)="DC START"
+ . . . . S DCSPLIT=1,JDCNT=JDCNT+1,TOT=TOT+1
+ . . . I ORWTS,(+$P($G(^OR(100,+IFN,0)),U,13)'=ORWTS) S TOT=TOT-1 Q
+ . . . S PTEVTID=$P($G(^OR(100,+IFN,0)),U,17)
+ . . . S:PTEVTID>0 EVTNAME=$$NAME^OREVNTX(PTEVTID)
+ . . . S ^TMP("ORRJD",$J,JDCNT)=IFN_U_$P($G(^OR(100,+IFN,0)),U,11)_U_$P($G(^(8,+$P(IFN,";",2),0)),U)_U_PTEVTID_U_EVTNAME
+ . . . S JDCNT=JDCNT+1
+ S TXTVW=$S(MULT:0,FILTER=2:2,1:1) D:FILTER=2 ORYD^ORDD100
+ S ^TMP("ORRJD",$J,.1)=TOT_U_TXTVW_U_$G(ORYD,0)
+ S REF=$NA(^TMP("ORRJD",$J))
+ Q
+FLAGRULE(ORNUM,USR) ;
+ ;returns 0 if we should keep ORNUM in the list
+ ;returns 1 if we should remove ORNUM from the list
+ ;determines based on whether the user USR should see these flagged orders
+ ; based on presence in file 100 NODE 8 FIELD 39 and
+ ; based on whether the user should have gotten the flag due to provider recipients
+ N ORI,ORRET,ORQUIT,I,LST,ORDFN
+ I '$G(USR) S USR=DUZ
+ S ORRET=1,ORQUIT=0
+ S ORI=0 F  S ORI=$O(^OR(100,ORNUM,8,ORI)) Q:'ORI  D
+ .I '$P($G(^OR(100,ORNUM,8,ORI,3)),U,6)&($P($G(^OR(100,ORNUM,8,ORI,3)),U,9)) S LST($P($G(^OR(100,ORNUM,8,ORI,3)),U,9))=""
+ S ORDFN=+$P($G(^OR(100,ORNUM,0)),U,2)
+ D START^ORBPRCHK(.LST,ORNUM,6,ORDFN)
+ ;add ordering provider
+ N ORDPROV
+ S ORDPROV=$$ORDERER^ORQOR2(ORNUM)
+ I $G(ORDPROV) S LST(ORDPROV)=""
+ D ADDSURR(.LST)
+ ;p456 add the current user if they have a notification associated with the current order
+ N ORNLST,ORI,ORRTN,ORMTCH S ORNLST=0,ORI=0,ORMTCH=0,ORRTN="" D GETUSER1^XQALDATA("ORNLST",DUZ) I ORNLST D
+ .F  S ORI=$O(ORNLST(ORI)) Q:'ORI  D  Q:ORMTCH
+ ..D GETDATA^ORWORB(.ORRTN,$P(ORNLST(ORI),U,2))
+ ..I +ORRTN=ORNUM S LST(DUZ)="",ORMTCH=1
+ I $D(LST(USR)) S ORRET=0
+ Q ORRET
+ADDSURR(LST) ;TAKE LIST OF USERS AND ADD SURROGATES TO THE LIST
+ N I
+ S I=0 F  S I=$O(LST(I)) Q:'I  S LST($$CURRSURO^XQALSURO(I))=""
+ Q
+
+
+

@@ -204,9 +204,14 @@ def configureConsoleDevice(VistA):
   VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DEVICE')
   VistA.wait('EDIT WHICH FIELD')
-  VistA.write('SIGN-ON/SYSTEM DEVICE\r')
+  VistA.write('$I\rSIGN-ON/SYSTEM DEVICE\r')
   VistA.wait('NAME:')
   VistA.write('/dev/tty')
+  VistA.wait('//')
+  if sys.platform == 'cygwin':
+    VistA.write('/dev/pty')
+  else:
+    VistA.write('')
   VistA.wait('SYSTEM DEVICE')
   VistA.write('Y\r')
   VistA.wait("Select OPTION")
