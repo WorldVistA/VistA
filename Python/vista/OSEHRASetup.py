@@ -318,10 +318,7 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
     VistA.write("")
     VistA.wait("Select PORT")
   VistA.write(tcp_port + '\rY')
-  if VistA.type=='cache':
-    VistA.write('1\r1\r1\r')
-  else:
-    VistA.write('1\r\r\r')
+  VistA.write('1\r1\r1\r')
   VistA.wait("Select OPTION")
   VistA.write("")
 
