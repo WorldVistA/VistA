@@ -107,10 +107,10 @@ class ConnectMUMPS(object):
       VistAboxvol = ''
       for i in range(test[0], test[1]):
         VistAboxvol = VistAboxvol + match[2][i]
-      self.boxvol = VistAboxvol
+      self.boxvol = VistAboxvol.strip()
     else:
       self.wait_re(volume + ':.+\s', None)
-      self.boxvol = self.connection.after
+      self.boxvol = self.connection.after.strip()
 
   def IEN(self, file, objectname):
     self.write('S DUZ=1 D Q^DI')
