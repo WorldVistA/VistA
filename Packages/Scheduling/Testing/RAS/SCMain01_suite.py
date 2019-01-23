@@ -392,7 +392,7 @@ def sc_test010(test_suite_details):
                                  ['RACE', ''],
                                  ['MARITAL STATUS', 'MARRIED'],
                                  ['RELIGIOUS PREFERENCE', 'CELTICISM'],
-                                 ['TEMPORARY ADDRESS ACTIVE', 'NO'],
+                                 ['ADDRESS ACTIVE', 'NO'],
                                  ['PHONE NUMBER', ''],
                                  ['PAGER NUMBER', '']], emailAddress = 'email@example.org')
         SC.signon()
