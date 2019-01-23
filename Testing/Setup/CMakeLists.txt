@@ -27,7 +27,7 @@ endif()
 set(TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT 3600 CACHE STRING "Timeout in seconds for importing globals")
 set(TEST_VISTA_FRESH_ROUTINE_IMPORT_TIMEOUT 1500 CACHE STRING "Timeout in seconds for importing routines")
 set(TEST_VISTA_SETUP_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
-set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
+set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will give you a sensible default by system.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
 
 foreach(fvariable ${freshinfo})
   if(NOT ${fvariable})

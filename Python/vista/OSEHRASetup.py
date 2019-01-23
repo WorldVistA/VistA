@@ -18,6 +18,7 @@ import os
 import time
 import datetime
 import TestHelper
+from tempfile import gettempdir
 from OSEHRAHelper import PROMPT
 
 introText = """**************************************************
@@ -109,6 +110,7 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   # Kernel System Parameters file
   #
   # "@" to remove or set a new file path.
+  if (hfs_dir=="@" or hfs_dir=='') : hfs_dir = gettempdir()
   startFileman(VistA)
   VistA.write('1')
   VistA.wait_re('INPUT TO WHAT FILE')
