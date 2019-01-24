@@ -2144,8 +2144,6 @@ class WebPageGenerator:
                             self.__parseReadCmd__(readCmdMatches, routine, currentEntryPoint+"+"+str(entryOffset))
                         if WRITE_CMD.search(line):
                             self.__parseWriteCmd__(line, routine, currentEntryPoint+"+"+str(entryOffset))
-                        if lineNo > 1:
-                           continue
                         outputFile.write(line)
                         lineNo += 1
                         entryOffset += 1
