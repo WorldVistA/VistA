@@ -59,7 +59,13 @@
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
-                  columns: ':visible'
+                  columns: ':visible',
+                  format: {
+                     body: function(html, indx, node) {
+                        var entryList = html.split("</li>");
+                        return $("<div/>").html(entryList.join("|")).text();
+                     }
+                  }
               }
           },
           {
@@ -68,7 +74,31 @@
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
-                  columns: ':visible'
+                  columns: ':visible',
+                  format: {
+                     body: function(html, indx, node) {
+                        var entryList = html.split("</li>");
+                        var parsedList = []
+                        entryList.forEach(function(d) {
+                            if (d.indexOf("<li>") != -1) {
+                              parsedList.push("* " + d)
+                            } else {
+                              parsedList.push(d)
+                            }
+                        });
+                        return $("<div/>").html(parsedList.join("  ")).text();
+                     }
+                  }
+              },
+              customize: function (doc) {
+                  // Taken from https://stackoverflow.com/questions/35642802/datatables-export-pdf-with-100-width
+                  var colCount = new Array();
+                  var length = $('#ICR_List-All tbody tr:first-child td').length;
+                  console.log('length / number of td in report one record = '+length);
+                  $('#ICR_List-All').find('tbody tr:first-child td').each(function(){
+                      colCount.push(parseFloat(100 / length)+'%');
+                  });
+                  doc.content[1].table.widths = colCount;
               }
           }
 
@@ -631,6 +661,23 @@
 <td></td>
 <td></td>
 <td></td>
+</tr>
+<tr>
+<td>4887</td>
+<td><a title=" This integration agreement describes the use of the std_institution table and fields within the PATS application&quot;s Oracle database.
+ When the first test site goes to production with PATS, the EMC will be using version 11 of the SDS database." href="ICR-4887.html">Use of STD_INSTITUTION table in PATS application</a></td>
+<td>SQL Table</td>
+<td>807</td>
+<td>2006/08/21</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td></td>
+<td><br>This integration agreement describes the use of the<br>std_institution table and fields within the PATS application&quot;s Oracle<br>database.
+<br>When the first test site goes to production with PATS, the EMC will be using<br>version 11 of the SDS database.</td>
+<td></td>
+<td></td>
+<td>2006/09/23</td>
 </tr>
 <tr>
 <td>5499</td>

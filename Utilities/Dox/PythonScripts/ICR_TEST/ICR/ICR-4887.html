@@ -28,7 +28,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-      $("#SUNSLTYxMDQ").dataTable({
+      $("#SUNSLTQ4ODc").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -38,10 +38,10 @@
       });
 }); </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h1>LRHY GET SITES RPC &nbsp;&nbsp;  ICR (6104)</h1>
+<body id="dt_example"><div id="container" style="width:80%"><h1>Use of STD_INSTITUTION table in PATS application &nbsp;&nbsp;  ICR (4887)</h1>
 
 <div id="demo">
-<table id="SUNSLTYxMDQ" class="display">
+<table id="SUNSLTQ4ODc" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -50,35 +50,27 @@
 </thead>
 <tr>
 <td>NUMBER</td>
-<td>6104</td>
+<td>4887</td>
 </tr>
 <tr>
 <td>IA #</td>
-<td>6104</td>
-</tr>
-<tr>
-<td>FILE NUMBER</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
-</tr>
-<tr>
-<td>GLOBAL ROOT</td>
-<td>LRHY(69.86</td>
+<td>4887</td>
 </tr>
 <tr>
 <td>DATE CREATED</td>
-<td>2014/09/23</td>
+<td>2006/08/21</td>
 </tr>
 <tr>
 <td>CUSTODIAL PACKAGE</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td>807</td>
 </tr>
 <tr>
 <td>USAGE</td>
-<td>Controlled Subscription</td>
+<td>Private</td>
 </tr>
 <tr>
 <td>TYPE</td>
-<td>Remote Procedure</td>
+<td>SQL Table</td>
 </tr>
 <tr>
 <td>DBIC APPROVAL STATUS</td>
@@ -86,58 +78,18 @@
 </tr>
 <tr>
 <td>NAME</td>
-<td>LRHY GET SITES RPC</td>
+<td>Use of STD_INSTITUTION table in PATS application</td>
 </tr>
 <tr>
 <td>GENERAL DESCRIPTION</td>
 <td><pre>
+This integration agreement describes the use of the
+std_institution table and fields within the PATS application's Oracle
+database.
 
-NAME: LRHY GET SITES                    TAG: GETSITES
-ROUTINE: LRHYRP01                     RETURN VALUE
-TYPE: ARRAY
-DESCRIPTION:
-This RPC will return all Howdy Sites
-USAGE: Controlled Subscri  ENTERED: SEP 23,2014
-STATUS: Pending             EXPIRES:
-DURATION:                     VERSION:
-DESCRIPTION:                        TYPE: Remote Procedure
+When the first test site goes to production with PATS, the EMC will be using
+version 11 of the SDS database.
 </pre>
-</td>
-</tr>
-<tr>
-<td>GLOBAL REFERENCE</td>
-<td>
-<ol>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;NAME</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;NAME</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Both R/W w/Fileman</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LRHY(69.86,D0,0</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;LAB TEST (TO EXCLUDE)</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Both R/W w/Fileman</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;2</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LRHY(69.86,D0,2,0</dt>
-</li>
-</ol>
 </td>
 </tr>
 <tr>
@@ -149,50 +101,100 @@ DESCRIPTION:                        TYPE: Remote Procedure
 <td>
 <ol>
 <li>
-<dt>KEYWORDS:  &nbsp;&nbsp;LRHY</dt>
+<dt>KEYWORDS:  &nbsp;&nbsp;PATS</dt>
 </li>
 <li>
-<dt>KEYWORDS:  &nbsp;&nbsp;Howdy</dt>
+<dt>KEYWORDS:  &nbsp;&nbsp;SDS</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;INSTITUTION</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;STD_INSTITUTION</dt>
 </li>
 </ol>
 </td>
 </tr>
 <tr>
-<td>ID</td>
-<td>LRHY(69.86</td>
-</tr>
-<tr>
-<td>SUBSCRIBING PACKAGE</td>
-<td>
-<ol>
-<li>
-<dt>SUBSCRIBING DETAILS:  &nbsp;&nbsp;<pre>
-VA Point of Service Kiosks needs to use LRHY GET SITES,
-implemented in LRHYRP01 and included in patch LR*5.2*447, to return the list
-of Howdy sites at a facility to VetLink.
-</pre>
-</dt>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_VA_Point_of_Service.html">VA POINT OF SERVICE (KIOSKS)</a></dt>
-</li>
-</ol>
-</td>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
 </tr>
 <tr>
 <td>CREATOR</td>
-<td>WHELESS,CAROLYN</td>
-</tr>
-<tr>
-<td>DBA Comments</td>
-<td><pre>
-10/2/14-MC:Activated ICR at the request of Carolyn Wheless and
-approved by Levi Teitelbaum for patch LRS*5.2*447. VPS will use the RPC LRHY
-GET SITES to return the list of Howdy sites at a facility.
-</pre>
-</td>
+<td>WINN,TAMI</td>
 </tr>
 <tr>
 <td>DATE ACTIVATED</td>
-<td>2014/10/02</td>
+<td>2006/09/23</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>43953287</td>
+</tr>
+<tr>
+<td>DATE/TIME EDITED</td>
+<td>
+<ol>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;APPROVED</dt>
+<dt>AT THE REQUEST OF:  &nbsp;&nbsp;WINN,TAMI</dt>
+<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;ADDISON,MELISSA</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2006/09/23 09:00</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>SQL TABLE</td>
+<td>STD_INSTITUTION</td>
+</tr>
+<tr>
+<td>SQL COLUMN</td>
+<td>
+<ol>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS does a join between the PATS report_of_contact table
+and the std_institution table, to select this field into the rollup table and
+the report tables.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;STATIONNUMBER</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS uses this field when building data for the rollup and
+for one PATS report provided for the National Program Office. PATS first does
+a JOIN between the PATS report_of_contact table and the std_institution table
+to select the institution at which a patient complaint was made. It then uses
+the results of the first join to do a second join on the std_institution table
+to select an entry with an ID matching the visn_id field of the first entry,
+in order to get the name of the VISN.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;VISN_ID</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS does a join between the PATS report_of_contact table
+and the std_institution table, to select this field into the rollup table and
+the report tables.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;VISTANAME</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS has several foreign key references to the ID field on
+the std_institution table. This field is used both to do joins between the
+PATS tables and the std_institution table to build tables used for reporting,
+and to screen data so that users see only the data for their own division.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;ID</dt>
+</li>
+</ol>
+</td>
 </tr>
 </tbody>
 </table>

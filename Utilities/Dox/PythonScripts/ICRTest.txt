@@ -1201,6 +1201,50 @@ SUBSCRIBING PACKAGE: TEXT INTEGRATION UTILITIES
 DATE/TIME EDITED: MAY 07, 2012@14:46    ACTION: RETIRED
   AT THE REQUEST OF: MCCLENAHAN,MARGY   WITH CONCURRENCE OF: DAVIS,ROBERT
 
+NUMBER: 4887                            IA #: 4887
+  DATE CREATED: AUG 21, 2006            CUSTODIAL PACKAGE: 807
+  USAGE: Private                        TYPE: SQL Table
+  DBIC APPROVAL STATUS: APPROVED
+  NAME: Use of STD_INSTITUTION table in PATS application
+  CREATOR: WINN,TAMI
+ GENERAL DESCRIPTION:   This integration agreement describes the use of the
+ std_institution table and fields within the PATS application's Oracle
+ database. 
+  
+ When the first test site goes to production with PATS, the EMC will be using
+ version 11 of the SDS database.  
+  STATUS: Active                        DURATION: Till Otherwise Agreed
+  MAIL MESSAGE: 43953287
+KEYWORDS: PATS
+KEYWORDS: SDS
+KEYWORDS: INSTITUTION
+KEYWORDS: STD_INSTITUTION
+  SQL TABLE: STD_INSTITUTION
+SQL COLUMN: STATIONNUMBER
+ COLUMN DETAILS:   PATS does a join between the PATS report_of_contact table
+ and the std_institution table, to select this field into the rollup table and
+ the report tables.  
+SQL COLUMN: VISN_ID
+ COLUMN DETAILS:   PATS uses this field when building data for the rollup and
+ for one PATS report provided for the National Program Office. PATS first does
+ a JOIN between the PATS report_of_contact table and the std_institution table
+ to select the institution at which a patient complaint was made. It then uses 
+ the results of the first join to do a second join on the std_institution table
+ to select an entry with an ID matching the visn_id field of the first entry,
+ in order to get the name of the VISN.  
+SQL COLUMN: VISTANAME
+ COLUMN DETAILS:   PATS does a join between the PATS report_of_contact table
+ and the std_institution table, to select this field into the rollup table and
+ the report tables.  
+SQL COLUMN: ID
+ COLUMN DETAILS:   PATS has several foreign key references to the ID field on
+ the std_institution table. This field is used both to do joins between the 
+ PATS tables and the std_institution table to build tables used for reporting,
+ and to screen data so that users see only the data for their own division.  
+  DATE ACTIVATED: SEP 23, 2006
+DATE/TIME EDITED: SEP 23, 2006@09:00    ACTION: APPROVED
+  AT THE REQUEST OF: WINN,TAMI          WITH CONCURRENCE OF: ADDISON,MELISSA
+
 NUMBER: 5499                            IA #: 5499
   DATE CREATED: SEP 25, 2009
   CUSTODIAL PACKAGE: TEXT INTEGRATION UTILITIES
