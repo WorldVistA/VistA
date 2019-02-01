@@ -39,7 +39,9 @@
 }); </script>
 
 <body id="dt_example"><div id="container" style="width:80%"><h1>LRHY GET SITES RPC &nbsp;&nbsp;  ICR (6104)</h1>
-<div id="demo"><table id="SUNSLTYxMDQ" class="display">
+
+<div id="demo">
+<table id="SUNSLTYxMDQ" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -106,35 +108,43 @@ DESCRIPTION:                        TYPE: Remote Procedure
 <td>GLOBAL REFERENCE</td>
 <td>
 <ol>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;NAME</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;NAME</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Both R/W w/Fileman</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LRHY(69.86,D0,0</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;LAB TEST (TO EXCLUDE)</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Both R/W w/Fileman</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;2</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LRHY(69.86,D0,2,0</dt>
-</li>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>GLOBAL REFERENCE</th>
+</tr></thead><tbody>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td></td>
+<td>NAME</td>
+<td></td>
+</tr>
+<td>Both R/W w/Fileman</td>
+<td>.01</td>
+<td>NAME</td>
+</tr>
+</tbody></table>
+</td>
+<td>LRHY(69.86,D0,0</td>
+</tr>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Both R/W w/Fileman</td>
+<td>2</td>
+<td>LAB TEST (TO EXCLUDE)</td>
+</tr>
+</tbody></table>
+</td>
+<td>LRHY(69.86,D0,2,0</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -146,12 +156,14 @@ DESCRIPTION:                        TYPE: Remote Procedure
 <td>KEYWORDS</td>
 <td>
 <ol>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;LRHY</dt>
-</li>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;Howdy</dt>
-</li>
+<table><thead><tr>
+<th>KEYWORDS</th>
+</tr></thead><tbody>
+<td>LRHY</td>
+</tr>
+<td>Howdy</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -163,15 +175,19 @@ DESCRIPTION:                        TYPE: Remote Procedure
 <td>SUBSCRIBING PACKAGE</td>
 <td>
 <ol>
-<li>
-<dt>SUBSCRIBING DETAILS:  &nbsp;&nbsp;<pre>
+<table><thead><tr>
+<th>SUBSCRIBING DETAILS</th>
+<th>SUBSCRIBING PACKAGE</th>
+</tr></thead><tbody>
+<td><pre>
 VA Point of Service Kiosks needs to use LRHY GET SITES,
 implemented in LRHYRP01 and included in patch LR*5.2*447, to return the list
 of Howdy sites at a facility to VetLink.
 </pre>
-</dt>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_VA_Point_of_Service.html">VA POINT OF SERVICE (KIOSKS)</a></dt>
-</li>
+</td>
+<td><a href="https://code.osehra.org/dox/Package_VA_Point_of_Service.html">VA POINT OF SERVICE (KIOSKS)</a></td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
