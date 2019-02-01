@@ -53,7 +53,7 @@ COMPONENT_TYPE_DICT = {
   "extended action" : "Ea",
   "event driver" : "Ed",
   "subscriber" : "Su",
-  "protocol" : "P",
+  "protocol" : "O",
   "limited protocol" : "LP",
 
   # Option Values
