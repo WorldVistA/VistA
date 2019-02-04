@@ -27,6 +27,7 @@ from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from LogManager import initLogging, logger
 
 EXPECTED_PDFS = {
+    "807": ["ICR-4887.pdf"],
     "General_Medical_Record___Vitals": ["ICR-3996.pdf"],
     "Imaging": ["ICR-4528.pdf"],
     "Lab_Service": ["ICR-6104.pdf", "ICR-91.pdf"],

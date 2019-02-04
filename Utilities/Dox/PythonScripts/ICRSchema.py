@@ -67,7 +67,9 @@ ICR_FILE_KEYWORDS_LIST = [
     'RETURN VALUE TYPE',
     'APP PROXY ALLOWED',
     'WORD WRAP ON',
-    'AVAILABILITY'
+    'AVAILABILITY',
+    'SQL TABLE',
+    'SQL COLUMN'
 ]
 
 """ Convert to a set for fast search """
@@ -115,6 +117,9 @@ SUBFILE_FIELDS = {
     ],
     'CROSS REF NUM': [
       'TYPE',
+    ],
+    'SQL COLUMN': [
+      'COLUMN DETAILS',
     ]
 }
 
@@ -130,7 +135,8 @@ WORDS_FIELDS = set([
     'GLOBAL DESCRIPTION',
     'GENERAL DESCRIPTION',
     'SUBSCRIBING DETAILS',
-    'COMPONENT DESCRIPTION'
+    'COMPONENT DESCRIPTION',
+    'COLUMN DETAILS'
 ])
 
 DATE_TIME_FIELD = set([

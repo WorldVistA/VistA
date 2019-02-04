@@ -1,0 +1,203 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTQ4ODc").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>Use of STD_INSTITUTION table in PATS application &nbsp;&nbsp;  ICR (4887)</h1>
+
+<div id="demo">
+<table id="SUNSLTQ4ODc" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>4887</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>4887</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>2006/08/21</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td>807</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Private</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>SQL Table</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>Use of STD_INSTITUTION table in PATS application</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+This integration agreement describes the use of the
+std_institution table and fields within the PATS application's Oracle
+database.
+
+When the first test site goes to production with PATS, the EMC will be using
+version 11 of the SDS database.
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>KEYWORDS</td>
+<td>
+<ol>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;PATS</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;SDS</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;INSTITUTION</dt>
+</li>
+<li>
+<dt>KEYWORDS:  &nbsp;&nbsp;STD_INSTITUTION</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>CREATOR</td>
+<td>WINN,TAMI</td>
+</tr>
+<tr>
+<td>DATE ACTIVATED</td>
+<td>2006/09/23</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>43953287</td>
+</tr>
+<tr>
+<td>DATE/TIME EDITED</td>
+<td>
+<ol>
+<li>
+<dt>ACTION:  &nbsp;&nbsp;APPROVED</dt>
+<dt>AT THE REQUEST OF:  &nbsp;&nbsp;WINN,TAMI</dt>
+<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;ADDISON,MELISSA</dt>
+<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2006/09/23 09:00</dt>
+</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>SQL TABLE</td>
+<td>STD_INSTITUTION</td>
+</tr>
+<tr>
+<td>SQL COLUMN</td>
+<td>
+<ol>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS does a join between the PATS report_of_contact table
+and the std_institution table, to select this field into the rollup table and
+the report tables.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;STATIONNUMBER</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS uses this field when building data for the rollup and
+for one PATS report provided for the National Program Office. PATS first does
+a JOIN between the PATS report_of_contact table and the std_institution table
+to select the institution at which a patient complaint was made. It then uses
+the results of the first join to do a second join on the std_institution table
+to select an entry with an ID matching the visn_id field of the first entry,
+in order to get the name of the VISN.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;VISN_ID</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS does a join between the PATS report_of_contact table
+and the std_institution table, to select this field into the rollup table and
+the report tables.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;VISTANAME</dt>
+</li>
+<li>
+<dt>COLUMN DETAILS:  &nbsp;&nbsp;<pre>
+PATS has several foreign key references to the ID field on
+the std_institution table. This field is used both to do joins between the
+PATS tables and the std_institution table to build tables used for reporting,
+and to screen data so that users see only the data for their own division.
+</pre>
+</dt>
+<dt>SQL COLUMN:  &nbsp;&nbsp;ID</dt>
+</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>
