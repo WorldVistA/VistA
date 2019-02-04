@@ -16,6 +16,7 @@
 
 import argparse
 import filecmp
+import logging
 import os
 import sys
 import unittest
@@ -23,6 +24,7 @@ import unittest
 import ICRParser
 
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+from LogManager import initLogging, logger
 
 EXPECTED_PDFS = {
     "General_Medical_Record___Vitals": ["ICR-3996.pdf"],
@@ -157,6 +159,8 @@ if __name__ == '__main__':
     TEST_ICR_DIR = os.path.join(scripts_dir, "ICR_TEST", "ICR")
     TEST_ICR_FILES = os.listdir(TEST_ICR_DIR)
     TEST_ICR_FILES.sort()
+
+    initLogging(args.testOutDir, "TESTICRParser.log", level=logging.ERROR)
 
     suite = unittest.TestLoader().loadTestsFromTestCase(testICRParser)
     unittest.TextTestRunner(verbosity=2).run(suite)

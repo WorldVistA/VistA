@@ -316,7 +316,7 @@ class FileManSchemaParser(object):
       types = [FileManField.FIELD_TYPE_NONE]
     if types and types[0]  == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile and subFile == fileSchema.getFileNo():
-        logger.error("recursive subfile pointer for %s" % subFile)
+        logger.warning("Recursive subfile pointer for %s" % subFile)
         types = [FileManField.FIELD_TYPE_NONE]
     fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0],
                                                 types[0], location)
@@ -356,7 +356,7 @@ class FileManSchemaParser(object):
           if not globalName:
             pointedToFile.setName(fileGlobalRoot)
           elif globalName != fileGlobalRoot:
-            logger.error("%s: FileMan global root mismatch '%s' : '%s'" %
+            logger.warning("%s: FileMan global root mismatch '%s' : '%s'" %
                           (zeroFields, globalName, fileGlobalRoot))
         else:
           logger.info("@TODO, find file global root for # %s" % filePointedTo)

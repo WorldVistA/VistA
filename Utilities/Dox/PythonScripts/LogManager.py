@@ -33,10 +33,10 @@ FORMAT_STRING = '%(asctime)s %(levelname)s %(message)s'
 # DEBUG
 # NOTSET (default, all others)
 
-def initLogging(outputDir, outputFileName):
+def initLogging(outputDir, outputFileName, level=logging.DEBUG):
     # Set root logging level. This level is checked first and then the
     # individual handers' levels are checked.
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(level)
     formatter = logging.Formatter(FORMAT_STRING)
     if not os.path.exists(outputDir):
         os.makedirs(outputDir)
