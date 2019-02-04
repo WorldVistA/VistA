@@ -39,7 +39,9 @@
 }); </script>
 
 <body id="dt_example"><div id="container" style="width:80%"><h1>DBIA91-A &nbsp;&nbsp;  ICR (91)</h1>
-<div id="demo"><table id="SUNSLTkx" class="display">
+
+<div id="demo">
+<table id="SUNSLTkx" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -98,65 +100,71 @@
 <td>GLOBAL REFERENCE</td>
 <td>
 <ol>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;NAME</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Direct Global Read & w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;TEST COST</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Direct Global Read & w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;11</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;1</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SUBSCRIPT</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Direct Global Read & w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;4</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;4</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;LOCATION (DATA NAME)</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Direct Global Read & w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;5</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;5</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LAB(60,D0,0)</dt>
-</li>
-<li>
-<dt>GLOBAL DESCRIPTION:  &nbsp;&nbsp;<pre>
+<table><thead><tr>
+<th>GLOBAL DESCRIPTION</th>
+<th>FIELD NUMBER</th>
+<th>GLOBAL REFERENCE</th>
+</tr></thead><tbody>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.01</td>
+<td>NAME</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>0;1</td>
+</tr>
+<td>1</td>
+<td>TEST COST</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>0;11</td>
+</tr>
+<td>4</td>
+<td>SUBSCRIPT</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>0;4</td>
+</tr>
+<td>5</td>
+<td>LOCATION (DATA NAME)</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>0;5</td>
+</tr>
+</tbody></table>
+</td>
+<td>LAB(60,D0,0)</td>
+</tr>
+<td><pre>
 The 'B' cross-reference is used to locate patient data
 by the specific Laboratory Test Name.
 </pre>
-</dt>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LAB(60,'B',</dt>
-</li>
-<li>
-<dt>GLOBAL DESCRIPTION:  &nbsp;&nbsp;<pre>
+</td>
+<td></td>
+<td>LAB(60,'B',</td>
+</tr>
+<td><pre>
 The 'C' cross-reference is used to locate the Laboratory
 Test Name when all data for a selected patient is being evaluated based on the
 Location (DATA NAME) for a particular result
 </pre>
-</dt>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LAB(60,'C',</dt>
-</li>
-<li>
-<dt>GLOBAL DESCRIPTION:  &nbsp;&nbsp;<pre>
+</td>
+<td></td>
+<td>LAB(60,'C',</td>
+</tr>
+<td><pre>
 This is a check used in  DIC('S') for LAB TESTS INCLUDED
 IN PANEL in the following manner: S DIC("S")="I '$D(^LAB(60,+Y,2))" S
 DIC("?")="The lab test may not be a panel of tests." S DIC="60",DIC(0)="AEQMZ"
 F  D ^DIC Q:Y=-1  D
 </pre>
-</dt>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;LAB(60,D0,2)</dt>
-</li>
+</td>
+<td></td>
+<td>LAB(60,D0,2)</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -176,32 +184,43 @@ F  D ^DIC Q:Y=-1  D
 <td>SUBSCRIBING PACKAGE</td>
 <td>
 <ol>
-<li>
-<dt>ISC:  &nbsp;&nbsp;Oakland</dt>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Spinal_Cord_Dysfunction.html">SPINAL CORD DYSFUNCTION</a></dt>
-</li>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Clinical_Reminders.html">CLINICAL REMINDERS</a></dt>
-</li>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Clinical_Case_Registries.html">CLINICAL CASE REGISTRIES</a></dt>
-</li>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Pharmacy_Benefits_Management.html">PHARMACY BENEFITS MANAGEMENT</a></dt>
-</li>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></dt>
-</li>
-<li>
-<dt>SUBSCRIBING DETAILS:  &nbsp;&nbsp;<pre>
+<table><thead><tr>
+<th>ISC</th>
+<th>SUBSCRIBING DETAILS</th>
+<th>SUBSCRIBING PACKAGE</th>
+</tr></thead><tbody>
+<td>Oakland</td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Package_Spinal_Cord_Dysfunction.html">SPINAL CORD DYSFUNCTION</a></td>
+</tr>
+<td></td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Package_Clinical_Reminders.html">CLINICAL REMINDERS</a></td>
+</tr>
+<td></td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Package_Clinical_Case_Registries.html">CLINICAL CASE REGISTRIES</a></td>
+</tr>
+<td></td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Package_Pharmacy_Benefits_Management.html">PHARMACY BENEFITS MANAGEMENT</a></td>
+</tr>
+<td></td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
+</tr>
+<td></td>
+<td><pre>
 ADDED 4/23/09
 </pre>
-</dt>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;MRSA INITIATIVE REPORTS</dt>
-</li>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;ENTERPRISE HEALTH MGMT PLATFORM</dt>
-</li>
+</td>
+<td>MRSA INITIATIVE REPORTS</td>
+</tr>
+<td></td>
+<td></td>
+<td>ENTERPRISE HEALTH MGMT PLATFORM</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -221,17 +240,23 @@ of Raymond Blank and approval of Carol Anzaldua for HMP 2.0
 <td>DATE/TIME EDITED</td>
 <td>
 <ol>
-<li>
-<dt>ACTION:  &nbsp;&nbsp;SUBSCRIBER ADDED</dt>
-<dt>AT THE REQUEST OF:  &nbsp;&nbsp;MCDEARMON,JAMES</dt>
-<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2009/06/08 12:21</dt>
-</li>
-<li>
-<dt>ACTION:  &nbsp;&nbsp;SUBSCRIBER ADDED</dt>
-<dt>AT THE REQUEST OF:  &nbsp;&nbsp;BLANK,RAYMOND</dt>
-<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;ANZALDUA,CAROL</dt>
-<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2016/01/27 10:28</dt>
-</li>
+<table><thead><tr>
+<th>AT THE REQUEST OF</th>
+<th>ACTION</th>
+<th>WITH CONCURRENCE OF</th>
+<th>DATE/TIME EDITED</th>
+</tr></thead><tbody>
+<td>MCDEARMON,JAMES</td>
+<td>SUBSCRIBER ADDED</td>
+<td></td>
+<td>2009/06/08 12:21</td>
+</tr>
+<td>BLANK,RAYMOND</td>
+<td>SUBSCRIBER ADDED</td>
+<td>ANZALDUA,CAROL</td>
+<td>2016/01/27 10:28</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>

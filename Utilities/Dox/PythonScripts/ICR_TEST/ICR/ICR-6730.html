@@ -39,7 +39,9 @@
 }); </script>
 
 <body id="dt_example"><div id="container" style="width:80%"><h1>VIAB SRGY RPTLIST &nbsp;&nbsp;  ICR (6730)</h1>
-<div id="demo"><table id="SUNSLTY3MzA" class="display">
+
+<div id="demo">
+<table id="SUNSLTY3MzA" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -98,34 +100,43 @@ VIA needs to read a number of fields from Surgery File
 <td>GLOBAL REFERENCE</td>
 <td>
 <ol>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SURGERY SPECIALTY</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;4</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.04</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SPECIMENS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;9;0</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;49</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,9,0)</dt>
-</li>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>GLOBAL REFERENCE</th>
+</tr></thead><tbody>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>.04</td>
+<td>0;4</td>
+<td>SURGERY SPECIALTY</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,0)</td>
+</tr>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>49</td>
+<td>9;0</td>
+<td>SPECIMENS</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,9,0)</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -137,18 +148,18 @@ VIA needs to read a number of fields from Surgery File
 <td>KEYWORDS</td>
 <td>
 <ol>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;SURGERY</dt>
-</li>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;REPORT</dt>
-</li>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;LIST</dt>
-</li>
-<li>
-<dt>KEYWORDS:  &nbsp;&nbsp;VIA</dt>
-</li>
+<table><thead><tr>
+<th>KEYWORDS</th>
+</tr></thead><tbody>
+<td>SURGERY</td>
+</tr>
+<td>REPORT</td>
+</tr>
+<td>LIST</td>
+</tr>
+<td>VIA</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -160,9 +171,12 @@ VIA needs to read a number of fields from Surgery File
 <td>SUBSCRIBING PACKAGE</td>
 <td>
 <ol>
-<li>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_VistA_Integration_Adapter.html">VISTA INTEGRATION ADAPTOR</a></dt>
-</li>
+<table><thead><tr>
+<th>SUBSCRIBING PACKAGE</th>
+</tr></thead><tbody>
+<td><a href="https://code.osehra.org/dox/Package_VistA_Integration_Adapter.html">VISTA INTEGRATION ADAPTOR</a></td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -195,12 +209,18 @@ PROCEDURE CODE (27) from the ICR request.
 <td>DATE/TIME EDITED</td>
 <td>
 <ol>
-<li>
-<dt>ACTION:  &nbsp;&nbsp;APPROVED</dt>
-<dt>AT THE REQUEST OF:  &nbsp;&nbsp;ROSS,RICK</dt>
-<dt>WITH CONCURRENCE OF:  &nbsp;&nbsp;MONTALI,MIKE</dt>
-<dt>DATE/TIME EDITED:  &nbsp;&nbsp;2017/03/09 12:58</dt>
-</li>
+<table><thead><tr>
+<th>ACTION</th>
+<th>DATE/TIME EDITED</th>
+<th>AT THE REQUEST OF</th>
+<th>WITH CONCURRENCE OF</th>
+</tr></thead><tbody>
+<td>APPROVED</td>
+<td>2017/03/09 12:58</td>
+<td>ROSS,RICK</td>
+<td>MONTALI,MIKE</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>

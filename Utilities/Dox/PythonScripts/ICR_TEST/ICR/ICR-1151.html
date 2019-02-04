@@ -39,7 +39,9 @@
 }); </script>
 
 <body id="dt_example"><div id="container" style="width:80%"><h1>MAILMAN: Server API &nbsp;&nbsp;  ICR (1151)</h1>
-<div id="demo"><table id="SUNSLTExNTE" class="display">
+
+<div id="demo">
+<table id="SUNSLTExNTE" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -263,8 +265,12 @@ Technical Manual and System Manager's Guide).
 <td>COMPONENT/ENTRY POINT</td>
 <td>
 <ol>
-<li>
-<dt>COMPONENT DESCRIPTION:  &nbsp;&nbsp;<pre>
+<table><thead><tr>
+<th>COMPONENT/ENTRY POINT</th>
+<th>COMPONENT DESCRIPTION</th>
+</tr></thead><tbody>
+<td>STATUS</td>
+<td><pre>
 
 
 
@@ -288,11 +294,10 @@ Examples:
 W $$STATUS^XMS1(51555,"NOSS,VER@VER.GOLD.domain.ext")
 Awaiting transmission.
 </pre>
-</dt>
-<dt>COMPONENT/ENTRY POINT:  &nbsp;&nbsp;STATUS</dt>
-</li>
-<li>
-<dt>COMPONENT DESCRIPTION:  &nbsp;&nbsp;<pre>
+</td>
+</tr>
+<td>$$SRVTIME</td>
+<td><pre>
 $$SRVTIME^XMS1
 
 This extrinsic function sets status of recipients in a message.
@@ -309,9 +314,9 @@ If successful, X = 0
 readable error
 
 </pre>
-</dt>
-<dt>COMPONENT/ENTRY POINT:  &nbsp;&nbsp;$$SRVTIME</dt>
-</li>
+</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>

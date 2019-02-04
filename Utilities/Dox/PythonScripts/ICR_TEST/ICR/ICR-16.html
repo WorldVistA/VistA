@@ -39,7 +39,9 @@
 }); </script>
 
 <body id="dt_example"><div id="container" style="width:80%"><h1>DBIA16 &nbsp;&nbsp;  ICR (16)</h1>
-<div id="demo"><table id="SUNSLTE2" class="display">
+
+<div id="demo">
+<table id="SUNSLTE2" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -105,243 +107,278 @@ Surgery file (130).
 <td>GLOBAL REFERENCE</td>
 <td>
 <ol>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SURGERY SPECIALTY</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;4</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.04</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;DATE OF OPERATION</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;9</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.09</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SURGEON</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;.1;4</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.14</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,.1)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;OTHER PREOP DIAGNOSIS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PAIRED ORGAN</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;2</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;1</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;DIAGNOSIS COMMENTS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;1;0</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;2</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,14,D1,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;OTHER POSTOP DIAG'S</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PAIRED ORGANS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;2</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;1</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;DIAGNOSIS COMMENTS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;1;0</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;2</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,15,D1,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;OTHER OPERATIVE PROCEDURES</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;.01</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;OP CODE COMMENTS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;1;0</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;1.5</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;COMPLETED</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;3</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;2</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PROCEDURE CODE</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;2;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;3</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,13,D1,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SURGEON'S DICTATION</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>FIELD DESCRIPTION:  &nbsp;&nbsp;<pre>
+<table><thead><tr>
+<th>GLOBAL DESCRIPTION</th>
+<th>FIELD NUMBER</th>
+<th>GLOBAL REFERENCE</th>
+</tr></thead><tbody>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.04</td>
+<td>SURGERY SPECIALTY</td>
+<td>Read w/Fileman</td>
+<td>0;4</td>
+</tr>
+<td>.09</td>
+<td>DATE OF OPERATION</td>
+<td>Read w/Fileman</td>
+<td>0;9</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,0)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>.14</td>
+<td>.1;4</td>
+<td>SURGEON</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,.1)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.01</td>
+<td>OTHER PREOP DIAGNOSIS</td>
+<td>Read w/Fileman</td>
+<td>0;1</td>
+</tr>
+<td>1</td>
+<td>PAIRED ORGAN</td>
+<td>Read w/Fileman</td>
+<td>0;2</td>
+</tr>
+<td>2</td>
+<td>DIAGNOSIS COMMENTS</td>
+<td>Read w/Fileman</td>
+<td>1;0</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,14,D1,0)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.01</td>
+<td>OTHER POSTOP DIAG'S</td>
+<td>Read w/Fileman</td>
+<td>0;1</td>
+</tr>
+<td>1</td>
+<td>PAIRED ORGANS</td>
+<td>Read w/Fileman</td>
+<td>0;2</td>
+</tr>
+<td>2</td>
+<td>DIAGNOSIS COMMENTS</td>
+<td>Read w/Fileman</td>
+<td>1;0</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,15,D1,0)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.01</td>
+<td>OTHER OPERATIVE PROCEDURES</td>
+<td>Read w/Fileman</td>
+<td>0;1</td>
+</tr>
+<td>1.5</td>
+<td>OP CODE COMMENTS</td>
+<td>Read w/Fileman</td>
+<td>1;0</td>
+</tr>
+<td>2</td>
+<td>COMPLETED</td>
+<td>Read w/Fileman</td>
+<td>0;3</td>
+</tr>
+<td>3</td>
+<td>PROCEDURE CODE</td>
+<td>Read w/Fileman</td>
+<td>2;1</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,13,D1,0)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD DESCRIPTION</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td><pre>
 Word processing
 </pre>
-</dt>
-<dt>LOCATION:  &nbsp;&nbsp;12;0</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;1.15</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,12,D1,0)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;DATE/TIME OF DICTATION</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;31;6</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;15</dt>
-</li>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;DATE OF TRANSCRIPTION</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;31;7</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;39</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,31)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PRINCIPAL OP CODE</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;OP;2</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;27</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,'OP')</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PRINCIPAL PRE-OP DIAGNOSIS</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;33;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;32</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,33)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;PRINCIPAL POST-OP DIAG</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;34;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;34</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,34)</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;CASE VERIFICATION</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>LOCATION:  &nbsp;&nbsp;VER;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;43</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,'VER')</dt>
-</li>
-<li>
-<dl><dt>FIELD NUMBER:</dt>
-<dd>
-<ol>
-<li>
-<dt>FIELD NAME:  &nbsp;&nbsp;SPECIMENS AND CULTURES</dt>
-<dt>ACCESS:  &nbsp;&nbsp;Read w/Fileman</dt>
-<dt>FIELD DESCRIPTION:  &nbsp;&nbsp;<pre>
+</td>
+<td>1.15</td>
+<td>12;0</td>
+<td>SURGEON'S DICTATION</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,12,D1,0)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>FIELD NAME</th>
+<th>ACCESS</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>15</td>
+<td>DATE/TIME OF DICTATION</td>
+<td>Read w/Fileman</td>
+<td>31;6</td>
+</tr>
+<td>39</td>
+<td>DATE OF TRANSCRIPTION</td>
+<td>Read w/Fileman</td>
+<td>31;7</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,31)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>27</td>
+<td>OP;2</td>
+<td>PRINCIPAL OP CODE</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,'OP')</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>32</td>
+<td>33;1</td>
+<td>PRINCIPAL PRE-OP DIAGNOSIS</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,33)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>34</td>
+<td>34;1</td>
+<td>PRINCIPAL POST-OP DIAG</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,34)</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td>43</td>
+<td>VER;1</td>
+<td>CASE VERIFICATION</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,'VER')</td>
+</tr>
+<td></td>
+<td>
+<table><thead><tr>
+<th>ACCESS</th>
+<th>FIELD DESCRIPTION</th>
+<th>FIELD NUMBER</th>
+<th>LOCATION</th>
+<th>FIELD NAME</th>
+</tr></thead><tbody>
+<td>Read w/Fileman</td>
+<td><pre>
 Multiple
 </pre>
-</dt>
-<dt>LOCATION:  &nbsp;&nbsp;0;1</dt>
-<dt>FIELD NUMBER:  &nbsp;&nbsp;49</dt>
-</li>
-</ol>
-</dd></dl>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF(D0,9,D1,0)</dt>
-</li>
-<li>
-<dt>GLOBAL DESCRIPTION:  &nbsp;&nbsp;<pre>
+</td>
+<td>49</td>
+<td>0;1</td>
+<td>SPECIMENS AND CULTURES</td>
+</tr>
+</tbody></table>
+</td>
+<td>SRF(D0,9,D1,0)</td>
+</tr>
+<td><pre>
 Used to access data.
 </pre>
-</dt>
-<dt>GLOBAL REFERENCE:  &nbsp;&nbsp;SRF('B',</dt>
-</li>
+</td>
+<td></td>
+<td>SRF('B',</td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
@@ -361,10 +398,14 @@ Used to access data.
 <td>SUBSCRIBING PACKAGE</td>
 <td>
 <ol>
-<li>
-<dt>ISC:  &nbsp;&nbsp;Salt Lake City</dt>
-<dt>SUBSCRIBING PACKAGE:  &nbsp;&nbsp;<a href="https://code.osehra.org/dox/Package_Health_Summary.html">HEALTH SUMMARY</a></dt>
-</li>
+<table><thead><tr>
+<th>ISC</th>
+<th>SUBSCRIBING PACKAGE</th>
+</tr></thead><tbody>
+<td>Salt Lake City</td>
+<td><a href="https://code.osehra.org/dox/Package_Health_Summary.html">HEALTH SUMMARY</a></td>
+</tr>
+</tbody></table>
 </ol>
 </td>
 </tr>
