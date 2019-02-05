@@ -1460,7 +1460,7 @@ def addPatient(VistA,pfile):
     preader = TestHelper.CSVFileReader()
     prec = preader.getfiledata(pfile, 'key')
     for pitem in prec:
-      VistA.write('S DUZ=1 D ^XUP')
+      VistA.write('L  S DUZ=1 D ^XUP')
       VistA.wait('Select OPTION NAME')
       VistA.write('Core Applications\r')
       VistA.wait("Select Core Applications")
