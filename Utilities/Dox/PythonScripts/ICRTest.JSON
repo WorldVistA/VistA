@@ -226,10 +226,6 @@
     {
         "DATE CREATED": "1991/09/11", 
         "STATUS": "Active", 
-        "DBA Comments": [
-            "1/27/16-MC: Added EHMP as a subscriber to ICR at the request", 
-            "of Raymond Blank and approval of Carol Anzaldua for HMP 2.0"
-        ], 
         "NAME": "DBIA91-A", 
         "CUSTODIAL ISC": "Dallas", 
         "TYPE": "File", 
@@ -256,6 +252,10 @@
                 "SUBSCRIBING PACKAGE": "MRSA INITIATIVE REPORTS"
             }, 
             {
+                "DBA Comments": [
+                    "1/27/16-MC: Added EHMP as a subscriber to ICR at the request", 
+                    "of Raymond Blank and approval of Carol Anzaldua for HMP 2.0"
+                ], 
                 "SUBSCRIBING PACKAGE": "ENTERPRISE HEALTH MGMT PLATFORM"
             }
         ], 
@@ -835,11 +835,6 @@
     {
         "DATE CREATED": "2014/09/23", 
         "STATUS": "Active", 
-        "DBA Comments": [
-            "10/2/14-MC:Activated ICR at the request of Carolyn Wheless and", 
-            "approved by Levi Teitelbaum for patch LRS*5.2*447. VPS will use the RPC LRHY", 
-            "GET SITES to return the list of Howdy sites at a facility."
-        ], 
         "NAME": "LRHY GET SITES RPC", 
         "CREATOR": "WHELESS,CAROLYN", 
         "TYPE": "Remote Procedure", 
@@ -850,6 +845,15 @@
                     "VA Point of Service Kiosks needs to use LRHY GET SITES,", 
                     "implemented in LRHYRP01 and included in patch LR*5.2*447, to return the list", 
                     "of Howdy sites at a facility to VetLink."
+                ], 
+                "DBA Comments": [
+                    "10/2/14-MC:Activated ICR at the request of Carolyn Wheless and", 
+                    "approved by Levi Teitelbaum for patch LRS*5.2*447. VPS will use the RPC LRHY", 
+                    "GET SITES to return the list of Howdy sites at a facility.", 
+                    "DATE ACTIVATED: OCT 02, 2014", 
+                    "", 
+                    "", 
+                    ""
                 ], 
                 "SUBSCRIBING PACKAGE": "VA POINT OF SERVICE (KIOSKS)"
             }
@@ -889,7 +893,6 @@
                 "GLOBAL REFERENCE": "LRHY(69.86,D0,2,0"
             }
         ], 
-        "DATE ACTIVATED": "2014/10/02", 
         "USAGE": "Controlled Subscription", 
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "LRHY(69.86", 
@@ -1375,21 +1378,6 @@
     {
         "DATE CREATED": "2005/11/30", 
         "REMOTE PROCEDURE": "GMV ADD VM", 
-        "DBA Comments": [
-            "11/21/12-MM:  Added Patient Assessment Documetation Package", 
-            "(PADP) as a subscriber for NUPA*1*1.  The PADP package uses RPC GMV ADD VM in", 
-            "order to upload vitals. Frank Traxler concurred with request with the", 
-            "following warning to the team:", 
-            "", 
-            "\"This API creates new vital signs/measurements entries for patients. There are", 
-            "few built-in data checks in it. If you pass it junk data values, it will most", 
-            "likely file them.\" 5/21/2014-MC: Added surgery as a subscribing package. Patch", 
-            "SR*3.0*180.  Requested by James Harris. Approved by Frank Traxler.  7/9/14-MC:", 
-            "PADP did not complete the class 3 to class 1 conversion process, but it is", 
-            "still installed at sites. Sites have the option to utilize the program,", 
-            "however it is no longer nationally supported.  There will be no further", 
-            "patching of the package. PADP has been removed as a subscriber to this ICR."
-        ], 
         "STATUS": "Active", 
         "NAME": "GMV ADD VM", 
         "CUSTODIAL ISC": "Chicago", 
@@ -1403,6 +1391,21 @@
                 "SUBSCRIBING PACKAGE": "VA CERTIFIED COMPONENTS - DSSI"
             }, 
             {
+                "DBA Comments": [
+                    "11/21/12-MM:  Added Patient Assessment Documetation Package", 
+                    "(PADP) as a subscriber for NUPA*1*1.  The PADP package uses RPC GMV ADD VM in", 
+                    "order to upload vitals. Frank Traxler concurred with request with the", 
+                    "following warning to the team:", 
+                    "", 
+                    "\"This API creates new vital signs/measurements entries for patients. There are", 
+                    "few built-in data checks in it. If you pass it junk data values, it will most", 
+                    "likely file them.\" 5/21/2014-MC: Added surgery as a subscribing package. Patch", 
+                    "SR*3.0*180.  Requested by James Harris. Approved by Frank Traxler.  7/9/14-MC:", 
+                    "PADP did not complete the class 3 to class 1 conversion process, but it is", 
+                    "still installed at sites. Sites have the option to utilize the program,", 
+                    "however it is no longer nationally supported.  There will be no further", 
+                    "patching of the package. PADP has been removed as a subscriber to this ICR."
+                ], 
                 "SUBSCRIBING PACKAGE": "SURGERY"
             }
         ], 
@@ -1480,6 +1483,135 @@
         ]
     }, 
     {
+        "DATE CREATED": "1994/11/21", 
+        "STATUS": "Retired", 
+        "NAME": "DBIA1068", 
+        "CUSTODIAL ISC": "Dallas", 
+        "TYPE": "File", 
+        "NUMBER": "1068", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "ISC": "Salt Lake City", 
+                "DBA Comments": [
+                    "While trying to determine what impact ICD10 changes will have", 
+                    "on the active DBIA ICR #1068, it was discovered that the Progress Note package", 
+                    "no longer uses this ICR.", 
+                    "", 
+                    "From: Trost, Debbie The following is from the message string discussing this:", 
+                    "I have retired the DBIA #1068.   That sure made it easier Robert!", 
+                    "", 
+                    "From: Davis, Robert B. (HP) Sent: Monday, May 07, 2012 9:26 AM To: McClenahan,", 
+                    "Margy; Trost, Debbie Cc: Phelps, Ty (EDS); Russell, Joel; Traxler, Frank;", 
+                    "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence", 
+                    "", 
+                    "Thanks Margy!", 
+                    "", 
+                    "Debbie, does that mean this ICR needs to be retired, or another status that", 
+                    "would be appropriate?", 
+                    "", 
+                    "Please advise.thx!", 
+                    "", 
+                    "Rob", 
+                    "", 
+                    "From: McClenahan, Margy Sent: Monday, May 07, 2012 12:22 PM To: Davis, Robert", 
+                    "B. (HP) Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;", 
+                    "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence", 
+                    "", 
+                    "Thank you for letting us know.  TIU no longer has routines GMRPNP3 or GMRPNP4", 
+                    "nor does it use file 121 any longer.  We no longer need that ICR.  Thanks", 
+                    "again, Margy", 
+                    "", 
+                    "From: Davis, Robert B. (HP) Sent: Friday, May 04, 2012 7:44 AM To: McClenahan,", 
+                    "Margy Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;", 
+                    "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: IA1068 concurrence", 
+                    "", 
+                    "Hi Margy,", 
+                    "", 
+                    "I am the primary developer on the ICD10 remediation project for the mental", 
+                    "health package and am seeking ICR concurrence on IA1068 which we want to", 
+                    "update the verbiage on (see below in Yellow) mainly in reference to some new", 
+                    "functionality for the DSM table which is what the IA is for (Mental Health is", 
+                    "the custodial package and TIU is the subscribing package for the DSM table).", 
+                    "I was given your name, along with the names of Ty Phelps and Joel Russell, as", 
+                    "points of contact for TIU to ask about this.  Ty indicated you may be the best", 
+                    "one to ask for feedback.", 
+                    "", 
+                    "Here is the IA along with the updates we are proposing:", 
+                    "", 
+                    "1068     NAME: DBIA1068", 
+                    "CUSTODIAL PACKAGE: MENTAL HEALTH                              Dallas", 
+                    "SUBSCRIBING PACKAGE: TEXT INTEGRATION UTILITIES                 Salt Lake City", 
+                    "USAGE: Private             ENTERED: NOV 21,1994", 
+                    "STATUS: Active              EXPIRES:", 
+                    "DURATION: Till Otherwise Agr  VERSION:", 
+                    "FILE: 627.7                  ROOT: YSD", 
+                    "DESCRIPTION:                        TYPE: File", 
+                    "Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as", 
+                    "follows:", 
+                    "FILE    ORDER   PREFIX  LAYGO   MESSAGE", 
+                    "80      1      I       n       ICD Code", 
+                    "627.5    2      D       n       DSM-III-R Code This is for use with", 
+                    "Mental Health v4.18 and Mental Health v5.0.", 
+                    "", 
+                    "With the release of Mental Heath v5.01 this will be changed to:", 
+                    "FILE    ORDER   PREFIX  LAYGO   MESSAGE", 
+                    "80      1      I       n       ICD Code", 
+                    "", 
+                    "", 
+                    "INTEGRATION REFERENCE INQUIRY #1068            APR 26,2012  14:00    PAGE 2", 
+                    "--------------------------------------------------------------------------", 
+                    "------", 
+                    "", 
+                    "627.7    2      D       n       DSM-IV", 
+                    "", 
+                    "PNs should have had an agreement to use this file.  Prior to the release", 
+                    "of Progress Notes v2.5 this data was a part of the Mental Health progress", 
+                    "notes global 606.  The agreement was somehow overlooked when the data was", 
+                    "converted to ^GMR(121.", 
+                    "", 
+                    "GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18,", 
+                    "5.0 and 5.01 of Mental Health.", 
+                    "", 
+                    "Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for", 
+                    "the existence of all 3 possible globals and accomplish the prting", 
+                    "accordingly.", 
+                    "", 
+                    "Please note that Mental Health has made modifications to its YSDIAGE menu", 
+                    "option to check the 0;8 field of file 627.7 and, if it is '9' which denotes", 
+                    "ICD9 ICD VERSION then some date validation logic will be triggered to make", 
+                    "certain that the DATE/TIME OF DIAGNOSIS field in file 627.8 is before the", 
+                    "ICD10 implementation date.  Similarly, if 0;8 of file 627.7 is '10' which", 
+                    "denotes ICD10 ICD VERSION then the DATE/TIME OF DIAGNOSIS field of file", 
+                    "627.8 will be checked to ascertain that it is on or after the ICD10", 
+                    "Implementation date.  TIU should probably add some validation logic in", 
+                    "its routines to emulate what has been done in Mental Health routines for", 
+                    "the YSDIAGE menu option.", 
+                    "KEYWORDS:", 
+                    "", 
+                    "***************************", 
+                    "", 
+                    "The mental health code has been modified to do what is in yellow above."
+                ], 
+                "SUBSCRIBING PACKAGE": "TEXT INTEGRATION UTILITIES"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "MENTAL HEALTH", 
+        "MAIL MESSAGE": "12542237", 
+        "DURATION": "Till Otherwise Agreed", 
+        "IA #": "1068", 
+        "DATE/TIME EDITED": [
+            {
+                "ACTION": "RETIRED", 
+                "WITH CONCURRENCE OF": "DAVIS,ROBERT", 
+                "AT THE REQUEST OF": "MCCLENAHAN,MARGY", 
+                "DATE/TIME EDITED": "2012/05/07 14:46"
+            }
+        ], 
+        "USAGE": "Private", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "GLOBAL ROOT": "YSD", 
+        "ID": "YSD", 
+        "FILE NUMBER": "627.7", 
         "GENERAL DESCRIPTION": [
             "Progress Notes has a variable pointer, DXLS, file 121,", 
             "field 30 that is as follows:", 
@@ -1509,138 +1641,7 @@
             "VIEWER: ANDREASSEN,LARRY", 
             "VIEWER: CRAVEN,MARCIE J", 
             "VIEWER: DEVLIN,MARK J"
-        ], 
-        "CUSTODIAL ISC": "Dallas", 
-        "NUMBER": "1068", 
-        "SUBSCRIBING PACKAGE": [
-            {
-                "ISC": "Salt Lake City", 
-                "SUBSCRIBING PACKAGE": "TEXT INTEGRATION UTILITIES"
-            }, 
-            {
-                "SUBSCRIBING PACKAGE": "TEXT INTEGRATION UTILITIES                 Salt Lake City"
-            }
-        ], 
-        "DATE/TIME EDITED": [
-            {
-                "ACTION": "RETIRED", 
-                "WITH CONCURRENCE OF": "DAVIS,ROBERT", 
-                "AT THE REQUEST OF": "MCCLENAHAN,MARGY", 
-                "DATE/TIME EDITED": "2012/05/07 14:46"
-            }
-        ], 
-        "KEYWORDS": [
-            {
-                "KEYWORDS": [
-                    "", 
-                    "***************************", 
-                    "The mental health code has been modified to do what is in yellow above."
-                ]
-            }
-        ], 
-        "DURATION": "Till Otherwise Agr", 
-        "ENTERED": "NOV 21,1994", 
-        "DATE CREATED": "1994/11/21", 
-        "EXPIRES": "", 
-        "IA #": "1068", 
-        "DBA Comments": [
-            "While trying to determine what impact ICD10 changes will have", 
-            "on the active DBIA ICR #1068, it was discovered that the Progress Note package", 
-            "no longer uses this ICR.", 
-            "", 
-            "From: Trost, Debbie The following is from the message string discussing this:", 
-            "I have retired the DBIA #1068.   That sure made it easier Robert!", 
-            "", 
-            "From: Davis, Robert B. (HP) Sent: Monday, May 07, 2012 9:26 AM To: McClenahan,", 
-            "Margy; Trost, Debbie Cc: Phelps, Ty (EDS); Russell, Joel; Traxler, Frank;", 
-            "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence", 
-            "", 
-            "Thanks Margy!", 
-            "", 
-            "Debbie, does that mean this ICR needs to be retired, or another status that", 
-            "would be appropriate?", 
-            "", 
-            "Please advise.thx!", 
-            "", 
-            "Rob", 
-            "", 
-            "From: McClenahan, Margy Sent: Monday, May 07, 2012 12:22 PM To: Davis, Robert", 
-            "B. (HP) Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;", 
-            "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: RE: IA1068 concurrence", 
-            "", 
-            "Thank you for letting us know.  TIU no longer has routines GMRPNP3 or GMRPNP4", 
-            "nor does it use file 121 any longer.  We no longer need that ICR.  Thanks", 
-            "again, Margy", 
-            "", 
-            "From: Davis, Robert B. (HP) Sent: Friday, May 04, 2012 7:44 AM To: McClenahan,", 
-            "Margy Cc: Phelps, Ty (EDS); Russell, Joel; Trost, Debbie; Traxler, Frank;", 
-            "Jackson, Todd (HP); Bootz, Kristina (HP) Subject: IA1068 concurrence", 
-            "", 
-            "Hi Margy,", 
-            "", 
-            "I am the primary developer on the ICD10 remediation project for the mental", 
-            "health package and am seeking ICR concurrence on IA1068 which we want to", 
-            "update the verbiage on (see below in Yellow) mainly in reference to some new", 
-            "functionality for the DSM table which is what the IA is for (Mental Health is", 
-            "the custodial package and TIU is the subscribing package for the DSM table).", 
-            "I was given your name, along with the names of Ty Phelps and Joel Russell, as", 
-            "points of contact for TIU to ask about this.  Ty indicated you may be the best", 
-            "one to ask for feedback.", 
-            "", 
-            "Here is the IA along with the updates we are proposing:", 
-            "", 
-            "1068     NAME: DBIA1068", 
-            "CUSTODIAL PACKAGE: MENTAL HEALTH                              Dallas"
-        ], 
-        "STATUS": "Active", 
-        "CUSTODIAL PACKAGE": "MENTAL HEALTH", 
-        "VERSION": [
-            "", 
-            "FILE: 627.7                  ROOT: YSD"
-        ], 
-        "USAGE": "Private", 
-        "GLOBAL ROOT": "YSD", 
-        "ID": "YSD", 
-        "DESCRIPTION": [
-            "", 
-            "Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as", 
-            "follows:", 
-            "FILE    ORDER   PREFIX  LAYGO   MESSAGE", 
-            "80      1      I       n       ICD Code", 
-            "627.5    2      D       n       DSM-III-R Code This is for use with", 
-            "Mental Health v4.18 and Mental Health v5.0.", 
-            "With the release of Mental Heath v5.01 this will be changed to:", 
-            "FILE    ORDER   PREFIX  LAYGO   MESSAGE", 
-            "80      1      I       n       ICD Code", 
-            "INTEGRATION REFERENCE INQUIRY #1068            APR 26,2012  14:00    PAGE 2", 
-            "--------------------------------------------------------------------------", 
-            "------", 
-            "627.7    2      D       n       DSM-IV", 
-            "PNs should have had an agreement to use this file.  Prior to the release", 
-            "of Progress Notes v2.5 this data was a part of the Mental Health progress", 
-            "notes global 606.  The agreement was somehow overlooked when the data was", 
-            "converted to ^GMR(121.", 
-            "GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18,", 
-            "5.0 and 5.01 of Mental Health.", 
-            "Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for", 
-            "the existence of all 3 possible globals and accomplish the prting", 
-            "accordingly.", 
-            "Please note that Mental Health has made modifications to its YSDIAGE menu", 
-            "option to check the 0;8 field of file 627.7 and, if it is '9' which denotes", 
-            "ICD9 ICD VERSION then some date validation logic will be triggered to make", 
-            "certain that the DATE/TIME OF DIAGNOSIS field in file 627.8 is before the", 
-            "ICD10 implementation date.  Similarly, if 0;8 of file 627.7 is '10' which", 
-            "denotes ICD10 ICD VERSION then the DATE/TIME OF DIAGNOSIS field of file", 
-            "627.8 will be checked to ascertain that it is on or after the ICD10", 
-            "Implementation date.  TIU should probably add some validation logic in", 
-            "its routines to emulate what has been done in Mental Health routines for", 
-            "the YSDIAGE menu option."
-        ], 
-        "NAME": "DBIA1068", 
-        "MAIL MESSAGE": "12542237", 
-        "DBIC APPROVAL STATUS": "APPROVED", 
-        "TYPE": "File", 
-        "FILE NUMBER": "627.7"
+        ]
     }, 
     {
         "DATE CREATED": "2006/08/21", 
@@ -1776,19 +1777,6 @@
     {
         "DATE CREATED": "2017/01/26", 
         "STATUS": "Active", 
-        "DBA Comments": [
-            "3/9/2017-DC Activated the ICR for VIAB*1*9 and VIAB SRGY", 
-            "RPTLIST RPC service name for RPC maybe: GET SURGERY REPORT.", 
-            "", 
-            "Recommendations from Alan Monosky is as follows: Concerning ICR #6730, the", 
-            "DATE/TIME OF DICTATION field (#15) and the DATE OF TRANSCRIPTION field (#39)", 
-            "are not part of the current dictation/transcription process through TIU.", 
-            "Therefore, those two fields will not be populated and should not be part of", 
-            "the ICR.", 
-            "", 
-            "Discussions with Mike Montoli and VIA resulted in removing the PLANNED PRIN", 
-            "PROCEDURE CODE (27) from the ICR request."
-        ], 
         "NAME": "VIAB SRGY RPTLIST", 
         "CREATOR": "MORRISON,JENNIFER", 
         "DATE/TIME EDITED": [
@@ -1803,6 +1791,20 @@
         "NUMBER": "6730", 
         "SUBSCRIBING PACKAGE": [
             {
+                "DBA Comments": [
+                    "3/9/2017-DC Activated the ICR for VIAB*1*9 and VIAB SRGY", 
+                    "RPTLIST RPC service name for RPC maybe: GET SURGERY REPORT.", 
+                    "", 
+                    "Recommendations from Alan Monosky is as follows: Concerning ICR #6730, the", 
+                    "DATE/TIME OF DICTATION field (#15) and the DATE OF TRANSCRIPTION field (#39)", 
+                    "are not part of the current dictation/transcription process through TIU.", 
+                    "Therefore, those two fields will not be populated and should not be part of", 
+                    "the ICR.", 
+                    "", 
+                    "Discussions with Mike Montoli and VIA resulted in removing the PLANNED PRIN", 
+                    "PROCEDURE CODE (27) from the ICR request.", 
+                    "DATE ACTIVATED: MAR 09, 2017"
+                ], 
                 "SUBSCRIBING PACKAGE": "VISTA INTEGRATION ADAPTOR"
             }
         ], 
@@ -1846,7 +1848,6 @@
                 "GLOBAL REFERENCE": "SRF(D0,9,0)"
             }
         ], 
-        "DATE ACTIVATED": "2017/03/09", 
         "USAGE": "Private", 
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "SRF(", 
@@ -1889,15 +1890,7 @@
         "TYPE": "File", 
         "NUMBER": "10156", 
         "CUSTODIAL PACKAGE": "KERNEL", 
-        "MAIL MESSAGE": [
-            "43299654", 
-            "Press RETURN to continue...", 
-            "NAME   NAMESPACE AND FILESPACE REGISTRATIONS ...", 
-            "IAs    INTEGRATION CONTROL REGISTRATIONS ...", 
-            "PKG    PACKAGE FILE INFORMATION ...", 
-            "STN    INSTITUTION FILE INFORMATION ...", 
-            "STND   STANDARDS ..."
-        ], 
+        "MAIL MESSAGE": "43299654", 
         "IA #": "10156", 
         "USAGE": "Supported", 
         "DBIC APPROVAL STATUS": "APPROVED", 
@@ -1908,6 +1901,461 @@
             "Exporting, deleting, updating Options by Namespace via", 
             "KIDS is permitted.  Linking menu options from other packages requires IAs", 
             "between the packages whose options are being \"linked\"."
+        ]
+    }, 
+    {
+        "DATE CREATED": "1998/11/17", 
+        "STATUS": "Active", 
+        "COMPONENT/ENTRY POINT": [
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Required) This variable must be the global root of", 
+                            "the filegram to be installed."
+                        ], 
+                        "VARIABLES": "DIFGLO", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Optional) If this variable is defined, a new entry", 
+                            "will be created in the base file."
+                        ], 
+                        "VARIABLES": "DIADD", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Optional) Entry number in base file at which new", 
+                            "file entry, if added, will be created."
+                        ], 
+                        "VARIABLES": "DINUM", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "This output variable is defined if an error has", 
+                            "occurred."
+                        ], 
+                        "VARIABLES": "DIFGER", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "^DIFG always returns DIFGY. DIFGY can have one of the", 
+                            "following values:", 
+                            "", 
+                            "DIFGY=-1 Indicates that the lookup on the initial file processed (the base", 
+                            "file) was unsuccessful.", 
+                            "", 
+                            "DIFGY=N^F Where N is the internal number of the entry in the base file and F", 
+                            "is the base file's number.", 
+                            "", 
+                            "DIFGY=N^F^1 Where N and F are defined as above and 1 indicates that a new", 
+                            "entry has been added to the base file.", 
+                            ""
+                        ], 
+                        "VARIABLES": "DIFGY", 
+                        "TYPE": "Output"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "DIFG", 
+                "COMPONENT DESCRIPTION": "Used to to install filegrams."
+            }
+        ], 
+        "NAME": "Other API: Filegram", 
+        "CUSTODIAL ISC": "San Francisco", 
+        "ORIGINAL NUMBER": "10034", 
+        "NUMBER": "10034", 
+        "CUSTODIAL PACKAGE": "VA FILEMAN", 
+        "MAIL MESSAGE": "28370785", 
+        "IA #": "10034", 
+        "ROUTINE": "DIFG", 
+        "USAGE": "Supported", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "TYPE": "Routine", 
+        "ID": "DIFG", 
+        "GENERAL DESCRIPTION": [
+            "Used to to install filegrams."
+        ]
+    }, 
+    {
+        "DATE CREATED": "2017/09/13", 
+        "STATUS": "Active", 
+        "DBA Comments": [
+            "20070910 - added field .134 PHONE NUMBER [CELLULAR] 20110524 -", 
+            "added field .133 EMAIL ADDRESS 9/13/17-DT: Adding field EXCLUDE FROM FACILITY", 
+            "DIR (#.109) for use by VIAB in VIAB*1*12.  This changes the VIA", 
+            "BackgroundProcess Method: getBMSdata.  10/2/17-DT: Reactivated ICR. Field .109", 
+            "is introduced in VIAB*1*8 for BMS.", 
+            "DATE ACTIVATED: MAY 24, 2011"
+        ], 
+        "NAME": "PATIENT FILE", 
+        "CREATOR": "SCHLEHUBER,CAMERON", 
+        "CUSTODIAL ISC": "Albany", 
+        "TYPE": "File", 
+        "NUMBER": "10035", 
+        "CUSTODIAL PACKAGE": "REGISTRATION", 
+        "MAIL MESSAGE": "85805601", 
+        "IA #": "10035", 
+        "GLOBAL REFERENCE": [
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "NAME"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".02", 
+                        "LOCATION": "0;2", 
+                        "FIELD NAME": "SEX"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".03", 
+                        "LOCATION": "0;3", 
+                        "FIELD NAME": "DATE OF BIRTH"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".05", 
+                        "LOCATION": "0;5", 
+                        "FIELD NAME": "MARITAL STATUS"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".07", 
+                        "LOCATION": "0;7", 
+                        "FIELD NAME": "OCCUPATION"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".08", 
+                        "LOCATION": "0;8", 
+                        "FIELD NAME": "RELIGIOUS PREFERENCE"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".09", 
+                        "LOCATION": "0;9", 
+                        "FIELD NAME": "SOCIAL SECURITY NUMBER"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".091", 
+                        "LOCATION": "0;10", 
+                        "FIELD NAME": "REMARKS"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".092", 
+                        "LOCATION": "0;11", 
+                        "FIELD NAME": "PLACE OF BIRTH [CITY]"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".093", 
+                        "LOCATION": "0;12", 
+                        "FIELD NAME": "PLACE OF BIRTH [STATE]"
+                    }, 
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD DESCRIPTION": "Computed field", 
+                        "FIELD NUMBER": ".033", 
+                        "LOCATION": "COMPUTED", 
+                        "FIELD NAME": "AGE"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".14", 
+                        "LOCATION": "0;14", 
+                        "FIELD NAME": "CURRENT MEANS TEST STATUS"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".096", 
+                        "LOCATION": "0;15", 
+                        "FIELD NAME": "WHO ENTERED PATIENT"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".097", 
+                        "LOCATION": "0;16", 
+                        "FIELD NAME": "DATE ENTERED INTO FILE"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT("
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".1", 
+                        "LOCATION": ".1;1", 
+                        "FIELD NAME": "WARD LOCATION"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.1)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".101", 
+                        "LOCATION": ".101;1", 
+                        "FIELD NAME": "ROOM-BED"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.101)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "63", 
+                        "LOCATION": "63;1", 
+                        "FIELD NAME": "LABORATORY REFERENCE"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,'LR')"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".363", 
+                        "LOCATION": ".36;3", 
+                        "FIELD NAME": "PRIMARY LONG ID"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".364", 
+                        "LOCATION": ".36;4", 
+                        "FIELD NAME": "PRIMARY SHORT ID"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.36)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".102", 
+                        "LOCATION": ".102;1", 
+                        "FIELD NAME": "CURRENT MOVEMENT"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.102)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".103", 
+                        "LOCATION": ".103;1", 
+                        "FIELD NAME": "TREATING SPECIALTY"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.103)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".104", 
+                        "LOCATION": ".104;1", 
+                        "FIELD NAME": "PROVIDER"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.104)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".1041", 
+                        "LOCATION": ".1041;1", 
+                        "FIELD NAME": "ATTENDING PHYSICIAN"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.1041)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".105", 
+                        "LOCATION": ".105;1", 
+                        "FIELD NAME": "CURRENT ADMISSION"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.105)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".106", 
+                        "LOCATION": ".106;1", 
+                        "FIELD NAME": "LAST DMMS EPISODE NUMBER"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.106)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".107", 
+                        "LOCATION": ".107;1", 
+                        "FIELD NAME": "LODGER WARD LOCATION"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.107)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".108", 
+                        "LOCATION": ".108;1", 
+                        "FIELD NAME": "CURRENT ROOM"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.108)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".351", 
+                        "LOCATION": ".35;1", 
+                        "FIELD NAME": "DATE OF DEATH"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".352", 
+                        "LOCATION": ".35;2", 
+                        "FIELD NAME": "DEATH ENTERED BY"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.35)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "RACE INFORMATION"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.02,"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "ETHNICITY INFORMATION"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.06,"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".132", 
+                        "LOCATION": ".13;2", 
+                        "FIELD NAME": "PHONE NUMBER [WORK]"
+                    }, 
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".134", 
+                        "LOCATION": ".13;4", 
+                        "FIELD NAME": "PHONE NUMBER [CELLULAR]"
+                    }, 
+                    {
+                        "ACCESS": "Read w/Fileman", 
+                        "FIELD NUMBER": ".133", 
+                        "LOCATION": ".13;3", 
+                        "FIELD NAME": "EMAIL ADDRESS"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.13)"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD DESCRIPTION": [
+                            "Denotes whether or not the patient wished to be excluded", 
+                            "from the Facility Directory for current admission.  This field is only stored", 
+                            "for current inpatients.  It must NOT be edited as this could affect the", 
+                            "integrity of many options within PIMS and other packages."
+                        ], 
+                        "FIELD NUMBER": ".109", 
+                        "LOCATION": ".109;1", 
+                        "FIELD NAME": "EXCLUDE FROM FACILITY DIR"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "DPT(D0,.109"
+            }
+        ], 
+        "DATE/TIME EDITED": [
+            {
+                "ACTION": "DEACTIVATED FOR EDITS", 
+                "WITH CONCURRENCE OF": "DESMOND,LINDA", 
+                "AT THE REQUEST OF": "WHITE,ELAINE", 
+                "DATE/TIME EDITED": "2007/09/24 14:00"
+            }, 
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "DESMOND,LINDA", 
+                "AT THE REQUEST OF": "WHITE,ELAINE", 
+                "DATE/TIME EDITED": "2007/08/25 08:00"
+            }, 
+            {
+                "ACTION": "DEACTIVATED FOR EDITS", 
+                "WITH CONCURRENCE OF": "HARVEY,JULIE", 
+                "AT THE REQUEST OF": "WARE,CHANDRA", 
+                "DATE/TIME EDITED": "2011/05/24 11:31"
+            }, 
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "KOPECKY,STEVE", 
+                "AT THE REQUEST OF": "BLAESER,DAVID", 
+                "DATE/TIME EDITED": "2011/05/24 11:49"
+            }, 
+            {
+                "ACTION": "DEACTIVATED FOR EDITS", 
+                "WITH CONCURRENCE OF": "ICR,TEAM", 
+                "AT THE REQUEST OF": "RENEE,JOLIE", 
+                "DATE/TIME EDITED": "2017/09/13 12:04"
+            }, 
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "ICR,TEAM", 
+                "AT THE REQUEST OF": "BURKHALTER,WILLIAM", 
+                "DATE/TIME EDITED": "2017/10/02 16:56"
+            }
+        ], 
+        "ORIGINAL NUMBER": "10035", 
+        "USAGE": "Supported", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "GLOBAL ROOT": "DPT(", 
+        "ID": "DPT(", 
+        "FILE NUMBER": "2", 
+        "GENERAL DESCRIPTION": [
+            "Any nationally released cross-reference on the", 
+            "supported fields in this Integration Agreement are \"open/supported\" for direct", 
+            "global reference (as well as reference through VA FileMan)."
         ]
     }
 ]

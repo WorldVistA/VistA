@@ -29,17 +29,17 @@ from LogManager import initLogging, logger
 EXPECTED_PDFS = {
     "807": ["ICR-4887.pdf"],
     "General_Medical_Record___Vitals": ["ICR-3996.pdf"],
-    "Imaging": ["ICR-4528.pdf"],
-    "Lab_Service": ["ICR-6104.pdf", "ICR-91.pdf"],
-    "Mental_Health": ["ICR-1068.pdf"],
-    "Registration": ["ICR-4849.pdf"],
-    "Text_Integration_Utility": ["ICR-3248.pdf", "ICR-5499.pdf"],
     "IFCAP": ["ICR-214.pdf"],
-    "Kernel": ["ICR-10156.pdf", "ICR-977.pdf"],
+    "Imaging": ["ICR-4528.pdf"],
+    "Kernel": ["ICR-977.pdf", "ICR-10156.pdf"],
+    "Lab_Service": ["ICR-91.pdf", "ICR-6104.pdf"],
     "MailMan": ["ICR-1151.pdf"],
+    "Mental_Health": ["ICR-1068.pdf"],
     "Record_Tracking": ["ICR-85.pdf"],
+    "Registration": ["ICR-4849.pdf", "ICR-10035.pdf"],
     "Surgery": ["ICR-16.pdf", "ICR-6730.pdf"],
-    "VA_FileMan": ["ICR-10155.pdf"]}
+    "Text_Integration_Utility": ["ICR-3248.pdf", "ICR-5499.pdf"],
+    "VA_FileMan": ["ICR-10034.pdf", "ICR-10155.pdf"]}
 
 
 class testICRParser(unittest.TestCase):
