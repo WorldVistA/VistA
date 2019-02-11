@@ -466,7 +466,7 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
 
 
 def _icrDataEntryToHtml(output, icrJson, crossRef):
-    fieldList = ICR_FILE_KEYWORDS_LIST
+    fieldList = ['NUMBER'] + ICR_FILE_KEYWORDS_LIST
     # As we do not have a real schema to define the field order,
     # we will have to guess the order here
     for field in fieldList:
@@ -498,7 +498,7 @@ def _icrDataEntryToPDF(pdf, icrJson, doc):
     # a table. Otherwise, the rows can become taller than
     # a page and reportlab will fail to create the pdf.
 
-    fieldList = ICR_FILE_KEYWORDS_LIST
+    fieldList = ['NUMBER'] + ICR_FILE_KEYWORDS_LIST
     # As we do not have a real schema to define the field order,
     # we will have to guess the order here
     description = ""

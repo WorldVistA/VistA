@@ -25,7 +25,7 @@ RPC_NAME_FIELD_NO = '.01'
     This list is a sequence order of each fields
 """
 ICR_FILE_KEYWORDS_LIST = [
-    'NUMBER',
+    # NUMBER is handled by 'START_OF_RECORD'
     'IA #',
     'FILE NUMBER',
     'GLOBAL ROOT',
