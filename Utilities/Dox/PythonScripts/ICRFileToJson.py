@@ -95,7 +95,7 @@ class ICRFileToJson(object):
                     elif fieldName == 'SUBSCRIBING DETAILS':
                         subscribingDetails = True
                     if DBAComments:
-                        if fieldName in ICR_FILE_KEYWORDS:
+                        if fieldName == 'DATE/TIME EDITED' or fieldName == 'NUMBER':
                             DBAComments = False
                     elif generalDescription:
                         if line.startswith("  STATUS:"):  # Starts with exactly 2 spaces
