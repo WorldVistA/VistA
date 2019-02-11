@@ -126,9 +126,9 @@ class ICRFileToJson(object):
                             continue
                         logger.debug('No field associated with line %s: %s ' %
                                       (curLineNo, line))
-        if not self._curStack:
-            self._curField = None
-            self._rewindStack()
+        # TODO: Copy + paste from '_startOfNewItem()'
+        self._curField = None
+        self._rewindStack()
         if self._curRecord:
             self._outObject.append(self._curRecord)
         outputDir = os.path.dirname(outputFilename)

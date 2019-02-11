@@ -93,6 +93,9 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         allpkgJson = []
         inputJson = json.load(inputFile)
         for icrEntry in inputJson:
+            if 'NUMBER' not in icrEntry:
+                logger.error("Could not parse entry: " + str(icrEntry))
+                continue
             if generatePDF:
                 _generateICRIndividualPagePDF(icrEntry, date, pdfOutDir)
             if generateHTML:
@@ -259,6 +262,9 @@ def _convertICREntryToSummaryInfo(icrEntry, crossRef):
 def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
     outDep = {}
     for icrItem in inputJson:
+        if 'IA #' not in icrItem:
+            logger.error("Failed to parse ICR entry " + str(icrItem))
+            continue
         curIaNum = icrItem['IA #']
         # ignore the non-active icrs
         if 'STATUS' not in icrItem or icrItem['STATUS'] != 'Active':
