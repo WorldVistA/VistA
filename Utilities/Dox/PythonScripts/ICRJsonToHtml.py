@@ -93,6 +93,9 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         allpkgJson = []
         inputJson = json.load(inputFile)
         for icrEntry in inputJson:
+            if 'NUMBER' not in icrEntry:
+                logger.error("Could not parse entry: " + str(icrEntry))
+                continue
             if generatePDF:
                 _generateICRIndividualPagePDF(icrEntry, date, pdfOutDir)
             if generateHTML:
@@ -259,6 +262,9 @@ def _convertICREntryToSummaryInfo(icrEntry, crossRef):
 def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
     outDep = {}
     for icrItem in inputJson:
+        if 'IA #' not in icrItem:
+            logger.error("Failed to parse ICR entry " + str(icrItem))
+            continue
         curIaNum = icrItem['IA #']
         # ignore the non-active icrs
         if 'STATUS' not in icrItem or icrItem['STATUS'] != 'Active':
@@ -460,7 +466,7 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
 
 
 def _icrDataEntryToHtml(output, icrJson, crossRef):
-    fieldList = ICR_FILE_KEYWORDS_LIST
+    fieldList = ['NUMBER'] + ICR_FILE_KEYWORDS_LIST
     # As we do not have a real schema to define the field order,
     # we will have to guess the order here
     for field in fieldList:
@@ -492,7 +498,7 @@ def _icrDataEntryToPDF(pdf, icrJson, doc):
     # a table. Otherwise, the rows can become taller than
     # a page and reportlab will fail to create the pdf.
 
-    fieldList = ICR_FILE_KEYWORDS_LIST
+    fieldList = ['NUMBER'] + ICR_FILE_KEYWORDS_LIST
     # As we do not have a real schema to define the field order,
     # we will have to guess the order here
     description = ""

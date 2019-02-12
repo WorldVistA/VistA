@@ -117,35 +117,39 @@ and 5.01 of Mental Health.
 
 Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the
 existence of all 3 possible globals and accomplish the prting accordingly.
-VIEWER: SCHLEHUBER,PAM
-VIEWER: DEFA,TANA
-VIEWER: EBERT,AL
-VIEWER: ANDREASSEN,LARRY
-VIEWER: CRAVEN,MARCIE J
-VIEWER: DEVLIN,MARK J
 </pre>
 </td>
 </tr>
 <tr>
-<td>STATUS</td>
-<td>Active</td>
-</tr>
-<tr>
-<td>KEYWORDS</td>
+<td>VIEWER</td>
 <td>
 <ol>
 <table><thead><tr>
-<th>KEYWORDS</th>
+<th>VIEWER</th>
 </tr></thead><tbody>
-<td>[u'', u'***************************', u'The mental health code has been modified to do what is in yellow above.']</td>
+<td>SCHLEHUBER,PAM</td>
+</tr>
+<td>DEFA,TANA</td>
+</tr>
+<td>EBERT,AL</td>
+</tr>
+<td>ANDREASSEN,LARRY</td>
+</tr>
+<td>CRAVEN,MARCIE J</td>
+</tr>
+<td>DEVLIN,MARK J</td>
 </tr>
 </tbody></table>
 </ol>
 </td>
 </tr>
 <tr>
+<td>STATUS</td>
+<td>Retired</td>
+</tr>
+<tr>
 <td>DURATION</td>
-<td>Till Otherwise Agr</td>
+<td>Till Otherwise Agreed</td>
 </tr>
 <tr>
 <td>ID</td>
@@ -157,20 +161,10 @@ VIEWER: DEVLIN,MARK J
 <ol>
 <table><thead><tr>
 <th>ISC</th>
+<th>DBA Comments</th>
 <th>SUBSCRIBING PACKAGE</th>
 </tr></thead><tbody>
 <td>Salt Lake City</td>
-<td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
-</tr>
-<td></td>
-<td>TEXT INTEGRATION UTILITIES                 Salt Lake City</td>
-</tr>
-</tbody></table>
-</ol>
-</td>
-</tr>
-<tr>
-<td>DBA Comments</td>
 <td><pre>
 While trying to determine what impact ICD10 changes will have
 on the active DBIA ICR #1068, it was discovered that the Progress Note package
@@ -219,7 +213,63 @@ Here is the IA along with the updates we are proposing:
 
 1068     NAME: DBIA1068
 CUSTODIAL PACKAGE: MENTAL HEALTH                              Dallas
+SUBSCRIBING PACKAGE: TEXT INTEGRATION UTILITIES                 Salt Lake City
+USAGE: Private             ENTERED: NOV 21,1994
+STATUS: Active              EXPIRES:
+DURATION: Till Otherwise Agr  VERSION:
+FILE: 627.7                  ROOT: YSD
+DESCRIPTION:                        TYPE: File
+Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as
+follows:
+FILE    ORDER   PREFIX  LAYGO   MESSAGE
+80      1      I       n       ICD Code
+627.5    2      D       n       DSM-III-R Code This is for use with
+Mental Health v4.18 and Mental Health v5.0.
+
+With the release of Mental Heath v5.01 this will be changed to:
+FILE    ORDER   PREFIX  LAYGO   MESSAGE
+80      1      I       n       ICD Code
+
+
+INTEGRATION REFERENCE INQUIRY #1068            APR 26,2012  14:00    PAGE 2
+--------------------------------------------------------------------------
+------
+
+627.7    2      D       n       DSM-IV
+
+PNs should have had an agreement to use this file.  Prior to the release
+of Progress Notes v2.5 this data was a part of the Mental Health progress
+notes global 606.  The agreement was somehow overlooked when the data was
+converted to ^GMR(121.
+
+GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18,
+5.0 and 5.01 of Mental Health.
+
+Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for
+the existence of all 3 possible globals and accomplish the prting
+accordingly.
+
+Please note that Mental Health has made modifications to its YSDIAGE menu
+option to check the 0;8 field of file 627.7 and, if it is '9' which denotes
+ICD9 ICD VERSION then some date validation logic will be triggered to make
+certain that the DATE/TIME OF DIAGNOSIS field in file 627.8 is before the
+ICD10 implementation date.  Similarly, if 0;8 of file 627.7 is '10' which
+denotes ICD10 ICD VERSION then the DATE/TIME OF DIAGNOSIS field of file
+627.8 will be checked to ascertain that it is on or after the ICD10
+Implementation date.  TIU should probably add some validation logic in
+its routines to emulate what has been done in Mental Health routines for
+the YSDIAGE menu option.
+KEYWORDS:
+
+***************************
+
+The mental health code has been modified to do what is in yellow above.
 </pre>
+</td>
+<td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
+</tr>
+</tbody></table>
+</ol>
 </td>
 </tr>
 <tr>
@@ -244,22 +294,6 @@ CUSTODIAL PACKAGE: MENTAL HEALTH                              Dallas
 </tbody></table>
 </ol>
 </td>
-</tr>
-<tr>
-<td>ENTERED</td>
-<td>NOV 21,1994</td>
-</tr>
-<tr>
-<td>EXPIRES</td>
-<td></td>
-</tr>
-<tr>
-<td>VERSION</td>
-<td>[u'', u'FILE: 627.7                  ROOT: YSD']</td>
-</tr>
-<tr>
-<td>DESCRIPTION</td>
-<td>[u'', u'Progress Notes has a variable pointer, DXLS, file 121, field 30 that is as', u'follows:', u'FILE    ORDER   PREFIX  LAYGO   MESSAGE', u'80      1      I       n       ICD Code', u'627.5    2      D       n       DSM-III-R Code This is for use with', u'Mental Health v4.18 and Mental Health v5.0.', u'With the release of Mental Heath v5.01 this will be changed to:', u'FILE    ORDER   PREFIX  LAYGO   MESSAGE', u'80      1      I       n       ICD Code', u'INTEGRATION REFERENCE INQUIRY #1068            APR 26,2012  14:00    PAGE 2', u'--------------------------------------------------------------------------', u'------', u'627.7    2      D       n       DSM-IV', u'PNs should have had an agreement to use this file.  Prior to the release', u'of Progress Notes v2.5 this data was a part of the Mental Health progress', u'notes global 606.  The agreement was somehow overlooked when the data was', u'converted to ^GMR(121.', u'GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18,', u'5.0 and 5.01 of Mental Health.', u'Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for', u'the existence of all 3 possible globals and accomplish the prting', u'accordingly.', u'Please note that Mental Health has made modifications to its YSDIAGE menu', u"option to check the 0;8 field of file 627.7 and, if it is '9' which denotes", u'ICD9 ICD VERSION then some date validation logic will be triggered to make', u'certain that the DATE/TIME OF DIAGNOSIS field in file 627.8 is before the', u"ICD10 implementation date.  Similarly, if 0;8 of file 627.7 is '10' which", u'denotes ICD10 ICD VERSION then the DATE/TIME OF DIAGNOSIS field of file', u'627.8 will be checked to ascertain that it is on or after the ICD10', u'Implementation date.  TIU should probably add some validation logic in', u'its routines to emulate what has been done in Mental Health routines for', u'the YSDIAGE menu option.']</td>
 </tr>
 </tbody>
 </table>

@@ -1335,14 +1335,161 @@ NUMBER: 10156                           IA #: 10156
  between the packages whose options are being "linked".  
   STATUS: Active                        MAIL MESSAGE: 43299654
 
+NUMBER: 10034                           IA #: 10034
+  DATE CREATED: NOV 17, 1998            CUSTODIAL PACKAGE: VA FILEMAN
+  CUSTODIAL ISC: San Francisco          USAGE: Supported
+  TYPE: Routine                         DBIC APPROVAL STATUS: APPROVED
+  ROUTINE: DIFG                         NAME: Other API: Filegram
+  ORIGINAL NUMBER: 10034                ID: DIFG
+ GENERAL DESCRIPTION:   Used to to install filegrams.  
+  STATUS: Active                        MAIL MESSAGE: 28370785
+COMPONENT/ENTRY POINT: DIFG
+ COMPONENT DESCRIPTION:   Used to to install filegrams.  
+VARIABLES: DIFGLO                       TYPE: Input
+ VARIABLES DESCRIPTION:   (Required) This variable must be the global root of
+ the filegram to be installed. 
+VARIABLES: DIADD                        TYPE: Input
+ VARIABLES DESCRIPTION:   (Optional) If this variable is defined, a new entry
+ will be created in the base file. 
+VARIABLES: DINUM                        TYPE: Input
+ VARIABLES DESCRIPTION:   (Optional) Entry number in base file at which new
+ file entry, if added, will be created.  
+VARIABLES: DIFGER                       TYPE: Output
+ VARIABLES DESCRIPTION:   This output variable is defined if an error has
+ occurred. 
+VARIABLES: DIFGY                        TYPE: Output
+ VARIABLES DESCRIPTION:   ^DIFG always returns DIFGY. DIFGY can have one of the
+ following values: 
+  
+ DIFGY=-1 Indicates that the lookup on the initial file processed (the base 
+ file) was unsuccessful.  
+  
+ DIFGY=N^F Where N is the internal number of the entry in the base file and F
+ is the base file's number.  
+  
+ DIFGY=N^F^1 Where N and F are defined as above and 1 indicates that a new 
+ entry has been added to the base file.  
 
-
-
-Press RETURN to continue...
-
-
-   NAME   NAMESPACE AND FILESPACE REGISTRATIONS ...
-   IAs    INTEGRATION CONTROL REGISTRATIONS ...
-   PKG    PACKAGE FILE INFORMATION ...
-   STN    INSTITUTION FILE INFORMATION ...
-   STND   STANDARDS ...
+NUMBER: 10035                           IA #: 10035
+  FILE NUMBER: 2                        GLOBAL ROOT: DPT(
+  DATE CREATED: SEP 13, 2017            CUSTODIAL PACKAGE: REGISTRATION
+  CUSTODIAL ISC: Albany                 USAGE: Supported
+  TYPE: File                            DBIC APPROVAL STATUS: APPROVED
+  NAME: PATIENT FILE                    ORIGINAL NUMBER: 10035
+  ID: DPT(                              CREATOR: SCHLEHUBER,CAMERON
+GLOBAL REFERENCE: DPT(
+FIELD NUMBER: .01                       FIELD NAME: NAME
+  LOCATION: 0;1                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .02                       FIELD NAME: SEX
+  LOCATION: 0;2                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .03                       FIELD NAME: DATE OF BIRTH
+  LOCATION: 0;3                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .05                       FIELD NAME: MARITAL STATUS
+  LOCATION: 0;5                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .07                       FIELD NAME: OCCUPATION
+  LOCATION: 0;7                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .08                       FIELD NAME: RELIGIOUS PREFERENCE
+  LOCATION: 0;8                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .09                       FIELD NAME: SOCIAL SECURITY NUMBER
+  LOCATION: 0;9                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .091                      FIELD NAME: REMARKS
+  LOCATION: 0;10                        ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .092                      FIELD NAME: PLACE OF BIRTH [CITY]
+  LOCATION: 0;11                        ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .093                      FIELD NAME: PLACE OF BIRTH [STATE]
+  LOCATION: 0;12                        ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .033                      FIELD NAME: AGE
+  LOCATION: COMPUTED                    ACCESS: Read w/Fileman
+ FIELD DESCRIPTION:   Computed field 
+FIELD NUMBER: .14                       FIELD NAME: CURRENT MEANS TEST STATUS
+  LOCATION: 0;14                        ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .096                      FIELD NAME: WHO ENTERED PATIENT
+  LOCATION: 0;15                        ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .097                      FIELD NAME: DATE ENTERED INTO FILE
+  LOCATION: 0;16                        ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.1)
+FIELD NUMBER: .1                        FIELD NAME: WARD LOCATION
+  LOCATION: .1;1                        ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.101)
+FIELD NUMBER: .101                      FIELD NAME: ROOM-BED
+  LOCATION: .101;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,'LR')
+FIELD NUMBER: 63                        FIELD NAME: LABORATORY REFERENCE
+  LOCATION: 63;1                        ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.36)
+FIELD NUMBER: .363                      FIELD NAME: PRIMARY LONG ID
+  LOCATION: .36;3                       ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .364                      FIELD NAME: PRIMARY SHORT ID
+  LOCATION: .36;4                       ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.102)
+FIELD NUMBER: .102                      FIELD NAME: CURRENT MOVEMENT
+  LOCATION: .102;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.103)
+FIELD NUMBER: .103                      FIELD NAME: TREATING SPECIALTY
+  LOCATION: .103;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.104)
+FIELD NUMBER: .104                      FIELD NAME: PROVIDER
+  LOCATION: .104;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.1041)
+FIELD NUMBER: .1041                     FIELD NAME: ATTENDING PHYSICIAN
+  LOCATION: .1041;1                     ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.105)
+FIELD NUMBER: .105                      FIELD NAME: CURRENT ADMISSION
+  LOCATION: .105;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.106)
+FIELD NUMBER: .106                      FIELD NAME: LAST DMMS EPISODE NUMBER
+  LOCATION: .106;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.107)
+FIELD NUMBER: .107                      FIELD NAME: LODGER WARD LOCATION
+  LOCATION: .107;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.108)
+FIELD NUMBER: .108                      FIELD NAME: CURRENT ROOM
+  LOCATION: .108;1                      ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.35)
+FIELD NUMBER: .351                      FIELD NAME: DATE OF DEATH
+  LOCATION: .35;1                       ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: .352                      FIELD NAME: DEATH ENTERED BY
+  LOCATION: .35;2                       ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: DPT(D0,.02,
+FIELD NUMBER: .01                       FIELD NAME: RACE INFORMATION
+  LOCATION: 0;1                         ACCESS: Read w/Fileman
+GLOBAL REFERENCE: DPT(D0,.06,
+FIELD NUMBER: .01                       FIELD NAME: ETHNICITY INFORMATION
+  LOCATION: 0;1                         ACCESS: Read w/Fileman
+GLOBAL REFERENCE: DPT(D0,.13)
+FIELD NUMBER: .132                      FIELD NAME: PHONE NUMBER [WORK]
+  LOCATION: .13;2                       ACCESS: Read w/Fileman
+FIELD NUMBER: .134                      FIELD NAME: PHONE NUMBER [CELLULAR]
+  LOCATION: .13;4                       ACCESS: Read w/Fileman
+FIELD NUMBER: .133                      FIELD NAME: EMAIL ADDRESS
+  LOCATION: .13;3                       ACCESS: Read w/Fileman
+GLOBAL REFERENCE: DPT(D0,.109
+FIELD NUMBER: .109                      FIELD NAME: EXCLUDE FROM FACILITY DIR
+  LOCATION: .109;1                      ACCESS: Direct Global Read & w/Fileman
+ FIELD DESCRIPTION:   Denotes whether or not the patient wished to be excluded
+ from the Facility Directory for current admission.  This field is only stored
+ for current inpatients.  It must NOT be edited as this could affect the
+ integrity of many options within PIMS and other packages.  
+ GENERAL DESCRIPTION:   Any nationally released cross-reference on the
+ supported fields in this Integration Agreement are "open/supported" for direct
+ global reference (as well as reference through VA FileMan).  
+  STATUS: Active                        MAIL MESSAGE: 85805601
+ DBA Comments:   20070910 - added field .134 PHONE NUMBER [CELLULAR] 20110524 -
+ added field .133 EMAIL ADDRESS 9/13/17-DT: Adding field EXCLUDE FROM FACILITY
+ DIR (#.109) for use by VIAB in VIAB*1*12.  This changes the VIA
+ BackgroundProcess Method: getBMSdata.  10/2/17-DT: Reactivated ICR. Field .109
+ is introduced in VIAB*1*8 for BMS.  
+  DATE ACTIVATED: MAY 24, 2011
+DATE/TIME EDITED: SEP 24, 2007@14:00    ACTION: DEACTIVATED FOR EDITS
+  AT THE REQUEST OF: WHITE,ELAINE       WITH CONCURRENCE OF: DESMOND,LINDA
+DATE/TIME EDITED: AUG 25, 2007@08:00    ACTION: APPROVED
+  AT THE REQUEST OF: WHITE,ELAINE       WITH CONCURRENCE OF: DESMOND,LINDA
+DATE/TIME EDITED: MAY 24, 2011@11:31    ACTION: DEACTIVATED FOR EDITS
+  AT THE REQUEST OF: WARE,CHANDRA       WITH CONCURRENCE OF: HARVEY,JULIE
+DATE/TIME EDITED: MAY 24, 2011@11:49    ACTION: APPROVED
+  AT THE REQUEST OF: BLAESER,DAVID      WITH CONCURRENCE OF: KOPECKY,STEVE
+DATE/TIME EDITED: SEP 13, 2017@12:04    ACTION: DEACTIVATED FOR EDITS
+  AT THE REQUEST OF: RENEE,JOLIE        WITH CONCURRENCE OF: ICR,TEAM
+DATE/TIME EDITED: OCT 02, 2017@16:56    ACTION: APPROVED
+  AT THE REQUEST OF: BURKHALTER,WILLIAM
+  WITH CONCURRENCE OF: ICR,TEAM

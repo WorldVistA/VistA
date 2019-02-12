@@ -28,7 +28,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-      $("#SUNSLTQ4ODc").dataTable({
+      $("#SUNSLTEwMDM0").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -38,10 +38,10 @@
       });
 }); </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h1>Use of STD_INSTITUTION table in PATS application &nbsp;&nbsp;  ICR (4887)</h1>
+<body id="dt_example"><div id="container" style="width:80%"><h1>Other API: Filegram &nbsp;&nbsp;  ICR (10034)</h1>
 
 <div id="demo">
-<table id="SUNSLTQ4ODc" class="display">
+<table id="SUNSLTEwMDM0" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -50,45 +50,52 @@
 </thead>
 <tr>
 <td>NUMBER</td>
-<td>4887</td>
+<td>10034</td>
 </tr>
 <tr>
 <td>IA #</td>
-<td>4887</td>
+<td>10034</td>
 </tr>
 <tr>
 <td>DATE CREATED</td>
-<td>2006/08/21</td>
+<td>1998/11/17</td>
 </tr>
 <tr>
 <td>CUSTODIAL PACKAGE</td>
-<td>807</td>
+<td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>San Francisco</td>
 </tr>
 <tr>
 <td>USAGE</td>
-<td>Private</td>
+<td>Supported</td>
 </tr>
 <tr>
 <td>TYPE</td>
-<td>SQL Table</td>
+<td>Routine</td>
 </tr>
 <tr>
 <td>DBIC APPROVAL STATUS</td>
 <td>APPROVED</td>
 </tr>
 <tr>
+<td>ROUTINE</td>
+<td><a href="https://code.osehra.org/dox/Routine_DIFG.html">DIFG</a></td>
+</tr>
+<tr>
 <td>NAME</td>
-<td>Use of STD_INSTITUTION table in PATS application</td>
+<td>Other API: Filegram</td>
+</tr>
+<tr>
+<td>ORIGINAL NUMBER</td>
+<td>10034</td>
 </tr>
 <tr>
 <td>GENERAL DESCRIPTION</td>
 <td><pre>
-This integration agreement describes the use of the
-std_institution table and fields within the PATS application's Oracle
-database.
-
-When the first test site goes to production with PATS, the EMC will be using
-version 11 of the SDS database.
+Used to to install filegrams.
 </pre>
 </td>
 </tr>
@@ -97,111 +104,89 @@ version 11 of the SDS database.
 <td>Active</td>
 </tr>
 <tr>
-<td>KEYWORDS</td>
+<td>ID</td>
+<td>DIFG</td>
+</tr>
+<tr>
+<td>COMPONENT/ENTRY POINT</td>
 <td>
 <ol>
 <table><thead><tr>
-<th>KEYWORDS</th>
+<th>VARIABLES</th>
+<th>COMPONENT/ENTRY POINT</th>
+<th>COMPONENT DESCRIPTION</th>
 </tr></thead><tbody>
-<td>PATS</td>
+<td>
+<table><thead><tr>
+<th>VARIABLES DESCRIPTION</th>
+<th>VARIABLES</th>
+<th>TYPE</th>
+</tr></thead><tbody>
+<td><pre>
+(Required) This variable must be the global root of
+the filegram to be installed.
+</pre>
+</td>
+<td>DIFGLO</td>
+<td>Input</td>
 </tr>
-<td>SDS</td>
+<td><pre>
+(Optional) If this variable is defined, a new entry
+will be created in the base file.
+</pre>
+</td>
+<td>DIADD</td>
+<td>Input</td>
 </tr>
-<td>INSTITUTION</td>
+<td><pre>
+(Optional) Entry number in base file at which new
+file entry, if added, will be created.
+</pre>
+</td>
+<td>DINUM</td>
+<td>Input</td>
 </tr>
-<td>STD_INSTITUTION</td>
+<td><pre>
+This output variable is defined if an error has
+occurred.
+</pre>
+</td>
+<td>DIFGER</td>
+<td>Output</td>
+</tr>
+<td><pre>
+^DIFG always returns DIFGY. DIFGY can have one of the
+following values:
+
+DIFGY=-1 Indicates that the lookup on the initial file processed (the base
+file) was unsuccessful.
+
+DIFGY=N^F Where N is the internal number of the entry in the base file and F
+is the base file's number.
+
+DIFGY=N^F^1 Where N and F are defined as above and 1 indicates that a new
+entry has been added to the base file.
+
+</pre>
+</td>
+<td>DIFGY</td>
+<td>Output</td>
+</tr>
+</tbody></table>
+</td>
+<td>DIFG</td>
+<td><pre>
+Used to to install filegrams.
+</pre>
+</td>
 </tr>
 </tbody></table>
 </ol>
 </td>
-</tr>
-<tr>
-<td>DURATION</td>
-<td>Till Otherwise Agreed</td>
-</tr>
-<tr>
-<td>CREATOR</td>
-<td>WINN,TAMI</td>
-</tr>
-<tr>
-<td>DATE ACTIVATED</td>
-<td>2006/09/23</td>
 </tr>
 <tr>
 <td>MAIL MESSAGE</td>
-<td>43953287</td>
-</tr>
-<tr>
-<td>DATE/TIME EDITED</td>
-<td>
-<ol>
-<table><thead><tr>
-<th>ACTION</th>
-<th>DATE/TIME EDITED</th>
-<th>AT THE REQUEST OF</th>
-<th>WITH CONCURRENCE OF</th>
-</tr></thead><tbody>
-<td>APPROVED</td>
-<td>2006/09/23 09:00</td>
-<td>WINN,TAMI</td>
-<td>ADDISON,MELISSA</td>
-</tr>
-</tbody></table>
-</ol>
-</td>
-</tr>
-<tr>
-<td>SQL TABLE</td>
-<td>STD_INSTITUTION</td>
-</tr>
-<tr>
-<td>SQL COLUMN</td>
-<td>
-<ol>
-<table><thead><tr>
-<th>SQL COLUMN</th>
-<th>COLUMN DETAILS</th>
-</tr></thead><tbody>
-<td>STATIONNUMBER</td>
-<td><pre>
-PATS does a join between the PATS report_of_contact table
-and the std_institution table, to select this field into the rollup table and
-the report tables.
-</pre>
-</td>
-</tr>
-<td>VISN_ID</td>
-<td><pre>
-PATS uses this field when building data for the rollup and
-for one PATS report provided for the National Program Office. PATS first does
-a JOIN between the PATS report_of_contact table and the std_institution table
-to select the institution at which a patient complaint was made. It then uses
-the results of the first join to do a second join on the std_institution table
-to select an entry with an ID matching the visn_id field of the first entry,
-in order to get the name of the VISN.
-</pre>
-</td>
-</tr>
-<td>VISTANAME</td>
-<td><pre>
-PATS does a join between the PATS report_of_contact table
-and the std_institution table, to select this field into the rollup table and
-the report tables.
-</pre>
-</td>
-</tr>
-<td>ID</td>
-<td><pre>
-PATS has several foreign key references to the ID field on
-the std_institution table. This field is used both to do joins between the
-PATS tables and the std_institution table to build tables used for reporting,
-and to screen data so that users see only the data for their own division.
-</pre>
-</td>
-</tr>
-</tbody></table>
-</ol>
-</td>
+<td>28370785</td>
 </tr>
 </tbody>
 </table>
