@@ -899,6 +899,10 @@ def registerVitalsCPRS(VistA):
   VistA.wait(PROMPT,60)
   VistA.write('D EN^XPAR(\"SYS\",\"GMV GUI VERSION\",GMVGUI,1)')
 
+def removeCAPRILogin(VistA):
+  VistA.wait(PROMPT,60)
+  VistA.write('D EN^XPAR(\"SYS\",\"XU522\",1,\"Y\")')
+
 def addDoctor(VistA,name,init,SSN,sex,AC,VC1):
   # Adds a Doctor user into the system via the User Management Menu as
   # the System Manager.

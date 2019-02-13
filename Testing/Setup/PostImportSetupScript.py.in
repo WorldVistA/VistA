@@ -96,6 +96,9 @@ if VistA.type=='cache':
 # Start TaskMan through the XUP Menu system.
 OSEHRASetup.restartTaskMan(VistA)
 
+# Remove "old-style" logins
+OSEHRASetup.removeCAPRILogin(VistA)
+
 #Create the System Manager
 OSEHRASetup.addSystemManager(VistA)
 
