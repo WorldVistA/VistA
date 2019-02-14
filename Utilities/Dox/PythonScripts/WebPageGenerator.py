@@ -2199,20 +2199,8 @@ class WebPageGenerator:
                 return "%s<sup>(%s)</sup>" % (routineName, COMPONENT_TYPE_DICT[componentType])
         return routineName
 
-#===============================================================================
-# utility method to show routine name
-#===============================================================================
-    def getRoutineDisplayNameByName(self, routineName):
-        routine = self._crossRef.getRoutineByName(routineName)
-        return self.getRoutineDisplayName(routine)
-
     def getRoutineDisplayName(self, routine):
-        routineName = routine.getName()
-        if isinstance(routine, PlatformDependentGenericRoutine):
-            return "%s&sup1" % routineName # superscript 1
-        if not routine.hasSourceCode():
-            return "%s&sup2" % routineName # superscript 2
-        return routineName
+        return routine.getName()
 
     def getGlobalEntryName(self, routine):
         if ".01" in routine:
@@ -2240,6 +2228,15 @@ class WebPageGenerator:
         self._generateIndexPage("routines.html", "Routine", totalCol,
                                 sortedItems, getRoutineHtmlFileName,
                                 self.getRoutineDisplayNameByName, indexList)
+
+    def getRoutineDisplayNameByName(self, routineName):
+        routine = self._crossRef.getRoutineByName(routineName)
+        routineName = routine.getName()
+        if isinstance(routine, PlatformDependentGenericRoutine):
+            return "%s<sup>(%s)</sup>" % (routineName, "platform dependent generic routine")
+        if not routine.hasSourceCode():
+            return "%s<sup>(%s)</sup>" % (routineName, "no source")
+        return routineName
 
 #===============================================================================
 #
