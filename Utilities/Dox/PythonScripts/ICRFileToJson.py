@@ -97,11 +97,11 @@ class ICRFileToJson(object):
                     if DBAComments:
                         if fieldName in ['DATE/TIME EDITED', 'NUMBER', 'DATE ACTIVATED']:
                             DBAComments = False
-                    elif generalDescription:
+                    if generalDescription:
                         # Starts with exactly 2 spaces
                         if line.startswith("  STATUS:") or fieldName == 'VIEWER':
                             generalDescription = False
-                    elif subscribingDetails:
+                    if subscribingDetails:
                         # This assumes that 'Subscribing Details' may start
                         # with a field name but will never contain a field name
                         # in the middle of the entry
@@ -113,6 +113,7 @@ class ICRFileToJson(object):
                             self._appendWordsFieldLine(line)
                         else:
                             self._curField = fieldName
+                            self._rewindStack()
                             name = match.group('name') # this is the name part
                             restOfLine = line[match.end():]
                             self._curRecord[name] = restOfLine.strip()
