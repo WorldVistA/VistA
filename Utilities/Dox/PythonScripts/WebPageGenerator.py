@@ -3193,6 +3193,12 @@ class WebPageGenerator:
                               fileNamePrefix))
                 if self._generatePDFBundle:
                     self.__writeImageToPDF__(imageFileName, pdfSection)
+                # Skip first line - id and name are incorrect for routines that
+                # start with %
+                next(cmapFile)
+                # Re-write line with correct id and name
+                outputFile.write("<map id=\"%s\" name=\"%s\">"
+                                    % (fileNamePrefix, fileNamePrefix))
                 for line in cmapFile:
                     outputFile.write(line)
         except Exception, e:
