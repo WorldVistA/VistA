@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 from VistATaskmanUtil import  VistATaskmanUtil
@@ -32,7 +33,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "XU*8.0*10002"
     self.kbInstaller = DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,

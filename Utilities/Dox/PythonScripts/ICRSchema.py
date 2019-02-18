@@ -17,6 +17,7 @@
 
 import re
 import os
+from functools import reduce
 
 RPC_FILE_NO = '8994'
 RPC_NAME_FIELD_NO = '.01'

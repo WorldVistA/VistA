@@ -25,6 +25,7 @@ Created on Mar 2, 2012
 @copyright PwC
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
+from __future__ import print_function
 
 import sys
 import csv
@@ -167,7 +168,7 @@ class TestSuiteDriver(object):
         if not os.path.isdir(args.resultdir):
             try:
                 os.makedirs(args.resultdir)
-            except OSError, e:
+            except OSError as e:
                 if e.errno != errno.EEXIST:
                     raise
         #resfile = args.resultdir + '/' + test_suite_name + '.txt'
@@ -263,7 +264,7 @@ class TestDriver(object):
                                    location=location,
                                    remote_conn_details=test_suite_details.remote_conn_details)
         except ImportError as ex:
-           print ex
+           print(ex)
            raise
 
         if test_suite_details.username != '':
@@ -276,7 +277,7 @@ class TestDriver(object):
         if VistA.type is not None and VistA.type =='cache' and test_suite_details.namespace != '':
             try:
                 VistA.ZN(test_suite_details.namespace)
-            except IndexError, no_namechange:
+            except IndexError as no_namechange:
                 pass
             VistA.wait(PROMPT)
 

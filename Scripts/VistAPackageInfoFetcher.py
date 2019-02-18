@@ -15,6 +15,7 @@
 #---------------------------------------------------------------------------
 
 from __future__ import with_statement
+from __future__ import print_function
 import sys
 import re
 import argparse
@@ -575,7 +576,7 @@ class PatchInstallLog(object):
       try:
         self.patchNo = int(patchPart.strip())
       except ValueError as ex:
-        print ex
+        print(ex)
         logger.error("History Line is %s" % historyLine)
         self.patchNo = 0
 
@@ -679,7 +680,7 @@ def parsePatchInstallDatetime(dtString):
         if fmtStr.find(date_time_seperator) >= 0:
           fmtStr = fmtStr[0:fmtStr.find(date_time_seperator)]
       outDatetime = datetime.strptime(dtStr, fmtStr)
-    except ValueError, ve:
+    except ValueError as ve:
       pass
 
   if not outDatetime:
@@ -768,7 +769,7 @@ def main():
     packagePatchHist.getPackagePatchHistByNamespace("DI", "22.0")
     packagePatchHist.printPackagePatchHist("VA FILEMAN")
     ver = getPackageLatestVersionByNamespace("DI", testClient)
-    print "the latest version is [%s]" % ver
+    print("the latest version is [%s]" % ver)
     output = packagePatchHist.getAllPatchesInstalledByTime(datetime(2012,8,24))
     pprint.pprint(output)
     output = packagePatchHist.getAllPatchInstalledAfterByTime("T-1000")

@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+
 import re
 from datetime import datetime, date, time
 
@@ -69,7 +71,7 @@ def testFmDtToPyDt():
                "3110000",
                )
   for fmDt in fileManDt:
-    print fmDtToPyDt(fmDt)
+    print(fmDtToPyDt(fmDt))
 
 if __name__ == '__main__':
   testFmDtToPyDt()

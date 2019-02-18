@@ -2147,7 +2147,7 @@ class WebPageGenerator:
                         outputFile.write(line)
                         lineNo += 1
                         entryOffset += 1
-            except Exception, e:
+            except Exception as e:
                 logger.error(e)
                 return
             routine.addEntryPoint(entry, comment, icrJson)
@@ -3201,7 +3201,7 @@ class WebPageGenerator:
                                     % (fileNamePrefix, fileNamePrefix))
                 for line in cmapFile:
                     outputFile.write(line)
-        except Exception, e:
+        except Exception as e:
             logger.error(e)
 
     def __writeRoutineDepTable__(self, data, header, outputFile, pdf,

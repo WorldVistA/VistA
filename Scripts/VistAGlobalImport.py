@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 
 import sys
 import os
@@ -77,7 +78,7 @@ def testMain():
   assert testClient
   with testClient as vistAClient:
     logFilename = getTempLogFile(DEFAULT_GLOBAL_IMPORT_TIMEOUT)
-    print "Log File is %s" % logFilename
+    print("Log File is %s" % logFilename)
     vistAClient.setLogFile(logFilename)
     vistAGlobalImport = VistAGlobalImport()
     vistAGlobalImport.importGlobal(vistAClient, inputFile, timeout=result.timeout)

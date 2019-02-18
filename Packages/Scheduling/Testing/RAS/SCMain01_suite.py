@@ -70,7 +70,7 @@ def sc_test001(test_suite_details):
         SC.makeapp_bypat(clinic=tclinic, patient='333224444', datetime=time, fresh='No', prevCO='yes')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -105,7 +105,7 @@ def sc_test002(test_suite_details):
                       patientname1='Twelve', patientname2='Ten')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -134,7 +134,7 @@ def sc_test003(test_suite_details):
         SC.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -168,7 +168,7 @@ def sc_test004(test_suite_details):
         SC.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -203,7 +203,7 @@ def sc_test005(test_suite_details):
         SC.deletecheckout(clinic=tclinic, appnum='3')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -225,7 +225,7 @@ def sc_test006(test_suite_details):
         SC.waitlistdisposition(clinic=tclinic, patient='323123456')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -267,7 +267,7 @@ def sc_test007(test_suite_details):
         SC.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -304,7 +304,7 @@ def sc_test008(test_suite_details):
         SC.canapp(clinic='cLiNiCx', mult='2', future=1, rebook=1)
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -338,7 +338,7 @@ def sc_test009(test_suite_details):
                         EPvlist=['THIRTEEN,PATIENT M', 'CLINICX', '8904', 'FUTURE', 'SCHEDULED', 'REGULAR'])
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -423,7 +423,7 @@ def sc_test010(test_suite_details):
                                  ['PAGER NUMBER', '']], emailAddress ='email@example.org')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -446,7 +446,7 @@ def sc_test011(test_suite_details):
         SC.gotoApptMgmtMenu()
         SC.verapp_bypat(patient='656454321', vlist=['Clinic1', '7:00', 'Future', 'Clinicx', '17:00', 'Future'],)
         SC.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         resultlog.write('\nEXCEPTION ERROR:' + str(e))
         logging.error('*****exception*********' + str(e))
     else:
@@ -485,7 +485,7 @@ def sc_test012(test_suite_details):
         SC.gotoApptMgmtMenu()
         SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+10@9AM', fresh='No', badtimeresp='overbook')
         SC.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -522,7 +522,7 @@ def sc_test013(test_suite_details):
             SC.gotoApptMgmtMenu()
             SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+9@5AM', fresh='No', apptype='SHARING AGREEMENT', subcat=['subcat1', 'SUBCAT2'])
             SC.signoff()
-        except TestHelper.TestError, e:
+        except TestHelper.TestError as e:
             test_driver.exception_handling(test_suite_details, e)
         finally:
             test_driver.finally_handling(test_suite_details)
@@ -551,7 +551,7 @@ def sc_test014(test_suite_details):
         SC.ma_clinicchk(patient='333224444', clinic='CLInicD', exp_apptype='REGULAR', datetime='t+5@03pm',
                         cslots='[4]', cxrays='', fresh='No', elig='Yes')
         SC.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -574,7 +574,7 @@ def startmon(test_suite_details):
         VistA.startCoverage(test_suite_details.coverage_subset)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -603,7 +603,7 @@ def stopmon (test_suite_details):
         VistA.stopCoverage(path, test_suite_details.coverage_type)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)

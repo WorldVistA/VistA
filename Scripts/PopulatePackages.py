@@ -89,7 +89,7 @@ def populatePackageMapByCSV(input):
         for ns in p.included:
             namespaces[ns] = p.path
         for ns in p.excluded:
-            if not namespaces.has_key(ns):
+            if not ns in namespaces:
                 namespaces[ns] = None
 
     return (packages, namespaces)

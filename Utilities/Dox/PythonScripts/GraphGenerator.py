@@ -51,7 +51,7 @@ class GraphGenerator:
                 dirName = os.path.join(self._outDir, packageName)
                 if not os.path.exists(dirName):
                     os.makedirs(dirName)
-            except OSError, e:
+            except OSError as e:
                 logger.error("Error making dir %s : Error: %s" % (dirName, e))
 
     def generateGraphs(self):

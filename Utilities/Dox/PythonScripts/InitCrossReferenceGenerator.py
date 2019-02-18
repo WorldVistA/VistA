@@ -183,7 +183,7 @@ class InitCrossReferenceGenerator(object):
                          allPackages.get(packageName))
       try:
         fileNum = float(globalVar.getFileNo())
-      except ValueError, es:
+      except ValueError as es:
         logger.error("error: %s, globalVar:%s file %s" % (es, globalVar, file))
         continue
 #            crossReference.addGlobalToPackage(globalVar, packageName)

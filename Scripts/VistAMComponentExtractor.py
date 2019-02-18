@@ -16,6 +16,7 @@
 #---------------------------------------------------------------------------
 
 from __future__ import with_statement
+from __future__ import print_function
 import sys
 import os
 import subprocess
@@ -196,7 +197,7 @@ class VistADataExtractor:
     allZWRFiles = glob.glob(os.path.join(self._globalOutputDir,
                                          "*.zwr"))
     for file in allZWRFiles:
-      os.chmod(file, 0644)
+      os.chmod(file, 0o644)
 
   def __generatePackageReadMes__(self):
     # assume runs from the scripts directory

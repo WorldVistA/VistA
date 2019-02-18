@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import with_statement
+from __future__ import print_function
 import os
 import sys
 import subprocess
@@ -97,7 +98,7 @@ def isInstanceRunning(instanceName):
       if resultList[0] == instanceName:
         return (RUNNING_REGEX.search(resultList[3].split(',')[0]) != None)
   except OSError as ex:
-    print ex
+    print(ex)
   return False
 """
   dismount/mount a local database via InterSystem Cache ^DATABASE call
@@ -322,7 +323,7 @@ def testMountDisMountLocalDb():
                            'Make sure InterSystem ^DATABASE routine is accessable via'
                            ' specified namespace.')
   result = parser.parse_args();
-  print result
+  print(result)
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   with testClient:
     if result.action == 'D':

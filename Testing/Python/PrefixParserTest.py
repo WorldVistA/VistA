@@ -1,3 +1,4 @@
+from __future__ import print_function
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
 #
@@ -28,8 +29,8 @@ ExpectedOutput = ["'%", "'ABC", "'BCD", "'DEF", 'ABCD', "'CDEH", 'DEFG']
 TestOutput = FindPackagePrefixes(sys.argv[1],sys.argv[2])
 
 if ExpectedOutput == TestOutput:
-  print "Output of test matches the expected output"
+  print("Output of test matches the expected output")
   sys.exit(0)
 else:
-  print "Error:  Expected output was: " + str(ExpectedOutput) + ".  Test output was: " + str(TestOutput)
+  print("Error:  Expected output was: " + str(ExpectedOutput) + ".  Test output was: " + str(TestOutput))
   sys.exit(1)

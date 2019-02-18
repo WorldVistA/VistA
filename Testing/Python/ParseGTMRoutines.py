@@ -15,6 +15,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from __future__ import print_function
 import os
 import re
 
@@ -38,7 +39,7 @@ def parse_gtmroutines():
   var = os.getenv('gtmroutines')
   final_list = extract_m_source_dirs(var)
   final_str = ';'.join(final_list)
-  print final_str
+  print(final_str)
 
 def extract_m_source_dirs(var):
   #First, replace unescaped spaces with semicolons

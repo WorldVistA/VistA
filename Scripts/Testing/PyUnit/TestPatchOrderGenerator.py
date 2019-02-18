@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+
 import os
 import sys
 import unittest
@@ -70,16 +72,16 @@ class TestPatchOrderGenerator(unittest.TestCase):
     result = topologicSort(depDict)
     self.assertTrue(result, "no valid order is generated")
     self.assertTrue('12' in result, "orphan node is ignored")
-    print result
+    print(result)
     result = topologicSort(depDict, '9')
     self.assertTrue(result, "no valid order is generated")
-    print result
+    print(result)
     result = topologicSort(depDict, '10')
     self.assertTrue(result, "no valid order is generated")
-    print result
+    print(result)
     result = topologicSort(depDict, '2')
     self.assertTrue(result, "no valid order is generated")
-    print result
+    print(result)
     self.assertTrue(result, "no valid order is generated")
    # this will create a cycle among 5, 11, 10
     depDict.update({'5':  ['10']})

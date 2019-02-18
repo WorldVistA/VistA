@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 import sys
 import os
 import argparse
@@ -551,9 +552,9 @@ class KIDSBuildParser(object, ISectionParser):
     print the result
   """
   def printResult(self):
-    print self.installNameList
+    print(self.installNameList)
     for kidsBuild in self._kidsBuilds:
-      print kidsBuild
+      print(kidsBuild)
       if kidsBuild.preInstallRoutine:
         preRtn = kidsBuild.preInstallRoutine.split('^')[-1]
         assert preRtn in [x.name for x in kidsBuild.routineList]
@@ -571,7 +572,7 @@ class KIDSBuildParser(object, ISectionParser):
   """
   def __verifyResult__(self):
     for kidsBuild in self._kidsBuilds:
-      print kidsBuild
+      print(kidsBuild)
       if kidsBuild.preInstallRoutine:
         preRtn = kidsBuild.preInstallRoutine.split('^')[-1]
         if preRtn not in [x.name for x in kidsBuild.routineList]:

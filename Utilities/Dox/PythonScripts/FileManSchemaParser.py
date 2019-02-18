@@ -23,6 +23,7 @@ from CrossReference import FileManField, Global
 from ZWRGlobalParser import getKeys
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from LogManager import logger
+from functools import reduce
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))

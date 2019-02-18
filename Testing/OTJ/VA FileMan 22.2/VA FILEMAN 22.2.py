@@ -1,3 +1,4 @@
+from __future__ import print_function
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
 #
@@ -42,7 +43,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "VA FILEMAN 22.2"
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,

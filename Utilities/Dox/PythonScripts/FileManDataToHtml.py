@@ -42,6 +42,7 @@ from DataTableHtml import outputLargeDataListTableHeader
 from DataTableHtml import outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId
 from LogManager import logger
+from functools import reduce
 
 DOX_URL = None
 VIV_URL = None

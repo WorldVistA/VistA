@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 from VistAMenuUtil import VistAMenuUtil
@@ -36,7 +37,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "ROR*1.5*31"
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,

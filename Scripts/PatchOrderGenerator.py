@@ -22,6 +22,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 import os
 import sys
 import re
@@ -716,11 +717,11 @@ def visitNode(nodeName, depDict, visitSet, tempStack, result):
 """ Utility function to print result of a ordered patch list """
 def printPatchOrderList(patchOrderList):
   for x in patchOrderList:
-    print({"Name" : x.installName},
+    print(({"Name" : x.installName},
           {"Seq#" : x.seqNo},
           {"KIDS" : os.path.basename(x.kidsFilePath)},
           {"CSVDep" : x.csvDepPatch},
-         )
+         ))
 
 """ Utility function to check if the csv file is indeed in valid format """
 def isValidOrderCSVFile(patchesCSV):

@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import with_statement
+from __future__ import print_function
 import os # to get gtm environment variables
 import sys
 import subprocess

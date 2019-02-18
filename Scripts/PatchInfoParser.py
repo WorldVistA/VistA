@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+
 import os
 import sys
 import re
@@ -253,7 +255,7 @@ def testPatchInfoParser():
     sys.exit(-1)
   infoParser = PatchInfoParser()
   patchInfo = infoParser.parseKIDSInfoFile(sys.argv[1])
-  print patchInfo
+  print(patchInfo)
 
 if __name__ == '__main__':
   testPatchInfoParser()

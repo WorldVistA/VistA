@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 
 import xlrd
 from xlrd import open_workbook,cellname,xldate_as_tuple
@@ -23,15 +24,15 @@ import logging
 def test_sheet(test_xls):
   book = open_workbook(test_xls)
   sheet0 = book.sheet_by_index(0)
-  print sheet0.row(0)
-  print sheet0.col(0)
-  print
-  print sheet0.row_slice(0,1)
-  print sheet0.row_slice(0,1,2)
-  print sheet0.row_values(0,1)
-  print sheet0.row_values(0,1,2)
-  print sheet0.row_types(0,1)
-  print sheet0.row_types(0,1,2)
+  print(sheet0.row(0))
+  print(sheet0.col(0))
+  print()
+  print(sheet0.row_slice(0,1))
+  print(sheet0.row_slice(0,1,2))
+  print(sheet0.row_values(0,1))
+  print(sheet0.row_values(0,1,2))
+  print(sheet0.row_types(0,1))
+  print(sheet0.row_types(0,1,2))
 
 typeDict = {
   xlrd.XL_CELL_NUMBER: "Number",

@@ -25,6 +25,7 @@ and interaction methods such as write() and wait()
 @copyright The Open Source Electronic Health Record Agent
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
+from __future__ import print_function
 
 import sys
 import os, errno
@@ -45,13 +46,13 @@ sys.path.append(paramikoedir)
 try:
   import pexpect
   no_pexpect = None
-except ImportError, no_pexpect:
+except ImportError as no_pexpect:
   pass
 
 try:
   import paramiko
   no_paramiko = None
-except ImportError, no_paramiko:
+except ImportError as no_paramiko:
   pass
 
 #---------------------------------------------------------------------------
@@ -543,7 +544,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
 
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
-        print 'ERROR: expected: ' + command
+        print('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
         return 1
@@ -659,12 +660,12 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
       if os.getenv('gtm_dist'):
         try:
           return ConnectLinuxGTM(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect, no_gtm:
+        except pexpect.ExceptionPexpect as no_gtm:
            if (no_gtm):
-             raise "Cannot find a MUMPS instance"
+             raise TestHelper.TestError("Cannot find a MUMPS instance")
       else:
         try:
           return ConnectLinuxCache(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect, no_cache:
+        except pexpect.ExceptionPexpect as no_cache:
          if (no_cache):
-           raise "Cannot find a MUMPS instance"
+           raise TestHelper.TestError("Cannot find a MUMPS instance")

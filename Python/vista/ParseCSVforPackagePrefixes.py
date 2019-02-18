@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+
 import csv,os,sys
 
 class Prefix:
@@ -137,6 +139,6 @@ if __name__ == '__main__':
     sys.exit()
   prefixes = FindPackagePrefixes(sys.argv[1], sys.argv[2])
   files = FindPackageFiles(sys.argv[1], sys.argv[2])
-  print prefixes
-  print "********************************"
-  print files
+  print(prefixes)
+  print("********************************")
+  print(files)

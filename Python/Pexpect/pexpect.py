@@ -243,18 +243,18 @@ def run(command, timeout=-1, withexitstatus=False, events=None,
     while True:
         try:
             index = child.expect(patterns)
-            if type(child.after) in types.StringTypes:
+            if type(child.after) in (str,):
                 child_result_list.append(child.before + child.after)
             else:
                 # child.after may have been a TIMEOUT or EOF,
                 # which we don't want appended to the list.
                 child_result_list.append(child.before)
-            if type(responses[index]) in types.StringTypes:
+            if type(responses[index]) in (str,):
                 child.send(responses[index])
             elif isinstance(responses[index], types.FunctionType):
                 callback_result = responses[index](locals())
                 sys.stdout.flush()
-                if type(callback_result) in types.StringTypes:
+                if type(callback_result) in (str,):
                     child.send(callback_result)
                 elif callback_result:
                     break
@@ -1293,7 +1293,7 @@ class spawn(object):
             compile_flags = compile_flags | re.IGNORECASE
         compiled_pattern_list = []
         for p in patterns:
-            if type(p) in types.StringTypes:
+            if type(p) in (str,):
                 compiled_pattern_list.append(re.compile(p, compile_flags))
             elif p is EOF:
                 compiled_pattern_list.append(EOF)
@@ -1418,7 +1418,7 @@ class spawn(object):
         This method is also useful when you don't want to have to worry about
         escaping regular expression characters that you want to match."""
 
-        if (type(pattern_list) in types.StringTypes or
+        if (type(pattern_list) in (str,) or
             pattern_list in (TIMEOUT, EOF)):
             pattern_list = [pattern_list]
         return self.expect_loop(searcher_string(pattern_list),

@@ -25,6 +25,7 @@ Created on Apr 20, 2012
 @copyright PwC
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
+from __future__ import print_function
 
 import time
 import sys
@@ -92,7 +93,7 @@ class Actions (object):
             elif rval[0] == -1:
                 break
             else:
-                print "HOW DID I GET HERE: " + str(rval)
+                print("HOW DID I GET HERE: " + str(rval))
 
     def adduser(self, name, ssn, gender, initials, acode, vcode1):
         ''' Add a user to system'''

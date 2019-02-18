@@ -16,6 +16,7 @@
 #---------------------------------------------------------------------------
 
 from __future__ import with_statement
+from __future__ import print_function
 import sys
 import os
 import re
@@ -124,7 +125,7 @@ def main():
   assert testClient
   with testClient as vistAClient:
     logFilename = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
-    print "Log File is %s" % logFilename
+    print("Log File is %s" % logFilename)
     vistAClient.setLogFile(logFilename)
     isAllRoutines = result.allRoutines
     vistARoutineExport = VistARoutineExport()
