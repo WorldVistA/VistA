@@ -34,7 +34,7 @@ from UtilityFunctions import mergeAndSortDependencyListByPackage, normalizePacka
 from UtilityFunctions import normalizeName, parseICRJson, readIntoDictionary
 from UtilityFunctions import PACKAGE_COMPONENT_MAP, MAX_DEPENDENCY_LIST_SIZE
 
-class GraphGenerator:
+class GraphGenerator(object):
     def __init__(self, crossReference, outDir, docRepDir, dot):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
@@ -233,7 +233,7 @@ class GraphGenerator:
 
             for (depPackage, callDict) in depRoutines.iteritems():
                 output.write("\tsubgraph \"cluster_%s\"{\n" % depPackage)
-                for depRoutine in callDict.keys():
+                for depRoutine in callDict:
                     normalizedDepName = re.sub("[ /.*?&<>:]", '_', depRoutine.getName())
                     escapedDepRoutineName = normalizedDepName.replace("%","\%")
                     output.write("\t\t\"%s\" [penwidth=2 color=black URL=\"%s\" tooltip=\"%s\"];\n" %

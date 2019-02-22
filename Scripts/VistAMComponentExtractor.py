@@ -52,7 +52,7 @@ ROUTINE_EXTRACT_EXCEPTION_LIST = (
 """ Extract routines/globals from a VistA instance and import
     to the git repository
 """
-class VistADataExtractor:
+class VistADataExtractor(object):
   def __init__(self, vistARepoDir, outputResultDir,
                outputLogDir, routineOutDir=None,
                gitBranch=None, generateReadMe=False,

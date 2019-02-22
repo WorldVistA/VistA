@@ -153,7 +153,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
         crossRef = kargs['crossRef']
     if crossRef:
         if not pgkUpperCaseNameDict:
-            for name in crossRef.getAllPackages().iterkeys():
+            for name in crossRef.getAllPackages():
                 pgkUpperCaseNameDict[name.upper()] = name
         upperName = _normalizeName(pkgName).upper()
         if upperName in pgkUpperCaseNameDict:

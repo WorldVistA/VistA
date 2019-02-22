@@ -35,7 +35,7 @@ LINE_OFFSET_DELIM = ","
 #===============================================================================
 # A Class to represent the variable in a _calledRoutine
 #===============================================================================
-class AbstractVariable:
+class AbstractVariable(object):
     def __init__(self, name, prefix, lineOffsets):
         self._name = name
         self._prefix = prefix
@@ -729,7 +729,7 @@ class FileManMumpsTypeField(FileManField):
         assert fType == self.FIELD_TYPE_MUMPS
         FileManField.__init__(self, fieldNo, name, fType ,location)
 
-class FileManFieldFactory:
+class FileManFieldFactory(object):
     _creationTuple_ = (FileManNoneTypeField, FileManDateTimeTypeField,
                        FileManNumberTypeField, FileManSetTypeField,
                        FileManFreeTextTypeField, FileManWordProcessingTypeField,
@@ -982,7 +982,7 @@ class Package(object):
         for key in allObjs:
           for obj in allObjs[key]:
             calledRoutines = allObjs[key][obj].getCalledRoutines()
-            for package in calledRoutines.iterkeys():
+            for package in calledRoutines:
                 if package and package != self:
                     if package not in self._objectDependencies:
                         # the first set consists of all caller _calledRoutine in the self package
@@ -1001,7 +1001,7 @@ class Package(object):
         # build routine based dependencies
         for globalEntry in self._globals.itervalues():
             calledRoutines =  globalEntry.getCalledRoutines()
-            for package in calledRoutines.iterkeys():
+            for package in calledRoutines:
                 if package and package != self:
                     if package not in self._globalRoutineDependencies:
                         # the first set consists of all caller _calledRoutine in the self package
@@ -1029,7 +1029,7 @@ class Package(object):
                     package._globalGlobalDependendents[self][1].add(globalVar)
         for routine in self._routines.itervalues():
             calledRoutines = routine.getCalledRoutines()
-            for package in calledRoutines.iterkeys():
+            for package in calledRoutines:
                 if package and package != self:
                     if package not in self._routineDependencies:
                         # the first set consists of all caller _calledRoutine in the self package
@@ -1077,7 +1077,7 @@ class Package(object):
             if not Global.isFileManFile(): # only care about the file man file now
                 continue
             pointerToFiles = Global.getAllReferredFileManFiles()
-            for package in pointerToFiles.iterkeys():
+            for package in pointerToFiles:
                 if package != self:
                     if package not in self._fileManDependencies:
                         self._fileManDependencies[package] = (set(), set())
@@ -1213,7 +1213,7 @@ class Package(object):
 ##===============================================================================
 ## Class represent a detailed call info NOT USED
 ##===============================================================================
-class RoutineCallDetails:
+class RoutineCallDetails(object):
     def __init__(self, callTag, lineOccurrences):
         self._callDetails = callTag
         self._lineOccurrences = []
@@ -1253,7 +1253,7 @@ class PackageDependencyRoutineList(dict):
 #===============================================================================
 # A Wrapper class represents all Cross Reference Information
 #===============================================================================
-class CrossReference:
+class CrossReference(object):
     def __init__(self):
         self._allPackages = dict()
         self._allRoutines = dict()
@@ -1466,7 +1466,7 @@ class CrossReference:
             genericRoutine.setHasSourceCode(False)
             callerRoutines = genericRoutine.getCallerRoutines()
             for routineDict in callerRoutines.itervalues():
-                for routine in routineDict.keys():
+                for routine in routineDict:
                     routineName = routine.getName()
                     if self.isPlatformDependentRoutineByName(routineName):
                         value = routineDict.pop(routine)

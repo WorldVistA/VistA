@@ -49,7 +49,7 @@ from PackRO             import pack
 from VistARoutineImport import VistARoutineImport
 
   #(fileNum, Package, GlobalName)
-class updateMFSGlobals():
+class updateMFSGlobals(object):
   MFS_list = [
   ("Kernel","4.009","STANDARD TERMINOLOGY VERSION FILE"),
   ("Registration","10.99", "RACE MASTER"),

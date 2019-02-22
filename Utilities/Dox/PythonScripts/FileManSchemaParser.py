@@ -189,7 +189,7 @@ class FileManSchemaParser(object):
 
   def _updateFileDep(self):
     exclude = set()
-    for file in self._fileDep.iterkeys():
+    for file in self._fileDep:
       if file in exclude:
         continue
       exclude.add(file)

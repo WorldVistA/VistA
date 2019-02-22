@@ -44,7 +44,7 @@ SUBFILE_REGEX = re.compile("Multiple #(?P<File>[.0-9]+)")
 FILE_REGEX = re.compile("^ +(?P<File>[0-9\.]+) +")
 POINTED_TO_BY_VALUE_REGEX = re.compile("field \(#(?P<fieldNo>[0-9.]+)\) (of the .*? sub-field \(#(?P<subFieldNo>[0-9.]+)\))?.*of the (?P<Name>.*) File \(#(?P<FileNo>[0-9.]+)\)$")
 
-class IDDSectionParser:
+class IDDSectionParser(object):
     def __init__(self):
         pass
     def onSectionStart(self, line, section, Global, CrossReference):
@@ -447,7 +447,7 @@ class PointedToBySectionParser(IDDSectionParser):
         else:
             logger.error("Could not parse pointer reference [%s] in file [%s]" % (line, self._global.getFileNo()))
 
-class IDataDictionaryListFileLogParser:
+class IDataDictionaryListFileLogParser(object):
     # Enum for section value
     DESCRIPTION_SECTION = 1
     COMPILED_CROSS_REFERENCE_ROUTINE_SECTION = 2

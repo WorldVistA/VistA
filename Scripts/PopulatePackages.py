@@ -31,7 +31,7 @@ import os
 import csv
 import glob
 
-class Package:
+class Package(object):
     def __init__(self, name, path):
         self.name = name
         self.path = path.strip().replace('/',os.path.sep)

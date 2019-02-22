@@ -220,7 +220,7 @@ class PatchOrderGenerator(object):
 
   """ parse all the KIDS files, update kidsInstallNameDict, multibuildDict """
   def __parseAllKIDSBuildFilesList__(self):
-    for basename in self._kidsBuildFileDict.iterkeys():
+    for basename in self._kidsBuildFileDict:
       kidsFile, sha1Path = self._kidsBuildFileDict[basename]
       if kidsFile == None:
         logger.error("No KIDS file available for name %s" % basename)

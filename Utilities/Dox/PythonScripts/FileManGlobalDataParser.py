@@ -404,7 +404,7 @@ class FileManGlobalDataParser(object):
   def _updateBuildReference(self):
     build = self._glbData['9.6']
     for ien in sorted(build.dataEntries.keys(),key=lambda x: float(x)):
-      if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT.keys():
+      if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT:
         INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name] = {"ien":ien, "multi": -1}
       if '10' in build.dataEntries[ien].fields:
         INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['multi']= 1
@@ -553,14 +553,14 @@ class FileManGlobalDataParser(object):
           if installEntry.name in INSTALL_DEPENDENCY_DICT:
             installItem['BUILD_ien'] = INSTALL_DEPENDENCY_DICT[installEntry.name]["ien"]
             installchildren = []
-            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
               installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
-            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
                 for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
                   childPackage = self._findInstallPackage(packageList,child)
                   childEntry = {"name": child, "package": childPackage}
-                  if child in INSTALL_DEPENDENCY_DICT.keys():
-                      if 'multi' in INSTALL_DEPENDENCY_DICT[child].keys():
+                  if child in INSTALL_DEPENDENCY_DICT:
+                      if 'multi' in INSTALL_DEPENDENCY_DICT[child]:
                         childEntry['multi'] = INSTALL_DEPENDENCY_DICT[child]['multi']
                   installchildren.append(childEntry);
                 installItem['children'] = installchildren

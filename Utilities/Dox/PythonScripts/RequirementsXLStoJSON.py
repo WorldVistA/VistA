@@ -126,7 +126,7 @@ def checkReqForUpdate(curNode,pastJSONObj,curDate):
             diffFlag=False
             if "dateUpdated" in entry:
               foundDate=entry["dateUpdated"]
-            for val in curNode.keys():
+            for val in curNode:
               if val in ["recentUpdate","dateUpdated"]:
                 continue
               oldVal = entry[val] if (val in entry) else None

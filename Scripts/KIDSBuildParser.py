@@ -29,7 +29,7 @@ from PatchInfoParser import installNameToDirName
 """
   KIDS Section Parser Interface
 """
-class ISectionParser:
+class ISectionParser(object):
   def __init__(self, **kargs):
     pass
   """
@@ -65,7 +65,7 @@ class DebugSectionParser(ISectionParser):
     logger.debug("Function reset is called")
     self.__logKargs__(**kargs)
   def __logKargs__(self, **kargs):
-    for key in kargs.iterkeys():
+    for key in kargs:
       logger.debug("Key: %s" % (key))
 
   def __logFunctionCallInfo__(self, funcName, section, lines, **kargs):
@@ -545,7 +545,7 @@ class KIDSBuildParser(object, ISectionParser):
   def unregisterSectionHandler(self, section):
     if section in self._sectionHandler:
       self._sectionHandler[section] = None
-    for regex in self._regExSectionMapping.iterkeys():
+    for regex in self._regExSectionMapping:
       if self._regExSectionMapping[regex][0] == section:
         self._regExSectionMapping[regex] = (section, None)
   """
@@ -645,7 +645,7 @@ class KIDSBuildParser(object, ISectionParser):
     @return (None, None) if not valid, else return (section, parser)
   """
   def __isSectionLine__(self, curLine):
-    for regex in self._regExSectionMapping.iterkeys():
+    for regex in self._regExSectionMapping:
       if regex.search(curLine):
         return self._regExSectionMapping[regex]
     return (None, None)

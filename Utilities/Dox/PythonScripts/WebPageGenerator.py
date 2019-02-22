@@ -563,7 +563,7 @@ def generateList(data):
 
 ###############################################################################
 # class to generate the web page based on input
-class WebPageGenerator:
+class WebPageGenerator(object):
     def __init__(self, crossReference, outDir, pdfOutDir, repDir, docRepDir,
                  rtnJson, repoJson, generatePDF):
         self._crossRef = crossReference
@@ -730,9 +730,9 @@ class WebPageGenerator:
       #  Would return all "ROUTINE" types where the "ROUTINE" field equals 'SDAM1'
       #
       if package in self._crossRef._icrJson:
-        for keyVal in self._crossRef._icrJson[package].keys():
+        for keyVal in self._crossRef._icrJson[package]:
           if type == "*":
-              for keyEntry in self._crossRef._icrJson[package][keyVal].keys():
+              for keyEntry in self._crossRef._icrJson[package][keyVal]:
                 for entry in self._crossRef._icrJson[package][keyVal][keyEntry]:
                   icrList.append(entry)
           else:
@@ -1690,7 +1690,7 @@ class WebPageGenerator:
                                                   columnWidths=colWidths, isString=False)
 
     def _updatePackageDepDict(self, package, depDict, packDepDict):
-        for depPack in depDict.iterkeys():
+        for depPack in depDict:
             fileName = getPackageDependencyHtmlFile(package.getName(),
                                                     depPack.getName())
             if fileName not in packDepDict:
@@ -2177,7 +2177,7 @@ class WebPageGenerator:
 # sourceDir should be VistA-M git repository
 #===============================================================================
     def generateAllSourceCodePage(self):
-        for packageName in self._allPackages.iterkeys():
+        for packageName in self._allPackages:
             for (routineName, routine) in self._allPackages[packageName].getAllRoutines().iteritems():
                 if self._crossRef.isPlatformGenericRoutineByName(routineName):
                     self.__generatePlatformDependentRoutineSourcePage__(routine)
@@ -2578,7 +2578,7 @@ class WebPageGenerator:
 # method to generate individual package page
 #===============================================================================
     def generateIndividualPackagePage(self):
-        for packageName in self._allPackages.iterkeys():
+        for packageName in self._allPackages:
             if self._generatePDFBundle:
                 self.__setupPDF__(isLandscape=True)
                 pdf = []

@@ -18,7 +18,7 @@ import sys
 import re
 import types
 
-class SSHClientInteraction:
+class SSHClientInteraction(object):
     """This class allows an expect-like interface to Paramiko which allows coders
     to interact with applications and the shell of the connected device."""
 

@@ -17,7 +17,7 @@ from __future__ import print_function
 
 import csv,os,sys
 
-class Prefix:
+class Prefix(object):
   def __init__(self, exclude, name):
     self.exclude = exclude
     self.name = name

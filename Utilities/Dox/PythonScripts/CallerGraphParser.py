@@ -118,7 +118,7 @@ def checkCSVDeps(self,CrossReference,optionText,keyVal):
 #===============================================================================
 # Interface to parse a section of the XINDEX log file
 #===============================================================================
-class ISectionParser:
+class ISectionParser(object):
     def __init__(self):
         pass
     def onSectionStart(self, line, section, crossRef):
@@ -553,7 +553,7 @@ class PackageObjectListingSectionParser (AbstractSectionParser):
 #===============================================================================
 # Interface for a Xindex Log File Parser
 #===============================================================================
-class IXindexLogFileParser:
+class IXindexLogFileParser(object):
     # some enum like constant for section header
     LOCAL_VARIABLE=1
     GLOBAL_VARIABLE=2

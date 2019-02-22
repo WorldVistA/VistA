@@ -511,7 +511,7 @@ class FileManDataToHtml(object):
 
     index = 1
     test = FileManFileData("9999999", 'Server Virtual Menu')
-    for menu in menuArray.keys():
+    for menu in menuArray:
       allOptionList.append(menuArray[menu])
       allMenuList.append(menuArray[menu])
       test.addFileManDataEntry(index, menuArray[menu])
