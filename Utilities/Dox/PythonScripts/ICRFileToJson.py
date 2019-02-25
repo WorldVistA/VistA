@@ -203,7 +203,10 @@ class ICRFileToJson(object):
                     self._curRecord[name] = val
                     changeField = not(name == 'DESCRIPTION' and val == "")
                 if idx == len(allmatches) -1:
-                    if changeField:
+                    if isWordProcessingField(self._curField):
+                        if self._ignoreKeywordInWordProcessingFields(rm.group('name')):
+                            self._appendWordsFieldLine(restOfLine)
+                    elif changeField:
                         self._curField = rm.group('name')
                         self._curRecord[self._curField] = restOfLine[rm.end():].strip()
                     else:
@@ -235,25 +238,31 @@ class ICRFileToJson(object):
 
     def _startOfSubFile(self, match, line):
         """
-            for start of the sub file, we need to add a list element to the current record if it not there
+            for start of the sub file, we need to add a list element to the
+            current record if it not there
             reset _curRecord to be a new one, and push old one into the stack
         """
         subFile = match.group('name')
         while self._curStack: # we are in subfile mode
             prevSubFile = self._curStack[-1][1]
-            if prevSubFile == subFile: # just continue with more of the same subfile
-                self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord) # append the previous result
+            if prevSubFile == subFile:
+                # just continue with more of the same subfile
+                # append the previous result
+                self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord)
                 break;
-            else: # this is a different subfile # now check if it is a nested subfile
-                if isSubFileField(prevSubFile, subFile): # this is a nested subFile, push to stack
+            else: # this is a different subfile, now check if it is a nested subfile
+                if isSubFileField(prevSubFile, subFile):
+                    # this is a nested subFile, push to stack
                     self._curStack.append((self._curRecord, subFile))
-                    break;
-                else: # this is a different subFile now:
+                    break
+                else:
+                    # this is a different subFile now:
                     preStack = self._curStack.pop()
                     preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                     self._curRecord = preStack[0]
         if not self._curStack:
-            self._curStack.append((self._curRecord, subFile)) # push a tuple, the first is the record, the second is the subFile field
+            # push a tuple, the first is the record, the second is the subFile field
+            self._curStack.append((self._curRecord, subFile))
         self._curRecord = {}
         self._findKeyValueInLine(match, line)
 
