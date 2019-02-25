@@ -19,6 +19,7 @@ import json
 import os.path
 import cgi
 import io
+import re
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.platypus import KeepTogether, Table, TableStyle
@@ -601,9 +602,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                     _variables = _variables[0]
                     if "-" in _variables:
                         # TODO: This is a workaround for an error in original
-                        # file, see ICR-639. This does not create an error
-                        # when creating the html file, but the formating is
-                        # incorrect.
+                        # file, see ICR-639.
                         variable['VARIABLES'] = _variables.split("-")[0]
                         variable['VARIABLES DESCRIPTION'] = _variables.split("-")[1]
                     else:
@@ -660,6 +659,22 @@ def _writeTableOfValue(output, value, crossRef):
     for val in headerList:
       if val in entry:
         if (type(entry[val]) is list) and (type(entry[val][0]) is dict):
+          if val == "VARIABLES" and entry[val][0]["VARIABLES"] and type(entry[val][0]["VARIABLES"]) is list:
+            # This is a workaround for an error in original file,
+            # VARIABLES section is not formatted correctly
+            variables = entry[val][0]["VARIABLES"][0]
+            # ICR-5317
+            if "Type:" in variables:
+                # <variableName> Type: <variable type> <description>
+                ICR_5317_REGEX = re.compile("^(?P<varName>[A-Z]+)\s+Type:\s+(?P<varType>[A-Za-z]+)\s*(?P<description>.*)")
+                ret = ICR_5317_REGEX.search(variables)
+                entry[val][0]['VARIABLES'] = ret.group('varName')
+                entry[val][0]['TYPE'] = ret.group('varType')
+                entry[val][0]['VARIABLES DESCRIPTION'] = ret.group('description')
+            else:
+                # ICR-639
+                entry[val][0]['VARIABLES'] = variables.split("-")[0]
+                entry[val][0]['VARIABLES DESCRIPTION'] = variables.split("-")[1]
           output.write("<td>\n")
           _writeTableOfValue(output, entry[val], crossRef)
           output.write("</td>\n")

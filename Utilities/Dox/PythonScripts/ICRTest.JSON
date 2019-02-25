@@ -1,5 +1,619 @@
 [
     {
+        "DATE CREATED": "2008/12/23", 
+        "STATUS": "Active", 
+        "COMPONENT/ENTRY POINT": [
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "A subscripted array with a value of 1 or 0 to", 
+                            "indicate if user is active. 1 = Active, 0 = Inactive."
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "A single value or a subscripted array of security", 
+                            "keys to be evaluated."
+                        ], 
+                        "VARIABLES": "XDUZ", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "DSISCR(n) = string where n = 0,1,2,3,4,...", 
+                            "", 
+                            "Allowable formats of DSISCR(n) = flag^val1^val2^val3^.. where:", 
+                            "", 
+                            "security key ck = KEY^security key name", 
+                            "", 
+                            "kernel param ck = PARM^parameter name^ parameter instance", 
+                            "", 
+                            "M code = M^<return message>^ <executable M code which sets $T>"
+                        ], 
+                        "VARIABLES": "DSISCR", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": "If $G(FUN) then extrinsic function, else RPC.", 
+                        "VARIABLES": "FUN", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "ACT", 
+                "COMPONENT DESCRIPTION": [
+                    "", 
+                    "VARIABLES:  DSIC   Type: Output", 
+                    "A subscripted array with a value of 1", 
+                    "or 0 to indicated if user is active.", 
+                    "XDUZ   Type: Input  (Required)", 
+                    "A single value or a subscripted array", 
+                    "of security keys to be evaluated.", 
+                    "DSISCR Type: Input  (Optional)", 
+                    "DSISCR(n) = string where n = 0,1,2,3,4,... Allowable", 
+                    "formats of DSISCR(n) =", 
+                    "flag^val1^val2^val3^..", 
+                    "", 
+                    "security key ck = KEY^security key name", 
+                    "kernel param ck = PARM^parameter name^", 
+                    "parameter instance", 
+                    "M code = M^<return message>^", 
+                    "<executable M code which sets $T>", 
+                    "", 
+                    "FUN    Type: Input (Optional)  Default is zero (0).", 
+                    "I $G(FUN) then extrinsic function,", 
+                    "else RPC.", 
+                    "", 
+                    "This API is used by the \"DSIC USER ACTIVE USER\" rpc.", 
+                    "This API can be used to verify if a user is an active", 
+                    "VistA user.  The calling routine will send the DUZ to", 
+                    "check and the api will return a subscripted array with a", 
+                    "value of 1 (user owns key) or 0 (key not found)."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": "A single DUZ value to check.", 
+                        "VARIABLES": "XDUZ", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "CK", 
+                "COMPONENT DESCRIPTION": [
+                    "This API does a basic check on a DUZ to see if user", 
+                    "is active."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "return p1^p2^p3:", 
+                            "", 
+                            "p1=pointer to file 4", 
+                            "p2=institution name", 
+                            "p3=station number"
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "A single value or a subscripted array of security", 
+                            "keys to be evaluated."
+                        ], 
+                        "VARIABLES": "XDUZ", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "if SITE=1 and user has no divisions, then return", 
+                            "facility's  default division."
+                        ], 
+                        "VARIABLES": "SITE", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Default is zero (0). I $G(FUN) then extrinsic", 
+                            "function, else RPC"
+                        ], 
+                        "VARIABLES": "FUN", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "DIV", 
+                "COMPONENT DESCRIPTION": [
+                    "Return default division for user.  If that user has", 
+                    "only one division in the file 200 DIVISION multiple, then that entry is", 
+                    "assumed to be the default division unless it is explicitly marked as NO.  This", 
+                    "component is used for the \"DSIC USER DEF DIV\" rpc."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "return p1^p2^p3^p4 for n=1,2,3,... where", 
+                            "If error, return -1^message", 
+                            "If RPC or M API,", 
+                            "return List[n] = p1^p2^p3^p4", 
+                            "for n=1,2,3,4,...", 
+                            "If Ext. Function,", 
+                            "return", 
+                            "p1^p2^p3^p4;p1^p2^p3^p4;p1^p2^p3^p4;...", 
+                            "where p1 - ID mnemonic", 
+                            "p2 - ID value", 
+                            "p3 - location", 
+                            "(valid for OAI mnemonics only)", 
+                            "p4 = 1 (valid for OAI only.)", 
+                            "(If 1, then default Alt ID)"
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Pointer to NEW PERSON (#200) file, if optional", 
+                            "default to DUZ."
+                        ], 
+                        "VARIABLES": "XDUZ", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "default to \"AaDNSTVv\".", 
+                            "", 
+                            "FLAGS[\"A\" - return alternate IDS in field 21600 only", 
+                            "\"a\" - return default alternate ID only - either one must be flagged", 
+                            "as default or if there is only one entry in alt id.", 
+                            "\"D\" - return DEA#", 
+                            "\"N\" - return NPI#", 
+                            "\"S\" - return SSN", 
+                            "\"T\" - TAX ID", 
+                            "\"v\" - VA#", 
+                            "\"V\" - VPID"
+                        ], 
+                        "VARIABLES": "FLAGS", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Default is zero (0). I $G(FUN) then extrinsic", 
+                            "function, else RPC."
+                        ], 
+                        "VARIABLES": "FUN", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "ID", 
+                "COMPONENT DESCRIPTION": [
+                    "Return all user IDs for a given user.  This component", 
+                    "is used for the \"DSIC USER ID\" rpc."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Return ^TMP(\"DSIC\",$J,\"DILIST\",#,0) = p1^p2^p3^...^p8", 
+                            "where:", 
+                            "", 
+                            "p1 = ien                      p6 = initials", 
+                            "p2 = name (.01 field)         p7 = title", 
+                            "p3 = sig block printed name   p8 = service", 
+                            "p4 = sig block title          p9 = division", 
+                            "p5 = first m last"
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": "lookup value for NEW PERSON file.", 
+                        "VARIABLES": "VAL", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Optional) Array of additional screens to perform:", 
+                            "", 
+                            "string   where n = 0,1,2,3,4,...", 
+                            "Allowable formats of SCR(n) = flag^val1^val2^val3^..", 
+                            "", 
+                            "security key ck = KEY^security key name", 
+                            "kernel param ck = PARM^parameter name^", 
+                            "parameter instance", 
+                            "M code = M^<return message>^", 
+                            "<executable M code which sets $T"
+                        ], 
+                        "VARIABLES": "SCR", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "LIST", 
+                "COMPONENT DESCRIPTION": [
+                    "Return list of active users for a lookup value.  This", 
+                    "component is used for the \"DSIC ACTIVE USER LIST\" rpc."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Return user's current active person classification", 
+                            "for PCE.", 
+                            "", 
+                            "Return p1^p2^p3^...^p8  where", 
+                            "p1 = IEN to file 8932.1     p5 = Effective date", 
+                            "p2 = Occupation             p6 = expiration date", 
+                            "p3 = specialty              p7 = VA Code", 
+                            "p4 = sub-specialty          p8 = specialty code"
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Pointer to NEW PERSON (#200) file.  If optional,", 
+                            "default to DUZ."
+                        ], 
+                        "VARIABLES": "USER", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Default=today.  Fileman date to check for active", 
+                            "person class."
+                        ], 
+                        "VARIABLES": "DATE", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Default is zero (0). I $G(FUN) then extrinsic", 
+                            "function, else RPC."
+                        ], 
+                        "VARIABLES": "FUN", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "PER", 
+                "COMPONENT DESCRIPTION": [
+                    "Return user's current active person classification", 
+                    "for PCE. This component is used for the \"DSIC ACTIVE PERSON CLASS\" rpc."
+                ]
+            }, 
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Return: 3 if active user", 
+                            "2 if user is active via the XUORES security key", 
+                            "1 if user is a RDV visitor and you passed RDV=1", 
+                            "0 if user is a RDV visitor and you passed RDV=0", 
+                            "-1^message if problems or not a provider"
+                        ], 
+                        "VARIABLES": "DSIC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Required) Default is current user DUZ. A single", 
+                            "value of the DUZ to return values for."
+                        ], 
+                        "VARIABLES": "XDUZ", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "Boolean flag to indicate whether or not to include", 
+                            "remote data view visitors - default to 0 to not include."
+                        ], 
+                        "VARIABLES": "RDV", 
+                        "TYPE": "Input"
+                    }, 
+                    {
+                        "VARIABLES DESCRIPTION": [
+                            "(Optional)  Default is zero (0). I $G(FUN) then", 
+                            "extrinsic function, else RPC."
+                        ], 
+                        "VARIABLES": "FUN", 
+                        "TYPE": "Input"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "PROV", 
+                "COMPONENT DESCRIPTION": [
+                    "Return all user IDs for a given user.  This component", 
+                    "is used for the \"DSIC ACTIVE CPRS PROVIDER\" rpc."
+                ]
+            }
+        ], 
+        "NAME": "DSICDUZ", 
+        "CREATOR": "CAREY,BILL", 
+        "DATE/TIME EDITED": [
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "CAREY,WILLIAM", 
+                "AT THE REQUEST OF": "CLARK,KAREN", 
+                "DATE/TIME EDITED": "2009/06/11 11:44"
+            }
+        ], 
+        "DATE ACTIVATED": "2009/06/11", 
+        "ORIGINAL NUMBER": "5317", 
+        "NUMBER": "5317", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "SUBSCRIBING PACKAGE": "INSURANCE CAPTURE BUFFER"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "VA CERTIFIED COMPONENTS - DSSI", 
+        "DURATION": "Till Otherwise Agreed", 
+        "IA #": "5317", 
+        "ROUTINE": "DSICDUZ", 
+        "USAGE": "Controlled Subscription", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "TYPE": "Routine", 
+        "ID": "DSICDUZ", 
+        "GENERAL DESCRIPTION": [
+            "", 
+            "This ICR records API's in the DSICDUZ routine.  This routine is used by DSS", 
+            "applications for NEW PERSON (#200) file accesses.  The routine is a wrapper", 
+            "around Standard FILEMAN calls to derive results.", 
+            "", 
+            "Associated RPCs: DSIC ACTIVE USER, DSIC USER DEF DIV,", 
+            "DSIC USER ID, DSIC ACTIVE USER LIST,", 
+            "DSIC ACTIVE PERSON CLASS, DSIC ACTIVE CPRS PROVIDER", 
+            "", 
+            "", 
+            "", 
+            "ROUTINE: DSICDUZ", 
+            "COMPONENT:  ACT", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "A subscripted array with a value of 1", 
+            "or 0 to indicated if user is active.", 
+            "", 
+            "XDUZ   Type: Input   (Required)", 
+            "A single value or a subscripted array", 
+            "of security keys to be evaluated.", 
+            "DSISCR Type: Input   (Optional)", 
+            "DSISCR(n) = string", 
+            "where n = 0,1,2,3,4,...", 
+            "Allowable formats of DSISCR(n) =", 
+            "flag^val1^val2^val3^..", 
+            "", 
+            "security key ck = KEY^security key", 
+            "name", 
+            "kernel param ck = PARM^parameter", 
+            "name^ parameter instance", 
+            "M code = M^<return message>^", 
+            "<executable M code which", 
+            "sets $T>", 
+            "", 
+            "FUN    Type: Input (Optional)  Default is zero (0).", 
+            "I $G(FUN) then extrinsic function,", 
+            "else RPC.", 
+            "", 
+            "This API is used by the \"DSIC USER ACTIVE USER\" rpc.", 
+            "This API can be used to verify if a user is an active", 
+            "VistA user.", 
+            "The calling routine will send the DUZ to check and the", 
+            "API will return a subscripted array with a value of 1", 
+            "(user owns key) or 0 (key not found).", 
+            "", 
+            "COMPONENT:  CK", 
+            "VARIABLES:  XDUZ   Type: Input   (Required)", 
+            "A single DUZ value to check.", 
+            "", 
+            "", 
+            "", 
+            "This API does a basic check on a DUZ to see if user is active.", 
+            "", 
+            "COMPONENT:  DIV", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "return p1^p2^p3:", 
+            "", 
+            "p1=pointer to file 4", 
+            "p2=institution name", 
+            "p3=station number", 
+            "", 
+            "XDUZ   Type: Input   (Required) default is currect user", 
+            "DUZ.", 
+            "A single value or a subscripted array", 
+            "of security keys to be evaluated.", 
+            "SITE   Type: Input   (Optional)", 
+            "if SITE=1 and user has no divisions,", 
+            "then return facility's  default", 
+            "division", 
+            "", 
+            "FUN    Type: Input (Optional)  Default is zero (0).", 
+            "I $G(FUN) then extrinsic function,", 
+            "else RPC.", 
+            "", 
+            "Return default division for user.  If that user has", 
+            "only one division in the file 200 DIVISION multiple,", 
+            "then that entry is assumed to be the default division", 
+            "unless it is explicitly marked as NO.  This component is", 
+            "used for the \"DSIC USER DEF DIV\" rpc.", 
+            "", 
+            "COMPONENT:  ID", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "return p1^p2^p3^p4 for n=1,2,3,...", 
+            "where", 
+            "If error, return -1^message", 
+            "If RPC or M API,", 
+            "return List[n] = p1^p2^p3^p4", 
+            "for n=1,2,3,4,...", 
+            "If Ext. Function,", 
+            "return", 
+            "p1^p2^p3^p4;p1^p2^p3^p4;p1^p2^p3^p4;...", 
+            "where p1 - ID mnemonic", 
+            "p2 - ID value", 
+            "p3 - location", 
+            "(valid for OAI mnemonics", 
+            "only)", 
+            "p4 = 1 (valid for OAI only.)", 
+            "(If 1, then default", 
+            "Alt ID)", 
+            "", 
+            "XDUZ   Type: Input   pointer to NEW PERSON file,", 
+            "if optional default to DUZ", 
+            "", 
+            "FLAGS  Type: Input   (Optional)", 
+            "default to \"AaDNSTVv\"", 
+            "FLAGS[\"A\" - return alternate IDS in", 
+            "field 21600 only", 
+            "\"a\" - return default alternate", 
+            "ID only", 
+            "- either one must be", 
+            "flagged as default or if", 
+            "there is only one entry", 
+            "in alt id.", 
+            "\"D\" - return DEA#", 
+            "\"N\" - return NPI#", 
+            "\"S\" - return SSN", 
+            "\"T\" - TAX ID", 
+            "\"v\" - VA#", 
+            "\"V\" - VPID", 
+            "", 
+            "FUN    Type: Input (Optional)  Default is zero (0).", 
+            "I $G(FUN) then extrinsic function,", 
+            "else RPC.", 
+            "", 
+            "Return all user IDs for a given user.  This component", 
+            "is used for the \"DSIC USER ID\" rpc.", 
+            "", 
+            "COMPONENT:  LIST", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "Return ^TMP(\"DSIC\",$J,\"DILIST\",#,0) = p1^p2^p3^...^p8", 
+            "where:", 
+            "p1 = ien                      p6 = initials", 
+            "p2 = name (.01 field)         p7 = title", 
+            "p3 = sig block printed name   p8 = service", 
+            "p4 = sig block title          p9 = division", 
+            "p5 = first m last", 
+            "", 
+            "VAL   Type: Input   (Required)", 
+            "lookup value for NEW PERSON file.", 
+            "", 
+            "SCR   Type: Input   (Optional)", 
+            "array of additional screens to", 
+            "perform:", 
+            "", 
+            "string   where n = 0,1,2,3,4,...", 
+            "Allowable formats of SCR(n) =", 
+            "flag^val1^val2^val3^..", 
+            "security key ck = KEY^security key", 
+            "name", 
+            "kernel param ck = PARM^parameter", 
+            "name^ parameter instance", 
+            "M code = M^<return message>^", 
+            "<executable M code which sets $T>", 
+            "", 
+            "Return list of active users for a lookup value.  This", 
+            "component is used for the \"DSIC ACTIVE USER LIST\" rpc.", 
+            "", 
+            "", 
+            "", 
+            "COMPONENT:  PER", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "", 
+            "Return user's current active person classification for", 
+            "PCE.", 
+            "Return p1^p2^p3^...^p8  where", 
+            "p1 = IEN to file 8932.1     p5 = Effective date", 
+            "p2 = Occupation             p6 = expiration date", 
+            "p3 = specialty              p7 = VA Code", 
+            "p4 = sub-specialty          p8 = specialty code", 
+            "", 
+            "USER   Type: Input   pointer to NEW PERSON file,", 
+            "if optional default to DUZ.", 
+            "", 
+            "DATE    Type: Input   ;  DATE - default=today", 
+            "Fileman date to check for", 
+            "active person class.", 
+            "", 
+            "FUN    Type: Input (Optional)  Default is zero (0).", 
+            "I $G(FUN) then extrinsic function,", 
+            "else RPC.", 
+            "", 
+            "Return user's current active person classification for", 
+            "PCE. This component is used for the \"DSIC ACTIVE PERSON", 
+            "CLASS\" rpc.", 
+            "", 
+            "", 
+            "COMPONENT:  PROV", 
+            "VARIABLES:  DSIC   Type: Output", 
+            "", 
+            "Return: 3 if active user", 
+            "2 if user is active via the XUORES security key", 
+            "1 if user is a RDV visitor and you passed RDV=1", 
+            "0 if user is a RDV visitor and you passed RDV=0", 
+            "-1^message if problems or not a provider", 
+            "", 
+            "XDUZ   Type: Input  (Required) default is current user DUZ.", 
+            "", 
+            "A single value of the DUZ to return values for.", 
+            "", 
+            "", 
+            "RDV    Type: Input   (Optional) default = today", 
+            "Boolean flag to indicate whether or not to", 
+            "include remote data view visitors - default to 0", 
+            "to not include.", 
+            "", 
+            "FUN    Type: Input (Optional)  Default is zero (0).", 
+            "I $G(FUN) then extrinsic function, else RPC.", 
+            "", 
+            "Return all user IDs for a given user.  This component", 
+            "is used for the \"DSIC ACTIVE CPRS PROVIDER\" rpc."
+        ]
+    }, 
+    {
+        "DATE CREATED": "1992/06/19", 
+        "STATUS": "Active", 
+        "COMPONENT/ENTRY POINT": [
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES": [
+                            "ORIFN - the order that you want this notification to be linked to.", 
+                            "ORIFN - the order that you want this notification to be linked to."
+                        ]
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "NOTIF", 
+                "COMPONENT DESCRIPTION": [
+                    "NOTIF^ORX8(ORIFN,ORNOTE)  Used when cleaning up a", 
+                    "notification that is linked to an order.  REQUIRED VARIABLES:", 
+                    "ORNOTE(notification entry #) - must be set to null - notification entry number", 
+                    "is from File 100.9, field .001(IFN) ORVP - patient identifier in the formal", 
+                    "\"DFN;DPT(\"    (ORVP is also used by other OE/RR routines and may already be", 
+                    "available in your package.) REUTNRED VARIABLES;          None OPTIONAL"
+                ]
+            }
+        ], 
+        "NAME": "DBIA181-F", 
+        "CUSTODIAL ISC": "Salt Lake City", 
+        "ORIGINAL NUMBER": "181", 
+        "NUMBER": "639", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "ISC": "Salt Lake City", 
+                "SUBSCRIBING PACKAGE": "CONSULT/REQUEST TRACKING"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "ORDER ENTRY/RESULTS REPORTING", 
+        "DURATION": "Till Otherwise Agreed", 
+        "IA #": "639", 
+        "ROUTINE": "ORX8", 
+        "USAGE": "Private", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "TYPE": "Routine", 
+        "ID": "ORX8"
+    }, 
+    {
         "DATE CREATED": "1989/03/21", 
         "STATUS": "Retired", 
         "COMPONENT/ENTRY POINT": [
@@ -925,7 +1539,7 @@
                 "GLOBAL REFERENCE": "LRHY(69.86,D0,2,0"
             }
         ], 
-        "DATE ACTIVATED": "2014/10/02", 
+        "DATE ACTIVATED": "OCT 02, 2014", 
         "USAGE": "Controlled Subscription", 
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "LRHY(69.86", 

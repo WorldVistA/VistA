@@ -79,6 +79,7 @@ class ICRFileToJson(object):
                         DBAComments = False
                         generalDescription = False
                         subscribingDetails = False
+                        componentDescription = False
                         self._startOfNewItem(name, number, match, line)
                         continue
                 match = GENERIC_START_OF_RECORD.search(line)
@@ -88,25 +89,38 @@ class ICRFileToJson(object):
                         DBAComments = True
                 if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
+                    # Are we at the beginning of a special field?
                     if fieldName == 'DBA Comments':
                         DBAComments = True
                     elif fieldName == 'GENERAL DESCRIPTION':
                         generalDescription = True
                     elif fieldName == 'SUBSCRIBING DETAILS':
                         subscribingDetails = True
+                    elif fieldName == 'COMPONENT DESCRIPTION':
+                        componentDescription = True
+
+                    # Are we at the end of a special field?
                     if DBAComments:
                         if fieldName in ['DATE/TIME EDITED', 'NUMBER', 'DATE ACTIVATED']:
                             DBAComments = False
-                    if generalDescription:
+                    elif generalDescription:
                         # Starts with exactly 2 spaces
                         if line.startswith("  STATUS:") or fieldName == 'VIEWER':
                             generalDescription = False
-                    if subscribingDetails:
+                    elif subscribingDetails:
                         # This assumes that 'Subscribing Details' may start
                         # with a field name but will never contain a field name
                         # in the middle of the entry
                         if fieldName in ICR_FILE_KEYWORDS and 'SUBSCRIBING DETAILS' in self._curRecord:
                             subscribingDetails = False
+                    elif componentDescription:
+                        # At most one space before 'VARIABLES:'
+                        if line.startswith("VARIABLES:") or line.startswith(" VARIABLES:") or \
+                          fieldName in ['COMPONENT/ENTRY POINT', 'SUBSCRIBING PACKAGE']:
+                            componentDescription = False
+
+                    # Process line
+                    # Start with special, multi-line fields
                     if DBAComments:
                         fieldName = 'DBA Comments'
                         if self._curField == fieldName:
@@ -135,11 +149,21 @@ class ICRFileToJson(object):
                             name = match.group('name') # this is the name part
                             restOfLine = line[match.end():]
                             self._curRecord[name] = restOfLine.strip()
+                    elif componentDescription:
+                        fieldName = 'COMPONENT DESCRIPTION'
+                        if self._curField == fieldName:
+                            self._appendWordsFieldLine(line)
+                        else:
+                            # Starting to process component description
+                            self._curField = fieldName
+                            self._rewindStack()
+                            self._findKeyValueInLine(match, line)
+
                     elif isSubFile(fieldName):
                         self._curField = fieldName
                         self._startOfSubFile(match, line)
                     else:
-                        """ Check to see if fieldName is already in the out list """
+                        # Check to see if fieldName is already in the out list
                         if isWordProcessingField(self._curField):
                             if self._ignoreKeywordInWordProcessingFields(fieldName):
                                 self._appendWordsFieldLine(line)
@@ -157,7 +181,7 @@ class ICRFileToJson(object):
                     if self._curRecord:
                         if not line.strip():
                             continue
-                        logger.debug('No field associated with line %s: %s ' %
+                        logger.error('No field associated with line %s: %s ' %
                                       (curLineNo, line))
         # TODO: Copy + paste from '_startOfNewItem()'
         self._curField = None

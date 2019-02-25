@@ -35,10 +35,12 @@ EXPECTED_PDFS = {
     "Lab_Service": ["ICR-91.pdf", "ICR-6104.pdf"],
     "MailMan": ["ICR-1151.pdf"],
     "Mental_Health": ["ICR-1068.pdf"],
+    "Order_Entry_Results_Reporting": ["ICR-639.pdf"],
     "Record_Tracking": ["ICR-85.pdf"],
     "Registration": ["ICR-28.pdf", "ICR-4849.pdf", "ICR-10035.pdf"],
     "Surgery": ["ICR-16.pdf", "ICR-6730.pdf"],
     "Text_Integration_Utility": ["ICR-3248.pdf", "ICR-5499.pdf"],
+    "VA_Certified_Components___DSSI": ["ICR-5317.pdf"],
     "VA_FileMan": ["ICR-10034.pdf", "ICR-10155.pdf"]}
 
 

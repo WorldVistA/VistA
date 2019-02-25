@@ -28,7 +28,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-      $("#SUNSLTYxMDQ").dataTable({
+      $("#SUNSLTYzOQ").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -38,10 +38,10 @@
       });
 }); </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h1>LRHY GET SITES RPC &nbsp;&nbsp;  ICR (6104)</h1>
+<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA181-F &nbsp;&nbsp;  ICR (639)</h1>
 
 <div id="demo">
-<table id="SUNSLTYxMDQ" class="display">
+<table id="SUNSLTYzOQ" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -50,163 +50,111 @@
 </thead>
 <tr>
 <td>NUMBER</td>
-<td>6104</td>
+<td>639</td>
 </tr>
 <tr>
 <td>IA #</td>
-<td>6104</td>
-</tr>
-<tr>
-<td>FILE NUMBER</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
-</tr>
-<tr>
-<td>GLOBAL ROOT</td>
-<td>LRHY(69.86</td>
+<td>639</td>
 </tr>
 <tr>
 <td>DATE CREATED</td>
-<td>2014/09/23</td>
+<td>1992/06/19</td>
 </tr>
 <tr>
 <td>CUSTODIAL PACKAGE</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
+<td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Salt Lake City</td>
 </tr>
 <tr>
 <td>USAGE</td>
-<td>Controlled Subscription</td>
+<td>Private</td>
 </tr>
 <tr>
 <td>TYPE</td>
-<td>Remote Procedure</td>
+<td>Routine</td>
 </tr>
 <tr>
 <td>DBIC APPROVAL STATUS</td>
 <td>APPROVED</td>
 </tr>
 <tr>
-<td>NAME</td>
-<td>LRHY GET SITES RPC</td>
+<td>ROUTINE</td>
+<td><a href="https://code.osehra.org/dox/Routine_ORX8.html">ORX8</a></td>
 </tr>
 <tr>
-<td>GENERAL DESCRIPTION</td>
-<td><pre>
-
-NAME: LRHY GET SITES                    TAG: GETSITES
-ROUTINE: LRHYRP01                     RETURN VALUE
-TYPE: ARRAY
-DESCRIPTION:
-This RPC will return all Howdy Sites
-USAGE: Controlled Subscri  ENTERED: SEP 23,2014
-STATUS: Pending             EXPIRES:
-DURATION:                     VERSION:
-DESCRIPTION:                        TYPE: Remote Procedure
-</pre>
-</td>
+<td>NAME</td>
+<td>DBIA181-F</td>
 </tr>
 <tr>
-<td>GLOBAL REFERENCE</td>
-<td>
-<ol>
-<table><thead><tr>
-<th>FIELD NUMBER</th>
-<th>GLOBAL REFERENCE</th>
-</tr></thead><tbody>
-<td>
-<table><thead><tr>
-<th>ACCESS</th>
-<th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
-</tr></thead><tbody>
-<td></td>
-<td>NAME</td>
-<td></td>
-</tr>
-<td>Both R/W w/Fileman</td>
-<td>.01</td>
-<td>NAME</td>
-</tr>
-</tbody></table>
-</td>
-<td>LRHY(69.86,D0,0</td>
-</tr>
-<td>
-<table><thead><tr>
-<th>ACCESS</th>
-<th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
-</tr></thead><tbody>
-<td>Both R/W w/Fileman</td>
-<td>2</td>
-<td>LAB TEST (TO EXCLUDE)</td>
-</tr>
-</tbody></table>
-</td>
-<td>LRHY(69.86,D0,2,0</td>
-</tr>
-</tbody></table>
-</ol>
-</td>
+<td>ORIGINAL NUMBER</td>
+<td>181</td>
 </tr>
 <tr>
 <td>STATUS</td>
 <td>Active</td>
 </tr>
 <tr>
-<td>KEYWORDS</td>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>ORX8</td>
+</tr>
+<tr>
+<td>COMPONENT/ENTRY POINT</td>
 <td>
 <ol>
 <table><thead><tr>
-<th>KEYWORDS</th>
+<th>VARIABLES</th>
+<th>COMPONENT/ENTRY POINT</th>
+<th>COMPONENT DESCRIPTION</th>
 </tr></thead><tbody>
-<td>LRHY</td>
+<td>
+<table><thead><tr>
+<th>VARIABLES DESCRIPTION</th>
+<th>VARIABLES</th>
+</tr></thead><tbody>
+<td><pre>
+ the order that you want this notification to be linked to.
+</pre>
+</td>
+<td>ORIFN </td>
 </tr>
-<td>Howdy</td>
+</tbody></table>
+</td>
+<td>NOTIF</td>
+<td><pre>
+NOTIF^ORX8(ORIFN,ORNOTE)  Used when cleaning up a
+notification that is linked to an order.  REQUIRED VARIABLES:
+ORNOTE(notification entry #) - must be set to null - notification entry number
+is from File 100.9, field .001(IFN) ORVP - patient identifier in the formal
+"DFN;DPT("    (ORVP is also used by other OE/RR routines and may already be
+available in your package.) REUTNRED VARIABLES;          None OPTIONAL
+</pre>
+</td>
 </tr>
 </tbody></table>
 </ol>
 </td>
-</tr>
-<tr>
-<td>ID</td>
-<td>LRHY(69.86</td>
 </tr>
 <tr>
 <td>SUBSCRIBING PACKAGE</td>
 <td>
 <ol>
 <table><thead><tr>
-<th>SUBSCRIBING DETAILS</th>
+<th>ISC</th>
 <th>SUBSCRIBING PACKAGE</th>
 </tr></thead><tbody>
-<td><pre>
-VA Point of Service Kiosks needs to use LRHY GET SITES,
-implemented in LRHYRP01 and included in patch LR*5.2*447, to return the list
-of Howdy sites at a facility to VetLink.
-</pre>
-</td>
-<td><a href="https://code.osehra.org/dox/Package_VA_Point_of_Service.html">VA POINT OF SERVICE (KIOSKS)</a></td>
+<td>Salt Lake City</td>
+<td><a href="https://code.osehra.org/dox/Package_Consult_Request_Tracking.html">CONSULT/REQUEST TRACKING</a></td>
 </tr>
 </tbody></table>
 </ol>
 </td>
-</tr>
-<tr>
-<td>CREATOR</td>
-<td>WHELESS,CAROLYN</td>
-</tr>
-<tr>
-<td>DBA Comments</td>
-<td><pre>
-10/2/14-MC:Activated ICR at the request of Carolyn Wheless and
-approved by Levi Teitelbaum for patch LRS*5.2*447. VPS will use the RPC LRHY
-GET SITES to return the list of Howdy sites at a facility.
-</pre>
-</td>
-</tr>
-<tr>
-<td>DATE ACTIVATED</td>
-<td>OCT 02, 2014</td>
 </tr>
 </tbody>
 </table>

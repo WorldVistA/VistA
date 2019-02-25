@@ -29,7 +29,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-    var table = $("#ICR_List-Lab_Service").DataTable({
+    var table = $("#ICR_List-Order_Entry_Results_Reporting").DataTable({
         bInfo: true,
         dom: '<Bfr<t>ilp>',
         iDisplayLength: 25,
@@ -55,7 +55,7 @@
           },
           {
               extend: 'csv',
-              title: 'ICR_List-Lab_Service',
+              title: 'ICR_List-Order_Entry_Results_Reporting',
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
@@ -70,7 +70,7 @@
           },
           {
               extend: 'pdf',
-              title: 'ICR_List-Lab_Service',
+              title: 'ICR_List-Order_Entry_Results_Reporting',
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
@@ -93,9 +93,9 @@
               customize: function (doc) {
                   // Taken from https://stackoverflow.com/questions/35642802/datatables-export-pdf-with-100-width
                   var colCount = new Array();
-                  var length = $('#ICR_List-Lab_Service tbody tr:first-child td').length;
+                  var length = $('#ICR_List-Order_Entry_Results_Reporting tbody tr:first-child td').length;
                   console.log('length / number of td in report one record = '+length);
-                  $('#ICR_List-Lab_Service').find('tbody tr:first-child td').each(function(){
+                  $('#ICR_List-Order_Entry_Results_Reporting').find('tbody tr:first-child td').each(function(){
                       colCount.push(parseFloat(100 / length)+'%');
                   });
                   doc.content[1].table.widths = colCount;
@@ -152,17 +152,17 @@
 
 <script type="text/javascript" id="js">
   function clearFilters() {
-    var table = $('#ICR_List-Lab_Service').DataTable();
+    var table = $('#ICR_List-Order_Entry_Results_Reporting').DataTable();
     table
       .search( '' )
       .columns().search( '' )
       .draw();
     $("select").prop('selectedIndex', 0);
-    $('#ICR_List-Lab_Service tfoot input').val('');
+    $('#ICR_List-Order_Entry_Results_Reporting tfoot input').val('');
   }
 </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: Lab Service ICR List</h1><div id="demo"><table id="ICR_List-Lab_Service" class="display">
+<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: Order Entry Results Reporting ICR List</h1><div id="demo"><table id="ICR_List-Order_Entry_Results_Reporting" class="display">
 <thead>
 <tr>
 <th>IA #</th>
@@ -199,36 +199,19 @@
 </tfoot>
 <tbody>
 <tr>
-<td>91</td>
-<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
-<td>File</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
-<td>1991/09/11</td>
+<td>639</td>
+<td><a title="" href="ICR-639.html">DBIA181-F</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
+<td>1992/06/19</td>
 <td>APPROVED</td>
 <td>Active</td>
-<td>Controlled Subscription</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxBQig2MA==.html">60</a></td>
+<td>Private</td>
 <td></td>
 <td></td>
 <td></td>
+<td><a href="https://code.osehra.org/dox/Routine_ORX8.html">ORX8</a></td>
 <td></td>
-</tr>
-<tr>
-<td>6104</td>
-<td><a title="
- NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
-<td>Remote Procedure</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
-<td>2014/09/23</td>
-<td>APPROVED</td>
-<td>Active</td>
-<td>Controlled Subscription</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
-<td>
-<br>NAME: LRHY GET SITES                    TAG: GETSITES<br>ROUTINE: LRHYRP01                     RETURN VALUE<br>TYPE: ARRAY<br>DESCRIPTION:<br>This RPC will return all Howdy Sites<br>USAGE: Controlled Subscri  ENTERED: SEP 23,2014<br>STATUS: Pending             EXPIRES:<br>DURATION:                     VERSION:<br>DESCRIPTION:                        TYPE: Remote Procedure</td>
-<td></td>
-<td></td>
-<td>OCT 02, 2014</td>
 </tr>
 </tbody>
 </table>
