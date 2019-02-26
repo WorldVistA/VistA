@@ -928,7 +928,22 @@
         "STATUS": "Active", 
         "DBA Comments": [
             "1/27/16-MC: Added EHMP as a subscriber to ICR at the request", 
-            "of Raymond Blank and approval of Carol Anzaldua for HMP 2.0"
+            "of Raymond Blank and approval of Carol Anzaldua for HMP 2.0", 
+            "", 
+            "3/15/17-MM:  VIA added as a subscriber to ICR #91 for VIAB*1*9.  VIA's", 
+            "originally created ICR #6728 for access to this file.  Levi recommended adding", 
+            "VIA as a subscriber to ICR #91 rather than activating ICR #6728.  VIA agreed.", 
+            "", 
+            "VIA needs access to the Laboratory Test (#60) file for VIAB LOAD RPC and", 
+            "OrderMgmtSvc - getLabTestSpecificParams.  CPRS RPC is ORWDLR32 LOAD.", 
+            "", 
+            "11/1/17-MM:  HMP's subscription to this ICR expires on 10/27/17 with the", 
+            "shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational patch", 
+            "outlining the steps for the sites to shut down the application.", 
+            "", 
+            "If HMP is reactivated in the future, the HMP project team should review the", 
+            "access provided by this ICR with the custodial application before reactivating", 
+            "HMP's subscription to this ICR."
         ], 
         "NAME": "DBIA91-A", 
         "CUSTODIAL ISC": "Dallas", 
@@ -956,7 +971,23 @@
                 "SUBSCRIBING PACKAGE": "MRSA INITIATIVE REPORTS"
             }, 
             {
-                "SUBSCRIBING PACKAGE": "ENTERPRISE HEALTH MGMT PLATFORM"
+                "SUBSCRIBING DETAILS": [
+                    "HMP's subscription to this ICR expires on 10/27/17 with", 
+                    "the shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational", 
+                    "patch outlining the steps for the sites to shut down the application.", 
+                    "", 
+                    "If HMP is reactivated in the future, the HMP project team should review the", 
+                    "access provided by this ICR with the custodial application before reactivating", 
+                    "HMP's subscription to this ICR."
+                ], 
+                "SUBSCRIBING PACKAGE": "HEALTH MANAGEMENT PLATFORM"
+            }, 
+            {
+                "SUBSCRIBING DETAILS": [
+                    "VIA needs access to the Laboratory Test (#60) file for", 
+                    "VIAB LOAD RPC and OrderMgmtSvc - getLabTestSpecificParams."
+                ], 
+                "SUBSCRIBING PACKAGE": "VISTA INTEGRATION ADAPTOR"
             }
         ], 
         "CUSTODIAL PACKAGE": "LAB SERVICE", 
@@ -1029,6 +1060,18 @@
                 "WITH CONCURRENCE OF": "ANZALDUA,CAROL", 
                 "AT THE REQUEST OF": "BLANK,RAYMOND", 
                 "DATE/TIME EDITED": "2016/01/27 10:28"
+            }, 
+            {
+                "ACTION": "SUBSCRIBER ADDED", 
+                "WITH CONCURRENCE OF": "TEITELBAUM,LEVI", 
+                "AT THE REQUEST OF": "ROSS,RICK", 
+                "DATE/TIME EDITED": "2017/03/15 11:03"
+            }, 
+            {
+                "ACTION": "CONTENT CORRECTED", 
+                "WITH CONCURRENCE OF": "ICR,TEAM", 
+                "AT THE REQUEST OF": "LORD,BRIAN", 
+                "DATE/TIME EDITED": "2017/11/01 15:55"
             }
         ], 
         "ORIGINAL NUMBER": "91", 
@@ -1589,7 +1632,7 @@
                 "GLOBAL REFERENCE": "LRHY(69.86,D0,2,0"
             }
         ], 
-        "DATE ACTIVATED": "OCT 02, 2014", 
+        "DATE ACTIVATED": "2014/10/02", 
         "USAGE": "Controlled Subscription", 
         "DBIC APPROVAL STATUS": "APPROVED", 
         "GLOBAL ROOT": "LRHY(69.86", 

@@ -1,5 +1,6 @@
 INTEGRATION REFERENCES LIST                    JAN 29,2016  12:45    PAGE 1
 --------------------------------------------------------------------------------
+
 NUMBER: 3103                            IA #: 3103
   FILE NUMBER: 3.54                     GLOBAL ROOT: %ZISL(3.54
   DATE CREATED: MAY 04, 2000            CUSTODIAL PACKAGE: KERNEL
@@ -704,13 +705,42 @@ SUBSCRIBING PACKAGE: PHARMACY BENEFITS MANAGEMENT
 SUBSCRIBING PACKAGE: ORDER ENTRY/RESULTS REPORTING
 SUBSCRIBING PACKAGE: MRSA INITIATIVE REPORTS
  SUBSCRIBING DETAILS:   ADDED 4/23/09 
-SUBSCRIBING PACKAGE: ENTERPRISE HEALTH MGMT PLATFORM
+SUBSCRIBING PACKAGE: HEALTH MANAGEMENT PLATFORM
+ SUBSCRIBING DETAILS:   HMP's subscription to this ICR expires on 10/27/17 with
+ the shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational
+ patch outlining the steps for the sites to shut down the application.  
+  
+ If HMP is reactivated in the future, the HMP project team should review the
+ access provided by this ICR with the custodial application before reactivating
+ HMP's subscription to this ICR.  
+SUBSCRIBING PACKAGE: VISTA INTEGRATION ADAPTOR
+ SUBSCRIBING DETAILS:   VIA needs access to the Laboratory Test (#60) file for
+ VIAB LOAD RPC and OrderMgmtSvc - getLabTestSpecificParams.  
  DBA Comments:   1/27/16-MC: Added EHMP as a subscriber to ICR at the request
  of Raymond Blank and approval of Carol Anzaldua for HMP 2.0 
+  
+ 3/15/17-MM:  VIA added as a subscriber to ICR #91 for VIAB*1*9.  VIA's 
+ originally created ICR #6728 for access to this file.  Levi recommended adding
+ VIA as a subscriber to ICR #91 rather than activating ICR #6728.  VIA agreed.  
+  
+ VIA needs access to the Laboratory Test (#60) file for VIAB LOAD RPC and 
+ OrderMgmtSvc - getLabTestSpecificParams.  CPRS RPC is ORWDLR32 LOAD.  
+  
+ 11/1/17-MM:  HMP's subscription to this ICR expires on 10/27/17 with the 
+ shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational patch
+ outlining the steps for the sites to shut down the application.  
+  
+ If HMP is reactivated in the future, the HMP project team should review the
+ access provided by this ICR with the custodial application before reactivating
+ HMP's subscription to this ICR.  
 DATE/TIME EDITED: JUN 08, 2009@12:21    ACTION: SUBSCRIBER ADDED
   AT THE REQUEST OF: MCDEARMON,JAMES
 DATE/TIME EDITED: JAN 27, 2016@10:28    ACTION: SUBSCRIBER ADDED
   AT THE REQUEST OF: BLANK,RAYMOND      WITH CONCURRENCE OF: ANZALDUA,CAROL
+DATE/TIME EDITED: MAR 15, 2017@11:03    ACTION: SUBSCRIBER ADDED
+  AT THE REQUEST OF: ROSS,RICK          WITH CONCURRENCE OF: TEITELBAUM,LEVI
+DATE/TIME EDITED: NOV 01, 2017@15:55    ACTION: CONTENT CORRECTED
+  AT THE REQUEST OF: LORD,BRIAN         WITH CONCURRENCE OF: ICR,TEAM
 
 NUMBER: 214                             IA #: 214
   DATE CREATED: FEB 22, 1993            CUSTODIAL PACKAGE: IFCAP

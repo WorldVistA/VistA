@@ -51,10 +51,14 @@ class ICRFileToJson(object):
     def parse(self, inputFilename, outputFilename):
         with open(inputFilename,'r') as ICRFile:
             curLineNo = 0
+            curNumber = None
+            # Free text fields may contain field names and
+            # need special parsing rules
             DBAComments = False
             generalDescription = False
             subscribingDetails = False
-            curNumber = None
+            componentDescription = False
+
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 curLineNo +=1
@@ -70,36 +74,35 @@ class ICRFileToJson(object):
                     name = match.group('name')
                     number = match.group('number')
                     skipField = False
-                    isFreeTextField = DBAComments or generalDescription or subscribingDetails
+                    isFreeTextField = DBAComments or generalDescription or \
+                        subscribingDetails or componentDescription
                     if isFreeTextField:
-                        # Check if the number is matches what we're currently processing
+                        # Check if the number is matches what
+                        # we're currently processing
                         skipField = number == curNumber
                     if not skipField:
                         curNumber = number
+
                         DBAComments = False
                         generalDescription = False
                         subscribingDetails = False
                         componentDescription = False
+
                         self._startOfNewItem(name, number, match, line)
                         continue
+
                 match = GENERIC_START_OF_RECORD.search(line)
                 if not match:
+                    # DBA Comments doesn't match regex for other fields,
+                    # check separately. Even if we get a match here, can't
+                    # assume that we're in a DBA Comments field, might be in
+                    # a different free text field
                     match = DBA_COMMENTS.match(line)
-                    if match:
-                        DBAComments = True
+
                 if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
-                    # Are we at the beginning of a special field?
-                    if fieldName == 'DBA Comments':
-                        DBAComments = True
-                    elif fieldName == 'GENERAL DESCRIPTION':
-                        generalDescription = True
-                    elif fieldName == 'SUBSCRIBING DETAILS':
-                        subscribingDetails = True
-                    elif fieldName == 'COMPONENT DESCRIPTION':
-                        componentDescription = True
 
-                    # Are we at the end of a special field?
+                    # First check if we are at the end of a free text field
                     if DBAComments:
                         if fieldName in ['DATE/TIME EDITED', 'NUMBER', 'DATE ACTIVATED']:
                             DBAComments = False
@@ -111,17 +114,33 @@ class ICRFileToJson(object):
                         # This assumes that 'Subscribing Details' may start
                         # with a field name or may contain 'GLOBAL REFERENCE'
                         # but won't contain any other field names in the middle
-                        if fieldName in ICR_FILE_KEYWORDS and fieldName != 'GLOBAL REFERENCE' \
-                          and 'SUBSCRIBING DETAILS' in self._curRecord:
+                        if fieldName in ICR_FILE_KEYWORDS and \
+                          fieldName != 'GLOBAL REFERENCE' and \
+                          'SUBSCRIBING DETAILS' in self._curRecord:
                             subscribingDetails = False
                     elif componentDescription:
                         # At most one space before 'VARIABLES:'
-                        if line.startswith("VARIABLES:") or line.startswith(" VARIABLES:") or \
+                        if line.startswith("VARIABLES:") or \
+                          line.startswith(" VARIABLES:") or \
                           fieldName in ['COMPONENT/ENTRY POINT', 'SUBSCRIBING PACKAGE']:
                             componentDescription = False
 
+                    # Are we at the beginning of a free text field?
+                    if DBAComments or generalDescription or \
+                      subscribingDetails or componentDescription:
+                        # Free text fields are never nested
+                        pass
+                    elif fieldName == 'DBA Comments':
+                        DBAComments = True
+                    elif fieldName == 'GENERAL DESCRIPTION':
+                        generalDescription = True
+                    elif fieldName == 'SUBSCRIBING DETAILS':
+                        subscribingDetails = True
+                    elif fieldName == 'COMPONENT DESCRIPTION':
+                        componentDescription = True
+
                     # Process line
-                    # Start with special, multi-line fields
+                    # Start with free text fields
                     if DBAComments:
                         fieldName = 'DBA Comments'
                         if self._curField == fieldName:

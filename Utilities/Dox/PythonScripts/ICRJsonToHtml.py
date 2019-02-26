@@ -477,12 +477,10 @@ def _icrDataEntryToHtml(output, icrJson, crossRef):
                 output.write ("<tr>\n")
                 output.write("<td>%s</td>\n" % field)
                 output.write("<td>\n")
-                output.write ("<ol>\n")
-                if (type(value) is list) and (type(value[0]) is dict):
-                  _writeTableOfValue(output, value, crossRef)
+                if isinstance(value, list) and isinstance(value[0], dict):
+                    _writeTableOfValue(output, value, crossRef)
                 else:
-                  _icrSubFileToHtml(output, value, field, crossRef)
-                output.write ("</ol>\n")
+                    _icrSubFileToHtml(output, value, field, crossRef)
                 output.write("</td>\n")
                 output.write ("</tr>\n")
                 continue
@@ -646,11 +644,24 @@ def _writeTableOfValue(output, value, crossRef):
   headerList = set()
   # Finds the longest header list to write out as table header
   for entry in value:
-    headerList.update(set(entry.keys()))
+      headerList.update(set(entry.keys()))
+  if len(headerList) == 1:
+      field = headerList.pop()
+      if len(value) == 1:
+          # A single value in a single column
+          output.write(_convertIndividualFieldValue(field, entry, entry[field], crossRef))
+      else:
+          output.write("<ul>\n")
+          # Write a list, not a table
+          for entry in value:
+              output.write("<li>%s</li>\n" % _convertIndividualFieldValue(field, entry, entry[field], crossRef))
+          output.write("</ul>\n")
+      return
+
   # Start table with the table header
   output.write("<table><thead><tr>\n")
   for val in headerList:
-    output.write("<th>%s</th>\n" % val)
+      output.write("<th>%s</th>\n" % val)
   output.write("</tr></thead><tbody>\n")
   # Loop through each value again to create a row
   for entry in value:
@@ -697,14 +708,12 @@ def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
                 value = icrEntry[field]
                 if isSubFile(field) and field != subFile: # avoid recursive subfile for now
                     if type(value) is list:
-                      _writeTableOfValue(output, value, crossRef)
+                        _writeTableOfValue(output, value, crossRef)
                     else:
-                      output.write ("<dl><dt>%s:</dt>\n" % field)
-                      output.write ("<dd>\n")
-                      output.write ("<ol>\n")
-                      _icrSubFileToHtml(output, value, field, crossRef)
-                      output.write ("</ol>\n")
-                      output.write ("</dd></dl>\n")
+                        output.write ("<dl><dt>%s:</dt>\n" % field)
+                        output.write ("<dd>\n")
+                        _icrSubFileToHtml(output, value, field, crossRef)
+                        output.write ("</dd></dl>\n")
                     continue
                 value = _convertIndividualFieldValue(field, icrEntry, value, crossRef)
                 output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (field, value))
