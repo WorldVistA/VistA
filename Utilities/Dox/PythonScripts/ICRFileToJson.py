@@ -109,9 +109,10 @@ class ICRFileToJson(object):
                             generalDescription = False
                     elif subscribingDetails:
                         # This assumes that 'Subscribing Details' may start
-                        # with a field name but will never contain a field name
-                        # in the middle of the entry
-                        if fieldName in ICR_FILE_KEYWORDS and 'SUBSCRIBING DETAILS' in self._curRecord:
+                        # with a field name or may contain 'GLOBAL REFERENCE'
+                        # but won't contain any other field names in the middle
+                        if fieldName in ICR_FILE_KEYWORDS and fieldName != 'GLOBAL REFERENCE' \
+                          and 'SUBSCRIBING DETAILS' in self._curRecord:
                             subscribingDetails = False
                     elif componentDescription:
                         # At most one space before 'VARIABLES:'

@@ -1,0 +1,163 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTMxMDM").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>RESOURCE FILE MANAGEMENT &nbsp;&nbsp;  ICR (3103)</h1>
+
+<div id="demo">
+<table id="SUNSLTMxMDM" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>3103</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>3103</td>
+</tr>
+<tr>
+<td>FILE NUMBER</td>
+<td><a href="https://code.osehra.org/dox/Global_XiVaSVNMKDMuNTQ=.html">3.54</a></td>
+</tr>
+<tr>
+<td>GLOBAL ROOT</td>
+<td>%ZISL(3.54</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>2000/05/04</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>San Francisco</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Private</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>File</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>RESOURCE FILE MANAGEMENT</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+To prevent multiple jobs from running simultaneously
+through a resource device, the device must be monitored.  Also, if a job that
+is utilizing a resource device fails, the device must be cleared manually.
+This IA will allow the CMOP package to manage the PSX resource device and
+prevent potentially harmful results from data merging.
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>%ZISL(3.54</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<ol>
+<table><thead><tr>
+<th>ISC</th>
+<th>SUBSCRIBING DETAILS</th>
+<th>SUBSCRIBING PACKAGE</th>
+</tr></thead><tbody>
+<td>Birmingham</td>
+<td><pre>
+The CMOP transmission process relies on the PSX
+resource device to ensure that only one CMOP job runs at a time.  As long as
+the sites keep the AVAILABLE SLOTS field set to one there is never a problem.
+However, despite many efforts at training we continually discover the
+AVAILABLE SLOTS set to more than one. Because two CMOP jobs running
+simultaneously has resulted in merged data and involves patient safety, the
+CMOP package requests the ability to monitor the PSX resource device and, if
+necessary, reset the available slots field to one.
+
+
+GLOBAL REFERENCE: ^%ZISL(3.54,0
+.01     NAME                    0;1      Read with Fileman
+1       AVAILABLE SLOTS 0;2      Read with Fileman
+
+^%ZISL(3.54,D0,1,0
+.01     SLOT IN USE             1;1     R/W with Fileman
+3       TASK #                  1;4     Read with Fileman
+
+</pre>
+</td>
+<td><a href="https://code.osehra.org/dox/Package_CMOP.html">CMOP</a></td>
+</tr>
+</tbody></table>
+</ol>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>31251919</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

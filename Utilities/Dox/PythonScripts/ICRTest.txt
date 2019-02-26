@@ -1,5 +1,36 @@
 INTEGRATION REFERENCES LIST                    JAN 29,2016  12:45    PAGE 1
 --------------------------------------------------------------------------------
+NUMBER: 3103                            IA #: 3103
+  FILE NUMBER: 3.54                     GLOBAL ROOT: %ZISL(3.54
+  DATE CREATED: MAY 04, 2000            CUSTODIAL PACKAGE: KERNEL
+  CUSTODIAL ISC: San Francisco          USAGE: Private
+  TYPE: File                            DBIC APPROVAL STATUS: APPROVED
+  NAME: RESOURCE FILE MANAGEMENT        ID: %ZISL(3.54
+ GENERAL DESCRIPTION:   To prevent multiple jobs from running simultaneously
+ through a resource device, the device must be monitored.  Also, if a job that
+ is utilizing a resource device fails, the device must be cleared manually. 
+ This IA will allow the CMOP package to manage the PSX resource device and
+ prevent potentially harmful results from data merging.  
+  STATUS: Active                        DURATION: Till Otherwise Agreed
+  MAIL MESSAGE: 31251919
+SUBSCRIBING PACKAGE: CMOP               ISC: Birmingham
+ SUBSCRIBING DETAILS:   The CMOP transmission process relies on the PSX
+ resource device to ensure that only one CMOP job runs at a time.  As long as
+ the sites keep the AVAILABLE SLOTS field set to one there is never a problem. 
+ However, despite many efforts at training we continually discover the
+ AVAILABLE SLOTS set to more than one. Because two CMOP jobs running
+ simultaneously has resulted in merged data and involves patient safety, the
+ CMOP package requests the ability to monitor the PSX resource device and, if
+ necessary, reset the available slots field to one. 
+  
+  
+ GLOBAL REFERENCE: ^%ZISL(3.54,0 
+         .01     NAME                    0;1      Read with Fileman 
+         1       AVAILABLE SLOTS 0;2      Read with Fileman 
+  
+ ^%ZISL(3.54,D0,1,0 
+         .01     SLOT IN USE             1;1     R/W with Fileman 
+         3       TASK #                  1;4     Read with Fileman 
 
 NUMBER: 5317                            IA #: 5317
   DATE CREATED: DEC 23, 2008

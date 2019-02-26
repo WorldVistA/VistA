@@ -1,5 +1,55 @@
 [
     {
+        "DATE CREATED": "2000/05/04", 
+        "STATUS": "Active", 
+        "NAME": "RESOURCE FILE MANAGEMENT", 
+        "CUSTODIAL ISC": "San Francisco", 
+        "TYPE": "File", 
+        "NUMBER": "3103", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "ISC": "Birmingham", 
+                "SUBSCRIBING DETAILS": [
+                    "The CMOP transmission process relies on the PSX", 
+                    "resource device to ensure that only one CMOP job runs at a time.  As long as", 
+                    "the sites keep the AVAILABLE SLOTS field set to one there is never a problem.", 
+                    "However, despite many efforts at training we continually discover the", 
+                    "AVAILABLE SLOTS set to more than one. Because two CMOP jobs running", 
+                    "simultaneously has resulted in merged data and involves patient safety, the", 
+                    "CMOP package requests the ability to monitor the PSX resource device and, if", 
+                    "necessary, reset the available slots field to one.", 
+                    "", 
+                    "", 
+                    "GLOBAL REFERENCE: ^%ZISL(3.54,0", 
+                    ".01     NAME                    0;1      Read with Fileman", 
+                    "1       AVAILABLE SLOTS 0;2      Read with Fileman", 
+                    "", 
+                    "^%ZISL(3.54,D0,1,0", 
+                    ".01     SLOT IN USE             1;1     R/W with Fileman", 
+                    "3       TASK #                  1;4     Read with Fileman", 
+                    ""
+                ], 
+                "SUBSCRIBING PACKAGE": "CMOP"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "KERNEL", 
+        "MAIL MESSAGE": "31251919", 
+        "DURATION": "Till Otherwise Agreed", 
+        "IA #": "3103", 
+        "USAGE": "Private", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "GLOBAL ROOT": "%ZISL(3.54", 
+        "ID": "%ZISL(3.54", 
+        "FILE NUMBER": "3.54", 
+        "GENERAL DESCRIPTION": [
+            "To prevent multiple jobs from running simultaneously", 
+            "through a resource device, the device must be monitored.  Also, if a job that", 
+            "is utilizing a resource device fails, the device must be cleared manually.", 
+            "This IA will allow the CMOP package to manage the PSX resource device and", 
+            "prevent potentially harmful results from data merging."
+        ]
+    }, 
+    {
         "DATE CREATED": "2008/12/23", 
         "STATUS": "Active", 
         "COMPONENT/ENTRY POINT": [
