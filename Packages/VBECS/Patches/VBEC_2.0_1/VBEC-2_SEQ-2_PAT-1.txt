@@ -1,0 +1,223 @@
+$TXT Created by              at BBMGR-DOMAIN.EXT  (KIDS) on Thursday, 11/08/18 at 10:16
+=============================================================================
+Run Date: NOV 16, 2018                     Designation: VBEC*2*1
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 2         SEQ #2                      Status: Released
+                  Compliance Date: DEC 17, 2018
+=============================================================================
+
+Associated patches: (v)VBEC*2*0        install with patch       `VBEC*2*1'
+
+Subject: VBECS VERSION 2.3 RELEASE
+
+Category: 
+  - Informational
+  - Routine
+
+Description:
+============
+
+ This patch (VBEC*2*1) is being released in conjunction with the Vista 
+ Blood Establishment Computer Software (VBECS) VBECS 2.3.0 server patch.
+  
+ Installation of this patch will have no effect on sites who have not 
+ installed VBECS.
+  
+ A full description of the VistA patch changes and implementation process 
+ are included in the VBECS 2.3.0 Release Notes.
+  
+ This VistA patch has a 30-day compliance.  This patch MUST be installed 
+ in the Test environment ASAP and prior to testing VBECS 2.3.0.
+  
+ BLOOD BANK CLEARANCE
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*2*1 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*2*1 have no adverse effect on 
+ VistA Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS:
+ ========================
+ The VBECS 2.3.0 update and VBEC*2*1 require customer validation in the 
+ local Test account prior to installation in Production to meet Food & 
+ Drug Administration (FDA) requirements. The user validates the Blood Bank 
+ software for its intended use prior to its acceptance and use for patient 
+ care. The VBECS 2.3.0 Release Notes contain descriptions of the changes 
+ made in this patch and includes validation scenarios.
+  
+ It is imperative that the installation of VBEC*2*1 occur prior to the 
+ validation of the VBECS 2.3.0 server patch. Coordinate the installation 
+ with Pathology & Laboratory Medicine Service staff to allow adequate time 
+ for impact analysis and testing the changes prior to installation in 
+ Production.
+  
+ Files & Fields Associated:
+ ==========================
+ N/A
+  
+ FORMS ASSOCIATED:
+ =================
+ N/A
+  
+ MAIL GROUPS ASSOCIATED:
+ =======================
+ N/A
+  
+ OPTIONS ASSOCIATED:
+ ===================
+ N/A
+  
+ PROTOCOLS ASSOCIATED:
+ =====================
+ N/A
+  
+ SECURITY KEYS ASSOCIATED:
+ =========================
+ N/A
+  
+ TEMPLATES ASSOCIATED:
+ =====================
+ N/A
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ N/A
+  
+ NEW SERVICE REQUESTS (NSRS):
+ ============================
+ N/A
+  
+ PATIENT SAFETY ISSUES (PSIS):
+ =============================
+ N/A
+  
+ DEFECT TRACKING SYSTEM TICKET(S) & OVERVIEW:
+ ============================================
+ I5868220FY15
+ I7744342FY16
+ I6114955FY16
+ I7083226FY16
+ I17762673FY18
+  
+ TEST SITES:
+ ===========
+ MILWAUKEE, WI
+ PHILADELPHIA, PA
+ SAN FRANCISCO, CA
+ HINES, IL
+ IOWA CITY, IA
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Documentation describing the new functionality introduced by this patch 
+ is available. Documentation can be found on the VA Software Documentation 
+ Library at: https://www.domain.ext/vdl/application.asp?appid=182
+  
+ =======================================================================
+ Veterans Health Administration (VHA) Customer Documents:
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Release 
+ Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Release 
+ Notes.pdf
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Technical 
+ Manual-Security Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Technical 
+ Manual-Security Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 User Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 User Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Admin User 
+ Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.0 Admin User 
+ Guide.pdf
+ VBECS Known Defects and Anomalies.docx
+ VBECS Known Defects and Anomalies.pdf
+  
+  
+  
+ PATCH INSTALLATION:
+ ===================
+  
+ Pre/Post installation Overview:
+ ===============================
+ Refer to the VistA Blood Establishment Computer Software (VBECS) 2.3.0 
+ Release Notes document for pre and post installation information and 
+ instructions.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Create a test with the following information prior to patch installation.
+  
+ NAME: VBEC PATIENT REFLEX TEST      TYPE: NEITHER
+   SUBSCRIPT: WORKLOAD               HIGHEST URGENCY ALLOWED: ROUTINE
+   PRINT NAME: VBEC PATIENT REFLEX   CREATION DATE: <Use current date>
+  
+ Installation Instructions:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     2) From the Kernel Installation and Distribution System Menu,
+        select the Installation menu.
+     3) From this menu, you may elect to use the following options
+        (when prompted for the INSTALL NAME, enter VBEC*2*1).
+        a) Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d) Print Transport Global - this option will allow you to view 
+           the components of the KIDS build.
+     4) Use the Install Package(s) option and select the package 
+        VBEC*2*1.
+     5) If prompted 'This Patch is for Version 2, you are running
+        Version 1 Want to continue installing this build? No//' respond
+        YES.
+     6) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO.
+     7) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;VBEC;**[Patch List]**;Jun 05, 2015;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VBEC2P1
+    Before:       n/a   After:  B5998326  **1**
+Routine Name: VBECA7
+    Before: B32810678   After: B34071335  **1**
+Routine Name: VBECHLOR
+    Before: B17460611   After: B17674758  **1**
+Routine Name: VBECLU
+    Before: B62085514   After: B62564378  **1**
+Routine Name: VBECLU0
+    Before: B22984698   After: B25504211  **1**
+Routine Name: VBECRPCM
+    Before: B41078175   After: B41336097  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 14, 2016
+Completed By:                               Date Completed: NOV 16, 2018
+Released By :                               Date Released : NOV 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

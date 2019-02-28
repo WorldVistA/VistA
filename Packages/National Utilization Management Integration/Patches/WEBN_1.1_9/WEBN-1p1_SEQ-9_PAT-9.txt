@@ -1,0 +1,561 @@
+
+=============================================================================
+Run Date: NOV 28, 2018                     Designation: WEBN*1.1*9
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #9                    Status: Released
+                  Compliance Date: DEC 29, 2018
+=============================================================================
+
+
+Subject: NUMI 15.6 - 508 compliance
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The National Utilization Management Integration (NUMI) WEBN*1.1*9, patch 
+ addresses issues related to Section 508 compliance, thus enabling NUMI to 
+ be Section 508 compliant.
+  
+  
+ Patch Components:
+ -----------------
+ N/A   
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                             N/A                             N/A   
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A                             N/A                             N/A   
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A     N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A     N/A     N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A     N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A     N/A     N/A             N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ 1. Rational Defect 749765 - Elements should have proper tab indexes, 
+ improper navigation during tabbing, and keyboard navigational issues.
+  
+ Duplicate/Related: 749761, 775379, 779291, 721975, 740285, 779282, 
+ 740288, 721065, 779292, 779304, 779289, 271072, 740286, 721375
+  
+  
+ Problem: 
+ -------
+ Keyboard navigation on NUMI web pages does not have the proper flow 
+ causing users who are using a screen reader and a keyboard to move 
+ erratically on the page.
+  
+ Resolution:
+ ----------
+ NUMI web pages now have improved keyboard navigation with the proper HTML 
+ tags and HTML placement. Each case of tab ordering was examined. The 
+ appropriate solution to support logical navigation of the page was 
+ implemented.
+  
+  
+ 2. Rational Defect 749763 - Form elements must have labels so that screen 
+ readers can identify the element in focus.
+  
+ Duplicate/Related:  749828, 749806, 749778, 749771, 749814, 749833, 
+ 749838, 749715, 749720, 749704, 749744, 749710, 749738, 749749, 749754, 
+ 749847, 749852, 721071, 779286, 779287, 749734, 749700, 721061, 721062, 
+ 740287, 779303, 775374, 779285, 779294, 721060, 775373, 779288, 775376, 
+ 740842, 779298, 775375, 775378, 779283, 779284
+  
+  
+ Problem: 
+ -------
+ Form elements are missing labels causing screen readers to not identify 
+ what currently is in focus.  Some form elements are not correctly read 
+ when focus is placed on them, or focus is not being placed on elements 
+ appropriately.
+  
+ Resolution:
+ ----------
+ Elements on the page have had labels assigned to them using associated 
+ ID's or Aria-Labels. Form elements have been updated to receive focus 
+ where appropriate so that existing error messages can be conveyed to the 
+ user.  Form elements that have conditional business flow or help text 
+ that are obvious to sighted users but need additional code to screen 
+ readers to be redirected as appropriate.
+  
+  
+ 3. Rational Defect 740846 - Default list box has no default value, 
+ uninitialized controls or forms have focus but no value to read.
+  
+ Duplicate/Similar: 740843
+  
+ Problem: 
+ -------
+ NUMI's Admin Sites page on load contains list box values that contain no 
+ data as no data has been searched for yet by the user. Older screen 
+ readers will sometimes not read the element properly if it is empty.
+  
+ Resolution:
+ ----------
+ Screen readers now report that the list box is empty indicating no 
+ results have been returned. Other form elements that had no default value 
+ have been given them, or the default values that existed in an error 
+ message were moved to the control with focus.  508 rules state that 
+ controls where possible should have default values, even if the value is 
+ a variation of "no value".
+  
+  
+ 4. Rational Defect 749758 - When using <ul> and <ol> tags they must be 
+ well-formed. 
+  
+ Duplicate: 749751, 749849, 749853, 749735, 749726, 749731, 749701, 
+ 749697, 749830, 749822, 749780, 749816, 749808, 749834, 749712, 749717, 
+ 749721, 749773, 749706, 749740, 749746, 749755
+  
+ Problem: 
+ -------
+ HTML standards state that in order to use the Unorder List element in a 
+ webpage the UL must contain a well-formed list element nested inside. 
+  
+ Resolution:
+ ----------
+ Screen readers may depend on these tags to provide counts of items to 
+ visually impaired users. This can be important when presenting 
+ information to the user for radio buttons where they want to know how 
+ many options they'll have to pick from, or other controls like list boxes 
+ or drop-down lists to have awareness of how many options there are to go 
+ through.  The data to display is now nested in a LI tag creating 
+ well-formed flow. 
+  
+  
+ 5. Rational Defect 74960 - Page must contain one main landmark for the 
+ skip navigation link to navigate to.
+  
+ Duplicate: 749750, 749844, 749768, 749829, 749821, 749815, 749807, 
+ 749779, 749772, 749671, 749663, 749657, 749649, 749621, 749614, 749764, 
+ 749606, 749681, 749839, 749705, 749716, 749757, 749690, 749711, 749739, 
+ 749610, 749766, 749848, 749745, 749587, 749581, 749685, 749843
+  
+ Problem: 
+ -------
+ The Main landmark is required on all web pages as a notifier to users 
+ that the portion of the page located inside the Main container is content 
+ exclusive to the current page. Section 508 requires a main landmark on 
+ each page for the skipnavlink to move to when a user selected.
+  
+ Resolution:
+ ----------
+ On each master page of NUMI the role="main" has been added to either a 
+ main tag, body tag, or div that holds the main content of the page.
+  
+  
+ 6. Rational Defect 721063 - Skip navigation link is missing from the 
+ application.
+  
+ Problem: 
+ -------
+ Section 508 Compliance requires a skip navigation link to be present on 
+ all pages to skip over the menu bar and proceed directly to content on 
+ the page. 
+  
+ Resolution:
+ ----------
+ Skip navigation link has been implemented in the NUMI application. It is 
+ the first element of the page when using the keyboard following 508 
+ standards.
+  
+  
+ 7. Rational Defect 740839 - .NET 1.2 is not Section 508 compliant.
+  
+ Duplicate: 740844, 740841, 740840
+  
+ Problem: 
+ -------
+ The old version of .NET 1.2 is not Section 508 compliant.
+  
+ Resolution:
+ ----------
+ NUMI has been upgraded to .NET 4.5. This newer version of .NET has 
+ additional Section 508 functionality to assist with Section 508 
+ compliance.  Version 4.5 of .NET is not fully compliant on its own, but 
+ it adds many accessibility features over 1.2.  For example, it adds an 
+ override for default text data sets in grid views and other screen reader 
+ friendly functionality.
+  
+  
+ 8. Rational Defect 749832 - Elements must have sufficient color contrast 
+ meeting Web Content Accessibility Guidelines (WCAG) AA Standards.
+  
+ Duplicate: 749727, 749698, 749817, 749810, 749775, 749673, 749831, 
+ 749752, 749718, 749574, 721064, 749741, 749823, 749707, 749567, 749692, 
+ 749732, 749835
+  
+ Problem: 
+ -------
+ All combinations of text color, font size, background and foreground 
+ colors must meet Web Content Accessibility Guidelines (WCAG) AA Standards 
+ to meet Section 508 Compliance. 
+  
+ Resolution:
+ ----------
+ NUMI has elements with too little contrast.  This included many table 
+ headers, datagrid elements, and the main menu.
+  
+ The commonly used colors are now:
+ Table Headers: LigthSteelBlue with Black text
+ Datagrid Headers: DarkBlue with White text
+ Main Menu: DarkBlue with White text
+  
+  
+ 9. Rational Defect 740838 - NUMI Navigation Menu is not navigable with a 
+ screen reader and keyboard.
+  
+ Duplicates: 721072, 740874
+  
+ Problem: 
+ -------
+ Section 508 requires NUMI Navigation Menu to be keyboard navigable and 
+ focus must be stable for screen readers throughout navigation. Keyboard 
+ navigation must ensure users can open and close all dropdowns and access 
+ all links nested in the Navigation Menu. 
+  
+ Resolution:
+ ----------
+ A new Navigation Menu using button click dropdown instead of hovering has 
+ been created to replace the old menu.
+  
+  
+ 10. Rational Defect 740845 - Screen readers are having issues navigating 
+ the nested table for sites on the NUMI User List page.
+  
+ Problem:
+ -------
+ Screen readers are having issues navigating the nested table located on 
+ the NUMI User List page. The use of tables of data nested within tables 
+ cause screen readers to lose focus and potentially become stuck inside 
+ the nested table. 
+  
+ Resolution:
+ ----------
+ The nested table has been converted to a list located in a single cell 
+ making it easier for screen readers to intercept the page and for user 
+ navigation. 
+  
+  
+ 11. Rational Defect 749824 - ID attribute value must be unique.
+  
+ Duplicate:  749818, 749666, 749660
+  
+ Problem:
+ -------
+ HTML IDs should be unique from one another NUMI .NET components in 
+ several instances have the same IDs. 
+  
+ Resolution:
+ -----------
+ NUMI's duplicate IDs on pages have been renamed to make them unique to 
+ prevent screen readers from becoming confused.  Some pages in NUMI had 
+ dynamically added control identifiers that could confuse screen readers.  
+ These controls have been explicitly named to prevent duplicates.
+  
+  
+ 12. Rational Defect 749845 - HTML headers should never be left empty.  
+  
+ Duplicate/Similar: 749841, 749836, 749825, 749819, 749811, 749804, 
+ 749776, 749769, 749747, 749742, 749713, 749708, 779826, 749826
+  
+ Problem: 
+ -------
+ NUMI is using empty header elements for spacing purposes. This is poor 
+ HTML practice and needs to be brought into proper HTML standards. The 
+ iFrame title elements must have descriptive values.
+  
+ Resolution:
+ ----------
+ The empty headers were used for spacing purposes. They have been removed 
+ and other 508 compliant headers have been used.
+  
+  
+ 13. Rational Defect 749851 - All HTML pages should have language 
+ attributes to alert screen readers of default language.
+  
+ Duplicate: 749846, 749842, 749837, 749827, 749820, 749812, 749805, 
+ 749796, 749777, 749770, 749767, 749762, 749760, 749756, 749753, 749748, 
+ 749743, 749737, 749733, 749730, 749725, 749719, 749714, 749709, 749703, 
+ 749699, 749696, 749693, 749674, 749602, 749575, 749572, 749568, 749565 
+  
+ Problem:
+ -------
+ Users who install screen readers in a different default language than 
+ English won't have the screen read correctly.
+  
+ Resolution:
+ ----------
+ Add the language element for every page in the system.  This will allow 
+ screen readers that have been installed with non-English default 
+ languages to correctly read NUMI.
+  
+  
+ 14. Rational Defect 749781 - Radio inputs with the same name attribute 
+ value must be part of a radial button group.
+  
+ Duplicate/Similar: 749774, 749809, 775377
+  
+ Problem:
+ --------
+ The radio button group located on Manual Vista Synchronization is not 
+ properly defined and can cause screen readers to think it is a single 
+ instance of a radio button and when it is in fact a single instance 
+ inside a group of radio buttons.
+  
+ Resolution:
+ ----------
+ The radio button group has been given a group title called Filter Group 
+ and each individual button has been placed inside the group to help 
+ inform the user.
+  
+  
+ 15. Rational Defect 779300 - On the Patient Stay Administration page, 
+ focus is not shifting to the delete button after validating a stay.
+  
+ Problem:
+ ---------
+ NUMI users' focus is not moved to the delete button after they close the 
+ message box popup.
+  
+ Resolution:
+ ----------
+ Added keyboard accessible short cut alt+x to delete last validated stay. 
+ Added a stay summary header and moved the delete button to the bottom of 
+ the stay summary section. This was done so that a visually impaired user 
+ would be able to have all elements of the stay read before making the 
+ decision to delete (previously the delete button was at the top of the 
+ summary would require a decision prior to stay information being read to 
+ the user).
+  
+  
+ 16. Rational Defect 779299 - UM Review Listing verbally entered dates 
+ causing crashes on uninitialized date fields.
+  
+ Problem:
+ ---------
+ NUMI contains an unhandled exception when entering dates into a field 
+ with no default date.
+  
+ Resolution:
+ ----------
+ Added default date range to the controls to prevent user from entering a 
+ null date.  This approach has the additional benefit of giving users 
+ their most commonly entered search criteria while avoiding an unhandled 
+ exception in the third-party date control.
+  
+  
+ 17. Rational Defect 779290 - NUMI uses color or images to convey 
+ informational messages.
+  
+ Duplicate: 749813, 749813, 779293
+  
+ Problem:
+ ---------
+ NUMI's notifications cannot use color as they only mean to convey errors, 
+ informational, and warnings without a screen readable alternative.
+  
+ Resolution:
+ ----------
+ Added the information to the tooltip to convey the meaning as color for 
+ users.  In other places images were replaced with text for screen readers.
+  
+  
+ 18. Rational Defect 740847 - Treating Specialty Configuration Dynamic 
+ HTML Table is not Section 508 Compliant.
+  
+ Problem:
+ ---------
+ The Dynamic HTML Table generated on the treating specialty configuration 
+ is not Section 508 compliant. Business Owners would also like more 
+ spacing between the links located inside the table.
+  
+ Resolution:
+ ----------
+ The dynamic table has been reworked to meet Section 508 compliance, as 
+ well as spacing and a delimiter has been added to help with spacing. 
+  
+  
+ 19. Rational Defect 823607 - 508 Compliance best practices
+  
+ Problem:
+ ----------
+ Lists default value needs to be located at the top of the list versus the 
+ end of the list.
+  
+ Resolution:
+ -----------
+ Updated the ordering of Patient category list on Patient selection / 
+ worklist page selection filter to display "Patients with Undismmissed 
+ stays" as the first item in the list which is selected by default.
+  
+  
+ 20. Rational Defect 823602 - User Guide updates for Section 508 
+ compliance.
+  
+ Problem:
+ ---------
+ Users using screen readers can use a combination of accessibility keys to 
+ navigate across the NUMI application efficiently where normal tab 
+ navigation sometimes is cumbersome and may not work.
+  
+ Resolution:
+ -----------
+ Updated the NUMI User Guide to include accessibility feature sections to 
+ help users using screen readers with additional navigation tips.
+  
+  
+ 21. Rational Defect 830760 - Fortify Remediation
+  
+ Problem:
+ --------
+ Remediating Section 508 compliance defects caused some portions of the 
+ code base to be no longer used.  Fortify flagged these as security risks.
+  
+ Resolution:
+ -----------
+ The code which is no longer reachable has been commented out to allow for 
+ passing Fortify scans.
+  
+  
+ Test Sites:
+ ----------
+ Bay Pines VAMC
+ Gainesville (NFSG)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/application.asp?appid=184
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ NUMI_15_6_ug.pdf                NUMI User Guide v15.6           binary
+ NUMI_15_6_serversetupguide.pdf  NUMI Server Setup Guide v15.6   binary
+ NUMI_15_6_sysmgmtguide.pdf      NUMI System Management Guide v15.6  binary
+  
+  
+  
+ Patch Installation:
+ -------------------
+ Austin Information Technology Center (AITC) performs patch installation 
+ on a centralized web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ NUMI application users need to be notified of the patch installation 
+ window after confirming the final release date and time with AITC. A 
+ maintenance page is displayed on the NUMI web application while 
+ installation and smoke testing are performed.
+  
+  
+ Installation Instructions:
+ --------------------------
+ NUMI is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ A back-out plan will be sent to AITC and attached to the installation 
+ change order (CO) in a separate document.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 19, 2018
+Completed By:                               Date Completed: NOV 27, 2018
+Released By :                               Date Released : NOV 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,416 @@
+$TXT Created by               H at VIPDEV32.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 10/31/18 at 20:06
+=============================================================================
+Run Date: JAN 02, 2019                     Designation: PSJ*5*366
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #323                      Status: Released
+                  Compliance Date: FEB 02, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*248   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*253   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*281   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*302   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*317   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*352   <<= must be installed BEFORE `PSJ*5*366'
+                    (v)PSJ*5*373   <<= must be installed BEFORE `PSJ*5*366'
+
+Subject: CAS MPDU BUILD 4: MED ROUTE SHORT LIST/ACTIVE PROVIDER FILTER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ As part of the Clinical Ancillary Services project (CAS) - Medication 
+ Permission/Dispensing Updates (MPDU), the Inpatient Medications package
+ has been modified to address the following:
+  
+ This patch will address the following issues.
+  
+ 1. Limit the Display of Medication Routes for Infusion Order Dialogs
+ 2. Limit the Display of Medication Routes for Inpatient Unit Dose Order
+    Dialogs
+ 3. Check dosage form to determine appropriate default route
+ 4. Validate Termination of a Provider 
+ 5. Addresses the defect reported in INC2806789 - Unable to Edit Start 
+    Date/Time when finishing an Inpatient Order 
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Item 1-3
+ -------- 
+  
+ Problem:
+ -------
+ The prompt for selection of the medication route when entering an 
+ inpatient medication (infusion/unit dose) order has been modified to list
+ only those routes associated with the dosage form for the selected
+ medication (short list).
+ The system will allow partial matches that are found in the short list
+ or an exact full-text match or an abbreviation match if found in the
+ MEDICATION ROUTES file (#51.2).
+  
+  
+ Resolution:
+ ----------
+  
+ Routines PSGOE4, PSGOE8, PSGOE9 and PSIVEDT were modified to provide the
+ following:
+ 1. If a default med route is not defined in the orderable item, med route 
+    will be set to null (will not default to PO or ORAL).
+ 2. A "?" at the ROUTE prompt, will display a short list of routes that
+    were defined in the orderable item, and the prompt for the short list
+    selection will be "Select MED ROUTE: ".
+ 3. Partial match will pick a med route only if found in the short
+    list (not from the long list).
+ 4. An exact match of the full route name or an abbreviated route name will
+    also pick a med route.
+ 5. Existing functionality supporting "??" is retained. Entering "??" at 
+    the ROUTE prompt will display all routes that have been defined for all
+    orderable item. When typing in a route, if no match is found, then 
+    "??" is displayed.
+  
+ Item 4
+ ------ 
+ Problem:
+ -------
+ The prompt for selecting a provider when finishing an inpatient medication
+ (infusion/unit dose) order has been modified to list only those providers 
+ who are active in VistA so that critical alerts/notifications related to
+ orders will be processed in a timely manner.
+  
+ Resolution:
+ ----------
+ Routines PSGOE1, PSJOE0, PSGOE42, PSGOE82, PSGOE92, PSGOEEW, PSIVEDT, 
+ PSJLMGUD, PSJOE0 and PSIVCHK were modified to perform additional checks
+ for a provider to write medications by calling a new extrinsic function
+ $$ACTPRO^PSGOE1(provider IEN).
+  
+ A provider is authorized to write medication if all the following fields
+ in the New Person file (#200) are found to be true.
+  
+ a. Holds the Provider Key 
+    200,8932.001  PROVIDER KEY
+  
+ b. Authorized to write set to "Yes"
+    200,53.1      AUTHORIZED TO WRITE MED ORDERS PS;1 SET
+  
+ c. Inactivation date  (if exists is not < today's date)
+    200,53.4      INACTIVE DATE          PS;4 DATE
+  
+ d. Termination date  (if exists is not < today's date) (new)
+    200,9.2       TERMINATION DATE       0;11 DATE (audited)
+  
+ e. Not flagged as dis-user (new)
+    200,7         DISUSER                0;7 SET
+  
+ This new extrinsic function $$ACTPRO^PSGOE1(provider IEN) will return a 
+ one (1) when all of the above conditions are met otherwise, a zero (0) is
+ returned.
+  
+  
+ Item 5
+ ------ 
+ Problem:
+ --------
+  
+ INC2806789 - Issues with patch PSJ 5 373 (HITPS-6415) - please remove the
+              patch to fix the Start Date Time field
+ INC2588377 - Unable to Edit Start Date/Time in Inpatient Order Entry
+ (Duplicate) 
+ INC2775053 - VistA troubleshoot (HITPS-6415) - related ticket from another
+              region
+ (Duplicate) 
+ INC2099246 - HD UD Start/Date Updating Incorrectly
+ (Duplicate) 
+ INC2776369 - VistA troubleshoot - related ticket from another region
+ (Duplicate) 
+ INC3432487 - Start Date unable to be changed after schedule changed
+ (Duplicate)
+  
+  
+ After PSJ*5*373 was released some sites noticed that after editing the 
+ Start Date/Time field for an Inpatient order via Inpatient Order Entry
+ [PSJ OE] option it would not accept the user entry. Instead it would
+ re-calculate the Start Date/Time. This happened when the Schedule and the
+ Start Date/Time fields were edited simultaneously. This issue was 
+ introduced by PSJ*5*373 as a negative side-effect of a fix for the ticket
+ #I13108353FY17 (See PSJ*5*373 patch description for more details on the
+ issue fixed).
+  
+ Resolution:
+ -----------
+ A change was made to the Inpatient Order Entry [PSJ OE] option to prevent 
+ a re-calculation of the Start Date/Time when the field is manually being
+ edited by the user.
+    
+ The routines PSGOE3, PSGOE41, PSGOE81 and PSGOE91 were changed at line tag
+ A10+1 to set the variable PSGSDEDT to 1 (one) indicating the user is
+ manually editing the Start Date/Time field. Then, the routine PSGOEE was
+ modified at CHKDT+1 to verify whether the variable PSGSDEDT is set to 1, 
+ if so it will quit and will no longer re-calculate the Start Date/Time.
+  
+  
+ Test Sites:
+ ----------
+ HEARTLAND-WEST
+ FAYETTEVILLE, AR -VAMC
+ TENNESSEE VALLEY HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   https://www.domain.ext/vdl/.
+  
+  
+ File Description                    File Name                  FTP Mode
+ --------------------------------------------------------------------------
+ Inpatient Medications Nurse's       PSJ_5_P366_NURSE_UM.PDF    Binary
+ User Manual v5.0
+ Inpatient Medications Pharmacist's  PSJ_5_P366_PHAR_UM.PDF     Binary
+ User Manual v5.0
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSJ*5*366.
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back-out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back-out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+  ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;16 DEC 97;[BUILD #] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup of
+ the routines in a mail message using the Backup a Transport Global [XPD
+ BACKUP] menu option (this is done at time of install). The message
+ containing the backed up routines can be loaded with the "Xtract PackMan"
+ function at the Message Action prompt. The Packman function "INSTALL/CHECK
+ MESSAGE" is then used to install the backed up routines onto the VistA
+ System.
+  
+  
+ Validation of Roll Back Procedure:
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSJ, PSG or PSI Routines contained in this patch using the option
+ First Line Routine Print [XU FIRST LINE PRINT]. Once the routines
+ contained in the PSJ*5.0*366 patch have been rolled back, the first two
+ lines of the Routines will no longer contain the designation of patch
+ PSJ*5.0*366 in the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE1
+    Before: B29572227   After: B32244396  **7,19,26,39,58,85,80,110,127,
+                                           133,134,315,366**
+Routine Name: PSGOE3
+    Before: B25305463   After: B26173269  **58,81,315,366**
+Routine Name: PSGOE4
+    Before: B31371280   After: B42442364  **2,50,64,58,111,113,245,253,366**
+Routine Name: PSGOE41
+    Before:B102492308   After:B104146997  **50,63,64,69,58,111,136,113,
+                                           267,315,334,373,366**
+Routine Name: PSGOE42
+    Before: B10177522   After: B10268792  **366**
+Routine Name: PSGOE8
+    Before: B53298336   After: B54413557  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287,315,338,366**
+Routine Name: PSGOE81
+    Before:B115959656   After:B117103092  **26,50,64,58,82,110,111,136,
+                                           113,267,315,334,373,366**
+Routine Name: PSGOE82
+    Before: B33061347   After: B34233969  **2,35,50,67,58,81,127,168,181,
+                                           276,317,366**
+Routine Name: PSGOE9
+    Before: B46578663   After: B47270955  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269,315,338,352,
+                                           366**
+Routine Name: PSGOE91
+    Before:B121528275   After:B122701385  **50,64,58,110,111,136,113,179,
+                                           265,267,285,315,334,373,366**
+Routine Name: PSGOE92
+    Before: B43137679   After: B43075516  **2,35,50,58,81,110,215,237,
+                                           276,316,317,366**
+Routine Name: PSGOEE
+    Before:B107177603   After:B108119491  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281,315,338,373,366**
+Routine Name: PSGOEEW
+    Before: B29287658   After: B28146717  **7,58,111,315,373,366**
+Routine Name: PSIVCHK
+    Before: B25232244   After: B27420606  **54,58,81,111,213,113,179,248,366**
+Routine Name: PSIVEDT
+    Before: B52868787   After: B69412559  **4,110,127,133,134,181,252,281,366**
+Routine Name: PSJLMGUD
+    Before: B31955674   After: B30941132  **25,58,85,116,110,111,267,275,
+                                           315,256,373,366**
+Routine Name: PSJOE0
+    Before: B26555549   After: B26150423  **47,56,110,133,162,241,267,
+                                           275,302,366**
+ 
+Routine list of preceding patches: 248, 253, 302, 317, 352, 373
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 27, 2018
+Completed By:                               Date Completed: JAN 02, 2019
+Released By :                               Date Released : JAN 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

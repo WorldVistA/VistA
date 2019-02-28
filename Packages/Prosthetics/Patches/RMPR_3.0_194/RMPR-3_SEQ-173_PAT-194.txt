@@ -1,0 +1,230 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/19/18 at 13:50
+=============================================================================
+Run Date: NOV 27, 2018                     Designation: RMPR*3*194
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #173                      Status: Released
+                  Compliance Date: DEC 28, 2018
+=============================================================================
+
+Associated patches: (v)RMPR*3*182  <<= must be installed BEFORE `RMPR*3*194'
+                    (v)RMPR*3*189  <<= must be installed BEFORE `RMPR*3*194'
+
+Subject: FIXES FIELD UPDATE FOR LOT NUMBER;FIXES SUBSCRIPT ERROR VIEW 2319
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 2 issues:
+  
+ 1. The Lot Number entry is being put in the Description (#24) field in 
+    the RECORD OF PROS APP (#660) file.
+  
+ 2. When a record in the RECORD OF PROS APP (#660) file does not have a 
+    suspense date, the user receives a subscript error in the View
+    Prosthetics Item Transactions [RMPR VIEW 2319 READ ONLY] menu option.
+  
+  
+ Patch Components:
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name   New/Modified/Deleted
+ ---------------   --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I19018190FY18 - Prosthesis Package (RMPR) will .... (high priority 
+  
+    Duplicate:
+      I19066596FY18 - AEU; Vista, Unable to update vendor files *Problem
+                 
+ Problem:
+ --------
+ When a new item is added using the Reconcile/Close Out Purchase Card 
+ Transaction [RMPR4 CLOSE OUT] menu option, in the RECORD OF PROS APP
+ (#660) file, the Lot Number (#21) field will save in the Description (#24)
+ field.
+  
+ Resolution:
+ -----------
+ The routine RMPR4M has been updated so that the correct field is being 
+ updated for the Lot Number (#24) in the RECORD OF PROS APP (#660) file.
+  
+  
+ 2. INC0193684 - <SUBSCRIPT>PRINT+104^RMPOPAT3 ^ICD9("") (Stl/Marion)
+                     
+ Problem:
+ --------
+ If a record in the RECORD OF PROS APP (#660) file does not have a 
+ SUSPENSE ICD (#8.8) field, but has a SUSPENSE DATE (#8.1) field, a 
+ subscript error will occur in the View Prosthetics Item Transactions [RMPR
+ VIEW 2319 READ ONLY] menu option. 
+  
+ Resolution:
+ -----------
+ The routine RMPOPAT3 has been updated so that it will check if the
+ SUSPENSE ICD (8.8) field exists before it sets the value for the ICD. 
+  
+  
+ Test Sites:
+ ----------
+ Dayton VAMC
+ San Francisco VA HCS
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter RMPR*3.0*194).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*194
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond NO.
+   
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+        1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+         Reconcile/Close Out Purchase Card Transaction   [RMPR4 CLOSE OUT]
+      
+         View Prosthetics Item Transactions     [RMPR VIEW 2319 READ ONLY]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOPAT3
+    Before: B39179406   After: B39792529  **70,92,99,182,194**
+Routine Name: RMPR4M
+    Before: B35332873   After: B35332645  **3,26,28,30,41,62,90,133,189,194**
+ 
+Routine list of preceding patches: 182, 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 14, 2018
+Completed By:                               Date Completed: NOV 26, 2018
+Released By :                               Date Released : NOV 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

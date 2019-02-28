@@ -1,0 +1,224 @@
+$TXT Created by                      at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/16/18 at 11:55
+=============================================================================
+Run Date: DEC 26, 2018                     Designation: XM*8*49
+Package : XM - MAILMAN                        Priority: Mandatory
+Version : 8        SEQ #44                      Status: Released
+                  Compliance Date: JAN 26, 2019
+=============================================================================
+
+Associated patches: (v)XM*8*20     <<= must be installed BEFORE `XM*8*49'
+
+Subject: P-MESSAGE VARIABLE CLEANUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue when using the P-MESSAGE device, an escape
+ variable is set and never removed when the user presses enter at the 'And
+ Send to' prompt. This may lead to unexpected results in subsequent
+ functions that check the value of the escape variable.
+  
+   
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Group Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XM*8.0*49 contains
+ changes to a package referenced as MailMan: BBM Team Review of VistA
+ Patches. This patch does not alter or modify any VistA Blood Bank 
+ software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XM*8.0*49 have no effect on Blood 
+ Bank software functionality, therefore RISK is none. This indorsement is 
+ via Randy Morton.
+  
+  
+  
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC0223620 - Bug in a VistA Mailman routine, XMAPHOST. 
+  
+    Problem:
+    --------
+    When using the P-MESSAGE device, an escape variable is set and
+    never removed when the user presses enter at the, 'And Send to' prompt.
+    This may lead to unexpected results in subsequent functions that check 
+    the value of the escape variable. This also can result in an undesired
+    exit from the report transmission during normal operations or other
+    errors due to faulty MailMan code.
+  
+    Resolution:
+    -----------
+    The tag TOWHOM in routine XMJMT has been altered to NEW the DIRUT, 
+    DUOUT and DTOUT variables. In addition, the tags QQ and S were also
+    altered this way to accommodate entry of "??" with the "S" option to
+    prevent these tags from creating the same issue.
+  
+ Test Sites:
+ -----------
+ VA North Texas Health Care System 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No install routines, No special instructions.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be queued to run after normal business hours to
+ minimize potential disruption to users.
+  
+ This patch should take less than 2 minutes to install. 
+  
+  
+    1. Choose the PackMan message containing this patch.
+     
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+    3. From the Kernel Installation & Distribution System Menu, select 
+       the Installation Menu. From this menu, you may select to use the 
+       following options.  When prompted for the INSTALL NAME, enter the
+       patch XM*8.0*49:
+  
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+     
+    4. From the Installation Menu, select the Install Package(s) option
+       and choose the patch to install.
+    
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+     
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", respond NO.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;MailMan;**[Patch List]**;Jun 28, 2002;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XMJMT
+    Before: B25941084   After: B26269689  **20,49**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 24, 2018
+Completed By:                               Date Completed: DEC 26, 2018
+Released By :                               Date Released : DEC 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

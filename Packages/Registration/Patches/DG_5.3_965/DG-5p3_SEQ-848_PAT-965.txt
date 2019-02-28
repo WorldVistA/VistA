@@ -1,0 +1,228 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/10/18 at 12:54
+=============================================================================
+Run Date: NOV 05, 2018                     Designation: DG*5.3*965
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #848                    Status: Released
+                  Compliance Date: DEC 06, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*907  <<= must be installed BEFORE `DG*5.3*965'
+                    (v)DG*5.3*954  <<= must be installed BEFORE `DG*5.3*965'
+
+Subject: DELETED PIVOT ENTRY SUBSCRIPT ERR; NAME COMPONENT SUBSCRIPT ERR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*965 addresses 2 issues:
+ 1. <SUBSCRIPT>PIVNW+40^VAFHPIVT error (Pivot file entry not there).
+ 2. SAM-site is receiving SUBSCRIPT>SAVE+11^DGRPECE error.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC0575865-Registration-<SUBSCRIPT>PIVNW+40^VAFHPIVT (Pivot file entry not
+               there)
+  
+    
+    Problem:
+    --------
+    The PIVNW^VAFHPIVT Application Programming Interface (API) for retrieving
+    or adding an ADT/HL7 PIVOT (#396.71) file entry has potential to produce a
+    <SUBSCRIPT> error if it identifies an existing record, but the record is
+    deleted before it is able to access it.
+  
+    
+    Resolution:
+    -----------
+    Modified routine VAFHPIVT so that after identifying the appropriate record,
+    the code will now check to confirm it still exists. If not, it will
+    quit processing and return a value of -1 to indicate the record could
+    not be found.
+  
+  
+  
+  
+ 2. INC1009955 - Registration - SAM-site is receiving SUBSCRIPT>SAVE+11^DGRPECE
+                 error
+  
+  
+    Problem:
+    --------
+    The cross reference of the PATIENT (#2) file for the NAME (#.01) field
+    uses Kernel name standardization APIs to keep the NAME COMPONENTS (#20)
+    file record associated with the NAME (#.01) field synchronized with the
+    data value stored in that field.  If this data becomes corrupted at the
+    site it is highly likely the user will encounter the noted SUBSCRIPT
+    error when updating/editing a patient's record using the Register a
+    Patient [DG REGISTER PATIENT] option.
+  
+    
+    Resolution:
+    -----------
+    Modified routine DGRPECE so the SAVE^DGRPECE API used to store
+    accepted/edited values into the patient file can properly handle
+    corrupted or missing data.
+  
+  
+ TEST SITES:
+ -----------
+ VISN 2 (Upstate New York HCS)
+ Salem
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time. 
+  
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DG*5.3*965:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':
+  
+      Enter:  Register a Patient [DG REGISTER PATIENT]
+              Load/Edit Patient Data [DG LOAD PATIENT DATA]
+              Preregister a Patient [DGPRE PRE-REGISTER OPTION]
+              Collateral Patient Register [DG COLLATERAL PATIENT]   
+ 
+ 
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGRPECE
+    Before: B89386957   After: B92843483  **638,682,700,720,653,688,750,
+                                           831,907,965**
+Routine Name: VAFHPIVT
+    Before: B21544775   After: B21569222  **91,179,575,954,965**
+ 
+Routine list of preceding patches: 907, 954
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 21, 2018
+Completed By:                               Date Completed: NOV 05, 2018
+Released By :                               Date Released : NOV 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

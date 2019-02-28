@@ -1,0 +1,261 @@
+$TXT Created by             at SCM.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 07/25/18 at 09:22
+=============================================================================
+Run Date: DEC 11, 2018                     Designation: SD*5.3*703
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #580                    Status: Released
+                  Compliance Date: JAN 11, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*496  <<= must be installed BEFORE `SD*5.3*703'
+                    (v)SD*5.3*509  <<= must be installed BEFORE `SD*5.3*703'
+                    (v)SD*5.3*618  <<= must be installed BEFORE `SD*5.3*703'
+
+Subject: SCHEDULING PACKAGE ENHANCEMENTS OF CLASS III TO CLASS I
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch will include code changes for several routines for three New 
+ Service Requests (NSRs) that were approved by the Software Modification
+ Waiver Committee associated with Scheduling Package in VistA.
+  
+ The following will be addressed in this patch:
+    1) Remove Full Social Security Number(SSN) from the Appointment List
+       [SDLIST] - The national patient Appointment List displays the patient's
+       full nine digits of their SSN. Patient Appointment lists are printed 
+       in clinics and outpatient areas daily. This modification replaces the 
+       entire nine digits of the SSN from the Appointment List with only
+       the last four digits of the patient's SSN.
+  
+    2) Stop Code added to Cancelled Clinic Report - The Cancelled Clinic Report
+       [SDAM CANCELLED CLINIC RPT] is used to provide data on clinics that
+       have been cancelled. A column was added to the Cancelled Clinic
+       Report to provide the Stop Code of the clinic, which identifies the
+       specialty or service.
+   
+    3) SSN REDUCTION - Clinic Availability Report - The Social Security Number
+       was being displayed on the Display Clinic Availability Report [SD
+       DISPLAY AVAIL REPORT] to protect a patient's full Social Security 
+       Number from being viewed a change was made to display the initial of 
+       the last name and the last four digits of the Social Security Number.
+  
+ TECHNICAL SUMMARY:
+ ==================   
+  
+ Routines
+ --------
+ The routine SDAL0 was modified to replace the entire Social Security
+ Number (nine digits) from the Appointment List with only the last four 
+ digits of the patient's Social Security Number.
+  
+ The routine SDAL was modified to update the SSN to be last 4 digits of 
+ the SSN on two lines starting in column 41 versus column 44 in the header.
+  
+ The routine SDAMOCP1 was modified to update the Cancelled Clinic Report. A
+ column was added to the Cancelled Clinic Report to provide the Stop Code 
+ of the clinic, which identifies the specialty or service.
+  
+ The routine SDCLAV0 was modified to update the Display Clinic Availability
+ Report. The Display was changed to only show the "initial of the last 
+ name" and the "last four digits of the Social Security Number.
+  
+ Patch Components: 
+ =================
+  
+ Files & Fields Associated: 
+ ------------------------
+ N/A
+  
+ Forms Associated:
+ ----------------- 
+ N/A
+  
+ Mail Groups Associated:
+ ------------------------
+ N/A
+  
+ Options Associated:
+ ------------------------
+ N/A
+  
+ Protocols Associated: 
+ ------------------------
+ N/A
+  
+ Security Keys Associated: 
+ ------------------------
+ N/A
+  
+ Templates Associated: 
+ ------------------------
+ N/A
+  
+ Remote Procedures Associated:
+ -----------------------------
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+ ---------------------------------
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information: 
+ =======================
+  
+ New Service Requests (NSRs): 
+ -----------------------------
+ NSR #20180330 - Remove Full SSN from Appointment List
+ NSR #20180328 - Stop Code added to Canceled Clinic Report
+ NSR #20180316 - SSN REDUCTION - Clinic Availability Report
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ John J. Pershing VA Medical Center - Poplar Bluff
+ North Florida/South Georgia Veterans Health System - Gainesville, FL 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+  
+ Software released as a host file and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+        Albany:         domain.ext
+        Hines:          domain.ext  
+        Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                          File Name                     FTP Mode
+ ---------------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ The following menu options should be disabled:
+          Display Clinic Availability Report [SD DISPLAY AVAIL REPORT]
+          Appointment List [SDLIST] 
+          Cancelled Clinic Report [SDAM CANCELLED CLINIC RPT]
+  
+ INSTALLATION INSTRUCTIONS: 
+ --------------------------
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+ Installation Menu.  From this menu, you may elect to use the following
+ options. When prompted for the INSTALL NAME enter the patch name
+ (SD*5.3*703): 
+     a. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global. 
+     b. Print Transport Global - This option will allow you to view the
+        components of the KIDS build. 
+     c. Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed. It compares all of the components of this patch, such as
+        routines, DDs, templates, etc. 
+     d. Backup a Transport Global - This option will create a backup backup
+        any other changes such as DDs or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+   
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO// NO
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// NO
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? YES// YES
+      a. When prompted 'Enter options you wish to mark as 'Out Of Order':', 
+         select the following option<s>:
+   
+            Option Name                 Menu Text
+            -----------                 ---------
+            SD DISPLAY AVAIL REPORT     Display Clinic Availability Report
+            SDLIST                      Appointment List
+            SDAM CANCELLED CLINIC RPT   Cancelled Clinic Report
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAL
+    Before: B32575250   After: B32624315  **37,46,106,171,177,80,266,491,
+                                           572,618,703**
+Routine Name: SDAL0
+    Before: B37381989   After: B37916524  **28,37,106,149,171,177,193,
+                                           305,373,266,572,618,703**
+Routine Name: SDAMOCP1
+    Before: B18032029   After: B21120628  **487,496,703**
+Routine Name: SDCLAV0
+    Before:  B9891276   After: B10221725  **184,439,490,517,529,509,703**
+ 
+Routine list of preceding patches: 496, 509, 618
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 25, 2018
+Completed By:                               Date Completed: DEC 10, 2018
+Released By :                               Date Released : DEC 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

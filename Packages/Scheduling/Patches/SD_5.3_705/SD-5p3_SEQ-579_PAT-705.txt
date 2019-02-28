@@ -1,0 +1,372 @@
+$TXT Created by             at SCM.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 10/12/18 at 15:04
+=============================================================================
+Run Date: DEC 06, 2018                     Designation: SD*5.3*705
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #579                    Status: Released
+                  Compliance Date: JAN 05, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*27   <<= must be installed BEFORE `SD*5.3*705'
+                    (v)SD*5.3*132  <<= must be installed BEFORE `SD*5.3*705'
+                    (v)SD*5.3*545  <<= must be installed BEFORE `SD*5.3*705'
+                    (v)SD*5.3*680  <<= must be installed BEFORE `SD*5.3*705'
+
+Subject: SCHEDULING PACKAGE ENHANCEMENTS OF CLASS III TO CLASS I
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This patch will include code changes for several routines for two NSR's 
+ that were approved by the Software Modification Waiver Committee 
+ associated with Scheduling Package in VistA.
+  
+ The following will be addressed in this patch:
+     1) Add A Blank Line Between Appointments in Print Scheduling Letters
+        [SDPRLETTERS]. This is an optional feature which can be enabled if the 
+        site wants to use it.
+  
+     2) Modifications were made to VistA Scheduling Option Display 
+        Appointments [SDDISPPEND] to allow a site the ability to included 
+        additional header text which could include Station Name, Station 
+        Address, Station Phone Numbers, etc.  Changes were also made to display 
+        the Primary Care provider, Associate Provider and team, as well as the 
+        physical location for an appointment. Clinic appointments were screened 
+        for administrative clinics, and finally, output of Social Security
+        Number (SSN) was truncated to four digits instead of outputting the
+        entire SSN.
+     
+        Note that the following features are optional and can be enabled if
+        the site wants to use them:
+             Add additional header information to the Patient Scheduling Letter
+             Exclude clinic appointments for administrative clinics.
+   
+     3) Modifications made to menu option SCHEDULING PARAMETERS [SD PARM 
+        PARAMETERS] to enter/edit new fields Additional Header Text,
+        Exclude Administrative Clinics and Enable Blank Line fields.
+  
+ TECHNICAL SUMMARY:
+ ==================   
+  
+ Routines
+ --------
+ The routine SDLT was modified to add a blank line between appointments in 
+ Print Scheduling Letters.
+  
+ The routine SDDPA was modified to Print Address Header, to Display PC 
+ Provider, Associate and Team, to Truncate SSN to Display Only Last Four
+ Digits, to Display Important Station Phone Numbers, to Display Physical
+ Location for An Appointment and to Screens Out Call Appointments (Stop
+ Code 674).
+  
+ Routines SDPARM, SPARM1 and SDPARM2 were modified to add fields Additional 
+ Header Text, Exclude Administrative Clinics and Enable Blank Line fields to 
+ menu option SCHEDULING PARAMETERS [SD PARM PARAMETERS].
+                                    
+ Patch Components: 
+ =================
+  
+ Files & Fields Associated: 
+ --------------------------
+                                                                    New/
+                                                                   Modified/
+ File Name (Number)             Field Name (Number)                Deleted
+ ------------------             -------------------                ---------
+ SCHEDULING PARAMETER (#404.91)   ENABLE BLANK LINE? (#1.1)            New
+   
+                                  EXCLUDE ADMIN CLINICS?(#1.2)         New
+  
+ SCHEDULING PARAMETER (#404.91)   Multiple (Sub-File)                
+                                  ADDITIONAL HEADER TEXT (#1.3)        New
+  
+ SCHEDULING PARAMETER (#404.91) 
+ #404.9102                       INSTITUTION(#.01)                     New 
+  
+ SCHEDULING PARAMETER (#404.91)  Multiple (Sub-File)
+ #404.9102                       HEADER TEXT(#1)                       New 
+  
+ SCHEDULING PARAMETER (#404.91)  Multiple (Sub-File)
+ #404.91021                      HEADER TEXT(#.01)                     New
+  
+                                 PRINT STARTING AT FIRST LINE?(#.02)   New
+  
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated:
+ ---------------------
+ SD PARM EDIT HEADER TEXT
+ SD PARM PARAMETERS MENU
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+ Remote Procedures Associated: N/A
+  
+ Parameter Definitions Associated: N/A
+  
+  
+ Additional Information: 
+ =======================
+  
+ New Service Requests (NSRs): 
+ -----------------------------
+ NSR #20180314 - Add Blank Line Between Appointments in Letters
+ NSR #20180315 - Modifications to Patient Scheduling Letters
+  
+  
+ Patient Safety Issues (PSIs): N/A
+  
+ Defect Tracking System Ticket(s) & Overview: N/A
+  
+ Test Sites:
+ -----------
+ Fargo VA Health Care System
+ VA Black Hills Health Care System (Fort Meade)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+  
+ Software released as a host file and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+        Albany:         domain.ext
+        Hines:          domain.ext  
+        Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:http://www4.domain.ext/vdl/
+  
+ Title                                         File Name           FTP Mode
+ --------------------------------------------------------------------------
+ User Manual - Supervisor Menu                 supv.docx           binary
+ User Manual - Supervisor Menu                 supv.pdf            binary
+ Deployment/Installation/Roll Back/Back-out   
+   Guide                                       sd_5_3_705_ig.docx  binary
+ Deployment/Installation/Roll Back/Back-out 
+   Guide                                       sd_5_3_705_ig.pdf   binary
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ The following menu options should be disabled:
+         Display Appointments [SDDISPPEND]
+         Print Scheduling Letters [SDPRLETTERS]
+         SCHEDULING PARAMETERS [SD PARM PARAMETERS]
+  
+ The following PROTOCOL options should be disabled:
+        SD PARM PARAMETERS MENU
+  
+ INSTALLATION INSTRUCTIONS: 
+ --------------------------
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch name
+     (SD*5.3*705):
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+       d. Backup a Transport Global - This option will create a backup
+          backup any other changes such as DDs or templates.
+  
+  4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+  5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO// NO
+  
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// NO
+  
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES// YES
+       a. When prompted 'Enter options you wish to mark as 'Out Of Order':', 
+       select the following option<s>:
+   
+            Option Name                 Menu Text
+            -----------                 ---------
+            SDDISPPEND                  Display Appointments
+            SDPRLETTERS                 Print Scheduling Letters
+            SD PARM PARAMETERS          SCHEDULING PARAMETERS
+  
+            Protocols
+            ----------------------          
+            SD PARM PARAMETERS MENU
+  
+ Post-Installation Instructions:
+ -------------------------------
+ After the installation of the patch the following features may be enabled 
+ using the SCHEDULING PARAMETERS [SD PARM PARAMETERS] option: 
+     1) Add A Blank Line Between Appointments in Print Scheduling Letters
+        [SDPRLETTERS].
+  
+     2) For VistA Scheduling Option Display Appointments [SDDISPPEND] allow
+        a site the ability to included additional header text which could
+        include Station Name, Station Address, Station Phone Numbers, etc.
+  
+     3) For VistA Scheduling Option Display Appointments [SDDISPPEND] allow
+        a site the ability to exclude clinic appointments for
+        administrative clinics.
+  
+ After the functionality has been enabled, if for some reason a site
+ determines it no longer wants the functionality enabled, it can be
+ disabled using the same option.
+  
+ This can be done as follows:
+  
+ For Enable Blank Line and Exclude Admin Clinics
+ Select OPTION NAME: SCHEDULING ParAMETERS  SD PARM PARAMETERS     Scheduling
+ Parameters
+ Scheduling Parameters
+ ...HMMM, THIS MAY TAKE A FEW MOMENTS.........
+  
+  Scheduling Parameters        Aug 31, 2018@10:03:47          Page:    1 of   6 
+                           *** Site Demographics ***                             
+            Site: ALBANY                 Scheduling Version: 5.3                 
+  
+                         *** Editable Site Parameters ***                        
+       Appt. Search Threshold: 30   Appt. Update Mail Group: DGPM UR ADMISSION   
+  
+    >>> Dispositioning <<<                 NPCDB Mail Group: DGPM UR ADMISSION   
+   Default for View Check Out: YES                                               
+                                   Late Activity Mail Group: DGPM UR ADMISSION   
+  
+                                    API Messages Mail Group: DGPM UR ADMISSION   
+  
+      Allow '^' out of Class.: YES  API Messages to Process: ERRORS ONLY         
+  
+           Enable Blank Line?: NO     Exclude Admin Clinics: NO                  
+  
+ +         Enter ?? for more actions                                             
+ CL  Clinic Print Manager  EP  Edit Parameters       ET  Edit Header Text
+ DV  Div Print Manager     EV  Edit Div Params
+ Select Action: Next Screen// EP   Edit Parameters  
+ APPT SEARCH THRESHOLD: 30// 
+ APPT. UPDATE MAIL GROUP: DGPM UR ADMISSION// 
+ NPCDB MAIL GROUP: DGPM UR ADMISSION// 
+ VIEW CHECK OUT INFO DEFAULT: YES// 
+ LATE ACTIVITY MAIL GROUP: DGPM UR ADMISSION// 
+ API ERRORS MAIL GROUP: DGPM UR ADMISSION// 
+ API NOTIFICATIONS TO PROCESS: ERRORS ONLY// 
+ ALLOW UP-ARROW OUT OF CLASSIFICATION: YES// 
+ ENABLE BLANK LINE?: NO// YES  YES
+ EXCLUDE ADMIN CLINICS?: NO// YES  YES
+ ...SORRY, THIS MAY TAKE A FEW MOMENTS.........
+  
+  
+ For Additional Header Text fields
+ ...SORRY, THIS MAY TAKE A FEW MOMENTS.........
+  
+  Scheduling Parameters        Aug 31, 2018@10:04:34          Page:    1 of   6 
+                           *** Site Demographics ***                             
+            Site: ALBANY                 Scheduling Version: 5.3                 
+  
+                         *** Editable Site Parameters ***                        
+       Appt. Search Threshold: 30   Appt. Update Mail Group: DGPM UR ADMISSION   
+  
+    >>> Dispositioning <<<                 NPCDB Mail Group: DGPM UR ADMISSION   
+   Default for View Check Out: YES                                               
+                                   Late Activity Mail Group: DGPM UR ADMISSION   
+  
+                                    API Messages Mail Group: DGPM UR ADMISSION   
+  
+      Allow '^' out of Class.: YES  API Messages to Process: ERRORS ONLY         
+  
+           Enable Blank Line?: YES    Exclude Admin Clinics: YES                 
+  
+ +         Enter ?? for more actions                                             
+ CL  Clinic Print Manager  EP  Edit Parameters       ET  Edit Header Text
+ DV  Div Print Manager     EV  Edit Div Params
+ Select Action: Next Screen// ET   Edit Header Text  
+ Select INSTITUTION:
+  
+ Select INSTITUTION: TROY       NY  OCS       474  
+   Are you adding 'TROY' as a new ADDITIONAL HEADER TEXT? No// Y  (Yes)
+   Select HEADER TEXT:
+  
+   Select HEADER TEXT: 765 DALE STREET COLUMBUS OHIO 75432
+   Are you adding '765 DALE STREET COLUMBUS OHIO 75432' as 
+     a new HEADER TEXT (the 1ST for this ADDITIONAL HEADER TEXT)? No// Y  (Yes)
+     PRINT STARTING AT FIRST LINE?: Y  YES
+   Select HEADER TEXT: 
+ Select INSTITUTION: 
+  
+ Back-Out Plan:
+ -------------
+  
+ Backout/Rollback Strategy:
+ ==========================
+ See the Deployment/Installation/Roll Back/Back-out Guide for
+ backout/rollback procedures and strategy.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDDPA
+    Before: B24783116   After: B45995999  **140,334,545,705**
+Routine Name: SDLT
+    Before: B29114101   After: B31344433  **185,213,281,330,398,523,441,
+                                           555,622,641,680,705**
+Routine Name: SDPARM
+    Before: B12429112   After: B24363657  **27,132,705**
+Routine Name: SDPARM1
+    Before:  B2578758   After:  B6141988  **27,705**
+Routine Name: SDPARM2
+    Before:   B993830   After:  B2250043  **27,132,705**
+ 
+Routine list of preceding patches: 132, 545, 680
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 17, 2018
+Completed By:                               Date Completed: DEC 05, 2018
+Released By :                               Date Released : DEC 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,241 @@
+$TXT Created by                L at TST.DEV.DOMAIN.EXT  (KIDS) on Thursday, 07/19/18 at 10:31
+=============================================================================
+Run Date: DEC 19, 2018                     Designation: MD*1*60
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #47                      Status: Released
+                  Compliance Date: JAN 18, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*20     <<= must be installed BEFORE `MD*1*60'
+                    (v)MD*1*41     <<= must be installed BEFORE `MD*1*60'
+                    (v)MAG*3*208   <<= must be installed BEFORE `MD*1*60'
+
+Subject: CLINICAL PROCEDURES AND DICOM CONSULT REQUEST TRACKING
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Clinical Procedures and DICOM Consult Request Tracking.
+  
+ This patch and MAG*3.0*208 work together to greatly improve
+ interoperability between Clinical Procedures and VistA Imaging CPRS
+ Consult Request Tracking DICOM.
+  
+ The CP studies have the same Instrument Order Number as the regular
+ consult and procedure Accession Number (sss-GMR-nnnnnnnn).
+  
+ This allows DICOM objects created during a CP examination to be sent to
+ VistA Imaging and be processed automatically.  It also allows them to be
+ used with all of the other DICOM services, like query/retrieve and export.
+  
+ Reports in DICOM Encapsulated PDF are highly recommended.
+  
+ Associated Ticket(s):
+ =====================
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ VA Heartland East (ST. Louis)
+ Eastern Colorado HCS (Denver)
+  
+  
+ Problem A:
+ ----------
+ Many devices setup for Clinical Procedures also have DICOM capabilities 
+ however due to the VistA Imaging (VI) and Clinical Procedures (CP) 
+ packages using different accession number formats, clinicians are not able
+ to utilize both in a seamless manner.
+  
+ Resolution A:
+ -------------
+ A new parameter was added to the CP INSTRUMENT FILE (#702.09) called CP -
+ DICOM INTEROPERABLILTY. A new VistA option called 'CP - DICOM 
+ Interoperability' [MD DICOM] has been created to access this parameter.
+  
+ This parameter has three options:
+  
+        0        No special action
+        1        Use VistA Imaging accession number sss-GMR-nnnnnnnn
+        2        Use VistA Imaging HL7 instead of CP's HL7
+  
+ Option '0' is used for devices that do not utilize DICOM.
+ Option '1' will use the VI style accession number instead of the CP 
+ Instrument Order Number. 
+ Option '2' will provide an enhanced HL7 message body in addition to the
+ VI style accession number.
+  
+ Additionally, the VI worklist will receive the order message at the time 
+ of CP Check-in instead of when the order is signed/released in CPRS.
+  
+  
+ Problem B:
+ ----------
+ A 'Consult Keep Open' parameter was added to the CP INSTRUMENT file 
+ (#702.09) with patch MD*1.0*42 but no option was provided to set it.
+  
+ Resolution B:
+ -------------
+ A new menu option was created for this parameter called 'Keep Consult Open
+ for CART-CL' [MD CARTCL].
+  
+ CONSULT KEEP OPEN: ?
+      Enter Yes to keep consult note open or No to close consult note.
+      Choose from:
+        0        No
+        1        Yes
+  
+ A parent menu called CP Coordinator [MD COORDINATOR] has also been created
+ that will contain the two new menu options with this patch as well as two
+ existing menu options.
+  
+     CP Coordinator Menu
+  
+           Auto Study Check-In Setup
+           CP - DICOM Interoperability
+           High Volume Procedure Setup
+           Keep Consult Open for CART-CL
+  
+  
+ Documentation Distribution:
+ ===========================
+ Documentation is available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices.
+  
+ The preferred method is to SFTP the files from: Download.vista.domain.ext
+  
+ This transmits files from the first available SFTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as
+ follows:
+  
+       Albany                  ftp.domain.ext
+       Hines                   ftp.domain.ext
+       Salt Lake City          ftp.domain.ext
+  
+ File Name:             Description:                     Protocol:
+ ==========             ============                     =========
+ clinproc1_impg.docx    Implementation Guide             Binary
+ clinproc1_impg.pdf     Implementation Guide             Binary
+ clinproc1_tm.docx      Technical Manual                 Binary
+ clinproc1_tm.pdf       Technical Manual                 Binary
+ ClinInstHL7.docx       HL7 Specifications               Binary
+  
+ Documentation may be found on the System Design and Development Web
+ page at:  http://www.domain.ext/vdl
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the
+ Clinical Procedures users be off the system.  Other VISTA users will not
+ be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  Start Up KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL, however backing up the Transport
+     Global is required for the back-out strategy. 
+  
+     When prompted for the INSTALL NAME, enter MD*1.0*60:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//', answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu
+        Options, and Protocols? NO//', answer NO.
+  
+ Back-out/Roll-back Strategy:
+ ===========================
+  
+  Back-out will be done only with the concurrence and participation of
+  development team and appropriate VA site/region personnel. The decision
+  to back-out or rollback software will be a joint decision between
+  development team, VA site/region personnel and other appropriate VA
+  personnel. A national help desk ticket should be logged before attempting
+  any backout procedures.
+  
+  Prior to installing an updated KIDS package, the site/region should have
+  saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option (this is done at time of
+  install). The message containing the backed up routines can be loaded
+  with the "Xtract PackMan" function at the Message Action prompt. The
+  Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+  backed up routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDHL7BH
+    Before: B22948615   After: B27805892  **11,21,20,60**
+Routine Name: MDRPCOT1
+    Before: B44379273   After: B62839525  **5,11,21,41,60**
+ 
+Routine list of preceding patches: 20, 41
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 10, 2018
+Completed By:                               Date Completed: DEC 19, 2018
+Released By :                               Date Released : DEC 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,204 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 09/07/18 at 07:37
+=============================================================================
+Run Date: NOV 26, 2018                     Designation: PSS*1*220
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #198                      Status: Released
+                  Compliance Date: DEC 27, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*204   <<= must be installed BEFORE `PSS*1*220'
+                    (v)PSS*1*208   <<= must be installed BEFORE `PSS*1*220'
+                    (v)PSS*1*227   <<= must be installed BEFORE `PSS*1*220'
+
+Subject: ERRORS WITH PSS LOOK AND PSS DRUG ENTER/EDIT OPTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1) Errors when using the Lookup into Dispense Drug File [PSS LOOK] option
+    in VistA
+  
+ 2) Hard error within Drug Enter/Edit [PSS DRUG ENTER/EDIT] option for Lab
+    Monitoring
+  
+ 3) Duplicate prompt to create a new Orderable Item when entering a new
+    DRUG (#50) file entry
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1)  CA-SDM R17777273FY18 - Errors when using the PSS LOOK option in VistA
+      dup  I17850187FY18
+      dup  INC0170207
+      dup  INC0808490     
+  
+ Problem: 
+ ========
+ While using the Lookup into Dispense Drug File [PSS LOOK] option, a hard
+ error is encountered when looking up a DRUG (#50) file entry that is
+ currently unmatched from the National Drug File (NDF) but had been
+ previously matched to the NDF.
+  
+ When a drug is unmatched from the NDF the first 6 pieces of the "ND" node
+ are deleted.  Only the first 5 pieces should be deleted to retain the
+ NATIONAL DRUG CLASS (#25) field in the file.
+  
+ Resolution:
+ ===========
+ A modification was made to routines PSSDEE1 & PSSLOOK to delete only the first
+ 5 pieces of the "ND" node when a drug is unmatched from the National Drug
+ File.
+  
+  
+ 2)  CA-SDM I17578782FY18 - Hard error within PSS DRUG ENTER/EDIT option for
+                            Lab Monitor
+  
+ Problem:
+ ========
+ While using the Drug Enter/Edit [PSS DRUG ENTER/EDIT] option on a
+ Clozapine drug for Outpatient Meds, when prompted to mark/unmark as a LAB
+ MONITOR or CLOZAPINE DRUG, the user selects Lab Monitor, then uses the "^"
+ to get out of the option and receives an UNDEFINED error in VistA.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSSDEE to ensure the UNDEFINED error 
+ does not occur and that the user is properly exited from the option.
+  
+  
+ 3)  CA-SDM I18167971FY18 - Duplicate prompt to Create a New Orderable Item
+                            when entering a new drug file entry.
+  
+ Problem:
+ ========
+ The user creates a new DRUG (#50) file entry related to the creation of a
+ new orderable item. During the process, the user chooses to link the new
+ DRUG (#50) file entry to an existing orderable item but responds "NO"
+ after an existing entry is selected. Then they "^" out and choose to
+ create a new orderable item. After the new orderable item is created, a
+ second prompt for creating a new orderable item is presented.
+  
+ Resolution:
+ ===========
+ A modification was made to routines PSSPOIMN and PSSPOIM1 so that the 
+ 'Select DRUG GENERIC NAME' prompt displays, instead of a duplicate 
+ 'Create a new Orderable Item to match?' prompt.
+  
+  
+ Test Sites:
+ -----------
+ VA Central California Health Care System (Fresno)
+ Corporal Michael J. Crescenz VAMC (Philadelphia)
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.
+  
+ 4. From the Installation Menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch PSS*1.0*220. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+  
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch: PSS*1.0*220 
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDEE
+    Before:B151650966   After:B151722192  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193,200,207,195,227,
+                                           220**
+Routine Name: PSSDEE1
+    Before: B22862365   After: B22862330  **15,20,34,38,68,90,208,220**
+Routine Name: PSSLOOK
+    Before:B137576490   After:B137641364  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195,213,227,220**
+Routine Name: PSSPOIM1
+    Before:B133178041   After:B133407770  **29,38,47,141,153,159,166,191,
+                                           198,204,220**
+Routine Name: PSSPOIMN
+    Before: B82446313   After: B82922600  **15,32,34,38,51,57,82,125,189,220**
+ 
+Routine list of preceding patches: 204, 208, 227
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 21, 2017
+Completed By:                               Date Completed: NOV 23, 2018
+Released By :                               Date Released : NOV 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

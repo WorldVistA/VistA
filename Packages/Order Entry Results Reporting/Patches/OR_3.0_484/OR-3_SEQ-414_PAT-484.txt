@@ -1,0 +1,247 @@
+$TXT Created by              at CPRS30.DOMAIN.EXT  (KIDS) on Wednesday, 08/15/18 at 10:47
+=============================================================================
+Run Date: DEC 03, 2018                     Designation: OR*3*484
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #414                      Status: Released
+                  Compliance Date: JAN 03, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*434    <<= must be installed BEFORE `OR*3*484'
+
+Subject: OrderCom.DLL update
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to export the new version of the 
+ Ordercom.dll file with 2 Factor Authentication changes.  This will be 
+ done at the PACKAGE level parameter for parameter definition OR MOB DLL 
+ VERSION. The OR MOB DLL VERSION parameter is used to store the current 
+ server version of the CPRS Med Order Button (MOB) DLL. That is the 
+ version of the Ordercom.dll file which will then allow for a version 
+ check to be done when logging into CPRS.
+  
+  
+ Patch Components 
+ ================
+  
+ Display Group              New/Modified
+ -------------              ------------
+ N/A
+  
+ Order Dialog               New/Modified
+ ------------               ------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name                New/Modified/Deleted
+ --------------                --------------------
+ OR MOB DLL VERSION                Updated Value
+  
+  
+ Protocols Associated:         
+  
+ Protocol Name                 New/Modified/Deleted
+ -------------                 -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name           New/Modified/Deleted
+ --------------------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Jazz Defect 493210: No longer able to enter the injection site on a 
+ one-step clinic admin order.  
+ Resolution: this issue has been resolved so that the injection site list 
+ properly populates in the form.
+  
+ Jazz Defect 598953: Change instances of "Hash.pas" in PRC Broker to 
+ "XWBHash.pas"
+ Resolution: this is a behind the scenes change in the code and no 
+ functional testing is needed.
+  
+  
+ Test Sites:
+ -----------
+ MINNEAPOLIS, MN -VAMC
+ CENTRAL, TX -VAMC  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The patch is being released as a National Patch Module patch.  See Patch
+ Installation section.
+  
+ The DLL is available for download as described below:
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+   
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ File Name                   Contents                       FTP Mode
+  
+ OR_30_484.ZIP                Ordercom.dll                  Binary
+  
+ Order Com DLL installation 
+ ==========================
+ The OrderCom.dll file was part of the OR_30_484.zip distributed as part 
+ of this patch. 
+ -Manual Installation 
+ 1. Locate the OrderCom.dll file. 
+ 2. Copy the OrderCom.dll file to the VistA\Common File directory. 
+  
+ Windows 7: 
+   For 64 bit machines: "C:\Program Files (x86)\Vista\Common Files" 
+   For 32 bit machines: "C:\Program Files\Vista\Common Files" 
+  
+ Note: You may need to have a user with Administrator rights complete this 
+ step.
+  
+ -SCCM
+ An SCCM package has been created and can be used by sites to install the 
+ OrderCom.dll instead of Manual Installation
+  
+ Patch Installation:
+ =================== 
+ Expected installation time is less than 5 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(OR*3.0*484):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Before installing take note of the value of the parameter OR MOB DLL 
+ VERSION.  Also maintain a copy of the existing file of the 
+ OrderCom.dll used at your site.
+  
+ Backout Plan
+ ------------
+ The only steps needed to roll-back this patch is to set the OR MOB DLL 
+ VERSION parameter back to the value it was prior to installing the 
+ patch and revert to the previously existing OrderCom.dll file.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORY484
+    Before:       n/a   After:    B98614  **484**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2018
+Completed By:                               Date Completed: DEC 03, 2018
+Released By :                               Date Released : DEC 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

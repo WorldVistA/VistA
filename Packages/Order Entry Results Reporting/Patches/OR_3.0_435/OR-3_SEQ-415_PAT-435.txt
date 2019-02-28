@@ -1,0 +1,403 @@
+$TXT Created by                at VIPDEV12.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 02/20/18 at 13:48
+=============================================================================
+Run Date: DEC 04, 2018                     Designation: OR*3*435
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #415                      Status: Released
+                  Compliance Date: JAN 04, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*435'
+                    (v)OR*3*394    <<= must be installed BEFORE `OR*3*435'
+
+Subject: FIRST DOSE NOW
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **Note: Delivery of this patch is required to meet VA VistA 
+ Standardization requirements. The functionality in this patch is not 
+ dependent on the OR*3.0*405 VistA build (CPRS V32 COMBINED BUILD 1.0); 
+ however, the GUI code needed to run the new functionality created by this 
+ patch will not be available until the CPRS V32 cprschart.exe is released.
+  
+ OR*3.0*435 enables clinicians working in the Computerized Patient Record 
+ System (CPRS) to order a new medication for an inpatient where the first 
+ dose is to be administered immediately and ongoing doses are scheduled for
+ administration on a regular schedule.
+  
+ Before implementation of this patch, when clinicians checked the "Give 
+ additional dose now" checkbox in the Inpatient Medications dialog box, two
+ orders were created and both were given the same priority. If the assigned
+ priority was ROUTINE, then the dose prescribed for immediate 
+ administration was processed during routine background processing and 
+ consequently not administered immediately as the clinician intended. 
+ Similarly, if the assigned priority was set to ASAP, then both orders were
+ processed immediately when only the first dose required immediate 
+ processing.
+  
+ OR*3.0*435 implements enhancements to the CPRS Graphical User Interface 
+ (GUI) and VistA routines so that the first dose is automatically set to 
+ the priority ASAP and the ongoing order is set to the priority ROUTINE 
+ when "Give additional dose now" is selected. Sites that do not use the 
+ priority ASAP can select a site-specific alternative during patch 
+ installation. A Warning message notifies users that two orders are created
+ and the dosing schedule and priority (ASAP and ROUTINE) are set 
+ automatically for each.
+  
+ Although the priority of the first dose defaults to ASAP, the clinician
+ may select any available alternative from the Priority field before
+ accepting the order. If "Give additional dose now" is selected and the 
+ Priority field is blank when the order is accepted, then the first dose 
+ will default to ASAP when the order is signed. If a value for the Priority
+ field is selected before the "Give additional dose now" checkbox is
+ enabled, a message notifies the user that the priority will be changed to
+ default values (ASAP and ROUTINE).
+  
+ When the "Give additional dose now" checkbox is left unchecked, only one
+ new medication order is created. The dosing priority and schedule are
+ based on the priority and schedule specified by the clinician who creates
+ and signs the order.
+  
+ A new parameter [ORDER URGENCY ASAP ALTERNATIVE] in VistA enables sites 
+ that do not have the priority ASAP in the Order Urgency file (#101.42) to 
+ use this enhancement. If the priority ASAP is not found during 
+ installation, then the installation program prompts the user to select an 
+ alternative urgency from the Order Urgency file. This alternative 
+ selection is stored in the PARAMETER DEFINITION file (# 8989.51) in the 
+ ORDER URGENCY ASAP ALTERNATIVE parameter. If an alternative priority is 
+ defined at installation, then CPRS displays the alternative to ASAP when a
+ new inpatient medication order is placed and "Give additional dose now" is
+ selected.
+  
+ BLOOD BANK Clearance:
+ --------------------
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3.0*435 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch OR*3.0*435 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components:
+  -----------------
+  
+ Files & Fields Associated:
+ ----------------------------
+ N/A
+  
+ Forms Associated:
+ ----------------------------
+ N/A
+  
+ Mail Groups Associated:
+ ----------------------------
+ N/A
+  
+ Options Associated:
+ ----------------------------
+ N/A
+  
+ Protocols Associated:
+ ----------------------------
+ N/A
+  
+ Security Keys Associated:
+ ----------------------------
+ N/A
+  
+ Templates Associated:
+ ----------------------------
+ N/A
+  
+ Remote Procedures Associated:   New/Modified/Deleted
+ ----------------------------    --------------------
+ ORWDPS1 GETPRIOR                NEW
+ ORWDPS1 GETPRIEN                NEW
+  
+ Parameters Associated:          New/Modified/Deleted
+ ---------------------           --------------------
+  
+ ORDER URGENCY ASAP ALTERNATIVE  New
+  
+ Additional Information:
+ N/A 
+  
+ New Service Requests (NSRs)
+ ----------------------------
+ 20130802 First Dose Now
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ VA Portland Health Care System Portland, OR
+ North Florida/South Georgia Veterans Health System, Gainesville, FL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is being released as a KIDS build and the associated
+ documentation describing the new functionality introduced by this patch
+ will be available for downdload. The preferred method is to retrieve files
+ from download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve files directly from a
+ specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found in the VA Software Document Library (VDL)
+ at: https://www.domain.ext/vdl/.
+  
+ Title                                   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version            cprsguium.doc   Binary
+ CPRS User Guide: GUI Version            cprsguium.pdf   Binary
+ CPRS Technical Manual: GUI Version      cprsguitm.doc   Binary
+ CPRS Technical Manual: GUI Version      cprsguitm.pdf   Binary
+ CPRS Technical Manual                   cprslmtm.doc    Binary
+ CPRS Technical Manual                   cprslmtm.pdf    Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ This patch utilizes the post-installation routine ORFD435P that runs at 
+ the end of the installation; the notification ""Running Post-Install 
+ Routine: ^ORFD435P" displays when the post-installation routine runs. 
+ This routine prompts sites that do not have ASAP in the Order Urgency 
+ file to select an alternative urgency. 
+  
+ If the priority ASAP is not available in the Order Urgency file, then the 
+ following prompt displays, instructing the user to select an alternative 
+ urgency from the site's Order Urgency file.
+  
+   "Your sites' Order Urgency file does not contain 'ASAP', please select 
+ an alternative to the "ASAP" urgency for your site"
+  
+ If ASAP is available, then the existing ASAP priority will be used by 
+ default. The new prompt will not display, the installation will complete, 
+ and the following message will display.
+  
+   "Running Post-Install Routine: ^ORFD435P
+    The ORDER URGENCY ASAP ALTERNATIVE parameter has already been set"
+  
+ Refer to the Post-Installation Instructions section of this document for 
+ additional details about the post-installation routine.
+  
+  
+ Installation Instructions
+ -----------------------------
+ To install the patch:
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System (KIDS) menu,
+     select the Installation Menu.  From this menu, you may elect to use
+     the following options. When prompted for the INSTALL NAME, enter the 
+     patch number OR*3.0*435.
+  
+         a.  Verify Checksums in Transport Global - This option will 
+             help ensure the integrity of the routines that are in
+             the transport global.
+         
+         b.  Print Transport Global - This option will enable viewing the
+             components of the KIDS build.
+         
+         c.  Compare Transport Global to Current System - This option will
+             enable viewing all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, data dictionaries, templates, etc.).
+         
+         d.  Back up a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             back up any other changes such as data dictionaries or
+             templates.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     press <Enter>.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', press <Enter>
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', press <Enter>.
+  
+  
+ 8.  If prompted 'Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt. Enter a
+     '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press
+     <Enter>.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After the final installation prompt, the system displays a series of 
+ notifications related to the installation of patch components. The 
+ post-installation routine ORFD435P runs automatically. The notification 
+ "Running Post-Install Routine: ^ORFD435P" displays when the routine runs.
+  
+ Note: These post-installation instructions are only necessary for sites 
+ that do not have the priority "ASAP" in the Order Urgency file (#101.42). 
+ If ASAP is an available priority, then the installation of the patch will 
+ complete using the priority ASAP in conjunction with the "Give additional 
+ dose now" option.
+  
+ Sites that have the priority ASAP in the Order Urgency file when this 
+ patch is installed will not be prompted for an alternative by the 
+ post-installation routine; the existing ASAP priority will be used by 
+ default. The installation will complete and display the following message:
+  
+   "Running Post-Install Routine: ^ORFD435P
+    The ORDER URGENCY ASAP ALTERNATIVE parameter has already been set"
+  
+ When the priority ASAP is not available in the Order Urgency file, the 
+ patch installer prompts the user to select an alternative urgency from the
+ site's Order Urgency file. This alternative selection is stored in the
+ PARAMETER DEFINITION file (#8989.51) in the ORDER URGENCY ASAP ALTERNATIVE
+ parameter definition. Installation cannot continue until an alternative is
+ selected. The selected alternative is used in place of the ASAP priority
+ when "Give additional dose now" is selected. If the priority ASAP is not
+ available and thus cannot be set during installation, the following
+ displays:
+  
+   "Your sites' Order Urgency file does not contain 'ASAP', please select 
+ an alternative to the "ASAP" urgency for your site"
+  
+   "Setting ORDER GIVE ADDITIONAL DOSE SITE URGENCY for System: 
+ exampl.dns.domain.ext
+    SITE ASAP ORDER URGENCY ALTERNATIVE:?"
+  
+ Type a question mark at the prompt to display the order urgency entries 
+ available in the Order Urgency file.
+  
+   "Answer with ORDER URGENCY NAME, or ABBREVIATION, or USAGE
+    Do you want the entire 15-Entry ORDER URGENCY List? Y  (Yes)"
+      Choose from:
+      DONE
+      EMERGENCY
+      INPATIENT
+      NEXT AVAILABLE
+      NOW
+      PRE-OP
+      ROUTINE
+      STAT
+      TODAY
+      WITHIN 1 MONTH
+      WITHIN 1 WEEK
+      WITHIN 24 HOURS
+      WITHIN 48 HOURS
+      WITHIN 72 HOURS
+      URGENTASAP
+  
+   "SITE ASAP ORDER URGENCY ALTERNATIVE: URGENTASAP"
+   "URGENTASAP: Was recorded as your sites selection for an alternative to 
+ "ASAP""
+  
+ Note: The post-installation routine adds the Remote Procedure Calls (RPCs)
+ ORWDPS1 GETPRIOR and ORWDPS1 GETPRIEN to the OR CPRS GUI CHART option, if
+ not already present.
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout. However, in the event that a site decides to back out this patch,
+ the site should contact the National Service Desk (NSD) to submit a CA
+ Technologies Service Desk Manager (CA SDM) ticket. The development team
+ will then assist with the backout process. The items listed in the Patch
+ Components section of this patch description must be manually removed by
+ OIT personnel using current approved methods.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the OR routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the OR routines have been backed
+ out, the first two lines of the routines will no longer contain the
+ designation of patch OR*3.0*435 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSEND1
+    Before: B66241171   After: B75776613  **4,29,45,61,79,94,116,138,158,
+                                           149,187,215,243,282,323,394,
+                                           435**
+Routine Name: ORFD435P
+    Before:       n/a   After:  B7794799  **435**
+Routine Name: ORWDPS1
+    Before: B58422591   After: B65920710  **85,132,141,163,215,255,243,
+                                           306,350,435**
+ 
+Routine list of preceding patches: 350, 394
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 04, 2016
+Completed By:                               Date Completed: DEC 03, 2018
+Released By :                               Date Released : DEC 04, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

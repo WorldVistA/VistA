@@ -1,0 +1,306 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 09/04/18 at 15:12
+=============================================================================
+Run Date: NOV 29, 2018                     Designation: RG*1*70
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #69                      Status: Released
+                  Compliance Date: DEC 30, 2018
+=============================================================================
+
+Associated patches: (v)RG*1*69     <<= must be installed BEFORE `RG*1*70'
+                    (v)DG*5.3*967  <<= must be installed BEFORE `RG*1*70'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - MVI SENSITIVITY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a Veterans
+       Affair Medical Center (VAMC) VistA system).
+  
+ DG*5.3*967 and RG*1.0*69 are the required builds for patch RG*1.0*70.
+  
+ NOTE: Master Patient Index (MPI) 'Sensitivity' enhancements are being
+       distributed in three VistA namespaces: DG, MPIF and RG.
+       The only build enforced requirement is that:
+         - DG*5.3*967 be installed before MPIF*1.0*68 and RG*1.0*70
+       
+         *** MPIF*1.0*68 and RG*1.0*70 can be installed in any order
+             as there are NO dependencies between these patches.
+       (Do NOT install MPIF*1.0*68 or RG*1.0*70 on legacy sites or on
+        the FORUM CLAIMS system). 
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*967 patch. MPIF*1.0*68 and RG*1.0*70 should NOT be
+       installed on legacy sites or on the FORUM CLAIMS system. 
+  
+ The following enhancement exported in this patch requested by the
+ Healthcare Identity Management (HC IdM) business group will allow the
+ Master Veteran Index (MVI) to now track a patient's sensitivity level,
+ as recorded in the SECURITY LEVEL field (#2) of the DG SECURITY LOG
+ File (#38.1).  
+  
+ Enhancement
+ The Health Level Seven (HL7) message builder for the Admit Discharge
+ Transfer Update Patient (ADT A08) message that is transmitted to the
+ Master Veteran Index (MVI) system was enhanced in routine RGADTP to
+ now create an additional 'Observation/Result' (OBX) message segment
+ that will include the patient's 'Sensitivity' level. This new OBX HL7
+ message segment will include both the internal and external values of
+ the SECURITY LEVEL field (#2) contained in the DG SECURITY LOG File
+ (#38.1) that is associated with the patient. 
+  
+  Example: OBX^^CE^SECURITY LEVEL^^1~SENSITIVE~L^^^^^^F
+                                   * *********
+  
+     
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Louisville Kentucky VAMC
+ Richard L. Roudebush VAMC (Indianapolis, Indiana)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ MPI/PD VistA Documentation can also be found on the VA Software 
+ Documentation Library at: http://www.domain.ext/vdl/application.asp?appid=16
+   
+ Title                                       File Name              FTP Mode
+ ---------------------------------------------------------------------------
+ MPI/PD VISTA User Manual                RG_1_0_P70_UM.PDF          (binary)
+ MPI/PD VISTA Programmer Manual          RG_1_0_P70_PM.PDF          (binary)
+ MPI/PD VISTA Technical Manual           RG_1_0_P70_TM.PDF          (binary) 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+      Enter/Edit Patient Security Level           [DG SECURITY ENTER/EDIT]  
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. RG*1.0*70):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+          [DG SECURITY ENTER/EDIT]       Enter/Edit Patient Security Level 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+   
+ Back-Out Plan
+ -------------
+ The RG back-out procedure would consist of restoring the original routine
+ using the back-up message created during the patch installation, as there
+ are no additional components nor any other data modifications being made
+ in this patch.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP
+    Before:B127390031   After:B129225444  **26,27,20,34,35,40,45,44,47,
+                                           59,60,61,62,63,65,68,69,70**
+ 
+Routine list of preceding patches: 69
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2018
+Completed By:                               Date Completed: NOV 29, 2018
+Released By :                               Date Released : NOV 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

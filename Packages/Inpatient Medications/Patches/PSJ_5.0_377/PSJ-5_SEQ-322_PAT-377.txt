@@ -1,0 +1,151 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/08/18 at 13:20
+=============================================================================
+Run Date: DEC 10, 2018                     Designation: PSJ*5*377
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #322                      Status: Released
+                  Compliance Date: JAN 10, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*256   <<= must be installed BEFORE `PSJ*5*377'
+
+Subject: VISTA IV QUICK CODE SCHEDULE ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one issue:
+  
+ VistA IV Quick Code schedule issue
+  
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ HITPS6392
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC1731907  VistA IV Quick Orders
+    dup  INC1844821
+    dup  INC2261615
+    dup  INC2419195
+  
+ Problem: 
+ ========
+ An order is placed in CPRS for an IV Additive using the Inpatient Meds dialog.
+ When the Pharmacist goes to finish the order, instead of filling in all the
+ fields for the IV order, he selects a quick code that has a schedule more 
+ in-line with the medication ordered.  Thus the quick code has a different 
+ schedule than what the Provider had entered via CPRS.
+  
+ When the order is completed the Schedule is not updated to the schedule
+ defined in the quick code but remains the value the Provider entered.  The
+ Admin Times field is updated to the appropriate Admin Times for the quick
+ code that was selected by the Pharmacist.
+  
+ This issue was made more apparent by the MOCHA 2.1B Enhancement patch 
+ that was nationally released in February 2018
+  
+ Resolution:
+ ===========
+  
+ To resolve this issue, code was added to PSIVQUI to move the quick code
+ schedule to the appropriate variable for the processing needed to update
+ the order appropriately.
+  
+ Test Sites:
+ ===========
+ Martinsburg VAMC
+ Pittsburg VAMC
+  
+  
+ Patch Installation:  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ This patch should take less than 2 minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*377.
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVQUI
+    Before: B21879458   After: B22141976  **21,50,65,73,76,93,104,110,
+                                           275,256,377**
+ 
+Routine list of preceding patches: 256
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 04, 2018
+Completed By:                               Date Completed: DEC 04, 2018
+Released By :                               Date Released : DEC 10, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

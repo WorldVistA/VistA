@@ -1,0 +1,351 @@
+$TXT Created by                  COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Monday, 08/13/18 at 16:41
+=============================================================================
+Run Date: DEC 07, 2018                     Designation: GMRC*3*107
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #94                      Status: Released
+                  Compliance Date: JAN 07, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*490    <<= must be installed BEFORE `GMRC*3*107'
+
+Subject: GMRC ADMIN RELEASE BY POLICY RPT
+
+Category: 
+  - Routine
+  - Input Template
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ In the Consult Management menu option [GMRC MGR] under the Consult
+ Tracking Reports [GMRC REPORTS] option there are three new reports that
+ can be run by users.  They are
+  
+ TI     Administratively Released Consults by Title [GMRC RPT ADMIN 
+ RELEASE CONSULT]
+  
+ GR     Administratively Released Consults by Group [GMRC RPT ADMIN REL 
+ CONS GROUPR]
+  
+ US     Administratively Released Consults by User [GMRC RPT ADMIN REL 
+ CONS USER]
+  
+  
+ The purpose of these Veterans Information Systems and Technology 
+ Architecture (VistA) reports is to provide metrics on the usage of the
+ Administratively Released by Policy option by users who have the Admin Key
+ rights and can send Community Care-Admin and Community Care-DS consults
+ directly to Community Care.
+  
+ Patch Components
+ ================ 
+  
+ Files & Fields Associated:
+  
+                                                           New/Modified/
+ File Name (Number)          Field Name(Number)              Deleted
+ -------------------         ------------------            -------------
+ N/A 
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name Number               Deleted   
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted   
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                              New/Modified/
+ Option Name                     Type                           Deleted
+ -----------                     ----                         -------------
+ GMRC REPORTS                     Menu                           Modified
+ GMRC RPT ADMIN RELEASE CONSULT   Run Routine                    New
+ GMRC RPT ADMIN REL CONS USER     Run Routine                    New
+ GMRC RPT ADMIN REL CONS GROUPR   Run Routine                    New
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted   
+ -------------                                             -------------
+ GMRC PRINT LIST                                                 New
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted   
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                   Type   File Name (Number)   Deleted
+ -------------                   ----   ------------------ -------------
+ GMRC RPT ADMIN RELEASE CONSULT  INPUT  LIST TEMPLATE (#409.61) New
+ GMRC RPT ADMIN REL CONS USER    INPUT  LIST TEMPLATE (#409.61) New
+ GMRC RPT ADMIN REL CONS GROUPR  INPUT  LIST TEMPLATE (#409.61) New
+  
+  
+ Additional Information:
+ ----------------------- 
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Eastern Colorado HCS  Denver, CO
+ Tomah VA Medical Center  Tomah, WI
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                                   File Name             FTP Mode
+ -----------------------------------------------------------------------
+ Consult/Request Technical Manual        constm.pdf            Binary
+ Consult/Request Technical Manual        constm.doc            Binary
+ Consult/Request User Manual             consum.pdf            Binary
+ Consult/Request User Manual             consum.docx           Binary 
+  
+  
+ Patch Installation:
+  
+ *****************************************
+ DO NOT QUEUE the install of this patch.
+ *****************************************
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter patch 
+     GMRC*3.0*107:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//Respond YES  
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO// Respond NO
+                                                                 
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO// Respond NO
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A 
+  
+  
+ Back-Out Plan:
+ -------------------------------
+ I. Information:
+ This patch contains 1 protocol, 3 List Templates and 3 Menu Options.
+ If assistance is needed to rollback/back out the patch please, log a CA 
+ Service Desk Manager (SDM) ticket so the development team can assist in 
+ this process.
+  
+ This patch creates 3 new local reports and menu items.
+   
+ To back out this patch, we can use FileMan to delete the entries:
+  
+  
+ II. Backout OPTION:
+ VISTA>D P^DI
+  
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  
+ Input to what File: OPTION//              (14119 entries)
+ EDIT WHICH FIELD: ALL// 
+  
+  
+ CHOOSE 1-5: 1  GMRC RPT ADMIN REL CONS GROUPR     Administratively 
+ Released Consults by Group
+ NAME: GMRC RPT ADMIN REL CONS GROUPR  Replace @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMRC RPT ADMIN REL CONS GROUPR' 
+ OPTION? Y
+  
+ III. Backout PROTOCOL:
+ VISTA>D P^DI
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  
+ Input to what File: OPTION// PROTOCOL     (6764 entries)
+ EDIT WHICH FIELD: ALL// 
+  
+  
+ Select PROTOCOL NAME: GMRC PRINT LIST            
+ NAME: GMRC PRINT LIST// @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMRC PRINT LIST' PROTOCOL? Y
+  
+  
+ IV. Backout Routines:
+ This patch also contains 3 GMRC routines.  The decision to back-out or
+ rollback software will be a joint decision between development team, VA
+ site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed-up
+ routines onto the VistA System.
+  
+ Go to the Backup of Patch_GMRC*3.0*107 message in Mailman. 
+ At the Enter message action prompt, enter "X" to "Xtract PackMan" 
+ At the Select PackMan Function prompt enter the number 6 to Install/Check 
+ Message. 
+ At the end of this process the pre-patch routines are restored.
+  
+  
+ IV. Backout LIST TEMPLATE:
+ VISTA>D P^DI
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  
+ Input to what File: PROTOCOL// LIST TEMPLATE    (708 entries)
+ EDIT WHICH FIELD: ALL// 
+  
+  
+ Select LIST TEMPLATE NAME: GMRC RPT ADMIN
+      1   GMRC RPT ADMIN REL CONS GROUPR  
+      2   GMRC RPT ADMIN REL CONS USER  
+      3   GMRC RPT ADMIN RELEASE CONSULT  
+ CHOOSE 1-3: 1  GMRC RPT ADMIN REL CONS GROUPR
+ NAME: GMRC RPT ADMIN REL CONS GROUPR  Replace @
+    SURE YOU WANT TO DELETE THE ENTIRE 'GMRC RPT ADMIN REL CONS GROUPR' 
+ LIST TEMP LATE? Y
+  
+   
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the three GMRC routines contained in this patch using the option First
+ Line Routine  Print [XU FIRST LINE PRINT]. Once the routines contained in
+ the GMRC*3.0*107 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch GMRC*3.0*107 in
+ the patch list section on line 2.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+     
+ It is imperative that you have performed a backup of the routines
+ included in this patch prior to installation.
+    
+ The back-out plan is to restore the routines from the backup created.
+    
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+    
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCAD
+    Before:       n/a   After: B15478590  **107**
+Routine Name: GMRCADG
+    Before:       n/a   After: B21404529  **107**
+Routine Name: GMRCADU
+    Before:       n/a   After: B15875640  **107**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2018
+Completed By:                               Date Completed: DEC 06, 2018
+Released By :                               Date Released : DEC 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

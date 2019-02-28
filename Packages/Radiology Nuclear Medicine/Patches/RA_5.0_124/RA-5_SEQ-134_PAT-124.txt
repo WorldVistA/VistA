@@ -1,0 +1,270 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 11/07/18 at 13:41
+=============================================================================
+Run Date: JAN 03, 2019                     Designation: RA*5*124
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #134                      Status: Released
+                  Compliance Date: FEB 04, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*113    <<= must be installed BEFORE `RA*5*124'
+                    (v)RA*5*127    <<= must be installed BEFORE `RA*5*124'
+                    (v)RA*5*135    <<= must be installed BEFORE `RA*5*124'
+                    (v)RA*5*141    <<= must be installed BEFORE `RA*5*124'
+                    (v)RA*5*144    <<= must be installed BEFORE `RA*5*124'
+
+Subject: VISTA RIS/CPRS ORDER STATUS SYNCHRONIZATION PART 1 OF 2
+
+Category: 
+  - Input Template
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ RA*5.0*124 will address nine issues:
+ -------------------------------------
+ 1. A bug in the VistA Radiology/Nuclear Medicine application (referred to 
+    from this point forward Radiology Information System or 'RIS') allows
+    the user to edit a study using the 'Case No. Exam Edit' [RA EDITCN] &
+    'Edit Exam by Patient' and change the procedure of the study after the
+    study has moved to an examination status of 'Complete'.
+    
+    PSPO 2658, I6535839FY16, I6499976FY16 & R19382906FY18
+  
+ 2. The option 'Cancel an Exam' [RA CANCEL] relies on user input to 
+    properly run to completion. Prior to this patch, the software cancels 
+    the study. It then continues to ask the user for a technologist 
+    comment, reason for cancellation and 'Do you want to cancel the request
+    associated with this exam?'. At this point the study has been canceled.
+    If the user does not enter a reply in the proper amount of time, the 
+    option times out and exits. This leaves the study cancelled and the 
+    the orders in the RIS and CPRS active. The orders and study statuses 
+    are now out of synchronization ('synch').
+    
+    PSPO 2658, I8454979FY16, I6535839FY16, I6499976FY16 & R19382906FY18
+  
+ 3. The Radiology 'Delinquent Status Report' and 'Incomplete Exam
+    Report' do not exit the report when an up-arrow is entered by the user
+    when asked for input by the end of screen (EOS) prompt.
+  
+ 4. A new VistA RIS Security Key, RA UNVERIFY, will be distributed with
+    this patch. This key will be required for a user to run the 'Unverify a
+    Report for Amendment' [RA UNVERIFY] option. RA UNVERIFY will supercede
+    all keys used to lock the 'Unverify a Report for Amendment' option
+    prior to the release of RA*5.0*124. This key will be exported with the
+    patch and tied directly to the 'Unverify a Report for Amendment'
+    option.
+  
+    Requested by VACO
+  
+ 5. The Bay Pines Radiology Package and the DSS Extract files for 
+    Managerial Cost Accounting are not matching the volume of Radiology 
+    Procedures collected. In the Rad/Nuc Med Report file (#74), there is a 
+    'Other Case#' field that seems to duplicate the original case number.
+  
+    The DSS developer has confirmed the issue, and contacted Radiology who 
+    indicated that the case number that appears in the file should never be
+    repeated in the 'Other Case#' multiple.
+  
+    SN/INC0055540
+  
+ 6. The option 'RA AUTO DISCONTINUE PROCESS' exported and run with 
+    RA*5.0*135 will be deleted from test and production accounts.
+  
+ 7. A software correction is made to the routine RARTE1 (PACS tag).
+  
+ 8. There is an issue with reports being amended when using voice 
+    recognition. It appears that on occasion that amended reports are
+    not being updated correctly. The original version of the report is not
+    being stored off and the activity log for that report does not show
+    that the report has been backed down from a verified status, amended
+    and then re-verified. This patch will address this issue.
+    
+    SN/INC0654877, SN/INC0924671
+  
+ 9. This patch deletes the traditional "AE" and "AS" cross-references on
+    the EXAM STATUS field (#3) on the EXAMINATIONS (70.03) sub-file. The
+    "AE" and "AS" cross-references are rebuilt as new-style cross
+    references.
+  
+  
+ Informatics Patient Safety issue PSPO
+ -------------------------------------
+ 2658
+  
+  
+ CA/Reference Tag        VA Medical Center/Site
+ --------------------    ----------------------
+ CA/I8454979FY16         Orlando, FL
+ CA/I6535839FY16         Martinsburg, WV
+ CA/I6499976FY16         Kansas City, MO
+ CA/R19382906FY18        Washington, DC
+  
+  
+ SN/Reference Tag        VA Medical Center/Site
+ ----------------        ----------------------
+ SN/INC0055540           Bay Pines, FL
+ SN/INC0924671           Boston, MA
+ SN/INC0654877           Lexington, KY 
+  
+ CA = CA Technologies Service Desk Master
+ SN = ServiceNow 
+  
+  
+ Test Sites:
+ -----------
+ Milwaukee, WI
+ West Los Angeles, CA
+ Lexington, KY
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------
+ These are the documentation changes associated with this patch:
+ Technical Manual
+ ADPAC Guide
+  
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices. These files
+ should be retrieved in binary format.
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to SFTP the files from
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server as follows:
+  
+     Hines                 ftp.domain.ext
+     Salt Lake City        ftp.domain.ext
+  
+ The documentation distribution includes:
+  
+ File Name               Description                     Protocol
+ ---------               -----------                     --------
+ RA5_0_TM_P124           RA Nuclear Medicine Tech Manual BINARY
+ RA5_0_AG_P124           RA Nuclear Medicine ADPAC Guide BINARY
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch cannot be installed with Radiology/Nuclear Medicine users on
+ the system. This patch should take less than 5 minutes to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you must backup any routines
+     exported with this patch. When prompted for the INSTALL enter the
+     patch # (RA*5.0*124):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter RA*5.0*124.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+     
+     Disable the following options:
+     ------------------------------
+     Exam Entry/Edit Menu     [RA EXAMEDIT]
+     Case No. Exam Edit       [RA EDITCN]
+     Edit Exam by Patient     [RA EDITPT]
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Have the AO/ADPAC alert the radiology staff of the security key change
+ so they can request the allocation of the 'RA UNVERIFY' key.
+  
+ Backout/Roll-back strategy
+ ==========================
+ Note: Back-out will be done only with the concurrence and participation
+ of the development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision 
+ between development team, VA site/region personnel and other appropriate
+ VA personnel. A national help desk ticket should be logged before
+ attempting any backout procedure.
+  
+ If you have backed up the components documented under the 'Backup 
+ requirements prior to patch installation' section the roll-back will be 
+ ready to go when your national help desk ticket is answered.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADD2
+    Before: B18850431   After: B26464377  **84,47,124**
+Routine Name: RADLQ1
+    Before: B35197870   After: B35681929  **15,97,47,137,124**
+Routine Name: RAEDCN
+    Before: B69681618   After: B86443933  **5,13,10,18,28,31,34,45,85,97,124**
+Routine Name: RAEDCN1
+    Before: B15841829   After: B33553428  **18,45,93,106,113,124**
+Routine Name: RAIPR124
+    Before:       n/a   After:   B221656  **124**
+Routine Name: RAIPS124
+    Before:       n/a   After:  B9199604  **124**
+Routine Name: RANPROU
+    Before:  B5444307   After:  B6016594  **127,124**
+Routine Name: RAORDC
+    Before: B20640927   After: B22908747  **113,124**
+Routine Name: RAREG1
+    Before: B33386427   After: B34544181  **7,21,93,137,144,124**
+Routine Name: RARTE
+    Before: B44678185   After: B45769333  **18,34,45,56,99,47,124**
+Routine Name: RARTE1
+    Before: B66239828   After: B66328918  **2,15,17,23,31,68,56,47,124**
+Routine Name: RARTE2
+    Before: B32141462   After: B52409178  **10,31,47,124**
+Routine Name: RARTE5
+    Before:B103201399   After:B105969926  **56,95,97,47,141,124**
+Routine Name: RASETU
+    Before:  B4778388   After:  B6507799  **15,124**
+ 
+Routine list of preceding patches: 113, 127, 141, 144
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 19, 2015
+Completed By:                               Date Completed: JAN 02, 2019
+Released By :                               Date Released : JAN 03, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,274 @@
+
+=============================================================================
+Run Date: DEC 17, 2018                     Designation: EAS*1*171
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #141                      Status: Released
+                  Compliance Date: JAN 17, 2019
+=============================================================================
+
+
+Subject: Enrollment System (ES) 5.4.1 Sustainment Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.4.1. This release, developed in 
+ Java technology, contains Enrollment System Modernization Phase 2 (ESM P2)
+ defect fixes to support Community Care (CC) and ES Sustainment.
+  
+ This software is being installed at AITC and no action is required by the 
+ sites.
+  
+ ES 5.4.1 was successfully deployed on Saturday, December 15th, 2018.
+  
+ The following functionality is updated in this ES 5.4.1 release:
+  
+ ES Sustainment defect fixes:
+  
+ 549296: Health Benefit Plan Assigned - Unselect to Delete is not working
+         properly.
+ 594410: Facility pick-list on User Accounts page displays sites
+         inconsistently.
+ 653932: ES View Unformatted Health Level 7 (HL7) Messages - MSH segment is
+         not displayed flush to the left hand side of the screen.
+ 775711: LabelTag.java is generating incorrect html. 
+ 787075: associationform.jsp hides some field labels when a validation 
+         error occurs.
+ 817804: Address with missing city causes user interface (UI) to error out.
+ 850020: Health Benefit Plan did not show up on ESCC detail report if 
+         Veterans Choice Eligibility (VCE) changed to Ineligible.
+ 856832: The method postDataRetrieval() in ESCCP2ReportDataDAOImpl.java
+         mishandles confidential information, which can compromise user
+         privacy.
+ 856867: The method prettyPrintXML1() in IAMWebServiceDelegateImpl.java can
+         crash the program by dereferencing a null pointer on line 906. 
+ 857884: Vet360 is adding a word "County" to the county field data. 
+ 858985: Annual Internal Revenue Service (IRS) client updates for 
+         Affordable Care Act (ACA).
+ 869295: Comparator method fails when called by Operational Decision 
+         Manager (ODM) rule processing.
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ --------- --------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+            
+ Rational Team Concert (RTC):
+ ----------------------------
+  
+ RTC #       Problem / Resolution:
+ --------    ---------------------
+ 549296      Problem: Health Benefit Plan Assigned - Unselect to Delete is 
+             not working properly.
+  
+             Resolution: When the incoming list of Health Benefit Plans is
+             empty, the list of Health Benefit Plans that's already on the
+             file object is cleared before merging both lists together.
+  
+ 594410      Problem: Facility pick-list on User Accounts page displays 
+             sites inconsistently.
+  
+             Resolution: Updated sort order for facilities.
+  
+ 653932      Problem: ES View Unformatted Health Level 7 (HL7) Messages - 
+             MSH segment is not displayed flush to the left hand side of
+             the screen.
+  
+             Resolution: Reformatted HL7 message view.
+  
+ 775711      Problem: LabelTag.java is generating incorrect html. 
+  
+             Resolution: Modified method doEndTag so the end tags match up
+             with the start tags.
+  
+ 787075      Problem: associationform.jsp hides some field labels when a
+             validation error occurs. 
+  
+             Resolution: Added corrective code after "chosenElem =
+             elem.firstChild.childNodes[0];".
+  
+ 817804      Problem: Address with missing city causes user interface (UI)
+             to error out.
+  
+             Resolution: Added a null check in the city field.
+  
+ 850020      Problem: Health Benefit Plan did not show up on ESCC detail
+             report if Veterans Choice Eligibility (VCE) changed to
+             Ineligible. 
+  
+             Resolution: Modified the report query to include the record's
+             modified timestamp greater than or equal to record modified 
+             date for VCE.
+  
+ 856832      Problem: The method postDataRetrieval() in
+             ESCCP2ReportDataDAOImpl.java mishandles confidential 
+             information, which can compromise user privacy.
+  
+             Resolution: Commented out the debug lines to the logger. They 
+             are not necessary and expose risk according to the Fortify
+             scan.
+  
+ 856867      Problem: The method prettyPrintXML1() in
+             IAMWebServiceDelegateImpl.java can crash the program by
+             dereferencing a null pointer on line 906. 
+  
+             Resolution: Added if block around the close call at line 906 
+             to keep this from being attempted if the object is null, which
+             could cause a crash per the Fortify scan report.
+  
+ 857884      Problem: Vet360 is adding a word "County" to the county field
+             data. 
+  
+             Resolution: Modified ES to fix the HL7 construct logic to 
+             exclude the word "County" when searching/validating the county
+             data.
+  
+ 858985      Problem: Annual Internal Revenue Service (IRS) client updates 
+             for Affordable Care Act (ACA).
+  
+             Resolution: IRS updates for 2019 applied to code and 
+             libraries.  
+  
+ 869295      Problem: Comparator method fails when called by Operational
+             Decision Manager (ODM) rule processing.
+  
+             Resolution: To prevent the exception, specific handling of the
+             null value comparison was added.
+  
+ Test Sites:
+ -----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the modification and defects fixed by 
+ this release is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         ES_5_4_1_RN.PDF         (binary)
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 16, 2018
+Completed By:                               Date Completed: DEC 17, 2018
+Released By :                               Date Released : DEC 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

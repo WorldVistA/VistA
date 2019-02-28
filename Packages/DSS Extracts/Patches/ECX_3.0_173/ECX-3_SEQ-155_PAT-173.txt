@@ -1,0 +1,311 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Monday, 12/17/18 at 13:27
+=============================================================================
+Run Date: JAN 03, 2019                     Designation: ECX*3*173
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #155                      Status: Released
+                  Compliance Date: JAN 04, 2019
+=============================================================================
+
+Associated patches: (v)ECX*3*170   <<= must be installed BEFORE `ECX*3*173'
+
+Subject: DSS FY 2019 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Since the release of the FY19 DSS Sustainment patch, ECX*3.0*170, four
+ issues have been identified.  
+  
+ The first issue is in the MOV extract. If a patient goes ASIH other 
+ facility in one month (e.g. 2/28/18) and returns from ASIH other facility 
+ in the next month (e.g. 3/2/18) the ending movement from 3/2/18 is being 
+ included in the FEB extract, which is incorrect. The extract will now put 
+ the records in the correct month.
+  
+ The second issue is related to the MOV extract audit report.  When a 
+ patient returns from ASIH other facility, the discharge record that's 
+ created does not have a ward.  As a result, the record is included in the 
+ "missing wards" section of the report.  While this is correct, the user 
+ doesn't know that this is an ASIH other facility related record, which 
+ doesn't require any action.  The report will now indicate if the record 
+ is an ASIH other facility type record.  Related to this report, the 
+ "facility" field was not showing the facility, but was showing the ward 
+ location.  This field will now show the facility information from the 
+ MEDICAL CENTER DIVISION file (#40.8).
+  
+ The third issue is related to the ADM extract audit report.  When a 
+ patient goes ASIH other facility, an ADM record is created to show the 
+ start of the ASIH other facility episode of care.  The ward stored with 
+ that record is the ward the patient was on prior to going ASIH other 
+ facility.  The ADM extract audit report was incorrectly counting this 
+ record as an admission for that ward.  The report has been modified to 
+ not count ASIH other facility records and will list them at the end of 
+ the report in a separate section.
+  
+ The fourth issue is the creation of the DSS IDENTIFIER field in the Event 
+ Capture extract.  In a recent Event Capture update, DSS units could now
+ have a 'send to PCE' setting of OOS (Occasion Of Service).  This new 
+ setting was not considered when building the DSS IDENTIFIER.  The stop 
+ code was not correctly identified in this case, causing the DSS 
+ IDENTIFIER to be all zeroes.
+  
+ Problem #1: MOV extract incorrectly storing records from outside of the 
+ extract time frame.
+  
+   SERVICE NOW TICKET:
+   ===================
+   N/A  
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When a patient goes ASIH other facility in one month and returns the 
+   next month, the movement that ends the ASIH other facility episode of 
+   care is incorrectly included in the current month's extract.
+  
+   Resolution:
+   -----------
+   The routine ECXMOV was modified to exclude movements that are outside 
+   of the extract timeframe.  If a movement that ends the ASIH other 
+   facility episode of care is in the following month, the movement is 
+   stored for review and inclusion when the next month's extract is 
+   performed.
+  
+ Problem #2: The MOV extract audit report doesn't identify ASIH other 
+ facility movements and the facility information in the missing wards 
+ section is incorrect.
+  
+  
+   SERVICE NOW TICKET:
+   ===================
+   INC3103077
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   ASIH other facility records do not have a ward associated with them.  
+   As a result, they appear in the "missing wards" section of the report. 
+   These records do not need to be fixed but there wasn't a way to identify
+   these records as being ASIH other facility movements.  The report also 
+   incorrectly identified a ward instead of the facility in the "facility" 
+   field of the missing wards section of the report.
+  
+   Resolution:
+   -----------
+   Routine ECXAMOV was modified to include a field that indicates if the 
+   record is an ASIH other facility type record.  ASIH other facility 
+   entries in the missing wards section of the report do not need to be 
+   fixed.  This routine was also modified to get facility information from 
+   the MEDICAL CENTER DIVISION file (#40.8) rather than the WARD LOCATION 
+   file (#42).
+  
+ Problem #3: The ADM extract audit report is incorrectly counting ASIH 
+ other facility admissions.
+  
+   SERVICE NOW TICKET:
+   ===================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   -------- 
+   The ADM extract audit report is counting ASIH other facility 
+   admissions.  This report should only count admissions to the parent 
+   facility.
+  
+   Resolution:
+   -----------
+   Routine ECXAADM was modified to skip records that are ASIH other 
+   facility related.  The ASIH other facility records will now appear at 
+   the end of the report in a separate section.
+  
+ Problem #4: Event Capture extract incorrectly builds the DSS IDENTIFIER.
+  
+   SERVICE NOW TICKET:
+   ===================
+   INC3456428  
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When the DSS unit associated with the Event Capture workload has a 
+   'send to PCE' setting of "OOS" the DSS IDENTIFIER is not using the stop 
+   code associated with the clinic.  Instead, it's defaulting to 000.
+  
+   Resolution:
+   -----------
+   Routine ECXEC was modified to check the DSS unit's 'send to PCE' 
+   setting and if it's "OOS" then it will get the stop code from the 
+   associated clinic.  Routine ECXQSR was also updated even though the 
+   QUASAR extract does not use OOS related DSS units/clinics at this time. 
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available and may be retrieved directly using Secure File 
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following Office of Information (OI) Field Offices:
+  
+   OIFO               SFTP ADDRESS               
+   ------------       ------------------------   
+   First available    download.vista.domain.ext
+   Hines              domain.ext
+   Salt Lake City     domain.ext
+   
+ Below is a list of the files related to this patch that will be needed and
+ available via the SFTP sites listed above.
+  
+ File Description                       File Name             
+ -------------------------------------------------------------
+ Users Guide                             DSS_UG.pdf  
+ Technical Manual                        DSS_TM.pdf  
+ Deployment, Install, Backout,
+ Rollback Guide (Installation Guide)     DSS_DIBR.pdf
+ Version Description Doc (Release Notes) DSS_VDD.pdf 
+  
+ Documentation can also be found on the System Design and Development Web 
+ page at: https://www.domain.ext/vdl/application.asp?appid=35 
+  
+ Test Sites:
+ -----------
+ Boston
+ Little Rock
+ Fort Harrison
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*173):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*173 when prompted for a build name.
+        b.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+            of Install? NO//' respond NO.
+        c.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  NO//' respond NO.
+        d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? NO//' respond YES.
+        e.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+        g.  If prompted 'Delay Install (Minutes):  (0-60):  0//'
+            answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXAADM
+    Before: B77033155   After: B98478030  **8,33,149,170,173**
+Routine Name: ECXAMOV
+    Before:B118886242   After:B137341561  **8,33,149,173**
+Routine Name: ECXEC
+    Before:B122027345   After:B122320440  **11,8,13,24,27,33,39,46,49,
+                                           71,89,92,105,120,127,132,136,
+                                           144,149,154,161,166,170,173**
+Routine Name: ECXMOV
+    Before: B54397407   After: B64293383  **8,24,33,39,41,42,46,65,84,
+                                           107,105,128,127,161,166,170,
+                                           173**
+Routine Name: ECXQSR
+    Before: B75027967   After: B75325783  **11,8,13,26,24,34,33,35,39,
+                                           43,46,49,64,71,84,92,106,105,
+                                           120,124,127,132,136,144,154,
+                                           161,166,170,173**
+Routine Name: ECXUTL6
+    Before: B75618868   After:B107741652  **92,105,112,119,132,154,170,173**
+ 
+Routine list of preceding patches: 170
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 28, 2018
+Completed By:                               Date Completed: JAN 02, 2019
+Released By :                               Date Released : JAN 03, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

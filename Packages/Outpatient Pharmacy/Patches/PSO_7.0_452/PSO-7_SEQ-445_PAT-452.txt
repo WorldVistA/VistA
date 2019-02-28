@@ -1,0 +1,435 @@
+
+=============================================================================
+Run Date: NOV 30, 2018                     Designation: PSO*7*452
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #445                      Status: Released
+                  Compliance Date: DEC 30, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*398   <<= must be installed BEFORE `PSO*7*452'
+                    (v)PSO*7*448   <<= must be installed BEFORE `PSO*7*452'
+                    (v)PSO*7*500   <<= must be installed BEFORE `PSO*7*452'
+                    (v)PSO*7*539   <<= must be installed BEFORE `PSO*7*452'
+
+Subject: EPIP OUTPATIENT PHARMACY REMEDIATION 1.0
+
+Category: 
+  - Informational
+  - Routine
+  - Other
+
+Description:
+============
+
+      ------------------------------------------------------------------
+                                   PLEASE NOTE
+  
+            THIS PATCH IS PART OF THE EPIP_PSO_PSS_IP21.KID HOST FILE
+            WHICH CONSISTS OF PSO*7.0*452 AND PSS*1.0*215. THE PSO PATCH
+            WILL BE INSTALLED BEFORE THE PSS PATCH.
+  
+       ------------------------------------------------------------------
+  
+ PSO*7.0*452 provides the following enhancements to VistA:
+  
+ - Enhances the High Cost Rx Report [PSO HI COST] option to list a site's 
+ OUTPATIENT SITE file (#59) entries. This enables users to select any 
+ combination of available Outpatient Pharmacy sites so that only 
+ information from those sites is included in the report. After specifying a
+ Date Range and Dollar Limit, the new prompt "For RXs written at OUTPATIENT
+ SITES(s): (Example 1,3 or 1-5)" displays. A list of active sites is
+ retrieved from the OUTPATIENT SITE file and displays as a numbered list.
+ The user can select one, some, or all sites to be included in the report.
+ For example, a multi-divisional facility with five active outpatient sites
+ could create the report for one site by typing the assigned site number
+ (e.g., "3"), for multiple sites by typing the corresponding site numbers
+ separated by a comma (e.g., "1,3,5"), or for all sites by typing the range
+ "1-5."
+  
+ A new header, "Outpatient Site(s) Included in this Report," is added to 
+ the top of the report. The header displays a list of the site(s) included 
+ in the report. This modification eliminates the need for multi-divisional 
+ sites to manually identify the prescriptions associated with each pharmacy
+ location, thus reducing effort and potential errors.
+  
+ - Enables Outpatient Pharmacy Services to print suspended prescription 
+ labels by category when using the Print from Suspense File [PSO PNDLBL] 
+ option. The new prompt "Select Print Category: (A/N/C/S/R/D/V/E): ALL//" 
+ allows users to specify the prescription labels to be printed from the RX 
+ SUSPENSE file (#52.5) by selecting from the categories All (A),
+ Non-Controlled Drugs (N), Controlled Substances (C), Supplies (S),
+ Refrigerated Items (R), Drugs (D), and VA Classifications (V). To leave 
+ the prompt without choosing a print category, select Exit (E). Type "?" at
+ the prompt to display help text describing the available print categories.
+  
+ The existing option to print all labels is still available. When the new 
+ prompt displays, accepting the default value "ALL" prints all labels in 
+ the Suspense File using existing functionality and prompts. A variety of 
+ new and existing prompts follow. Extra help text is added to the 
+ Refrigerated and Supplies prompts to clarify expected results when using 
+ the Include or Exclude functionality.
+  
+ - Modifies the VistA Outpatient Pharmacy System to send an early warning 
+ message to a new PHARMACY SUPERVISORS MailMan group, notifying recipients 
+ that one or more active Outpatient Pharmacy sites in a multi-divisional 
+ facility are approaching the upper limit of the defined prescription 
+ numbering series. Each pharmacy site uses a prescription numbering series 
+ unique to that site. The new warning is intended to prevent an 
+ unintentional shutdown of prescription processing that will occur if the 
+ pharmacy reaches the upper limit of the numbering series. When the last 
+ number in the defined range is assigned to an order, all Outpatient 
+ Pharmacy prescription processing stops until a new range of numbers is 
+ defined by a Pharmacy Automated Data Processing Application Coordinator 
+ (ADPAC) or Pharmacy Informaticist.
+  
+ This enhancement adds the new PSO RX Numbering Warning [PSO RX NUMBERING 
+ WARNING] option. The post-installation routine PSOP452P creates the new 
+ PHARMACY SUPERVISORS mail group and schedules the PSO RX Numbering Warning
+ option to run a nightly job at 03:01. This nightly job runs the new
+ routine PSOEOPNW, which searches the prescription number ranges for all
+ active sites in the OUTPATIENT SITE file (#59) and generates a MailMan
+ message to the PHARMACY SUPERVISORS group when a new range must be
+ defined. The mail group must be populated with the recipients responsible
+ for modifying the range at each active Outpatient Pharmacy site.
+  
+ By default, the warning message is sent when there are 1000 prescription 
+ numbers left in a range. The warning will be sent each time the nightly 
+ job runs and less than 1000 numbers remain in the defined range. The first
+ warning can be customized for each site using the new RX# UPPER BOUND
+ WARNING LIMIT field (#48) added to the Pharmacy System file (#59.7) by
+ companion patch PSS*1.0*215. The upper-limit value stored in this field
+ determines when the system sends an early warning message. If no custom
+ value is entered, then the default value is used.
+  
+ Most VA facilities use separate numbering systems for Narcotic and 
+ non-Narcotic medications. If Narcotics are numbered separately, then the 
+ warning will include information about the upper limit for Narcotics. If 
+ Narcotics are not numbered separately, then they are grouped with 
+ non-Narcotic medications. Information specific to Narcotics numbering is 
+ only tracked and displayed if Narcotics are numbered separately.
+  
+ - Enhances the patient demographic information displayed when using 
+ certain Pharmacy options. The new patient demographic details include the 
+ patient's primary care team and/or physician, physician contact numbers 
+ (phone/pager), clinician remarks, and assigned or recent facility where 
+ care is recieved. The additional patient demographic information is 
+ preceded by the header "Extended Patient Demographics." These demographic
+ details are retrieved from existing patient information in VistA and added
+ to the demographic information currently displayed when using any of the
+ following options: Medication Profile [PSO P], View Prescriptions [PSO
+ VIEW], Patient Prescription Processing [PSO LM BACKDOOR ORDERS], and
+ Complete Orders from OERR [PSO LMOE FINISH].
+  
+ This enhancement also adds a new Clinical Alert to highlight important 
+ care information relevant to the patient. Pharmacy Supervisors can use the
+ new Clinical Alert Enter/Edit [PSO CLINICAL ALERT ENTER/EDIT] option to
+ make Pharmacy staff aware of information such as drug interactions or the
+ patient's participation in clinical trials. When a Pharmacy Supervisor
+ enters a Clinical Alert, the Alert text is prominently displayed with
+ other patient demographic information when Pharmacy staff use any of the
+ aforementioned Outpatient Pharmacy [PSO] options to process and dispense
+ outpatient medications.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ ------------------         -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                  File #                    New/Modified/Deleted
+ ---------                  ------                    --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ PHARMACY SUPERVISORS       New
+  
+  
+ Options Associated:
+  
+ Option Name                        Type             New/Modified/Deleted
+ -----------                        ----             ---------------------
+ Clinical Alert Enter/Edit          Run Routine      New
+   [PSO CLINICAL ALERT ENTER/EDIT]                   
+ PSO RX NUMBERING WARNING           Run Routine      New
+  
+  
+ Protocols Associated:
+  
+ Protocol                   Name                      New/Modified/Deleted
+ -----------------          -----                     ---------------------
+ N/A
+  
+  
+ Parameters Associated:
+  
+ Parameter Name  New/Modified/Deleted
+ --------------- -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type  File Name (Number)   New/Modified/Deleted
+ -------------     ----  ------------------   --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20150311 High Cost Rx Report
+ 20151109 Pharmacy Print from Suspense by Category
+ 20150512 Early Warning Advisory for Approaching the end of Rx Number 
+ Ranges 
+ 20151001 Pharmacy Patient Demographics
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Orlando VA Medical Center, Orlando, FL
+ VA St. Louis Health Care System, Saint Louis, MO
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ The software distribution includes:
+  
+ File Name                       Description
+ ----------------------------------------------------------------------- 
+ EPIP_PSO_PSS_IP21.KID            KIDS Build 
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ https://www.domain.ext/vdl/.
+  
+  
+ Title                              File Name                   FTP Mode
+ -----------------------------------------------------------------------
+ Outpatient Pharmacy (PSO)
+  Manager's User Manual             pso_man_um_p452.doc            Binary
+ Outpatient Pharmacy (PSO)
+  Manager's User Manual             pso_man_um_p452.pdf            Binary
+ Outpatient Pharmacy (PSO)
+  Pharmacist's User Manual          pso_7_phar_um_p452.docx         Binary
+ Outpatient Pharmacy (PSO)
+  Pharmacist's User Manual          pso_7_phar_um_p452.pdf         Binary
+ Outpatient Pharmacy (PSO)
+   Technician's User Manual         pso_7_tech_um_p452.docx        Binary
+ Outpatient Pharmacy (PSO)
+   Technician's User Manual         pso_7_tech_um_p452.pdf         Binary
+ Outpatient Pharmacy (PSO)
+   Technical Manual/Security Guide  pso_7_tm_p452.doc              Binary
+ Outpatient Pharmacy (PSO)
+   Technical Manual/Security Guide  pso_7_tm_p452.pdf              Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu.
+  
+ 2. Select option 1, Load a Distribution. At the "Enter a Host File:" 
+ prompt, enter the full pathname for host file EPIP_PSO_PSS_IP21.KID.
+  
+ 3. Enter YES for each "OK to Continue with Load? NO//" prompt. 
+  
+ 4. When the Installation Menu is redisplayed, use the following options 
+ to continue patch installation. When prompted for the INSTALL NAME, enter 
+ primary patch number PSO*7.0*452.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 5. From the Installation Menu, select the Install Package(s) option When 
+ prompted for the INSTALL NAME, enter primary patch number PSO*7.0*452.
+  
+ 6. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 9. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 10. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-installation routine PSOP452P runs automatically at the end of 
+ the installation. This routine creates the PHARMACY SUPERVISORS mail group
+ and schedules the PSO RX NUMBERING WARNING option to run a nightly job at
+ 03:01 daily.
+  
+ This nightly job runs the new PSOEOPNW routine, which searches 
+ prescription number ranges for active sites in the OUTPATIENT SITE file 
+ (#59) and sends a warning message to the new mail group when a new range 
+ must be defined. The PHARMACY SUPERVISORS mail group is created without 
+ any members and must be populated with appropriate recipients for each 
+ site.
+  
+ The post-installation routine is automatically deleted when installation 
+ completes.
+  
+  
+ Backout Procedure: 
+ ------------------ 
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of the multi-patch build that includes this 
+ patch, it is not recommended for backout, and a restore from a backup of 
+ the Transport Global should not be attempted. However, in the event that a
+ site decides to back out the primary and/or companion patches included in
+ the host file, the site should contact the National Service Desk (NSD) to
+ submit a help desk ticket. The development team will need to issue one or 
+ more follow-on patches in order to comprehensively complete the backout, 
+ after coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure: 
+ -------------------------------- 
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSO routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSO routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSO*7.0*452 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out for this patch. It does not confirm that routine changes 
+ within other patches in the multi-patch build have been backed out. It 
+ also does not confirm that component changes other than routines have 
+ been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 56
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCST10
+    Before: B13881983   After: B20212856  **31,56,331,398,452**
+Routine Name: PSODEM
+    Before: B18912575   After: B21822724  **5,19,233,258,326,390,411,402,
+                                           500,452**
+Routine Name: PSODEMSB
+    Before:       n/a   After: B62505884  **452**
+Routine Name: PSODIR4
+    Before:       n/a   After: B57253130  **452**
+Routine Name: PSOEOPNW
+    Before:       n/a   After: B11880159  **452**
+Routine Name: PSOP452P
+    Before:       n/a   After:  B5385563  **452**
+Routine Name: PSOSITED
+    Before: B11301085   After: B11480103  **24,65,268,354,452**
+Routine Name: PSOSUCAT
+    Before:       n/a   After: B81054236  **452**
+Routine Name: PSOSULB1
+    Before: B46165452   After: B47930066  **10,200,264,289,367,421,448,452**
+Routine Name: PSOSULBL
+    Before:B104789141   After:B105467816  **139,173,174,148,200,260,264,
+                                           287,289,290,354,421,370,427,
+                                           466,539,452**
+ 
+Routine list of preceding patches: 398, 448, 500, 539
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 09, 2015
+Completed By:                               Date Completed: NOV 30, 2018
+Released By :                               Date Released : NOV 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

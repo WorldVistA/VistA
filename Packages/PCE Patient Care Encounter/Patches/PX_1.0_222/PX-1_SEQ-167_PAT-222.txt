@@ -1,0 +1,194 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/19/18 at 11:47
+=============================================================================
+Run Date: DEC 18, 2018                     Designation: PX*1*222
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #167                      Status: Released
+                  Compliance Date: JAN 18, 2019
+=============================================================================
+
+Associated patches: (v)PX*1*189    <<= must be installed BEFORE `PX*1*222'
+
+Subject: PREVENT UNDEFINED IN PROVIDER ENCOUNTER COUNTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch prevents an <UNDEFINED> error from occurring when 
+ routine PXRRECSE attempts to sort corrupt data identified by an invalid
+ x-reference.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1391638 - Issue: <UNDEFINED>VISIT+2^PXRRECSE
+  
+    Problem:
+    --------
+    The Provider Encounter Counts [PXRR PROVIDER ENCOUNTER COUNTS] menu 
+    option will crash with an <UNDEFINED> error if the cross reference 
+    provides a corrupt entry within the date range specified by the user.
+  
+    Resolution:
+    -----------
+    Added data validation to routine PXRRECSE to determine if the currently
+    selected record is corrupt before processing.
+  
+  
+ TEST SITES:
+ -----------
+ Indianapolis VAMC
+ Salem VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch PX*1.0*222:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? YES//" respond YES.
+                 a. When prompted "Enter options you wish to mark as 'Out
+                    Of Order':", enter the following options:
+                    
+                 Provider Encounter Counts [PXRR PROVIDER ENCOUNTER COUNTS]
+                 
+                 b. When Prompted "Enter protocols you wish to mark as
+                    'Out Of Order':", Press <ENTER>.
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRRECSE
+    Before: B59966884   After: B60515211  **3,10,12,18,72,189,222**
+ 
+Routine list of preceding patches: 189
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 25, 2018
+Completed By:                               Date Completed: DEC 18, 2018
+Released By :                               Date Released : DEC 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

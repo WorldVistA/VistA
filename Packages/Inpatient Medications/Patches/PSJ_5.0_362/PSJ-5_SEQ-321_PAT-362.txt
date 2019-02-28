@@ -1,0 +1,270 @@
+$TXT Created by               at DVACACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 05/02/18 at 10:21
+=============================================================================
+Run Date: NOV 30, 2018                     Designation: PSJ*5*362
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #321                      Status: Released
+                  Compliance Date: DEC 30, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*337   <<= must be installed BEFORE `PSJ*5*362'
+                    (v)PSJ*5*356   <<= must be installed BEFORE `PSJ*5*362'
+
+Subject: CAS MPDU - PADE FIXES AND ENHANCEMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ MPDU - MEDICATION PERMISSIONS/DISPENSING UPDATES - Build 3
+  
+ This patch will address the following issues.
+  
+  1. Timestamp Differential in VistA.
+  
+  2. Honor Value of SEND CHECKIN/SURG HL7 FOR INPT for Admitted patients 
+     only.
+  
+  3. Prohibit Unintentional Reactivation/Inactivation of PADE Devices.
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Item 1
+ ------ 
+ Problem:
+ -------
+ The VistA system should use the exact time sent from the vendor system as 
+ long as it is no longer than 2 hours off the time in VistA.
+  
+ Resolution:
+ ----------
+ Line tag FILETRAN^PSJPAD7I has been modified to allow a time gap of up to
+ 2 hours in the future, and if it is >2 hours then the transaction
+ date/time will be set to NOW Date/Time.
+  
+ Item 2
+ ------ 
+ Problem:
+ -------
+ For a PADE user, the value of the SEND CHECKIN/SURG HL7 FOR INPT to 
+ be honored for admitted inpatients only so that check-in messages will 
+ always be sent for non-admitted patients regardless of the parameter's 
+ value.
+  
+ Resolution:
+ ----------
+ Line tag CLCI^PSJPDCLA has been modified to block check-in/Surg HL7 
+ messages only if the patient is an inpatient and the flag SEND 
+ CHECKIN/SURG HL7 FOR INPT is not set to "Y".
+  
+  
+ Item 3
+ ------ 
+ Problem:
+ -------
+ As a user of the VistA PADE interface, the DISPLAY PADE INDICATORS IN IOE?
+ prompt edit, through option 'PADE Inventory System Setup '(PSJ PADE
+ INVENTORY SYSTEM), to not automatically reactivate devices that are 
+ currently inactive, or to inactivate devices that are currently active.
+  
+  
+ Resolution:
+ ----------
+ The line tag PSJOE^PSJPADSI has been modified to not execute the code
+ (D DEVONOFF^PSJPDRU1) to reactivate/activate the devices automatically
+ when stepping over the prompt DISPLAY PADE INDICATORS IN IOE?
+ The user will have the control to reactivate/inactivate a device.
+  
+  
+ Test Sites:
+ ----------
+ New York Harbor
+ Kansas City
+ Hines
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended to be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 3 minutes to
+ install. 
+   
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System (KIDS) menu,
+      select the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*362).
+     a. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when the patch
+        is installed. It compares all components of the patch (routines,
+        DDs, templates, etc.).
+     b. Verify Checksums in Transport Global - This option will ensure
+        the integrity of the routines that are in the transport global.
+     c. Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+  
+   4. Select the installation option Backup a Transport Global. This
+      option will create a backup message of any routines exported with 
+      this patch in case you need to backout this patch. It will not
+      backup any other changes such as Data Dictionaries (DD's) or
+      templates. It is important this step be followed, because if backout
+      of this patch is necessary, having the backup will make the process
+      much easier.
+  
+   5. Use the Install Package(s) option and select the package
+      PSJ*5.0*362.
+  
+   6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+  ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;16 DEC 97;[BUILD #] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure:
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSJ Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSJ*5.0*362 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSJ*5.0*362 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPAD7I
+    Before: B94307166   After: B94847537  **317,356,362**
+Routine Name: PSJPADSI
+    Before:B213018114   After:B211762174  **317,337,362**
+Routine Name: PSJPDCLA
+    Before:B148639456   After:B150716817  **317,337,362**
+ 
+Routine list of preceding patches: 337, 356
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 27, 2018
+Completed By:                               Date Completed: NOV 28, 2018
+Released By :                               Date Released : NOV 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

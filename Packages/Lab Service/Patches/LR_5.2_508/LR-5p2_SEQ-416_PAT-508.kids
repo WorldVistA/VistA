@@ -1,0 +1,649 @@
+Released LR*5.2*508 SEQ #416
+Extracted from mail message
+**KIDS**:LR*5.2*508^
+
+**INSTALL NAME**
+LR*5.2*508
+"BLD",10637,0)
+LR*5.2*508^LAB SERVICE^0^3180723^y
+"BLD",10637,1,0)
+^^20^20^3180626^
+"BLD",10637,1,1,0)
+This patch will update the DESCRIPTION field (#6) in file #62.07 with the
+"BLD",10637,1,2,0)
+Preliminary Comments field for Bacteriology, TB Bacteriology, and
+"BLD",10637,1,3,0)
+Mycology.
+"BLD",10637,1,4,0)
+Also, it will clean up obsolete codes in the EXECUTE CODE field #1 of
+"BLD",10637,1,5,0)
+the EXECUTE CODE file (#62.07), that were discovered after the release of
+"BLD",10637,1,6,0)
+LR*5.2*476. The obsolete execute codes were not introduced by LR*5.2*476
+"BLD",10637,1,7,0)
+because it was found that many sites have the codes before LR*5.2*476
+"BLD",10637,1,8,0)
+was installed. In a nutshell, Mycology will be cleaned up of obsolete
+"BLD",10637,1,9,0)
+field #19.2; in Bacteriology, the expression LRSPEC=68 will be replaced
+"BLD",10637,1,10,0)
+with LRSPEC=360.
+"BLD",10637,1,11,0)
+When the patch is installed, it saves the existing DESCRIPTION field 
+"BLD",10637,1,12,0)
+contents and the Execute codes in the installation log for later review 
+"BLD",10637,1,13,0)
+if desired. The log can be used to manually restore local changes found
+"BLD",10637,1,14,0)
+and not restored by this patch.
+"BLD",10637,1,15,0)
+ 
+"BLD",10637,1,16,0)
+This patch also modifies the routine LRMISTF by adding the 
+"BLD",10637,1,17,0)
+preliminary comment fields for Bacteriology, TB Bacteriology, and 
+"BLD",10637,1,18,0)
+Mycology with corresponding expansion codes so that the canned messages 
+"BLD",10637,1,19,0)
+from the LAB DESCRIPTIONS file (#62.5) appear during Results Entry 
+"BLD",10637,1,20,0)
+(Batch).
+"BLD",10637,4,0)
+^9.64PA^^
+"BLD",10637,6.3)
+8
+"BLD",10637,"ABPKG")
+n
+"BLD",10637,"INID")
+^y
+"BLD",10637,"INIT")
+POST^LR52P508
+"BLD",10637,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10637,"KRN",.4,0)
+.4
+"BLD",10637,"KRN",.401,0)
+.401
+"BLD",10637,"KRN",.402,0)
+.402
+"BLD",10637,"KRN",.403,0)
+.403
+"BLD",10637,"KRN",.5,0)
+.5
+"BLD",10637,"KRN",.84,0)
+.84
+"BLD",10637,"KRN",3.6,0)
+3.6
+"BLD",10637,"KRN",3.8,0)
+3.8
+"BLD",10637,"KRN",9.2,0)
+9.2
+"BLD",10637,"KRN",9.8,0)
+9.8
+"BLD",10637,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10637,"KRN",9.8,"NM",1,0)
+LRMISTF^^0^B15004530
+"BLD",10637,"KRN",9.8,"NM","B","LRMISTF",1)
+
+"BLD",10637,"KRN",19,0)
+19
+"BLD",10637,"KRN",19.1,0)
+19.1
+"BLD",10637,"KRN",101,0)
+101
+"BLD",10637,"KRN",409.61,0)
+409.61
+"BLD",10637,"KRN",771,0)
+771
+"BLD",10637,"KRN",779.2,0)
+779.2
+"BLD",10637,"KRN",870,0)
+870
+"BLD",10637,"KRN",8989.51,0)
+8989.51
+"BLD",10637,"KRN",8989.52,0)
+8989.52
+"BLD",10637,"KRN",8994,0)
+8994
+"BLD",10637,"KRN","B",.4,.4)
+
+"BLD",10637,"KRN","B",.401,.401)
+
+"BLD",10637,"KRN","B",.402,.402)
+
+"BLD",10637,"KRN","B",.403,.403)
+
+"BLD",10637,"KRN","B",.5,.5)
+
+"BLD",10637,"KRN","B",.84,.84)
+
+"BLD",10637,"KRN","B",3.6,3.6)
+
+"BLD",10637,"KRN","B",3.8,3.8)
+
+"BLD",10637,"KRN","B",9.2,9.2)
+
+"BLD",10637,"KRN","B",9.8,9.8)
+
+"BLD",10637,"KRN","B",19,19)
+
+"BLD",10637,"KRN","B",19.1,19.1)
+
+"BLD",10637,"KRN","B",101,101)
+
+"BLD",10637,"KRN","B",409.61,409.61)
+
+"BLD",10637,"KRN","B",771,771)
+
+"BLD",10637,"KRN","B",779.2,779.2)
+
+"BLD",10637,"KRN","B",870,870)
+
+"BLD",10637,"KRN","B",8989.51,8989.51)
+
+"BLD",10637,"KRN","B",8989.52,8989.52)
+
+"BLD",10637,"KRN","B",8994,8994)
+
+"BLD",10637,"QUES",0)
+^9.62^^
+"BLD",10637,"REQB",0)
+^9.611^1^1
+"BLD",10637,"REQB",1,0)
+LR*5.2*476^1
+"BLD",10637,"REQB","B","LR*5.2*476",1)
+
+"INIT")
+POST^LR52P508
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2950611
+"PKG",26,22,1,"PAH",1,0)
+508^3180723
+"PKG",26,22,1,"PAH",1,1,0)
+^^20^20^3180723
+"PKG",26,22,1,"PAH",1,1,1,0)
+This patch will update the DESCRIPTION field (#6) in file #62.07 with the
+"PKG",26,22,1,"PAH",1,1,2,0)
+Preliminary Comments field for Bacteriology, TB Bacteriology, and
+"PKG",26,22,1,"PAH",1,1,3,0)
+Mycology.
+"PKG",26,22,1,"PAH",1,1,4,0)
+Also, it will clean up obsolete codes in the EXECUTE CODE field #1 of
+"PKG",26,22,1,"PAH",1,1,5,0)
+the EXECUTE CODE file (#62.07), that were discovered after the release of
+"PKG",26,22,1,"PAH",1,1,6,0)
+LR*5.2*476. The obsolete execute codes were not introduced by LR*5.2*476
+"PKG",26,22,1,"PAH",1,1,7,0)
+because it was found that many sites have the codes before LR*5.2*476
+"PKG",26,22,1,"PAH",1,1,8,0)
+was installed. In a nutshell, Mycology will be cleaned up of obsolete
+"PKG",26,22,1,"PAH",1,1,9,0)
+field #19.2; in Bacteriology, the expression LRSPEC=68 will be replaced
+"PKG",26,22,1,"PAH",1,1,10,0)
+with LRSPEC=360.
+"PKG",26,22,1,"PAH",1,1,11,0)
+When the patch is installed, it saves the existing DESCRIPTION field 
+"PKG",26,22,1,"PAH",1,1,12,0)
+contents and the Execute codes in the installation log for later review 
+"PKG",26,22,1,"PAH",1,1,13,0)
+if desired. The log can be used to manually restore local changes found
+"PKG",26,22,1,"PAH",1,1,14,0)
+and not restored by this patch.
+"PKG",26,22,1,"PAH",1,1,15,0)
+ 
+"PKG",26,22,1,"PAH",1,1,16,0)
+This patch also modifies the routine LRMISTF by adding the 
+"PKG",26,22,1,"PAH",1,1,17,0)
+preliminary comment fields for Bacteriology, TB Bacteriology, and 
+"PKG",26,22,1,"PAH",1,1,18,0)
+Mycology with corresponding expansion codes so that the canned messages 
+"PKG",26,22,1,"PAH",1,1,19,0)
+from the LAB DESCRIPTIONS file (#62.5) appear during Results Entry 
+"PKG",26,22,1,"PAH",1,1,20,0)
+(Batch).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LR52P508")
+0^^B42243663^n/a
+"RTN","LR52P508",1,0)
+LR52P508 ;AITC/CR - Cleanup of Execute Code File (#62.07) ; 6/18/18 12:37pm
+"RTN","LR52P508",2,0)
+ ;;5.2;LAB SERVICE;**508**;Sep 27, 1994;Build 8
+"RTN","LR52P508",3,0)
+ ; clean up field #19.2 and specimen #68 in the Execute Code file, #62.07,
+"RTN","LR52P508",4,0)
+ ; in field #1 of file #62.07, the reference to field #19.2 will be deleted for Mycology,
+"RTN","LR52P508",5,0)
+ ; the expression LRSPEC=68 will be replaced with LRSPEC=360 in Bacteriology
+"RTN","LR52P508",6,0)
+ ; the DESCRIPTION field (#6) of file #62.07 will be updated with preliminary comments
+"RTN","LR52P508",7,0)
+ ; for Bacteriology, TB Bacteriology, and Mycology
+"RTN","LR52P508",8,0)
+ Q
+"RTN","LR52P508",9,0)
+ ;
+"RTN","LR52P508",10,0)
+ERR ; keep a history of any error that happened during the installation
+"RTN","LR52P508",11,0)
+ D BMES^XPDUTL("Post-installation of LR*5.2*508 did not complete.")
+"RTN","LR52P508",12,0)
+ I $D(LRERR) D MES^XPDUTL(.LRERR)
+"RTN","LR52P508",13,0)
+ ;alert the user if any error occurred
+"RTN","LR52P508",14,0)
+ I $D(LRERR) D
+"RTN","LR52P508",15,0)
+ .N DIFROM,LRTEXT,XMDUZ,XMY,XMDUZ,XMSUB,XMTEXT
+"RTN","LR52P508",16,0)
+ .S XMSUB="ERROR ENCOUNTERED WHILE INSTALLING LR*5.2*508"
+"RTN","LR52P508",17,0)
+ .S XMDUZ=.5
+"RTN","LR52P508",18,0)
+ .S XMY(DUZ)="",XMY(XMDUZ)=""
+"RTN","LR52P508",19,0)
+ .S LRTEXT(1)="During the post-installation operations of patch"
+"RTN","LR52P508",20,0)
+ .S LRTEXT(2)="LR*5.2*508, an error occurred. Please look at the"
+"RTN","LR52P508",21,0)
+ .S LRTEXT(3)="installation log of the patch for details."
+"RTN","LR52P508",22,0)
+ .S XMTEXT="LRTEXT("
+"RTN","LR52P508",23,0)
+ .D ^XMD
+"RTN","LR52P508",24,0)
+ Q
+"RTN","LR52P508",25,0)
+ ;
+"RTN","LR52P508",26,0)
+ ;
+"RTN","LR52P508",27,0)
+POST ; save the DESCRPTION field in EXECUTE CODE file (#62.07) before changes
+"RTN","LR52P508",28,0)
+ ; lrdsc displays exec code descriptions for bacteriology, tb bacteriology, and mycology
+"RTN","LR52P508",29,0)
+ ; lrien values are national standard IENs for the 3 exec codes above
+"RTN","LR52P508",30,0)
+ I $G(DUZ)="" D BMES^XPDUTL("Your DUZ is not identified in VistA, quitting ...") Q
+"RTN","LR52P508",31,0)
+ D BMES^XPDUTL("Starting Post-Installation for LR*5.2*508")
+"RTN","LR52P508",32,0)
+ D MES^XPDUTL(" ")
+"RTN","LR52P508",33,0)
+ D MES^XPDUTL("Collecting existing DESCRIPTION field information in file #62.07")
+"RTN","LR52P508",34,0)
+ D MES^XPDUTL(" for BACTERIOLOGY (IEN=7), TB BACTERIOLOGY (IEN=8), and MYCOLOGY (IEN=9)")
+"RTN","LR52P508",35,0)
+ N LRFILE,LRFLD,LRIEN,LRROOT
+"RTN","LR52P508",36,0)
+ S LRDSC=""
+"RTN","LR52P508",37,0)
+ S LRFILE=62.07,LRFLD=6,LRROOT=""
+"RTN","LR52P508",38,0)
+ F LRIEN=7,8,9 D
+"RTN","LR52P508",39,0)
+ . S LRDSC=$$GET1^DIQ(LRFILE,LRIEN_",",LRFLD,"","WP") ; get current desc
+"RTN","LR52P508",40,0)
+ . D BMES^XPDUTL("DESCRIPTION field before changes for "_$S(LRIEN=7:"BACTERIOLOGY:",LRIEN=8:"TB BACTERIOLOGY:",LRIEN=9:"MYCOLOGY:",1:""))
+"RTN","LR52P508",41,0)
+ . D MES^XPDUTL(.WP) K WP ;clear array WP to avoid corruption
+"RTN","LR52P508",42,0)
+ D BMES^XPDUTL("====================================================")
+"RTN","LR52P508",43,0)
+ ;
+"RTN","LR52P508",44,0)
+ ; clean up existing desc field and stuff national description with updated prelim comment
+"RTN","LR52P508",45,0)
+ ; check that file is available before updating description field
+"RTN","LR52P508",46,0)
+ F LRIEN=7,8,9 L +^LAB(62.07,LRIEN):5 I '$T D BMES^XPDUTL("Cannot lock file - try later.") G ERR
+"RTN","LR52P508",47,0)
+ D BMES^XPDUTL("Deleting existing data in the DESCRIPTION field of File #62.07 ...")
+"RTN","LR52P508",48,0)
+ F LRIEN=7,8,9 D WP^DIE(LRFILE,LRIEN_",",LRFLD,"K",LRROOT) ;
+"RTN","LR52P508",49,0)
+ D BMES^XPDUTL("DESCRIPTION field is now empty.")
+"RTN","LR52P508",50,0)
+ ;
+"RTN","LR52P508",51,0)
+ D BMES^XPDUTL("Updating DESCRIPTION field of File #62.07 with national definitions ...")
+"RTN","LR52P508",52,0)
+ ; add national descritpion with preliminary comment to bacteriology
+"RTN","LR52P508",53,0)
+ ; bacteriology, ien=7, comment field is #6 in file #62.07
+"RTN","LR52P508",54,0)
+ K LRTXT,WP
+"RTN","LR52P508",55,0)
+ S LRTXT(1)="Stuff BACT PERSON with current user; COLLECTION SAMPLE;"
+"RTN","LR52P508",56,0)
+ S LRTXT(2)="SITE/SPECIMEN; COMMENT ON SPECIMEN; BACT RPT STATUS; PRELIMINARY BACT COMMENT;"
+"RTN","LR52P508",57,0)
+ S LRTXT(3)="if specimen is urine use URINE SCREEN; if specimen is sputum use SPUTUM SCREEN."
+"RTN","LR52P508",58,0)
+ S LRTXT(4)="Enter the ORGANISM and antibiotics (edit templates may be utilized); BACT RPT REMARK; BACT RPT DATE APPROVED."
+"RTN","LR52P508",59,0)
+ S LRCOMM=6
+"RTN","LR52P508",60,0)
+ S LRIEN=7 D WP^DIE(LRFILE,LRIEN_",",LRCOMM,"A","LRTXT")
+"RTN","LR52P508",61,0)
+ S LRDSC=$$GET1^DIQ(LRFILE,LRIEN_",",LRFLD,"","WP")
+"RTN","LR52P508",62,0)
+ D BMES^XPDUTL("DESCRIPTION Field after changes for BACTERIOLOGY:")
+"RTN","LR52P508",63,0)
+ D MES^XPDUTL("")
+"RTN","LR52P508",64,0)
+ D MES^XPDUTL(.WP) ; output refreshed description of exec code
+"RTN","LR52P508",65,0)
+ ; ========================================= 
+"RTN","LR52P508",66,0)
+ ;
+"RTN","LR52P508",67,0)
+ ; add national description with preliminary comment for tb bacteriology
+"RTN","LR52P508",68,0)
+ K LRTXT,WP
+"RTN","LR52P508",69,0)
+ S LRTXT(1)="Stuff TB ENTERING PERSON with current user; SITE/SPECIMEN;"
+"RTN","LR52P508",70,0)
+ S LRTXT(2)="COMMENT ON SPECIMEN; TB RPT STATUS; ACID FAST STAIN; QUANTITY; multiple"
+"RTN","LR52P508",71,0)
+ S LRTXT(3)="MYCOBACTERIUM including QUANTITY, COMMENTS and DRUGS; PRELIMINARY TB COMMENT;"
+"RTN","LR52P508",72,0)
+ S LRTXT(4)="TB RPT REMARK; TB RPT DATE APPROVED."
+"RTN","LR52P508",73,0)
+ S LRIEN=8 D WP^DIE(LRFILE,LRIEN_",",LRCOMM,"A","LRTXT")
+"RTN","LR52P508",74,0)
+ S LRDSC=$$GET1^DIQ(LRFILE,LRIEN_",",LRFLD,"","WP")
+"RTN","LR52P508",75,0)
+ D BMES^XPDUTL("DESCRIPTION Field after changes for TB BACTERIOLOGY:")
+"RTN","LR52P508",76,0)
+ D MES^XPDUTL("")
+"RTN","LR52P508",77,0)
+ D MES^XPDUTL(.WP) ; output refreshed description of exec code
+"RTN","LR52P508",78,0)
+ ; ========================================== 
+"RTN","LR52P508",79,0)
+ ;
+"RTN","LR52P508",80,0)
+ ; add national description with preliminary comment to mycology
+"RTN","LR52P508",81,0)
+ K LRTXT,WP
+"RTN","LR52P508",82,0)
+ S LRTXT(1)="Stuff MYC PERSON with current user; SITE/SPECIMEN; COMMENT ON"
+"RTN","LR52P508",83,0)
+ S LRTXT(2)="SPECIMEN; MYCOLOGY RPT STATUS; multiple FUNGUS/YEAST including QUANTITY and"
+"RTN","LR52P508",84,0)
+ S LRTXT(3)="COMMENTS; PRELIMINARY MYCOLOGY COMMENT; MYCOLOGY RPT REMARK; MYCOLOGY RPT DATE APPROVED."
+"RTN","LR52P508",85,0)
+ S LRIEN=9 D WP^DIE(LRFILE,LRIEN_",",LRCOMM,"A","LRTXT")
+"RTN","LR52P508",86,0)
+ S LRDSC=$$GET1^DIQ(LRFILE,LRIEN_",",LRFLD,"","WP")
+"RTN","LR52P508",87,0)
+ D BMES^XPDUTL("DESCRIPTION Field after changes for MYCOLOGY:")
+"RTN","LR52P508",88,0)
+ D MES^XPDUTL("")
+"RTN","LR52P508",89,0)
+ D MES^XPDUTL(.WP) ; output refreshed description of exec code
+"RTN","LR52P508",90,0)
+ D BMES^XPDUTL("Completed updating Description field in File #62.07 - LR*5.2*508")
+"RTN","LR52P508",91,0)
+ K LRTXT,LRDSC,WP
+"RTN","LR52P508",92,0)
+ D POST1
+"RTN","LR52P508",93,0)
+ Q
+"RTN","LR52P508",94,0)
+ ;
+"RTN","LR52P508",95,0)
+POST1 ; edit field #1 for the Bacteriology record (#7)
+"RTN","LR52P508",96,0)
+ ;
+"RTN","LR52P508",97,0)
+ D BMES^XPDUTL("Continuing Post-Installation for LR*5.2*508 ...")
+"RTN","LR52P508",98,0)
+ N DA,DIE,DR,LRFDA,LRCODE1,LRCODE2,LRCODE3,LRNECODE,LRERR,LRMICROEC,LRNEC
+"RTN","LR52P508",99,0)
+ ;
+"RTN","LR52P508",100,0)
+ S LRCODE1="BACTERIOLOGY",LRCODE3="MYCOLOGY"
+"RTN","LR52P508",101,0)
+ S LRIEN1=$$FIND1^DIC(62.07,,"MX",LRCODE1) ;IEN for the execute code record
+"RTN","LR52P508",102,0)
+ S LRIEN3=$$FIND1^DIC(62.07,,"MX",LRCODE3)
+"RTN","LR52P508",103,0)
+ F DA=LRIEN1,LRIEN3 L +^LAB(62.07,DA):5 I '$T D BMES^XPDUTL("Cannot lock file - try later.") G ERR
+"RTN","LR52P508",104,0)
+ ;
+"RTN","LR52P508",105,0)
+ S LRMICROEC=$$GET1^DIQ(62.07,LRIEN1_",",1) ; current execute code before changes
+"RTN","LR52P508",106,0)
+ D BMES^XPDUTL("Execute Code for Bacteriology before changes:")
+"RTN","LR52P508",107,0)
+ D BMES^XPDUTL(LRMICROEC)
+"RTN","LR52P508",108,0)
+ S LRNECODE="S DR=""11.55////""_DUZ_"";.055;.05;.99;11.6;11.5;1;S LRSPEC=$P(LRBG0,U,5),Y=$S(LRSPEC=71:11.57,LRSPEC=360:11.58,1:0);11.57;S Y=0;11.58"",LREND=0 D ^DIE S:$D(Y) LREND=1 Q:$D(Y)  D ^LRMIBUG Q:LREND  S DR=""13;11"" D ^DIE Q"
+"RTN","LR52P508",109,0)
+ ; prepare field for new data
+"RTN","LR52P508",110,0)
+ S DIE="^LAB(62.07,",DR="1///@",DA=LRIEN1 D ^DIE
+"RTN","LR52P508",111,0)
+ ;
+"RTN","LR52P508",112,0)
+ S DA=LRIEN1
+"RTN","LR52P508",113,0)
+ D UPDATE
+"RTN","LR52P508",114,0)
+ D BMES^XPDUTL("Execute Code for Bacteriology after changes:")
+"RTN","LR52P508",115,0)
+ S LRNEC=$$GET1^DIQ(62.07,LRIEN1_",",1) ; updated execute code 
+"RTN","LR52P508",116,0)
+ D BMES^XPDUTL(LRNEC)
+"RTN","LR52P508",117,0)
+ D BMES^XPDUTL("============================================================")
+"RTN","LR52P508",118,0)
+ ;
+"RTN","LR52P508",119,0)
+ ; edit field #1 for the Mycology record (#9)
+"RTN","LR52P508",120,0)
+ S LRMICROEC=$$GET1^DIQ(62.07,LRIEN3_",",1)
+"RTN","LR52P508",121,0)
+ D BMES^XPDUTL("Execute Code for Mycology before changes:")
+"RTN","LR52P508",122,0)
+ D BMES^XPDUTL(LRMICROEC)
+"RTN","LR52P508",123,0)
+ S LRNECODE="S DR=""19.5////""_DUZ_"";.05;.99;19;20;20.5;21;18"",DR(2,63.37)="".01:99"" D ^DIE Q"
+"RTN","LR52P508",124,0)
+ S DIE="^LAB(62.07,",DR="1///@",DA=LRIEN3 D ^DIE
+"RTN","LR52P508",125,0)
+ ;
+"RTN","LR52P508",126,0)
+ S DA=LRIEN3
+"RTN","LR52P508",127,0)
+ D UPDATE
+"RTN","LR52P508",128,0)
+ D BMES^XPDUTL("Execute Code for Mycology after changes:")
+"RTN","LR52P508",129,0)
+ S LRNEC=$$GET1^DIQ(62.07,LRIEN3_",",1)
+"RTN","LR52P508",130,0)
+ D BMES^XPDUTL(LRNEC)
+"RTN","LR52P508",131,0)
+ D BMES^XPDUTL("Post-Installation of LR*5.2*508 completed!")
+"RTN","LR52P508",132,0)
+ F DA=LRIEN1,LRIEN3 L -^LAB(62.07,DA)
+"RTN","LR52P508",133,0)
+ Q
+"RTN","LR52P508",134,0)
+ ;
+"RTN","LR52P508",135,0)
+UPDATE ; common code for update of field #1, Execute Code File
+"RTN","LR52P508",136,0)
+ S LRFDA(62.07,DA_",",1)=LRNECODE
+"RTN","LR52P508",137,0)
+ D FILE^DIE("E","LRFDA","LRERR")
+"RTN","LR52P508",138,0)
+ I $D(LRERR) D BMES^XPDUTL("Unable to edit the Execute Code field of Record #: "_DA) D ERR
+"RTN","LR52P508",139,0)
+ Q
+"RTN","LRMISTF")
+0^1^B15004530^B14531968
+"RTN","LRMISTF",1,0)
+LRMISTF ;SLC/CJS/BA - MASS DATA ENTRY INTO FILE 63.05 ;6/26/18 1:38pm
+"RTN","LRMISTF",2,0)
+ ;;5.2;LAB SERVICE;**153,476,508**;Sep 27, 1994;Build 8
+"RTN","LRMISTF",3,0)
+ ;from option LRMISTUF
+"RTN","LRMISTF",4,0)
+ACCESS I '$D(^XUSEC("LRVERIFY",DUZ)) W !,"You're not cleared for this option. You must have the LRVERIFY Key." Q
+"RTN","LRMISTF",5,0)
+ ; LR*5.2*476 - CR; added codes #1, #20.5, and #26.5 per NSR 20161009
+"RTN","LRMISTF",6,0)
+BEGIN D ^LRPARAM Q:$G(LREND)  S LREND=0,LRVT="RE",LRSBS="1^13^11.6^11.57^11.58^17^15.51^21^19.6^20.5^26.5^27^24^37",(Z(1),Z(13),Z(11.6),Z(11.57),Z(11.58))=1,(Z(17),Z(15.51))=5,(Z(21),Z(19.6),Z(20.5))=8,(Z(27),Z(24),Z(26.5))=11,Z(37)=16
+"RTN","LRMISTF",7,0)
+ S LRMIMASS=1
+"RTN","LRMISTF",8,0)
+ D ASK
+"RTN","LRMISTF",9,0)
+ I $D(LRCSQ),$O(^XTMP("LRCAP",LRCSQ,DUZ,0)) D STD^LRCAPV
+"RTN","LRMISTF",10,0)
+END D ANN^LRMIEDZ,^LRGVK
+"RTN","LRMISTF",11,0)
+ K %,AGE,DA,D1,DFN,DIC,DIE,DLAYGO,DOB,DQ,DR,H9,I,J,K,LRAA,LRAD,LRAN,LRCDT,LRCO,LRDFN,LRDPF,LRECODE,LREND,LRIDT,LRLLOC,LRMF,LRMODE,LROK,LRNOP,LRPF,LRSB,LRSBCNT,LRSBS,LRSCREEN,LRTEST,LRWRD,LRVT,POP,PNM,R,SEX,SSN,X,X1,X2,Y,Z
+"RTN","LRMISTF",12,0)
+ K LRMIMASS
+"RTN","LRMISTF",13,0)
+ Q
+"RTN","LRMISTF",14,0)
+ASK D LRAA^LRMIUT Q:LRAA<1  S LRSS=$P(^LRO(68,LRAA,0),U,2)
+"RTN","LRMISTF",15,0)
+ I LRSS="" W !?5,"Accession Area LR SUBSCRIPT is misssing.",! Q
+"RTN","LRMISTF",16,0)
+ I $P(LRPARAM,U,14) D ^LRCAPV G:LREND ANN^LRMIEDZ
+"RTN","LRMISTF",17,0)
+ S %DT="AE",%DT("A")="Micro Accession Year: ("_$E(DT,2,3)_")//" D ^%DT K %DT("A") Q:X[U  S:X="" Y=$E(DT,1,3) S LRAD=$E(Y,1,3)_"0000"
+"RTN","LRMISTF",18,0)
+ S DIC="^LAB(60,",DIC("A")="Select MICROBIOLOGY TEST: ",DIC(0)="AEMOQ",DIC("S")="I $P(^(0),U,4)=""MI"",$L($P(^(0),U,14))" D ^DIC K DIC Q:Y<1  S LRTEST=+Y
+"RTN","LRMISTF",19,0)
+ S LRECODE=$P(^LAB(60,LRTEST,0),U,14),LRECODE=$S($D(^LAB(62.07,LRECODE,.1)):^(.1),1:"")
+"RTN","LRMISTF",20,0)
+ K LRSB S LRSBCNT=0 F LRSB=1:1 S X=$P(LRSBS,U,LRSB) Q:'X  S X1=""""_X,X2=";"_X I LRECODE[X,LRECODE[X1!(LRECODE[X2) S LRSB(X)="",LRSBCNT=LRSBCNT+1
+"RTN","LRMISTF",21,0)
+ I 'LRSBCNT W "Test does not have an appropriate entry in the EDIT CODE" Q
+"RTN","LRMISTF",22,0)
+ F I=0:0 R !,"Preliminary or Final: ",X:DTIME Q:'$T!(X[U)!(X="P")!(X="F")  W !,"Enter ""P"" or ""F""."
+"RTN","LRMISTF",23,0)
+ Q:'$T!(X[U)  S LRPF=X
+"RTN","LRMISTF",24,0)
+ I LRSBCNT=1 S H9=$O(LRSB(0)),LRSB=Z(H9),LRMF=$P(^DD(63.05,H9,0),U) W !,LRMF K DIC
+"RTN","LRMISTF",25,0)
+ I LRSBCNT'=1 S DIC("A")="Enter the field to edit: ",DIC(0)="AE",DIC("S")="I $D(LRSB(+Y))",DIC="^DD(63.05," D ^DIC K DIC Q:Y<1  S H9=+Y,LRSB=Z(H9),LRMF=$P(^DD(63.05,H9,0),U)
+"RTN","LRMISTF",26,0)
+ F I=0:0 R !,"1  Automatically enter your entry.",!,"2  Prompt with your entry.",!,"3  Just Prompt.",!,"Choice: ",X:DTIME Q:X=""!(X[U)!(X<4&(X>0)&(X?1N))  D INFO
+"RTN","LRMISTF",27,0)
+ Q:X=""!(X[U)  S LRMODE=X
+"RTN","LRMISTF",28,0)
+ ; LR*5.2*508 - *508 - preliminary comm fields, #1, #20.5, and #26.5 for canned mesg expansion in Results Entry (Batch)
+"RTN","LRMISTF",29,0)
+ S:LRMODE<3 LRSCREEN=$S(H9=13:"KM",H9=11.6:"KG",H9=11.58:"KY",H9=17:"KP",H9=15.51:"KW",H9=21:"KF",H9=19.6:"KW",H9=27:"KT",H9=24:"KW",H9=37:"KV",H9=1:"KMTVP",H9=20.5:"KF",H9=26.5:"KT",1:"")
+"RTN","LRMISTF",30,0)
+ D ^LRMISTF1
+"RTN","LRMISTF",31,0)
+ Q
+"RTN","LRMISTF",32,0)
+INFO W !,"Enter a number between 1 and 3.",!,"1. Automatically enters the result you specify. You cannot change the entries."
+"RTN","LRMISTF",33,0)
+ W !,"2. Automatically enters the result you specify, you can see and change entries",!,"3. Prompts with the field name.  Does not automatically enter data.",!!
+"RTN","LRMISTF",34,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10637,6)
+^416
+**END**
+**END**
+

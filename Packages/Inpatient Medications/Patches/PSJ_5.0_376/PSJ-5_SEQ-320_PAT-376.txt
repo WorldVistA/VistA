@@ -1,0 +1,150 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/27/18 at 14:34
+=============================================================================
+Run Date: NOV 15, 2018                     Designation: PSJ*5*376
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #320                      Status: Released
+                  Compliance Date: DEC 16, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*356   <<= must be installed BEFORE `PSJ*5*376'
+
+Subject: PADE MAILMAN MESSAGES NOT BEING RECEIVED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one issue:
+  
+ PADE Dispense Without Order VistA Mailman messages not being received
+  
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC2166518  PADE Dispense Without Order VistA Mailman messages not being
+             received
+  
+ Problem: 
+ ========
+ When a medication is removed from an ADC (automated dispensing cabinet), a
+ message is generated and sent in VistA to provide specific details surrounding
+ the medication removed without a doctor's order. Those messages are NOT 
+ being sent.
+  
+ The process to send these messages uses the 'Message from' name of "PADE".
+ What is happening is that Mailman is using that string (PADE) to do a partial 
+ lookup and finds a person in the NEW PERSON file who's name starts with PADE.  
+ There actually are several in the file but the lowest IEN, or first match,
+ is being used.
+  
+  
+ The person that Mailman is finding does not have "send authorization" to the
+ email group defined for the messages, thus the message isn't being sent.
+  
+  
+  
+ Resolution:
+ ===========
+  
+ The resolution is to modify routine PSJPAD70 to change the string in the
+ variable XMDUZ from "PADE" to "PADE-SYSTEM".
+  
+ Test Sites:
+ ===========
+  
+ Upstate New York HCS
+ Tennessee Valley HCS
+  
+ Pre/Post Installation Overview:  
+ ------------------------------- 
+ It is not necessary to disable any options to install this patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ This patch should take less than 2 minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*376.
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded 
+ with the "Xtract PackMan" function at the Message Action prompt. The
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPAD70
+    Before:B196235756   After:B196324037  **317,356,376**
+ 
+Routine list of preceding patches: 356
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2018
+Completed By:                               Date Completed: NOV 14, 2018
+Released By :                               Date Released : NOV 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1699 @@
+Released SD*5.3*705 SEQ #579
+Extracted from mail message
+**KIDS**:SD*5.3*705^
+
+**INSTALL NAME**
+SD*5.3*705
+"BLD",10420,0)
+SD*5.3*705^SCHEDULING^0^3181012^y
+"BLD",10420,1,0)
+^^14^14^3181012^
+"BLD",10420,1,1,0)
+This patch will include code changes for several routines for two New 
+"BLD",10420,1,2,0)
+Service Requests (NSRs) that were approved by the Software Modification 
+"BLD",10420,1,3,0)
+Waiver Committee associated with Scheduling Package in VistA.
+"BLD",10420,1,4,0)
+The following will be addressed in this patch:
+"BLD",10420,1,5,0)
+1) Add A Blank Line Between Appointments in Print Scheduling 
+"BLD",10420,1,6,0)
+Letters[SDPRLETTERS].
+"BLD",10420,1,7,0)
+2) Modifications to Patient Scheduling Letters - modifications were made 
+"BLD",10420,1,8,0)
+to VistA Scheduling option Display Appointments[SDDISPPEND] to add the 
+"BLD",10420,1,9,0)
+physical address of the site in the header. Changes were also made to 
+"BLD",10420,1,10,0)
+display the Primary Care provider, Associate Provider and team, as well 
+"BLD",10420,1,11,0)
+as the physical location for an appointment. Clinic appointments were 
+"BLD",10420,1,12,0)
+screened for administrative clinics, and finally, output of Social 
+"BLD",10420,1,13,0)
+Security Number(SSN) was truncated to four digits instead of outputting 
+"BLD",10420,1,14,0)
+the entire SSN.
+"BLD",10420,4,0)
+^9.64PA^404.91^1
+"BLD",10420,4,404.91,0)
+404.91
+"BLD",10420,4,404.91,2,0)
+^9.641^404.91^3
+"BLD",10420,4,404.91,2,404.91,0)
+SCHEDULING PARAMETER  (File-top level)
+"BLD",10420,4,404.91,2,404.91,1,0)
+^9.6411^1.2^2
+"BLD",10420,4,404.91,2,404.91,1,1.1,0)
+ENABLE BLANK LINE?
+"BLD",10420,4,404.91,2,404.91,1,1.2,0)
+EXCLUDE ADMIN CLINICS?
+"BLD",10420,4,404.91,2,404.9102,0)
+ADDITIONAL HEADER TEXT  (sub-file)
+"BLD",10420,4,404.91,2,404.9102,1,0)
+^9.6411^.01^1
+"BLD",10420,4,404.91,2,404.9102,1,.01,0)
+INSTITUTION
+"BLD",10420,4,404.91,2,404.91021,0)
+HEADER TEXT  (sub-file)
+"BLD",10420,4,404.91,2,404.91021,1,0)
+^9.6411^.02^2
+"BLD",10420,4,404.91,2,404.91021,1,.01,0)
+HEADER TEXT
+"BLD",10420,4,404.91,2,404.91021,1,.02,0)
+PRINT STARTING AT FIRST LINE?
+"BLD",10420,4,404.91,222)
+y^n^p^^^^n^^n
+"BLD",10420,4,404.91,224)
+
+"BLD",10420,4,"APDD",404.91,404.91)
+
+"BLD",10420,4,"APDD",404.91,404.91,1.1)
+
+"BLD",10420,4,"APDD",404.91,404.91,1.2)
+
+"BLD",10420,4,"APDD",404.91,404.9102)
+
+"BLD",10420,4,"APDD",404.91,404.9102,.01)
+
+"BLD",10420,4,"APDD",404.91,404.91021)
+
+"BLD",10420,4,"APDD",404.91,404.91021,.01)
+
+"BLD",10420,4,"APDD",404.91,404.91021,.02)
+
+"BLD",10420,4,"B",404.91,404.91)
+
+"BLD",10420,6)
+2^
+"BLD",10420,6.3)
+11
+"BLD",10420,"ABPKG")
+n
+"BLD",10420,"INID")
+^
+"BLD",10420,"INIT")
+
+"BLD",10420,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10420,"KRN",.4,0)
+.4
+"BLD",10420,"KRN",.401,0)
+.401
+"BLD",10420,"KRN",.402,0)
+.402
+"BLD",10420,"KRN",.403,0)
+.403
+"BLD",10420,"KRN",.5,0)
+.5
+"BLD",10420,"KRN",.84,0)
+.84
+"BLD",10420,"KRN",3.6,0)
+3.6
+"BLD",10420,"KRN",3.8,0)
+3.8
+"BLD",10420,"KRN",9.2,0)
+9.2
+"BLD",10420,"KRN",9.8,0)
+9.8
+"BLD",10420,"KRN",9.8,"NM",0)
+^9.68A^5^5
+"BLD",10420,"KRN",9.8,"NM",1,0)
+SDLT^^0^B31344433
+"BLD",10420,"KRN",9.8,"NM",2,0)
+SDDPA^^0^B45995999
+"BLD",10420,"KRN",9.8,"NM",3,0)
+SDPARM^^0^B24363657
+"BLD",10420,"KRN",9.8,"NM",4,0)
+SDPARM1^^0^B6141988
+"BLD",10420,"KRN",9.8,"NM",5,0)
+SDPARM2^^0^B2250043
+"BLD",10420,"KRN",9.8,"NM","B","SDDPA",2)
+
+"BLD",10420,"KRN",9.8,"NM","B","SDLT",1)
+
+"BLD",10420,"KRN",9.8,"NM","B","SDPARM",3)
+
+"BLD",10420,"KRN",9.8,"NM","B","SDPARM1",4)
+
+"BLD",10420,"KRN",9.8,"NM","B","SDPARM2",5)
+
+"BLD",10420,"KRN",19,0)
+19
+"BLD",10420,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",10420,"KRN",19.1,0)
+19.1
+"BLD",10420,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",10420,"KRN",101,0)
+101
+"BLD",10420,"KRN",101,"NM",0)
+^9.68A^2^2
+"BLD",10420,"KRN",101,"NM",1,0)
+SD PARM EDIT HEADER TEXT^^0
+"BLD",10420,"KRN",101,"NM",2,0)
+SD PARM PARAMETERS MENU^^3
+"BLD",10420,"KRN",101,"NM","B","SD PARM EDIT HEADER TEXT",1)
+
+"BLD",10420,"KRN",101,"NM","B","SD PARM PARAMETERS MENU",2)
+
+"BLD",10420,"KRN",409.61,0)
+409.61
+"BLD",10420,"KRN",771,0)
+771
+"BLD",10420,"KRN",779.2,0)
+779.2
+"BLD",10420,"KRN",870,0)
+870
+"BLD",10420,"KRN",8989.51,0)
+8989.51
+"BLD",10420,"KRN",8989.52,0)
+8989.52
+"BLD",10420,"KRN",8994,0)
+8994
+"BLD",10420,"KRN","B",.4,.4)
+
+"BLD",10420,"KRN","B",.401,.401)
+
+"BLD",10420,"KRN","B",.402,.402)
+
+"BLD",10420,"KRN","B",.403,.403)
+
+"BLD",10420,"KRN","B",.5,.5)
+
+"BLD",10420,"KRN","B",.84,.84)
+
+"BLD",10420,"KRN","B",3.6,3.6)
+
+"BLD",10420,"KRN","B",3.8,3.8)
+
+"BLD",10420,"KRN","B",9.2,9.2)
+
+"BLD",10420,"KRN","B",9.8,9.8)
+
+"BLD",10420,"KRN","B",19,19)
+
+"BLD",10420,"KRN","B",19.1,19.1)
+
+"BLD",10420,"KRN","B",101,101)
+
+"BLD",10420,"KRN","B",409.61,409.61)
+
+"BLD",10420,"KRN","B",771,771)
+
+"BLD",10420,"KRN","B",779.2,779.2)
+
+"BLD",10420,"KRN","B",870,870)
+
+"BLD",10420,"KRN","B",8989.51,8989.51)
+
+"BLD",10420,"KRN","B",8989.52,8989.52)
+
+"BLD",10420,"KRN","B",8994,8994)
+
+"BLD",10420,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",10420,"QUES",0)
+^9.62^^
+"BLD",10420,"REQB",0)
+^9.611^4^4
+"BLD",10420,"REQB",1,0)
+SD*5.3*545^2
+"BLD",10420,"REQB",2,0)
+SD*5.3*680^2
+"BLD",10420,"REQB",3,0)
+SD*5.3*132^2
+"BLD",10420,"REQB",4,0)
+SD*5.3*27^2
+"BLD",10420,"REQB","B","SD*5.3*132",3)
+
+"BLD",10420,"REQB","B","SD*5.3*27",4)
+
+"BLD",10420,"REQB","B","SD*5.3*545",1)
+
+"BLD",10420,"REQB","B","SD*5.3*680",2)
+
+"FIA",404.91)
+SCHEDULING PARAMETER
+"FIA",404.91,0)
+^SD(404.91,
+"FIA",404.91,0,0)
+404.91
+"FIA",404.91,0,1)
+y^n^p^^^^n^^n
+"FIA",404.91,0,10)
+
+"FIA",404.91,0,11)
+
+"FIA",404.91,0,"RLRO")
+
+"FIA",404.91,0,"VR")
+5.3^SD
+"FIA",404.91,404.91)
+1
+"FIA",404.91,404.91,1.1)
+
+"FIA",404.91,404.91,1.2)
+
+"FIA",404.91,404.91,1.3)
+
+"FIA",404.91,404.9102)
+1
+"FIA",404.91,404.9102,.01)
+
+"FIA",404.91,404.9102,1)
+
+"FIA",404.91,404.91021)
+1
+"FIA",404.91,404.91021,.01)
+
+"FIA",404.91,404.91021,.02)
+
+"KRN",101,1889,-1)
+3^2
+"KRN",101,1889,0)
+SD PARM PARAMETERS MENU^Scheduling Parameters^^M^^^^^^^^SCHEDULING
+"KRN",101,1889,1,0)
+^101.06^1^1^3180831^^^^
+"KRN",101,1889,1,1,0)
+This menu contains all the activities for the scheduling parameter option.
+"KRN",101,1889,4)
+26^4
+"KRN",101,1889,10,0)
+^101.01PA^5^5
+"KRN",101,1889,10,5,0)
+6543^ET^13^
+"KRN",101,1889,10,5,"^")
+SD PARM EDIT HEADER TEXT
+"KRN",101,1889,26)
+D SHOW^VALM
+"KRN",101,1889,28)
+Select Action: 
+"KRN",101,1889,99)
+64889,65706
+"KRN",101,6543,-1)
+0^1
+"KRN",101,6543,0)
+SD PARM EDIT HEADER TEXT^Edit Header Text^^A^^^^^^^^SCHEDULING
+"KRN",101,6543,1,0)
+^^2^2^3180823^
+"KRN",101,6543,1,1,0)
+This Protocol will allow the users to enter/edit the Additional Header
+"KRN",101,6543,1,2,0)
+Text data in the Scheduling Parameter (#404.91) file.
+"KRN",101,6543,20)
+D 3^SDPARM2
+"KRN",101,6543,99)
+64889,65706
+"MBREQ")
+0
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813^2930824
+"PKG",16,22,1,"PAH",1,0)
+705^3181012^11969
+"PKG",16,22,1,"PAH",1,1,0)
+^^14^14^3181012
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will include code changes for several routines for two New 
+"PKG",16,22,1,"PAH",1,1,2,0)
+Service Requests (NSRs) that were approved by the Software Modification 
+"PKG",16,22,1,"PAH",1,1,3,0)
+Waiver Committee associated with Scheduling Package in VistA.
+"PKG",16,22,1,"PAH",1,1,4,0)
+The following will be addressed in this patch:
+"PKG",16,22,1,"PAH",1,1,5,0)
+1) Add A Blank Line Between Appointments in Print Scheduling 
+"PKG",16,22,1,"PAH",1,1,6,0)
+Letters[SDPRLETTERS].
+"PKG",16,22,1,"PAH",1,1,7,0)
+2) Modifications to Patient Scheduling Letters - modifications were made 
+"PKG",16,22,1,"PAH",1,1,8,0)
+to VistA Scheduling option Display Appointments[SDDISPPEND] to add the 
+"PKG",16,22,1,"PAH",1,1,9,0)
+physical address of the site in the header. Changes were also made to 
+"PKG",16,22,1,"PAH",1,1,10,0)
+display the Primary Care provider, Associate Provider and team, as well 
+"PKG",16,22,1,"PAH",1,1,11,0)
+as the physical location for an appointment. Clinic appointments were 
+"PKG",16,22,1,"PAH",1,1,12,0)
+screened for administrative clinics, and finally, output of Social 
+"PKG",16,22,1,"PAH",1,1,13,0)
+Security Number(SSN) was truncated to four digits instead of outputting 
+"PKG",16,22,1,"PAH",1,1,14,0)
+the entire SSN.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+5
+"RTN","SDDPA")
+0^2^B45995999^B24783116
+"RTN","SDDPA",1,0)
+SDDPA ;MAN/GRR,ALB/TMP,GXT/SCM- DISPLAY APPOINTMENTS ; 23 JUL 2018 12:37 pm
+"RTN","SDDPA",2,0)
+ ;;5.3;Scheduling;**140,334,545,705**;Aug 13, 1993;Build 11
+"RTN","SDDPA",3,0)
+ ;;PER VHA DIRECTIVE 2004-038, DO NOT MODIFY THIS ROUTINE
+"RTN","SDDPA",4,0)
+ ;;9/5/06KMP
+"RTN","SDDPA",5,0)
+ D:'$D(DT) DT^SDUTL K SDACS
+"RTN","SDDPA",6,0)
+RD Q:$D(SDACS)  S HDT=DT,APL="",SDRG=0,SDEDT=""
+"RTN","SDDPA",7,0)
+ K ^UTILITY($J) W ! S SDEND=0,DIC="^DPT(",DIC(0)="AEQM" D ^DIC G:X=""!(X="^")!($D(DTOUT)) END I Y<0 W !,*7,*7,"PATIENT NOT FOUND",*7,*7 G RD
+"RTN","SDDPA",8,0)
+ S DA=+Y,DFN=DA,NAME=$P(Y,"^",2)
+"RTN","SDDPA",9,0)
+RD1 ; If "Exclude Administrative Clinics" parameter (ADMIN API) is set to "YES"
+"RTN","SDDPA",10,0)
+ ; then user will be prompted if they want to exclude the administrative 
+"RTN","SDDPA",11,0)
+ ; clinics from the Appointment List. SD*5.3*705
+"RTN","SDDPA",12,0)
+ N SDEXCLUD S SDEXCLUD=""
+"RTN","SDDPA",13,0)
+ I $$ADMIN  D
+"RTN","SDDPA",14,0)
+ . S %=2,DTOUT=0 W !,"Do you want to exclude Administrative Clinic appointments" D YN^DICN G:%<0!$T RD I '% W !,"Respond YES or NO" G RD1
+"RTN","SDDPA",15,0)
+ . S SDEXCLUD=%
+"RTN","SDDPA",16,0)
+RD2 S %=1,DTOUT=0 W !,"Do you want to see only pending appointments" D YN^DICN G:%<0!$T RD I '% W !,"Respond YES or NO" G RD2
+"RTN","SDDPA",17,0)
+ S (SDONE,POP)=0,SDYN=% D:SDYN=2 RANGE G:POP RD
+"RTN","SDDPA",18,0)
+ ; DGVAR updated to include SDEXCLUD variable SD*5.3*705
+"RTN","SDDPA",19,0)
+ S DGVAR="BEGDATE^ENDATE^SDYN^DFN^HDT^APL^SDRG^SDONE^SDEDT^SDEND^SDEXCLUD",DGPGM="1^SDDPA" D ZIS^DGUTQ G:POP SDDPA D 1 G SDDPA
+"RTN","SDDPA",20,0)
+1 U IO S SDSTR=$S($D(^DPT(DFN,0)):^(0),1:""),SDN=$P(SDSTR,U)
+"RTN","SDDPA",21,0)
+ ; Displays/prints the site entered additional header text at 
+"RTN","SDDPA",22,0)
+ ; the beginning of report. SD*5.3*705
+"RTN","SDDPA",23,0)
+ D ADDHDR(1)
+"RTN","SDDPA",24,0)
+ S SDSSN=$P(SDSTR,U,9),%DT="R",X="N" D ^%DT
+"RTN","SDDPA",25,0)
+ W !,"APPOINTMENTS FOR: ",$E(SDN,1,22)
+"RTN","SDDPA",26,0)
+ ; Truncate SSN to Display Only Last Four Digits. SD*5.3*705
+"RTN","SDDPA",27,0)
+ W ?42,"***","-","**","-",$E(SDSSN,6,9)
+"RTN","SDDPA",28,0)
+ W ?54,"PRINTED: ",$$FMTE^XLFDT(Y,"5")
+"RTN","SDDPA",29,0)
+ ; Displays/prints the site entered additional header text after 
+"RTN","SDDPA",30,0)
+ ; the second line of report. SD*5.3*705
+"RTN","SDDPA",31,0)
+ D ADDHDR(0) G:$G(SDEND)>0 END
+"RTN","SDDPA",32,0)
+ ; Display PC Provider, Associate and Team. SD*5.3*705
+"RTN","SDDPA",33,0)
+ W !!,$$PCLINE^SDPPTEM(DFN)
+"RTN","SDDPA",34,0)
+ I ($Y+4)>IOSL,$E(IOST,1,2)="C-" D OUT^SDUTL W:'SDEND @IOF G:SDEND>0 END
+"RTN","SDDPA",35,0)
+ G:$O(^DPT(DFN,"S",HDT))'>0 NO S NDT=HDT,L=0
+"RTN","SDDPA",36,0)
+ ;
+"RTN","SDDPA",37,0)
+EN1 ;
+"RTN","SDDPA",38,0)
+ ; Output updated to include physical location of the clinic and
+"RTN","SDDPA",39,0)
+ ; as appropriate excludes administrative clinics. SD*5.3*705
+"RTN","SDDPA",40,0)
+ F J=1:1 S NDT=$O(^DPT(DFN,"S",NDT)) Q:NDT'>0!(SDRG&(NDT>SDEDT))  D
+"RTN","SDDPA",41,0)
+ . I $S($P(^DPT(DFN,"S",NDT,0),"^",2)']"":1,$P(^DPT(DFN,"S",NDT,0),"^",2)["NT":1,$P(^DPT(DFN,"S",NDT,0),"^",2)["I":1,SDRG:1,1:0)  D
+"RTN","SDDPA",42,0)
+ . . D CHKSO,FLEN  Q:$$EXCLUDE(SDEXCLUD,SDSCIEN)>0  S ^UTILITY($J,L)=NDT_"^"_SC_"^"_COV_"^"_APL_"^^"_SDNS_"^"_SDBY_"^"_SCRM
+"RTN","SDDPA",43,0)
+ G:L'>0 NO
+"RTN","SDDPA",44,0)
+ S ZZ=0 F  S ZZ=$O(^UTILITY($J,ZZ)) Q:ZZ'>0  S AT=$S($P(^UTILITY($J,ZZ),"^",2)'?.N:1,1:0) W !! S Y=$P($P(^(ZZ),"^",1),".",1) D DT^SDM0 S X=$P(^(ZZ),"^",1) X ^DD("FUNC",2,1) W " ",$J(X,8) D MORE Q:SDEND
+"RTN","SDDPA",45,0)
+ G END
+"RTN","SDDPA",46,0)
+ ;
+"RTN","SDDPA",47,0)
+NO W !,"NO ",$S('SDRG:"PENDING APPOINTMENTS",1:"APPOINTMENTS FOUND DURING RANGE SELECTED")
+"RTN","SDDPA",48,0)
+ G END
+"RTN","SDDPA",49,0)
+RANGE D DATE^SDUTL Q:POP  S HDT=BEGDATE,SDEDT=ENDDATE_.9,SDRG=1,SDONE=0
+"RTN","SDDPA",50,0)
+ I $D(^DPT(DFN,"ARCH","AB","S")) S X=$O(^("S",0)) I $D(^DPT(DFN,"ARCH",X)) F A=0:0 S A=$O(^DPT(DFN,"ARCH",X,1,A)) Q:A'>0  S Z=^(A,0),B=$P(Z,"^",3),C=$P(Z,"^",4),D=$P(Z,"^",5),E=$P(Z,"^",2) I B'<HDT&(B'>SDEDT)!(C'<HDT&(C'>SDEDT)) D ARCH
+"RTN","SDDPA",51,0)
+ Q
+"RTN","SDDPA",52,0)
+ARCH I 'SDONE W @IOF,!!,"This patient has archived appts during this time period:",! W !,?3,"ARCHIVED DATE RANGE    # APPOINTMENTS     TAPE #      DATE ARCHIVED",!
+"RTN","SDDPA",53,0)
+ W !,?3,$S(B:$$FMTE^XLFDT(B,"5D"),1:""),"-",$S(C:$$FMTE^XLFDT(C,"5D"),1:""),?32,+D,?45,E S Y=+Z D DTS^SDUTL W ?59,Y
+"RTN","SDDPA",54,0)
+ S SDONE=1 K B,C,D,E,Z Q
+"RTN","SDDPA",55,0)
+FLEN ;following code changed with SD/545
+"RTN","SDDPA",56,0)
+ ;Set stop code IEN and clinic address. SD*5.3*705
+"RTN","SDDPA",57,0)
+ S SC=+^DPT(DFN,"S",NDT,0),L=L+1,COV=$S($P(^DPT(DFN,"S",NDT,0),U,11)=1:" (COLLATERAL) ",1:""),SCNODE=$G(^SC(SC,0)),SDSCIEN=$P(SCNODE,U,7),SCRM=$P(SCNODE,U,11) I $D(^SC(SC,"S",NDT)) F ZL=0:0 S ZL=$O(^SC(SC,"S",NDT,1,ZL)) Q:ZL=""  D
+"RTN","SDDPA",58,0)
+ .N POP S POP=0
+"RTN","SDDPA",59,0)
+ .I '$D(^SC(SC,"S",NDT,1,ZL,0)) I $D(^SC(SC,"S",NDT,1,ZL,"C")) D RESET I POP S APL=APLEN Q
+"RTN","SDDPA",60,0)
+ .I +^SC(SC,"S",NDT,1,ZL,0)=DFN S APL=$P(^SC(SC,"S",NDT,1,ZL,0),U,2)
+"RTN","SDDPA",61,0)
+ K POP,APLEN
+"RTN","SDDPA",62,0)
+ Q
+"RTN","SDDPA",63,0)
+ ;
+"RTN","SDDPA",64,0)
+RESET ;reset zero node of appt multiple in file #44 if values are known SD/545
+"RTN","SDDPA",65,0)
+ I 'DFN S POP=1 Q
+"RTN","SDDPA",66,0)
+ I '$D(^DPT(DFN,"S",NDT,0)) S POP=1 Q
+"RTN","SDDPA",67,0)
+ I '$G(^DPT(DFN,"S",NDT,0)) S POP=1 Q
+"RTN","SDDPA",68,0)
+ I '+^DPT(DFN,"S",NDT,0) S POP=1 Q
+"RTN","SDDPA",69,0)
+ I $P(^DPT(DFN,"S",NDT,0),U,2)="CA"!($P(^(0),U,2)="PC")!($P(^(0),U,2)="PCA") K ^SC(SC,"S",NDT,1,ZL,"C") S APLEN=+^SC(SC,"SL"),POP=1 Q
+"RTN","SDDPA",70,0)
+ S (NODE,APLEN,STAT1)=""
+"RTN","SDDPA",71,0)
+ S NODE=^DPT(DFN,"S",NDT,0),APLEN=+^SC(SC,"SL"),STAT1=$P(NODE,U,2)
+"RTN","SDDPA",72,0)
+ S DA=ZL,DA(1)=NDT,DA(2)=SC
+"RTN","SDDPA",73,0)
+ S DIE="^SC("_DA(2)_",""S"","_DA(1)_",1,"
+"RTN","SDDPA",74,0)
+ S DR=".01///^S X=DFN;1///^S X=APLEN" D ^DIE
+"RTN","SDDPA",75,0)
+ S SC=DA(2)
+"RTN","SDDPA",76,0)
+ S $P(^SC(SC,"S",NDT,1,ZL,0),U,6)=$P(NODE,U,18)
+"RTN","SDDPA",77,0)
+ S $P(^SC(SC,"S",NDT,1,ZL,0),U,7)=$P(NODE,U,19)
+"RTN","SDDPA",78,0)
+ I STAT1="C" S $P(^SC(SC,"S",NDT,1,ZL,0),U,9)=STAT1
+"RTN","SDDPA",79,0)
+ K NODE,APLEN,STAT1,DA,DR,DIE
+"RTN","SDDPA",80,0)
+ Q
+"RTN","SDDPA",81,0)
+ ;
+"RTN","SDDPA",82,0)
+CHKSO S SDNS=$S($P(^DPT(DFN,"S",NDT,0),"^",2)']""!($P(^(0),"^",2)["I"):"",1:$P(^(0),"^",2)),SDBY="" I SDNS["C" S SDU=+$P(^DPT(DFN,"S",NDT,0),"^",12),SDBY=$S($D(^VA(200,SDU,0)):$P(^(0),"^",1),1:SDU) K SDU
+"RTN","SDDPA",83,0)
+ F SDJ=3,4,5 I $P(^DPT(DFN,"S",NDT,0),"^",SDJ)]"" S L=L+1,^UTILITY($J,L)=$P(^(0),"^",SDJ)_"^"_$S(SDJ=3:"LAB",SDJ=4:"XRAY",1:"EKG")_"^0^0"
+"RTN","SDDPA",84,0)
+ Q
+"RTN","SDDPA",85,0)
+END W ! K %DT,A,C,APL,AT,BEGDATE,ENDDATE,COV,DA,DFN,DGPGM,DGVAR,DIPGM,DIC,HDT,J,L,NAME,NDT,POP,SC,SDED,SDBD,SDBY,SDEDT,SDEND,SDJ,SDN,SDNS,SDONE,SDRG,SDSSN,SDSTR,SDYN
+"RTN","SDDPA",86,0)
+ K X,Y,ZL,ZX,ZZ,^UTILITY($J),SCNODE,SDSCIEN,SCRM,DTOUT ;Kill the new variables added with SD*5.3*705
+"RTN","SDDPA",87,0)
+ D CLOSE^DGUTQ
+"RTN","SDDPA",88,0)
+ Q
+"RTN","SDDPA",89,0)
+MORE I AT W ?36,$P(^UTILITY($J,ZZ),"^",2) I ($Y+4)>IOSL,$E(IOST,1,2)="C-" D OUT^SDUTL Q:SDEND  W @IOF
+"RTN","SDDPA",90,0)
+ Q:AT
+"RTN","SDDPA",91,0)
+ W " (",$P(^UTILITY($J,ZZ),"^",4)," MINUTES) ",$S($D(^SC(+$P(^UTILITY($J,ZZ),"^",2),0)):$P(^SC(+$P(^UTILITY($J,ZZ),"^",2),0),"^"),1:"Deleted Clinic"),$P(^UTILITY($J,ZZ),"^",3)," ",$P(^(ZZ),"^",5),?60,$P(^(ZZ),"^",8) ;SD*5.3*705
+"RTN","SDDPA",92,0)
+ I $P(^(ZZ),"^",6)]"" W !,$S($P(^(ZZ),"^",6)["NT":" *** ACTION REQUIRED ***",$P(^(ZZ),"^",6)["N":" *** NO-SHOW ***",$P(^(ZZ),"^",6)["C":" *** CANCELLED BY "_$P(^(ZZ),"^",7)_" ***",1:"") ;NAKED REFERENCE - ^UTILITY($J,ZZ)
+"RTN","SDDPA",93,0)
+ I ($Y+4)>IOSL,IOST?1"C-".E D OUT^SDUTL W:'SDEND @IOF
+"RTN","SDDPA",94,0)
+ Q
+"RTN","SDDPA",95,0)
+ ;
+"RTN","SDDPA",96,0)
+ADDHDR(SDLOC) ;
+"RTN","SDDPA",97,0)
+ ; Added with patch SD*5.3*705
+"RTN","SDDPA",98,0)
+ ; The SDLOC variable is passed to delineate which entered text should
+"RTN","SDDPA",99,0)
+ ; be printed. 
+"RTN","SDDPA",100,0)
+ ;
+"RTN","SDDPA",101,0)
+ ; Quit if there is no additional text for user based on their defined 
+"RTN","SDDPA",102,0)
+ ; location (DUZ(2))
+"RTN","SDDPA",103,0)
+ Q:$D(^SD(404.91,1,2,"B",+$G(DUZ(2))))'>0
+"RTN","SDDPA",104,0)
+ N SITEIEN,TXTIEN,FIRST,HDRTXT,COLNUM
+"RTN","SDDPA",105,0)
+ S SITEIEN=$O(^SD(404.91,1,2,"B",+$G(DUZ(2)),0))
+"RTN","SDDPA",106,0)
+ ; Quit if there is no Header Text for the user's defined location  in 
+"RTN","SDDPA",107,0)
+ ; the ADDITIONAL HEADER TEXT (1.3) multiple subfile of the SCHEDULING
+"RTN","SDDPA",108,0)
+ ; PARAMETER (#404.91) file
+"RTN","SDDPA",109,0)
+ Q:SITEIEN'>0
+"RTN","SDDPA",110,0)
+ S TXTIEN=0,FIRST=1
+"RTN","SDDPA",111,0)
+ F  S TXTIEN=$O(^SD(404.91,1,2,"C",+$G(SDLOC),SITEIEN,TXTIEN)) Q:TXTIEN'>0  D  Q:$G(SDEND)>0
+"RTN","SDDPA",112,0)
+ . ; Execute a top of form operation for current device if header
+"RTN","SDDPA",113,0)
+ . ; text is to start on first line of output
+"RTN","SDDPA",114,0)
+ . I FIRST=1,$G(SDLOC)=1 W @IOF S FIRST=0
+"RTN","SDDPA",115,0)
+ . ; Execute a line feed operation for current device if header
+"RTN","SDDPA",116,0)
+ . ; text is to start after Patient Data line
+"RTN","SDDPA",117,0)
+ . I FIRST=1,$G(SDLOC)'>0 W ! S FIRST=0
+"RTN","SDDPA",118,0)
+ . S HDRTXT=$P($G(^SD(404.91,1,2,SITEIEN,1,TXTIEN,0)),U,1)
+"RTN","SDDPA",119,0)
+ . S COLNUM=$S(SDLOC=1:(80-$L(HDRTXT))/2,1:1)
+"RTN","SDDPA",120,0)
+ . W !,?COLNUM,HDRTXT
+"RTN","SDDPA",121,0)
+ . ; If text is to start after patient name and the current additional 
+"RTN","SDDPA",122,0)
+ . ; header line exceeds allowed body text, then execute a top of form 
+"RTN","SDDPA",123,0)
+ . ; operation
+"RTN","SDDPA",124,0)
+ . I SDLOC'>0,($Y+4)>IOSL,$E(IOST,1,2)="C-" D OUT^SDUTL W:'SDEND @IOF
+"RTN","SDDPA",125,0)
+ ; Execute a line feed operation for current device if header
+"RTN","SDDPA",126,0)
+ ; text is to start on first line of output and there is header text
+"RTN","SDDPA",127,0)
+ W:(SDLOC>0&($G(HDRTXT)]"")) !
+"RTN","SDDPA",128,0)
+ Q
+"RTN","SDDPA",129,0)
+ ;
+"RTN","SDDPA",130,0)
+ADMIN() ;
+"RTN","SDDPA",131,0)
+ ; This API gets the value of the  "EXCLUDE ADMIN CLINICS" (#1.2)
+"RTN","SDDPA",132,0)
+ ; field in the SCHEDULING PARAMETERS (404.91) file.
+"RTN","SDDPA",133,0)
+ ; Added with patch SD*5.3*705
+"RTN","SDDPA",134,0)
+ N DIQ,DIC,DA,DR
+"RTN","SDDPA",135,0)
+ S DIQ(0)="I",DIC=404.91,DA=1,DR="1.2"
+"RTN","SDDPA",136,0)
+ Q +$$GET1^DIQ(DIC,DA_",",DR,"I")
+"RTN","SDDPA",137,0)
+ ;
+"RTN","SDDPA",138,0)
+EXCLUDE(SDEXCLUD,SDSCIEN) ;
+"RTN","SDDPA",139,0)
+ ; This API returns a 1 if the user responded to the "Exclude
+"RTN","SDDPA",140,0)
+ ; Administrative Clinics" with a yes SDEXCLUD variable and
+"RTN","SDDPA",141,0)
+ ; if the appointment clinic has a Stop Code Number equals 674.
+"RTN","SDDPA",142,0)
+ ; The values of SDEXCLUD may be based on the YN^DICN call for future maintainability.
+"RTN","SDDPA",143,0)
+ ; NOTE: The SDSCIEN variable is the pointer value of STOP CODE
+"RTN","SDDPA",144,0)
+ ; NUMBER (#8) FIELD  in the HOSPITAL LOCATION(#44) FILE. Using
+"RTN","SDDPA",145,0)
+ ; this pointer value a check is done on the value in the REPORTING
+"RTN","SDDPA",146,0)
+ ; STOP CODE (#1) field in the CLINIC STOP (#40.7) file to see if it
+"RTN","SDDPA",147,0)
+ ; equals 674.
+"RTN","SDDPA",148,0)
+ ; Added with patch SD*5.3*705
+"RTN","SDDPA",149,0)
+ Q $S((+$G(SDEXCLUD)=1)&($P($G(^DIC(40.7,+$G(SDSCIEN),0)),U,2)=674):1,1:0)
+"RTN","SDDPA",150,0)
+ ;
+"RTN","SDLT")
+0^1^B31344433^B29114101
+"RTN","SDLT",1,0)
+SDLT ;ALB/LDB,GXT - CANCELLATION LETTERS ;17 JUL 2018
+"RTN","SDLT",2,0)
+ ;;5.3;Scheduling;**185,213,281,330,398,523,441,555,622,641,680,705**;Aug 13, 1993;Build 11
+"RTN","SDLT",3,0)
+ ;;PER VHA DIRECTIVE 2004-038, DO NOT MODIFY THIS ROUTINE
+"RTN","SDLT",4,0)
+ ;
+"RTN","SDLT",5,0)
+ ;**************************************************************************
+"RTN","SDLT",6,0)
+ ;                          MODIFICATIONS
+"RTN","SDLT",7,0)
+ ;                          
+"RTN","SDLT",8,0)
+ ;   DATE      PATCH     DEVELOPER  DESCRIPTION OF CHANGES
+"RTN","SDLT",9,0)
+ ; --------  ----------  ---------  ----------------------------------------
+"RTN","SDLT",10,0)
+ ; 02/14/03  SD*5.3*281  SAUNDERS   Print letters to confidential address if
+"RTN","SDLT",11,0)
+ ;                                  requested
+"RTN","SDLT",12,0)
+ ; 12/2/03   SD*5.3*330  LUNDEN     Remove form feed from PRT+0
+"RTN","SDLT",13,0)
+ ; 01/21/16  SD*5.3*641  HSI        Print 1st piece of 99 node
+"RTN","SDLT",14,0)
+ ; 11/27/17  SD*5.3*680  JACKSON    Remove gender implications
+"RTN","SDLT",15,0)
+ ; 06/13/18  SD*5.3*705  THOMAS     Add blank line between appointments in 
+"RTN","SDLT",16,0)
+ ;                                  letters
+"RTN","SDLT",17,0)
+ ;**************************************************************************
+"RTN","SDLT",18,0)
+ ;
+"RTN","SDLT",19,0)
+ N Z0,X
+"RTN","SDLT",20,0)
+ ;WRITE GREETING AND OPENING TEXT OF LETTER
+"RTN","SDLT",21,0)
+PRT S DFN=$P(A,U,1)  ;SD*523
+"RTN","SDLT",22,0)
+ I $D(SDNOSH) I $D(^DPT(DFN,.1)) S POP=1 Q:POP  ;SD/523
+"RTN","SDLT",23,0)
+ S Y=DT D DTS^SDUTL
+"RTN","SDLT",24,0)
+ I +$G(SDFIRST)=0 W @IOF ;SD*5.3*330 Form feed only after letter #1
+"RTN","SDLT",25,0)
+ K SDFIRST
+"RTN","SDLT",26,0)
+ ;S SDFIRST=0
+"RTN","SDLT",27,0)
+ W !,?65,Y,!,?65,$$LAST4(A),!!!!
+"RTN","SDLT",28,0)
+ I 'SDFORM W !!!!! D ADDR W !!!!
+"RTN","SDLT",29,0)
+W1 W !,"Dear " ;,$S($P(^DPT(+A,0),"^",2)="M":"Mr. ",1:"Ms. ")   SD*5.3*680
+"RTN","SDLT",30,0)
+ N DPTNAME
+"RTN","SDLT",31,0)
+ S DPTNAME("FILE")=2,DPTNAME("FIELD")=".01",DPTNAME("IENS")=(+A)_","
+"RTN","SDLT",32,0)
+ S X=$$NAMEFMT^XLFNAME(.DPTNAME,"G","M") W X,","
+"RTN","SDLT",33,0)
+ W !! K ^UTILITY($J,"W"),DIWF,DIWR,DIWF S DIWL=1,DIWF="C80WN" F Z0=0:0 S Z0=$O(^VA(407.5,SDLET,1,Z0)) Q:Z0'>0  S X=^(Z0,0) D ^DIWP
+"RTN","SDLT",34,0)
+ D ^DIWW K ^UTILITY($J,"W") Q
+"RTN","SDLT",35,0)
+WRAPP ;WRITE APPOINTMENT INFORMATION
+"RTN","SDLT",36,0)
+ N B
+"RTN","SDLT",37,0)
+ ; SD*5.3*622 - re-arrange display of clinic name
+"RTN","SDLT",38,0)
+ ;S:$D(SC)&'$D(SDC) SDC=SC S SDCL=$P(^SC(+SDC,0),"^",1),SDCL=SDCL_" Clinic" D FORM
+"RTN","SDLT",39,0)
+ S:$D(SC)&'$D(SDC) SDC=SC S SDCL=$P(^SC(+SDC,0),"^",1),SDCL="   Clinic:  "_SDCL D FORM ; SD*5.3*622 end changes
+"RTN","SDLT",40,0)
+ ;
+"RTN","SDLT",41,0)
+ S SDX1=$S($D(SDX):SDX,1:X) S:$D(SDS) S=SDS F B=3,4,5 I $P(S,"^",B)]"" S SDCL=$S(B=3:"LAB",B=4:"XRAY",1:"EKG"),SDX=$P(S,"^",B) D FORM
+"RTN","SDLT",42,0)
+ S (SDX,X)=SDX1 Q
+"RTN","SDLT",43,0)
+ ; SD*5.3*622 - add more detail for appointment and format it
+"RTN","SDLT",44,0)
+FORM S:$D(SDX) X=SDX S SDHX=X D DW^%DTC S DOW=X,X=SDHX X ^DD("FUNC",2,1) S SDT0=X,SDDAT=$P("JAN^FEB^MAR^APR^MAY^JUN^JUL^AUG^SEP^OCT^NOV^DEC","^",$E(SDHX,4,5))_" "_+$E(SDHX,6,7)_", "_(1700+$E(SDHX,1,3))
+"RTN","SDLT",45,0)
+ ; Add blank line between appointments in letters - Done with patch SD*5.3*705
+"RTN","SDLT",46,0)
+ I $$ADLIN,'$D(B) W !
+"RTN","SDLT",47,0)
+ W:'$D(B) !?5,"Date/Time: ",?17,DOW,?$L(DOW)+19,$J(SDDAT,12)
+"RTN","SDLT",48,0)
+ I '$D(B),$D(SDC) W ?22,$J(SDT0,9),!?5,SDCL
+"RTN","SDLT",49,0)
+ ; get default provider if defined for a given clinic, print it on the
+"RTN","SDLT",50,0)
+ ; letter only if we have a YES on file, same for clinic location
+"RTN","SDLT",51,0)
+ ; skip printing the provider label if the field is empty in file #44
+"RTN","SDLT",52,0)
+ N J,SDLOC,SDPROV,SDPRNM,SDTEL,SDTELEXT
+"RTN","SDLT",53,0)
+ S SDLOC=$P($G(^SC(+SDC,0)),"^",11) ; physical location of the clinic
+"RTN","SDLT",54,0)
+ S SDTEL=$G(^SC(+SDC,99))        ; telephone number of clinic
+"RTN","SDLT",55,0)
+ S SDTELEXT="" I SDTEL]"",$G(^SC(+SDC,99.1))]"" D
+"RTN","SDLT",56,0)
+ .S SDTELEXT=^SC(+SDC,99.1)  ; telephone ext of clinic
+"RTN","SDLT",57,0)
+ ; get default provider, if any
+"RTN","SDLT",58,0)
+ F J=0:0 S J=$O(^SC(+SDC,"PR",J)) Q:'J>0  I $P($G(^SC(+SDC,"PR",J,0)),U,2)=1 S SDPROV=+$P(^SC(+SDC,"PR",J,0),U,1)
+"RTN","SDLT",59,0)
+ I $D(SDC),'$D(B),$P($G(^VA(407.5,SDLET,3)),U,2)="Y" D
+"RTN","SDLT",60,0)
+ .W:SDLOC]"" !?6,"Location:  "_SDLOC
+"RTN","SDLT",61,0)
+ I $D(SDC),'$D(B),SDTEL]"" D
+"RTN","SDLT",62,0)
+ .W !?5,"Telephone:  ",$P(SDTEL,U)
+"RTN","SDLT",63,0)
+ .W:SDTELEXT]"" "   Telephone Ext.:  ",SDTELEXT
+"RTN","SDLT",64,0)
+ I $D(SDPROV) D
+"RTN","SDLT",65,0)
+ .I $D(SDC),SDPROV>0 S SDPRNM=$P(^VA(200,SDPROV,0),U,1)
+"RTN","SDLT",66,0)
+ .I $D(SDC),'$D(B),$P($G(^VA(407.5,SDLET,3)),U,1)="Y" W:SDPRNM]"" !?6,"Provider:  "_$G(SDPRNM)
+"RTN","SDLT",67,0)
+ ; call handler for LAB, XRAY, and EKG tests
+"RTN","SDLT",68,0)
+ I $D(B) D TST
+"RTN","SDLT",69,0)
+ I $D(SDLT)&($Y>(IOSL-8)) W @IOF
+"RTN","SDLT",70,0)
+ ; SD*5.3*622 end changes
+"RTN","SDLT",71,0)
+ Q
+"RTN","SDLT",72,0)
+REST ;WRITE THE REMAINDER OF LETTER
+"RTN","SDLT",73,0)
+ N Z5,I,X
+"RTN","SDLT",74,0)
+ I SDLET W !?12 K ^UTILITY($J,"W"),DIWL,DIWR,DIWF S DIWL=1,DIWF="C80WN" F Z5=0:0 S Z5=$O(^VA(407.5,SDLET,2,Z5)) Q:Z5'>0  S X=^(Z5,0) D ^DIWP
+"RTN","SDLT",75,0)
+ D ^DIWW K ^UTILITY($J,"W") Q:'SDFORM
+"RTN","SDLT",76,0)
+ F I=$Y:1:IOSL-12 W !
+"RTN","SDLT",77,0)
+ D ADDR Q
+"RTN","SDLT",78,0)
+ADDR K VAHOW S DFN=+A W !?12,$$FML^DGNFUNC(DFN)
+"RTN","SDLT",79,0)
+ I $D(^DG(43,1,"BT")),'$P(^("BT"),"^",3) S VAPA("P")=""
+"RTN","SDLT",80,0)
+ S X1=DT,X2=5 D C^%DTC I '$D(VAPA("P")) S (VATEST("ADD",9),VATEST("ADD",10))=X
+"RTN","SDLT",81,0)
+ D ADD^VADPT D
+"RTN","SDLT",82,0)
+ .;CHANGE STATE TO ABBR.
+"RTN","SDLT",83,0)
+ .N SDIENS,X
+"RTN","SDLT",84,0)
+ .I $D(VAPA(5)) S SDIENS=+VAPA(5)_",",X=$$GET1^DIQ(5,SDIENS,1),$P(VAPA(5),U,2)=X
+"RTN","SDLT",85,0)
+ .I $D(VAPA(17)) S SDIENS=+VAPA(17)_",",X=$$GET1^DIQ(5,SDIENS,1),$P(VAPA(17),U,2)=X
+"RTN","SDLT",86,0)
+ .K SDIENS Q
+"RTN","SDLT",87,0)
+ N SDCCACT1,SDCCACT2,LL
+"RTN","SDLT",88,0)
+ S SDCCACT1=VAPA(12),SDCCACT2=$P($G(VAPA(22,2)),"^",3)
+"RTN","SDLT",89,0)
+ ;if confidential address is not active for scheduling/appointment letters, print to regular address
+"RTN","SDLT",90,0)
+ I ($G(SDCCACT1)=0)!($G(SDCCACT2)'="Y") D
+"RTN","SDLT",91,0)
+ .F LL=1:1:3 W:VAPA(LL)]"" !,?12,VAPA(LL)
+"RTN","SDLT",92,0)
+ .;if country is blank display as USA
+"RTN","SDLT",93,0)
+ .I (VAPA(25)="")!($P(VAPA(25),"^",2)="UNITED STATES")  D  ;display city,state,zip
+"RTN","SDLT",94,0)
+ ..W !,?12,VAPA(4)_" "_$P(VAPA(5),U,2)_"  "_$P(VAPA(11),U,2)
+"RTN","SDLT",95,0)
+ .E  D  ;display postal code,city,province
+"RTN","SDLT",96,0)
+ ..W !,?12,VAPA(24)_" "_VAPA(4)_" "_VAPA(23)
+"RTN","SDLT",97,0)
+ .W:($P(VAPA(25),"^",2)'="UNITED STATES") !,?12,$P(VAPA(25),U,2) ;display country
+"RTN","SDLT",98,0)
+ ;if confidential address is active for scheduling/appointment letters, print to confidential address
+"RTN","SDLT",99,0)
+ I $G(SDCCACT1)=1,$G(SDCCACT2)="Y" D
+"RTN","SDLT",100,0)
+ .F LL=13:1:15 W:VAPA(LL)]"" !,?12,VAPA(LL)
+"RTN","SDLT",101,0)
+ .I (VAPA(28)="")!($P(VAPA(28),"^",2)="UNITED STATES") D
+"RTN","SDLT",102,0)
+ ..W !,?12,VAPA(16)_" "_$P(VAPA(17),U,2)_"  "_$P(VAPA(18),U,2)
+"RTN","SDLT",103,0)
+ .E  D
+"RTN","SDLT",104,0)
+ ..W !,?12,VAPA(27)_" "_VAPA(16)_" "_VAPA(26)
+"RTN","SDLT",105,0)
+ .W:($P(VAPA(28),"^",2)'="UNITED STATES") !?12,$P(VAPA(28),U,2)
+"RTN","SDLT",106,0)
+ W ! D KVAR^VADPT Q
+"RTN","SDLT",107,0)
+ ;
+"RTN","SDLT",108,0)
+ ;
+"RTN","SDLT",109,0)
+LAST4(DFN) ;Return patient "last four"
+"RTN","SDLT",110,0)
+ N SDX
+"RTN","SDLT",111,0)
+ S SDX=$G(^DPT(+DFN,0))
+"RTN","SDLT",112,0)
+ Q $E(SDX)_$E($P(SDX,U,9),6,9)
+"RTN","SDLT",113,0)
+ ;
+"RTN","SDLT",114,0)
+BADADD ;Print patients with a Bad Address Indicator
+"RTN","SDLT",115,0)
+ I '$D(^TMP($J,"BADADD")) Q
+"RTN","SDLT",116,0)
+ N SDHDR,SDHDR1
+"RTN","SDLT",117,0)
+ W @IOF,$TR($J("",IOM)," ","*")
+"RTN","SDLT",118,0)
+ S SDHDR="BAD ADDRESS INDICATOR LIST" W !,?(IOM-$L(SDHDR)/2),SDHDR,!
+"RTN","SDLT",119,0)
+ S SDHDR1="** THE LETTER FOR THESE PATIENT(S) DID NOT PRINT DUE TO A BAD ADDRESS INDICATOR."
+"RTN","SDLT",120,0)
+ W !,"Last 4",!,"of SSN",?10,"Patient Name",!
+"RTN","SDLT",121,0)
+ W $TR($J("",IOM)," ","*")
+"RTN","SDLT",122,0)
+ N SDNAM,SDDFN
+"RTN","SDLT",123,0)
+ S SDNAM="" F  S SDNAM=$O(^TMP($J,"BADADD",SDNAM)) Q:SDNAM=""  D
+"RTN","SDLT",124,0)
+ . S SDDFN=0 F  S SDDFN=$O(^TMP($J,"BADADD",SDNAM,SDDFN)) Q:'SDDFN  D
+"RTN","SDLT",125,0)
+ . . W !,$$LAST4(SDDFN),?10,SDNAM
+"RTN","SDLT",126,0)
+ W !!,SDHDR1
+"RTN","SDLT",127,0)
+ Q
+"RTN","SDLT",128,0)
+ ;
+"RTN","SDLT",129,0)
+TST ; SD*5.3*622 - handle scheduled tests
+"RTN","SDLT",130,0)
+ W !
+"RTN","SDLT",131,0)
+ W:($L(SDCL)=3&($E(SDCL,1,3)="LAB")) ?1,SDCL_" SCHEDULED:  "_DOW_"  "_$J(SDDAT,12)_"  "_$J(SDT0,5)
+"RTN","SDLT",132,0)
+ W:($L(SDCL)=4&($E(SDCL,1,4)="XRAY")) SDCL_" SCHEDULED:  "_DOW_"  "_$J(SDDAT,12)_"  "_$J(SDT0,5)
+"RTN","SDLT",133,0)
+ W:($L(SDCL)=3&($E(SDCL,1,3)="EKG")) ?1,SDCL_" SCHEDULED:  "_DOW_"  "_$J(SDDAT,12)_"  "_$J(SDT0,5)
+"RTN","SDLT",134,0)
+ Q  ; SD*5.3*622 - end of changes
+"RTN","SDLT",135,0)
+ ;
+"RTN","SDLT",136,0)
+ADLIN() ;
+"RTN","SDLT",137,0)
+ ; This API is checked to determine if the "ENABLE BLANK LINE?" (#1.1) 
+"RTN","SDLT",138,0)
+ ; field in the SCHEDULING PARAMETERS (404.91) file is set to "YES" 
+"RTN","SDLT",139,0)
+ ; (internal value 1).
+"RTN","SDLT",140,0)
+ ; Added with patch SD*5.3*705
+"RTN","SDLT",141,0)
+ N DIQ,DIC,DA,DR
+"RTN","SDLT",142,0)
+ S DIQ(0)="I",DIC=404.91,DA=1,DR="1.1"
+"RTN","SDLT",143,0)
+ Q +$$GET1^DIQ(DIC,DA_",",DR,"I")
+"RTN","SDPARM")
+0^3^B24363657^B12429112
+"RTN","SDPARM",1,0)
+SDPARM ;ALB/CAW,SBW - Build Display for MAS Parameters ; 22/8/2018
+"RTN","SDPARM",2,0)
+ ;;5.3;Scheduling;**27,132,705**;08/13/93;Build 11
+"RTN","SDPARM",3,0)
+ ;;PER VHA DIRECTIVE 2004-038, DO NOT MODIFY THIS ROUTINE
+"RTN","SDPARM",4,0)
+ ;
+"RTN","SDPARM",5,0)
+ ;Patch SD*5.3*705 updated this routine to display and allow the edit
+"RTN","SDPARM",6,0)
+ ;of the ENABLE BLANK LINE? (#1.1), EXCLUDE ADMIN CLINICS? (#1.2), 
+"RTN","SDPARM",7,0)
+ ;and ADDITIONAL HEADER TEXT (#1.3) fields in the SCHEDULING PARAMETER 
+"RTN","SDPARM",8,0)
+ ;(#404.91) FILE.
+"RTN","SDPARM",9,0)
+ ;The ADDITIONAL HEADER TEXT (#1.3) is a subfile and includes
+"RTN","SDPARM",10,0)
+ ;INSTITUTION, HEADER TEXT and PRINT STARTING AT FIRST LINE? sub fields) 
+"RTN","SDPARM",11,0)
+ ;
+"RTN","SDPARM",12,0)
+START ;
+"RTN","SDPARM",13,0)
+ K XQORS,VALMLEVL D EN^VALM("SD PARM PARAMETERS")
+"RTN","SDPARM",14,0)
+ G QUIT
+"RTN","SDPARM",15,0)
+EN ;Entry point for list manager
+"RTN","SDPARM",16,0)
+ ;
+"RTN","SDPARM",17,0)
+ D INIT
+"RTN","SDPARM",18,0)
+ ;
+"RTN","SDPARM",19,0)
+HDR ;
+"RTN","SDPARM",20,0)
+ ;
+"RTN","SDPARM",21,0)
+1 D SET("                          *** Site Demographics ***")
+"RTN","SDPARM",22,0)
+ D CNTRL^VALM10(SDLN,26,26,IOINHI,IOINORM,0)
+"RTN","SDPARM",23,0)
+ ;
+"RTN","SDPARM",24,0)
+2 S X=""
+"RTN","SDPARM",25,0)
+ S X=$$SETSTR^VALM1("Site: ",X,12,6)
+"RTN","SDPARM",26,0)
+ S X=$$SETSTR^VALM1(SDSITE,X,18,20)
+"RTN","SDPARM",27,0)
+ S X=$$SETSTR^VALM1("Scheduling Version:",X,41,20)
+"RTN","SDPARM",28,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,205,"E"),X,SDSCOL,4)
+"RTN","SDPARM",29,0)
+ D SET(X)
+"RTN","SDPARM",30,0)
+ ;
+"RTN","SDPARM",31,0)
+3 D SET("")
+"RTN","SDPARM",32,0)
+ ;
+"RTN","SDPARM",33,0)
+4 D SET("                        *** Editable Site Parameters ***")
+"RTN","SDPARM",34,0)
+ D CNTRL^VALM10(SDLN,25,32,IOINHI,IOINORM,0)
+"RTN","SDPARM",35,0)
+ ;
+"RTN","SDPARM",36,0)
+5 S X=""
+"RTN","SDPARM",37,0)
+ S X=$$SETSTR^VALM1("      Appt. Search Threshold:",X,1,SDWID)
+"RTN","SDPARM",38,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,212,"E"),X,SDFCOL,4)
+"RTN","SDPARM",39,0)
+ S X=$$SETSTR^VALM1("Appt. Update Mail Group:",X,36,24)
+"RTN","SDPARM",40,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,215,"E"),X,SDSCOL,19)
+"RTN","SDPARM",41,0)
+ D SET(X)
+"RTN","SDPARM",42,0)
+ ;
+"RTN","SDPARM",43,0)
+6 D SET("")
+"RTN","SDPARM",44,0)
+ S X=""
+"RTN","SDPARM",45,0)
+ S X=$$SETSTR^VALM1(">>> Dispositioning <<<",X,4,SDWID)
+"RTN","SDPARM",46,0)
+ S X=$$SETSTR^VALM1("       NPCDB Mail Group:",X,36,24)
+"RTN","SDPARM",47,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,216,"E"),X,SDSCOL,19)
+"RTN","SDPARM",48,0)
+ D SET(X)
+"RTN","SDPARM",49,0)
+ D CNTRL^VALM10(SDLN,4,22,IOINHI,IOINORM,0)
+"RTN","SDPARM",50,0)
+ ;
+"RTN","SDPARM",51,0)
+7 S X=""
+"RTN","SDPARM",52,0)
+ S X=$$SETSTR^VALM1("  Default for View Check Out:",X,1,SDWID)
+"RTN","SDPARM",53,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,32,"E"),X,SDFCOL,4)
+"RTN","SDPARM",54,0)
+ D SET(X)
+"RTN","SDPARM",55,0)
+ ;
+"RTN","SDPARM",56,0)
+8 S X=""
+"RTN","SDPARM",57,0)
+ S X=$$SETSTR^VALM1("Late Activity Mail Group:",X,35,25)
+"RTN","SDPARM",58,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,217,"E"),X,SDSCOL,19)
+"RTN","SDPARM",59,0)
+ D SET(X)
+"RTN","SDPARM",60,0)
+ D CNTRL^VALM10(SDLN,4,22,IOINHI,IOINORM,0)
+"RTN","SDPARM",61,0)
+ ;
+"RTN","SDPARM",62,0)
+9 D SET("")
+"RTN","SDPARM",63,0)
+ ;
+"RTN","SDPARM",64,0)
+10 S X=""
+"RTN","SDPARM",65,0)
+ S X=$$SETSTR^VALM1(" API Messages Mail Group:",X,35,25)
+"RTN","SDPARM",66,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,226,"E"),X,SDSCOL,19)
+"RTN","SDPARM",67,0)
+ D SET(X)
+"RTN","SDPARM",68,0)
+ ;
+"RTN","SDPARM",69,0)
+11 D SET("")
+"RTN","SDPARM",70,0)
+ ;
+"RTN","SDPARM",71,0)
+12 S X=""
+"RTN","SDPARM",72,0)
+ S X=$$SETSTR^VALM1("Allow '^' out of Class.:",X,6,SDWID)
+"RTN","SDPARM",73,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,224,"E"),X,SDFCOL,4)
+"RTN","SDPARM",74,0)
+ S X=$$SETSTR^VALM1(" API Messages to Process:",X,35,25)
+"RTN","SDPARM",75,0)
+ S X=$$SETSTR^VALM1(SDPARM(43,1,227,"E"),X,SDSCOL,19)
+"RTN","SDPARM",76,0)
+ D SET(X)
+"RTN","SDPARM",77,0)
+ ;
+"RTN","SDPARM",78,0)
+13 D SET("")
+"RTN","SDPARM",79,0)
+ ;
+"RTN","SDPARM",80,0)
+14 S X=""
+"RTN","SDPARM",81,0)
+ S X=$$SETSTR^VALM1("Enable Blank Line?:",X,11,SDWID)
+"RTN","SDPARM",82,0)
+ S X=$$SETSTR^VALM1(SDPARM(404.91,1,1.1,"E"),X,SDFCOL,4)
+"RTN","SDPARM",83,0)
+ S X=$$SETSTR^VALM1("Exclude Admin Clinics:",X,38,24)
+"RTN","SDPARM",84,0)
+ S X=$$SETSTR^VALM1(SDPARM(404.91,1,1.2,"E"),X,SDSCOL,19)
+"RTN","SDPARM",85,0)
+ D SET(X)
+"RTN","SDPARM",86,0)
+ ;
+"RTN","SDPARM",87,0)
+15 D SET("")
+"RTN","SDPARM",88,0)
+   ;
+"RTN","SDPARM",89,0)
+16 D SET("                      *** Editable Division Parameters ***")
+"RTN","SDPARM",90,0)
+ D CNTRL^VALM10(SDLN,23,36,IOINHI,IOINORM,0)
+"RTN","SDPARM",91,0)
+ ;
+"RTN","SDPARM",92,0)
+ D ^SDPARM1 ; Call to build display for division
+"RTN","SDPARM",93,0)
+ ;
+"RTN","SDPARM",94,0)
+ S VALMCNT=SDLN
+"RTN","SDPARM",95,0)
+ ;
+"RTN","SDPARM",96,0)
+ ;
+"RTN","SDPARM",97,0)
+17 D SET("                    *** Editable Additional Header Text ***")
+"RTN","SDPARM",98,0)
+ D CNTRL^VALM10(SDLN,23,36,IOINHI,IOINORM,0)
+"RTN","SDPARM",99,0)
+ ;
+"RTN","SDPARM",100,0)
+ D HDRTXT^SDPARM1 ; Call to build display for Additional Header Text
+"RTN","SDPARM",101,0)
+ ;
+"RTN","SDPARM",102,0)
+ S VALMCNT=SDLN
+"RTN","SDPARM",103,0)
+ Q
+"RTN","SDPARM",104,0)
+ ;
+"RTN","SDPARM",105,0)
+QUIT ;
+"RTN","SDPARM",106,0)
+ K DIC,DIQ,DR,SD,SDJ,SDDIV,SDDLN,SDFCOL,SDSCOL,SDL,SDLN,SDPARM,SDSITE,SDVLAR,SDWID,^TMP("SDPARM",$J)
+"RTN","SDPARM",107,0)
+ K SDINST,SDHDR,SDHDRTXT,SDPARM2
+"RTN","SDPARM",108,0)
+ Q
+"RTN","SDPARM",109,0)
+INIT ;Init variables
+"RTN","SDPARM",110,0)
+ ;
+"RTN","SDPARM",111,0)
+ K ^TMP("SDPARM",$J)
+"RTN","SDPARM",112,0)
+ S SDVLAR="^TMP(""SDPARM"",$J)"
+"RTN","SDPARM",113,0)
+ S SDFCOL=31,SDSCOL=61,SDWID=29,SDLN=0
+"RTN","SDPARM",114,0)
+ S SDSITE=$P($$SITE^VASITE,U,2) D WAIT^DICD
+"RTN","SDPARM",115,0)
+ F DA=0:0 S DA=$O(^DG(40.8,DA)) Q:'DA  S DIC="^DG(40.8,",DR=".01;.07;9;30.01:30.04",DIQ="SDPARM",DIQ(0)="E" D EN^DIQ1 W "."
+"RTN","SDPARM",116,0)
+ S DIC="^DG(43,",DA=1,DR="32;205;212;215;216;217;224;226;227",DIQ="SDPARM",DIQ(0)="E" D EN^DIQ1
+"RTN","SDPARM",117,0)
+ ;Retrieve new Scheduling Parameters in File 404.91 added with patch SD*5.3*705
+"RTN","SDPARM",118,0)
+ S DIC="^SD(404.91,",DA=1,DR="1.1;1.2;1.3",DIQ="SDPARM",DIQ(0)="E" D EN^DIQ1
+"RTN","SDPARM",119,0)
+ F SDINST=0:0 S SDINST=$O(^SD(404.91,DA,2,SDINST)) Q:'SDINST  D
+"RTN","SDPARM",120,0)
+ . ;N SDPARM2
+"RTN","SDPARM",121,0)
+ . S DR(404.9102)=".01;1",DA(404.9102)=SDINST,DIQ="SDPARM2",DIQ(0)="E" D EN^DIQ1
+"RTN","SDPARM",122,0)
+ . S SDHDR(SDINST)=SDPARM2(404.9102,SDINST,.01,"E")
+"RTN","SDPARM",123,0)
+ . ;S DR="1.3",DR(404.9102)=".01;1",DA(404.9102)=SDINST,DIQ="SDPARM2",DIQ(0)="E" D EN^DIQ1
+"RTN","SDPARM",124,0)
+ . F SDHDRTXT=0:0 S SDHDRTXT=$O(^SD(404.91,DA,2,SDINST,1,SDHDRTXT)) Q:'SDHDRTXT  D
+"RTN","SDPARM",125,0)
+ . . S DR(404.91021)=".01;.02",DA(404.91021)=SDHDRTXT,DIQ="SDPARM2",DIQ(0)="E" D EN^DIQ1
+"RTN","SDPARM",126,0)
+ . . S SDHDR(SDINST,SDHDRTXT)=SDPARM2(404.91021,SDHDRTXT,.01,"E")_U_SDPARM2(404.91021,SDHDRTXT,.02,"E")
+"RTN","SDPARM",127,0)
+ Q
+"RTN","SDPARM",128,0)
+SET(X) ; Set in ^TMP global for display
+"RTN","SDPARM",129,0)
+ ;
+"RTN","SDPARM",130,0)
+ S SDLN=SDLN+1,^TMP("SDPARM",$J,SDLN,0)=X
+"RTN","SDPARM",131,0)
+ Q
+"RTN","SDPARM",132,0)
+ ;
+"RTN","SDPARM1")
+0^4^B6141988^B2578758
+"RTN","SDPARM1",1,0)
+SDPARM1 ;ALB/CAW,SBW - Build Display for Division(s) ; 22/8/2018
+"RTN","SDPARM1",2,0)
+ ;;5.3;Scheduling;**27,705**;08/13/93;Build 11
+"RTN","SDPARM1",3,0)
+ ;;PER VHA DIRECTIVE 2004-038, DO NOT MODIFY THIS ROUTINE
+"RTN","SDPARM1",4,0)
+ ;
+"RTN","SDPARM1",5,0)
+ ;Patch SD*5.3*705 updated this routine to display the SCHEDULING
+"RTN","SDPARM1",6,0)
+ ;PARAMETER (#404.91) file ADDITIONAL HEADER TEXT (#1.3) subfile 
+"RTN","SDPARM1",7,0)
+ ;data to include INSTITUTION, HEADER TEXT and PRINT STARTING AT 
+"RTN","SDPARM1",8,0)
+ ;FIRST LINE? sub fields) 
+"RTN","SDPARM1",9,0)
+ ;
+"RTN","SDPARM1",10,0)
+CONT ;
+"RTN","SDPARM1",11,0)
+ S SDDLN=0
+"RTN","SDPARM1",12,0)
+ F SDDIV=0:0 S SDDIV=$O(SDPARM(40.8,SDDIV)) Q:'SDDIV  S SDDLN=SDDLN+1 D DIV S SDDLN(SDDIV)=SDDLN
+"RTN","SDPARM1",13,0)
+ Q
+"RTN","SDPARM1",14,0)
+ ;
+"RTN","SDPARM1",15,0)
+DIV ;
+"RTN","SDPARM1",16,0)
+ ;
+"RTN","SDPARM1",17,0)
+11 ;
+"RTN","SDPARM1",18,0)
+ D SET^SDPARM($$SETSTR^VALM1("Division: "_SDPARM(40.8,SDDIV,.01,"E"),"",1,79))
+"RTN","SDPARM1",19,0)
+ D CNTRL^VALM10(SDLN,10,25,IOINHI,IOINORM,0)
+"RTN","SDPARM1",20,0)
+ ;
+"RTN","SDPARM1",21,0)
+12 S X=""
+"RTN","SDPARM1",22,0)
+ S X=$$SETSTR^VALM1("Address Loc. on Letters:",X,1,24)
+"RTN","SDPARM1",23,0)
+ S X=$$SETSTR^VALM1(SDPARM(40.8,SDDIV,30.01,"E"),X,26,6)
+"RTN","SDPARM1",24,0)
+ S X=$$SETSTR^VALM1("OP Lab Test Start Time:",X,37,23)
+"RTN","SDPARM1",25,0)
+ S X=$$SETSTR^VALM1($$TIME(SDPARM(40.8,SDDIV,30.02,"E")),X,SDSCOL,5)
+"RTN","SDPARM1",26,0)
+ D SET^SDPARM(X)
+"RTN","SDPARM1",27,0)
+ ;
+"RTN","SDPARM1",28,0)
+13 S X=""
+"RTN","SDPARM1",29,0)
+ S X=$$SETSTR^VALM1("OP EKG Start Time:",X,42,18)
+"RTN","SDPARM1",30,0)
+ S X=$$SETSTR^VALM1($$TIME(SDPARM(40.8,SDDIV,30.03,"E")),X,SDSCOL,5)
+"RTN","SDPARM1",31,0)
+ D SET^SDPARM(X)
+"RTN","SDPARM1",32,0)
+ ;
+"RTN","SDPARM1",33,0)
+14 S X=""
+"RTN","SDPARM1",34,0)
+ S X=$$SETSTR^VALM1("OP X-ray Start Time:",X,40,20)
+"RTN","SDPARM1",35,0)
+ S X=$$SETSTR^VALM1($$TIME(SDPARM(40.8,SDDIV,30.04,"E")),X,SDSCOL,5)
+"RTN","SDPARM1",36,0)
+ D SET^SDPARM(X)
+"RTN","SDPARM1",37,0)
+ ;
+"RTN","SDPARM1",38,0)
+ D SET^SDPARM("")
+"RTN","SDPARM1",39,0)
+ Q
+"RTN","SDPARM1",40,0)
+HDRTXT ; Additional Header Text is Displayed if it exist. Added
+"RTN","SDPARM1",41,0)
+ ; with patch SD*5.3*705 
+"RTN","SDPARM1",42,0)
+ ; If there is no additional text display message and quit
+"RTN","SDPARM1",43,0)
+ I $D(SDHDR)'>0 D  Q
+"RTN","SDPARM1",44,0)
+ . D SET^SDPARM($$SETSTR^VALM1("   *** No Additional Header Text has been entered. ***","",1,79))
+"RTN","SDPARM1",45,0)
+ . D CNTRL^VALM10(SDLN,10,25,IOINHI,IOINORM,0)
+"RTN","SDPARM1",46,0)
+ ;Display each Institution's additional header text
+"RTN","SDPARM1",47,0)
+ N SD1
+"RTN","SDPARM1",48,0)
+ S SD1=0
+"RTN","SDPARM1",49,0)
+ F  S SD1=$O(SDHDR(SD1)) Q:SD1'>0  D
+"RTN","SDPARM1",50,0)
+ . N SD2
+"RTN","SDPARM1",51,0)
+ . S SD2=0
+"RTN","SDPARM1",52,0)
+ . D SET^SDPARM($$SETSTR^VALM1("Institution/Division: "_SDHDR(SD1),"",1,79))
+"RTN","SDPARM1",53,0)
+ . F  S SD2=$O(SDHDR(SD1,SD2)) Q:SD2'>0  D
+"RTN","SDPARM1",54,0)
+ . . D SET^SDPARM($$SETSTR^VALM1(" "_$P(SDHDR(SD1,SD2),U,1),"",1,79))
+"RTN","SDPARM1",55,0)
+ . . D SET^SDPARM($$SETSTR^VALM1("    Print Starting At First Line?: "_$P(SDHDR(SD1,SD2),U,2),"",1,79))
+"RTN","SDPARM1",56,0)
+ . D SET^SDPARM("")
+"RTN","SDPARM1",57,0)
+ Q
+"RTN","SDPARM1",58,0)
+TIME(X) ; -- format time only :=   hr:min
+"RTN","SDPARM1",59,0)
+ I X="" Q X
+"RTN","SDPARM1",60,0)
+ Q $E(X_"0000",1,2)_":"_$E(X_"0000",3,4)
+"RTN","SDPARM2")
+0^5^B2250043^B993830
+"RTN","SDPARM2",1,0)
+SDPARM2 ;ALB/CAW,GXT - Edit Main and Division Parameters; 8/13/2018
+"RTN","SDPARM2",2,0)
+ ;;5.3;Scheduling;**27,132,705**;08/13/93;Build 11
+"RTN","SDPARM2",3,0)
+ ;;PER VHA DIRECTIVE 2004-038, DO NOT MODIFY THIS ROUTINE
+"RTN","SDPARM2",4,0)
+ ;
+"RTN","SDPARM2",5,0)
+ ;Patch SD*5.3*705 updated this routine to allow the enter/edit
+"RTN","SDPARM2",6,0)
+ ;of the ENABLE BLANK LINE? (#1.1), EXCLUDE ADMIN CLINICS? (#1.2), 
+"RTN","SDPARM2",7,0)
+ ;and ADDITIONAL HEADER TEXT (#1.3) fields in the SCHEDULING PARAMETER 
+"RTN","SDPARM2",8,0)
+ ;(#404.91) FILE.
+"RTN","SDPARM2",9,0)
+ ;The ADDITIONAL HEADER TEXT (#1.3) is a subfile and includes
+"RTN","SDPARM2",10,0)
+ ;INSTITUTION, HEADER TEXT and PRINT STARTING AT FIRST LINE? sub fields) 
+"RTN","SDPARM2",11,0)
+ ;
+"RTN","SDPARM2",12,0)
+1 ;Edit Main Parameters
+"RTN","SDPARM2",13,0)
+ ;
+"RTN","SDPARM2",14,0)
+ D FULL^VALM1
+"RTN","SDPARM2",15,0)
+ S DIE="^DG(43,",DA=1,DR="212;215;216;32;217;226;227;224T" D ^DIE K DIE
+"RTN","SDPARM2",16,0)
+ S DIE="^SD(404.91,",DIC(0)="AEQMZ",DR="1.1;1.2" D ^DIE K DR,DIE,DA ;Patch SD*5.3*705
+"RTN","SDPARM2",17,0)
+ I $D(DTOUT) G SDQUIT
+"RTN","SDPARM2",18,0)
+ G RDSPLY
+"RTN","SDPARM2",19,0)
+ Q
+"RTN","SDPARM2",20,0)
+ ;
+"RTN","SDPARM2",21,0)
+2 ;Edit Division Parameters
+"RTN","SDPARM2",22,0)
+ ;
+"RTN","SDPARM2",23,0)
+ D FULL^VALM1
+"RTN","SDPARM2",24,0)
+ I '$P($G(^DG(43,1,"GL")),U,2) S Y=1 D DIE Q
+"RTN","SDPARM2",25,0)
+DIC W ! S DIC="^DG(40.8,",DIC(0)="AEMQ" D ^DIC I Y<0 S VALMBCK="" G RDSPLY
+"RTN","SDPARM2",26,0)
+DIE S DIE="^DG(40.8,",(SD,DA)=+Y,DR="30.01:30.04" D ^DIE K DIE
+"RTN","SDPARM2",27,0)
+ I $D(DTOUT) G SDQUIT
+"RTN","SDPARM2",28,0)
+ I $P($G(^DG(43,1,"GL")),U,2) G DIC
+"RTN","SDPARM2",29,0)
+ G RDSPLY
+"RTN","SDPARM2",30,0)
+ Q
+"RTN","SDPARM2",31,0)
+ ;
+"RTN","SDPARM2",32,0)
+3 ;Edit Additional Header Text Fields in Scheduling Parameter (#404.91) file
+"RTN","SDPARM2",33,0)
+ ;
+"RTN","SDPARM2",34,0)
+ N DA,DR,DIE
+"RTN","SDPARM2",35,0)
+ D FULL^VALM1
+"RTN","SDPARM2",36,0)
+ S DA=1 S DR=1.3,DR(2,404.9102)=".01T;1T",DR(3,404.91021)=".01;.02",DIE=404.91 D ^DIE K DR,DA,DIE
+"RTN","SDPARM2",37,0)
+ I $D(DTOUT) G SDQUIT
+"RTN","SDPARM2",38,0)
+ G RDSPLY
+"RTN","SDPARM2",39,0)
+ Q
+"RTN","SDPARM2",40,0)
+ ;
+"RTN","SDPARM2",41,0)
+RDSPLY D EN^SDPARM S VALMBCK="R"
+"RTN","SDPARM2",42,0)
+SDQUIT Q
+"UP",404.91,404.9102,-1)
+404.91^2
+"UP",404.91,404.9102,0)
+404.9102
+"UP",404.91,404.91021,-2)
+404.91^2
+"UP",404.91,404.91021,-1)
+404.9102^1
+"UP",404.91,404.91021,0)
+404.91021
+"VER")
+8.0^22.2
+"^DD",404.91,404.91,1.1,0)
+ENABLE BLANK LINE?^S^1:YES;0:NO;^1;1^Q
+"^DD",404.91,404.91,1.1,.1)
+Enable Blank Line Between Appointments?
+"^DD",404.91,404.91,1.1,3)
+Enter "YES" if you wish to enable a blank line between appointments in letters. Leave blank or enter "NO" to not enable the blank line.  
+"^DD",404.91,404.91,1.1,21,0)
+^^5^5^3180831^^^
+"^DD",404.91,404.91,1.1,21,1,0)
+If this parameter is enabled (set to YES) then a blank line will be 
+"^DD",404.91,404.91,1.1,21,2,0)
+inserted between each appointment in the output of the letters when
+"^DD",404.91,404.91,1.1,21,3,0)
+using the Print Scheduling Letters [SDPRLETTERS] option. This is an 
+"^DD",404.91,404.91,1.1,21,4,0)
+optional field which only needs to be set to "YES" when a site desires to 
+"^DD",404.91,404.91,1.1,21,5,0)
+use this functionality. This field was added with Patch SD*5.3*705.
+"^DD",404.91,404.91,1.1,"DT")
+3180831
+"^DD",404.91,404.91,1.2,0)
+EXCLUDE ADMIN CLINICS?^S^1:YES;0:NO;^1;2^Q
+"^DD",404.91,404.91,1.2,.1)
+Exclude Administrative Clinics on Appointment List?
+"^DD",404.91,404.91,1.2,3)
+Enter "YES" if you wish to exclude administrative clinics from appearing on output. Leave blank or enter "NO" to include administrative clinics.
+"^DD",404.91,404.91,1.2,21,0)
+^^6^6^3181012^^
+"^DD",404.91,404.91,1.2,21,1,0)
+If this parameter is set to YES then administrative clinics will not be 
+"^DD",404.91,404.91,1.2,21,2,0)
+added to the Appointment List when using the Display Appointments 
+"^DD",404.91,404.91,1.2,21,3,0)
+[SDDISPPEND] option. This will help prevent patients from unnecessarily 
+"^DD",404.91,404.91,1.2,21,4,0)
+attending an administrative appointment. This is an optional field which 
+"^DD",404.91,404.91,1.2,21,5,0)
+only needs to be set to "YES" when a site desires to use this 
+"^DD",404.91,404.91,1.2,21,6,0)
+functionality. This field was added with Patch SD*5.3*705.
+"^DD",404.91,404.91,1.2,23,0)
+^^3^3^3181012^^
+"^DD",404.91,404.91,1.2,23,1,0)
+When this parameter is set to "YES" any appointment to a Clinic with an 
+"^DD",404.91,404.91,1.2,23,2,0)
+AMIS REPORTING STOP CODE of 674 will be excluded from the Appointment 
+"^DD",404.91,404.91,1.2,23,3,0)
+List.
+"^DD",404.91,404.91,1.2,"DT")
+3181012
+"^DD",404.91,404.91,1.3,0)
+ADDITIONAL HEADER TEXT^404.9102P^^2;0
+"^DD",404.91,404.91,1.3,21,0)
+^^14^14^3181012^^^
+"^DD",404.91,404.91,1.3,21,1,0)
+This multiple is optional. It allows the site to enter/edit text which
+"^DD",404.91,404.91,1.3,21,2,0)
+will be included on the header of the "Display Appointments" report
+"^DD",404.91,404.91,1.3,21,3,0)
+generated by the Display Appointments [SDDISPPEND] option. When
+"^DD",404.91,404.91,1.3,21,4,0)
+displaying/printing the report this allows the additional header text from
+"^DD",404.91,404.91,1.3,21,5,0)
+the parameter entry which corresponds to the user's defined Institution
+"^DD",404.91,404.91,1.3,21,6,0)
+DUZ(2) value. If there is no entry for the user's defined DUZ(2) value,
+"^DD",404.91,404.91,1.3,21,7,0)
+no additional text will be included in the header.
+"^DD",404.91,404.91,1.3,21,8,0)
+ 
+"^DD",404.91,404.91,1.3,21,9,0)
+This parameter allows different header information to be defined for each
+"^DD",404.91,404.91,1.3,21,10,0)
+facility at an integrated site or for each division at a multi-divisional
+"^DD",404.91,404.91,1.3,21,11,0)
+facility. 
+"^DD",404.91,404.91,1.3,21,12,0)
+ 
+"^DD",404.91,404.91,1.3,21,13,0)
+This multiple subfile and lower level fields were added with Patch
+"^DD",404.91,404.91,1.3,21,14,0)
+SD*5.3*705.
+"^DD",404.91,404.9102,0)
+ADDITIONAL HEADER TEXT SUB-FIELD^^.01^2
+"^DD",404.91,404.9102,0,"NM","ADDITIONAL HEADER TEXT")
+
+"^DD",404.91,404.9102,.01,0)
+INSTITUTION^MP4^DIC(4,^0;1^Q
+"^DD",404.91,404.9102,.01,.1)
+Institution for Additional Header Text Entry
+"^DD",404.91,404.9102,.01,1,0)
+^.1
+"^DD",404.91,404.9102,.01,1,1,0)
+404.9102^B
+"^DD",404.91,404.9102,.01,1,1,1)
+S ^SD(404.91,DA(1),2,"B",$E(X,1,30),DA)=""
+"^DD",404.91,404.9102,.01,1,1,2)
+K ^SD(404.91,DA(1),2,"B",$E(X,1,30),DA)
+"^DD",404.91,404.9102,.01,3)
+Enter the Institution for which you would like to include additional header text for Display Appointments.
+"^DD",404.91,404.9102,.01,21,0)
+^^3^3^3181012^
+"^DD",404.91,404.9102,.01,21,1,0)
+This parameter field is optional. It points  to the INSTITUTION (#4)
+"^DD",404.91,404.9102,.01,21,2,0)
+file.  There can be different header text defined for each facility at an 
+"^DD",404.91,404.9102,.01,21,3,0)
+integrated site or for each division at a multi-divisional facility.
+"^DD",404.91,404.9102,.01,"DT")
+3181012
+"^DD",404.91,404.9102,1,0)
+HEADER TEXT^404.91021^^1;0
+"^DD",404.91,404.9102,1,21,0)
+^^3^3^3181012^^^^
+"^DD",404.91,404.9102,1,21,1,0)
+This multiple is optional. It allows the site to enter/edit multiple 
+"^DD",404.91,404.9102,1,21,2,0)
+lines of site specific header text to be included on the header of the 
+"^DD",404.91,404.9102,1,21,3,0)
+"Display Appointments" report.
+"^DD",404.91,404.91021,0)
+HEADER TEXT SUB-FIELD^^.02^2
+"^DD",404.91,404.91021,0,"NM","HEADER TEXT")
+
+"^DD",404.91,404.91021,.01,0)
+HEADER TEXT^MFJ78^^0;1^K:$L(X)>78!($L(X)<1) X
+"^DD",404.91,404.91021,.01,1,0)
+^.1
+"^DD",404.91,404.91021,.01,1,1,0)
+404.91021^B
+"^DD",404.91,404.91021,.01,1,1,1)
+S ^SD(404.91,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",404.91,404.91021,.01,1,1,2)
+K ^SD(404.91,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",404.91,404.91021,.01,3)
+Answer must be 1-78 characters in length.
+"^DD",404.91,404.91021,.01,21,0)
+^^3^3^3181012^^^^
+"^DD",404.91,404.91021,.01,21,1,0)
+This field includes text which will be included for the header of the
+"^DD",404.91,404.91021,.01,21,2,0)
+"Display Appointments" report generated by the Display Appointments
+"^DD",404.91,404.91021,.01,21,3,0)
+[SDDISPPEND] option.
+"^DD",404.91,404.91021,.01,"DT")
+3181012
+"^DD",404.91,404.91021,.02,0)
+PRINT STARTING AT FIRST LINE?^RS^1:YES;0:NO;^0;2^Q
+"^DD",404.91,404.91021,.02,1,0)
+^.1
+"^DD",404.91,404.91021,.02,1,1,0)
+404.9102^C
+"^DD",404.91,404.91021,.02,1,1,1)
+S ^SD(404.91,DA(2),2,"C",$E(X,1,30),DA(1),DA)=""
+"^DD",404.91,404.91021,.02,1,1,2)
+K ^SD(404.91,DA(2),2,"C",$E(X,1,30),DA(1),DA)
+"^DD",404.91,404.91021,.02,1,1,"%D",0)
+^^2^2^3180817^
+"^DD",404.91,404.91021,.02,1,1,"%D",1,0)
+This cross reference will allow the Header Text to be easily retrieved 
+"^DD",404.91,404.91021,.02,1,1,"%D",2,0)
+based on where it should be printed.
+"^DD",404.91,404.91021,.02,1,1,"DT")
+3180817
+"^DD",404.91,404.91021,.02,3)
+Enter "YES if you wish the entered header text to start with the first line of the output. Enter "NO" if you wish it to print after the existing first line (Patient Name).
+"^DD",404.91,404.91021,.02,21,0)
+^^9^9^3181012^^^
+"^DD",404.91,404.91021,.02,21,1,0)
+This required field will allow the site to designate if the enter text
+"^DD",404.91,404.91021,.02,21,2,0)
+will start printing at the first line of the display/printout or after the
+"^DD",404.91,404.91021,.02,21,3,0)
+existing first line which is the "Appointment for patient" line.
+"^DD",404.91,404.91021,.02,21,4,0)
+ 
+"^DD",404.91,404.91021,.02,21,5,0)
+Multiple Header Text lines may be added and they can either come before
+"^DD",404.91,404.91021,.02,21,6,0)
+the existing first line or after it. Based on the value of this field 
+"^DD",404.91,404.91021,.02,21,7,0)
+these lines of text will be printed starting at the appropriate location 
+"^DD",404.91,404.91021,.02,21,8,0)
+in the order it is entered. This functionality allows header text to be 
+"^DD",404.91,404.91021,.02,21,9,0)
+placed before and after the "Appointment for patient" line.
+"^DD",404.91,404.91021,.02,"DT")
+3181012
+"BLD",10420,6)
+^579
+**END**
+**END**
+

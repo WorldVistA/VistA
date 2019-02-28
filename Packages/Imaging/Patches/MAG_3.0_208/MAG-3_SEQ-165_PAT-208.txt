@@ -1,0 +1,297 @@
+
+=============================================================================
+Run Date: DEC 19, 2018                     Designation: MAG*3*208
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #165                      Status: Released
+                  Compliance Date: JAN 18, 2019
+=============================================================================
+
+Associated patches: (v)MAG*3*180   <<= must be installed BEFORE `MAG*3*208'
+                    (v)MAG*3*183   <<= must be installed BEFORE `MAG*3*208'
+
+Subject: CLINICAL PROCEDURE AND DICOM CONSULT REQUEST TRACKING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patches MAG*3.0*208 and MD*1.0*60 work together and should be installed 
+ back to back. The two patches improve interoperability for the Clinical
+ Procedures DICOM modalities by using the VistA Imaging accession number
+ ("sss-GMR-nnnnnnnn") as the CP Instrument Order Number.  This allows the
+ DICOM objects generated during a Clinical Procedure to be automatically
+ processed by VistA Imaging.
+   
+ These patches also optimize the availability of the VistA Imaging DICOM 
+ Modality Worklist by putting the Clinical Procedures order on the 
+ worklist at check-in time, as opposed to when the order is released. 
+  
+ Furthermore, these patches can provide the VistA Imaging HL7 order 
+ message to instruments that need more information than available in the 
+ current Clinical Procedures HL7 order message.
+  
+ *** Note - MD*1*60 is distributed separately, please see that patch 
+ description for more details and installation instructions. ***
+  
+ Details
+ =======
+ Clinical Procedures (CP) and VistA Imaging (VI) CPRS Consult Request 
+ Tracking DICOM are two very successful applications.
+  
+ Clinical Procedures primarily uses HL7 for its communications.  It has 
+ two kinds of devices: unidirectional instruments and bidirectional 
+ instruments.  Both send examination results to Clinical Procedures via 
+ HL7.  A large variety of document types can be handled, with PDF being 
+ the most popular.  Unidirectional instruments are not capable of 
+ receiving HL7 orders and require manual entry of the patient and study 
+ information. Bidirectional instruments can receive HL7 order information 
+ prior to the examinations.  Some bidirectional Clinical Procedures 
+ instruments include DICOM modalities.  
+  
+ VistA Imaging CPRS Consult Request Tracking uses an accession number that 
+ has the format "sss-GMR-nnnnnnnn", where "sss" is the three-digit VA
+ Station Number and "nnnnnnnn" is the internal entry number of the study in
+ the REQUEST / CONSULTATION file (#123).  Automatic association of DICOM
+ images in the VistA electronic health record (EHR) requires exact matches 
+ for the patient name, medical record number (SSN in VA), and accession 
+ number.
+  
+ The Clinical Procedures Instrument Order Number is derived from the 
+ check-in date and time.  The Instrument Order Number is mapped to the 
+ DICOM Accession Number (0008,0050) in the DICOM modalities that are in 
+ use with Clinical Procedures. The DICOM objects created with this 
+ accession number cannot be automatically processed by VistA Imaging.
+  
+ These patches improve interoperability by using the VistA Imaging consult 
+ accession number (in the format "sss-GMR-nnnnnnnn") as the Clinical 
+ Procedures Instrument Order Number. This results in the correct value for 
+ the DICOM Accession Number (0008,0050) and allows Clinical Procedures' 
+ DICOM objects to be automatically processed by VistA Imaging and inserted 
+ into the EHR.
+  
+ DICOM instruments follow the established workflow of obtaining patient and
+ study information from a Modality Worklist provider, acquiring DICOM
+ objects, storing the patient and study data into the headers of the DICOM
+ objects, and sending the DICOM objects to VistA.  The DICOM Text Gateway
+ processes VistA Imaging HL7 order messages and puts the studies on the
+ worklist. Some DICOM instruments for Clinical Procedures use DICOM
+ Modality Worklist.                        
+  
+ These patches improve the timing of the DICOM Modality Worklist 
+ information for Clinical Procedures.  Previously the VistA Imaging HL7 
+ order message for Clinical Procedures was generated when the order is 
+ released (i.e., "signed") which resulted in the study being put on the 
+ worklist well in advance of the examination.  With these patches, the 
+ VistA Imaging HL7 order message is generated when the clinical procedure 
+ order is checked in. As a result, the study is put on the worklist just 
+ when it is needed to provide the patient and study information for the 
+ modality.
+  
+ With these patches, at check-in time, both the Clinical Procedures and
+ VistA Imaging HL7 messages are created. Some instruments require fields
+ that are not present in the Clinical Procedures HL7 order message.  The
+ VistA Imaging HL7 message body provides these fields and can be used by
+ Clinical Procedures instead.
+  
+ Note that if the Clinical Procedure uses DICOM instruments, the DICOM 
+ Encapsulated PDF SOP Class is recommended for computer-generated PDF 
+ reports. DICOM Encapsulated PDFs are more suitable for storage in an EHR 
+ than raw PDFs because they contain patient and study identification 
+ information and can be managed by the whole suite of DICOM services 
+ (storage, display, query/retrieve, export, etc.).
+  
+  
+ Overview of the New Capabilities
+ ================================
+ The new capabilities in these two patches only apply to bidirectional CP 
+ instruments.  There are no changes for unidirectional CP instruments.
+  
+  
+ CP Can Use VI Accession Number as Instrument Order Number
+ =========================================================
+ For designated CP instruments that generate DICOM objects, the VistA 
+ Imaging consult / procedure accession number "sss-GMR-nnnnnnnn"
+ can be used as the Clinical Procedure Instrument Order Number.  This
+ permits DICOM objects created by the CP instrument to be automatically
+ associated with the clinical procedure in VistA.
+  
+  
+ CP Check-in Triggers the VistA Imaging HL7 Generation
+ =====================================================
+ Check-in of a Clinical Procedure triggers the generation of the VistA 
+ Imaging HL7 order (ORM) message.  The VistA Imaging HL7 message will no 
+ longer be generated prematurely when the order is released.
+  
+ The VistA Imaging DICOM Modality Worklist is populated with information 
+ from the VistA Imaging HL7 order message.  Since the CP study shall be 
+ put on the worklist at check-in instead of when the order was released, 
+ the DICOM Modality Worklist will provide much more timely information.
+  
+ Note: The clinical procedure must have an entry in the CLINICAL SPECIALTY 
+ DICOM & HL7 file (#2006.5831) to have DICOM Modality Worklist and HL7.  
+ This is an existing requirement going back to MAG*3.0*10 DICOM - CONSULT 
+ AND PROCEDURES INTERFACE (2003).
+  
+  
+ CP Can Use VistA Imaging's HL7 Order Message Body
+ =================================================
+ The VistA Imaging HL7 order (ORM) message contains many more data fields 
+ than the CP order message. The VistA Imaging HL7 order (ORM) message for 
+ a Clinical Procedure is also backwards-compatible with the CP HL7 order 
+ (ORM) message - all the fields in the Clinical Procedure HL7 order message
+ are present in the VistA Imaging HL7 order message and contain the same 
+ data. Some VI HL7 ORM fields have additional components, however.
+  
+ For designated CP instruments that need this additional information, the 
+ VistA Imaging HL7 order message body can be used instead of the CP order 
+ message.  The content of the CP HL7 order message will be replaced by the 
+ VI HL7 order message, but the CP message transport mechanism will remain 
+ the same: the same MSH message header segment is used, the same Logical 
+ Link, and the same 1.6 HL7 communications package.
+  
+  
+ New CP INSTRUMENT file (#702.09) CP - DICOM INTEROPERABILITY field (#.19)
+ =========================================================================
+ MD*1.0*60 adds the new CP - DICOM INTEROPERABILITY field (#.19) to the CP 
+ INSTRUMENT file (#702.09).  This field is used to identify Clinical 
+ Procedure instruments that (1) will use the VistA Imaging 
+ consult/procedure accession number sss-GMR-nnnnnnnn as the Clinical 
+ Procedure Instrument Order Number, and (2) will use the VistA Imaging HL7 
+ message body instead of the Clinical Procedure HL7 message body. The 
+ values for the field are <null>, 0, 1, or 2 accordingly.
+  
+  
+ Associated Ticket(s):
+ =====================
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ VA Heartland East (ST. Louis)
+ Maryland HCS (Baltimore)
+ Eastern Colorado HCS (Denver)
+  
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to SFTP the files from: Download.vista.domain.ext
+  
+ The preferred method is to retrieve MAG*3.0*208 files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                    domain.ext    
+     Salt Lake City:           domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Note:   Information about last-minute changes to these patches will be 
+ provided in the readme file. If present, this file will also be in the 
+ MAG3_0P208 directory.
+  
+  
+ File Name:               Description:                     Protocol:
+ ==========               ============                     =========
+ MAG3_0P208.KID           KERNEL DISTRIBUTION              ASCII
+ MAG3_0P208_PD.PDF        PATCH DESCRIPTION                BINARY
+ MAG3_0P208_Cookbook.docx COOKBOOK                         BINARY
+  
+  
+ Installation Instructions:
+ ==========================
+ MAG*3.0*208 must be installed on the VistA System followed by patch 
+ MD*1.0*60 (see patch 60 for installation instructions). There is no
+ component for the legacy VistA Imaging DICOM Gateways. This patch must be
+ installed by the compliance date to conform to VHA Directive 2001-023.
+  
+ The MAG*3.0*208 patch can be loaded while the VistA Imaging System and
+ Clinical Procedures are active and users are on the system. 
+  
+ The actual KIDS installations will take less than one minute.
+  
+ 1       On the VistA system, access the Kernel Installation and 
+         Distribution System Menu [XPD MAIN].
+ 2       Run the Installation option [XPD INSTALLATION MENU].
+ 3       Load the KIDS file by performing the following steps:
+    a.   Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+         load the KIDS distribution.
+    b.   When prompted, enter the path and file name (MAG3_0P208.KID) of
+         the Patch MAG*3.0*208 KIDS file.
+    c.   When prompted to continue with the load, enter "YES". A 
+         Distribution OK! message will be displayed when the load is
+         complete.
+ 4       After loading the KIDS file, use the following options to verify 
+         the contents of the patch and to back up any affected routines.
+    a.   Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+         this option if you want to ensure the integrity of the routines in
+         the patch.
+    b.   Compare Transport Global to Current System [XPD COMPARE TO 
+         SYSTEM] - Run this option if you want to view all changes that
+         will be made when the patch is installed.  All components
+         (routines, options, and so on) in the patch will be compared.
+    c.   Backup a Transport Global [XPD BACKUP] - Run this option if you
+         want to create a backup message of any routines exported with the
+         patch. It will NOT back up any of the other changes.
+ 5       After performing the load and any optional verification steps, 
+         install the KIDS files by performing the following steps:
+    a.   Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b.   When prompted for the install name, enter "MAG*3.0*208".
+    c.   Answer "NO" to the following prompts:
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6       When installation is finished, an Install Complete message will 
+         be displayed.
+  
+  
+ Back-out/Rollback Strategy
+ ==========================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. It is imperative that you have performed 
+ a backup of the VistA routines included in this patch prior to 
+ installation.  (The VistA routines are listed below.)
+  
+ The back-out plan for VistA is to restore the routines from this backup.  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the routine information below.
+
+Routine Information:
+====================
+Routine Name: MAGDHLS
+Routine Name: MAGDHOW1
+Routine Name: MAGDHOW2
+Routine Name: MAGDHOW3
+Routine Name: MAGDHOWC
+Routine Name: MAGDHOWP
+Routine Name: MAGDHOWS
+Routine Name: MAGHOW4
+Routine Name: MAGIP208
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2018
+Completed By:                               Date Completed: DEC 19, 2018
+Released By :                               Date Released : DEC 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

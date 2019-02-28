@@ -1,0 +1,543 @@
+$TXT Created by                W at PREMV.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 10/18/18 at 14:38
+=============================================================================
+Run Date: NOV 29, 2018                     Designation: PSO*7*508
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #444                      Status: Released
+                  Compliance Date: DEC 29, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*372   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*442   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*443   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*446   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*454   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*467   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*482   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*505   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*517   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*520   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*527   <<= must be installed BEFORE `PSO*7*508'
+                    (v)PSO*7*540   <<= must be installed BEFORE `PSO*7*508'
+
+Subject: INBOUND ERX V3 ENHANCEMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Inbound Electronic Prescribing (eRx) v3 enhancements provides support for 
+ new eRx message types. Enhancements have been made that allow a user 
+ (pharmacist) to send a Rx Refill Request (also known as a Renewal in
+ VistA) message type to the external provider that originally sent the eRx
+ into VistA. After an Rx Refill Request has been sent to the external
+ provider, the provider will be able to send an Rx Refill Response. New 
+ functionality has been added to enable automatic and manual processing of
+ Rx Refill Response messages. Enhancements have also been made to 
+ support the receipt of cancel request messages, as well as the 
+ generation of cancel response messages. This functionailty allows an 
+ external provider to send a cancel request message to the VA pharmacy. 
+ It also allows the VA to properly respond to the cancel request 
+ message. The new message types will be stored along with the New Rx type
+ in the ERX HOLDING QUEUE file (#52.49).
+  
+ The Remote Procedure Call (RPC) that supports the receipt of a incoming 
+ New Rx has been enhanced to facilitate the filing and management of the 
+ new message types being supported.
+  
+ A new hidden action 'RR' (Refill Request) has been created and attached 
+ to the 'Other OP Actions' [PSO LM HIDDEN OTHER #2] protocol. This new
+ action allows a user to generate a refill request from pending outpatient
+ orders and backdoor order processing. This refill request is then
+ sent through the eRx processing hub to the external provider who wrote 
+ the prescription.
+  
+ New status values have been added to the ERX SERVICE REASON CODES file 
+ (#52.45) in support of the new refill request, refill response, cancel
+ request, cancel response, and error messages that will be received in the
+ holding queue. These status values, along with the MESSAGE TYPE field
+ (#.08) in the ERX HOLDING QUEUE file (#52.49) will ensure the messages can
+ be differentiated.
+  
+ A new action has been added to the list view in the eRx holding queue. 
+ This new action 'Message View' (MV) allows a user to select which types 
+ of messages they wish to view. This function makes it easier for a 
+ pharmacist or other use to narrow down the list of items they are viewing.
+  
+ A new symbol has been added as an eRx identifier in front of the 
+ prescription number in Patient Prescription Processing [PSO LM BACKDOOR 
+ ORDERS] and Complete Orders from OERR [PSO LMOE FINISH]. This allows the 
+ user to quickly identify eRx prescriptions. The new symbol is '&', and 
+ appears in front of the prescription number (i.e. &1234567).
+  
+ Inbound eRx has been enhanced, and is now capable of receiving refill
+ response and cancel request messages. When receiving a refill response,
+ the system will now link the associated request and response messages,
+ creating a relationship between the two messages. Request and response
+ messages are also linked to the new prescription message or related
+ message that was the source for the original prescription/communication.
+  
+ Inbound eRx has been enhanced to automatically process cancel requests 
+ sent from an external provider. If auto-processing is successful, an 
+ automated response may be built and sent to the provider automatically. 
+ In some instances, the status of the eRx will be updated to an actionable 
+ status. In these cases, users will now see the cancel request messages in 
+ the eRx holding queue. These cancel request messages require action by the
+ user to acknowledge the cancel request. In some cases, the user will be 
+ asked for the type of cancel response message they would like to send 
+ back to the provider (approved or denied response). A new action 'ACK' 
+ (Acknowledge) can be found in the hidden actions under the eRx 
+ summary/details screen.
+  
+ List Manager screens have been enhanced to display details about the 
+ refill requests, refill responses, cancel requests, cancel responses, and 
+ error messages. These screens give detailed information about the
+ currently selected message type (request/response) as well as information
+ related to the other linked messages. For example, if the selected message
+ is a refill response, details related to the refill request are also
+ displayed to the user. Additional message history information is available
+ at the bottom of the list manager view.
+  
+ Inbound eRx has been enhanced to automatically process an 'approved' 
+ refill response from the eRx holding queue, into pending outpatient 
+ orders. Refill responses that are of the type 'approved with changes' can 
+ be manually processed from the eRx holding queue. The only refill 
+ response messages that will require manual intervention are refill 
+ responses that contain a provider change.
+  
+ A new patient centric view has been added to inbound eRx. This view 
+ provides users a more generic overview of prescription activity. The new 
+ view includes information about the patient, the number of elapsed days
+ the oldest eRx has been in the holding queue, and totals counts for 
+ all messages that are actionable by a user. Once the user selects a 
+ patient from the patient centric view, the user will be taken to a 
+ prescription view. The prescription view will show only prescriptions for 
+ the selected patient.
+  
+ A new action has been added to the summary/details view of an eRx. The 
+ new 'JO' (Jump to OP) action uses the currently matched vista patient to 
+ pre-select the single patient filter and jump the user directly into 
+ 'Complete Orders from OERR' [PSO LMOE FINISH]. This functionality 
+ improves workflow and prevents users from being required to exit the 
+ Inbound eRx functionality completely. The users can now use the new 
+ action to jump directly to the Complete Orders from OERR option to finish 
+ processing prescriptions that have been accepted from inbound eRx.
+  
+ ************************************************************************
+ WARNING: There are two (2) known defects against PSO*7.0*508 to be 
+ assigned to the eRx v3.0 Sustainment team for resolution:
+  
+ 1) PHARM(CM) Defect 862482: Locking issue both in PCV and RX view with 
+    multiple VistA sessions open.
+  
+    Defect Test scenario:
+    If an erx pharmacist opens two VistA sessions on the same patient 
+    (in both message-centric and patient-centric view) and then closes one 
+    session, the lock placed by that pharmacist is removed. A second erx
+    pharmacist can then edit the same patient eRx entries, simultaneously,
+    as first pharmacist.
+  
+ 2) PHARM(CM) Defect 862505: Locking issue between PCV / RX view and ERX 
+    REFERENCE NUMBER, while searching(SR) the same prescription using ERX
+    REFERENCE NUMBER. 
+  
+    Defect Test scenario:
+    If a pharmacist selects a patient in both message-centric and 
+    patient-centric views, and goes into a patient record for validation
+    and acceptance, a second pharmacist can get into the same record by
+    searching for erx reference number, thus bypassing the lock on that
+    patient.
+  
+ ************************************************************************
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ ERX HOLDING QUEUE (#52.49) RELATED OR PARENT MESSAGE        Modified
+                            ID (#.02)
+                            EXTERNAL PATIENT IDENTIFIER      Modified
+                            (#.04)
+                            MESSAGE TYPE (#.08)              Modified
+                            RELATES TO HUB ID (#.14)           New
+                            CH MESSAGE ID (#25)              Modified
+                            MEDICATION DISPENSED/              New
+                            REQUESTED (#49)
+                            REQUEST/RESPONSE COMMENTS(#50)     New
+                            NOTE ADDED BY (#50.1)              New
+                            NOTE DATE/TIME (#50.2)             New
+                            REFILL/CANCEL REQUEST              New
+                            PERSON (#51.1)
+                            # OF REFILLS REQUESTED (#51.2)     New
+                            RESPONSE VALUE (#52.1)             New
+                            RESPONSE NOTE (#52.2)              New
+                            RESPONSE REFERENCE                 New
+                            NUMBER (#52.3)
+                            RESPONSE CODES (#55)               New
+                            REQUEST/RESPONSE ERROR TEXT (#60)  New
+                            REQUEST/RESPONSE ERROR CODE(#60.1) New
+                            REQUEST/RESONSE ERROR DCODES (#61) New
+                            CHANGE REQUEST TYPE (#80.1)        New
+                            RETURN RECEIPT (#80.2)             New
+                            REQUEST REFERENCE NUMBER (#80.3)   New
+                            CHANGE RX STATUS FLAG (#80.4)      New
+                            CHANGE/CANCEL DENIED BY            New
+                            HUB (#80.5)
+                            PROCESSING ERRORS (#100)         Modified  
+                            MESSAGE HISTORY (#201)             New
+                             
+  
+ ERX SERVICE REASON         CODE TYPE (#.03)                 Modified
+ CODES (#52.45)             BRIEF DESCRIPTION (#.02)         Modified
+  
+ PRESCRIPTION (#52)         ACTIVITY LOG SUB-FILE (#52.3)    Modified
+                            REASON (#.02)                    Modified
+  
+ OUTPATIENT SITE (#59)      ERX DEFAULT LOOKBACK DAYS (#10.2)  New 
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ List Templates Associated:
+ --------------------------
+ PSO ERX PATIENT CENTRIC VIEW
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Option Name                   Type               New/Modified/Deleted
+ -----------                   ----               -------------------- 
+ PSO ERX FINISH (Complete      Action                  Modified
+ Orders from eRx)
+  
+ Protocols Associated:
+  
+ Protocol Name                        New/Modified/Deleted
+ -------------                        -------------------- 
+ PSO ERX ACCEPT ERX                        Modified
+ PSO ERX ACKNOWLEDGE                         New
+ PSO ERX ADD COMMENT                         New
+ PSO ERD DISPLAY MENU                      Modified
+ PSO ERX HIDDEN ACTIONS                    Modified
+ PSO ERX HOLD                              Modified
+ PSO ERX HQ MENU                             New
+ PSO ERX JUMP TO OP                          New
+ PSO ERX MESSAGE VIEW                        New
+ PSO ERX PCV MENU                            New
+ PSO ERX PCV MESSAGE VIEW                    New
+ PSO ERX PCV SEARCH QUEUE                    New
+ PSO ERX PCV SELECT BY NUMBER                New
+ PSO ERX PCV SELECT PATIENT                  New
+ PSO ERX PCV SORT ENTRIES                    New
+ PSO ERX PRINT                             Modified
+ PSO ERX REFILL REQUEST                      New
+ PSO ERX REJECT                            Modified
+ PSO ERX REMOVE                            Modified
+ PSO ERX RENEW REQUEST                     Deleted
+ PSO ERX SINGLE REFILL REQUEST               New
+ PSO ERX STATUS HISTORY                      New
+ PSO ERX UNHOLD                            Modified
+ PSO ERX VALIDATE DRUG                     Modified
+ PSO ERX VALIDATE PATIENT                  Modified
+ PSO ERX VALIDATE PROVIDER                 Modified
+ PSO LM HIDDEN OTHER                       Modified
+ PSO LM HIDDEN OTHER #2                    Modified
+  
+ Remote Procedure Calls:
+ -----------------------
+  
+ Remote Procedure Name                 New/Modified/Deleted
+ ---------------------                -------------------- 
+ PSOERX INCERX                               Modified
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ INDIANAPOLIS,IN
+ FAYETTEVILLE,AR
+ MEDS BY MAIL
+ BROOKLYN,NY
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ Title                          File Name                         FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide - Inbound   pso_7_0_p508_ig.pdf               binary
+ ePrescribing (PSO*7.0*508) 
+  
+ User Manual - Inbound          pso_7_0_p508_um.pdf               binary
+ ePrescribing (PSO*7.0*508)
+  
+ Technical Manual/Security      pso_7_0_p508_tm.pdf               binary
+ Guide - Outpatient Pharmacy
+ V.7.0
+  
+ Release Notes - Inbound        pso_7_0_p508_rn.pdf               binary
+ ePrescribing (PSO*7.0*508)
+  
+ Implementation Guide -         pso_7_0_p508_img.pdf              binary
+ Inbound ePrescribing
+ (PSO*7.0*508)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ IMPORTANT:  Please contact the PRE Inbound eRx Sustainment Team prior to 
+ installing the PSO*7.0*508 patch if a pharmacy at your site is currently 
+ receiving Inbound eRx prescriptions using patch PSO*7.0*527.  Email the 
+ Inbound eRx Sustainment Team at inbounderx@domain.ext for support in applying 
+ new configuration settings.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PSO*7.0*508):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include KIDS notice of incompletion or hard errors) resulting from the 
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 295
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO508PO
+    Before:       n/a   After: B19257631  **508**
+Routine Name: PSOCAN
+    Before: B53171969   After: B55445842  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375,379,390,413,
+                                           372,416,508**
+Routine Name: PSOCAN1
+    Before: B60678355   After: B63054494  **8,20,24,27,32,131,163,185,
+                                           238,372,442,508**
+Routine Name: PSOCAN3
+    Before: B71988154   After: B73058805  **15,24,27,32,36,94,88,117,131,
+                                           146,139,132,223,235,148,249,
+                                           225,324,251,375,379,372,540,
+                                           508**
+Routine Name: PSOCAN4
+    Before: B49357876   After: B51143319  **20,24,27,63,88,117,131,259,
+                                           268,225,358,385,391,508**
+Routine Name: PSOCMOPA
+    Before: B16159826   After: B16718315  **61,76,443,508**
+Routine Name: PSOERX
+    Before: B70347933   After:B122296708  **467,527,508**
+Routine Name: PSOERX1
+    Before: B78477879   After: B96375321  **467,520,527,508**
+Routine Name: PSOERX1A
+    Before:B129260267   After:B140048297  **467,527,508**
+Routine Name: PSOERX1B
+    Before:B162952220   After:B200556396  **467,506,520,527,508**
+Routine Name: PSOERX1C
+    Before: B40194088   After: B61030450  **467,520,527,508**
+Routine Name: PSOERXA1
+    Before:B233267035   After:B188146400  **467,520,508**
+Routine Name: PSOERXA2
+    Before:B104569280   After:B111979280  **467,520,508**
+Routine Name: PSOERXA3
+    Before: B37438894   After: B38164072  **467,508**
+Routine Name: PSOERXA5
+    Before:       n/a   After: B65388361  **508**
+Routine Name: PSOERXC1
+    Before:       n/a   After: B92546733  **508**
+Routine Name: PSOERXD2
+    Before:B211196189   After:B182647633  **467,506,520,508**
+Routine Name: PSOERXEN
+    Before:       n/a   After: B15625365  **508**
+Routine Name: PSOERXH1
+    Before: B17222601   After: B17222601  **467,527,508**
+Routine Name: PSOERXO1
+    Before: B64732722   After:B115835250  **467,520,508**
+Routine Name: PSOERXU1
+    Before: B88661299   After:B144420314  **467,520,508**
+Routine Name: PSOERXU2
+    Before:       n/a   After: B50733365  **508**
+Routine Name: PSOERXU3
+    Before:       n/a   After:B170900975  **508**
+Routine Name: PSOERXU4
+    Before: B35485114   After: B33741259  **520,508**
+Routine Name: PSOERXU5
+    Before:       n/a   After: B64488961  **508**
+Routine Name: PSOERXU6
+    Before:       n/a   After:B111664391  **508**
+Routine Name: PSOERXX1
+    Before: B47206629   After:B155540262  **467,520,527,508**
+Routine Name: PSOERXX2
+    Before:B181162473   After:B185958519  **467,508**
+Routine Name: PSOERXX3
+    Before: B81556769   After: B84060041  **467,508**
+Routine Name: PSOERXX4
+    Before: B86144240   After:B109158139  **467,508**
+Routine Name: PSOERXX5
+    Before:B181218192   After:B161348685  **467,508**
+Routine Name: PSOERXZ1
+    Before:       n/a   After:B224204114  **508**
+Routine Name: PSOORAL1
+    Before:B120026363   After:B141679409  **71,156,148,247,240,287,354,
+                                           367,408,482,508**
+Routine Name: PSOORFIN
+    Before: B72047260   After: B72090334  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391,372,416,446,505,
+                                           508**
+Routine Name: PSOORNE6
+    Before: B50434819   After: B56294478  **46,103,117,156,210,488,505,508**
+Routine Name: PSOORNEW
+    Before:B117010534   After:B119220767  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486,446,505,517,508**
+Routine Name: PSOORUT1
+    Before:B124954661   After:B131536196  **1,14,30,46,132,148,233,274,
+                                           225,305,289,251,387,385,313,
+                                           427,444,454,508**
+Routine Name: PSORENW
+    Before: B48759882   After: B49878168  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313,411,
+                                           508**
+Routine Name: PSORENW4
+    Before: B73245534   After: B68530272  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411,444,508**
+ 
+Routine list of preceding patches: 442, 443, 454, 482, 517, 527, 540
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 13, 2017
+Completed By:                               Date Completed: NOV 29, 2018
+Released By :                               Date Released : NOV 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

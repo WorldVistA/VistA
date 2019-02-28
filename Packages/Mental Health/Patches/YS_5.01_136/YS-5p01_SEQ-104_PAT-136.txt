@@ -1,0 +1,209 @@
+$TXT Created by                    SPPDEV-MHA.DOMAIN.EXT  (KIDS) on Thursday, 10/25/18 at 09:37
+=============================================================================
+Run Date: NOV 26, 2018                     Designation: YS*5.01*136
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #104                   Status: Released
+                  Compliance Date: DEC 27, 2018
+=============================================================================
+
+Associated patches: (v)YS*5.01*121 <<= must be installed BEFORE `YS*5.01*136'
+
+Subject: MHA INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ VistA Patch Display                                                   
+ Page: 1
+ ==========================================================================
+ ===
+  
+ $TXT Created by                    SPPDEV-MHA.DOMAIN.EXT  (KIDS) on Friday, 06/15/18 at 13:25
+  
+  New Mental Health Instruments: 
+  ------------------------------
+ 1. WEMWBS
+ 2. BPRS-A
+ 3. PSS-3 2nd
+ 4. HSI
+ 5. PCL-5 Weekly
+ 6. MHRM
+  
+  
+ Patch Components:
+ =================
+  Files & Fields Associated:
+  File Name (Number)                Field Name (Number)   New/Mod/Del
+ ------------------                ------------------    -----------
+ MH TEST AND SURVEYS (601.71)                            Modified
+ MH QUESTIONS (601.72)                                   Modified
+ MH INTRODUCTIONS (601.73)                               Modified
+ MH INSTRUMENT CONTENT (601.76)                          Modified
+ MH SKIPPED QUESTIONS (601.79)                           Modified
+ MH RULES (601.82)                                       Modified
+ MH INSTRUMENT RULES (601.83)                            Modified
+ MH ANSWERS (601.85)                                     Modified
+ MH SCALE GROUPS (601.86)                                Modified
+ MH SCALES (601.87)                                      Modified
+ MH CHOICE IDENTIFIERS (601.89)                          Modified
+ MH SCORING KEYS (601.91)          Target (#3)           Modified
+ MH INSTRUMENT EXCHANGE (601.95)                         Modified
+  
+ Forms Associated:
+  Form Name                  File #                       New/Mod/Del
+ ---------                  ------                       -----------
+ N/A
+  
+ HL7 Application Parameters Associated:
+  HL7 Application Parameter Name                          New/Mod/Del
+ ------------------------------                          -----------
+ N/A
+  
+ List Templates Associated:
+  List Template Name                                      New/Mod/Del
+ ------------------                                      -----------
+ N/A
+  
+ Mail Groups Associated:
+  Mail Group Name                                         New/Mod/Del
+ ---------------                                         -----------
+ N/A
+  
+ Options Associated:
+  Option Name                       Type                  New/Mod/Del
+ N/A
+  
+  
+ Protocols Associated:
+ Protocol Name                     Type                  New/Mod/Del
+ -------------                     ----                  -----------
+ N/A
+  
+ Remote Procedures Associated:
+  Remote Procedure Name                                   New/Mod/Del
+ ---------------------                                   -----------
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  Template Name                                            New/Mod/Del 
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ ORLANDO
+ MILWAUKEE
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The documentation files are available on the following OI Field Offices' 
+ [ANONYMOUS.SOFTWARE] directories. Use the following FTP address to 
+ connect to the first available FTP server: download.vista.domain.ext
+  
+ OI FIELD OFFICE      FTP ADDRESS                DIRECTORY
+ ---------------------------------------------------------------
+ HINES            domain.ext       [ANONYMOUS.SOFTWARE]
+ SALT LAKE CITY   domain.ext         [ANONYMOUS.SOFTWARE]
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+ Title                   File Name                     SFTP Mode
+ --------------------------------------------------------------------------
+ YS_501_136_IG.PDF       MHA3 Patch 136 Install Guide  BINARY
+ YS_MHA_TM.PDF           MHA3 Technical Manual         BINARY
+ YS_MHA_UM.PDF           MHA3 User Manual              BINARY
+  
+ Installation:
+ ============= 
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 5 minutes.
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+       Select Kernel Installation & Distribution System Option: 
+ Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*136):
+         a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  4.  Use the Install Package(s) option and select the package
+     YS*5.01*136.
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 235
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS136PST
+    Before:       n/a   After:  B1118766  **136**
+Routine Name: YTQAPI2B
+    Before:B119361091   After:B119361091  **134,136**
+Routine Name: YTQAPI2C
+    Before:       n/a   After: B68236793  **136**
+ 
+Routine list of preceding patches: 134
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2018
+Completed By:                               Date Completed: NOV 21, 2018
+Released By :                               Date Released : NOV 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

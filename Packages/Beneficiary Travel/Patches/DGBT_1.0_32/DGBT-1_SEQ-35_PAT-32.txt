@@ -1,0 +1,201 @@
+
+=============================================================================
+Run Date: NOV 08, 2018                     Designation: DGBT*1*32
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #35                      Status: Released
+                  Compliance Date: DEC 09, 2018
+=============================================================================
+
+Associated patches: (v)DGBT*1*31   <<= must be installed BEFORE `DGBT*1*32'
+
+Subject: BT DASHBOARD 2FA IMPLEMENTATION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ In preparation for the VA's transition to become two factor authentication
+ (2FA) compliant, the Beneficiary Travel (BT) Dashboard web interface will 
+ need to implement multiple Single Sign On (SSOi) processes in order to be 
+ compliant.
+  
+ Install this patch after the affected user base has completed the Link My
+ Account process.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Problem: 
+ -------
+ The Department of Veterans Affairs Cybersecurity Task Force has been tasked 
+ by the Chief Information Officer (CIO) and the Inspector General (IG) to 
+ address identified material weaknesses. This task force has mandated that 
+ all internal, user facing VA applications become two factor authentication
+ (2FA) compliant by April 30, 2017. 
+  
+ In order to be compliant, applications are required to authenticate users 
+ via Personal Identity Verification (PIV) cards.  
+  
+ Note: Access and Verify codes will no longer be permitted for employees and 
+ contractors to access VA applications.  
+   
+ Resolution:
+ ----------
+ As part of the transition to 2FA, BT Dashboard was updated to
+ utilize the CA SiteMinder WebAgent and the SSOi Secure Token
+ Service (STS) to authenticate users with their PIV card.
+  
+  
+  
+ TEST SITES:
+ -----------
+ Michael E. DeBakey VA Medical Center - Houston, Texas
+  
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This software is being released as an XML file, and documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. Sites may
+ retrieve the new XML directly using Secure File Transfer Protocol (SFTP)
+ from the ANONYMOUS.SOFTWARE directory at the following OI Field Offices:
+  
+ Hines:               domain.ext  
+ Salt Lake City:      domain.ext
+   
+  Filename                    Description           Format
+  ========                    ===========           ======
+  DGBT_1_32.XML               Dashboard XML         Binary
+  
+  NOTE: The size of the file once downloaded will be 53.2 KB
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                              File Name              SFTP Mode
+ -------------------------------------------------------------------
+ BT Dashboard User Manual           dgbt1_0_dash_um.doc    Binary
+ BT Dashboard User Manual           dgbt1_0_dash_um.pdf    Binary
+ Technical Manual                   dgbt_1_32p_tm.doc      Binary
+ Technical Manual                   dgbt_1_32p_tm.pdf      Binary
+ DGBT_1.0_32 - Release Notes.doc    dgbt1_0_32_rn.doc      Binary
+ DGBT_1.0_32 - Release Notes.pdf    dgbt1_0_32_rn.pdf      Binary
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ In addition to the instructions below, each region will need to
+ install software on their web server and create a new SSL/TLS 
+ configuration using the Cache System Management Portal.
+ Please reference the associated Release Notes.  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Use Cache Studio to import the source code XML. 
+ Note: Cache Studio should be connected to your VistA server in your
+       station's namespace.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Click the Tools menu and select Import Local.
+  
+ 2.  Browse to the XML source code file retrieved from 
+     download.vista.domain.ext.
+  
+ 3.  Click the Open button.
+  
+ 4.  Ensure the Add Imported Items to Project checkbox is not selected and 
+     that Compile Imported Items is selected.
+  
+ 5.  Click the OK button to import the Beneficiary Travel Dashboard .csp
+     project file.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the XML file from patch 
+ DGBT*1.0*31 and disabling the CA SiteMinder WebAgent on the web server.
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 03, 2016
+Completed By:                               Date Completed: NOV 07, 2018
+Released By :                               Date Released : NOV 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,446 @@
+
+=============================================================================
+Run Date: DEC 26, 2018                     Designation: EAS*1*151
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #142                      Status: Released
+                  Compliance Date: JAN 26, 2019
+=============================================================================
+
+Associated patches: (v)EAS*1*70    <<= must be installed BEFORE `EAS*1*151'
+
+Subject: DISPLAY RESIDENTIAL ADDRESS, CHANGES TO DISPLAY OF MAILING ADDRESSES
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch EAS*1.0*151 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which 
+ supports Enrollment System Community Care (ESCC).
+  
+ EAS*1.0*151 is being released with DG*5.3*941 and IVM*2.0*164 in Host File
+ DG_53_P941.KID.
+  
+ EAS*1.0*151 is also being released in support of the Enrollment System 
+ (ES) 5.2 release. Refer to Informational Patch EAS*1.0*159 (Enrollment
+ Application System) for additional details regarding the ES release.
+  
+ Listing of Updates:
+ ===================
+ This patch makes the following enhancements to the Veterans Health
+ Information Systems and Technology Architecture (VistA) Registration, 
+ Eligibility, & Enrollment (REE) for the display available from menu 
+ option View Patient Address [EAS VIEW PATIENT ADDRESS].
+  
+ A new address type of Residential Address can be viewed. This address is 
+ used by Enrollment and Eligibility to retain the geographic residence of 
+ an applicant or patient. It supports the Enrollment System Community Care 
+ program's need to determine geographic distance from a treatment facility.
+ In addition, the screen labels and prompts are modified as follows.
+  
+ 1. The field label for the patient address is modified from "Patient 
+    Address" to "Permanent Mailing Address".
+  
+ 2. The field label for the date of the patient address change is modified 
+    from "Patient Add Change Date" to "Permanent Mailing Add Change Date".
+  
+ 3. The field label for the site of the patient address change is modified 
+    from "Patient Add Change Site" to "Permanent Mailing Add Change Site".
+  
+ 4. The field label for the source of the patient address change is
+    modified from "Patient Add Change Source" to "Permanent Mailing Add
+    Change Source". 
+  
+ Display Screen from menu option View Patient Address [EAS VIEW PATIENT 
+ ADDRESS]:
+  
+ BEGIN SCREEN CAPTURE *
+  
+ Select OPTION NAME: EAS VIEW PATIENT ADDRESS       View Patient Address
+ View Patient Address
+ Select PATIENT NAME:    TEST,EMERGENCY        1-21-32    207012132P 
+ **Pseudo SSN **     NO     SC VETERAN
+  Enrollment Priority:            Category: NOT ENROLLED  End Date: 
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+                        Patient Name: TEST,EMERGENCY
+           Permanent Mailing Address: PERMANENT LINE ADDRESS 1 THIS IS 35
+                                      PERM LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+               Bad Address Indicator:
+   Permanent Mailing Add Change Date: JUL 19, 2017@13:49:19
+ Permanent Mailing Add Change Source: VAMC
+   Permanent Mailing Add Change Site: VISN 2
+  
+ END SCREEN CAPTURE *
+  
+ 5. After displaying the Permanent Mailing Address, the user is prompted 
+    for displaying the Confidential Mailing, Temporary Mailing and
+    Residential addresses if they exist in the patient record. This prompt
+    is modified from: "Would you like to see the Confidential and Temporary
+    Addresses? Yes//" to "Would you like to view the Conf Mailing, Temp
+    Mailing and Residential Addresses? Yes//"
+  
+ Display Screen from menu option View Patient Address [EAS VIEW PATIENT 
+ ADDRESS]:
+  
+ BEGIN SCREEN CAPTURE *
+  
+ Select OPTION NAME: EAS VIEW PATIENT ADDRESS       View Patient Address
+ View Patient Address
+ Select PATIENT NAME:    TEST,EMERGENCY        1-21-32    207012132P 
+ **Pseudo SSN **     NO     SC VETERAN
+  Enrollment Priority:            Category: NOT ENROLLED  End Date: 
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+                        Patient Name: TEST,EMERGENCY
+           Permanent Mailing Address: PERMANENT LINE ADDRESS 1 THIS IS 35
+                                      PERM LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+               Bad Address Indicator: 
+   Permanent Mailing Add Change Date: JUL 19, 2017@13:49:19
+ Permanent Mailing Add Change Source: VAMC
+   Permanent Mailing Add Change Site: VISN 2
+  
+ Would you like to view the Conf Mailing, Temp Mailing and Residential
+ Addresses? Yes//
+  
+ END SCREEN CAPTURE *
+  
+ 6. The display of the Confidential Address is modified as follows:
+    a. The field label for the Confidential Address is modified from 
+       "Confid Address" to "Confid Mailing Address".
+    b. The field label for the date of the Confidential Address change is 
+       modified from "Confid Add Change Date" to "Confid Mailing Add Change
+       Date".
+    c. The field label for the site of the Confidential Address change is 
+       modified from "Confid Add Change Site" to "Confid Mailing Add Change
+       Site".
+    d. The field label for the start date of the Confidential Address is   
+       modified from "Confid Add Start Date" to "Confid Mailing Add Start  
+       Date".
+    e. The field label for the end date of the Confidential Address is 
+       modified from "Confid Add End Date" to "Confid Mailing Add End
+       Date".
+  
+ 7. The display of the Temporary Address is modified as follows:
+    a. The field label for the Temporary Address is modified from "Temp 
+       Address" to "Temp Mailing Address".
+    b. The field label for the date of the Temporary Address change is   
+       modified from "Temp Add Change Date" to "Temp Mailing Add Change
+       Date".
+    c. The field label for the site of the Temporary Address change is 
+       modified from "Temp Add Change Site" to "Temp Mailing Add Change
+       Site".
+    d. The field label for the start date of the Temporary Address is 
+       modified from "Temp Add Start Date" to "Temp Mailing Add Start
+       Date".
+    e. The field label for the end date of the Temporary Address is 
+       modified from "Temp Add End Date" to "Temp Mailing Add End Date".
+  
+ Display Screen from menu option View Patient Address [EAS VIEW PATIENT 
+ ADDRESS]:
+  
+ BEGIN SCREEN CAPTURE *
+  
+ Select OPTION NAME: EAS VIEW PATIENT ADDRESS       View Patient Address
+ View Patient Address
+ Select PATIENT NAME:    TEST,EMERGENCY        1-21-32    207012132P 
+ **Pseudo SSN **     NO     SC VETERAN
+  Enrollment Priority:            Category: NOT ENROLLED  End Date: 
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+                        Patient Name: TEST,EMERGENCY
+           Permanent Mailing Address: PERMANENT LINE ADDRESS 1 THIS IS 35
+                                      PERM LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+               Bad Address Indicator: 
+   Permanent Mailing Add Change Date: JUL 19, 2017@13:49:19
+ Permanent Mailing Add Change Source: VAMC
+   Permanent Mailing Add Change Site: VISN 2
+  
+ Would you like to view the Conf Mailing, Temp Mailing and Residential 
+ Addresses? Yes//   YES
+  
+  
+   
+                        Patient Name: TEST,EMERGENCY
+              Confid Mailing Address: 123 CONF STREET ADDRESS LINE 1
+                                      CONFIDENTIAL 2
+                                      CONF LINE 3
+                                      HILTON HEAD, SOUTH CAROLINA 29925
+                                      UNITED STATES
+      Confid Mailing Add Change Date: JUL 20, 2017@10:47:20
+      Confid Mailing Add Change Site: VISN 2
+       Confid Mailing Add Start Date: JUL 19, 2017
+         Confid Mailing Add End Date: AUG 18, 2017
+  
+                Temp Mailing Address: 123 TEMP AVE
+                                      TEMP LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+        Temp Mailing Add Change Date: JUL 19, 2017@10:07:35
+        Temp Mailing Add Change Site: VISN 2
+         Temp Mailing Add Start Date: JUL 19, 2017
+           Temp Mailing Add End Date: JUL 29, 2017
+  
+ Enter <RETURN> to continue.
+  
+ END SCREEN CAPTURE *
+  
+ 8. The Residential Address is added to the display if it exists in the 
+    patient record. The display of the Residential Address contains the
+    following fields from the PATIENT file (#2):
+    a. RESIDENTIAL ADDRESS LINE 1 (#.1151)
+    b. RESIDENTIAL ADDRESS LINE 2 (#.1152)
+    c. RESIDENTIAL ADDRESS LINE 3 (#.1153)
+    d. RESIDENTIAL ADDRESS CITY (#.1154)
+    e. For United States addresses:
+       - RESIDENTIAL STATE (#.1155)
+       - RESIDENTIAL ZIP+4 (#.1156)
+    f. For foreign addresses: 
+       - RESIDENTIAL PROVINCE (#.11571)
+       - RESIDENTIAL POSTAL CODE (#.11572)
+    g. RESIDENTIAL COUNTRY (#.1153)
+    h. RESIDENTIAL ADDRESS CHANGE SITE (#.11581)
+    i. RESIDENTIAL ADDRESS CHANGE SOURCE (#.11582)
+    j. RESIDENTIAL ADDRESS CHANGE DT/TM (#.1158)
+  
+ Display Screen from menu option View Patient Address [EAS VIEW PATIENT 
+ ADDRESS]:
+  
+ BEGIN SCREEN CAPTURE *
+  
+ Select OPTION NAME: EAS VIEW PATIENT ADDRESS       View Patient Address
+ View Patient Address
+ Select PATIENT NAME:    TEST,EMERGENCY        1-21-32    207012132P 
+ **Pseudo SSN **     NO     SC VETERAN
+  Enrollment Priority:            Category: NOT ENROLLED  End Date: 
+  
+ DEVICE: HOME//   VIRTUAL TELNET
+  
+                        Patient Name: TEST,EMERGENCY
+           Permanent Mailing Address: PERMANENT LINE ADDRESS 1 THIS IS 35
+                                      PERM LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+               Bad Address Indicator:  
+   Permanent Mailing Add Change Date: JUL 19, 2017@13:49:19
+ Permanent Mailing Add Change Source: VAMC
+   Permanent Mailing Add Change Site: VISN 2
+  
+ Would you like to view the Conf Mailing, Temp Mailing and Residential 
+ Addresses? Yes//   YES
+  
+  
+                        Patient Name: TEST,EMERGENCY
+              Confid Mailing Address: 123 CONF STREET ADDRESS LINE 1
+                                      CONFIDENTIAL 2
+                                      CONF LINE 3
+                                      HILTON HEAD, SOUTH CAROLINA 29925
+                                      UNITED STATES
+      Confid Mailing Add Change Date: JUL 20, 2017@10:47:20
+      Confid Mailing Add Change Site: VISN 2
+       Confid Mailing Add Start Date: JUL 19, 2017
+         Confid Mailing Add End Date: AUG 18, 2017
+      
+                Temp Mailing Address: 123 TEMP AVE
+                                      TEMP LINE 2
+                                      MILFORD, MASSACHUSETTS 01757
+                                      UNITED STATES
+        Temp Mailing Add Change Date: JUL 19, 2017@10:07:35
+        Temp Mailing Add Change Site: VISN 2
+         Temp Mailing Add Start Date: JUL 19, 2017
+           Temp Mailing Add End Date: JUL 29, 2017
+  
+ Enter <RETURN> to continue.
+  
+                 Residential Address: RESIDENTIAL ADDRESS LINE 1 35
+                                      VERY LONG LINE 2 FOR RESIDENTIAL AD
+                                      MYRTLE BEACH, SOUTH CAROLINA 29572
+                                      UNITED STATES
+         Residential Add Change Site: VISN2
+       Residential Add Change Source: VAMC
+         Residential Add Change Date: JUL 19, 2017@10:10:25
+  
+  
+ Select PATIENT NAME: 
+  
+ END SCREEN CAPTURE * 
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Pittsburgh Healthcare System (Station ID# 646) Pittsburgh, PA
+ Lebanon VA Medical Center (Station ID# 595) Lebanon, PA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Patches for this installation are combined in the following Host File for 
+ distribution: DG_53_P941.KID.
+  
+ The Host File was created to simplify installation at Veterans Health 
+ Administration (VHA) facilities. This file can be obtained from one of 
+ the anonymous SFTP directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DG_53_P941.KID                      DG*5.3*941         ASCII
+                                     IVM*2.0*164
+                                     EAS*1.0*151
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                       DG_5_3_P941_KID_RN.PDF  (binary)
+ User Manual                         DG_5_3_P941_REG_UM.PDF  (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the DG*5.3*941 patch description for installation 
+ instructions.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan
+ -------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ Refer to the "DG_53_P941.KID Deployment, Installation, Back-out, and
+ Rollback Guide" for complete instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;Mar 15, 2001;Build 50
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASAILK1
+    Before: B47986143   After: B76310280  **13,29,39,70,151**
+ 
+Routine list of preceding patches: 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 13, 2017
+Completed By:                               Date Completed: DEC 26, 2018
+Released By :                               Date Released : DEC 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

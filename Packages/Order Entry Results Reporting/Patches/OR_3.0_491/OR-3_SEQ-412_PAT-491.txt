@@ -1,0 +1,132 @@
+
+=============================================================================
+Run Date: NOV 01, 2018                     Designation: OR*3*491
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #412                      Status: Released
+                  Compliance Date: DEC 02, 2018
+=============================================================================
+
+
+Subject: CPRS ANTICOAGULANT - FIX ERROR REPORTED IN OR*3.0*463
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issue reported with patch OR*3.0*463
+  
+ 1.      INC1217628 - Outside HCT was being populated after a TEMP SAVE 
+                      even after no data was entered in the field. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1217628 - Routine ORAM1 is mispopulating the HCT fields and  
+                 changing the date.
+  
+  
+ Problem:
+ --------
+ After a TEMP SAVE is done the AMT application is populating the HCT field 
+ with the last HCT that was saved even if nothing was entered in the HCT 
+ field when the TEMP SAVE was done. 
+  
+ Resolution:
+ -----------
+ Updated the GUI source code so that HCT is NEVER populated automatically. 
+ The gui will ALWAYS save a HCT that is entered by the user either during 
+ a TEMP SAVE or a COMPLETE VISIT request by the user. 
+  
+         
+  
+  
+ Test Sites:
+ -----------
+ Cleveland
+ Upstate NY 
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ This is a GUI ONLY patch, there is NO KIDS BUILD required for this patch!!
+  
+ ***NOTE*** PLEASE ensure that all users are signed out of the AMT 
+ software before proceeding with the update. ***NOTE***
+  
+ The updated client software and updated Installation/Implementation Guide
+ may be retrieved by using Secure File Transfer Protocol (SFTP) from the
+ ANONYMOUS.SOFTWARE directory.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and documentation directly using 
+ SFTP from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+  
+ Title                               File Name           FTP Mode
+ -----------------------------------------------------------------------
+ Anticoagulation Management Tool     ORAMIG.doc          Binary
+ Installation/Implementation Guide    
+ Anticoagulation Management Tool     ORAMIG.PDF          Binary
+ Installation/Implementation Guide
+  
+ To obtain the updated client software, use FTP to retrieve OR_30_491.zip
+ from one of the OI Field Offices' ANONYMOUS.SOFTWARE directories.
+  
+ The software distribution includes this file:  OR_30_491.zip (2.953 MB)
+  
+ FILE NAME          RETRIEVAL FORMAT    
+ ---------          ----------------
+ OR_30_491.ZIP      BINARY
+  
+  
+ ZIP FILE CONTENTS          DESCRIPTION           FILE VERSION    
+ -----------------          -----------           ------------
+ AntiCoagulate.exe          Client                1.0.491.1
+ Anticoag_help_file.hlp     Client help file    
+ Anticoag help file.cnt     Client help TOC file
+ AntiCoagulate.map          Map File
+ CVisit.rav                 Rave report file
+ MAppt No FAX Labs.rav      Rave report file
+ MAppt.rav                  Rave report file
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+ Since this is a GUI only patch, there is no KIDS installation 
+ instructions.
+  
+ Please refer to the Installation/Implementation Guide for 
+ full instructions on how to install the GUI, help and RAVE report files.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Since there are NO MUMPS routines updated in patch OR*3.0*491, and there 
+ is no KIDS build included with the patch, the back out strategy is to 
+ remove the OR*3.0*491 GUI files and revert back to OR*3.0*463 GUI files.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2018
+Completed By:                               Date Completed: OCT 30, 2018
+Released By :                               Date Released : NOV 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

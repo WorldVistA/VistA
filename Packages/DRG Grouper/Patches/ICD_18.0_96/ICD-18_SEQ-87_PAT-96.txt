@@ -1,0 +1,458 @@
+
+=============================================================================
+Run Date: DEC 06, 2018                     Designation: ICD*18*96
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #87                     Status: Released
+                  Compliance Date: DEC 13, 2018
+=============================================================================
+
+Associated patches: (v)ICD*18*93   <<= must be installed BEFORE `ICD*18*96'
+
+Subject: FY2019 ANNUAL DRG GROUPER UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch provides the annual update to the Medicare Severity Diagnosis
+ Related Group (MS-DRG) Grouper version 36.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+ PLEASE NOTE: 
+   Be aware of the shortened compliance date - 5 days after release.  The
+   dates listed in the patch are accurate as the FY2019 annual patch
+   was delayed.
+      
+   The changes included in this patch were effective as of 10/1/2018 per the
+   Federal Register Vol. 83, No. 160, dated August 17, 2018.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC2592959 - FY2019 Annual DRG Grouper update
+    
+    The following changes are published in the Federal Register, Vol. 83,
+    No. 160, dated August 17, 2018 with an effective date of October 1,
+    2018. All page references below are for this annual update and
+    resource documents can be found at https://www.cms.gov/.
+     
+       
+      Changes include:
+       
+      I.   Revised DRGs.
+       
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+   
+    III.   DRG Reclassification changes to the Grouper.
+  
+     IV.   Additional DRG-related data for the new ICD codes introduced by
+           patch LEX*2.0*119 (released September 25, 2018).
+  
+       
+    This is a summary of the additions/changes made:
+       
+      I.   Routine ICD1896A was written to update the DRG file (#80.2).
+  
+           NEW DRGs for FY 2019
+           --------------------
+           MS-DRG 783
+           MS-DRG 784
+           MS-DRG 785
+           MS-DRG 786
+           MS-DRG 787
+           MS-DRG 788
+           MS-DRG 796
+           MS-DRG 797
+           MS-DRG 798
+           MS-DRG 805
+           MS-DRG 806
+           MS-DRG 807
+           MS-DRG 817
+           MS-DRG 818
+           MS-DRG 819
+           MS-DRG 831
+           MS-DRG 832
+           MS-DRG 833
+                      
+  
+           INACTIVATED DRGs for FY 2019
+           ----------------------------
+           MS-DRG 685
+           MS-DRG 765
+           MS-DRG 766
+           MS-DRG 767
+           MS-DRG 774
+           MS-DRG 775
+           MS-DRG 777
+           MS-DRG 778
+           MS-DRG 780
+           MS-DRG 781
+           MS-DRG 782
+  
+  
+     II.   Routine ICD1896A is used to update the finalized values for DRG
+           relative weights and average length of stay (ALOS).
+    
+    
+    III.   DRG RECLASSIFICATION.
+           
+      Changes to other DRGs:
+      ----------------------
+       1. Pre MDC (p.41171)
+          Effective 10/1/2018 ICD-10 changes to the titles of DRGs 11, 12
+          13 to the following:
+  
+          MS-DRG 11 (Tracheostomy for Face, Mouth and Neck Diagnoses or
+          Laryngectomy with MCC)
+  
+          MS-DRG 12 (Tracheostomy for Face, Mouth and Neck Diagnoses or
+          Laryngectomy with CC)
+  
+          MS-DRG 13 (Tracheostomy for Face, Mouth and Neck Diagnoses or
+          Laryngectomy without CC/MCC)
+  
+  
+       2. Pre MDC (p.41174)
+          Effective 10/1/2018 ICD-10-PCS procedure codes XW033C3 and 
+          XW043C3 moved to Pre-MDC MS-DRG 016 for FY 2019 and revised the
+          title of MS-DRG 16 from 'Autologous Bone Marrow Transplant with
+          CC/MCC' to 'Autologous Bone Marrow Transplant with CC/MCC or
+          T-cell Immunotherapy'.
+  
+  
+       3. MDC 1 (p.41174)
+          Effective 10/1/2018 ICD-10 diagnosis codes G40.109 and G40.111
+          moved to the list of epilepsy diagnosis codes for assignment to
+          MS-DRG 023.
+  
+          
+       4. MDC 6 (p.41195)
+          Effective 10/1/2018 reassignment of ICD-10 diagnosis code D17.71
+          from DRGs 393, 394, and 395 under MDC 6 to DRGs 686, 687 and
+          688 under MDC 11, and to reassign ICD-10 diagnosis code D17.72
+          from DRGs 606 and 607 under MDC 9 to DRGs 686, 687 and 688 under
+          MDC 11.
+  
+   
+       5. MDC 11 (p.41202)
+          Effective 10/1/2018 inactivate MS-DRG 685 and reassign ICD-10-CM
+          diagnosis codes Z49.01, Z49.02, Z49.31 and Z49.32 from MS-DRG 685
+          to MS-DRGs 698, 699 and 700 for FY 2019.
+  
+  
+       6. MDC 14 (p.41216)
+          Revised MDC 14 MS-DRGs including the deletion of 10 MS-DRGs and
+          the creation of 18 new MS-DRGs (below) in the ICD-10 MS-DRGs 
+          Version 36, effective October 1, 2018:
+  
+         Deletions
+         ---------
+         MS-DRG 765 Cesarean Section with CC/MCC
+         MS-DRG 766 Cesarean Section without CC/MCC
+         MS-DRG 767 Vaginal Delivery with Sterilization and/or D&C
+         MS-DRG 774 Vaginal Delivery with Complicating Diagnosis
+         MS-DRG 775 Vaginal Delivery without Complicating Diagnosis
+         MS-DRG 777 Ectopic Pregnancy
+         MS-DRG 778 Threatened Abortion
+         MS-DRG 780 False Labor
+         MS-DRG 781 Other Antepartum Diagnoses with Medical Complications
+         MS-DRG 782 Other Antepartum Diagnoses without Medical
+                    Complications
+  
+         Additions
+         ---------
+         MS-DRG 783 Cesarean Section with Sterilization with MCC
+         MS-DRG 784 Cesarean Section with Sterilization with CC
+         MS-DRG 785 Cesarean Section with Sterilization without CC/MCC
+         MS-DRG 786 Cesarean Section without Sterilization with MCC
+         MS-DRG 787 Cesarean Section without Sterilization with CC
+         MS-DRG 788 Cesarean Section without Sterilization without CC/MCC
+         MS-DRG 796 Vaginal Delivery with Sterilization/D&C with MCC
+         MS-DRG 797 Vaginal Delivery with Sterilization/D&C with CC
+         MS-DRG 798 Vaginal Delivery with Sterilization/D&C without CC/MCC
+         MS-DRG 805 Vaginal Delivery without Sterilization/D&C with MCC
+         MS-DRG 806 Vaginal Delivery without Sterilization/D&C with CC
+         MS-DRG 807 Vaginal Delivery without Sterilization/D&C without
+                     CC/MCC
+         MS-DRG 817 Other Antepartum Diagnoses with O.R. Procedure with
+                     MCC
+         MS-DRG 818 Other Antepartum Diagnoses with O.R. Procedure with CC
+         MS-DRG 819 Other Antepartum Diagnoses with O.R. Procedure without
+                     CC/MCC
+         MS-DRG 831 Other Antepartum Diagnoses without O.R. Procedure with
+                     MCC
+         MS-DRG 832 Other Antepartum Diagnoses without O.R. Procedure with
+                     CC
+         MS-DRG 833 Other Antepartum Diagnoses without O.R. Procedure
+                     without CC/MCC
+  
+  
+       7. MDC 18 (p.41218)
+          Reassigning ICD-10-CM diagnosis codes R65.10 and R65.11 to MS-DRG
+          864 and to revise the title of MS-DRG 864 to 'Fever and
+          Inflammatory Conditions'.
+  
+  
+ Test Sites:
+ -----------
+ VISN 02 (Buffalo, NY)
+ Montana HCS (Fort Harrison, MT)
+ North Florida HCS (Gainesville, FL)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following host file:
+  
+ Host file name: ICD_18_96.KID
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ ICD_18_96.KID                            ASCII
+  
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ It is recommended that this patch be installed during non-peak hours to
+ minimize potential disruption to users.  Additionally, installing during
+ peak hours may lead to an unusually long install time.  Do not interrupt
+ the installation.  Do not Queue this installation. If it is queued, it may
+ hang and not finish installing.
+  
+ Installation can take 40 mins to one (1) hour.
+  
+ Create a backup of the following global file before continuing.  When you
+ are creating a backup of non-subscripted globals, you are saving the entire
+ global.  You should use the utility ^%GO for non-subscripted globals, and
+ when prompted for a global, enter the global root (global name only, no open
+ parenthesis, no file number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICDD            entire ICDD global
+  
+ Installation Instructions:  
+ --------------------------
+  
+  1.  Download the host file ICD_18_96.KID from the ANONYMOUS.SOFTWARE
+      directory of one of the following two Office of Information Field
+      Offices (OIFOs): Hines or Salt Lake to the appropriate directory
+      on your system.
+  
+  2.  Load the KIDS distribution that is contained in file ICD_18_96.KID
+      using the Load a Distribution option on the Installation menu.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+  4.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter ICD*18.0*96):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package ICD*18.0*96:
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO.
+  
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+  
+      When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+      enter:
+  
+      DRG Grouper                      [ICD DRG GROUPER]
+      DRG Calculation                  [DG DRG CALCULATION]
+      Load/Edit PTF Data               [DG PTF SCREEN]
+      Claims Tracking Edit             [IBT EDIT TRACKING ENTRY]
+      Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+      DRG Information Report           [DG PTF DRG INFORMATION OUTPUT]          
+  
+      When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+      enter: <ENTER>
+  
+  6.  Please be aware that routine ICD1896P is deleted by design during
+      the install process.  Therefore, the ICD1896P post-install checksum
+      is not applicable.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Re-install patch ICD*18.0*93 if needed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1896A
+    Before:       n/a   After: B66185469  **96**
+Routine Name: ICD1896F
+    Before:       n/a   After: B61072935  **96**
+Routine Name: ICD1896G
+    Before:       n/a   After: B66333213  **96**
+Routine Name: ICD1896H
+    Before:       n/a   After: B60957844  **96**
+Routine Name: ICD1896I
+    Before:       n/a   After: B58475457  **96**
+Routine Name: ICD1896J
+    Before:       n/a   After: B62187251  **96**
+Routine Name: ICD1896K
+    Before:       n/a   After: B66047485  **96**
+Routine Name: ICD1896O
+    Before:       n/a   After:  B3282861  **96**
+Routine Name: ICD1896P
+    Before:       n/a   After:  B2854704  **96**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: DEC 04, 2018
+Released By :                               Date Released : DEC 06, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,871 @@
+Released MD*1*65 SEQ #48
+Extracted from mail message
+**KIDS**:MD*1.0*65^
+
+**INSTALL NAME**
+MD*1.0*65
+"BLD",10527,0)
+MD*1.0*65^CLINICAL PROCEDURES^0^3181031^y
+"BLD",10527,1,0)
+^^5^5^3181030^
+"BLD",10527,1,1,0)
+High Volume Procedure Setup modifications to allow setting of the 
+"BLD",10527,1,2,0)
+associated note title's two technical fields - COMMIT ACTION and 
+"BLD",10527,1,3,0)
+POST-SIGNATURE CODE.
+"BLD",10527,1,4,0)
+ 
+"BLD",10527,1,5,0)
+Consult / Procedure to Clinical Procedure conversion utilities.
+"BLD",10527,4,0)
+^9.64PA^^
+"BLD",10527,6.3)
+2
+"BLD",10527,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10527,"KRN",.4,0)
+.4
+"BLD",10527,"KRN",.401,0)
+.401
+"BLD",10527,"KRN",.402,0)
+.402
+"BLD",10527,"KRN",.403,0)
+.403
+"BLD",10527,"KRN",.5,0)
+.5
+"BLD",10527,"KRN",.84,0)
+.84
+"BLD",10527,"KRN",3.6,0)
+3.6
+"BLD",10527,"KRN",3.8,0)
+3.8
+"BLD",10527,"KRN",9.2,0)
+9.2
+"BLD",10527,"KRN",9.8,0)
+9.8
+"BLD",10527,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10527,"KRN",9.8,"NM",1,0)
+MDARSET^^0^B45042455
+"BLD",10527,"KRN",9.8,"NM",2,0)
+MDCONUTL^^0^B28324895
+"BLD",10527,"KRN",9.8,"NM","B","MDARSET",1)
+
+"BLD",10527,"KRN",9.8,"NM","B","MDCONUTL",2)
+
+"BLD",10527,"KRN",19,0)
+19
+"BLD",10527,"KRN",19,"NM",0)
+^9.68A^4^4
+"BLD",10527,"KRN",19,"NM",1,0)
+MD UTILITIES^^0
+"BLD",10527,"KRN",19,"NM",2,0)
+MD CONCONVERT^^0
+"BLD",10527,"KRN",19,"NM",3,0)
+MD PROCONVERT^^0
+"BLD",10527,"KRN",19,"NM",4,0)
+MD COORDINATOR^^2
+"BLD",10527,"KRN",19,"NM","B","MD CONCONVERT",2)
+
+"BLD",10527,"KRN",19,"NM","B","MD COORDINATOR",4)
+
+"BLD",10527,"KRN",19,"NM","B","MD PROCONVERT",3)
+
+"BLD",10527,"KRN",19,"NM","B","MD UTILITIES",1)
+
+"BLD",10527,"KRN",19.1,0)
+19.1
+"BLD",10527,"KRN",101,0)
+101
+"BLD",10527,"KRN",409.61,0)
+409.61
+"BLD",10527,"KRN",771,0)
+771
+"BLD",10527,"KRN",779.2,0)
+779.2
+"BLD",10527,"KRN",870,0)
+870
+"BLD",10527,"KRN",8989.51,0)
+8989.51
+"BLD",10527,"KRN",8989.52,0)
+8989.52
+"BLD",10527,"KRN",8994,0)
+8994
+"BLD",10527,"KRN","B",.4,.4)
+
+"BLD",10527,"KRN","B",.401,.401)
+
+"BLD",10527,"KRN","B",.402,.402)
+
+"BLD",10527,"KRN","B",.403,.403)
+
+"BLD",10527,"KRN","B",.5,.5)
+
+"BLD",10527,"KRN","B",.84,.84)
+
+"BLD",10527,"KRN","B",3.6,3.6)
+
+"BLD",10527,"KRN","B",3.8,3.8)
+
+"BLD",10527,"KRN","B",9.2,9.2)
+
+"BLD",10527,"KRN","B",9.8,9.8)
+
+"BLD",10527,"KRN","B",19,19)
+
+"BLD",10527,"KRN","B",19.1,19.1)
+
+"BLD",10527,"KRN","B",101,101)
+
+"BLD",10527,"KRN","B",409.61,409.61)
+
+"BLD",10527,"KRN","B",771,771)
+
+"BLD",10527,"KRN","B",779.2,779.2)
+
+"BLD",10527,"KRN","B",870,870)
+
+"BLD",10527,"KRN","B",8989.51,8989.51)
+
+"BLD",10527,"KRN","B",8989.52,8989.52)
+
+"BLD",10527,"KRN","B",8994,8994)
+
+"BLD",10527,"QDEF")
+^^^^^^^^^^YES
+"BLD",10527,"QUES",0)
+^9.62^^
+"BLD",10527,"REQB",0)
+^9.611^1^1
+"BLD",10527,"REQB",1,0)
+MD*1.0*21^2
+"BLD",10527,"REQB","B","MD*1.0*21",1)
+
+"KRN",19,14096,-1)
+0^2
+"KRN",19,14096,0)
+MD CONCONVERT^Consult to Clinical Procedure conversion utility^^R^^MD ADMINISTRATOR^^^^^^CLINICAL PROCEDURES^^1^1
+"KRN",19,14096,1,0)
+^^5^5^3180907^
+"KRN",19,14096,1,1,0)
+This utility will convert existing (non-CP) consults in a pending active 
+"KRN",19,14096,1,2,0)
+or scheduled status to a GMRC procedure.
+"KRN",19,14096,1,3,0)
+ 
+"KRN",19,14096,1,4,0)
+Note that consults setup with DICOM cannot be converted to Clinical 
+"KRN",19,14096,1,5,0)
+Procedures with this utility.
+"KRN",19,14096,15)
+K MDOPT("CONCONVERT")
+"KRN",19,14096,20)
+S MDOPT("CONCONVERT")=""
+"KRN",19,14096,25)
+CONVERT^MDCONUTL
+"KRN",19,14096,"U")
+CONSULT TO CLINICAL PROCEDURE 
+"KRN",19,14097,-1)
+0^3
+"KRN",19,14097,0)
+MD PROCONVERT^Procedure to Clinical Procedure conversion utility^^R^^MD ADMINISTRATOR^^^^^^CLINICAL PROCEDURES^^1^1
+"KRN",19,14097,1,0)
+^^5^5^3180907^
+"KRN",19,14097,1,1,0)
+This utility will get all the pending, active and scheduled procedures 
+"KRN",19,14097,1,2,0)
+for the selected REQUEST SERVICE and convert them to Clinical Procedures.
+"KRN",19,14097,1,3,0)
+ 
+"KRN",19,14097,1,4,0)
+Note that procedures setup with DICOM cannot be converted to Clinical 
+"KRN",19,14097,1,5,0)
+Procedures wth this utility.
+"KRN",19,14097,15)
+K MDOPT("PROCONVERT")
+"KRN",19,14097,20)
+S MDOPT("PROCONVERT")=""
+"KRN",19,14097,25)
+CONVERT^MDCONUTL
+"KRN",19,14097,"U")
+PROCEDURE TO CLINICAL PROCEDUR
+"KRN",19,14098,-1)
+0^1
+"KRN",19,14098,0)
+MD UTILITIES^Conversion Utilities^^M^^^^^^^^CLINICAL PROCEDURES
+"KRN",19,14098,1,0)
+^19.06^1^1^3180622^^^
+"KRN",19,14098,1,1,0)
+Menu for the CP conversion utility options
+"KRN",19,14098,10,0)
+^19.01IP^2^2
+"KRN",19,14098,10,1,0)
+14096^CO
+"KRN",19,14098,10,1,"^")
+MD CONCONVERT
+"KRN",19,14098,10,2,0)
+14097^PR
+"KRN",19,14098,10,2,"^")
+MD PROCONVERT
+"KRN",19,14098,99)
+64828,51886
+"KRN",19,14098,"U")
+CONVERSION UTILITIES
+"KRN",19,14100,-1)
+2^4
+"KRN",19,14100,0)
+MD COORDINATOR^CP Coordinator Menu^^M^.5^^^^^^^365
+"KRN",19,14100,10,0)
+^19.01IP^1^1
+"KRN",19,14100,10,1,0)
+14098
+"KRN",19,14100,10,1,"^")
+MD UTILITIES
+"KRN",19,14100,"U")
+CP COORDINATOR MENU
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",365,-1)
+1^1
+"PKG",365,0)
+CLINICAL PROCEDURES^MD^Clinical Procedures
+"PKG",365,22,0)
+^9.49I^1^1
+"PKG",365,22,1,0)
+1.0^3090522^2980529^363
+"PKG",365,22,1,"PAH",1,0)
+65^3181031
+"PKG",365,22,1,"PAH",1,1,0)
+^^5^5^3181031
+"PKG",365,22,1,"PAH",1,1,1,0)
+High Volume Procedure Setup modifications to allow setting of the 
+"PKG",365,22,1,"PAH",1,1,2,0)
+associated note title's two technical fields - COMMIT ACTION and 
+"PKG",365,22,1,"PAH",1,1,3,0)
+POST-SIGNATURE CODE.
+"PKG",365,22,1,"PAH",1,1,4,0)
+ 
+"PKG",365,22,1,"PAH",1,1,5,0)
+Consult / Procedure to Clinical Procedure conversion utilities.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MDARSET")
+0^1^B45042455^B19742072
+"RTN","MDARSET",1,0)
+MDARSET ; HOIFO/NCA,WOIFO/KLM - High Volume Check-In Setup ;31 Oct 2018 10:02 AM
+"RTN","MDARSET",2,0)
+ ;;1.0;CLINICAL PROCEDURES;**21,65**;Apr 01, 2004;Build 2
+"RTN","MDARSET",3,0)
+ ; Reference IA # 2263 [Supported] XPAR parameter calls
+"RTN","MDARSET",4,0)
+ ;               10104 [Supported] XLFSTR call
+"RTN","MDARSET",5,0)
+ ;                6924 [Private  ] ^TIU(8925.1
+"RTN","MDARSET",6,0)
+ ;
+"RTN","MDARSET",7,0)
+EN1 ; Entry Point for the setup option
+"RTN","MDARSET",8,0)
+ N MDAPT,MDAR,MDCP,MDCP1,MDCT,MDDEF,MDERR,MDKK,MDLST,MDLST1,MDMF,MDNOD,MDVAL,MDX,MDX1,X,Y S (MDMF,MDCT)=0
+"RTN","MDARSET",9,0)
+ D GETLST^XPAR(.MDLST,"SYS","MD GET HIGH VOLUME")
+"RTN","MDARSET",10,0)
+ F MDKK=0:0 S MDKK=$O(MDLST(MDKK)) Q:MDKK<1  S MDX=$G(MDLST(MDKK)),MDLST1(+MDX)=MDKK_"^"_$P(MDX,"^",2),MDCT=MDCT+1
+"RTN","MDARSET",11,0)
+ S MDAR=$$GET^XPAR("SYS","MD NOT ADMN CLOSE MUSE NOTE",1)
+"RTN","MDARSET",12,0)
+A1 ; Ask for procedure parameter
+"RTN","MDARSET",13,0)
+ N MDTIU
+"RTN","MDARSET",14,0)
+ S (MDCP1,MDDEF)="",MDCP1="NO"
+"RTN","MDARSET",15,0)
+ W !!,"Procedure: " R X:DTIME G:'$T!("^"[X) KIL
+"RTN","MDARSET",16,0)
+ I X["?" D PHELP
+"RTN","MDARSET",17,0)
+ K DIC S DIC="^MDS(702.01,",DIC(0)="EQMZ",DIC("S")="I +$P(^(0),U,9)>0&(+$P(^(0),U,6)'=2)&(+$P(^(0),U,11)'=2)"
+"RTN","MDARSET",18,0)
+ D ^DIC K DIC G A1:"^"[X!$D(DTOUT),A1:Y<1
+"RTN","MDARSET",19,0)
+ S MDCP=+Y,MDNOD="" D CHKTL ;KLM/p65 -note title information.
+"RTN","MDARSET",20,0)
+ S MDMF=$$MUSE(MDCP)
+"RTN","MDARSET",21,0)
+ I $G(MDLST1(MDCP))'="" S MDDEF=+$P($G(MDLST1(MDCP)),"^",2),MDCP1=+$P($P($G(MDLST1(MDCP)),"^",2),";",2)
+"RTN","MDARSET",22,0)
+ I $G(MDLST1(MDCP))="" G A2
+"RTN","MDARSET",23,0)
+A11 ; Ask to delete an existing entry
+"RTN","MDARSET",24,0)
+ K DIR S DIR(0)="YA",DIR("A")="Delete current procedure setup? ",DIR("B")="NO",DIR("?")="Enter either 'Y' or 'N'."
+"RTN","MDARSET",25,0)
+ S DIR("?",1)="Enter Yes or No, if you want to delete the setup for the procedure."
+"RTN","MDARSET",26,0)
+ D ^DIR G:$D(DIRUT)!$D(DIROUT)!(Y<0) KIL K DIR
+"RTN","MDARSET",27,0)
+ I +Y D EN^XPAR("SYS","MD GET HIGH VOLUME",$P($G(^MDS(702.01,+MDCP,0)),"^",1),"@") D:+MDMF EN^XPAR("SYS","MD NOT ADMN CLOSE MUSE NOTE",1,0) W "...Procedure deleted" D  S MDR=1 G TIU
+"RTN","MDARSET",28,0)
+ .S MDNOD=+MDLST1(MDCP) K MDLST1(MDCP),MDLST(+MDNOD) Q
+"RTN","MDARSET",29,0)
+A2 ; Get Text
+"RTN","MDARSET",30,0)
+ K DIR S DIR(0)="YA",DIR("A")="Get Text? " S:MDDEF'="" DIR("B")=$S(+MDDEF:"Yes",1:"No") S DIR("?")="Enter either 'Y' or 'N'."
+"RTN","MDARSET",31,0)
+ S DIR("?",1)="Indicate whether the text from the result should or should not"
+"RTN","MDARSET",32,0)
+ S DIR("?",2)="be obtained."
+"RTN","MDARSET",33,0)
+ D ^DIR G:$D(DIRUT)!$D(DIROUT)!(Y<0) KIL K DIR
+"RTN","MDARSET",34,0)
+ S MDDEF=Y
+"RTN","MDARSET",35,0)
+ I '+MDDEF S MDVAL=MDDEF_";"_0 D:+MDMF EN^XPAR("SYS","MD NOT ADMN CLOSE MUSE NOTE",1,0) G SET
+"RTN","MDARSET",36,0)
+ I '+MDMF G A4
+"RTN","MDARSET",37,0)
+A3 ; Use Interpreter to close the note
+"RTN","MDARSET",38,0)
+ K DIR S DIR(0)="YA",DIR("A")="Use Interpreter to close note? " S:MDAR'="" DIR("B")=$S(+MDAR:"Yes",1:"No") S DIR("?")="Enter either 'Y' or 'N'."
+"RTN","MDARSET",39,0)
+ S DIR("?",1)="If 'YES', the interpreter of the result will be used to close"
+"RTN","MDARSET",40,0)
+ S DIR("?",2)="the note.  If 'NO', the Proxy service will be used."
+"RTN","MDARSET",41,0)
+ D ^DIR G:$D(DIRUT)!$D(DIROUT)!(Y<0) KIL K DIR
+"RTN","MDARSET",42,0)
+ D EN^XPAR("SYS","MD NOT ADMN CLOSE MUSE NOTE",1,Y)
+"RTN","MDARSET",43,0)
+ I +Y S MDVAL=MDDEF_";"_0 D EN^XPAR("SYS","MD GET HIGH VOLUME","`"_+MDCP,MDVAL) D  G A1
+"RTN","MDARSET",44,0)
+ .S MDNOD=$G(MDLST1(MDCP)) I MDNOD="" S MDCT=MDCT+1,MDLST1(MDCP)=MDCT_"^"_MDVAL,MDLST(MDCT)=MDCP_"^"_MDVAL Q
+"RTN","MDARSET",45,0)
+ .I MDNOD'="" S $P(MDNOD,"^",2)=MDVAL,MDLST1(MDCP)=MDNOD,$P(MDLST(+MDNOD),"^",2)=MDVAL Q
+"RTN","MDARSET",46,0)
+ .Q
+"RTN","MDARSET",47,0)
+A4 ; Use CP Method
+"RTN","MDARSET",48,0)
+ K DIR S DIR(0)="YA",DIR("A")="Do Not Auto Close Note? " S:MDCP1'="" DIR("B")=$S(+MDCP1:"Yes",1:"No") S DIR("?")="Enter either 'Y' or 'N'."
+"RTN","MDARSET",49,0)
+ S DIR("?",1)="If 'YES', the text of the result will be in the significant finding of the procedure."
+"RTN","MDARSET",50,0)
+ S DIR("?",2)="If 'NO', the default auto closure will be used."
+"RTN","MDARSET",51,0)
+ D ^DIR G:$D(DIRUT)!$D(DIROUT)!(Y<0) KIL K DIR
+"RTN","MDARSET",52,0)
+ S MDCP1=Y,MDVAL=MDDEF_";"_MDCP1
+"RTN","MDARSET",53,0)
+SET ; Set parameter
+"RTN","MDARSET",54,0)
+ D EN^XPAR("SYS","MD GET HIGH VOLUME","`"_+MDCP,MDVAL)
+"RTN","MDARSET",55,0)
+ S MDNOD=$G(MDLST1(MDCP)) I MDNOD="" S MDCT=MDCT+1,MDLST1(MDCP)=MDCT_"^"_MDVAL,MDLST(MDCT)=MDCP_"^"_MDVAL G TIU
+"RTN","MDARSET",56,0)
+ I MDNOD'="" S $P(MDNOD,"^",2)=MDVAL,MDLST1(MDCP)=MDNOD,$P(MDLST(+MDNOD),"^",2)=MDVAL
+"RTN","MDARSET",57,0)
+TIU ;KLM/P65 -Set tech fields COMMIT ACTION and POST-SIGNATURE CODE for note title
+"RTN","MDARSET",58,0)
+ N MDIENS,MDTS
+"RTN","MDARSET",59,0)
+ ;S MDTIU=$$GET1^DIQ(702.01,MDCP,.04,"I")
+"RTN","MDARSET",60,0)
+ I MDTIU']"" W !,"Note title not found!" G A1
+"RTN","MDARSET",61,0)
+ W !,"Do you want to "_$S($D(MDR):"delete",1:"set")_" the technical fields for the "_MD01_" title?"
+"RTN","MDARSET",62,0)
+ K Y,DIR S DIR(0)="Y",DIR("B")="Yes",DIR("?")="Enter 'Yes' to update the technical fields or 'No' to bypass this step"
+"RTN","MDARSET",63,0)
+ S DIR("??")="^D TLH2^MDARSET" D ^DIR
+"RTN","MDARSET",64,0)
+ I +Y=0 G A1
+"RTN","MDARSET",65,0)
+ S MDIENS=MDTIU_","
+"RTN","MDARSET",66,0)
+ ;Check title's status (#.07), it must be inactive to continue
+"RTN","MDARSET",67,0)
+ S MDTS=$$GET1^DIQ(8925.1,MDTIU,.07)
+"RTN","MDARSET",68,0)
+ I MDTS'="INACTIVE" W !!,"Cannot update technical fields - Please INACTIVATE the note title first" K MDR G A1
+"RTN","MDARSET",69,0)
+ ;MDR set if procedure's HV setup is deleted...
+"RTN","MDARSET",70,0)
+ S MDFDA(8925.1,MDIENS,4.1)=$S($D(MDR):"",1:"Q") ;COMMIT ACTION
+"RTN","MDARSET",71,0)
+ S MDFDA(8925.1,MDIENS,4.9)=$S($D(MDR):"",1:"Q") ;POST-SIGNATURE CODE
+"RTN","MDARSET",72,0)
+ L +^TIU(8925.1,MDTIU):1 I '$T W !,"Record is locked." G XIT
+"RTN","MDARSET",73,0)
+ D FILE^DIE("E","MDFDA","MDERR")
+"RTN","MDARSET",74,0)
+ I $D(MDERR) D  G XIT
+"RTN","MDARSET",75,0)
+ .W !,"Update failed due to the following reason: "
+"RTN","MDARSET",76,0)
+ .S MDI="" F  S MDI=$O(MDERR("DIERR",1,"TEXT",MDI)) Q:MDI=""  W !,?5,$G(MDERR("DIERR",1,"TEXT",MDI))
+"RTN","MDARSET",77,0)
+ .Q
+"RTN","MDARSET",78,0)
+ L -^TIU(8925.1,MDTIU)
+"RTN","MDARSET",79,0)
+ W !!,"Update successful!  Don't forget to REACTIVATE the title."
+"RTN","MDARSET",80,0)
+ K MDFDA,MDR,MD01,MDERR,Y,DIR
+"RTN","MDARSET",81,0)
+ G A1
+"RTN","MDARSET",82,0)
+KIL ; kill DIR variables
+"RTN","MDARSET",83,0)
+ K DIC,DIR,DIROUT,DIRUT,DTOUT
+"RTN","MDARSET",84,0)
+ Q
+"RTN","MDARSET",85,0)
+MUSE(MDP) ; Check if procedure has Muse as a device
+"RTN","MDARSET",86,0)
+ N MDM,MDLL,MDINL S MDM=0
+"RTN","MDARSET",87,0)
+ Q:'$G(MDP)
+"RTN","MDARSET",88,0)
+ S MDLL=0 F  S MDLL=$O(^MDS(702.01,+MDP,.1,MDLL)) Q:MDLL<1  S MDINL=+$G(^(MDLL,0)) D  Q:+MDM
+"RTN","MDARSET",89,0)
+ .S:$$UP^XLFSTR($$GET1^DIQ(702.09,MDINL_",",".01","E"))["MUSE" MDM=1
+"RTN","MDARSET",90,0)
+ Q MDM
+"RTN","MDARSET",91,0)
+PHELP ; Procedure list
+"RTN","MDARSET",92,0)
+ N MDCH,MDACN,MDNAU
+"RTN","MDARSET",93,0)
+ S MDNAU=+$$GET^XPAR("SYS","MD USE NOTE",1)
+"RTN","MDARSET",94,0)
+ S MDACN=$$GET^XPAR("SYS","MD NOT ADMN CLOSE MUSE NOTE",1)
+"RTN","MDARSET",95,0)
+ W ! F MDKK=0:0 S MDKK=$O(MDLST(MDKK)) Q:MDKK<1  S MDX=$G(MDLST(MDKK)),MDX1=$P(MDX,"^",2) D
+"RTN","MDARSET",96,0)
+ .S MDCH=0 S:+$$MUSE(+MDX) MDCH=1
+"RTN","MDARSET",97,0)
+ .W !,$P($G(^MDS(702.01,+MDX,0)),"^"),?45,$S(+$P(MDX1,";"):"Text",1:"No Text")
+"RTN","MDARSET",98,0)
+ .W ?55,$S((+$P(MDX1,";",2)&'+MDNAU):"SF",(+MDCH&+MDACN):"Muse Interpreter",(+$P(MDX1,";",2)&+MDNAU):"Not Auto",1:"Auto")
+"RTN","MDARSET",99,0)
+ W !
+"RTN","MDARSET",100,0)
+ Q
+"RTN","MDARSET",101,0)
+CHKTL ;KLM/P65 -Display the associated note title information
+"RTN","MDARSET",102,0)
+ Q:'MDCP
+"RTN","MDARSET",103,0)
+ N MDIENS S MDTIU=$$GET1^DIQ(702.01,MDCP,.04,"I") I MDTIU']"" W !,"Note title not found!" Q
+"RTN","MDARSET",104,0)
+ S MDIENS=MDTIU_"," D GETS^DIQ(8925.1,MDIENS,".01;.07;4.1;4.9","","MDROOT")
+"RTN","MDARSET",105,0)
+ S MD01=$G(MDROOT(8925.1,MDIENS,.01)) ;TITLE
+"RTN","MDARSET",106,0)
+ S MD41=$G(MDROOT(8925.1,MDIENS,4.1)) ;COMMIT ACTION
+"RTN","MDARSET",107,0)
+ S MD49=$G(MDROOT(8925.1,MDIENS,4.9)) ;POST-SIGNATURE CODE
+"RTN","MDARSET",108,0)
+ S MD07=$G(MDROOT(8925.1,MDIENS,.07)) ;STATUS
+"RTN","MDARSET",109,0)
+ W !!,?5,"This procedure has note title "_MD01_" associated with it."
+"RTN","MDARSET",110,0)
+ W !!,?5,"The current setup is as follows:"
+"RTN","MDARSET",111,0)
+ W !,?10,"STATUS:",?32,MD07
+"RTN","MDARSET",112,0)
+ W !,?10,"COMMIT ACTION:",?32,$S(MD41]"":MD41,1:"<NULL>")
+"RTN","MDARSET",113,0)
+ W !,?10,"POST-SIGNATURE CODE:",?32,$S(MD49]"":MD41,1:"<NULL>")
+"RTN","MDARSET",114,0)
+ W !!,?5,"When a procedure is setup for High Volume, the COMMIT ACTION and"
+"RTN","MDARSET",115,0)
+ W !,?5,"POST-SIGNATURE CODE fields must contain a 'Q'. If you need to update"
+"RTN","MDARSET",116,0)
+ W !,?5,"these fields, the title ("_MD01_") must be inactivated first.",!!
+"RTN","MDARSET",117,0)
+ K MDROOT,MD41,MD49,MD07
+"RTN","MDARSET",118,0)
+ Q
+"RTN","MDARSET",119,0)
+TLH2 ;Help for ?? on update title prompt
+"RTN","MDARSET",120,0)
+ W !!,"Select 'Yes' to "_$S($D(MDR):"delete",1:"set")_" the COMMIT ACTION and POST-SIGNATURE CODE"
+"RTN","MDARSET",121,0)
+ W !,"technical fields of the associated note title. Note that if you"
+"RTN","MDARSET",122,0)
+ W !,"are deleting a procedure from the High Volume setup, but the note"
+"RTN","MDARSET",123,0)
+ W !,"title is shared with other procedures still configured for High"
+"RTN","MDARSET",124,0)
+ W !,"Volume, then you should not delete these fields, but instead"
+"RTN","MDARSET",125,0)
+ W !,"create a new title to be used separately (unless the procedure"
+"RTN","MDARSET",126,0)
+ W !,"is being decommissioned)."
+"RTN","MDARSET",127,0)
+ Q
+"RTN","MDARSET",128,0)
+XIT ;clean up and go
+"RTN","MDARSET",129,0)
+ K MDFDA,MDIENS,MDR,MD01,MDTS,MDERR,MDI,MDTIU,Y,DIR
+"RTN","MDARSET",130,0)
+ Q
+"RTN","MDCONUTL")
+0^2^B28324895^n/a
+"RTN","MDCONUTL",1,0)
+MDCONUTL ; WOIFO/KLM - CP Conversion Utility ;31 Oct 2018 2:31 PM
+"RTN","MDCONUTL",2,0)
+ ;;1.0;CLINICAL PROCEDURES;**65**;Apr 01, 2004;Build 2
+"RTN","MDCONUTL",3,0)
+ ; This utility is based on Shirley Ackerman's ZZNACVT and ZZNACVT1 
+"RTN","MDCONUTL",4,0)
+ ; class III conversion routines.
+"RTN","MDCONUTL",5,0)
+ ;
+"RTN","MDCONUTL",6,0)
+ ; Integration Agreements:
+"RTN","MDCONUTL",7,0)
+ ; IA# 2638 [Controlled] File 100.01,
+"RTN","MDCONUTL",8,0)
+ ; IA# 3067 [Private] FM R/W File 123
+"RTN","MDCONUTL",9,0)
+ ; IA# 5062 [Private] ^GMR(123,"AE"
+"RTN","MDCONUTL",10,0)
+ ; IA# 6926 [Private] File 123.3
+"RTN","MDCONUTL",11,0)
+ ; IA# 6927 [Private] File 123.5
+"RTN","MDCONUTL",12,0)
+ ; IA# 6959 [Private] ^MAG(2006.5831,
+"RTN","MDCONUTL",13,0)
+ ;
+"RTN","MDCONUTL",14,0)
+CONVERT ; Convert consults to procedures.
+"RTN","MDCONUTL",15,0)
+ ;;MDOPT defined from the entry action of the option used.
+"RTN","MDCONUTL",16,0)
+ Q:'$D(MDOPT)#2
+"RTN","MDCONUTL",17,0)
+ N MDCOUNT,MDCP,MDCPR,MDCPRST,MDCPST,MDFDA,MDFILE,MDL,MDLP,MDSERV,MDIEN,MDTE,MDTOS,MDFR
+"RTN","MDCONUTL",18,0)
+ N MDFRE,MDTOSE,MDCPRE,MDX
+"RTN","MDCONUTL",19,0)
+ S MDFILE=123
+"RTN","MDCONUTL",20,0)
+ S MDCOUNT=0
+"RTN","MDCONUTL",21,0)
+ I $D(MDOPT("CONCONVERT"))#2 D 
+"RTN","MDCONUTL",22,0)
+ .D CSCVRT
+"RTN","MDCONUTL",23,0)
+ .Q
+"RTN","MDCONUTL",24,0)
+ E  D
+"RTN","MDCONUTL",25,0)
+ .D PRCVRT
+"RTN","MDCONUTL",26,0)
+ .Q
+"RTN","MDCONUTL",27,0)
+ I '$G(MDX) D START
+"RTN","MDCONUTL",28,0)
+ Q
+"RTN","MDCONUTL",29,0)
+CSCVRT ;Select consult service and procedure for conversion
+"RTN","MDCONUTL",30,0)
+ W !!,"This routine utility will get all the pending consults of "
+"RTN","MDCONUTL",31,0)
+ W !,"a selected REQUEST SERVICE and convert them to a selected GMRC procedures.",!
+"RTN","MDCONUTL",32,0)
+ W !,"Note that consults that are currently setup with DICOM (in the CLINICAL "
+"RTN","MDCONUTL",33,0)
+ W !,"SPECIALTY DICOM & HL7 file) cannot be converted to CP with this utility."
+"RTN","MDCONUTL",34,0)
+ W !,"DICOM consults will need to discontinued and re-ordered.",!
+"RTN","MDCONUTL",35,0)
+ D SETTS I '$G(MDTOS) S MDX=1 Q
+"RTN","MDCONUTL",36,0)
+ S MDF=1 D SETPR(MDF) I '$G(MDCPR) S MDX=1 Q
+"RTN","MDCONUTL",37,0)
+ K MDF
+"RTN","MDCONUTL",38,0)
+ Q
+"RTN","MDCONUTL",39,0)
+PRCVRT ;Select consult service and procedures for conversion
+"RTN","MDCONUTL",40,0)
+ W !!,"This routine utility will get all the pending, active, and"
+"RTN","MDCONUTL",41,0)
+ W !,"scheduled procedures of a selected REQUEST SERVICE and convert"
+"RTN","MDCONUTL",42,0)
+ W !,"them to a selected GMRC procedures.",!
+"RTN","MDCONUTL",43,0)
+ W !,"Note that Procedures that are currently setup with DICOM (in the CLINICAL "
+"RTN","MDCONUTL",44,0)
+ W !,"SPECIALTY DICOM & HL7 file) cannot be converted to CP with this utility."
+"RTN","MDCONUTL",45,0)
+ W !,"DICOM procedures will need to discontinued and re-ordered.",!
+"RTN","MDCONUTL",46,0)
+ S MDF=0 D SETPR(MDF) I '$G(MDTOS)!('$G(MDFR)) S MDX=1 Q
+"RTN","MDCONUTL",47,0)
+ S MDF=1 D SETPR(MDF) I '$G(MDCPR) S MDX=1 Q
+"RTN","MDCONUTL",48,0)
+ K MDF
+"RTN","MDCONUTL",49,0)
+ Q
+"RTN","MDCONUTL",50,0)
+START ; Start process conversion
+"RTN","MDCONUTL",51,0)
+ S MDCP=$$GET1^DIQ(123.3,+MDCPR_",",.04,"I")
+"RTN","MDCONUTL",52,0)
+ I 'MDCP D
+"RTN","MDCONUTL",53,0)
+ .W !,"Missing Clinical Procedure Definition in ",$$GET1^DIQ(123.3,+MDCPR,.01),!
+"RTN","MDCONUTL",54,0)
+ .S DIC="^MDS(702.01,",DIC(0)="AEMNQ"
+"RTN","MDCONUTL",55,0)
+ .D ^DIC Q:Y<1!($D(DTOUT))!($D(DUOUT))
+"RTN","MDCONUTL",56,0)
+ .S MDCP=+Y
+"RTN","MDCONUTL",57,0)
+ .S MDFDA(123.3,MDCPR_",",.04)=+MDCP
+"RTN","MDCONUTL",58,0)
+ .L +^GMR(123.3,MDCPR):1 I '$T Q
+"RTN","MDCONUTL",59,0)
+ .D FILE^DIE("","MDFDA") K MDFDA
+"RTN","MDCONUTL",60,0)
+ .L -^GMR(123.3,MDCPR)
+"RTN","MDCONUTL",61,0)
+ .Q
+"RTN","MDCONUTL",62,0)
+ I 'MDCP W !,"Still missing CP Definition." Q
+"RTN","MDCONUTL",63,0)
+ I $D(MDOPT("CONCONVERT"))#2 D
+"RTN","MDCONUTL",64,0)
+ .W !!,"We will proceed to convert ",MDTOSE," consults to"
+"RTN","MDCONUTL",65,0)
+ .Q
+"RTN","MDCONUTL",66,0)
+ E  D
+"RTN","MDCONUTL",67,0)
+ .W !!,"We will proceed to convert ",MDFRE," in ",MDTOSE," to "
+"RTN","MDCONUTL",68,0)
+ .Q
+"RTN","MDCONUTL",69,0)
+ W !,MDCPRE," procedures...",!
+"RTN","MDCONUTL",70,0)
+ W ! S MDSERV=$$GETSER(+MDCPR) I 'MDSERV W !,"RELATED SERVICE missing from "_$S($D(MDCPRE):MDCPRE,1:MDFRE)_" - no records converted" Q
+"RTN","MDCONUTL",71,0)
+ S MDL="" F  S MDL=$O(^GMR(MDFILE,"AE",MDTOS,MDL)) Q:MDL<1  D
+"RTN","MDCONUTL",72,0)
+ .S MDCPST=MDL
+"RTN","MDCONUTL",73,0)
+ .S MDCPRST=$$GET1^DIQ(100.01,MDCPST_",",.01,"E")
+"RTN","MDCONUTL",74,0)
+ .I MDCPRST'="PENDING"&(MDCPRST'="ACTIVE")&(MDCPRST'="SCHEDULED") Q
+"RTN","MDCONUTL",75,0)
+ .S MDTE=0 F  S MDTE=$O(^GMR(MDFILE,"AE",MDTOS,MDL,MDTE)) Q:MDTE<1  D
+"RTN","MDCONUTL",76,0)
+ ..S MDLP=0 F  S MDLP=$O(^GMR(MDFILE,"AE",MDTOS,MDL,MDTE,MDLP)) Q:MDLP<1  D
+"RTN","MDCONUTL",77,0)
+ ...I $D(MDOPT("CONCONVERT"))#2,$$GET1^DIQ(MDFILE,MDLP_",",13,"I")="P" Q
+"RTN","MDCONUTL",78,0)
+ ...I $D(MDOPT("PROCONVERT"))#2 D  Q:(MDX'["GMR(123.3")!(+MDX'=+MDFR)
+"RTN","MDCONUTL",79,0)
+ ....S MDX=$$GET1^DIQ(MDFILE,MDLP_",",4,"I")
+"RTN","MDCONUTL",80,0)
+ ....Q
+"RTN","MDCONUTL",81,0)
+ ...S MDIEN=MDLP
+"RTN","MDCONUTL",82,0)
+ ...S MDFDA(123,MDIEN_",",1)=+MDSERV
+"RTN","MDCONUTL",83,0)
+ ...S MDFDA(123,MDIEN_",",1.01)=+MDCP
+"RTN","MDCONUTL",84,0)
+ ...S MDFDA(123,MDIEN_",",4)=+MDCPR_";"_"GMR(123.3,"
+"RTN","MDCONUTL",85,0)
+ ...S MDFDA(123,MDIEN_",",13)="P"
+"RTN","MDCONUTL",86,0)
+ ...L +^GMR(123,MDIEN):1 I '$T Q
+"RTN","MDCONUTL",87,0)
+ ...D FILE^DIE("","MDFDA")
+"RTN","MDCONUTL",88,0)
+ ...L -^GMR(123,MDIEN)
+"RTN","MDCONUTL",89,0)
+ ...S MDCOUNT=MDCOUNT+1 W !," Record # ",MDIEN," converted." Q
+"RTN","MDCONUTL",90,0)
+ ..Q
+"RTN","MDCONUTL",91,0)
+ .Q
+"RTN","MDCONUTL",92,0)
+ W !!,"Total Records converted = ",MDCOUNT
+"RTN","MDCONUTL",93,0)
+ Q
+"RTN","MDCONUTL",94,0)
+GETSER(MDNUM) ; Get the Consult service
+"RTN","MDCONUTL",95,0)
+ N MDK,MDIENS,MDARY,MDY
+"RTN","MDCONUTL",96,0)
+ S MDIENS=MDNUM_","
+"RTN","MDCONUTL",97,0)
+ D GETS^DIQ(123.3,MDIENS,"2*","I","MDARY")
+"RTN","MDCONUTL",98,0)
+ S MDK=0 F  S MDK=$O(MDARY(123.32,MDK)) Q:'MDK  S MDY=$G(MDARY(123.32,MDK,.01,"I"))
+"RTN","MDCONUTL",99,0)
+ Q:$D(MDY) MDY
+"RTN","MDCONUTL",100,0)
+ Q 0
+"RTN","MDCONUTL",101,0)
+SETTS ;Set Consult 'TO SERVICE'
+"RTN","MDCONUTL",102,0)
+ N DIC,X,Y,DTOUT,DUOUT
+"RTN","MDCONUTL",103,0)
+ S DIC="^GMR(123.5,",DIC(0)="AEMNQ"
+"RTN","MDCONUTL",104,0)
+ ;No DICOM consults allowed
+"RTN","MDCONUTL",105,0)
+ S:$D(MDOPT("CONCONVERT"))#2 DIC("S")="I $$DICSRN^MDCONUTL(+Y)"
+"RTN","MDCONUTL",106,0)
+ D ^DIC I Y<1!($D(DTOUT))!($D(DUOUT)) Q
+"RTN","MDCONUTL",107,0)
+ S MDTOS=+Y,MDTOSE=$P(Y,U,2)
+"RTN","MDCONUTL",108,0)
+ Q
+"RTN","MDCONUTL",109,0)
+SETPR(MDF) ;Set Procedure
+"RTN","MDCONUTL",110,0)
+ ;MDF=0 : Convert FROM, MDF=1 : Convert TO
+"RTN","MDCONUTL",111,0)
+ N DIC,X,Y,DTOUT,DUOUT,MDQ
+"RTN","MDCONUTL",112,0)
+ ;Convert FROM selection to include the related service of selected procedure. No DICOM procedures allowed.
+"RTN","MDCONUTL",113,0)
+ F  Q:'$D(MDF)  D
+"RTN","MDCONUTL",114,0)
+ .S DIC="^GMR(123.3,",DIC(0)="AEMNQ",DIC("A")="Select a GMRC Procedure to convert "_$S(MDF>0:"TO: ",1:"FROM: ")
+"RTN","MDCONUTL",115,0)
+ .D ^DIC I Y<1!($D(DTOUT))!($D(DUOUT)) K MDF Q
+"RTN","MDCONUTL",116,0)
+ .I MDF=0,$$GET1^DIQ(123.3,+Y,.04)]"" W !!,"This procedure is already a CP - cannot convert",! Q
+"RTN","MDCONUTL",117,0)
+ .I MDF S MDCPR=+Y,MDCPRE=$P(Y,U,2) K MDF
+"RTN","MDCONUTL",118,0)
+ .E  S MDFR=+Y,MDFRE=$P(Y,U,2) K MDF
+"RTN","MDCONUTL",119,0)
+ .Q
+"RTN","MDCONUTL",120,0)
+ I '$D(MDFR)!($D(MDTOS)) Q
+"RTN","MDCONUTL",121,0)
+ ;Related Service[123.32P]
+"RTN","MDCONUTL",122,0)
+ N DIC,X,Y,DTOUT,DUOUT
+"RTN","MDCONUTL",123,0)
+ ;Only allow service related to selected procedure
+"RTN","MDCONUTL",124,0)
+ S DIC="^GMR(123.5,",DIC(0)="AEMNQ",DIC("S")="I ($D(^GMR(123.3,MDFR,2,""B"",+Y)))"
+"RTN","MDCONUTL",125,0)
+ D ^DIC I Y<1!($D(DTOUT))!($D(DUOUT)) Q
+"RTN","MDCONUTL",126,0)
+ I $D(^MAG(2006.5831,"C",+Y,MDFR)) W !!,"Procedure/Service setup for DICOM - Cannot convert" Q
+"RTN","MDCONUTL",127,0)
+ S MDTOS=+Y,MDTOSE=$P(Y,U,2)
+"RTN","MDCONUTL",128,0)
+ Q
+"RTN","MDCONUTL",129,0)
+DICSRN(MDCON) ;Screen for DICOM consults
+"RTN","MDCONUTL",130,0)
+ ;Check each entry for a procedure.  If no procedure, it's setup as a consult
+"RTN","MDCONUTL",131,0)
+ ;and will be screened. Procedure/consult combo is a separate screen on the
+"RTN","MDCONUTL",132,0)
+ ;procedure conversion option.
+"RTN","MDCONUTL",133,0)
+ N MDDA,MDS S MDS=1
+"RTN","MDCONUTL",134,0)
+ S MDDA="" F  S MDDA=$O(^MAG(2006.5831,"B",MDCON,MDDA)) Q:MDDA=""  D  Q:'MDS 
+"RTN","MDCONUTL",135,0)
+ .S:$$GET1^DIQ(2006.5831,MDDA,2)="" MDS=0
+"RTN","MDCONUTL",136,0)
+ .Q
+"RTN","MDCONUTL",137,0)
+ Q MDS
+"VER")
+8.0^22.2
+"BLD",10527,6)
+^48
+**END**
+**END**
+

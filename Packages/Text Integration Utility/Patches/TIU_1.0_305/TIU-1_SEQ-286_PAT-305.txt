@@ -1,0 +1,351 @@
+$TXT Created by                    VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 10/29/18 at 14:52
+=============================================================================
+Run Date: DEC 21, 2018                     Designation: TIU*1*305
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #286                      Status: Released
+                  Compliance Date: JAN 21, 2019
+=============================================================================
+
+Associated patches: (v)TIU*1*112   <<= must be installed BEFORE `TIU*1*305'
+                    (v)TIU*1*182   <<= must be installed BEFORE `TIU*1*305'
+                    (v)TIU*1*250   <<= must be installed BEFORE `TIU*1*305'
+                    (v)TIU*1*259   <<= must be installed BEFORE `TIU*1*305'
+
+Subject: EPIP TEXT INTEGRATION UTILITIES REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ TIU*1.0*305 provides the following enhancements to VistA:
+  
+ - Enables sites to add a progress note to the electronic record of all 
+ inpatients and outpatients who were seen during computer system downtime 
+ using the new option Contingency Downtime Bookmark Progress Notes [TIU 
+ DOWNTIME BOOKMARK PN] in the TIU Maintenance Menu [TIU IRM MAINTENANCE 
+ MENU]. The note must use a locally-approved title that has been mapped to
+ the Veterans Health Administration (VHA) enterprise-standard COMPUTER
+ DOWNTIME title. When creating the note, users can enter: the note title; 
+ whether the computer downtime was scheduled or unscheduled; outage 
+ start/end times; the author of the note; a date/time stamp to sequence 
+ the note in the note tree; clinics to which the outage applies; users to 
+ receive an email notification listing the patients affected and whether 
+ the note was successfully appended to each patient's record; an option to 
+ edit the TIU note text; and an electronic signature to perform an 
+ administrative closure of the note to enter it into the medical record. 
+ The progress note states that a computer outage occurred, and alerts the 
+ user to search the patient's paper records for non-electronic 
+ documentation created during the outage. The set-up and note content 
+ should be coordinated with the Chief, Health Information Management at 
+ each site. Only one progress note is filed for any patient with multiple 
+ appointments (whether inpatient, outpatient, or both) at different 
+ clinics during the outage period. Use of this functionality is optional 
+ for each site.
+  
+ During the pre-installation phase, routine TIU1P305 checks the TIU 
+ DOCUMENT DEFINITION file (#8925.1) to ensure that a local progress 
+ note title is mapped to the enterprise-standard title COMPUTER DOWNTIME. A
+ message appears if no mapping or incorrect mapping is found, though the
+ patch installation continues. Note that the mapping issue must be resolved
+ after patch installation. If the mapping to the title COMPUTER DOWNTIME 
+ is correct, then no message is issued and the patch installation 
+ continues.
+  
+ During the post-installation phase, routine TIU1P305 deletes a site's 
+ existing text in the BOILERPLATE TEXT field (#3) in the TIU DOCUMENT 
+ DEFINITION file (#8925.1) and replaces it with new standard TIU note 
+ text. This new text can be modified by users when creating downtime 
+ bookmark progress notes. The installation history for the patch will 
+ capture the data from the BOILERPLATE TEXT field so that local Office of 
+ Information and Technology (OIT) personnel can retrieve the previous 
+ boilerplate text, if needed. The installation history can be reviewed 
+ using the Install File Print [XPD PRINT INSTALL FILE] option under the 
+ KIDS UTILITIES sub-menu.
+  
+ During the post-installation phase, routine TIU1P305 also attaches the 
+ new option Contingency Downtime Bookmark Progress Notes [TIU DOWNTIME 
+ BOOKMARK PN] to the TIU Maintenance Menu [TIU IRM MAINTENANCE MENU].
+  
+ - Enables clinicians and providers to create progress notes that 
+ automatically generate a post-signature alert to designated recipients 
+ based on the progress note title. The new option Create Post-Signature 
+ Alerts [TIUFPC CREATE POST-SIGNATURE] in the Document Definitions 
+ (Manager) [TIUF DOCUMENT DEFINITION MGR] menu allows Clinical Application 
+ Coordinators (CACs) or other supervisors to define who is alerted when a 
+ specific progress note title is used. The note title to define is 
+ selected at the "Select TIU DOCUMENT DEFINITION NAME:" prompt. The option 
+ then enables entry of the recipients to be notified (individual, mail 
+ group, or team list), whether to alert the Primary Care Provider, whether 
+ to print a chart copy at the patient's location, and to optionally select 
+ an output device for printing at another location. This data is used to 
+ populate a MUMPS subroutine name in the POST-SIGNATURE ACTION field 
+ (#4.9) for a document definition in the TIU DOCUMENT DEFINITION file 
+ (#8925.1). The notification is made through VistA Kernel Alerts and is 
+ sent to recipients immediately upon a clinician's entry of an electronic 
+ signature for the note. Use of this functionality is optional for each 
+ site.
+  
+ During the post-installation phase, routine TIU1P305 attaches the new 
+ option Create Post-Signature Alerts [TIUFPC CREATE POST-SIGNATURE] to the 
+ Document Definitions (Manager) [TIUF DOCUMENT DEFINITION MGR] menu. 
+ Routine TIU1P305 is deleted automatically at the end of patch 
+ installation. 
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                   New/Modified/Deleted
+ -----------                 ----                   -------------------- 
+ Contingency Downtime        Run routine            New
+   Bookmark Progress Notes
+ Create Post-Signature       Run routine            New
+   Alerts
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Parameters Associated:
+  
+ Parameter Name             New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted 
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20080310 Contingency Downtime Bookmark Progress Note
+ NSR20141017 TIU Post Signature Alerts
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Edward Hines, Jr. VA Hospital, Hines, IL
+ James H. Quillen VA Healthcare System, Mountain Home, TN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from
+ FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI 
+ Field Offices:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found in the VA Software Document Library 
+ (VDL) at: https://www.domain.ext/vdl/.
+  
+  
+ Title                                   File Name          FTP Mode
+ ---------------------------------------------------------------
+ TIU Clinical Coordinator & User Manual  tiuum.doc          Binary
+ TIU Clinical Coordinator & User Manual  tiuum.pdf          Binary
+ TIU Technical Manual                    tiutm.docx         Binary
+ TIU Technical Manual                    tiutm.pdf          Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number TIU*1.0*305.
+  
+    a. Verify Checksums in Transport Global - This option will help 
+    ensure the integrity of the routines that are in the transport global.
+  
+    b. Print Transport Global - This option will enable viewing the 
+    components of the KIDS build.
+  
+    c. Compare Transport Global to Current System - This option will 
+    enable viewing all changes that will be made when this patch is
+    installed. It compares all components of this patch (routines, data
+    dictionaries, templates, etc.).
+  
+    d. Back up a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not back up
+    any other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 8. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not 
+ be attempted. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will need to issue one or more 
+ follow-on patches in order to comprehensively back out this patch, after 
+ coordination with the VA Project Manager and COR.
+  
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the TIU routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the TIU routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch TIU*1.0*305 on line 2 in the patch list section. 
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;JUN 20, 1997;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIU1P305
+    Before:       n/a   After: B18580103  **305**
+Routine Name: TIUDTBP0
+    Before:       n/a   After:B217205415  **305**
+Routine Name: TIUDTBPN
+    Before:       n/a   After:B198161933  **305**
+Routine Name: TIUPSCA
+    Before:       n/a   After: B18892982  **305**
+Routine Name: TIUPSCS
+    Before:       n/a   After: B68716783  **305**
+Routine Name: TIUUTL2
+    Before:       n/a   After:  B1091999  **305**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 07, 2016
+Completed By:                               Date Completed: DEC 20, 2018
+Released By :                               Date Released : DEC 21, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

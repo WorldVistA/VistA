@@ -1,0 +1,127 @@
+
+=============================================================================
+Run Date: DEC 18, 2018                     Designation: PREN*3*5
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 3         SEQ #5                      Status: Released
+                  Compliance Date: JAN 17, 2019
+=============================================================================
+
+
+Subject: PPS-N 3.0.4 FIX FOR PRODUCTS AND WARNINGS LABEL REPORT
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ The PPS-N application performs the following major business functions:
+  
+ * Add/edit/approve medication and supply information
+ * Synchronize changes in PPS-N with VistA sites
+ * Output various reports
+ * Process additions and updates from First DataBank (FDB)
+ * Search for and add drug information from First DataBank
+  
+ PPS-N v3.0.4 contains the fix for ONE Service Now Ticket.
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2184628: Error message when running Products and Warning Labels Report 
+ in PPS-N
+   
+  
+ Problem:
+ ========
+ The defect headline mentions the Preview Update Report, but it was the 
+ Products and Warnings Labels report that was causing the problem. When 
+ there were more than 10 warning labels in the FDB data for a product, the 
+ Products and Warnings Labels report would hang and also cause an error 
+ message to show up on various other report pages, including the Preview 
+ Update Report.
+  
+  
+ Resolution:
+ ===========
+ Modified Products and Warning Labels Report code to handle situations 
+ where the FDB data contains more than 10 warning labels for a drug. The 
+ existing report code fails with an error when there are eleven or more 
+ warning labels for a product. Per PBM guidance, this report now ignores 
+ any warning labels after the tenth label.
+  
+  
+ Test Sites:
+ ===========
+ PBM Team
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------
+  
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to retrieve files 
+ from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+    OI FIELD OFFICE     ADDRESS                        DIRECTORY
+    Hines               DOMAIN.EXT        
+    Salt Lake City      DOMAIN.EXT          
+   
+ The documentation distribution includes:
+  
+  
+ FILE NAME                               DESCRIPTION
+ ---------------------------------------------------------------------
+  
+ PREN_3_0P5_V3_0_4_IG.PDF                PPS-N v3.0.4 Installation Guide
+ PREN_3_0P5_V3_0_4_UM.PDF                PPS-N v3.0.4 User Guide
+                
+ Pre-Installation Instructions:
+ ------------------------------ 
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 20, 2018
+Completed By:                               Date Completed: DEC 17, 2018
+Released By :                               Date Released : DEC 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
