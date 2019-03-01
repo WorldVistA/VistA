@@ -321,56 +321,10 @@ is used for the "DSIC ACTIVE CPRS PROVIDER" rpc.
 <td>
 <table><thead><tr>
 <th>COMPONENT/ENTRY POINT</th>
-<th>VARIABLES</th>
 <th>COMPONENT DESCRIPTION</th>
+<th>VARIABLES</th>
 </tr></thead><tbody>
 <td>ACT</td>
-<td>
-<table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
-<th>VARIABLES</th>
-<th>TYPE</th>
-</tr></thead><tbody>
-<td><pre>
-A subscripted array with a value of 1 or 0 to
-indicate if user is active. 1 = Active, 0 = Inactive.
-</pre>
-</td>
-<td>DSIC</td>
-<td>Output</td>
-</tr>
-<td><pre>
-A single value or a subscripted array of security
-keys to be evaluated.
-</pre>
-</td>
-<td>XDUZ</td>
-<td>Input</td>
-</tr>
-<td><pre>
-DSISCR(n) = string where n = 0,1,2,3,4,...
-
-Allowable formats of DSISCR(n) = flag^val1^val2^val3^.. where:
-
-security key ck = KEY^security key name
-
-kernel param ck = PARM^parameter name^ parameter instance
-
-M code = M^&lt;return message&gt;^ &lt;executable M code which sets $T&gt;
-</pre>
-</td>
-<td>DSISCR</td>
-<td>Input</td>
-</tr>
-<td><pre>
-If $G(FUN) then extrinsic function, else RPC.
-</pre>
-</td>
-<td>FUN</td>
-<td>Input</td>
-</tr>
-</tbody></table>
-</td>
 <td><pre>
 
 VARIABLES:  DSIC   Type: Output
@@ -401,36 +355,91 @@ check and the api will return a subscripted array with a
 value of 1 (user owns key) or 0 (key not found).
 </pre>
 </td>
-</tr>
-<td>CK</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
-A single DUZ value to check.
+A subscripted array with a value of 1 or 0 to
+indicate if user is active. 1 = Active, 0 = Inactive.
 </pre>
 </td>
+</tr>
 <td>XDUZ</td>
 <td>Input</td>
+<td><pre>
+A single value or a subscripted array of security
+keys to be evaluated.
+</pre>
+</td>
+</tr>
+<td>DSISCR</td>
+<td>Input</td>
+<td><pre>
+DSISCR(n) = string where n = 0,1,2,3,4,...
+
+Allowable formats of DSISCR(n) = flag^val1^val2^val3^.. where:
+
+security key ck = KEY^security key name
+
+kernel param ck = PARM^parameter name^ parameter instance
+
+M code = M^&lt;return message&gt;^ &lt;executable M code which sets $T&gt;
+</pre>
+</td>
+</tr>
+<td>FUN</td>
+<td>Input</td>
+<td><pre>
+If $G(FUN) then extrinsic function, else RPC.
+</pre>
+</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
+<td>CK</td>
 <td><pre>
 This API does a basic check on a DUZ to see if user
 is active.
 </pre>
 </td>
-</tr>
-<td>DIV</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>XDUZ</td>
+<td>Input</td>
+<td><pre>
+A single DUZ value to check.
+</pre>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<td>DIV</td>
+<td><pre>
+Return default division for user.  If that user has
+only one division in the file 200 DIVISION multiple, then that entry is
+assumed to be the default division unless it is explicitly marked as NO.  This
+component is used for the "DSIC USER DEF DIV" rpc.
+</pre>
+</td>
+<td>
+<table><thead><tr>
+<th>VARIABLES</th>
+<th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
+</tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
 return p1^p2^p3:
 
@@ -439,50 +448,48 @@ p2=institution name
 p3=station number
 </pre>
 </td>
-<td>DSIC</td>
-<td>Output</td>
 </tr>
+<td>XDUZ</td>
+<td>Input</td>
 <td><pre>
 A single value or a subscripted array of security
 keys to be evaluated.
 </pre>
 </td>
-<td>XDUZ</td>
-<td>Input</td>
 </tr>
+<td>SITE</td>
+<td>Input</td>
 <td><pre>
 if SITE=1 and user has no divisions, then return
 facility's  default division.
 </pre>
 </td>
-<td>SITE</td>
-<td>Input</td>
 </tr>
+<td>FUN</td>
+<td>Input</td>
 <td><pre>
 Default is zero (0). I $G(FUN) then extrinsic
 function, else RPC
 </pre>
 </td>
-<td>FUN</td>
-<td>Input</td>
 </tr>
 </tbody></table>
 </td>
-<td><pre>
-Return default division for user.  If that user has
-only one division in the file 200 DIVISION multiple, then that entry is
-assumed to be the default division unless it is explicitly marked as NO.  This
-component is used for the "DSIC USER DEF DIV" rpc.
-</pre>
-</td>
 </tr>
 <td>ID</td>
+<td><pre>
+Return all user IDs for a given user.  This component
+is used for the "DSIC USER ID" rpc.
+</pre>
+</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
 return p1^p2^p3^p4 for n=1,2,3,... where
 If error, return -1^message
@@ -500,17 +507,17 @@ p4 = 1 (valid for OAI only.)
 (If 1, then default Alt ID)
 </pre>
 </td>
-<td>DSIC</td>
-<td>Output</td>
 </tr>
+<td>XDUZ</td>
+<td>Input</td>
 <td><pre>
 Pointer to NEW PERSON (#200) file, if optional
 default to DUZ.
 </pre>
 </td>
-<td>XDUZ</td>
-<td>Input</td>
 </tr>
+<td>FLAGS</td>
+<td>Input</td>
 <td><pre>
 default to "AaDNSTVv".
 
@@ -525,32 +532,32 @@ as default or if there is only one entry in alt id.
 "V" - VPID
 </pre>
 </td>
-<td>FLAGS</td>
-<td>Input</td>
 </tr>
+<td>FUN</td>
+<td>Input</td>
 <td><pre>
 Default is zero (0). I $G(FUN) then extrinsic
 function, else RPC.
 </pre>
 </td>
-<td>FUN</td>
-<td>Input</td>
 </tr>
 </tbody></table>
 </td>
-<td><pre>
-Return all user IDs for a given user.  This component
-is used for the "DSIC USER ID" rpc.
-</pre>
-</td>
 </tr>
 <td>LIST</td>
+<td><pre>
+Return list of active users for a lookup value.  This
+component is used for the "DSIC ACTIVE USER LIST" rpc.
+</pre>
+</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
 Return ^TMP("DSIC",$J,"DILIST",#,0) = p1^p2^p3^...^p8
 where:
@@ -562,16 +569,16 @@ p4 = sig block title          p9 = division
 p5 = first m last
 </pre>
 </td>
-<td>DSIC</td>
-<td>Output</td>
 </tr>
+<td>VAL</td>
+<td>Input</td>
 <td><pre>
 lookup value for NEW PERSON file.
 </pre>
 </td>
-<td>VAL</td>
-<td>Input</td>
 </tr>
+<td>SCR</td>
+<td>Input</td>
 <td><pre>
 (Optional) Array of additional screens to perform:
 
@@ -585,24 +592,24 @@ M code = M^&lt;return message&gt;^
 &lt;executable M code which sets $T
 </pre>
 </td>
-<td>SCR</td>
-<td>Input</td>
 </tr>
 </tbody></table>
 </td>
-<td><pre>
-Return list of active users for a lookup value.  This
-component is used for the "DSIC ACTIVE USER LIST" rpc.
-</pre>
-</td>
 </tr>
 <td>PER</td>
+<td><pre>
+Return user's current active person classification
+for PCE. This component is used for the "DSIC ACTIVE PERSON CLASS" rpc.
+</pre>
+</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
 Return user's current active person classification
 for PCE.
@@ -614,48 +621,48 @@ p3 = specialty              p7 = VA Code
 p4 = sub-specialty          p8 = specialty code
 </pre>
 </td>
-<td>DSIC</td>
-<td>Output</td>
 </tr>
+<td>USER</td>
+<td>Input</td>
 <td><pre>
 Pointer to NEW PERSON (#200) file.  If optional,
 default to DUZ.
 </pre>
 </td>
-<td>USER</td>
-<td>Input</td>
 </tr>
+<td>DATE</td>
+<td>Input</td>
 <td><pre>
 Default=today.  Fileman date to check for active
 person class.
 </pre>
 </td>
-<td>DATE</td>
-<td>Input</td>
 </tr>
+<td>FUN</td>
+<td>Input</td>
 <td><pre>
 Default is zero (0). I $G(FUN) then extrinsic
 function, else RPC.
 </pre>
 </td>
-<td>FUN</td>
-<td>Input</td>
 </tr>
 </tbody></table>
 </td>
-<td><pre>
-Return user's current active person classification
-for PCE. This component is used for the "DSIC ACTIVE PERSON CLASS" rpc.
-</pre>
-</td>
 </tr>
 <td>PROV</td>
+<td><pre>
+Return all user IDs for a given user.  This component
+is used for the "DSIC ACTIVE CPRS PROVIDER" rpc.
+</pre>
+</td>
 <td>
 <table><thead><tr>
-<th>VARIABLES DESCRIPTION</th>
 <th>VARIABLES</th>
 <th>TYPE</th>
+<th>VARIABLES DESCRIPTION</th>
 </tr></thead><tbody>
+<td>DSIC</td>
+<td>Output</td>
 <td><pre>
 Return: 3 if active user
 2 if user is active via the XUORES security key
@@ -664,39 +671,32 @@ Return: 3 if active user
 -1^message if problems or not a provider
 </pre>
 </td>
-<td>DSIC</td>
-<td>Output</td>
 </tr>
+<td>XDUZ</td>
+<td>Input</td>
 <td><pre>
 (Required) Default is current user DUZ. A single
 value of the DUZ to return values for.
 </pre>
 </td>
-<td>XDUZ</td>
-<td>Input</td>
 </tr>
+<td>RDV</td>
+<td>Input</td>
 <td><pre>
 Boolean flag to indicate whether or not to include
 remote data view visitors - default to 0 to not include.
 </pre>
 </td>
-<td>RDV</td>
-<td>Input</td>
 </tr>
+<td>FUN</td>
+<td>Input</td>
 <td><pre>
 (Optional)  Default is zero (0). I $G(FUN) then
 extrinsic function, else RPC.
 </pre>
 </td>
-<td>FUN</td>
-<td>Input</td>
 </tr>
 </tbody></table>
-</td>
-<td><pre>
-Return all user IDs for a given user.  This component
-is used for the "DSIC ACTIVE CPRS PROVIDER" rpc.
-</pre>
 </td>
 </tr>
 </tbody></table>
@@ -719,13 +719,13 @@ is used for the "DSIC ACTIVE CPRS PROVIDER" rpc.
 <td>DATE/TIME EDITED</td>
 <td>
 <table><thead><tr>
-<th>ACTION</th>
 <th>DATE/TIME EDITED</th>
+<th>ACTION</th>
 <th>AT THE REQUEST OF</th>
 <th>WITH CONCURRENCE OF</th>
 </tr></thead><tbody>
-<td>APPROVED</td>
 <td>2009/06/11 11:44</td>
+<td>APPROVED</td>
 <td>CLARK,KAREN</td>
 <td>CAREY,WILLIAM</td>
 </tr>

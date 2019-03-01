@@ -478,7 +478,7 @@ def _icrDataEntryToHtml(output, icrJson, crossRef):
                 output.write("<td>%s</td>\n" % field)
                 output.write("<td>\n")
                 if isinstance(value, list) and isinstance(value[0], dict):
-                    _writeTableOfValue(output, value, crossRef)
+                    _writeTableOfValue(output, field, value, crossRef)
                 else:
                     _icrSubFileToHtml(output, value, field, crossRef)
                 output.write("</td>\n")
@@ -640,23 +640,32 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
         componentSection.append(t)
     pdf.append(KeepTogether(componentSection))
 
-def _writeTableOfValue(output, value, crossRef):
+def _writeTableOfValue(output, field, value, crossRef):
   headerList = set()
   # Finds the longest header list to write out as table header
   for entry in value:
       headerList.update(set(entry.keys()))
+
   if len(headerList) == 1:
-      field = headerList.pop()
+      val = headerList.pop()
       if len(value) == 1:
-          # A single value in a single column
-          output.write(_convertIndividualFieldValue(field, entry, entry[field], crossRef))
+          # A single value in a single column, write as a regular field
+          output.write(_convertIndividualFieldValue(val, entry, entry[val], crossRef))
       else:
+          # A single column, write as a list
           output.write("<ul>\n")
-          # Write a list, not a table
           for entry in value:
-              output.write("<li>%s</li>\n" % _convertIndividualFieldValue(field, entry, entry[field], crossRef))
+              output.write("<li>%s</li>\n" %
+                              _convertIndividualFieldValue(val, entry, entry[val], crossRef))
           output.write("</ul>\n")
       return
+
+  # Make sure the header list is in a known order, with the field name first
+  headerList = list(headerList)
+  headerList.sort()
+  if field in headerList:
+    headerList.remove(field)
+    headerList.insert(0, field)
 
   # Start table with the table header
   output.write("<table><thead><tr>\n")
@@ -665,7 +674,6 @@ def _writeTableOfValue(output, value, crossRef):
   output.write("</tr></thead><tbody>\n")
   # Loop through each value again to create a row
   for entry in value:
-
     # Find the result based on the header "key"
     for val in headerList:
       if val in entry:
@@ -687,7 +695,7 @@ def _writeTableOfValue(output, value, crossRef):
                 entry[val][0]['VARIABLES'] = variables.split("-")[0]
                 entry[val][0]['VARIABLES DESCRIPTION'] = variables.split("-")[1]
           output.write("<td>\n")
-          _writeTableOfValue(output, entry[val], crossRef)
+          _writeTableOfValue(output, val, entry[val], crossRef)
           output.write("</td>\n")
         else:
           output.write("<td>%s</td>\n" % _convertIndividualFieldValue(val, entry, entry[val], crossRef))
@@ -708,7 +716,7 @@ def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
                 value = icrEntry[field]
                 if isSubFile(field) and field != subFile: # avoid recursive subfile for now
                     if type(value) is list:
-                        _writeTableOfValue(output, value, crossRef)
+                        _writeTableOfValue(output, field, value, crossRef)
                     else:
                         output.write ("<dl><dt>%s:</dt>\n" % field)
                         output.write ("<dd>\n")
