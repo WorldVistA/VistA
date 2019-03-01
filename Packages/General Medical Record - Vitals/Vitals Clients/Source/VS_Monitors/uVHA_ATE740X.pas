@@ -4,7 +4,7 @@ unit uVHA_ATE740X;
 *
 *       Application:  Vitals
 *       Revision:     $Revision: 1 $  $Modtime: 1/20/09 3:56p $
-*       Developer:    dddddddddomain.user@domain.ext
+*       Developer:    andrey.andriyevskiy@domain.ext
 *       Site:         Hines OIFO
 *
 *       Description:  CASMED Vitals Signs Monitor support

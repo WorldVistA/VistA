@@ -272,6 +272,7 @@ object frmGMV_UserMain: TfrmGMV_UserMain
                 inherited pnlGSelectBottom: TPanel
                   Top = 24
                   Width = 105
+                  ExplicitLeft = 0
                   ExplicitTop = 24
                   ExplicitWidth = 105
                 end
@@ -395,7 +396,7 @@ object frmGMV_UserMain: TfrmGMV_UserMain
       end
       inherited ImageList1: TImageList
         Bitmap = {
-          494C01010B000E001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C01010B000E00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -1251,6 +1252,7 @@ object frmGMV_UserMain: TfrmGMV_UserMain
       end
       object mnFileExit: TMenuItem
         Action = FileExit1
+        OnClick = mnFileExitClick
       end
     end
     object mnReports: TMenuItem

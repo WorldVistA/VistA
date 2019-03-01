@@ -28,10 +28,10 @@ unit U_HelpMGR;
 
 
 interface
-
+{$WARN UNIT_PLATFORM OFF}
 uses
   Classes, Messages, windows, sysutils, ShlObj, Forms, SHFolder, ComCtrls, StdCtrls, Dialogs, mmsystem,
-  controls, FileCtrl, ComObj, Variants, ShellAPI, Registry, ActiveX, Math;
+  controls, ComObj, Variants, ShellAPI, Registry, ActiveX, Math;
 
 type
 
@@ -45,7 +45,6 @@ type
   public
     constructor Create(OriginalHelp: string; InstanceCheck: Boolean);
     destructor Destroy; override;
-  published
   end;
 
   tRetrivalThread = class(TThread) //Used to retrieve the file
@@ -63,7 +62,6 @@ type
   public
     constructor Create(Source, Destination: string; aProgressBar: TProgressBar; CallBack: Pointer; Canceled: PBOOL; AForm: TForm);
     destructor Destroy; override;
-  published
   end;
 
   ///============= INSTANCE TYPE =============
@@ -132,6 +130,9 @@ var
   FCanceled: Boolean; //Allow the DL to be canceled
   aProgressLabel: TLabel; //Label that appears to the end user
 
+  //Uncomment the line below to turn on the HotFix check
+  // {$DEFINE HOTFIXCHK}
+
 implementation
 
 ///============= PUBLIC PROCEDURES =============
@@ -172,6 +173,7 @@ begin
       if not FCanceled then
         Application.HelpFile := LocalHelpFile;
     end;
+    {$IFDEF HOTFIXCHK}
     if GetOperatingSystem = cOSWin7 then
     begin
       if (ExtractFileExt(HelpFile) = '.hlp') then
@@ -183,6 +185,7 @@ begin
             HotFixError;
         end;
     end;
+    {$ENDIF HOTFIXCHK}
   finally
     Screen.Cursor := crDefault;
   end;
@@ -195,7 +198,7 @@ begin
   //Need the patch
   HelpFile := ExtractFilePath(HelpFile) + ExtractFileName(HelpFile);
   HelpThread := tHelpThread.Create(HelpFile, InstanceCheck);
-  HelpThread.Resume;
+  HelpThread.Start;
 end;
 
 
@@ -310,9 +313,9 @@ var
   end;
 
   //Returns the file's date / time
-  function getFileDateTime(const FileName: string): Integer;
+  function getFileDateTime(const FileName: string): TDateTime;
   begin
-    result := FileAge(FileName);
+    FileAge(FileName, result);
   end;
 
   //Finds the users special directory
@@ -321,8 +324,6 @@ var
     SHGFP_TYPE_CURRENT = 0;
   var
     path: array[0..MaxChar] of char;
-    TmpPath: PChar;
-    PathLen: Integer;
   begin
     SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0]);
     Result := StrPas(path);
@@ -395,7 +396,6 @@ function DisplayProgress(Source, Destination: string): boolean;
 var
   AMsgDialog: TForm;
   AProgressBar: TProgressBar;
-  StopLoop: Boolean;
   RetrivalThread: tRetrivalThread;
 
   //Fire off the copy process
@@ -429,7 +429,7 @@ begin
 
   //process the download
   RetrivalThread := tRetrivalThread.Create(Source, Destination, AProgressBar, @CopyFileWithProgressBar2, @FCanceled, AMsgDialog);
-  RetrivalThread.Resume;
+  RetrivalThread.Start;
 
   if AMsgDialog.ShowModal = mrAbort then
     FCanceled := true; //User canceled the dl
@@ -446,13 +446,11 @@ const
 var
   reg: TRegistry;
   DataSize: LongWord;
-  ValueName, s, Rot13Coded: string;
+  ValueName, Rot13Coded: string;
   i, X: integer;
   e: Entry;
   eXP: EntryXp;
   Tab: TByteArray;
-  lft: TFileTime;
-  dft: DWord;
   SubKeyNames, ValueNames: TStringList;
   LoopKey: string;
   SysTime: TSystemTime;
@@ -540,7 +538,6 @@ begin
                     Inc(Result);
                 end;
 
-                DataSize := 0;
                 Tab := nil;
               end;
             end;
@@ -580,7 +577,6 @@ end;
 procedure tHelpThread.Execute;
 var
   LocalHelpFile: string;
-  LocalAvailable: Boolean;
 begin
   if Terminated then
     Exit;
@@ -588,6 +584,7 @@ begin
   CoInitialize(nil);
   if LoadLocalHelp(fstrOriginalHelp, LocalHelpFile, false) then
     Application.HelpFile := LocalHelpFile;
+  {$IFDEF HOTFIXCHK}
   if GetOperatingSystem = cOSWin7 then
   begin
     if (ExtractFileExt(LocalHelpFile) = '.hlp') then
@@ -600,6 +597,7 @@ begin
       end;
 
   end;
+ {$ENDIF HOTFIXCHK}
 
   Sleep(Random(100));
 end;
@@ -642,7 +640,8 @@ begin
 
     //Let the copy continue
     Result := PROGRESS_CONTINUE;
-  end;
+  end else
+   Result := PROGRESS_CANCEL;
 end;
 
 ///============= RETRIEVAL THREAD =============
@@ -673,9 +672,6 @@ begin
 end;
 
 procedure tRetrivalThread.Execute;
-var
-  LocalHelpFile: string;
-  LocalAvailable: Boolean;
 begin
   if Terminated then
     Exit;

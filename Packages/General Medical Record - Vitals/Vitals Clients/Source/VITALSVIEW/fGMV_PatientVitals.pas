@@ -457,7 +457,7 @@ procedure TfrmVitals.VitalsWe1Click(Sender: TObject);
 var
   s: String;
 begin
-//  ShellExecute(0, nil, PChar('http://domaindomain.ext/ClinicalSpecialties/vitals/'), nil, nil, SW_NORMAL)
+//  ShellExecute(0, nil, PChar('http://vista.domain.ext/ClinicalSpecialties/vitals/'), nil, nil, SW_NORMAL)
   s := getWebLinkAddress;
   if s <> '' then
     ShellExecute(0, nil, PChar(S), nil, nil, SW_NORMAL)

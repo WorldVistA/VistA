@@ -4,7 +4,7 @@ unit fGMV_ReportOptions;
 *
 *       Application:  Vitals
 *       Revision:     $Revision: 1 $  $Modtime: 2/25/09 2:30p $
-*       Developer:    dddddddddomain.user@domain.ext
+*       Developer:    andrey.andriyevskiy@domain.ext
 *       Site:         Hines OIFO
 *
 *       Description:  Report selection and device setup options.

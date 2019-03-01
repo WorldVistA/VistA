@@ -3,7 +3,7 @@
         <ProjectGuid>{E2965859-1B8B-4555-9EA9-5A0647CB1569}</ProjectGuid>
         <MainSource>GMV_VitalsViewEnter.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Library</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -52,7 +52,7 @@
         <DCC_UnitSearchPath>@VISTA_SOURCE_DIR@\Packages\RPC Broker\BDK\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_E>false</DCC_E>
-        <VerInfo_Release>28</VerInfo_Release>
+        <VerInfo_Release>34</VerInfo_Release>
         <DCC_S>false</DCC_S>
         <DCC_Define>DLL;CQ6942;L-INES;xAANTEST;NO3D;NOVTREE;NOTSMPACK;T-20;R144925;CASMED;USEVSMONITOR;xSHOWLOG;PATCH_5_0_23;xPATCH_5_0_22;USEVSMONITOR;$(DCC_Define)</DCC_Define>
         <DCC_ImageBase>00400000</DCC_ImageBase>
@@ -65,12 +65,12 @@
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
         <GenDll>true</GenDll>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOffice2k;XWB_R70;sabd5;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Build>4</VerInfo_Build>
         <DCC_N>true</DCC_N>
         <VerInfo_Debug>true</VerInfo_Debug>
         <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
         <VerInfo_PreRelease>true</VerInfo_PreRelease>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.1;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.1;Comments=v. 11/05/13 10:00;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*34;FileVersion=5.0.34.4;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.34.4;Comments=v. 11/05/13 10:00;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -89,8 +89,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
-        <VerInfo_Build>5</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*28;FileVersion=5.0.28.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.28.5;Comments=;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002;PreviousVersion=GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Release>37</VerInfo_Release>
+        <VerInfo_Build>2</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*37;FileVersion=5.0.37.2;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.37.2;Comments=;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002;PreviousVersion=GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -101,6 +102,7 @@
         <VerInfo_Build>5</VerInfo_Build>
         <Debugger_RunParams></Debugger_RunParams>
         <Debugger_HostApplication></Debugger_HostApplication>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5*34;FileVersion=5.0.34.5;InternalName=Vitals View/Enter;LegalCopyright=© Department of Veterans Affairs 2006-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals Lite;ProductVersion=5.0.34.5;Comments=v. 11/05/13 10:00;VASourceInformation=Developed by the Department of Veterans Affairs;VANamespace=GMRV;VAReleaseDate=October 2002</VerInfo_Keys>
         <BRCC_Defines>SHOWLOG;AANTEST;$(BRCC_Defines)</BRCC_Defines>
     </PropertyGroup>
     <ItemGroup>

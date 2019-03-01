@@ -164,7 +164,7 @@ object fGMV_DateTime: TfGMV_DateTime
           Width = 209
           Height = 162
           CalColors.MonthBackColor = clInfoBk
-          Date = 37481.386752951390000000
+          Date = 37481.409778842590000000
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
@@ -206,10 +206,11 @@ object fGMV_DateTime: TfGMV_DateTime
           FocusControl = edtTime
         end
         object lbxHours: TListBox
-          Left = 8
-          Top = 40
+          Left = 9
+          Top = 42
           Width = 57
           Height = 160
+          Style = lbOwnerDrawVariable
           Color = clInfoBk
           ItemHeight = 13
           Items.Strings = (
@@ -239,12 +240,14 @@ object fGMV_DateTime: TfGMV_DateTime
             '23')
           TabOrder = 0
           OnClick = lbxHoursClick
+          OnEnter = lbxHoursEnter
         end
         object lbxMinutes: TListBox
           Left = 72
           Top = 40
           Width = 41
           Height = 161
+          Style = lbOwnerDrawVariable
           Color = clInfoBk
           ItemHeight = 13
           Items.Strings = (

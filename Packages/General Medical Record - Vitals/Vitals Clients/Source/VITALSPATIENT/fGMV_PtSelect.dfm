@@ -39,8 +39,8 @@ object frmGMV_PtSelect: TfrmGMV_PtSelect
     Anchors = [akRight, akBottom]
     Caption = '&OK'
     Default = True
+    ModalResult = 1
     TabOrder = 0
-    OnClick = btnOkClick
   end
   object pnlPtInfo: TPanel
     Left = 0

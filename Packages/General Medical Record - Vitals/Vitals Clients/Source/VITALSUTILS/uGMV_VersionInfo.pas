@@ -428,7 +428,8 @@ end;
 function TVersionInfo.GetCompileDateTime: TDateTime;
 begin
 {$IFDEF DLL}
-  FileAge(GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.dll', Result);
+   FileAge(GetModuleName(HInstance), Result);
+ // FileAge(GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.dll', Result);
  // Result := FileDateToDateTime(FileAge(GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.dll'));
 {$ELSE}
   FileAge(Application.ExeName, Result);

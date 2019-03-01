@@ -3,7 +3,7 @@
         <ProjectGuid>{1FDD71ED-4EC3-481B-80E2-B99869825618}</ProjectGuid>
         <MainSource>Vitals.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">@CMAKE_BUILD_TYPE@</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -53,7 +53,7 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_K>false</DCC_K>
         <DCC_E>false</DCC_E>
-        <VerInfo_Release>27</VerInfo_Release>
+        <VerInfo_Release>36</VerInfo_Release>
         <DCC_S>false</DCC_S>
         <DebugSourcePath>..\..\CCR-Components;$(DebugSourcePath)</DebugSourcePath>
         <DCC_Define>RORCCOW;CQ6942;METRIC-CONVERSION;NO-3D;NOVTREE;NOTMSPACK;TOP-CCOWINDICATOR;T20;R144925;xAANTEST;USEVSMONITOR;xV5021;xSHOWLOG;xIGNOREEXENAME;PATCH_5_0_23;xPATCH_5_0_22;@ORPHEUS@$(DCC_Define)</DCC_Define>
@@ -73,7 +73,7 @@
         <VerInfo_Debug>true</VerInfo_Debug>
         <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*27;FileVersion=5.0.27.2;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.27.2;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=XE3 Build</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=5.0 Patch GMRV*5.0*36;FileVersion=5.0.36.2;InternalName=Vitals Client 5.0;LegalCopyright=© Department of Veterans Affairs 2002-2008;LegalTrademarks=;OriginalFilename=;ProductName=Vitals;ProductVersion=5.0.36.2;Comments=v. 11/14/13 12:00;VAReleaseDate=October 2002;VANamespace=GMRV;VASourceInformation=Developed by the Department of Veterans Affairs;DeveloperInfo=Help Manager</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -122,119 +122,120 @@
         <DCCReference Include="@SOURCE@\fGMV_UserMain.pas">
             <Form>frmGMV_UserMain</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsPatient\fGMV_PtSelect.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsPatient\fGMV_PtSelect.pas">
             <Form>frmGMV_PtSelect</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsUtils\uGMV_Utils.pas"/>
-        <DCCReference Include="..\VitalsCommon\uGMV_FileEntry.pas"/>
-        <DCCReference Include="..\VitalsUtils\uGMV_Const.pas"/>
-        <DCCReference Include="..\VitalsUtils\uGMV_GlobalVars.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_Splash.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_Utils.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_FileEntry.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_Const.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_GlobalVars.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_Splash.pas">
             <Form>frmGMV_Splash</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\fGMV_AboutDlg.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_AboutDlg.pas">
             <Form>frmGMV_AboutDlg</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\uGMV_User.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_TimeOutManager.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_User.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_TimeOutManager.pas">
             <Form>frmGMV_TimeOutManager</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsPatient\fGMV_PtInfo.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsPatient\fGMV_PtInfo.pas">
             <Form>fraGMV_PatientInfo</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsPatient\fGMV_ReportOptions.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsPatient\fGMV_ReportOptions.pas">
             <Form>frmGMV_ReportOptions</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsDataEntry\fGMV_EnteredInError.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\fGMV_EnteredInError.pas">
             <Form>frmGMV_EnteredInError</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsDataEntry\uGMV_QualifyBox.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_UserSettings.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\uGMV_QualifyBox.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_UserSettings.pas">
             <Form>frmGMV_UserSettings</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\fGMV_SelectColor.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_SelectColor.pas">
             <Form>frmGMV_SelectColor</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\uGMV_SaveRestore.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_DateRange.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_SaveRestore.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_DateRange.pas">
             <Form>frmGMV_DateRange</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsView\fGMV_ShowSingleVital.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsView\fGMV_ShowSingleVital.pas">
             <Form>frmGMV_ShowSingleVital</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsDataEntry\mGMV_InputOne2.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\mGMV_InputOne2.pas">
             <Form>fraGMV_InputOne2</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\VitalsDataEntry\fGMV_SupO2.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\fGMV_SupO2.pas">
             <Form>frmGMV_SupO2</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsDataEntry\fGMV_Qualifiers.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\fGMV_Qualifiers.pas">
             <Form>frmGMV_Qualifiers</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\fGMV_DateTimeDLG.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_DateTimeDLG.pas">
             <Form>fGMV_DateTime</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsView\mGMV_GridGraph.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsView\mGMV_GridGraph.pas">
             <Form>fraGMV_GridGraph</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\uGMV_Patient.pas"/>
-        <DCCReference Include="..\VitalsDataEntry\fGMV_InputLite.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_Patient.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\fGMV_InputLite.pas">
             <Form>frmGMV_InputLite</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\mGMV_MDateTime.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_EditUserTemplates.pas"/>
-        <DCCReference Include="..\VitalsCommon\mGMV_EditTemplate.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\mGMV_MDateTime.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_EditUserTemplates.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\mGMV_EditTemplate.pas">
             <Form>fraGMV_EditTemplate</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\fGMV_AddVCQ.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_AddVCQ.pas">
             <Form>frmGMV_AddVCQ</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsUtils\uGMV_Common.pas"/>
-        <DCCReference Include="..\VitalsUtils\uGMV_CRC32.pas"/>
-        <DCCReference Include="..\VitalsUtils\uGMV_VersionInfo.pas"/>
-        <DCCReference Include="..\VitalsCommon\uGMV_VitalTypes.pas"/>
-        <DCCReference Include="..\VS_Monitors\RS232.pas"/>
-        <DCCReference Include="..\VS_Monitors\uVHA_ATE740X.pas"/>
-        <DCCReference Include="..\ROR\uROR_RPCBroker.pas"/>
-        <DCCReference Include="..\ROR\fROR_PCall.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_Common.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_CRC32.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_VersionInfo.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_VitalTypes.pas"/>
+        <DCCReference Include="@SOURCE@\..\VS_Monitors\RS232.pas"/>
+        <DCCReference Include="@SOURCE@\..\VS_Monitors\uVHA_ATE740X.pas"/>
+        <DCCReference Include="@SOURCE@\..\ROR\uROR_RPCBroker.pas"/>
+        <DCCReference Include="@SOURCE@\..\ROR\fROR_PCall.pas">
             <Form>RPCErrorForm</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsUtils\uGMV_EXEVersion.pas"/>
-        <DCCReference Include="..\VitalsUtils\uGMV_Engine.pas"/>
-        <DCCReference Include="..\VitalsDataEntry\uGMV_Template.pas"/>
-        <DCCReference Include="..\VitalsCommon\uGMV_Setup.pas"/>
-        <DCCReference Include="..\VitalsPatient\fGMV_PatientSelector.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_EXEVersion.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_Engine.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsDataEntry\uGMV_Template.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\uGMV_Setup.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsPatient\fGMV_PatientSelector.pas">
             <Form>frmGMV_PatientSelector</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsUtils\uGMV_DLLCommon.pas"/>
-        <DCCReference Include="..\VitalsUtils\uXML.pas"/>
-        <DCCReference Include="..\VitalsCommon\fGMV_HospitalSelector2.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uGMV_DLLCommon.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsUtils\uXML.pas"/>
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_HospitalSelector2.pas">
             <Form>frmGMV_HospitalSelector2</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\fGMV_RPCLog.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\fGMV_RPCLog.pas">
             <Form>frmGMV_RPCLog</Form>
         </DCCReference>
-        <DCCReference Include="..\VitalsCommon\mGMV_PrinterSelector.pas">
+        <DCCReference Include="@SOURCE@\..\VitalsCommon\mGMV_PrinterSelector.pas">
             <Form>frGMV_PrinterSelector</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\VS_Monitors\uGMV_Monitor.pas"/>
-        <DCCReference Include="..\COMPONENTS\uGMV_ScrollListBox.pas"/>
-        <DCCReference Include="..\VS_Monitors\fGMV_Waiting.pas">
+        <DCCReference Include="@SOURCE@\..\VS_Monitors\uGMV_Monitor.pas"/>
+        <DCCReference Include="@SOURCE@\..\COMPONENTS\uGMV_ScrollListBox.pas"/>
+        <DCCReference Include="@SOURCE@\..\VS_Monitors\fGMV_Waiting.pas">
             <Form>frmWaiting</Form>
         </DCCReference>
-        <DCCReference Include="..\VITALSCOMMON\fGMV_RoomSelector.pas">
+        <DCCReference Include="@SOURCE@\..\VITALSCOMMON\fGMV_RoomSelector.pas">
             <Form>frmRoomSelector</Form>
         </DCCReference>
-        <DCCReference Include="..\VITALSCOMMON\mGMV_DefaultSelector.pas">
+        <DCCReference Include="@SOURCE@\..\VITALSCOMMON\mGMV_DefaultSelector.pas">
             <Form>frDefaultSelector</Form>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\VITALSCOMMON\uGMV_RPC_Names.pas"/>
-        <DCCReference Include="..\VITALSCOMMON\uGMV_Log.pas"/>
+        <DCCReference Include="@SOURCE@\..\VITALSCOMMON\uGMV_RPC_Names.pas"/>
+        <DCCReference Include="@SOURCE@\..\VITALSCOMMON\uGMV_Log.pas"/>
+        <DCCReference Include="@SOURCE@\..\VITALSCOMMON\U_HelpMGR.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

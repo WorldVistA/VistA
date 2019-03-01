@@ -98,12 +98,10 @@ type
     pnlPtInfo: TPanel;
     btnAgree: TButton;
     procedure btnAgreeClick(Sender: TObject);
-    procedure btnOkClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
-    fSelected:Boolean;
     PatientName: String;
     PatientDFN: String;
     procedure LoadPatient(Patient: TPatient);
@@ -155,8 +153,8 @@ begin
         Position := poScreenCenter;
         PatientDFN := DFN;
         PatientName := Patient.Name;
-        showModal;
-        if fSelected then
+        //Use modal result to drive this
+        if showModal = mrOk then
           Result := Patient
         else
           begin
@@ -201,8 +199,8 @@ begin
             Position := poScreenCenter;
             PatientDFN := DFN; // zzzzzzandria 2007-11-08 registering access by DFN
             PatientName := Patient.Name;  // zzzzzzandria 2007-11-08
-            showmodal;
-            if fSelected then
+            //Use modal result to drive this
+            if showModal = mrOk then
               Result := True
             else
               Result := False;
@@ -427,16 +425,9 @@ begin
   btnOk.SetFocus;
 end;
 
-procedure TfrmGMV_PtSelect.btnOkClick(Sender: TObject);
-begin
-  ModalResult := mrOK;
-  fSelected := True;
-  Close;
-end;
-
 procedure TfrmGMV_PtSelect.FormCreate(Sender: TObject);
 begin
-  fSelected := False;
+
 end;
 // zzzzzzandria 2008-02-28 ----------------------------------------------- begin
 procedure TfrmGMV_PtSelect.FormKeyDown(Sender: TObject; var Key: Word;
