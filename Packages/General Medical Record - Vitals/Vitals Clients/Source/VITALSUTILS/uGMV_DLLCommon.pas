@@ -4,7 +4,7 @@ unit uGMV_DLLCommon;
 *
 *       Application:  Vitals
 *       Revision:     $Revision: 1 $  $Modtime: 1/16/09 2:17p $
-*       Developer:    dddddddddomain.user@domain.ext
+*       Developer:    andrey.andriyevskiy@domain.ext
 *       Site:         Hines OIFO
 *
 *       Description:  Common DLL handling functions.

@@ -222,7 +222,7 @@ uses
   uGMV_GlobalVars, fGMV_Qualifiers, uGMV_User,
   uGMV_Const, uGMV_VitalTypes, uGMV_FileEntry
   , fROR_PCall
-  , uGMV_Engine, uROR_RPCBroker, uGMV_RPC_Names, fGMV_RPCLog, system.UITypes;
+  , uGMV_Engine, uROR_RPCBroker, uGMV_RPC_Names, fGMV_RPCLog, system.UITypes, U_HelpMgr;
 
 {$R *.DFM}
 ////////////////////////////////////////////////////////////////////////////////
@@ -890,20 +890,34 @@ function TfrmGMV_Manager.ApplicationEventsHelp(Command: Word; Data: NativeInt;
   var CallHelp: Boolean): Boolean;
 var
   s: String;
-  iHelp: Integer;
+  iHelp, CrRtn: Integer;
 begin
   try
     ApplicationEvents.CancelDispatch;
-    s := ExtractFileDir(Application.ExeName) + '\Help\'+
-      ChangeFileExt(ExtractFileName(Application.ExeName),'.hlp');
-    try
-      iHelp := ActiveControl.HelpContext;
-    except
-      iHelp := 1;
-    end;
-    if iHelp = 0 then iHelp := 1;
 
-    Application.HelpSystem.ShowContextHelp(iHelp,s);
+    CrRtn := Screen.Cursor;
+    Screen.Cursor := crHourGlass;
+    try
+      if Assigned(GMVUser) then
+        s := GMVUser.HelpFileDirectory
+      else
+        s := ExtractFileDir(Application.ExeName) + '\Help\';
+
+      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.hlp');
+      LoadHelpFile(s);
+    finally
+      Screen.Cursor := CrRtn;
+    end;
+
+    if Assigned(ActiveControl) then
+      iHelp := ActiveControl.HelpContext
+    else
+      iHelp := 1;
+
+    if iHelp = 0 then
+      iHelp := 1;
+
+    Application.HelpSystem.ShowContextHelp(iHelp, Application.HelpFile);
     CallHelp := False;
     Result := True;
   except
@@ -991,5 +1005,3 @@ begin
 end;
 
 end.
-
-

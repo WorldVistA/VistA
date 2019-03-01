@@ -12,7 +12,7 @@ uses
   , OleCtrls
   , mGMV_GridGraph
   , mGMV_MDateTime, uROR_Contextor, AppEvnts
-  , fGMV_PatientSelector, System.Actions
+  , fGMV_PatientSelector, System.Actions, Vcl.WinHelpViewer
   ;
 
 type
@@ -264,7 +264,7 @@ uses uGMV_Common, uGMV_User
   , fGMV_PtSelect, uGMV_FileEntry, uGMV_Engine, uGMV_Patient
   , uGMV_VersionInfo, Grids
   , fGMV_HospitalSelector2, fGMV_RPCLog, uGMV_Log
-  , System.UITypes;
+  , System.UITypes, U_helpMgr;
 
 {$R *.dfm}
 
@@ -571,7 +571,7 @@ begin
 end;
 
 procedure TfrmGMV_UserMain.Disconnect;
-begin 
+begin
   if Assigned(RPCBroker) then
     begin
 //      Hide;    zzzzzzandria 2008-03-11
@@ -890,21 +890,40 @@ function TfrmGMV_UserMain.ApplicationEventsHelp(Command: Word; Data: NativeInt;
   var CallHelp: Boolean): Boolean;
 var
   s: String;
-  iHelp: Integer;
+  iHelp, CrRtn: Integer;
 begin
-  ApplicationEvents.CancelDispatch;
-  s := ExtractFileDir(Application.ExeName) + '\Help\'+
-    ChangeFileExt(ExtractFileName(Application.ExeName),'.hlp');
-  if Assigned(ActiveControl) then
-    begin
-      iHelp := ActiveControl.HelpContext;
-      if iHelp = 0 then iHelp := 1;
+  try
+    ApplicationEvents.CancelDispatch;
+    CrRtn := Screen.Cursor;
+    Screen.Cursor := crHourGlass;
+    try
+      if Assigned(GMVUser) then
+        s := GMVUser.HelpFileDirectory
+      else
+        s := ExtractFileDir(Application.ExeName) + '\Help\';
 
-      Application.HelpSystem.ShowContextHelp(iHelp,s);
-      CallHelp := False;
+      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.hlp');
+      LoadHelpFile(s);
+    finally
+      Screen.Cursor := CrRtn;
     end;
-  Result := True;
 
+    if Assigned(ActiveControl) then
+      iHelp := ActiveControl.HelpContext
+    else
+      iHelp := 1;
+
+    if iHelp = 0 then
+      iHelp := 1;
+
+    Application.HelpSystem.ShowContextHelp(iHelp, Application.HelpFile);
+    CallHelp := False;
+
+    Result := True;
+  except
+    CallHelp := True;
+    Result := False;
+  end;
 end;
 
 procedure TfrmGMV_UserMain.ApplicationEventsMinimize(Sender: TObject);
@@ -1442,7 +1461,7 @@ procedure TfrmGMV_UserMain.FormClose(Sender: TObject;
 var
   s: String;
 begin
-  ApplicationEvents.OnHelp := nil;// zzzzzzandria 2007-11-08
+ // ApplicationEvents.OnHelp := nil;// zzzzzzandria 2007-11-08
   try
     s := IntToStr(frmGMV_PatientSelector.pcMain.TabIndex);
     setUserSettings('SELECTOR_TAB',s);
@@ -1859,5 +1878,3 @@ begin
 end;
 
 end.
-
-
