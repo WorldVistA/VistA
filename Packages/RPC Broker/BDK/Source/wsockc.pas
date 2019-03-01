@@ -746,14 +746,13 @@ begin
     NetError('getaddrinfo (Client)',0);
   pLocalName := pLocalResult.ai_canonname;
   //Don't send an IPv6 address as a host name due to VistA x-ref "AS2" in SIGN-ON LOG
-  { OSE/SMH - This code is no longer needed since XU*8*638 -- I am commenting it out }
-  {if AnsiContainsStr(pLocalName,':') then
+  if AnsiContainsStr(pLocalName,':') then
   begin
     DNSLookup := gethostname(pLocalName, 255); // get name of local system
     if DNSLookup > 0 then
       NetError ('gethostname (local)',0);
   end;
-  }
+
   y := TEncoding.UTF8.GetBytes('[XWB]' + '10' + IntToStr(CountWidth) + '0' + '4'+#$A + 'TCPConnect50');
   y := y + LPack(LocalAddressString,CountWidth) + [ Ord('f'), Ord('0') ] + LPack(IntToStr(0),CountWidth);
   y := y + [ Ord('f'), Ord('0') ] + LPack(String(pLocalName),CountWidth) + [ Ord('f'), 4 ];
