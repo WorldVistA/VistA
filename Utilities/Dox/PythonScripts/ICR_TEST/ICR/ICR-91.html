@@ -99,61 +99,62 @@
 <tr>
 <td>GLOBAL REFERENCE</td>
 <td>
-<ol>
 <table><thead><tr>
-<th>GLOBAL DESCRIPTION</th>
-<th>FIELD NUMBER</th>
 <th>GLOBAL REFERENCE</th>
+<th>FIELD NUMBER</th>
+<th>GLOBAL DESCRIPTION</th>
 </tr></thead><tbody>
-<td></td>
+<td>LAB(60,D0,0)</td>
 <td>
 <table><thead><tr>
 <th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
 <th>ACCESS</th>
+<th>FIELD NAME</th>
 <th>LOCATION</th>
 </tr></thead><tbody>
 <td>.01</td>
-<td>NAME</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>NAME</td>
 <td>0;1</td>
 </tr>
 <td>1</td>
-<td>TEST COST</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>TEST COST</td>
 <td>0;11</td>
 </tr>
 <td>4</td>
-<td>SUBSCRIPT</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>SUBSCRIPT</td>
 <td>0;4</td>
 </tr>
 <td>5</td>
-<td>LOCATION (DATA NAME)</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>LOCATION (DATA NAME)</td>
 <td>0;5</td>
 </tr>
 </tbody></table>
 </td>
-<td>LAB(60,D0,0)</td>
+<td></td>
 </tr>
+<td>LAB(60,'B',</td>
+<td></td>
 <td><pre>
 The 'B' cross-reference is used to locate patient data
 by the specific Laboratory Test Name.
 </pre>
 </td>
-<td></td>
-<td>LAB(60,'B',</td>
 </tr>
+<td>LAB(60,'C',</td>
+<td></td>
 <td><pre>
 The 'C' cross-reference is used to locate the Laboratory
 Test Name when all data for a selected patient is being evaluated based on the
 Location (DATA NAME) for a particular result
 </pre>
 </td>
-<td></td>
-<td>LAB(60,'C',</td>
 </tr>
+<td>LAB(60,D0,2)</td>
+<td></td>
 <td><pre>
 This is a check used in  DIC('S') for LAB TESTS INCLUDED
 IN PANEL in the following manner: S DIC("S")="I '$D(^LAB(60,+Y,2))" S
@@ -161,11 +162,8 @@ DIC("?")="The lab test may not be a panel of tests." S DIC="60",DIC(0)="AEQMZ"
 F  D ^DIC Q:Y=-1  D
 </pre>
 </td>
-<td></td>
-<td>LAB(60,D0,2)</td>
 </tr>
 </tbody></table>
-</ol>
 </td>
 </tr>
 <tr>
@@ -183,45 +181,60 @@ F  D ^DIC Q:Y=-1  D
 <tr>
 <td>SUBSCRIBING PACKAGE</td>
 <td>
-<ol>
 <table><thead><tr>
+<th>SUBSCRIBING PACKAGE</th>
 <th>ISC</th>
 <th>SUBSCRIBING DETAILS</th>
-<th>SUBSCRIBING PACKAGE</th>
 </tr></thead><tbody>
+<td><a href="https://code.osehra.org/dox/Package_Spinal_Cord_Dysfunction.html">SPINAL CORD DYSFUNCTION</a></td>
 <td>Oakland</td>
 <td></td>
-<td><a href="https://code.osehra.org/dox/Package_Spinal_Cord_Dysfunction.html">SPINAL CORD DYSFUNCTION</a></td>
 </tr>
-<td></td>
-<td></td>
 <td><a href="https://code.osehra.org/dox/Package_Clinical_Reminders.html">CLINICAL REMINDERS</a></td>
+<td></td>
+<td></td>
 </tr>
-<td></td>
-<td></td>
 <td><a href="https://code.osehra.org/dox/Package_Clinical_Case_Registries.html">CLINICAL CASE REGISTRIES</a></td>
+<td></td>
+<td></td>
 </tr>
-<td></td>
-<td></td>
 <td><a href="https://code.osehra.org/dox/Package_Pharmacy_Benefits_Management.html">PHARMACY BENEFITS MANAGEMENT</a></td>
+<td></td>
+<td></td>
 </tr>
-<td></td>
-<td></td>
 <td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
+<td></td>
+<td></td>
 </tr>
+<td><a href="https://code.osehra.org/dox/Package_Methicillin_Resistant_Staph_Aurerus_Initiative.html">MRSA INITIATIVE REPORTS</a></td>
 <td></td>
 <td><pre>
 ADDED 4/23/09
 </pre>
 </td>
-<td><a href="https://code.osehra.org/dox/Package_Methicillin_Resistant_Staph_Aurerus_Initiative.html">MRSA INITIATIVE REPORTS</a></td>
 </tr>
+<td><a href="https://code.osehra.org/dox/Package_Enterprise_Health_Management_Platform.html">HEALTH MANAGEMENT PLATFORM</a></td>
 <td></td>
+<td><pre>
+HMP's subscription to this ICR expires on 10/27/17 with
+the shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational
+patch outlining the steps for the sites to shut down the application.
+
+If HMP is reactivated in the future, the HMP project team should review the
+access provided by this ICR with the custodial application before reactivating
+HMP's subscription to this ICR.
+</pre>
+</td>
+</tr>
+<td><a href="https://code.osehra.org/dox/Package_VistA_Integration_Adapter.html">VISTA INTEGRATION ADAPTOR</a></td>
 <td></td>
-<td><a href="https://code.osehra.org/dox/Package_Enterprise_Health_Management_Platform.html">ENTERPRISE HEALTH MGMT PLATFORM</a></td>
+<td><pre>
+VIA needs access to the Laboratory Test (#60) file for
+VIAB LOAD RPC and OrderMgmtSvc - getLabTestSpecificParams.
+</pre>
+</td>
 </tr>
 </tbody></table>
-</ol>
 </td>
 </tr>
 <tr>
@@ -229,6 +242,21 @@ ADDED 4/23/09
 <td><pre>
 1/27/16-MC: Added EHMP as a subscriber to ICR at the request
 of Raymond Blank and approval of Carol Anzaldua for HMP 2.0
+
+3/15/17-MM:  VIA added as a subscriber to ICR #91 for VIAB*1*9.  VIA's
+originally created ICR #6728 for access to this file.  Levi recommended adding
+VIA as a subscriber to ICR #91 rather than activating ICR #6728.  VIA agreed.
+
+VIA needs access to the Laboratory Test (#60) file for VIAB LOAD RPC and
+OrderMgmtSvc - getLabTestSpecificParams.  CPRS RPC is ORWDLR32 LOAD.
+
+11/1/17-MM:  HMP's subscription to this ICR expires on 10/27/17 with the
+shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational patch
+outlining the steps for the sites to shut down the application.
+
+If HMP is reactivated in the future, the HMP project team should review the
+access provided by this ICR with the custodial application before reactivating
+HMP's subscription to this ICR.
 </pre>
 </td>
 </tr>
@@ -239,25 +267,33 @@ of Raymond Blank and approval of Carol Anzaldua for HMP 2.0
 <tr>
 <td>DATE/TIME EDITED</td>
 <td>
-<ol>
 <table><thead><tr>
-<th>AT THE REQUEST OF</th>
-<th>ACTION</th>
-<th>WITH CONCURRENCE OF</th>
 <th>DATE/TIME EDITED</th>
+<th>ACTION</th>
+<th>AT THE REQUEST OF</th>
+<th>WITH CONCURRENCE OF</th>
 </tr></thead><tbody>
-<td>MCDEARMON,JAMES</td>
-<td>SUBSCRIBER ADDED</td>
-<td></td>
 <td>2009/06/08 12:21</td>
-</tr>
-<td>BLANK,RAYMOND</td>
 <td>SUBSCRIBER ADDED</td>
-<td>ANZALDUA,CAROL</td>
+<td>MCDEARMON,JAMES</td>
+<td></td>
+</tr>
 <td>2016/01/27 10:28</td>
+<td>SUBSCRIBER ADDED</td>
+<td>BLANK,RAYMOND</td>
+<td>ANZALDUA,CAROL</td>
+</tr>
+<td>2017/03/15 11:03</td>
+<td>SUBSCRIBER ADDED</td>
+<td>ROSS,RICK</td>
+<td>TEITELBAUM,LEVI</td>
+</tr>
+<td>2017/11/01 15:55</td>
+<td>CONTENT CORRECTED</td>
+<td>LORD,BRIAN</td>
+<td>ICR,TEAM</td>
 </tr>
 </tbody></table>
-</ol>
 </td>
 </tr>
 </tbody>

@@ -199,6 +199,156 @@
 </tfoot>
 <tbody>
 <tr>
+<td>3103</td>
+<td><a title=" To prevent multiple jobs from running simultaneously through a resource device, the device must be monitored.  Also, if a job that is utilizing a resource device fails, the device must be cleared manually. This IA will allow the CMOP package to manage the PSX resource device and prevent potentially harmful results from data merging." href="ICR-3103.html">RESOURCE FILE MANAGEMENT</a></td>
+<td>File</td>
+<td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
+<td>2000/05/04</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td><a href="https://code.osehra.org/dox/Global_XiVaSVNMKDMuNTQ=.html">3.54</a></td>
+<td><br>To prevent multiple jobs from running simultaneously<br>through a resource device, the device must be monitored.  Also, if a job that<br>is utilizing a resource device fails, the device must be cleared manually.<br>This IA will allow the CMOP package to manage the PSX resource device and<br>prevent potentially harmful results from data merging.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5317</td>
+<td><a title="
+ This ICR records API&quot;s in the DSICDUZ routine.  This routine is used by DSS applications for NEW PERSON (#200) file accesses.  The routine is a wrapper around Standard FILEMAN calls to derive results.
+ Associated RPCs: DSIC ACTIVE USER, DSIC USER DEF DIV, DSIC USER ID, DSIC ACTIVE USER LIST, DSIC ACTIVE PERSON CLASS, DSIC ACTIVE CPRS PROVIDER
+
+
+ ROUTINE: DSICDUZ COMPONENT:  ACT VARIABLES:  DSIC   Type: Output A subscripted array with a value of 1 or 0 to indicated if user is active.
+ XDUZ   Type: Input   (Required) A single value or a subscripted array of security keys to be evaluated. DSISCR Type: Input   (Optional) DSISCR(n) = string where n = 0,1,2,3,4,... Allowable formats of DSISCR(n) = flag^val1^val2^val3^..
+ security key ck = KEY^security key name kernel param ck = PARM^parameter name^ parameter instance M code = M^&lt;return message&gt;^ &lt;executable M code which sets $T&gt;
+ FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
+ This API is used by the &quot;DSIC USER ACTIVE USER&quot; rpc. This API can be used to verify if a user is an active VistA user. The calling routine will send the DUZ to check and the API will return a subscripted array with a value of 1 (user owns key) or 0 (key not found).
+ COMPONENT:  CK VARIABLES:  XDUZ   Type: Input   (Required) A single DUZ value to check.
+
+
+ This API does a basic check on a DUZ to see if user is active.
+ COMPONENT:  DIV VARIABLES:  DSIC   Type: Output return p1^p2^p3:
+ p1=pointer to file 4 p2=institution name p3=station number
+ XDUZ   Type: Input   (Required) default is currect user DUZ. A single value or a subscripted array of security keys to be evaluated. SITE   Type: Input   (Optional) if SITE=1 and user has no divisions, then return facility&quot;s  default division
+ FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
+ Return default division for user.  If that user has only one division in the file 200 DIVISION multiple, then that entry is assumed to be the default division unless it is explicitly marked as NO.  This component is used for the &quot;DSIC USER DEF DIV&quot; rpc.
+ COMPONENT:  ID VARIABLES:  DSIC   Type: Output return p1^p2^p3^p4 for n=1,2,3,... where If error, return -1^message If RPC or M API, return List[n] = p1^p2^p3^p4 for n=1,2,3,4,... If Ext. Function, return p1^p2^p3^p4;p1^p2^p3^p4;p1^p2^p3^p4;... where p1 - ID mnemonic p2 - ID value p3 - location (valid for OAI mnemonics only) p4 = 1 (valid for OAI only.) (If 1, then default Alt ID)
+ XDUZ   Type: Input   pointer to NEW PERSON file, if optional default to DUZ
+ FLAGS  Type: Input   (Optional) default to &quot;AaDNSTVv&quot; FLAGS[&quot;A&quot; - return alternate IDS in field 21600 only &quot;a&quot; - return default alternate ID only - either one must be flagged as default or if there is only one entry in alt id. &quot;D&quot; - return DEA# &quot;N&quot; - return NPI# &quot;S&quot; - return SSN &quot;T&quot; - TAX ID &quot;v&quot; - VA# &quot;V&quot; - VPID
+ FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
+ Return all user IDs for a given user.  This component is used for the &quot;DSIC USER ID&quot; rpc.
+ COMPONENT:  LIST VARIABLES:  DSIC   Type: Output Return ^TMP(&quot;DSIC&quot;,$J,&quot;DILIST&quot;,#,0) = p1^p2^p3^...^p8 where: p1 = ien                      p6 = initials p2 = name (.01 field)         p7 = title p3 = sig block printed name   p8 = service p4 = sig block title          p9 = division p5 = first m last
+ VAL   Type: Input   (Required) lookup value for NEW PERSON file.
+ SCR   Type: Input   (Optional) array of additional screens to perform:
+ string   where n = 0,1,2,3,4,... Allowable formats of SCR(n) = flag^val1^val2^val3^.. security key ck = KEY^security key name kernel param ck = PARM^parameter name^ parameter instance M code = M^&lt;return message&gt;^ &lt;executable M code which sets $T&gt;
+ Return list of active users for a lookup value.  This component is used for the &quot;DSIC ACTIVE USER LIST&quot; rpc.
+
+
+ COMPONENT:  PER VARIABLES:  DSIC   Type: Output
+ Return user&quot;s current active person classification for PCE. Return p1^p2^p3^...^p8  where p1 = IEN to file 8932.1     p5 = Effective date p2 = Occupation             p6 = expiration date p3 = specialty              p7 = VA Code p4 = sub-specialty          p8 = specialty code
+ USER   Type: Input   pointer to NEW PERSON file, if optional default to DUZ.
+ DATE    Type: Input   ;  DATE - default=today Fileman date to check for active person class.
+ FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
+ Return user&quot;s current active person classification for PCE. This component is used for the &quot;DSIC ACTIVE PERSON CLASS&quot; rpc.
+
+ COMPONENT:  PROV VARIABLES:  DSIC   Type: Output
+ Return: 3 if active user 2 if user is active via the XUORES security key 1 if user is a RDV visitor and you passed RDV=1 0 if user is a RDV visitor and you passed RDV=0 -1^message if problems or not a provider
+ XDUZ   Type: Input  (Required) default is current user DUZ.
+ A single value of the DUZ to return values for.
+
+ RDV    Type: Input   (Optional) default = today Boolean flag to indicate whether or not to include remote data view visitors - default to 0 to not include.
+ FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
+ Return all user IDs for a given user.  This component is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc." href="ICR-5317.html">DSICDUZ</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_VA_Certified_Components___DSSI.html">VA CERTIFIED COMPONENTS - DSSI</a></td>
+<td>2008/12/23</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Controlled Subscription</td>
+<td></td>
+<td>
+<br>This ICR records API&quot;s in the DSICDUZ routine.  This routine is used by DSS<br>applications for NEW PERSON (#200) file accesses.  The routine is a wrapper<br>around Standard FILEMAN calls to derive results.
+<br>Associated RPCs: DSIC ACTIVE USER, DSIC USER DEF DIV,<br>DSIC USER ID, DSIC ACTIVE USER LIST,<br>DSIC ACTIVE PERSON CLASS, DSIC ACTIVE CPRS PROVIDER
+
+
+<br>ROUTINE: DSICDUZ<br>COMPONENT:  ACT<br>VARIABLES:  DSIC   Type: Output<br>A subscripted array with a value of 1<br>or 0 to indicated if user is active.
+<br>XDUZ   Type: Input   (Required)<br>A single value or a subscripted array<br>of security keys to be evaluated.<br>DSISCR Type: Input   (Optional)<br>DSISCR(n) = string<br>where n = 0,1,2,3,4,...<br>Allowable formats of DSISCR(n) =<br>flag^val1^val2^val3^..
+<br>security key ck = KEY^security key<br>name<br>kernel param ck = PARM^parameter<br>name^ parameter instance<br>M code = M^&lt;return message&gt;^<br>&lt;executable M code which<br>sets $T&gt;
+<br>FUN    Type: Input (Optional)  Default is zero (0).<br>I $G(FUN) then extrinsic function,<br>else RPC.
+<br>This API is used by the &quot;DSIC USER ACTIVE USER&quot; rpc.<br>This API can be used to verify if a user is an active<br>VistA user.<br>The calling routine will send the DUZ to check and the<br>API will return a subscripted array with a value of 1<br>(user owns key) or 0 (key not found).
+<br>COMPONENT:  CK<br>VARIABLES:  XDUZ   Type: Input   (Required)<br>A single DUZ value to check.
+
+
+<br>This API does a basic check on a DUZ to see if user is active.
+<br>COMPONENT:  DIV<br>VARIABLES:  DSIC   Type: Output<br>return p1^p2^p3:
+<br>p1=pointer to file 4<br>p2=institution name<br>p3=station number
+<br>XDUZ   Type: Input   (Required) default is currect user<br>DUZ.<br>A single value or a subscripted array<br>of security keys to be evaluated.<br>SITE   Type: Input   (Optional)<br>if SITE=1 and user has no divisions,<br>then return facility&quot;s  default<br>division
+<br>FUN    Type: Input (Optional)  Default is zero (0).<br>I $G(FUN) then extrinsic function,<br>else RPC.
+<br>Return default division for user.  If that user has<br>only one division in the file 200 DIVISION multiple,<br>then that entry is assumed to be the default division<br>unless it is explicitly marked as NO.  This component is<br>used for the &quot;DSIC USER DEF DIV&quot; rpc.
+<br>COMPONENT:  ID<br>VARIABLES:  DSIC   Type: Output<br>return p1^p2^p3^p4 for n=1,2,3,...<br>where<br>If error, return -1^message<br>If RPC or M API,<br>return List[n] = p1^p2^p3^p4<br>for n=1,2,3,4,...<br>If Ext. Function,<br>return<br>p1^p2^p3^p4;p1^p2^p3^p4;p1^p2^p3^p4;...<br>where p1 - ID mnemonic<br>p2 - ID value<br>p3 - location<br>(valid for OAI mnemonics<br>only)<br>p4 = 1 (valid for OAI only.)<br>(If 1, then default<br>Alt ID)
+<br>XDUZ   Type: Input   pointer to NEW PERSON file,<br>if optional default to DUZ
+<br>FLAGS  Type: Input   (Optional)<br>default to &quot;AaDNSTVv&quot;<br>FLAGS[&quot;A&quot; - return alternate IDS in<br>field 21600 only<br>&quot;a&quot; - return default alternate<br>ID only<br>- either one must be<br>flagged as default or if<br>there is only one entry<br>in alt id.<br>&quot;D&quot; - return DEA#<br>&quot;N&quot; - return NPI#<br>&quot;S&quot; - return SSN<br>&quot;T&quot; - TAX ID<br>&quot;v&quot; - VA#<br>&quot;V&quot; - VPID
+<br>FUN    Type: Input (Optional)  Default is zero (0).<br>I $G(FUN) then extrinsic function,<br>else RPC.
+<br>Return all user IDs for a given user.  This component<br>is used for the &quot;DSIC USER ID&quot; rpc.
+<br>COMPONENT:  LIST<br>VARIABLES:  DSIC   Type: Output<br>Return ^TMP(&quot;DSIC&quot;,$J,&quot;DILIST&quot;,#,0) = p1^p2^p3^...^p8<br>where:<br>p1 = ien                      p6 = initials<br>p2 = name (.01 field)         p7 = title<br>p3 = sig block printed name   p8 = service<br>p4 = sig block title          p9 = division<br>p5 = first m last
+<br>VAL   Type: Input   (Required)<br>lookup value for NEW PERSON file.
+<br>SCR   Type: Input   (Optional)<br>array of additional screens to<br>perform:
+<br>string   where n = 0,1,2,3,4,...<br>Allowable formats of SCR(n) =<br>flag^val1^val2^val3^..<br>security key ck = KEY^security key<br>name<br>kernel param ck = PARM^parameter<br>name^ parameter instance<br>M code = M^&lt;return message&gt;^<br>&lt;executable M code which sets $T&gt;
+<br>Return list of active users for a lookup value.  This<br>component is used for the &quot;DSIC ACTIVE USER LIST&quot; rpc.
+
+
+<br>COMPONENT:  PER<br>VARIABLES:  DSIC   Type: Output
+<br>Return user&quot;s current active person classification for<br>PCE.<br>Return p1^p2^p3^...^p8  where<br>p1 = IEN to file 8932.1     p5 = Effective date<br>p2 = Occupation             p6 = expiration date<br>p3 = specialty              p7 = VA Code<br>p4 = sub-specialty          p8 = specialty code
+<br>USER   Type: Input   pointer to NEW PERSON file,<br>if optional default to DUZ.
+<br>DATE    Type: Input   ;  DATE - default=today<br>Fileman date to check for<br>active person class.
+<br>FUN    Type: Input (Optional)  Default is zero (0).<br>I $G(FUN) then extrinsic function,<br>else RPC.
+<br>Return user&quot;s current active person classification for<br>PCE. This component is used for the &quot;DSIC ACTIVE PERSON<br>CLASS&quot; rpc.
+
+<br>COMPONENT:  PROV<br>VARIABLES:  DSIC   Type: Output
+<br>Return: 3 if active user<br>2 if user is active via the XUORES security key<br>1 if user is a RDV visitor and you passed RDV=1<br>0 if user is a RDV visitor and you passed RDV=0<br>-1^message if problems or not a provider
+<br>XDUZ   Type: Input  (Required) default is current user DUZ.
+<br>A single value of the DUZ to return values for.
+
+<br>RDV    Type: Input   (Optional) default = today<br>Boolean flag to indicate whether or not to<br>include remote data view visitors - default to 0<br>to not include.
+<br>FUN    Type: Input (Optional)  Default is zero (0).<br>I $G(FUN) then extrinsic function, else RPC.
+<br>Return all user IDs for a given user.  This component<br>is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc.</td>
+<td></td>
+<td>DSICDUZ</td>
+<td>2009/06/11</td>
+</tr>
+<tr>
+<td>639</td>
+<td><a title="" href="ICR-639.html">DBIA181-F</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
+<td>1992/06/19</td>
+<td>APPROVED</td>
+<td>Active</td>
+<td>Private</td>
+<td></td>
+<td></td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Routine_ORX8.html">ORX8</a></td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td><a title=" *****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES ONLY***** call to ZIS^DGUTL" href="ICR-28.html">DBIA28</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
+<td>1989/03/21</td>
+<td></td>
+<td>Retired</td>
+<td>Private</td>
+<td></td>
+<td><br>*****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES<br>ONLY*****<br>call to ZIS^DGUTL</td>
+<td></td>
+<td><a href="https://code.osehra.org/dox/Routine_DGUTL.html">DGUTL</a></td>
+<td></td>
+</tr>
+<tr>
 <td>1151</td>
 <td><a title=" ^XMS1 contains the following application programmer functions:
  $$STATUS^XMS1(MSGIEN,RDUZ) which extracts the status from network messages only.

@@ -28,7 +28,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-      $("#SUNSLTk3Nw").dataTable({
+      $("#SUNSLTMxMDM").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -38,10 +38,10 @@
       });
 }); </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA977 &nbsp;&nbsp;  ICR (977)</h1>
+<body id="dt_example"><div id="container" style="width:80%"><h1>RESOURCE FILE MANAGEMENT &nbsp;&nbsp;  ICR (3103)</h1>
 
 <div id="demo">
-<table id="SUNSLTk3Nw" class="display">
+<table id="SUNSLTMxMDM" class="display">
 <thead>
 <tr>
 <th>Name</th>
@@ -50,23 +50,23 @@
 </thead>
 <tr>
 <td>NUMBER</td>
-<td>977</td>
+<td>3103</td>
 </tr>
 <tr>
 <td>IA #</td>
-<td>977</td>
+<td>3103</td>
 </tr>
 <tr>
 <td>FILE NUMBER</td>
-<td><a href="https://code.osehra.org/dox/Global_XkRJQygxOQ==.html">19</a></td>
+<td><a href="https://code.osehra.org/dox/Global_XiVaSVNMKDMuNTQ=.html">3.54</a></td>
 </tr>
 <tr>
 <td>GLOBAL ROOT</td>
-<td>DIC(19,</td>
+<td>%ZISL(3.54</td>
 </tr>
 <tr>
 <td>DATE CREATED</td>
-<td>1994/08/29</td>
+<td>2000/05/04</td>
 </tr>
 <tr>
 <td>CUSTODIAL PACKAGE</td>
@@ -85,21 +85,27 @@
 <td>File</td>
 </tr>
 <tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
 <td>NAME</td>
-<td>DBIA977</td>
+<td>RESOURCE FILE MANAGEMENT</td>
 </tr>
 <tr>
 <td>GENERAL DESCRIPTION</td>
 <td><pre>
-This integration agreement permits IFCAP to remove
-entries from the OPTION file (#19) until the release and availability of KIDS.
-
+To prevent multiple jobs from running simultaneously
+through a resource device, the device must be monitored.  Also, if a job that
+is utilizing a resource device fails, the device must be cleared manually.
+This IA will allow the CMOP package to manage the PSX resource device and
+prevent potentially harmful results from data merging.
 </pre>
 </td>
 </tr>
 <tr>
 <td>STATUS</td>
-<td>Pending</td>
+<td>Active</td>
 </tr>
 <tr>
 <td>DURATION</td>
@@ -107,7 +113,7 @@ entries from the OPTION file (#19) until the release and availability of KIDS.
 </tr>
 <tr>
 <td>ID</td>
-<td>DIC(19,</td>
+<td>%ZISL(3.54</td>
 </tr>
 <tr>
 <td>SUBSCRIBING PACKAGE</td>
@@ -115,21 +121,38 @@ entries from the OPTION file (#19) until the release and availability of KIDS.
 <table><thead><tr>
 <th>SUBSCRIBING PACKAGE</th>
 <th>ISC</th>
+<th>SUBSCRIBING DETAILS</th>
 </tr></thead><tbody>
-<td><a href="https://code.osehra.org/dox/Package_IFCAP.html">IFCAP</a></td>
-<td>Washington/Silver Spring</td>
+<td><a href="https://code.osehra.org/dox/Package_CMOP.html">CMOP</a></td>
+<td>Birmingham</td>
+<td><pre>
+The CMOP transmission process relies on the PSX
+resource device to ensure that only one CMOP job runs at a time.  As long as
+the sites keep the AVAILABLE SLOTS field set to one there is never a problem.
+However, despite many efforts at training we continually discover the
+AVAILABLE SLOTS set to more than one. Because two CMOP jobs running
+simultaneously has resulted in merged data and involves patient safety, the
+CMOP package requests the ability to monitor the PSX resource device and, if
+necessary, reset the available slots field to one.
+
+
+GLOBAL REFERENCE: ^%ZISL(3.54,0
+.01     NAME                    0;1      Read with Fileman
+1       AVAILABLE SLOTS 0;2      Read with Fileman
+
+^%ZISL(3.54,D0,1,0
+.01     SLOT IN USE             1;1     R/W with Fileman
+3       TASK #                  1;4     Read with Fileman
+
+</pre>
+</td>
 </tr>
 </tbody></table>
 </td>
 </tr>
 <tr>
-<td>EDITOR</td>
-<td>
-JONES,RICK</td>
-</tr>
-<tr>
 <td>MAIL MESSAGE</td>
-<td>10999378</td>
+<td>31251919</td>
 </tr>
 </tbody>
 </table>

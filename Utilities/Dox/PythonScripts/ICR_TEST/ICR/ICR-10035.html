@@ -108,394 +108,395 @@ global reference (as well as reference through VA FileMan).
 <tr>
 <td>GLOBAL REFERENCE</td>
 <td>
-<ol>
 <table><thead><tr>
-<th>FIELD NUMBER</th>
 <th>GLOBAL REFERENCE</th>
+<th>FIELD NUMBER</th>
 </tr></thead><tbody>
+<td>DPT(</td>
 <td>
 <table><thead><tr>
 <th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
 <th>ACCESS</th>
-<th>LOCATION</th>
 <th>FIELD DESCRIPTION</th>
+<th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
 <td>.01</td>
-<td>NAME</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;1</td>
 <td></td>
+<td>NAME</td>
+<td>0;1</td>
 </tr>
 <td>.02</td>
-<td>SEX</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;2</td>
 <td></td>
+<td>SEX</td>
+<td>0;2</td>
 </tr>
 <td>.03</td>
-<td>DATE OF BIRTH</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;3</td>
 <td></td>
+<td>DATE OF BIRTH</td>
+<td>0;3</td>
 </tr>
 <td>.05</td>
-<td>MARITAL STATUS</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;5</td>
 <td></td>
+<td>MARITAL STATUS</td>
+<td>0;5</td>
 </tr>
 <td>.07</td>
-<td>OCCUPATION</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;7</td>
 <td></td>
+<td>OCCUPATION</td>
+<td>0;7</td>
 </tr>
 <td>.08</td>
-<td>RELIGIOUS PREFERENCE</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;8</td>
 <td></td>
+<td>RELIGIOUS PREFERENCE</td>
+<td>0;8</td>
 </tr>
 <td>.09</td>
-<td>SOCIAL SECURITY NUMBER</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;9</td>
 <td></td>
+<td>SOCIAL SECURITY NUMBER</td>
+<td>0;9</td>
 </tr>
 <td>.091</td>
-<td>REMARKS</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;10</td>
 <td></td>
+<td>REMARKS</td>
+<td>0;10</td>
 </tr>
 <td>.092</td>
-<td>PLACE OF BIRTH [CITY]</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;11</td>
 <td></td>
+<td>PLACE OF BIRTH [CITY]</td>
+<td>0;11</td>
 </tr>
 <td>.093</td>
-<td>PLACE OF BIRTH [STATE]</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;12</td>
 <td></td>
+<td>PLACE OF BIRTH [STATE]</td>
+<td>0;12</td>
 </tr>
 <td>.033</td>
-<td>AGE</td>
 <td>Read w/Fileman</td>
-<td>COMPUTED</td>
 <td><pre>
 Computed field
 </pre>
 </td>
+<td>AGE</td>
+<td>COMPUTED</td>
 </tr>
 <td>.14</td>
-<td>CURRENT MEANS TEST STATUS</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;14</td>
 <td></td>
+<td>CURRENT MEANS TEST STATUS</td>
+<td>0;14</td>
 </tr>
 <td>.096</td>
-<td>WHO ENTERED PATIENT</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;15</td>
 <td></td>
+<td>WHO ENTERED PATIENT</td>
+<td>0;15</td>
 </tr>
 <td>.097</td>
-<td>DATE ENTERED INTO FILE</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>0;16</td>
 <td></td>
+<td>DATE ENTERED INTO FILE</td>
+<td>0;16</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(</td>
 </tr>
-<td>
-<table><thead><tr>
-<th>ACCESS</th>
-<th>FIELD NUMBER</th>
-<th>LOCATION</th>
-<th>FIELD NAME</th>
-</tr></thead><tbody>
-<td>Direct Global Read & w/Fileman</td>
-<td>.1</td>
-<td>.1;1</td>
-<td>WARD LOCATION</td>
-</tr>
-</tbody></table>
-</td>
 <td>DPT(D0,.1)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.1</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.101</td>
-<td>.101;1</td>
-<td>ROOM-BED</td>
+<td>WARD LOCATION</td>
+<td>.1;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.101)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.101</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>63</td>
-<td>63;1</td>
-<td>LABORATORY REFERENCE</td>
+<td>ROOM-BED</td>
+<td>.101;1</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,'LR')</td>
 </tr>
+<td>DPT(D0,'LR')</td>
 <td>
 <table><thead><tr>
 <th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
 <th>ACCESS</th>
+<th>FIELD NAME</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>63</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>LABORATORY REFERENCE</td>
+<td>63;1</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<td>DPT(D0,.36)</td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>ACCESS</th>
+<th>FIELD NAME</th>
 <th>LOCATION</th>
 </tr></thead><tbody>
 <td>.363</td>
-<td>PRIMARY LONG ID</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>PRIMARY LONG ID</td>
 <td>.36;3</td>
 </tr>
 <td>.364</td>
-<td>PRIMARY SHORT ID</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>PRIMARY SHORT ID</td>
 <td>.36;4</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.36)</td>
 </tr>
-<td>
-<table><thead><tr>
-<th>ACCESS</th>
-<th>FIELD NUMBER</th>
-<th>LOCATION</th>
-<th>FIELD NAME</th>
-</tr></thead><tbody>
-<td>Direct Global Read & w/Fileman</td>
-<td>.102</td>
-<td>.102;1</td>
-<td>CURRENT MOVEMENT</td>
-</tr>
-</tbody></table>
-</td>
 <td>DPT(D0,.102)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.102</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.103</td>
-<td>.103;1</td>
-<td>TREATING SPECIALTY</td>
+<td>CURRENT MOVEMENT</td>
+<td>.102;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.103)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.103</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.104</td>
-<td>.104;1</td>
-<td>PROVIDER</td>
+<td>TREATING SPECIALTY</td>
+<td>.103;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.104)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.104</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.1041</td>
-<td>.1041;1</td>
-<td>ATTENDING PHYSICIAN</td>
+<td>PROVIDER</td>
+<td>.104;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.1041)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.1041</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.105</td>
-<td>.105;1</td>
-<td>CURRENT ADMISSION</td>
+<td>ATTENDING PHYSICIAN</td>
+<td>.1041;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.105)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.105</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.106</td>
-<td>.106;1</td>
-<td>LAST DMMS EPISODE NUMBER</td>
+<td>CURRENT ADMISSION</td>
+<td>.105;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.106)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.106</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.107</td>
-<td>.107;1</td>
-<td>LODGER WARD LOCATION</td>
+<td>LAST DMMS EPISODE NUMBER</td>
+<td>.106;1</td>
 </tr>
 </tbody></table>
 </td>
+</tr>
 <td>DPT(D0,.107)</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.107</td>
 <td>Direct Global Read & w/Fileman</td>
-<td>.108</td>
-<td>.108;1</td>
-<td>CURRENT ROOM</td>
+<td>LODGER WARD LOCATION</td>
+<td>.107;1</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.108)</td>
 </tr>
+<td>DPT(D0,.108)</td>
 <td>
 <table><thead><tr>
 <th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
 <th>ACCESS</th>
+<th>FIELD NAME</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.108</td>
+<td>Direct Global Read & w/Fileman</td>
+<td>CURRENT ROOM</td>
+<td>.108;1</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<td>DPT(D0,.35)</td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>ACCESS</th>
+<th>FIELD NAME</th>
 <th>LOCATION</th>
 </tr></thead><tbody>
 <td>.351</td>
-<td>DATE OF DEATH</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>DATE OF DEATH</td>
 <td>.35;1</td>
 </tr>
 <td>.352</td>
-<td>DEATH ENTERED BY</td>
 <td>Direct Global Read & w/Fileman</td>
+<td>DEATH ENTERED BY</td>
 <td>.35;2</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.35)</td>
 </tr>
-<td>
-<table><thead><tr>
-<th>ACCESS</th>
-<th>FIELD NUMBER</th>
-<th>LOCATION</th>
-<th>FIELD NAME</th>
-</tr></thead><tbody>
-<td>Read w/Fileman</td>
-<td>.01</td>
-<td>0;1</td>
-<td>RACE INFORMATION</td>
-</tr>
-</tbody></table>
-</td>
 <td>DPT(D0,.02,</td>
-</tr>
 <td>
 <table><thead><tr>
-<th>ACCESS</th>
 <th>FIELD NUMBER</th>
-<th>LOCATION</th>
+<th>ACCESS</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
-<td>Read w/Fileman</td>
 <td>.01</td>
+<td>Read w/Fileman</td>
+<td>RACE INFORMATION</td>
 <td>0;1</td>
-<td>ETHNICITY INFORMATION</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.06,</td>
 </tr>
+<td>DPT(D0,.06,</td>
 <td>
 <table><thead><tr>
 <th>FIELD NUMBER</th>
-<th>FIELD NAME</th>
 <th>ACCESS</th>
+<th>FIELD NAME</th>
+<th>LOCATION</th>
+</tr></thead><tbody>
+<td>.01</td>
+<td>Read w/Fileman</td>
+<td>ETHNICITY INFORMATION</td>
+<td>0;1</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<td>DPT(D0,.13)</td>
+<td>
+<table><thead><tr>
+<th>FIELD NUMBER</th>
+<th>ACCESS</th>
+<th>FIELD NAME</th>
 <th>LOCATION</th>
 </tr></thead><tbody>
 <td>.132</td>
-<td>PHONE NUMBER [WORK]</td>
 <td>Read w/Fileman</td>
+<td>PHONE NUMBER [WORK]</td>
 <td>.13;2</td>
 </tr>
 <td>.134</td>
-<td>PHONE NUMBER [CELLULAR]</td>
 <td>Read w/Fileman</td>
+<td>PHONE NUMBER [CELLULAR]</td>
 <td>.13;4</td>
 </tr>
 <td>.133</td>
-<td>EMAIL ADDRESS</td>
 <td>Read w/Fileman</td>
+<td>EMAIL ADDRESS</td>
 <td>.13;3</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.13)</td>
 </tr>
+<td>DPT(D0,.109</td>
 <td>
 <table><thead><tr>
+<th>FIELD NUMBER</th>
 <th>ACCESS</th>
 <th>FIELD DESCRIPTION</th>
-<th>FIELD NUMBER</th>
-<th>LOCATION</th>
 <th>FIELD NAME</th>
+<th>LOCATION</th>
 </tr></thead><tbody>
+<td>.109</td>
 <td>Direct Global Read & w/Fileman</td>
 <td><pre>
 Denotes whether or not the patient wished to be excluded
@@ -504,16 +505,13 @@ for current inpatients.  It must NOT be edited as this could affect the
 integrity of many options within PIMS and other packages.
 </pre>
 </td>
-<td>.109</td>
-<td>.109;1</td>
 <td>EXCLUDE FROM FACILITY DIR</td>
+<td>.109;1</td>
 </tr>
 </tbody></table>
 </td>
-<td>DPT(D0,.109</td>
 </tr>
 </tbody></table>
-</ol>
 </td>
 </tr>
 <tr>
@@ -550,45 +548,43 @@ is introduced in VIAB*1*8 for BMS.
 <tr>
 <td>DATE/TIME EDITED</td>
 <td>
-<ol>
 <table><thead><tr>
 <th>DATE/TIME EDITED</th>
-<th>AT THE REQUEST OF</th>
 <th>ACTION</th>
+<th>AT THE REQUEST OF</th>
 <th>WITH CONCURRENCE OF</th>
 </tr></thead><tbody>
 <td>2007/09/24 14:00</td>
-<td>WHITE,ELAINE</td>
 <td>DEACTIVATED FOR EDITS</td>
+<td>WHITE,ELAINE</td>
 <td>DESMOND,LINDA</td>
 </tr>
 <td>2007/08/25 08:00</td>
-<td>WHITE,ELAINE</td>
 <td>APPROVED</td>
+<td>WHITE,ELAINE</td>
 <td>DESMOND,LINDA</td>
 </tr>
 <td>2011/05/24 11:31</td>
-<td>WARE,CHANDRA</td>
 <td>DEACTIVATED FOR EDITS</td>
+<td>WARE,CHANDRA</td>
 <td>HARVEY,JULIE</td>
 </tr>
 <td>2011/05/24 11:49</td>
-<td>BLAESER,DAVID</td>
 <td>APPROVED</td>
+<td>BLAESER,DAVID</td>
 <td>KOPECKY,STEVE</td>
 </tr>
 <td>2017/09/13 12:04</td>
-<td>RENEE,JOLIE</td>
 <td>DEACTIVATED FOR EDITS</td>
+<td>RENEE,JOLIE</td>
 <td>ICR,TEAM</td>
 </tr>
 <td>2017/10/02 16:56</td>
-<td>BURKHALTER,WILLIAM</td>
 <td>APPROVED</td>
+<td>BURKHALTER,WILLIAM</td>
 <td>ICR,TEAM</td>
 </tr>
 </tbody></table>
-</ol>
 </td>
 </tr>
 </tbody>

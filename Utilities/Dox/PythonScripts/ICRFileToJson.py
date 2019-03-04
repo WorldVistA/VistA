@@ -51,10 +51,14 @@ class ICRFileToJson(object):
     def parse(self, inputFilename, outputFilename):
         with open(inputFilename,'r') as ICRFile:
             curLineNo = 0
+            curNumber = None
+            # Free text fields may contain field names and
+            # need special parsing rules
             DBAComments = False
             generalDescription = False
             subscribingDetails = False
-            curNumber = None
+            componentDescription = False
+
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 curLineNo +=1
@@ -70,43 +74,73 @@ class ICRFileToJson(object):
                     name = match.group('name')
                     number = match.group('number')
                     skipField = False
-                    isFreeTextField = DBAComments or generalDescription or subscribingDetails
+                    isFreeTextField = DBAComments or generalDescription or \
+                        subscribingDetails or componentDescription
                     if isFreeTextField:
-                        # Check if the number is matches what we're currently processing
+                        # Check if the number is matches what
+                        # we're currently processing
                         skipField = number == curNumber
                     if not skipField:
                         curNumber = number
+
                         DBAComments = False
                         generalDescription = False
                         subscribingDetails = False
+                        componentDescription = False
+
                         self._startOfNewItem(name, number, match, line)
                         continue
+
                 match = GENERIC_START_OF_RECORD.search(line)
                 if not match:
+                    # DBA Comments doesn't match regex for other fields,
+                    # check separately. Even if we get a match here, can't
+                    # assume that we're in a DBA Comments field, might be in
+                    # a different free text field
                     match = DBA_COMMENTS.match(line)
-                    if match:
-                        DBAComments = True
+
                 if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
-                    if fieldName == 'DBA Comments':
+
+                    # First check if we are at the end of a free text field
+                    if DBAComments:
+                        if fieldName in ['DATE/TIME EDITED', 'NUMBER', 'DATE ACTIVATED']:
+                            DBAComments = False
+                    elif generalDescription:
+                        # Starts with exactly 2 spaces
+                        if line.startswith("  STATUS:") or fieldName == 'VIEWER':
+                            generalDescription = False
+                    elif subscribingDetails:
+                        # This assumes that 'Subscribing Details' may start
+                        # with a field name or may contain 'GLOBAL REFERENCE'
+                        # but won't contain any other field names in the middle
+                        if fieldName in ICR_FILE_KEYWORDS and \
+                          fieldName != 'GLOBAL REFERENCE' and \
+                          'SUBSCRIBING DETAILS' in self._curRecord:
+                            subscribingDetails = False
+                    elif componentDescription:
+                        # At most one space before 'VARIABLES:'
+                        if line.startswith("VARIABLES:") or \
+                          line.startswith(" VARIABLES:") or \
+                          fieldName in ['COMPONENT/ENTRY POINT', 'SUBSCRIBING PACKAGE']:
+                            componentDescription = False
+
+                    # Are we at the beginning of a free text field?
+                    if DBAComments or generalDescription or \
+                      subscribingDetails or componentDescription:
+                        # Free text fields are never nested
+                        pass
+                    elif fieldName == 'DBA Comments':
                         DBAComments = True
                     elif fieldName == 'GENERAL DESCRIPTION':
                         generalDescription = True
                     elif fieldName == 'SUBSCRIBING DETAILS':
                         subscribingDetails = True
-                    if DBAComments:
-                        if fieldName in ['DATE/TIME EDITED', 'NUMBER', 'DATE ACTIVATED']:
-                            DBAComments = False
-                    if generalDescription:
-                        # Starts with exactly 2 spaces
-                        if line.startswith("  STATUS:") or fieldName == 'VIEWER':
-                            generalDescription = False
-                    if subscribingDetails:
-                        # This assumes that 'Subscribing Details' may start
-                        # with a field name but will never contain a field name
-                        # in the middle of the entry
-                        if fieldName in ICR_FILE_KEYWORDS and 'SUBSCRIBING DETAILS' in self._curRecord:
-                            subscribingDetails = False
+                    elif fieldName == 'COMPONENT DESCRIPTION':
+                        componentDescription = True
+
+                    # Process line
+                    # Start with free text fields
                     if DBAComments:
                         fieldName = 'DBA Comments'
                         if self._curField == fieldName:
@@ -135,11 +169,21 @@ class ICRFileToJson(object):
                             name = match.group('name') # this is the name part
                             restOfLine = line[match.end():]
                             self._curRecord[name] = restOfLine.strip()
+                    elif componentDescription:
+                        fieldName = 'COMPONENT DESCRIPTION'
+                        if self._curField == fieldName:
+                            self._appendWordsFieldLine(line)
+                        else:
+                            # Starting to process component description
+                            self._curField = fieldName
+                            self._rewindStack()
+                            self._findKeyValueInLine(match, line)
+
                     elif isSubFile(fieldName):
                         self._curField = fieldName
                         self._startOfSubFile(match, line)
                     else:
-                        """ Check to see if fieldName is already in the out list """
+                        # Check to see if fieldName is already in the out list
                         if isWordProcessingField(self._curField):
                             if self._ignoreKeywordInWordProcessingFields(fieldName):
                                 self._appendWordsFieldLine(line)
@@ -157,7 +201,7 @@ class ICRFileToJson(object):
                     if self._curRecord:
                         if not line.strip():
                             continue
-                        logger.debug('No field associated with line %s: %s ' %
+                        logger.error('No field associated with line %s: %s ' %
                                       (curLineNo, line))
         # TODO: Copy + paste from '_startOfNewItem()'
         self._curField = None
@@ -203,7 +247,10 @@ class ICRFileToJson(object):
                     self._curRecord[name] = val
                     changeField = not(name == 'DESCRIPTION' and val == "")
                 if idx == len(allmatches) -1:
-                    if changeField:
+                    if isWordProcessingField(self._curField):
+                        if self._ignoreKeywordInWordProcessingFields(rm.group('name')):
+                            self._appendWordsFieldLine(restOfLine)
+                    elif changeField:
                         self._curField = rm.group('name')
                         self._curRecord[self._curField] = restOfLine[rm.end():].strip()
                     else:
@@ -235,25 +282,31 @@ class ICRFileToJson(object):
 
     def _startOfSubFile(self, match, line):
         """
-            for start of the sub file, we need to add a list element to the current record if it not there
+            for start of the sub file, we need to add a list element to the
+            current record if it not there
             reset _curRecord to be a new one, and push old one into the stack
         """
         subFile = match.group('name')
         while self._curStack: # we are in subfile mode
             prevSubFile = self._curStack[-1][1]
-            if prevSubFile == subFile: # just continue with more of the same subfile
-                self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord) # append the previous result
+            if prevSubFile == subFile:
+                # just continue with more of the same subfile
+                # append the previous result
+                self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord)
                 break;
-            else: # this is a different subfile # now check if it is a nested subfile
-                if isSubFileField(prevSubFile, subFile): # this is a nested subFile, push to stack
+            else: # this is a different subfile, now check if it is a nested subfile
+                if isSubFileField(prevSubFile, subFile):
+                    # this is a nested subFile, push to stack
                     self._curStack.append((self._curRecord, subFile))
-                    break;
-                else: # this is a different subFile now:
+                    break
+                else:
+                    # this is a different subFile now:
                     preStack = self._curStack.pop()
                     preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                     self._curRecord = preStack[0]
         if not self._curStack:
-            self._curStack.append((self._curRecord, subFile)) # push a tuple, the first is the record, the second is the subFile field
+            # push a tuple, the first is the record, the second is the subFile field
+            self._curStack.append((self._curRecord, subFile))
         self._curRecord = {}
         self._findKeyValueInLine(match, line)
 

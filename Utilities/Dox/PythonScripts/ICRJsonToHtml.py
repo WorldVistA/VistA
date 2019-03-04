@@ -19,6 +19,7 @@ import json
 import os.path
 import cgi
 import io
+import re
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.platypus import KeepTogether, Table, TableStyle
@@ -476,12 +477,10 @@ def _icrDataEntryToHtml(output, icrJson, crossRef):
                 output.write ("<tr>\n")
                 output.write("<td>%s</td>\n" % field)
                 output.write("<td>\n")
-                output.write ("<ol>\n")
-                if (type(value) is list) and (type(value[0]) is dict):
-                  _writeTableOfValue(output, value, crossRef)
+                if isinstance(value, list) and isinstance(value[0], dict):
+                    _writeTableOfValue(output, field, value, crossRef)
                 else:
-                  _icrSubFileToHtml(output, value, field, crossRef)
-                output.write ("</ol>\n")
+                    _icrSubFileToHtml(output, value, field, crossRef)
                 output.write("</td>\n")
                 output.write ("</tr>\n")
                 continue
@@ -601,9 +600,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                     _variables = _variables[0]
                     if "-" in _variables:
                         # TODO: This is a workaround for an error in original
-                        # file, see ICR-639. This does not create an error
-                        # when creating the html file, but the formating is
-                        # incorrect.
+                        # file, see ICR-639.
                         variable['VARIABLES'] = _variables.split("-")[0]
                         variable['VARIABLES DESCRIPTION'] = _variables.split("-")[1]
                     else:
@@ -643,25 +640,62 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
         componentSection.append(t)
     pdf.append(KeepTogether(componentSection))
 
-def _writeTableOfValue(output, value, crossRef):
+def _writeTableOfValue(output, field, value, crossRef):
   headerList = set()
   # Finds the longest header list to write out as table header
   for entry in value:
-    headerList.update(set(entry.keys()))
+      headerList.update(set(entry.keys()))
+
+  if len(headerList) == 1:
+      val = headerList.pop()
+      if len(value) == 1:
+          # A single value in a single column, write as a regular field
+          output.write(_convertIndividualFieldValue(val, entry, entry[val], crossRef))
+      else:
+          # A single column, write as a list
+          output.write("<ul>\n")
+          for entry in value:
+              output.write("<li>%s</li>\n" %
+                              _convertIndividualFieldValue(val, entry, entry[val], crossRef))
+          output.write("</ul>\n")
+      return
+
+  # Make sure the header list is in a known order, with the field name first
+  headerList = list(headerList)
+  headerList.sort()
+  if field in headerList:
+    headerList.remove(field)
+    headerList.insert(0, field)
+
   # Start table with the table header
   output.write("<table><thead><tr>\n")
   for val in headerList:
-    output.write("<th>%s</th>\n" % val)
+      output.write("<th>%s</th>\n" % val)
   output.write("</tr></thead><tbody>\n")
   # Loop through each value again to create a row
   for entry in value:
-
     # Find the result based on the header "key"
     for val in headerList:
       if val in entry:
         if (type(entry[val]) is list) and (type(entry[val][0]) is dict):
+          if val == "VARIABLES" and entry[val][0]["VARIABLES"] and type(entry[val][0]["VARIABLES"]) is list:
+            # This is a workaround for an error in original file,
+            # VARIABLES section is not formatted correctly
+            variables = entry[val][0]["VARIABLES"][0]
+            # ICR-5317
+            if "Type:" in variables:
+                # <variableName> Type: <variable type> <description>
+                ICR_5317_REGEX = re.compile("^(?P<varName>[A-Z]+)\s+Type:\s+(?P<varType>[A-Za-z]+)\s*(?P<description>.*)")
+                ret = ICR_5317_REGEX.search(variables)
+                entry[val][0]['VARIABLES'] = ret.group('varName')
+                entry[val][0]['TYPE'] = ret.group('varType')
+                entry[val][0]['VARIABLES DESCRIPTION'] = ret.group('description')
+            else:
+                # ICR-639
+                entry[val][0]['VARIABLES'] = variables.split("-")[0]
+                entry[val][0]['VARIABLES DESCRIPTION'] = variables.split("-")[1]
           output.write("<td>\n")
-          _writeTableOfValue(output, entry[val], crossRef)
+          _writeTableOfValue(output, val, entry[val], crossRef)
           output.write("</td>\n")
         else:
           output.write("<td>%s</td>\n" % _convertIndividualFieldValue(val, entry, entry[val], crossRef))
@@ -682,14 +716,12 @@ def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
                 value = icrEntry[field]
                 if isSubFile(field) and field != subFile: # avoid recursive subfile for now
                     if type(value) is list:
-                      _writeTableOfValue(output, value, crossRef)
+                        _writeTableOfValue(output, field, value, crossRef)
                     else:
-                      output.write ("<dl><dt>%s:</dt>\n" % field)
-                      output.write ("<dd>\n")
-                      output.write ("<ol>\n")
-                      _icrSubFileToHtml(output, value, field, crossRef)
-                      output.write ("</ol>\n")
-                      output.write ("</dd></dl>\n")
+                        output.write ("<dl><dt>%s:</dt>\n" % field)
+                        output.write ("<dd>\n")
+                        _icrSubFileToHtml(output, value, field, crossRef)
+                        output.write ("</dd></dl>\n")
                     continue
                 value = _convertIndividualFieldValue(field, icrEntry, value, crossRef)
                 output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (field, value))
