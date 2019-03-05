@@ -2404,6 +2404,138 @@
         ]
     }, 
     {
+        "DATE CREATED": "1997/03/27", 
+        "STATUS": "Active", 
+        "COMPONENT/ENTRY POINT": [
+            {
+                "VARIABLES": [
+                    {
+                        "VARIABLES": "PSOPAR", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOBAR0", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOBAR1", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOBARS", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOCAP", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOCLC", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOCNT", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSODIV", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSXDTCUT", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOINST", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOION", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOIOS", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOLAP", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSONULBL", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOPAR7", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOPROP", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOPRPAS", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOREL", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOREO", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOSITE", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOSITE7", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSOSYS", 
+                        "TYPE": "Output"
+                    }, 
+                    {
+                        "VARIABLES": "PSXSYS", 
+                        "TYPE": "Output"
+                    }
+                ], 
+                "COMPONENT/ENTRY POINT": "PSOLSET"
+            }
+        ], 
+        "NAME": "DBIA1973", 
+        "CUSTODIAL ISC": "Birmingham", 
+        "NUMBER": "1973", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "ISC": "Birmingham", 
+                "SUBSCRIBING PACKAGE": "CMOP"
+            }, 
+            {
+                "ISC": "Albany", 
+                "SUBSCRIBING PACKAGE": "INTEGRATED BILLING"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "OUTPATIENT PHARMACY", 
+        "MAIL MESSAGE": "23527871", 
+        "DURATION": "Till Otherwise Agreed", 
+        "IA #": "1973", 
+        "ROUTINE": "PSOLSET", 
+        "USAGE": "Controlled Subscription", 
+        "DBIC APPROVAL STATUS": "APPROVED", 
+        "TYPE": "Routine", 
+        "ID": "PSOLSET", 
+        "GENERAL DESCRIPTION": [
+            "The CMOP package makes a call to the Outpatient", 
+            "Pharmacy routine, PSOLSET.  This call is made to set up the required OP system", 
+            "variables that are necessary for pulling Rx's from suspense during the CMOP", 
+            "transmission process or when CMOP labels are printed at the medical center", 
+            "pharmacy."
+        ]
+    }, 
+    {
         "DATE CREATED": "2006/08/21", 
         "STATUS": "Active", 
         "SQL TABLE": "STD_INSTITUTION", 
@@ -2532,6 +2664,193 @@
             "", 
             "TAG^ROUTINE: GETPREF^TIUSRVR", 
             "KEYWORDS:"
+        ]
+    }, 
+    {
+        "DATE CREATED": "2015/11/24", 
+        "STATUS": "Retired", 
+        "NAME": "HMP ACCESS TO LAB(64.5", 
+        "CREATOR": "BURKHALTER,WILLIAM", 
+        "DATE/TIME EDITED": [
+            {
+                "ACTION": "APPROVED", 
+                "WITH CONCURRENCE OF": "ANZALDUA,CAROL", 
+                "AT THE REQUEST OF": "BURKHALTER,WILLIAM", 
+                "DATE/TIME EDITED": "2017/11/06 13:43"
+            }, 
+            {
+                "ACTION": "RETIRED", 
+                "WITH CONCURRENCE OF": "ICR,TEAM", 
+                "AT THE REQUEST OF": "LORD,BRIAN", 
+                "DATE/TIME EDITED": "2017/11/06 13:56"
+            }, 
+            {
+                "ACTION": "USAGE CHOICE CHANGED", 
+                "WITH CONCURRENCE OF": "TEAM,ICR", 
+                "AT THE REQUEST OF": "ANZALDUA,CAROL", 
+                "DATE/TIME EDITED": "2017/11/07 14:16"
+            }
+        ], 
+        "TYPE": "File", 
+        "EXPIRATION DATE": "2017/10/27", 
+        "NUMBER": "6280", 
+        "SUBSCRIBING PACKAGE": [
+            {
+                "SUBSCRIBING DETAILS": [
+                    "HMP's subscription to this ICR expires on 10/27/17 with", 
+                    "the shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational", 
+                    "patch outlining the steps for the sites to shut down the application.", 
+                    "", 
+                    "If HMP is reactivated in the future, the HMP project team should review the", 
+                    "access provided by this ICR with the custodial application before reactivating", 
+                    "HMP's subscription to this ICR."
+                ], 
+                "SUBSCRIBING PACKAGE": "HEALTH MANAGEMENT PLATFORM"
+            }
+        ], 
+        "CUSTODIAL PACKAGE": "LAB SERVICE", 
+        "MAIL MESSAGE": "76134459", 
+        "KEYWORDS": [
+            {
+                "KEYWORDS": "LAB(64.5"
+            }, 
+            {
+                "KEYWORDS": "64.5"
+            }
+        ], 
+        "IA #": "6280", 
+        "GLOBAL REFERENCE": [
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "NAME"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "LAB(64.5,D0,0"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "1;1", 
+                        "FIELD NAME": "MAJOR HEADER"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "5", 
+                        "LOCATION": "1;2", 
+                        "FIELD NAME": "MEDICAL CENTER"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "LAB(64.5,D0,1,D1"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "MINOR HEADER"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "1", 
+                        "LOCATION": "0;2", 
+                        "FIELD NAME": "PROFILE SITE/SPECIMEN"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "2", 
+                        "LOCATION": "0;3", 
+                        "FIELD NAME": "TYPE OF DISPLAY"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "3", 
+                        "LOCATION": "0;4", 
+                        "FIELD NAME": "LOCALE FIELD"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "LAB(64.5,D0,1,D1,1,D2"
+            }, 
+            {
+                "FIELD NUMBER": [
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": ".01", 
+                        "LOCATION": "0;1", 
+                        "FIELD NAME": "LAB TEST"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "1", 
+                        "LOCATION": "0;2", 
+                        "FIELD NAME": "TEST FIELD LENGTH"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "2", 
+                        "LOCATION": "0;3", 
+                        "FIELD NAME": "PRINT TEST NAME"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "3", 
+                        "LOCATION": "0;4", 
+                        "FIELD NAME": "TEST PRINT CODE"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "4", 
+                        "LOCATION": "0;5", 
+                        "FIELD NAME": "TEST LOCATIOIN"
+                    }, 
+                    {
+                        "ACCESS": "Direct Global Read & w/Fileman", 
+                        "FIELD NUMBER": "5", 
+                        "LOCATION": "0;6", 
+                        "FIELD NAME": "DECIMAL PLACES"
+                    }
+                ], 
+                "GLOBAL REFERENCE": "LAB(64.5,D0,1,D1,1,D2,1,D3"
+            }
+        ], 
+        "DATE ACTIVATED": "2017/11/06", 
+        "USAGE": "Private", 
+        "DBA Comments": [
+            "11/6/17-DT: ICR 6280 provides access to Lab reports, the same", 
+            "way that CPRS sees the reports.  Carol Anzaldua approved the request December", 
+            "17, 2015.  Of note, John McCormack was asked his opinion. He didn't think this", 
+            "ICR should be approved, pending a rewrite of the Lab Reporting sofware.  Since", 
+            "no other solution is available, and HMP is assigned to provide Lab reports", 
+            "like CPRS does, the ICR was approved.", 
+            "", 
+            "", 
+            "", 
+            "After approval, added text to subscriber details regarding  future ICR", 
+            "reactivation, and then retired 6280.", 
+            "", 
+            "HMP's subscription to this ICR is retired effective on 10/27/17 with the", 
+            "shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational patch", 
+            "outlining the steps for the sites to shut down the application.", 
+            "", 
+            "If HMP is reactivated in the future, the HMP project team should review the", 
+            "access provided by this ICR with the custodial application before reactivating", 
+            "HMP's subscription to this ICR. It is possible that the custodian application", 
+            "had to make changes that HMP needs to accomodate.", 
+            "", 
+            "11/7/17-DT: Changed Usage to Private per Carol Anzaldua's request."
+        ], 
+        "GLOBAL ROOT": "LAB(64.5", 
+        "ID": "LAB(64.5", 
+        "FILE NUMBER": "64.5", 
+        "GENERAL DESCRIPTION": [
+            "The Enterprise Health MGMT Platform (HMP) accesses the", 
+            "Lab Reports file (#64.5) to retrieve lab report data."
         ]
     }, 
     {
