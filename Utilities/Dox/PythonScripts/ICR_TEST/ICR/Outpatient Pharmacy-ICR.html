@@ -29,7 +29,7 @@
 
 <script type="text/javascript" id="js">
   $(document).ready(function() {
-    var table = $("#ICR_List-Lab_Service").DataTable({
+    var table = $("#ICR_List-Outpatient_Pharmacy").DataTable({
         bInfo: true,
         dom: '<Bfr<t>ilp>',
         iDisplayLength: 25,
@@ -55,7 +55,7 @@
           },
           {
               extend: 'csv',
-              title: 'ICR_List-Lab_Service',
+              title: 'ICR_List-Outpatient_Pharmacy',
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
@@ -70,7 +70,7 @@
           },
           {
               extend: 'pdf',
-              title: 'ICR_List-Lab_Service',
+              title: 'ICR_List-Outpatient_Pharmacy',
               orientation: 'landscape',
               pageSize: 'LEGAL',
               exportOptions: {
@@ -93,9 +93,9 @@
               customize: function (doc) {
                   // Taken from https://stackoverflow.com/questions/35642802/datatables-export-pdf-with-100-width
                   var colCount = new Array();
-                  var length = $('#ICR_List-Lab_Service tbody tr:first-child td').length;
+                  var length = $('#ICR_List-Outpatient_Pharmacy tbody tr:first-child td').length;
                   console.log('length / number of td in report one record = '+length);
-                  $('#ICR_List-Lab_Service').find('tbody tr:first-child td').each(function(){
+                  $('#ICR_List-Outpatient_Pharmacy').find('tbody tr:first-child td').each(function(){
                       colCount.push(parseFloat(100 / length)+'%');
                   });
                   doc.content[1].table.widths = colCount;
@@ -152,17 +152,17 @@
 
 <script type="text/javascript" id="js">
   function clearFilters() {
-    var table = $('#ICR_List-Lab_Service').DataTable();
+    var table = $('#ICR_List-Outpatient_Pharmacy').DataTable();
     table
       .search( '' )
       .columns().search( '' )
       .draw();
     $("select").prop('selectedIndex', 0);
-    $('#ICR_List-Lab_Service tfoot input').val('');
+    $('#ICR_List-Outpatient_Pharmacy tfoot input').val('');
   }
 </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: Lab Service ICR List</h1><div id="demo"><table id="ICR_List-Lab_Service" class="display">
+<body id="dt_example"><div id="container" style="width:80%"><h2 align="right"><a href="./All-ICR List.html">All ICR List</a></h2><h1>Package: Outpatient Pharmacy ICR List</h1><div id="demo"><table id="ICR_List-Outpatient_Pharmacy" class="display">
 <thead>
 <tr>
 <th>IA #</th>
@@ -199,51 +199,19 @@
 </tfoot>
 <tbody>
 <tr>
-<td>91</td>
-<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
-<td>File</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
-<td>1991/09/11</td>
+<td>1973</td>
+<td><a title=" The CMOP package makes a call to the Outpatient Pharmacy routine, PSOLSET.  This call is made to set up the required OP system variables that are necessary for pulling Rx&quot;s from suspense during the CMOP transmission process or when CMOP labels are printed at the medical center pharmacy." href="ICR-1973.html">DBIA1973</a></td>
+<td>Routine</td>
+<td><a href="https://code.osehra.org/dox/Package_Outpatient_Pharmacy.html">OUTPATIENT PHARMACY</a></td>
+<td>1997/03/27</td>
 <td>APPROVED</td>
 <td>Active</td>
 <td>Controlled Subscription</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxBQig2MA==.html">60</a></td>
 <td></td>
+<td><br>The CMOP package makes a call to the Outpatient<br>Pharmacy routine, PSOLSET.  This call is made to set up the required OP system<br>variables that are necessary for pulling Rx&quot;s from suspense during the CMOP<br>transmission process or when CMOP labels are printed at the medical center<br>pharmacy.</td>
 <td></td>
+<td><a href="https://code.osehra.org/dox/Routine_PSOLSET.html">PSOLSET</a></td>
 <td></td>
-<td></td>
-</tr>
-<tr>
-<td>6104</td>
-<td><a title="
- NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
-<td>Remote Procedure</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
-<td>2014/09/23</td>
-<td>APPROVED</td>
-<td>Active</td>
-<td>Controlled Subscription</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxSSFkoNjkuODY=.html">69.86</a></td>
-<td>
-<br>NAME: LRHY GET SITES                    TAG: GETSITES<br>ROUTINE: LRHYRP01                     RETURN VALUE<br>TYPE: ARRAY<br>DESCRIPTION:<br>This RPC will return all Howdy Sites<br>USAGE: Controlled Subscri  ENTERED: SEP 23,2014<br>STATUS: Pending             EXPIRES:<br>DURATION:                     VERSION:<br>DESCRIPTION:                        TYPE: Remote Procedure</td>
-<td></td>
-<td></td>
-<td>2014/10/02</td>
-</tr>
-<tr>
-<td>6280</td>
-<td><a title=" The Enterprise Health MGMT Platform (HMP) accesses the Lab Reports file (#64.5) to retrieve lab report data." href="ICR-6280.html">HMP ACCESS TO LAB(64.5</a></td>
-<td>File</td>
-<td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
-<td>2015/11/24</td>
-<td></td>
-<td>Retired</td>
-<td>Private</td>
-<td><a href="https://code.osehra.org/dox/Global_XkxBQig2NC41.html">64.5</a></td>
-<td><br>The Enterprise Health MGMT Platform (HMP) accesses the<br>Lab Reports file (#64.5) to retrieve lab report data.</td>
-<td></td>
-<td></td>
-<td>2017/11/06</td>
 </tr>
 </tbody>
 </table>

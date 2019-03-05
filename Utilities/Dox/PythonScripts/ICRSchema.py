@@ -150,7 +150,7 @@ DATE_TIME_FIELD = set([
 ])
 
 # regular  expression for fields
-INTEGRATION_REFERENCES_LIST = re.compile('^[\r\f]?INTEGRATION REFERENCES LIST *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
+INTEGRATION_REFERENCES_LIST = re.compile('^\s*INTEGRATION REFERENCES (LIST|List) *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
 
 
 """ SOME UTILITY FUNCTIONS  """
@@ -169,7 +169,7 @@ def getDate(icrFilename):
             line = line.rstrip("\r\n")
             match = INTEGRATION_REFERENCES_LIST.match(line)
             if match:
-                return match.group(1).strip()
+                return match.group(2).strip()
     # No date specified in the file, try to parse the filename
     # Expected format: <year>_<month>_<day>_IA_Listing_Descriptions.TXT
     filename = os.path.basename(icrFilename)

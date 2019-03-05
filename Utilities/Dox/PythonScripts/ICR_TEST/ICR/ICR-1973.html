@@ -1,0 +1,226 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+
+<!-- Google Analytics -->
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-43872538-6', 'osehra.org');
+ ga('send', 'pageview');
+</script>
+
+
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+      $("#SUNSLTE5NzM").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bStateSave": true,
+        "bSort": false,
+        "bFilter": false
+      });
+}); </script>
+
+<body id="dt_example"><div id="container" style="width:80%"><h1>DBIA1973 &nbsp;&nbsp;  ICR (1973)</h1>
+
+<div id="demo">
+<table id="SUNSLTE5NzM" class="display">
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tr>
+<td>NUMBER</td>
+<td>1973</td>
+</tr>
+<tr>
+<td>IA #</td>
+<td>1973</td>
+</tr>
+<tr>
+<td>DATE CREATED</td>
+<td>1997/03/27</td>
+</tr>
+<tr>
+<td>CUSTODIAL PACKAGE</td>
+<td><a href="https://code.osehra.org/dox/Package_Outpatient_Pharmacy.html">OUTPATIENT PHARMACY</a></td>
+</tr>
+<tr>
+<td>CUSTODIAL ISC</td>
+<td>Birmingham</td>
+</tr>
+<tr>
+<td>USAGE</td>
+<td>Controlled Subscription</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td>Routine</td>
+</tr>
+<tr>
+<td>DBIC APPROVAL STATUS</td>
+<td>APPROVED</td>
+</tr>
+<tr>
+<td>ROUTINE</td>
+<td><a href="https://code.osehra.org/dox/Routine_PSOLSET.html">PSOLSET</a></td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>DBIA1973</td>
+</tr>
+<tr>
+<td>GENERAL DESCRIPTION</td>
+<td><pre>
+The CMOP package makes a call to the Outpatient
+Pharmacy routine, PSOLSET.  This call is made to set up the required OP system
+variables that are necessary for pulling Rx's from suspense during the CMOP
+transmission process or when CMOP labels are printed at the medical center
+pharmacy.
+</pre>
+</td>
+</tr>
+<tr>
+<td>STATUS</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>DURATION</td>
+<td>Till Otherwise Agreed</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>PSOLSET</td>
+</tr>
+<tr>
+<td>COMPONENT/ENTRY POINT</td>
+<td>
+<table><thead><tr>
+<th>COMPONENT/ENTRY POINT</th>
+<th>VARIABLES</th>
+</tr></thead><tbody>
+<td>PSOLSET</td>
+<td>
+<table><thead><tr>
+<th>VARIABLES</th>
+<th>TYPE</th>
+</tr></thead><tbody>
+<td>PSOPAR</td>
+<td>Output</td>
+</tr>
+<td>PSOBAR0</td>
+<td>Output</td>
+</tr>
+<td>PSOBAR1</td>
+<td>Output</td>
+</tr>
+<td>PSOBARS</td>
+<td>Output</td>
+</tr>
+<td>PSOCAP</td>
+<td>Output</td>
+</tr>
+<td>PSOCLC</td>
+<td>Output</td>
+</tr>
+<td>PSOCNT</td>
+<td>Output</td>
+</tr>
+<td>PSODIV</td>
+<td>Output</td>
+</tr>
+<td>PSXDTCUT</td>
+<td>Output</td>
+</tr>
+<td>PSOINST</td>
+<td>Output</td>
+</tr>
+<td>PSOION</td>
+<td>Output</td>
+</tr>
+<td>PSOIOS</td>
+<td>Output</td>
+</tr>
+<td>PSOLAP</td>
+<td>Output</td>
+</tr>
+<td>PSONULBL</td>
+<td>Output</td>
+</tr>
+<td>PSOPAR7</td>
+<td>Output</td>
+</tr>
+<td>PSOPROP</td>
+<td>Output</td>
+</tr>
+<td>PSOPRPAS</td>
+<td>Output</td>
+</tr>
+<td>PSOREL</td>
+<td>Output</td>
+</tr>
+<td>PSOREO</td>
+<td>Output</td>
+</tr>
+<td>PSOSITE</td>
+<td>Output</td>
+</tr>
+<td>PSOSITE7</td>
+<td>Output</td>
+</tr>
+<td>PSOSYS</td>
+<td>Output</td>
+</tr>
+<td>PSXSYS</td>
+<td>Output</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td>SUBSCRIBING PACKAGE</td>
+<td>
+<table><thead><tr>
+<th>SUBSCRIBING PACKAGE</th>
+<th>ISC</th>
+</tr></thead><tbody>
+<td><a href="https://code.osehra.org/dox/Package_CMOP.html">CMOP</a></td>
+<td>Birmingham</td>
+</tr>
+<td><a href="https://code.osehra.org/dox/Package_Integrated_Billing.html">INTEGRATED BILLING</a></td>
+<td>Albany</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td>MAIL MESSAGE</td>
+<td>23527871</td>
+</tr>
+</tbody>
+</table>
+<a href="https://foia-vista.osehra.org/VistA_Integration_Agreement/">Generated from JAN 29,2016 IA Listing Descriptions</a></div>
+</div>
+</body></html>

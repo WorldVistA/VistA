@@ -1691,6 +1691,51 @@ SUBSCRIBING PACKAGE: TEXT INTEGRATION UTILITIES
 DATE/TIME EDITED: MAY 07, 2012@14:46    ACTION: RETIRED
   AT THE REQUEST OF: MCCLENAHAN,MARGY   WITH CONCURRENCE OF: DAVIS,ROBERT
 
+NUMBER: 1973                            IA #: 1973
+  DATE CREATED: MAR 27, 1997            CUSTODIAL PACKAGE: OUTPATIENT PHARMACY
+  CUSTODIAL ISC: Birmingham             USAGE: Controlled Subscription
+  TYPE: Routine                         DBIC APPROVAL STATUS: APPROVED
+
+INTEGRATION REFERENCES List                          JAN 24, 2019@16:41   PAGE 2
+--------------------------------------------------------------------------------
+
+  ROUTINE: PSOLSET                      NAME: DBIA1973
+  ID: PSOLSET
+ GENERAL DESCRIPTION:   The CMOP package makes a call to the Outpatient
+ Pharmacy routine, PSOLSET.  This call is made to set up the required OP system
+ variables that are necessary for pulling Rx's from suspense during the CMOP
+ transmission process or when CMOP labels are printed at the medical center
+ pharmacy.  
+  STATUS: Active                        DURATION: Till Otherwise Agreed
+  MAIL MESSAGE: 23527871
+COMPONENT/ENTRY POINT: PSOLSET
+VARIABLES: PSOPAR                       TYPE: Output
+VARIABLES: PSOBAR0                      TYPE: Output
+VARIABLES: PSOBAR1                      TYPE: Output
+VARIABLES: PSOBARS                      TYPE: Output
+VARIABLES: PSOCAP                       TYPE: Output
+VARIABLES: PSOCLC                       TYPE: Output
+VARIABLES: PSOCNT                       TYPE: Output
+VARIABLES: PSODIV                       TYPE: Output
+VARIABLES: PSXDTCUT                     TYPE: Output
+VARIABLES: PSOINST                      TYPE: Output
+VARIABLES: PSOION                       TYPE: Output
+VARIABLES: PSOIOS                       TYPE: Output
+VARIABLES: PSOLAP                       TYPE: Output
+VARIABLES: PSONULBL                     TYPE: Output
+VARIABLES: PSOPAR7                      TYPE: Output
+VARIABLES: PSOPROP                      TYPE: Output
+VARIABLES: PSOPRPAS                     TYPE: Output
+VARIABLES: PSOREL                       TYPE: Output
+VARIABLES: PSOREO                       TYPE: Output
+VARIABLES: PSOSITE                      TYPE: Output
+VARIABLES: PSOSITE7                     TYPE: Output
+VARIABLES: PSOSYS                       TYPE: Output
+VARIABLES: PSXSYS                       TYPE: Output
+SUBSCRIBING PACKAGE: CMOP               ISC: Birmingham
+SUBSCRIBING PACKAGE: INTEGRATED BILLING
+  ISC: Albany
+
 NUMBER: 4887                            IA #: 4887
   DATE CREATED: AUG 21, 2006            CUSTODIAL PACKAGE: 807
   USAGE: Private                        TYPE: SQL Table
@@ -1766,7 +1811,90 @@ NUMBER: 5499                            IA #: 5499
 KEYWORDS: GET PREF
 SUBSCRIBING PACKAGE: MENTAL HEALTH
   DATE ACTIVATED: SEP 25, 2009
+  
+NUMBER: 6280                            IA #: 6280
+  FILE NUMBER: 64.5                     GLOBAL ROOT: LAB(64.5
+  DATE CREATED: NOV 24, 2015            CUSTODIAL PACKAGE: LAB SERVICE
+  USAGE: Private                        TYPE: File
+  NAME: HMP ACCESS TO LAB(64.5          ID: LAB(64.5
+  CREATOR: BURKHALTER,WILLIAM
+GLOBAL REFERENCE: LAB(64.5,D0,0
+FIELD NUMBER: .01                       FIELD NAME: NAME
+  LOCATION: 0;1                         ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: LAB(64.5,D0,1,D1
+FIELD NUMBER: .01                       FIELD NAME: MAJOR HEADER
+  LOCATION: 1;1                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 5                         FIELD NAME: MEDICAL CENTER
+  LOCATION: 1;2                         ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: LAB(64.5,D0,1,D1,1,D2
+FIELD NUMBER: .01                       FIELD NAME: MINOR HEADER
+  LOCATION: 0;1                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 1                         FIELD NAME: PROFILE SITE/SPECIMEN
+  LOCATION: 0;2                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 2                         FIELD NAME: TYPE OF DISPLAY
+  LOCATION: 0;3                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 3                         FIELD NAME: LOCALE FIELD
+  LOCATION: 0;4                         ACCESS: Direct Global Read & w/Fileman
+GLOBAL REFERENCE: LAB(64.5,D0,1,D1,1,D2,1,D3
+FIELD NUMBER: .01                       FIELD NAME: LAB TEST
+  LOCATION: 0;1                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 1                         FIELD NAME: TEST FIELD LENGTH
+  LOCATION: 0;2                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 2                         FIELD NAME: PRINT TEST NAME
+  LOCATION: 0;3                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 3                         FIELD NAME: TEST PRINT CODE
+  LOCATION: 0;4                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 4                         FIELD NAME: TEST LOCATIOIN
+  LOCATION: 0;5                         ACCESS: Direct Global Read & w/Fileman
+FIELD NUMBER: 5                         FIELD NAME: DECIMAL PLACES
+  LOCATION: 0;6                         ACCESS: Direct Global Read & w/Fileman
+ GENERAL DESCRIPTION:   The Enterprise Health MGMT Platform (HMP) accesses the
+ Lab Reports file (#64.5) to retrieve lab report data.  
+  STATUS: Retired                       EXPIRATION DATE: OCT 27, 2017
+  MAIL MESSAGE: 76134459
+KEYWORDS: LAB(64.5
+KEYWORDS: 64.5
+SUBSCRIBING PACKAGE: HEALTH MANAGEMENT PLATFORM
+ SUBSCRIBING DETAILS:   HMP's subscription to this ICR expires on 10/27/17 with
+ the shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational
+ patch outlining the steps for the sites to shut down the application.  
+  
+ If HMP is reactivated in the future, the HMP project team should review the
+ access provided by this ICR with the custodial application before reactivating
+ HMP's subscription to this ICR.  
+ DBA Comments:   11/6/17-DT: ICR 6280 provides access to Lab reports, the same
+ way that CPRS sees the reports.  Carol Anzaldua approved the request December
+ 17, 2015.  Of note, John McCormack was asked his opinion. He didn't think this
+ ICR should be approved, pending a rewrite of the Lab Reporting sofware.  Since
+ no other solution is available, and HMP is assigned to provide Lab reports
+ like CPRS does, the ICR was approved.  
 
+INTEGRATION REFERENCES List                          JAN 24, 2019@16:41   PAGE 5
+--------------------------------------------------------------------------------
+
+  
+ After approval, added text to subscriber details regarding  future ICR 
+ reactivation, and then retired 6280.  
+  
+ HMP's subscription to this ICR is retired effective on 10/27/17 with the 
+ shutdown of HMP.  HMP*2.0*12 released on 10/17/17 is an informational patch
+ outlining the steps for the sites to shut down the application.  
+  
+ If HMP is reactivated in the future, the HMP project team should review the
+ access provided by this ICR with the custodial application before reactivating
+ HMP's subscription to this ICR. It is possible that the custodian application
+ had to make changes that HMP needs to accomodate.  
+  
+ 11/7/17-DT: Changed Usage to Private per Carol Anzaldua's request.  
+  DATE ACTIVATED: NOV 06, 2017
+DATE/TIME EDITED: NOV 06, 2017@13:43    ACTION: APPROVED
+  AT THE REQUEST OF: BURKHALTER,WILLIAM
+  WITH CONCURRENCE OF: ANZALDUA,CAROL
+DATE/TIME EDITED: NOV 06, 2017@13:56    ACTION: RETIRED
+  AT THE REQUEST OF: LORD,BRIAN         WITH CONCURRENCE OF: ICR,TEAM
+DATE/TIME EDITED: NOV 07, 2017@14:16    ACTION: USAGE CHOICE CHANGED
+  AT THE REQUEST OF: ANZALDUA,CAROL     WITH CONCURRENCE OF: TEAM,ICR
+  
 NUMBER: 6730                            IA #: 6730
   FILE NUMBER: 130                      GLOBAL ROOT: SRF(
   DATE CREATED: JAN 26, 2017            CUSTODIAL PACKAGE: SURGERY
