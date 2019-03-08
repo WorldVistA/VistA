@@ -77,7 +77,7 @@ def getDataEntryHtmlFile(ien, fileNo):
 
 def getFileHtmlLink(dataEntry, value, **kargs):
   htmlFile = getDataEntryHtmlFile(dataEntry.ien, dataEntry.fileNo)
-  return "<a href=\"../%s/%s\">%s</a>" % (dataEntry.fileNo.replace(".","_"),htmlFile, value)
+  return "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, dataEntry.fileNo.replace(".","_"),htmlFile, value)
 
 def getRoutineName(inputString):
   tagRoutine = inputString.split('^')
@@ -112,7 +112,7 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
     fields = value.split('^')
     if len(fields) == 3: # fileNo, ien, name
       refFile = getDataEntryHtmlFile(fields[1], fields[0])
-      value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"),refFile, fields[-1])
+      value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".","_"),refFile, fields[-1])
     elif len(fields) == 2:
       value = 'File: %s, IEN: %s' % (fields[0], fields[1])
     else:
@@ -154,7 +154,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
       dataEntries = glbData.outFileManData[file].dataEntries
       for entry in dataEntries:
         if value == dataEntries[entry].fields[field].value:
-          return '<a href="../%s/%s-%s.html">%s</a>' % (dataEntries[entry].fileNo.replace(".","_"),
+          return '<a href="%s/%s/%s-%s.html">%s</a>' % (VIV_URL, dataEntries[entry].fileNo.replace(".","_"),
                                                         file, entry, value)
   return value
 
@@ -292,7 +292,7 @@ def convertFilePointerToHtml(inputValue):
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
     refFile = getDataEntryHtmlFile(fields[1], fields[0])
-    value = '<a href="../%s/%s">%s</a>' % (fields[0].replace(".","_"), refFile, fields[-1])
+    value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".","_"), refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -756,7 +756,7 @@ class FileManDataToHtml(object):
       name = dataEntry.name
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
-      dataHtmlLink = "<a href=\"../%s/%s\">%s</a>" % (fileNo.replace(".","_"),
+      dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".","_"),
                                                       getDataEntryHtmlFile(ien, fileNo),
                                                       str(name).replace("\xa0", ""))
       rows.append([dataHtmlLink, ien])
