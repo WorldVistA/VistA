@@ -26,6 +26,7 @@ from __future__ import with_statement
 import sys
 import os
 import csv
+import re
 # append this module in the sys.path at run time
 curDir = os.path.dirname(os.path.abspath(__file__))
 if curDir not in sys.path:
@@ -38,6 +39,24 @@ from ConvertToExternalData import addToGitIgnoreList, isValidKIDSBuildHeaderSuff
 from ConvertToExternalData import isValidSha1Suffix
 from PopulatePackages import populatePackageMapByCSV, order_long_to_short
 
+def checkPaths(source, dest):
+  move = True
+  curDir = os.getcwd()
+  pattern = re.compile("Patches")
+  # If destination path exists, do not move
+  if os.path.exists(dest):
+    move = False
+  # If source is a patch that has already been placed, do not move
+  # Check multibuilds
+  if source.startswith(os.path.join(curDir, "MultiBuilds")):
+    move = False
+  # Check if source dir includes "Patches", eliminate the curDir to remove
+  # chance that user has a folder named "Patches" in the path to VistA
+  if pattern.search(source, len(curDir)):
+    move = False
+  return move
+
+
 def place(src,dst):
     logger.info('%s => %s\n' % (src,dst))
     d = os.path.dirname(dst)
@@ -46,7 +65,7 @@ def place(src,dst):
         except OSError as ex:
           logger.error(ex)
           pass
-    if not os.path.exists(dst):
+    if checkPaths(src,dst):
       try:
         os.rename(src,dst)
       except OSError as ex:
@@ -59,10 +78,9 @@ def placeToDir(infoSrc, destDir, addToGitIgnore=True):
     return
   infoSrcName = os.path.basename(infoSrc)
   infoDest = os.path.join(destDir, infoSrcName)
-  if os.path.normpath(infoDest) != os.path.normpath(infoSrc):
-    place(infoSrc, infoDest)
-    if addToGitIgnore and isValidSha1Suffix(infoSrcName):
-      addToGitIgnoreList(infoDest[:infoDest.rfind('.')])
+  place(infoSrc, infoDest)
+  if addToGitIgnore and isValidSha1Suffix(infoSrcName):
+    addToGitIgnoreList(infoDest[:infoDest.rfind('.')])
 
 def placeAssociatedFiles(associatedFileList, destDir):
   if associatedFileList:
