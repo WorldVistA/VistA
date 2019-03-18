@@ -1,0 +1,221 @@
+
+=============================================================================
+Run Date: JAN 14, 2019                     Designation: EAS*1*172
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1       SEQ #144                      Status: Released
+                  Compliance Date: JAN 16, 2019
+=============================================================================
+
+Associated patches: (v)EAS*1*152   <<= must be installed BEFORE `EAS*1*172'
+
+Subject: CLEANUP OF SOCIAL SECURITY NUMBERS IN INCOME PERSON (#408.13) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of Your IT Services incident INC1928289 to fix a 
+ critical defect introduced by Enrollment System (ES) 5.3 and corrected
+ by 5.3.0.070001, where the dependent Social Security Number (SSN) data at
+ the Veterans Health Information System and Technology Architecture
+ (VistA) facilities was corrupted and requires a VistA patch to clean up
+ the database corruption.
+  
+ Please refer to the IVM*2.0*174 patch description for a description of the
+ problem and its resolution.
+  
+ EAS*1.0*172 is being released with IVM*2.0*174 in Host File
+ IVM_20_P174.KID.
+  
+  
+ Listing of Updates:
+ ===================
+ Patch EAS*1.0*172 modifies routine PROC^EASCM for the processing of the
+ HL7 ORU-Z10 message from ES to initialize a variable IVMSSNFLAG before
+ calling the code that parses the message.  Upon returning from that
+ routine, if the variable is set to "1", the code quits and does not
+ process the message further, otherwise the message is processed normally.
+  
+ Code block before installation of EAS*1.0*172:
+  ; - check HL7 msg structure for errors
+  K HLERR,^TMP($J,"IVMCM")
+  D ^IVMCMC I $D(HLERR) K:HLERR="" HLERR Q
+  ;
+  
+ Code block after installation of EAS*1.0*172:
+  ; - check HL7 msg structure for errors
+  K HLERR,^TMP($J,"IVMCM")
+  ; jam; EAS*1.0*172 - set IVMSSNFLAG=0 and quit processing if the flag is 
+ set upon return from ^IVMCMC
+  ;  (see ^IVMCMC for what sets this flag)
+  N IVMSSNFLAG
+  S IVMSSNFLAG=0
+  D ^IVMCMC I $D(HLERR) K:HLERR="" HLERR Q
+  I IVMSSNFLAG Q
+  ;
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Refer to this section in the Patch Description for patch IVM*2.0*174.
+  
+  
+ Test Sites:
+ -----------
+ * Erie VA Medical Center
+ * Lebanon, PA (Lebanon VA Medical Center)
+ * VA Western New York Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Patches for this installation are combined in the following Host File for 
+ distribution: IVM_20_P174.KID.
+  
+ The Host File was created to simplify installation at Veterans Health 
+ Administration (VHA) facilities. This file can be obtained from one of 
+ the anonymous SFTP directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ IVM_20_P174.KID                     IVM*2.0*174        ASCII
+                                     EAS*1.0*172
+  
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                           File Name                    SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                   IVM_2_P174_RN.PDF            (binary) 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please refer to the IVM*2.0*174 patch description for the Pre/Post 
+ Installation overview.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Please refer to the IVM*2.0*174 patch description for Pre-Installation 
+ instructions.
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the IVM*2.0*174 patch description for installation 
+ instructions.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Please refer to the IVM*2.0*174 patch description for Post-Installation 
+ instructions.
+  
+  
+ Back-Out Plan:
+ --------------
+ Please refer to the IVM*2.0*174 patch description Back-Out Plan section
+ for instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;15-MAR-01;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASCM
+    Before: B82492158   After: B84464053  **71,96,152,172**
+ 
+Routine list of preceding patches: 152
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 04, 2018
+Completed By:                               Date Completed: JAN 14, 2019
+Released By :                               Date Released : JAN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

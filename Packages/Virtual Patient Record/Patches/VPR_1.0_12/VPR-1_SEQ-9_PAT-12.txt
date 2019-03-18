@@ -1,0 +1,169 @@
+$TXT Created by                  at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 12/03/18 at 09:04
+=============================================================================
+Run Date: JAN 29, 2019                     Designation: VPR*1*12
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: MAR 01, 2019
+=============================================================================
+
+Associated patches: (v)VPR*1*4     <<= must be installed BEFORE `VPR*1*12'
+                    (v)VPR*1*9     <<= must be installed BEFORE `VPR*1*12'
+
+Subject: XML RETURN ISSUES MISSING INITIAL FILL,NKA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the VPR package:
+  
+ 1. The XML return from the "Allergy/Adverse Reaction Tracking" type does 
+ not include the "entered" date field if the allergy is "No known allergy".
+  
+ 2. The routine VPRDGMRA has unnecessary code that is potentially 
+ dangerous.
+  
+ 3. The initial Fill date is missing from the Virtual Patient Record (VPR)
+ XML output for Outpatient Medications.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC2704429 / RTC 845393 - VPR update needed for No Known Allergy (NKA)
+ assessment.  The assessment date is missing from the VPR XML.
+  
+ Problem:
+ --------
+ The XML return from the "Allergy/Adverse Reaction Tracking" type does not 
+ include the "entered" field if the allergy is "No known allergy".
+  
+ Resolution:
+ -----------
+ Routine VPRDGMRA was modified so the XML return from VistA will now
+ include the "entered" date field.
+  
+ 2. INC3006959 / RTC 862688 - VPR update needed for user look up in 
+ VPRDGMRA.
+  
+ Problem:
+ --------
+ The routine VPRDGMRA has unnecessary code that is potentially dangerous 
+ if used. This issue cannot be seen without Programmer Access.
+  
+  
+ Resolution:
+ -----------
+ Removed the unnecessary code.
+  
+ 3. INC3136806 / RTC 870506 - The initial Fill date is missing from the 
+ VPR XML output for Outpatient Medications. This is causing problems in 
+ JLV.
+  
+ Problem:
+ --------
+ The XML return from the "MEDS" type does not include the initial Fill in
+ the fills tag.
+  
+ Resolution:
+ -----------
+ Routine VPRDPSO was modified so the XML return from VistA will now include
+ the initial Fill in the fills tag.
+  
+ Test Sites:
+ -----------
+ WILMINGTON VAMC
+ DURHAM HCS
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No special pre or post install steps needed, just install as normal.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, use the following option(s). When 
+ prompted for the INSTALL NAME enter the patch #(ex. VPR*1.0*12):
+   a. Backup a Transport Global - (Mandatory) This option will create a
+      backup message of any routines exported with this patch. It will not 
+      backup any other changes such as DDs or templates.
+   b. Compare Transport Global to Current System - (Optional) This 
+      option will (allow you to view all changes that will be made when
+      this patch   is installed.  It compares all components of this patch
+      routines, DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - (Optional) This option 
+      will allow you to ensure the integrity of the routines that are in
+      the transport global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+ Enter "No"
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//' Enter "No"
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ No special post install steps, just install as normal.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRDGMRA
+    Before: B22400572   After: B22434939  **1,9,12**
+Routine Name: VPRDPSO
+    Before: B16064542   After: B17513089  **1,4,12**
+Routine Name: VPRP12I
+    Before:       n/a   After:    B91349  **12**
+ 
+Routine list of preceding patches: 4, 9
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 23, 2018
+Completed By:                               Date Completed: JAN 28, 2019
+Released By :                               Date Released : JAN 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

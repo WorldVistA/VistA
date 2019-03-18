@@ -1,0 +1,202 @@
+$TXT Created by               F at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 11/14/18 at 16:08
+=============================================================================
+Run Date: JAN 25, 2019                     Designation: PSO*7*547
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #449                      Status: Released
+                  Compliance Date: FEB 24, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*43    <<= must be installed BEFORE `PSO*7*547'
+                    (v)PSO*7*514   <<= must be installed BEFORE `PSO*7*547'
+
+Subject: CMOP SUSPENSE REMOVAL AND DISABILITIES LIST PROBLEMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+   
+ INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+              prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+ INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+              prescription processing
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+              prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+           
+ Problem: 
+ --------
+ Outpatient pharmacists at Louis Stokes Cleveland VA Medical Center reported a
+ glitch where a suspended Rx is edited and re-suspended appropriately but they
+ are not being sent to CMOP. This problem happens when a new CMOP prescription
+ is entered/finished and immediately after (without leaving the patient's
+ profile) the user requests a partial fill on the same prescription and
+ performs and edit on any field (e.g., QTY, FILL DATE, DAYS SUPPLY, etc.).
+ These steps wrongly caused the prescription to be removed from the CMOP
+ Suspense queue and placed on the Local Suspense queue.
+  
+ Resolution:
+ -----------
+ Outpatient Pharmacy will now check whether a partial was entered for a CMOP
+ suspended prescription and it will not move it from the CMOP Suspense queue
+ into the Local Suspense queue if that's the case.
+    
+ Technical Resolution:
+ ---------------------
+ Changed the line UNSUS+1^PSOCMOPC to check whether a partial was placed by
+ checking the variable RXPR and PSOFROM and it will not move the CMOP
+ Suspended prescription into the Local Suspense queue.
+  
+ INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+              prescription processing
+           
+ Problem: 
+ --------
+ Outpatient pharmacists at St. Cloud VA Health Care System reported a glitch
+ that started happening after patch PSO*7*514 was installed. They noticed that
+ numerous male patients were showing up in outpatient pharmacy prescription
+ processing as having SC conditions for ovarian disease or gynecological
+ issues. When checking back to the patient information screen in VISTA
+ pharmacy prescription processing or CPRS, the pharmacists discovered in many
+ cases the patient was only SC for tinnitus, yet a big list of other 
+ disabilities were listed at the very end of pharmacy prescription processing
+ when it lists the patient's SC conditions, often with the gynecological 
+ condition. After investigating the issue it was discovered PSO*7*514 changes
+ did not clear the list of disabilities from the previous patient worked on
+ by the user and carried them over to the subsequent patient worked on the
+ same session before exiting the Patient Prescription Processing [PSO LM 
+ BACKDOOR ORDERS] option.
+  
+ Resolution:
+ -----------
+ The Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option was 
+ changed to properly reset the list of disabilities every time the user 
+ selects a new patient.
+     
+ Technical Resolution:
+ ---------------------
+ Added the command K PSODISAR at CHKPAG+1^PSOMLLD2 in order to reset the
+ list of disabilities before retrieving it from the PATIENT file (#2).
+     
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ Louis Stokes Cleveland VAMC
+ St Cloud VA HCS
+    
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*547):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCMOPC
+    Before:  B9485196   After:  B9688413  **2,30,43,547**
+Routine Name: PSOMLLD2
+    Before: B38199463   After: B38288541  **143,219,239,225,431,514,547**
+ 
+Routine list of preceding patches: 43, 514
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: JAN 24, 2019
+Released By :                               Date Released : JAN 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,320 @@
+
+=============================================================================
+Run Date: JAN 24, 2019                     Designation: PRC*5.1*206
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #183                    Status: Released
+                  Compliance Date: JAN 27, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL - VIE TO Health Connect 
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch describing the migration from Vitria
+ Interface Engine (VIE) to InterSystems Health Connect. Health Connect is a
+ part of the suite of products grouped under HealthShare.
+ **************************************************************************
+  
+ The Health Connect product will be replacing the Vitria Interface 
+ Engine (VIE). During the transition phase, Health Connect and VIE will 
+ be running concurrently.
+  
+ A parallel deployment is planned at an enterprise level. The VIE IFCAP/ECMS
+ functionality will remain in place for most sites while specific sites will
+ implement the IFCAP/ECMS Health Connect.  Production will run concurrently 
+ with VIE, replacing only the VIE IFCAP/ECMS functionality. Both VIE and Health
+ Connect systems will run in parallel at the site level when Health Connect 
+ IFCAP/ECMS is rolled out. VIE will continue to process messages for 
+ applications that have not yet been migrated. The Health Connect IFCAP/ECMS 
+ production will process IFCAP/ECMS messages.
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)                     Field Name   New/Modified/Deleted
+ ------------                      ----------   --------------------
+ N/A
+  
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+  
+ Kernel Parameters Associated:
+  
+ Kernel Parameter Name              Entities                   Values
+ ---------------------       ---------------                 --------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ N/A
+  
+   
+ Protocols Associated:
+  
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                           New/Modified/Deleted
+ -----------------                           --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name               Type  File Name (#)  New/Modified/Deleted
+ -------------               ----  ------------   --------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+     
+  
+ TEST Sites:
+ ===========
+ The eCMS business product manager and the VA PMO have agreed that 
+ IOC will not occur with this application.      
+ 
+ Reason - VIE and Health Connect cannot be connected at the same time.
+ There is a 72-hour compliance window and the reason for not performing 
+ IOC.  The 72-hour compliance has been done previously.
+  
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Albany         domain.ext
+  Hines          domain.ext
+  Salt Lake City domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                         File Name                FTP Mode
+ --------------------------------------------------------------------------
+  
+ Intersystems Health Connect/ECMS        HC_eCMS_DIBRG.PDF       Binary 1.0
+ Deployment, Installation, Back-Out
+ and Rollback Guide  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ **************************************************************************
+ The following instructions are to be performed only when directed to do so 
+ by the Healthshare National Admin Team. These changes can only be 
+ implemented in collaboration and coordination with the Healthshare National
+ Admin Team, the Health Connect Support Operations Team, VistA HL7 support, 
+ and eCMS Support.
+ 
+ Please refer to the Health Connect/eCMS Deployment, Installation, Back-Out
+ and Rollback Guide for the overall implementation of the eCMS to Health 
+ Connect deployment.
+ *************************************************************************** 
+ 
+  
+ Installation Instructions
+ -------------------------
+ 
+ 1. After Healthshare's Health Connect is stood up, and the Health Connect
+ Production instance is ready to process incoming and outgoing messages,
+ the site administrator will need to edit the HL LOGICAL LINKS file
+ (#870) for PRCHJ_ECMS entry. The ECMS server and the VistA logical links 
+ will need to point to an IP address and port to the Health Connect 
+ production.
+ 
+ The following steps will need to be performed in the VistA HL7 application:
+  
+ Step 1.  Stop the PRCHJ_ECMS Logical Link with HL7 Menu option: Start/Stop 
+          Links. The following is an example:
+    
+  
+  Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+ 
+ 
+           Event monitoring menu ...
+           Systems Link Monitor
+           Filer and Link Management Options ...  <===
+           Message Management Options ...
+           Interface Developer Options ...
+           Site Parameter Edit
+    HLO    HL7 (Optimized) MAIN MENU ...
+ 
+ Select HL7 Main Menu <TEST ACCOUNT> Option: FILER AND LINK Management 
+                                             Options
+ 
+ 
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links  <===
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+ 
+ Select Filer and Link Management Options <TEST ACCOUNT> Option: sl  
+                                                        
+ This option is used to launch the lower level protocol for the
+ appropriate device.  Please select the node with which you want
+ to communicate
+ 
+ Select HL LOGICAL LINK NODE: PRCHJ_ECMS  
+ The LLP was last started on JAN 16, 2019 12:39:02.
+ 
+ Okay to shut down this job? y  YES
+ The job for the PRCHJ_ECMS Lower Level Protocol will be shut down.
+ 
+ Step 2.   Edit the PRCHJ_ECMS Logical Link with the Link Edit HL7 menu option: 
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit     <===
+    ER     Link Errors ...
+ 
+ Select HL LOGICAL LINK NODE:    PRCHJ_ECMS
+  
+  Step 3. To edit the PRCHJ_ECMS logical link, navigate to the LLP TYPE 
+          field and hit enter as instructed below.
+ 
+  Step 4. Edit the DNS DOMAIN field as instructed below.
+ 
+  NOTE: It is recommended that AUTOSTART field be set to disabled to keep 
+        PRCHJ_ECMS purely an HLO related link.
+ 
+                         HL7 LOGICAL LINK
+  ------------------------------------------------------------------------
+  
+  
+  
+                 NODE: PRCHJ_ECMS                     DESCRIPTION:
+                 ----
+          INSTITUTION:
+  
+       MAILMAN DOMAIN:
+  
+            AUTOSTART: Disabled  
+  
+           QUEUE SIZE: 10    
+  
+             LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+             --------            The TCP LOWER LEVEL PARAMETERS window
+                                 will open up (shown in step 4 below).
+           DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                 regional Health Connect system
+                                 
+  _________________________________________________________________________
+  
+  
+  COMMAND:                              Press <PF1>H for help    Insert
+ 
+ 
+  Step 5. Replace the existing TCP/IP ADDRESS and existing TCP/IP 
+          PORT (OPTIMIZED) with the Health Connect IP address and 
+          port as shown:
+    
+ 
+  
+                           HL7 LOGICAL LINK
+  -----------------------------------------------------------------------
+  
+   |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+   |                  PRCHJ_ECMS                                     |
+   |                                                                 |
+   |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+   |       TCP/IP ADDRESS: XXXXXX  <=== Enter the appropriate TCP/IP |
+   |                                    Address value for your       |
+   |                                    regional Health Connect      |
+   |                                    system.                      |
+   |         TCP/IP PORT:                                            |
+   |         TCP/IP PORT (OPTIMIZED): XXXX                           |
+   |                                                                 |
+   |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+   |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+   |    BLOCK SIZE:                                  SAY HELO:       |
+   |                                  TCP/IP OPENFAIL TIMEOUT:       |
+   |STARTUP NODE:                                  PERSISTENT:       |
+   |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+   |_________________________________________________________________|
+  
+   ______________________________________________________________________
+  
+  
+  COMMAND:                             Press <PF1>H for help    Insert
+  
+ 
+  Note:  Do NOT start the PRCHJ_ECMS Logical Link after the edits have 
+         been completed.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2018
+Completed By:                               Date Completed: JAN 24, 2019
+Released By :                               Date Released : JAN 24, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

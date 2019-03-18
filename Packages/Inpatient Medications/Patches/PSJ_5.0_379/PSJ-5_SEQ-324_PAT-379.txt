@@ -1,0 +1,134 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/07/18 at 12:03
+=============================================================================
+Run Date: JAN 10, 2019                     Designation: PSJ*5*379
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #324                      Status: Released
+                  Compliance Date: FEB 10, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*347   <<= must be installed BEFORE `PSJ*5*379'
+
+Subject: PADE ROOM-BED/WARD ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses a PADE ROOM-BED/WARD issue.
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC2336651  PADE BED-ROOM configuration glitch
+    
+  
+ Problem: 
+ ========
+ There is an issue when different wards are configured by ROOM-BED, using 
+ the exact same ROOM-BED designations, that the wrong dispensing machine 
+ in a different ward could receive the meds for that patient.
+  
+ A patient admitted to WARD B could have his medications delivered 
+ to WARD A. 
+  
+ The system was not designed to handle this type of occurrence, where there are
+ duplicated ROOM-BED designations.
+  
+ Resolution:
+ ===========
+  
+ A modification was made to routine PSJPDCL to ensure that the correct WARD is 
+ identified for the patient.
+  
+  
+ Test Sites:
+ ===========
+ Tennessee Valley VAMC
+ Upstate New York HCS
+  
+ Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*379.
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Back-out will be done only with the concurrence and participation of the 
+ development team, the support team and appropriate VA site/region 
+ personnel. The decision to back-out or rollback software will be a joint 
+ decision between these groups.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPDCL
+    Before: B59283748   After: B62118639  **317,337,347,379**
+ 
+Routine list of preceding patches: 347
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: JAN 10, 2019
+Released By :                               Date Released : JAN 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

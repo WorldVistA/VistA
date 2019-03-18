@@ -1,0 +1,227 @@
+
+=============================================================================
+Run Date: JAN 16, 2019                     Designation: MAG*3*224
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #167                      Status: Released
+                  Compliance Date: FEB 18, 2019
+=============================================================================
+
+
+Subject: VistARad/Microsoft Windows 2010 Compatibility
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ===================
+ This patch must be installed after MAG*3.0*199.
+  
+ Subject:  VistARad/Microsoft Windows 2010 Compatibility
+ ========
+  
+ Category:  OTHER
+ ==========
+  
+ Description:
+ ============
+ VistARad is a software application used for primary interpretation of 
+ digital images acquired by CR, CT, MR, and other modalities. VistARad 
+ displays any radiology exam stored in the VistA System and access
+ text-based reports. VistARad runs on Diagnostic Workstations with High
+ Resolution Monitors.  There are minimum requirements for diagnostic 
+ workstation hardware and network connections for VistARad, but the 
+ specific configurations can vary based on monitors, video cards and 
+ hardware drivers.  MAG*3.0*224 is an informational only patch to verify 
+ that VistARad operates on various workstation configurations running MS 
+ Windows 2010.
+  
+ With the release of informational patch MAG*3.0*224, VistARad is approved 
+ for use on diagnostic workstations running the Microsoft Windows 10 
+ operating system. 
+  
+ Patch Components:
+ =================
+ This patch only includes this document, MAG3_0P224_Patch_Description.pdf, 
+ which provides information constituting this patch.  
+ MAG3_0P224_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software & Documentation:
+ =========================
+ Table 1: Software & Documentation Files
+ ========================================
+ File Name                              Description
+ =========                              ===========
+ MAG3_0P224_Patch_Description.pdf       Patch Description for P224
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview
+ ===========================================
+ 1. MS Windows 2010 Compatibility
+  
+ Problem:  
+ ========
+ VistARad runs on Diagnostic Workstations with High Resolution Monitors.  
+ There are minimum requirements for diagnostic workstation hardware and 
+ network connections for VistARad, but the specific configurations can 
+ vary based on monitors, video cards and hardware drivers.  With the 
+ upgrade to Windows 10 operating system, verification is needed to ensure 
+ that VistARad continues to operate as designed on various Diagnostic
+ workstations running.
+  
+ With the release of informational patch MAG*3.0*224, VistARad is approved 
+ for use on diagnostic workstations running the Microsoft Windows 10 
+ operating system. 
+  
+ Resolution:   
+ ===========
+ VistA Imaging VistARad was tested to ensure that it operates normally on 
+ MS Windows 10.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         William Jennings Bryan Dorn VAMC-Columbia
+         Navajo Area Kayenta Service Unit
+         Navajo Area NNMC Shiprock Hospital
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location        Site
+ ========        ====
+ Hines           domain.ext 
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+  
+ Supported Client Versions
+ =========================
+ When MAG*3.0*224 is released, the list of supported versions of VistARad 
+ will NOT change:
+  
+ Supported Versions      No Longer Supported 
+ ==================      ===================
+ 3.0.199
+ 3.0.184
+ 3.0.153
+  
+ Pre/Post Installation Overview:
+ ===============================
+ There is no KIDS patch to install.
+  
+ Sites will need to install the current VistARad patch MAG*3.0*199 on MS 
+ Windows 2010 Diagnostic workstation 
+  
+ Pre-Installation Instructions:
+ ==============================
+ None
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ There is no KIDS patch to install.
+  
+ VistARad Client Installation Instructions:
+ ==========================================
+ For installing, updating, or uninstalling VistARad, refer to the VistA 
+ Imaging Installation Guide.
+  
+ Post-Installation Instructions:
+ ===============================
+ Restart all applications that were stopped for installation.
+  
+ Back Out Plan 
+ =============
+ Uninstalling VistARad Client MAG*3.0*199
+ ========================================
+ If it is necessary to uninstall the MAG*3.0*199 client, use the Uninstall 
+ option from the Windows Control Panel to uninstall: "VistARad MAG 3.0 
+ Patch 199".
+  
+ KIDS Uninstall:
+ ===============
+ There is no KIDS patch to uninstall.
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build nn;mm dd, yyyy
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine Checksum    Checksum      Patch List
+         Before      After
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 02, 2018
+Completed By:                               Date Completed: JAN 14, 2019
+Released By :                               Date Released : JAN 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

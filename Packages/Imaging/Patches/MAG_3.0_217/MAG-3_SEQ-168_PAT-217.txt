@@ -1,0 +1,420 @@
+
+=============================================================================
+Run Date: JAN 29, 2019                     Designation: MAG*3*217
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #168                      Status: Released
+                  Compliance Date: MAR 01, 2019
+=============================================================================
+
+
+Subject: Importer Non-DICOM/Unregistered Exams
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:
+ ===================
+ This patch must be installed after MAG*3.0*206.
+  
+ Subject: UNABLE TO IMPORT NON-DICOM STUDIES TO UNREGISTERED EXAMS
+ ========
+  
+ Category: OTHER
+ =========
+  
+ Description:
+ ============
+ MAG*3.0*217 addresses the following two issues:
+     The Importer is failing when importing a non-DICOM image to an
+     unregistered exam.
+     During Windows 10 Testing, the Importer was not able to perform any
+     Direct Imports and is erroring out. 
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 217_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P217_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ Table 1: Software & Documentation Files
+ =======================================
+ File Name                              Description
+ ==========                             ============
+ MAG3_0P217.KID                         Kernel Installation and
+                                        Distribution System (KIDS) build
+                                        for Patch 217.
+ MAG3_0P217_ImporterIII_setup.msi       Importer installation file.
+ MAG3_0P217_ImporterIII_setup.exe       Importer installation file.
+  
+ Documentation:
+ ==============
+ This document, MAG3_0217_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ========================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 736370 (CA Ticket INC0129261) Unable to import non-DICOM studies
+ to unregistered exams
+ Problem: 
+ ========
+ The Importer is failing when importing a non-DICOM image to an
+ unregistered exam.
+  
+ Study-level Failure Details: 
+ Exception Type: 
+ gov.va.med.imaging.core.interfaces.exceptions.MethodException
+ Details Message: -1`2 error lines returned.
+ -3`Parameter 'EXMDTE' has an invalid 
+ value.^REGISTER+17~RAMAGRP1^E`EXMDTE='null000100'
+  
+ During a typical import the Exam Date value is determined one of two ways.
+ It's either generated when registering an order in VistA, or it's obtained
+ from the DICOM header of a DICOM image. Since a non-DICOM file does not
+ have a DICOM header the Exam Date must be obtained from the exam 
+ registration - if the order has not been registered an Exam Date is not 
+ available, the import fails and an error is generated.
+  
+ Resolution: 
+ ===========
+ Do not allow Non-DICOM images to be imported against non-registered exams 
+ by not displaying unregistered exams on the list of exams to choose from 
+ when Importing. 
+  
+ 2. Defect 738272 - Error doing a Direct Import. Importer cannot do an
+ Import.
+  
+ Problem: 
+ ========
+ During Windows 10 testing, the Importer was not able to perform any Direct
+ Import and the application was displaying the following error: 
+  
+ This implementation is not part of the Windows Platform FIPS validated 
+ cryptographic algorithms.
+   at System.Security.Cryptography.MD5CryptoServiceProvider..ctor()
+   at 
+ ImagingClient.Infrastructure.Utilities.StringUtilities.GetHashValue(String
+ value)
+   at 
+ ImagingClient.Infrastructure.Utilities.StringUtilities.GetHashForStringArr
+ ay(String[] array)
+   at 
+ DicomImporter.ViewModels.MediaReadingViewModel.ReadDicomStudiesFromPath(St
+ ring sourceRootPath, Boolean isToBeStaged, String originIndex)
+   at 
+ DicomImporter.ViewModels.DirectImportHomeViewModel.GetStudyList(Object o, 
+ DoWorkEventArgs args)
+   at System.ComponentModel.BackgroundWorker.OnDoWork(DoWorkEventArgs e)
+   at System.ComponentModel.BackgroundWorker.WorkerThreadStart(Object 
+ argument)
+  
+ The Federal Information Processing Standard (FIPS) Publication 140-2, 
+ (FIPS PUB 140-2), is a U.S. government computer security standard used to 
+ approve cryptographic modules. The title is Security Requirements for 
+ Cryptographic Modules. Initial publication was on May 25, 2001 and was 
+ last updated December 3, 2002.
+  
+ Resolution: 
+ ===========
+ By replacing the MD5CryptoServiceProvider with the
+ SHA512CryptoServiceProvider, the Importer application will able to import 
+ images while running under the Windows 10 operating system.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+     VA Southern Nevada HCS (Las Vegas)
+     VA Pittsburgh HCS
+  
+ Software and Documentation Retrieval Instructions:
+ ===================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+ Location           Site
+ Hines              domain.ext 
+ Salt Lake City     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*217 is released, the list of supported versions of Importer 
+ will change:
+ Supported Versions      No Longer Supported 
+ 3.0.217                 3.0.118
+ 3.0.206
+ 3.0.136
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*217 must be installed on the VistA System. This patch must be 
+ installed by the compliance date.
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system. Installing the MAG*3.0*217 KIDS only takes 
+ 2-3 minutes.
+  
+ Pre-Installation Instructions:
+ ===============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+ Note: All released VistA Imaging patches must be installed on the VistA 
+       system before installing MAG*3.0*217.
+  
+ Prerequisite: With the release of patch MAG*3.0*206 KIDS package, all 
+               users who access the Importer application must be assigned
+               the secondary menu option called "MAGTP WORKLIST MGR" in
+               VistA. This is required because currently the REMOTE
+               APPLICATION file has no entry available for the Importer
+               application. This is a temporary work around until there is 
+               an entry created for the Importer application via a patch
+               release.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1  On the VistA system, access the Kernel Installation and Distribution
+    System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load
+       the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P217.KID) of the
+       MAG*3.0*217 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A
+       Distribution OK! message will be displayed when the load is
+       complete.
+ 4  After loading the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and 
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+       want to create a backup message of any routines exported with the
+       patch.
+       It will NOT back up any of the other changes.
+ 5  After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*217".
+    c. Answer "NO" to the following prompts, if they appear:
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 6  When installation is finished, an Install Complete message will be
+    displayed.
+  
+ KIDS Installation Example
+ ==========================
+ This example shows the output when the KIDS file is installed for the
+ first time. If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6 Install Package(s)
+ Select INSTALL NAME: MAG*3.0*217   7/25/18@16:35:13
+    => VistA Imaging 3.0 - Patch 217 Importer III ;Created on Jul 20, 
+ 2018@10:38:54
+  
+ This Distribution was loaded on Jul 25, 2018@16:35:13 with header of
+   VistA Imaging 3.0 - Patch 217 Importer III ;Created on Jul 20, 
+ 2018@10:38:54
+   It consisted of the following Install(s):
+   MAG*3.0*217
+ Checking Install for Package MAG*3.0*217
+  
+ Install Questions for MAG*3.0*217
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  HERE
+   
+  Install Started for MAG*3.0*217 :
+         Jul 25, 2018@16:35:27
+  
+ Build Distribution Date: Jul 20, 2018
+  
+  Installing Routines:..
+         Jul 25, 2018@16:35:27
+  
+  Running Post-Install Routine: POS^MAGIP217.
+  
+ Post Install Mail Message: Jul 25, 2018@16:35:27
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*217 Installed.
+         Jul 25, 2018@16:35:27
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Installing and Updating Importer III client
+ ===========================================
+ For installing or updating Importer III, refer to the MAG DICOM Importer 
+ III User Manual.
+  
+ Post-Installation Instructions:
+ ===============================
+ N/A
+  
+ BackOut Plan                   
+ =============
+ Uninstalling MAG*3.0*217 KID
+ =============================
+ If it is necessary to uninstall the MAG*3.0*217 VistA KIDS, you needed to 
+ select the "Kernel Installation & Distribution System" menu option, 
+ "Backup a Transport Global" (see installation section above, step 4c), 
+ before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function.
+ 1.  Select the message shown below:
+ Backup of MAG*3.0*217 install on <mmm dd, yyyy>  <user name>
+ 2.  Select the Xtract PackMan option.
+ 3.  Select the Install/Check Message option.
+ 4.  Enter "Yes" at the prompt.
+ 5.  Enter "No" at the backup prompt. There is no need to back up the 
+     backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts are backed
+ up, not even globals. You may use the 'Summarize Message' option of
+ PackMan to see what parts the message contains. Those parts that are not
+ routines should be backed up separately if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2  Message #42925   Unloading Routine  MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Uninstalling Importer III client
+ ================================
+ For uninstalling Importer III, refer to the MAG DICOM Importer III User 
+ Manual.
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine        Checksum       Checksum          Patch List
+                Before         After
+ MAGIP217        New           4110408           **217**
+ Routine MAGIP217 is an installation routine that is automatically deleted 
+ after the KIDS installaion. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP217
+    Before:       n/a   After:  B4110408  **217**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2018
+Completed By:                               Date Completed: JAN 16, 2019
+Released By :                               Date Released : JAN 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,281 @@
+$TXT Created by                 at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/03/19 at 13:38
+=============================================================================
+Run Date: JAN 25, 2019                     Designation: PSB*3*103
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #93                      Status: Released
+                  Compliance Date: FEB 25, 2019
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*103'
+                    (v)PSS*1*225   <<= must be installed BEFORE `PSB*3*103'
+
+Subject: EPIP COMPANION PATCH FOR PSS*1*225
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ PSB*3.0*103 adds new option Report for Respiratory Therapy Medications
+ [PSB RPT RESP THERAPY MEDS] to the Medication Administration Menu Pharmacy
+ [PSB PHARMACY] menu in the Bar Code Medication Administration (BCMA)
+ package, enabling Respiratory Therapists to create a report that 
+ identifies patients who need administration of orderable items that have
+ been classified as Respiratory Therapy drugs. These patients are located
+ throughout the hospital in critical care areas, medicine areas, surgery
+ areas, and Behavioral Health. Currently, Respiratory Therapists must go
+ bed-to-bed to find their patients. The new report provides the order
+ number, patient name and location, medication name and dosage, and
+ administration date and time, thus allowing the therapists to easily
+ identify each patient so that they can administer treatment. This report
+ obtains patient names and ward locations using the CN cross-reference from
+ the Patient file (#2).
+  
+ Note: Orderable items are classified as Respiratory Therapy drugs in the 
+ Pharmacy Data Management package using the Edit Orderable Items [PSS EDIT 
+ ORDERABLE ITEMS] option.
+  
+ Note: PRN orders will not be displayed in the Respiratory Therapy 
+ Medications report, since PRN items do not have a defined administration 
+ time.
+  
+ During the post-installation phase, routine PSB3P103 attaches the new 
+ option Report for Respiratory Therapy Medications [PSB RPT RESP THERAPY 
+ MEDS] to the Medication Administration Menu Pharmacy [PSB PHARMACY] menu. 
+ Routine PSB3P103 is deleted automatically at the end of patch 
+ installation.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)     New/Modified/Deleted
+ ------------------          -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name                   File #                  New/Modified/Deleted
+ ---------                   ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                     New/Modified/Deleted
+ ---------------                                     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                       Type              New/Modified/Deleted
+ -----------                       ----              --------------------
+ PSB RPT RESP THERAPY MEDS         Run Routine       New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                       New/Modified/Deleted
+ -------------                                       -------------------- 
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name                                      New/Modified/Deleted
+ ---------------                                     -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)    New/Modified/Deleted
+ -------------         ----    ------------------    --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR20170515 Adds Respiratory Therapy Report
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ VA Salt Lake City Health Care System, Salt Lake City, UT
+ West Palm Beach VA Medical Center, West Palm Beach, FL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from
+ FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found in the VA Software Document Library
+ (VDL) at https://www.domain.ext/vdl/.
+  
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ BCMA Pharmacy CHUI User Manual  psb_3_pharm_chui_um_p103.doc  Binary
+ BCMA Pharmacy CHUI User Manual  psb_3_pharm_chui_um_p103.pdf  Binary
+ BCMA Technical Manual/          psb_3_tm_p103.doc             Binary
+ Security Guide 
+ BCMA Technical Manual/          psb_3_tm_p103.pdf             Binary
+ Security Guide      
+  
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number PSB*3.0*103.
+  
+    a. Verify Checksums in Transport Global - This option will help 
+    ensure the integrity of the routines that are in the transport global.
+  
+    b. Print Transport Global - This option will enable viewing the 
+    components of the KIDS build.
+  
+    c. Compare Transport Global to Current System - This option will 
+    enable viewing all changes that will be made when this patch is
+    installed. It compares all components of this patch (routines, data
+    dictionaries, templates, etc.).
+  
+    d. Back up a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not back up
+    any other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 8. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+  
+ Backout Procedure: 
+ ------------------ 
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not 
+ be attempted. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will need to issue one or more 
+ follow-on patches in order to comprehensively back out this patch, after 
+ coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSB routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSB routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSB*3.0*103 on line 2 in the patch list section. 
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB3P103
+    Before:       n/a   After:  B2124804  **103**
+Routine Name: PSBMMRB
+    Before:       n/a   After: B31182721  **103**
+Routine Name: PSBO1
+    Before: B35906614   After: B35943966  **4,13,32,2,43,28,70,83,103**
+Routine Name: PSBOHDR1
+    Before:       n/a   After:  B3661233  **103**
+Routine Name: PSBORT
+    Before:       n/a   After: B73550568  **103**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 05, 2017
+Completed By:                               Date Completed: JAN 24, 2019
+Released By :                               Date Released : JAN 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

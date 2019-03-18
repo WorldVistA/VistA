@@ -1,0 +1,737 @@
+Released PSJ*5*378 SEQ #325
+Extracted from mail message
+**KIDS**:PSJ*5.0*378^
+
+**INSTALL NAME**
+PSJ*5.0*378
+"BLD",10942,0)
+PSJ*5.0*378^INPATIENT MEDICATIONS^0^3181102^y
+"BLD",10942,1,0)
+^^34^34^3181102^
+"BLD",10942,1,1,0)
+This patch will resolve the following issue.
+"BLD",10942,1,2,0)
+ 
+"BLD",10942,1,3,0)
+INC2264488 - Medication order start times and BCMA admin times are before the
+"BLD",10942,1,4,0)
+             date/time the order was signed
+"BLD",10942,1,5,0)
+     
+"BLD",10942,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10942,1,7,0)
+--------------------------------------------
+"BLD",10942,1,8,0)
+INC2264488 - Medication order start times and BCMA admin times are before the
+"BLD",10942,1,9,0)
+             date/time the order was signed
+"BLD",10942,1,10,0)
+         
+"BLD",10942,1,11,0)
+Problem: 
+"BLD",10942,1,12,0)
+--------
+"BLD",10942,1,13,0)
+The Robley Rex VA Medical Center reported that medication orders are showing
+"BLD",10942,1,14,0)
+start date/times BEFORE the signature date/time of the order. This causes
+"BLD",10942,1,15,0)
+meds to be due for administration in BCMA for a past time when the order did
+"BLD",10942,1,16,0)
+not even exist. It appears as though patients are missing meds. Thus far
+"BLD",10942,1,17,0)
+orders have been isolated to our 4S MED hospital ward and all identified
+"BLD",10942,1,18,0)
+orders have been in the Unit Dose package.
+"BLD",10942,1,19,0)
+      
+"BLD",10942,1,20,0)
+Resolution:
+"BLD",10942,1,21,0)
+-----------
+"BLD",10942,1,22,0)
+The primary reason the Robley Rex VAMC experienced this problem is because
+"BLD",10942,1,23,0)
+the 4S MED was not configured in the Inpatient Ward Parameters Edit [PSJ IWP
+"BLD",10942,1,24,0)
+EDIT] option where the parameter DEFAULT START DATE CALCULATION used to
+"BLD",10942,1,25,0)
+calculate the default start date/time for an order is set. The other reason
+"BLD",10942,1,26,0)
+is that once they processed two orders at the same time for the same ward
+"BLD",10942,1,27,0)
+the default value for the parameter was getting overwritten when they tried
+"BLD",10942,1,28,0)
+to finish the second order. This patch corrects this issue. 
+"BLD",10942,1,29,0)
+  
+"BLD",10942,1,30,0)
+Technical Resolution:
+"BLD",10942,1,31,0)
+---------------------
+"BLD",10942,1,32,0)
+Changed the line ENSD+99^PSGNE3 to check only the 5th piece of the PSJSYSW0
+"BLD",10942,1,33,0)
+variable since it contains all ward parameters and after the user finished
+"BLD",10942,1,34,0)
+the first order it was getting set with multiple up-carets ("^^^^^^^^^^"). 
+"BLD",10942,4,0)
+^9.64PA^^
+"BLD",10942,6.3)
+2
+"BLD",10942,"ABPKG")
+n
+"BLD",10942,"KRN",0)
+^9.67PA^1.61^23
+"BLD",10942,"KRN",.4,0)
+.4
+"BLD",10942,"KRN",.401,0)
+.401
+"BLD",10942,"KRN",.402,0)
+.402
+"BLD",10942,"KRN",.403,0)
+.403
+"BLD",10942,"KRN",.5,0)
+.5
+"BLD",10942,"KRN",.84,0)
+.84
+"BLD",10942,"KRN",1.6,0)
+1.6
+"BLD",10942,"KRN",1.61,0)
+1.61
+"BLD",10942,"KRN",1.62,0)
+1.62
+"BLD",10942,"KRN",3.6,0)
+3.6
+"BLD",10942,"KRN",3.8,0)
+3.8
+"BLD",10942,"KRN",9.2,0)
+9.2
+"BLD",10942,"KRN",9.8,0)
+9.8
+"BLD",10942,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10942,"KRN",9.8,"NM",1,0)
+PSGNE3^^0^B86543610
+"BLD",10942,"KRN",9.8,"NM","B","PSGNE3",1)
+
+"BLD",10942,"KRN",19,0)
+19
+"BLD",10942,"KRN",19.1,0)
+19.1
+"BLD",10942,"KRN",101,0)
+101
+"BLD",10942,"KRN",409.61,0)
+409.61
+"BLD",10942,"KRN",771,0)
+771
+"BLD",10942,"KRN",779.2,0)
+779.2
+"BLD",10942,"KRN",870,0)
+870
+"BLD",10942,"KRN",8989.51,0)
+8989.51
+"BLD",10942,"KRN",8989.52,0)
+8989.52
+"BLD",10942,"KRN",8994,0)
+8994
+"BLD",10942,"KRN","B",.4,.4)
+
+"BLD",10942,"KRN","B",.401,.401)
+
+"BLD",10942,"KRN","B",.402,.402)
+
+"BLD",10942,"KRN","B",.403,.403)
+
+"BLD",10942,"KRN","B",.5,.5)
+
+"BLD",10942,"KRN","B",.84,.84)
+
+"BLD",10942,"KRN","B",1.6,1.6)
+
+"BLD",10942,"KRN","B",1.61,1.61)
+
+"BLD",10942,"KRN","B",1.62,1.62)
+
+"BLD",10942,"KRN","B",3.6,3.6)
+
+"BLD",10942,"KRN","B",3.8,3.8)
+
+"BLD",10942,"KRN","B",9.2,9.2)
+
+"BLD",10942,"KRN","B",9.8,9.8)
+
+"BLD",10942,"KRN","B",19,19)
+
+"BLD",10942,"KRN","B",19.1,19.1)
+
+"BLD",10942,"KRN","B",101,101)
+
+"BLD",10942,"KRN","B",409.61,409.61)
+
+"BLD",10942,"KRN","B",771,771)
+
+"BLD",10942,"KRN","B",779.2,779.2)
+
+"BLD",10942,"KRN","B",870,870)
+
+"BLD",10942,"KRN","B",8989.51,8989.51)
+
+"BLD",10942,"KRN","B",8989.52,8989.52)
+
+"BLD",10942,"KRN","B",8994,8994)
+
+"BLD",10942,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10942,"QUES",0)
+^9.62^^
+"BLD",10942,"REQB",0)
+^9.611^1^1
+"BLD",10942,"REQB",1,0)
+PSJ*5.0*275^2
+"BLD",10942,"REQB","B","PSJ*5.0*275",1)
+
+"MBREQ")
+0
+"PKG",221,-1)
+1^1
+"PKG",221,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",221,22,0)
+^9.49I^1^1
+"PKG",221,22,1,0)
+5.0^2971215^2981113^1
+"PKG",221,22,1,"PAH",1,0)
+378^3181102
+"PKG",221,22,1,"PAH",1,1,0)
+^^34^34^3181102
+"PKG",221,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",221,22,1,"PAH",1,1,2,0)
+ 
+"PKG",221,22,1,"PAH",1,1,3,0)
+INC2264488 - Medication order start times and BCMA admin times are before the
+"PKG",221,22,1,"PAH",1,1,4,0)
+             date/time the order was signed
+"PKG",221,22,1,"PAH",1,1,5,0)
+     
+"PKG",221,22,1,"PAH",1,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",221,22,1,"PAH",1,1,7,0)
+--------------------------------------------
+"PKG",221,22,1,"PAH",1,1,8,0)
+INC2264488 - Medication order start times and BCMA admin times are before the
+"PKG",221,22,1,"PAH",1,1,9,0)
+             date/time the order was signed
+"PKG",221,22,1,"PAH",1,1,10,0)
+         
+"PKG",221,22,1,"PAH",1,1,11,0)
+Problem: 
+"PKG",221,22,1,"PAH",1,1,12,0)
+--------
+"PKG",221,22,1,"PAH",1,1,13,0)
+The Robley Rex VA Medical Center reported that medication orders are showing
+"PKG",221,22,1,"PAH",1,1,14,0)
+start date/times BEFORE the signature date/time of the order. This causes
+"PKG",221,22,1,"PAH",1,1,15,0)
+meds to be due for administration in BCMA for a past time when the order did
+"PKG",221,22,1,"PAH",1,1,16,0)
+not even exist. It appears as though patients are missing meds. Thus far
+"PKG",221,22,1,"PAH",1,1,17,0)
+orders have been isolated to our 4S MED hospital ward and all identified
+"PKG",221,22,1,"PAH",1,1,18,0)
+orders have been in the Unit Dose package.
+"PKG",221,22,1,"PAH",1,1,19,0)
+      
+"PKG",221,22,1,"PAH",1,1,20,0)
+Resolution:
+"PKG",221,22,1,"PAH",1,1,21,0)
+-----------
+"PKG",221,22,1,"PAH",1,1,22,0)
+The primary reason the Robley Rex VAMC experienced this problem is because
+"PKG",221,22,1,"PAH",1,1,23,0)
+the 4S MED was not configured in the Inpatient Ward Parameters Edit [PSJ IWP
+"PKG",221,22,1,"PAH",1,1,24,0)
+EDIT] option where the parameter DEFAULT START DATE CALCULATION used to
+"PKG",221,22,1,"PAH",1,1,25,0)
+calculate the default start date/time for an order is set. The other reason
+"PKG",221,22,1,"PAH",1,1,26,0)
+is that once they processed two orders at the same time for the same ward
+"PKG",221,22,1,"PAH",1,1,27,0)
+the default value for the parameter was getting overwritten when they tried
+"PKG",221,22,1,"PAH",1,1,28,0)
+to finish the second order. This patch corrects this issue. 
+"PKG",221,22,1,"PAH",1,1,29,0)
+  
+"PKG",221,22,1,"PAH",1,1,30,0)
+Technical Resolution:
+"PKG",221,22,1,"PAH",1,1,31,0)
+---------------------
+"PKG",221,22,1,"PAH",1,1,32,0)
+Changed the line ENSD+99^PSGNE3 to check only the 5th piece of the PSJSYSW0
+"PKG",221,22,1,"PAH",1,1,33,0)
+variable since it contains all ward parameters and after the user finished
+"PKG",221,22,1,"PAH",1,1,34,0)
+the first order it was getting set with multiple up-carets ("^^^^^^^^^^"). 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSGNE3")
+0^1^B86543610^B86381204
+"RTN","PSGNE3",1,0)
+PSGNE3 ;BIR/CML3,MLM-DETERMINE DEFAULT FOR START & STOP TIMES ; 12/13/10 2:46pm
+"RTN","PSGNE3",2,0)
+ ;;5.0;INPATIENT MEDICATIONS ;**4,26,47,50,63,69,105,80,111,183,193,179,275,378**;16 DEC 97;Build 2
+"RTN","PSGNE3",3,0)
+ ;
+"RTN","PSGNE3",4,0)
+ ; Reference to ^PS(51.1 is supported by DBIA 2177
+"RTN","PSGNE3",5,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191
+"RTN","PSGNE3",6,0)
+ ; Reference to PSBAPIPM is supported by DBIA 3564
+"RTN","PSGNE3",7,0)
+ ;
+"RTN","PSGNE3",8,0)
+ N X1,X2,Y
+"RTN","PSGNE3",9,0)
+NOW ;
+"RTN","PSGNE3",10,0)
+ S:'$D(PSGST) PSGST=""
+"RTN","PSGNE3",11,0)
+ S PSGDT=$$DATE^PSJUTL2(),PSGNESD=$$ENSD($S(PSGST["P":"PRN",1:PSGSCH),PSGS0Y,PSGDT,PSGDT)
+"RTN","PSGNE3",12,0)
+ ;
+"RTN","PSGNE3",13,0)
+STOP ; exit when start date found
+"RTN","PSGNE3",14,0)
+ K ET,F,FT,LT,NT,PSGNE3,TT G:$D(PSGOES)!$D(PSGODF) SF S PSGNESDO=$$ENDD^PSGMI(PSGNESD)
+"RTN","PSGNE3",15,0)
+ Q
+"RTN","PSGNE3",16,0)
+ ;
+"RTN","PSGNE3",17,0)
+ENFD(PSGDT) ; find default stop date
+"RTN","PSGNE3",18,0)
+ N X1,X2,X3DMIN,Y
+"RTN","PSGNE3",19,0)
+SF I '$O(^PS(55,PSGP,5,"AUS",PSGDT)),'$D(^PS(53.1,"AC",PSGP)),+$G(^PS(55,PSGP,5.1)) S $P(^PS(55,PSGP,5.1),U)=""
+"RTN","PSGNE3",20,0)
+ S PSJSYSW0=$G(PSJSYSW0) ; Initialize/restore PSJSYSW0 ward parameters; clinic orders may not have them. Killed at exit in ENKV^PSGSETU
+"RTN","PSGNE3",21,0)
+ I $G(PSGOEA)="R",$P(PSJSYSW0,"^",4) D ENWALL(%,0,PSGP)
+"RTN","PSGNE3",22,0)
+ S PSGNEFD="",PSGNEW=$S('$P(PSJSYSW0,U,4):0,+$G(^PS(55,PSGP,5.1))'>PSGDT:0,1:+$G(^PS(55,PSGP,5.1))) S:PSGNEW<PSGNESD PSGNEW=0
+"RTN","PSGNE3",23,0)
+ I PSGNEW,($G(PSGOEA)="R") S X1=$P(%,"."),X2=3 D C^%DTC S PSGNEW=$S($P(X,".")_(PSGNESD#1)'>PSGNEW:PSGNEW,1:0)
+"RTN","PSGNE3",24,0)
+ I PSGST="O" S PSGNEFD=$$ENOSD^PSJDCU(PSJSYSW0,PSGNESD,PSGP) I PSGNEFD]"" G OUT
+"RTN","PSGNE3",25,0)
+ ;PSJ*179;x-ref to "APPSJ"
+"RTN","PSGNE3",26,0)
+ I PSGST'="O",PSGSCH]"",$S(PSGSCH="ONCE":1,PSGSCH="STAT":1,PSGSCH="ONE TIME":1,1:0)!($P($G(^PS(51.1,+$O(^PS(51.1,"AC","PSJ",PSGSCH,0)),0)),"^",5)="O") S PSGNEFD=$$ENOSD^PSJDCU(PSJSYSW0,PSGNESD,PSGP) I PSGNEFD]"" G OUT
+"RTN","PSGNE3",27,0)
+ S X1=$P(PSGNESD,"."),X2=$S($P(PSJSYSW0,"^",3):+$P(PSJSYSW0,"^",3),1:14)
+"RTN","PSGNE3",28,0)
+ D
+"RTN","PSGNE3",29,0)
+ . ; *** psi 06 082 - RDC 08/2006;ADDED VAR AA TO CHK FOR APPT and CLINIC ***
+"RTN","PSGNE3",30,0)
+ . N A,AA,B
+"RTN","PSGNE3",31,0)
+ . Q:'$D(PSGORD)  S A=""
+"RTN","PSGNE3",32,0)
+ . I PSGORD["P" S A=$G(^PS(53.1,+PSGORD,"DSS"))
+"RTN","PSGNE3",33,0)
+ . I PSGORD["U" S A=$G(^PS(55,PSGP,5,+PSGORD,8))
+"RTN","PSGNE3",34,0)
+ . I PSGORD["I" S A=$G(^PS(55,PSGP,"IV",+PSGORD,"DSS"))
+"RTN","PSGNE3",35,0)
+ . ;PSJ*5*179;Clin Def Stop
+"RTN","PSGNE3",36,0)
+ . S AA=$P(A,"^",2),A=$P(A,"^") I A,AA S X2=14 I $D(^PS(53.46,"B",A)) S B=$O(^PS(53.46,"B",A,"")),X2=$P(^PS(53.46,B,0),"^",2) I X2="" S X2=14
+"RTN","PSGNE3",37,0)
+ D C^%DTC
+"RTN","PSGNE3",38,0)
+ I $G(PSGNEDFD) I $S($P(PSGNEDFD,"^")["L":PSGS0XT!PSGS0Y,1:1) D DFD
+"RTN","PSGNE3",39,0)
+ I $G(PSGORD),$G(PSGFD) S X3DMIN=$$GETDUR^PSJLIVMD(PSGP,+$G(PSGORD),$S($G(PSGORD)["P":"P",$G(PSGORD)["V":"IV",1:5),1) I X3DMIN]"" D  I PSGNEFD]"" G OUT
+"RTN","PSGNE3",40,0)
+ . S X3DMIN=$$DURMIN^PSJLIVMD(X3DMIN) I $G(X3DMIN) S PSGNEFD=$$FMADD^XLFDT(PSGNESD,,,X3DMIN)
+"RTN","PSGNE3",41,0)
+ S X=+(X_$S($P(PSJSYSW0,"^",7):"."_$P(PSJSYSW0,"^",7),1:(PSGNESD#1)))
+"RTN","PSGNE3",42,0)
+ S PSGNEFD=$S('PSGNEFD:X,X<PSGNEFD:X,1:PSGNEFD) I PSGNEW,(PSGNEW<PSGNEFD),$P(PSJSYSW0,U,4) D
+"RTN","PSGNE3",43,0)
+ . I $G(PSGORD),$G(PSGRDTX) I PSGORD=$P(PSGRDTX,U,4),PSGNEW<PSGRDTX Q   ; Requested Start is after Stop
+"RTN","PSGNE3",44,0)
+ . S PSGNEFD=PSGNEW
+"RTN","PSGNE3",45,0)
+ ;
+"RTN","PSGNE3",46,0)
+OUT ;
+"RTN","PSGNE3",47,0)
+ ;*179 Account for drug changing
+"RTN","PSGNE3",48,0)
+ I $G(PSGPDNX)&('$G(PSBSTR)) S:$G(PSGSDX) PSGNESD=PSGSDX S:$G(PSGFDX) PSGNEFD=PSGFDX
+"RTN","PSGNE3",49,0)
+ I '$D(PSGODF),'$D(PSGOES) S PSGNEFDO=$$ENDD^PSGMI(PSGNEFD)
+"RTN","PSGNE3",50,0)
+ K PSGDL,PSGNEW Q
+"RTN","PSGNE3",51,0)
+ ;
+"RTN","PSGNE3",52,0)
+DFD ;
+"RTN","PSGNE3",53,0)
+ I $P(PSGNEDFD,"^")["D" S X1=$P(PSGNESD,"."),X2=+PSGNEDFD D C^%DTC S X=+(X_"."_$S($P(PSJSYSW0,"^",7):$P(PSJSYSW0,"^",7),1:$P(PSGNESD,".",2)))
+"RTN","PSGNE3",54,0)
+ I $P(PSGNEDFD,"^")["L" S PSGDL=+PSGNEDFD D EN1^PSGDL
+"RTN","PSGNE3",55,0)
+ S PSGNEFD=$S(PSGNEW<X&PSGNEW:PSGNEW,1:X) Q:$P(PSGNEDFD,"^")'["D"!'$P(PSJSYSW0,"^",4)!PSGNEW
+"RTN","PSGNE3",56,0)
+ Q
+"RTN","PSGNE3",57,0)
+ ;
+"RTN","PSGNE3",58,0)
+ENOR ;
+"RTN","PSGNE3",59,0)
+ K PSGOES,PSGODF S X=$P($G(^PS(53.1,DA,2)),"^")
+"RTN","PSGNE3",60,0)
+ S $P(^PS(53.1,DA,0),"^",7)=$S(X="PRN":"P",X="ONCE":"O",X="STAT":"O",X="ONE TIME":"O",X="ON CALL":"OC",$P(PSGNEDFD,"^",3)]"":$P(PSGNEDFD,"^",3),1:"C") D PSGNE3 S X=PSGNESD
+"RTN","PSGNE3",61,0)
+ Q
+"RTN","PSGNE3",62,0)
+ ;
+"RTN","PSGNE3",63,0)
+ENSET0(DFN) ; Set "0" node and build xrefs for entries found without one.
+"RTN","PSGNE3",64,0)
+ N DA,DIK S ^PS(55,DFN,0)=DFN,DIK="^PS(55,",DIK(1)=.01,DA=DFN D EN^DIK
+"RTN","PSGNE3",65,0)
+ S $P(^PS(55,DFN,5.1),"^",11)=2 ; Mark as converted for POE
+"RTN","PSGNE3",66,0)
+ Q
+"RTN","PSGNE3",67,0)
+ ;
+"RTN","PSGNE3",68,0)
+ENWALL(SD,FD,DFN) ; Update default stop date if appropriate.
+"RTN","PSGNE3",69,0)
+ N WALL,NWALL,X1,X2,X3
+"RTN","PSGNE3",70,0)
+ D NOW^%DTC S X3=%
+"RTN","PSGNE3",71,0)
+ S WALL=+$G(^PS(55,DFN,5.1)),X1=$P(SD,"."),X2=3 D C^%DTC I +(X_"."_$P(SD,".",2))'>+WALL Q
+"RTN","PSGNE3",72,0)
+ S X1=$P(X3,"."),X2=$S($P(PSJSYSW0,U,3):+$P(PSJSYSW0,U,3),1:14) D C^%DTC
+"RTN","PSGNE3",73,0)
+ S NWALL=X_$S($P(PSJSYSW0,U,7):"."_$P(PSJSYSW0,U,7),1:SD#1)
+"RTN","PSGNE3",74,0)
+ S $P(^PS(55,DFN,5.1),U)=+$S(FD>NWALL:FD,1:NWALL)
+"RTN","PSGNE3",75,0)
+ Q
+"RTN","PSGNE3",76,0)
+ ;
+"RTN","PSGNE3",77,0)
+ENSD(SCH,AT,LI,OSD) ;Find start dt/tm
+"RTN","PSGNE3",78,0)
+ ;SCH=schedule,AT=admin times,LI=login date/time,OSD=Renewed orders start
+"RTN","PSGNE3",79,0)
+ I $G(APPT),$G(PSGORD)["P" S XD=$$DATE2^PSJUTL2($S(($$FMDIFF^XLFDT(APPT,PSGDT,2)<0):PSGDT,1:APPT)) Q XD
+"RTN","PSGNE3",80,0)
+ N X,OSDLI D
+"RTN","PSGNE3",81,0)
+ .I $L(LI)<13 S X=LI Q
+"RTN","PSGNE3",82,0)
+ .I $L(LI)=14 S X=$E(LI,13,14) S:X>29 X=$E(LI,1,12)_5 S:X'>29 X=$E(LI,1,12)_1 Q
+"RTN","PSGNE3",83,0)
+ .I $L(LI)=13 S X=$E(LI,13)_0 S:X>29 X=$E(LI,1,12)_5 S:X'>29 X=$E(LI,1,12)_1 Q
+"RTN","PSGNE3",84,0)
+ I $G(LI) S:(LI=$G(OSD)) OSDLI=1
+"RTN","PSGNE3",85,0)
+ S LI=+$FN(X,"",4) I '$P(LI,".",2) S LI=$$FMADD^XLFDT(LI,-1,0,0,0)_.24
+"RTN","PSGNE3",86,0)
+ I $G(OSDLI) S OSD=LI K OSDLI
+"RTN","PSGNE3",87,0)
+ ;BHW;PSJ*5*179;Re-calc Start date
+"RTN","PSGNE3",88,0)
+ N PSGBCADM,PSGBCLDT,PSGBCLA,PSGBCFR,PSGBTT,PSGBST,PSGBCSHH,PSGBCLHH,PSGBSAT,PSGBSATN,PSGBNAT,PSGBCLIT,PSGBCTDY
+"RTN","PSGNE3",89,0)
+ N PSGBCTDD,PSGBCTDA,PSGDAYC,PSGBDNXT,PSGBCSCD,PSGBCLID
+"RTN","PSGNE3",90,0)
+ S (PSGBST,PSGBCFR,PSGBCADM)=""
+"RTN","PSGNE3",91,0)
+ S PSGBCORD=$S($G(PSGORD):PSGORD,$G(PSJORD):PSJORD,1:$G(PSGORD))
+"RTN","PSGNE3",92,0)
+ I PSGBCORD S:'$P($G(^PS(55,DFN,$S($G(PSGBCORD)["V":"IV",1:5),+PSGBCORD,0)),"^",2) PSGBCORD=""
+"RTN","PSGNE3",93,0)
+ I PSGBCORD["U" S PSGBCOT=5,PSGBCND=0,PSGBCPO=25
+"RTN","PSGNE3",94,0)
+ I PSGBCORD["V" S PSGBCOT="IV",PSGBCND=2,PSGBCPO=5
+"RTN","PSGNE3",95,0)
+ I (PSGBCORD'["U")&(PSGBCORD'["V") S PSGBCORD=""
+"RTN","PSGNE3",96,0)
+ I +$G(DFN)&(+PSGBCORD) S PSGBCPRV=PSGBCORD D
+"RTN","PSGNE3",97,0)
+ .F  S PSGBCADM=$$EN^PSBAPIPM(DFN,PSGBCPRV) Q:PSGBCADM'=""  S PSGBCPRV=$P(^PS(55,DFN,PSGBCOT,+PSGBCPRV,PSGBCND),U,PSGBCPO) Q:(PSGBCPRV="")!(PSGBCPRV["P")
+"RTN","PSGNE3",98,0)
+ .Q
+"RTN","PSGNE3",99,0)
+ I $L(PSGBCADM) D  I PSGBST Q +PSGBST
+"RTN","PSGNE3",100,0)
+ .S PSGBCLID=$P(LI,".",1),PSGBCLIT=$E($P(LI,".",2),1,2) I $L(PSGBCLIT)=1 S PSGBCLIT=PSGBCLIT*10
+"RTN","PSGNE3",101,0)
+ .S PSGBCSCH=$P(PSGBCADM,U,1),PSGBCSCD=$P(PSGBCSCH,".",1),PSGBCLDT=$P(PSGBCADM,U,2),PSGBCLA=$P(PSGBCADM,U,3)
+"RTN","PSGNE3",102,0)
+ .I "GR"'[PSGBCLA Q
+"RTN","PSGNE3",103,0)
+ .S PSGBCFR=""
+"RTN","PSGNE3",104,0)
+ .I PSGBCORD["U" S PSGBCFR=$P(^PS(55,DFN,5,+PSGBCORD,2),U,6)
+"RTN","PSGNE3",105,0)
+ .I PSGBCORD["V" S PSGBCFR=$P(^PS(55,DFN,"IV",+PSGBCORD,0),U,15)
+"RTN","PSGNE3",106,0)
+ .;Convert
+"RTN","PSGNE3",107,0)
+ .S PSGBCFR=$S(PSGBCFR="D":1440,PSGBCFR="O":0,1:PSGBCFR)*60
+"RTN","PSGNE3",108,0)
+ .I 'PSGBCFR,'AT Q
+"RTN","PSGNE3",109,0)
+ .S X=PSGBCSCH D H^%DTC S PSGBCSCH=%H*86400+%T,PSGBCSHH=%H_","_%T
+"RTN","PSGNE3",110,0)
+ .S X=PSGBCLDT D H^%DTC S PSGBCLDT=%H*86400+%T,PSGBCLHH=%H_","_%T
+"RTN","PSGNE3",111,0)
+ .;Sched Admin Time
+"RTN","PSGNE3",112,0)
+ .I PSGBCSCH D
+"RTN","PSGNE3",113,0)
+ ..;Check admin times/freq
+"RTN","PSGNE3",114,0)
+ ..I AT D  Q:PSGBST
+"RTN","PSGNE3",115,0)
+ ...S PSGBSAT=$P($P(PSGBCADM,"^",1),".",2) Q:'PSGBSAT
+"RTN","PSGNE3",116,0)
+ ...I $L(PSGBSAT)=1 S PSGBSAT=PSGBSAT*10
+"RTN","PSGNE3",117,0)
+ ...I ((PSGBSAT<PSGBCLIT)!(PSGBCSCD<PSGBCLID))&(PSGBCSCD'>PSGBCLID) S PSGBSAT=PSGBCLIT  ;&(PSGBCFR<86400)
+"RTN","PSGNE3",118,0)
+ ...S PSGBNAT=""
+"RTN","PSGNE3",119,0)
+ ...I ($L($P(AT,"-",1))=4)&($L(PSGBSAT)'=4) S PSGBSAT=PSGBSAT_$E("00",1,4-$L(PSGBSAT))
+"RTN","PSGNE3",120,0)
+ ...F PSGBSATN=1:1 S PSGBNAT=$P(AT,"-",PSGBSATN) Q:PSGBNAT=""  I PSGBNAT>PSGBSAT Q
+"RTN","PSGNE3",121,0)
+ ...;If DOW
+"RTN","PSGNE3",122,0)
+ ...I ("SU-MO-TU-WE-TH-FR-SA"[$P(SCH,"-",1)) D  Q:PSGBST
+"RTN","PSGNE3",123,0)
+ ....;Get TODAY
+"RTN","PSGNE3",124,0)
+ ....D NOW^%DTC I '$L(PSGBNAT),PSGBCSCD'<X S X1=X,X2=1 D C^%DTC
+"RTN","PSGNE3",125,0)
+ ....S PSGBCTDD=X D DW^%DTC S PSGBCTDY=$E(X,1,2)
+"RTN","PSGNE3",126,0)
+ ....K PSGBCTMP F PSGBCTMP="SU:1","MO:2","TU:3","WE:4","TH:5","FR:6","SA:7" S PSGBCTMP($P(PSGBCTMP,":",1))=$P(PSGBCTMP,":",2),PSGBCTMP($P(PSGBCTMP,":",2))=$P(PSGBCTMP,":",1)
+"RTN","PSGNE3",127,0)
+ ....;DAY of Last Admin
+"RTN","PSGNE3",128,0)
+ ....S X=PSGBCSCD D DW^%DTC S PSGBCTDA=$E(X,1,2) I PSGBCSCD<PSGBCTDD S PSGBCTDA=PSGBCTDY
+"RTN","PSGNE3",129,0)
+ ....;Get Next Day in Sched
+"RTN","PSGNE3",130,0)
+ ....S PSGDAYC=PSGBCTMP(PSGBCTDA),(PSGBDNXT,X)=""
+"RTN","PSGNE3",131,0)
+ ....F X=PSGDAYC:1:7 I SCH[$G(PSGBCTMP(X)) S PSGBDNXT=PSGBCTMP(X) Q
+"RTN","PSGNE3",132,0)
+ ....I '$L(PSGBDNXT) S PSGBDNXT=$P(SCH,"-",1)
+"RTN","PSGNE3",133,0)
+ ....;Set new Start Day
+"RTN","PSGNE3",134,0)
+ ....S PSGBCTDY=PSGBCTMP(PSGBCTDY)
+"RTN","PSGNE3",135,0)
+ ....S PSGBDNXT=PSGBCTMP(PSGBDNXT)
+"RTN","PSGNE3",136,0)
+ ....S X2=PSGBDNXT-PSGBCTDY I X2<0 S X2=(7-PSGBCTDY)+PSGBDNXT
+"RTN","PSGNE3",137,0)
+ ....S X1=PSGBCTDD D C^%DTC  ;Add # of days
+"RTN","PSGNE3",138,0)
+ ....I +X S PSGBST=X_"."_($S('$L(PSGBNAT)!(PSGBCLID'=X):$P(AT,"-",1),1:PSGBNAT))
+"RTN","PSGNE3",139,0)
+ ....Q
+"RTN","PSGNE3",140,0)
+ ...;IF no Next Admin
+"RTN","PSGNE3",141,0)
+ ...I (('PSGBNAT)&(PSGBCFR))!((PSGBCFR>86399)&(PSGBCSCD<PSGBCLID)) S X1=$S(PSGBCFR<86400:PSGBCLID,1:PSGBCSCD),X2=$S(PSGBCFR<86400:1,1:PSGBCFR/60/60/24) D C^%DTC S PSGBST=+X_"."_($S(PSGBNAT:PSGBNAT,1:$P(AT,"-",1))) Q
+"RTN","PSGNE3",142,0)
+ ...S PSGBST=PSGBCSCD_"."_PSGBNAT
+"RTN","PSGNE3",143,0)
+ ...Q
+"RTN","PSGNE3",144,0)
+ ..I 'PSGBCFR Q
+"RTN","PSGNE3",145,0)
+ ..;Add Freq
+"RTN","PSGNE3",146,0)
+ ..S PSGBST=PSGBCSCH+PSGBCFR,PSGBST=(PSGBST\86400)_","_(PSGBST#86400)
+"RTN","PSGNE3",147,0)
+ ..I $P(PSGBST,",",2)<3600 S $P(PSGBST,",",2)=3600
+"RTN","PSGNE3",148,0)
+ ..;If next day
+"RTN","PSGNE3",149,0)
+ ..I $P(PSGBST,",",2)<3600 S %H=$S(+PSGBST=+PSGBCSHH:+PSGBST,1:PSGBST-1)_",86400"
+"RTN","PSGNE3",150,0)
+ ..S %H=PSGBST D YMD^%DTC S PSGBST=X_(+$E(%,1,5))
+"RTN","PSGNE3",151,0)
+ ..I PSGBST<LI S PSGBST="" Q
+"RTN","PSGNE3",152,0)
+ ..;If the date/time is > than the First admin
+"RTN","PSGNE3",153,0)
+ ..I AT,($P(PSGBST,".",1)>PSGBCLID) D
+"RTN","PSGNE3",154,0)
+ ...S PSGBSAT=$P(PSGBST,".",2) I $L(PSGBSAT)=1 S PSGBSAT=PSGBSAT*10
+"RTN","PSGNE3",155,0)
+ ...S PSGBSATN=$P(AT,"-",1)  ;First admin TIME
+"RTN","PSGNE3",156,0)
+ ...I PSGBSAT>PSGBSATN S PSGBST=$P(PSGBST,".",1)_"."_PSGBSATN
+"RTN","PSGNE3",157,0)
+ ...Q
+"RTN","PSGNE3",158,0)
+ ..Q
+"RTN","PSGNE3",159,0)
+ .;Future Date?
+"RTN","PSGNE3",160,0)
+ .I (PSGBST)&((PSGBST<LI)!(($P(PSGBCADM,"^",1)+.0001)>PSGBST)) D
+"RTN","PSGNE3",161,0)
+ ..S INFO=($S(($P(PSGBCADM,"^",1)+.0001>PSGBST):$P(PSGBCADM,"^",1)+.0001,1:$G(LI)))_U_($G(PSGFD))_U_($G(PSGSCH))_U_($G(PSGST))_U_($G(PSGPDRG))_U_($G(PSGS0Y))
+"RTN","PSGNE3",162,0)
+ ..S PSGBST=$$ENQ^PSJORP2(PSGP,INFO)
+"RTN","PSGNE3",163,0)
+ ..I PSGBST<LI S PSGBST="" Q
+"RTN","PSGNE3",164,0)
+ ..Q
+"RTN","PSGNE3",165,0)
+ .;No Sched time
+"RTN","PSGNE3",166,0)
+ .I PSGBCLDT,PSGBCFR,'PSGBCSCH D  Q
+"RTN","PSGNE3",167,0)
+ ..;Add Freq
+"RTN","PSGNE3",168,0)
+ ..S PSGBST=PSGBCLDT+PSGBCFR,PSGBST=(PSGBST\86400)_","_(PSGBST#86400)
+"RTN","PSGNE3",169,0)
+ ..I $P(PSGBST,",",2)<3600 S $P(PSGBST,",",2)=3600
+"RTN","PSGNE3",170,0)
+ ..I $P(PSGBST,",",2)#3600 S PSGBTT=$P(($P(PSGBST,",",2)/3600)+1,".",1)*3600,$P(PSGBST,",",2)=PSGBTT
+"RTN","PSGNE3",171,0)
+ ..;If next day
+"RTN","PSGNE3",172,0)
+ ..I $P(PSGBST,",",2)<3600 S %H=$S(+PSGBST=+PSGBCLHH:+PSGBST,1:PSGBST-1)_",86400"
+"RTN","PSGNE3",173,0)
+ ..S %H=PSGBST D YMD^%DTC S PSGBST=X_(+$E(%,1,3))
+"RTN","PSGNE3",174,0)
+ ..I PSGBST<LI S PSGBST="" Q
+"RTN","PSGNE3",175,0)
+ ..Q
+"RTN","PSGNE3",176,0)
+ ;BHW;PSJ*5*179;END
+"RTN","PSGNE3",177,0)
+ I ($P($G(PSJSYSW0),U,5)="")!($P($G(PSJSYSW0),U,5)=2) Q LI
+"RTN","PSGNE3",178,0)
+ S:SCH["PRN" AT=""
+"RTN","PSGNE3",179,0)
+ N INT,PSG S:(SCH'["PRN"&(SCH'?1"Q".N1"H")&(LI'=OSD)&('AT)&($G(PSGST)'="O")) AT=$E(OSD,9,10) S OSD=$E(OSD,1,10)
+"RTN","PSGNE3",180,0)
+ S INT=$S(SCH="QD":24,SCH="QOD":48,SCH="QH":1,SCH?1"Q".N1"D":(+$P(SCH,"Q",2)*24),SCH?1"Q".N1"H":+$P(SCH,"Q",2),LI=OSD:24,1:24)
+"RTN","PSGNE3",181,0)
+ S:INT=24 OSD=$$FMADD^XLFDT(LI,0,-INT,0,0)
+"RTN","PSGNE3",182,0)
+ I 'AT,INT>23 S:$P(PSJSYSW0,U,5)!($E(LI,11,12)>30) AT=$E($$FMADD^XLFDT(LI,0,1,0,0),9,10) S:AT="00" AT=24 S:'AT AT=$E(LI,9,10)
+"RTN","PSGNE3",183,0)
+ I SCH?1"Q".N1"H",'AT S ND=OSD,PSG(+ND)="" S:(INT>24)&('$G(PSJREN)) INT=24 S DAYS=INT\24,HRS=(-INT\24*24+INT) F  S ND=$$FMADD^XLFDT(ND,DAYS,HRS),PSG(+ND)="" Q:ND>LI
+"RTN","PSGNE3",184,0)
+ Q:INT=24&'$L(AT,"-") $E(LI,1,8)_AT
+"RTN","PSGNE3",185,0)
+ I '$O(PSG(LI)) S X=$S(OSD>1:OSD,LI>1:LI,1:$$DATE^PSJUTL2) D
+"RTN","PSGNE3",186,0)
+ .F  S ND=X D  Q:ND>LI  S:(INT>24)&('$G(PSJREN)) INT=24 S DAYS=INT\24,HRS=(-INT\24*24+INT) S X=$$FMADD^XLFDT($S($P(ND,".",2)=24:$P(ND,".")_".23",1:ND),DAYS,HRS) S:$P(X,".")'>$P(ND,".") X=$$FMADD^XLFDT(X,1,0,0,0)
+"RTN","PSGNE3",187,0)
+ ..F Y=1:1 S AT1=$P(AT,"-",Y) Q:'AT1  S ND=ND\1_"."_AT1,PSG(+ND)=""
+"RTN","PSGNE3",188,0)
+ Q:$P(PSJSYSW0,U,5) $O(PSG(LI))
+"RTN","PSGNE3",189,0)
+ S INT="" F ND=0:0 S ND=$O(PSG(ND)) S X=$$FMDIFF^XLFDT(LI,ND,2) S:X<0 X=-X Q:INT&(X'<INT)  S INT=+X,OND=ND Q:INT=0
+"RTN","PSGNE3",190,0)
+ Q $S($G(OND):OND,1:LI)  ;Use login time if OND is null PSJ*5*193
+"VER")
+8.0^22.2
+"BLD",10942,6)
+^325
+**END**
+**END**
+

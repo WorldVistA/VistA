@@ -1,0 +1,194 @@
+$TXT Created by                W at PREMV.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 12/11/18 at 15:36
+=============================================================================
+Run Date: JAN 08, 2019                     Designation: PSO*7*550
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #447                      Status: Released
+                  Compliance Date: JAN 10, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*508   <<= must be installed BEFORE `PSO*7*550'
+
+Subject: INBOUND ERX PSORENW AND PSORENW4 REPAIR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSO*7*508 was released, inadvertently removing logic in PSORENW and 
+ PSORENW4. These routines have been repaired to reintroduce the changes 
+ made in PSO*7*504 and re-apply the modifications related to PSO*7*508, 
+ bringing the routines to the correct state.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ <List each Defect Tracking System Ticket, and include a description of 
+ the problem and the resolution.>
+  
+ 1. 874287 - PSO*7.0*508 Missing PSO*7.0*504 on 2nd line of routine PSORENW
+  
+ Problem:
+ -------
+ PSO*7*508 released two routines that erroneously removed changes made to 
+ those routines in patch PSO*7*504.
+  
+ Resolution:
+ ----------
+ PSORENW and PSORENW4 (from PSO*7*504) have been restored, then the 
+ modifications made by patch PSO*7*508 were re-applied to the correct 
+ versions of these routines.
+  
+ Test Sites:
+ ----------
+ FAYETTEVILLE
+ MEDS BY MAIL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title   File Name       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  1. Choose the PackMan message containing this patch.
+   
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+   
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may select to use the
+     following options.
+     
+     When prompted for the INSTALL NAME enter the patch # (PSO*7.0*550):
+  
+     a. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+        If you receive the following message, it is okay to 
+        proceed: *** WARNING, you are missing one or more Patches ***. 
+        This message is produced due to the fact that the second line of
+        each routine is missing patch 504 prior to install.
+  
+     b. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the
+        transport global.
+  
+  4. Select the installation option Backup a Transport Global. This
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+  5. From the Installation Menu, select the Install Package(s)
+     option and choose the patch to install.
+  
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Respond NO 
+  
+  7. If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Respond NO
+  
+  8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out Procedures
+ -------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed-up routines can be loaded with the "Xtract PackMan"
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed-up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*550 patch has been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*550 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORENW
+    Before: B49878168   After: B51301339  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313,411,
+                                           504,508,550**
+Routine Name: PSORENW4
+    Before: B68530272   After: B76190857  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411,444,504,508,
+                                           550**
+ 
+Routine list of preceding patches: 508
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 06, 2018
+Completed By:                               Date Completed: JAN 08, 2019
+Released By :                               Date Released : JAN 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

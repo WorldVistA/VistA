@@ -1,0 +1,224 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/04/18 at 07:50
+=============================================================================
+Run Date: JAN 09, 2019                     Designation: PRCA*4.5*344
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #300                    Status: Released
+                  Compliance Date: FEB 09, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*340<<= must be installed BEFORE `PRCA*4.5*344'
+
+Subject: CS BATCH RUN: 5B MAIL MESSAGE HANDLING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PRCA*4.5*344 addresses 1 issue:
+  
+ 1. Weekly cross-service batch run does not handle multiple 5B transactions
+    properly.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name           New/Modified/Deleted
+ ---------------------           --------------------
+ N/A                             N/A
+   
+   
+ Parameter Definitions Associated:
+   
+ Parameter Name           New/Modified/Deleted
+ --------------           --------------------
+ N/A                      N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC2158982 - Weekly cross-service batch run does not handle multiple 5B
+                 transactions properly
+  
+  
+ Problem:
+ --------
+ A weekly Cross-Service (CS)  mailman message string was sent to 
+ Austin Information Technology Center (AITC) for processing and
+ their processing rejected one of the mail messages from the batch
+ due to a non-compliant size that exceeded the 60 transactions
+ record count allowable.
+  
+  
+ Analysis found that the message handling for 5B decrease transactions
+ did not have the same record count control that the regular bill updates
+ used.
+  
+ Since AITC tosses the unmanageable mail message aside, VAMC sites CS bill
+ updates never get sent to Treasury. However, VistA updates the bills at
+ the site which causes an unreconcilable situation with manual intervention
+ needed by the Tier 3 support team, to reset the bills linked to the
+ unhandled mail message transactions.
+  
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to ensure that the same record
+ count control used for updates is also used when handling the 5B updates 
+ from the batch run.
+  
+  
+ Routines: RCTCSP2
+  
+  
+ TEST SITES:
+ -----------
+ VA Greater Los Angeles HCS 
+ Montana VA HCS 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than five minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*344)
+   
+       a.  Verify Checksums in Transport Global - This option allows
+           you to ensure the integrity of the routines that are in the
+             transport global.
+       b.  Print Transport Global - This option allows you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option 
+           allows you to view all changes that are made when this 
+           patch is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option creates a backup
+           message of any routines exported with this patch. It will not
+  
+     4. Use the Install Package(s) option and select the package
+        PRCA*4.5*344.
+  
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+  
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", hit ENTER.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCTCSP2
+    Before:B128258214   After:B135421242  **301,315,339,340,344**
+ 
+Routine list of preceding patches: 340
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2018
+Completed By:                               Date Completed: JAN 08, 2019
+Released By :                               Date Released : JAN 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,174 @@
+
+=============================================================================
+Run Date: JAN 24, 2019                     Designation: MHV*1*39
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #32                      Status: Released
+                  Compliance Date: FEB 25, 2019
+=============================================================================
+
+
+Subject: MYHEALTHEVET MINOR RELEASE MHV_2019.0.1.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MyHealtheVet Combined Core Development/Sustainment (Sprint 85) Minor Release 
+ (MHV_2019.0.1.0.0) will be promoted to the MHV Production environment on
+ Saturday, January 26th, 2019 starting at 10:00 PM EST.
+ 
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ SM ENHANCEMENTS/DEFECTS
+ JAZZ 860227     SM Patient and Preferences Enhancements -  Patient Preferences
+                 Contact List based on preference settings Graphic User
+ Interface
+                 (GUI) changes, Set preferences for Triage Group GUI changes
+ JAZZ 862570     (Prod Defect):  SM Messages older than 365 days - Preferences
+                 Finding - System continues to display all messages in the
+                 table.  It appears that when user changes their preferences, 
+                 only the number of Unread messages changes in the left-hand 
+                 navigation (Inbox, Drafts, and Deleted) but not the actual 
+                 messages displayed in the table.
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS/DEFECTS
+ JAZZ 874594     Enable ChampVA Beneficiaries 741MM Facilities - Enable existing
+                 users with 741MM Facility need to have ChampVA relationship in
+                 the profile (Implementer)
+ JAZZ 871772     Enable ChampVA Beneficiaries to access MHV National Portal 
+                 Prescriptions and Submit Refills
+ JAZZ 854989     UAT Finding: RX refill page - Icon displayed if prescription 
+                 cannot be refilled. Hover over does not work on mobile devices
+ 
+ ADMIN PORTAL ENHANCEMENTS/DEFECTS
+ JAZZ 833533     Automatically Deactivate MHV Admin Portal VA Staff that have a
+                 Termination Date
+ JAZZ 833535     Admin Portal user will be able to update their Profile Page in
+                 Admin Portal and Add/Edit their Phone Number, Title and/or 
+                 Termination Date
+ JAZZ 833540     Role Administrator will be able to View/Add/Edit the MHV VA 
+                 Staff Members Profile Information
+ JAZZ 871428     Increase Comments size in Employee Evault Table and Update 
+                 Deactivation Job
+ JAZZ 870881     (Prod Defect) - Manage VA Staff - The Value being displayed
+                 for Last Login Date is not correct
+ 
+ DATABASE ENHANCEMENTS
+ JAZZ 833535     New user profile page in Admin portal and add/edit my phone
+                 number, Title and/or Termination date.
+ JAZZ 860227     SM Patient Preferences Enhancements
+ JAZZ 861530     Add logic to email section of the deactivation procedure for
+                 terminated employees
+ JAZZ 871772     Enable ChampVA beneficiaries to access MHV National Portal 
+                 Prescriptions and Submit refills
+ JAZZ 874594     ChampVA Phase 4: Existing users with 741MM facility need to
+                 have ChampVA relationship in the profile
+ 
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS:
+ JAZZ 872673    MHV Single Sign On (SSO) users should be Presented the MHV
+                Terms and Conditions (T&C)
+ 
+ DATABASE ENHANCEMENTS:
+ JAZZ 859656    Blue Button Shall Pull All Active VA Medications
+ 
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ MHV/API NATIONAL PORTAL ENHANCEMENTS/DEFECTS
+ JAZZ 856273     Wellness Reminders:  GUI new content is displayed in two areas
+                 of the Blue Button Portlet informing users that their Wellness
+                 Reminders are not currently updated, and new content based on 
+                 whether Historical Data is present or not.   Wellness Reminder
+                 Portlet was removed and replaced with a simple content page 
+                 and new content will re-direct users where to get the new 
+                 information is located (Added 3 Active Links).
+ JAZZ 826899     MHV Appointments -  2 New User Fields -  Clinic Telephone 
+                 Extension and More Recognizable Clinical Name on Appointments
+                 Module, Health Calendar, Blue Button Reporting, Appointment 
+                 Print, Health Calendar Print, User Guide and Help files.
+                 Revised Information content and re-label existing field in 
+                 Email Reminder.
+ JAZZ 894300     Blue Button Medical Imaging (BBMI)/Blue Button:  Scan for files
+                 with 9 digit Social Security Numbers as well as the 3-2-4 
+                 Digit Patterns
+ 
+ DATABASE ENHANCEMENTS
+ JAZZ 826899     MHV Appointment -New User Fields
+ JAZZ 852631     Add 3 new columns to the PHR_APPOINTMENT table (TELEPHONE,
+                 EXTENSION, TYPE OF VISIT, LOCATION PATIENT FRIENDLY NAME)
+ JAZZ 856276     Blue Button Display of Wellness Reminders Content
+ 
+ ================================================================
+ Technical Debt Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ N/A
+        
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+ 
+ MHV NATIONAL PORTAL ENHANCEMENTS
+ JAZZ 726832    Resolve BlueButton Low Fortify Issues - Poor Logging Practice:
+                Use of a System Output Stream
+ JAZZ 746116    When MHV cannot reach a medical center, users should always 
+                be able to see their Rx in their eVault instead of seeing 
+                "no record found"
+ JAZZ 849057    Updating My profile information - If an Error occurs the 
+                system clears out all the other fields that were entered.  
+                Losing work already done  
+ JAZZ 851025    Health Calendar Add Event displays HTML Code
+ JAZZ 852710    My Links will display same link twice on window
+ JAZZ 864278    Health History Self-Entered Allergies shows encoded characters
+                when you Edit, Print or Delete the contents
+ JAZZ 865627    Use consistent spelling of "labeled" Download My Data 
+                selection page
+ JAZZ 872381    Fix RxProfileDecoder class that throws 
+                ArrayIndexOutOfBoundsException when parsing Provider from
+                HL7/RDT segment of VistA message
+ JAZZ 888906    Reduce the logging level from WARN to INFO inside the 
+                RxRefillResultsDecoder class when a Division with a 
+                non-numeric value is encountered
+ 
+ LEGACY SM 
+ JAZZ 821728    SM - Modify search algorithm to accept accounts with Status
+                value = 1 (Opt In) or 4 (Manually Associated)
+ 
+ MISCELLANEOUS ENHANCEMENTS
+ N/A
+ 
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ MHV Documentation can be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 10, 2019
+Completed By:                               Date Completed: JAN 24, 2019
+Released By :                               Date Released : JAN 24, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
