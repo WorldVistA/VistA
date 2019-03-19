@@ -1,0 +1,167 @@
+$TXT Created by               F at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 11/02/18 at 14:20
+=============================================================================
+Run Date: JAN 23, 2019                     Designation: PSJ*5*378
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #325                      Status: Released
+                  Compliance Date: FEB 23, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*378'
+
+Subject: UNIT DOSE START/DATE TIME CALCULATION WRONG
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC2264488 - Medication order start times and BCMA admin times are before the
+              date/time the order was signed
+      
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2264488 - Medication order start times and BCMA admin times are before the
+              date/time the order was signed
+          
+ Problem: 
+ --------
+ The Robley Rex VA Medical Center reported that medication orders are showing
+ start date/times BEFORE the signature date/time of the order. This causes
+ meds to be due for administration in BCMA for a past time when the order did
+ not even exist. It appears as though patients are missing meds. Thus far
+ orders have been isolated to our 4S MED hospital ward and all identified
+ orders have been in the Unit Dose package.
+       
+ Resolution:
+ -----------
+ The primary reason the Robley Rex VAMC experienced this problem is because
+ the 4S MED was not configured in the Inpatient Ward Parameters Edit [PSJ IWP
+ EDIT] option where the parameter DEFAULT START DATE CALCULATION used to
+ calculate the default start date/time for an order is set. The other reason
+ is that once they processed two orders at the same time for the same ward
+ the default value for the parameter was getting overwritten when they tried
+ to finish the second order. This patch corrects this issue. 
+   
+ Technical Resolution:
+ ---------------------
+ Changed the line ENSD+99^PSGNE3 to check only the 5th piece of the PSJSYSW0
+ variable since it contains all ward parameters and after the user finished
+ the first order it was getting set with multiple up-carets ("^^^^^^^^^^"). 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ Oklahoma City VAMC
+ Louisville VAMC   
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSJ*5.0*378):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGNE3
+    Before: B86381204   After: B86543610  **4,26,47,50,63,69,105,80,111,
+                                           183,193,179,275,378**
+ 
+Routine list of preceding patches: 275
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 18, 2018
+Completed By:                               Date Completed: JAN 23, 2019
+Released By :                               Date Released : JAN 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

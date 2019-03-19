@@ -1,0 +1,178 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 08/23/18 at 08:23
+=============================================================================
+Run Date: OCT 16, 2018                     Designation: PSO*7*539
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #440                      Status: Released
+                  Compliance Date: NOV 16, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*466   <<= must be installed BEFORE `PSO*7*539'
+
+Subject: PRINT FROM SUSPENSE FILE <UNDEFINED> ERROR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+              was closed without assistance
+       
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+              was closed without assistance
+ INC0998874 - LON Cannot Print to suspense/ clear old records from RX suspense
+ (Duplicate)  file death causing suspense print to error out.
+ INC0785349 - suspense function in Vista is not working 
+ (Duplicate) 
+ INC0411672 - PSO OPTION NOT WORKING
+ (Duplicate) 
+ INC0301071 - TUA - prescriptions not printing
+ (Duplicate) 
+ INC0190642 - CA SDM Ticket I18597371FY18 moved to SN. UNABLE TO RUN FULL LIST
+ (Duplicate)  SUSPENSE FUNCTION
+         
+ Problem: 
+ --------
+ The Marion VA Medical Center reported getting an <UNDEFINED> error when trying
+ to print local labels in the RX SUSPENSE file (#52.5). Upon further analysis
+ it was determined that a bad "AC" cross-reference entry in the RX SUSPENSE
+ file (#52.5) is causing the problem. Although the cross-reference is set, the
+ record it is pointing to is no longer present on the file which consequently
+ causes the routine PSOSULBL to error out with an <UNDEFINED> error at BEG+6.
+         
+ Resolution:
+ -----------
+ The reason why the "AC" cross-reference entry was not deleted along with the
+ original record could not be identified. However, this patch modifies the
+ routine PSOSULBL to prevent the <UNDEFINED> error from happening when the
+ corrupted "AC" cross-reference is present. Furthermore, the PSOSULBL routine
+ was also modified to clean up the corrupt "AC" cross-reference.
+   
+ Technical Resolution:
+ ---------------------
+ Changed the routine PSOSULBL at line tag BEG and TMP to prevent the
+ <UNDEFINED> error and to kill off the corrupt "AC" cross-reference entry.
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ Long Beach VAMC
+ Maine VAMC   
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+  
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*539):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOSULBL
+    Before:B101436426   After:B104789141  **139,173,174,148,200,260,264,
+                                           287,289,290,354,421,370,427,
+                                           466,539**
+ 
+Routine list of preceding patches: 466
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 20, 2018
+Completed By:                               Date Completed: OCT 16, 2018
+Released By :                               Date Released : OCT 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

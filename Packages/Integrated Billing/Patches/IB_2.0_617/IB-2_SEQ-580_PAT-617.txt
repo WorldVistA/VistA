@@ -1,0 +1,212 @@
+
+=============================================================================
+Run Date: JAN 15, 2019                     Designation: IB*2*617
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #580                      Status: Released
+                  Compliance Date: FEB 15, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*550    <<= must be installed BEFORE `IB*2*617'
+                    (v)IB*2*592    <<= must be installed BEFORE `IB*2*617'
+
+Subject: MCCF EDI TAS EPHARMACY BUILDS 5 & 6
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*512
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*24
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*617
+    PHARMACY DATA MANAGEMENT V. 1.0                       PSS*1.0*214
+  
+ All four of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSS BUNDLE 12.0
+   KIDS Host File name: BPS_1_24_PSO_IB_PSS.KID
+  
+  
+ This patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. Several enhancements are being made to these ECME reports:  Payable 
+      Claims; Reversal Claims; Claims Submitted, Not Yet Released; Closed
+      Claims; and Non-Billable Status.  To support these ECME report
+      enhancements, Integrated Billing is being updated.
+  
+   2. The system will be updated to support new and modified data
+      elements from the National Council for Prescription Drug Programs
+      (NCPDP) Implementation Guide versions published through October 2017.
+  
+   3. Third Party Joint Inquiry (TPJI) will be modified to display the 
+      pharmacy NPI for paper pharmacy claims.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ GROUP INSURANCE PLAN (#355.3)
+                             DATE LAST MATCHED (#1.07)                New
+                             LAST MATCHED BY (#1.08)                  New
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+  
+                                                           New/Modified/
+ List Templates                 File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  https://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ *ECME Deploy Install Rollback Guide (BPS*1*24)
+                                        BPS_1_0_P24_IG.PDF       Binary
+  
+ *A single Release Notes document will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*24.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNRP
+    Before: B23991702   After: B36716559  **251,516,550,617**
+Routine Name: IBCNRPM1
+    Before:  B7640127   After:  B8669484  **251,516,617**
+Routine Name: IBCNRPM2
+    Before: B20472874   After: B32798094  **251,276,550,617**
+Routine Name: IBJTCA1
+    Before: B59576910   After: B63894628  **39,80,106,137,223,276,363,
+                                           384,432,452,473,497,521,516,
+                                           592,617**
+Routine Name: IBJTRX
+    Before: B86052927   After: B87956137  **435,452,494,521,617**
+Routine Name: IBNCPDP1
+    Before:B179115393   After:B180640575  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452,473,
+                                           494,534,550,617**
+Routine Name: IBNCPEV3
+    Before: B30560136   After: B38344902  **534,617**
+ 
+Routine list of preceding patches: 550, 592
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 02, 2018
+Completed By:                               Date Completed: JAN 15, 2019
+Released By :                               Date Released : JAN 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,286 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/22/18 at 15:03
+=============================================================================
+Run Date: JAN 14, 2019                     Designation: IB*2*632
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #579                      Status: Released
+                  Compliance Date: JAN 31, 2019
+=============================================================================
+
+
+Subject: PHARMACY ADMINISTRATIVE FEE UPDATE FOR CY2019
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch, IB*2.0*632, will update the administrative charge based on
+ different rate types with new dispensing fee for third party pharmacy
+ prescription claims with an effective date of January 1st, 2019.
+  
+     Rate Type                 Dispensing Fee
+     -------------------       --------------
+     DENTAL REIMB. INS.            17.66
+     HUMANITARIAN                  17.66
+     HUMANITARIAN REIMB. INS.      17.66
+     INELIGIBLE                    17.66
+     INELIGIBLE REIMB. INS.        17.66
+     INTERAGENCY                   17.66
+     NO FAULT INS.                 17.66
+     REIMBURSABLE INS.             17.66
+     TORT FEASOR                   17.66
+     WORKERS' COMP.                17.66
+     TRICARE                       14.73
+     TRICARE REIMB. INS.           14.73
+  
+  
+ Patch Components:
+ ----------------- 
+   
+ Files & Fields Associated:
+   
+   
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+   
+ Forms Associated:
+   
+   
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+   
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+   
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+   
+   
+ Protocols Associated:
+   
+   
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+   
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+   
+  
+ Parameter Definitions Associated:
+    
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+   
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================ 
+ 1. INC1870769-Initiate IB RX Administration Fee patch for CY19
+  
+    Problem:
+    --------
+    The Office of Community Care has requested an update to the pharmacy
+    administrative charge for different rate types for outpatient pharmacy
+    with an effective date of January 1st, 2019.
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P632 was created to inactivate rate schedules
+    containing the RX COST charge set for rate types: Dental Reimbursable
+    Insurance, Humanitarian, Humanitarian Reimbursable Insurance, Ineligible,
+    Ineligible Reimbursable Insurance, Interagency, No Fault Insurance,
+    Reimbursable Insurance, Tort  Feasor and Workers' Compensation with an
+    inactive date of December 31, 2018.
+  
+    It also adds the new rate schedules with the administrative fee starting
+    on January 1st, 2019 in the RATE SCHEDULE (#363) file.
+   
+ 2. INC2128666-TRICARE Pharmacy Administrative Fee for 2019 
+  
+    Problem:
+    --------
+    The Office of Community Care has requested an update of the pharmacy
+    administrative fee for the Tricare and Tricare Reimbursement Insurance
+    rate types with an effective date of January 1st, 2019.
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P632 was created to inactivate rate 
+    schedules containing the RX COST charge set for rate types: Tricare and
+    Tricare Reimbursable Insurance.
+  
+  
+ **************************************************************************
+ Note: This patch will NOT update any Rate Schedules if any Rate Types are
+ currently set to INACTIVE.  Please verify with Facility Revenue Manager(s)
+ and local Veterans Information Systems and Technology Architecture (VistA)
+ support to ACTIVATE any Rate Types as needed.
+ **************************************************************************
+  
+  
+ TEST SITES:
+ ===========
+ Bay Pines VA Healthcare System
+ Chillicothe VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+   
+   
+ Patch Installation:
+ ===================   
+   
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+      
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+      
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch IB*2.0*632:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+      
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+      
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+      
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine IB20P628 from your production system after the 
+ patch has been successfully verified.
+   
+ Use the 'Install File Print' option to review the updates and ensure
+ that the install has been completed. For an example:
+  
+ Note: If results show otherwise, please check the settings of the
+       rate schedules for the rate types in RATE SCHEDULE (#363) file
+       or log a ticket with The Enterprise Service Desk for assistance.
+  
+ IB*2.0*632 Post-Install starts.....
+  
+   >>>Effect. JAN 01, 2019 of RX Rate Schedule Adjustment for the Rate Type:
+     
+        DENTAL REIMB. INS. added
+        HUMANITARIAN added
+        HUMANITARIAN REIMB. INS. added
+        INELIGIBLE added
+        INTERAGENCY added
+        INELIGIBLE REIMB. INS. added
+        NO FAULT INS. added
+        REIMBURSABLE INS. added
+        TORT FEASOR added
+        WORKERS' COMP. added
+        TRICARE added
+        TRICARE REIMB. INS. added
+   
+      Total 12 entries added to the Rate Schedule file (#363)
+   
+ IB*2.0*632 Post-Install is complete.
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ The Enter/Edit Charge Master option [IBCR DISPLAY CHARGE MASTER] can be
+ used to remove the newly added rate schedules for those rate types under
+ the Charge Master menu. Or contact Help desk to log a ticket for
+ assistance if it is necessary.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P632
+    Before:       n/a   After: B10977808  **632**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 11, 2018
+Completed By:                               Date Completed: JAN 10, 2019
+Released By :                               Date Released : JAN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

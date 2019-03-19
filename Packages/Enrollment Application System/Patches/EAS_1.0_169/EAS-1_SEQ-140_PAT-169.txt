@@ -1,0 +1,387 @@
+
+=============================================================================
+Run Date: NOV 19, 2018                     Designation: EAS*1*169
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #140                      Status: Released
+                  Compliance Date: DEC 20, 2018
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.4 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.4. This release, developed in Java
+ technology, contains Enrollment System Modernization (ESM) Phase 2 
+ development and upgrade efforts, including enhancements to support 
+ Community Care (CC) and ES Sustainment.
+  
+ ES 5.4 was successfully deployed on Saturday, November 17th, 2018.
+  
+ The following functionality is updated in this ES 5.4 release:
+  
+ ESM:
+ 1. ES is updated to no longer filter outgoing Z05 Demographic Data 
+    Transmission HL7 messages to VistA sites based on sender or content. 
+    Changes include updating the decision filter process for sending an 
+    ORU~Z05 message (Change Request - 768318).
+ 2. ES is modified to send the Reason for Early Separation Code along with 
+    the Reason for Early Separation Description to VistA REE for each
+    Military Service Episode.
+ 3. ES is enhanced to allow users to directly access the Veterans Health 
+    Identification Card (VHIC) application. The system will provide the
+    user with the ability to access the VHIC system through a hyperlink
+    (button) (Change Request - 621847).
+ 4. The Future Discharge Date (FDD) received from Military Service Data 
+    Sharing (MSDS) is unreliable. A configurable switch is added to ES so 
+    that ES will check the parameter and only accept the FDD received from 
+    MSDS when it is turned on once data quality issues are resolved (Change
+    Request - 771257).
+  
+ ESCC:
+ 1. Other Health Insurance (OHI) updates and enhancements allow ES to 
+    capture additional OHI fields in ES and then send those fields to
+    VistA.
+ 2. A feature has been added that will allow an ES user to view and 
+    download historical Third-Party Administrator (TPA) and Community Care
+    Network (CCN) data into a comma-separated values (.csv) file format 
+    (Change Request - 619088).
+ 3. In order to send TPA data in a more efficient way and track the status
+    of the TPA file in an automated manner, the mechanism has been changed
+    from SFTP (Secure File Transfer Protocol) to DAS (Data Access Services)
+    for the transfer of the TPA files. The TPA Message Log screen and the
+    CCN Contractor Message Search screen are updated (Change Request -
+    801907). 
+ 4. The distance value display on the CC Determination Page is 
+    updated to display the distance value up to the eighth decimal place. 
+ 5. The Administrative Data Repository (ADR) database is changed to 
+    capture the values for distance, longitude and latitude sent by
+    Planning Systems Support Group (PSSG) instead of explicitly truncating
+    these values.
+ 6. Modifications are made to the Enrollment System Z04 message to: 1) add
+    the Source of information codes: 14 "Purchased Care CHOICE" and 3 "IVM"
+    so the source of information transmits from ES to the VistA insurance
+    buffer. This change provides the Revenue, Insurance Verification Team
+    the ability to differentiate the insurance information received from
+    CCN contractor (code 14) via the Enrollment System and other insurance
+    information sent by the Enrollment System based on online (HCA) and
+    user entry (code 3).  2) Add Insured's DOB on the Z04 segment
+    transmitted from ES to VistA insurance buffer, this is independent of
+    the source of insurance (Change Request - 768328).
+  
+ ODM
+ 1. The ES application is configured to switch from iLog Rules legacy 
+    to ODM Rules so that the application can use either rule set without 
+    having to deploy a new build. All ODM Manage Demographic Validation
+    Rules are integrated into the ES application (Change Request - 776089).
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 704193      Problem: The Enrollment System Community Care (ESCC) Detail 
+             report is missing on the Health Benefit Plan (HBP) if the VCE
+             is set to Mileage and Wait-time, or Hardship and Wait-time.
+             Resolution: Reviewed and modified the SQL statement to correct
+             the report.
+  
+ 704233      Problem: The ESCC Detail Report does not display correctly if
+             the records don't have HBP assigned or records don't have
+             Geocoded data. 
+             Resolution: Modified the SQL statement to correct the report
+             when the records don't have HBP assigned or records don't have
+             Geocoded data.
+  
+ 707276      Problem: "commonEvent" transaction failures are occurring due
+             to incorrect workflow of the outbound message.
+             Resolution: Added a new trigger identity
+             (MessageCaseTriggerIdentity) to route the workflow message
+             case.
+  
+ 726067      Problem: Some records contain Temporary Mailing Address and 
+             Confidential Address when Update Residential/Permanent Mailing
+             Address triggers two ORUZ05 messages.
+             Resolution: Used "result" person instead of "incoming" person
+             to get the address in updateMessageEvents.
+  
+ 727030      Problem: The ORUZ05 sends Business Email Address in lieu of
+             Personal Email Address.
+             Resolution: Corrected the logic for the ORUZ05 message to
+             sites to share Personal Email Address first; if Personal Email
+             Address doesn't exist, then look for Business Email Address.
+  
+ 747231      Problem: The Z04 Health Level 7 (HL7) message does not 
+             immediately trigger when Other Health Insurance (OHI) is
+             received from Community Care Network (CCN).
+             Resolution: Corrected the transaction boundaries for the OHI
+             File Loader Service.
+  
+ 747232      Problem: Not all records received OHI information in ES when
+             Data Access Service (DAS) sent multiple records with OHI
+             information to ES.
+             Resolution: Corrected the transaction boundaries for the OHI
+             File Loader Service.
+  
+ 780561      Problem: Business Event Notification System (BENS) load is 
+             causing massive contention on the QRTZ tables and triggers.
+             Resolution: Stopped BENS messages from starting any clock or
+             trigger event to messageEventQueue. Updated inbound MSDS
+             Master Data Base (MDB) dispatch policy to use the same work
+             manager as BENS so the rate can be better controlled
+             end-to-end.
+  
+ 793942      Problem: Online Help: Non-text content does not have an 
+             equivalent text alternative. 
+             Resolution: Corrected the broken images throughout the Online
+             Help section.
+  
+ 793945      Problem: Online Help: Audio description is not provided for
+             all prerecorded video content in synchronized media.
+             Resolution: The 36 demonstration videos in Online Help have
+             been removed.
+  
+ 793962      Problem: The correct reading sequence cannot be read 
+             (programmatically determined).
+             Resolution: Implemented corrections to reading sequence.
+  
+ 793968      Problem: Text and images do not have a contrast ratio of at
+             least 4.5:1.
+             Resolution: Resolved color contrast issues by implementing the
+             correct ratio.
+  
+ 793975      Problem: VCE Parameters screen: Text and images do not have a 
+             contrast ratio of at least 4.5:1. 
+             Resolution: Cascading Style Sheet (CSS) has been modified to
+             improve the color contrast for the user interface (UI)
+             elements, including the information messages.
+  
+ 793984      Problem: Content functionality is not operable through a
+             keyboard interface.
+             Resolution: Removed (F12) in Home Menu tool tip.
+  
+ 794942      Problem: Bad address check for specific words in address line 
+             1 should be removed.
+             Resolution: Bad address check removed from VCE_Params_Recalc 
+             and VCE_Params_Re-enroll packages.
+  
+ 794955      Problem: Exclusion of records with "Unverified Date of Death
+             indicated from Master Veteran Index (MVI) correlation" mail 
+             stop reason is needed.
+             Resolution: Records with mail stop reason null or mail stop
+             reason not equal to "Unverified Date of Death indicated from 
+             MVI correlation" are included in ETL jobs.
+  
+ 803252      Problem: System Parameter does not display the first parameter
+             "Agent Orange Special Treatment Authority Exp Date:" on the
+             UI.
+             Resolution: System Parameter has been modified to display the
+             first parameter on the UI.
+  
+ 808880      Problem: Nearest Veterans Access, Choice, and Accountability
+             Act (VACAA) Facility fields are missing data if the country is
+             null or Yemen. 
+             Resolution: Modified code to accommodate for null or Yemen.
+  
+ 810851      Problem: Messages to Vet360 do not retry when the system goes 
+             down.
+             Resolution: Added additional conditions in the Vet360 response
+             process for detecting unavailable states.
+  
+ 811035      Problem: The Performance Monitor Logs are empty.
+             Resolution: Corrected the Log4j config to have the appropriate
+             default log level for stop watch logger and performance
+             interceptor classes.
+  
+ 812299      Problem: Duplicate ORUZ05 messages appear upon phone number
+             update in ES.
+             Resolution: Added logic to trigger ORUZ05 decision based on
+             phone type and caller. For Home, Business, Mobile and Fax
+             phone types. No need to trigger ORUZ05 if the caller is not
+             Vet360.
+  
+ 817748      Problem: A duplicate ORUZ05 message is triggered while Coding 
+             Accuracy Support System (CASS) is in "PROCESSING" status when
+             Permanent Mailing Address update is received from VistA via
+             ORUZ07 message.
+             Resolution: Modified code to get address from "result" person
+             instead of "incoming" person.
+  
+  
+ 819844      Problem: It takes more than five minutes to open the CCN 
+             Contractor Message Log page in the pre-production environment.
+             Resolution: Replaced "like in where" clause for Integration
+             Control Number (ICN) with "equal" in the CCN search queries.
+  
+ 820560      Problem: Duplicate ORU-Z05 is triggered when Bad Address
+             Reason Update is received from VistA via an ORU-Z07 message.
+             Resolution: Included Bad Address Reason in address comparison
+             and removed association entity key.
+  
+ 822485      Problem: Query message timeouts are being initiated from
+             VistA.
+             Resolution: Added high priority Java Message Service (JMS)
+             queue publisher for dispatch type "RESPOND" to send as JMS
+             priority of 9 so that query response trigger events are sorted
+             above all the normal "NOTIFY" unsolicited trigger events.
+  
+ 827717      Problem: VOA update erases employment data in ES.
+             Resolution: Modified the Process Demographic Employment
+             Information sub-flow to only do a removal of address if the
+             process isn't from VOA. 
+  
+ 831195      Problem: Logger configuration interface is only displaying
+             loggers that are configured in logj.xml.
+             Resolution: Added loggers from Java Virtual Machine (JVM) to
+             look up from LogManager.
+  
+ 831231      Problem: On TPA File, the Wait-time for Veterans Integrated 
+             Services Networks (VISN) number field shows station name
+             instead of VISN number.
+             Resolution: Modified code to always use VISN_NUMBER.
+  
+ 833670      Problem: On Add a Person (AAP) the Dependency Factors are not
+             being saved after the Accept Changes button is clicked.
+             Resolution: Changed code to used spouse financial details
+             information in AAP.
+  
+ 833671      Problem: On AAP in the Non-Veteran Eligibility Code, the
+             Employee is not displayed on the screen after user accepts
+             changes and returns to the screen.
+             Resolution: Changed code to retrieve the eligibility codes
+             from the list of received eligibilities in the person record
+             (which are independent of the enrollment determination) in
+             scenarios where an enrollment determination does not exist.
+             For scenarios where there is an enrollment determination, the
+             eligibility codes should be populated as they were before.
+  
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.4 Release Notes            ES_5_4_RN.PDF                  binary
+ ES 5.4 User Guide               ES_5_4_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2018
+Completed By:                               Date Completed: NOV 19, 2018
+Released By :                               Date Released : NOV 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

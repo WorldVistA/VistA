@@ -1,0 +1,260 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: GMRC*3*81
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #73                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)GMRC*3*66   <<= must be installed BEFORE `GMRC*3*81'
+                    (v)OR*3*350    <<= must be installed BEFORE `GMRC*3*81'
+                    (v)GMRC*3*73   <<= must be installed BEFORE `GMRC*3*81'
+                    (v)GMRC*3*76   <<= must be installed BEFORE `GMRC*3*81'
+                    (v)GMRC*3*85   <<= must be installed BEFORE `GMRC*3*81'
+
+Subject: RENAME EARLIEST DATE TO CLINICALLY INDICATED DATE
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ A request has been made to rename a field in the CONSULTS/REQUEST
+ TRACKING package (GMRC) and in the Computerized Patient Record System
+ (CPRS) Consult Order Dialog from 'Earliest Appropriate Date' (EAD) to
+ 'Clinically Indicated Date' (CID). This is being done to support new
+ Veterans Access, Control, and Accountability Act (VACAA) guidelines for
+ measuring wait times. 
+  
+ This patch is being released in conjunction with CPRS GUI v30.B 
+ (OR*3*350) and GMTS*2.7*112 which also contain modifications related to 
+ this change request. The following changes are being implemented in this 
+ GMRC patch.  Please refer to the other patches mentioned for items 
+ specific to those patches.
+  
+  a) The new and edit/resubmit order processes for both consult and
+  procedure orders, the SF-513 display and print, and the Consults tab
+  detail display are all updated to use the CID nomenclature.
+  
+  b) The REQUEST/CONSULTATION file (#123) data dictionary is being updated.
+  The EARLIEST DATE field (#17) will be renamed to CLINICALLY INDICATED
+  DATE.
+  
+ The EARLIEST DATE field, more commonly referred to as Earliest 
+ Appropriate Date, was released with GMRC*3.0*66 as part of CPRS GUI v28 
+ and was first used in a production environment (test site) beginning 
+ August 4th, 2010.  Upon release of this GMRC patch, the EARLIEST DATE 
+ field will be renamed to CLINICALLY INDICATED DATE and all consult
+ orders will carry that field name.  For a given VistA system, the 
+ time period for which the field was referred to as EARLIEST DATE begins 
+ with the installation of GMRC*3.0*66 and ends with the installation of 
+ GMRC*3.0*81.
+  
+  
+ LOCAL OBJECTS BASED ON EARLIEST DATE
+ ====================================
+ If your site has created any local data objects based on the EARLIEST DATE
+ field, those objects will continue to function normally.  However, it is 
+ likely that the displayed name/header for such an object would need to be
+ updated to reflect that the underlying field name has changed from
+ EARLIEST DATE to CLINICALLY INDICATED DATE.
+  
+  
+ Patch Components:
+ =================
+  
+ This patch contains:
+  
+ The data dictionary change to rename the EARLIEST DATE field to CLINICALLY
+ INDICATED DATE.  
+  
+ The 11 routines that have been updated to incorporate this change into the
+ GMRC package.
+  
+ The input template GMRC SETUP REQUEST SERVICE is being re-exported to 
+ resolve a Remedy ticket.  Reference that section below for additional 
+ information.
+  
+ ********************************NOTE********************************
+ Three of the included routines contain comment-only changes. The
+ checksums for these routines will appear the same with GMRC*3.0*81 as
+ in the previous patch for each routine.  The comments were updated to
+ remove references to 'earliest appropriate date'.  This change was made
+ primarily to assist any development or support staff when reading the
+ GMRC code.
+  
+ Those routines are:
+       GMRCHL7
+       GMRCHL7A
+       GMRCSTL8
+  
+  
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File                          Field                New/Modified/Deleted
+ -----------------------------------------------------------------------
+ REQUEST/CONSULTATION (#123)   EARLIEST DATE (#17)      Modified
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ Name                          Type            New/Modified/Deleted
+ -----------------------------------------------------------------------
+ GMRC SETUP REQUEST SERVICE    INPUT               Modified
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking Ticket(s) & Overview:
+ -------------------------------------
+ INC000001115226 - Editing consult service name CARE COORDINATION HOME 
+                   TELEHEALTH SCREENING
+  
+ Problem: Sites are occasionally renaming the "CARE COORDINATION HOME 
+ TELEHEALTH SCREENING" Consult service which breaks the ability for a
+ site to enroll/activate/inactivate patients for home telehealth. 
+  
+ Solution: The INPUT TEMPLATE, GMRC SETUP REQUEST SERVICE has been 
+ modified to prevent the CARE COORDINATION HOME TELEHEALTH SCREENING 
+ consult service name from being edited. All other fields for that 
+ service should remain available for edit.
+  
+  
+ Test Sites:
+ ===========
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed. 
+  
+ Title                           File Name       FTP Mode
+ --------------------------------------------------------
+ Consult/Request Tracking        constm.pdf      Binary
+    Technical Manual
+  
+ Consult/Request Tracking User   consum.pdf      Binary
+    User Manual
+  
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCEDT1
+    Before: B69360979   After: B69352507  **1,5,12,15,22,33,47,66,73,85,81**
+Routine Name: GMRCEDT3
+    Before: B21921693   After: B21946009  **1,5,15,22,66,73,81**
+Routine Name: GMRCEDT4
+    Before: B85518879   After: B85509564  **1,5,12,15,22,33,66,73,85,81**
+Routine Name: GMRCGUIC
+    Before: B68517845   After: B68545414  **4,12,20,15,22,33,66,73,85,81**
+Routine Name: GMRCGUIU
+    Before: B30591724   After: B30326787  **4,12,15,17,22,66,73,81**
+Routine Name: GMRCHL7
+    Before: B31393339   After: B31393339  **1,5,12,19,29,66,81**
+Routine Name: GMRCHL7A
+    Before: B31527698   After: B31527698  **1,5,12,15,21,22,33,68,66,73,81**
+Routine Name: GMRCP5B
+    Before: B43394633   After: B43503817  **4,13,12,15,24,23,22,29,65,
+                                           66,73,81**
+Routine Name: GMRCSLM2
+    Before: B92878039   After: B92923527  **1,4,18,15,17,23,22,65,66,73,81**
+Routine Name: GMRCSTL7
+    Before:B109494560   After:B108615335  **41,60,76,81**
+Routine Name: GMRCSTL8
+    Before:B111506461   After:B111506461  **41,60,66,81**
+ 
+Routine list of preceding patches: 76, 85
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

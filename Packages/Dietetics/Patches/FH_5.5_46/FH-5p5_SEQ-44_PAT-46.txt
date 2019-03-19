@@ -1,0 +1,147 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/04/18 at 13:01
+=============================================================================
+Run Date: DEC 13, 2018                     Designation: FH*5.5*46
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #44                    Status: Released
+                  Compliance Date: JAN 14, 2019
+=============================================================================
+
+Associated patches: (v)FH*5.5*45   <<= must be installed BEFORE `FH*5.5*46'
+
+Subject: ADD NEW FOOD ALLERGIES TO FHSELA2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the addition of new food allergies by adding them
+ into the mapping capability for food preference dislikes.
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ HITPS-1123 (formerly PSPO 1380)
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ 1. INC2381967 - New Food Allergies
+  
+ Problem:
+ -------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added DAIRY
+ FOODS, FRESH FRUITS, FRUITS, MINT HERB, PEPPERMINT HERB, PEPPERMINT OIL,
+ and RABBIT MEAT as food allergies to the GMR ALLERGIES file (#120.82).
+ These new food allergies must be added to the routine FHSELA2 in order to
+ be mapped as allergy type food preference dislikes in the Dietetics
+ package.
+  
+ Resolution:
+ ----------
+ Routine FHSELA2 has a hard-coded list of food allergies. It presents this 
+ hard-coded list to the user when adding a food allergy preference dislike
+ to the FOOD PREFERENCES file (#115.2) and then maps it to a matching
+ record in the GMR ALLERGIES file (#120.82). The new allergies have been
+ added to the hard-coded list of food allergies in routine FHSELA2 so that
+ they may be presented to the user.
+  
+  
+ Test Sites:
+ ----------
+ William S. Middleton Memorial Veterans Hospital (Madison)
+ Central Alabama Veterans Health Care System (CAVHCS)
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.
+  
+ 4. From the Installation Menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch FH*5.5*46. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+  
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch: FH*5.5*46 
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B136191846   After:B142382944  **8,13,23,25,28,35,37,39,40,
+                                           41,42,44,45,46**
+ 
+Routine list of preceding patches: 45
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 03, 2018
+Completed By:                               Date Completed: DEC 13, 2018
+Released By :                               Date Released : DEC 13, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1483 @@
+Released LR*5.2*509 SEQ #415
+Extracted from mail message
+**KIDS**:LR*5.2*509^
+
+**INSTALL NAME**
+LR*5.2*509
+"BLD",11136,0)
+LR*5.2*509^LAB SERVICE^0^3180706^y
+"BLD",11136,1,0)
+^^22^22^3180627^
+"BLD",11136,1,1,0)
+The patch addresses four (4) issues:
+"BLD",11136,1,2,0)
+ 
+"BLD",11136,1,3,0)
+1.  Emerging Pathogen Initiative (EPI) data is collected in VistA and 
+"BLD",11136,1,4,0)
+    forwarded to the Austin Information Technology Center (AITC) for
+"BLD",11136,1,5,0)
+    national roll-up monthly.  Part of the collected data has to do with
+"BLD",11136,1,6,0)
+    Clinical Reminders related to Hepatitis C.  The Clinical Reminder data
+"BLD",11136,1,7,0)
+    is formatted into the DSP segment of a HL7 record for delivery to the
+"BLD",11136,1,8,0)
+    AITC.  The data is currently being formatted improperly.
+"BLD",11136,1,9,0)
+ 
+"BLD",11136,1,10,0)
+2.  When USING AP Log-in, anat path [option LRAPLG], an <UNDEFINED> error
+"BLD",11136,1,11,0)
+    occurs in the NEXT subroutine of routine LRAPKOE when logging in a 
+"BLD",11136,1,12,0)
+    case for a deceased veteran ordered in CPRS.
+"BLD",11136,1,13,0)
+ 
+"BLD",11136,1,14,0)
+3.  In AP Log-in, anat path [option LRAPLG], the PATHOLOGIST prompt is a 
+"BLD",11136,1,15,0)
+    required entry.  The pathologist who will read the case is usually 
+"BLD",11136,1,16,0)
+    not known at the time the case is logged into the laboratory.  The 
+"BLD",11136,1,17,0)
+    process should be modified to make entry of PATHOLOGIST optional.
+"BLD",11136,1,18,0)
+ 
+"BLD",11136,1,19,0)
+4.  The routine (LRAPKOE) that processes Anatomic Pathology orders entered
+"BLD",11136,1,20,0)
+    in CPRS needs to be modified to call VistA Imaging to add the case to
+"BLD",11136,1,21,0)
+    the MAG PATH CASELIST file (#2005.42) to support Telepathology and to
+"BLD",11136,1,22,0)
+    generate the HL7 message that is sent to digital pathology systems.
+"BLD",11136,4,0)
+^9.64PA^^
+"BLD",11136,6.3)
+4
+"BLD",11136,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11136,"KRN",.4,0)
+.4
+"BLD",11136,"KRN",.401,0)
+.401
+"BLD",11136,"KRN",.402,0)
+.402
+"BLD",11136,"KRN",.403,0)
+.403
+"BLD",11136,"KRN",.5,0)
+.5
+"BLD",11136,"KRN",.84,0)
+.84
+"BLD",11136,"KRN",3.6,0)
+3.6
+"BLD",11136,"KRN",3.8,0)
+3.8
+"BLD",11136,"KRN",9.2,0)
+9.2
+"BLD",11136,"KRN",9.8,0)
+9.8
+"BLD",11136,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",11136,"KRN",9.8,"NM",1,0)
+LRAPKOE^^0^B184170357
+"BLD",11136,"KRN",9.8,"NM",2,0)
+LREPI^^0^B66831950
+"BLD",11136,"KRN",9.8,"NM","B","LRAPKOE",1)
+
+"BLD",11136,"KRN",9.8,"NM","B","LREPI",2)
+
+"BLD",11136,"KRN",19,0)
+19
+"BLD",11136,"KRN",19.1,0)
+19.1
+"BLD",11136,"KRN",101,0)
+101
+"BLD",11136,"KRN",409.61,0)
+409.61
+"BLD",11136,"KRN",771,0)
+771
+"BLD",11136,"KRN",779.2,0)
+779.2
+"BLD",11136,"KRN",870,0)
+870
+"BLD",11136,"KRN",8989.51,0)
+8989.51
+"BLD",11136,"KRN",8989.52,0)
+8989.52
+"BLD",11136,"KRN",8994,0)
+8994
+"BLD",11136,"KRN","B",.4,.4)
+
+"BLD",11136,"KRN","B",.401,.401)
+
+"BLD",11136,"KRN","B",.402,.402)
+
+"BLD",11136,"KRN","B",.403,.403)
+
+"BLD",11136,"KRN","B",.5,.5)
+
+"BLD",11136,"KRN","B",.84,.84)
+
+"BLD",11136,"KRN","B",3.6,3.6)
+
+"BLD",11136,"KRN","B",3.8,3.8)
+
+"BLD",11136,"KRN","B",9.2,9.2)
+
+"BLD",11136,"KRN","B",9.8,9.8)
+
+"BLD",11136,"KRN","B",19,19)
+
+"BLD",11136,"KRN","B",19.1,19.1)
+
+"BLD",11136,"KRN","B",101,101)
+
+"BLD",11136,"KRN","B",409.61,409.61)
+
+"BLD",11136,"KRN","B",771,771)
+
+"BLD",11136,"KRN","B",779.2,779.2)
+
+"BLD",11136,"KRN","B",870,870)
+
+"BLD",11136,"KRN","B",8989.51,8989.51)
+
+"BLD",11136,"KRN","B",8989.52,8989.52)
+
+"BLD",11136,"KRN","B",8994,8994)
+
+"BLD",11136,"QUES",0)
+^9.62^^
+"BLD",11136,"REQB",0)
+^9.611^2^2
+"BLD",11136,"REQB",1,0)
+LR*5.2*483^1
+"BLD",11136,"REQB",2,0)
+LR*5.2*421^1
+"BLD",11136,"REQB","B","LR*5.2*421",2)
+
+"BLD",11136,"REQB","B","LR*5.2*483",1)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",26,22,1,"PAH",1,0)
+509^3180706
+"PKG",26,22,1,"PAH",1,1,0)
+^^22^22^3180706
+"PKG",26,22,1,"PAH",1,1,1,0)
+The patch addresses four (4) issues:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1.  Emerging Pathogen Initiative (EPI) data is collected in VistA and 
+"PKG",26,22,1,"PAH",1,1,4,0)
+    forwarded to the Austin Information Technology Center (AITC) for
+"PKG",26,22,1,"PAH",1,1,5,0)
+    national roll-up monthly.  Part of the collected data has to do with
+"PKG",26,22,1,"PAH",1,1,6,0)
+    Clinical Reminders related to Hepatitis C.  The Clinical Reminder data
+"PKG",26,22,1,"PAH",1,1,7,0)
+    is formatted into the DSP segment of a HL7 record for delivery to the
+"PKG",26,22,1,"PAH",1,1,8,0)
+    AITC.  The data is currently being formatted improperly.
+"PKG",26,22,1,"PAH",1,1,9,0)
+ 
+"PKG",26,22,1,"PAH",1,1,10,0)
+2.  When USING AP Log-in, anat path [option LRAPLG], an <UNDEFINED> error
+"PKG",26,22,1,"PAH",1,1,11,0)
+    occurs in the NEXT subroutine of routine LRAPKOE when logging in a 
+"PKG",26,22,1,"PAH",1,1,12,0)
+    case for a deceased veteran ordered in CPRS.
+"PKG",26,22,1,"PAH",1,1,13,0)
+ 
+"PKG",26,22,1,"PAH",1,1,14,0)
+3.  In AP Log-in, anat path [option LRAPLG], the PATHOLOGIST prompt is a 
+"PKG",26,22,1,"PAH",1,1,15,0)
+    required entry.  The pathologist who will read the case is usually 
+"PKG",26,22,1,"PAH",1,1,16,0)
+    not known at the time the case is logged into the laboratory.  The 
+"PKG",26,22,1,"PAH",1,1,17,0)
+    process should be modified to make entry of PATHOLOGIST optional.
+"PKG",26,22,1,"PAH",1,1,18,0)
+ 
+"PKG",26,22,1,"PAH",1,1,19,0)
+4.  The routine (LRAPKOE) that processes Anatomic Pathology orders entered
+"PKG",26,22,1,"PAH",1,1,20,0)
+    in CPRS needs to be modified to call VistA Imaging to add the case to
+"PKG",26,22,1,"PAH",1,1,21,0)
+    the MAG PATH CASELIST file (#2005.42) to support Telepathology and to
+"PKG",26,22,1,"PAH",1,1,22,0)
+    generate the HL7 message that is sent to digital pathology systems.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","LRAPKOE")
+0^1^B184170357^B175040482
+"RTN","LRAPKOE",1,0)
+LRAPKOE ;DSS/FHS - CRPS AP LAB ORDER ENTRY AND ACCESSION ;15 Mar 2017 10:30 AM
+"RTN","LRAPKOE",2,0)
+ ;;5.2;LAB SERVICE;**462,479,483,509**;Sep 27, 1994;Build 4
+"RTN","LRAPKOE",3,0)
+ ; Supported calls AI #, 5286,103,3615
+"RTN","LRAPKOE",4,0)
+EN1 ;
+"RTN","LRAPKOE",5,0)
+ ; Called from EN^LRAPLG
+"RTN","LRAPKOE",6,0)
+ ; Process CPRS AP Orders
+"RTN","LRAPKOE",7,0)
+ N ANS,ANSY,CNT,CONTROL,DA,DIC,DIERR,DIR,DIRUT,DOD,DR
+"RTN","LRAPKOE",8,0)
+ N DTOUT,DUOUT,ERR,FDA,FDAIEN,FIL,FLD,GOT,IEN,IENX,II
+"RTN","LRAPKOE",9,0)
+ N LR,LRAA,LRACN,LRACN0,LRAP690,LRAPNT,LRAPSPEC
+"RTN","LRAPKOE",10,0)
+ N LRAPTST,LRC,LRCAPA,LRCAPLOC,LRCHK
+"RTN","LRAPKOE",11,0)
+ N LRCOL,LRCOM,LRC5,LRDFN,LRDISC,LRDIE,LRDOC,LRDPF,LREND,LRFDA
+"RTN","LRAPKOE",12,0)
+ N LRFDAIEN,LRI,LRIDT,LRIEN,LRJ,LRLL,LRLLOC,LRLWC,LRMD,LRMSG
+"RTN","LRAPKOE",13,0)
+ N LRNATURE,LRNLT,LRNODE69,LRNONE,LROD0,LROD1,LROD3,LRODT,LRODT0
+"RTN","LRAPKOE",14,0)
+ N LROESTAT,LROLLOC,LRORD,LRORDRR,LROOS,LRORD,LRORDRR
+"RTN","LRAPKOE",15,0)
+ N LRORIFN,LRORNUM,LRORPOV,LRORTYP,LROS,LROSD,LRPRAC,LRPANEL,LRPHY,LRPL
+"RTN","LRAPKOE",16,0)
+ N LRPROVL,LRRC,LRROD,LRSAMP,LRSD,LRSIT,LRSN,LRSND
+"RTN","LRAPKOE",17,0)
+ N LRSP,LRSPCOM,LRSPEC,LRSS,LRSTATUS,LRSUBBY,LRSUBMIT
+"RTN","LRAPKOE",18,0)
+ N LRSVSN,LRT,LRTM7,LRTSORU,LRTST,LRTSTS,LRUID,LRURG,LRVAL,LRWKCD
+"RTN","LRAPKOE",19,0)
+ N LRWARD,LRWRDS,LRX,LRXX,LRYI,LRZX,M9,NODE,ODT,ORD
+"RTN","LRAPKOE",20,0)
+ N PNM,RET,S,SN,SSN,TMPDIAL,VA,VADM,VAIN
+"RTN","LRAPKOE",21,0)
+ N LREND,LRVAL,LRORPROV,LRSUBBY,X,X3,X4,Y
+"RTN","LRAPKOE",22,0)
+ ;
+"RTN","LRAPKOE",23,0)
+ N COBR,COBX,IFN,IFN1,LRA,LRACD,LRANC0,LRAU,LRCS,LRD,LRFIRST
+"RTN","LRAPKOE",24,0)
+ N LRO,LRP,LRSEL,LRSF,LRSOP,LRSTATI,LRSVC,LRTNAM
+"RTN","LRAPKOE",25,0)
+ N LRU,LRWARDS,ORBMSG,ORCMSG,SRTN,X10,X5,X6,X7,X9,Z1
+"RTN","LRAPKOE",26,0)
+ S LREND=0
+"RTN","LRAPKOE",27,0)
+ D CK^LRAP I Y<0 Q
+"RTN","LRAPKOE",28,0)
+ N X,Y
+"RTN","LRAPKOE",29,0)
+ ;;*
+"RTN","LRAPKOE",30,0)
+ S LRLWC="WC"
+"RTN","LRAPKOE",31,0)
+ ;;;*
+"RTN","LRAPKOE",32,0)
+ ; Select peforming laboratory
+"RTN","LRAPKOE",33,0)
+ I '$G(LRPL) S LRPL=DUZ(2) S LRVAL=$$SELPL^LRVERA(DUZ(2)) D END:LRVAL<1 Q:LRVAL<1  S LRPL=$S(LRVAL'=DUZ(2):LRVAL,1:DUZ(2))
+"RTN","LRAPKOE",34,0)
+L5 ;
+"RTN","LRAPKOE",35,0)
+ Q:$G(LREND)
+"RTN","LRAPKOE",36,0)
+NEXT ;from LROE1
+"RTN","LRAPKOE",37,0)
+ N LRVIDO,LRVIDOF D VIDEO^LRPARAM ; needed below - P509 PMK 5/22/17
+"RTN","LRAPKOE",38,0)
+ K DIR,LRYI,LRAPTST,GOT,LRAPDIAL,LRNODE69,LRSUBMIT,LRPHY,LRAD,LRAA,LRLLOC,LROLLOC,LRSUBBY,LRORPROV D KVAR^LRX
+"RTN","LRAPKOE",39,0)
+ I $D(LROESTAT) D:$P(LRPARAM,U,14) ^LRCAPV I $G(LREND) K LRLONG,LRPANEL Q
+"RTN","LRAPKOE",40,0)
+ S (LRODT,X,DT)=$$DT^XLFDT(),LRODT0=$$FMTE^XLFDT(DT,5)
+"RTN","LRAPKOE",41,0)
+ I '$D(^LRO(69,DT,1,0)) S ^LRO(69,DT,0)=DT,^LRO(69,DT,1,0)="^69.01PA^^",^LRO(69,"B",DT,DT)=""
+"RTN","LRAPKOE",42,0)
+ I $D(^LAB(69.9,1,"RO")),+$H'=+$P(^("RO"),U) D
+"RTN","LRAPKOE",43,0)
+ . W $C(7),!,"ROLLOVER ",$S($P(^("RO"),U,2):"IS RUNNING.",1:"HAS NOT RUN.")," ACCESSIONING SHOULDN'T BE DONE NOW.",$C(7),!
+"RTN","LRAPKOE",44,0)
+ . S DIR("A")="  Are you sure you want to continue",DIR(0)="Y",DIR("B")="No"
+"RTN","LRAPKOE",45,0)
+ I $T D ^DIR D END:$D(DIRUT) I Y'=1 W !,"OK, try later." D EN1
+"RTN","LRAPKOE",46,0)
+ S X="T-7",%DT="" D ^%DT S LRTM7=+Y
+"RTN","LRAPKOE",47,0)
+ K DIC,LRSND,LRSN,LRAPDIAL
+"RTN","LRAPKOE",48,0)
+ W !!,"Select Order number: " R LRORD:DTIME I LRORD["."!($D(LRLONG)&(LRORD="")) W !,"Wrong format" G EN1
+"RTN","LRAPKOE",49,0)
+ W @IOF S M9=0 G END:LRORD="^"  I LRORD="" W !?5,"No Order Number entered use standard Specimen Log-in process",! Q
+"RTN","LRAPKOE",50,0)
+ I $L(LRORD)>8 W !,"The order number entered is too long." H 1 G EN1
+"RTN","LRAPKOE",51,0)
+ S:LRORD?.N LRORD=+LRORD IF LRORD'?.N D QMSG G EN1
+"RTN","LRAPKOE",52,0)
+ I '$D(^LRO(69,"C",LRORD)) W !!?10,LRORD_" Does not exist, select another ",$C(7),! G EN1
+"RTN","LRAPKOE",53,0)
+ L +^LRO(69,"C",LRORD):$G(DILOCKTM,3)
+"RTN","LRAPKOE",54,0)
+ I '$T W !?5,"Someone else is editing this Order",!!,$C(7) G EN1
+"RTN","LRAPKOE",55,0)
+ S (LRCHK,LRNONE)=1,(M9,LRODT)=0
+"RTN","LRAPKOE",56,0)
+ F  S LRODT=+$O(^LRO(69,"C",LRORD,LRODT)) Q:LRODT<1  D
+"RTN","LRAPKOE",57,0)
+ . S DA=0 F  S DA=$O(^LRO(69,"C",LRORD,LRODT,DA)) Q:DA<1  S LRCHK=LRCHK-1 S:LRNONE'=2 LRNONE=0 D LROE2
+"RTN","LRAPKOE",58,0)
+ G:$G(LREND) EN1
+"RTN","LRAPKOE",59,0)
+ I DOD'="" S Y=DOD D DD^LRX W !,!,?5,@LRVIDO,"Patient ",PNM," died on: ",Y,@LRVIDOF W !
+"RTN","LRAPKOE",60,0)
+ D  I Y=0!($D(DIRUT)) K DIRUT,DTOUT,DUOUT,Y D KVAR^LRX G EN1
+"RTN","LRAPKOE",61,0)
+ . K Y
+"RTN","LRAPKOE",62,0)
+ . S DIR(0)="Y"
+"RTN","LRAPKOE",63,0)
+ . S DIR("A")="Do you wish to continue with this accession [Yes/No]"
+"RTN","LRAPKOE",64,0)
+ . S DIR("T")=120
+"RTN","LRAPKOE",65,0)
+ . D ^DIR K DIR
+"RTN","LRAPKOE",66,0)
+ I LRNONE=2,LRCHK<1 W !,"The order has already been partially accessioned." H 1
+"RTN","LRAPKOE",67,0)
+ I LRNONE=2,LRCHK>0 W !,"The order has already been accessioned." H 1 G NEXT
+"RTN","LRAPKOE",68,0)
+ I LRNONE=1 W !,"No order exists with that number." H 1 G NEXT
+"RTN","LRAPKOE",69,0)
+ I '$$GOT(LRORD) W !!,"All tests for this order have been canceled.",! G NEXT
+"RTN","LRAPKOE",70,0)
+ S LRODT=$O(^LRO(69,"C",LRORD,0)),LRSN=$O(^LRO(69,"C",LRORD,LRODT,0))
+"RTN","LRAPKOE",71,0)
+ I $P($G(^LRO(69,LRODT,1,LRSN,1)),U,4)'="" W !?5,"Specimen already processed" D END G EN1
+"RTN","LRAPKOE",72,0)
+ ; made PATHOLOGIST optional like legacy AP log-in - P509 PMK 5/25/17
+"RTN","LRAPKOE",73,0)
+ K LRPHY D DOC(.LRPHY,"PATHOLOGIST") I $G(LREND) W !,"No Pathologist selected" D END G EN1
+"RTN","LRAPKOE",74,0)
+ S (LRPROVL,X)=+LRPHY D D^LRUA S LRPRAC(1)=X
+"RTN","LRAPKOE",75,0)
+ D DATE(.LRCDT,"COLLECTION DATE/TIME") I $G(LRCDT)<1 D END G EN1
+"RTN","LRAPKOE",76,0)
+ S LRURG=9,LRAD=DT
+"RTN","LRAPKOE",77,0)
+ S LRNODE69=^LRO(69,LRODT,1,LRSN,0)
+"RTN","LRAPKOE",78,0)
+ S LRSUBBY="" I $D(^LRO(69,LRODT,1,LRSN,12))#2 S LRSUBBY=^(12) ;SUBMITTED BY
+"RTN","LRAPKOE",79,0)
+ S LRORNUM=$G(^LRO(69,LRODT,1,LRSN,.1))
+"RTN","LRAPKOE",80,0)
+ S LRSUBMIT=$P(LRNODE69,U,2),LRSUBMIT=$P(^VA(200,LRSUBMIT,0),U)_U_LRSUBMIT
+"RTN","LRAPKOE",81,0)
+ S LRORIFN=$P(LRNODE69,U,11),LRORTYP=$P(LRNODE69,U,4)
+"RTN","LRAPKOE",82,0)
+ S LRORPROV=+$P($G(^LRO(69,LRODT,1,LRSN,11)),U,3) ;Ordering Provider Optional
+"RTN","LRAPKOE",83,0)
+NEXT2 ;
+"RTN","LRAPKOE",84,0)
+ S LRAPSPEC="",LRI=0
+"RTN","LRAPKOE",85,0)
+ F  S LRI=$O(^LRO(69,LRODT,1,LRSN,4,1,1,LRI)) Q:LRI<1  S LRAPSPEC(LRI)=^(LRI,0)
+"RTN","LRAPKOE",86,0)
+ S LRLLOC=$P(LRNODE69,U,7),LROLLOC=$P(LRNODE69,U,9) S:LRLLOC="" LRLLOC="NO ABRV"
+"RTN","LRAPKOE",87,0)
+ K LRCOM S LRCOM=""
+"RTN","LRAPKOE",88,0)
+ N LRYI S LRYI=0 F  S LRYI=$O(^LRO(69,LRODT,1,LRSN,2,1,1,LRYI)) Q:LRYI<1  D
+"RTN","LRAPKOE",89,0)
+ . S LRCOM(LRYI)=(^(LRYI,0))
+"RTN","LRAPKOE",90,0)
+ K LRYI K LRAPDIAL
+"RTN","LRAPKOE",91,0)
+ F LRYI=13,14,15,16 M LRAPDIAL(".0"_LRYI)=^LRO(69,LRODT,1,LRSN,LRYI) K LRAPDIAL(".0"_LRYI,0)
+"RTN","LRAPKOE",92,0)
+ K LRYI,LRAPTST,LRTST
+"RTN","LRAPKOE",93,0)
+ S (LRAA,LRSS)=""
+"RTN","LRAPKOE",94,0)
+ S LRYI=0 F  S LRYI=$O(^LRO(69,LRODT,1,LRSN,2,"B",LRYI)) Q:LRYI<1  S (LRTSORU,LRTST)=LRYI,LRAPTST(LRYI)="" D
+"RTN","LRAPKOE",95,0)
+ . S LRWKCD=+$G(^LAB(60,+LRTST,64)),LRNLT=$P($G(^LAM(LRWKCD,0)),"^",2),II=1
+"RTN","LRAPKOE",96,0)
+ . ;Get accession area for institution
+"RTN","LRAPKOE",97,0)
+ . S LRAA=+$P($G(^LAB(60,LRTST,8,+$G(LRPL),0)),U,2)
+"RTN","LRAPKOE",98,0)
+ . I 'LRAA D  Q
+"RTN","LRAPKOE",99,0)
+ . . S LRERR="[ "_$P($G(^LAB(60,LRTST,0)),U)_"]  DOES NOT HAVE AN APPROPRIATE ACCESSION AREA DEFINED"
+"RTN","LRAPKOE",100,0)
+ . . W !!,$$CJ^XLFSTR(LRERR,IOM)
+"RTN","LRAPKOE",101,0)
+ . . W !,$$CJ^XLFSTR("Log-in Aborted",IOM),!
+"RTN","LRAPKOE",102,0)
+ . . S LREND=1
+"RTN","LRAPKOE",103,0)
+ . I LRAA S LRSS=$P(^LAB(60,LRTST,0),U,4)
+"RTN","LRAPKOE",104,0)
+ . N LRI
+"RTN","LRAPKOE",105,0)
+ . S LRI=$O(^LRO(69,LRODT,1,LRSN,2,"B",LRYI,0))
+"RTN","LRAPKOE",106,0)
+ . S LRAPTST(LRYI)=$P(^LRO(69,LRODT,1,LRSN,2,LRI,0),U,7)
+"RTN","LRAPKOE",107,0)
+ ;;;*
+"RTN","LRAPKOE",108,0)
+ I $G(LREND) K LRERR,LREND D END G EN1
+"RTN","LRAPKOE",109,0)
+ K LRDPF D PT^LRX
+"RTN","LRAPKOE",110,0)
+ K LRYI D KVA^VADPT
+"RTN","LRAPKOE",111,0)
+ S LRAPDIAL=1,LRAP690=$G(LROD0),LRSTATUS="C"
+"RTN","LRAPKOE",112,0)
+ ;;*
+"RTN","LRAPKOE",113,0)
+ S LROUTINE=9
+"RTN","LRAPKOE",114,0)
+ S X=$P(^LRO(68,LRAA,0),U) D ^LRUTL
+"RTN","LRAPKOE",115,0)
+ S (Y,LRAD)=DT D LRAD^LRU
+"RTN","LRAPKOE",116,0)
+ ;;;*
+"RTN","LRAPKOE",117,0)
+ D CHECK68^LRWLST1(LRAA,LRAD)
+"RTN","LRAPKOE",118,0)
+ S:'$D(^LRO(68,LRAA,1,LRAD,1,0)) ^LRO(68,LRAA,1,LRAD,1,0)="^68.02PA^"
+"RTN","LRAPKOE",119,0)
+ S LRAN=+$P(^LRO(68,LRAA,1,LRAD,1,0),U,3)
+"RTN","LRAPKOE",120,0)
+ F  Q:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN))  S LRAN=LRAN+1
+"RTN","LRAPKOE",121,0)
+ S LRAC=$P(^LRO(68,LRAA,0),U,11)_" "_$S(LRAD["0000":$E(LRAD,2,3),1:$E(LRAD,4,7))_" "_LRAN
+"RTN","LRAPKOE",122,0)
+ D CRE863^LRAPLG1
+"RTN","LRAPKOE",123,0)
+ K LRXX S LRXX(LRTST)="" D ORDTST
+"RTN","LRAPKOE",124,0)
+ D MOVE(LRDFN,LRSS,LRIDT)
+"RTN","LRAPKOE",125,0)
+ ;
+"RTN","LRAPKOE",126,0)
+SET68 ;Setup ^LRO(68,LRAA,1,LRAD,1,LRAN
+"RTN","LRAPKOE",127,0)
+ I LRSS'="AU" D
+"RTN","LRAPKOE",128,0)
+ .  K LRDIE D CRE868^LRAPLG1
+"RTN","LRAPKOE",129,0)
+ . S X=^LR(LRDFN,LRSS,LRI,0),LRIDT=LRI,LRCAPLOC=""
+"RTN","LRAPKOE",130,0)
+ . S LRSD=$P(X,U),LRRC=$P(X,U,10),LRACC=$P(X,U,6),LRMD(1)=$P(X,U,7),LRSIT=$P(X,U,5),LRCS=$P(X,U,11),LRLLOC=$P(X,U,8),LRC(5)=""
+"RTN","LRAPKOE",131,0)
+ . K LRDIE D EN^LRUWLF
+"RTN","LRAPKOE",132,0)
+ D UPD68
+"RTN","LRAPKOE",133,0)
+ L
+"RTN","LRAPKOE",134,0)
+ Q
+"RTN","LRAPKOE",135,0)
+ ;
+"RTN","LRAPKOE",136,0)
+MOVE(LRDFN,LRSS,LRI) ;Move CPRS AP Dialog to ^LR(LRDFN,LRSS,LRI)
+"RTN","LRAPKOE",137,0)
+ ;Check to see if Surgery Package Dialog is available
+"RTN","LRAPKOE",138,0)
+ D ^LRAPKLG
+"RTN","LRAPKOE",139,0)
+ ;
+"RTN","LRAPKOE",140,0)
+ N ANS,X,Y,ERR,IEN,FDA,FIL,LRX
+"RTN","LRAPKOE",141,0)
+ S FIL=63.08,FLD=.013
+"RTN","LRAPKOE",142,0)
+ S IEN=LRI_","_LRDFN_","
+"RTN","LRAPKOE",143,0)
+ S:LRSS="SP" FIL=63.08
+"RTN","LRAPKOE",144,0)
+ S:LRSS="CY" FIL=63.09
+"RTN","LRAPKOE",145,0)
+ S:LRSS="EM" FIL=63.02
+"RTN","LRAPKOE",146,0)
+ S LRX=0 F  S LRX=$O(LRAPDIAL(LRX)) Q:LRX=""  D
+"RTN","LRAPKOE",147,0)
+ . K ERR D WP^DIE(FIL,IEN,LRX,"A","LRAPDIAL("_LRX_")","ERR")
+"RTN","LRAPKOE",148,0)
+ Q
+"RTN","LRAPKOE",149,0)
+ ;
+"RTN","LRAPKOE",150,0)
+ORDTST ; Ordered test
+"RTN","LRAPKOE",151,0)
+ N XX
+"RTN","LRAPKOE",152,0)
+ S LRWKCD=+$G(^LAB(60,+$G(LRTST),64)),LRNLT=$P($G(^LAM(LRWKCD,0)),"^",2),II=1
+"RTN","LRAPKOE",153,0)
+ S XX=0
+"RTN","LRAPKOE",154,0)
+ F  S XX=$O(LRXX(XX)) Q:'XX  S $P(LRXX(XX),"^",2)=LRNLT_"^"_+LRTST
+"RTN","LRAPKOE",155,0)
+ Q
+"RTN","LRAPKOE",156,0)
+ ;
+"RTN","LRAPKOE",157,0)
+LROE2 ;
+"RTN","LRAPKOE",158,0)
+ S LREND=0 I '$D(^LRO(69,LRODT,1,DA,0)) Q
+"RTN","LRAPKOE",159,0)
+ N IEN,FLD,FIL,ANS
+"RTN","LRAPKOE",160,0)
+ S FIL=69.01,FLD=13,IEN=DA_","_LRODT_","
+"RTN","LRAPKOE",161,0)
+ S ANS=$$GET1^DIQ(FIL,IEN,13,,"ANS","ERR")
+"RTN","LRAPKOE",162,0)
+ I $L(ANS) D  Q
+"RTN","LRAPKOE",163,0)
+ . W !,$$CJ^XLFSTR("The order# "_LRORD_" has been "_ANS,IOM),!
+"RTN","LRAPKOE",164,0)
+ . W $$CJ^XLFSTR("Select another order",IOM),!
+"RTN","LRAPKOE",165,0)
+ . S LREND=1
+"RTN","LRAPKOE",166,0)
+ I $D(^LRO(69,LRODT,1,DA,1)) D
+"RTN","LRAPKOE",167,0)
+ . I $P(^LRO(69,LRODT,1,DA,1),U,4)="C" S LRNONE=2,LRCHK=LRCHK+1 Q
+"RTN","LRAPKOE",168,0)
+ . I $P(^LRO(69,LRODT,1,DA,0),U,4)="LC",$P(^LRO(69,LRODT,1,DA,1),U,4)="" S LRNONE=2,LRCHK=LRCHK+1
+"RTN","LRAPKOE",169,0)
+ ;
+"RTN","LRAPKOE",170,0)
+ K LRSN
+"RTN","LRAPKOE",171,0)
+ S (LRSN,LRSN(DA))=+DA,LREND=0
+"RTN","LRAPKOE",172,0)
+ I '$D(^LRO(69,LRODT,1,LRSN,0)) Q
+"RTN","LRAPKOE",173,0)
+ I '$O(^LRO(69,LRODT,1,LRSN,13,0)) W !?5,"No AP Dialog for this order" S LREND=1 Q
+"RTN","LRAPKOE",174,0)
+ S M9=$G(M9)+1,LRZX=^LRO(69,LRODT,1,LRSN,0),LRDFN=+LRZX,LRDPF=$P(^LR(LRDFN,0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRAPKOE",175,0)
+ D PT^LRX
+"RTN","LRAPKOE",176,0)
+ I $G(VA("MRN"))]"" D
+"RTN","LRAPKOE",177,0)
+ .W !,PNM,?30,$G(VA("MRN",0))_": "_SSN
+"RTN","LRAPKOE",178,0)
+ .W !,?30,"DOB: "_$P($G(VADM(3)),U,2) S LRWRDS=LRWRD
+"RTN","LRAPKOE",179,0)
+ E  W !,PNM,?30,SSN S LRWRDS=LRWRD
+"RTN","LRAPKOE",180,0)
+ W ?45,"Requesting location: ",$P(LRZX,U,7) S Y=$P(LRZX,U,5) D DD^LRX W !,"Date/Time Ordered: ",Y,?45,"By: ",$S($D(^VA(200,+$P(LRZX,U,2),0)):$P(^(0),U),1:"")
+"RTN","LRAPKOE",181,0)
+ S LRSVSN=LRSN D ORDER^LROS S LRSN=LRSVSN
+"RTN","LRAPKOE",182,0)
+ Q
+"RTN","LRAPKOE",183,0)
+ ;
+"RTN","LRAPKOE",184,0)
+ ;
+"RTN","LRAPKOE",185,0)
+QMSG W !,"Enter the order entry number assigned when the test was ordered."
+"RTN","LRAPKOE",186,0)
+ W:'$D(LRLONG) !,"If the test has not been ordered, type the RETURN key to exit."
+"RTN","LRAPKOE",187,0)
+ W !,"To exit, type the ""^"" key and RETURN key."
+"RTN","LRAPKOE",188,0)
+ Q
+"RTN","LRAPKOE",189,0)
+ ;
+"RTN","LRAPKOE",190,0)
+ ;
+"RTN","LRAPKOE",191,0)
+END K DIR,DIRUT,GOT
+"RTN","LRAPKOE",192,0)
+ D ^LRORDK,LROEND^LRORDK,STOP^LRCAPV,CLEAN D KVAR^LRX
+"RTN","LRAPKOE",193,0)
+ S LREND=1
+"RTN","LRAPKOE",194,0)
+ Q
+"RTN","LRAPKOE",195,0)
+ ;
+"RTN","LRAPKOE",196,0)
+ ;
+"RTN","LRAPKOE",197,0)
+GOT(ORD) ;See if all tests have been canceled
+"RTN","LRAPKOE",198,0)
+ N I,SN,ODT
+"RTN","LRAPKOE",199,0)
+ S (GOT,ODT,SN)=0
+"RTN","LRAPKOE",200,0)
+ F  S ODT=$O(^LRO(69,"C",ORD,ODT)) Q:ODT<1  D
+"RTN","LRAPKOE",201,0)
+ . S SN=0 F  S SN=$O(^LRO(69,"C",ORD,ODT,SN)) Q:SN<1!(GOT)  D
+"RTN","LRAPKOE",202,0)
+ . . Q:'$D(^LRO(69,ODT,1,SN,0))
+"RTN","LRAPKOE",203,0)
+ . . S I=0 F  S I=$O(^LRO(69,ODT,1,SN,2,I)) Q:I<1  I $D(^(I,0)),'$P(^(0),"^",11) S GOT=1 Q
+"RTN","LRAPKOE",204,0)
+ Q GOT
+"RTN","LRAPKOE",205,0)
+ ;
+"RTN","LRAPKOE",206,0)
+UPD68 ; Update #68 with required test data
+"RTN","LRAPKOE",207,0)
+ N LRFILE,ERR,IEN,LRI,LRIEN,LRCNT
+"RTN","LRAPKOE",208,0)
+ S LRFILE=68.04,IEN(1)=LRTST
+"RTN","LRAPKOE",209,0)
+ S LRIEN="?+1,"_LRAN_","_LRAD_","_LRAA_","
+"RTN","LRAPKOE",210,0)
+ S FDA(3,LRFILE,LRIEN,.01)=LRTST
+"RTN","LRAPKOE",211,0)
+ S FDA(3,LRFILE,LRIEN,1)=LROUTINE
+"RTN","LRAPKOE",212,0)
+ S FDA(3,LRFILE,LRIEN,8.1)=LRTST
+"RTN","LRAPKOE",213,0)
+ D UPDATE^DIE("","FDA(3)","IEN","ERR(3)")
+"RTN","LRAPKOE",214,0)
+ ;
+"RTN","LRAPKOE",215,0)
+ ;
+"RTN","LRAPKOE",216,0)
+SPEC68 ; Update #68 with specimen data
+"RTN","LRAPKOE",217,0)
+ S (LRI,LRCNT)=0 F  S LRI=$O(LRAPSPEC(LRI)) Q:LRI<1  D
+"RTN","LRAPKOE",218,0)
+ .  K LRFILE,FDAIEN,IEN
+"RTN","LRAPKOE",219,0)
+ .  S LRFILE=68.05,LRCNT=LRCNT+1
+"RTN","LRAPKOE",220,0)
+ .  S LRSPEC=$P(LRAPSPEC(LRI),U,6)
+"RTN","LRAPKOE",221,0)
+ .  S LRSAMP=$P(LRAPSPEC(LRI),U,7)
+"RTN","LRAPKOE",222,0)
+ .  S FDAIEN="?+"_LRCNT_","_LRAN_","_LRAD_","_LRAA_","
+"RTN","LRAPKOE",223,0)
+ .  S FDA(31,LRFILE,FDAIEN,.01)=LRSPEC
+"RTN","LRAPKOE",224,0)
+ .  S FDA(31,LRFILE,FDAIEN,1)=LRSAMP
+"RTN","LRAPKOE",225,0)
+ .  D UPDATE^DIE("","FDA(31)","IEN","LRERR(31)")
+"RTN","LRAPKOE",226,0)
+ ;
+"RTN","LRAPKOE",227,0)
+ S LRCAPA=$P(^LAB(69.9,1,0),"^",14)&($P(^LRO(68,LRAA,0),"^",16))
+"RTN","LRAPKOE",228,0)
+ I $G(LRCAPA) D WKLD ; Stuff workload data into accession.
+"RTN","LRAPKOE",229,0)
+ ;
+"RTN","LRAPKOE",230,0)
+ D LR7OB1 ;;Update CPRS to active status
+"RTN","LRAPKOE",231,0)
+ ;
+"RTN","LRAPKOE",232,0)
+ D LR7OFAO ;Update ^LRO(69 with accession data.
+"RTN","LRAPKOE",233,0)
+ ;
+"RTN","LRAPKOE",234,0)
+ D SPEC63(LRDFN,LRSS,LRIDT,.LRAPSPEC) ;Load AP Specimens into ^LR(
+"RTN","LRAPKOE",235,0)
+ ;
+"RTN","LRAPKOE",236,0)
+ D LRCOM(LRDFN,LRSS,LRIDT,.LRCOM) ; Store comments into ^LR(
+"RTN","LRAPKOE",237,0)
+ ;
+"RTN","LRAPKOE",238,0)
+ D ORUT^LRWLST11 ;Populate the ^LR(LRDFN,LRSS,LRIDT,"ORUT" with test data
+"RTN","LRAPKOE",239,0)
+ ;
+"RTN","LRAPKOE",240,0)
+ D DIS63(LRDFN,LRSS,LRIDT) ; Display ^LR(LRDFN,LRSS,LRIDT) data.
+"RTN","LRAPKOE",241,0)
+ ;
+"RTN","LRAPKOE",242,0)
+ W !,$$CJ^XLFSTR("****  Enter Next Order ****",IOM),!
+"RTN","LRAPKOE",243,0)
+ Q
+"RTN","LRAPKOE",244,0)
+DOC(RET,LABEL) ; Return provider
+"RTN","LRAPKOE",245,0)
+ ;IN = RET by reference
+"RTN","LRAPKOE",246,0)
+ ;     Label is the prompt the user will see
+"RTN","LRAPKOE",247,0)
+ ;OUT = LREND=1 if user fails to answer the prompt correctly
+"RTN","LRAPKOE",248,0)
+ ;      RET = +y
+"RTN","LRAPKOE",249,0)
+ ;      RET(0) = IEN^.01 FIELD
+"RTN","LRAPKOE",250,0)
+ N DIR,X,Y,DIRUT,DTOUT,DUOUT
+"RTN","LRAPKOE",251,0)
+ ; made PATHOLOGIST optional like legacy AP log-in - P509 PMK 5/25/17
+"RTN","LRAPKOE",252,0)
+ S DIR(0)="PO^200:EQMF",LREND=0 ; PATHOLOGIST is optional
+"RTN","LRAPKOE",253,0)
+ S DIR("S")="I $D(^VA(200,""AK.PROVIDER"",$P(^(0),U)))"
+"RTN","LRAPKOE",254,0)
+ S DIR("A")=LABEL
+"RTN","LRAPKOE",255,0)
+ D ^DIR
+"RTN","LRAPKOE",256,0)
+ I $G(DIRUT),((Y["^")!(Y="")) S LREND=1 Q
+"RTN","LRAPKOE",257,0)
+ I Y=-1 S Y=""
+"RTN","LRAPKOE",258,0)
+ S RET=+Y,RET(0)=Y
+"RTN","LRAPKOE",259,0)
+ Q
+"RTN","LRAPKOE",260,0)
+DATE(RET,LABEL) ;
+"RTN","LRAPKOE",261,0)
+ ;
+"RTN","LRAPKOE",262,0)
+ ;IN = RET by reference
+"RTN","LRAPKOE",263,0)
+ ;     Label is the prompt the user will see
+"RTN","LRAPKOE",264,0)
+ ;OUT = LREND=1 if user fails to answer the prompt correctly
+"RTN","LRAPKOE",265,0)
+ ;      RET = Y
+"RTN","LRAPKOE",266,0)
+ N DIR,X,Y,DIRUT,DTOUT,DUOUT
+"RTN","LRAPKOE",267,0)
+ S LREND=0,DIR("A")=LABEL,DIR("?")="Date can not be in the future"
+"RTN","LRAPKOE",268,0)
+ S DIR(0)="D^:-NOW:EXT"
+"RTN","LRAPKOE",269,0)
+ D ^DIR
+"RTN","LRAPKOE",270,0)
+ I Y<1 S LREND=1
+"RTN","LRAPKOE",271,0)
+ S RET=Y
+"RTN","LRAPKOE",272,0)
+ Q
+"RTN","LRAPKOE",273,0)
+DA(Y) ; Returns date in eye-readable month format
+"RTN","LRAPKOE",274,0)
+ Q $$FMTE^XLFDT(Y,"M")
+"RTN","LRAPKOE",275,0)
+ Q
+"RTN","LRAPKOE",276,0)
+LR7OB1 ;Update CPRS to active status
+"RTN","LRAPKOE",277,0)
+ K DIERR,IEN,LRFDA,ERR
+"RTN","LRAPKOE",278,0)
+ K ERR
+"RTN","LRAPKOE",279,0)
+ S LRORD=+$G(^LRO(69,LRODT,1,LRSN,.1))
+"RTN","LRAPKOE",280,0)
+ S IEN=LRSN_","_LRODT_","
+"RTN","LRAPKOE",281,0)
+ I '$G(^LRO(69,LRODT,1,LRSN,1)) D
+"RTN","LRAPKOE",282,0)
+ . S LRFDA(1,69.01,IEN,10)=+$G(LRCDT,$$NOW^XLFDT)
+"RTN","LRAPKOE",283,0)
+ . S LRFDA(1,69.01,IEN,12)=DUZ
+"RTN","LRAPKOE",284,0)
+ . S LRFDA(1,69.01,IEN,13)="C"
+"RTN","LRAPKOE",285,0)
+ . I $G(LRPL) S LRFDA(1,69.01,IEN,25)=+$G(LRPL)
+"RTN","LRAPKOE",286,0)
+ . S LRFDA(1,69.01,IEN,20)=LRNT
+"RTN","LRAPKOE",287,0)
+ . D UPDATE^DIE("KS","LRFDA(1)","IEN","ERR")
+"RTN","LRAPKOE",288,0)
+ K ^LRO(69,"AA",LRODT_"|"_LRSN) ;DD 69.01,13 is incorrect
+"RTN","LRAPKOE",289,0)
+ S ^LRO(69,"AA",LRORD,LRODT_"|"_LRSN)=""
+"RTN","LRAPKOE",290,0)
+ ;Update status in OR(100,
+"RTN","LRAPKOE",291,0)
+ S LRORIFN=+$P($G(^LRO(69,LRODT,1,LRSN,2,1,0)),"^",7) D
+"RTN","LRAPKOE",292,0)
+ . S CONTROL=$S($G(LRORIFN):"SC",1:"SN")
+"RTN","LRAPKOE",293,0)
+ . D NEW^LR7OB1(LRODT,LRSN,CONTROL,,,6)
+"RTN","LRAPKOE",294,0)
+ Q
+"RTN","LRAPKOE",295,0)
+LR7OFAO ;Update ^LRO(69 with accession data.
+"RTN","LRAPKOE",296,0)
+   ;
+"RTN","LRAPKOE",297,0)
+ K IEN,LRFDA,LRFDAIEN,LRMSG,DIERR
+"RTN","LRAPKOE",298,0)
+ S IEN="?+1,"_LRSN_","_LRODT_","
+"RTN","LRAPKOE",299,0)
+ S LRFDA(6,69.03,IEN,.01)=LRTST
+"RTN","LRAPKOE",300,0)
+ I $G(LROUTINE) S LRFDA(6,69.03,IEN,1)=LROUTINE
+"RTN","LRAPKOE",301,0)
+ S LRFDA(6,69.03,IEN,2)=LRAD
+"RTN","LRAPKOE",302,0)
+ S LRFDA(6,69.03,IEN,3)=LRAA
+"RTN","LRAPKOE",303,0)
+ S LRFDA(6,69.03,IEN,4)=LRAN
+"RTN","LRAPKOE",304,0)
+ S LRFDA(6,69.03,IEN,13)=LRUID
+"RTN","LRAPKOE",305,0)
+ S LRFDA(6,69.03,IEN,8)="IP"
+"RTN","LRAPKOE",306,0)
+ S LRFDA(6,69.03,IEN,9)="L"
+"RTN","LRAPKOE",307,0)
+ D UPDATE^DIE("","LRFDA(6)","LRFDAIEN","LRMSG")
+"RTN","LRAPKOE",308,0)
+ Q
+"RTN","LRAPKOE",309,0)
+DIS63(LRDFN,LRSS,LRIDT) ;Display ^LR(LRDFN,LRSS,LRIDT data
+"RTN","LRAPKOE",310,0)
+ Q:'$G(^LR(LRDFN,LRSS,LRIDT,0))
+"RTN","LRAPKOE",311,0)
+ W @IOF,!!,$$CJ^XLFSTR("-------------------------------------",IOM),!
+"RTN","LRAPKOE",312,0)
+ W $$CJ^XLFSTR("Display of CPRS data in LAB DATA file",IOM),!
+"RTN","LRAPKOE",313,0)
+ N ANS,DIC,DA,DR,ERR,CNT,ID,IEN,LREND,LRFILE,LRPAGE,S
+"RTN","LRAPKOE",314,0)
+ S DA=LRIDT,DA(1)=LRDFN,LREND=0
+"RTN","LRAPKOE",315,0)
+ S DIC="^LR("_LRDFN_","_""""_LRSS_""""_",",DR=0,S=1
+"RTN","LRAPKOE",316,0)
+ D EN^DIQ S LRPAGE=S
+"RTN","LRAPKOE",317,0)
+ S LRFILE=$S(LRSS="SP":63.08,LRSS="CY":63.09,LRSS="EM":63.02,1:0)
+"RTN","LRAPKOE",318,0)
+ S IEN=DA_","_DA(1)_","
+"RTN","LRAPKOE",319,0)
+ D GETS^DIQ(LRFILE,IEN,".01:16","ERRZ","ANS","ERR")
+"RTN","LRAPKOE",320,0)
+ F ID="BRIEF CLINICAL HISTORY","PREOPERATIVE DIAGNOSIS","OPERATIVE FINDINGS","POSTOPERATIVE DIAGNOSIS" Q:$G(LREND)  D
+"RTN","LRAPKOE",321,0)
+ . I $O(ANS(LRFILE,IEN,ID,0)) W !?5,ID_":" D PAGE Q:$G(LREND)  D
+"RTN","LRAPKOE",322,0)
+ . . S CNT=0 F  S CNT=$O(ANS(LRFILE,IEN,ID,CNT)) Q:CNT<1!($G(LREND))  D
+"RTN","LRAPKOE",323,0)
+ . . . W !,ANS(LRFILE,IEN,ID,CNT,0) D PAGE
+"RTN","LRAPKOE",324,0)
+ W:'$G(LREND) !!,$$CJ^XLFSTR("--- End of CPRS data in LAB DATA file ---",IOM),!
+"RTN","LRAPKOE",325,0)
+ ;
+"RTN","LRAPKOE",326,0)
+ ; VistA Imaging changes - P509 PMK 5/10/17
+"RTN","LRAPKOE",327,0)
+ I $T(ADD^MAGTP005)'="" D ADD^MAGTP005(LRAC) ; add case to file #2005.42
+"RTN","LRAPKOE",328,0)
+ N LRI S LRI=LRIDT  ; LRI is used in MAGT7MA instead of LRIDT
+"RTN","LRAPKOE",329,0)
+ I $T(NEW^MAGT7MA)'="" D NEW^MAGT7MA ; invoke Imaging HL7 routine
+"RTN","LRAPKOE",330,0)
+ Q
+"RTN","LRAPKOE",331,0)
+ ;
+"RTN","LRAPKOE",332,0)
+SPEC63(LRDFN,LRSS,LRIDT,LRAPSPEC) ;Load AP Specimens into ^LR(
+"RTN","LRAPKOE",333,0)
+    ; INPUT  LRAPSPEC(1)="CERVICAL CYTOLOGIC MATERIAL,Thin Prep^^^^^6242^55"
+"RTN","LRAPKOE",334,0)
+ ;
+"RTN","LRAPKOE",335,0)
+ K LRFDA,IEN,IENX,ERR,ERR2,WPIEN68,NODE,ANS,ANSY,LRSP,LRCOL
+"RTN","LRAPKOE",336,0)
+ K LRJ,NODE,LRFILE,LRSPCOM,LRSPEC,LRSAMP
+"RTN","LRAPKOE",337,0)
+ ;
+"RTN","LRAPKOE",338,0)
+ Q:LRSS="AU"!(LRSS="BB")
+"RTN","LRAPKOE",339,0)
+ S LRFILE=$S(LRSS="SP":63.812,LRSS="CY":63.902,LRSS="EM":63.202,1:0)
+"RTN","LRAPKOE",340,0)
+ S IEN="+1,"_LRIDT_","_LRDFN_","
+"RTN","LRAPKOE",341,0)
+ S:'$G(IENX) IENX=0 F  S IENX=$O(LRAPSPEC(IENX)) Q:IENX<1  D
+"RTN","LRAPKOE",342,0)
+ . S NODE=LRAPSPEC(IENX),LRSPCOM=$P(NODE,U),LRSPEC=+$P(NODE,U,6),LRSAMP=$P(NODE,U,7)
+"RTN","LRAPKOE",343,0)
+ . Q:$S('LRSPEC:1,'LRSAMP:1,1:0)
+"RTN","LRAPKOE",344,0)
+ . K LRFDA,ERR,ANSY
+"RTN","LRAPKOE",345,0)
+ . S LRFDA(2,LRFILE,IEN,.01)=LRSPCOM ;Specimen Description
+"RTN","LRAPKOE",346,0)
+ . S LRFDA(2,LRFILE,IEN,.06)=LRSPEC ;Specimen  ^LAB(61,LRSP
+"RTN","LRAPKOE",347,0)
+ . S LRFDA(2,LRFILE,IEN,.07)=LRSAMP ; Collection Sample ^LAB(62,LRCOL
+"RTN","LRAPKOE",348,0)
+ . D UPDATE^DIE("KS","LRFDA(2)","ANSY(1)","ERR")
+"RTN","LRAPKOE",349,0)
+ Q
+"RTN","LRAPKOE",350,0)
+LRCOM(LRDFN,LRSS,LRIDT,LRCOM) ;Store Comments into ^LR(
+"RTN","LRAPKOE",351,0)
+ ;IN   LRCOM(1)="~For Test: GYNECOLOGY"
+"RTN","LRAPKOE",352,0)
+ K LRFILE,LRFDA,IEN,CNT
+"RTN","LRAPKOE",353,0)
+ S LRFILE=$S(LRSS="CH":63.041,LRSS="MI":63.05,LRSS="SP":63.98,LRSS="CY":63.908,LRSS="EM":63.208,1:"")
+"RTN","LRAPKOE",354,0)
+ Q:'LRFILE
+"RTN","LRAPKOE",355,0)
+ S IEN="+1,"_LRIDT_","_LRDFN_",",CNT=0
+"RTN","LRAPKOE",356,0)
+ F  S CNT=$O(LRCOM(CNT)) Q:CNT<1  D
+"RTN","LRAPKOE",357,0)
+ . K LRFDA,ERR
+"RTN","LRAPKOE",358,0)
+ . S LRFDA(9,LRFILE,IEN,.01)=LRCOM(CNT)
+"RTN","LRAPKOE",359,0)
+ . D UPDATE^DIE("KS","LRFDA(9)","","ERR")
+"RTN","LRAPKOE",360,0)
+ Q
+"RTN","LRAPKOE",361,0)
+CLEAN ;Kill variable
+"RTN","LRAPKOE",362,0)
+ Q
+"RTN","LRAPKOE",363,0)
+WKLD ;Setup workload info
+"RTN","LRAPKOE",364,0)
+ ;
+"RTN","LRAPKOE",365,0)
+ N LR,LRI,LRK,LRRC,LRT,LRW
+"RTN","LRAPKOE",366,0)
+ S LRI=LRIDT
+"RTN","LRAPKOE",367,0)
+ S LRRC=$S($G(LRCDT):LRCDT,1:$$NOW^XLFDT)
+"RTN","LRAPKOE",368,0)
+ S LRCAPA=$P(^LAB(69.9,1,0),"^",14)&($P(^LRO(68,LRAA,0),"^",16))
+"RTN","LRAPKOE",369,0)
+ ;
+"RTN","LRAPKOE",370,0)
+ S LR("L")=LRSS_"^LRAP" I LRCAPA,"AUSP"[LRSS S X=$S(LRSS="SP":"H & E STAIN",1:"AUTOPSY H & E") D X^LRUWK I $D(X) S LRW("H&E")=LRT D ^LRAPSWK
+"RTN","LRAPKOE",371,0)
+ ;
+"RTN","LRAPKOE",372,0)
+ I LRCAPA,LRSS="EM" S X="THICK SECTION EM" D X^LRUWK I $D(X) S X=11 D SET1 S LRW("SS")=LRT_U_X S X="GRID EM" D X^LRUWK I $D(X) S X=12 D SET1 S LRW("G")=LRT_U_X D ^LRAPSWK
+"RTN","LRAPKOE",373,0)
+ ;
+"RTN","LRAPKOE",374,0)
+ I LRCAPA D
+"RTN","LRAPKOE",375,0)
+ . K LRT S LRT=0 F  S LRT=$O(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT)) Q:LRT<1  D
+"RTN","LRAPKOE",376,0)
+ . . Q:$P(^LRO(68,LRAA,1,LRAD,1,LRAN,4,LRT,0),U,2)>49
+"RTN","LRAPKOE",377,0)
+ . . I LRSS="CY" D ^LRAPCWK
+"RTN","LRAPKOE",378,0)
+ . . I LRSS?1(1"SP",1"EM") D ^LRAPSWK,^LRSPGD
+"RTN","LRAPKOE",379,0)
+ ;
+"RTN","LRAPKOE",380,0)
+ Q
+"RTN","LRAPKOE",381,0)
+SET1 S X=$P($G(^LRO(69.2,LRAA,0)),"^",X) S:'X X=1
+"RTN","LRAPKOE",382,0)
+ Q
+"RTN","LRAPKOE",383,0)
+PAGE ;Page Prompt
+"RTN","LRAPKOE",384,0)
+ Q:$E(IOST,1)'="C"
+"RTN","LRAPKOE",385,0)
+ S LRPAGE=$G(LRPAGE)+1,LREND=0 Q:LRPAGE<(IOSL-2)
+"RTN","LRAPKOE",386,0)
+ S DIR(0)="E" D ^DIR K DIR I $G(Y)=0 S LREND=1 Q
+"RTN","LRAPKOE",387,0)
+ S LRPAGE=2 W @IOF
+"RTN","LRAPKOE",388,0)
+ Q
+"RTN","LREPI")
+0^2^B66831950^B66094816
+"RTN","LREPI",1,0)
+LREPI ;DALOI/SED - EMERGING PATHOGENS SEARCH ;16 Jun 2013  6:03 PM
+"RTN","LREPI",2,0)
+ ;;5.2;LAB SERVICE;**132,175,260,281,421,509**;Sep 27, 1994;Build 4
+"RTN","LREPI",3,0)
+ ; Reference to ^DGPT supported by IA #418
+"RTN","LREPI",4,0)
+ ; Reference to ^ORD(101 supported by IA #872
+"RTN","LREPI",5,0)
+ ; Reference to PATS^PXRMXX supported by IA #3134
+"RTN","LREPI",6,0)
+TEST S LRRPS=3000501,LRRPE=3000531,LRRTYPE=1
+"RTN","LREPI",7,0)
+ S LREPI(2)="",LREPI(17)="",LREPI(18)="",LREPI(19)=""
+"RTN","LREPI",8,0)
+ ;S D0=0 F  S D0=$O(^LAB(69.5,D0)) Q:+D0'>0  D
+"RTN","LREPI",9,0)
+ ;.Q:$P(^LAB(69.5,D0,0),U,2)="1"
+"RTN","LREPI",10,0)
+ ;.Q:$P(^LAB(69.5,D0,0),U,7)=""
+"RTN","LREPI",11,0)
+ ;.Q:'$D(^ORD(101,$P(^LAB(69.5,D0,0),U,7),0))
+"RTN","LREPI",12,0)
+ ;.S LREPI(D0)=""
+"RTN","LREPI",13,0)
+ S LRBEG=9999999-(LRRPE+.9),LREND=9999999-LRRPS+.999999
+"RTN","LREPI",14,0)
+EN ;
+"RTN","LREPI",15,0)
+ ;
+"RTN","LREPI",16,0)
+INIT ;Set up search criteria
+"RTN","LREPI",17,0)
+ ;Fix start and stop date problem CKA 6/2/2002
+"RTN","LREPI",18,0)
+ S LRBEG=(9999999-LRRPE)_".0000001",LREND=9999999-LRRPS+.999999
+"RTN","LREPI",19,0)
+ ; Determine which Coding to system to activate:
+"RTN","LREPI",20,0)
+ ; If report beginning date and ending date are prior to ICDx effective date
+"RTN","LREPI",21,0)
+ ;  report will print patients with ICD diagnosis codes 
+"RTN","LREPI",22,0)
+ ;  and for summary report, count only ICD codes.
+"RTN","LREPI",23,0)
+ ; If report beginning date and ending date are on or after ICDx effective date
+"RTN","LREPI",24,0)
+ ;  report will print patients with ICDx diagnosis codes
+"RTN","LREPI",25,0)
+ ;  and for summary report, count only ICDx codes.
+"RTN","LREPI",26,0)
+ ; If report beginning date is prior to ICDx effective date and report ending date is on or after ICDx effective date
+"RTN","LREPI",27,0)
+ ;  report will print patients that have either ALL valid diagnosis codes
+"RTN","LREPI",28,0)
+ ;  and count both ALL valid diagnosis codes.
+"RTN","LREPI",29,0)
+ ;
+"RTN","LREPI",30,0)
+ N LRBEGSYS,LRENDSYS
+"RTN","LREPI",31,0)
+ S LRBEGSYS=+$$ICDSYS^LREPICD(LRRPS,"D"),LRENDSYS=+$$ICDSYS^LREPICD(LRRPE,"D")
+"RTN","LREPI",32,0)
+ K LREPISYS S:LRBEGSYS=0 LRBEGSYS=9 S:LRENDSYS=0 LRENDSYS=9 F LREPISYS=LRBEGSYS:1:LRENDSYS S LREPISYS(LREPISYS)=""
+"RTN","LREPI",33,0)
+ ;
+"RTN","LREPI",34,0)
+ K ^TMP($J),^TMP("HLS",$J)
+"RTN","LREPI",35,0)
+ S D0=0 F  S D0=$O(LREPI(D0)) Q:+D0'>0  D
+"RTN","LREPI",36,0)
+ .S ^TMP($J,$P(^LAB(69.5,D0,0),U,7))=""
+"RTN","LREPI",37,0)
+ .S:$P(^LAB(69.5,D0,0),U,8)=1 ^TMP($J,"LREPI",D0)=""
+"RTN","LREPI",38,0)
+ .S LRPROT=$P(^LAB(69.5,D0,0),U,7)
+"RTN","LREPI",39,0)
+ .Q:LRPROT=""
+"RTN","LREPI",40,0)
+ .S D1=0 F  S D1=$O(^LAB(69.5,D0,1,D1)) Q:+D1'>0  D
+"RTN","LREPI",41,0)
+ ..S TST=$P(^LAB(69.5,D0,1,D1,0),U)
+"RTN","LREPI",42,0)
+ ..Q:'$D(^LAB(60,TST,0))
+"RTN","LREPI",43,0)
+ ..Q:$P(^LAB(60,TST,0),U,4)=""
+"RTN","LREPI",44,0)
+ ..I $P(^LAB(60,TST,0),U,4)="CH" D
+"RTN","LREPI",45,0)
+ ...Q:$P(^LAB(60,TST,0),U,5)=""
+"RTN","LREPI",46,0)
+ ...S ^TMP($J,"T",TST,D0)=""
+"RTN","LREPI",47,0)
+ ...S ^TMP($J,"TPROT",TST,LRPROT)=""
+"RTN","LREPI",48,0)
+ ...S LRIND=$P(^LAB(69.5,D0,1,D1,0),U,2,3)
+"RTN","LREPI",49,0)
+ ...S ^TMP($J,$P(^LAB(60,TST,0),U,4),TST)=$P(^LAB(60,TST,0),U,5)_U_LRIND
+"RTN","LREPI",50,0)
+ ..I $P(^LAB(60,TST,0),U,4)="CY" D
+"RTN","LREPI",51,0)
+ ...S ^TMP($J,"T",TST,D0)=""
+"RTN","LREPI",52,0)
+ ...S ^TMP($J,$P(^LAB(60,TST,0),U,4),TST)=""
+"RTN","LREPI",53,0)
+ .S D1=0 F  S D1=$O(^LAB(69.5,D0,2,D1)) Q:+D1'>0  S ^TMP($J,"E",$P(^LAB(69.5,D0,2,D1,0),U),D0)=""
+"RTN","LREPI",54,0)
+ .S D1=0 F  S D1=$O(^LAB(69.5,D0,9,D1)) Q:+D1'>0  S ^TMP($J,"SNO",$P(^LAB(69.5,D0,9,D1,0),U),D0)=""
+"RTN","LREPI",55,0)
+ .S D1=0 F  S D1=$O(^LAB(69.5,D0,3,D1)) Q:+D1'>0  D
+"RTN","LREPI",56,0)
+ ..S LREPISYS=$S(+$P(^LAB(69.5,D0,3,D1,0),U,2)=30:10,1:9)
+"RTN","LREPI",57,0)
+ ..S:$D(LREPISYS(LREPISYS))&($P(^LAB(69.5,D0,3,D1,0),U)]"") ^TMP($J,"ICD",$P(^LAB(69.5,D0,3,D1,0),U),D0)=""
+"RTN","LREPI",58,0)
+ K D0,D1,TST,LRIND
+"RTN","LREPI",59,0)
+ I $D(^TMP($J,"LREPI")) D SEARCH^LREPI4
+"RTN","LREPI",60,0)
+ I $D(^TMP($J,"ICD")) D PTF^LREPI5
+"RTN","LREPI",61,0)
+LAB63 ;Search file 63 for lab data
+"RTN","LREPI",62,0)
+ K LRIND
+"RTN","LREPI",63,0)
+ S LRDFN=0 F  S LRDFN=$O(^LR(LRDFN)) Q:+LRDFN'>0  D
+"RTN","LREPI",64,0)
+ .Q:'$D(^LR(LRDFN,0))
+"RTN","LREPI",65,0)
+ .Q:$P(^LR(LRDFN,0),U,2)'=2
+"RTN","LREPI",66,0)
+ .S LRPAT=$P(^LR(LRDFN,0),U,3)
+"RTN","LREPI",67,0)
+ .I $D(^TMP($J,"CH")) D CH
+"RTN","LREPI",68,0)
+ .I $D(^TMP($J,"CY")) D CYTST^LREPICY
+"RTN","LREPI",69,0)
+ .I $D(^TMP($J,"E")) D MI
+"RTN","LREPI",70,0)
+ .;I '$D(^TMP($J,"ICD"))&($D(^TMP($J,"SNO"))) D CY^LREPICY
+"RTN","LREPI",71,0)
+ .I $D(^TMP($J,"SNO")) D CY^LREPICY
+"RTN","LREPI",72,0)
+ ;Retrieve patient list from Clinical Reminders
+"RTN","LREPI",73,0)
+ S LRPROTX=$O(^ORD(101,"B","LREPI",""))
+"RTN","LREPI",74,0)
+ I LRPROTX]"" S LRSRXX="",LRSRGO=0 F  S LRSRXX=$O(LREPI(LRSRXX)) Q:'LRSRXX  I $G(^LAB(69.5,LRSRXX,0))["HEPATITIS" D  Q
+"RTN","LREPI",75,0)
+  . ;D PATS^PXRMXX(LRRPS,LRRPE,"LREPISRCH") ;LR509: no longer collect Clinical Reminder info for EPI
+"RTN","LREPI",76,0)
+  . S EPISRCH=0 F  S EPISRCH=$O(^TMP("LREPISRCH",$J,EPISRCH)) Q:'EPISRCH  D
+"RTN","LREPI",77,0)
+  . . S LRENCDT=$P(^TMP("LREPISRCH",$J,EPISRCH),"^") Q:'LRENCDT
+"RTN","LREPI",78,0)
+  . . Q:$D(^TMP($J,LRPROTX,EPISRCH,LRENCDT))  ;Encounter date already exists, don't update
+"RTN","LREPI",79,0)
+  . . S ^TMP($J,LRPROTX,EPISRCH,LRENCDT)=$P(^TMP("LREPISRCH",$J,EPISRCH),"^",2)
+"RTN","LREPI",80,0)
+ I $G(LRREP) D ^LREPI2A
+"RTN","LREPI",81,0)
+ I '$G(LRREP) D ^LREPI2
+"RTN","LREPI",82,0)
+EXIT ;EXIT
+"RTN","LREPI",83,0)
+ S D0=0
+"RTN","LREPI",84,0)
+ I $G(LRRTYPE)=0 F  S D0=$O(LREPI(D0)) Q:+D0'>0  D
+"RTN","LREPI",85,0)
+ .S $P(^LAB(69.5,D0,0),U,4)=DT
+"RTN","LREPI",86,0)
+ K LREPI,DFN,CNT,DA,DIE,DR,DQ,HL,ENTRY,ENDT,ENC,FD,HLECH,HLFS,HLN,HLQ
+"RTN","LREPI",87,0)
+ K DDER,D0,HLRST,HLSAN,LRBEG,LRCNT,LRCS,LRDATE,LRDFN,LREFG,LRENCDT
+"RTN","LREPI",88,0)
+ K LREND,LRETND,LRHL7,LRINV,LRINVD,LRITN,LRND,LRNL,LRNLT,LRNTE,LROBR
+"RTN","LREPI",89,0)
+ K LRPAT,LRPFG,LRPID,LRPROT,LRPV1,LRRPE,LRRPS,LRRTYPE,LRTND,LRTNM,MSG
+"RTN","LREPI",90,0)
+ K MSGCNT,PTF,RR,SEG,SP,STDT,TST,UN,TSTNM,VAERR,X,XCNP,XMDUZ,XMZ,ZTSK
+"RTN","LREPI",91,0)
+ K AF,D,DI,LRENT,LRIND,LRPATH,OV,LRENDT,ADMDT,EPISITE,EPISRCH
+"RTN","LREPI",92,0)
+ K LR31799Z,LRANTI,LRCHK,LRIC,LRIEN,LRIPT,LRMG,LRMGN,LRNX,LRO,LROK
+"RTN","LREPI",93,0)
+ K LROVR,LRPCNT,LRPTOT,LRSI,LRSITE,LRCYSP,LRDIS,LRDISI,LRIC,LRICD
+"RTN","LREPI",94,0)
+ K LRICDI,LRIEN,LRIPT,LRMG,LRMGN,LRMOR,LRMORI,LRMSG,PXRMITEM
+"RTN","LREPI",95,0)
+ K LRSNM,LRSNO,LRSTOP,LRSUB,LRTOP,LRTOPP,LRWKI,LRPRO,LRPROI
+"RTN","LREPI",96,0)
+ K LRNDC,LRNTE1,LRFIND,LRDRUG,LRCODE,LRDRSEQ,HLHDR,HLMTIEN,HLMTIENS
+"RTN","LREPI",97,0)
+ K HLNEXT,HLNODE,HLQUIT,HLRESLT,HLRESLTA,LRANS,LRDRSQ1,LRPROTX,LRPTY
+"RTN","LREPI",98,0)
+ K LRPVVV,LRSRGO,LRSRXX,LRTOLD,LRTRM,LRPREV,LRPRECYC,X1,X2,X3
+"RTN","LREPI",99,0)
+ K LRANTIND,LRANTINV,LRREP,LRPV1NUM,LREPISYS
+"RTN","LREPI",100,0)
+ Q
+"RTN","LREPI",101,0)
+ENCT ;SET THE ENCOUNTER FOR PV1
+"RTN","LREPI",102,0)
+ S LRPROT=$P(^LAB(69.5,LRPATH,0),U,7)
+"RTN","LREPI",103,0)
+ S LRCHK=0 D ADDCHK^LREPI5 Q:LRCHK
+"RTN","LREPI",104,0)
+ S LRDATE=9999999-LRINV
+"RTN","LREPI",105,0)
+ K VAIN,DFN,VAINDT S DFN=LRPAT,VAINDT=LRDATE D INP^VADPT
+"RTN","LREPI",106,0)
+ S LRENCDT=$S(VAIN(7)'="":$P(VAIN(7),U),1:LRDATE)
+"RTN","LREPI",107,0)
+ I $P(^LAB(69.5,LRPATH,0),U,8)=1 D CHECK^LREPI4
+"RTN","LREPI",108,0)
+ S:'$D(^TMP($J,LRPROT,LRPAT,LRENCDT)) ^TMP($J,LRPROT,LRPAT,LRENCDT)=$S(VAIN(7)'="":"I",1:"O")_U_$G(VAIN(10))
+"RTN","LREPI",109,0)
+ S:$P(^TMP($J,LRPROT,LRPAT,LRENCDT),U)="O" ^(LRENCDT)="O"_U_$S($D(LRPATLOC):LRPATLOC,1:"")
+"RTN","LREPI",110,0)
+ S:'$D(^TMP($J,LRPROT,LRPAT,LRENCDT,LRPATH,LRINV,ND)) ^TMP($J,LRPROT,LRPAT,LRENCDT,LRPATH,LRINV,ND)=""
+"RTN","LREPI",111,0)
+ I $G(LRANTIND)="",$G(LRANTINV)="" Q
+"RTN","LREPI",112,0)
+ S:'$D(^TMP($J,LRPROT,LRPATH,LRENCDT,LRPAT,LRINV,ND,LRANTIND,LRANTINV)) ^TMP($J,LRPROT,LRPAT,LRENCDT,LRPATH,LRINV,ND,LRANTIND,LRANTINV)=""
+"RTN","LREPI",113,0)
+ Q
+"RTN","LREPI",114,0)
+CH ;Check the 'CH' node
+"RTN","LREPI",115,0)
+ S LRINV=LRBEG
+"RTN","LREPI",116,0)
+ F  S LRINV=$O(^LR(LRDFN,"CH",LRINV)) Q:+LRINV'>0!(LRINV>LREND)  D
+"RTN","LREPI",117,0)
+ .Q:$P(^LR(LRDFN,"CH",LRINV,0),U,3)=""
+"RTN","LREPI",118,0)
+ .S LRCNT=1,LRTST=0 F  S LRTST=$O(^TMP($J,"CH",LRTST)) Q:+LRTST'>0  D
+"RTN","LREPI",119,0)
+ ..S LRND=$P($P(^TMP($J,"CH",LRTST),";",2),U,1) Q:+LRND'>0
+"RTN","LREPI",120,0)
+ ..S LRPC=$P($P(^TMP($J,"CH",LRTST),";",3),U,1) Q:+LRPC'>0
+"RTN","LREPI",121,0)
+ ..S LRRES=$P($G(^LR(LRDFN,"CH",LRINV,LRND)),U,LRPC) Q:LRRES=""
+"RTN","LREPI",122,0)
+ ..S LRPATLOC=$P(^LR(LRDFN,"CH",LRINV,0),U,13)
+"RTN","LREPI",123,0)
+ ..S ^TMP($J,"TST",LRTST)=+$G(^TMP($J,"TST",LRTST))+1
+"RTN","LREPI",124,0)
+ ..S ^TMP($J,"TST",LRTST,LRDFN)=""
+"RTN","LREPI",125,0)
+ ..S LRPATH=0 F  S LRPATH=$O(^TMP($J,"T",LRTST,LRPATH)) Q:+LRPATH'>0  D CHKIND
+"RTN","LREPI",126,0)
+ K LRTST,LRND,LRPC,LRRES,LRNO
+"RTN","LREPI",127,0)
+ Q
+"RTN","LREPI",128,0)
+CHKIND ;Check the results
+"RTN","LREPI",129,0)
+ I '$D(^LAB(69.5,LRPATH,1,"B",LRTST)) Q
+"RTN","LREPI",130,0)
+ S LRITST=0,ND="CH",LRNO=0
+"RTN","LREPI",131,0)
+ F  S LRITST=$O(^LAB(69.5,LRPATH,1,"B",LRTST,LRITST)) Q:+LRITST'>0  D  D:'LRNO ENCT
+"RTN","LREPI",132,0)
+ .S LRNO=0
+"RTN","LREPI",133,0)
+ .S LRIND=$P(^LAB(69.5,LRPATH,1,LRITST,0),U,2,3)
+"RTN","LREPI",134,0)
+ .Q:$P(LRIND,U,1)=""
+"RTN","LREPI",135,0)
+ .I $P(LRIND,U,1)=1 D  Q
+"RTN","LREPI",136,0)
+ ..Q:'LRRES#2
+"RTN","LREPI",137,0)
+ ..S LRSPEC=$P($G(^LR(LRDFN,"CH",LRINV,0)),U,5) Q:LRSPEC=""
+"RTN","LREPI",138,0)
+ ..Q:'$D(^LAB(60,LRTST,1,LRSPEC,0))
+"RTN","LREPI",139,0)
+ ..S LRLOW=$P(^LAB(60,LRTST,1,LRSPEC,0),U,2),LRHIG=$P(^(0),U,3)
+"RTN","LREPI",140,0)
+ ..Q:'LRLOW#2!('LRHIG#2)
+"RTN","LREPI",141,0)
+ ..I LRRES<LRLOW!(LRRES>LRHIG) Q
+"RTN","LREPI",142,0)
+ ..S LRNO=1
+"RTN","LREPI",143,0)
+ .I $P(LRIND,U,2)="" Q
+"RTN","LREPI",144,0)
+ .S LRRES=$$UP^XLFSTR(LRRES),LRIND=$$UP^XLFSTR(LRIND)
+"RTN","LREPI",145,0)
+ .I $P(LRIND,U,1)=2,(LRRES[$P(LRIND,U,2)) Q
+"RTN","LREPI",146,0)
+ .I $P(LRIND,U,1)=3,(LRRES>$P(LRIND,U,2)) Q
+"RTN","LREPI",147,0)
+ .I $P(LRIND,U,1)=4,(LRRES<$P(LRIND,U,2)) Q
+"RTN","LREPI",148,0)
+ .I $P(LRIND,U,1)=5,(LRRES=$P(LRIND,U,2)) Q
+"RTN","LREPI",149,0)
+ .S LRNO=1
+"RTN","LREPI",150,0)
+ K LRITST,LRLOW,LRHIG,LRSPEC
+"RTN","LREPI",151,0)
+ Q
+"RTN","LREPI",152,0)
+MI ;Check the 'MI' node
+"RTN","LREPI",153,0)
+ S LRINV=LRBEG
+"RTN","LREPI",154,0)
+ F  S LRINV=$O(^LR(LRDFN,"MI",LRINV)) Q:+LRINV'>0!(LRINV>LREND)  D
+"RTN","LREPI",155,0)
+ .S LRCNT=1
+"RTN","LREPI",156,0)
+ .F LRMIND=3,6,9,12,17 S LRETND=0 F  S LRETND=$O(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND)) Q:+LRETND'>0  D
+"RTN","LREPI",157,0)
+ ..I LRMIND=3,$P($G(^LR(LRDFN,"MI",LRINV,1)),U,2)'="F" Q
+"RTN","LREPI",158,0)
+ ..I LRMIND'=3,$P($G(^LR(LRDFN,"MI",LRINV,(LRMIND-1))),U,2)'="F" Q
+"RTN","LREPI",159,0)
+ ..S LRETI=$P($G(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND,0)),U)
+"RTN","LREPI",160,0)
+ ..Q:+LRETI'>0
+"RTN","LREPI",161,0)
+ ..Q:'$D(^TMP($J,"E",LRETI))
+"RTN","LREPI",162,0)
+ ..S ^TMP($J,"EPROT",LRETI)=""
+"RTN","LREPI",163,0)
+ ..S ^TMP($J,"ETI",LRETI)=+$G(^TMP($J,"ETI",LRETI))+1
+"RTN","LREPI",164,0)
+ ..S ^TMP($J,"ETI",LRETI,LRDFN)=""
+"RTN","LREPI",165,0)
+ ..S LRPATH=0 F  S LRPATH=$O(^TMP($J,"E",LRETI,LRPATH)) Q:+LRPATH'>0  D
+"RTN","LREPI",166,0)
+ ...S ND="MI"
+"RTN","LREPI",167,0)
+ ...D TOP Q:LRTOP
+"RTN","LREPI",168,0)
+ ...I LRMIND=3 D ANTI Q
+"RTN","LREPI",169,0)
+ ...D ENCT
+"RTN","LREPI",170,0)
+ K LRMIND,LRETI
+"RTN","LREPI",171,0)
+ Q
+"RTN","LREPI",172,0)
+TOP ;CHECK TO SEE IF SCREEN ON SITE
+"RTN","LREPI",173,0)
+ S LRTOP=0
+"RTN","LREPI",174,0)
+ S LRSITE=$P($G(^LR(LRDFN,"MI",LRINV,0)),U,5) Q:+LRSITE'>0
+"RTN","LREPI",175,0)
+ I ($O(^LAB(69.5,LRPATH,5,0))="")&($O(^LAB(69.5,LRPATH,6,0))="") Q
+"RTN","LREPI",176,0)
+ I ($O(^LAB(69.5,LRPATH,5,0))'="")&($O(^LAB(69.5,LRPATH,6,0))'="") Q
+"RTN","LREPI",177,0)
+ I ($O(^LAB(69.5,LRPATH,5,0))'="")&($D(^LAB(69.5,LRPATH,5,"B",LRSITE))) Q
+"RTN","LREPI",178,0)
+ I ($O(^LAB(69.5,LRPATH,6,0))'="")&('$D(^LAB(69.5,LRPATH,6,"B",LRSITE))) Q
+"RTN","LREPI",179,0)
+ S LRTOP=1
+"RTN","LREPI",180,0)
+ Q
+"RTN","LREPI",181,0)
+ANTI ;LOOK FOR THE ANTIMICROBIAL SUS FOR ORGANISMS
+"RTN","LREPI",182,0)
+ I $O(^LAB(69.5,LRPATH,4,0))="" D ENCT Q
+"RTN","LREPI",183,0)
+ S LRANTI=0 F  S LRANTI=$O(^LAB(69.5,LRPATH,4,LRANTI)) Q:+LRANTI'>0  D
+"RTN","LREPI",184,0)
+ .S LRANT=$G(^LAB(69.5,LRPATH,4,LRANTI,0),U),LRANTIND=$P(^(0),U,2),LRANTINV=$P(^(0),U,3) Q:+LRANT'>0
+"RTN","LREPI",185,0)
+ .S LRAND=$P($G(^LAB(62.06,LRANT,0)),U,2) Q:LRAND=""
+"RTN","LREPI",186,0)
+ .Q:'$D(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND,LRAND))
+"RTN","LREPI",187,0)
+ .Q:$P(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND,LRAND),U,2)=""
+"RTN","LREPI",188,0)
+ .Q:$$UP^XLFSTR($E($P($G(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND,LRAND)),U,2),1,1))="S"
+"RTN","LREPI",189,0)
+ .D ENCT
+"RTN","LREPI",190,0)
+ .;CHECK MIC VALUES
+"RTN","LREPI",191,0)
+ .I LRANTIND=""!(LRANTINV="") Q
+"RTN","LREPI",192,0)
+ .S LRRES=$$UP^XLFSTR($E($P($G(^LR(LRDFN,"MI",LRINV,LRMIND,LRETND,LRAND)),U,2),1,1)),LRANTINV=$$UP^XLFSTR(LRANTINV),LRANTIND=$$UP^XLFSTR(LRANTIND)
+"RTN","LREPI",193,0)
+ .I LRANTIND=1,(LRRES[LRANTINV) D ENCT Q
+"RTN","LREPI",194,0)
+ .I LRANTIND=2,(LRRES>LRANTINV) D ENCT Q
+"RTN","LREPI",195,0)
+ .I LRANTIND=3,(LRRES<LRANTINV) D ENCT Q
+"RTN","LREPI",196,0)
+ .I LRANTIND=4,(LRRES=LRANTINV) D ENCT Q
+"RTN","LREPI",197,0)
+ Q
+"RTN","LREPI",198,0)
+ ;
+"VER")
+8.0^22.2
+"BLD",11136,6)
+^415
+**END**
+**END**
+

@@ -1,0 +1,448 @@
+$TXT Created by                 NTHONY at DEVVOO.DOMAIN.EXT  (KIDS) on Tuesday, 10/02/18 at 10:53
+=============================================================================
+Run Date: JAN 29, 2019                     Designation: DG*5.3*966
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #853                    Status: Released
+                  Compliance Date: MAR 01, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*947  <<= must be installed BEFORE `DG*5.3*966'
+
+Subject: SEPARATION REASON CODE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ Patch DG*5.3*966 is being released to support enhancements introduced in 
+ the Enrollment System (ES) 5.4 release.  For additional information on 
+ the v5.4 release, please refer to informational patch EAS*1.0*169 for 
+ details.  This patch provides enhancements to Veterans Health Information 
+ System and Technology Architecture (VistA) Registration, Eligibility & 
+ Enrollment (REE) that ensure a Veteran's complete and accurate military 
+ service record is displayed in the system.
+  
+ This patch provides for validation of the Early Separation Reason for a 
+ veterans' Military Service Episode (MSE).  This ensures greater data 
+ integrity.  DG*5.3*966 ensures that eligibility for care is accurately 
+ determined across Veterans Health Administration (VHA) systems and that 
+ the Veteran's military service information is accurate and accessible at 
+ any VHA facility.
+  
+ Listing of Updates
+ ==================
+ This patch makes the following enhancements to VistA REE:
+ 1. The SEPARATION REASON CODE (#.1) sub-field within the MILITARY SERVICE
+    EPISODE (#.3216) multiple in the PATIENT (#2) file is added. This
+    field is a pointer to the SEPARATION REASON (#26) file and the data for
+    this field will be received from ES in ORF-Z11/ORU-Z11 HL7 messages in
+    the ZMH segment. The SEPARATION REASON CODE cannot be edited or deleted
+    by VistA users and will not be sent back to ES in a Z07 message.
+  
+    Note: DBIA 5783 MILITARY SERVICE EPISODE API, the routine DGMSEUTL
+    includes component GETMSE that returns all records in the MILITARY 
+    SERVICE EPISODE (#.3216) multiple within the PATIENT (#2) file in the
+    Military Service Episode (MSE) array. While no modifications were made
+    to this component, the SEPARATION REASON CODE (#.1) field is included
+    in the returned array.
+  
+  
+ 2. The SEPARATION REASON (#26) file is added to VistA REE. This file
+    contains the codes and associated descriptions for the Reason for Early
+    Separation with data matching the equivalent table in (ES). The data
+    for this file is included in the build. (See the Post-Installation
+    Instructions section below.) The file consists of two fields:
+    a.  CODE field (#.01) - Free-text field of 3 digits for the Reason for
+        Separation Code.
+    b.  DESCRIPTION field (#.02) - Free-text field of 3-128 characters.
+  
+ 3. The HL7 interface with ES is modified to include the additional
+    "SEPARATION REASON CODE" (#.01) field that is associated with each MSE.
+    The ORU-Z11/ORF-Z11 message contains a new sequence, (#10), in the
+    ZMH segment.
+  
+ 4. When VistA receives an HL7 message with a Separation Reason Code, the 
+    code is validated against the SEPARATION REASON (#26) file in VistA.  
+    VistA processes the field based on the following criteria:
+    a. If the Separation Reason Code is present in the SEPARATION REASON
+       (#26) file, it is stored in the SEPARATION REASON CODE (#.1) field
+       within the MILITARY SERVICE EPISODE (#.3216) multiple within the
+       PATIENT (#2) file.
+    b. If the Separation Reason Code is not present in the SEPARATION
+       REASON (#26) file, the text "Refer to Enrollment System for Reason"
+       is stored in the patient record in the REASON FOR EARLY SEPARATION
+       (#.09) field in the MILITARY SERVICE EPISODE (#.3216) multiple
+       within the PATIENT (#2) file.
+  
+ 5. MSEs that contain a SEPARATION REASON CODE will not be included 
+    in the ORU-Z07 or ORF-Z07 messages sent to ES.
+  
+ 6. There are no display changes in VistA REE. The internal logic used to
+    retrieve the Reason for Early Separation description from the patient
+    record for display on screens <6> and <6.1> is modified as follows:
+    a. If the SEPARATION REASON CODE (#.1) sub-field within the MILITARY 
+       SERVICE EPISODE (#.3216) multiple in the PATIENT (#2) file is
+       present, it is used to acquire the DESCRIPTION (#.02) field from the
+       SEPARATION REASON (#26) file.
+    b. If the SEPARATION REASON CODE (#.1) sub-field within the MILITARY 
+       SERVICE EPISODE (#.3216) multiple in the PATIENT (#2) file is not
+       present, the REASON FOR EARLY SEPARATION (#.09) sub-field within the
+       MILITARY SERVICE EPISODE (#.3216) multiple in the PATIENT (#2) file
+       field is used to retrieve the description.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (#2)               MILITARY SERVICE        Modified
+                            EPISODE (#.3216)          
+                            SEPARATION REASON       New
+                            CODE (#.1)
+  
+ SEPARATION REASON (#26)                            New
+                            CODE (#.01)             New
+                            DESCRIPTION (.02)       New
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------                                      
+ VA Greater Los Angeles Healthcare System, Los Angeles CA
+ James E. Van Zandt VA Medical Center, Altoona PA 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         DG_53_P966_RN.PDF       (binary)
+ IVM Technical Manual                  IVM_2_P175_TM.PDF       (binary) 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running.
+  
+ 1. The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+    Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+    Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+    date/time.
+  
+ 2. The Health Level Seven (HL7) incoming/outgoing filers should be 
+    stopped. Stop All Messaging Background Processes by using the [HL STOP
+    ALL] option on the Filer and Link Management Options [HL MENU FILER
+    LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+ 3. Use Global Output Function to backup MILITARY SERVICE EPISODE 
+    (#.3216) multiple data dictionary by running the command below (be
+    sure to enter "V" for the parameters). You will need to specify a local
+    directory and file name for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]dg_53_966_backup.gbl
+ Parameters? ("V") => V
+ Global ^DD(2.3216 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility, GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/dg_53_966_backup.gbl
+ Parameters? ("V") => V
+ Global ^DD(2.3216 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ where "xxx" is the site designation, then follow the instructions above
+ for entering the globals to save.
+  
+ 4. The following options should be disabled during installation:
+  
+    Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+    Register a Patient                    [DG REGISTER PATIENT]
+    View Registration Data                [DG REGISTRATION VIEW]
+    Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+    Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+    Admit a Patient                       [DG ADMIT PATIENT]
+  
+ 5. This patch may be installed with users on the system, however, because
+    the Registration options need to be placed out of order, we suggest it
+    be installed after business hours. This patch should take less than 5 
+    minutes to install.
+  
+ Installation Instructions
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch#
+    (DG*5.3*966):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install. 
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? YES//', respond YES.
+  
+ 7. When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+    enter the following options:
+  
+    Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+    Register a Patient                    [DG REGISTER PATIENT]
+    View Registration Data                [DG REGISTRATION VIEW]
+    Eligibility Verification              [DG ELIGIBILITY VERIFICATION]
+    Preregister a Patient                 [DGPRE PRE-REGISTER OPTION]
+    Admit a Patient                       [DG ADMIT PATIENT]          
+  
+ 9. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+    press <enter>.
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].
+  
+ The patch creates the SEPARATION REASON (#26) file and adds 20 entries to
+ the file. The file will contain the following data at the completion of
+ the installation process:
+   
+ CODE:        003
+ DESCRIPTION: PARENTHOOD OR CUSTODY OF MINOR CHILDREN
+  
+ CODE:        038
+ DESCRIPTION: REDUCTION IN FORCE
+  
+ CODE:        039
+ DESCRIPTION: ATTEND CIVILIAN SCHOOL
+  
+ CODE:        044
+ DESCRIPTION: SURVIVING FAMILY MEMBER - SOLE SURVIVORSHIP
+  
+ CODE:        045
+ DESCRIPTION: HARDSHIP
+  
+ CODE:        048
+ DESCRIPTION: HOLIDAY EARLY RELEASE PROGRAM
+  
+ CODE:        065
+ DESCRIPTION: DISABILITY, SEVERANCE PAY, COMBAT RELATED (ENHANCED)
+  
+ CODE:        066
+ DESCRIPTION: DISABILITY, SEVERANCE PAY, NON COMBAT (ENHANCED)
+  
+ CODE:        068
+ DESCRIPTION: DISABILITY, SEVERANCE PAY (ENHANCED)
+  
+ CODE:        071
+ DESCRIPTION: DISABILITY, AGGRAVATION (ENHANCED)
+  
+ CODE:        072
+ DESCRIPTION: DISABILITY, OTHER (ENHANCED)
+  
+ CODE:        076
+ DESCRIPTION: DISABILITY, SEVERANCE PAY, COMBAT RELATED
+  
+ CODE:        077
+ DESCRIPTION: DISABILITY, SEVERANCE PAY
+  
+ CODE:        080
+ DESCRIPTION: DISABILITY, SEVERANCE PAY, NON COMBAT
+  
+ CODE:        082
+ DESCRIPTION: DISABILITY, AGGRAVATION
+  
+ CODE:        083
+ DESCRIPTION: DISABILITY, OTHER
+  
+ CODE:        105
+ DESCRIPTION: DISABILITY, PERMANENT (ENHANCED)
+  
+ CODE:        106
+ DESCRIPTION: DISABILITY, TEMPORARY (ENHANCED)
+  
+ CODE:        107
+ DESCRIPTION: DISABILITY, PERMANENT
+  
+ CODE:        108
+ DESCRIPTION: DISABILITY, TEMPORARY
+  
+  
+ Back-Out Plan
+ -------------
+ During installation, if the option to back up routines was run as 
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a 
+ restore of other VistA components, such as data dictionary, 
+ cross-reference, and template changes, etc. 
+  
+ Prior to attempting a back-out of the software, submit a YOUR IT Services 
+ ticket with the Enterprise Service Desk (ESD) for assistance with the 
+ procedure. 
+  
+ For VistA patches, the general strategy for back-out is to repair the 
+ code with another follow-on patch. Depending on each individual patch, 
+ sites will be given a procedure detailing how to complete the back-out.
+  
+ If any issue(s) with the software are discovered after it is nationally 
+ released and if within the maintenance window, the ESM Phase 2 
+ development team will research the issue(s) and provide guidance for any 
+ immediate, possible work around. After discussing the defect with the VA 
+ and receiving their approval on the desired resolution, the ESM Phase 2 
+ development team will communicate guidance for the long-term solution to 
+ the field.
+  
+ Long-term solutions will be one of the following: installation of a 
+ follow-up patch to correct the defect, a follow-up patch to remove the 
+ defective updates, or a procedure detailing how the software can be 
+ safely backed out of the production system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL3
+    Before: B94088270   After: B98793535  **147,230,232,377,404,451,653,
+                                           688,793,797,841,928,935,947,
+                                           966**
+Routine Name: DGMSEUTL
+    Before: B18882941   After: B23603501  **797,935,947,966**
+Routine Name: DGRP61
+    Before: B64590268   After: B66671182  **797,909,935,947,966**
+ 
+Routine list of preceding patches: 947
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 02, 2018
+Completed By:                               Date Completed: JAN 29, 2019
+Released By :                               Date Released : JAN 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1559 @@
+Released PSO*7*507 SEQ #442
+Extracted from mail message
+**KIDS**:PSO*7.0*507^
+
+**INSTALL NAME**
+PSO*7.0*507
+"BLD",10508,0)
+PSO*7.0*507^OUTPATIENT PHARMACY^0^3180920^y
+"BLD",10508,1,0)
+^^62^62^3180125^
+"BLD",10508,1,1,0)
+This patch has the following enhancements for Clinical Ancillary Services
+"BLD",10508,1,2,0)
+(CAS) Enhancements (RXSU2).
+"BLD",10508,1,3,0)
+ 
+"BLD",10508,1,4,0)
+ 
+"BLD",10508,1,5,0)
+1. Manage Lookup List Inactive Entries 
+"BLD",10508,1,6,0)
+ 
+"BLD",10508,1,7,0)
+   Modified Pharmacy Backdoor menu option Patient Prescription Processing 
+"BLD",10508,1,8,0)
+   [PSO LM BACKDOOR ORDERS]. Added the text "** INACTIVE **" to the end 
+"BLD",10508,1,9,0)
+   the display of the ADMINISTRATION SCHEDULE file (#51.1) entries during
+"BLD",10508,1,10,0)
+   editing the Listman screen field "3)  *Schedule:".  Upon typing a ?
+"BLD",10508,1,11,0)
+   at that prompt and selecting "A" for Administration Schedule File, the
+"BLD",10508,1,12,0)
+   entries displayed will now include the Inactive text.
+"BLD",10508,1,13,0)
+ 
+"BLD",10508,1,14,0)
+ 
+"BLD",10508,1,15,0)
+2. Manage Hidden Icons (Actions)  Outpatient
+"BLD",10508,1,16,0)
+ 
+"BLD",10508,1,17,0)
+   Two new hidden actions are provided for Outpatient Pharmacy's menu 
+"BLD",10508,1,18,0)
+   option Patient Prescription Processing [PSO LM BACKDOOR ORDERS].
+"BLD",10508,1,19,0)
+ 
+"BLD",10508,1,20,0)
+   a. New hidden action "DM" for displaying dispense drug information 
+"BLD",10508,1,21,0)
+      during data entry.  This hidden action will display key information
+"BLD",10508,1,22,0)
+      about the order to help aid in the verification process of an order
+"BLD",10508,1,23,0)
+      and also allow user to Enter another drug if desired.  Key
+"BLD",10508,1,24,0)
+      information includes:
+"BLD",10508,1,25,0)
+ 
+"BLD",10508,1,26,0)
+      Example:
+"BLD",10508,1,27,0)
+ 
+"BLD",10508,1,28,0)
+           DRUG NAME:  xxxxxxxxxxxxxxxxxxx   (IEN: 3)
+"BLD",10508,1,29,0)
+             ORDERABLE ITEM TEXT:
+"BLD",10508,1,30,0)
+              xxx xx xxxxx xxxxx xx xxxxx
+"BLD",10508,1,31,0)
+              x xxxxxxxx xx xxxxxxxxxxxx
+"BLD",10508,1,32,0)
+ 
+"BLD",10508,1,33,0)
+           MESSAGE:   xxxx xxx xx xxxxx x xxxxxxxx
+"BLD",10508,1,34,0)
+           QTY DISP MESSAGE:   x xxxxxxxx xx xxxxxxxxx xxxx
+"BLD",10508,1,35,0)
+  
+"BLD",10508,1,36,0)
+           Return to continue or
+"BLD",10508,1,37,0)
+           Select DRUG GENERIC NAME:
+"BLD",10508,1,38,0)
+ 
+"BLD",10508,1,39,0)
+   b. New hidden action "VP" for displaying Provider information during 
+"BLD",10508,1,40,0)
+      data entry.  This hidden action will display key information about
+"BLD",10508,1,41,0)
+      the PROVIDER to help aid in the verification process of an order and
+"BLD",10508,1,42,0)
+      also allow user to enter another provider if desired.  Key 
+"BLD",10508,1,43,0)
+      information includes:
+"BLD",10508,1,44,0)
+ 
+"BLD",10508,1,45,0)
+      Example:
+"BLD",10508,1,46,0)
+ 
+"BLD",10508,1,47,0)
+           PROVIDER TITLE:     xxxxxxxx
+"BLD",10508,1,48,0)
+ 
+"BLD",10508,1,49,0)
+           PROVIDER REMARKS:   xxx xxxxx xxxx
+"BLD",10508,1,50,0)
+ 
+"BLD",10508,1,51,0)
+           PROVIDER SPECIALTY: xxxxxx
+"BLD",10508,1,52,0)
+ 
+"BLD",10508,1,53,0)
+           Return to continue or
+"BLD",10508,1,54,0)
+           Select NEW PERSON NAME: 
+"BLD",10508,1,55,0)
+ 
+"BLD",10508,1,56,0)
+ 
+"BLD",10508,1,57,0)
+3. Suppress Duplicate - Therapy Alerts
+"BLD",10508,1,58,0)
+ 
+"BLD",10508,1,59,0)
+   Duplicate Therapy order check is suppressed in CPRS if the same
+"BLD",10508,1,60,0)
+   provider is ordering the same drug within the last 25% of the
+"BLD",10508,1,61,0)
+   medications' calculated days supply.  All 3 above criteria must be
+"BLD",10508,1,62,0)
+   met for this order check to be suppressed.
+"BLD",10508,4,0)
+^9.64PA^^
+"BLD",10508,6.3)
+28
+"BLD",10508,"ABPKG")
+n
+"BLD",10508,"INIT")
+EN^PSO7P507
+"BLD",10508,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10508,"KRN",.4,0)
+.4
+"BLD",10508,"KRN",.401,0)
+.401
+"BLD",10508,"KRN",.402,0)
+.402
+"BLD",10508,"KRN",.403,0)
+.403
+"BLD",10508,"KRN",.5,0)
+.5
+"BLD",10508,"KRN",.84,0)
+.84
+"BLD",10508,"KRN",3.6,0)
+3.6
+"BLD",10508,"KRN",3.8,0)
+3.8
+"BLD",10508,"KRN",9.2,0)
+9.2
+"BLD",10508,"KRN",9.8,0)
+9.8
+"BLD",10508,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10508,"KRN",9.8,"NM",1,0)
+PSOUTLA2^^0^B42876866
+"BLD",10508,"KRN",9.8,"NM",2,0)
+PSOORED4^^0^B58529910
+"BLD",10508,"KRN",9.8,"NM",3,0)
+PSOORED5^^0^B75166815
+"BLD",10508,"KRN",9.8,"NM","B","PSOORED4",2)
+
+"BLD",10508,"KRN",9.8,"NM","B","PSOORED5",3)
+
+"BLD",10508,"KRN",9.8,"NM","B","PSOUTLA2",1)
+
+"BLD",10508,"KRN",19,0)
+19
+"BLD",10508,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",10508,"KRN",19.1,0)
+19.1
+"BLD",10508,"KRN",101,0)
+101
+"BLD",10508,"KRN",101,"NM",0)
+^9.68A^3^3
+"BLD",10508,"KRN",101,"NM",1,0)
+PSO HIDDEN ACTIONS #3^^2
+"BLD",10508,"KRN",101,"NM",2,0)
+PSO DRUG LOOK^^0
+"BLD",10508,"KRN",101,"NM",3,0)
+PSO VIEW PROVIDER^^0
+"BLD",10508,"KRN",101,"NM","B","PSO DRUG LOOK",2)
+
+"BLD",10508,"KRN",101,"NM","B","PSO HIDDEN ACTIONS #3",1)
+
+"BLD",10508,"KRN",101,"NM","B","PSO VIEW PROVIDER",3)
+
+"BLD",10508,"KRN",409.61,0)
+409.61
+"BLD",10508,"KRN",771,0)
+771
+"BLD",10508,"KRN",779.2,0)
+779.2
+"BLD",10508,"KRN",870,0)
+870
+"BLD",10508,"KRN",8989.51,0)
+8989.51
+"BLD",10508,"KRN",8989.52,0)
+8989.52
+"BLD",10508,"KRN",8994,0)
+8994
+"BLD",10508,"KRN","B",.4,.4)
+
+"BLD",10508,"KRN","B",.401,.401)
+
+"BLD",10508,"KRN","B",.402,.402)
+
+"BLD",10508,"KRN","B",.403,.403)
+
+"BLD",10508,"KRN","B",.5,.5)
+
+"BLD",10508,"KRN","B",.84,.84)
+
+"BLD",10508,"KRN","B",3.6,3.6)
+
+"BLD",10508,"KRN","B",3.8,3.8)
+
+"BLD",10508,"KRN","B",9.2,9.2)
+
+"BLD",10508,"KRN","B",9.8,9.8)
+
+"BLD",10508,"KRN","B",19,19)
+
+"BLD",10508,"KRN","B",19.1,19.1)
+
+"BLD",10508,"KRN","B",101,101)
+
+"BLD",10508,"KRN","B",409.61,409.61)
+
+"BLD",10508,"KRN","B",771,771)
+
+"BLD",10508,"KRN","B",779.2,779.2)
+
+"BLD",10508,"KRN","B",870,870)
+
+"BLD",10508,"KRN","B",8989.51,8989.51)
+
+"BLD",10508,"KRN","B",8989.52,8989.52)
+
+"BLD",10508,"KRN","B",8994,8994)
+
+"BLD",10508,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10508,"QUES",0)
+^9.62^^
+"BLD",10508,"REQB",0)
+^9.611^6^3
+"BLD",10508,"REQB",4,0)
+PSO*7.0*410^2
+"BLD",10508,"REQB",5,0)
+PSO*7.0*500^2
+"BLD",10508,"REQB",6,0)
+PSO*7.0*515^2
+"BLD",10508,"REQB","B","PSO*7.0*410",4)
+
+"BLD",10508,"REQB","B","PSO*7.0*500",5)
+
+"BLD",10508,"REQB","B","PSO*7.0*515",6)
+
+"INIT")
+EN^PSO7P507
+"KRN",101,5533,-1)
+2^1
+"KRN",101,5533,0)
+PSO HIDDEN ACTIONS #3^Outpatient Pharmacy Hidden Actions #3^^M^520824641^^^^^^^170
+"KRN",101,5533,10,0)
+^101.01PA^26^26
+"KRN",101,5533,10,24,0)
+8296^DM^42^
+"KRN",101,5533,10,24,"^")
+PSO DRUG LOOK
+"KRN",101,5533,10,25,0)
+8297^VP^43^
+"KRN",101,5533,10,25,"^")
+PSO VIEW PROVIDER
+"KRN",101,8296,-1)
+0^2
+"KRN",101,8296,0)
+PSO DRUG LOOK^Drug Look Up^^A^^^^^^^^OUTPATIENT PHARMACY
+"KRN",101,8296,.1)
+DRUG LK
+"KRN",101,8296,1,0)
+^101.06^1^1^3171201^^^
+"KRN",101,8296,1,1,0)
+Hidden action to view drug information
+"KRN",101,8296,2,0)
+^101.02A^1^1
+"KRN",101,8296,2,1,0)
+DM
+"KRN",101,8296,2,"B","DM",1)
+
+"KRN",101,8296,20)
+D DMACTN^PSOUTLA2
+"KRN",101,8296,99)
+64608,32355
+"KRN",101,8297,-1)
+0^3
+"KRN",101,8297,0)
+PSO VIEW PROVIDER^View Provider^^A^^^^^^^^OUTPATIENT PHARMACY
+"KRN",101,8297,.1)
+VIEW PR
+"KRN",101,8297,1,0)
+^101.06^1^1^3171201^^^
+"KRN",101,8297,1,1,0)
+Hidden action to view provider on pending orders
+"KRN",101,8297,2,0)
+^101.02A^1^1
+"KRN",101,8297,2,1,0)
+VP
+"KRN",101,8297,2,"B","VP",1)
+
+"KRN",101,8297,20)
+D VPACTN^PSOUTLA2
+"KRN",101,8297,99)
+64608,53333
+"MBREQ")
+0
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+507^3180920
+"PKG",170,22,1,"PAH",1,1,0)
+^^62^62^3180920
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch has the following enhancements for Clinical Ancillary Services
+"PKG",170,22,1,"PAH",1,1,2,0)
+(CAS) Enhancements (RXSU2).
+"PKG",170,22,1,"PAH",1,1,3,0)
+ 
+"PKG",170,22,1,"PAH",1,1,4,0)
+ 
+"PKG",170,22,1,"PAH",1,1,5,0)
+1. Manage Lookup List Inactive Entries 
+"PKG",170,22,1,"PAH",1,1,6,0)
+ 
+"PKG",170,22,1,"PAH",1,1,7,0)
+   Modified Pharmacy Backdoor menu option Patient Prescription Processing 
+"PKG",170,22,1,"PAH",1,1,8,0)
+   [PSO LM BACKDOOR ORDERS]. Added the text "** INACTIVE **" to the end 
+"PKG",170,22,1,"PAH",1,1,9,0)
+   the display of the ADMINISTRATION SCHEDULE file (#51.1) entries during
+"PKG",170,22,1,"PAH",1,1,10,0)
+   editing the Listman screen field "3)  *Schedule:".  Upon typing a ?
+"PKG",170,22,1,"PAH",1,1,11,0)
+   at that prompt and selecting "A" for Administration Schedule File, the
+"PKG",170,22,1,"PAH",1,1,12,0)
+   entries displayed will now include the Inactive text.
+"PKG",170,22,1,"PAH",1,1,13,0)
+ 
+"PKG",170,22,1,"PAH",1,1,14,0)
+ 
+"PKG",170,22,1,"PAH",1,1,15,0)
+2. Manage Hidden Icons (Actions)  Outpatient
+"PKG",170,22,1,"PAH",1,1,16,0)
+ 
+"PKG",170,22,1,"PAH",1,1,17,0)
+   Two new hidden actions are provided for Outpatient Pharmacy's menu 
+"PKG",170,22,1,"PAH",1,1,18,0)
+   option Patient Prescription Processing [PSO LM BACKDOOR ORDERS].
+"PKG",170,22,1,"PAH",1,1,19,0)
+ 
+"PKG",170,22,1,"PAH",1,1,20,0)
+   a. New hidden action "DM" for displaying dispense drug information 
+"PKG",170,22,1,"PAH",1,1,21,0)
+      during data entry.  This hidden action will display key information
+"PKG",170,22,1,"PAH",1,1,22,0)
+      about the order to help aid in the verification process of an order
+"PKG",170,22,1,"PAH",1,1,23,0)
+      and also allow user to Enter another drug if desired.  Key
+"PKG",170,22,1,"PAH",1,1,24,0)
+      information includes:
+"PKG",170,22,1,"PAH",1,1,25,0)
+ 
+"PKG",170,22,1,"PAH",1,1,26,0)
+      Example:
+"PKG",170,22,1,"PAH",1,1,27,0)
+ 
+"PKG",170,22,1,"PAH",1,1,28,0)
+           DRUG NAME:  xxxxxxxxxxxxxxxxxxx   (IEN: 3)
+"PKG",170,22,1,"PAH",1,1,29,0)
+             ORDERABLE ITEM TEXT:
+"PKG",170,22,1,"PAH",1,1,30,0)
+              xxx xx xxxxx xxxxx xx xxxxx
+"PKG",170,22,1,"PAH",1,1,31,0)
+              x xxxxxxxx xx xxxxxxxxxxxx
+"PKG",170,22,1,"PAH",1,1,32,0)
+ 
+"PKG",170,22,1,"PAH",1,1,33,0)
+           MESSAGE:   xxxx xxx xx xxxxx x xxxxxxxx
+"PKG",170,22,1,"PAH",1,1,34,0)
+           QTY DISP MESSAGE:   x xxxxxxxx xx xxxxxxxxx xxxx
+"PKG",170,22,1,"PAH",1,1,35,0)
+  
+"PKG",170,22,1,"PAH",1,1,36,0)
+           Return to continue or
+"PKG",170,22,1,"PAH",1,1,37,0)
+           Select DRUG GENERIC NAME:
+"PKG",170,22,1,"PAH",1,1,38,0)
+ 
+"PKG",170,22,1,"PAH",1,1,39,0)
+   b. New hidden action "VP" for displaying Provider information during 
+"PKG",170,22,1,"PAH",1,1,40,0)
+      data entry.  This hidden action will display key information about
+"PKG",170,22,1,"PAH",1,1,41,0)
+      the PROVIDER to help aid in the verification process of an order and
+"PKG",170,22,1,"PAH",1,1,42,0)
+      also allow user to enter another provider if desired.  Key 
+"PKG",170,22,1,"PAH",1,1,43,0)
+      information includes:
+"PKG",170,22,1,"PAH",1,1,44,0)
+ 
+"PKG",170,22,1,"PAH",1,1,45,0)
+      Example:
+"PKG",170,22,1,"PAH",1,1,46,0)
+ 
+"PKG",170,22,1,"PAH",1,1,47,0)
+           PROVIDER TITLE:     xxxxxxxx
+"PKG",170,22,1,"PAH",1,1,48,0)
+ 
+"PKG",170,22,1,"PAH",1,1,49,0)
+           PROVIDER REMARKS:   xxx xxxxx xxxx
+"PKG",170,22,1,"PAH",1,1,50,0)
+ 
+"PKG",170,22,1,"PAH",1,1,51,0)
+           PROVIDER SPECIALTY: xxxxxx
+"PKG",170,22,1,"PAH",1,1,52,0)
+ 
+"PKG",170,22,1,"PAH",1,1,53,0)
+           Return to continue or
+"PKG",170,22,1,"PAH",1,1,54,0)
+           Select NEW PERSON NAME: 
+"PKG",170,22,1,"PAH",1,1,55,0)
+ 
+"PKG",170,22,1,"PAH",1,1,56,0)
+ 
+"PKG",170,22,1,"PAH",1,1,57,0)
+3. Suppress Duplicate - Therapy Alerts
+"PKG",170,22,1,"PAH",1,1,58,0)
+ 
+"PKG",170,22,1,"PAH",1,1,59,0)
+   Duplicate Therapy order check is suppressed in CPRS if the same
+"PKG",170,22,1,"PAH",1,1,60,0)
+   provider is ordering the same drug within the last 25% of the
+"PKG",170,22,1,"PAH",1,1,61,0)
+   medications' calculated days supply.  All 3 above criteria must be
+"PKG",170,22,1,"PAH",1,1,62,0)
+   met for this order check to be suppressed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PSO7P507")
+0^^B439895^n/a
+"RTN","PSO7P507",1,0)
+PSO7P507 ;BIRMINGHAM/GN-POST INSTALL TO REBUILD PARENT PROTOCOL MENU ;1/16/18 10:00am
+"RTN","PSO7P507",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**507**;13 Feb 97;Build 28
+"RTN","PSO7P507",3,0)
+ ;
+"RTN","PSO7P507",4,0)
+ ; Routine should be deleted after install.
+"RTN","PSO7P507",5,0)
+ ; Routine can be re-run as needed.
+"RTN","PSO7P507",6,0)
+ Q
+"RTN","PSO7P507",7,0)
+EN ; ENTRY POINT
+"RTN","PSO7P507",8,0)
+ N PSOPIEN,XQORM
+"RTN","PSO7P507",9,0)
+ D MES^XPDUTL("")
+"RTN","PSO7P507",10,0)
+ D MES^XPDUTL("Rebuild Hidden Action protocols")
+"RTN","PSO7P507",11,0)
+ D MES^XPDUTL("")
+"RTN","PSO7P507",12,0)
+ ; Recompile menus that contain new items
+"RTN","PSO7P507",13,0)
+ S PSOPIEN=$O(^ORD(101,"B","PSO HIDDEN ACTIONS #3",0))
+"RTN","PSO7P507",14,0)
+ S XQORM=PSOPIEN_";ORD(101," D XREF^XQORM
+"RTN","PSO7P507",15,0)
+ Q
+"RTN","PSOORED4")
+0^2^B58529910^B57964531
+"RTN","PSOORED4",1,0)
+PSOORED4 ;BIR/SAB - Edit front door dosing ;07/13/00
+"RTN","PSOORED4",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,91,78,99,111,117,133,159,148,251,391,372,416,313,437,282,402,515,507**;DEC 1997;Build 28
+"RTN","PSOORED4",3,0)
+ ;External reference ^PS(51 supported by DBIA 2224
+"RTN","PSOORED4",4,0)
+ ;External reference to PS(51.2 supported by DBIA 2226
+"RTN","PSOORED4",5,0)
+ ;External reference to PS(51.1 supported by DBIA 2225
+"RTN","PSOORED4",6,0)
+ ;called from psoornew
+"RTN","PSOORED4",7,0)
+ ;
+"RTN","PSOORED4",8,0)
+DOSE(PSORXED) ;
+"RTN","PSOORED4",9,0)
+ I '$G(PSODRUG("IEN")) W !,"DRUG NAME REQUIRED!" D 2^PSOORNW1 I '$G(PSODRUG("IEN")) S VALMSG="No Dispense Drug Selected" Q
+"RTN","PSOORED4",10,0)
+ K ROU,STRE,UNITN,PSODOSE M PSODOSE=PSORXED
+"RTN","PSOORED4",11,0)
+ D KV K FIELD,DOSEOR,DUPD,X,Y,UNITS S ENT=1,OLENT=$G(PSORXED("ENT"))
+"RTN","PSOORED4",12,0)
+ASK I $G(ORD) W !!,"Possible SIG: " D
+"RTN","PSOORED4",13,0)
+ .;Coded only for outside orders with no Patient Instructions
+"RTN","PSOORED4",14,0)
+ .I $O(SIG(""))="",$G(ORD),$P($G(^PS(52.41,ORD,"EXT")),"^")'="" D SIGS^PSOHCPRS
+"RTN","PSOORED4",15,0)
+ .S INST=0 F  S INST=$O(SIG(INST)) Q:'INST  S MIG=SIG(INST) D
+"RTN","PSOORED4",16,0)
+ ..F SG=1:1:$L(MIG," ") W:$X+$L($P(MIG," ",SG)_" ")>IOM !?14 W $P(MIG," ",SG)_" "
+"RTN","PSOORED4",17,0)
+ K SG,INST,MIG
+"RTN","PSOORED4",18,0)
+ S ROU="PSOORED4",II=ENT D ASK^PSOBKDED K ROU,II I $G(JUMP) K JUMP G JUMP
+"RTN","PSOORED4",19,0)
+ G:$D(DIRUT) EXQ
+"RTN","PSOORED4",20,0)
+ ;
+"RTN","PSOORED4",21,0)
+ I $G(VERB)]"" S PSORXED("VERB",ENT)=VERB G DUPD
+"RTN","PSOORED4",22,0)
+VER D VER^PSOOREDX I X[U,$L(X)>1 S FIELD="VER" G JUMP
+"RTN","PSOORED4",23,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",24,0)
+ I X="@" K PSORXED("VERB",ENT),VERB G DUPD
+"RTN","PSOORED4",25,0)
+ S:X'="" (PSORXED("VERB",ENT),VERB)=X
+"RTN","PSOORED4",26,0)
+DUPD ;
+"RTN","PSOORED4",27,0)
+ I $G(PSORXED("DOSE",ENT))'?.N&($G(PSORXED("DOSE",ENT))'?.N1".".N)!'DOSE("LD") K PSORXED("DOSE ORDERED",ENT),DUPD G NOU1
+"RTN","PSOORED4",28,0)
+ D DUPD^PSOOREDX
+"RTN","PSOORED4",29,0)
+ S DIR("B")=$S($G(PSORXED("DOSE ORDERED",ENT))]"":PSORXED("DOSE ORDERED",ENT),1:1) S:$E($G(DIR("B")),1)="." DIR("B")="0"_$G(DIR("B")) K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",30,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUPD" G JUMP
+"RTN","PSOORED4",31,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",32,0)
+ I X="@"!(X=0) W !,"Dispense Units Per Dose is Required!!",! G DUPD
+"RTN","PSOORED4",33,0)
+ D STR^PSOOREDX
+"RTN","PSOORED4",34,0)
+NOU1 G:'$G(PSORXED("DOSE ORDERED",ENT)) RTE
+"RTN","PSOORED4",35,0)
+ D CNON^PSOORED3
+"RTN","PSOORED4",36,0)
+ N PSONDEF
+"RTN","PSOORED4",37,0)
+ I $G(NOUN)]"" S PSORXED("NOUN",ENT)=NOUN
+"RTN","PSOORED4",38,0)
+NOU D NOU^PSOOREDX I X[U,$L(X)>1 S FIELD="NOU" G JUMP
+"RTN","PSOORED4",39,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",40,0)
+ I X="@" K PSORXED("NOUN",ENT),NOUN G RTE
+"RTN","PSOORED4",41,0)
+ I X'="",$G(PSONDEF)="" S NOUN=X
+"RTN","PSOORED4",42,0)
+ I X'="",$G(PSONDEF)'=X S NOUN=X
+"RTN","PSOORED4",43,0)
+ S:X'="" PSORXED("NOUN",ENT)=X
+"RTN","PSOORED4",44,0)
+ ;
+"RTN","PSOORED4",45,0)
+RTE K JUMP S ROU="PSOORED4" D RTE^PSOBKDED K ROU
+"RTN","PSOORED4",46,0)
+ I $G(JUMP) K JUMP G JUMP
+"RTN","PSOORED4",47,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",48,0)
+ ;
+"RTN","PSOORED4",49,0)
+SCH D SCH^PSOBKDED I X[U,$L(X)>1 S FIELD="SCH" G JUMP
+"RTN","PSOORED4",50,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",51,0)
+ S SCH=$$SCHASL^PSOORED5(Y) D SCH^PSOSIG I $G(SCH)']""!($D(DTOUT))!($D(DUOUT)) G SCH
+"RTN","PSOORED4",52,0)
+ S PSORXED("SCHEDULE",ENT)=SCH IF $G(SCHEX)'="" W " ("_SCHEX_")"
+"RTN","PSOORED4",53,0)
+ K SCH,SCHEX,X,Y,PSOSCH
+"RTN","PSOORED4",54,0)
+ S:$G(PSORXED("ENT"))<ENT PSORXED("ENT")=ENT
+"RTN","PSOORED4",55,0)
+ ;
+"RTN","PSOORED4",56,0)
+DUR D KV K EXP S DIR(0)="52.0113,4",DIR("A")="LIMITED DURATION (IN DAYS, HOURS OR MINUTES)"
+"RTN","PSOORED4",57,0)
+ S DIR("B")=$S($G(PSORXED("DURATION",ENT))]"":PSORXED("DURATION",ENT),1:"") K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",58,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUR" G JUMP
+"RTN","PSOORED4",59,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",60,0)
+ D DUR1^PSOOREDX
+"RTN","PSOORED4",61,0)
+ ;
+"RTN","PSOORED4",62,0)
+CON D CON^PSOOREDX I X[U,$L(X)>1 S FIELD="CON" G JUMP
+"RTN","PSOORED4",63,0)
+ G:$D(DTOUT)!($D(DUOUT)) EXQ
+"RTN","PSOORED4",64,0)
+ I X="@",$G(PSORXED("CONJUNCTION",ENT))="" W !,?10,"Invalid Entry - nothing to delete!!" G CON
+"RTN","PSOORED4",65,0)
+ S:X'=""&(X'="@") PSORXED("CONJUNCTION",ENT)=Y
+"RTN","PSOORED4",66,0)
+ I X="@",$D(PSORXED("CONJUNCTION",ENT)) D CON1^PSOOREDX G:$D(DIRUT) EXQ G:'Y CON N CKX S CKX=1 D UPD^PSOOREDX G CON
+"RTN","PSOORED4",67,0)
+ ;
+"RTN","PSOORED4",68,0)
+ N PSODLBD4 S PSOSAVX=X,PSODLBD4=1
+"RTN","PSOORED4",69,0)
+ ;*437
+"RTN","PSOORED4",70,0)
+ I '$$DUROK^PSOORED3(.PSORXED,ENT) D  G DUR
+"RTN","PSOORED4",71,0)
+ . W !!,"Duration is required for the dosage entered prior to the THEN conjunction.",$C(7),!
+"RTN","PSOORED4",72,0)
+ I $G(PSORXED("CONJUNCTION",ENT))]"" S PSOCKCON=1 D DCHK1^PSODOSUT G:$G(PSONEW("DFLG")) EX S ENT=ENT+1 K DIR G ASK
+"RTN","PSOORED4",73,0)
+ E  K PSOCKCON D DCHK1^PSODOSUT I $D(DTOUT)!($D(DUOUT)) S PSORX("DFLG")=1,PSONEW("DFLG")=1 G EX  ;don't need to print the full summary, just the last sequence. 
+"RTN","PSOORED4",74,0)
+ I PSOSAVX="",$G(PSORXED) K PSOCKCON,PSOEDDOS
+"RTN","PSOORED4",75,0)
+ K PSOSAVX
+"RTN","PSOORED4",76,0)
+ ;
+"RTN","PSOORED4",77,0)
+ S X=$G(PSORXED("INS")) D SIG^PSOHELP S:$G(INS1)]"" PSORXED("SIG")=$E(INS1,2,9999999)
+"RTN","PSOORED4",78,0)
+ D EN^PSOFSIG(.PSORXED),VERI I $G(CKX),'$G(PSOSIGFL) D MP1 K CKX
+"RTN","PSOORED4",79,0)
+ I $G(PSOSIGFL)=1 D  I '$G(PSOSIGFL) Q
+"RTN","PSOORED4",80,0)
+ .I $D(OR0),$P(OR0,"^",24)=1 S VALMSG="Digitally Signed Order - No such changes allowed." K PSORXED,PSOSIGFL M PSORXED=PSODOSE D EN^PSOFSIG(.PSORXED) D  Q
+"RTN","PSOORED4",81,0)
+ ..I $D(PSOBDR) K PSODRUG M PSODRUG=PSOBDR K PSOBDR,PSOBDRG
+"RTN","PSOORED4",82,0)
+ .S PSORXED("ENT")=ENT,SIGOK=1,VALMSG="This change will create a new prescription!",NCPDPFLG=1
+"RTN","PSOORED4",83,0)
+ K QTYHLD S:$G(PSORXED("QTY")) QTYHLD=PSORXED("QTY") D QTY^PSOSIG(.PSORXED) I $G(PSORXED("QTY")) S QTY=1
+"RTN","PSOORED4",84,0)
+ I $G(QTYHLD),'$G(PSORXED("QTY")) S PSORXED("QTY")=QTYHLD
+"RTN","PSOORED4",85,0)
+ K QTYHLD
+"RTN","PSOORED4",86,0)
+ I '$G(PSORXED("QTY")),$P(OR0,"^",10) S PSORXED("QTY")=$P(OR0,"^",10)
+"RTN","PSOORED4",87,0)
+EX ;
+"RTN","PSOORED4",88,0)
+ K PSOBDR,PSOBDRG,PSOSCH,DUPD,STRE,UNITN,SCH,VERB,NOUN,DOSEOR,RTE,DUR,X,Y,ENTS,PSODOSE,OLENT,FIELD,FLDNM,AR,NM,ENT,STRE,UNITN,PSODOSE,ERTE,ROU
+"RTN","PSOORED4",89,0)
+KV K DTOUT,DUOUT,DIR,DIRUT
+"RTN","PSOORED4",90,0)
+ Q
+"RTN","PSOORED4",91,0)
+EXQ ;
+"RTN","PSOORED4",92,0)
+ K PSORXED,PSOSIGFL M PSORXED=PSODOSE D EN^PSOFSIG(.PSORXED) D MP1
+"RTN","PSOORED4",93,0)
+ I $D(PSOBDR) M PSODRUG=PSOBDR K PSOBDR,PSOBDRG
+"RTN","PSOORED4",94,0)
+ G EX Q
+"RTN","PSOORED4",95,0)
+MP1 D MP1^PSOOREDX
+"RTN","PSOORED4",96,0)
+ Q
+"RTN","PSOORED4",97,0)
+VERI ;checks for changes to dosing instructions
+"RTN","PSOORED4",98,0)
+ S ENTS=0
+"RTN","PSOORED4",99,0)
+ F I=0:0 S I=$O(PSORXED("DOSE",I)) Q:'I  S ENTS=$G(ENTS)+1
+"RTN","PSOORED4",100,0)
+ I ENTS<OLENT!(ENTS>OLENT) S PSOSIGFL=1 Q
+"RTN","PSOORED4",101,0)
+ F I=1:1:OLENT D
+"RTN","PSOORED4",102,0)
+ .I +PSODOSE("DOSE",I)'=$G(PSORXED("DOSE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",103,0)
+ .I $G(PSODOSE("DURATION",I))]"" D
+"RTN","PSOORED4",104,0)
+ ..S DURATION=$S($E(PSODOSE("DURATION",I),1)'?.N:$E(PSODOSE("DURATION",I),2,99)_$E(PSODOSE("DURATION",I),1),1:PSODOSE("DURATION",I))
+"RTN","PSOORED4",105,0)
+ ..I +DURATION'=+$G(PSORXED("DURATION",I)) S PSOSIGFL=1
+"RTN","PSOORED4",106,0)
+ .I $G(PSODOSE("CONJUNCTION",I))'=$G(PSORXED("CONJUNCTION",I)) S PSOSIGFL=1
+"RTN","PSOORED4",107,0)
+ .I PSODOSE("ROUTE",I)'=$G(PSORXED("ROUTE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",108,0)
+ .I PSODOSE("SCHEDULE",I)'=$G(PSORXED("SCHEDULE",I)) S PSOSIGFL=1
+"RTN","PSOORED4",109,0)
+ K DURATION Q
+"RTN","PSOORED4",110,0)
+JUMP ;jump to fields
+"RTN","PSOORED4",111,0)
+ I $L($E(X,2,99))<3 W !,"Field Name Must Be At Least 3 Characters in Length",! G @FIELD
+"RTN","PSOORED4",112,0)
+ D FNM^PSOOREDX
+"RTN","PSOORED4",113,0)
+ I FLDNM']"" K X,NM,FLDNM W !,"INVALID FIELD NAME.  PLEASE TRY AGAIN!",! G @FIELD
+"RTN","PSOORED4",114,0)
+ F AR=1:1:PSORXED("ENT") W !,AR_". "_$P(FLDNM,"^",2)_": "_$S(NM="ROU"&($G(PSORXED($P(FLDNM,"^"),AR))):$P(^PS(51.2,PSORXED($P(FLDNM,"^"),AR),0),"^"),1:$G(PSORXED($P(FLDNM,"^"),AR))) S AR1=AR
+"RTN","PSOORED4",115,0)
+ D KV S DIR("A",1)="* Indicates which fields will create a New Order",DIR("A")="Select Field to Edit by number",DIR(0)="NO^1:"_AR1 D ^DIR G:$D(DIRUT) @FIELD
+"RTN","PSOORED4",116,0)
+ D JFN^PSOOREDX G:FLDNM="" @FIELD G @FLDNM
+"RTN","PSOORED4",117,0)
+ G EX
+"RTN","PSOORED4",118,0)
+ Q
+"RTN","PSOORED4",119,0)
+HLP ;help text for med route
+"RTN","PSOORED4",120,0)
+ D FULL^VALM1 W !,"Please enter how patient will use the medication!"
+"RTN","PSOORED4",121,0)
+ S DIC=51.2,X="??",DIC(0)="M",DIC("S")="I $P(^PS(51.2,+Y,0),""^"",4)" D ^DIC K DIC,X,Y
+"RTN","PSOORED4",122,0)
+ Q
+"RTN","PSOORED4",123,0)
+SCHLP ;
+"RTN","PSOORED4",124,0)
+ D FULL^VALM1 W !,"You can choose an entry from the Administration Schedule File (#51.1),",!,"Medication Instruction File (#51) or enter free text."
+"RTN","PSOORED4",125,0)
+ W !,"The free text entry cannot contain more than 2 spaces or be greater than 20",!,"characters in length."
+"RTN","PSOORED4",126,0)
+ W ! S DIR(0)="S^A:Administration Schedule File;M:Medication Instruction File;B:Both;F:Free Text",DIR("B")="Both"
+"RTN","PSOORED4",127,0)
+ S DIR("A")="Do you want to list from" D ^DIR I Y="F"!($G(DIRUT)) K X,Y G X
+"RTN","PSOORED4",128,0)
+ S LBL=Y G @LBL
+"RTN","PSOORED4",129,0)
+A ;display 51.1 entries only
+"RTN","PSOORED4",130,0)
+B K X,Y,DIC S X="??",DIC="^PS(51.1,",DIC(0)="QESMVZ",DIC("W")="D DICW^PSOORED4",D="APPSJ^D" W ! D MIX^DIC1
+"RTN","PSOORED4",131,0)
+ K DIC,X I LBL="A"!($G(DTOUT)) K LBL G X
+"RTN","PSOORED4",132,0)
+ I Y=-1!($G(DUOUT)) K DIR,DTOUT,DUOUT S DIR(0)="Y",DIR("B")="No",DIR("A")="Do you want to continue with the Medication Instruction File"
+"RTN","PSOORED4",133,0)
+ D ^DIR I 'Y!($G(DTOUT)) K DIR,X,Y G X
+"RTN","PSOORED4",134,0)
+M K X,Y,DIC S DIC=51,X="??",DIC(0)="M" D ^DIC K DIC,X,Y,DTOUT,DUOUT,LBL
+"RTN","PSOORED4",135,0)
+ ;*282 Allow multi-word schedules
+"RTN","PSOORED4",136,0)
+X S DIR("?")="^D SCHLP^PSOORED4",DIR("A")="Schedule: ",DIR(0)="FA^1:20^I X[""""""""!(X?.E1C.E)!($A(X)=45)!($L(X,"" "")>$S(X[""PRN"":4,1:3))!($L(X)>20)!($L(X)<1) K X"
+"RTN","PSOORED4",137,0)
+ S DIR("B")=$S($D(PSOSCH)&('$D(PSORXED("SCHEDULE",ENT))):PSOSCH,$G(PSORXED("SCHEDULE",ENT))]"":PSORXED("SCHEDULE",ENT),1:"") K:DIR("B")="" DIR("B")
+"RTN","PSOORED4",138,0)
+ Q
+"RTN","PSOORED4",139,0)
+DICW ;
+"RTN","PSOORED4",140,0)
+ S Z=$P(^PS(51.1,+Y,0),"^",5),Z=$S(Z="O":-1,Z="S":1,Z="R":-2,1:0) W:Z "  ",$S(Z>0:"SHIFT",Z=-2:"RANGE",1:"ONE-TIME")
+"RTN","PSOORED4",141,0)
+ I Z'<0,$D(PSJW),$D(^(PSJPP'="PSJ"+1,PSJW,0)),$P(^(0),"^",Z+2)]"" W "  ",$P(^(0),"^",Z+2)
+"RTN","PSOORED4",142,0)
+ ;Naked reference on DICW+2 is from DICW+1, ^PS(51.1,+Y,0)
+"RTN","PSOORED4",143,0)
+ W:+Y $S($P(^(0),U,12):" **INACTIVE**",1:"")                   ;*507
+"RTN","PSOORED4",144,0)
+ Q
+"RTN","PSOORED5")
+0^3^B75166815^B73345856
+"RTN","PSOORED5",1,0)
+PSOORED5 ;BIR/SAB-Rxs without dosing info ;07/20/00
+"RTN","PSOORED5",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**46,75,78,100,99,117,133,251,378,372,416,313,450,486,402,500,507**;DEC 1997;Build 28
+"RTN","PSOORED5",3,0)
+ ;Reference to ^PS(51.2 supported by DBIA 2226
+"RTN","PSOORED5",4,0)
+ ;Reference to ^PS(50.7 supported by DBIA 2223
+"RTN","PSOORED5",5,0)
+ ;Reference to ^PSDRUG( supported by DBIA 221
+"RTN","PSOORED5",6,0)
+ ;Reference to ^PS(55 supported by DBIA 2228
+"RTN","PSOORED5",7,0)
+ ;called by psoored2 and psodir
+"RTN","PSOORED5",8,0)
+ ;pre-poe rxs and new backdoor rxs
+"RTN","PSOORED5",9,0)
+ ;
+"RTN","PSOORED5",10,0)
+ ;*507 indicate inactive file #51.1 sched entries
+"RTN","PSOORED5",11,0)
+ ;
+"RTN","PSOORED5",12,0)
+DOSE1(PSORXED) ;for new rxs
+"RTN","PSOORED5",13,0)
+DOSE ;pre-poe rx
+"RTN","PSOORED5",14,0)
+ D KV K ROU,STRE,FIELD,DOSEOR,DUPD,X,Y,UNITS S ENT=1,OLENT=ENT
+"RTN","PSOORED5",15,0)
+ASK S ROU="PSOORED5" D ASK^PSOBKDED K ROU G:$D(DIRUT) EXE  ;486
+"RTN","PSOORED5",16,0)
+ I $G(JUMP) K JUMP G JUMP
+"RTN","PSOORED5",17,0)
+ I $G(QUIT)]"" K QUIT,ROU Q
+"RTN","PSOORED5",18,0)
+ ;
+"RTN","PSOORED5",19,0)
+ I $G(VERB)]"" S PSORXED("VERB",ENT)=VERB G DUPD
+"RTN","PSOORED5",20,0)
+ I $G(PSORX("EDIT"))']"" W:$G(PSORXED("VERB",ENT))]"" !,"VERB: "_PSORXED("VERB",ENT) G DUPD
+"RTN","PSOORED5",21,0)
+VER D VER^PSOOREDX
+"RTN","PSOORED5",22,0)
+ I X[U,$L(X)>1 S FIELD="VER" G JUMP
+"RTN","PSOORED5",23,0)
+ G EX:$D(DTOUT),EXE:$D(DUOUT) I X="@" K PSORXED("VERB",ENT),VERB G DUPD
+"RTN","PSOORED5",24,0)
+ S:X'="" (PSORXED("VERB",ENT),VERB)=X
+"RTN","PSOORED5",25,0)
+DUPD ;
+"RTN","PSOORED5",26,0)
+ I $G(PSORXED("DOSE",ENT))'?.N&($G(PSORXED("DOSE",ENT))'?.N1".".N)!'DOSE("LD") K PSORXED("DOSE ORDERED",ENT),DUPD G NOU1
+"RTN","PSOORED5",27,0)
+ D KV S DIR(0)="52.0113,1",DIR("A")="DISPENSE UNITS PER DOSE"_$S($G(PSORXED("NOUN",ENT))]"":"("_PSORXED("NOUN",ENT)_")",1:"")
+"RTN","PSOORED5",28,0)
+ I '$G(PSORXED("DOSE",ENT)),$G(PSORXED("DOSE",ENT-1)) S PSORXED("DOSE",ENT)=PSORXED("DOSE",ENT-1)
+"RTN","PSOORED5",29,0)
+ S DIR("B")=$S($G(PSORXED("DOSE ORDERED",ENT))]"":PSORXED("DOSE ORDERED",ENT),$G(DUPD)]"":DUPD,1:"") S:$E($G(DIR("B")),1)="." DIR("B")="0"_$G(DIR("B")) K:DIR("B")="" DIR("B")
+"RTN","PSOORED5",30,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUPD" G JUMP
+"RTN","PSOORED5",31,0)
+ G EX:$D(DTOUT),EXE:$D(DUOUT)
+"RTN","PSOORED5",32,0)
+ I X="@"!(X=0) W !,"Dispense Units Per Dose is Required!!",! G DUPD
+"RTN","PSOORED5",33,0)
+ D STR^PSOOREDX
+"RTN","PSOORED5",34,0)
+ ;
+"RTN","PSOORED5",35,0)
+NOU1 G:'$D(DUPD) RTE D CNON^PSOORED3 N PSONDEF
+"RTN","PSOORED5",36,0)
+ I $G(NOUN)]"",$G(PSORX("EDIT"))']"" S PSORXED("NOUN",ENT)=NOUN W !,"NOUN: "_$G(NOUN) G RTE
+"RTN","PSOORED5",37,0)
+ I $G(PSORX("EDIT"))']"",$G(PSORXED("NOUN",ENT))]"" W !,"NOUN: "_PSORXED("NOUN",ENT) G RTE
+"RTN","PSOORED5",38,0)
+NOU D NOU^PSOOREDX I X[U,$L(X)>1 S FIELD="NOU" G JUMP
+"RTN","PSOORED5",39,0)
+ G EXE:$D(DTOUT)!$D(DUOUT) I X="@" K PSORXED("NOUN",ENT),NOUN G RTE
+"RTN","PSOORED5",40,0)
+ I X'="",$G(PSONDEF)="" S NOUN=X
+"RTN","PSOORED5",41,0)
+ I X'="",$G(PSONDEF)'=X S NOUN=X
+"RTN","PSOORED5",42,0)
+ S:X'="" PSORXED("NOUN",ENT)=X
+"RTN","PSOORED5",43,0)
+ ;
+"RTN","PSOORED5",44,0)
+RTE I $G(ENT)>1,$G(PSORX("EDIT"))']"",$G(PSORXED("ROUTE",ENT-1)),$G(PSORXED("ROUTE",ENT))']"" S PSORXED("ROUTE",ENT)=PSORXED("ROUTE",ENT-1) G SCH
+"RTN","PSOORED5",45,0)
+ I '$G(DRET),'$G(PSORXED("ROUTE",ENT)),$P(^PS(50.7,PSODRUG("OI"),0),"^",6) S PSORXED("ROUTE",ENT)=$P(^PS(50.7,PSODRUG("OI"),0),"^",6)
+"RTN","PSOORED5",46,0)
+ I $G(DRET) S PSORXED("ROUTE",ENT)=""
+"RTN","PSOORED5",47,0)
+ I $G(RTE) K RTE
+"RTN","PSOORED5",48,0)
+ D KV S DIR(0)="FO^2:45",DIR("A")="ROUTE",DIR("?")="^D HLP^PSOORED4"
+"RTN","PSOORED5",49,0)
+ S DIR("B")=$S($G(PSORXED("ROUTE",ENT)):$P(^PS(51.2,PSORXED("ROUTE",ENT),0),"^"),$G(RTE)]"":RTE,$G(DRET):"",1:"PO") K:DIR("B")="" DIR("B")
+"RTN","PSOORED5",50,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="RTE" G JUMP
+"RTN","PSOORED5",51,0)
+ S:($D(DTOUT))!($D(DUOUT)) PSODIR("DFLG")=1 G EX:$D(DTOUT),EXE:$D(DUOUT)
+"RTN","PSOORED5",52,0)
+ I X="@"!(X="") K RTE,ERTE S DRET=1,PSORXED("ROUTE",ENT)="" G SCH
+"RTN","PSOORED5",53,0)
+ K DRET I X=$P($G(^PS(51.2,+$G(PSORXED("ROUTE",ENT)),0)),"^") S RTE=$P(^PS(51.2,PSORXED("ROUTE",ENT),0),"^"),ERTE=$P(^PS(51.2,PSORXED("ROUTE",ENT),0),"^",2) W X_" "_$G(ERTE) G SCH
+"RTN","PSOORED5",54,0)
+ S DIC=51.2,DIC(0)="QEZM",DIC("S")="I $P(^(0),""^"",4)" D ^DIC Q:X[U  G:Y=-1 RTE W "  "_$P(Y(0),"^",2)
+"RTN","PSOORED5",55,0)
+ S:X'="" PSORXED("ROUTE",ENT)=+Y,RTE=Y(0,0),ERTE=$P(Y(0),"^",2)
+"RTN","PSOORED5",56,0)
+ ;
+"RTN","PSOORED5",57,0)
+SCH D SCH^PSOBKDED I X[U,$L(X)>1 S FIELD="SCH" G JUMP
+"RTN","PSOORED5",58,0)
+ G EX:$D(DTOUT),EXE:$D(DUOUT)
+"RTN","PSOORED5",59,0)
+ S SCH=$$SCHASL(Y) D SCH^PSOSIG I $G(SCH)']""!($D(DTOUT))!($D(DUOUT)) G SCH
+"RTN","PSOORED5",60,0)
+ S PSORXED("SCHEDULE",ENT)=SCH IF $G(SCHEX)'="" W " ("_SCHEX_")"
+"RTN","PSOORED5",61,0)
+ K SCH,SCHEX,X,Y,PSOSCH
+"RTN","PSOORED5",62,0)
+ S:$G(PSORXED("ENT"))<ENT PSORXED("ENT")=ENT
+"RTN","PSOORED5",63,0)
+ ;
+"RTN","PSOORED5",64,0)
+DUR D KV K EXP S DIR(0)="52.0113,4",DIR("A")="LIMITED DURATION (IN DAYS, HOURS OR MINUTES)"
+"RTN","PSOORED5",65,0)
+ S DIR("B")=$S($D(DUR):DUR,$G(PSORXED("DURATION",ENT))]"":PSORXED("DURATION",ENT),1:"") K:DIR("B")="" DIR("B")
+"RTN","PSOORED5",66,0)
+ D ^DIR I X[U,$L(X)>1 S FIELD="DUR" G JUMP
+"RTN","PSOORED5",67,0)
+ G EX:$D(DTOUT),EXE:$D(DUOUT)
+"RTN","PSOORED5",68,0)
+ D DUR1^PSOOREDX
+"RTN","PSOORED5",69,0)
+ ;
+"RTN","PSOORED5",70,0)
+CON D CON^PSOOREDX I X[U,$L(X)>1 S FIELD="CON" G JUMP
+"RTN","PSOORED5",71,0)
+ G EX:$D(DTOUT),EXE:$D(DUOUT)
+"RTN","PSOORED5",72,0)
+ I X="@",$G(PSORXED("CONJUNCTION",ENT))="" W !,?10,"Invalid Entry - nothing to delete!!" G CON
+"RTN","PSOORED5",73,0)
+ S:X'=""&(X'="@") PSORXED("CONJUNCTION",ENT)=Y
+"RTN","PSOORED5",74,0)
+ I X="@" D CON1^PSOOREDX G:$D(DIRUT) EX G:'Y CON S:'$G(COPY) PSOSIGFL=1 D UPD^PSOOREDX G CON
+"RTN","PSOORED5",75,0)
+ ;
+"RTN","PSOORED5",76,0)
+ I '$$DUROK^PSOORED3(.PSORXED,ENT) D  G DUR
+"RTN","PSOORED5",77,0)
+ . W !!,"Duration is required for the dosage entered prior to the THEN conjunction.",$C(7),!
+"RTN","PSOORED5",78,0)
+ N PSODLBD4 S PSOSAVX=X,PSODLBD4=1
+"RTN","PSOORED5",79,0)
+ I $G(PSORXED("CONJUNCTION",ENT))]"" S PSOCKCON=1 D DCHK1^PSODOSUT G:$G(PSORXED("DFLG"))!($G(PSORX("DFLG"))) EX S ENT=ENT+1 K DIR G ASK
+"RTN","PSOORED5",80,0)
+ E  K PSOCKCON I $$DCHK^PSODOSUT S PSORXED("DFLG")=1,PSORX("DFLG")=1 G EX
+"RTN","PSOORED5",81,0)
+ I PSOSAVX="",$G(PSORXED)!($D(PSOEDDOS)) K PSOCKCON
+"RTN","PSOORED5",82,0)
+ K PSOSAVX
+"RTN","PSOORED5",83,0)
+ ;
+"RTN","PSOORED5",84,0)
+EXS ;Entry point for EXE to rebuild SIG  PSO*7.0*450
+"RTN","PSOORED5",85,0)
+ S X=$G(PSORXED("INS")) D SIG^PSOHELP S:$G(INS1)]"" PSORXED("SIG")=$E(INS1,2,9999999)
+"RTN","PSOORED5",86,0)
+ D EN^PSOFSIG(.PSORXED) I $O(SIG(0)) S PSORXED("ENT")=ENT,SIGOK=1
+"RTN","PSOORED5",87,0)
+ Q:$G(PSOREEDT)!($G(PSOORRNW))
+"RTN","PSOORED5",88,0)
+ K QTYHLD S:$G(PSORXED("QTY")) QTYHLD=PSORXED("QTY") D QTY^PSOSIG(.PSORXED) I $G(PSORXED("QTY")) S QTY=1
+"RTN","PSOORED5",89,0)
+ I $G(QTYHLD),'$G(PSORXED("QTY")) S PSORXED("QTY")=QTYHLD
+"RTN","PSOORED5",90,0)
+ K QTYHLD Q:$G(PSOFROM)="NEW"!($G(COPY))!($G(PSOFROM))!($G(PSOREEDT))
+"RTN","PSOORED5",91,0)
+ Q:$G(PSOSIGFL)  D
+"RTN","PSOORED5",92,0)
+ .S D=0 F  S D=$O(SIG(D)) Q:'D  S ^PSRX(PSORXED("IRXN"),"SIG1",D,0)=SIG(D),$P(^PSRX(PSORXED("IRXN"),"SIG1",0),"^",3)=+$P($G(^PSRX(PSORXED("IRXN"),"SIG1",0)),"^",3)+1,$P(^(0),"^",4)=+$P($G(^(0)),"^",4)+1 Q:'$O(SIG(D))
+"RTN","PSOORED5",93,0)
+ .S (A,I)=0 F  S I=$O(^PSRX(PSORXED("IRXN"),"A",I)) Q:'I  S A=A+1
+"RTN","PSOORED5",94,0)
+ .S:'$D(^PSRX(PSORXED("IRXN"),"A",0)) ^PSRX(PSORXED("IRXN"),"A",0)="^52.3DA^"
+"RTN","PSOORED5",95,0)
+ .S $P(^PSRX(PSORXED("IRXN"),"A",0),"^",3)=$P($G(^PSRX(PSORXED("IRXN"),"A",0)),"^",3)+1,$P(^(0),"^",4)=$P($G(^(0)),"^",4)+1
+"RTN","PSOORED5",96,0)
+ .D NOW^%DTC S A=A+1,^PSRX(PSORXED("IRXN"),"A",A,0)=%_"^E^"_DUZ_"^0^New Dosing Instructions Added",^PSRX(PSORXED("IRXN"),"A",A,1)="ORIGINAL SIG^" D
+"RTN","PSOORED5",97,0)
+ ..I '$P(^PSRX(PSORXED("IRXN"),"SIG"),"^",2) S $P(^PSRX(PSORXED("IRXN"),"A",A,1),"^",2)=$P(^PSRX(PSORXED("IRXN"),"SIG"),"^") Q
+"RTN","PSOORED5",98,0)
+ ..F I=0:0 S I=$O(^PSRX(PSORXED("IRXN"),"SIG1",I)) Q:'I  S ^PSRX(PSORXED("IRXN"),"A",A,2,I,0)=^PSRX(PSORXED("IRXN"),"SIG1",I,0),^PSRX(PSORXED("IRXN"),"A",A,2,0)="^52.34A^"_I_"^"_I
+"RTN","PSOORED5",99,0)
+ .S ^PSRX(PSORXED("IRXN"),"SIG")="^1" K SIG,A,I
+"RTN","PSOORED5",100,0)
+ S ^PSRX(PSORXED("IRXN"),6,0)="^52.0113^"_ENT_"^"_ENT
+"RTN","PSOORED5",101,0)
+ F I=1:1:ENT S ^PSRX(PSORXED("IRXN"),6,I,0)=PSORXED("DOSE",I)_"^"_$G(PSORXED("DOSE ORDERED",I))_"^"_$G(PSORXED("UNITS",I))_"^"_$G(PSORXED("NOUN",I))_"^" D
+"RTN","PSOORED5",102,0)
+ .S ^PSRX(PSORXED("IRXN"),6,I,0)=^PSRX(PSORXED("IRXN"),6,I,0)_$G(PSORXED("DURATION",I))_"^"_$G(PSORXED("CONJUNCTION",I))_"^"_$G(PSORXED("ROUTE",I))_"^"_$G(PSORXED("SCHEDULE",I))_"^"_$G(PSORXED("VERB",I))
+"RTN","PSOORED5",103,0)
+ .I $G(PSORXED("DOSE",I))]"" S ^PSRX(PSORXED("IRXN"),6,I,1)=PSORXED("DOSE",I)
+"RTN","PSOORED5",104,0)
+ S ^PSRX(PSORXED("IRXN"),"POE")=1 G EX
+"RTN","PSOORED5",105,0)
+ Q
+"RTN","PSOORED5",106,0)
+EX I $D(DUOUT)!($D(DTOUT)) S PSONEW("DFLG")=1
+"RTN","PSOORED5",107,0)
+ ;I $D(DUOUT)!($D(DTOUT)) S:'$G(PSORX("EDIT")) PSONEW("DFLG")=1
+"RTN","PSOORED5",108,0)
+ G:$G(PSOSIGFL)!($G(PSORX("EDIT")))!($G(PSORXED))!($G(PSOREEDT)) EX1
+"RTN","PSOORED5",109,0)
+ K PSORXED("DOSE"),PSORXED("NOUN"),PSORXED("VERB"),PSORXED("DOSE ORDERED"),PSORXED("ROUTE"),SIG,PSORXED("SCHEDULE"),PSORXED("DURATION"),PSORXED("CONJUNCTION"),PSORXED("ODOSE")
+"RTN","PSOORED5",110,0)
+EX1 K UNITN,STRE,DOSE,DUPD,SCH,VERB,NOUN,DOSEOR,RTE,DUR,X,Y,ENTS,PSOSCH,ENT,PSORTE,DURA,ERTE,ROU
+"RTN","PSOORED5",111,0)
+KV K DIR,DIRUT,DTOUT,DUOUT
+"RTN","PSOORED5",112,0)
+ Q
+"RTN","PSOORED5",113,0)
+ ;This line tag was added to check if EXit is being performed while EDITing.  If it is,
+"RTN","PSOORED5",114,0)
+ ;process SIG and do not delete order.  Previous calls to EX when due to $D(DUOUT) were
+"RTN","PSOORED5",115,0)
+ ;changed to go to this line tag instead.
+"RTN","PSOORED5",116,0)
+EXE I $G(PSORX("EDIT"))]"" K DUOUT G EXS  ;*PSO*7.0*450
+"RTN","PSOORED5",117,0)
+ G EX
+"RTN","PSOORED5",118,0)
+ ;
+"RTN","PSOORED5",119,0)
+UPD ;updates dosing array
+"RTN","PSOORED5",120,0)
+ D UPD^PSOORED6
+"RTN","PSOORED5",121,0)
+ Q
+"RTN","PSOORED5",122,0)
+JUMP ;
+"RTN","PSOORED5",123,0)
+ I $G(PSORXED("SCHEDULE",1))']"" W $C(7),!!,"All Dosing Instructions must be entered before Jumping to other Fields!",!! G @FIELD
+"RTN","PSOORED5",124,0)
+ I $L($E(X,2,99))<3 W !,"Field Name Must Be At Least 3 Characters in Length",! G @FIELD
+"RTN","PSOORED5",125,0)
+ D FNM^PSOOREDX
+"RTN","PSOORED5",126,0)
+ I FLDNM']"" K X,NM,FLDNM W !,"INVALID FIELD NAME.  PLEASE TRY AGAIN!",! G @FIELD
+"RTN","PSOORED5",127,0)
+ F AR=1:1:PSORXED("ENT") W !,AR_". "_$P(FLDNM,"^",2)_": "_$S(NM="ROU"&($G(PSORXED($P(FLDNM,"^"),AR))):$P(^PS(51.2,PSORXED($P(FLDNM,"^"),AR),0),"^"),1:$G(PSORXED($P(FLDNM,"^"),AR))) S AR1=AR
+"RTN","PSOORED5",128,0)
+ D KV
+"RTN","PSOORED5",129,0)
+ I $G(PSOFROM)'="NEW",'$G(COPY) S DIR("A",1)="* Indicates which fields will create a New Order"
+"RTN","PSOORED5",130,0)
+ S DIR("A")="Select Field by number",DIR(0)="NO^1:"_AR1 D ^DIR G:$D(DIRUT) @FIELD
+"RTN","PSOORED5",131,0)
+ D JFN^PSOOREDX G:FLDNM="" @FIELD G @FLDNM
+"RTN","PSOORED5",132,0)
+ G EX
+"RTN","PSOORED5",133,0)
+ Q
+"RTN","PSOORED5",134,0)
+LAN ;
+"RTN","PSOORED5",135,0)
+ Q:'$G(PSODRUG("IEN"))
+"RTN","PSOORED5",136,0)
+ I $G(OR0),'$G(PSONEW("DOSE ORDERED",II)),$P($G(^PS(55,PSODFN,"LAN")),"^") D  K QI,QII Q
+"RTN","PSOORED5",137,0)
+ .Q:$G(OTHDOS(II))
+"RTN","PSOORED5",138,0)
+ .F QI=0:0 S QI=$O(^PSDRUG(PSODRUG("IEN"),"DOS2",QI)) Q:'QI  D  Q:$G(QII)
+"RTN","PSOORED5",139,0)
+ ..Q:$G(PSONEW("DOSE",II))']""
+"RTN","PSOORED5",140,0)
+ ..I PSONEW("DOSE",II)=$P(^PSDRUG(PSODRUG("IEN"),"DOS2",QI,0),"^") S PSONEW("ODOSE",II)=$P(^PSDRUG(PSODRUG("IEN"),"DOS2",QI,0),"^",4),QII=1
+"RTN","PSOORED5",141,0)
+ I $G(Y),$P($G(DOSE(Y)),"^",13)]"" S PSORXED("ODOSE",ENT)=$P(DOSE(Y),"^",13) Q
+"RTN","PSOORED5",142,0)
+ K QII F I=0:0 S I=$O(^PSDRUG(PSODRUG("IEN"),"DOS2",I)) Q:'I  I DOSE=$P(^PSDRUG(PSODRUG("IEN"),"DOS2",I,0),"^") D  Q:$G(QII)
+"RTN","PSOORED5",143,0)
+ .S PSORXED("ODOSE",ENT)=$P(^PSDRUG(PSODRUG("IEN"),"DOS2",I,0),"^",4),QII=1
+"RTN","PSOORED5",144,0)
+ K QII,I
+"RTN","PSOORED5",145,0)
+ Q
+"RTN","PSOORED5",146,0)
+ ;
+"RTN","PSOORED5",147,0)
+SCHASL(SCHA) ;
+"RTN","PSOORED5",148,0)
+ N SCHEA,SCHFL1 S SCHEA="",SCHFL1=0
+"RTN","PSOORED5",149,0)
+ ;**Lookup into the ADMINISTRATION SCHEDULE (#51.1) file 
+"RTN","PSOORED5",150,0)
+ K X,Y,DIC,D SET X=$G(SCHA),DIC="^PS(51.1,",DIC(0)="CEMOV"
+"RTN","PSOORED5",151,0)
+ S DIC("W")="W ""  ""_$G(X)_""  ""_$P(^PS(51.1,+Y,0),U,8)_$S($P(^(0),U,12):""   **INACTIVE**"",1:"""")"      ;*507
+"RTN","PSOORED5",152,0)
+ S D="APPSJ^D" W !,"Now searching ADMINISTRATION SCHEDULE (#51.1) file...",! D MIX^DIC1                      ;*507
+"RTN","PSOORED5",153,0)
+ K DIC,D S:Y'>0 SCHFL1=1 IF '$G(SCHFL1),'$D(DTOUT),'$D(DUOUT) SET SCHEA=$P(Y,U,2) Q SCHEA
+"RTN","PSOORED5",154,0)
+ I $D(DTOUT)!($D(DUOUT)) Q ""
+"RTN","PSOORED5",155,0)
+ I $G(SCHFL1)=1 S SCHEA=$$SCHMI(SCHA) Q SCHEA
+"RTN","PSOORED5",156,0)
+ Q ""
+"RTN","PSOORED5",157,0)
+ ;
+"RTN","PSOORED5",158,0)
+SCHMI(SCHM) ;
+"RTN","PSOORED5",159,0)
+ N SCHEM,SCHFL2 S SCHEM="",SCHFL2=0
+"RTN","PSOORED5",160,0)
+ ;**Lookup into the MEDICATION INSRUCTION (#51) file
+"RTN","PSOORED5",161,0)
+ K X,Y,DIC,D SET X=$G(SCHM),DIC="^PS(51,",DIC(0)="CEMOV",DIC("W")="W ""  ""_$G(X)_""  ""_$P(^PS(51,+Y,0),U,2)",D="A^B^D" W !,"Now searching MEDICATION INSTRUCTION (#51) file...",! D MIX^DIC1
+"RTN","PSOORED5",162,0)
+ K DIC,D S:Y'>0 SCHFL2=1 IF '$G(SCHFL2),'$D(DTOUT),'$D(DUOUT) SET SCHEM=$P(Y,U,2) Q SCHEM
+"RTN","PSOORED5",163,0)
+ ;
+"RTN","PSOORED5",164,0)
+ I $D(DTOUT)!($D(DUOUT)) Q ""
+"RTN","PSOORED5",165,0)
+ I $G(SCHFL2)=1 Q SCHM
+"RTN","PSOORED5",166,0)
+ Q ""
+"RTN","PSOUTLA2")
+0^1^B42876866^B20328353
+"RTN","PSOUTLA2",1,0)
+PSOUTLA2 ;BHAM ISC/GSN-Pharmacy utility program cont. ;6/6/05 12:19pm
+"RTN","PSOUTLA2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**210,410,507**;DEC 1997;Build 28
+"RTN","PSOUTLA2",3,0)
+ Q
+"RTN","PSOUTLA2",4,0)
+ ;
+"RTN","PSOUTLA2",5,0)
+WORDWRAP(STR,IEN,GL,LM) ;Wraps words at spaces normally and will breakup long
+"RTN","PSOUTLA2",6,0)
+ ;               words at a delimiter & wrap at those break points
+"RTN","PSOUTLA2",7,0)
+ ; Input: STR - a text string
+"RTN","PSOUTLA2",8,0)
+ ;        IEN - ien of global
+"RTN","PSOUTLA2",9,0)
+ ;        GL  - global root
+"RTN","PSOUTLA2",10,0)
+ ;        LM  - left margin
+"RTN","PSOUTLA2",11,0)
+ ; Output: Populated global  (usually in ^TMP)
+"RTN","PSOUTLA2",12,0)
+ ;
+"RTN","PSOUTLA2",13,0)
+ ; When a long word is encountered, i.e. text with no spaces, an
+"RTN","PSOUTLA2",14,0)
+ ; attempt will be made to locate a delimiter & break the line there. 
+"RTN","PSOUTLA2",15,0)
+ ; If it can't find a valid delimiter without a restricted scenario,
+"RTN","PSOUTLA2",16,0)
+ ; i.e. a number like 1,000 , then it will be forced to break at the
+"RTN","PSOUTLA2",17,0)
+ ; End of Line (EOL).
+"RTN","PSOUTLA2",18,0)
+ ;
+"RTN","PSOUTLA2",19,0)
+ ;    Delimiters searched for and order they are picked for use:
+"RTN","PSOUTLA2",20,0)
+ ;        preferred:   ,    ;
+"RTN","PSOUTLA2",21,0)
+ ;        alternate:   :    =
+"RTN","PSOUTLA2",22,0)
+ ;        do not use:  -  .  )  (  /    (to critical, used in dosing)
+"RTN","PSOUTLA2",23,0)
+ ;         example:  "TAKE 1/2-1 TAB(7.5MG) TABLET(S)"
+"RTN","PSOUTLA2",24,0)
+ ;
+"RTN","PSOUTLA2",25,0)
+ ; Key Variables: WORD  - current word from text string
+"RTN","PSOUTLA2",26,0)
+ ;                WORD1 - 1st part of word that will fit
+"RTN","PSOUTLA2",27,0)
+ ;                WORD2 - 2nd part of word for new line
+"RTN","PSOUTLA2",28,0)
+ ;                WORD0 - remnant that won't fit on the new line
+"RTN","PSOUTLA2",29,0)
+ ;
+"RTN","PSOUTLA2",30,0)
+ N QQ,DL,DLM,WD,LL,TL,UL,MAXLN,LSTD,CURD,GWRD,LC,WORD0,WORD,WORD1,WORD2
+"RTN","PSOUTLA2",31,0)
+ S IEN=+$G(IEN),@GL@(IEN,0)=$G(@GL@(IEN,0)),WORD0=""
+"RTN","PSOUTLA2",32,0)
+ ;loop thru words, quit if no more words & no remnants - i.e. WORD0
+"RTN","PSOUTLA2",33,0)
+ F QQ=1:1 S WORD=$P(STR," ",QQ) D  Q:(QQ'<$L(STR," "))&(WORD0="")
+"RTN","PSOUTLA2",34,0)
+ . ;if remnant exists, prepend to next Word
+"RTN","PSOUTLA2",35,0)
+ . S:WORD0]"" WORD=WORD0_WORD,WORD0=""
+"RTN","PSOUTLA2",36,0)
+ . ;wrap short words at spaces, check if last char is already a space
+"RTN","PSOUTLA2",37,0)
+ . S GWRD=@GL@(IEN,0)
+"RTN","PSOUTLA2",38,0)
+ . S LC=$E(@GL@(IEN,0),$L(GWRD))
+"RTN","PSOUTLA2",39,0)
+ . I LC=" ",$L(GWRD_WORD)<81 S @GL@(IEN,0)=@GL@(IEN,0)_WORD Q
+"RTN","PSOUTLA2",40,0)
+ . I LC'=" ",$L(GWRD_" "_WORD)<81 S @GL@(IEN,0)=@GL@(IEN,0)_" "_WORD Q
+"RTN","PSOUTLA2",41,0)
+ . I $L(WORD)<20,$L(LM+1+$L(WORD))<81 D  Q
+"RTN","PSOUTLA2",42,0)
+ . . S WORD1="",WORD2=WORD,DLM="" D ADDWORDS S WORD0=WORD2 Q
+"RTN","PSOUTLA2",43,0)
+ . ;
+"RTN","PSOUTLA2",44,0)
+ . ;word>80, so wrap long words @ a specific delimiter, if found
+"RTN","PSOUTLA2",45,0)
+ . S MAXLN=79-$L(@GL@(IEN,0))
+"RTN","PSOUTLA2",46,0)
+ . ;search backwards & pick 1st dl  > 1 count of preferred delims
+"RTN","PSOUTLA2",47,0)
+ . F DL=";","," S DL($L(WORD,DL))=DL
+"RTN","PSOUTLA2",48,0)
+ . S DL=$O(DL(DL),-1) S DLM=$S(DL>1:DL(DL),1:"")
+"RTN","PSOUTLA2",49,0)
+ . I DLM="" F DL="=",":" S DL($L(WORD,DL))=DL D  ;try these alt delims
+"RTN","PSOUTLA2",50,0)
+ . . S DL=$O(DL(DL),-1) S DLM=$S(DL>1:DL(DL),1:"")
+"RTN","PSOUTLA2",51,0)
+ . ;
+"RTN","PSOUTLA2",52,0)
+ . ;no good delimiter, will have to break at end of line
+"RTN","PSOUTLA2",53,0)
+ . I DLM="" D  Q
+"RTN","PSOUTLA2",54,0)
+ . . S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",55,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",56,0)
+ . ;
+"RTN","PSOUTLA2",57,0)
+ . ;good delimiter, will break at last dlm that fits within maxln
+"RTN","PSOUTLA2",58,0)
+ . S (LSTD,LL)=0,CURD=1 F TL=0:0 S CURD=$F(WORD,DLM,CURD) Q:'CURD  D
+"RTN","PSOUTLA2",59,0)
+ . . S TL=TL+1
+"RTN","PSOUTLA2",60,0)
+ . . S WD(TL)=CURD_"^"_$E(WORD,CURD-2,CURD)
+"RTN","PSOUTLA2",61,0)
+ . . S:CURD'>MAXLN LSTD=CURD,LL=TL
+"RTN","PSOUTLA2",62,0)
+ . ;special check of "," embedded in a number  e.g. 1,000
+"RTN","PSOUTLA2",63,0)
+ . ;backup to previous delimiter if pattern match
+"RTN","PSOUTLA2",64,0)
+ . I DLM="," F UL=LL:-1:0 Q:$P($G(WD(UL)),"^",2)'?1N1","1N
+"RTN","PSOUTLA2",65,0)
+ . I DLM=",",+$G(WD(UL))<LSTD S LSTD=+$G(WD(UL))
+"RTN","PSOUTLA2",66,0)
+ . ;
+"RTN","PSOUTLA2",67,0)
+ . ;*410
+"RTN","PSOUTLA2",68,0)
+ . ;if WORD is longer than 60 characters and a valid delimiter is 
+"RTN","PSOUTLA2",69,0)
+ . ;found after character position 57 (58 or later), ignore the 
+"RTN","PSOUTLA2",70,0)
+ . ;delimiter and break at end of line since entire word will not
+"RTN","PSOUTLA2",71,0)
+ . ;fit on one line
+"RTN","PSOUTLA2",72,0)
+ . N WORDLN S WORDLN=$L(WORD) I DLM]"",DLM'="," S WORDLN=$F(WORD,DLM,1)-1
+"RTN","PSOUTLA2",73,0)
+ . S WORD1=$E(WORD,1,WORDLN),WORD2=$E(WORD,WORDLN+1,$L(WORD))
+"RTN","PSOUTLA2",74,0)
+ . I (LM+1+$L(WORD1))>80 S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",75,0)
+ . I DLM]"",($F(WORD,DLM,1)-1)>57,$L(WORD)'<60 D  Q
+"RTN","PSOUTLA2",76,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",77,0)
+ . ;
+"RTN","PSOUTLA2",78,0)
+ . ;'LSTD usually means no valid Dlm's found in Word, but if line
+"RTN","PSOUTLA2",79,0)
+ . ;found to have some valid Dlm's later in the Word, then go ahead
+"RTN","PSOUTLA2",80,0)
+ . ;defer entire string to next line via Addwords Api
+"RTN","PSOUTLA2",81,0)
+ . I 'LSTD,TL>LL,$P($G(WD(TL)),"^",2)'?1N1","1N D  Q
+"RTN","PSOUTLA2",82,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",83,0)
+ . ;
+"RTN","PSOUTLA2",84,0)
+ . ;no valid Dlm's found in word, can't determine a word, break @EOL
+"RTN","PSOUTLA2",85,0)
+ . I 'LSTD,$L(WORD)>(MAXLN) D  Q
+"RTN","PSOUTLA2",86,0)
+ . . S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",87,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",88,0)
+ . ;no valid Dlm's found in word, and can add Word to curr line
+"RTN","PSOUTLA2",89,0)
+ . I 'LSTD,$L(WORD)'>(MAXLN) S @GL@(IEN,0)=@GL@(IEN,0)_WORD Q
+"RTN","PSOUTLA2",90,0)
+ . ;
+"RTN","PSOUTLA2",91,0)
+ . ;valid Dlm's & location found indicated by SS
+"RTN","PSOUTLA2",92,0)
+ . I LSTD D  Q
+"RTN","PSOUTLA2",93,0)
+ . . S WORD1=$E(WORD,1,LSTD-1),WORD2=$E(WORD,LSTD,$L(WORD))
+"RTN","PSOUTLA2",94,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",95,0)
+ Q
+"RTN","PSOUTLA2",96,0)
+ ;
+"RTN","PSOUTLA2",97,0)
+ADDWORDS ;Add words to curr line and to a new line
+"RTN","PSOUTLA2",98,0)
+ N CH
+"RTN","PSOUTLA2",99,0)
+ ;if last character is the DLM or a " ", then don't add a space when
+"RTN","PSOUTLA2",100,0)
+ ;adding Word1 to current line
+"RTN","PSOUTLA2",101,0)
+ S CH=$E(@GL@(IEN,0),$L(@GL@(IEN,0)))
+"RTN","PSOUTLA2",102,0)
+ I (CH=DLM)!(CH=" ") D
+"RTN","PSOUTLA2",103,0)
+ . S @GL@(IEN,0)=@GL@(IEN,0)_WORD1
+"RTN","PSOUTLA2",104,0)
+ E  D
+"RTN","PSOUTLA2",105,0)
+ . S @GL@(IEN,0)=@GL@(IEN,0)_" "_WORD1
+"RTN","PSOUTLA2",106,0)
+ ;create new line to hold Word2
+"RTN","PSOUTLA2",107,0)
+ S IEN=IEN+1,$P(@GL@(IEN,0)," ",LM+1)=" "
+"RTN","PSOUTLA2",108,0)
+ S MAXLN=79-$L(@GL@(IEN,0))
+"RTN","PSOUTLA2",109,0)
+ ;word2 won't fit, quit for further wrapping
+"RTN","PSOUTLA2",110,0)
+ Q:$L(WORD2)>(80-LM)
+"RTN","PSOUTLA2",111,0)
+ ;word2 will fit add it
+"RTN","PSOUTLA2",112,0)
+ S @GL@(IEN,0)=@GL@(IEN,0)_WORD2,WORD2=""
+"RTN","PSOUTLA2",113,0)
+ Q
+"RTN","PSOUTLA2",114,0)
+ ;
+"RTN","PSOUTLA2",115,0)
+DMACTN ;Entry point for DM hidden action from backdoor OE  *507
+"RTN","PSOUTLA2",116,0)
+ D FULL^VALM1
+"RTN","PSOUTLA2",117,0)
+ N IFN S IFN=+$G(PSODRUG("IEN")) D SHOWDR
+"RTN","PSOUTLA2",118,0)
+ S VALMBCK="R"
+"RTN","PSOUTLA2",119,0)
+ Q
+"RTN","PSOUTLA2",120,0)
+ ;
+"RTN","PSOUTLA2",121,0)
+PICKDR ;Entry point for Selecting a diff Drug
+"RTN","PSOUTLA2",122,0)
+ N IFN,Y
+"RTN","PSOUTLA2",123,0)
+ W ! K DIC S DIC="^PSDRUG(",DIC(0)="AEQMVTN",DIC("T")="" W "Return to continue or" D ^DIC K DIC I Y<0 Q
+"RTN","PSOUTLA2",124,0)
+ S IFN=+Y
+"RTN","PSOUTLA2",125,0)
+ ;
+"RTN","PSOUTLA2",126,0)
+SHOWDR ;Entry point to Display Drug hidden action info (defaulted IFN via DM actn)
+"RTN","PSOUTLA2",127,0)
+ N DIR,OIPTR
+"RTN","PSOUTLA2",128,0)
+ I 'IFN W !!,"** NO Dispense Drug entered for this order",! G PICKDR
+"RTN","PSOUTLA2",129,0)
+ W #,!,"DRUG NAME: ",$$GET1^DIQ(50,IFN_",","GENERIC NAME")," (IEN: "_IFN_")"
+"RTN","PSOUTLA2",130,0)
+ S OIPTR=^PSDRUG(IFN,2) S:$P(OIPTR,"^",1)]"" OIPTR=$P(OIPTR,"^",1)
+"RTN","PSOUTLA2",131,0)
+ I OIPTR]"" W !," ORDERABLE ITEM TEXT: ",! D DMOITXT
+"RTN","PSOUTLA2",132,0)
+ W !," MESSAGE: ",$$GET1^DIQ(50,IFN_",","MESSAGE") D FULL
+"RTN","PSOUTLA2",133,0)
+ W !," QTY DISP MESSAGE: ",$$GET1^DIQ(50,IFN_",","QUANTITY DISPENSE MESSAGE"),! D FULL
+"RTN","PSOUTLA2",134,0)
+ K Y
+"RTN","PSOUTLA2",135,0)
+ G PICKDR
+"RTN","PSOUTLA2",136,0)
+ ;
+"RTN","PSOUTLA2",137,0)
+DMOITXT ;Get Pharmacy Orderable Item drug text fields
+"RTN","PSOUTLA2",138,0)
+ N DDD,QUIT,TXT,TEXT,TEXTPTR
+"RTN","PSOUTLA2",139,0)
+ I $D(^PS(50.7,OIPTR,1,0)) F TXT=0:0 S TXT=$O(^PS(50.7,OIPTR,1,TXT)) Q:'TXT  D
+"RTN","PSOUTLA2",140,0)
+ . S TEXTPTR=^PS(50.7,OIPTR,1,TXT,0)
+"RTN","PSOUTLA2",141,0)
+ . F DDD=0:0 S DDD=$O(^PS(51.7,TEXTPTR,2,DDD)) Q:'DDD  I '$$INACDATE S TEXT=^PS(51.7,TEXTPTR,2,DDD,0) D FULL Q:$G(QUIT)  W "  ",TEXT,!
+"RTN","PSOUTLA2",142,0)
+ Q
+"RTN","PSOUTLA2",143,0)
+ ;
+"RTN","PSOUTLA2",144,0)
+FULL ;Screen is full, pause
+"RTN","PSOUTLA2",145,0)
+ D:($Y+3)>IOSL&('$G(QUIT)) FSCRN
+"RTN","PSOUTLA2",146,0)
+ Q
+"RTN","PSOUTLA2",147,0)
+ ;
+"RTN","PSOUTLA2",148,0)
+FSCRN ;User Wait as screen if full
+"RTN","PSOUTLA2",149,0)
+ Q:$G(QUIT)  K DIR S DIR(0)="E",DIR("A")="Press Return to continue,'^' to exit" D ^DIR W @IOF S:Y'=1 QUIT=1
+"RTN","PSOUTLA2",150,0)
+ Q
+"RTN","PSOUTLA2",151,0)
+ ;
+"RTN","PSOUTLA2",152,0)
+INACDATE() ;Check Inactive date
+"RTN","PSOUTLA2",153,0)
+ Q $P($G(^PS(51.7,TEXTPTR,0)),"^",2)
+"RTN","PSOUTLA2",154,0)
+ ;
+"RTN","PSOUTLA2",155,0)
+VPACTN  ;Entry point for VP hidden action from backdoor OE  *507
+"RTN","PSOUTLA2",156,0)
+ D FULL^VALM1
+"RTN","PSOUTLA2",157,0)
+ N IFN
+"RTN","PSOUTLA2",158,0)
+ S IFN=+$G(PSONEW("PROVIDER")) D SHOWVP
+"RTN","PSOUTLA2",159,0)
+ S VALMBCK="R"
+"RTN","PSOUTLA2",160,0)
+ Q
+"RTN","PSOUTLA2",161,0)
+ ;
+"RTN","PSOUTLA2",162,0)
+PICKVP  ;Entry Point For Selecting a diff provider
+"RTN","PSOUTLA2",163,0)
+ N IFN,Y
+"RTN","PSOUTLA2",164,0)
+ W ! K DIC S DIC="^VA(200,",DIC(0)="AEQMVTN",DIC("T")="" W !,"Return to continue or" D ^DIC K DIC I Y<0 Q
+"RTN","PSOUTLA2",165,0)
+ S IFN=+Y
+"RTN","PSOUTLA2",166,0)
+ ;
+"RTN","PSOUTLA2",167,0)
+SHOWVP  ;Entry point to Display Provider hidden action info (via defaulted IFN)
+"RTN","PSOUTLA2",168,0)
+ N DIR
+"RTN","PSOUTLA2",169,0)
+ I 'IFN W !,"No provider entered for this order",! G PICKVP
+"RTN","PSOUTLA2",170,0)
+ W #,"PROVIDER TITLE:    ",$$GET1^DIQ(200,IFN_",","TITLE")
+"RTN","PSOUTLA2",171,0)
+ W !!,"PROVIDER REMARKS:  ",$$GET1^DIQ(200,IFN_",","REMARKS")
+"RTN","PSOUTLA2",172,0)
+ W !!,"PROVIDER SPECIALTY:  ",$$GET1^DIQ(200,IFN_",","PROVIDER CLASS"),!,"                     "_$$GET1^DIQ(200,IFN_",","SERVICE/SECTION")
+"RTN","PSOUTLA2",173,0)
+ K Y
+"RTN","PSOUTLA2",174,0)
+ G PICKVP
+"RTN","PSOUTLA2",175,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10508,6)
+^442
+**END**
+**END**
+

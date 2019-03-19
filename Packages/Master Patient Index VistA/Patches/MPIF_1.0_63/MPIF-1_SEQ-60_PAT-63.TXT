@@ -1,0 +1,248 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Friday, 06/24/16 at 14:36
+=============================================================================
+Run Date: DEC 14, 2016                     Designation: MPIF*1*63
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #60                      Status: Released
+                  Compliance Date: JAN 14, 2017
+=============================================================================
+
+Associated patches: (v)MPIF*1*61   <<= must be installed BEFORE `MPIF*1*63'
+                    (v)XOBW*1*4    <<= must be installed BEFORE `MPIF*1*63'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 16 RELEASE 1
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ *************************************************************************
+ * Local installation tools should NOT be used to install either the     *
+ * XOBW*1.0*4 patch or this patch (MPIF*1.0*63).                         *
+ * The patch descriptions and installation guides for these patches MUST *
+ * be read and completely understood before any attempt is made to begin *
+ * installation.                                                         *
+ ************************************************************************* 
+  
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       MPIF* patches should NOT be installed on legacy systems.
+  
+ MPIF*1.0*61 and XOWB*1.0*4 are the required builds for patch MPIF*1.0*63.
+  
+ NOTE: Sites should refer to the install guide for complete installation
+       instructions.
+  
+ Enhancement
+ In order to address the Web Application Security Assessment (WASA)
+ findings related to the passing of Personal Identifiable Information (PII)
+ through Hypertext Transport Protocol (HTTP) communication, changes are 
+ needed to the Veterans Health Information Systems and Technology 
+ Architecture (VistA) system to support Hypertext Transport Protocol
+ Secure (HTTPS) communications to the Person Service Identity Management
+ (PSIM) system. The VistA system implements the VistA HealtheVet Web 
+ Services Client (HWSC) framework through Simple Object Access Protocol
+ (SOAP) Web Services when communicating with the PSIM system.
+  
+ To support secure HTTPS communications with PSIM a new set of WEB SERVICE
+ (#18.02) and WEB SERVER (#18.12) file entries will be created during the
+ post-initialization process. In addition, a new entry "TWO" will be
+ created in the MPI ICN BUILD MANAGEMENT (#984.8) file which will
+ determine which communication protocol layer (HTTP or HTTPS) will be used
+ when communicating with PSIM. This new entry as well as the username and
+ password of the new web server entry can be updated as needed by the
+ Master Veteran Index (MVI) through the new remote procedure call (RPC)
+ [MPI VISTA HWS CONFIG], allowing a gradual shift from HTTP to HTTPS. The
+ MVI option is described in the Master Patient Index (MPI) Austin User
+ Guide and its use will be tracked in Change Control.
+  
+ Note: Existing entries in the WEB SERVICE (#18.02) and the WEB SERVER 
+       (#18.12) files used to support the HTTP communication transmission
+       will not be removed at this time. This will allow MVI to switch
+       between (HTTP and HTTPS) as issues/errors are encountered at sites.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name
+ ---------------------
+ MPI VISTA HWS CONFIG
+  
+    
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ C.W. Bill Young (Bay Pines) VAMC
+ North Florida / South Georgia HCS
+ West Palm Beach VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany:              domain.ext
+ Hines:               domain.ext  
+ Salt Lake City:      domain.ext
+  
+ MPI/PD VistA Documentation can also be found on the VA Software 
+ Documentation Library at: http://www.domain.ext/vdl/application.asp?appid=16
+  
+   
+ File Name                       Contents                  FTP Mode
+ -----------------------------------------------------------------------
+ VISTAWEBSERVICE.WSDL              WSDL                      ASCII
+ MPIF_1_63IG.PDF                   Install Guide             BINARY
+ MPIF_1_0_P63_TM.PDF       MPI/PD VISTA Technical Manual     BINARY
+   
+  
+ Patch Installation:
+  
+  
+ Environment Check
+ -----------------
+ MPIFWSC - This environment check will execute to ensure the proper
+ placement of the VISTAWEBSERVICE.WSDL file is complete prior to allowing
+ this patch to be installed. 
+  
+ Note: The VISTAWEBSERVICE.WSDL file must be available in the Default 
+       Directory for HOST File Systems (HFS), as stated in the KERNEL
+       SYSTEM PARAMTER (#8989.3) file, else the patch will not install.
+  
+ Refer to the install guide for further information. 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ A post-install program will be executed as the last step of the patch
+ installation process to create the WEB SERVICE (#18.02) and WEB SERVER
+ (#18.12) file entries to support the transfer of PII information using
+ HTTPS communications to PSIM. In addition, the "TWO" file entry will be
+ automatically added to the MPI ICN BUILD MANAGEMENT (#984.8) file which
+ will allow determination of the communications protocol (HTTP or HTTPS) to
+ use when communicating with PSIM. The post-install process will be part of
+ the installation process rather than tasked, so the patch install log
+ rather than a separate MailMan message will include post-install results.
+   
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system.
+  
+ Refer to the install guide for further information.
+  
+  
+ Installation Instructions
+ -------------------------
+ Please refer to the Installation Guide (MPIF_1_63IG.PDF) for complete
+ installation instructions. 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Please refer to the Installation Guide (MPIF_1_63IG.PDF) for complete
+ installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFHWSC
+    Before: B12341980   After: B13124173  **56,61,63**
+Routine Name: MPIFWSC
+    Before:       n/a   After: B19528322  **63**
+ 
+Routine list of preceding patches: 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2016
+Completed By:                               Date Completed: NOV 22, 2016
+Released By :                               Date Released : DEC 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,160 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 09/07/18 at 12:57
+=============================================================================
+Run Date: NOV 05, 2018                     Designation: MD*1*43
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #45                      Status: Released
+                  Compliance Date: DEC 06, 2018
+=============================================================================
+
+Associated patches: (v)MD*1*21     <<= must be installed BEFORE `MD*1*43'
+
+Subject: CP USER LOCKING BUG CREATING DUPLICATE TIU NOTES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to provide a software bug fix for Clinical 
+ Procedures functionality. This patch addresses the following issue:
+  
+ 1. Duplicate reports with the same time stamp
+  
+ Associated Tickets(s):
+ ----------------------
+ 1. I9896708FY16 - duplicate reports with the same time stamp.
+    Duplicate:
+    R12448407FY17 - Lock CP Transaction File Record
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I9896708FY16 - duplicate reports with the same time stamp
+  
+ Problem 1:
+ ----------
+ Due to a locking issue, it is possible for multiple users to create
+ duplicate TIU [Text Integrated Utility] documents with the same time 
+ stamp for a single CP request for a patient. When the MD scheduled tasks
+ are running at close frequencies and overlaps, the studies end up with two
+ notes at the same date and time. A duplicate note can cause the image to
+ be linked to the wrong note, and also the provider can put their
+ interpretation on the wrong note. The attachment and interpretation should
+ be together. 
+  
+ Solution 1:
+ -----------
+ Added locks to routine MDRPCOT so that duplicate documents can no longer 
+ be created.
+  
+ Test Sites
+ ----------
+ James E. Van Zandt VA Medical Center (Altoona, PA)
+ Cheyenne VA Medical Center, WY
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+  
+ Installation Instructions:
+ --------------------------
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter MD*1.0*43):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        MD*1.0*43.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ None
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDRPCOT
+    Before: B85701277   After: B89860576  **5,6,11,21,43**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 06, 2015
+Completed By:                               Date Completed: NOV 01, 2018
+Released By :                               Date Released : NOV 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

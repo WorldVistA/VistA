@@ -1,0 +1,205 @@
+
+=============================================================================
+Run Date: NOV 07, 2018                     Designation: MHV*1*38
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #31                      Status: Released
+                  Compliance Date: DEC 10, 2018
+=============================================================================
+
+
+Subject: MYHEALTHEVET MINOR RELEASE MHV_2018.5.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The November MyHealtheVet Core Development Minor Release (MHV_2018.5.0.0) will
+ be promoted to the MHV Production environment on Thursday, November 8, 2018 
+ starting at 8:00 PM ET.
+  
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ SM ENHANCEMENTS/DEFECTS:
+ JAZZ 786862 - Display SM messages older than 365 Days
+ JAZZ 849913 - SM Patient Only - Advance Search - Update based on Preference 
+      Setting - Dates will default when advanced search is selected based on the 
+      user's preferences 
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS/DEFECTS:
+ JAZZ 840505 - Improve Performance by Caching Allergy Data in Pharmacy Pages
+  
+ ADMIN PORTAL ENHANCEMENTS/DEFECTS:
+ JAZZ 760598 - Auto-Deactivation of VA Staff in MHV Admin Portal
+ JAZZ 833519 - US 1: Job to automatically deactivate MHV admin portal 
+      VA staff members that have not logged in the last 90 days
+ JAZZ 833523 - US 3: Login/Logout MHV Admin Portal Messages
+ JAZZ 833549 - US 4: Error message displayed after MHV Admin portal account is
+      auto-deactivated
+ JAZZ 833527 - US 6:  Manage VA Staff page, display roles that were auto-
+      deactivated and any added comments will show in Admin Portal
+ JAZZ 833529 - US 8:  Email notification will be sent when an admin portal 
+      role is auto-deactivated
+ JAZZ 838540 - Admin Portal will capture email address (if it exists) from 
+      Single Sign-on internal (SSOi) Header at login
+ JAZZ 841469 - Manage VA Staff - Error message will display if Active Directory
+      is Down
+ JAZZ 838976 - Improvise connection and read timeouts for all Lightweight 
+      Directory Access Protocol (LDAP) calls from MVH Admin Portal 
+      (Non-veteran facing): Enable connection timeout of 2 seconds and read 
+      timeout of 5 seconds for all LDAP calls in MHV Admin Portal 
+      (Help Desk - Reset Password).
+ JAZZ 824701 - 'Contact Us' portlet integration with IRIS in MHV Admin Portal
+ JAZZ 813634 - Technical Reference Model (TRM) upgrades to certain Apache 
+      Commons library versions in MHV Admin Portal
+  
+ DATABASE ENHANCEMENTS:
+ JAZZ 786862 - Display SM messages older than 365 days
+ JAZZ 824701 - 'Contact Us' portlet integration with IRIS in MHV Admin Portal
+ JAZZ 833702 - Implement the auto-deactivation MHV Admin portal job
+ JAZZ 838976 - Improvise connection and read timeouts for all Lightweight 
+      Directory Access Protocol (LDAP) calls from MVH Admin Portal 
+      (Non-veteran facing): Enable connection timeout of 2 seconds and read 
+      timeout of 5 seconds for all LDAP calls in MHV Admin Portal 
+      (Help Desk - Reset Password).
+  
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS:
+ JAZZ 825713 - Health Summary Enhancements - Consolidated Clinical Document 
+      Architecture (CCDA) version 2 is being deployed Nationally, including
+      Style Sheet update and Data/Business rules document updates
+ JAZZ 821532 - DOMAIN SSO - As part of Veterans Day release, SSO is 
+      implemented between DOMAIN and MHV
+ JAZZ 834111 - MHV as an accepted CSP on Access VA-MHV CSP is added as one
+      Credential Service Provider on the Access VA site 
+ 
+ MHV ADMIN PORTAL ENHANCEMENTS:
+ JAZZ 818632 - Add Terms and Condition Fields (T & C) to Help Desk Page 
+ 
+ DATABASE ENHANCEMENTS:
+ JAZZ 837067 - Admin Portal - Identity Proofing in IPA Menu
+ 
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ MHV/API NATIONAL PORTAL ENHANCEMENTS:
+ JAZZ 837923 - MHV Community Care Appointments - Inform users that 
+      their Community Care Appointments does not meet at a VA Facility
+ JAZZ 837937 - Appointments:  US01:  Appointments Module Community
+      Care Appointments
+ JAZZ 837950 - Appointments:  US02:  Learn More about VA Appointments
+ JAZZ 837957 - Appointments:  US03:  Personal Health Calendar Community Care
+      Appointments
+ JAZZ 837966 - Appointments:  US04:  Appointment Reminder Email Community 
+      Care Appointments
+ JAZZ 837972 - Appointments:  US05:  Blue Button Community Care Appointments
+  
+ MHV/API NATIONAL PORTAL DEFECTS:
+ JAZZ 842038 - (PROD Defect) VA Medical Images and Reports:  Images not
+      displaying that once did when thumbnail images were used
+ JAZZ 583235 - UAT Finding:  Health History in PROD Content:  CDC Adult 
+      Immunization Schedule hyperlink should navigate to the VA Screenings
+      and Immunizations page
+ JAZZ 842563 - (PROD Defect) Production Issue that random imaging studies
+      are not producing the HQ images for online viewing
+ JAZZ 842627 - (PROD Defect) Production Issue that target files with 12
+      bit resolution cannot be converted to HQ images for online viewing
+ JAZZ 824150 - (PROD Defect) Blue Button Medical Imaging (BBMI):  Images 
+      are not being displayed
+  
+ DATABASE ENHANCEMENTS:
+ JAZZ 812029 - Create two views to support the extraction of the employee roles
+ JAZZ 837937 - Appointments:  US01:  Appointments Module Community Care
+      Appointments
+ JAZZ 842572 - Create CREATED_DATE and MODIFIED_DATE columns for all 
+      PHR_* tables
+  
+ ================================================================
+ Technical Debt Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+  
+ BATCH ENHANCEMENTS:
+ JAZZ 848477 - 18.4 Fortify Security Scan Remediation
+ JAZZ 836216 - Resolve Fortify Issues
+ JAZZ 821595 - Fortify Scan Remediation
+        
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+  
+ MHV NATIONAL PORTAL ENHANCEMENTS:
+ JAZZ 726828 - Resolve BlueButton Low Fortify Issues -  Log Forging (debug)
+ JAZZ 731837 - Basic user updates account through profile update but not 
+      able to access Pharmacy
+ JAZZ 772860 - Health Information Card - Address information - Province not
+      displaying.
+ JAZZ 802140 - Users with Advanced accounts get blank page when trying to 
+      upgrade to Premium via eBenefits
+ JAZZ 802718 - Users with Advanced accounts get blank page when trying to 
+      upgrade to Premium via DS Logon 
+ JAZZ 812370 - Health History: Allergies form validation for allergy name
+      field displaying formatting code
+ JAZZ 816350 - The Cancel button on the My Profile page the MHV system displays
+      the top of the page while the 'Are you sure you want to cancel?'
+ JAZZ 816353 - When user selects the Save button on the My Profile page,
+      MHV displays the top of the page while the confirmation message is 
+      displayed above the Update Profile Information heading.
+ JAZZ 818670 - Update RX Refill Shipment Notification to Remove vet.gov 
+      References
+ JAZZ 825581 - Adjust warning logging in RXRefill module to reduce the amount
+      of logs stored in Kibana
+ JAZZ 828389 - 200MH facility is not getting added for user account when
+      account is uncorrelated from AP and then get correlated from NP upon login
+ JAZZ 833204 - Self entered test results and comments showing coding/scripting
+      after entering results for any tests like glucose levels
+ JAZZ 847671 - Fix NullPointer in Hl7FilterParser error handling
+ JAZZ 855145 - Update PHR context profile name for SysTest-A
+  
+ LEGACY SM:
+ JAZZ 841347 - Add Validation to Handle NullPointerException at PcmmServiceImpl
+  
+ MHV ADMIN PORTAL:
+ JAZZ 841126 - Admin Portal secondary sort on first name is missing.
+  
+ MISCELLANEOUS ENHANCEMENTS:
+ JAZZ 824807 - Upgrade Java 6 from Update 191 to Oracle JDK 6 Update 211
+ JAZZ 824801 - Upgrade Java 7 from Update 181 to Oracle JDK 7 Update 201
+ JAZZ 824799 - Upgrade Java 8 from Update 172 to Oracle JDK 8 Update 192
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ MHV Documentation can be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : NOV 05, 2018
+Entered By  :                               Date Entered  : NOV 05, 2018
+Completed By:                               Date Completed: NOV 06, 2018
+Released By :                               Date Released : NOV 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

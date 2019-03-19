@@ -1,0 +1,444 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Friday, 01/04/19 at 12:27
+=============================================================================
+Run Date: JAN 31, 2019                     Designation: FH*5.5*43
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #45                    Status: Released
+                  Compliance Date: MAR 04, 2019
+=============================================================================
+
+
+Subject: EPIP FH REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ FH*5.5*43 provides the following enhancements to VistA:
+  
+ - Modifies the VistA Dietetics Report Queuing software to automatically 
+ queue Nutrition and Food Service (NFS) reports and labels to run daily, 
+ or as often as necessary, without requiring Dietetics staff to manually 
+ queue them each day. With many standard reports and labels currently 
+ available to NFS staff, it is inefficient and time consuming for users to 
+ manually set up and run reports daily.
+  
+ This enhancement enables an NFS Manager, Clinical Application Coordinator 
+ (CAC), or Automated Data Processing Application Coordinator (ADPAC) to 
+ set pre-defined options for printing NFS reports and labels 
+ automatically, including the routine name and the setup of variables 
+ required for the reports to run unattended.
+  
+ Three new options enabling this functionality are added to the existing 
+ Tray Tickets [FHMTKM] menu. The Manager/CAC/ADPAC must be assigned the 
+ NFS security key FHMGR to access these options:
+  
+   - Queued Options Edit [FHQUE OPTION EDIT] displays a list of available 
+ reports that can be selected and configured. When configuring a report, 
+ the user is prompted for the desired printer and whether it is active, the
+ days of the week to run the report, and the time at which to run the
+ report (e.g., T-1@18:00, if applicable. A new report option, Print Tray
+ Tickets [FHMTKP], prompts the user for the meal ticket to print
+ (Breakfast, Noon, or Evening).
+  
+   - Queue Diet Reports [FHQUE QUEUE DIET REPORTS] passes the configured 
+ reports and labels to TaskMan to be executed and printed at the scheduled 
+ time. Typically, Queue Diet Reports is scheduled to run once per day, 
+ soon after midnight. This option is used for testing to ensure all 
+ configured reports print as expected.
+  
+   - Test an Individual Queued Option [FHQUE TEST] is used to immediately 
+ run a single configured report to validate selected options. 
+  
+ Three new files store the values required for printing NFS reports and 
+ labels automatically. The FHQUE AVAILABLE OPTIONS file (#117.0243) stores 
+ values such as the time the report is scheduled to run and the printer to 
+ which it will be sent. The FHQUE QUEUED REPORTS/LABELS file (#117.024) 
+ stores a meaningful description for each of the available reports that 
+ display when Queued Options Edit is selected. The FHQUE REPORT DAYS file 
+ (#117.0241) stores the days of the week to enable a user to select the 
+ day to run the report.
+  
+ - Enhances the existing Patient Supplemental Feeding List to display the
+ most recent patient Diet Order. Diet orders can change frequently based on
+ a patient's medical needs; sometimes diet orders are changed in VistA
+ after a supplemental feeding is prepared by a food service worker.
+ Currently, there is no easy way to check supplemental feeding orders
+ against the patient's most recent diet order before delivering the
+ supplemental nutrition.
+  
+ The enhanced Patient Supplemental Feeding List is accessible from 
+ the "Run SF Labels/Consolid Ingred List" [FHNO2] option, which is 
+ available from the SUPPLEMENTAL FEEDINGS [FHNOM] menu. This 
+ enhancement reduces the risk of improper feeding by retrieving 
+ current diet order information from VistA and using that data to 
+ prepare the Patient Supplemental Feeding List, so that both the 
+ current diet order and the supplemental feeding order are included.
+  
+ - Adds three new fields to the NUTRITION PERSON file (#115) that the 
+ staff in a Community Living Center (CLC) can use to enter meal 
+ instructions for morning, midday, and evening meals. The new free-text 
+ fields include the BREAKFAST FLAG field (#22), the NOON FLAG field 
+ (#22.1), and the EVENING FLAG field (#22.2).
+  
+ The existing Tray Tickets [FHMTKM] menu is further modified to include 
+ the new option Tray Ticket Flag Edit [FHMTK1D TRAY TICKET EDIT], which 
+ enables CLC staff to enter flag text in the new fields. To use this 
+ option, the Ward to which a patient is assigned must include "CLC" in the 
+ Ward name. The user is prompted to select either a Ward or a Patient. The 
+ BREAKFAST FLAG, NOON FLAG, and EVENING FLAG fields display so that text 
+ can be entered in one or more of the fields. The existing Print Tray 
+ Tickets [FHMTK1P TRAY TICKET PRINT] option is modified to print flag text 
+ on the bottom of the tray ticket where it can be easily seen by clinical 
+ staff at mealtime.
+  
+ This enhancement provides a simple and consistent way to ensure that each 
+ patient's mealtime instructions and needs are communicated between team 
+ members to ensure patient safety and quality of care.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)         
+ New/Modified/Deleted
+ ------------------         -------------------         
+ --------------------
+ FHQUE AVAILABLE            OPTION NAME (.01)            NEW
+ OPTIONS (117.0243)         TIME TO RUN (1)              NEW
+                            PRINTER (2)                  NEW
+                            ENTRY TAG (3)                NEW
+                            CALLED ROUTINE (4)           NEW
+                            ACTIVE (5)                   NEW
+                            VARIABLES
+                            (MULTIPLE) (10)              NEW
+                            DAYS TO RUN
+                            (MULTIPLE) (20)              NEW
+  
+ FHQUE QUEUED               OPTION (.01)                 NEW
+ REPORTS/LABELS (117.024)   ADDITIONAL    
+                             DESCRIPTION (1)             NEW
+                            VARIABLES                    NEW 
+                             (MULTIPLE) (2)
+                            TAG (3)                      NEW
+                            ROUTINE (4)                  NEW
+  
+ FHQUE REPORT DAYS          DAY OF WEEK (.01)            NEW
+ (117.0241)                 NUMBER (1)                   NEW
+  
+  
+ NUTRITION PERSON (115)     BREAKFAST FLAG (22)          NEW
+                            NOON FLAG (22.1)             NEW
+                            EVENING FLAG (22.2)          NEW
+  
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                Type                New/Modified/Deleted
+ -----------                ----                -------------------- 
+ FHQUE QUEUE DIET REPORTS   RUN ROUTINE         NEW
+ FHQUE OPTION EDIT          RUN ROUTINE         NEW
+ FHQUE TEST                 RUN ROUTINE         NEW
+ FHMTK1D TRAY TICKET EDIT   RUN ROUTINE         NEW
+ FHMTK1P TRAY TICKET PRINT  RUN ROUTINE         Modified
+ FHMTKM Tray Tickets        MENU                Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ FHMGR
+  
+  
+ Templates Associated:
+  
+ Template Name      Type   File Name (Number)  New/Modified/Deleted
+ -------------      ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20141207 Dietetics Report for Queuing Software
+ 20170510 Print Flag on Bottom of Tray Ticket
+ 20170519 Add Diet Order to the Patient Supplemental Feeding List
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ San Francisco VA Health Care System, San Francisco, CA
+ VA Salt Lake City Health Care System, Salt Lake City, UT
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from 
+ FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI 
+ Field Offices:
+  
+ Hines:                 domain.ext
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ https://wwww.domain.ext/vdl/.
+  
+  
+ Title                                    File Name             FTP Mode
+ -----------------------------------------------------------------------
+ VistA Nutrition and Food Service        fh_5_5_p43_ag_cp.doc   Binary
+   Manager/ADPAC Guide Change Pages
+   for Patch FH*5.5*43
+ VistA Nutrition and Food Service        fh_5_5_p43_ag_cp.pdf   Binary
+   Manager/ADPAC Guide Change Pages
+   for Patch FH*5.5*43
+ VistA Nutrition and Food Service        fh_5_5_p43_um_cp.doc   Binary
+   User Manual Change Pages 
+   for Patch FH*5.5*43 
+ VistA Nutrition and Food Service        fh_5_5_p43_um_cp.pdf   Binary
+   User Manual Change Pages
+   for Patch FH*5.5*43
+ VistA Nutrition and Food Service        fh_5_5_p43_tm_cp.doc   Binary
+   Outpatient Meals Technical Manual
+   and Security Guide 
+   Change Pages for Patch FH*5.5*43 
+ VistA Nutrition and Food Service        fh_5_5_p43_tm_cp.pdf   Binary
+   Outpatient Meals Technical Manual
+   and Security Guide
+   Change Pages for Patch FH*5.5*43
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The pre-installation routine FH43P runs automatically at the start of 
+ installation. This routine is required by sites that previously installed
+ the FH*5.5*43 patch prior to v14. The FH43P routine removes existing
+ data from the files FHQUE AVAILABLE OPTIONS (#117.0243), FHQUE QUEUED
+ REPORTS/LABELS (#117.024), and FHQUE REPORT DAYS (#117.0241) and loads new
+ data into those files.
+  
+ The pre-installation routine is automatically deleted after execution.
+  
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number FH*5.5*43.
+  
+ a.      Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, data 
+ dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any 
+ other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO//', press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO//', press <Enter>.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//', press <Enter>.
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+ messages. You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press 
+ <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-installation routine FHP43 runs automatically at the end of the 
+ installation. This routine is required by sites that previously installed 
+ the FH*5.5*43 patch or used the local Class III modification. The FHP43 
+ routine copies existing data to the new BREAKFAST FLAG field (#22), NOON 
+ FLAG field (#22.1), and EVENING FLAG field (#22.2) in the NUTRITION 
+ PERSON file (#115). The post-installation routine is automatically 
+ deleted after execution.
+  
+ When the site is ready to turn on the patch functionality, the site 
+ Nutrition ADPAC should contact the Patch Installer to complete the 
+ following steps.
+  
+ 1.      Use the Queued Options Edit [FHQUE OPTION EDIT] option to select 
+ the reports to be run, add/change the printer, enable/disable the queue, 
+ and select the day(s) and time(s) to run the reports. The ADPAC should 
+ determine which reports are needed, the printer to which the reports will
+ print, and the day(s) and time(s) to run the reports, if applicable.
+  
+ Available options are:
+     1. FHASNR4         List Inpats By Nutrition Status Level
+     2. FHBIR           Birthday List
+     3. FHMTKP          Print Tray Tickets
+     4. FHORD10         Nutrition Location Diet Order List
+     5. FHORD13         Diet Activity Report/Labels
+     6. FHORD5          NPO/Pass List
+     7. FHORT5S         Tubefeeding Pull Lists
+     8. FHORTF5         Preparation/Delivery of Tubefeedings
+     9. FHPATM          Patient Movements
+  
+ 2. Immediately after activating the functionality of the reports, the 
+ Patch Installer should schedule the Queue Diet Reports [FHQUE QUEUE 
+ DIET REPORTS] option in Taskman. This option should be scheduled to run 
+ once per day (1d), soon after midnight (T+1@00:10). The installer must 
+ also add the name(s) of the Nutrition Manager who is assigned the FHMGR 
+ key to the USER TO RUN TASK on the second page of the 
+ Schedule/Unschedule option.
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not 
+ be attempted. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will need to issue one or more 
+ follow-on patches in order to comprehensively back out this patch, after 
+ coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the FH routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the FH routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch FH*5.5*43 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 66
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FH43P
+    Before:       n/a   After:   B466644  **43**
+Routine Name: FHMTK1C
+    Before: B21105135   After: B20731472  **43**
+Routine Name: FHMTK1D
+    Before:       n/a   After: B11272478  **43**
+Routine Name: FHNO21
+    Before: B16043749   After: B21077978  **5,8,43**
+Routine Name: FHP43
+    Before:       n/a   After:  B2072953  **43**
+Routine Name: FHQUE
+    Before:       n/a   After: B25912403  **43**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: JAN 30, 2019
+Released By :                               Date Released : JAN 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

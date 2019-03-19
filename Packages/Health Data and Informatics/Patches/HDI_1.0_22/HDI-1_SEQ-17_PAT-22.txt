@@ -1,0 +1,315 @@
+$TXT Created by                 JR at CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 08/20/18 at 17:28
+=============================================================================
+Run Date: NOV 27, 2018                     Designation: HDI*1*22
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1        SEQ #17                      Status: Released
+                  Compliance Date: DEC 28, 2018
+=============================================================================
+
+
+Subject: NDS ENHANCEMENT TO LOOKUP/RETURN SDO'S FOR LABORATORY
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ The Department of Veterans Affairs (VA) has established a process for
+ implementing standard terminology/terminologies within individual clinical
+ domains for the exchange of data. The intent of this effort is to provide
+ the detailed groundwork necessary for industry-wide interoperability. The
+ objective of this process is to enable the most user friendly interface as
+ possible in the implementation of the native standardization along with
+ all of the activities required to operationalize the change within the 
+ VistA environment and the associated terminology consuming applications.
+  
+ This patch adds the ability to collect Standards Development Organization
+ (SDO) codes based on items stored in the ORDERABLE ITEMS File (101.43) for
+ the Laboratory area.
+  
+ INTEGRATION CONTROL REGISTRATIONS (ICR's) Used for this effort.
+ ICR     NAME
+ ---     ----
+ 6894    HDI COLLECT SDOS
+ 6895    HDI READ ORDERABLE ITEMS File (#101.43)
+ 6901    HDI READ LABORATORY SERVICE LABORATORY TEST FILE (#60)
+ 6902    HDI READ MASTER LABORATORY TEST FILE (#66.3)
+ 5812    MAX LINES SEND/RECEIVE (#4.3)
+  
+  
+ The effort has three distinct sections:
+ 1)  The creation of a general use Application Program Interface (API).
+       This API will allow anyone who can call an API  the ability to collect
+       SDO Codes for Laboratory items that are associated to the ORDERABLE
+       ITEMS File (#101.43)
+       This option is associated to ICR 6894. Utilization will require
+       being added as a subscriber to the ICR.
+ 2)  A VistA lookup option that will allow users of VistA to lookup Laboratory
+      SDO Codes that are associated to the ORDERABLE ITEMS File (#101.43).
+      This option will allow users to lookup a single Laboratory Orderable
+      Item, Orderable Items by partial match to the orderable item name for
+      Laboratory, or get ALL of orderable items SDO Codes for Laboratory.
+      The user will be able to select an output device and also be able to
+      select a pre-defined output format. The formats are: XML style,
+      standard report format, or TAB delimited export format.
+      ***********************************************************************
+      *  The user, following their facilities normal request method, would  *
+      *  need to have this option: 'HDI REQUEST SDO [HDISDO REQUEST SDO]'   *
+      *  added to their working menu.                                       *
+      ***********************************************************************
+ 3)  A HDI server side mailman function.
+      The user, using their outlook e-mail, may receive a TAB delimited text
+      file containing all the orderable items and their associated SDO Codes
+      for Laboratory.
+  
+ Patch Components:
+ --------------------------
+  
+ Files that would be READ from and which fields would be referenced:
+  
+ File Name    (Number)                   Field Name (Number)
+ --------------------------              --------------------------
+ ORDERABLE ITEMS File (#101.43)     NAME (#.01)
+                                    ID     (#2)
+                                    INACTIVATED (#.1)
+                                    SET MEMBERSHIP (#9)
+                                    SET (#101.439,.01)
+                                    SYNONYMS (#1)
+                                    SYNONYM  (#101.432,.01)
+  
+ LABORATORY
+ ---------------
+ LABORATORY TEST File (#60)         NAME (#.01)
+                                    TYPE (#3)
+                                    LOCATION (DATA NAME) (#5)
+                                    FIELD (#13)
+                                    TEST INACTIVE DATE (#133)
+                                    TEST INACTIVE (#132)
+                                    SITE/SPECIMEN (#100)
+                                    SITE/SPECIMEN (#60.01,.01)
+                                    UNITS (#60.01,6)
+                                    MLTF NUMBER (#60.01,30)
+                                    RESULT/SPECIMEN INACTIVE (#60.01,32)
+                                    RESULT/SPECIMEN INACTIVE DATE (#60.01,33)
+ MASTER LABORATORY TEST File
+                     (#66.3)        LAB TEST NAME (#.01)
+                                    ALTERNATE TEST NAME (#.02)
+                                    LOINC CODE (#.04)
+                                    COMPONENT (#.05)
+                                    PROPERTY (#.06)
+                                    TIME ASPECT (#.07)
+                                    SPECIMEN (#.08)
+                                    SCALE (#.09)
+                                    METHOD (#1)
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------    ------     --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                               Type       New/Modified/Deleted
+ -----------                               ----       --------------------
+ HDI SDO ORDER SERVER [HDISDOSERVER]       Output        New
+ HDI SDO API  [HDISDO API]                 Output        New
+ HDI REQUEST SDO [HDISDO REQUEST SDO]      Output        New
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ---------- 
+  Grand Junction (575)
+ Salt lake city (660)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is being released as a FORUM patch. Documentation
+ describing the new functionality introduced by this patch are
+ available.
+  
+ The preferred method is to retrieve files from download.
+ vista.domain.ext. This transmits the files from the first available
+ server. Sites may also elect to retrieve files directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:            domain.ext 
+ Salt Lake City:   domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                         File Name            FTP Mode
+ ----------------------------------------------------------------------
+ Deployment, Installation, Back-Out,  
+ and Rollback Guide                       hdi_1_0_22_ig.pdf    BINARY
+ Deployment, Installation, Back-Out,
+ and Rollback Guide                       hdi_1_0_22_ig.docx   BINARY 
+ HDI SDO Retrieval User Manual            hdi_sdo_um.pdf       BINARY
+ HDI SDO Retrieval User Manual            hdi_sdo_um.docx      BINARY
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Pre-Installation Instructions:
+ ------------------------------
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (hdi_1_0_22_ig.doc) for complete installation instructions.
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (hdi_1_0_22_ig.docx) for complete installation instructions.
+  
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu. From this menu, you may elect to use the
+ following options. When prompted for the INSTALL NAME enter the patch
+ : HDI*1.0*22
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will allow
+ you to view all changes that will be made when this patch is installed.
+ It compares all components of this patch routines, DDs, templates,
+ etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO//'
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//'
+   
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post install instructions for this patch.
+  
+ Backout Instructions
+ --------------------
+ In the event  a site determines that this patch should be backed out, the 
+ site should submit a CA SDM ticket with the ESD for assistance with the 
+ procedure.
+  
+ Refer to the Deployment, Installation, Back-Out, and Rollback Guide
+ (hdi_1_0_22_ig.docx) for complete installation instructions.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDIPSZRT
+    Before: B30301671   After: B30347676  **21,22**
+Routine Name: HDISDOC
+    Before:       n/a   After: B83861623  **22**
+Routine Name: HDISDOCL
+    Before:       n/a   After:B114683234  **22**
+Routine Name: HDISDOL
+    Before:       n/a   After: B81231137  **22**
+Routine Name: HDISDOLL
+    Before:       n/a   After:B185025754  **22**
+Routine Name: HDISDSR
+    Before:       n/a   After:  B8012840  **22**
+Routine Name: HDISDSR1
+    Before:       n/a   After: B13794495  **22**
+Routine Name: HDISDSRL
+    Before:       n/a   After:B173574871  **22**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 16, 2017
+Completed By:                               Date Completed: NOV 26, 2018
+Released By :                               Date Released : NOV 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

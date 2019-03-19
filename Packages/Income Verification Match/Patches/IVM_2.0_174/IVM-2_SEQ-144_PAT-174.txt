@@ -1,0 +1,452 @@
+
+=============================================================================
+Run Date: JAN 14, 2019                     Designation: IVM*2*174
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #144                      Status: Released
+                  Compliance Date: JAN 16, 2019
+=============================================================================
+
+Associated patches: (v)IVM*2*121   <<= must be installed BEFORE `IVM*2*174'
+                    (v)DG*5.3*970  <<= must be installed BEFORE `IVM*2*174'
+
+Subject: CLEANUP OF SOCIAL SECURITY NUMBERS IN INCOME PERSON (#408.13) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses Your IT Services incident INC1928289 to fix a 
+ critical defect introduced by Enrollment System (ES) 5.3 and corrected
+ by 5.3.0.070001, where the dependent Social Security Number (SSN) data at
+ the Veterans Health Information System and Technology Architecture
+ (VistA) facilities was corrupted and requires a VistA patch to clean up
+ the database corruption.
+  
+ Please refer to the 'Defect Tracking System Ticket(s) & Overview' 
+ section of this patch for a description of the problem and its resolution.
+  
+ This patch is a follow-up patch to DG*5.3*970 and it is required to
+ install this patch. Patch DG*5.3*970 created global ^XTMP("DG53970P")
+ which lists the dependent records' Internal Entry Numbers (IENs) in the
+ INCOME PERSON file (#408.13) that need to have the SOCIAL SECURITY NUMBER
+ (#.09) field updated. It also lists the record number (DFN) in PATIENT
+ (#2) file for the patient associated with the dependent record.
+  
+ Patch IVM*2.0*174 uses this global when processing the Health Level 7
+ (HL7) ORU-Z10 message from ES to update the SOCIAL SECURITY NUMBER (#.09)
+ field of dependent records in the INCOME PERSON file (#408.13) and to
+ clean them out of the ^XTMP("DG53970P") global. Additionally, a
+ post-install routine extends the expiration date of the 
+ ^XTMP("DG53970P") global by an additional 120 days from the patch 
+ install date and submits a background job to send a MailMan message
+ every 2 days to report the status of IENs and DFNs remaining in the ^XTMP
+ global. The message is sent to FORUM MailMan group
+ G.IVM20174MONITOR@FORUM.DOMAIN.EXT. The members of the mail group consist of
+ developers, Software Quality Assurance (SQA), and Health Product
+ Support.  A copy of the mail message will be sent to the installer of
+ patch IVM*2.0*174.
+  
+ Once all dependent records identified in the ^XTMP("DG53970P") global
+ have had the SOCIAL SECURITY NUMBER (#.09) field of the INCOME PERSON file
+ (#408.13) successfully updated, the background job will no longer be 
+ automatically queued to check the global and send a status message.
+  
+ Listing of Updates:
+ ===================
+ Patch IVM*2.0*174 modifies the processing of the HL7 ORU-Z10 message from 
+ ES as follows:
+  
+ 1. If the Patient record from the ORU-Z10 PID segment is found in the 
+    ^XTMP("DG53970P") global, only the ZDP segments in the message are 
+    processed as follows:
+    a. The dependent record (Internal Entry Number) from the INCOME PERSON
+       file (#408.13) is derived from the ZDP segment. If that record is
+       found in the ^XTMP("DG53970P") global, the SSN from the ZDP segment
+       is filed into the INCOME PERSON file (#408.13) for that dependent.
+    b. The SSN will be validated prior to filing and will not be filed if 
+       it is invalid. The SSN must be 9 numbers.
+    c. If the ZDP segment includes a PSEUDO SSN REASON and it is a valid 
+       value of "S", "N", or "R", it is stored in the INCOME PERSON file 
+       (#408.13) in the PSEUDO SSN REASON field (#.1) and a "P" is appended
+       to the SSN prior to being filed.
+    d. Prior to the SSN being updated, the SSN field in the INCOME PERSON
+       file (#408.13) is checked and will be corrected if the field is 
+       corrupted.
+    e. If the filing of the SSN fails, the error message is placed in the 
+       ^XTMP("DG53970P") global.
+    f. If the filing of the SSN is successful, the associated 
+       ^XTMP("DG53970P") entry is removed.
+  
+ 2. If the DFN in the PID segment is not found in ^XTMP("DG53970P") 
+    global, the ORU-Z10 message is processed normally.
+  
+ 3. A post-install routine is run that submits the background task 
+    IVM*2.0*174 STATUS UPDATE JOB that produces a MailMan message that
+    lists the patient records and associated dependent records from the
+    ^XTMP("DG53970P") global. If there are entries in the ^XTMP("DG53970P")
+    global, this job is submitted to run again in 2 days. The MailMan
+    message lists the following information:
+    a. The total number of patient records and associated dependent 
+       records that need to have the SSN field updated.
+    b. Each DFN and the associated dependent IENs in the ^XTMP("DG53970P") 
+       that need to have the SSN updated. If an ORU-Z10 message failed
+       to update an SSN for a dependent record, the error is shown with the
+       record.
+  
+ An example of the MailMan message is shown below.
+  
+ Example: Post-Install MailMan Message
+ -------------------------------------
+ Subj: IVM*2.0*174-#500-VHA/ES CLEANUP OF SSNs IN (#408.13) FILE 
+ From: <POSTMASTER>                              In 'IN' basket.   Page 1
+ -------------------------------------------------------------------------
+  
+ The job completed to check if patient records still exist in the
+ ^XTMP("DG53970P" global and require a push of corrected SSN data from ES
+ via an HL7(ORU-Z10) message.
+  
+ Job Results:
+ ------------
+  Facility Name: ZZALBANY.DOMAIN.EXT
+ Station Number: 500
+  
+ Total patients (ICN/DFN) with dependents not updated: 6
+                   Total dependent (IENs) not updated: 7
+  
+ Patient ICN/DFN: 5000000001V324625/7171998
+  Dependent IENs: 2
+  
+ Patient ICN/DFN: 5000000105V037465/7171999
+  Dependent IENs: 1
+  
+ Patient ICN/DFN: 5000000040V317188/7171864
+  Dependent IENs: 3
+                  4
+  
+ Patient ICN/DFN: 5000000077V373245/7171902
+  Dependent IENs: 5
+  
+ Patient ICN/DFN: 5000000101V983844/7171926
+  Dependent IENs: 14
+  
+ Patient ICN/DFN: 5000000111V198302/7171934
+  Dependent IENs: 13
+  
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Incident: INC1928289 
+    Short Description: <SUBSCRIPT>IX+1^DIE1 ^DGPR(408.13 - Error Seen At 
+    Multiple Sites
+  
+ Problem:
+ --------
+ Critical defect #810016 was logged against Enrollment System (ES) 5.3 
+ build. A new build was created to address the defect.  Emergency 
+ Release ES 5.3.0.07001 implemented code changes to remove a method and 
+ method calls that were removing the SSN from the ZDP segment and setting 
+ it to a single "space" character. Dependent Social Security Number (SSN)
+ data at the VistA facilities was corrupted and requires a VistA patch to
+ clean up the database corruption.  Upon follow-up with the facilities who
+ reported the original error, additional instances of a slightly different
+ error were being seen after the deployment of the code fix.  The expected
+ outcome is that no errors would be seen after the deployment of ES
+ 5.3.0.07001.  The error logged in the VistA instances is as follows:
+  
+   $ZE= <SUBSCRIPT>IX^DIE1 ^DGPR(408.13,"BS","")
+  
+   K ^DGPR(408.13,"BS",$E(X,6,9),DA)
+  
+ The error is occurring on the second instance of an inbound financial HL7 
+ transmission (ORU-Z10) for a patient.  The root cause was determined to 
+ be the data (in this case an empty space) which was filed into the SOCIAL 
+ SECURITY NUMBER field (#.09) of the INCOME PERSON file (#408.13). The SSN 
+ data in that file was potentially degraded by the initial issue. ES was 
+ remediated, the second transmission files the correct data; however, 
+ still errors due to the previous value.  A third or higher transmission 
+ should file without error.
+  
+  
+ Resolution:
+ -----------
+ The processing of the ORU-Z10 message is modified:
+  
+ 1. If the DFN is found in the global ^XTMP("DG53970P"), which was created 
+    by patch DG*5.3*970 to capture the records that need to be corrected,  
+    then process only the ZDP segments to retrieve and store the dependent 
+    SSNs. No other segments or data are processed.
+ 2. If the SSN update was successful, remove the associated entries from 
+    the ^XTMP("DG53970P") global.
+ 3. If the SSN update was not successful, store the error in the 
+    ^XTMP("DG53970P") global.
+  
+ Once all facilities have installed this emergency patch IVM*2.0*174 by 
+ the Compliance date, ES will be sending ORU-Z10 HL7 messages for all
+ veterans that have dependents that needed the SSN updated during non-
+ peak hours.
+  
+ The post-install routine EP^IVM2174P queues the background task
+ IVM*2.0*174 STATUS UPDATE JOB that gathers the DFNs and IENs that are in
+ the ^XTMP("DG53970P") global. These values are listed in an email sent to
+ FORUM MailMan group G.IVM20174MONITOR@FORUM.DOMAIN.EXT. Members of this mail
+ group will monitor messages received from facilities and coordinate 
+ with ES about retransmission of corrected SSN data from ES via an HL7 
+ (ORU-Z10) message. The members of the mail group consist of developers,
+ Software Quality Assurance (SQA), and Health Product Support.  A copy of
+ the mail message will be sent to the installer of patch IVM*2.0*174. If
+ there are still entries in the global, this task will automatically be
+ resubmitted to run in the background in 2 days.
+  
+ Once all dependent records identified in the ^XTMP("DG53970P") global
+ have had the SOCIAL SECURITY NUMBER (#.09) field of the INCOME PERSON file
+ (#408.13) successfully updated, the background job will no longer be 
+ automatically queued to check the global and send a status message.
+  
+  
+ Test Sites:
+ -----------
+ * Erie VA Medical Center
+ * Lebanon, PA (Lebanon VA Medical Center)
+ * VA Western New York Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Patches for this installation are combined in the following Host File for 
+ distribution: IVM_20_P174.KID.
+  
+ The Host File was created to simplify installation at Veterans Health 
+ Administration (VHA) facilities. This file can be obtained from one of 
+ the anonymous Secure File Transfer Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ---------                           --------           ----------------
+ IVM_20_P174.KID                     IVM*2.0*174        ASCII
+                                     EAS*1.0*172
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                           File Name                    SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                   IVM_2_P174_RN.PDF            (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install process will run routine IVM2174P. This routine queues
+ a background job.
+  
+ Upon completion of the job, a MailMan message is sent to FORUM MailMan
+ group G.IVM20174MONITOR@FORUM.DOMAIN.EXT and the Patch installer.
+  
+ See an example of the message in the 'Listing of Updates' section above.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, however we suggest 
+ it be installed after business hours. This patch should take less than 5
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Download IVM_20_P174.KID into your local directory.
+  
+ 2. From the Kernel Installation and Distribution System (KIDS) Menu, 
+    select the Installation menu. 
+  
+ 3. Use Load a Distribution option. You may need to prepend a directory 
+    name. When prompted for "Enter a Host File: ", respond with
+    IVM_20_P174.KID
+  
+     Example: USER$:[ABC]IVM_20_P174.KID
+  
+ 4. Use Global Output Function to backup the ^XTMP by running
+    the command below (be sure to enter "V" for the parameters). You will 
+    need to specify a local directory and file name for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]ivm_20_174_xtmp_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^XTMP("DG53970P" -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility, GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/ivm_20_174_xtmp_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^XTMP("DG53970P" -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ where "xxx" is the site designation, then follow the 
+ instructions above for entering the globals to save.
+  
+ 5. From the installation menu, you may elect to use the following 
+    options. When prompted for the INSTALL NAME enter IVM*2.0*174.
+  
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 6.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' respond NO.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ IMPORTANT NOTE: Do not delete the post-installation routine IVM2174P
+ from your system.
+  
+  
+ Back-Out Plan:
+ --------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ This patch is part of a dependent/spouse SSN data cleanup effort that was
+ initiated with patch DG*5.3*970. Any issues would need to be evaluated
+ to determine if: a back-out of the software is appropriate; a new patch
+ is needed; or if the data can be manually corrected.    
+  
+ During installation, if the option to back up routines was run as 
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a 
+ backup of other VistA software components, such as data dictionaries, 
+ templates, options, protocols, etcetera.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVM2174F
+    Before:       n/a   After: B29322365  **174**
+Routine Name: IVM2174P
+    Before:       n/a   After: B19273328  **174**
+Routine Name: IVMCM2
+    Before: B31637468   After: B32817951  **17,105,115,139,121,174**
+Routine Name: IVMCMC
+    Before: B37984998   After: B43788420  **17,34,49,51,90,115,174**
+ 
+Routine list of preceding patches: 121
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2018
+Completed By:                               Date Completed: JAN 14, 2019
+Released By :                               Date Released : JAN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

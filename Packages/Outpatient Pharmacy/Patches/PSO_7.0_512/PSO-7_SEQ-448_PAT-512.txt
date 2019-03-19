@@ -1,0 +1,279 @@
+
+=============================================================================
+Run Date: JAN 15, 2019                     Designation: PSO*7*512
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #448                      Status: Released
+                  Compliance Date: FEB 15, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*408   <<= must be installed BEFORE `PSO*7*512'
+                    (v)PSO*7*482   <<= must be installed BEFORE `PSO*7*512'
+
+Subject: MCCF EDI TAS EPHARMACY BUILDS 5 & 6
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*512
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*24
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*617
+    PHARMACY DATA MANAGEMENT V. 1.0                       PSS*1.0*214
+  
+ All four of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSS BUNDLE 12.0
+   KIDS Host File name: BPS_1_24_PSO_IB_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. In the activity log section of View Prescription, the ECME Log Label
+      "BILLING QUANTITY submitted" is being replaced with "QUANTITY
+      SUBMITTED ON CLAIM".
+  
+   2. The help text on ePharmacy Site Parameters [PSO ePHARM SITE
+      PARAMETERS], EA Edit All Parameters and ET Edit Transfer Reject Code
+      is being modified to refer to both CMOP and locally filled
+      prescriptions.
+  
+   3. The option Ignored Rejects Report [PSO IGNORED REJECTS REPORT] is
+      being modified to display the reject code(s) and Insurance name for
+      all ignored rejects.
+  
+   4. The Third Party Payer Rejects - View/Process option [PSO REJECTS
+      VIEW/PROCESS] is being modified to allow the user to search for
+      prescriptions using the ECME Number.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ PSO ACTIVITY LOGS                                         Modified
+ PSO DISPLAY DRUG ALLERGIES                                Modified
+ PSO DRUG RESTR/GUIDE INFO                                 Modified
+ PSO EDIT CLAIM SUBMITTED 1                                  New
+ PSO EDIT CLAIM SUBMITTED 2                                  New
+ PSO ERX OP PRINT                                          Modified
+ PSO HIDDEN ACTIONS                                        Modified
+ PSO HIDDEN ACTIONS #6                                       New
+ PSO HOLD                                                  Modified
+ PSO LM BACKDOOR COPY                                      Modified
+ PSO LM BACKDOOR MARK AS TITRATION                         Modified
+ PSO LM BACKDOOR PRTCL USRSCR RESUBMIT                     Modified
+ PSO LM BACKDOOR PRTCL USRSCR REVERSE                      Modified
+ PSO LM BACKDOOR PRTCL USRSCR VERIFY                       Modified
+ PSO LM BACKDOOR TITRATION RX REFILL                       Modified
+ PSO LM HIDDEN OTHER #2                                    Modified
+ PSO LM INPATIENT MEDICATION PROFILE                       Modified
+ PSO LM INTERVENTION MENU                                  Modified
+ PSO PATIENT INFORMATION                                   Modified
+ PSO PULL ONE RX FROM SUSPENSE                             Modified
+ PSO REJECT DISCONTINUE                                    Modified
+ PSO REJECT DISPLAY ADD COMMENT                            Modified
+ PSO REJECT DISPLAY ADDITIONAL INFO                        Modified
+ PSO REJECT DISPLAY CLARIFICATION CODE                     Modified
+ PSO REJECT DISPLAY HIDDEN MENU                            Modified
+ PSO REJECT DISPLAY OUTSIDE CALL                           Modified
+ PSO REJECT DISPLAY PRIOR AUTHORIZATION                    Modified
+ PSO REJECT DISPLAY RX EDIT                                Modified
+ PSO REJECT DISPLAY SMA                                    Modified
+ PSO REJECT SUSPENSE DT CALC                               Modified
+ PSO REJECT TRICARE HIDDEN MENU                            Modified
+ PSO REJECT VIEW ECME RX                                   Modified
+ PSO REPRINT                                               Modified
+ PSO UNHOLD                                                Modified
+ PSO VERIFY                                                Modified
+ VALM DOWN A LINE                                          Modified
+ VALM FIRST SCREEN                                         Modified
+ VALM GOTO PAGE                                            Modified
+ VALM LAST SCREEN                                          Modified
+ VALM LEFT                                                 Modified
+ VALM NEXT SCREEN                                          Modified
+ VALM PREVIOUS SCREEN                                      Modified
+ VALM PRINT LIST                                           Modified
+ VALM PRINT SCREEN                                         Modified
+ VALM QUIT                                                 Modified
+ VALM REFRESH                                              Modified
+ VALM RIGHT                                                Modified
+ VALM SEARCH LIST                                          Modified
+ VALM TURN ON/OFF MENUS                                    Modified
+ VALM UP ONE LINE                                          Modified
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+                                                           New/Modified/
+ List Templates                 File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ PSO REJECT DISPLAY - RESOLVED  N/A                        Modified
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ User Manual - Manager - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P512_MAN_UM.PDF      Binary
+ User Manual - Pharmacist - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P512_PHAR_UM.PDF     Binary
+ *ECME Deploy Install Rollback Guide (BPS*1*24)
+                                     BPS_1_0_P24_IG.PDF           Binary
+  
+ *A single Install Rollback Guide will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*24.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 42
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBPSR1
+    Before: B41182836   After: B71253939  **260,448,512**
+Routine Name: PSOBPSSL
+    Before: B94150549   After: B94336071  **421,427,482,512**
+Routine Name: PSOBPSU1
+    Before:B114078580   After:B116456797  **148,260,281,287,303,289,290,
+                                           358,359,385,403,427,448,482,
+                                           512**
+Routine Name: PSOBPSU2
+    Before: B63271095   After: B63200300  **260,287,289,341,290,358,359,
+                                           385,421,459,482,512**
+Routine Name: PSOBPSU3
+    Before: B17460470   After: B98947553  **448,482,512**
+Routine Name: PSOBPSUT
+    Before: B90264639   After: B91597468  **148,247,260,281,287,289,358,
+                                           385,403,408,512**
+Routine Name: PSOREJP1
+    Before:B202538328   After:B196908863  **148,247,260,281,287,289,290,
+                                           358,359,385,403,421,427,448,
+                                           478,482,512**
+Routine Name: PSOREJP2
+    Before:B199801855   After:B228260947  **148,247,260,287,289,358,385,
+                                           403,421,427,448,482,512**
+Routine Name: PSOREJP3
+    Before:B262665295   After:B272735549  **260,287,289,290,358,359,385,
+                                           403,421,427,448,482,512**
+Routine Name: PSOREJP5
+    Before: B33571893   After: B57088844  **359,421,512**
+Routine Name: PSORXED
+    Before: B83606769   After:B106523584  **2,16,21,26,56,71,125,201,246,
+                                           289,298,366,385,403,421,482,
+                                           512**
+ 
+Routine list of preceding patches: 408, 482
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2018
+Completed By:                               Date Completed: JAN 15, 2019
+Released By :                               Date Released : JAN 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

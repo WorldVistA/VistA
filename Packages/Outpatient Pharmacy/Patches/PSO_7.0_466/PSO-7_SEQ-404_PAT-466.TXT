@@ -1,0 +1,209 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 09/02/16 at 14:45
+=============================================================================
+Run Date: AUG 23, 2017                     Designation: PSO*7*466
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #404                      Status: Released
+                  Compliance Date: SEP 22, 2017
+=============================================================================
+
+Associated patches: (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*466'
+                    (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*466'
+
+Subject: ALLERGY CHECK ISSUES, PRINT FROM SUSPENSE LABEL PRINTING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues: 
+  
+ 1. When invoking the CK (Check Interaction) action in the Outpatient
+    Pharmacy Medication Profile screen, Non-VA and pending orders which do
+    not contain dispense drugs do not receive allergy checks.
+  
+ 2. When invoking the CK (Check Interaction) action in the Outpatient
+    Pharmacy Medication Profile screen, the business rule for performing
+    allergy checks on discontinued orders is not being followed.
+  
+ 3. The option Print from Suspense File [PSO PNDLBL] might erroneously skip
+    printing some labels for orders which previously had labels printed but
+    were put back on suspense and do need new labels.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ PSPO #2896 - When invoking the CK (Check Interaction) action in the 
+ Outpatient Pharmacy Medication Profile screen, Non-VA and pending orders
+ which do not contain dispense drugs do not receive allergy checks.
+  
+ PSPO #3178 - When invoking the CK (Check Interaction) action in the 
+ Outpatient Pharmacy Medication Profile screen, the business rule for
+ performing allergy checks on discontinued orders is not being followed.
+  
+ Test Sites:
+ ===========
+ Milwaukee VAMC
+ Indiana HCS
+  
+ Associated CA SDM Ticket(s):
+ ============================
+ 1. I9856734FY16 - CK action Allergy checks on Non-VA and Pending Orders
+  
+ 2. I9857987FY16 - CK action Allergy checks on Discontinued Orders
+  
+ 3. R8126525FY16 - Print from Suspense File Option Label Printing Issue
+  
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================
+  
+ 1. I9856734FY16 - CK action Allergy checks on Non-VA and Pending Orders
+   
+    PSPO #2896
+  
+    Problem:
+    --------
+    
+    When invoking the CK (Check Interactions) hidden action in the 
+    Outpatient Pharmacy Medication Profile screen, allergy checks will not
+    occur for non-VA or pending orders that only have an orderable item
+    assigned. This situation can occur if a free text dosage is specified 
+    during the ordering process.
+  
+    Resolution:
+    -----------
+  
+    Modify routine PSOUTL to perform allergy checks against non-VA and 
+    pending orders which only contain an orderable item and no dispense
+    drug.  
+    
+    Routine: PSOUTL
+  
+ 2. I9857987FY16 - CK action Allergy checks on Discontinued OrdersCK 
+                   action Allergy checks on Discontinued Orders
+  
+    
+    PSPO #3178
+  
+    Problem:
+    --------
+  
+    When invoking the CK (Check Interactions) hidden action in the 
+    Outpatient Pharmacy Medication Profile screen, all discontinued orders
+    on the patient's profile receive allergy checks. However, the VA
+    business rule to only check discontinued orders if the "Cancel Date +
+    Days Supply + 7 is equal to or greater than today's date" is not being
+    followed.
+  
+    Resolution:
+    ----------
+  
+    Modify routine PSOUTL to follow the VA business rule for allergy 
+    checking on discontinued orders when invoking the CK action.
+    
+    Routine: PSOUTL
+  
+ 3. R8126525FY16 - Print from Suspense File Option Label Printing Issue
+  
+    Problem:
+    --------
+  
+    If the PRESCRIPTION (#52) file's label log shows that a label has been 
+    printed for a prescription at any time in the past, option "Print from 
+    Suspense File" will delete the prescription from the RX SUSPENSE 
+    (#52.5) file without printing a label.  There is no notification to the
+    user other than an entry in the activity log.  However, the
+    prescription may have been newly put on suspense and requires an
+    additional label since the first one may have been printed by mistake.
+    
+    Resolution:
+    -----------
+  
+    Modified the Print from Suspense File [PSO PNDLBL] option and routine
+    PSOSULBL to print all labels which are on suspense and display under
+    option Log of Suspended Rx's by Day [PSO PNDLOG] as not having been
+    printed since being put on suspense. The logic of checking the PRINTED
+    (#2) field in the RX SUSPENSE (#52.5) file continues to be performed by
+    this patch.  This field resets to "not printed" when a prescription is
+    put back on suspense and is set to "printed" when the label prints.
+  
+    The logic which also checked the label log in the PRESCRIPTION (#52)
+    file has been removed from option Print from Suspense File [PSO PNDLBL]
+    option. This logic was introduced with patch PSO*7.0*427 and remains in
+    the other functionality added by PSO*7.0*427.
+  
+     Routine: PSOSULBL
+  
+  
+ INSTALLATION INSTRUCTIONS
+ ========================== 
+  
+ It is not necessary to disable any options.  Outpatient Pharmacy users 
+ should not be on the system when this patch is installed.  It should take 
+ less than 5 minutes to install this patch.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+   3. From this menu, you may select to use the following options: 
+      (when prompted for INSTALL NAME, enter PSO*7.0*466)
+      a.  Verify Checksums in Transport Global - This option will 
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+      b.  Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      c.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package 
+      PSO*7.0*466.
+  
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOSULBL
+    Before: B99891854   After:B101436426  **139,173,174,148,200,260,264,
+                                           287,289,290,354,421,370,427,
+                                           466**
+Routine Name: PSOUTL
+    Before:B147729082   After:B169155979  **1,21,126,174,218,259,324,390,
+                                           313,411,466**
+ 
+Routine list of preceding patches: 411, 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 19, 2016
+Completed By:                               Date Completed: AUG 21, 2017
+Released By :                               Date Released : AUG 23, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

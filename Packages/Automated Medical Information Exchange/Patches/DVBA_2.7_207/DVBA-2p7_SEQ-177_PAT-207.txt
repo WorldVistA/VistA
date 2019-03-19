@@ -1,0 +1,215 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/31/18 at 09:35
+=============================================================================
+Run Date: NOV 15, 2018                     Designation: DVBA*2.7*207
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #177                    Status: Released
+                  Compliance Date: DEC 15, 2018
+=============================================================================
+
+
+Subject: CAPRI LCM URL CHANGE REQUEST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+  Patch DVBA*2.7*207 will address 1 issue:
+  
+ 1. Change Compensation and Pension Record Interchange (CAPRI) to call new
+    Legacy Content Manager (LCM) (formerly called Virtual VA) Uniform 
+    Resource Locators (URLs).
+  
+   
+       
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1497901 - Change CAPRI to call new LCM (formerly called Virtual VA) URLs
+  
+    Problem:
+    --------
+    Back in April 2018, LCM upgraded to new WebLogic servers which resulted
+    in them having new hostnames.  As a workaround to avoid impacting our
+    integration partners using LCM's web services, aliases were created in
+    the Domain Name System (DNS), pointing old hostnames to the new
+    servers.  The workaround solution is not intended to be a long term
+    solution but rather a solution to allow LCM the flexibility to work with
+    integration partners to change to new URLs. Since CAPRI is one of LCM's
+    integration partners, LCM is requesting CAPRI to make changes to call
+    new LCM web services URLs.  Below are the new LCM URLs:
+  
+ For Production-
+ https://vbaphiprdwlsappa.vba.domain.ext:7002/VABFI/services/vva?wsdl
+ For Test- 
+ https://vbaphitstwlsappa.vba.domain.ext:7002/VABFI/services/vva
+  
+    Resolution:
+    -----------
+    Post-install routine DVBA207P will update the PARAMETERS (#8989.5) file
+    to use the new LCM URLs. The PARAMETER (#.02) field in the
+    PARAMETERS (#8989.5) file to update are DVBAB CAPRI VIRTUALVA PROD URL
+    and DVBAB CAPRI VIRTUALVA TEST URL.
+  
+ TEST SITES:
+ -----------
+ Coatesville VA Medical Center
+ West Palm Beach VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DVBA*2.7*207:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//" respond NO.
+  
+   ** 7. During install, verify that all entries were added successfully.
+         If an error is displayed, please create a ticket.  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine DVBA207P from your production system after the 
+ patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------
+ In a VistA session, enter FileMan and select the ENTER OR EDIT FILE ENTRIES
+ option.
+  
+ VA FileMan 22.2
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ Input to what File: PARAMETERS// 8989.5  PARAMETERS  (168401 entries)
+ EDIT WHICH FIELD: ALL// VALUE  
+  
+  
+ At the PARAMETERS ENTITY: prompt, select the entries for DVBAB CAPRI VIRTUALVA
+ PROD URL and DVBAB CAPRI VIRTUALVA TEST URL.
+ Replace the VALUE field with the original URLs:
+  
+ DVBAB CAPRI VIRTUALVA PROD URL:
+ https://vbaphi8popp.vba.domain.ext:7002/VABFI/services/vva
+  
+ DVBAB CAPRI VIRTUALVA TEST URL:
+ https://vbaphi5topp.vba.domain.ext:7002/VABFI/services/vva
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA207P
+    Before:       n/a   After:  B3283656  **207**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: NOV 14, 2018
+Released By :                               Date Released : NOV 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

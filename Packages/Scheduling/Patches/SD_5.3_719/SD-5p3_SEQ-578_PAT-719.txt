@@ -1,0 +1,213 @@
+$TXT Created by                CHY0018.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 11/15/18 at 13:35
+=============================================================================
+Run Date: NOV 30, 2018                     Designation: SD*5.3*719
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #578                    Status: Released
+                  Compliance Date: DEC 18, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*682  <<= must be installed BEFORE `SD*5.3*719'
+
+Subject: FIX TO PATCH SD*5.3*682 ERROR WHEN PRINTING CANCELLATION LETTERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ SD*5.3*719 addresses an issue introduced with the installation of patch 
+ SD*5.3*682.This patch fixes a bug discovered after install of patch 
+ SD*5.3*682 where users are kicked out of VistA after printing if "Cancel
+ By Patient" or "Cancel by Clinic" is selected under the Cancel Appointment
+ option.  This patch modifies the Cancel Appointment option which resolves
+ the issue.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                                    Type   New/Modified/Deleted
+ -----------                                    ----   --------------------
+ Cancel Appointment [SD CANCEL APPOINTMENT]     Routine            Modified
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs): N/A
+  
+ Patient Safety Issues (PSIs): N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2929891: User called Getting a Error On Vista causing the Application 
+ to Close Happens Every time User tries to Cancel a Patients Appointment.
+  
+ Problem:
+ --------
+ When using the 'Cancel by Patient' or 'Cancel by Clinic' options in the
+ Appointment Management Menu, users are kicked out of VistA after printing
+ the cancellation letter.
+  
+ Resolution:
+ -----------
+ The Vista routine SDCNP1 is edited to prevent users from being kicked 
+ out of VistA.
+  
+ Test Sites:                                                 
+ -----------
+ Minneapolis VAMC
+ Pittsburgh VAMC
+ St. Cloud VAMC 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A 
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+   
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SD*5.3*719):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', respond YES.
+  
+     Option Name                 
+     -----------                   
+     Cancel Appointment [SD CANCEL APPOINTMENT]
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+  
+ In the event of a catastrophic failure, the Facility Chief Information
+ Officer may make the decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines and
+ the routines included matches the pre-patch checksum from the patch
+ description.
+  
+ This patch only contains routine updates. To back-out the patch please
+ restore the backup message from the patch installation process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCNP1
+    Before: B33715154   After: B33773499  **398,467,478,554,597,682,719**
+ 
+Routine list of preceding patches: 682
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2018
+Completed By:                               Date Completed: NOV 30, 2018
+Released By :                               Date Released : NOV 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

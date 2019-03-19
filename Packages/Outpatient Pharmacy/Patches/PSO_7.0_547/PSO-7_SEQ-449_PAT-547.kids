@@ -1,0 +1,841 @@
+Released PSO*7*547 SEQ #449
+Extracted from mail message
+**KIDS**:PSO*7.0*547^
+
+**INSTALL NAME**
+PSO*7.0*547
+"BLD",10973,0)
+PSO*7.0*547^OUTPATIENT PHARMACY^0^3181114^y
+"BLD",10973,1,0)
+^^65^65^3181114^
+"BLD",10973,1,1,0)
+This patch will resolve the following issue.
+"BLD",10973,1,2,0)
+  
+"BLD",10973,1,3,0)
+INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+"BLD",10973,1,4,0)
+             prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+"BLD",10973,1,5,0)
+INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+"BLD",10973,1,6,0)
+             prescription processing
+"BLD",10973,1,7,0)
+ 
+"BLD",10973,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10973,1,9,0)
+--------------------------------------------
+"BLD",10973,1,10,0)
+INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+"BLD",10973,1,11,0)
+             prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+"BLD",10973,1,12,0)
+          
+"BLD",10973,1,13,0)
+Problem: 
+"BLD",10973,1,14,0)
+--------
+"BLD",10973,1,15,0)
+Outpatient pharmacists at Louis Stokes Cleveland VA Medical Center reported a
+"BLD",10973,1,16,0)
+glitch where a suspended Rx is edited and re-suspended appropriately but they
+"BLD",10973,1,17,0)
+are not being sent to CMOP. This problem happens when a new CMOP prescription
+"BLD",10973,1,18,0)
+is entered/finished and immediately after (without leaving the patient's
+"BLD",10973,1,19,0)
+profile) the user requests a partial fill on the same prescription and
+"BLD",10973,1,20,0)
+performs and edit on any field (e.g., QTY, FILL DATE, DAYS SUPPLY, etc.).
+"BLD",10973,1,21,0)
+These steps wrongly caused the prescription to be removed from the CMOP
+"BLD",10973,1,22,0)
+Suspense queue and placed on the Local Suspense queue.
+"BLD",10973,1,23,0)
+ 
+"BLD",10973,1,24,0)
+Resolution:
+"BLD",10973,1,25,0)
+-----------
+"BLD",10973,1,26,0)
+Outpatient Pharmacy will now check whether a partial was entered for a CMOP
+"BLD",10973,1,27,0)
+suspended prescription and it will not move it from the CMOP Suspense queue
+"BLD",10973,1,28,0)
+into the Local Suspense queue if that's the case.
+"BLD",10973,1,29,0)
+   
+"BLD",10973,1,30,0)
+Technical Resolution:
+"BLD",10973,1,31,0)
+---------------------
+"BLD",10973,1,32,0)
+Changed the line UNSUS+1^PSOCMOPC to check whether a partial was placed by
+"BLD",10973,1,33,0)
+checking the variable RXPR and PSOFROM and it will not move the CMOP
+"BLD",10973,1,34,0)
+Suspended prescription into the Local Suspense queue.
+"BLD",10973,1,35,0)
+ 
+"BLD",10973,1,36,0)
+INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+"BLD",10973,1,37,0)
+             prescription processing
+"BLD",10973,1,38,0)
+          
+"BLD",10973,1,39,0)
+Problem: 
+"BLD",10973,1,40,0)
+--------
+"BLD",10973,1,41,0)
+Outpatient pharmacists at St. Cloud VA Health Care System reported a glitch
+"BLD",10973,1,42,0)
+that started happening after patch PSO*7*514 was installed. They noticed that
+"BLD",10973,1,43,0)
+numerous male patients were showing up in outpatient pharmacy prescription
+"BLD",10973,1,44,0)
+processing as having SC conditions for ovarian disease or gynecological
+"BLD",10973,1,45,0)
+issues. When checking back to the patient information screen in VISTA
+"BLD",10973,1,46,0)
+pharmacy prescription processing or CPRS, the pharmacists discovered in many
+"BLD",10973,1,47,0)
+cases the patient was only SC for tinnitus, yet a big list of other 
+"BLD",10973,1,48,0)
+disabilities were listed at the very end of pharmacy prescription processing
+"BLD",10973,1,49,0)
+when it lists the patient's SC conditions, often with the gynecological 
+"BLD",10973,1,50,0)
+condition. After investigating the issue it was discovered PSO*7*514 changes
+"BLD",10973,1,51,0)
+did not clear the list of disabilities from the previous patient worked on
+"BLD",10973,1,52,0)
+by the user and carried them over to the subsequent patient worked on the
+"BLD",10973,1,53,0)
+same session before exiting the Patient Prescription Processing [PSO LM 
+"BLD",10973,1,54,0)
+BACKDOOR ORDERS] option.
+"BLD",10973,1,55,0)
+ 
+"BLD",10973,1,56,0)
+Resolution:
+"BLD",10973,1,57,0)
+-----------
+"BLD",10973,1,58,0)
+The Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option was 
+"BLD",10973,1,59,0)
+changed to properly reset the list of disabilities every time the user 
+"BLD",10973,1,60,0)
+selects a new patient.
+"BLD",10973,1,61,0)
+    
+"BLD",10973,1,62,0)
+Technical Resolution:
+"BLD",10973,1,63,0)
+---------------------
+"BLD",10973,1,64,0)
+Added the command K PSODISAR at CHKPAG+1^PSOMLLD2 in order to reset the
+"BLD",10973,1,65,0)
+list of disabilities before retrieving it from the PATIENT file (#2).
+"BLD",10973,4,0)
+^9.64PA^^
+"BLD",10973,6.3)
+1
+"BLD",10973,"ABPKG")
+n
+"BLD",10973,"KRN",0)
+^9.67PA^1.61^23
+"BLD",10973,"KRN",.4,0)
+.4
+"BLD",10973,"KRN",.401,0)
+.401
+"BLD",10973,"KRN",.402,0)
+.402
+"BLD",10973,"KRN",.403,0)
+.403
+"BLD",10973,"KRN",.5,0)
+.5
+"BLD",10973,"KRN",.84,0)
+.84
+"BLD",10973,"KRN",1.6,0)
+1.6
+"BLD",10973,"KRN",1.61,0)
+1.61
+"BLD",10973,"KRN",1.62,0)
+1.62
+"BLD",10973,"KRN",3.6,0)
+3.6
+"BLD",10973,"KRN",3.8,0)
+3.8
+"BLD",10973,"KRN",9.2,0)
+9.2
+"BLD",10973,"KRN",9.2,"NM",0)
+^9.68A^^
+"BLD",10973,"KRN",9.8,0)
+9.8
+"BLD",10973,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10973,"KRN",9.8,"NM",1,0)
+PSOMLLD2^^0^B38288541
+"BLD",10973,"KRN",9.8,"NM",2,0)
+PSOCMOPC^^0^B9688413
+"BLD",10973,"KRN",9.8,"NM","B","PSOCMOPC",2)
+
+"BLD",10973,"KRN",9.8,"NM","B","PSOMLLD2",1)
+
+"BLD",10973,"KRN",19,0)
+19
+"BLD",10973,"KRN",19.1,0)
+19.1
+"BLD",10973,"KRN",101,0)
+101
+"BLD",10973,"KRN",409.61,0)
+409.61
+"BLD",10973,"KRN",771,0)
+771
+"BLD",10973,"KRN",779.2,0)
+779.2
+"BLD",10973,"KRN",870,0)
+870
+"BLD",10973,"KRN",8989.51,0)
+8989.51
+"BLD",10973,"KRN",8989.52,0)
+8989.52
+"BLD",10973,"KRN",8994,0)
+8994
+"BLD",10973,"KRN","B",.4,.4)
+
+"BLD",10973,"KRN","B",.401,.401)
+
+"BLD",10973,"KRN","B",.402,.402)
+
+"BLD",10973,"KRN","B",.403,.403)
+
+"BLD",10973,"KRN","B",.5,.5)
+
+"BLD",10973,"KRN","B",.84,.84)
+
+"BLD",10973,"KRN","B",1.6,1.6)
+
+"BLD",10973,"KRN","B",1.61,1.61)
+
+"BLD",10973,"KRN","B",1.62,1.62)
+
+"BLD",10973,"KRN","B",3.6,3.6)
+
+"BLD",10973,"KRN","B",3.8,3.8)
+
+"BLD",10973,"KRN","B",9.2,9.2)
+
+"BLD",10973,"KRN","B",9.8,9.8)
+
+"BLD",10973,"KRN","B",19,19)
+
+"BLD",10973,"KRN","B",19.1,19.1)
+
+"BLD",10973,"KRN","B",101,101)
+
+"BLD",10973,"KRN","B",409.61,409.61)
+
+"BLD",10973,"KRN","B",771,771)
+
+"BLD",10973,"KRN","B",779.2,779.2)
+
+"BLD",10973,"KRN","B",870,870)
+
+"BLD",10973,"KRN","B",8989.51,8989.51)
+
+"BLD",10973,"KRN","B",8989.52,8989.52)
+
+"BLD",10973,"KRN","B",8994,8994)
+
+"BLD",10973,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10973,"QUES",0)
+^9.62^^
+"BLD",10973,"REQB",0)
+^9.611^2^2
+"BLD",10973,"REQB",1,0)
+PSO*7.0*514^2
+"BLD",10973,"REQB",2,0)
+PSO*7.0*43^2
+"BLD",10973,"REQB","B","PSO*7.0*43",2)
+
+"BLD",10973,"REQB","B","PSO*7.0*514",1)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+547^3181114
+"PKG",170,22,1,"PAH",1,1,0)
+^^65^65^3181114
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",170,22,1,"PAH",1,1,2,0)
+  
+"PKG",170,22,1,"PAH",1,1,3,0)
+INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+"PKG",170,22,1,"PAH",1,1,4,0)
+             prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+"PKG",170,22,1,"PAH",1,1,5,0)
+INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+"PKG",170,22,1,"PAH",1,1,6,0)
+             prescription processing
+"PKG",170,22,1,"PAH",1,1,7,0)
+ 
+"PKG",170,22,1,"PAH",1,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",170,22,1,"PAH",1,1,9,0)
+--------------------------------------------
+"PKG",170,22,1,"PAH",1,1,10,0)
+INC2842893 - Removed from CMOP Suspense, returned to OP Suspense - outpatient
+"PKG",170,22,1,"PAH",1,1,11,0)
+             prescriptions not suspending to CMOP after PSO*7*482 SEQ #435
+"PKG",170,22,1,"PAH",1,1,12,0)
+          
+"PKG",170,22,1,"PAH",1,1,13,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,14,0)
+--------
+"PKG",170,22,1,"PAH",1,1,15,0)
+Outpatient pharmacists at Louis Stokes Cleveland VA Medical Center reported a
+"PKG",170,22,1,"PAH",1,1,16,0)
+glitch where a suspended Rx is edited and re-suspended appropriately but they
+"PKG",170,22,1,"PAH",1,1,17,0)
+are not being sent to CMOP. This problem happens when a new CMOP prescription
+"PKG",170,22,1,"PAH",1,1,18,0)
+is entered/finished and immediately after (without leaving the patient's
+"PKG",170,22,1,"PAH",1,1,19,0)
+profile) the user requests a partial fill on the same prescription and
+"PKG",170,22,1,"PAH",1,1,20,0)
+performs and edit on any field (e.g., QTY, FILL DATE, DAYS SUPPLY, etc.).
+"PKG",170,22,1,"PAH",1,1,21,0)
+These steps wrongly caused the prescription to be removed from the CMOP
+"PKG",170,22,1,"PAH",1,1,22,0)
+Suspense queue and placed on the Local Suspense queue.
+"PKG",170,22,1,"PAH",1,1,23,0)
+ 
+"PKG",170,22,1,"PAH",1,1,24,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,25,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,26,0)
+Outpatient Pharmacy will now check whether a partial was entered for a CMOP
+"PKG",170,22,1,"PAH",1,1,27,0)
+suspended prescription and it will not move it from the CMOP Suspense queue
+"PKG",170,22,1,"PAH",1,1,28,0)
+into the Local Suspense queue if that's the case.
+"PKG",170,22,1,"PAH",1,1,29,0)
+   
+"PKG",170,22,1,"PAH",1,1,30,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,31,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,32,0)
+Changed the line UNSUS+1^PSOCMOPC to check whether a partial was placed by
+"PKG",170,22,1,"PAH",1,1,33,0)
+checking the variable RXPR and PSOFROM and it will not move the CMOP
+"PKG",170,22,1,"PAH",1,1,34,0)
+Suspended prescription into the Local Suspense queue.
+"PKG",170,22,1,"PAH",1,1,35,0)
+ 
+"PKG",170,22,1,"PAH",1,1,36,0)
+INC2882730 - Erroneous SC conditions are being displayed during pharmacy
+"PKG",170,22,1,"PAH",1,1,37,0)
+             prescription processing
+"PKG",170,22,1,"PAH",1,1,38,0)
+          
+"PKG",170,22,1,"PAH",1,1,39,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,40,0)
+--------
+"PKG",170,22,1,"PAH",1,1,41,0)
+Outpatient pharmacists at St. Cloud VA Health Care System reported a glitch
+"PKG",170,22,1,"PAH",1,1,42,0)
+that started happening after patch PSO*7*514 was installed. They noticed that
+"PKG",170,22,1,"PAH",1,1,43,0)
+numerous male patients were showing up in outpatient pharmacy prescription
+"PKG",170,22,1,"PAH",1,1,44,0)
+processing as having SC conditions for ovarian disease or gynecological
+"PKG",170,22,1,"PAH",1,1,45,0)
+issues. When checking back to the patient information screen in VISTA
+"PKG",170,22,1,"PAH",1,1,46,0)
+pharmacy prescription processing or CPRS, the pharmacists discovered in many
+"PKG",170,22,1,"PAH",1,1,47,0)
+cases the patient was only SC for tinnitus, yet a big list of other 
+"PKG",170,22,1,"PAH",1,1,48,0)
+disabilities were listed at the very end of pharmacy prescription processing
+"PKG",170,22,1,"PAH",1,1,49,0)
+when it lists the patient's SC conditions, often with the gynecological 
+"PKG",170,22,1,"PAH",1,1,50,0)
+condition. After investigating the issue it was discovered PSO*7*514 changes
+"PKG",170,22,1,"PAH",1,1,51,0)
+did not clear the list of disabilities from the previous patient worked on
+"PKG",170,22,1,"PAH",1,1,52,0)
+by the user and carried them over to the subsequent patient worked on the
+"PKG",170,22,1,"PAH",1,1,53,0)
+same session before exiting the Patient Prescription Processing [PSO LM 
+"PKG",170,22,1,"PAH",1,1,54,0)
+BACKDOOR ORDERS] option.
+"PKG",170,22,1,"PAH",1,1,55,0)
+ 
+"PKG",170,22,1,"PAH",1,1,56,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,57,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,58,0)
+The Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option was 
+"PKG",170,22,1,"PAH",1,1,59,0)
+changed to properly reset the list of disabilities every time the user 
+"PKG",170,22,1,"PAH",1,1,60,0)
+selects a new patient.
+"PKG",170,22,1,"PAH",1,1,61,0)
+    
+"PKG",170,22,1,"PAH",1,1,62,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,63,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,64,0)
+Added the command K PSODISAR at CHKPAG+1^PSOMLLD2 in order to reset the
+"PKG",170,22,1,"PAH",1,1,65,0)
+list of disabilities before retrieving it from the PATIENT file (#2).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSOCMOPC")
+0^2^B9688413^B9485196
+"RTN","PSOCMOPC",1,0)
+PSOCMOPC ;BIR/HTW-Utility for CMOP/OP Edit ;8/30/96
+"RTN","PSOCMOPC",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**2,30,43,547**;DEC 1997;Build 1
+"RTN","PSOCMOPC",3,0)
+ ;External reference to ^PS(55 supported by DBIA 2228
+"RTN","PSOCMOPC",4,0)
+ ;External reference to ^PSDRUG supported by DBIA 221
+"RTN","PSOCMOPC",5,0)
+EN(XDA) N A,A1,CMOP,PSOA,PSOB,PSOCK,T,T1,DA
+"RTN","PSOCMOPC",6,0)
+ ;
+"RTN","PSOCMOPC",7,0)
+ S DA=XDA
+"RTN","PSOCMOPC",8,0)
+ D ^PSOCMOPA
+"RTN","PSOCMOPC",9,0)
+ ;                Q:If not in suspense file, set status to 0 - active
+"RTN","PSOCMOPC",10,0)
+ I '$G(CMOP("52.5")) D  Q
+"RTN","PSOCMOPC",11,0)
+ . S:+$P($G(PSOLST(ORN)),"^",2) ^PSRX($P(PSOLST(ORN),"^",2),"STA")=0
+"RTN","PSOCMOPC",12,0)
+ ;
+"RTN","PSOCMOPC",13,0)
+ D CHECK
+"RTN","PSOCMOPC",14,0)
+ I $G(CMOP("S"))']"",($G(CMOP)) D ACT D   G QUIT
+"RTN","PSOCMOPC",15,0)
+ .K ^PS(52.5,"AC",$P(^PSRX(XDA,0),"^",2),$P(^PS(52.5,CMOP("52.5"),0),"^",2),CMOP("52.5"))
+"RTN","PSOCMOPC",16,0)
+ .S DIE="^PS(52.5,",DR="3////Q",DA=CMOP("52.5") D ^DIE K DIE
+"RTN","PSOCMOPC",17,0)
+ .S T=$P(^PSRX(XDA,3),"^")
+"RTN","PSOCMOPC",18,0)
+ .S T1=$E(T,4,5)_"-"_$E(T,6,7)_"-"_$E(T,2,3)
+"RTN","PSOCMOPC",19,0)
+ .S $P(^PSRX(XDA,"A",0),"^",3)=A,$P(^PSRX(XDA,"A",0),"^",4)=A1
+"RTN","PSOCMOPC",20,0)
+ .D NOW^%DTC
+"RTN","PSOCMOPC",21,0)
+ .S ^PSRX(XDA,"A",PSOB,0)=%_"^S^"_DUZ_"^"_$S($G(CMOP("L"))<6:$G(CMOP("L")),1:$G(CMOP("L"))+1)_"^ Placed on Suspense for CMOP until "_T1
+"RTN","PSOCMOPC",22,0)
+ .K T,T1,%
+"RTN","PSOCMOPC",23,0)
+UNSUS ; If Rx is suspended and is not CMOP, ensure is not suspended as CMOP (Exception of a Partial Fill done after the CMOP Suspense)
+"RTN","PSOCMOPC",24,0)
+ I $G(CMOP("S"))["Q",('$G(CMOP)),'$G(RXPR(XDA)),$G(PSOFROM)'="PARTIAL" D  G QUIT
+"RTN","PSOCMOPC",25,0)
+ .S DIE="^PS(52.5,",DR="3////@",DA=CMOP("52.5") D ^DIE K DIE,DR
+"RTN","PSOCMOPC",26,0)
+ .S ^PS(52.5,"AC",$P(^PSRX(XDA,0),"^",2),$P(^PS(52.5,DA,0),"^",2),DA)=""
+"RTN","PSOCMOPC",27,0)
+ .D ACT
+"RTN","PSOCMOPC",28,0)
+ .S T=$P(^PSRX(XDA,3),"^")
+"RTN","PSOCMOPC",29,0)
+ .S T1=$E(T,4,5)_"-"_$E(T,6,7)_"-"_$E(T,2,3)
+"RTN","PSOCMOPC",30,0)
+ .S $P(^PSRX(XDA,"A",0),"^",3)=A,$P(^PSRX(XDA,"A",0),"^",4)=A1
+"RTN","PSOCMOPC",31,0)
+ .D NOW^%DTC
+"RTN","PSOCMOPC",32,0)
+ .S ^PSRX(XDA,"A",PSOB,0)=%_"^S^"_DUZ_"^"_$S($G(CMOP("L"))<6:$G(CMOP("L")),1:$G(CMOP("L"))+1)_"^ Removed from CMOP Suspense, returned to OP Suspense. "_T1
+"RTN","PSOCMOPC",33,0)
+ .S DA=XDA
+"RTN","PSOCMOPC",34,0)
+QUIT K A,A1,CMOP,PSOA,PSOB,PSOCK,T,T1,XDA Q
+"RTN","PSOCMOPC",35,0)
+ACT ;  If no act node, make one .... determine last entry
+"RTN","PSOCMOPC",36,0)
+ S:'$D(^PSRX(XDA,"A",0)) ^(0)="^52.3XDA^^"
+"RTN","PSOCMOPC",37,0)
+ S PSOA="" F  S PSOA=$O(^PSRX(XDA,"A",PSOA)) Q:PSOA']""  S PSOB=PSOA+1
+"RTN","PSOCMOPC",38,0)
+ S A=$P(^PSRX(XDA,"A",0),"^",3),A1=$P(^PSRX(XDA,"A",0),"^",4),A=A+1,A1=A1+1
+"RTN","PSOCMOPC",39,0)
+ K PSOA
+"RTN","PSOCMOPC",40,0)
+ Q
+"RTN","PSOCMOPC",41,0)
+CHECK S CMOP=0 Q:'$G(PSXSYS)
+"RTN","PSOCMOPC",42,0)
+ ;           Q:Partial or Reprint
+"RTN","PSOCMOPC",43,0)
+ S PSOCMSUS=$O(^PS(52.5,"B",XDA,0))
+"RTN","PSOCMOPC",44,0)
+ I $G(PSOCMSUS) I $P($G(^PS(52.5,PSOCMSUS,0)),"^",5)!($P($G(^(0)),"^",12)) K PSOCMSUS Q
+"RTN","PSOCMOPC",45,0)
+ K PSOCMSUS
+"RTN","PSOCMOPC",46,0)
+ ;           Q:Do not Mail
+"RTN","PSOCMOPC",47,0)
+ S PSOCMPAT=+$P($G(^PSRX(XDA,0)),"^",2),PSOCMDT=$P($G(^PS(55,PSOCMPAT,0)),"^",5),PSOCMMAI=$P($G(^PS(55,PSOCMPAT,0)),"^",3)
+"RTN","PSOCMOPC",48,0)
+ I $G(PSOCMMAI)>1,$S($G(PSOCMDT)=""!($G(PSOCMDT)>DT):1,1:0) D KMAIL Q
+"RTN","PSOCMOPC",49,0)
+ D KMAIL
+"RTN","PSOCMOPC",50,0)
+ ;          Get drug IEN and check if CMOP
+"RTN","PSOCMOPC",51,0)
+ S PSOCK=$P($G(^PSRX(XDA,0)),"^",6) Q:'$D(^PSDRUG("AQ",PSOCK))
+"RTN","PSOCMOPC",52,0)
+ I $P($G(^PSDRUG(+$G(PSOCK),2)),"^",3)'["O" Q
+"RTN","PSOCMOPC",53,0)
+ Q:$G(PSOFROM)="PARTIAL"
+"RTN","PSOCMOPC",54,0)
+ ;           Q:If tradename
+"RTN","PSOCMOPC",55,0)
+ Q:$G(^PSRX(XDA,"TN"))]""
+"RTN","PSOCMOPC",56,0)
+ ;           Q: If Cancelled, Expired, Deleted
+"RTN","PSOCMOPC",57,0)
+ Q:$P($G(^PSRX(XDA,"STA")),"^")>10
+"RTN","PSOCMOPC",58,0)
+ ;           Q: If pending
+"RTN","PSOCMOPC",59,0)
+ Q:$P($G(^PSRX(XDA,"STA")),"^")=4
+"RTN","PSOCMOPC",60,0)
+ ;           Q:If not "Mail"
+"RTN","PSOCMOPC",61,0)
+ S PSOMW=$S($G(CMOP("L"))>0:$P(^PSRX(XDA,1,CMOP("L"),0),"^",2),1:$P(^PSRX(XDA,0),"^",11)) I $G(PSOMW)="W"  K CMOP("L") Q
+"RTN","PSOCMOPC",62,0)
+ ;           Q:If fill was CMOPed and other than '3' 'not dispensed'
+"RTN","PSOCMOPC",63,0)
+ Q:'$$FILTRAN^PSOCMOP(XDA,CMOP("L"))
+"RTN","PSOCMOPC",64,0)
+ S CMOP=1
+"RTN","PSOCMOPC",65,0)
+ Q
+"RTN","PSOCMOPC",66,0)
+KMAIL K PSOCMPAT,PSOCMDT,PSOCMMAI Q
+"RTN","PSOMLLD2")
+0^1^B38288541^B38199463
+"RTN","PSOMLLD2",1,0)
+PSOMLLD2 ;BIR/LE - Service Connection Check for SC>50% ;02/27/04
+"RTN","PSOMLLD2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**143,219,239,225,431,514,547**;DEC 1997;Build 1
+"RTN","PSOMLLD2",3,0)
+ ;External reference SDC022 supported by DBIA 1579
+"RTN","PSOMLLD2",4,0)
+ ;External reference DIS^SDROUT2 private by DBIA 112
+"RTN","PSOMLLD2",5,0)
+ ;External reference $$GETSHAD^DGUTL3 supported by DBIA 4462
+"RTN","PSOMLLD2",6,0)
+ ;External reference ^DPT(DFN,.372 private by DBIA 1476
+"RTN","PSOMLLD2",7,0)
+ ;External reference ^DIC(31 supported by DBIA 658
+"RTN","PSOMLLD2",8,0)
+SC ;This routine is used for SC>50% - OUTSIDE OF COPAY - DFN AND PSOSCP VARIABLES ARE EXPECTED TO BE PRESENT WHEN CALLED
+"RTN","PSOMLLD2",9,0)
+ ; Requires: DFN, PSOSCP, PSOSCA 
+"RTN","PSOMLLD2",10,0)
+ I '$G(DFN) N DFN S DFN=+$G(PSODFN)
+"RTN","PSOMLLD2",11,0)
+ ;I $G(DFN) I '$$SC^SDCO22(DFN) D  Q  ;if SC>49 don't ask if api says not to
+"RTN","PSOMLLD2",12,0)
+ ;. K PSOANSQ("SC>50"),PSOANSQD("SC>50") I $G(PSOX("IRXN")) K PSOANSQ(PSOX("IRXN"),"SC>50")
+"RTN","PSOMLLD2",13,0)
+SC2 I $G(PSOMESOI)=1,$G(PSORXED) W !!,"The Pharmacy Orderable Item has changed for this order. Please review any",!,"existing SC or Environmental Indicator defaults carefully for appropriateness.",! S PSOMESOI=2
+"RTN","PSOMLLD2",14,0)
+ I $G(PSOMESFI)=1 W !!,"The Pharmacy Orderable Item has changed for this order. Please review any",!,"existing SC or Environmental Indicator defaults carefully for appropriateness.",! S PSOMESFI=2
+"RTN","PSOMLLD2",15,0)
+ N PSODISAR D CHKPAG,DISSCD ;*514
+"RTN","PSOMLLD2",16,0)
+ N PSOUFLAG S PSOUFLAG=0 K DIR S DIR(0)="Y"
+"RTN","PSOMLLD2",17,0)
+ S DIR("A")="Was treatment for a Service Connected condition"
+"RTN","PSOMLLD2",18,0)
+ S DIR("?")=" ",DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition related",DIR("?",2)="to Service Connected."
+"RTN","PSOMLLD2",19,0)
+ I '$G(PSOFLAG) D
+"RTN","PSOMLLD2",20,0)
+ . I PSOSCP<50 S (DIR("B"),PSOUFLAG)=$S($G(PSORX(+$G(PSORENW("OIRXN")),"SC"))=0:"NO",$G(PSORX(+$G(PSORENW("OIRXN")),"SC"))=1:"YES",1:"") I DIR("B")="" K DIR("B") S PSOUFLAG=0
+"RTN","PSOMLLD2",21,0)
+ . I PSOSCP<50&($D(PSORX(+$G(PSORENW("OIRXN")),"SC>50"))) S (DIR("B"),PSOUFLAG)=$S($G(PSORX(+$G(PSORENW("OIRXN")),"SC>50"))=0:"NO",$G(PSORX(+$G(PSORENW("OIRXN")),"SC>50"))=1:"YES",1:"") I DIR("B")=""  K DIR("B") S PSOUFLAG=0
+"RTN","PSOMLLD2",22,0)
+ . I PSOSCP>49 S (DIR("B"),PSOUFLAG)=$S($G(PSORX(+$G(PSORENW("OIRXN")),"SC>50"))=0:"NO",$G(PSORX(+$G(PSORENW("OIRXN")),"SC>50"))=1:"YES",1:"") I DIR("B")=""  K DIR("B") S PSOUFLAG=0
+"RTN","PSOMLLD2",23,0)
+ . I '$D(DIR("B"))&($D(PSOANSQD("SC>50"))!($D(PSOANSQD("SC")))) D  I '$D(DIR("B")) K DIR("B") S PSOUFLAG=0
+"RTN","PSOMLLD2",24,0)
+ .. I $D(PSOANSQD("SC>50")) I $G(PSOANSQD("SC>50"))=0!($G(PSOANSQD("SC>50"))=1) S (PSOUFLAG,DIR("B"))=$S($G(PSOANSQD("SC>50"))=1:"YES",1:"NO")
+"RTN","PSOMLLD2",25,0)
+ .. I $D(PSOANSQD("SC")) I $G(PSOANSQD("SC"))=0!($G(PSOANSQD("SC"))=1) S (PSOUFLAG,DIR("B"))=$S($G(PSOANSQD("SC"))=1:"YES",1:"NO")
+"RTN","PSOMLLD2",26,0)
+ I $G(PSORX("SC"))]""!($G(PSORX(+$G(PSORENW("OIRXN")),"SC"))'="") S DIR("B")=$S($G(PSORX("SC"))="SC":"YES",$G(PSORX("SC"))="NSC":"NO",$G(PSORX(+$G(PSORENW("OIRXN")),"SC"))=1:"YES",$G(PSORX(+$G(PSORENW("OIRXN")),"SC"))=0:"NO",1:"")
+"RTN","PSOMLLD2",27,0)
+ ;
+"RTN","PSOMLLD2",28,0)
+ I $G(PSOFLAG),$G(PSONEWFF) I $G(PSOANSQD("SC>50"))=0!($G(PSOANSQD("SC>50"))=1) S DIR("B")=$S($G(PSOANSQD("SC>50"))=1:"YES",1:"NO")
+"RTN","PSOMLLD2",29,0)
+ I $G(DIR("B"))="YES"!($G(DIR("B"))="NO") S PSOUFLAG=$G(DIR("B"))
+"RTN","PSOMLLD2",30,0)
+ I $G(DIR("B"))="" K DIR("B")
+"RTN","PSOMLLD2",31,0)
+ W ! D ^DIR K DIR
+"RTN","PSOMLLD2",32,0)
+ I $G(Y)=1!($G(Y)=0) D  I $G(PSONEWFF),$G(PSOFLAG) S PSOANSQD("SC>50")=$G(Y)
+"RTN","PSOMLLD2",33,0)
+ . I $G(PSOX("IRXN")) S PSOANSQ(PSOX("IRXN"),"SC>50")=+Y
+"RTN","PSOMLLD2",34,0)
+ . S PSOANSQ("SC>50")=+Y
+"RTN","PSOMLLD2",35,0)
+ I PSOFLAG I Y["^"!($D(DTOUT))!($D(DUOUT)) S PSOCPZ("DFLG")=1
+"RTN","PSOMLLD2",36,0)
+ S:Y=0 Y=2
+"RTN","PSOMLLD2",37,0)
+ S PSOANSR=+Y I 'PSOANSR,'PSOFLAG D  S $P(PSOCPAY,"^")=$S($G(PSOUFLAG)="NO":1,1:0) W ! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR Q
+"RTN","PSOMLLD2",38,0)
+ .W !!,"This Renewal has been designated as "_$S($G(PSOUFLAG)="YES":"SERVICE CONNECTED",1:"NON-SERVICE CONNECTED.")
+"RTN","PSOMLLD2",39,0)
+ .;W !,"Please use the 'Reset Copay Status/Cancel Charges' option to make  corrections."
+"RTN","PSOMLLD2",40,0)
+ .S PSOANSQ("SC>50")=$S($G(PSOUFLAG)="YES":1,1:0)
+"RTN","PSOMLLD2",41,0)
+ I $G(PSOFLAG),$G(PSOCPZ("DFLG")) G EXIT
+"RTN","PSOMLLD2",42,0)
+ S:PSOANSR=1 PSOCPAY=0 S:PSOANSR=2 $P(PSOCPAY,"^")=1
+"RTN","PSOMLLD2",43,0)
+EXIT ;
+"RTN","PSOMLLD2",44,0)
+ K PSOANSR,DIR,DUOUT,DIRUT,DTOUT,Y,X,PSOSCA
+"RTN","PSOMLLD2",45,0)
+ Q
+"RTN","PSOMLLD2",46,0)
+ ;
+"RTN","PSOMLLD2",47,0)
+PAUSE K DIR W ! S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSOMLLD2",48,0)
+ Q
+"RTN","PSOMLLD2",49,0)
+ ;
+"RTN","PSOMLLD2",50,0)
+SHAD ; PROJ 112/SHAD Question
+"RTN","PSOMLLD2",51,0)
+ I $G(PSODFN),$L($T(GETSHAD^DGUTL3)) I $$GETSHAD^DGUTL3(PSODFN)'=1 D  Q
+"RTN","PSOMLLD2",52,0)
+ . K PSOANSQ("SHAD"),PSOANSQD("SHAD") I $G(PSOX("IRXN")) K PSOANSQ(PSOX("IRXN"),"SHAD")
+"RTN","PSOMLLD2",53,0)
+ N PSOUFLAG S PSOUFLAG=0
+"RTN","PSOMLLD2",54,0)
+ K DIR S DIR(0)="Y"
+"RTN","PSOMLLD2",55,0)
+ S DIR("A")="Was treatment related to PROJ 112/SHAD"
+"RTN","PSOMLLD2",56,0)
+ S DIR("?")=" "
+"RTN","PSOMLLD2",57,0)
+ S DIR("?",1)="Enter 'Yes' if this prescription is being used to treat a condition due to"
+"RTN","PSOMLLD2",58,0)
+ S DIR("?",2)="Shipboard Hazard and Defense (SHAD) exposure."
+"RTN","PSOMLLD2",59,0)
+ S DIR("?",3)="This response will be used to determine whether or not a copay should"
+"RTN","PSOMLLD2",60,0)
+ S DIR("?",4)="be applied to the prescription."
+"RTN","PSOMLLD2",61,0)
+ I '$G(PSOFLAG) D
+"RTN","PSOMLLD2",62,0)
+ . S (DIR("B"),PSOUFLAG)=$S($G(PSORX(+$G(PSORENW("OIRXN")),"SHAD"))=0:"NO",$G(PSORX(+$G(PSORENW("OIRXN")),"SHAD"))=1:"YES",1:"")
+"RTN","PSOMLLD2",63,0)
+ . I DIR("B")="" K DIR("B") S PSOUFLAG=0
+"RTN","PSOMLLD2",64,0)
+ I $G(PSOFLAG),$G(PSONEWFF) D
+"RTN","PSOMLLD2",65,0)
+ . I $G(PSOANSQD("SHAD"))=0!($G(PSOANSQD("SHAD"))=1) D
+"RTN","PSOMLLD2",66,0)
+ . . S DIR("B")=$S($G(PSOANSQD("SHAD"))=1:"YES",1:"NO")
+"RTN","PSOMLLD2",67,0)
+ W ! D ^DIR K DIR
+"RTN","PSOMLLD2",68,0)
+ I $G(PSOFLAG) W ! D  Q
+"RTN","PSOMLLD2",69,0)
+ . I Y["^"!($D(DUOUT))!($G(DTOUT)) S PSOCPZ("DFLG")=1 Q
+"RTN","PSOMLLD2",70,0)
+ . S PSOANSQ("SHAD")=Y
+"RTN","PSOMLLD2",71,0)
+ . I $G(PSONEWFF) S PSOANSQD("SHAD")=Y
+"RTN","PSOMLLD2",72,0)
+ I Y["^"!($D(DUOUT))!($D(DTOUT)) D  Q
+"RTN","PSOMLLD2",73,0)
+ . W !!,"This Renewal has been designated as"_$S($G(PSOUFLAG)="YES":"",1:" NOT")_" being used for treatment of "
+"RTN","PSOMLLD2",74,0)
+ . W !,"Shipboard Hazard and Defense (SHAD) exposure." D:$G(PSOSCP)<50 MESS^PSOMLLDT D PAUSE
+"RTN","PSOMLLD2",75,0)
+ . S PSOANSQ(PSOX("IRXN"),"SHAD")=$S($G(PSOUFLAG)="YES":1,1:0)
+"RTN","PSOMLLD2",76,0)
+ I $G(PSOX("IRXN")) S PSOANSQ(PSOX("IRXN"),"SHAD")=Y
+"RTN","PSOMLLD2",77,0)
+ E  S PSOANSQ("SHAD")=Y
+"RTN","PSOMLLD2",78,0)
+ Q
+"RTN","PSOMLLD2",79,0)
+ ;
+"RTN","PSOMLLD2",80,0)
+CHKPAG ;
+"RTN","PSOMLLD2",81,0)
+ N PSOSPACE K PSODISAR S $P(PSOSPACE," ",50)=""
+"RTN","PSOMLLD2",82,0)
+ S I3=0 F I=0:0 S I=$O(^DPT(DFN,.372,I)) Q:'I  D
+"RTN","PSOMLLD2",83,0)
+ .S I1=^DPT(DFN,.372,I,0) I $P(I1,"^",3) D
+"RTN","PSOMLLD2",84,0)
+ ..S I2=$S($D(^DIC(31,+I1,0)):^(0),1:""),I2=$S($P(I2,"^",4)]"":$P(I2,"^",4),1:$P(I2,"^"))
+"RTN","PSOMLLD2",85,0)
+ ..S PSODISAR(I)=I2_$E(PSOSPACE,1,48-$L(I2))_$J($P(I1,"^",2),4)_"% - "_$S($P(I1,"^",3):"SERVICE CONNECTED",1:""),I3=I3+1
+"RTN","PSOMLLD2",86,0)
+ I 'I3 S PSODISAR(1)=$S('$O(^DPT(DFN,.372,0)):"NONE STATED",1:"NO SC DISABILITIES LISTED")
+"RTN","PSOMLLD2",87,0)
+ S PSODISAR=I3
+"RTN","PSOMLLD2",88,0)
+ K I1,I2,I3
+"RTN","PSOMLLD2",89,0)
+ Q
+"RTN","PSOMLLD2",90,0)
+ ;
+"RTN","PSOMLLD2",91,0)
+DISSCD ;DISPLAY SERVICE CONNECTED DISABILITIES - REPLACES CALL TO DIS^SDROUT2
+"RTN","PSOMLLD2",92,0)
+ ;
+"RTN","PSOMLLD2",93,0)
+ ;rated disabilities
+"RTN","PSOMLLD2",94,0)
+ ; -- Pharmacy is allowed to call this tag via a special agreement
+"RTN","PSOMLLD2",95,0)
+ ;    with MAS.  MAS should notify pharmacy developers of any
+"RTN","PSOMLLD2",96,0)
+ ;    changes that may impact PS* code.  (5/91 - MJK/BOK)
+"RTN","PSOMLLD2",97,0)
+ ;
+"RTN","PSOMLLD2",98,0)
+ I '$D(VAEL) D ELIG^VADPT S DGKVAR=1
+"RTN","PSOMLLD2",99,0)
+ I $Y<3,$O(PSODISAR(0)) W "DRUG: "_$S($G(PSODRUG("TRADE NAME"))]"":PSODRUG("TRADE NAME"),1:$G(PSODRUG("NAME")))
+"RTN","PSOMLLD2",100,0)
+ W:'+VAEL(3) !!,"Service Connected: NO" W:+VAEL(3) !!,"       SC Percent: ",$P(VAEL(3),"^",2)_"%"
+"RTN","PSOMLLD2",101,0)
+ W !,"     Disabilities: " I 'VAEL(4),$S('$D(^DG(391,+VAEL(6),0)):1,$P(^(0),"^",2):0,1:1) W "NOT A VETERAN" G DISQ
+"RTN","PSOMLLD2",102,0)
+ S I=0 F  S I=$O(PSODISAR(I)) Q:'I  D
+"RTN","PSOMLLD2",103,0)
+ .W !,PSODISAR(I)
+"RTN","PSOMLLD2",104,0)
+ .I $Y+3>IOSL D
+"RTN","PSOMLLD2",105,0)
+ ..S DIR(0)="E",DIR("A")=" Press the return key to continue" D ^DIR W @IOF
+"RTN","PSOMLLD2",106,0)
+ ..I $O(PSODISAR(I)) W "DRUG: "_$S($G(PSODRUG("TRADE NAME"))]"":PSODRUG("TRADE NAME"),1:$G(PSODRUG("NAME"))),!
+"RTN","PSOMLLD2",107,0)
+DISQ I $D(DGKVAR) D KVAR^VADPT K DGKVAR,I
+"RTN","PSOMLLD2",108,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10973,6)
+^449
+**END**
+**END**
+

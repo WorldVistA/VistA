@@ -1,0 +1,238 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 11/19/18 at 09:55
+=============================================================================
+Run Date: JAN 10, 2019                     Designation: MPIF*1*70
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #66                      Status: Released
+                  Compliance Date: FEB 10, 2019
+=============================================================================
+
+Associated patches: (v)MPIF*1*63   <<= must be installed BEFORE `MPIF*1*70'
+
+Subject: MASTER VETERAN VISTA ENHANCEMENTS - REMOTE UPDATES FOR CLOUD
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a
+       Veterans Affair Medical Center (VAMC) VistA system).
+  
+ MPIF*1.0*63 is the only required build for patch MPIF*1.0*70.
+   
+ NOTE: Do NOT install MPIF*1.0*70 on legacy sites or on the 
+       FORUM CLAIMS system. 
+  
+ The following enhancement exported in this patch will allow the
+ Master Veteran Index (MVI) to now remotely update the Internet
+ Protocol (IP) Address and the associated Secure Socket Layer Port
+ for the existing Web Service that utilizes the Hypertext Transport
+ Protocol Secure (HTTPS) communication link to the Person Service
+ Identity Management (PSIM) system.   
+   
+ Enhancement
+ MVI has further enhanced the existing Remote Procedure Call (RPC)
+ [MPI VISTA HWS CONFIG] through the inclusion of 2 NEW 'Optional'
+ parameters that will allow MVI to remotely update the following
+ additional fields for the "MPI_PSIM_NEW EXECUTE" Web Service in
+ the WEB SERVER (#18.12) file:
+  
+      -  .04 SERVER
+      - 3.03 SSL PORT
+  
+ These changes introduced into the RPC and the associated routine
+ 'MPIFWSC' are needed to allow MVI to quickly adapt to and update
+ the IP and Port Number configuration settings for the PSIM system
+ identified in the Web Service entry "MPI_PSIM_NEW EXECUTE" at the
+ VistA sites when and wherever it is migrated to the Cloud.
+ Ultimately, this remote capability enhancement will result in
+ minimal downtime and/or issues being reported/experienced by the
+ sites during the relocation of this system into the Cloud. 
+         
+       
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ MPI VISTA HWS CONFIG              MODIFIED
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ CENTRAL ALABAMA HCS
+ WILLIAM S. MIDDLETON VAMC (MADISON WI)
+  
+   
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system. NO OPTIONs or PROTOCOLs are
+ required to be disabled. The HL7 filers do NOT need to be stopped.
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*70):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+      
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+   
+ Back-Out Plan
+ -------------
+ The MPIF back-out procedure would primarily consist of restoring the
+ original routine using the back-up message created during the patch
+ installation. Upon coordination with the MVI development team, the
+ original RPC [MPI VISTA HWS CONFIG] can be provided to remove the 2
+ optional parameters from the definition.
+    
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFWSC
+    Before: B19528322   After: B24585177  **63,70**
+ 
+Routine list of preceding patches: 63
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: JAN 10, 2019
+Released By :                               Date Released : JAN 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

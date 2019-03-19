@@ -1,0 +1,292 @@
+$TXT Created by               at DEVVOO.DOMAIN.EXT  (KIDS) on Friday, 10/12/18 at 16:10
+=============================================================================
+Run Date: JAN 29, 2019                     Designation: IVM*2*172
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #146                      Status: Released
+                  Compliance Date: MAR 01, 2019
+=============================================================================
+
+Associated patches: (v)IVM*2*115   <<= must be installed BEFORE `IVM*2*172'
+                    (v)IVM*2*121   <<= must be installed BEFORE `IVM*2*172'
+
+Subject: OTHER HEALTH INSURANCE (OHI) TO VISTA
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch IVM*2.0*172 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project.
+  
+ IVM*2.0*172 is also being released in support of the Enrollment System 
+ (ES) 5.4 release. Refer to Informational Patch EAS*1*169 (Enrollment 
+ Application System) for additional details regarding the ES release.
+  
+ This Veterans Health Information System and Technology Architecture 
+ (VistA) Registration, Eligibility & Enrollment (REE) patch enhances the 
+ ability of VA's Office of Care Coordination (OCC) to receive Other Health 
+ Insurance (OHI) information from Community Care Network (CCN) contractors.
+  
+ OCC Revenue staff need the source of OHI information to be reflected in 
+ the Insurance Buffer, to be routed through the correct workflow process, 
+ and to be available for analytics. To accomplish these goals, the ES will 
+ send a new Source of Information Code 14 "Purchased Care CHOICE" or 
+ Source of Information Code 3 "IVM", and the Insured's Date of Birth (DOB) 
+ to VistA. 
+  
+ When ES receives OHI information from a Community Care Network (CCN) 
+ contractor, ES sends VistA a Health Level 7 (HL7) message assigning the 
+ Source of Information Code 14 "Purchased Care CHOICE". The source of 
+ information will reflect in the Insurance Buffer as "Purchased 
+ Care CHOICE" instead of defaulting as "IVM".
+  
+ If OHI is entered in ES via the Health Eligibility Center (HEC), then ES 
+ will assign the Source of Information Code 3 "IVM" to the HL7 message 
+ that will be sent to VistA. VistA will receive the Source of Information 
+ Code 3 "IVM" and this data will be passed through the existing workflow 
+ to the Insurance Buffer.
+  
+ ES will send the Insured's DOB when it sends insurance information to 
+ VistA. Staff will be able to view in VistA the Insured's DOB value on the 
+ record in the Insurance Buffer as an element for validating insurance.
+  
+ Listing of Updates
+ ==================
+ This patch makes the following enhancements to VistA REE:
+  
+ 1. The HL7 interface with ES is modified to include two additional data
+    elements that will be available for analytics: 
+    a. SOURCE OF INFORMATION. The ORUZ04 message contains a new
+       sequence #13 in the ZIV segment.
+    b. INSURED'S DATE OF BIRTH. The ORUZ04 message populates
+       sequence #18 in the IN1 segment.
+  
+ 2. When VistA receives an HL7 ORUZ04 message, the two fields are 
+    stored in the following locations:
+    a. SOURCE OF INFORMATION is stored in the SOURCE OF INFORMATION 
+       field (#.03) within the INSURANCE VERIFICATION PROCESSOR file
+       (#355.33).
+    b. INSURED'S DATE OF BIRTH is stored in the INSURED'S DOB
+       field (#60.08) within the INSURANCE VERIFICATION PROCESSOR file
+       (#355.33).
+  
+ 3. The processing of these 2 fields above are as follows:
+    a. SOURCE OF INFORMATION - only 2 values are accepted from the ORU-Z04:
+       3 - IVM and 14 - Purchased Care CHOICE.
+    b. INSURED'S DATE OF BIRTH - The date will be transformed into FileMan 
+       format before storing.
+  
+ 4. Data for SOURCE OF INFORMATION and INSURED'S DATE OF BIRTH can be 
+    viewed within the INSURANCE VERIFICATION PROCESSOR file (#355.33). 
+    The data will be viewable within the Process Insurance Buffer menu
+    option.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ -----------                                      
+ VA Greater Los Angeles Healthcare System, Los Angeles CA
+ James E. Van Zandt VA Medical Center, Altoona PA
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+  Release Notes                         IVM_2_P172_RN.PDF      (binary)
+  IVM Technical Manual                  IVM_2_P172_TM.PDF        (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM 
+ BACKGROUND JOB] is running.
+  
+ 1. The HL7 incoming/outgoing filers should be stopped. Stop All 
+    Messaging Background Processes by using the [HL STOP ALL] option on
+    the Filer and Link Management Options [HL MENU FILER LINK MGT] menu on
+    the HL7 Main Menu [HL MAIN MENU].
+  
+ 2. This patch may be installed with users on the system, however, we
+    suggest it be installed after business hours. This patch should take
+    less than 5 minutes to install.
+  
+ Installation Instructions
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch#
+    (IVM*2.0*172):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install. 
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? YES//', respond NO.
+  
+ 7. When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+    press <enter>.
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].  
+  
+ Back-Out Plan
+ -------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service 
+ Desk (ESD) for assistance with the procedure.
+  
+ Any issues would need to be evaluated to determine if: a back-out of the 
+ software is appropriate; a new patch is needed; or if data requires 
+ correction or restoration.
+   
+ During installation, if the option to back up routines was run as 
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a 
+ backup of other VistA software components, such as data dictionaries, 
+ templates, options, protocols, etcetera. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMLINS3
+    Before: B12231839   After: B15147489  **14,111,121,172**
+Routine Name: IVMPREC3
+    Before: B20718682   After: B25802932  **3,17,34,111,115,172**
+ 
+Routine list of preceding patches: 115, 121
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 09, 2018
+Completed By:                               Date Completed: JAN 29, 2019
+Released By :                               Date Released : JAN 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

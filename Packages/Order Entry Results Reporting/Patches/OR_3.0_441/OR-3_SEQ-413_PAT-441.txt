@@ -1,0 +1,501 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 10/10/18 at 12:35
+=============================================================================
+Run Date: NOV 07, 2018                     Designation: OR*3*441
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #413                      Status: Released
+                  Compliance Date: DEC 08, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*311    <<= must be installed BEFORE `OR*3*441'
+                    (v)OR*3*356    <<= must be installed BEFORE `OR*3*441'
+                    (v)OR*3*434    <<= must be installed BEFORE `OR*3*441'
+
+Subject: EPIP OR REMEDIATION 2.0
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Print Template
+  - Other
+
+Description:
+============
+
+ OR*3.0*441 provides the following enhancements to VistA:
+  
+ - Modifies the display of flagged Order comments and Ward comments to
+ make them readily available on the Computerized Patient Record System 
+ (CPRS) Orders tab where Clinical staff can plainly see them.
+  
+ Currently, the clinician must double-click the order and search through 
+ activity details to find the flagged Order comment or Ward comment. Not 
+ only is this search time-consuming, but it requires that the clinician 
+ recognize the need to actively search. This can result in comments being 
+ overlooked and not addressed in a timely manner, thus impacting patient 
+ safety and care.
+  
+ The Flagged and Ward comments modification comes with an On/Off switch. 
+ The default position is OFF. To enable the modification, use the XPAR 
+ MENU TOOLS option to set the OR FLAGGED & WARD COMMENTS parameter to ON. 
+ This parameter is stored in the PARAMETER DEFINITION file (#8989.51).
+  
+ - Enables support for tracking antimicrobial medication quick orders by 
+ adding a tracking hook to enhance auditing of those orders. Sites that do 
+ not wish to track antimicrobial prescribing practices using quick orders, 
+ or do not use the VISN 23 Antimicrobial Clinical Decision Support System 
+ (CDSS), do not need to perform the setup steps for using the antimicrobial
+ hooks and reporting features described in the supporting documentation for
+ this patch.
+  
+ The Antimicrobial Decision Tree Hook functionality is enabled by two new
+ TIU Objects (hooks) added to the TIU DOCUMENT DEFINITION file (#8925.1).
+ The |OR QUICK ORDER AUDIT| hook tracks clinically preferred antimicrobial
+ drug quick orders; the |OR QUICK ORDER AUDIT(ALT)| hook tracks quick
+ orders that prescribe an alternative to a clinically preferred
+ antimicrobial drug.
+  
+ This enhancement does not provide any preconfigured quick orders; the 
+ quick orders must be set up and added to CPRS by a Clinical Application 
+ Coordinator (CAC) or Office of Information and Technology (OIT) staff
+ member. When creating an antimicrobial drug quick order, either the |OR 
+ QUICK ORDER AUDIT| or the |OR QUICK ORDER AUDIT(ALT)| hook must be added 
+ to the order Comments field to enable quick order audit capabilities.
+  
+ Note: When setting up Antimicrobial Quick Orders, respond YES at the 
+ "Verify Order" prompt and NO at the "Auto-Accept" prompt. If a YES 
+ response is made at the "Auto-Accept" prompt, then two pharmacy 
+ confirmation numbers will appear in the new antimicrobial quick order 
+ tracking file and subsequent Quick Order Audit reports. This does not 
+ result in the creation of multiple drug orders.
+  
+ When an antimicrobial drug quick order containing one of the Quick Order 
+ Audit hooks is created from the CPRS Orders tab, a pharmacy confirmation 
+ number is displayed with other order information such as the medication, 
+ dose, schedule, and special instructions. When the medication order is 
+ accepted by the clinician, an order number is assigned; this number serves
+ as verification that the order was completed.
+  
+ Six VistA quick order auditing options are provided with this enhancement:
+ OR Quick Order Nightly Background Task [OR QUICK ORDER NIGHTLY BG], OR
+ Quick Order Audit Menu [OR QUICK ORDER AUDIT MENU], OR Quick Order Audit
+ Inquiry [OR QUICK ORDER AUDIT INQUIRY], OR Quick Order Audit Print [OR
+ QUICK ORDER AUDIT PRINT], OR Quick Order Audit Monthly [OR QUICK ORDER
+ AUDIT MONTHLY], and OR Quick Order Division Groups Edit [OR QUICK ORDER
+ DIVISION GROUPS]. These options enable the various auditing and reporting
+ features associated with antimicrobial quick orders.
+  
+ The OR Quick Order Nightly Background Task is scheduled to run by TaskMan.
+ This option adds the order number to the QUICK ORDER AUDIT file (#100.95)
+ if the order is accepted. The background job scheduling is set to YES and
+ is preset to run at 23:01 and then to re-run at 24-hour intervals. These
+ default settings can be modified by OIT staff.
+  
+ The OR Quick Order Audit Menu option displays the OR Quick Order Audit 
+ Inquiry, OR Quick Order Audit Print, OR Quick Order Audit Monthly, and OR 
+ Quick Order Division Groups Edit options.
+  
+    - The OR Quick Order Audit Inquiry option uses the pharmacy 
+ confirmation number to retrieve order details for individual antimicrobial
+ quick orders from the QUICK ORDER AUDIT file. The pharmacy confirmation
+ number is displayed in the order Comments field in CPRS when the order is
+ created; it is also included in the report generated using the OR Quick
+ Order Audit Print option.
+  
+    - The OR Quick Order Audit Print option provides information about
+ antimicrobial quick order usage. Date range fields are provided to limit
+ the report output to a specific time period. The information in this
+ report reflects provider medication decision trends because a pharmacy
+ confirmation number is recorded any time an antimicrobial quick order
+ containing one of the Quick Order Audit hooks is created, even if the
+ order is not accepted. If the order is accepted, an order number is also
+ included. This report uses a Print template and a Sort template, each
+ named [OR QUICK ORDER AUDIT REPORT], to display information from the QUICK
+ ORDER AUDIT file.
+   
+    - The OR Quick Order Audit Monthly option generates a report that
+ includes details on all antimicrobial drug orders placed during a
+ user-specified reporting period. The monthly report can be run for any
+ period of up to 31 days for which data is present in the system. This
+ report separates antimicrobial orders into those placed using a quick
+ order and those placed using a method other than a quick order. 
+  
+ This report is intended to be exported in a delimited format to an HFS
+ (HOST FILE DEVICE) at the standard device prompt "DEVICE:" for import 
+ into Excel. Before the standard prompt is presented, the new prompt "Do
+ you want a delimited report to a printer or home device ? NO//" is
+ presented to facilitate those sites that do not have access to an HFS
+ (HOST FILE DEVICE). If a user selects the default NO response, then the
+ standard "DEVICE:" prompt will display and the user can choose to send a
+ delimited report to the HFS (HOST FILE DEVICE) or to have a non-delimited
+ report sent to the screen or other printer. If the user responds "YES" at
+ the new prompt, then a modified device prompt, "DELIMITED REPORT DEVICE:
+ HOME//," is presented. From this prompt, the user can send a delimited
+ report to the screen or to a printer, but will have to use other methods
+ (for example, turning on logging) to capture the delimited report so that
+ it can be imported into Excel the same way that an HFS (HOST FILE DEVICE)
+ would deliver the report. The user can additionally choose to include 
+ orders that are missing a location by responding "YES" at the "Do you 
+ want to print orders with MISSING LOCATIONS? NO//" prompt.
+  
+ Before using this report, it must be configured using the OR Quick Order
+ Division Groups Edit option.
+  
+    - The OR Quick Order Division Groups Edit option enables editing of the
+ QUICK ORDER DIVISION GROUPS file (#100.953). This file allows large
+ facilities to filter the OR Quick Order Audit Monthly report into groups
+ of Medical Center divisions to be included in separate reports. The
+ selected divisions are stored in the MEDICAL CENTER DIVISIONS field
+ (#100.9531). This field only supports selecting from existing entries
+ found in the MEDICAL CENTER DIVISION file (#40.8). Proper configuration
+ requires each site to create one or more group names and then add all
+ subordinate divisions to include in the group. When a group is added, the
+ user is prompted for the divisions to include; a different subset of
+ divisions may be selected for each group. Sites desiring only one report
+ must include all of the Medical Center divisions associated with their
+ facility in a single group.
+  
+ Note: The Quick Order Audit Inquiry [OR QUICK ORDER AUDIT INQUIRY] report 
+ may not accurately record antimicrobial quick orders in the QUICK ORDER 
+ AUDIT file (#100.95) when processing multiple delayed orders at one time. 
+ Due to an issue with legacy delayed order processing of quick orders, the 
+ system does not transmit all the required variables for antimicrobial 
+ quick order tracking. This may result in inaccuracies when using the 
+ inquiry report. However, the Quick Order Audit Monthly [OR QUICK ORDER 
+ AUDIT MONTHLY] report provides accurate information for all orders and can
+ be used in its place. This report retrieves information from the Order
+ file (#100) and provides real-time data on all antimicrobial orders. The
+ report separates Quick Orders and Non-Quick Orders and can be used to
+ identify antimicrobial quick orders for verification and auditing 
+ purposes. Those individuals assigned the Quick Order Audit Menu [OR QUICK 
+ ORDER AUDIT MENU] have access to all of the new user options associated 
+ with this patch, including the monthly report.
+  
+ The patch functionality is turned ON by adding one of the two new hooks to
+ antimicrobial quick orders defined for the site. The functionality is 
+ turned OFF by removing the hook from the Comments section of any quick 
+ orders previously configured with either hook. To completely turn off the 
+ Antimicrobial Decision Tree Hook functionality, the scheduled OR Quick
+ Order Nightly Background Task [OR QUICK ORDER NIGHTLY BG] must also be
+ turned off.
+  
+ Note: Sites that are utilizing an existing CDSS to select quick
+ orders associated with antimicrobial drugs can continue using the CDSS
+ without interruption following implementation of this enhancement. During
+ patch installation, Quick Orders preconfigured with a |ZZ QUICK ORDER
+ AUDIT|, |ZZ QUICK ORDER AUDIT (CI)|, or |ZZ QUICK ORDER AUDIT (NE)| hook
+ will be automatically converted to the new |OR QUICK ORDER AUDIT| hook.
+ Quick Orders preconfigured with the |ZZ QUICK ORDER AUDIT (ALT)|, |ZZ
+ QUICK ORDER AUDIT (CI-ALT)|, or |ZZ QUICK ORDER AUDIT (NE-ALT)| hook will
+ be automatically converted to the new |OR QUICK ORDER AUDIT(ALT)| hook.
+  
+  
+ BLOOD BANK Clearance:
+ --------------------
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3.0*441 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+  
+ RISK ANALYSIS: Changes made by patch OR*3.0*441 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ QUICK ORDER AUDIT                               NEW
+   (#100.95)                 
+ QUICK ORDER DIVISION    MEDICAL CENTER          NEW
+   GROUPS (#100.953)       DIVISIONS (#100.9531)        
+ TIU DOCUMENT DEFINITION                         MERGE/ ADDED TWO OBJECTS
+   (#8925.1)
+ PARAMETER DEFINITION                            MERGE/ ADDED A PARAMETER
+   (#8989.51)
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ ------------------------------  ----            --------------------
+ OR QUICK ORDER AUDIT MONTHLY    RUN ROUTINE     NEW
+ OR QUICK ORDER AUDIT INQUIRY    INQUIRE         NEW 
+ OR QUICK ORDER AUDIT MENU       MENU            NEW
+ OR QUICK ORDER AUDIT PRINT      PRINT           NEW
+ OR QUICK ORDER NIGHTLY BG       RUN ROUTINE     NEW
+ OR QUICK ORDER DIVISION         MULTIPLE        NEW
+   GROUPS EDIT
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A 
+  
+ Parameters Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------               -------------------- 
+ OR FLAGGED & WARD COMMENTS  New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted 
+ ---------------    ----    -----------------   --------------------
+ OR QUICK ORDER     PRINT   QUICK ORDER AUDIT   NEW
+   AUDIT REPORT                     (#100.95)
+ OR QUICK ORDER     SORT    QUICK ORDER AUDIT  NEW
+   AUDIT REPORT                     (#100.95)
+  
+  
+  
+ Additional Information:
+ N/A 
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20150103 Display Flagged and Ward Comments
+ NSR20160613 Anti-Microbial Decision Tree Interface Hook
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ---------
+ Milwaukee VA Medical Center, Milwaukee, WI
+ Minneapolis VA Health Care System, Minneapolis, MN
+ VA Nebraska-Western Iowa Health Care System, Omaha, NE
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from 
+ FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at:
+ https://www.domain.ext/vdl/.
+  
+  
+ Title                                File Name       FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version         cprsguium.doc   Binary
+ CPRS User Guide: GUI Version         cprsguium.pdf   Binary
+ CPRS Technical Manual: GUI Version   cprsguitm.doc   Binary
+ CPRS Technical Manual: GUI Version   cprsguitm.pdf   Binary 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+         select the Installation Menu. From this menu, you may elect to use
+         the following options. When prompted for the INSTALL NAME, enter
+         the patch number OR*3.0*441.
+  
+ a.      Verify Checksums in Transport Global - This option will help
+         ensure the integrity of the routines that are in the transport
+         global.
+  
+ b.      Print Transport Global - This option will enable viewing the 
+         components of the KIDS build.
+  
+ c.      Compare Transport Global to Current System - This option will 
+         enable viewing all changes that will be made when this patch is 
+         installed. It compares all components of this patch (routines,
+         data dictionaries, templates, etc.).
+  
+ d.      Back up a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not back
+         up any other changes such as data dictionaries or templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//', press <Enter>.
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', press <Enter>.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', press <Enter>.
+  
+ 8.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 9.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ ------------------------------
+  
+ The Post-Installation routine ORQO441P will schedule the OR Quick 
+ Order Nightly Background Task [OR QUICK ORDER NIGHTLY BG] option to run
+ every 24 hours at 23:01 on the next calendar day. If this is not an
+ optimal time to run the option, then a member of the OIT staff must
+ manually reschedule this option. This routine also creates two new objects
+ in the TIU DOCUMENT DEFINITION file (#8925.1) - |OR QUICK ORDER AUDIT| and
+ |OR QUICK ORDER AUDIT(ALT)|.
+  
+ Sites with quick orders containing the |ZZ QUICK ORDER AUDIT|, |ZZ QUICK 
+ ORDER AUDIT (CI)|, or |ZZ QUICK ORDER AUDIT (NE)| hook in the order 
+ Comments field must convert those orders to use the |OR QUICK ORDER AUDIT|
+ hook. Sites with quick orders containing the |ZZ QUICK ORDER AUDIT (ALT)|,
+ |ZZ QUICK ORDER AUDIT (CI-ALT)|, or |ZZ QUICK ORDER AUDIT (NE-ALT)| hook
+ must convert those orders to use the |OR QUICK ORDER AUDIT(ALT)| hook. A
+ utility in the post-installation routine automatically performs this
+ conversion. Each quick order that the utility converts is displayed on the
+ screen as the routine executes.
+  
+ No conversion is needed at sites that do not have previously configured 
+ antimicrobial quick orders using a "ZZ" prefixed hook.
+  
+ Routine ORQO441P is automatically deleted at the end of the installation.
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not be
+ attempted. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit a
+ help desk ticket. The development team will need to issue one or more 
+ follow-on patches in order to comprehensively back out this patch, after 
+ coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the OR routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the OR routines have been backed
+ out, the first two lines of the routines will no longer contain the
+ designation of patch OR*3.0*441 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 52
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQ12
+    Before: B37558185   After: B41144852  **12,27,78,92,116,190,220,215,
+                                           243,356,441**
+Routine Name: ORQO441P
+    Before:       n/a   After: B21266113  **441**
+Routine Name: ORQOAUIA
+    Before:       n/a   After:  B6757048  **441**
+Routine Name: ORQOAUIB
+    Before:       n/a   After: B45897882  **441**
+Routine Name: ORQOAUIC
+    Before:       n/a   After: B15051497  **441**
+Routine Name: ORWDXM3
+    Before:B118361960   After:B120942767  **10,85,131,132,141,185,187,
+                                           190,195,215,243,303,296,280,
+                                           350,434,441**
+Routine Name: ORWPT
+    Before: B64148022   After: B77269918  **10,85,132,149,206,187,190,
+                                           215,243,280,306,311,441**
+ 
+Routine list of preceding patches: 311, 356, 434
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2016
+Completed By:                               Date Completed: NOV 05, 2018
+Released By :                               Date Released : NOV 07, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

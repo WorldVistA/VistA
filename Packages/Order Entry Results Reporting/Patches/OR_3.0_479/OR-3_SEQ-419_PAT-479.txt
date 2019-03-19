@@ -1,0 +1,253 @@
+$TXT Created by                L. at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/18/18 at 11:52
+=============================================================================
+Run Date: JAN 31, 2019                     Designation: OR*3*479
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #419                      Status: Released
+                  Compliance Date: MAR 03, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*479'
+
+Subject: VSR RPC BACKDOOR UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch OR*3.0*479 is being released to support the security vulnerability
+ solution for the VistA Security Remediation (VSR) program that focuses on 
+ updates to the Remote Procedure Call (RPC) Broker.
+ 
+ Defects:
+ 869485 - DEF - Remote procedure call (RPC) ORQQPL EDIT SAVE
+ 869492 - DEF - Remote procedure call (RPC) ORQQPL UPDATE
+ 869497 - DEF - Remote procedure call (RPC) ORQQPL ADD SAVE
+ 
+ Included in this patch are the following updates:
+ 1.  Remote Procedure call ORQQPL EDIT SAVE, ORQQPL UPDATE, and ORQQPL ADD 
+     SAVE
+     a. These RPC's allow for parameters to be passed in and then use 
+        indirection to set up certain arrays (GMPFLD, GMPORIG, ORARRAY). The
+        use of indirection is done without any validation that the Parameters
+        are only setting the needed arrays.  This allows a parameter to be 
+        passed in that potentially allows for data to be read, deleted, or 
+        edited within the RPC calls. 
+ 
+     b. Resolution will include a coding change to verify that the parameters 
+        being passed in are both setting individual arrays (as intended) and 
+        is not passing a function or direct global set (this is accomplished
+        via a check for a double quote after the equal sign). This suggested 
+        logic change should close the security hole within the code.
+ 
+     c. Additional code changes will remove the check for $XECUTE and modify  
+        the logic to check to make sure that the first value after the equal 
+        sign is a double quote.  
+ 
+ The suggested logic changes should close the security hole within the code 
+ and prevent all functions from being executed within the code.
+ 
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ WEST PALM BEACH, FL
+ BOSTON, MD
+ TUCSON, AZ
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 5 minutes to install. 
+   
+ Installation Instructions:
+ --------------------------
+ 1. If the release is provided using PackMan, choose the PackMan message 
+    containing this build. Then select the INSTALL/CHECK MESSAGE PackMan  
+    option to load the build.
+ 
+ 2. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, 
+ 
+    A. Select the Verify Checksums in Transport Global option to confirm 
+       the integrity of the routines that are in the transport global. When 
+       prompted for the INSTALL NAME enter the patch or build name (ex.  
+       OR*3.0*479).
+ 
+       NOTE: Using <spacebar><enter> will not bring up a Multi-Package build 
+             even if it was loaded immediately before this step. It will only 
+             bring up the last patch in the build.
+  
+    B. Select the Backup a Transport Global option to create a backup message   
+       of any routines exported with this patch. It will not backup any other   
+       changes such as DDs or templates. 
+ 
+    C. You may also elect to use the following options: 
+       i.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       
+       ii. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all of the components of this patch,
+           such as routines, DDs, templates, etc.
+ 
+    D. Select the Install Package(s) option and choose the patch to install.
+       i.   If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+            Install? NO//', answer NO
+  
+       ii.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?    
+            NO//', answer NO
+ 
+       iii. When prompted 'Want to DISABLE Scheduled Options, Menu Options,  
+            and Protocols? NO//', answer NO
+            a. When prompted 'Enter options you wish to mark as 'Out Of
+               Order':', press the Enter key.
+           
+            b. When prompted 'Enter protocols you wish to mark as 'Out Of
+               Order':', press the Enter key.
+ 
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ This patch only consists of routines. During the VistA Installation
+ Procedure of the KIDS build, the installer should back up the modified
+ routines by the use of the 'Backup a Transport Global' action
+ (step 2B in the Installations Instructions above).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQQPL1
+    Before: B93414156   After:B134129327  **10,85,148,173,203,206,249,
+                                           243,280,306,361,385,350,479**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 01, 2018
+Completed By:                               Date Completed: JAN 31, 2019
+Released By :                               Date Released : JAN 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

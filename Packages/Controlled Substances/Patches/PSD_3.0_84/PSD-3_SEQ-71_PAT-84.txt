@@ -1,0 +1,348 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 09/11/18 at 17:11
+=============================================================================
+Run Date: NOV 14, 2018                     Designation: PSD*3*84
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #71                      Status: Released
+                  Compliance Date: DEC 14, 2018
+=============================================================================
+
+Associated patches: (v)PSD*3*8     <<= must be installed BEFORE `PSD*3*84'
+                    (v)PSD*3*65    <<= must be installed BEFORE `PSD*3*84'
+                    (v)PSD*3*79    <<= must be installed BEFORE `PSD*3*84'
+
+Subject: EPIP CONTROLLED SUBSTANCES REMEDIATION 1.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+ PSD*3.0*84 provides the following enhancements to VistA:
+  
+ - Enhances the Outpatient Rx's [PSD OUTPATIENT] option in the Pharmacist 
+ Menu [PSD TRANSACTION MENU] to require users to enter the current on-hand
+ narcotic medication count without seeing the VistA computed count. The
+ existing option displays the VistA narcotic medication count without
+ asking users to enter the actual on-hand count, which does not ensure that
+ an actual count was performed to confirm that the number shown in VistA
+ matches the true count. The modification ensures that an actual count is
+ performed and compares the user's input against current VistA totals. If
+ the balances entered by the user do not match the VistA count after three
+ attempts, then an e-mail message is sent to the new CS BALANCE DISCREPANCY
+ mail group for further investigation. The mail group is populated by each
+ site with pharmacy personnel who have access to the Balance Adjustments
+ [PSD BALANCE ADJUSTMENTS] menu to address balance discrepancies.
+  
+ During the post-installation phase, routine PSD84P checks to see if there 
+ is a pre-existing CS BALANCE DISCREPANCY mail group. If it does not 
+ exist, the routine creates the new mail group and displays an on-screen 
+ confirmation. Routine PSD84P is deleted automatically at the end of patch 
+ installation.
+  
+ This modification serves as a failsafe against narcotic diversion.
+  
+ This patch adds the BALANCE DISCREPANCY CHECK field (#37) to the DRUG 
+ ACCOUNTABILITY STATS file (#58.8) to enable or disable use of the balance
+ discrepancy modification. The new field is edited using the new "BALANCE
+ DISCREPANCY CHECK:" prompt when creating or editing Master Vault
+ dispensing sites. The prompt is accessed through the existing Create/Edit
+ the Narcotic Area of Use [PSD NAOU EDIT] option. Users must hold the PSD
+ PARAM security key to access this option. Entering "ON" (or "1") at the
+ prompt will enable the discrepancy check, requiring a manual count for the
+ dispensing site. Entering "OFF" (or "0") is designed for sites where
+ manual counting is not practical and automated dispensing is used. The
+ BALANCE DISCREPANCY CHECK field is delivered as a null (disabled) value
+ for all dispensing sites at a location. A null entry in this field is the
+ same as OFF.
+  
+ - Enhances the "Daily Activity Log (in lieu of VA FORM 10-2320)" [PSD
+ DAILY LOG] option in the Production Reports [PSD PRODUCTION REPORTS] menu
+ and the "Daily Activity Log (in lieu of VA FORM 10-2320)" [PSD DAILY LOG
+ TECH] option in the Technician (CS Pharmacy) Menu [PSD PHARM TECH] to
+ group all Schedule II drugs under one group name. The existing option
+ allows a user to print all activity using the [^ALL] group selection or
+ requires a user to manually input the name of each individual drug in the
+ group every time a Daily Activity Log report is run. Manually inputting
+ this information is a significant time burden and increases the
+ possibility of data entry mistakes. This enhancement allows the user to
+ enter one group name [^ALL CII DRUGS] that selects all Schedule II drugs
+ instead of requiring entry of individual drug names. This group name must
+ be typed in full; there is no shortcut or auto-complete.
+  
+ This modification ensures a more accurate report, thereby helping to
+ monitor for drug diversion patterns and aiding staff in troubleshooting
+ when the electronic supply count does not match the number of items
+ on-hand. 
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ DRUG ACCOUNTABILITY STATS  BALANCE DISCREPANCY     New field
+  (#58.8)                     CHECK (#37)
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ CS BALANCE DISCREPANCY     New
+  
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    ---------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR20171101 Controlled Substance Narcotic Count Input
+ NSR20171111 Pharmacy Activity Report Sched II Meds
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee VA Medical Center, Milwaukee, WI
+ Fargo VA Health Care System, Fargo, ND
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from
+ FORUM. 
+  
+ Software documentation describing the new functionality introduced
+ by this patch is available for downloading.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found in the VA Software Document Library (VDL) 
+ at: https://www.domain.ext/vdl/.
+  
+  
+ Title                         File Name                        FTP Mode
+ -----------------------------------------------------------------------
+ Controlled Substances Pharmacist's User Manual
+                               psd_3_pharm_um_r1118.doc         Binary
+ Controlled Substances Pharmacist's User Manual   
+                               psd_3_pharm_um_r1118.pdf         Binary
+ Controlled Substances Supervisor's User Manual   
+                               psd_3_um_supv_r1118.doc          Binary
+ Controlled Substances Supervisor's User Manual   
+                               psd_3_um_supv_r1118.pdf          Binary
+ Controlled Substances Technical Manual           
+                               psd_3_tm_r1118.doc               Binary
+ Controlled Substances Technical Manual           
+                               psd_3_tm_r1118.pdf               Binary
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number PSD*3.0*84.
+  
+       a. Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+       b. Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is installed.
+ It compares all components of this patch (routines, data dictionaries,
+ templates, etc.).
+  
+       d. Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any
+ other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Routine PSD84P checks to see if there is a pre-existing CS BALANCE 
+ DISCREPANCY mail group. If it does not exist, the routine creates the new 
+ mail group and displays an on-screen confirmation. Routine PSD84P is 
+ deleted automatically at the end of patch installation.
+  
+ After installation is complete, each site must populate this mail group 
+ with the appropriate pharmacy personnel who have access to the Balance 
+ Adjustments [PSD BALANCE ADJUSTMENTS] menu to investigate and address 
+ narcotic count discrepancies.
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not be
+ attempted. However, in the event that a site decides to back out this
+ patch, the site should contact the National Service Desk (NSD) to submit a
+ help desk ticket. The development team will need to issue one or more
+ follow-on patches in order to comprehensively back out this patch, after
+ coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSD routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSD routines have been 
+ backed out, the first two lines of the routines will no longer contain the
+ designation of patch PSD*3.0*84 on line 2 in the patch list section. 
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES ;**[Patch List]**;13 Feb 97;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSD84P
+    Before:       n/a   After:  B2906261  **84**
+Routine Name: PSDACT
+    Before: B13793020   After: B15642875  **8,84**
+Routine Name: PSDACT1
+    Before: B32437161   After: B34237847  **10,14,30,65,84**
+Routine Name: PSDEN
+    Before: B13693307   After: B14499014  **84**
+Routine Name: PSDNBAL
+    Before:       n/a   After: B16701063  **84**
+Routine Name: PSDOPT
+    Before: B86544635   After: B90223389  **10,11,15,21,30,39,48,62,69,
+                                           71,79,84**
+ 
+Routine list of preceding patches: 8, 65, 79
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 09, 2018
+Completed By:                               Date Completed: NOV 09, 2018
+Released By :                               Date Released : NOV 14, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

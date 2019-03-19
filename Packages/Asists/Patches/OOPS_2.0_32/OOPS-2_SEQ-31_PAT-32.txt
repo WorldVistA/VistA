@@ -1,0 +1,248 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 11/26/18 at 11:01
+=============================================================================
+Run Date: JAN 09, 2019                     Designation: OOPS*2*32
+Package : OOPS - ASISTS                       Priority: EMERGENCY
+Version : 2        SEQ #31                      Status: Released
+                  Compliance Date: JAN 12, 2019
+=============================================================================
+
+Associated patches: (v)OOPS*2*31   <<= must be installed BEFORE `OOPS*2*32'
+
+Subject: DISABLE MENUS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Automated Safety Incident Surveillance and Tracking System (ASISTS) 
+ patch, OOPS*2.0*32, disables menu options that are no longer needed once 
+ the decommissioning of this application on January 1st, 2019.
+  
+ ***********************************************************************
+ ** This patch is being released as an Emergency due to the           **
+ ** decommissioning of the ASISTS application on January 1st, 2019.   **
+ ** This patch has a shortened compliance date and must be installed  **
+ ** on or before January 12th, 2019, in all systems no later than the **
+ ** mentioned compliance requirement date.                            **
+ ***********************************************************************
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Rational Defect# 870257 - Disable Menu Options for ASISTS
+    Decommissioning
+    
+    Problem:
+    --------
+    ASISTS application will be decommissioned on January 1st, 2019.  
+    The following secondary menus will be disabled upon installation of
+    this patch:
+  
+ Menu Name                        Secondary Menu Option name
+ -------------                    -----------------------------
+ Employee                         OOPS GUI EMPLOYEE
+ Supervisor                       OOPS GUI SUPERVISOR MENU
+ Occupational Health              OOPS GUI EMPLOYEE HEALTH MENU
+ Union                            OOPS GUI UNION MENU
+  
+ Access to Safety [OOPS GUI SAFETY OFFICER MENU] menu and Workers' Comp
+ [OOPS GUI WORKERS' COMP MENU] menu options are still allowed for
+ designated users.
+  
+  
+    Resolution:
+    -----------
+    Modified routine OOPSGUI1 to disable secondary menu options
+  
+ TEST SITES:
+ -----------
+ Martinsburg VA Medical Center
+ Battle Creek VA Medical Center
+ VA New York Harbor Health Care System (Brooklyn, Manhattan)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Documentation Title               File Name                  FTP Mode
+ ---------------------------------------------------------------------
+ ASISTS GUI User Manual          oops2_0um.doc                 Binary
+ ASISTS GUI Technical Manual     oops2_0tm.doc                 Binary
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch OOPS*2.0*32:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+  
+   
+    When prompted 'Delay Install (Minutes):  (0 - 60): 0//', answer 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34497330   After: B33338224  **4,8,7,11,15,18,20,21,23,28,
+                                           29,30,31,32**
+ 
+Routine list of preceding patches: 31
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 23, 2018
+Completed By:                               Date Completed: JAN 07, 2019
+Released By :                               Date Released : JAN 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

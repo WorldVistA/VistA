@@ -1,0 +1,560 @@
+
+=============================================================================
+Run Date: DEC 26, 2018                     Designation: IVM*2*164
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #143                      Status: Released
+                  Compliance Date: JAN 26, 2019
+=============================================================================
+
+Associated patches: (v)IVM*2*145   <<= must be installed BEFORE `IVM*2*164'
+                    (v)IVM*2*167   <<= must be installed BEFORE `IVM*2*164'
+                    (v)IVM*2*171   <<= must be installed BEFORE `IVM*2*164'
+
+Subject: RESIDENTIAL ADDRESS, ADDRESS CHANGES, IVM DEMO UPLOAD TOOL ENHANCEMENT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch IVM*2.0*164 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which 
+ supports Enrollment System Community Care (ESCC).
+  
+ IVM*2.0*164 is being released with DG*5.3*941 and EAS*1.0*151 in
+ Host File DG_53_P941.KID.
+  
+ IVM*2.0*164 is also being released in support of Enrollment System (ES)
+ 5.2 release. Refer to Informational Patch EAS*1.0*159 (Enrollment
+ Application System) for additional details regarding the ES release.
+  
+ This patch makes the following enhancements to Veterans Health Information
+ Systems and Technology Architecture (VistA) Registration, Eligibility, &
+ Enrollment (REE):
+  
+ This patch will modify VistA Health Level 7 (HL7) messaging.
+  
+ VistA Registration will send and receive a new address type of 
+ Residential Address to and from the Enrollment System. This address 
+ is used by Enrollment and Eligibility to retain the geographic residence 
+ of an applicant or patient. It supports the ESCC program's need to
+ determine geographic distance from a treatment facility.
+  
+ For each address type, VistA Registration will also send and receive the 
+ new "Coding Accuracy Support System (CASS) Certified" data element, which 
+ is used to indicate whether or not the format of the address has been 
+ verified by third party software.  
+  
+ The Income Verification Match (IVM) Demographic Upload Utility will 
+ include the Permanent Mailing Address CASS Certified field. 
+  
+ Listing of Updates
+ ==================
+     
+ 1. With installation of this patch, VistA receives, stores, and displays  
+    Residential Addresses sent by ES.
+  
+    a. Address changes are received from ES via Z05 HL7 messages which now
+       include the Residential Address in the PATIENT IDENTIFICATION (PID)
+       segment.
+    b. Logic for Confidential Mailing Address now allows VistA to process
+       Confidential Mailing Address updates when ES is ready to send
+       them. Previously, when a Confidential Mailing Address was updated
+       in ES, a Z05 was sent to VistA, but "site number" logic prevented
+       the address changes from being processed on VistA. The impact of
+       this change will not be apparent until ES begins to send the
+       Confidential Mailing Addresses to VistA.
+  
+ 2. When VistA receives a Residential Address type on the Z05 HL7 message
+    from ES, VistA checks the Date/Time last updated:
+  
+    a. If, and only if the incoming address is newer, the address is stored
+       on VistA.
+    b. If the incoming address on the Z05 is older, it is not stored.
+    c. No other validation is applicable to Residential Address types 
+       during the Z05 upload.
+  
+ 3. The HL7 message from ES to VistA includes the new CASS Certified
+    field for Permanent Mailing, Temporary Mailing, Confidential Mailing,
+    and Residential Address types in the new ZAV Segment.
+  
+    a. The new ZAV, Address Verification, segment will be included for each
+       address type included in the Z05 message.
+    b. The new ZAV, Address Verification, segment will be included for each
+       address type included in the Z07 message.
+  
+ 4. The IVM Demographic Upload Utility is modified to include the 
+    Permanent Mailing Address CASS Certified field.
+  
+    When a Permanent Mailing Address is received from ES on the Z05, the
+    associated CASS Certified field will either be uploaded to the IVM
+    Demographic Upload Utility or directly to the PATIENT file (#2) based
+    on the existing rules for processing a Permanent Mailing Address.
+  
+ 5. The following menu options allow a Registration user to view, add or
+    update the Residential Address. If any Residential address field is
+    added or updated, VistA will send the change to ES via the Z07 HL7
+    message.  The new ZAV, Address Verification, segment will be included
+    for each address type included in the Z05 message.
+  
+        Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+        Patient Inquiry          [DG PATIENT INQUIRY]
+        Preregister a Patient    [DGPRE PRE-REGISTER OPTION]
+        Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+        View Registration Data   [DG REGISTRATION VIEW]
+        Register a Patient       [DG REGISTER PATIENT]
+        Patient Address Update   [DG ADDRESS UPDATE]
+        Admit a Patient          [DG ADMIT PATIENT]
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------    
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Lebanon VA Medical Center (VAMC) Lebanon, PA 17042
+ VA Pittsburgh Healthcare System Pittsburgh, PA 15240  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Patches for this installation are combined in a Host File for
+ distribution: DG_53_P941.KID. The Host File was created to simplify
+ installation at Veterans Health Administration (VHA) facilities. This 
+ file can be obtained from one of the anonymous Secure File Transfer 
+ Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DG_53_P941.KID                      DG*5.3*941         ASCII
+                                     IVM*2.0*164
+                                     EAS*1.0*151
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ SFTP from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+   
+ Hines:              domain.ext  
+ Salt Lake City:     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation
+ Library at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name              SFTP Mode
+ -----------------------------------------------------------------------
+ Release Notes                       DG_5_3_P941_KID_RN.PDF  (binary)
+ IVM Technical Manual                IVM_2_P164_TM.PDF       (binary)
+ IVM User Manual                     IVM_2_P164_UM.PDF       (binary)
+  
+ Patch Installation:
+   
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install process will run routine IVM2164P to add new entries
+ listed in Post-Install Instructions section to the IVM DEMOGRAPHIC UPLOAD 
+ FIELDS file (#301.92).  If an entry already exists, it will be deleted 
+ and recreated with new data elements.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ Please see the Patch Description for patch DG*5.3*941 for installation 
+ instructions.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post-install routine, IVM2164P, delivered with this patch, will add 
+ thirty-three new records to the IVM DEMOGRAPHIC UPLOAD FIELDS file
+ (#301.92). If records already exist, IVM2164P deletes them and then 
+ adds records with new data elements.  The new records will contain the
+ following data at the completion of the post-install process:
+  
+ DHCP FIELD NAME: STREET ADDR CASS       HL7 LOCATION: ZAV03
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .1118              TRANSFORM IVM DATA: YES
+   TRANSFORM DHCP DATA: YES              ADDRESS FIELD?: YES
+   DHCP LOCATION LOGIC: S DR=.1118 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1118 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: TEMPORARY ADDR CASS    HL7 LOCATION: ZAV04
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .12115             TRANSFORM IVM DATA: YES
+   TRANSFORM DHCP DATA: YES              ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.12115 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.12115 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDR CASS
+    HL7 LOCATION: ZAV02                   UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14117
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14117 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14117 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDR CASS
+    HL7 LOCATION: ZAV01                   UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1159
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1159 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1159 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL STREET [LINE 1]
+    HL7 LOCATION: PID111C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1411
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1411 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1411 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL STREET [LINE 2]
+   HL7 LOCATION: PID112C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1412
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1412 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1412 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL STREET [LINE 3]
+    HL7 LOCATION: PID118C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1413
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1413 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1413 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDRESS CATEGORY
+   HL7 LOCATION: PID117C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .141
+   TRANSFORM IVM DATA: NO                TRANSFORM DHCP DATA: NO
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DA(1)=DFN,DA=IEN,DIC="^DPT(DA(1),.141,IEN," D 
+ ^DIC
+   DHCP OUTPUT LOGIC: S DA(1)=DFN,DA=IEN,DIC="^DPT(DA(1),.141,IEN," D ^DIC
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDRESS CITY
+    HL7 LOCATION: PID113C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1414
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1414 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1414 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDRESS STATE
+    HL7 LOCATION: PID114C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1415
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1415 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1415 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDRESS ZIP CODE
+    HL7 LOCATION: PID115C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1416
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1416 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1416 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDR COUNTRY
+   HL7 LOCATION: PID116C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14116
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.14116 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.14116 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDR PROVINCE
+    HL7 LOCATION: PID114CF                UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14114
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14114 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14114 D LOOK^IVMPREC9
+   
+ DHCP FIELD NAME: CONFIDENTIAL ADDR POSTAL CODE
+    HL7 LOCATION: PID115CF                UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14115
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14115 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14115 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDRESS COUNTY
+    HL7 LOCATION: PID119C                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14111
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14111 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14111 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDR CHANGE DT/TM
+    HL7 LOCATION: RF171CA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14112
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14112 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14112 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL ADDR CHANGE SITE
+    HL7 LOCATION: RF161CA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .14113
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.14113 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.14113 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL PHONE NUMBER
+   HL7 LOCATION: PID13CA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1315
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1315 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1315 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL START DATE
+    HL7 LOCATION: PID1112C                UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1417
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1417 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1417 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: CONFIDENTIAL END DATE
+    HL7 LOCATION: PID1113C                UPLOADABLE DEMOGRAPHIC FIELD: YES
+    DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1418
+    TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+    ADDRESS FIELD?: NO
+    DHCP LOCATION LOGIC: S DR=.1418 D LOOK^IVMPREC9
+    DHCP OUTPUT LOGIC: S DR=.1418 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDRESS [LINE 1]
+   HL7 LOCATION: PID111R                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1151
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1151 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1151 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDRESS [LINE 2]
+   HL7 LOCATION: PID112R                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1152
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1152 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1152 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDRESS [LINE 3]
+   HL7 LOCATION: PID118R                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1153
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1153 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1153 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL CITY       HL7 LOCATION: PID113R
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .1154              ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1154 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1154 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL STATE      HL7 LOCATION: PID114R
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .1155              TRANSFORM IVM DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1155 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1155 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ZIP+4      HL7 LOCATION: PID115R
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .1156              TRANSFORM IVM DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1156 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1156 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL COUNTRY    HL7 LOCATION: PID116R
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .11573             ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.11573 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.11573 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL PROVINCE   HL7 LOCATION: PID114RF
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .11571             ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.11571 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.11571 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL POSTAL CODE
+   HL7 LOCATION: PID115RF                UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .11572
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.11572 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.11572 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL COUNTY     HL7 LOCATION: PID119R
+   UPLOADABLE DEMOGRAPHIC FIELD: YES     DHCP FILE: PATIENT
+   DHCP FIELD NUMBER: .1157              ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1157 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1157 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDR CHANGE DT/TM
+   HL7 LOCATION: RF171RA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .1158
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.1158 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.1158 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDR CHANGE SITE
+   HL7 LOCATION: RF161RA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .11581
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.11581 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.11581 D LOOK^IVMPREC9
+  
+ DHCP FIELD NAME: RESIDENTIAL ADDR CHANGE SOURCE
+   HL7 LOCATION: RF162RA                 UPLOADABLE DEMOGRAPHIC FIELD: YES
+   DHCP FILE: PATIENT                    DHCP FIELD NUMBER: .11582
+   TRANSFORM IVM DATA: YES               TRANSFORM DHCP DATA: YES
+   ADDRESS FIELD?: NO
+   DHCP LOCATION LOGIC: S DR=.11582 D LOOK^IVMPREC9
+   DHCP OUTPUT LOGIC: S DR=.11582 D LOOK^IVMPREC9
+  
+ The post-install routine, IVM2164P, should be manually deleted from 
+ your system using the KERNEL option Delete Routines [XTRDEL] upon 
+ completion of the installation.
+  
+ Back-Out Plan:
+ --------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ Refer to the "DG_53_P941.KID Deployment, Installation, Back-out, and
+ Rollback Guide", for complete instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 98
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVM2164P
+    Before:       n/a   After: B55645928  **164**
+Routine Name: IVMLDEM6
+    Before: B88291633   After:B100336132  **10,58,73,79,108,106,105,124,
+                                           115,152,164**
+Routine Name: IVMPREC6
+    Before:B155993541   After:B190620030  **3,4,12,17,34,58,79,102,115,
+                                           140,144,121,151,152,165,167,
+                                           171,164**
+Routine Name: IVMPREC8
+    Before:B259327625   After:B300675114  **5,6,12,58,73,79,102,115,121,
+                                           148,151,152,168,167,171,164**
+Routine Name: IVMPRECA
+    Before: B87632745   After: B93390034  **5,6,12,34,58,56,115,144,121,
+                                           151,145,164**
+Routine Name: IVMPTRN8
+    Before: B86571271   After:B103984771  **9,11,19,12,21,17,24,36,37,
+                                           47,48,42,34,77,76,75,79,85,89,
+                                           98,56,97,104,113,109,114,105,
+                                           115,121,151,141,150,160,161,
+                                           168,167,164**
+Routine Name: IVMPTRN9
+    Before: B53734874   After: B54344683  **9,11,19,12,21,17,46,50,53,
+                                           34,49,58,79,99,116,105,115,152,
+                                           160,164**
+Routine Name: IVMPTRNA
+    Before: B15638011   After: B16853619  **46,58,76,105,152,164**
+ 
+Routine list of preceding patches: 145, 171
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2017
+Completed By:                               Date Completed: DEC 26, 2018
+Released By :                               Date Released : DEC 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

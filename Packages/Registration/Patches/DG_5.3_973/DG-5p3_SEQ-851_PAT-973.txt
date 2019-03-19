@@ -1,0 +1,368 @@
+
+=============================================================================
+Run Date: DEC 27, 2018                     Designation: DG*5.3*973
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #851                    Status: Released
+                  Compliance Date: DEC 31, 2018
+=============================================================================
+
+Associated patches: (v)DG*5.3*949  <<= must be installed BEFORE `DG*5.3*973'
+
+Subject: 2019 MEANS TEST THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2019, this      *
+ *  patch MUST be installed before January 1, 2019. The patch is being    *
+ *  released together with EAS*1.0*170 (2019 GMT Thresholds) and          *
+ *  IB*2.0*635 (2019 RX Copay Thresholds) and may be installed out of     *
+ *  sequence with respect to other released Registration (DG) patches.    *
+ **************************************************************************
+  
+ **NOTE: The installation of this patch should not be queued to run. If -- 
+         and only if -- there are exemptions, you will be prompted to 
+         UPDATE AND PRINT the exemptions report. The report should be sent 
+         to a secure printer. Please read section 4b listed under the 
+         'Installation Instructions' for more details.
+  
+ The Means Test thresholds for Calendar Year 2019 are distributed with this
+ patch. The post-installation routine, DG53973P, will create a new subentry
+ (or replace an existing one) for calendar year 2019 in the MEANS TEST DATA
+ (#250) multiple field of the MAS PARAMETERS (#43) file. 
+  
+  
+ This patch, DG*5.3*973 is one of three Veterans Information Systems 
+ and Technology Architecture (VistA) 2019 threshold patches. It
+ updates the thresholds for the Means Tests and the Maximum Annual Pension 
+ Rate. Patch EAS*1.0*170 will address the annual updates for the 
+ Geographic-Based Means Test (GMT) Thresholds and patch IB*2.0*635 will
+ address the annual updates for the Pharmacy Copay Thresholds.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+   
+ Additional Information:
+ -----------------------
+   
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================ 
+ 1.  INC2776700 - 2019 MEANS TEST THRESHOLDS
+  
+ Problem:
+ --------
+ Annual update of Geographic Means Test (GMT) thresholds are needed for
+ calendar year 2019 (income year 2018).
+  
+ Resolution:
+ -----------
+ The post-installation routine, DG53973P, will create a new subentry
+ (or replace an existing one) for calendar year 2019 in the MEANS TEST DATA
+ (#250) multiple field of the MAS PARAMETERS (#43) file. 
+  
+  
+ Six subfields within the multiple will be updated with the new Means Test
+ threshold data values as follows:
+  
+        MEANS TEST DATA (#.01) - 2019
+        MT COPAY EXEMPT VET INCOME (#2) - $33,632
+        MT COPAY EXEMPT 1ST DEP INCOME (#3) - $6,727
+        MT COPAY EXEMPT INCOME PER DEP (#4) - $2,313
+        THRESHOLD PROPERTY (#8) - $80,000
+        CHILD INCOME EXCLUSION (#17) - $12,200
+  
+ In addition, this patch will update the following fields in the 
+ PARAMETERS file (#8989.5) for Income Year 2018 to:
+  
+        DGMT MAPR GLOBAL RATE         5% 
+        DGMT MAPR 0 DEPENDENTS        $13,535
+        DGMT MAPR 1 DEPENDENTS        $17,724
+        DGMT MAPR N DEPENDENTS        $2,313 
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach VAMC
+ Manchester VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+    
+ Host file name:    DG_53_973.KID
+   
+ Builds:            DG*5.3*973
+                    EAS*1.0*170
+                    IB*2.0*635
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ DG_53_973.KID                            ASCII
+  
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview:
+  
+ Pre-Installation Instructions:
+ N/A
+  
+ Installation Instructions:
+ ========================== 
+ This host file (containing three patches) can be installed with users on
+ the system.  The installation should not be queued to run.  Installation
+ will take approximately 10 minutes. The updates to the GMT THRESHOLDS
+ file (#712.5) in patch EAS*1.0*170, are extensive. Due to the volume of
+ updates, the installation process will appear to stall and/or stop. This
+ is normal, as the file updates may take up to 10 minutes to complete.
+  
+        *****Please be patient and allow the process to complete.*****
+  
+ Also, when comparing the transport global to the current system, entries 
+ will scroll by on the screen.  This is normal as there are approximately
+ 58,686 entries included in the GMT THRESHOLDS file (#712.5) distributed
+ with this patch and a comparison is done on each of these entries. It is
+ possible your session may time out before the install has completed. If
+ so, you may not be able to get a complete screen capture of the compare.
+ This will not, however, mean that there is any problem with the software.
+ To avoid a session time-out, you can designate a printer (non-queued) as
+ the device for the installation.
+    
+   1.   DOWNLOAD HOST KIDS FILE
+        -----------------------
+        Download the KIDS file DG_53_973.KID from the ANONYMOUS.SOFTWARE
+        directory of one of the following two Office of Information
+        Field Offices (OIFOs):  Hines or Salt Lake City to the
+        appropriate directory on your system.
+       
+  
+   2.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global 
+  
+   Select Installation Option:
+  
+   3.   Select Installation Option:
+        --------------------------
+  
+        a.  Use the 'Load a Distribution' option and enter the directory
+            into which you downloaded the host file, followed by the host
+            file name:
+  
+            [directory]DG_53_973.KID
+  
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter DG*5.3*973):
+  
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+   4.   Select Installation Option: Install Package(s)
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+  
+       a.  Choose the Install Package(s) option to start the patch install.
+  
+       b.  The BILLING EXEMPTIONS file (#354.1) will be checked for
+           medication co-payment exemptions based on prior thresholds.
+           If -- and only if -- there are exemptions, you will be prompted
+           to UPDATE AND PRINT the exemptions report.  NOTE:  the report is
+           not new and is intended only as an FYI for billing staff.
+  
+              Select Action:  (P/U): Update & Print//
+  
+           Press <Enter> to accept the default "Update & Print"
+  
+              Select Device:
+  
+           You must enter a print device.  An entry is required and HOME,
+           SPOOLER, or P-MESSAGE are not allowed. You MUST choose a
+           valid printer or the installation will be aborted.
+  
+           NOTE: The exemption report contains full patient names and SSNs.
+           Be sure to select a device in a secure area and retrieve the
+           output immediately.
+  
+           You need not queue the report since the installation process
+           will queue it automatically.
+  
+       c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//' answer NO.
+       d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//' answer YES.
+       e.  When prompted 'Enter options you wish to mark as 'Out Of
+           Order':'  Enter the following options:
+  
+ [DG MEANS TEST EDIT]             Edit an Existing Means Test
+ [DG CO-PAY TEST EDIT]            Edit an Existing Copay Exemption Test
+ [EASEC LTC COPAY TEST EDIT]      Edit an Existing LTC Copayment Test
+ [EASEC LTC EXEMPTION TEST EDIT]  Edit an Existing LTC Copay Exemption Test
+  
+       f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+           Order':' press <Enter>.
+  
+ Post-Installation Instructions:
+  
+ 1. Post install routines DG53973P and IB20P635, Pre-Install routine
+ EAS1170P, and Environment check routine IB20E635 may be deleted
+ after patch installation is complete.
+  
+ 2. If the "Exemptions Based on Prior Year Thresholds" report has been
+ printed, it should be given to the MCCF/Billing Department or the
+ Integrated Billing ADPAC.
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Due to the complexity of this patch, it is not recommended for back-out, and
+ a restore from a backup of the Transport Global should not be attempted.  In
+ the event that a site decides to back out this patch, the site should contact
+ the Enterprise Service Desk (ESD) to submit a help desk ticket. The
+ development team will need to issue a follow-on patch in order to
+ comprehensively back-out this patch and restore the system to a 
+ functioning state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53973P
+    Before:       n/a   After: B10942799  **973**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2018
+Completed By:                               Date Completed: DEC 27, 2018
+Released By :                               Date Released : DEC 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

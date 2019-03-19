@@ -1,0 +1,283 @@
+$TXT Created by               H at VIPDEV32.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 10/24/18 at 15:36
+=============================================================================
+Run Date: DEC 04, 2018                     Designation: PSO*7*525
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #446                      Status: Released
+                  Compliance Date: JAN 04, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*371   <<= must be installed BEFORE `PSO*7*525'
+                    (v)PSO*7*507   <<= must be installed BEFORE `PSO*7*525'
+                    (v)PSO*7*518   <<= must be installed BEFORE `PSO*7*525'
+
+Subject: CAS MPDU BUILD 4 - RECALL NOTICE LOT#/MED ROUTE SHORT LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ As part of the Clinical Ancillary Services project (CAS) - Medication 
+ Permission/Dispensing Updates (MPDU), the Outpatient package has been
+ modified to address the following:
+  
+ 1. Modify the List of Patients/Prescriptions for Recall Notice Report
+ 2. Limit the Display of Medication Routes for Outpatient Order Dialogs
+ 3. Check dosage form to determine appropriate default route
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Item #1:
+ --------
+ The option List of Patients/Prescriptions for Recall Notice [PSO RECALL 
+ LIST] has been modified to correctly identify the Lot # of each individual
+ prescription fill (original, refill or partial; locally dispensed or CMOP)
+ so that all prescription fills with that Lot # are accurately reported.
+  
+  
+ Resolution:
+ -----------
+ Line tag LOT^PSORLST2 has been modified to also check the CMOP node 
+ for a CMOP fill (original or refill) and include it in the report.
+  
+  
+ Item #2:
+ --------
+ The prompt for selection of the medication route when entering an
+ outpatient prescription has been modified to list only those routes
+ associated with the dosage form for the selected medication (short list).
+ The system will allow partial matches that are found in the short list
+ or an exact full-text match or an abbreviation match if found in the
+ MEDICATION ROUTES file (#51.2).
+  
+  
+ Resolution:
+ -----------
+ Routines PSOORED5 and PSOBKDED were modified with the following:
+ 1. If a default med route is not defined in the orderable item, med route 
+    will be set to null (will not default to PO or ORAL).
+ 2. A "?" at the ROUTE prompt, will display a short list of routes that
+    were defined in the orderable item, and the prompt for the short list
+    selection will be "Select MED ROUTE: ".
+ 3. Partial match will pick a med route only if found in the short list
+    (not from the long list).
+ 4. An exact match of the full route name or an abbreviated route name will
+    also pick a med route.
+ 5. Existing functionality supporting "??" is retained.  Entering "??" at 
+    the ROUTE prompt will display all routes that have been defined for all
+    orderable item. When typing in a route, if no match is found, then "??"
+    is displayed.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ HEARTLAND-WEST
+ FAYETTEVILLE, AR -VAMC
+ WHITE RIVER JUNCT., VT
+ TENNESSEE VALLEY HCS
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+ Title                            File Name                     FTP Mode
+ -----------------------------------------------------------------------
+ Outpatient Pharmacy Pharmacists  PSO_7_0_P525_PHAR_UM.PDF       Binary
+ User Manual                          
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. 
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7*525.
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back-out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back-out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ POST-Installation Instructions:
+ -------------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+  ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;DEC 1997;[BUILD #] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow ticket to obtain
+ this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup of
+ the routines in a mail message using the Backup a Transport Global [XPD
+ BACKUP] menu option (this is done at time of install). The message
+ containing the backed up routines can be loaded with the "Xtract PackMan"
+ function at the Message Action prompt. The Packman function "INSTALL/CHECK
+ MESSAGE" is then used to install the backed up routines onto the VistA
+ System.
+  
+  
+ Validation of Roll Back Procedure:
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*525 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*525 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B88808842   After: B95133055  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282,450,402,518,
+                                           525**
+Routine Name: PSOORED5
+    Before: B75166815   After:B103542781  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486,402,
+                                           500,507,525**
+Routine Name: PSORLST2
+    Before: B70157701   After: B72493487  **348,371,525**
+ 
+Routine list of preceding patches: 371, 507, 518
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2018
+Completed By:                               Date Completed: DEC 04, 2018
+Released By :                               Date Released : DEC 04, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

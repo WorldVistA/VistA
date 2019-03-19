@@ -1,0 +1,284 @@
+
+=============================================================================
+Run Date: DEC 27, 2018                     Designation: IB*2*635
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #576                      Status: Released
+                  Compliance Date: DEC 31, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*611    <<= must be installed BEFORE `IB*2*635'
+
+Subject: 2019 RX COPAY THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2019, this      *
+ *  patch MUST be installed AS SOON AS POSSIBLE. The patch is being       *
+ *  released as a combined build together with DG*5.3*973 (2019 Means     *
+ *  Test Thresholds) and EAS*1.0*170 (2019 GMT Thresholds) and may be     *
+ *  installed out of sequence with respect to other released IB patches.  *
+ **************************************************************************
+  
+ This patch, IB*2.0*635, is one of three VistA 2019 threshold patches. It 
+ addresses the annual updates for the Pharmacy Copay Thresholds. Patch 
+ DG*5.3*973 will update the thresholds for the Means Tests and the Maximum
+ Annual Pension Rate. Patch EAS*1.0*170 will address the annual updates for
+ the GMT Thresholds.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+   
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+   
+ Additional Information:
+ -----------------------
+   
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================ 
+ 1.  INC2776938 - 2019 RX COPAY THRESHOLDS 
+  
+ Problem:
+ --------
+ Each year, the government sets new values for the Medicare deductible and
+ for the pension threshold rates. These values need to be updated in the
+ associated billing files for accurate and legal billing. The purpose of
+ this patch is to assist sites in the entry of the Basic Pension Threshold
+ rates and the Medicare Deductible value for Calendar Year 2019. 
+  
+ Resolution:
+ -----------
+ Post Install routine IB20P635, will automate the update of the new
+ Medicare and pension threshold values. The Technical section below
+ contains a list of the new rates, which may also be found in VHA
+ FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST AND
+ MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2019. If a site has
+ already entered the values manually, the record will be overwritten
+ with the national update.
+  
+ The new pension rates for Calendar Year 2019 (with an effective date of
+ 12/1/18) are defined in VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-
+ BASED MEANS TEST AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 
+ 2019 as:
+   
+  *   $ 13,535 for a single veteran without dependents
+  *   $ 17,724 for a veteran with 1 dependent
+  *   An additional $ 2,313 for each additional dependent beyond 1 
+      dependent
+   
+ Medicare deductible rate effective 01/01/2019 is shown as:
+   
+  *   The Medicare deductible:  $ 1,364.
+   
+ TECHNICAL:
+ ---------- 
+  
+ File #350.2 -- IB ACTION CHARGE is updated with a new record.  The values 
+ are as follows:
+   .01  KEY                 = "MEDICARE DEDUCTIBLE"
+   .02  EFFECTIVE DATE      = 3190101 (internal form for January 01, 2019)
+   .03  IB TRANSACTION TYPE = pointer to "MEDICARE DEDUCTIBLE" in file #350.1
+   .04  UNIT CHARGE, FIXED  =  1364
+   ==========
+    
+ File #354.3 -- BILLING THRESHOLDS is updated with a new record.  The 
+ values are as follows: 
+   .01  DATE                        = 3181201 (internal form for 12/01/2018)
+   .02  TYPE                        = 1       (for BASIC PENSION)
+   .03  BASE RATE FOR VETERAN       = 13535
+   .04  BASE RATE WITH 1 DEPENDENT  = 17724
+   .05  BASE RATE WITH 2 DEPENDENTS = 20037
+   .06  BASE RATE WITH 3 DEPENDENTS = 22350
+   .07  BASE RATE WITH 4 DEPENDENTS = 24663
+   .08  BASE RATE WITH 5 DEPENDENTS = 26976
+   .09  BASE RATE WITH 6 DEPENDENTS = 29289
+   .1   BASE RATE WITH 7 DEPENDENTS = 31602
+   .11  BASE RATE WITH 8 DEPENDENTS = 33915
+   .12  ADDITIONAL DEPENDENT AMOUNT = 2313 
+  
+  
+ Test Sites:
+ -----------
+ Manchester VAMC
+ West Palm Beach VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+    
+ Host file name:    DG_53_973.KID
+   
+ Builds:            DG*5.3*973
+                    EAS*1.0*170
+                    IB*2.0*635
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A 
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ DG_53_973.KID                                          Ascii
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+  
+  
+ Pre-Installation Instructions:
+  
+ The IB20E635 pre-init routine will provide prompting during the patch
+ install and may be deleted after install.
+   
+ The IB20P635 post-install routine will update the following files and may 
+ be deleted after install.
+       IB ACTION CHARGE (#350.2)
+       BILLING EXEMPTIONS (#354.1)
+       BILLING THRESHOLDS (#354.3)
+   
+  
+ Installation Instructions:
+ ========================== 
+ The components sent with this IB*2.0*635 patch have been included in the 
+ HOST File DG_53_973.KID.  Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*973.
+    
+ NOTE: Please bear in mind items below for install.
+   
+  1.  During installation, the BILLING EXEMPTIONS file (#354.1) will be
+      checked for medication co-payment exemptions based on prior
+      thresholds. If they exist, the installer will be prompted to
+      UPDATE AND PRINT the exemptions report since the exemption status may
+      change due to the new rates.
+    
+      Press <Enter> to accept the default value of Update & Print. At the
+      DEVICE prompt you must enter a valid print device. An entry is 
+      required and the HOME device is not allowed; neither are the
+      P-Message device or Spooler device (this will abort the install). You
+      MUST choose a valid printer. You need not queue the report since the
+      patch will do so automatically.
+  
+ Post-Installation Instructions:
+  
+ Please see patch DG*5.3*973 for Back-Out plan.
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please see patch DG*5.3*973 for Back-Out plan.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20E635
+    Before:       n/a   After:  B2474662  **635**
+Routine Name: IB20P635
+    Before:       n/a   After: B34594561  **635**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2018
+Completed By:                               Date Completed: DEC 27, 2018
+Released By :                               Date Released : DEC 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,358 @@
+$TXT Created by                 NTHONY at DEVVOO.DOMAIN.EXT  (KIDS) on Tuesday, 09/18/18 at 08:12
+=============================================================================
+Run Date: OCT 09, 2018                     Designation: DG*5.3*970
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #845                    Status: Released
+                  Compliance Date: OCT 11, 2018
+=============================================================================
+
+
+Subject: CORRUPTED SOCIAL SECURITY NUMBERS IN INCOME PERSON (#408.13) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses Your IT Services incident INC1928289 to fix a 
+ critical defect introduced by the ES emergency release 5.3.0.07001, and 
+ where the dependent Social Security Number (SSN) data at the VistA 
+ facilities was corrupted and requires a VistA patch to clean up the 
+ database corruption.  
+  
+ Please refer to the 'Defect Tracking System Ticket(s) & Overview' 
+ section of this patch for a description of the problem and its resolution.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Incident: INC1928289 
+    Short Description: <SUBSCRIPT>IX+1^DIE1 ^DGPR(408.13 - Error Seen At 
+    Multiple Sites
+  
+ Problem:
+ -------
+ Critical defect #810016 was logged against Enrollment System (ES) 5.3 
+ build.   A new build was created to address the defect.  Emergency 
+ Release ES 5.3.0.07001 implemented code changes to remove a method and 
+ method calls that were removing the SSN from the ZDP segment and setting 
+ it to a single "space" character. Dependent Social Security Number (SSN)
+ data at the VistA facilities was corrupted and requires a VistA patch to
+ clean up the database corruption.  Upon follow-up with the facilities who
+ reported the original error, additional instances of a slightly different
+ error were being seen after the deployment of the code fix.  The expected
+ outcome is that no errors would be seen after the deployment of ES
+ 5.3.0.07001.  The error logged in the VistA instances is as follows:
+  
+   $ZE= <SUBSCRIPT>IX^DIE1 ^DGPR(408.13,"BS","")
+  
+   K ^DGPR(408.13,"BS",$E(X,6,9),DA)
+  
+ The error is occurring on the second instance of an inbound financial HL7 
+ transmission (ORU-Z10) for a patient.  The root cause was determined to 
+ be the data (in this case an empty space) which was filed into the SOCIAL 
+ SECURITY NUMBER field (#.09) of the INCOME PERSON file (#408.13). The SSN 
+ data in that file was potentially degraded by the initial issue. ES was 
+ remediated, the second transmission files the correct data; however, 
+ still errors due to the previous value.  A third or higher transmission 
+ should file without error.
+  
+  
+ Resolution:
+ ----------
+ The post-install routine EP^DG53970P queues off a background job to 
+ delete corrupted SSNs in the SOCIAL SECURITY NUMBER (#.09) field of the
+ INCOME PERSON file (#408.13).
+  
+ * This will delete corrupted Social Security Numbers (SSNs) in the
+   INCOME PERSON file (#408.13). The routine traverses all records (IENs)
+   in the file and if the Social Security Number (#.09) field is a single
+   "space" character or the letter "P" preceded by a single "space" 
+   character, the field is set to NULL. The IENs are stored in the ^XTMP 
+   global for tracking purposes.
+  
+ * All SSN cross-references for the record are removed.  
+  
+ * The Patient record (DFN) associated with the record is determined and 
+   stored in the ^XTMP global for tracking purposes.
+  
+  
+ Test Sites:
+ -----------
+ * Erie VA Medical Center
+ * Lebanon, PA (Lebanon VA Medical Center)
+ * VA Western New York Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ There is no new or updated documentation being released with this patch.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install process will run routine DG53970P. This routine queues
+ off a background job:
+  
+ * This will delete corrupted Social Security Numbers (SSNs) in the
+   INCOME PERSON file (#408.13). The routine traverses all records (IENs)
+   in the file and if the Social Security Number (#.09) field is a single
+   "space" character or the letter "P" preceded by a single "space" 
+   character, the field is set to NULL. The IENs are stored in the ^XTMP 
+   global.
+  
+ * All SSN cross-references for the record are removed.  
+  
+ * The Patient records (DFNs) associated with each record is determined and
+   stored in the ^XTMP global.
+  
+ * Should this patch be re-installed, the background job will not be 
+   submitted and the ^XTMP global from the original installation will not
+   be removed.
+  
+  
+ NOTE: Because of the length of time this process may run to delete 
+ the corrupted SSNs from the INCOME PERSON file (#408.13), which could be 
+ several hours, this post-install routine is queued to run in the 
+ background. Upon successful completion of the job a Mailman message is 
+ sent to the Patch installer.  This message will contain statistics of the 
+ job including start and end times as well as the number of records 
+ affected.  The list of IENs that were corrected and associated DFNs is
+ captured in the ^XTMP global.  The Mailman message will include
+ information on where to view those lists. See an example of  
+ the message in the 'Post-Installation Instructions' section. 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ It is recommended to install this patch during non-peak hours and before
+ the IVM BACKGROUND JOB [IVM BACKGROUND JOB] has run. This patch should NOT
+ be installed while the IVM BACKGROUND JOB [IVM BACKGROUND JOB] is running.
+ This patch should take less than 5 minutes to install.
+  
+ 1. The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled. Use
+    the Schedule/Unschedule Options [XUTM SCHEDULE] option on the Taskman
+    Management [XUTM MGR] menu. Note the currently scheduled date/time.
+  
+ 2. Use Global Output Function to backup the INCOME PERSON file (#408.13)
+    data by running the command below (be sure to enter "V" for the
+    parameters). You will need to specify a local directory and file name
+    for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]dg_53_970_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DGPR(408.13 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility, GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/dg_53_970_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DGPR(408.13 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ Where "xxx" is the site designation, then follow the 
+ instructions above for entering the globals to save.
+  
+  
+ The following options should be disabled during installation: 
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(DG*5.3*970):
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//' respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ IMPORTANT NOTE: Do not do the following steps until you have received the 
+ Mailman message indicating the successful completion of the DG53970P 
+ post-installation cleanup:  
+  
+ * The post-installation routine DG53970P should be manually deleted from
+   your system using the KERNEL option Delete Routines [XTRDEL].
+ * The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+   Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+   Taskman Management [XUTM MGR] menu.
+  
+  
+ Example: Post-Install Mailman Message
+ -------------------------------------
+  
+ Subj: DG*5.3*970 JOB TO CORRECT SSNs IN INCOME PERSON FILE (#408.13)  
+ [#491570]
+ 09/12/18@10:36  20 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ -----
+ The DG*5.3*970 process has completed.
+  
+ This process ran through the INCOME PERSON file #408.13 and checked each
+ record for the Social Security Number (#.09) field having a 'space' or
+ a 'space' followed by a 'P' and deleted the field.
+  
+ The process statistics:
+  
+ Job Start Date/Time: SEP 12, 2018@10:36:59
+   Job End Date/Time: SEP 12, 2018@10:36:59
+  
+ Total INCOME PERSON file (#408.13) records searched: 42
+ Total records with SSN data updated: 2
+  
+  View global ^XTMP("DG53970P",26034,"SSN" for the list of records in the
+   INCOME PERSON file that had SSN data updated.
+  View global ^XTMP("DG53970P",26034,"DFN" for the list of Patients (DFNs)
+   associated with the updated INCOME PERSON file records.
+  
+ Type <Enter> to continue or '^' to exit: 
+  
+ Subj: DG*5.3*970 JOB TO CORRECT SSNs IN INCOME PERSON FILE (#408.13)  
+ [#491570]
+ Page 2
+ --------------------------------------------------------------------------
+ -----
+  View global ^XTMP("DG53970P",26034,"ERR" for the list of records in the
+   INCOME PERSON file for which a DFN was not found.
+  
+  
+ Back-Out Plan:
+ --------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ IMPORTANT NOTE: System usage cannot be restored by performing a restore 
+ from the back-up of the INCOME PERSON file (#408.13) because it would 
+ re-introduce corrupted data. Installation of follow-on patch IVM*2.0*174 
+ (which will not introduce new functionality but will complete the clean 
+ up of the corrupted data) is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13,1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53970P
+    Before:       n/a   After: B25664528  **970**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 04, 2018
+Completed By:                               Date Completed: OCT 09, 2018
+Released By :                               Date Released : OCT 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

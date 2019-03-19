@@ -1,0 +1,381 @@
+
+=============================================================================
+Run Date: NOV 05, 2018                     Designation: MAG*3*220
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #164                      Status: Released
+                  Compliance Date: DEC 06, 2018
+=============================================================================
+
+
+Subject: VistARAD Timestamp Issue
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*120.
+  
+ Subject: VISTARAD DATE/TIMESTAMP Issue Update
+ ========
+  
+ Category: OTHER
+ =========
+  
+ Description:
+ ============
+ MAG*3.0*220 provides a VistARad Update for the display of the 
+ date/timestamp associated with a study. When using VistA Imaging Capture, 
+ if the user scans/captures a document to a radiology exam with a date that
+ is more recent than the existing images, the timestamp display associated
+ with the ordered study in VistARad disappears. Additionally, the exam to
+ which the document was scanned and associated does not appear in the
+ VistARad 'Custom' lists. 
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 220_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P220_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software & Documentation:
+ =========================
+  
+ File Name                           Description
+ =========                           ===========
+ MAG3_0P220.KID                      Kernel Installation and Distribution
+                                     System (KIDS) build for Patch 220
+ MAG3_0P220_Patch_Description.pdf    Patch Description for P220 
+  
+ Documentation:
+ ==============
+ This document, MAG3_0220_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 742041 (Trouble Ticket INC0129261) VistARad Date and Timestamp
+ display
+  
+ Problem: 
+ ========
+ When using VistA Imaging Capture, if the user scans/captures a document 
+ to a radiology exam with a date that is more recent than the existing 
+ images, the timestamp associated with the ordered study in VistARad 
+ disappears. Additionally, the exam to which the document was scanned and 
+ associated does not appear in the VistARad 'Custom' tab. 
+ When a clerk scans/captures an image, the clerk has to enter the Document 
+ Image Date. This entry is only a date and does not have a time stamp. 
+ VistARad loops through all the images related to an order and selects the 
+ image with the earliest date that it finds in the image set. If the
+ scanned/captured image is the only image related to an order, it will be 
+ displayed without a timestamp.
+  
+ Resolution: 
+ ===========
+ Modified the code to use the Date/Time the image was captured, if the 
+ Document Image date/time is only a date, with no time. 
+  
+ Test Sites:
+ ===========
+ The following site is a test site for this patch:
+         Charles Norwood VAMC (Augusta)
+         Coatesville VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location           Site
+ ========           ====
+ Hines              domain.ext 
+ Salt Lake City     domain.ext
+  
+ Additional documentation may be found also be found on the VA Software 
+ Documentation Library at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*220 is released, the list of supported versions of VistARad 
+ will NOT change:
+  
+ Supported Versions      No Longer Supported 
+ ==================      ===================
+ 3.0.199                 3.0.133
+ 3.0.184                 
+ 3.0.153
+  
+ Pre/Post Installation Overview:
+ ===============================
+ This patch must be installed by the compliance date. This patch may be 
+ loaded while the VistA Imaging System is active. Installation will take 
+ less than one minute.
+  
+ Pre-Installation Instructions 
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+       system before installing MAG*3.0*220.
+  
+ VistA System (KIDS) Installation Instructions 
+ =============================================
+ Installation Steps
+ ==================
+ KIDS installation will take less than five minutes.
+ 1. On the VistA system, access the Kernel Installation and 
+ Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+       load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P220.KID) of
+       the Patch 184 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A 
+       Distribution OK! message will be displayed when the load is
+       complete.
+ 4. After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and 
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+       want to create a backup message of any routines exported with the
+       patch.
+       It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, 
+    install the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*220".
+    c. Answer "NO" to the following prompts:
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 6. When installation is finished, an Install Complete message will 
+    be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6 Install Package(s)
+ Select INSTALL NAME: MAG*3.0*220  7/24/18@12:37:52
+   => VistA Imaging 3.0 - Patch 220 VistARAD Timestamp Issue ;Created on 
+ Jul 17, 2018 
+ This Distribution was loaded on Jul 24, 2018@12:37:52 with header of
+  VistA Imaging 3.0 - Patch 220 VistARAD Timestamp Issue ;Created on Jul 
+ 17, 2018
+ 018@11:20:23
+  It consisted of the following Install(s):
+  MAG*3.0*220
+ Checking Install for Package MAG*3.0*220
+  
+ Install Questions for MAG*3.0*220
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// HERE
+   
+  Install Started for MAG*3.0*220 :
+     Jul 24, 2018@12:38:02
+  
+ Build Distribution Date: Jul 17, 2018
+  
+  Installing Routines:...
+     Jul 24, 2018@12:38:02
+  
+  Running Post-Install Routine: POS^MAGIP220.
+  
+ Post Install Mail Message: Jul 24, 2018@12:38:02
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*220 Installed.
+     Jul 24, 2018@12:38:03
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+  100%
+  
+ Complete
+  
+ Install Completed
+  
+ VistARad Client Installation Instructions
+ =========================================
+  N/A  - MAG*3.0*220 is a KIDS patch only.  There is not a client 
+  installation for MAG*3.0*220.
+  
+ Post-Installation Instructions:
+ =============================== 
+ Uninstalling MAG*3.0*220 KIDS
+ =============================
+  
+ Note: To uninstall MAG*3.0*220, the "Backup a Transport Global" menu 
+       option must have been selected during the Kernel Installation & 
+       Distribution System (KIDS) install process (see KIDS Installation
+       section above, step 4C).
+ If it is necessary to uninstall MAG*3.0*220, administrators will need to 
+ use the PackMan function INSTALL/CHECK MESSAGE. Check your MailMan 
+ messages for the backup message sent by the Backup a Transport Global 
+ function.
+ 1. Select the message shown below:
+    Backup of MAG*3.0*220 install on <mmm dd, yyyy> <user name>
+ 2. Select the Xtract Packman option
+ 3. Select the Install/Check Message option
+ 4. Enter "Yes" at the prompt
+ 5. Enter "No" at the backup prompt. There is no need to backup the 
+    backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+  Answer with PackMan function NUMBER, or NAME
+  Choose from:
+  1   ROUTINE LOAD
+  2   GLOBAL LOAD
+  3   PACKAGE LOAD
+  4   SUMMARIZE MESSAGE
+  5   PRINT MESSAGE
+  6   INSTALL/CHECK MESSAGE
+  7   INSTALL SELECTED ROUTINE(S)
+  8   TEXT PRINT/DISPLAY
+  9   COMPARE MESSAGE
+  
+ Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2 Message #43517  Unloading Routine MAGJMN1
+ (PACKMAN_BACKUP)
+ Line 380 Message #43517  Unloading Routine MAGJTU4V
+ (PACKMAN_BACKUP)
+ Line 680 Message #43517  Unloading Routine MAGJUTL5
+ (PACKMAN_BACKUP)
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore//
+ The MAG*3.0*220 KIDS Uninstall is now complete.
+  
+ Uninstalling VistARad Client
+ ============================
+ N/A  - MAG*3.0*220 is a KIDS patch only.  There is not a client 
+ installation to uninstall for MAG*3.0*220.
+  
+ Routine Information:
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum      Checksum        Patch List
+                 Before        After
+ MAGIP220        New           4110353         **220**
+ MAGJUTL2        55943912      56711674        **18,65,76,104,120,220**
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP220
+    Before:       n/a   After:  B4110353  **220**
+Routine Name: MAGJUTL2
+    Before: B55943912   After: B56711674  **18,65,76,104,120,220**
+ 
+Routine list of preceding patches: 120
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 10, 2018
+Completed By:                               Date Completed: NOV 02, 2018
+Released By :                               Date Released : NOV 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

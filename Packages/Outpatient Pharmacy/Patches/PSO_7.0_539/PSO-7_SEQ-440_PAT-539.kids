@@ -1,0 +1,909 @@
+Released PSO*7*539 SEQ #440
+Extracted from mail message
+**KIDS**:PSO*7.0*539^
+
+**INSTALL NAME**
+PSO*7.0*539
+"BLD",10879,0)
+PSO*7.0*539^OUTPATIENT PHARMACY^0^3180823^y
+"BLD",10879,1,0)
+^^41^41^3180823^^
+"BLD",10879,1,1,0)
+This patch will resolve the following issue:
+"BLD",10879,1,2,0)
+ 
+"BLD",10879,1,3,0)
+INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+"BLD",10879,1,4,0)
+             was closed without assistance
+"BLD",10879,1,5,0)
+      
+"BLD",10879,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10879,1,7,0)
+--------------------------------------------
+"BLD",10879,1,8,0)
+INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+"BLD",10879,1,9,0)
+             was closed without assistance
+"BLD",10879,1,10,0)
+INC0998874 - LON Cannot Print to suspense/ clear old records from RX suspense
+"BLD",10879,1,11,0)
+(Duplicate)  file death causing suspense print to error out.
+"BLD",10879,1,12,0)
+INC0785349 - suspense function in Vista is not working 
+"BLD",10879,1,13,0)
+(Duplicate) 
+"BLD",10879,1,14,0)
+INC0411672 - PSO OPTION NOT WORKING
+"BLD",10879,1,15,0)
+(Duplicate) 
+"BLD",10879,1,16,0)
+INC0301071 - TUA - prescriptions not printing
+"BLD",10879,1,17,0)
+(Duplicate) 
+"BLD",10879,1,18,0)
+INC0190642 - CA SDM Ticket I18597371FY18 moved to SN. UNABLE TO RUN FULL LIST
+"BLD",10879,1,19,0)
+(Duplicate)  SUSPENSE FUNCTION
+"BLD",10879,1,20,0)
+        
+"BLD",10879,1,21,0)
+Problem: 
+"BLD",10879,1,22,0)
+--------
+"BLD",10879,1,23,0)
+The Marion VA Medical Center reported getting an <UNDEFINED> error when trying
+"BLD",10879,1,24,0)
+to print local labels in the RX SUSPENSE file (#52.5). Upon further analysis
+"BLD",10879,1,25,0)
+it was determined that a bad "AC" cross-reference entry in the RX SUSPENSE
+"BLD",10879,1,26,0)
+file (#52.5) is causing the problem. Although the cross-reference is set, the
+"BLD",10879,1,27,0)
+record it is pointing to is no longer present on the file which consequently
+"BLD",10879,1,28,0)
+causes the routine PSOSULBL to error out with an <UNDEFINED> error at BEG+6.
+"BLD",10879,1,29,0)
+        
+"BLD",10879,1,30,0)
+Resolution:
+"BLD",10879,1,31,0)
+-----------
+"BLD",10879,1,32,0)
+The reason why the "AC" cross-reference entry was not deleted along with the
+"BLD",10879,1,33,0)
+original record could not be identified. However, this patch modifies the
+"BLD",10879,1,34,0)
+routine PSOSULBL to prevent the <UNDEFINED> error from happening when the
+"BLD",10879,1,35,0)
+corrupted "AC" cross-reference is present. Furthermore, the PSOSULBL routine
+"BLD",10879,1,36,0)
+was also modified to clean up the corrupt "AC" cross-reference.
+"BLD",10879,1,37,0)
+  
+"BLD",10879,1,38,0)
+Technical Resolution:
+"BLD",10879,1,39,0)
+---------------------
+"BLD",10879,1,40,0)
+Changed the routine PSOSULBL at line tag BEG and TMP to prevent the
+"BLD",10879,1,41,0)
+<UNDEFINED> error and to kill off the corrupt "AC" cross-reference entry.
+"BLD",10879,4,0)
+^9.64PA^^
+"BLD",10879,6.3)
+2
+"BLD",10879,"ABPKG")
+n
+"BLD",10879,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10879,"KRN",.4,0)
+.4
+"BLD",10879,"KRN",.401,0)
+.401
+"BLD",10879,"KRN",.402,0)
+.402
+"BLD",10879,"KRN",.403,0)
+.403
+"BLD",10879,"KRN",.5,0)
+.5
+"BLD",10879,"KRN",.84,0)
+.84
+"BLD",10879,"KRN",3.6,0)
+3.6
+"BLD",10879,"KRN",3.8,0)
+3.8
+"BLD",10879,"KRN",9.2,0)
+9.2
+"BLD",10879,"KRN",9.8,0)
+9.8
+"BLD",10879,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10879,"KRN",9.8,"NM",1,0)
+PSOSULBL^^0^B104789141
+"BLD",10879,"KRN",9.8,"NM","B","PSOSULBL",1)
+
+"BLD",10879,"KRN",19,0)
+19
+"BLD",10879,"KRN",19.1,0)
+19.1
+"BLD",10879,"KRN",101,0)
+101
+"BLD",10879,"KRN",409.61,0)
+409.61
+"BLD",10879,"KRN",771,0)
+771
+"BLD",10879,"KRN",779.2,0)
+779.2
+"BLD",10879,"KRN",870,0)
+870
+"BLD",10879,"KRN",8989.51,0)
+8989.51
+"BLD",10879,"KRN",8989.52,0)
+8989.52
+"BLD",10879,"KRN",8994,0)
+8994
+"BLD",10879,"KRN","B",.4,.4)
+
+"BLD",10879,"KRN","B",.401,.401)
+
+"BLD",10879,"KRN","B",.402,.402)
+
+"BLD",10879,"KRN","B",.403,.403)
+
+"BLD",10879,"KRN","B",.5,.5)
+
+"BLD",10879,"KRN","B",.84,.84)
+
+"BLD",10879,"KRN","B",3.6,3.6)
+
+"BLD",10879,"KRN","B",3.8,3.8)
+
+"BLD",10879,"KRN","B",9.2,9.2)
+
+"BLD",10879,"KRN","B",9.8,9.8)
+
+"BLD",10879,"KRN","B",19,19)
+
+"BLD",10879,"KRN","B",19.1,19.1)
+
+"BLD",10879,"KRN","B",101,101)
+
+"BLD",10879,"KRN","B",409.61,409.61)
+
+"BLD",10879,"KRN","B",771,771)
+
+"BLD",10879,"KRN","B",779.2,779.2)
+
+"BLD",10879,"KRN","B",870,870)
+
+"BLD",10879,"KRN","B",8989.51,8989.51)
+
+"BLD",10879,"KRN","B",8989.52,8989.52)
+
+"BLD",10879,"KRN","B",8994,8994)
+
+"BLD",10879,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10879,"QUES",0)
+^9.62^^
+"BLD",10879,"REQB",0)
+^9.611^1^1
+"BLD",10879,"REQB",1,0)
+PSO*7.0*466^2
+"BLD",10879,"REQB","B","PSO*7.0*466",1)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,20,0)
+^9.402P^^
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+539^3180823
+"PKG",170,22,1,"PAH",1,1,0)
+^^41^41^3180823
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue:
+"PKG",170,22,1,"PAH",1,1,2,0)
+ 
+"PKG",170,22,1,"PAH",1,1,3,0)
+INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+"PKG",170,22,1,"PAH",1,1,4,0)
+             was closed without assistance
+"PKG",170,22,1,"PAH",1,1,5,0)
+      
+"PKG",170,22,1,"PAH",1,1,6,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",170,22,1,"PAH",1,1,7,0)
+--------------------------------------------
+"PKG",170,22,1,"PAH",1,1,8,0)
+INC1866048 - Suspense not printing, previously entered ticket INC1658361 which
+"PKG",170,22,1,"PAH",1,1,9,0)
+             was closed without assistance
+"PKG",170,22,1,"PAH",1,1,10,0)
+INC0998874 - LON Cannot Print to suspense/ clear old records from RX suspense
+"PKG",170,22,1,"PAH",1,1,11,0)
+(Duplicate)  file death causing suspense print to error out.
+"PKG",170,22,1,"PAH",1,1,12,0)
+INC0785349 - suspense function in Vista is not working 
+"PKG",170,22,1,"PAH",1,1,13,0)
+(Duplicate) 
+"PKG",170,22,1,"PAH",1,1,14,0)
+INC0411672 - PSO OPTION NOT WORKING
+"PKG",170,22,1,"PAH",1,1,15,0)
+(Duplicate) 
+"PKG",170,22,1,"PAH",1,1,16,0)
+INC0301071 - TUA - prescriptions not printing
+"PKG",170,22,1,"PAH",1,1,17,0)
+(Duplicate) 
+"PKG",170,22,1,"PAH",1,1,18,0)
+INC0190642 - CA SDM Ticket I18597371FY18 moved to SN. UNABLE TO RUN FULL LIST
+"PKG",170,22,1,"PAH",1,1,19,0)
+(Duplicate)  SUSPENSE FUNCTION
+"PKG",170,22,1,"PAH",1,1,20,0)
+        
+"PKG",170,22,1,"PAH",1,1,21,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,22,0)
+--------
+"PKG",170,22,1,"PAH",1,1,23,0)
+The Marion VA Medical Center reported getting an <UNDEFINED> error when trying
+"PKG",170,22,1,"PAH",1,1,24,0)
+to print local labels in the RX SUSPENSE file (#52.5). Upon further analysis
+"PKG",170,22,1,"PAH",1,1,25,0)
+it was determined that a bad "AC" cross-reference entry in the RX SUSPENSE
+"PKG",170,22,1,"PAH",1,1,26,0)
+file (#52.5) is causing the problem. Although the cross-reference is set, the
+"PKG",170,22,1,"PAH",1,1,27,0)
+record it is pointing to is no longer present on the file which consequently
+"PKG",170,22,1,"PAH",1,1,28,0)
+causes the routine PSOSULBL to error out with an <UNDEFINED> error at BEG+6.
+"PKG",170,22,1,"PAH",1,1,29,0)
+        
+"PKG",170,22,1,"PAH",1,1,30,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,31,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,32,0)
+The reason why the "AC" cross-reference entry was not deleted along with the
+"PKG",170,22,1,"PAH",1,1,33,0)
+original record could not be identified. However, this patch modifies the
+"PKG",170,22,1,"PAH",1,1,34,0)
+routine PSOSULBL to prevent the <UNDEFINED> error from happening when the
+"PKG",170,22,1,"PAH",1,1,35,0)
+corrupted "AC" cross-reference is present. Furthermore, the PSOSULBL routine
+"PKG",170,22,1,"PAH",1,1,36,0)
+was also modified to clean up the corrupt "AC" cross-reference.
+"PKG",170,22,1,"PAH",1,1,37,0)
+  
+"PKG",170,22,1,"PAH",1,1,38,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,39,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,40,0)
+Changed the routine PSOSULBL at line tag BEG and TMP to prevent the
+"PKG",170,22,1,"PAH",1,1,41,0)
+<UNDEFINED> error and to kill off the corrupt "AC" cross-reference entry.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSOSULBL")
+0^1^B104789141^B101436426
+"RTN","PSOSULBL",1,0)
+PSOSULBL ;BHAM ISC/RTR,SAB - Print Suspended labels ;4/8/93
+"RTN","PSOSULBL",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**139,173,174,148,200,260,264,287,289,290,354,421,370,427,466,539**;DEC 1997;Build 2
+"RTN","PSOSULBL",3,0)
+ ;External reference ^PS(55 supported by DBIA 2228
+"RTN","PSOSULBL",4,0)
+ ;Reference to SAVNDC^PSSNDCUT supported by IA 4707
+"RTN","PSOSULBL",5,0)
+ ;Reference ^PSDRUG( supported by DBIA 221
+"RTN","PSOSULBL",6,0)
+ K PDUZ,REPRINT G ^PSOSULB1
+"RTN","PSOSULBL",7,0)
+BEG ;
+"RTN","PSOSULBL",8,0)
+ K PSORUNIN,PSORETRY N BPSCNT
+"RTN","PSOSULBL",9,0)
+ S PSORUNIN="^XTMP(""PSOSUSP"")"     ; global lock fix by patch 290
+"RTN","PSOSULBL",10,0)
+ L +@PSORUNIN:10 I '$T D
+"RTN","PSOSULBL",11,0)
+ . F PSORETRY=1:1:120 L +@PSORUNIN:60 I $T Q  ;wait Max of 2 hrs before continue
+"RTN","PSOSULBL",12,0)
+ . Q
+"RTN","PSOSULBL",13,0)
+ K ^UTILITY($J,"PSOPRO"),^TMP("PSOSBAI",$J)
+"RTN","PSOSULBL",14,0)
+ S PSOSEQ=1 F DFN=0:0 S DFN=$O(^PS(52.5,"AC",DFN)) Q:'DFN  D
+"RTN","PSOSULBL",15,0)
+ . S (PSOSFLAG,DEAD)=0
+"RTN","PSOSULBL",16,0)
+ . F ZZ=0:0 S ZZ=$O(^PS(52.5,"AC",DFN,ZZ)) Q:'ZZ!$G(PSOSFLAG)  D
+"RTN","PSOSULBL",17,0)
+ . . I ZZ'>PRTDT S PSOSFLAG=1
+"RTN","PSOSULBL",18,0)
+ . D:'$G(PSRT) PID^VADPT6 D CHKDEAD I $G(DEAD) Q
+"RTN","PSOSULBL",19,0)
+ . I $G(PSOSFLAG) D PRT
+"RTN","PSOSULBL",20,0)
+ D PPL
+"RTN","PSOSULBL",21,0)
+ D:$D(^UTILITY($J,"PSOPRO"))&($P(PSOPAR,"^",8)) PROF
+"RTN","PSOSULBL",22,0)
+ G EXIT
+"RTN","PSOSULBL",23,0)
+ ;
+"RTN","PSOSULBL",24,0)
+PRT F SDT=0:0 S SDT=$O(^PS(52.5,"AC",DFN,SDT)) D:SDT CHK Q:'SDT
+"RTN","PSOSULBL",25,0)
+ Q
+"RTN","PSOSULBL",26,0)
+EXIT ;
+"RTN","PSOSULBL",27,0)
+ I $D(^TMP("PSOSBAI",$J)) D CHKMAIL
+"RTN","PSOSULBL",28,0)
+ K ^TMP($J),^TMP("PSOSBAI",$J)
+"RTN","PSOSULBL",29,0)
+ I $D(PSORUNIN) L -@PSORUNIN
+"RTN","PSOSULBL",30,0)
+ D ^%ZISC
+"RTN","PSOSULBL",31,0)
+ K %,%ZIS,CNT,COM,DA,DEAD,DFN,DIRUT,DTTM,G,HDPPL,JJ,JJJ,JJJJ,PDUZ,IOP,ORD,PFIOQ,PSLION,PSRT,POP,PRF,PRTDT,PSLIO,PSNP,PSODBQ,PSOSEQ,PSOSFLAG,PSOSU,PSOTIME,PSOOUT,PSOPRFLG,PSOSEQ,PSOSUSPR,PSSPND,PST,PTL,PPLHLD,PSFNIEN,ZTSK
+"RTN","PSOSULBL",32,0)
+ K PSOBADDR,PSORUNIN,PSORETRY,PSRTONE,PSSRT,PSUSDEA,RF,RFCNT,RX,RXDFN,SDT,SFN,SREC,STOP,SUSPT,VADM,VAPA,X,X1,X2,XAK,XDATE,Y,Z,ZZ,WWW,PSDDDATE,SINRX,RXPR,RXPR1,GGGG,XXX,ZII,ZTDESC,ZTRTN,ZTSAVE,RRRR,RXRP,RXRP1,RXFL,SPR S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSOSULBL",33,0)
+CHK I SDT'>XDATE D TMP Q
+"RTN","PSOSULBL",34,0)
+ Q
+"RTN","PSOSULBL",35,0)
+TMP F SFN=0:0 S SFN=$O(^PS(52.5,"AC",DFN,SDT,SFN)) Q:'SFN  D
+"RTN","PSOSULBL",36,0)
+ . I '$D(^PS(52.5,SFN,0))!'$D(^DPT(+DFN,0)) K ^PS(52.5,"AC",DFN,SDT,SFN) Q
+"RTN","PSOSULBL",37,0)
+ . N RXSITE,PRINTED,PSDFN,RXSTS,RXIEN,RXFILL,PARTIAL,RXEXPDT,RESP,DSHLD,ESTATUS
+"RTN","PSOSULBL",38,0)
+ . S RXIEN=+$$GET1^DIQ(52.5,SFN,.01,"I"),RXDFN=$$GET1^DIQ(52,RXIEN,2,"I")
+"RTN","PSOSULBL",39,0)
+ . S RXSTS=$$GET1^DIQ(52,RXIEN,100,"I"),RXSITE=+$$GET1^DIQ(52.5,SFN,.06,"I"),PRINTED=+$$GET1^DIQ(52.5,SFN,2,"I")
+"RTN","PSOSULBL",40,0)
+ . S PARTIAL=+$$GET1^DIQ(52.5,SFN,.05,"I"),RXEXPDT=$$GET1^DIQ(52,RXIEN,26,"I")
+"RTN","PSOSULBL",41,0)
+ . S RXFILL=$$GET1^DIQ(52.5,SFN,9,"I") I RXFILL="" S RXFILL=$$LSTRFL^PSOBPSU1(RXIEN)
+"RTN","PSOSULBL",42,0)
+ . I RXSITE=$G(PSOSITE),'PRINTED,RXDFN=DFN,RXSTS<9 D
+"RTN","PSOSULBL",43,0)
+ . . I PARTIAL,'$D(^PSRX(RXIEN,"P",PARTIAL)) Q
+"RTN","PSOSULBL",44,0)
+ . . ; If already printed and the REPRINT flag is not set, remove from queue and quit
+"RTN","PSOSULBL",45,0)
+ . . ; Line below commented out due to patient safety issue
+"RTN","PSOSULBL",46,0)
+ . . ; Refer to PSO*7.0*466
+"RTN","PSOSULBL",47,0)
+ . . ;I $$PRINTED(SFN,RXIEN,RXFILL)=1 D REMOVE(SFN,RXIEN,RXFILL,.5,"","") Q  
+"RTN","PSOSULBL",48,0)
+ . . I RXEXPDT<DT,RXSTS<11 D  Q
+"RTN","PSOSULBL",49,0)
+ . . . N RXREC S RXREC=RXIEN D EX^PSOSUTL
+"RTN","PSOSULBL",50,0)
+ . . . K DIE,DA S DIE=52,DA=RXIEN,DR="100///11" D ^DIE K DIE,DA
+"RTN","PSOSULBL",51,0)
+ . . . K DIK,DA S DA=SFN,DIK="^PS(52.5," D ^DIK K DIK,DA
+"RTN","PSOSULBL",52,0)
+ . . S PSOBADDR=0 D CHKBAI I PSOBADDR Q
+"RTN","PSOSULBL",53,0)
+ . . I PSRT="D" D
+"RTN","PSOSULBL",54,0)
+ . . . S PSSRT=$S($G(PSRTONE)="I":VA("PID"),1:$P(^DPT(DFN,0),"^")_$P(^(0),"^",9))
+"RTN","PSOSULBL",55,0)
+ . . . S PSUSDEA=$P($G(^PS(52.5,SFN,0)),"^",10)
+"RTN","PSOSULBL",56,0)
+ . . . S SRT=$S(PSUSDEA["A"!(PSUSDEA["C"):"A-"_PSSRT,PSUSDEA["S":"S-"_PSSRT,1:"Z-"_PSSRT)
+"RTN","PSOSULBL",57,0)
+ . . I PSRT'="D" D
+"RTN","PSOSULBL",58,0)
+ . . . S SRT=$S(PSRT:$P(^DPT(DFN,0),"^")_$P(^(0),"^",9),1:VA("PID"))
+"RTN","PSOSULBL",59,0)
+ . . ; - If not partial fill, sending Rx to ECME for 3rd Party billing
+"RTN","PSOSULBL",60,0)
+ . . I 'PARTIAL,$$RETRX^PSOBPSUT(RXIEN,RXFILL),SDT>DT Q
+"RTN","PSOSULBL",61,0)
+ . . S ESTATUS=$$STATUS^PSOBPSUT(RXIEN,RXFILL)
+"RTN","PSOSULBL",62,0)
+ . . I 'PARTIAL,ESTATUS'="",ESTATUS'["PAYABLE",'$$ECMESTAT^PSOBPSU2(RXIEN,RXFILL) Q  ;check for existing epharmacy reject codes
+"RTN","PSOSULBL",63,0)
+ . . I 'PARTIAL,RXFILL>0,$$STATUS^PSOBPSUT(RXIEN,RXFILL-1)'="" S DSHLD=$$DSH^PSOSULB1(SFN) Q:'DSHLD  ;epharmacy-3/4 days supply (refill)
+"RTN","PSOSULBL",64,0)
+ . . I 'PARTIAL,RXFILL=0 S DSHLD=$$DSH^PSOSULB1(SFN) Q:'DSHLD  ;epharmacy-3/4 days supply (original fill)
+"RTN","PSOSULBL",65,0)
+ . . I 'PARTIAL,$$FIND^PSOREJUT(RXIEN,RXFILL,,"79,88",,1) Q  ;check for DUR/RTS/RRR (again as it is done in ECMESTAT above)
+"RTN","PSOSULBL",66,0)
+ . . I 'PARTIAL,($$RETRX^PSOBPSUT(RXIEN,RXFILL)!$$ECMEST2^PSOBPSU2(RXIEN,RXFILL)) D  Q:$$TRISTA^PSOREJU3(RXIEN,RXFILL,.RESP,"PL")
+"RTN","PSOSULBL",67,0)
+ . . . D ECMESND^PSOBPSU1(RXIEN,RXFILL,,"PL",,,,,,.RESP)
+"RTN","PSOSULBL",68,0)
+ . . . I $D(RESP),'RESP S BPSCNT=$G(BPSCNT)+1
+"RTN","PSOSULBL",69,0)
+ . . S ^TMP($J,SRT,SFN)=RXIEN
+"RTN","PSOSULBL",70,0)
+ Q
+"RTN","PSOSULBL",71,0)
+PPL ; Wait some time before printing so response from 3rd party payers can be received
+"RTN","PSOSULBL",72,0)
+ I $G(BPSCNT)>0 H 60+$S((BPSCNT*15)>7200:7200,1:(BPSCNT*15))
+"RTN","PSOSULBL",73,0)
+ K PPL,PPL1 S ORD="" F  S ORD=$O(^TMP($J,ORD)) Q:ORD=""  D PPL1
+"RTN","PSOSULBL",74,0)
+ Q
+"RTN","PSOSULBL",75,0)
+PPL1 ; Printing Labels
+"RTN","PSOSULBL",76,0)
+ N PARTIAL,REPRINT,REFILL,Z,QUIT,ESTAT
+"RTN","PSOSULBL",77,0)
+ S (PSOPRFLG,SUSPT)=1 S:$D(PSOPROP) PFIO=PSOPROP
+"RTN","PSOSULBL",78,0)
+ S:'$D(PDUZ) PDUZ=DUZ K RXPR,RXPR1,PPL
+"RTN","PSOSULBL",79,0)
+ F SFN=0:0 S SFN=$O(^TMP($J,ORD,SFN)) Q:'SFN  D
+"RTN","PSOSULBL",80,0)
+ .I '$D(^PS(52.5,SFN,0)) Q
+"RTN","PSOSULBL",81,0)
+ .S Z=$G(^PS(52.5,SFN,0)),SINRX=+$P(Z,"^"),REFILL=+$P(Z,"^",13)
+"RTN","PSOSULBL",82,0)
+ .S PARTIAL=$P(Z,"^",5),REPRINT=$P(Z,"^",12)
+"RTN","PSOSULBL",83,0)
+ .; - Screening out OPEN/UNRESOLVED Rejects (3rd Party Payer) 
+"RTN","PSOSULBL",84,0)
+ .S QUIT=0
+"RTN","PSOSULBL",85,0)
+ .I 'PARTIAL,'REPRINT D  I QUIT Q
+"RTN","PSOSULBL",86,0)
+ ..I $$FIND^PSOREJUT(SINRX,REFILL,,"79,88",,1) S QUIT=1 Q
+"RTN","PSOSULBL",87,0)
+ ..S ESTAT=$$STATUS^PSOBPSUT(SINRX,REFILL)
+"RTN","PSOSULBL",88,0)
+ ..I ESTAT'="E PAYABLE",'$$ECMESTAT^PSOBPSU2(SINRX,REFILL) S QUIT=1 Q  ;host reject
+"RTN","PSOSULBL",89,0)
+ ..I ESTAT="E PAYABLE" D
+"RTN","PSOSULBL",90,0)
+ ...D SAVNDC^PSSNDCUT(+$$GET1^DIQ(52,SINRX,6,"I"),$$RXSITE^PSOBPSUT(SINRX,REFILL),$$GETNDC^PSONDCUT(SINRX,REFILL))
+"RTN","PSOSULBL",91,0)
+ .; 
+"RTN","PSOSULBL",92,0)
+ .I $L($G(PPL))<240 D
+"RTN","PSOSULBL",93,0)
+ ..S PPL=$P(^TMP($J,ORD,SFN),"^")_","_$G(PPL),RXPR(SINRX)=$P(^PS(52.5,SFN,0),"^",5)
+"RTN","PSOSULBL",94,0)
+ ..S:$P(^PS(52.5,SFN,0),"^",12) RXRP(SINRX)=1
+"RTN","PSOSULBL",95,0)
+ .E  D
+"RTN","PSOSULBL",96,0)
+ ..S PPL1=$P(^TMP($J,ORD,SFN),"^")_","_$G(PPL1),RXPR1(SINRX)=$P(^PS(52.5,SFN,0),"^",5)
+"RTN","PSOSULBL",97,0)
+ ..S:$P(^PS(52.5,SFN,0),"^",12) RXRP1(SINRX)=1
+"RTN","PSOSULBL",98,0)
+ .S DFN=$P(^PS(52.5,SFN,0),"^",3)
+"RTN","PSOSULBL",99,0)
+ .I $P(PSOPAR,"^",8),'$D(^PSRX($P(^PS(52.5,SFN,0),"^"),1)),'$G(RXPR(SINRX)),'$G(RXPR1(SINRX)) S PSOPRFLG=0
+"RTN","PSOSULBL",100,0)
+ S PSNP=$S($P(PSOPAR,"^",8):1,1:0)
+"RTN","PSOSULBL",101,0)
+ I $G(PPL) D
+"RTN","PSOSULBL",102,0)
+ .S PPLHLD=$G(PPL1),HDPPL=PPL K PPL1 S (PSODBQ,PSOSUSPR)=1
+"RTN","PSOSULBL",103,0)
+ .F GGGG=0:0 S GGGG=$O(RXPR(GGGG)) Q:'GGGG  K:'$G(RXPR(GGGG)) RXPR(GGGG)
+"RTN","PSOSULBL",104,0)
+ I $G(PPL) S ZTIO=$G(PSLION) D DQ^PSOLBL,SEQ D:'$G(PSOPRFLG) 
+"RTN","PSOSULBL",105,0)
+ .I $G(PSOPROP)'=$G(PSLION) S ^UTILITY($J,"PSOPRO",DFN)="" Q
+"RTN","PSOSULBL",106,0)
+ .D DQ^PSOPRFSS
+"RTN","PSOSULBL",107,0)
+ I $G(PPLHLD) K RXPR S (PPL,HDPPL)=PPLHLD,(PSODBQ,PSOSUSPR)=1,PSNP=0 S:'$D(PDUZ) PDUZ=DUZ F XXX=0:0 S XXX=$O(RXPR1(XXX)) Q:'XXX  S:$G(RXPR1(XXX)) RXPR(XXX)=RXPR1(XXX)
+"RTN","PSOSULBL",108,0)
+ I $G(PPLHLD) F RRRR=0:0 S RRRR=$O(RXRP1(RRRR)) Q:'RRRR  S:$D(RXRP1(RRRR)) RXRP(RRRR)=1
+"RTN","PSOSULBL",109,0)
+ I $G(PPLHLD) S ZTIO=$G(PSLION) D DQ^PSOLBL,SEQ D:'$G(PSOPRFLG)
+"RTN","PSOSULBL",110,0)
+ .I $G(PSOPROP)'=$G(PSLION) S ^UTILITY($J,"PSOPRO",DFN)="" Q
+"RTN","PSOSULBL",111,0)
+ .D DQ^PSOPRFSS
+"RTN","PSOSULBL",112,0)
+ K PPL,PPL1,PPLHLD,RXPR,RXPR1,RXFL Q
+"RTN","PSOSULBL",113,0)
+SEQ ;
+"RTN","PSOSULBL",114,0)
+ S SQCOUNT=0 F JJJ=1:1:$L(HDPPL) S:$E(HDPPL,JJJ)="," SQCOUNT=SQCOUNT+1
+"RTN","PSOSULBL",115,0)
+ F JJJJ=1:1:SQCOUNT S PSFNIEN=$P(HDPPL,",",JJJJ) D:PSFNIEN
+"RTN","PSOSULBL",116,0)
+ .S PSFNIEN=$O(^PS(52.5,"B",PSFNIEN,0)) I PSFNIEN D
+"RTN","PSOSULBL",117,0)
+ ..S $P(^PS(52.5,PSFNIEN,0),"^",11)=PSOSEQ,PSOSEQ=PSOSEQ+1 S:$P(^PS(52.5,PSFNIEN,0),"^",8)&($P(^(0),"^",9))&($P(^(0),"^",6)) ^PS(52.5,"AS",$P(^PS(52.5,PSFNIEN,0),"^",8),$P(^(0),"^",9),$P(^(0),"^",6),$P(^(0),"^",11),PSFNIEN)=""
+"RTN","PSOSULBL",118,0)
+ Q
+"RTN","PSOSULBL",119,0)
+CHKDEAD D DEM^VADPT I VADM(1)="" S DEAD=0 Q
+"RTN","PSOSULBL",120,0)
+ I VADM(6)="" S DEAD=0 Q
+"RTN","PSOSULBL",121,0)
+ S PSDDDATE=$P(VADM(6),"^",2) F WWW=0:0 S WWW=$O(^PS(55,DFN,"P",WWW)) Q:'WWW  I $D(^PS(55,DFN,"P",WWW,0)),$P($G(^(0)),"^") S (DA,RXREC)=$P(^(0),"^") S SFN=$O(^PS(52.5,"B",RXREC,0)) I SFN,$D(^PS(52.5,SFN,0)) S RX=$P(^(0),"^") D DEAD
+"RTN","PSOSULBL",122,0)
+ Q
+"RTN","PSOSULBL",123,0)
+DEAD S $P(^PSRX(RX,"STA"),"^")=12,COM="Died ("_$G(PSDDDATE)_")",DA(1)=RX
+"RTN","PSOSULBL",124,0)
+ S DEAD=1 D ARECD^PSOSUTL S DIK="^PS(52.5,",DA=SFN D ^DIK K DIK
+"RTN","PSOSULBL",125,0)
+ Q
+"RTN","PSOSULBL",126,0)
+PROF ;
+"RTN","PSOSULBL",127,0)
+ S ZTRTN="PRPROF^PSOSULBL",ZTDESC="PRINT PROFILES FROM SUSPENSE",ZTDTH=$H,ZTIO=PSOPROP
+"RTN","PSOSULBL",128,0)
+ S ZTSAVE("^UTILITY($J,""PSOPRO"",")="",ZTSAVE("PSOPAR")="",ZTSAVE("PSODTCUT")="",ZTSAVE("PSOSITE")="",ZTSAVE("PSOPRPAS")="" D ^%ZTLOAD Q
+"RTN","PSOSULBL",129,0)
+PRPROF ;
+"RTN","PSOSULBL",130,0)
+ F LLL=0:0 S LLL=$O(^UTILITY($J,"PSOPRO",LLL)) Q:'LLL  I $D(^DPT(LLL,0)) S DFN=LLL D DQ^PSOPRFSS
+"RTN","PSOSULBL",131,0)
+ K PSOPAR,PSODTCUT,PSOSITE,PSOPRPAS,LLL,DFN,^UTILITY($J,"PSOPRO") D ^%ZISC S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","PSOSULBL",132,0)
+ Q
+"RTN","PSOSULBL",133,0)
+ ;
+"RTN","PSOSULBL",134,0)
+CHKBAI ; IF BAD ADDRESS INDICATOR, NO ACTIVE TEMPORARY ADDRESS AND ROUTING OF MAIL, DO NOT SEND TO OPAI AND/OR DO NOT PRINT LABEL
+"RTN","PSOSULBL",135,0)
+ N PSOBADR,ACTSEQ,XX,PSOFIRST,ACTTYPE
+"RTN","PSOSULBL",136,0)
+ I '$G(RXFILL),$P(^PSRX(RXIEN,0),"^",11)="W" Q
+"RTN","PSOSULBL",137,0)
+ I $P($G(^PSRX(RXIEN,1,RXFILL,0)),"^",2)="W" Q
+"RTN","PSOSULBL",138,0)
+ S ACTTYPE="BAD ADDRESS INDICATOR"
+"RTN","PSOSULBL",139,0)
+ S PSOBADR=$$CHKRX^PSOBAI(RXIEN)
+"RTN","PSOSULBL",140,0)
+ ; GOOD PERMANENT OR TEMPORARY ADDRESS - CHECK FOR DO NOT MAIL
+"RTN","PSOSULBL",141,0)
+ I PSOBADR,'$P(PSOBADR,"^",2) D SETTMP(ACTTYPE) Q
+"RTN","PSOSULBL",142,0)
+ S NOMAIL=0 D NOMAIL I NOMAIL Q
+"RTN","PSOSULBL",143,0)
+ D FOREIGN
+"RTN","PSOSULBL",144,0)
+ Q
+"RTN","PSOSULBL",145,0)
+ ;
+"RTN","PSOSULBL",146,0)
+SETTMP(ACTTYPE) ;
+"RTN","PSOSULBL",147,0)
+ N ACTSEQ,XX,PSOFIRST,ZZ
+"RTN","PSOSULBL",148,0)
+ S PSOFIRST=1
+"RTN","PSOSULBL",149,0)
+ S PSOBADDR=1
+"RTN","PSOSULBL",150,0)
+ S ACTSEQ=0 F  S ACTSEQ=$O(^PSRX(RXIEN,"A",ACTSEQ)) Q:ACTSEQ=""  D
+"RTN","PSOSULBL",151,0)
+ .S XX=$G(^PSRX(RXIEN,"A",ACTSEQ,0)) I $P(XX,"^",2)="S" S ZZ=$P(XX,"^",4),ZZ=$S(ZZ<6:ZZ,1:ZZ-1) I ZZ=RXFILL,$P(XX,"^",5)["due to "_ACTTYPE S PSOFIRST=0 Q
+"RTN","PSOSULBL",152,0)
+ I PSOFIRST D
+"RTN","PSOSULBL",153,0)
+ .S ^TMP("PSOSBAI",$J,RXIEN,+RXFILL)=ACTTYPE
+"RTN","PSOSULBL",154,0)
+ .D ACT(ACTTYPE)
+"RTN","PSOSULBL",155,0)
+ Q
+"RTN","PSOSULBL",156,0)
+ ;
+"RTN","PSOSULBL",157,0)
+NOMAIL ; SEE IF FILE 55 STATUS IS DO NOT MAIL
+"RTN","PSOSULBL",158,0)
+ N ACTTYPE,DFN,MAILST,MAILEXP
+"RTN","PSOSULBL",159,0)
+ S ACTTYPE="DO NOT MAIL"
+"RTN","PSOSULBL",160,0)
+ S DFN=+$P($G(^PSRX(RXIEN,0)),"^",2),MAILST=$P($G(^PS(55,DFN,0)),"^",3) I MAILST'=2 Q
+"RTN","PSOSULBL",161,0)
+ S MAILEXP=$P(^PS(55,DFN,0),"^",5)
+"RTN","PSOSULBL",162,0)
+ I MAILEXP=""!(MAILEXP>DT) D SETTMP(ACTTYPE)
+"RTN","PSOSULBL",163,0)
+ Q
+"RTN","PSOSULBL",164,0)
+ ;
+"RTN","PSOSULBL",165,0)
+FOREIGN ;
+"RTN","PSOSULBL",166,0)
+ N DFN,PSOFORGN
+"RTN","PSOSULBL",167,0)
+ S DFN=$$GET1^DIQ(52,RXIEN,2,"I")  ;*370
+"RTN","PSOSULBL",168,0)
+ D ADD^VADPT
+"RTN","PSOSULBL",169,0)
+ S PSOFORGN=$P($G(VAPA(25)),"^",2) I PSOFORGN'="" D  ; *370
+"RTN","PSOSULBL",170,0)
+ . N PSON,PSOFOREN S PSOFOREN=1
+"RTN","PSOSULBL",171,0)
+ . S PSON=$$GET1^DIQ(59,PSOSITE,.01)
+"RTN","PSOSULBL",172,0)
+ . I PSON'["MANILA",PSOFORGN["UNITED STATES" S PSOFOREN=0
+"RTN","PSOSULBL",173,0)
+ . I PSON["MANILA",PSOFORGN["PHILIPPINES" S PSOFOREN=0
+"RTN","PSOSULBL",174,0)
+ . S PSOFORGN=PSOFOREN
+"RTN","PSOSULBL",175,0)
+ I PSOFORGN D SETTMP("FOREIGN ADDRESS")
+"RTN","PSOSULBL",176,0)
+ Q
+"RTN","PSOSULBL",177,0)
+ ;
+"RTN","PSOSULBL",178,0)
+CHKMAIL ; SEE IF MAILMAN MESSAGE SHOULD BE SENT FOR BAI/MAIL ROUTING
+"RTN","PSOSULBL",179,0)
+ N RXIEN,RXFILL,ACTSEQ,XX,DFN,SSN,NAME,ACTTYPE,ZZ
+"RTN","PSOSULBL",180,0)
+ K ^TMP("PSOSM",$J)
+"RTN","PSOSULBL",181,0)
+ S RXIEN=0 F  S RXIEN=$O(^TMP("PSOSBAI",$J,RXIEN)) Q:'RXIEN  D
+"RTN","PSOSULBL",182,0)
+ .S RXFILL="" F  S RXFILL=$O(^TMP("PSOSBAI",$J,RXIEN,RXFILL)) Q:RXFILL=""  D
+"RTN","PSOSULBL",183,0)
+ ..S ACTTYPE=^TMP("PSOSBAI",$J,RXIEN,RXFILL)
+"RTN","PSOSULBL",184,0)
+ ..S ACTSEQ=0 F  S ACTSEQ=$O(^PSRX(RXIEN,"A",ACTSEQ)) Q:ACTSEQ=""  D
+"RTN","PSOSULBL",185,0)
+ ...S XX=$G(^PSRX(RXIEN,"A",ACTSEQ,0)) I $P(XX,"^",2)="S" S ZZ=$P(XX,"^",4),ZZ=$S(ZZ<6:ZZ,1:ZZ-1) I ZZ=RXFILL,$P(XX,"^",5)["due to "_ACTTYPE Q
+"RTN","PSOSULBL",186,0)
+ ...S DFN=$P(^PSRX(RXIEN,0),"^",2),NAME=$P(^DPT(DFN,0),"^"),SSN=$P(^(0),"^",9) I SSN="" S SSN=0
+"RTN","PSOSULBL",187,0)
+ ...S ^TMP("PSOSM",$J,NAME,SSN,RXIEN,RXFILL)=ACTTYPE
+"RTN","PSOSULBL",188,0)
+ I $D(^TMP("PSOSM",$J)) D BAIMAIL^PSOSULB1
+"RTN","PSOSULBL",189,0)
+ K ^TMP("PSOSM",$J)
+"RTN","PSOSULBL",190,0)
+ Q
+"RTN","PSOSULBL",191,0)
+ ;
+"RTN","PSOSULBL",192,0)
+ACT(ACTTYPE) ;adds activity info for rx not printed from suspense/not sent to OPAI
+"RTN","PSOSULBL",193,0)
+ N NOW,IR,FDA
+"RTN","PSOSULBL",194,0)
+ D NOW^%DTC S NOW=%
+"RTN","PSOSULBL",195,0)
+ S IR=0 F FDA=0:0 S FDA=$O(^PSRX(RXIEN,"A",FDA)) Q:'FDA  S IR=FDA
+"RTN","PSOSULBL",196,0)
+ S IR=IR+1,^PSRX(RXIEN,"A",0)="^52.3DA^"_IR_"^"_IR
+"RTN","PSOSULBL",197,0)
+ S ^PSRX(RXIEN,"A",IR,0)=NOW_"^"_"S"_"^"_DUZ_"^"_$S(+RXFILL>5:RXFILL+1,1:+RXFILL)_"^"_"RX not printed from suspense due to "_ACTTYPE
+"RTN","PSOSULBL",198,0)
+ K PSUS,RXF,I,FDA,DIC,DIE,DR,Y,X,%,%I,%H,RSDT
+"RTN","PSOSULBL",199,0)
+ Q
+"RTN","PSOSULBL",200,0)
+ ;
+"RTN","PSOSULBL",201,0)
+PRINTED(SFN,RX,RFL) ;
+"RTN","PSOSULBL",202,0)
+ ; Check if a label log indicates that a label has already been printed
+"RTN","PSOSULBL",203,0)
+ ; Input Parameters
+"RTN","PSOSULBL",204,0)
+ ;    SFN - IEN of RX Suspense file (#52.5)
+"RTN","PSOSULBL",205,0)
+ ;    RX  - IEN of Prescription file (#50)
+"RTN","PSOSULBL",206,0)
+ ;    RFL - Refill number
+"RTN","PSOSULBL",207,0)
+ ; Output
+"RTN","PSOSULBL",208,0)
+ ;     0 - Label not printed
+"RTN","PSOSULBL",209,0)
+ ;     1 - Label already printed
+"RTN","PSOSULBL",210,0)
+ ;     2 - Label already printed and reprint flag is set
+"RTN","PSOSULBL",211,0)
+ ;
+"RTN","PSOSULBL",212,0)
+ ; Check parameters
+"RTN","PSOSULBL",213,0)
+ I '$G(SFN) Q 0
+"RTN","PSOSULBL",214,0)
+ I '$G(RX) Q 0
+"RTN","PSOSULBL",215,0)
+ I $G(RFL)="" S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOSULBL",216,0)
+ ;
+"RTN","PSOSULBL",217,0)
+ N LBL,PTLBL
+"RTN","PSOSULBL",218,0)
+ ; Check label log
+"RTN","PSOSULBL",219,0)
+ S LBL=0,PTLBL=0
+"RTN","PSOSULBL",220,0)
+ F  S LBL=$O(^PSRX(RX,"L",LBL)) Q:'LBL  D  Q:PTLBL
+"RTN","PSOSULBL",221,0)
+ . I +$$GET1^DIQ(52.032,LBL_","_RX,1,"I")'=RFL Q
+"RTN","PSOSULBL",222,0)
+ . I $$GET1^DIQ(52.032,LBL_","_RX,4,"I") Q    ; Warning Label printed
+"RTN","PSOSULBL",223,0)
+ . I $$GET1^DIQ(52.032,LBL_","_RX,2)["INTERACTION" Q  ; Comment contains "Interaction"
+"RTN","PSOSULBL",224,0)
+ . S PTLBL=1
+"RTN","PSOSULBL",225,0)
+ ; If the label log indicates a label was printed and the REPRINT flag is set, change the output to 2
+"RTN","PSOSULBL",226,0)
+ I PTLBL=1,$$GET1^DIQ(52.5,SFN_",",8,"I") S PTLBL=2
+"RTN","PSOSULBL",227,0)
+ ; 
+"RTN","PSOSULBL",228,0)
+ Q PTLBL
+"RTN","PSOSULBL",229,0)
+ ;
+"RTN","PSOSULBL",230,0)
+REMOVE(SFN,RX,RFL,USR,DSP,PRTFLG) ;
+"RTN","PSOSULBL",231,0)
+ ; Remove the RX from the RX Suspense queue (#52.5)
+"RTN","PSOSULBL",232,0)
+ ; Input Parameters
+"RTN","PSOSULBL",233,0)
+ ;    SFN - IEN of RX Suspense file (#52.5)
+"RTN","PSOSULBL",234,0)
+ ;    RX  - IEN of Prescription file (#52)
+"RTN","PSOSULBL",235,0)
+ ;    RFL - Refill number
+"RTN","PSOSULBL",236,0)
+ ;    USR - User to enter into the Activity Log
+"RTN","PSOSULBL",237,0)
+ ;    DSP - Display message
+"RTN","PSOSULBL",238,0)
+ ;    PRTFLG - 1:Printed,2:Printed and Reprint Flag
+"RTN","PSOSULBL",239,0)
+ ;
+"RTN","PSOSULBL",240,0)
+ ; If Reprint flag and display flags are on, display message and quit
+"RTN","PSOSULBL",241,0)
+ I $G(PRTFLG)=2,$G(DSP)  W !,"Reprint Flag is on.  Prescription left on suspense." H 1 Q
+"RTN","PSOSULBL",242,0)
+ ;
+"RTN","PSOSULBL",243,0)
+ ; Check parameters
+"RTN","PSOSULBL",244,0)
+ I '$G(SFN) Q
+"RTN","PSOSULBL",245,0)
+ I '$D(^PS(52.5,SFN,0)) Q
+"RTN","PSOSULBL",246,0)
+ I '$G(RX) Q
+"RTN","PSOSULBL",247,0)
+ I '$D(^PSRX(RX,0)) Q
+"RTN","PSOSULBL",248,0)
+ I $G(RFL)="" S RFL=$$LSTRFL^PSOBPSU1(RX)
+"RTN","PSOSULBL",249,0)
+ ;
+"RTN","PSOSULBL",250,0)
+ N DIK,DA,DIE,DR,DTOUT
+"RTN","PSOSULBL",251,0)
+ ;
+"RTN","PSOSULBL",252,0)
+ ; Remove from the suspense queue
+"RTN","PSOSULBL",253,0)
+ S DIK="^PS(52.5,",DA=SFN D ^DIK
+"RTN","PSOSULBL",254,0)
+ ;
+"RTN","PSOSULBL",255,0)
+ ; Update status in the PRESCRIPTION file
+"RTN","PSOSULBL",256,0)
+ K DIE,DA
+"RTN","PSOSULBL",257,0)
+ S DIE=52,DA=RX,DR="100///0" D ^DIE
+"RTN","PSOSULBL",258,0)
+ ; 
+"RTN","PSOSULBL",259,0)
+ ; Update the Activity Log
+"RTN","PSOSULBL",260,0)
+ I '$D(USR) S USR=DUZ
+"RTN","PSOSULBL",261,0)
+ I '$D(^VA(200,+USR,0)) S USR=DUZ
+"RTN","PSOSULBL",262,0)
+ N X,DIC,DA,DD,DO,DR,DINUM,Y,DLAYGO
+"RTN","PSOSULBL",263,0)
+ S DA(1)=RX,DIC="^PSRX("_RX_",""A"",",DLAYGO=52.3,DIC(0)="L",X=$$NOW^XLFDT()
+"RTN","PSOSULBL",264,0)
+ S DIC("DR")=".02///S;.03////"_USR_";.04///"_$S(RFL>5:RFL+1,1:RFL)_";.05///Rx removed from suspense due to previous label print"
+"RTN","PSOSULBL",265,0)
+ D FILE^DICN
+"RTN","PSOSULBL",266,0)
+ I $G(DSP) W !,"Prescription has been removed from suspense." H 1
+"RTN","PSOSULBL",267,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10879,6)
+^440
+**END**
+**END**
+

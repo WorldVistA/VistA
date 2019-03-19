@@ -1,0 +1,304 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/01/18 at 13:21
+=============================================================================
+Run Date: NOV 01, 2018                     Designation: DVBA*2.7*206
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #176                    Status: Released
+                  Compliance Date: DEC 02, 2018
+=============================================================================
+
+
+Subject: AMIE EXAM FILE UPDATE FOR CAPRI C&P EXAM LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+     Patch, DVBA*2.7*206, will update the AMIE EXAM (#396.6) file by
+     changing 10 exam names and inactivating 55 exams.
+  
+   
+       
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. INC1343994 - Update exam pick list on C&P exam request screen of CAPRI
+   
+     Problem:
+     --------
+     There is a request to update the list of exams under the Compensation
+     and Pension (C&P) Exams tab in Compensation and Pension Record
+     Interchange (CAPRI) to synchronize the Veterans Benefit Administration
+     (VBA) and Veterans Health Administration (VHA) exam lists.
+    
+    
+     Resolution:
+     -----------
+     The post install routine DVBAP206 included in this patch will update
+     the AMIE EXAM (#396.6) file by updating the names of 10 exams and
+     inactivating 55 exams. The AMIE EXAM (#396.6) file provides the list
+     of exams to the C&P Exam tab in CAPRI.
+       
+     The entries whose exam names will be changed in the AMIE EXAM (#396.6)
+     file are:
+    
+         ---------------------------------------------------------------------
+         Old Name: AID AND ATTENDANCE OR HOUSEBOUND EXAMINATION
+         New Name: Aid and Attendance or Housebound Examination
+         ---------------------------------------------------------------------
+         Old Name: BONES (FRACTURES AND BONE DISEASE)
+         New Name: Bones (Fractures and Bone Diseases)
+         ---------------------------------------------------------------------
+         Old Name: DBQ DENTAL Dental & oral (other than TMJ)
+         New Name: DBQ DENTAL Dental & oral (other than TMD)
+         ---------------------------------------------------------------------
+         Old Name: DBQ GI Liver conditions Hepatitis, cirrhosis & other liver
+         New Name: DBQ GI Liver Hepatitis, cirrhosis & other liver conditions
+         ---------------------------------------------------------------------
+         Old Name: DBQ General Medical Gulf War
+         New Name: DBQ General Medical Gulf War (including Burn Pits)
+         ---------------------------------------------------------------------
+         Old Name: DBQ MUSC Foot miscellaneous
+         New Name: DBQ MUSC Foot conditions, including Flatfoot (Pes Planus)
+         ---------------------------------------------------------------------
+         Old Name: DBQ MUSC Hip & thigh
+         New Name: DBQ MUSC Hip & thigh conditions
+         ---------------------------------------------------------------------
+         Old Name: DBQ Medical SHA
+         New Name: DBQ Separation Health Assessment
+         ---------------------------------------------------------------------
+         Old Name: DBQ RHEUM Arthritis: non-degen (inflam, imm, cryst, infect)
+         New Name: DBQ RHEUM Arthritis non-degen (inflam, imm, cryst, infect)
+         ---------------------------------------------------------------------
+         Old Name: SOCIAL AND INDUSTRIAL SURVEY
+         New Name: Social and Industrial Survey
+         ---------------------------------------------------------------------
+         
+         
+     The entries that will be inactivated in the AMIE EXAM (#396.6) file are:
+     
+         ACROMEGALY
+         AMPUTATION, RESIDUALS OF
+         ARRHYTHMIAS
+         ARTERIES, VEINS AND MISCELLANEOUS
+         AUDIO
+         BRAIN AND SPINAL CORD
+         CHRONIC FATIGUE SYNDROME
+         COLD INJURY PROTOCOL EXAMINATION
+         CRANIAL NERVES
+         CUSHING'S SYNDROME
+         DENTAL AND ORAL
+         DIABETES MELLITUS
+         DIGESTIVE CONDITIONS, MISCELLANEOUS
+         EAR DISEASE
+         EATING DISORDERS (MENTAL DISORDERS)
+         ENDOCRINE DISEASES, MISCELLANEOUS
+         EPILEPSY AND NARCOLEPSY
+         ESOPHAGUS AND HIATAL HERNIA
+         EYE EXAMINATION
+         FEET
+         FIBROMYALGIA
+         GENERAL MEDICAL EXAMINATION
+         GENITOURINARY EXAMINATION
+         GULF WAR GUIDELINES
+         GYNECOLOGICAL CONDITIONS AND DISORDERS OF THE BREAST
+         HAND, THUMB, AND FINGERS
+         HEART
+         HEMIC DISORDERS
+         HIV-RELATED ILLNESS
+         HYPERTENSION
+         INFECTIOUS, IMMUNE, AND NUTRITIONAL DISABILITIES
+         INITIAL EVALUATION FOR POST-TRAUMATIC STRESS DISORDER (PTSD)
+         INTESTINES (LARGE AND SMALL)
+         JOINTS (SHOULDER/ELBOW/WRIST/HIP/KNEE/ANKLE)
+         LIVER, GALL BLADDER, AND PANCREAS
+         LYMPHATIC DISORDERS
+         MENTAL DISORDERS (EXCEPT PTSD AND EATING DISORDERS)
+         MOUTH, LIPS, AND TONGUE
+         MUSCLES
+         NEUROLOGICAL DISORDERS, MISCELLANEOUS
+         NOSE, SINUS, LARYNX, AND PHARYNX
+         PERIPHERAL NERVES
+         PRISONER OF WAR PROTOCOL EXAMINATION
+         PULMONARY TUBERCULOSIS AND MYCOBACTERIAL DISEASES
+         RECTUM AND ANUS
+         RESPIRATORY (OBSTRUCTIVE, RESTRICTIVE, AND INTERSTITIAL)
+         RESPIRATORY DISEASES, MISCELLANEOUS
+         REVIEW EXAMINATION FOR POST-TRAUMATIC STRESS DISORDER (PTSD)
+         SCARS
+         SENSE OF SMELL AND TASTE
+         SKIN DISEASES (OTHER THAN SCARS)
+         SPINE
+         STOMACH, DUODENUM AND PERITONEAL ADHESIONS
+         THYROID AND PARATHYROID DISEASES
+         TRAUMATIC BRAIN INJURY (TBI)
+         
+  
+ TEST SITES:
+ -----------
+ West Palm Beach VAMC
+ Asheville VA Medical Center    
+    
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to install this patch, backup file ^DVB(396.6) using your site's 
+ policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^DVB(396.6
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+ Installation Instructions:
+ --------------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter DVBA*2.7*206)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package DVBA*2.7*206.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//", respond NO.
+  
+      7. Review the installation message for notifications.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine DVBAP206 from your production system
+ after the patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------
+ Please use %GIGEN for restoring the AMIE EXAM file (#396.6) if needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^DVB(396.6
+    7. At the To global ^DVB(396.6=>, enter ^DVB(396.6
+    8. At the OK to transfer? Yes=> prompt, select Yes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBAP206
+    Before:       n/a   After: B29414778  **206**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2018
+Completed By:                               Date Completed: NOV 01, 2018
+Released By :                               Date Released : NOV 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

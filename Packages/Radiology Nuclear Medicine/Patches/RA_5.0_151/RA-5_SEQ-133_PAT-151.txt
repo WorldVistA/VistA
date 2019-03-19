@@ -1,0 +1,128 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/02/18 at 14:52
+=============================================================================
+Run Date: NOV 19, 2018                     Designation: RA*5*151
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #133                      Status: Released
+                  Compliance Date: DEC 20, 2018
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*151'
+
+Subject: RADIOPHARMACEUTICAL USAGE REPORT IS NOT DISPLAYING CORRECT VALUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Radiopharmaceutical Usage Report is not displaying correct 
+ Long-Case@Time values after turning on Site Specific Accession Numbers
+  
+ ServiceNow Ticket(s):
+ ----------------------------  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  Defect 833192 (ServiceNow INC1967867)
+  
+ Problem:
+ -------
+ Running the Radiopharmaceutical Usage Report after the site turned on the Site
+ Specific Accession Numbers functionality (introduced with RA*5.0*47), the
+ report shows the Long-Case value as the same for all lines of the report.  It
+ is displaying the @time correct but the Long-Case value is instead the value
+ for the last entry in NUC MED EXAM DATA reviewed when processing the report.
+  
+ Resolution:
+ ----------
+ Modify routine RANMUSE2 to reset variables RADFN, RADTI & RACNI before calling
+ SSANVAL^RAHLRU1 which uses these values to find the Site Specific Accession
+ Number. 
+  
+  
+ Test Sites:
+ ----------
+ Boston HCS
+ Lexington VAMC
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 2 minutes to complete.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following 
+        options.  When prompted for the INSTALL NAME enter patch RA*5.0*151.
+          
+              a. Backup a Transport Global - This option will create a backup 
+                 message of any routines exported with this patch. It will not 
+                 backup any other changes such as DDs or templates.
+              b. Compare Transport Global to Current System - This option will 
+                 (allow you to view all changes that will be made when this 
+                 patch is installed.  It compares all components of this patch 
+                 routines, DDs, templates, etc.).
+              c. Verify Checksums in Transport Global - This option will allow 
+                 you to ensure the integrity of the routines that are in the 
+                 transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option and
+          choose the patch to install (RA*5.0*151)
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO//'
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'
+  
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RANMUSE2
+    Before: B42611600   After: B44664263  **65,47,151**
+ 
+Routine list of preceding patches: 47
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 02, 2018
+Completed By:                               Date Completed: NOV 16, 2018
+Released By :                               Date Released : NOV 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

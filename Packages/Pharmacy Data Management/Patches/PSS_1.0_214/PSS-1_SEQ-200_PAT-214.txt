@@ -1,0 +1,197 @@
+
+=============================================================================
+Run Date: JAN 15, 2019                     Designation: PSS*1*214
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #200                      Status: Released
+                  Compliance Date: FEB 15, 2019
+=============================================================================
+
+Associated patches: (v)PSS*1*220   <<= must be installed BEFORE `PSS*1*214'
+
+Subject: MCCF EDI TAS EPHARMACY BUILDS 5 & 6
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*512
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*24
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*617
+    PHARMACY DATA MANAGEMENT V. 1.0                       PSS*1.0*214
+  
+ All four of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSS BUNDLE 12.0
+   KIDS Host File name: BPS_1_24_PSO_IB_PSS.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. The Lookup into Dispense Drug File [PSS LOOK] is being updated to
+      allow for up to five decimal places to be displayed for the NCPDP
+      QUANTITY MULTIPLIER.
+  
+   2. On the Drug Enter/Edit screen, the system will now display a message
+      to the user if all three "ePharmacy Billable" fields are blank for an
+      active drug upon exiting the option.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                  File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual v1.0
+                                     PSS_1_0_P214_UM.PDF          Binary
+ *ECME Deploy Install Rollback Guide (BPS*1*24)
+                                     BPS_1_0_P24_IG.PDF           Binary
+  
+ *A single Install Rollback Guide will be released with this multi-build.  
+  It can be found on the ECME page of the VDL.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch BPS*1.0*24.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 43
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSBPSUT
+    Before:   B791476   After:  B5090315  **127,214**
+Routine Name: PSSDEE
+    Before:B151722192   After:B156658460  **3,5,15,16,20,22,28,32,34,33,
+                                           38,57,47,68,61,82,90,110,155,
+                                           156,180,193,200,207,195,227,
+                                           220,214**
+Routine Name: PSSLOOK
+    Before:B137641364   After:B137686641  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195,213,227,220,214**
+ 
+Routine list of preceding patches: 220
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 18, 2017
+Completed By:                               Date Completed: JAN 15, 2019
+Released By :                               Date Released : JAN 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

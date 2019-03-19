@@ -1,0 +1,306 @@
+$TXT Created by                 at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Monday, 07/23/18 at 08:59
+=============================================================================
+Run Date: NOV 30, 2018                     Designation: LR*5.2*508
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #416                    Status: Released
+                  Compliance Date: JAN 02, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*476  <<= must be installed BEFORE `LR*5.2*508'
+
+Subject: REMOVAL OF OBSOLETE FIELD AND SPECIMEN IN EXECUTE CODE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch LR*5.2*508 corrects references to one obsolete field and one 
+ specimen found in the EXECUTE CODE file (#62.07) for Mycology and 
+ Bacteriology. The obsolete references were discovered after the release of
+ LR*5.2*476.
+  
+ For Mycology, field #19.2 listed in the EXECUTE CODE field (#1) is 
+ not defined in the LAB DATA file (#63) and is deleted. For Bacteriology,
+ specimen #68 from the TOPOGRAPHY FIELD file (#61) was previously
+ referenced in the EXECUTE CODE field (#1) with the expression LRSPEC=68.
+ This reference is changed to LRSPEC=360 to reflect specimen #360 from the
+ TOPOGRAPHY FIELD file (#61). 
+  
+ This patch also updates the DESCRIPTION field (#6) in the EXECUTE CODE 
+ file (#62.07) with new national definitions for Bacteriology, Mycology, 
+ and TB Bacteriology entries. The national definitions are updated to 
+ include the sub-fields PRELIMINARY BACT COMMENT (#1), PRELIMINARY 
+ MYCOLOGY COMMENT (#20.5), and PRELIMINARY TB COMMENT (#26.5). These 
+ sub-fields originate from the MICROBIOLOGY multiple field (#5) defined in 
+ the LAB DATA file (#63).
+  
+ Post-installation routine LR52P508 makes the edits to the EXECUTE CODE 
+ field (#1) for Bacteriology and Mycology records. This routine also 
+ updates the DESCRIPTION field (#6) with new national definitions for 
+ Bacteriology, Mycology, and TB Bacteriology entries. Upon completion of 
+ patch installation, the routine is deleted automatically.
+  
+ Routine LRMISTF is modified to reference the preliminary comment fields 
+ for Bacteriology, Mycology, and TB Bacteriology, along with corresponding 
+ expansion codes. This enables predefined messages from the LAB 
+ DESCRIPTIONS file (#62.5) to appear when the user runs the Results Entry 
+ (Batch) option.
+  
+ Note to sites: Office of Information and Technology (OIT) personnel can
+ retrieve the installation log for this patch by using the Install
+ File Print [XPD PRINT INSTALL FILE] option in the UTILITIES submenu of
+ KIDS. If any local changes were saved when this patch was installed, they
+ must be restored manually after installation of the patch.
+  
+  
+ BLOOD BANK Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*508 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*508 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*508 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    ---------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+ Parameters Associated: 
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Central Texas Veterans Health Care System, Temple, TX
+ Gulf Coast Veterans Health Care System, Biloxi, MS
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan patch message and is distributed 
+ from FORUM. 
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found in the VA Software Document Library (VDL)
+ at: https://www.domain.ext/vdl/.
+  
+ Title                                    File Name             FTP Mode
+ -----------------------------------------------------------------------
+ Laboratory Technical Manual Version 5.2  lab5_2tm.doc          Binary 
+ Laboratory Technical Manual Version 5.2  lab5_2tm.pdf          Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number LR*5.2*508.
+  
+    a. Verify Checksums in Transport Global - This option will help 
+       ensure the integrity of the routines that are in the transport
+       global.
+  
+    b. Print Transport Global - This option will enable viewing the 
+       components of the KIDS build.
+  
+    c. Compare Transport Global to Current System - This option will 
+       enable viewing all changes that will be made when this patch is
+       installed. It compares all components of this patch (routines,
+       data dictionaries, templates, etc.).
+  
+    d. Back up a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not
+       back up any other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Verify that the execute codes for Mycology and Bacteriology have been
+ updated by doing a FileMan inquiry of the EXECUTE CODE file (#62.07) and
+ then reviewing the MUMPS code in the EXECUTE CODE field (#1). For
+ Mycology, field #19.2 should no longer be available. For Bacteriology, the
+ reference to specimen #68 with the expression LRSPEC=68 should now read
+ LRSPEC=360.
+  
+ OIT personnel can retrieve the installation log for this patch by using 
+ the Install File Print [XPD PRINT INSTALL FILE] option in the UTILITIES 
+ submenu of KIDS. If any local changes were saved when this patch was 
+ installed, they must be restored manually after installation of the patch.
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the LR routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the LR routines have been backed
+ out, the first two lines of the routines will no longer contain the
+ designation of patch LR*5.2*508 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR52P508
+    Before:       n/a   After: B42243663  **508**
+Routine Name: LRMISTF
+    Before: B14531968   After: B15004530  **153,476,508**
+ 
+Routine list of preceding patches: 476
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2018
+Completed By:                               Date Completed: NOV 28, 2018
+Released By :                               Date Released : NOV 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

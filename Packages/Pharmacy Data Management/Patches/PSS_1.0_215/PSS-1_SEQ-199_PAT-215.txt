@@ -1,0 +1,206 @@
+
+=============================================================================
+Run Date: NOV 30, 2018                     Designation: PSS*1*215
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #199                      Status: Released
+                  Compliance Date: DEC 30, 2018
+=============================================================================
+
+
+Subject: EPIP COMPANION PATCH FOR PSO*7.0*452
+
+Category: 
+  - Informational
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+       ------------------------------------------------------------------
+                                   PLEASE NOTE
+  
+            THIS PATCH IS PART OF THE EPIP_PSO_PSS_IP21.KID HOST FILE
+            WHICH CONSISTS OF PSO*7.0*452 AND PSS*1.0*215. THE PSO PATCH
+            WILL BE INSTALLED BEFORE THE PSS PATCH.
+  
+       ------------------------------------------------------------------
+  
+  
+ Patch PSS*1.0*215 provides the following enhancements to VistA:
+  
+ - Adds a new RX# UPPER BOUND WARNING LIMIT field (#48) to the PHARMACY 
+ SYSTEM file (#59.7). The value stored in this field determines when the 
+ early warning message enabled by PSO*7.0*452 is sent to the new
+ PHARMACY SUPERVISORS MailMan group.
+  
+ - Adds the CLINICAL ALERT multiple field (#109) to the PHARMACY PATIENT 
+ file (#55). This field stores the date and time of the alert and enables 
+ free-text entry of the alert text. This patch also creates a new PSO
+ CLINICAL ALERT ENTER/EDIT input template and adds it to the PHARMACY
+ PATIENT file (#55). This template is utilized by the PSODEMSB routine in
+ patch PSO*7.0*452.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ ------------------         -------------------       --------------------
+ PHARMACY PATIENT (#55)     CLINICAL ALERT            New
+                              Multiple (#109)
+ PHARMACY SYSTEM (#59.7)    RX# UPPER BOUND           New
+                              WARNING LIMIT (#48)
+  
+ Forms Associated:
+  
+ Form Name                  File #                    New/Modified/Deleted
+ ---------                  ------                    --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name               Type                     New/Modified/Deleted
+ -----------               ----                     --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol                   Name                    New/Modified/Deleted
+ -----------------          -----                   ---------------------
+ N/A
+  
+  
+ Parameters Associated:
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name        Type     File Name (Number)    New/Modified/Deleted
+  -------------       -----    ------------------    --------------------
+  
+ PSO CLINICAL ALERT   Input    PHARMACY PATIENT (#55)   New
+   ENTER/EDIT
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20150512 Early Warning Advisory for Approaching the end of Rx Number 
+ Ranges 
+ 20151001 Pharmacy Patient Demographics
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Orlando VA Medical Center, Orlando, FL
+ VA St. Louis Health Care System, Saint Louis, MO
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+  
+ Documentation can also be found in the VA Software Documentat Library 
+ (VDL) at: https://www.domain.ext/vdl/.
+  
+  
+ Title                                   File Name         FTP Mode
+ ---------------------------------------------------------------------
+ Pharmacy Data Management                pss_1_tm_p215.docx     Binary
+   Technical Manual/Security Guide
+ Pharmacy Data Management                pss_1_tm_p215.pdf      Binary
+   Technical Manual/Security Guide
+  
+  
+  
+ Patch Installation:
+ -------------------
+ Refer to the Patch Installation sections for patch PSO*7.0*452 for 
+ instructions on installing the host file that includes this companion 
+ patch. 
+  
+  
+ Backout Procedure:
+ ------------------
+ Refer to the the Backout Procedure sections for patch PSO*7.0*452 for 
+ information on backing out this multi-patch build.
+  
+  
+ Routine Information:
+ --------------------
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 02, 2017
+Completed By:                               Date Completed: NOV 30, 2018
+Released By :                               Date Released : NOV 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

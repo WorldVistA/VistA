@@ -1,0 +1,267 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/06/18 at 08:05
+=============================================================================
+Run Date: NOV 19, 2018                     Designation: LR*5.2*509
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #415                    Status: Released
+                  Compliance Date: DEC 20, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*421  <<= must be installed BEFORE `LR*5.2*509'
+                    (v)LR*5.2*483  <<= must be installed BEFORE `LR*5.2*509'
+
+Subject: EPI EXTRACT W23 WARNING MESSAGES; AP ISSUES RELATED TO CPRS ORDER ENTRY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses four (4) issues:
+  
+ 1.  Emerging Pathogen Initiative (EPI) data is collected in VistA and 
+     forwarded to the Austin Information Technology Center (AITC) for
+     national roll-up monthly.  Part of the collected data has to do with
+     Clinical Reminders related to Hepatitis C.  The Clinical Reminder data
+     is formatted into the DSP segment of a HL7 record for delivery to the
+     AITC.  The data is currently being formatted improperly.
+  
+ 2.  When USING AP Log-in, anat path [option LRAPLG], an <UNDEFINED> error
+     occurs in the NEXT subroutine of routine LRAPKOE when logging in a 
+     case for a deceased veteran ordered in CPRS.
+  
+ 3.  In AP Log-in, anat path [option LRAPLG], the PATHOLOGIST prompt is a 
+     required entry.  The pathologist who will read the case is usually 
+     not known at the time the case is logged into the laboratory.  The 
+     process should be modified to make entry of PATHOLOGIST optional.
+  
+ 4.  The routine (LRAPKOE) that processes Anatomic Pathology orders entered
+     in CPRS needs to be modified to call VistA Imaging to add the case to
+     the MAG PATH CASELIST file (#2005.42) to support Telepathology and to
+     generate the HL7 message that is sent to digital pathology systems.
+  
+ Associated NSR(s):
+ ==================
+ This patch addresses the following New Service Request (NSR):
+ 20090511 - VistA Imaging Enhancements: Store and Forward Telehealth and 
+ Telepathology
+  
+ The previous patch LR*5.2*433 made changes to the legacy Anatomic 
+ Pathology case login routines to support this NSR.  This patch makes the
+ same changes for the CPRS Anatomic Pathology ordered case login routines.
+  
+ Associated ticket(s):
+ ==========================
+ 1. I18968586FY18 - EPI Extract W23 Warning Messages
+ 2. RTC WI 756192 - UNDEF Error when Logging Deceased Veteran
+ 3. RTC WI 756196 - PATHOLOGIST Prompt Should be Optional
+ 4. RTC WI 756202 - LRAPKOE Modification for VistA Imaging
+  
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*509 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*509 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*509 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ Northport VA Medical Center  
+ Philadelphia - VA Medical Center  
+  
+ Remedy Overview:
+ ================
+ 1. I18968586FY18 - EPI Extract W23 Warning Messages
+  
+ Problem:
+ --------
+ The Clinical Reminders code called by the EPI search option properly 
+ returns the reminder text but not the number (1 - 7) sometimes referred
+ to as the Resolve Term (ALTTRM).  As a result, the EPI code sets the 
+ number equal to "00" in the HL7 DSP segment to be sent to Austin.  This
+ works for two (2) of the reminders (5 and 6) but not the others.  The 
+ AITC performs validations on the data that expect that if the value in
+ the Resolve Term is 1, 2, 3, 4 or 7; then the lab result data value must
+ be null.  If it is 0, 5 or 6; the lab result value must not be null.
+  
+ When there is an inconsistency between the value of the Resolve Term and
+ whether the result field is null, a W23 warning message is generated.
+  
+ Resolution:
+ -----------
+ Per the business owners, the data is no longer used by EPI and the HIV, 
+ Hepatitis, and Related Conditions (HHRC) program is not using it.  
+ Consequently, there is no point for the LREPI routine to continue to call
+ the Clinical Reminders API and send the data to Austin. As a result, the
+ routine LREPI is modified to not call the routine (^PXRMXX) that extracts
+ the Clinical Reminders. That will eliminate the W23 warnings.
+  
+ Routines: LREPI
+  
+ 2. RTC WI 756192 - UNDEF Error when Logging Deceased Veteran
+   
+ Problem:
+ --------
+ An <UNDEFINED> error occurs in the NEXT subroutine in ^LRAPKOE when 
+ performing AP Log-In in VistA for an Anatomic study ordered in CPRS v32
+ for a deceased veteran.
+  
+ Resolution:
+ -----------
+ Modify routine LRAPKOE in subroutine NEXT to assure that variable LRVIDO
+ is defined.
+  
+ Routines: LRAPKOE
+  
+ 3. RTC WI 756196 - PATHOLOGIST Prompt Should be Optional
+   
+ Problem:
+ --------
+ When an Anatomic Pathology order is entered via CPRS V32 Order and logged
+ in in VistA, entry of a pathologist is required.  However, the pathologist
+ who will ultimately read the case is usually not known at the time that
+ the case is logged into the laboratory.  The log in pathway for V32 orders
+ should be consistent with the legacy roll and scroll anatomic pathology 
+ login process which has the PATHOLOGIST prompt as optional.
+  
+ Resolution:
+ -----------
+ Routine LRAPKOE is modified to change the PATHOLOGIST prompt from 
+ "required" to "optional".
+  
+ Routines: LRPAKOE
+  
+ 4. RTC WI 756202 - LRAPKOE Modification for VistA Imaging
+   
+ Problem:
+ --------
+ CPRS v32 provided a new Anatomic Pathology Order Entry capability.  
+ LRAPKOE is the new routine that takes an order entered via CPRS and logs
+ it into the legacy anatomic pathology application (LRAP*).  LRAPKOE was
+ created in patch LR*5.2*462 and updated in patch LR*5.2*479 and again in
+ LR*5.2*483.  The current programming does not call VistA Imaging to add a
+ case to the MAG PATH CASELIST file (#2005.42).
+  
+ Resolution:
+ -----------
+ LRAPKOE is modified to call VistA Imaging to add the case study to the
+ MAG PATH CASELIST file (#2005.42) to support a Telepathology Worklist 
+ and to generate the HL7 message that is sent to digital pathology systems.
+  
+ Routines: LRPAKOE
+  
+ Components:
+ ===========
+ N/A
+  
+ Patch Installation:
+ ===================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be installed when Laboratory users are on the system. The 
+ install time for this patch is less than 2 minutes.
+  
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option to load the KIDS patch
+    into a Transport Global on your system.
+  
+ 3. From the Kernel Installation & Distribution System Menu (KIDS), select
+    the Installation Menu.
+  
+ 4. From the Installation Menu, select the Backup a Transport Global 
+    option and when prompted for the INSTALL NAME enter the patch
+    LR*5.2*509. This option will create a backup message of any routines
+    exported with this patch. It will not backup any other changes such as
+    DDs or templates.
+     
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch LR*5.2*509.
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    enter the patch LR*5.2*509.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility Chief Information 
+ Officer may make the decision to back-out the patch.
+  
+ The back-out plan is to restore the routine from the backup created.  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The PackMan
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ To verify the back-out completed successfully, ensure the checksum matches
+ the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPKOE
+    Before:B175040482   After:B184170357  **462,479,483,509**
+Routine Name: LREPI
+    Before: B66094816   After: B66831950  **132,175,260,281,421,509**
+ 
+Routine list of preceding patches: 421, 483
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 29, 2018
+Completed By:                               Date Completed: NOV 16, 2018
+Released By :                               Date Released : NOV 19, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,198 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 10/25/18 at 08:28
+=============================================================================
+Run Date: DEC 11, 2018                     Designation: OR*3*494
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #417                      Status: Released
+                  Compliance Date: JAN 11, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*434    <<= must be installed BEFORE `OR*3*494'
+
+Subject: MISSING TEXT ON COPIED RTC ORDERS; CANCELED RTC ORDERS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses two (2) issues:
+  
+ 1.  A "Return to Clinic" order which is copied will be missing text
+     in the copied order.
+  
+ 2.  "Return To Clinic" orders are canceled when INTERVAL is zero (0) and
+     NUMBER OF APPOINTMENTS is greater than one (1).
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ HITPS-6390 (INC2101638)
+ HITPS-6410 (INC2105632)
+  
+ Associated ticket(s):
+ =====================
+ 1.  INC2101638 - Missing Text When RTC Orders Copied
+ 2.  INC2105632 - RTC Orders Canceled When INTERVAL is Zero (0)
+  
+ Participating Test Sites:
+ ========================
+ St. Cloud VAMC
+ Durham VAMC
+   
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ 1.  INC2101638: Missing Text on Copied "Return to Clinic" Orders
+  
+ Problem:
+ -------
+ When a "Return to Clinic" order is copied, the text "on or around" is
+ missing before the date.  Example: The order should state "Return to 
+ Clinic ABC on or around (Sep 24, 2018) for a total of 1 appointment(s)."  
+ Instead, a copied order will state "Return to Clinic ABC Sep 24, 2018 for 
+ a total of 1 appointment(s)."
+  
+ Resolution: 
+ ----------
+ Modify routine ORWDXM1 to force the user to edit the order which will
+ include entering a new date. (The same date may be entered for the copied 
+ order if that complies with procedures to have two "Return to Clinic" 
+ orders for the same clinic and same date.)
+  
+ Routine: ORWDXM1 
+  
+ 2.  INC2105632: RTC orders canceled when INTERVAL is zero (0)
+  
+ Problem:
+ --------
+ When a using the VistA CPRS CLINICIAN MENU option OR OE/RR MENU CLINICIAN
+ to place a Return To Clinic" order and the Number of Appointments is
+ greater than one (1), the Interval should not be allowed to be zero (0).
+  
+ Resolution:
+ -----------
+ The patch modifies the INTERVAL item (OR GTX SCH INTERVAL) for the ORDER
+ DIALOG SD RTC in the ORDER DIALOG file (#101.41).  The modification makes 
+ the INTERVAL a required field when the value of the Number of 
+ Appointments field is greater than one (1). The modification is performed
+ by a post install routine (OR494PIV) that will be removed in a future 
+ patch.
+  
+ Routine: OR494PIR
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+  ORDER DIALOG (#101.41)     ITEMS (#101.412)     Modified
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior to
+       installation, you should use the 'Backup a Transport Global' option
+       at this time. You may also compare the routines in your production
+       account to the routines in the patch by using the 'Compare a
+       Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'OR*3.0*494'.
+  
+       If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//', choose 'NO'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+ Compare the checksums of the routine ORWDXM1 to the "after" checksums
+ listed in this patch description.
+  
+ Use FileMan to INQUIRE in the ORDER DIALOG (#101.41) file for the order 
+ dialog SD RTC. Review the item OR GTX SCH INTERVAL , confirming that  
+ "S REQD=1" is defined in the ASK ON CONDITION value. 
+  
+ Example:
+ -------
+  
+ SEQUENCE: 20.5                          ITEM: OR GTX SCH INTERVAL
+   DISPLAY TEXT: Interval: 
+   INPUT TRANSFORM: I +$$VAL^ORCD("NUMBER OF APPOINTMENTS")>1,X<1 K X
+   HELP MESSAGE: Select an interval between 1 and 30
+   ORDER TEXT SEQUENCE: 30               LEADING TEXT: with a frequency of 
+ every
+   TRAILING TEXT: day(s)
+   ASK ON CONDITION: I +$$VAL^ORCD("NUMBER OF APPOINTMENTS")>1 S REQD=1
+  
+ Back-out Procedures:
+ --------------------
+ Restore the routine ORWDXM1 from the backup PackMan message which was
+ generated before patch install.
+  
+ Also: in programmer mode run the routine to restore the ORDER DIALOG file 
+ for the SD RTC dialog by typing "D ROLL^OR494PIR" at the programmer
+ prompt.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Sep 27, 2018;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OR494PIR
+    Before:       n/a   After:  B6952974  **494**
+Routine Name: ORWDXM1
+    Before:B111273921   After:B114227639  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388,350,
+                                           423,434,494**
+ 
+Routine list of preceding patches: 434
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2018
+Completed By:                               Date Completed: DEC 10, 2018
+Released By :                               Date Released : DEC 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

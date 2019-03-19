@@ -1,0 +1,232 @@
+
+=============================================================================
+Run Date: DEC 27, 2018                     Designation: EAS*1*170
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1       SEQ #143                      Status: Released
+                  Compliance Date: DEC 31, 2018
+=============================================================================
+
+Associated patches: (v)EAS*1*154   <<= must be installed BEFORE `EAS*1*170'
+
+Subject: 2019 GMT THRESHOLDS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2019, this      *
+ *  patch MUST be installed AS SOON AS POSSIBLE. The patch is being       *
+ *  released as a combined build together with DG*5.3*973 (2019 Means     *
+ *  Test Thresholds) and IB*2.0*635 (2019 RX Copay Thresholds) and may    *
+ *  be installed out of sequence with respect to other released EAS       *
+ *  patches.                                                              *
+ **************************************************************************
+   
+ The Geographic-Based Means Test thresholds for Calendar Year 2019 are
+ distributed with this patch. The updated values for the GMT THRESHOLDS
+ file (#712.5) are used in the determination of a veteran's GMT Threshold
+ for a given income year, based on locality and number of dependents.
+   
+ Geographical income level thresholds are set yearly by the U.S. Department
+ of Housing and Urban Development (HUD). This large set of income
+ thresholds are usually referred to as the HUD index. The geographic based
+ income limits for Income Year (IY) 2018 can be found January 1, 2019 at:
+ http://www.domain.ext/healthbenefits/cost/income_thresholds.asp
+  
+ This patch, EAS*1.0*170, is one of three VistA 2019 threshold patches.  It
+ addresses the annual updates for the GMT Thresholds. Patch DG*5.3*973 will
+ update the thresholds for the Means Tests and the Maximum Annual Pension
+ Rate. Patch IB*2.0*635 will address the annual updates for the Pharmacy
+ Copay Thresholds.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A 
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+   
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+   
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1.  INC2776632 - 2019 GMT THRESHOLDS 
+  
+ Problem:
+ --------
+ The GMT THRESHOLDS (#712.5) file needs to be updated for the 2019
+ calendar year (income year 2018).
+  
+ Resolution:
+ -----------
+ The GMT THRESHOLDS (#712.5) file is updated and transported via this 
+ patch.
+  
+  
+ File:  
+ ===== 
+   
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+ FILE #      NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+ --------------------------------------------------------------------------
+ 712.5       GMT THRESHOLDS (#712.5)    NO    NO    YES 
+  
+  
+ Test Sites:
+ -----------
+ Manchester VAMC
+ West Palm Beach VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+    
+ Host file name:    DG_53_973.KID
+   
+ Builds:            DG*5.3*973
+                    EAS*1.0*170
+                    IB*2.0*635
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A 
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ DG_53_973.KID                                          Ascii
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+  
+   
+ Pre-Installation Instructions:
+  
+ See patch DG*5.3*973 for pre-install instructions.
+  
+ Installation Instructions:
+ ========================== 
+ The components sent with this patch EAS*1.0*170 have been included in the 
+ HOST File DG_53_973.KID. Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*973.
+  
+ Post-Installation Instructions:
+ =============================== 
+ See patch DG*5.3*973 for post-install instructions.
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please see patch DG*5.3*973 for Back-Out plan.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;MAR 15,2001;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1170P
+    Before:       n/a   After:  B1092365  **170**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2018
+Completed By:                               Date Completed: DEC 27, 2018
+Released By :                               Date Released : DEC 27, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,572 @@
+
+=============================================================================
+Run Date: JAN 15, 2019                     Designation: BPS*1*24
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: FEB 15, 2019
+=============================================================================
+
+Associated patches: (v)BPS*1*23    <<= must be installed BEFORE `BPS*1*24'
+
+Subject: MCCF EDI TAS EPHARMACY BUILDS 5 & 6
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*512
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*24
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*617
+    PHARMACY DATA MANAGEMENT V. 1.0                       PSS*1.0*214
+  
+ All four of these patches are being released via Kernel Installation
+ and Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name: BPS PSO IB PSS BUNDLE 12.0
+   KIDS Host File name: BPS_1_24_PSO_IB_PSS.KID
+  
+  
+ This patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. The action OCN Open/Close Non-Billable Entry action will now allow
+      the user to select multiple claims.
+  
+   2. Several enhancements are being made to these ECME reports:  Payable
+      Claims; Reversal Claims; Claims Submitted, Not Yet Released; Closed
+      Claims; and Non-Billable Status. The enhancements include:
+        - Three new filter questions are being added
+        - Several of the existing filter questions are being modified to
+          allow the selection of one, many, or all
+        - The report headings are being modified to accommodate the new
+          fields
+        - Several header fields are being modified to display ALL or
+          SELECTED
+        - The Excel report is being modified to add new fields, truncate
+          some fields, delete some fields
+        - The Excel capture instructions are being reworded
+  
+   3. The filter questions for the ECME reports listed in #2, above, are
+      being modified to allow the user to delete a previously selected
+      entry for the multi-selection prompts.
+  
+   4. The activity log section of View Prescription and the ECME Log Label
+      are being modified to replace "BILLING QUANTITY SUBMITTED" with
+      "QUANTITY SUBMITTED ON CLAIM".  The LOG Action (Claim Log) on the
+      ECME User Screen is being modified to replace "NCPDP Qty" with
+      "Quantity Submitted on Claim" and to replace "Billed Qty" with "Rx
+      Qty".
+  
+   5. The system will be updated to support new and modified data
+      elements from the National Council for Prescription Drug Programs
+      (NCPDP) Implementation Guide versions published through October 2017.
+  
+   6. Third Party Joint Inquiry (TPJI), the Reject Information
+      screen, and the ECME User Screen claim log will be modified to
+      display additional field(s).
+  
+  
+ Patch Components:
+  
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                               New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ BPS CLAIMS (#9002313.02)
+   TRANSACTIONS  (sub-file) (#9002313.0201)
+                       OTHER PAYER PROGRAM TYPE (#2147)       New
+                       OTHER PAYER RECONCILIATION ID (#2149)  New
+                       BENEFIT STAGE INDICATOR COUNT (#2150)  New
+                       BENEFIT STAGE INDICATOR (#2151)        New
+                       COMPOUND LEVEL OF COMPLEXITY (#2160)   New
+                       LTPAC BILLING METHODOLOGY (#2190)      New
+                       LTPAC DISPENSE FREQUENCY (#2191)       New
+                       NUMBER OF LTPAC DISPENSING EVE (#2192) New
+                       PREPARATION ENVIRONMENT CODE (#2198)   New
+                       PREPARATION ENVIRONMENT TYPE (#2199)   New
+                       PRESCRIBER DEA NUMBER (#2201)          New 
+                       TOTAL PRESCRIBED QUANTITY RE (#2202)   New
+                       SUBROGATION AMOUNT REQUESTED (#2214)   New
+                       SUBMISSION TYPE CODE COUNT (#2216)     New
+                       SUBMISSION TYPE CODE (#2217)           New
+                       DO NOT DISPENSE BEFORE DATE (#2218)    New
+                       MULTIPLE RX/SVC GROUP ID (#2221)       New
+                       MULTI RX/SVC GROUP REASON CODE (#2222) New
+                       OTHER PAYR TAX EXEMPT INDICATR (#2251) New
+                       OTHER PAYR FEE EXMPT INDICATR (#2252)  New
+                       OTHER PAYR FEE TYPE COUNT (#2253)      New
+                       PRESCRIBER PLACE OF SERVICE (#2257)    New
+                       REGULATORY FEE COUNT (#2260)           New
+                       REGULATORY FEE TYPE CODE (#2261)       New
+                       OTHER PAYER FEE TYPE CODE (#2263)      New
+   COB OTHER PAYMENTS  (sub-file) (#9002313.0401)
+                       OTHER PAYER RECONCILIATION ID (#2149)  New
+  
+ BPS RESPONSES (#9002313.03)
+   RESPONSES  (sub-file) (#9002313.0301)
+                       MAXIMUM AGE QUALIFIER (#931)           New
+                       MAXIMUM AGE (#932)                     New
+                       MAXIMUM AMOUNT (#933)                  New
+                       MAXIMUM AMOUNT QUALIFIER (#934)        New
+                       MAXIMUM AMOUNT TIME PERIOD (#935)      New
+                       MAX AMT TIME PERIOD START DATE (#936)  New
+                       MAX AMT TIME PERIOD END DATE (#937)    New
+                       MAX AMT TIME PERIOD UNITS (#938)       New
+                       MINIMUM AGE QUALIFIER (#943)           New
+                       MINIMUM AGE (#944)                     New
+                       OTHER PAYER PROGRAM TYPE (#2147)       New
+                       BENEFIT STAGE INDICATOR COUNT (#2150)  New
+                       BENEFIT STAGE INDICATOR (#2151)        New
+                       BENEFIT TYPE OPPORTUNITY (#2158)       New
+                       BENEFIT TYPE OPPORTUNITY COUNT (#2159) New
+                       HELP DESK BUS UNIT TYPE (#2166)        New
+                       HELP DESK BUS UNIT TYPE COUNT (#2167)  New
+                       HELP DESK CONTACT INFORMATION (#2168)  New
+                       HELP DESK CONTACT INFO EXT (#2169)     New
+                       HELP DESK CONTACT INFO QUAL (#2170)    New
+                       HELP DESK SUPPORT TYPE (#2171)         New
+                       HELP DESK SUPPORT TYPE COUNT (#2172)   New
+                       INTERMEDIARY HELP DESK TYPE (#2180)    New
+                       INTERMEDIARY HLPDSK BUS COUNT (#2181)  New
+                       INTERMEDIARY HLPDSK CONTACT (#2182)    New
+                       INTERMEDIARY HLPDSK EXTENSION (#2183)  New
+                       INTERMEDIARY HLPDSK QUALIFIER (#2184)  New
+                       INTERMEDIARY HLPDSK SUPPT TYPE (#2185) New
+                       INTERMEDIARY HLPDSK TYP COUNT (#2186)  New
+                       PATIENT PAY COMPONENT AMOUNT (#2193)   New
+                       PATIENT PAY COMPONENT COUNT (#2194)    New
+                       PATIENT PAY COMPONENT QUAL (#2195)     New
+                       PAYER/HEALTH PLAN ID COUNT (#2196)     New
+                       SUBROGTN REQUESTR RECONCIL ID (#2215)  New
+                       MINIMUM AMOUNT (#2219)                 New
+                       MINIMUM AMOUNT QUALIFIER (#2220)       New
+                       OTHER PAYER NAME (#2223)               New
+                       REMAINING AMOUNT (#2224)               New
+                       REMAINING AMOUNT QUALIFIER (#2225)     New
+                       OTHER PAYER RELATIONSHIP TYPE (#2241)  New
+                       FORMULARY ALT BENEFIT TIER (#2242)     New
+                       FORMULARY ALT REASON CODE (#2243)      New
+                       FORMULRY ALT REQ THERAPY COUNT (#2244) New
+                       FORMULRY ALT THERAPY INDICATOR (#2245) New
+                       FORMULRY ALT THERAPY TIME QUAL (#2246) New
+                       FORMULRY ALT THERAPY DURATION (#2247)  New
+                       FORMULRY ALT THERAPY START DT (#2248)  New
+                       FORMULRY ALT THERAPY END DATE (#2249)  New
+                       OTHER PAYER BENEFIT CLASS (#2250)      New
+                       PLAN OVERRIDE INDICATOR (#2254)        New
+                       PLAN OVERRIDE VALUE COUNT (#2255)      New
+                       PLAN BENEFIT OVERRIDE VALUE (#2256)    New
+                       REGULATORY FEE TYPE CODE (#2261)       New
+                       REGULATORY FEE EXMPT INDICATOR (#2262) New
+                       PATIENT REGULATORY FEE AMOUNT (#2265)  New
+  
+ BPS PAYER RESPONSE OVERRIDES (#9002313.32)
+                       MAXIMUM AGE QUALIFIER (#4.01)          New
+                       MAXIMUM AGE (#4.02)                    New
+                       MAXIMUM AMOUNT (#4.03)                 New
+                       MAXIMUM AMOUNT QUALIFIER (#4.04)       New
+                       MAXIMUM AMOUNT TIME PERIOD (#4.05)     New
+                       MAX AMT TIME PERIOD START DATE (#4.06) New
+                       MAX AMT TIME PERIOD END DATE (#4.07)   New
+                       MAX AMT TIME PERIOD UNITS (#4.08)      New
+                       MINIMUM AGE QUALIFIER (#4.09)          New
+                       MINIMUM AGE (#4.1)                     New
+                       OTHER PAYER PROGRAM TYPE (#4.11)       New
+                       PATIENT PAY COMPONENT AMOUNT (#4.12)   New
+                       PATIENT PAY COMPONENT COUNT (#4.13)    New
+                       PATIENT PAY COMPONENT QUAL (#4.14)     New
+                       MINIMUM AMOUNT (#4.15)                 New
+                       MINIMUM AMOUNT QUALIFIER (#4.16)       New
+                       OTHER PAYER NAME (#4.17)               New
+                       REMAINING AMOUNT (#4.18)               New
+                       REMAINING AMOUNT QUALIFIER (#4.19)     New
+                       OTHER PAYER RELATIONSHIP TYPE (#4.2)   New
+  
+ BPS NCPDP PRESCRIBER PLACE OF SERVICE (#9002313.34)          New
+  
+ BPS NCPDP BENEFIT STAGE INDICATOR (#9002313.35)              New
+  
+ BPS NCPDP LTPAC DISPENSE FREQUENCY (#9002313.36)             New
+  
+ BPS NCPDP PATIENT PAY COMPONENT QUALIFIER (#9002313.37)      New
+  
+ BPS NCPDP OTHER PAYER PROGRAM TYPE (#9002313.38)             New
+  
+ BPS TRANSACTION (#9002313.59)
+   COB OTHER PAYERS  (sub-file) (#9002313.5914)
+                       OTHER PAYER RECONCILIATION ID (#.11)   New
+  
+ BPS REQUESTS (#9002313.77)
+   COB OTHER PAYERS  (sub-file) (#9002313.778)
+                       OTHER PAYER RECONCILIATION ID (#.11)   New
+  
+ BPS NCPDP FIELD DEFS (#9002313.91)                           Modified
+  
+ Forms Associated:
+                                                             New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                             New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                             New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                             New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                             New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+  
+                                                             New/Modified/
+ List Templates                 File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+   New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA HEARTLAND - WEST, VISN 15 (589)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+ BIRMINGHAM VAMC (521)
+ CENTRAL ARKANSAS HEALTH CARE SYSTEM - LITTLE ROCK (598)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Software being released as a host file and/or documentation describing
+   New functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at:  https://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ ECME User Manual                       BPS_1_0_P24_UM.PDF       Binary
+ ECME Technical Manual/Security Guide   BPS_1_0_P24_TM.PDF       Binary
+ ECME Deploy Install Rollback Guide (BPS*1*24)
+                                        BPS_1_0_P24_IG.PDF       Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is a pre-install routine associated with this patch named
+ PRE^BPS24PRE.  The purpose of the pre-install routine is to:
+  
+   1.  Update segment names in file# 9002313.9, BPS NCPDP SEGMENTS.
+   2.  Update descriptions in file# 9002313.91, BPS NCPDP FIELD DEFS.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ **************************** IMPORTANT NOTE ****************************
+ *                                                                      *
+ *  The ePharmacy Logical Links must be stopped before patch            *
+ *  installation.  This can be done with the option "Start/Stop Links"  *
+ *  [HL START].  The ePharmacy Logical Links which need to be stopped   *
+ *  are the following:                                                  *
+ *                                                                      *
+ *    BPS NCPDP                                                         *
+ *    EPHARM OUT                                                        *
+ *                                                                      *
+ *  To avoid disruptions, these patches should be installed during      *
+ *  non-peak hours when there is minimal activity on the system.        *
+ *  Avoid times when ECME claims are being transmitted.  Of particular  *
+ *  concern are the options below.                                      *
+ *                                                                      *
+ *    1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]        *
+ *       Do not install the patch when ECME claims are being generated  *
+ *       by the BPS Nightly Background Job option.  Wait for this job   *
+ *       to finish or Complete the installation before this job starts. *
+ *                                                                      *
+ *    2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and        *
+ *       Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS     *
+ *       Do not install the patch when prescriptions are being          *
+ *       transmitted to CMOP.  Wait for the CMOP transmissions to       *
+ *       finish or complete the installation before the transmissions   *
+ *       start.  Both the CS (Controlled Substances) and the non-CS     *
+ *       CMOP transmission options should be checked.  Check with       *
+ *       Pharmacy Service or your Pharmacy ADPAC to find out when CMOP  *
+ *       transmissions occur.                                           *
+ *                                                                      *
+ ************************************************************************
+  
+ This multi-build installation may take up to 2 minutes to install 
+ depending on the amount of data in the files being converted.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_24_PSO_IB_PSS.KID, which contains the
+     following patches:
+  
+         BPS*1.0*24
+         IB*2.0*617
+         PSO*7.0*512
+         PSS*1.0*214
+  
+     Sites may retrieve VistA software from download.vista.domain.ext.  
+     This transmits the file from the first available server.  Sites may
+     also elect to retrieve this file directly from a specific server.
+  
+     Sites may retrieve the software directly using Secure File Transfer 
+     (SFTP) from the ANONYMOUS.SOFTWARE directory at the following Field
+     Offices:
+    
+         Hines:                  domain.ext    
+         Salt Lake City:         domain.ext
+  
+     File Name                            Transfer Mode
+     --------------------------------------------------
+     BPS_1_24_PSO_IB_PSS.KID                ASCII
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where the host file BPS_1_24_PSO_IB_PSS.KID was saved (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_24_PSO_IB_PSS.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PSS BUNDLE 12.0
+         BPS*1.0*24
+         PSO*7.0*512
+         IB*2.0*617
+         PSS*1.0*214
+  
+       Use INSTALL NAME: BPS PSO IB PSS BUNDLE 12.0 to install this
+       Distribution.
+  
+ 4.  RUN INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PSS BUNDLE 12.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PSS BUNDLE 12.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         PSS BUNDLE 12.0.
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", press Enter to accept the default.
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", press Enter to accept the default.
+     e.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ ************************** IMPORTANT NOTE ******************************
+ *                                                                      *
+ *  Please re-start the ePharmacy Logical Links using the "Start/Stop   *
+ *  Links" [HL START] menu option.  The ePharmacy Logical Links are     *
+ *  the following:                                                      *
+ *                                                                      *
+ *    BPS NCPDP                                                         *
+ *    EPHARM OUT                                                        *
+ *                                                                      *
+ ************************************************************************ 
+  
+  
+ Back-Out Plan:
+ --------------
+ For a description of how to back-out this patch, please refer to the
+ ECME Deploy Install Rollback Guide listed above (BPS_1_0_P24_IG.PDF).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;;Build 43
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS24PRE
+    Before:       n/a   After:  B9804823  **24**
+Routine Name: BPSBUTL
+    Before:B120426085   After:B141492794  **1,3,2,5,7,8,9,10,11,15,20,24**
+Routine Name: BPSECX0
+    Before: B40356172   After: B42203811  **1,5,8,10,15,19,23,24**
+Routine Name: BPSFLD01
+    Before: B16648261   After: B17444008  **8,10,23,24**
+Routine Name: BPSNCPD4
+    Before: B43924039   After: B43404653  **6,7,8,10,11,24**
+Routine Name: BPSOSCD
+    Before:B106714458   After:B107538123  **1,3,2,5,7,8,10,11,15,19,20,23,24**
+Routine Name: BPSOSCE
+    Before: B13028933   After: B16490040  **1,5,7,8,10,11,15,19,24**
+Routine Name: BPSOSHF
+    Before: B45980918   After: B46124241  **1,5,8,10,11,23,24**
+Routine Name: BPSOSRX
+    Before: B40932013   After: B39970761  **1,5,7,8,10,20,24**
+Routine Name: BPSOSRX3
+    Before:B124478276   After:B125814788  **7,8,10,11,23,24**
+Routine Name: BPSOSSG
+    Before: B30642361   After: B40022062  **1,5,10,11,20,24**
+Routine Name: BPSPRRX3
+    Before:B127795834   After:B135138872  **8,10,11,19,23,24**
+Routine Name: BPSPRRX6
+    Before:B122123507   After:B127755081  **8,10,11,19,23,24**
+Routine Name: BPSPSOU1
+    Before: B14671447   After: B15624922  **20,24**
+Routine Name: BPSRES
+    Before:B192481154   After:B192744761  **3,5,7,8,10,11,20,21,23,24**
+Routine Name: BPSRES1
+    Before: B51902398   After: B55933378  **23,24**
+Routine Name: BPSRPT0
+    Before: B64877834   After: B79756869  **1,5,7,10,11,19,20,23,24**
+Routine Name: BPSRPT1
+    Before: B82481306   After: B84866228  **1,5,7,8,10,11,19,20,23,24**
+Routine Name: BPSRPT3
+    Before:B232886550   After:B233518281  **1,3,5,7,11,14,19,20,23,24**
+Routine Name: BPSRPT3A
+    Before: B48335740   After: B77149727  **23,24**
+Routine Name: BPSRPT4
+    Before:B135691834   After:B209178587  **1,5,7,8,10,11,19,23,24**
+Routine Name: BPSRPT5
+    Before:B175946250   After:B178163629  **1,3,5,7,8,10,11,19,23,24**
+Routine Name: BPSRPT7
+    Before:B185034078   After:B189873408  **1,3,5,7,8,10,11,19,20,23,24**
+Routine Name: BPSRPT8
+    Before:B168765371   After:B176758027  **1,3,5,7,8,10,11,19,20,23,24**
+Routine Name: BPSSCRCU
+    Before:  B9528540   After:  B9850835  **1,5,7,24**
+Routine Name: BPSSCRL1
+    Before: B66576750   After: B76871633  **22,24**
+Routine Name: BPSSCRLG
+    Before:B127974786   After:B132775345  **1,5,7,8,10,11,15,18,20,22,24**
+Routine Name: BPSSCRN0
+    Before:  B8359563   After: B23164009  **20,24**
+Routine Name: BPSTEST
+    Before:B233813306   After:B101618182  **6,7,8,10,11,15,19,20,22,23,24**
+Routine Name: BPSTEST2
+    Before:       n/a   After: B99644333  **24**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2018
+Completed By:                               Date Completed: JAN 15, 2019
+Released By :                               Date Released : JAN 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,243 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/30/18 at 12:38
+=============================================================================
+Run Date: JAN 09, 2019                     Designation: PRCA*4.5*342
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #301                    Status: Released
+                  Compliance Date: FEB 08, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*315<<= must be installed BEFORE `PRCA*4.5*342'
+                    (v)PRCA*4.5*321<<= must be installed BEFORE `PRCA*4.5*342'
+
+Subject: ERRORS AT SETERR_PRCAUDT AND SUST_PRCAPCL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue(s):
+  
+ 1. An error occurs when running the Accounts Receivable
+ Nightly Process Background Job [PRCA NIGHTLY PROCESS] when one of
+ the records processed is locked.
+  
+ 2. An error occurs while running the Status Listing
+ For Bills [PRCAL STATUS LIST] menu option when an ACCOUNTS RECEIVABLE
+ bill has a status of 'Suspended' and does not
+ have any associated transactions in the AR TRANSACTION (#433) file. 
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                       File #          New/Modified/Deleted
+ ---------                       ------          --------------------
+ N/A                             N/A             N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A                     N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ N/A                             N/A             N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A                     N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A                     N/A                     N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC1011726 - $ZE= <PARAMETER>SETERR^PRCAUDT error 
+                    
+   
+    Problem: 
+    -------
+    An error occurs when running the Accounts Receivable
+    Nightly Process Background Job [PRCA NIGHTLY PROCESS] if a record
+    is locked when the job is running.
+   
+    Resolution:
+    ----------
+    Routine PRCAUDT was modified to pass the correct text parameter 
+    when calling the SETERR tag when a record is locked.
+  
+ 2. INC1115190 - Status Listing For Bills error SUBSCRIPT>SUST+3^PRCAPCL
+                ^PRCA(433,"")
+    INC1169862(d) - Status Listing For Bills-Error-Clarksburg & 
+                    Martinsburg SUBSCRIPT>SUST+3^PRCAPCL ^PRCA(433,"")
+    
+    INC1371322(d) - necpac VistA session terminates while running 
+                    Suspended Bills Report
+  
+    Problem: 
+    -------
+    An error occurs while running the Status Listing
+    For Bills [PRCAL STATUS LIST] menu option when an ACCOUNTS RECEIVABLE
+    bill has a status of 'Suspended' and does not
+    have any associated transactions in the AR TRANSACTION (#433) file.
+  
+    Resolution:
+    ----------
+    Routine PRCAPCL was modified to ensure there are corresponding entries
+    in the AR TRANSACTION (#433) file to correct the subscript error.
+  
+ TEST SITES:
+ -----------
+ VA Montana HCS
+ VA Eastern Kansas HCS
+   
+  Software and Documentation Retrieval Instructions:
+  --------------------------------------------------
+  N/A
+   
+  Patch Installation:
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  This patch may be installed with users on the system, and it is 
+  recommended it be queued to run during normal business hours
+  to avoid conflict with this after hours process. This patch should
+  take less than 2 minutes to install.
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+   
+  Installation Instructions:
+  --------------------------
+      1. Choose the PackMan message containing this patch.
+      
+      2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+      
+      3. From the Kernel Installation & Distribution System Menu, select the
+         Installation Menu. From this menu, you may select to use the
+         following options. When prompted for the INSTALL NAME, enter
+         the patch PRCA*4.5*342:
+            a. Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+            b. Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+            c. Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed. It compares all components of this patch
+               (routines, DD's, templates, etc.).
+            d. Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+      
+       4. From the Installation Menu, select the Install Package(s) option
+          and choose the patch to install.
+         
+       5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+          NO//" respond NO.  
+      
+       6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? NO//" respond YES.
+                  a. When prompted "Enter options you wish to mark as 'Out
+                     Of Order':", enter the following options:
+                     
+                     Accounts Receivable Nightly Process Background Job
+                       [PRCA NIGHTLY PROCESS]
+                     Status Listing For Bills
+                       [PRCAL STATUS LIST]
+                  
+                  b. When Prompted "Enter protocols you wish to mark as
+                     'Out Of Order':", Press <ENTER>.
+  
+                  Delay Install (Minutes):  (0-60): 0//
+  
+   
+    
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+  
+  Back-Out Plan:
+  --------------------
+  Prior to installing the updated KIDS package, the site/region should have
+  saved a backup of the routines in a mail message using the Backup a 
+  Transport Global [XPD BACKUP] menu option. The message containing the 
+  backed up routines can be loaded with the "Xtract PackMan" function at 
+  the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is
+  then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAPCL
+    Before: B41751936   After: B42880971  **72,63,143,154,315,342**
+Routine Name: PRCAUDT
+    Before: B53225243   After: B53661295  **1,21,57,97,143,107,173,321,342**
+ 
+Routine list of preceding patches: 315, 321
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2018
+Completed By:                               Date Completed: JAN 08, 2019
+Released By :                               Date Released : JAN 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

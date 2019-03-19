@@ -1,0 +1,1168 @@
+
+=============================================================================
+Run Date: DEC 26, 2018                     Designation: DG*5.3*941
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #850                    Status: Released
+                  Compliance Date: JAN 26, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*664  <<= must be installed BEFORE `DG*5.3*941'
+                    (v)DG*5.3*935  <<= must be installed BEFORE `DG*5.3*941'
+                    (v)DG*5.3*940  <<= must be installed BEFORE `DG*5.3*941'
+                    (v)DG*5.3*944  <<= must be installed BEFORE `DG*5.3*941'
+
+Subject: ADDRESS TYPE OF RESIDENTIAL, ADDR UPDATES AND HEALTH BENE PLAN UPDATE
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ ************************ A T T E N T I O N **************************
+    After installing this patch, please ensure that you follow the
+    Residential Address VistA Parameters Special Instructions under the
+    Post-Installation section of this patch description. Failure to take   
+    this action immediately after install will result in failure to upload
+    the demographic updates from the Z05 messages.
+ **********************************************************************
+  
+ Patch DG*5.3*941 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on 
+ updates for the Enrollment System Modernization (ESM) project, which 
+ supports Enrollment System Community Care (ESCC).
+  
+ DG*5.3*941 is being released with IVM*2.0*164 and EAS*1.0*151 in 
+ Host File DG_53_P941.KID.
+  
+ DG*5.3*941 is also being released in support of the Enrollment System (ES)
+ 5.2 release. Refer to Informational Patch EAS*1.0*159 (Enrollment
+ Application System) for additional details regarding the ES release.
+  
+ With the install of this patch:
+ A new address type of Residential Address can be viewed, added or updated
+ in Veterans Health Information System and Technology Architecture (VistA)
+ Registration, Eligibility, & Enrollment (REE).  This address is used by
+ Enrollment and Eligibility to retain the geographic residence of an
+ applicant or patient. It supports the Enrollment System Community Care 
+ (ESCC) program's need to determine geographic distance from a treatment
+ facility.  A Residential Address street address cannot include a P.O.
+ Box. A new field "Coding Accuracy Support System (CASS) Certified" was
+ added to all address types to store whether postal addresses meet United
+ States Postal Service (USPS) format standards. The CASS Certified field
+ will not be displayed or shared in Address Application Program Interfaces
+ (APIs). The Residential Address is available for viewing in other VistA
+ packages via Integration Control Registration (ICR) 2041 and 10037. This
+ patch also includes a Health Benefit Plan name change. This is described
+ in the Pre/Post Installation Overview section below.
+  
+ VistA can receive from the Enrollment System a new value for the Change 
+ Source associated with the Residential Address, Permanent Address, 
+ Residential Phone Number, Cellular Phone Number and Email Address.  The 
+ new value is "VET360" and VistA will accept and store it in the 
+ corresponding PATIENT file (#2) field.  The value of "VET360" refers to a
+ central repository for patient contact information which is also used for
+ address validation.
+  
+ A defect was resolved by revising address type labels on the Patient
+ Address Update [DG ADDRESS UPDATE] Option to be consistent with the
+ changes made with Patch DG*5.3*925.
+  
+ Listing of Updates:
+ ===================
+ This patch makes the following enhancements to VistA REE:
+  
+ PART 1: New Address Type of Residential
+ =======================================
+  
+ 1. The PATIENT file (#2) includes a new address type of Residential
+    Address consisting of the following fields:
+    a. CASS Certified (system-generated and not displayed)
+       RESIDENTIAL ADDR CASS IND
+    b. Country
+       RESIDENTIAL COUNTRY
+    c. Address Line 1
+       RESIDENTIAL ADDRESS [LINE 1]
+    d. Address Line 2
+       RESIDENTIAL ADDRESS [LINE 2]
+    e. Address Line 3
+       RESIDENTIAL ADDRESS [LINE 3]
+    f. Zip Code (4 Digit Extension)
+       RESIDENTIAL ZIP+4
+    g. City
+       RESIDENTIAL CITY
+    h. State
+       RESIDENTIAL STATE
+    i. County
+       RESIDENTIAL COUNTY
+    j. Postal Code
+       RESIDENTIAL POSTAL CODE
+    k. Province
+       RESIDENTIAL PROVINCE
+    l. Source of Change
+       RESIDENTIAL ADDR CHANGE SOURCE
+    m. Site of Change
+       RESIDENTIAL ADDR CHANGE SITE
+    n. Last Update (system-generated, view only)
+       RESIDENTIAL ADDR CHANGE DT/TM
+  
+ 2. The following menu options incorporate the Address changes listed
+    below:
+  
+    Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+    Patient Inquiry          [DG PATIENT INQUIRY]
+    Preregister a Patient    [DGPRE PRE-REGISTER OPTION]
+    Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+    View Registration Data   [DG REGISTRATION VIEW]
+    Register a Patient       [DG REGISTER PATIENT]
+    Admit a Patient          [DG ADMIT PATIENT]
+  
+ 3. Validation and consistency rules are consistent with those used for 
+    the Permanent Mailing Address unless specified herein.
+  
+ 4. When creating or modifying the Residential Address, the fields and 
+    prompts are as shown.
+    a. Country - Required. Defaults to UNITED STATES. Selection limited to 
+       the list of countries from the COUNTRY CODE file (#779.004). For an 
+       existing address, the Country on-file is displayed.
+    b. Address Line 1 - Optional, but required for saving.  
+       Free Text 3-35 characters.
+    c. Address Line 2 - Optional. Free Text 3-30 characters.
+    d. Address Line 3 - Optional. Free Text 3-30 characters.
+   
+ 5. VistA uses the selected Country to determine the following fields 
+    presented to the user.
+    a. If Country = UNITED STATES:
+       i. Zip Code - Optional, but required for saving.  Selection 
+          must be a valid zip code from the ZIP CODE file (#5.11).  Once a
+          Zip Code is entered, the State and County will be populated
+          automatically.
+      ii. City - Optional, but required for saving. Selection is derived 
+          from the zip code and user may be presented with more than one 
+          choice.
+   
+    b. If Country is not UNITED STATES:
+       i. City - Optional, but required for saving.  
+          Free Text 2-15 characters.
+      ii. Province - Optional. Free Text 1-20 characters.
+     iii. Postal Code - Optional. Free Text 1-10 characters.
+   
+ 6. VistA then prompts for the two phone number fields below.
+    a. Phone Number [RESIDENCE] - Optional. Free Text 4-20 characters. 
+    b. Phone Number [WORK] - Optional. Free Text 4-20 characters.
+  
+ 7. VistA then prompts for confirmation to save the changes to the Address
+    fields. The previous residential address fields are displayed along
+    with the updated fields.
+  
+ BEGIN SCREEN CAPTURE *
+  
+   [OLD RESIDENTIAL ADDRESS] 
+                 123 MAIN STREET
+                 APT 2
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+   [NEW RESIDENTIAL ADDRESS] 
+                 123 MAIN STREET
+                 UNIT 2
+                 MILFORD,MASSACHUSETTS 01757
+                 UNITED STATES
+         County: WORCESTER 027
+  
+ Are you sure that you want to save the ADDRESS changes? 
+  
+ END SCREEN CAPTURE *
+  
+ 8. If the user answers "N", the changes are discarded.
+  
+ 9. If the user answers "Y", VistA validates the address entered. If the
+    address passes validation the changes are saved. If the validation
+    fails, VistA rejects the changes, informs the user, and presents the
+    user with a message indicating the validation failure.
+  
+    The validation consists of two steps.
+  
+    a. The following fields are required and may not be empty. 
+       - Address Line 1
+       - City
+       - State (for domestic address only)
+       - Zip Code (for domestic address only)
+  
+    b. The address must be a valid residential address.  See PART 2:
+       Determine Non-Residential Address. 
+  
+ BEGIN SCREEN CAPTURE *
+  
+   [OLD RESIDENTIAL ADDRESS] 
+                 123 MAIN STREET
+                 APT 2
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+   [NEW RESIDENTIAL ADDRESS] 
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+ Are you sure that you want to save the ADDRESS changes? YES
+  
+ RESIDENTIAL ADDRESS [LINE 1], ZIP CODE and CITY fields are required.
+  
+ RESIDENTIAL COUNTRY: UNITED STATES// 
+  
+ END SCREEN CAPTURE *
+  
+ BEGIN SCREEN CAPTURE *
+  
+   [OLD RESIDENTIAL ADDRESS] 
+                 123 MAIN STREET
+                 APT 2
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+   [NEW RESIDENTIAL ADDRESS] 
+                 P.O. BOX 123
+                 APT 2
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+ Are you sure that you want to save the ADDRESS changes? YES
+  
+    You cannot enter 'P.O. Box' or 'General Delivery' for a Residential 
+ Address.
+  
+  
+ RESIDENTIAL COUNTRY: UNITED STATES// 
+  
+ END SCREEN CAPTURE *
+  
+ 10. VistA then prompts for confirmation to save the changes to the Phone
+     Number fields. The previous phone number fields are displayed along
+     with the updated phone numbers.
+  
+ BEGIN SCREEN CAPTURE *
+  
+   [OLD PHONE NUMBERS]
+          Phone: 555-555-5555
+         Office: 
+  
+   [NEW PHONE NUMBERS]
+          Phone: 111-222-3333
+         Office: 123-456-7890
+  
+ Are you sure that you want to save the PHONE changes? 
+  
+ 11. If the user answers "Y", the changes are saved. If the user answers
+     "N", the changes are discarded.
+  
+ 12. After the phone number is processed, if the address validation
+     described above had failed, the user is returned to the 
+     RESIDENTIAL COUNTRY prompt. 
+  
+ 13. When the user has completed editing a Residential Address and phone
+     Numbers, VistA prompts the user "Copy the Residential Address to the
+     Permanent Mailing Address? NO//".
+  
+     a. If the user selects "Yes", VistA copies the Residential Address
+        fields to the Permanent Mailing Address, displays the Permanent
+        Mailing Address fields and requests confirmation to update.
+     b. If the user selects "No", the copy is canceled and VistA returns to
+        SCREEN <1.1>.
+  
+ BEGIN SCREEN CAPTURE *
+  
+ RESIDENTIAL COUNTRY: UNITED STATES// UNITED STATES  USA     United States
+ RESIDENTIAL ADDRESS [LINE 1]: 14 MAIN STREET// 123 MAPLE AVE
+ RESIDENTIAL ADDRESS [LINE 2]: APT 2// @
+ RESIDENTIAL ZIP+4: 01757// 60606
+  
+      Select one of the following:
+  
+           1         CHICAGO*
+  
+ RESIDENTIAL CITY: MILFORD// 1  CHICAGO*
+ STATE: ILLINOIS
+ COUNTY: COOK
+ PHONE NUMBER [RESIDENCE]: 555-555-5555// 312-555-5555
+ PHONE NUMBER [WORK]: 312-444-4444
+  
+   [OLD RESIDENTIAL ADDRESS]
+                 14 MAIN STREET
+                 APT 2
+                 MILFORD,MASSACHUSETTS 01757
+                 UNITED STATES
+         County: WORCESTER 027
+  
+   [NEW RESIDENTIAL ADDRESS]
+                 123 MAPLE AVE
+                 CHICAGO,ILLINOIS 60606
+                 UNITED STATES
+         County: COOK 031
+  
+ Are you sure that you want to save the ADDRESS changes? YES
+ Change saved.
+ Press ENTER to continue: 
+  
+   [OLD PHONE NUMBERS]
+          Phone: 555-555-5555
+         Office: 
+  
+   [NEW PHONE NUMBERS]
+          Phone: 312-555-5555
+         Office: 312-444-4444
+  
+ Are you sure that you want to save the PHONE changes? YES
+ Change saved.
+ Press ENTER to continue: 
+ Copy the Residential Address to the Permanent Mailing Address? NO// YES
+  
+ Residential Address to copy to the Permanent Mailing Address:
+  
+    123 MAPLE AVE                            County: COOK(031)
+    CHICAGO,IL  60606
+    UNITED STATES
+  
+ Are you sure you want to copy? // YES
+ Copy completed.
+ Press ENTER to continue: 
+  
+ END SCREEN CAPTURE *
+  
+ 14. The user cannot exit the Residential Address prompts by entering an 
+     up-carat "^".
+  
+ 15. The Last Update field is system generated and displayed as view-only, 
+     for example in the EAS VIEW PATIENT ADDRESS screen.
+  
+ 16. VistA PATIENT DEMOGRAPHIC DATA, SCREEN <1> is updated as follows:
+     a. Group [1]: The Phone Number [Residence] and Phone Number [Work] 
+        are no longer presented to the user with the Permanent Mailing
+        Address on Registration screens.
+  
+     b. Group [4]: The Permanent Mailing Address group of fields are 
+        removed. The fields 'Cell Phone', 'Pager #' and 'Email Address'
+        are added.
+  
+     c. Group [5]: The fields 'Language Date/Time', 'Preferred Language'
+        are added. Temporary Mailing Address fields are removed.
+  
+  
+ BEGIN SCREEN CAPTURE *
+  
+                      PATIENT DEMOGRAPHIC DATA, SCREEN <1>
+ REGPATIENT,TESTADDRESS; 666-12-1144                        NSC VETERAN
+ ==========================================================================
+ [1]    Name: REGPATIENT,TESTADDRESS         SS: 666-12-1144  
+         DOB: SEP 1,1965
+      Family: REGPATIENT              Birth Sex: FEMALE  MBI: 
+ UNANSWERED      
+       Given: TESTADDRESS             [2] Alias: < No alias entries on
+ file >
+      Middle:                                   
+      Prefix:                                   
+      Suffix:                                   
+      Degree:                                   
+      Self-Identified Gender Identity: UNANSWERED
+  
+ [3] Remarks: NO REMARKS ENTERED FOR THIS PATIENT
+  
+ [4]    Cell Phone: 555-123-4567
+           Pager #: 555-555-5555
+     Email Address: UNANSWERED
+  
+ [5] Language Date/Time: UNANSWERED
+     Preferred Language: UNANSWERED
+  
+ <RET> to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT: 
+  
+ END SCREEN CAPTURE *
+  
+ 17. VistA ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1> is redesigned
+     as follows:
+  
+     a. Group [1] Residential Address is added with the following fields:
+        - Address Line 1
+        - Address Line 2
+        - Address Line 3
+        - City
+        - State, Zip Code, County - for UNITED STATES address
+        - Province, Postal Code - for foreign address
+        - Country (default equals "United States" for a new address)
+        - Phone (Phone Number [Residence])
+        - Office (Phone Number [Work])
+     b. Group [2] 'Cell Phone', 'Pager #', and 'Email Address' are removed.
+     c. Group [2] Permanent Mailing Address - is added with the same group
+        of fields as originally presented in SCREEN <1>, group [4], with
+        the removal of the 'Phone:' and 'Office:' fields.
+     d. Group [3] 'Language Date/Time' and 'Preferred Language' are
+        removed.
+     e. Group [3] Temporary Mailing Address is added with the same group of
+        fields as originally presented in SCREEN <1>, group [5].
+     f. Group [4] Confidential Mailing Address is added - same group of
+        fields as originally presented in ADDITIONAL PATIENT DEMOGRAPHIC
+        DATA, SCREEN <1.1>, group [1].
+  
+ BEGIN SCREEN CAPTURE *
+  
+                ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1>
+ REGPATIENT,TESTADDRESS; 666-12-1144                         NSC VETERAN
+ ==========================================================================
+ [1] Residential Address:                  [2] Permanent Mailing Address: 
+      123 MAIN STREET                        14 MAPLE AVE
+      MILFORD,MA 31707-10                    CHICAGO,IL 60606
+      UNITED STATES                          UNITED STATES
+      County: WORCESTER (027)                County: COOK (031)
+       Phone: 555-444-4444                 Bad Addr: 
+      Office: UNANSWERED
+  
+ [3] Temporary Mailing Address:            [4] Confidential Mailing Address
+ Address: 
+      123 MAIN STREET                        NONE ON FILE
+      MILFORD,MA 01757
+      UNITED STATES
+      County: WORCESTER (027)
+       Phone: UNANSWERED                      Phone: NOT APPLICABLE
+   From/To: JUL 10,2017-JUL 11,2017         From/To: NOT APPLICABLE
+                                       Categories: NOT APPLICABLE
+  
+ <RET> to CONTINUE, 1-4 or ALL to EDIT, ^N for screen N or '^' to QUIT: 
+  
+ END SCREEN CAPTURE *
+  
+ 18. The Demographic Help Screens for SCREEN <1> and SCREEN <1.1> reflect  
+     the changes described above in #16 and #17.
+  
+ 19. On the ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1>, when the
+     user is adding a Permanent Mailing Address that is currently blank and
+     a Residential Address was entered, VistA prompts the user "Copy the
+     Residential Address to the Permanent Mailing Address? NO//".
+  
+     a. If the user selects "Yes", VistA copies the Residential Address
+        fields to the Permanent Mailing Address, and displays the Permanent
+        Mailing Address fields and requests confirmation to add.
+     b. If the user selects "No", VistA proceeds by prompting for each
+        Permanent Mailing Address field.
+  
+ BEGIN SCREEN CAPTURE *
+  
+                ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1>
+ REGPATIENT,TESTADDRESS; 666-12-1144                           NSC VETERAN
+  
+ [1] Residential Address:              [2] Permanent Mailing Address: 
+      123 MAIN STREET                        UNK. CITY/STATE 
+      MILFORD,MA 31707-10                    
+      UNITED STATES
+      County: WORCESTER (027)                County: UNANSWERED
+      Phone: 555-444-4444                  Bad Addr: 
+      Office: UNANSWERED
+  
+ [3] Temporary Mailing Address:         [4] Confidential Mailing Address:
+      123 MAIN STREET                        NONE ON FILE
+      MILFORD,MA 01757
+      UNITED STATES
+      County: WORCESTER (027)
+      Phone: UNANSWERED                      Phone: NOT APPLICABLE
+   From/To: JUL 10,2017-JUL 11,2017        From/To: NOT APPLICABLE
+                                        Categories: NOT APPLICABLE
+  
+ <RET> to CONTINUE, 1-4 or ALL to EDIT, ^N for screen N or '^' to QUIT: 2
+ Copy the Residential Address to the Permanent Mailing Address? NO//
+  
+ END SCREEN CAPTURE *
+  
+ 20. On the ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN <1.1>, when the
+     user has edited and saved a Permanent Mailing address and the
+     Permanent Mailing address is an allowable Residential Address (not a
+     P.O. Box or General Delivery and has the required fields) VistA
+     prompts the user "Copy the Permanent Mailing Address to the 
+     Residential Address?"
+     - If the user selects "Yes", VistA copies the Permanent Mailing
+       Address fields to the Residential Address, displays the Residential
+       Address fields and requests confirmation to update.
+  
+ BEGIN SCREEN CAPTURE *
+  
+    This is your current Permanent Mailing Address.
+  
+    14 MAPLE AVE                            County: COOK(031)
+    CHICAGO,IL  60606
+    UNITED STATES
+  
+  Current Residential Address:
+  
+    123 MAIN STREET                         County: WORCESTER(027)
+    MILFORD,MA  01757
+    UNITED STATES
+  
+  
+ Copy the Permanent Mailing Address to the Residential Address? y  YES
+  
+ Permanent Mailing Address to copy to Residential Address:
+  
+    14 MAPLE AVE                            County: COOK(031)
+    CHICAGO,IL  60606
+    UNITED STATES
+  
+ Are you sure you want to copy? // 
+  
+  
+ END SCREEN CAPTURE *
+  
+ 21. A history of Residential address changes is maintained by VistA via VA
+     FileMan auditing. 
+  
+ PART 2:  Determine Non-Residential Address
+ ==========================================
+  
+ 1. VistA prevents a user from saving a Residential Address that is in
+    a non-residential format with General Delivery or P.O. Box. A
+    non-residential address is defined as Address Line 1 starting with any
+    of the following in upper case, lower case or mixed case, with or 
+    without a period:
+  
+          "Post Office"
+          "P.O." or "PO" 
+          "General Delivery" 
+          "Box" when immediately followed by a number.
+  
+ 2. The user can enter a non-residential address format when:
+    
+    a.  The Veteran's Residential address is Alaska or Hawaii
+    b.  The Veteran resides in one of the United States territories (Guam, 
+        American Samoa, CNMI (Mariana Islands), U.S. Virgin Islands, or
+        Philippines)
+  
+ 3. If the user attempts to save a Residential Address that violates the 
+    non-residential address rules defined above, saving the record is not 
+    allowed. The following error message is displayed: "You cannot enter
+    'P.O. Box' or 'General Delivery' for a Residential Address".
+  
+ PART 3:  Patient Address Updates 
+ ================================
+  
+ 1. When editing the Temporary Mailing Address, the prompts for these
+    fields are renamed as follows:
+    
+    a. TEMP MAILING ADDRESS ACTIVE?:
+    b. TEMP MAILING ADDRESS START DATE:
+    c. TEMP MAILING ADDRESS END DATE:
+  
+ BEGIN SCREEN CAPTURE *
+  
+ TEMP MAILING ADDRESS ACTIVE?: YES  YES
+ TEMP MAILING ADDRESS START DATE: T+1  (JAN 24, 2018)
+ TEMP MAILING ADDRESS END DATE: 2/6/18  (FEB 06, 2018)
+ TEMPORARY ADDRESS COUNTRY: UNITED STATES// UNITED STATES  USA     United 
+ States
+ TEMPORARY STREET [LINE 1]: // 999 TEMP AVE.
+ TEMPORARY STREET [LINE 2]: // TEMP SUITE 2
+ TEMPORARY STREET [LINE 3]: // 
+ TEMPORARY ZIP+4: 45212
+  
+      Select one of the following:
+  
+           1         CINCINNATI*
+           2         NORWOOD
+  
+ TEMPORARY CITY: // 2  NORWOOD
+ TEMPORARY STATE: OHIO
+ TEMPORARY COUNTY: HAMILTON
+ TEMPORARY PHONE NUMBER: // 513-908-4455
+  
+ END SCREEN CAPTURE *
+  
+ 2. In the Patient Address Update [DG ADDRESS UPDATE] option, on the 
+    screen for editing the Permanent Mailing Address, the 'PHONE NUMBER 
+    [RESIDENCE]' and 'PHONE NUMBER [OFFICE]' fields are removed.
+  
+ 3. The Patient Inquiry Screen [DG PATIENT INQUIRY] is modified so the 
+    first screen mimics the format of SCREEN <1.1>.
+    
+    a. Residential Address group of fields is added.
+    b. Permanent Mailing Address, Temporary Mailing Address, and 
+       Confidential Mailing Address groups of fields are shifted on the 
+       screen to mimic the same positions as in SCREEN <1.1>.
+    c. The Cell phone number and email remain displayed with the Permanent
+       Mailing Address.
+  
+ 4. A new CASS Certified field was added for Residential Address, 
+    (RESIDENTIAL ADDR CASS IND field .1159), Confidential Mailing, 
+    (CONFIDENTIAL ADDR CASS IND field .14117), Temporary Mailing,
+    (TEMPORARY ADDR CASS IND field .12115), and Permanent Mailing address,
+    (STREET ADDRESS CASS IND field .1118) types. This new field will be set
+    to "NC" Not Checked when a user enters a new address or edits an
+    existing address.
+  
+ PART 4:  Add Residential Address to Address Sharing APIs
+ ========================================================
+  
+ The VADPT routine includes the Residential Address. It now returns the 
+ Residential Address with the Patient Address data. This applies to ICR 
+ 10061 at entry point "ADD^VADPT".  This provides other VistA packages with
+ the ability to edit the Residential Address, which is planned for a future
+ release.
+  
+ PART 5:  ADDRESS CHANGE SOURCE Fields Updates
+ =============================================
+  
+ The Z05 received from the Enrollment System can include any of the
+ following: Residential or Permanent Address, a Residence or Cellular 
+ Phone Number or an Email Address. If VistA accepts the update, now the 
+ Change Source can contain the value "VET360" and VistA will store 
+ "VET360" in the corresponding PATIENT file (#2) Change Source field.
+    The change source fields are:
+       ADDRESS CHANGE SOURCE (Permanent Address)
+       RESIDENTIAL ADDR CHANGE SOURCE
+       RESIDENCE NUMBER CHANGE SOURCE
+       CELLULAR NUMBER CHANGE SOURCE
+       EMAIL ADDRESS CHANGE SOURCE
+  
+ PART 6:  DEFECT - DG Address Update Prompt Labels
+ =================================================
+  
+ On the screen in the Registration menu option Patient Address Update [DG
+ ADDRESS UPDATE]:
+  
+ The labels in the prompt are modified from "Do you want to update the
+ (P)ermanent Address, (T)emporary Address, or (B)oth?" to "Do you want
+ to update the (P)ermanent Mailing Address, (T)emporary Mailing Address,
+ or (B)oth?".
+  
+ BEGIN SCREEN CAPTURE *
+  
+ Select OPTION NAME: DG ADDRESS UPDATE       Patient Address Update
+ Patient Address Update
+  
+  
+ Veteran Name/SSN:    REGADDRESS, TESTADDRESS    
+  5-1-42      666223939 NO                           NSC VETERAN
+ Enrollment Priority: GROUP 6    Category: IN PROCESS    End Date: 
+  
+ Do you want to update the (P)ermanent Mailing Address, (T)emporary Mailing
+ Address, or (B)oth? 
+  
+ END SCREEN CAPTURE *
+  
+  
+ PART 7:  HEALTH BENEFIT PLAN NAME CORRECTED
+ ===========================================
+  
+ In the HEALTH BENEFIT PLAN file (#25.11) the name of a Health Benefit Plan
+ (HBP) is corrected. "Veteran Plan - VC Unusual and Excessive Burden" is
+ changed to "Veteran Plan - VC Unusual or Excessive Burden."
+  
+ PART 8:  PATIENT FILE (#2) ADDRESS TRIGGER - ADTTM8
+ ===================================================
+  
+ 1.  When any Residential Address field is changed (see list below), it 
+     modifies the Residential Address Change Date and Time field 
+     RESIDENTIAL ADDR CHANGE DT/TM (#.1158)
+  
+                         RESIDENTIAL ADDRESS [LINE 1] 
+                                   (#.1151)             New
+                         RESIDENTIAL ADDRESS [LINE 2]
+                                   (#.1152)             New
+                         RESIDENTIAL ADDRESS [LINE 3]
+                                   (#.1153)             New
+                         RESIDENTIAL CITY
+                                   (#.1154)             New
+                         RESIDENTIAL STATE
+                                   (#.1155)             New
+                         RESIDENTIAL ZIP+4
+                                   (#.1156)             New
+                         RESIDENTIAL COUNTY
+                                   (#.1157)             New
+                         RESIDENTIAL PROVINCE
+                                   (#.11571)            New
+                         RESIDENTIAL POSTAL CODE
+                                   (#.11572)            New
+                         RESIDENTIAL COUNTRY
+                                   (#.11573)            New
+  
+ 2. Any modification of the Residential Address Change Date and Time field 
+    RESIDENTIAL ADDR CHANGE DT/TM (#.1158) triggers the update of the
+    Residential Address Source of Change field RESIDENTIAL ADDR CHANGE 
+    SOURCE (#.11582).
+  
+  
+ PART 9:  ADDRESS FIELDS CONVERTED TO UPPERCASE
+ ===================================================
+  
+ All address text fields on SCREEN <1.1> are modified to automatically 
+ convert the text entered to uppercase.  This applies to address lines 1, 
+ 2, and 3, City, Province, Postal Code for Residential Address, Permanent 
+ Mailing Address, Temporary Mailing Address, and Confidential Mailing 
+ Address.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ PATIENT    (#2)         RESIDENTIAL ADDRESS [LINE 1]
+                                   (#.1151)             New
+                         RESIDENTIAL ADDRESS [LINE 2]
+                                   (#.1152)             New
+                         RESIDENTIAL ADDRESS [LINE 3]
+                                   (#.1153)             New
+                         RESIDENTIAL CITY
+                                   (#.1154)             New
+                         RESIDENTIAL STATE
+                                   (#.1155)             New
+                         RESIDENTIAL ZIP+4
+                                   (#.1156)             New
+                         RESIDENTIAL COUNTY
+                                   (#.1157)             New
+                         RESIDENTIAL PROVINCE
+                                   (#.11571)            New
+                         RESIDENTIAL POSTAL CODE
+                                   (#.11572)            New
+                         RESIDENTIAL COUNTRY
+                                   (#.11573)            New
+                         RESIDENTIAL ADDR CHANGE DT/TM
+                                   (#.1158)             New
+                         RESIDENTIAL ADDR CASS IND
+                                   (#.1159)             New
+                         RESIDENTIAL ADDR CHANGE SITE   
+                                   (#.11581)            New
+                         RESIDENTIAL ADDR CHANGE SOURCE  
+                                   (#.11582)            New
+                         TEMPORARY ADDR CASS IND         
+                                   (#.12115)            New
+                         CONFIDENTIAL ADDR CASS IND
+                                   (#.14117)            New
+                         STREET ADDRESS CASS IND
+                                   (#.1118)             New
+                         ADDRESS CHANGE SOURCE      
+                                   (#.119)              Mod
+                         RESIDENCE NUMBER CHANGE SOURCE
+                                   (#.1322)             Mod
+                         CELLULAR NUMBER CHANGE SOURCE
+                                   (#.1311)             Mod
+                         EMAIL ADDRESS CHANGE SOURCE
+                                   (#.137)              Mod
+                         STREET ADDRESS [LINE 1]
+                                   (#.111)              Mod
+                         STREET ADDRESS [LINE 3]
+                                   (#.113)              Mod
+                         CITY
+                                   (#.114)              Mod
+                         PROVINCE
+                                   (#.1171)             Mod
+                         POSTAL CODE
+                                   (#.1172)             Mod
+                         TEMPORARY STREET [LINE 1]
+                                   (#.1211)             Mod
+                         TEMPORARY STREET [LINE 2]
+                                   (#.1212)             Mod
+                         TEMPORARY STREET [LINE 3]
+                                   (#.1213)             Mod
+                         TEMPORARY CITY
+                                   (#.1214)             Mod
+                         TEMPORARY ADDRESS PROVINCE
+                                   (#.1221)             Mod
+                         TEMPORARY ADDRESS POSTAL CODE
+                                   (#.1222)             Mod
+                         CONFIDENTIAL STREET [LINE 1]
+                                   (#.1411)             Mod
+                         CONFIDENTIAL STREET [LINE 2]
+                                   (#.1412)             Mod
+                         CONFIDENTIAL STREET [LINE 3]
+                                   (#.1413)             Mod
+                         CONFIDENTIAL ADDRESS CITY
+                                   (#.1414)             Mod
+                         CONFIDENTIAL ADDR PROVINCE
+                                   (#.14114)            Mod
+                         CONFIDENTIAL ADDR POSTAL CODE
+                                   (#.14115)            Mod
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type     File Name (Number)  New/Modified/Deleted 
+ -------------         ----     ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Lebanon VA Medical Center (VAMC) Lebanon, PA 17042
+ VA Pittsburgh Healthcare System Pittsburgh, PA 15240  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Patches for this installation are combined in the following Host File for 
+ distribution: DG_53_P941.KID.
+  
+ The Host File was created to simplify installation at Veterans Health 
+ Administration (VHA) facilities. This file can be obtained from one of 
+ the anonymous Secure File Transfer Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ---------                           --------           ----------------
+ DG_53_P941.KID                      DG*5.3*941         ASCII
+                                     IVM*2.0*164
+                                     EAS*1.0*151
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:              domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Release Notes                         DG_5_3_P941_KID_RN.PDF   (binary)
+ User Manual - Registration Menu       DG_5_3_P941_REG_UM.PDF   (binary)
+ PIMS Technical Manual                 PIMSTM.PDF               (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install process will run routine DG53P941 to change the name of
+ Health Benefit Plan (HBP) "Veteran Plan - VC Unusual and Excessive Burden"
+ to "Veteran Plan - VC Unusual or Excessive Burden." in the HEALTH BENEFIT
+ PLAN file (#25.11).  The routine will first check to see if this plan
+ exists. If the plan does not exist, VistA will issue a message that it
+ does not exist and no action is taken. If the plan does exist, the name
+ change will be stored and a message will display that the plan was
+ corrected in the HEALTH BENEFIT PLAN file (#25.11).
+  
+ The post install process will also run routine IVM2164P to add new entries
+ listed in Post-Install Instructions section to the Income Verification 
+ Match (IVM) DEMOGRAPHIC UPLOAD FIELDS file (#301.92).  If an entry already
+ exists, it will be deleted and recreated with new data elements.
+  
+ Note: After installing this patch, please ensure that you follow the 
+ Residential Address VistA Parameters Special Instructions under the 
+ Post-Installation section of this patch description. Failure to take this 
+ action immediately after install will result in failure to upload the 
+ demographic updates from the Z05 messages.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The following KIDS build DG_53_P941.KID will be installed. This patch
+ should NOT be installed while the IVM BACKGROUND JOB [IVM BACKGROUND JOB]
+ is running.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+     date/time.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped. Stop All Messaging
+     Background Processes by using the [HL STOP ALL] option on the Filer
+     and Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+  
+ 3.  Use Global Output Function to backup the PATIENT file (#2) data 
+     dictionary by running the command below (be sure to enter "V" for the
+     parameters). You will need to specify a local directory and file name
+     for the Device.
+  
+ DEVISC1A1:DEVVOO>D ^%GOGEN
+  
+ Device: USER$:[VISTA]dg_53_941_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DD(2 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ If the system you are installing this patch on is a LINUX system, you will
+ need to run a different utility, GOGEN^%ZSPECIAL. Enter the following 
+ command:
+  
+ D GOGEN^%ZSPECIAL
+ Device: /srv/vista/xxx/user/sftp/dg_53_941_backup.gbl
+ Parameters? ("WNS") => V
+ Global ^DD(2 -- NOTE: translation in effect
+ Global ^
+ DEVISC1A2:DEVVOO>
+  
+ Where "xxx" is the site designation, then follow the 
+ instructions above for entering the globals to save.
+  
+ 4.  The following options should be disabled during installation:
+     
+     Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+     Patient Inquiry          [DG PATIENT INQUIRY]
+     Preregister a Patient    [DGPRE PRE-REGISTER OPTION]
+     Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+     View Registration Data   [DG REGISTRATION VIEW]
+     Register a Patient       [DG REGISTER PATIENT]
+     Patient Address Update   [DG ADDRESS UPDATE]
+     Admit a Patient          [DG ADMIT PATIENT]
+     View Patient Address     [EAS VIEW PATIENT ADDRESS]
+     Demographics Upload      [IVM UPLOAD DEM]
+  
+ 5.  This patch may be installed with users on the system, however, because
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours. This patch should take less than 5 
+     minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Download DG_53_P941.KID into your local directory.
+  
+ 2. From the Kernel Installation and Distribution System (KIDS) Menu, 
+    select the Installation menu. 
+  
+ 3. Use Load a Distribution option. You may need to prepend a directory 
+    name. When prompted for "Enter a Host File: ", respond with
+    DG_53_P941.KID
+  
+     Example: USER$:[ABC]DG_53_P941.KID
+  
+ 4. From the installation menu, you may elect to use the following 
+    options. When prompted for the INSTALL NAME enter DG*5.3*941.
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DDs or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is installed.
+       It compares all components of this patch (routines, DDs, templates, 
+       etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport global.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//'respond YES.
+   
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options:
+  
+      Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+      Patient Inquiry          [DG PATIENT INQUIRY]
+      Preregister a Patient    [DGPRE PRE-REGISTER OPTION]
+      Eligibility Verification [DG ELIGIBILITY VERIFICATION]
+      View Registration Data   [DG REGISTRATION VIEW]
+      Register a Patient       [DG REGISTER PATIENT]
+      Patient Address Update   [DG ADDRESS UPDATE]
+      Admit a Patient          [DG ADMIT PATIENT]
+      View Patient Address     [EAS VIEW PATIENT ADDRESS]
+      Demographics Upload      [IVM UPLOAD DEM]
+  
+ 9.  When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     press <enter>.
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//'
+     respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].  
+  
+ The post-installation routines DG53P941 and IVM2164P should be manually
+ deleted from your system using the KERNEL option Delete Routines [XTRDEL]
+  
+ The post-install routine, IVM2164P, delivered with patch IVM*2.0*164,
+ will add thirty three new records to the IVM DEMOGRAPHIC UPLOAD FIELDS
+ file (#301.92). If records already exists, IVM2164P deletes them and then
+ adds records with new data elements.  The new records will contain the
+ data listed in the Post-Install Instructions for IVM*2.0*164 at the
+ completion of the post-install process.
+  
+ Residential Address VistA Parameters Special Instructions:
+ ----------------------------------------------------------
+ For ES to share Residential Address data with VA facilities, a parameter 
+ (ES_RESIDENTIAL_ADDRESS_VISTA_ROLLOUT) must be updated to include each 
+ VistA site.  This change will be made on the Enrollment System (ES) side 
+ by authorized staff.
+  
+ Once the DG*5.3*971 build is installed at a facility, each site must 
+ contact Once the host file is installed in the Production, each site must 
+ contact Geraldine Bridges, Member Services, Quality Program Management 
+ Program Analyst (geraldine.bridges@domain.ext) to add the site id to the 
+ parameter to allow ES to share the Residential Address with their site. 
+ For additional questions, log a Service Now ticket or reach out to the 
+ Enterprise Service Desk at 855-673-4357, option 5. 
+  
+ Failure to take this action immediately after install can result in 
+ failure to upload the demographic updates from the Enrollment System via 
+ the ORUZ05 transmission type.
+  
+ Back-Out Plan
+ -------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ Refer to the "DG_53_P941.KID Deployment, Installation, Back-out, and
+ Rollback Guide" for complete instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 70
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P941
+    Before:       n/a   After:  B4792773  **941**
+Routine Name: DGADDUT2
+    Before:  B7195938   After:  B6214510  **688,851,925,941**
+Routine Name: DGADDUTL
+    Before: B59041473   After: B62220802  **658,695,730,688,808,851,872,
+                                           915,925,941**
+Routine Name: DGCNTRY
+    Before:  B3718332   After:  B4455344  **688,941**
+Routine Name: DGDDDTTM
+    Before:  B5522558   After:  B7898513  **665,653,688,754,941**
+Routine Name: DGREGAED
+    Before: B42299807   After: B43930519  **522,560,658,730,688,808,915,941**
+Routine Name: DGREGCOP
+    Before:       n/a   After:  B2145529  **941**
+Routine Name: DGREGCP1
+    Before:       n/a   After: B29343646  **941**
+Routine Name: DGREGCP2
+    Before:       n/a   After:  B3251423  **941**
+Routine Name: DGREGRED
+    Before:       n/a   After: B55962900  **941**
+Routine Name: DGREGTED
+    Before: B30516214   After: B31206434  **688,851,941**
+Routine Name: DGRP1
+    Before: B40910302   After: B36820867  **109,161,506,244,546,570,629,
+                                           638,649,700,653,688,750,851,
+                                           907,925,941**
+Routine Name: DGRPCADD
+    Before: B18204630   After: B22281332  **489,624,688,754,887,941**
+Routine Name: DGRPD
+    Before: B79894914   After:B102167809  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907,925,936,940,941**
+Routine Name: DGRPE
+    Before: B71849762   After: B78319537  **32,114,139,169,175,247,190,
+                                           343,397,342,454,415,489,506,
+                                           244,547,522,528,555,508,451,
+                                           626,638,624,677,672,702,689,
+                                           735,688,797,842,865,871,887,
+                                           941**
+Routine Name: DGRPH
+    Before: B25194652   After: B27215074  **114,343,397,415,489,545,638,
+                                           624,689,842,941**
+Routine Name: DGRPU
+    Before: B88766469   After: B89347012  **33,114,489,624,672,689,688,
+                                           935,941**
+Routine Name: DGRPU1
+    Before:  B6201118   After:  B6546031  **139,169,415,527,508,664,941**
+Routine Name: DGRPV
+    Before: B19742844   After: B19689062  **109,114,247,190,327,365,343,
+                                           397,415,489,546,545,451,624,
+                                           677,672,689,716,688,797,842,
+                                           871,887,941**
+Routine Name: VADPT1
+    Before: B50294297   After: B57593585  **415,489,516,614,688,754,887,941**
+Routine Name: VAFCQRY3
+    Before: B63911334   After:B101601272  **575,707,754,944,941**
+Routine Name: VAFHLZAV
+    Before:       n/a   After:  B4403961  **941**
+ 
+Routine list of preceding patches: 664, 935, 940, 944
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 21, 2017
+Completed By:                               Date Completed: DEC 26, 2018
+Released By :                               Date Released : DEC 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,308 @@
+$TXT Created by                 at CAS-RXSU2-S1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 09/20/18 at 14:16
+=============================================================================
+Run Date: OCT 25, 2018                     Designation: PSO*7*507
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #442                      Status: Released
+                  Compliance Date: NOV 25, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*218       install with patch       `PSO*7*507'
+                    (v)PSO*7*410   <<= must be installed BEFORE `PSO*7*507'
+                    (v)PSO*7*500   <<= must be installed BEFORE `PSO*7*507'
+                    (v)PSO*7*515   <<= must be installed BEFORE `PSO*7*507'
+
+Subject: CAS-RXSU2 NEW HIDDEN ACTIONS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has the following enhancements for Clinical Ancillary Services
+ Project (CAS) - Pharmacy Safety Updates (RxSu) Phase 2.
+  
+  
+ 1. Manage Lookup List Inactive Entries 
+  
+    Modified Pharmacy Backdoor menu option Patient Prescription Processing 
+    [PSO LM BACKDOOR ORDERS]. Added the text "** INACTIVE **" to the end 
+    the display of the ADMINISTRATION SCHEDULE file (#51.1) entries during
+    editing the Listman screen field "3)  *Schedule:".  Upon typing a "?"
+    at that prompt and selecting "A" or "B" to check the Administration 
+    Schedules or typing a partial match of an Administration Schedule,
+    the entries displayed will now include the Inactive text for 
+    Inactive entries in the ADMINISTRATION SCHEDULE file only.
+  
+  
+  
+ 2. Manage Hidden Icons (Actions) Outpatient
+  
+    Two new hidden actions are provided for Outpatient Pharmacy's menu 
+    option Patient Prescription Processing [PSO LM BACKDOOR ORDERS].
+  
+    a. A new hidden action, "DM", has been added for displaying dispense
+       drug information while finishing a pending order. This hidden action
+       will display key information about the order to aid in the
+       verification process of an order and allow user to enter another
+       drug if desired.  Key information includes:
+  
+       Example:
+  
+            DRUG NAME:  xxxxxxxxxxxxxxxxxxx   (IEN: 3)
+              ORDERABLE ITEM TEXT:
+               xxx xx xxxxx xxxxx xx xxxxx
+               x xxxxxxxx xx xxxxxxxxxxxx
+  
+            MESSAGE:   xxxx xxx xx xxxxx x xxxxxxxx
+            QTY DISP MESSAGE:   x xxxxxxxx xx xxxxxxxxx xxxx
+   
+            Return to continue or
+            Select DRUG GENERIC NAME:
+  
+    b. A new hidden action, "VP", has been added for displaying Provider
+       information while finishing a pending order. This hidden action will
+       display key information about the PROVIDER to help aid in the
+       verification process of an order and also allow user to enter
+       another provider if desired.  Key information includes:
+  
+       Example:
+  
+            PROVIDER TITLE:     xxxxxxxx
+  
+            PROVIDER REMARKS:   xxx xxxxx xxxx
+  
+            PROVIDER SPECIALTY: xxxxxx
+  
+            Return to continue or
+            Select NEW PERSON NAME: 
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                             New/Modified/Deleted
+ -------------------------------------     -------------------- 
+ Outpatient Pharmacy Hidden Actions #3     [PSO HIDDEN ACTIONS #3]
+                                               Modified
+  
+ Disp Drug Lookup                          [PSO DRUG LOOK]
+                                               New
+  
+ Provider Lookup                           [PSO VIEW PROVIDER] 
+                                               New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20151007
+  
+  
+ Test Sites:
+ -----------
+ St Louis
+ Orlando
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   https://www.domain.ext/vdl.
+  
+ File Description                    File Name                    FTP Mode
+ -------------------------------------------------------------------------
+ Outpatient Pharmacy Pharmacists
+ User Manual                         PSO_7_0_p507_PHAR_UM.PDF      Binary
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch PSO*7.0*507.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 4.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*507:
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  If prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//,' respond No
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//,' respond No 
+  
+  
+ Post Installation Overview
+ --------------------------
+ The post-install rebuilds the parent Protocol menu PSO HIDDEN ACTIONS #3 
+ to insure display of the two new Hidden Actions added b this patch. 
+  
+ Please delete the post install routine PSO7P507 after you have verified 
+ that both DM and VP new hidden actions appear after entering ?? and 
+ pressing Return and Enter to continue, during viewing an Outpatient 
+ pending order details in the Outpatient Order Entry.
+  
+ If DM and VP actions do not display but still execute, they manually run 
+ the Post Install routine again by entering EN^PSO7P507 at the 
+ programmer's prompt.
+  
+  
+ Backout Procedures
+ ------------------
+  
+ Backout Procedures are only needed if there are major problems (examples
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow ticket to obtain
+ this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*507 patch have been rolled back, the first two lines of the 
+ routines will no longer contain the designation of patch PSO*7.0*507 in 
+ the [Patch List] section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;13 Feb 97;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P507
+    Before:       n/a   After:   B439895  **507**
+Routine Name: PSOORED4
+    Before: B57964531   After: B58529910  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416,313,437,
+                                           282,402,515,507**
+Routine Name: PSOORED5
+    Before: B73345856   After: B75166815  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486,402,
+                                           500,507**
+Routine Name: PSOUTLA2
+    Before: B20328353   After: B42876866  **210,410,507**
+ 
+Routine list of preceding patches: 410, 500, 515
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2017
+Completed By:                               Date Completed: OCT 25, 2018
+Released By :                               Date Released : OCT 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

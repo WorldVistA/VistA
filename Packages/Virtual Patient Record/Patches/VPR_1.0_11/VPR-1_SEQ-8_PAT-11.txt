@@ -1,0 +1,158 @@
+$TXT Created by                     FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 10/16/18 at 12:32
+=============================================================================
+Run Date: NOV 05, 2018                     Designation: VPR*1*11
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: EMERGENCY
+Version : 1         SEQ #8                      Status: Released
+                  Compliance Date: NOV 12, 2018
+=============================================================================
+
+Associated patches: (v)VPR*1*7     <<= must be installed BEFORE `VPR*1*11'
+
+Subject: LAB PANELS FIX
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package corrects a problem
+ with Lab Orders, first reported by the Joint Legacy Viewer (JLV) client.
+  
+ This extract was changed in patch VPR*1*7 to use the Orders File (#100) to 
+ find completed Lab orders, then extract the results tied to each, instead
+ of first pulling data from the Lab Service and attempting to organize the 
+ results by the order that requested them. The changes in patch VPR*1*7 did  
+ not fully account for splitting an order across multiple accessions, so 
+ some results were omitted from the payload. The date range search also
+ changed from working off the Collection Time to the Date Released of the 
+ order, due to the available indices on the Orders file. Both of these 
+ issues have been corrected in this patch.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:         N/A
+  
+ Forms Associated:                  N/A
+  
+ Mail Groups Associated:            N/A
+  
+ Options Associated:                N/A
+  
+ Protocols Associated:              N/A
+  
+ Remote Procedure Calls Associated: N/A
+  
+ Security Keys Associated:          N/A
+  
+ Templates Associated:              N/A
+  
+ New Service Requests:              N/A
+  
+ Patient Safety Issues:             N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach, FL
+ Walla Walla, WA 
+   
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ There are no documentation updates for this patch.
+   
+   
+ Backout and Rollback Procedure:
+ -------------------------------
+ During the VistA Installation Procedure of the KIDS build, the
+ installer should use the 'Backup a Transport Global' action (step 3a
+ in the Installations Instructions below). If rollback/backout is 
+ required, the installer can use the MailMan message to restore routines 
+ that were saved prior to installing the patch.
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ NOTE: This patch was created with VA FileMan 22.2, so please ensure  
+ the target system has also been upgraded to this version, otherwise 
+ installation will fail.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*11.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+ Post-Installation:
+ -----------------
+ The post-init routine will simply update the value of the VPR VERSION 
+ parameter to 1.11.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRDLRO
+    Before: B28036256   After: B29659691  **2,5,7,11**
+Routine Name: VPRP11I
+    Before:       n/a   After:    B91291  **11**
+ 
+Routine list of preceding patches: 7
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 11, 2018
+Completed By:                               Date Completed: NOV 02, 2018
+Released By :                               Date Released : NOV 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

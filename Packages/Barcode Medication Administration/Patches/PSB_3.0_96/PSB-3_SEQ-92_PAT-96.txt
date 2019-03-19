@@ -1,0 +1,276 @@
+$TXT Created by                      MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/16/18 at 11:14
+=============================================================================
+Run Date: DEC 18, 2018                     Designation: PSB*3*96
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #92                      Status: Released
+                  Compliance Date: JAN 18, 2019
+=============================================================================
+
+Associated patches: (v)PSB*3*97    <<= must be installed BEFORE `PSB*3*96'
+
+Subject: BCMA GUI 2FA IMPLEMENTATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will update the log-in procedure to the Bar Code Medication 
+ Administration (BCMA) Client and BCMA Site Parameters Graphical User 
+ Interfaces (GUI) to use Two Factor Authentication (2FA) which will 
+ require the use of a Personal Identity Verification (PIV) card.
+  
+ In order to make the transition to 2FA, it was also necessary to upgrade 
+ the BCMA Client and BCMA Site Parameters GUIs to Delphi version XE8 in
+ order to implement the new Remote Procedure Call (RPC) Broker allowing
+ compliance.
+  
+ This patch also distributes a new version of the Med Order Button 
+ Dynamically Linked Library (DLL) file and a parameter that controls the
+ version check inside of BCMA. 
+  
+ NOTE:  If BCMA and Computerized Patient Record System (CPRS) are installed
+ on the same workstation please make sure that OR*3.0*484 is installed as
+ both CPRS and BCMA applications will use the same DLL for the Med
+ Order Button.
+  
+ This patch no longer requires Broker patch XWB*1.1*29 (Shared Broker) to 
+ be installed on a workstation to run the BCMA Client or BCMA Parameter 
+ applications.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ No associated tickets
+  
+   
+ Problem: 
+ --------
+ The Department of Veterans Affairs Cybersecurity Task Force has been tasked 
+ by the Chief Information Officer (CIO) and the Inspector General (IG) to 
+ address identified material weaknesses. This task force has mandated that 
+ all internal, user facing VA applications become 2FA compliant by April
+ 30, 2017. 
+  
+ In order to be compliant, applications are required to authenticate users 
+ via PIV cards.  
+  
+ Note: Usernames and password will no longer be permitted for employees and
+ contractors to access VA applications.  
+   
+ Resolution:
+ -----------
+ As part of the transition to 2FA, the BCMA Client and BCMA Site Parameters
+ GUIs were upgraded to Delphi XE8 to allow access to the latest version of
+ the RPC Broker implementing 2FA. This change also required a new version of
+ the OrderCom.DLL which is used by the Med Order Button. This patch also 
+ distributes a parameter, PSB MOB DLL REQUIRED VERSION, which is used by
+ the BCMA GUI to determine which version of the Med Order Button DLL file 
+ to use.
+  
+ *********************Notice*********************************************
+ New OrderCom.DLL will be located in C:\Program Files (x86)\Vista\Common 
+ Files and replace BcmaOrderCom.dll located within the BCMA directory.
+ ************************************************************************
+  
+ Additional Information:
+ -----------------------
+  
+ Parameter Name:                    Entity:          Value:
+ ---------------                    -------          ------
+ PSB MOB DLL REQUIRED VERSION       SYSTEM           2.0.18.3         
+  
+ Test Sites:
+ -----------
+ MINNEAPOLIS, MN -VAMC
+ CENTRAL, TX -VAMC  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by 
+ this patch is available.
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www.domain.ext/vdl/
+  
+ Title               File Name                               FTP Mode
+ ---------------------------------------------------------------------
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 6
+                     PSB_3_UM_CHAPTERS_1_THRU_6.PDF           binary
+  
+ BCMA V.3.0 GUI Use Manual - Chapters 7 through 13
+                     PSB_3_UM_CHAPTERS_7_THRU_13.PDF          binary
+  
+ BCMA V. 3.0 GUI User Manual - Appendix A (FAQs)
+                     PSB_3_UM_APPENDIX_A_FAQS.PDF             binary
+  
+ BCMA V.3.0 Manager's User Manual
+                     PSB_3_MAN_UM.PDF                         binary 
+  
+ BCMA V.3.0 Installation Guide
+                     PSB_3_IG.PDF                             binary
+  
+ Client Retrieval Instructions:
+ ------------------------------
+ Retrieve one of the below installation files from the ANONYMOUS.SOFTWARE 
+ directory mentioned above:
+  
+      FILE NAME           BYTES        SFTP MODE
+      -------------       --------     ---------
+      PSB3_0P96.MSI       8,539,648    binary
+      PSB3_0P96.EXE       9,148,658    binary
+  
+ The software installation distribution includes these modified files:
+  
+ FILE NAME     DESCRIPTION            FILE VERSION   BYTES    FTP MODE
+ -----------   ---------------------- ------------  --------  --------
+ BCMA.EXE      Client                  3.0.96       5,788,160 binary 
+ BCMApar.EXE   Parameters Client       3.0.96       3,785,728 binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no Pre/Post install routines to be deleted.
+  
+  
+ Installation Instructions:
+ --------------------------
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+ NOTE:  If BCMA and Computerized Patient Record System (CPRS) are installed
+ on the same workstation please make sure that OR*3.0*484 is installed as
+ both CPRS and BCMA applications will use the same DLL for the Med
+ Order Button.
+  
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter PSB*3.0*96)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        PSB*3.0*96.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+ Client Installation Instructions:
+ ---------------------------------
+ 1. Prior client compatible with patch:  NO
+ 2. Client can be copied instead of installed:  YES
+  
+   
+ If BCMA is currently running, please exit BCMA. This client
+ installation patch file can be used to upgrade an existing version of
+ BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P96.EXE or PSB3_0P96.MSI, which will launch
+        the InstallShield Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" screen select one of the following options:
+              a. Typical - installs only the BCMA client program,
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install.
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+ Post-Installation:
+ ------------------
+ Please remove all instances of the BCMAOrderCom.dll file. This file is
+ being replaced by the OrderCom.dll being delivered with this patch.
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and
+ participation of the appropriate VA site/region personnel. The decision
+ to back out the patch will be a joint decision between VA site/region
+ personnel and other appropriate VA personnel.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB96PST
+    Before:       n/a   After:   B362019  **96**
+Routine Name: PSBRPC3
+    Before:   B292055   After:   B292026  **6,3,4,16,13,10,32,28,42,58,
+                                           68,70,83,97,96**
+ 
+Routine list of preceding patches: 97
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 09, 2016
+Completed By:                               Date Completed: DEC 17, 2018
+Released By :                               Date Released : DEC 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,351 @@
+$TXT Created by                at VIPDEV32.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 10/23/18 at 08:58
+=============================================================================
+Run Date: NOV 28, 2018                     Designation: PSO*7*517
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #443                      Status: Released
+                  Compliance Date: DEC 28, 2018
+=============================================================================
+
+Associated patches: (v)PSO*7*504   <<= must be installed BEFORE `PSO*7*517'
+                    (v)PSO*7*505   <<= must be installed BEFORE `PSO*7*517'
+
+Subject: MPDU BUILD 3-LEADING ZERO, TITRATE ISSUE, UNDEFINED ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ MPDU - MEDICATION PERMISSIONS/DISPENSING UPDATES - Build 3
+  
+ This patch will address the following issues:
+  
+ 1.  The PHARMACY PATIENT file (#55) should have only one logical data 
+     piece corresponding to RX PATIENT STATUS on the "PS" node.
+ 2.  Display in the Patient's Medication Profile has a leading zero 
+     in the quantity if it is a fractional quantity.
+ 3.  An intermittent issue was found that some Non-Controlled Substance 
+     order items are not able to be marked for titrate.
+ 4.  While testing the Outpatient Medication Controlled substance order 
+     edit, unnecessary code was found.
+ 5.  Manilla Philippines unique address is stopping controlled substance
+     orders from finishing.
+ 6.  Undefined Error at ACP+21^PSOORNEW
+ 7.  Patient address, risk of carryover information between patients in 
+     VAPA array.
+ 8.  Allowing "# of refills" entry to be edited on Controlled Substance
+     orders.
+ 9.  Entering a new Controlled substance order via backdoor will not block
+     the user when the patient does not have a zip code.
+  
+  
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A 
+  
+  Defect Tracking System Ticket(s) & Overview: 
+  --------------------------------------------
+  
+  1. R11837840FY17
+  
+  Problem:
+  =======
+  A site reported bad data in the "PS" node of the Pharmacy Patient
+  file (#55). The node should only contain one numeric status, but some
+  records had multiple delimiters/statuses. The data has been corrected
+  at the site. However, there may be other sites with the same issue,
+  therefore, a post-install routine is transported in this patch to
+  address this issue.
+  
+  Resolution:
+  ==========
+  A post-install routine, PSO7P517 will loop through the PHARMACY PATIENT
+  file (#55) and will check if the ^PS(55,DFN,"PS") node contains "^", then
+  it will reset the node to the first numeric piece. A mail message will
+  be generated to the PSORPH KEY holders with the old and new value and a
+  second mail message to the installer to indicate the patch was completed.
+  
+  This post-install routine PSO7P517 may be deleted manually from your
+  system after the post-install mail messages are received.
+  
+  
+  2. 816346   A leading zero before the whole number first integer."02.5"
+              QTY displays
+  
+  Problem:
+  ========
+  A leading zero is inappropriately being added to fractional quantity 
+  prescriptions when the number before the decimal is greater than zero
+  
+  Resolution:
+  ===========
+  Routine PSON52 was modified prevent the addition of the leading zero if 
+  the number before the decimal is greater than zero (i.e. 4.5).
+  
+  
+  3. INC1977447,810757 - Bug in new Titration dosage  Controlled drug 
+                         check
+  
+  Problem:
+  ========
+  An issue was reported that some Titration Order's for Non-Controlled 
+  Substance Drug are being blocked as if it is a controlled substance drug.
+  
+  Resolution:
+  ===========
+  Routine PSOOTMRX was modified to remove this intermittent issue. 
+  
+  
+  4. Outpatient Medication Editing a range for a Controlled Substance Order
+  
+  Problem:
+  ========
+  An HPS developer found that a loop was not needed given the existing 
+  code.
+  
+  Resolution:
+  =============
+  Routine PSOOREDT was modified to follow the format of a similar call 
+  which makes proper use of the loop.
+  
+  
+  5.  815634 - Manila Philippines unique issue of patient zip code 
+               population
+  
+  Problem:
+  =========
+  An issue was reported that if a patient had a Philippines address, the 
+  system is not allowing a Controlled Substance order to be finished.
+  
+  Resolution:
+  ==========
+  Routine PSODRG has been modified to use the new API that checks the 
+  validity of the patient zip code. If the zip code is not valid, the user 
+  will be informed that controlled substance prescriptions require a 
+  patient address. The user will not be allowed to write the controlled 
+  substance order until the patient has a valid address. Since some 
+  foreign countries don't have zip codes, routine PSOORNEW was modified to 
+  consider the country when evaluating the zip code validity.
+  
+  
+  6.  816327 - New error ACP+21^PSOORNEW <undef>
+  
+  Problem:
+  =========
+  An undefined error occurred when trying to finish a Controlled 
+  Substance order.
+  
+  Resolution:
+  ===========
+  Routine PSOORNEW was modified to move the PSODRUG("IEN") check. The 
+  check now occurs after drug selection to ensure a drug has been selected.
+  
+  
+  7.  816996 - Patient address risk of carryover between patients in VAPA 
+               array
+  
+  Problem:
+  ========
+  There is a risk in the Order Finishing functionality where the patient 
+  address variable could carryover between patients.
+  
+  Resolution:
+  ===========
+  Routine POOORNEW was modified to create a new function that 'New's the 
+  VAPA array before making the VADPT call, protecting the stack and 
+  ensuring carryover does not occur.
+  
+  
+  8. 814219 - Controlled substances # of refills edit issue
+  
+  Problem:
+  ========
+  When selecting the # of refills field as the only edit on a pending
+  prescription, the following message is given in VISTA:
+  The selection includes field(s) that are not editable
+  for controlled substances. These field(s) will be skipped.
+  
+  This was previous functionality and the change wasn't specifically 
+  mentioned in the patch description that delivered this change 
+  (PSO*7*505).
+  
+  Resolution:
+  ==========
+  Modified PSOOREDT to allow refills to be edited, restoring the ability 
+  for a user to edit the number of refills for a controlled substance
+  medication (schedule 3-5).
+  
+  Test Sites:
+  -----------
+  New York Harbor
+  Kansas City
+  Hines
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ Title                          File Name                         FTP Mode
+ --------------------------------------------------------------------------
+ Technical Manual/Security      pso_7_p517_tm.pdf                 binary
+ Guide - Outpatient Pharmacy
+ V.7.0
+  
+  
+  Pre-Installation Instructions:
+  =============================
+  N/A
+  
+  
+  Installation Instructions:
+  -------------------------- 
+  
+  Pharmacy users can be on the system, but it is recommended that this 
+  patch be queued to run after normal business hours.
+  The cleanup of the "PS" node of the PHARMACY PATIENT file (#55) might 
+  take up to an hour depending on the number of records in the file. 
+  
+  
+  1. Choose the PackMan message containing this patch.
+   
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+   
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may select to use the
+     following options.
+     
+     When prompted for the INSTALL NAME enter the patch # (PSO*7.0*517):
+  
+     a. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+     b. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the
+        transport global.
+  
+  4. Select the installation option Backup a Transport Global. This
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+  5. From the Installation Menu, select the Install Package(s)
+     option and choose the patch to install.
+  
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Respond NO 
+  
+  7. If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Respond NO
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-install routine PSO7P517 may be deleted manually from your system
+ after the post-install mail messages are received by using the following
+ option:
+  
+     Select Routine Tools <TEST ACCOUNT> Option: Delete Routines
+  
+     ROUTINE DELETE
+  
+     All Routines? No => No
+  
+     Routine: PSO7P517
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed-up routines can be loaded with the "Xtract PackMan"
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed-up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*517 patch has been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*517 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO7P517
+    Before:       n/a   After: B19425302  **517**
+Routine Name: PSODRG
+    Before: B93661712   After:B100166024  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427,411,458,504,
+                                           517**
+Routine Name: PSON52
+    Before:B102819042   After:B103399623  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408,
+                                           473,504,505,517**
+Routine Name: PSOOREDT
+    Before: B91171061   After: B90555441  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391,313,427,411,
+                                           505,517**
+Routine Name: PSOORNEW
+    Before:B112662411   After:B117010534  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486,446,505,517**
+Routine Name: PSOOTMRX
+    Before: B23201302   After: B22834550  **313,505,517**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 25, 2018
+Completed By:                               Date Completed: NOV 27, 2018
+Released By :                               Date Released : NOV 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

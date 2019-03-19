@@ -1,0 +1,303 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 08/29/18 at 17:27
+=============================================================================
+Run Date: NOV 08, 2018                     Designation: MD*1*54
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #46                      Status: Released
+                  Compliance Date: DEC 09, 2018
+=============================================================================
+
+Associated patches: (v)MD*1*42     <<= must be installed BEFORE `MD*1*54'
+                    (v)MD*1*52     <<= must be installed BEFORE `MD*1*54'
+
+Subject: INSTRUMENT CANCELLATION, AUTO CHECK-IN AND CP CONSOLE (GUI) FIXES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses these four issues:
+  
+ 1.  A cancellation message is not being sent to the instrument 
+     when an order is cancelled or discontinued through CPRS.
+  
+ 2.  TIU Note Title of Procedures edited in CP Console (GUI) are being
+     lost.
+  
+ 3.  Attempting to import in CP Console (GUI) results in an error.
+  
+ 4.  A follow up CP order placed the same day as a scheduled CP order
+     will check in without it being scheduled.
+  
+ Associated CA-SDM Ticket(s):
+ ===========================
+ 1.  I9850587FY16 - Instrument Cancellation Message Issue
+ 2.  I9914178FY16 - TIU Note Title Issue (CP Console)
+ 3.  I17133608FY18 - Error when importing (CP Console)
+ 4.  R6900025FY16  - An issue with procedure requests 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ PSPO:
+ =====
+ N/A 
+  
+ Test Sites:
+ ===========
+ Birmingham VA Medical Center
+ Wilkes-Barre VA Medical Center
+  
+ Overview:
+ =========
+  
+ 1. I9850587FY16 - Instrument Cancellation Message Issue
+   
+    Problem: 
+    ========
+    A cancellation message is not sent to the instrument if two entries
+    exist in CP USER for a consult with one having a "NEW" status and the
+    other one having a "PENDING INSTRUMENT DATA" status.
+  
+    Resolution:
+    ===========
+    For procedures which are cancelled in CPRS, routines MDWOR and MDWORC
+    have been modified to loop through all entries in the CP TRANSACTION
+    (#702) file and set the status as "cancelled".  If an entry had a
+    status of "Pending Instrument Data", a cancellation HL7 message is sent
+    to the instrument.
+   
+    Routines: MDWOR and MDWORC
+  
+ 2. I9914178FY16 - TIU Note Title Issue (CP Console)
+  
+    Problem: 
+    ========
+    TIU Notes assigned to Procedures in CP Console aren't being saved.
+    (Technically, the TIU Notes weren't being *loaded*, but the net result 
+    was the same.)
+  
+    Resolution:
+    ===========
+    The loading code was fixed to properly load in the TIU Note ID assigned
+    to the Procedure.
+  
+ 3. I17133608FY18 - Error when importing (CP Console)
+  
+    Problem:
+    ========
+    In CP Console, when attempting an import (Tools menu, Import from
+    XML...) an access violation occurs.
+  
+    Resolution:
+    ===========
+    The initialization code for the Import from XML form was corrected to
+    fix an improper loop.
+  
+ 4. R6900025FY16 - An issue with procedure requests
+  
+    Problem:
+    ========
+    A CP is ordered and scheduled for today. When it preformed the
+    clinician decides to order a follow up to the CP. When the 
+    follow up CP is signed in CPRS GUI, it will auto check in 
+    without an appointment for it having been made.
+  
+    Resolution:
+    ===========
+    Modification of routines MDWOR, MDWORSR, and new routine
+    MDWORSR2 to determine if a CP is already scheduled for 
+    that day and prevent the follow up CP from auto checked in. 
+  
+    Routine: MDWOR,MDWORSR,MDWORSR2
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interface (GUI). Files and documentation
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Console (MD*1.0*54) Installation Guide" for
+ installation and set-up information. 
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+      
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ CP Console (MD*1.0*54)    MD_1_54.ZIP         Binary
+ (GUI) executable
+  
+ CP Console (MD*1.0*54)    MD_1_54_IG.doc      Binary
+ Installation Guide                          
+  
+ Pre Installation Overview:
+ ==========================
+ Before the installation of the patch, the options MD STUDY CHECK-IN and MD
+ SCHEDULED STUDIES will need to be unscheduled. The instructions to
+ unschedule these options is given below.
+  
+ Post Installation Overview:
+ ===========================
+ A post-installation routine is provided which updates Clinical Procedures 
+ with the expected version numbers for CP Console.
+  
+ After the installation of the patch, the MD STUDY CHECK-IN and MD
+ SCHEDULED STUDIES will need to be rescheduled. The instructions to
+ reschedule these options is given after the installation instructions.
+  
+ ===================== PRE INSTALLATION INSTRUCTIONS ======================
+ To unschedule the options MD STUDY CHECK-INI and MD SCHEDULED STUDIES:
+  
+ 1.      Start Taskman Manager [XUTM MGR]
+  
+ 2.      Select option Schedule/Unschedule Options
+  
+ 3.      At the prompt "Select OPTION to schedule or reschedule:" type in 
+         MD STUDY CHECK-IN and press the enter key.
+  
+ 4.      At the prompt "Option Name:" press the enter key to accept the 
+         defaulted value. It will be the name of the selected option.
+  
+ 5.      At the prompt "QUEUED TO RUN AT WHAT TIME:" enter @ (shift 2) and 
+         press the enter key.
+  
+ 6.      At the prompt "DEVICE FOR QUEUED JOB OUTPUT:" enter ^ (shift 6) 
+         and press the enter key to exit to the "COMMAND:" prompt.
+  
+ 7.      At the prompt "COMMAND:" enter S for Save and press the enter key.
+  
+ 8.      At the prompt "COMMAND:" enter E for Exit and press the enter key.
+  
+ 9.      At the prompt "Select OPTION to schedule or reschedule:" type in 
+         MD SCHEDULED STUDIES and press the enter key. Repeat steps 4 to 8
+         for this option to be unscheduled.
+  
+ ======================= INSTALLATION INSTRUCTIONS ========================
+ Clinical Procedure users should not be on the system during the
+ installation of this patch. Other users may be on the system, but this
+ patch should be installed during non-peak hours.
+  
+ It should take less than 5 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter MD*1.0*54.)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package MD*1.0*54.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+  
+ ===================== POST INSTALLATION INSTRUCTIONS =====================
+ To reschedule the options MD STUDY CHECK-INI and MD SCHEDULED STUDIES:
+  
+ 1.      Start Taskman Manager [XUTM MGR]
+  
+ 2.      Select option Schedule/Unschedule Options
+  
+ 3.      At the prompt "Select OPTION to schedule or reschedule:" type 
+         in MD STUDY CHECK-IN and press the enter key.
+  
+ 4.      At the prompt "Option Name:" press the enter key to accept the 
+         defaulted value. It will be the name of the selected option.
+  
+ 5.      At the prompt "QUEUED TO RUN AT WHAT TIME:" enter the starting 
+         date and time for the option and press the enter key.
+  
+ 6.      At the prompt "DEVICE FOR QUEUED JOB OUTPUT:" enter ^ (shift 6) 
+         and press the enter key to exit to the "COMMAND:" prompt.
+  
+ 7.      At the prompt "COMMAND:" enter S for Save and press the enter key.
+  
+ 8.      At the prompt "COMMAND:" enter E for Exit and press the enter key.
+  
+ 9.      At the prompt "Select OPTION to schedule or reschedule:" type in 
+         MD SCHEDULED STUDIES and press the enter key. Repeat steps 4 to 8
+         for this option to be rescheduled.
+  
+  
+ Back-out/Rollback Strategy:
+ ==========================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST54
+    Before:       n/a   After:   B810582  **54**
+Routine Name: MDWOR
+    Before: B47515185   After: B51417126  **14,11,21,20,37,42,54**
+Routine Name: MDWORC
+    Before: B13681232   After: B13986642  **14,54**
+Routine Name: MDWORSR
+    Before: B59105822   After: B59164885  **14,11,21,20,54**
+Routine Name: MDWORSR2
+    Before:       n/a   After:  B2825873  **54**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 17, 2017
+Completed By:                               Date Completed: NOV 06, 2018
+Released By :                               Date Released : NOV 08, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
