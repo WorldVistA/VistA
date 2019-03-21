@@ -216,6 +216,7 @@ class GraphGenerator:
 
         dirName = os.path.join(self._outDir, packageName)
         normalizedName = normalizeName(routineName)
+        normalizedName = normalizedName.replace("$","\$")
         dotFilename = os.path.join(dirName, "%s%s.dot" % (normalizedName, routineSuffix))
 
         with open(dotFilename, 'wb') as output:
