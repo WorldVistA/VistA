@@ -64,8 +64,8 @@ class VistADataExtractor:
     self._outputResultDir = outputResultDir
     self._packagesDir = os.path.join(self._vistARepoDir, "Packages")
     assert os.path.exists(self._packagesDir)
-    self._packagesCSV = os.path.normpath(os.path.join(SCRIPTS_DIR,
-                                                 "../Packages.csv"))
+    self._packagesCSV = os.path.normpath(os.path.join(_vistARepoDir,
+                                                 "Packages.csv"))
     assert os.path.exists(self._packagesCSV)
     self._routineOutputFile = os.path.join(self._outputResultDir, "Routines.ro")
     self._globalOutputDir = os.path.join(self._outputResultDir, "Globals")
