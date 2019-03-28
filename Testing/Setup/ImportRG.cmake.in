@@ -14,7 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 macro(CheckResult Result Message)
-  if(NOT "${Result}" EQUAL 0)
+  if(NOT ${Result} EQUAL 0)
     message(FATAL_ERROR  "ERROR: ${Message}")
   endif()
 endmacro()
