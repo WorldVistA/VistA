@@ -263,13 +263,14 @@ function startWritePDF(event){
             $(".headerVal:checked").toArray().forEach(function(title) {
               titleList.push($(title).attr("val"))
             })
-            writePDF(event);
+            writePDF();
             $( this ).dialog( "close" )
         }
       }
   })
 }
-function writePDF(event) {
+
+function writePDF() {
   // Capture images first
   toDataUrl($("#img_called").attr("src"), function(callGraph, callGraphWidth, callGraphHeight) {
     toDataUrl($("#img_caller").attr("src"), function(callerGraph, callerGraphWidth, callerGraphHeight) {
@@ -277,40 +278,9 @@ function writePDF(event) {
         toDataUrl($("#package_dependentGraph").attr("src"), function(dependentVal, dependentValWidth, dependentValHeight) {
           toDataUrl($("#colorLegendImg").attr("src"), function (colorLegendImg, colorLegendWidth, colorLegendHeight) {
             var title = $("#pageTitle").html();
-            var today = new Date();
-            var footerText = "Generated from " + window.location.href;
-            footerText +=  " on " + today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
 
             // And then text and tables
-            var docDefinition = {
-              pageOrientation: 'landscape',
-              // Note: [left, top, right, bottom] or [horizontal, vertical]
-              //       or just a number for equal margins
-              pageMargins: margin,
-              images : {},
-              styles: {
-                header: {
-                  fontSize: 18,
-                  bold: true
-                },
-                subheader: {
-                  fontSize: 15,
-                  bold: true
-                },
-                tableheader: {
-                  fontSize: 13,
-                  bold: true
-                },
-                quote: {
-                  italics: true
-                },
-                small: {
-                  fontSize: 8
-                }
-              },
-              content:[{text:title, style: "header"}, "\n\n"],
-              footer: { text: footerText, alignment: "center"},
-            };
+            var docDefinition = getDocDefinition(title);
 
             titleList.forEach(function(test) {
               if(test.indexOf("_")) {
@@ -381,6 +351,98 @@ function writePDF(event) {
       })
     })
   })
+}
+
+function writeICRPDF() {
+  var title = $("#pageTitle").html();
+
+  var docDefinitionAddition = {
+    table: {
+      widths:getColumnSizes({"numCols":2,"stretchColumn":1}),
+      body: getICRTable($("tr.even,tr.odd"))
+    },
+    layout: {
+      fillColor: function (i, node) { return (i % 2 === 0) ?  '#CCCCCC' : null;
+    }
+  }};
+  
+  var docDefinition = getDocDefinition(title);
+  docDefinition.content.push(docDefinitionAddition);
+  docDefinition.content.push("\n\n");
+
+  // Create PDF
+  pdfMake.createPdf(docDefinition).download(title + ".pdf")
+}
+
+function getICRTable(table) {
+  var pdfTable = [];
+  $(table).each(function(rowIndex, row) {
+    var pdfRow = [];
+    var tableObj = $(row).children();
+    tableObj.each(function(colIndex, col) {
+      // Does this cell contain a table?
+      var contents = $(col).children();
+      if (contents.length >  0 && contents.is("table")) {
+        var rows = $.merge($(contents).children().eq(0).children(),
+                           $(contents).children().eq(1).children());
+        var nestedTable = getICRTable(rows);
+        
+        // Add style to headers
+        var headers = [];
+        var headerRow = nestedTable[0];
+        $(headerRow).each(function(i, headerText) {
+          var header = { text: headerText, style: "tableheader"}
+          headers.push(header);
+        });
+        nestedTable[0] = headers;
+  
+        pdfRow.push({ table: { body: nestedTable }});
+      } else {
+        pdfRow.push($(col).text());
+      }
+    });
+    pdfTable.push(pdfRow);
+  })
+  return pdfTable;
+}
+
+function getDocDefinition(title) {
+  return {
+    pageOrientation: 'landscape',
+    // Note: [left, top, right, bottom] or [horizontal, vertical]
+    //       or just a number for equal margins
+    pageMargins: margin,
+    images : {},
+    styles: {
+      header: {
+        fontSize: 18,
+        bold: true
+      },
+      subheader: {
+        fontSize: 15,
+        bold: true
+      },
+      tableheader: {
+        fontSize: 13,
+        bold: true
+      },
+      quote: {
+        italics: true
+      },
+      small: {
+        fontSize: 8
+      }
+    },
+    content:[{text:title, style: "header"}, "\n\n"],
+    footer: { text: getFooter(), alignment: "center"},
+  };
+}
+
+function getFooter() { 
+  var today = new Date();
+  var footerText = "Generated from " + window.location.href;
+  footerText +=  " on " + today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+  return footerText;
 }
 
 function startDownloadPDFBundle(filename) {
