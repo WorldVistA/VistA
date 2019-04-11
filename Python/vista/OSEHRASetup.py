@@ -215,7 +215,12 @@ def configureConsoleDevice(VistA):
   else:
     VistA.write('')
   VistA.wait('SYSTEM DEVICE')
-  VistA.write('Y\r')
+  VistA.write('Y')
+  index = VistA.multiwait(['SYSTEM DEVICE', 'DEVICE NAME'])
+  if index == 0:
+      VistA.write('^')
+      VistA.wait("Select DEVICE")
+  VistA.write('')
   VistA.wait("Select OPTION")
   VistA.write("")
 
