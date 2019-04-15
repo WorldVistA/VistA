@@ -1185,7 +1185,8 @@ class WebPageGenerator:
                                                     outputFile, self.getGlobalEntryHTML,
                                                     nameFunc=self.getGlobalEntryName,
                                                     classid="gblEntry",
-                                                    useColor=False)
+                                                    useColor=False,
+                                                    additionalDetailsURL="%s/%s/%s.html" % (VIVIAN_URL,globalVar.getFileNo().replace('.','_'), globalVar.getFileNo()))
                       if self._generatePDFBundle:
                           columns = 8
                           columnWidth = self.doc.width/columns
@@ -2426,8 +2427,9 @@ class WebPageGenerator:
 #===============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile,
                                  htmlMappingFunc, nameFunc=None, totalCol=8,
-                                 classid="", useColor=True):
+                                 classid="", useColor=True, additionalDetailsURL=""):
         pdfTable = []
+        objectCount = 0
         totalNumRoutine = 0
         if sortedItemList:
             totalNumRoutine = len(sortedItemList)
@@ -2451,6 +2453,7 @@ class WebPageGenerator:
                             displayName = nameFunc(displayName)
                         outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
                                    % (borderColorString, linkName, displayName))
+                        objectCount += 1
                         if self._generatePDFBundle:
                             # format name for pdf
                             displayName = str(displayName)
@@ -2470,6 +2473,9 @@ class WebPageGenerator:
                 outputFile.write("</tr>\n")
                 if self._generatePDFBundle and pdfRow:
                     pdfTable.append(pdfRow)
+                if objectCount > 1000:
+                    outputFile.write("<tr><td colspan=\"%s\">For the entire list of entries see: <a href=\"%s\">Here</a></td></tr>" % (totalCol, additionalDetailsURL) )
+                    break
             outputFile.write("</table>\n</div>\n")
         else:
             outputFile.write("<div>\n</div>\n")
