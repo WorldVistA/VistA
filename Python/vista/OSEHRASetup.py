@@ -140,6 +140,27 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   VistA.wait('Select OPTION:')
   VistA.write('')
 
+def removeResourceUsageLogging(VistA):
+  # By default, prevent logging of Resource Usage
+  startFileman(VistA)
+  VistA.write('1')
+  VistA.wait_re('INPUT TO WHAT FILE')
+  VistA.write('KERNEL SYSTEM PARAMETERS')
+  VistA.wait('EDIT WHICH FIELD')
+  VistA.write('LOG RESOURCE USAGE')
+  VistA.wait('THEN EDIT FIELD')
+  VistA.write('')
+  VistA.wait('DOMAIN NAME')
+  # `1 is the notation to grab the entry with a number of 1
+  VistA.write('`1')
+  VistA.wait('LOG RESOURCE USAGE')
+  VistA.write('NO')
+  VistA.wait('DOMAIN NAME')
+  VistA.write('')
+  VistA.wait('Select OPTION:')
+  VistA.write('')
+
+
 def setupIntroText(VistA, introTextSHA):
   # Set up the introduction text for the VistA system
   #
@@ -215,7 +236,12 @@ def configureConsoleDevice(VistA):
   else:
     VistA.write('')
   VistA.wait('SYSTEM DEVICE')
-  VistA.write('Y\r')
+  VistA.write('Y')
+  index = VistA.multiwait(['SYSTEM DEVICE', 'DEVICE NAME'])
+  if index == 0:
+      VistA.write('^')
+      VistA.wait("Select DEVICE")
+  VistA.write('')
   VistA.wait("Select OPTION")
   VistA.write("")
 
