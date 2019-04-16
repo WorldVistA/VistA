@@ -16,6 +16,7 @@
 import os
 import sys
 import re
+import gc
 import subprocess
 from datetime import datetime
 import json
@@ -243,7 +244,7 @@ class FileManGlobalDataParser(object):
     self._rtnRefDict = {} # dict of rtn => fileNo => Details
     self.allFiles = self._getAllFileManZWRFiles()  # Dict of fileNum => Global file
     self.schemaParser = FileManSchemaParser()
-    self._allSchemaDict = self.schemaParser.parseSchemaDDFileV2(self.allFiles['0']['path'])
+    self._allSchemaDict = self.schemaParser.parseSchemaDDFileV2(self.allFiles['0']['path'][0])
 
   @property
   def outFileManData(self):
@@ -282,18 +283,18 @@ class FileManGlobalDataParser(object):
       fileName = os.path.basename(file)
       if fileName == 'DD.zwr':
         outFiles['0'] = {'name': 'Schema File',
-                         'path': os.path.normpath(os.path.abspath(file))}
+                         'path': [os.path.normpath(os.path.abspath(file))]}
         continue
       result = ZWR_FILE_REGEX.search(fileName)
       if result:
-        if result.groups()[1]:
-          logger.info("Ignore file %s" % fileName)
-          continue
         fileNo = result.group('fileNo')
         if fileNo.startswith('0'): fileNo = fileNo[1:]
         globalDes = result.group('des')
-        outFiles[fileNo] = {'name': globalDes,
-                            'path': os.path.normpath(os.path.abspath(file))}
+        if fileNo not in outFiles:
+          outFiles[fileNo] = {'name': globalDes,
+                              'path': [os.path.normpath(os.path.abspath(file))]}
+        else:
+          outFiles[fileNo]['path'].append( os.path.normpath(os.path.abspath(file)))
     return outFiles
 
   def generateFileIndex(self, inputFileName, fileNumber):
@@ -795,7 +796,7 @@ def run(args):
   assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
 
   # Populate glbDataParser.globalLocationMap
-  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
   for fileNo in args.fileNos:
     assert fileNo in glbDataParser.globalLocationMap
   del glbDataParser.outFileManData['1']
@@ -807,13 +808,12 @@ def run(args):
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
-      gdFile = glbDataParser.allFiles[fileNo]['path']
-      logger.info("Parsing file: %s at %s" % (fileNo, gdFile))
-      glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
-
-      htmlGen.outputFileManDataAsHtml(glbDataParser)
-
-      del glbDataParser.outFileManData[fileNo]
+      for gdFile in glbDataParser.allFiles[fileNo]['path']:
+        logger.info("Parsing file: %s at %s" % (fileNo, gdFile))
+        glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
+        htmlGen.outputFileManDataAsHtml(glbDataParser)
+        del glbDataParser.outFileManData[fileNo]
+        gc.collect()
   else:
     # Generate all required files
     sccSet = glbDataParser.schemaParser.sccSet
@@ -825,20 +825,19 @@ def run(args):
     for i in xrange(0,idx+1):
       fileSet = fileSet.union(sccSet[i])
       fileSet &= set(glbDataParser.allFiles.keys())
-      fileSet.discard('757')
     if len(fileSet) > 1:
       for file in fileSet:
-        zwrFile = glbDataParser.allFiles[file]['path']
-        globalSub = glbDataParser.allFiles[file]['name']
-        glbDataParser.generateFileIndex(zwrFile, file)
+        for zwrFile in glbDataParser.allFiles[file]['path']:
+          globalSub = glbDataParser.allFiles[file]['name']
+          glbDataParser.generateFileIndex(zwrFile, file)
     for file in fileSet:
-      zwrFile = glbDataParser.allFiles[file]['path']
-      globalSub = glbDataParser.allFiles[file]['name']
-      logger.info("Parsing file: %s at %s" % (file, zwrFile))
-      glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
-      htmlGen.outputFileManDataAsHtml(glbDataParser)
-      del glbDataParser.outFileManData[file]
-
+        for zwrFile in glbDataParser.allFiles[file]['path']:
+          logger.info("Parsing file: %s at %s" % (file, zwrFile))
+          globalSub = glbDataParser.allFiles[file]['name']
+          glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
+          htmlGen.outputFileManDataAsHtml(glbDataParser)
+          del glbDataParser.outFileManData[file]
+          gc.collect()
   glbDataParser.outRtnReferenceDict()
 
 def horologToDateTime(input):
