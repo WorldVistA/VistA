@@ -801,20 +801,19 @@ def run(args):
   for fileNo in args.fileNos:
     assert fileNo in glbDataParser.globalLocationMap
   del glbDataParser.outFileManData['1']
-
   glbDataParser.outdir = args.outDir
 
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, args.outDir, _doxURL, _vivianURL)
+  htmlGen = FileManDataToHtml(crossRef, glbDataParser.schemaParser, args.outDir, _doxURL, _vivianURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
   if not args.all or set(args.fileNos).issubset(isolatedFiles):
     for fileNo in args.fileNos:
       for gdFile in glbDataParser.allFiles[fileNo]['path']:
         logger.info("Parsing file: %s at %s" % (fileNo, gdFile))
         glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
-        htmlGen.outputFileManDataAsHtml(glbDataParser)
-        del glbDataParser.outFileManData[fileNo]
-        gc.collect()
+      htmlGen.outputFileManDataAsHtml(fileNo, glbDataParser)
+      del glbDataParser.outFileManData[fileNo]
+      gc.collect()
   else:
     # Generate all required files
     sccSet = glbDataParser.schemaParser.sccSet
@@ -836,9 +835,9 @@ def run(args):
           logger.info("Parsing file: %s at %s" % (file, zwrFile))
           globalSub = glbDataParser.allFiles[file]['name']
           glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
-          htmlGen.outputFileManDataAsHtml(glbDataParser)
-          del glbDataParser.outFileManData[file]
-          gc.collect()
+        htmlGen.outputFileManDataAsHtml(file, glbDataParser)
+        glbDataParser.outFileManData.pop(file)
+        gc.collect()
   glbDataParser.outRtnReferenceDict()
 
 def horologToDateTime(input):

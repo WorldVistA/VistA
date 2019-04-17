@@ -207,7 +207,7 @@ def normalizePackageName(packageName):
     if packageName in PACKAGE_MAP:
        packageName = PACKAGE_MAP[packageName]
     newName = packageName.replace(' ', '_')
-    return newName.replace('-', "_").replace('.', '_').replace('/', '_')
+    return newName.replace('-', "_").replace('.', '_').replace('/', '_').replace('(', '_').replace(')', '_')
 
 def getPackageObjHtmlFileNameUnquoted(optionName):
     if "Global" in str(type(optionName)):

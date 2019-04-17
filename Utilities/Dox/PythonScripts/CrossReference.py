@@ -390,8 +390,11 @@ class FileManFile(Routine):
         self.setFileNo(fileNo)
         self._fileManDbCallRoutines = None
         self._fileAttrs = None
+        self._fieldNames = []
     def getFileNo(self):
         return self._fileNo
+    def getFieldNames(self):
+        return self._fieldNames
     def setFileNo(self, fileNo):
         if fileNo:
             try:
@@ -408,6 +411,8 @@ class FileManFile(Routine):
     def addFileManField(self, FileManField):
         if not self._fields:
             self._fields = dict()
+        if FileManField.getName() not in self._fieldNames:
+          self._fieldNames.append(FileManField.getName())
         self._fields[FileManField.getFieldNo()] = FileManField
     def getAllFileManFields(self):
         return self._fields
