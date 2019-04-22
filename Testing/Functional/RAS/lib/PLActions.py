@@ -1067,6 +1067,7 @@ class PLActions (Actions):
         self.VistA.write('$')
         self.VistA.wait('Select Problem')
         self.VistA.write('')
+        self.VistA.wait('Select Action:')
         self.VistA.write('DT')
         self.VistA.wait('Select Problem')
         self.VistA.write('')
@@ -1078,6 +1079,7 @@ class PLActions (Actions):
         self.VistA.wait('Select Problem')
         self.VistA.write('')
         self.VistA.wait('does not require verification')
+        self.VistA.wait('Select Action:')
         self.VistA.write('Q')
 
     def selectnewpatient(self, ssn1, name1, ss2, name2):
@@ -1227,6 +1229,7 @@ class PLActions (Actions):
           elif rval == 2:
              self.VistA.write(probList[probIndex])
              probIndex += 1
+        self.VistA.wait('Select Action')
         self.VistA.write('QUIT')
         self.VistA.wait('Print a new problem list')
         self.VistA.write('N')
