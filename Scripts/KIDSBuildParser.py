@@ -18,6 +18,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+from builtins import range
 from builtins import object
 import sys
 import os
@@ -751,7 +752,7 @@ def routineLineCheckSum(routineLine, lineNum):
       #still count data lines (";;")
       totalLen = pos
   checkSum = 0
-  for i in xrange(totalLen):
+  for i in range(totalLen):
     checkSum += (lineNum+i+1)*ord(routineLine[i])
   return checkSum
 

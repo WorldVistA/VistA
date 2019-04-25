@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import range
 from builtins import object
 import sys
 import os
@@ -114,7 +115,7 @@ class PatchIncrInstallExtractCommit(object):
     logger.debug(output)
     """ logic to check if we need to recover from cache backup data """
     found = False
-    for idx in xrange(0,len(output)):
+    for idx in range(0,len(output)):
       if output[idx][0] == installNames[-1]:
         found = True
         break

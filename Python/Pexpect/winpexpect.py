@@ -6,6 +6,7 @@
 # WinPexpect is copyright (c) 2008-2010 by the WinPexpect authors. See the
 # file "AUTHORS" for a complete overview.
 
+from builtins import range
 from builtins import object
 import os
 import sys
@@ -79,7 +80,7 @@ def split_command_line(cmdline):
     """Split a command line into a command and its arguments according to
     the rules of the Microsoft C runtime."""
     # http://msdn.microsoft.com/en-us/library/ms880421
-    s_free, s_in_quotes, s_in_escape = range(3)
+    s_free, s_in_quotes, s_in_escape = list(range(3))
     state = namedtuple('state',
                 ('current', 'previous', 'escape_level', 'argument'))
     state.current = s_free

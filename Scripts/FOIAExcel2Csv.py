@@ -15,6 +15,7 @@
 #---------------------------------------------------------------------------
 from __future__ import print_function
 
+from builtins import range
 import xlrd
 from xlrd import open_workbook,cellname,xldate_as_tuple
 from datetime import datetime, date, time

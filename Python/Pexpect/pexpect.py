@@ -63,6 +63,7 @@ PEXPECT LICENSE
 
 """
 
+from builtins import range
 from builtins import object
 try:
     import os

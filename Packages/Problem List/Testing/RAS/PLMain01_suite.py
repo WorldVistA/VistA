@@ -34,6 +34,7 @@ Created on Mar 9, 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
+from builtins import range
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from PLActions import PLActions
