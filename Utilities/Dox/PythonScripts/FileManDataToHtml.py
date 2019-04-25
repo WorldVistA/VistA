@@ -138,17 +138,17 @@ def getFreeTextLink(dataEntry, value, **kargs):
       if file not in glbData.outFileManData:
         glbData._glbData[file] = FileManFileData(file,
                                   glbData.getFileManFileNameByFileNo(file))
-        pathName = glbData.allFiles[file]["path"]
-        # Taken from the FileManGlobalDataParser
-        glbData._createDataRootByZWRFile(pathName)
-        glbLoc = glbData._glbLocMap.get(file)
-        for dataRoot in readGlobalNodeFromZWRFileV2(pathName, glbLoc):
-          if not dataRoot:
-            continue
-          glbData._dataRoot = dataRoot
-          fileDataRoot = dataRoot
-          glbData._parseDataBySchema(fileDataRoot, glbData._allSchemaDict[file],
-                                  glbData._glbData[file])
+        for pathName in glbData.allFiles[file]["path"]:
+          # Taken from the FileManGlobalDataParser
+          glbData._createDataRootByZWRFile(pathName)
+          glbLoc = glbData._glbLocMap.get(file)
+          for dataRoot in readGlobalNodeFromZWRFileV2(pathName, glbLoc):
+            if not dataRoot:
+              continue
+            glbData._dataRoot = dataRoot
+            fileDataRoot = dataRoot
+            glbData._parseDataBySchema(fileDataRoot, glbData._allSchemaDict[file],
+                                    glbData._glbData[file])
       # Once the information is available check for the target in any available
       # information in that file
       dataEntries = glbData.outFileManData[file].dataEntries
