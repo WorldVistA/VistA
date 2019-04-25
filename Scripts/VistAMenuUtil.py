@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import object
 import re
 # constant for reuse
 DD_OUTPUT_FROM_WHAT_FILE = re.compile("OUTPUT FROM WHAT FILE:", re.I)

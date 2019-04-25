@@ -6,6 +6,7 @@
 # WinPexpect is copyright (c) 2008-2010 by the WinPexpect authors. See the
 # file "AUTHORS" for a complete overview.
 
+from builtins import object
 import os
 import sys
 import pywintypes

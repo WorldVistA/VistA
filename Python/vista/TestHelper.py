@@ -27,6 +27,7 @@ Created on Mar 2, 2012
 '''
 from __future__ import print_function
 
+from builtins import object
 import sys
 import csv
 import logging

@@ -15,6 +15,7 @@
 #---------------------------------------------------------------------------
 from __future__ import print_function
 
+from builtins import object
 import csv,os,sys
 
 class Prefix(object):

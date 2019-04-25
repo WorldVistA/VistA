@@ -17,6 +17,7 @@
 # limitations under the License.
 #----------------------------------------------------------------
 
+from builtins import object
 import glob
 import re
 import os

@@ -14,6 +14,7 @@
 # The following code is an extended version of paramikoe by Fotis Gimian (https://github.com/fgimian/paramiko-expect).
 #
 
+from builtins import object
 import sys
 import re
 import types

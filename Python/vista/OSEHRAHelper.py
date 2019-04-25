@@ -27,6 +27,7 @@ and interaction methods such as write() and wait()
 '''
 from __future__ import print_function
 
+from builtins import object
 import sys
 import os, errno
 import telnetlib

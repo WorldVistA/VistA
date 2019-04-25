@@ -18,6 +18,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+from builtins import object
 import sys
 import os
 import argparse
