@@ -1,3 +1,4 @@
+from __future__ import division
 # This module is parses ICR in JSON format and convert to html web page
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
@@ -15,6 +16,8 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import str
+from past.utils import old_div
 import json
 import os.path
 import cgi
@@ -108,7 +111,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
                                         outDir, isForAll=True)
-            for pkgName, outJson in pkgJson.iteritems():
+            for pkgName, outJson in pkgJson.items():
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
                                             outDir)
             logger.warn('Total # entry in PACKAGE_MAP is [%s]', len(PACKAGE_MAP))
@@ -300,17 +303,17 @@ def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
         """ table body """
         output.write("<tbody>\n")
         """ Now convert the ICR Data to Table data """
-        for pkgName in sorted(outDep.iterkeys()):
+        for pkgName in sorted(outDep.keys()):
             output.write("<tr>\n")
             output.write("<td>%s</td>\n" % _getPackageHRefLink(pkgName, {'CUSTODIAL PACKAGE': pkgName}, crossRef=crossRef))
             """ Convert the dependencies and dependent information """
             output.write("<td>\n")
             output.write ("<ol>\n")
-            for pkgDepType in sorted(outDep[pkgName].iterkeys()):
+            for pkgDepType in sorted(outDep[pkgName].keys()):
                 output.write ("<li>\n")
                 output.write ("<dt>%s:</dt>\n" % pkgDepType.upper())
                 depPkgInfo = outDep[pkgName][pkgDepType]
-                for depPkgName in sorted(depPkgInfo.iterkeys()):
+                for depPkgName in sorted(depPkgInfo.keys()):
                     outputInfo = _getPackageHRefLink(depPkgName, {'CUSTODIAl PACKAGE': depPkgName}, crossRef=crossRef)
                     outputInfo += ': &nbsp;&nbsp Total # of ICRs %s : [' % len(depPkgInfo[depPkgName])
                     for icrNo in depPkgInfo[depPkgName]:
@@ -443,10 +446,10 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
     buf = io.BytesIO()
     doc = SimpleDocTemplate(
         buf,
-        rightMargin=inch/2,
-        leftMargin=inch/2,
-        topMargin=inch/2,
-        bottomMargin=inch/2,
+        rightMargin=old_div(inch,2),
+        leftMargin=old_div(inch,2),
+        topMargin=old_div(inch,2),
+        bottomMargin=old_div(inch,2),
         pagesize=letter,
     )
     pdf = []
@@ -566,7 +569,7 @@ def _writeGlobalReferenceToPDF(section, pdf, doc):
                             row.append(Paragraph("", STYLES['Normal']))
                     table.append(row)
             columns = 12
-            columnWidth = doc.width/columns
+            columnWidth = old_div(doc.width,columns)
             t = Table(table,
                       colWidths=[columnWidth, columnWidth*2, columnWidth*2, columnWidth*6, columnWidth])
             t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
@@ -632,7 +635,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                 # TODO: Parsing error! See ICR-28
                 pass
         columns = 10
-        columnWidth = doc.width/columns
+        columnWidth = old_div(doc.width,columns)
         t = Table(table, colWidths=[columnWidth*2, columnWidth, columnWidth*7])
         t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),

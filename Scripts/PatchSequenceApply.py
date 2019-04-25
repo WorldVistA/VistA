@@ -24,6 +24,7 @@
 
 from __future__ import with_statement
 from __future__ import print_function
+from builtins import str
 from builtins import range
 from builtins import object
 import sys

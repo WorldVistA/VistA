@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from builtins import zip
 import os
 import sys
 import subprocess
@@ -203,7 +204,7 @@ def getCommitInfo(gitRepoDir=None, revision='HEAD'):
   git_command_list.extend([fmtStr, "-n1", revision])
   result, output = _runGitCommand(git_command_list, gitRepoDir)
   if result:
-    return dict(zip(outfmtLst, output.strip('\r\n').split(delim)))
+    return dict(list(zip(outfmtLst, output.strip('\r\n').split(delim))))
   return None
 
 def _runGitCommand(gitCmdList, workingDir):

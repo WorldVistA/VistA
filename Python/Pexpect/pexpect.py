@@ -63,6 +63,9 @@ PEXPECT LICENSE
 
 """
 
+from builtins import zip
+from builtins import chr
+from builtins import str
 from builtins import range
 from builtins import object
 try:

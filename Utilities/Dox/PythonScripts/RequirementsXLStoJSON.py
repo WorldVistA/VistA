@@ -14,6 +14,8 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import map
+from builtins import range
 import xlrd
 from xlrd import open_workbook,cellname,xldate_as_tuple
 from datetime import datetime, date, time
@@ -120,7 +122,7 @@ def checkReqForUpdate(curNode,pastJSONObj,curDate):
       diffFlag=False;
       noHistory=False;
       if BFFEntry in pastJSONObj:
-        ret = filter(lambda x: x['name'] == curNode['name'] , pastJSONObj[BFFEntry])
+        ret = [x for x in pastJSONObj[BFFEntry] if x['name'] == curNode['name']]
         if ret:
           for entry in ret:
             diffFlag=False
@@ -163,18 +165,18 @@ def convertExcelToJson(input, output,pastData,curDate):
   fields = None
   all_nodes = dict(); # all the nodes
   fields = sheet.row_values(row_index)
-  fields = map(RequirementsFieldsConvertFunc, fields)
+  fields = list(map(RequirementsFieldsConvertFunc, fields))
   # Read rest of the BFF data from data_row
-  for row_index in xrange(data_row, sheet.nrows):
+  for row_index in range(data_row, sheet.nrows):
     curNode = dict()
     curNode['isRequirement'] = True
     curNode['isRequirement'] = True
-    for col_index in xrange(sheet.ncols):
+    for col_index in range(sheet.ncols):
       cell = sheet.cell(row_index, col_index)
       cType = cell.ctype
       convFunc = typeDictConvert.get(cell.ctype)
       cValue = cell.value
-      if type(cValue) == unicode:
+      if type(cValue) == str:
         cValue = re.sub(r'[^\x00-\x7F]+','', cValue) #cValue.decode('unicode_escape').encode('ascii','ignore')
       if convFunc:
         cValue = convFunc(cValue,col_index)

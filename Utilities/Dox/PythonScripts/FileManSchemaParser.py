@@ -207,7 +207,7 @@ class FileManSchemaParser(object):
     allFilesWithPointedTo = [x for x in depDict if self._allSchema[x].isRootFile()]
     allFilesWithoutPointedTo = sorted(set(allFiles) - set(allFilesWithPointedTo), key=lambda x: float(x))
     logger.info("Total # of Files that is not pointed to by any files: %s" % len(allFilesWithoutPointedTo))
-    allFilePointerTo = reduce(set.union, depDict.itervalues())
+    allFilePointerTo = reduce(set.union, iter(depDict.values()))
     allFileNoPointerTo = set(allFiles) - allFilePointerTo
     logger.info("Total # of files that does not have file pointer: %s" % len(allFileNoPointerTo))
     self._isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
@@ -230,7 +230,7 @@ class FileManSchemaParser(object):
     """ remove self dependency """
     allFiles = set(self._fileDep.keys())
     # special logic to reduce the dependency of file 101
-    for key, values in self._fileDep.iteritems():
+    for key, values in self._fileDep.items():
       #if key == '101':
       #  for item in ('200', '19', '9.4', '870', '123.5', '62.07', '62.05', '60', '61', '62', '123.1', '71', '19.1'):
       #    values.discard(item)
@@ -434,11 +434,11 @@ class FileManSchemaParser(object):
 
   def _updateMultiple(self):
     allSchemaDict = self._allSchema
-    for file, schema in allSchemaDict.iteritems():
+    for file, schema in allSchemaDict.items():
       allFields = schema.getAllFileManFields()
       if not allFields:
         continue
-      for field, detail in schema.getAllFileManFields().iteritems():
+      for field, detail in schema.getAllFileManFields().items():
         if detail.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
           subFile = detail.getPointedToSubFile()
           if subFile:

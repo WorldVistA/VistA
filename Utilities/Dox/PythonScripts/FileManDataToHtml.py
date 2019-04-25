@@ -14,6 +14,9 @@
 # limitations under the License.
 #------------------------------------------------------------------------------
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 from builtins import object
 import os
 import sys
@@ -21,7 +24,7 @@ import re
 from datetime import datetime
 import glob
 import cgi
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 import json
 
@@ -330,7 +333,7 @@ class FileManDataToHtml(object):
     crossRef = self.crossRef
     fileManDataMap = gblDataParser.outFileManData
     self.dataMap = gblDataParser
-    for fileNo in getKeys(fileManDataMap.iterkeys(), float):
+    for fileNo in getKeys(iter(fileManDataMap.keys()), float):
       fileManData = fileManDataMap[fileNo]
       fileNoPathSafe = fileNo.replace('.','_')
       fileNoOutDir = os.path.join(self.outDir, fileNoPathSafe)
@@ -340,7 +343,7 @@ class FileManDataToHtml(object):
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allRpcs = []
-          for package in allPackages.itervalues():
+          for package in allPackages.values():
             if package.rpcs:
               self._generateRPCListHtml(package.rpcs, package.getName(),
                                         fileNoOutDir)
@@ -356,14 +359,14 @@ class FileManDataToHtml(object):
           allPackages = crossRef.getAllPackages()
           allHl7s = []
           allProtocols = []
-          for ien in getKeys(fileManData.dataEntries.keys(), float):
+          for ien in getKeys(list(fileManData.dataEntries.keys()), float):
             dataEntry = fileManData.dataEntries[ien]
             allProtocols.append(dataEntry)
             fields = dataEntry.fields
             if '4' in fields:
               if fields['4'].value == 'menu':
                 allProtoMenuList.append(dataEntry)
-          for package in allPackages.itervalues():
+          for package in allPackages.values():
             if package.hl7:
               self._generateHL7ListByPackage(package.hl7, package.getName(),
                                              fileNoOutDir)
@@ -382,7 +385,7 @@ class FileManDataToHtml(object):
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHLOs = []
-          for package in allPackages.itervalues():
+          for package in allPackages.values():
             if package.hlo:
               self._generateHLOListByPackage(package.hlo, package.getName(),
                                              gblDataParser, fileNoOutDir)
@@ -398,7 +401,7 @@ class FileManDataToHtml(object):
         menuOutDir = os.path.join(self.outDir, "menus", "19")
         if not os.path.exists(menuOutDir):
           os.makedirs(menuOutDir)
-        for ien in getKeys(fileManData.dataEntries.keys(), float):
+        for ien in getKeys(list(fileManData.dataEntries.keys()), float):
           dataEntry = fileManData.dataEntries[ien]
           allOptionList.append(dataEntry)
           fields = dataEntry.fields
@@ -427,7 +430,7 @@ class FileManDataToHtml(object):
 
       allObjectsList = []
       outJSON = {}
-      for ien in getKeys(fileManData.dataEntries.keys(), float):
+      for ien in getKeys(list(fileManData.dataEntries.keys()), float):
         dataEntry = fileManData.dataEntries[ien]
         outJSON[ien] = dataEntry.fields
         allObjectsList.append(dataEntry)
@@ -547,7 +550,7 @@ class FileManDataToHtml(object):
     for entry in leafMenus:
       del menuDepDict[entry]
     """ find the top level menu, menu without any parent """
-    allChildSet = reduce(set.union, menuDepDict.itervalues())
+    allChildSet = reduce(set.union, iter(menuDepDict.values()))
     rootSet = set(allMenuList) - allChildSet
     leafSet = allChildSet - set(allMenuList)
 
@@ -750,7 +753,7 @@ class FileManDataToHtml(object):
 
   def _getTableRows(self, fileManData, fileNo):
     rows = []
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
+    for ien in getKeys(list(fileManData.dataEntries.keys()), float):
       dataEntry = fileManData.dataEntries[ien]
       if not dataEntry.name:
         logger.warn("No name for %s" % dataEntry)
@@ -767,7 +770,7 @@ class FileManDataToHtml(object):
   def _convertFileManDataToHtml(self, fileManData):
     fileManDataFileNo = fileManData.fileNo
     pathSafeFileManDataFileNo = fileManDataFileNo.replace(".", "_")
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
+    for ien in getKeys(list(fileManData.dataEntries.keys()), float):
       dataEntry = fileManData.dataEntries[ien]
       name = dataEntry.name
       if not name:
@@ -792,7 +795,7 @@ class FileManDataToHtml(object):
         if fileNo in ['19','101']:
           # Todo: Check if the object exists in options/menus first.
           output.write("<a style='font-size: 15px;' href='%s../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
-                          (VIV_URL, fileNo, urllib.quote_plus(name)))
+                          (VIV_URL, fileNo, urllib.parse.quote_plus(name)))
         outputFileEntryTableList(output, tName)
         """ table body """
         output.write("<tbody>\n")
@@ -805,7 +808,7 @@ class FileManDataToHtml(object):
 
   def _convertFileManSubFileDataToHtml(self, output, fileManData):
     output.write ("<ol>\n")
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
+    for ien in getKeys(list(fileManData.dataEntries.keys()), float):
       dataEntry = fileManData.dataEntries[ien]
       self._fileManDataEntryToHtml(output, dataEntry, False)
     output.write ("</ol>\n")
@@ -813,7 +816,7 @@ class FileManDataToHtml(object):
   def _fileManDataEntryToHtml(self, output, dataEntry, isRoot):
     if not isRoot:
       output.write("<li>\n")
-    fields = dataEntry.fields.keys()
+    fields = list(dataEntry.fields.keys())
     fields.sort()
     for fldId in fields:
       dataField = dataEntry.fields[fldId]

@@ -26,6 +26,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from past.builtins import cmp
 from builtins import object
 import sys
 import os
@@ -107,7 +108,7 @@ def populate(input):
     #-----------------------------------------------------------------------------
 
     # Map by package namespace (prefix).
-    for ns in sorted(namespaces.keys(),order_long_to_short):
+    for ns in sorted(list(namespaces.keys()),order_long_to_short):
         path = namespaces[ns]
         gbls=[]
         for gbl in globals:

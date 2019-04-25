@@ -17,7 +17,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import division
+from future import standard_library
+standard_library.install_aliases()
+from builtins import next
+from builtins import str
+from builtins import range
 from builtins import object
+from past.utils import old_div
 import argparse
 import json
 import os
@@ -25,7 +32,7 @@ import os.path
 import re
 import shutil
 import string
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import cgi
 
 from operator import itemgetter
@@ -224,7 +231,7 @@ PC_LEGEND = """
       <tbody>
         <tr>
         """
-for key, value in COMPONENT_TYPE_DICT.iteritems():
+for key, value in COMPONENT_TYPE_DICT.items():
   PC_LEGEND += """ <td class="IndexKey"> %s </td>
           <td class="IndexValue"> <sup>%s</sup> </td>
           """ % (key, value)
@@ -410,9 +417,9 @@ def getFileManFileHyperLinkWithNameFileNo(GlobalVar):
 
 # sub fileman files related functions
 def getFileManSubFileHtmlFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.html" % subFileNo)
+    return urllib.parse.quote("SubFile_%s.html" % subFileNo)
 def getFileManSubFilePDFFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.pdf" % subFileNo)
+    return urllib.parse.quote("SubFile_%s.pdf" % subFileNo)
 
 def getFileManSubFileHtmlFileName(subFile):
     return getFileManSubFileHtmlFileNameByName(subFile.getFileNo())
@@ -428,7 +435,7 @@ def getRoutinePdfFileNameUnquoted(routineName):
     return "Routine_%s.pdf" % routineName
 
 def getPackagePdfFileName(packageName):
-    return urllib.quote("Package_%s.pdf" %
+    return urllib.parse.quote("Package_%s.pdf" %
                         normalizePackageName(packageName))
 
 def getRoutineHypeLinkByName(routineName):
@@ -455,7 +462,7 @@ def getRoutineSourceHtmlFileNameUnquoted(routineName):
     return "Routine_%s_source.html" % routineName
 
 def getRoutineSourceHtmlFileName(routineName):
-    return urllib.quote(getRoutineSourceHtmlFileNameUnquoted(routineName))
+    return urllib.parse.quote(getRoutineSourceHtmlFileNameUnquoted(routineName))
 
 
 def getPackagePackageDependencyHyperLink(packageName, depPackageName, name,
@@ -542,7 +549,7 @@ def generateParagraph(text):
         logger.warning("Failed to write to PDF:")
         logger.warning(text)
         logger.warning(e)
-        return Paragraph(unicode(text, errors='ignore'), styles['Heading6'])
+        return Paragraph(str(text, errors='ignore'), styles['Heading6'])
 
 def generatePDFListData(listData):
     if not listData:
@@ -609,10 +616,10 @@ class WebPageGenerator(object):
       else:
         pagesize = landscape(letter)
       self.doc = SimpleDocTemplate(self.buf,
-                                   rightMargin=inch/2,
-                                   leftMargin=inch/2,
-                                   topMargin=inch/2,
-                                   bottomMargin=inch/2,
+                                   rightMargin=old_div(inch,2),
+                                   leftMargin=old_div(inch,2),
+                                   topMargin=old_div(inch,2),
+                                   bottomMargin=old_div(inch,2),
                                    pagesize=pagesize,
                                   )
 
@@ -629,7 +636,7 @@ class WebPageGenerator(object):
     def __generateLegend__(self):
       self.legend = "<h3>Legends:</h3>"
       self.legend += "<div class=\"contents colorLegendGrp\">\n"
-      self.legend += "<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.quote("colorLegend.png"),"Legend of Colors")
+      self.legend += "<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.parse.quote("colorLegend.png"),"Legend of Colors")
       cmapFile = open(os.path.join(self._outDir, "colorLegend.cmapx"), 'r')
       for line in cmapFile:
           self.legend += line
@@ -863,7 +870,7 @@ class WebPageGenerator(object):
         outputFile.write("<div class=\"contents\">\n")
         outputFile.write("<table align=\"center\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n")
         totalNumItems = len(sortedItems)
-        numPerCol = totalNumItems / numCol + 1
+        numPerCol = old_div(totalNumItems, numCol) + 1
         for i in range(numPerCol):
             itemsPerRow = []
             for j in range(numCol):
@@ -903,7 +910,7 @@ class WebPageGenerator(object):
         sortedGlobals = [] # a list of list
         for letter in indexList:
             sortedGlobals.append([letter, letter])
-        for globalVar in self._allGlobals.itervalues():
+        for globalVar in self._allGlobals.values():
             sortedName = globalVar.getName()[1:] # get rid of ^
             if sortedName.startswith('%') or sortedName.startswith('$'): # get rid of % and $
                 sortedName = sortedName[1:]
@@ -922,7 +929,7 @@ class WebPageGenerator(object):
         filename = os.path.join(self._outDir, "filemanfiles.html")
         with open(filename, 'w') as outputFile:
             allFileManFilesList = []
-            for item in self._allGlobals.itervalues():
+            for item in self._allGlobals.values():
                 if item.isFileManFile():
                     allFileManFilesList.append(item)
             self.__includeHeader__(outputFile)
@@ -956,7 +963,7 @@ class WebPageGenerator(object):
                               "Sub-File FileNo",
                               "Package Name"],
                              outputFile)
-            sortedSubFileList = sorted(allSubFiles.values(), key=lambda item: float(item.getFileNo()))
+            sortedSubFileList = sorted(list(allSubFiles.values()), key=lambda item: float(item.getFileNo()))
             for subFile in sortedSubFileList:
                 package = subFile.getRootFile().getPackage()
                 row = [getFileManSubFileHypeLinkWithName(subFile),
@@ -973,9 +980,9 @@ class WebPageGenerator(object):
     def generateIndividualGlobalPage(self):
         logger.info("Start generating individual globals......")
 
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             packageName = package.getName()
-            for (globalName, globalVar) in package.getAllGlobals().iteritems():
+            for (globalName, globalVar) in package.getAllGlobals().items():
                 isFileManFile = globalVar.isFileManFile()
                 if isFileManFile:
                     # Get all of the data first so we know which sections to
@@ -1139,7 +1146,7 @@ class WebPageGenerator(object):
                     # Accessed By FileMan Db Calls
                     if fileManDbCallRtns:
                         DbCallRtnsNos = [len(x) for x in
-                                            fileManDbCallRtns.itervalues()]
+                                            fileManDbCallRtns.values()]
                         totalNumDbCallRtns = sum(DbCallRtnsNos)
                         self.writeSectionHeader("Accessed By FileMan Db Calls, Total: %d" %
                                                 totalNumDbCallRtns,
@@ -1189,7 +1196,7 @@ class WebPageGenerator(object):
                                                     useColor=False)
                       if self._generatePDFBundle:
                           columns = 8
-                          columnWidth = self.doc.width/columns
+                          columnWidth = old_div(self.doc.width,columns)
                           colWidths = [columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth]
                           self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf,isString=True,columnWidths=colWidths)
                       writeSectionEnd(outputFile)
@@ -1210,7 +1217,7 @@ class WebPageGenerator(object):
                 if isFileManFile:
                     subFiles = globalVar.getAllSubFiles()
                     if subFiles:
-                        for subFile in subFiles.itervalues():
+                        for subFile in subFiles.values():
                             self.__generateFileManSubFilePage__(subFile)
         logger.info("End of generating individual globals......")
 
@@ -1307,7 +1314,7 @@ class WebPageGenerator(object):
         if not allFields:
             return
         # sort the fields # by the float value
-        sortedFields = sorted(allFields.keys(), key=lambda item: float(item))
+        sortedFields = sorted(list(allFields.keys()), key=lambda item: float(item))
         outputFieldsList = []
         if self._generatePDFBundle:
             pdfOutputFieldsList = []
@@ -1403,7 +1410,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(fieldHeaderList, outputFieldsList, outputFile, "fmFields")
         if self._generatePDFBundle:
             columns = 13
-            columnWidth = self.doc.width/columns
+            columnWidth = old_div(self.doc.width,columns)
             colWidths = [columnWidth, columnWidth*2, columnWidth, columnWidth*2, columnWidth*7]
             self.__writeGenericTablizedPDFData__(fieldHeaderList, pdfOutputFieldsList, pdf,
                                                   columnWidths=colWidths, isString=False)
@@ -1561,7 +1568,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid)
         if pdf and self._generatePDFBundle:
             columns = 8
-            columnWidth = self.doc.width/columns
+            columnWidth = old_div(self.doc.width,columns)
             colWidths = [columnWidth, columnWidth, columnWidth * 6]
             self.__writeGenericTablizedPDFData__(infoHeader, pdfItemList, pdf,
                                                  columnWidths=colWidths, isString=False)
@@ -1613,7 +1620,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid)
         if self._generatePDFBundle:
             columns = 8
-            columnWidth = self.doc.width/columns
+            columnWidth = old_div(self.doc.width,columns)
             colWidths = [columnWidth, columnWidth, columnWidth * 6]
             self.__writeGenericTablizedPDFData__(infoHeader, pdfItemList, pdf, colWidths)
 
@@ -1622,14 +1629,14 @@ class WebPageGenerator(object):
 #===============================================================================
     def generatePackagePackageInteractionDetail(self):
         packDepDict = dict()
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             for depDict in (package.getPackageRoutineDependencies(),
                             package.getPackageGlobalRoutineDependencies(),
                             package.getPackageGlobalDependencies(),
                             package.getPackageFileManFileDependencies(),
                             package.getPackageFileManDbCallDependencies()):
                 self._updatePackageDepDict(package, depDict, packDepDict)
-        for (key, value) in packDepDict.iteritems():
+        for (key, value) in packDepDict.items():
             self.generatePackageInteractionDetailPage(key, value[0], value[1])
 
     def generateGlobalICRSection(self, icrInfo, outfile, pdf):
@@ -1685,7 +1692,7 @@ class WebPageGenerator(object):
                     fieldsReferencedPDF, generateParagraph(description)]
           icrTablePDF.append(pdfRow)
           columns = 10
-          columnWidth = self.doc.width/columns
+          columnWidth = old_div(self.doc.width,columns)
           colWidths = [columnWidth, columnWidth * 2, columnWidth * 3, columnWidth * 4]
           self.__writeGenericTablizedPDFData__(headerList, icrTablePDF, pdf,
                                                   columnWidths=colWidths, isString=False)
@@ -2168,7 +2175,7 @@ class WebPageGenerator(object):
 #===============================================================================
     def __generatePlatformDependentRoutineSourcePage__(self, genericRoutine):
         allRoutines = genericRoutine.getAllPlatformDepRoutines()
-        for routineInfo in allRoutines.itervalues():
+        for routineInfo in allRoutines.values():
             routine = routineInfo[0]
             sourceCodeName = routine.getOriginalName()
             self.__generateSourceCodePageByName__(sourceCodeName, routine)
@@ -2179,7 +2186,7 @@ class WebPageGenerator(object):
 #===============================================================================
     def generateAllSourceCodePage(self):
         for packageName in self._allPackages:
-            for (routineName, routine) in self._allPackages[packageName].getAllRoutines().iteritems():
+            for (routineName, routine) in self._allPackages[packageName].getAllRoutines().items():
                 if self._crossRef.isPlatformGenericRoutineByName(routineName):
                     self.__generatePlatformDependentRoutineSourcePage__(routine)
                     continue
@@ -2221,7 +2228,7 @@ class WebPageGenerator(object):
         indexList.insert(0, "$")
         indexList.sort()
         routinesList = []
-        for routine in self._allRoutines.itervalues():
+        for routine in self._allRoutines.values():
             routinesList.append(routine.getName())
         sortedItems = indexList + routinesList
         sortedItems = sorted(sortedItems, key=lambda s: s.lower())
@@ -2261,7 +2268,7 @@ class WebPageGenerator(object):
 #
 #===============================================================================
     def generatePackageIndexPage(self):
-        packagesList = self._allPackages.keys()
+        packagesList = list(self._allPackages.keys())
         indexList = [char for char in string.uppercase]
         indexList.insert(0, '0-9')
         indexList.sort()
@@ -2334,7 +2341,7 @@ class WebPageGenerator(object):
 
         outputFile.write("<div><table>\n")
         numOfCol = 6
-        numOfRow = totalPackages / numOfCol + 1
+        numOfRow = old_div(totalPackages, numOfCol) + 1
         if self._generatePDFBundle:
             PDFData = []
         for index in range(numOfRow):
@@ -2434,7 +2441,7 @@ class WebPageGenerator(object):
             totalNumRoutine = len(sortedItemList)
         if totalNumRoutine > 0:
             outputFile.write("<div class=\"contents\"><table>\n")
-            numOfRow = totalNumRoutine / totalCol + 1
+            numOfRow = old_div(totalNumRoutine, totalCol) + 1
             for index in range(numOfRow):
                 if self._generatePDFBundle:
                     pdfRow = []
@@ -2486,7 +2493,7 @@ class WebPageGenerator(object):
         elif type(columnWidths) is not list:
             # Evenly spaced columns
             columns = columnWidths
-            t = Table(data, colWidths=[self.doc.width/columns]*columns)
+            t = Table(data, colWidths=[old_div(self.doc.width,columns)]*columns)
         else:
             # Custom width columns
             t = Table(data, colWidths=columnWidths)
@@ -2505,8 +2512,8 @@ class WebPageGenerator(object):
         if im.width > width or im.height > height:
             rh = 1.0
             rw = 1.0
-            if im.height > height: rh = height / im.height
-            if im.width > width: rw = width / im.width
+            if im.height > height: rh = old_div(height, im.height)
+            if im.width > width: rw = old_div(width, im.width)
             r = min([rh, rw])
             pdf.append(Image(os.path.join(self._outDir, imageFileName),
                                 im.width * r, im.height * r))
@@ -2518,7 +2525,7 @@ class WebPageGenerator(object):
         # No color legend in PDFs
         # TODO: Copy + paste from PC_LEGEND
         table = []
-        for key, value in COMPONENT_TYPE_DICT.iteritems():
+        for key, value in COMPONENT_TYPE_DICT.items():
               table.append([key, value])
         # TODO: Columns to fit contents + left aligned
         self.__writeGenericTablizedPDFData__(["Package Component", "Superscript"],
@@ -2600,13 +2607,13 @@ class WebPageGenerator(object):
             # Separate fileman files and non-fileman globals
             fileManList, globalList = [], []
             allGlobals = package.getAllGlobals()
-            for globalVar in allGlobals.itervalues():
+            for globalVar in allGlobals.values():
                 if globalVar.isFileManFile():
                     fileManList.append(globalVar)
                 else:
                     globalList.append(globalVar)
             #
-            routinesList = package.getAllRoutines().values()
+            routinesList = list(package.getAllRoutines().values())
 
             # Build list of sections with data
             indexList = ["Namespace", "Doc"]
@@ -2791,7 +2798,7 @@ class WebPageGenerator(object):
             if not totalObjectDict:
                 continue
             totalComponents  = []
-            for value in totalObjectDict.itervalues():
+            for value in totalObjectDict.values():
                 totalComponents.append(value)
             sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
             componentType = keyVal.replace("_"," ")
@@ -2842,7 +2849,7 @@ class WebPageGenerator(object):
     def __convertVariableToTableData__(self, variables, isGlobal=False,
                                        routine=None):
         output = []
-        allVars = variables.keys()
+        allVars = list(variables.keys())
         allVars.sort()
         for varName in allVars:
             if varName is None:
@@ -2857,7 +2864,7 @@ class WebPageGenerator(object):
 
     def __convertExternalReferenceToTableData__(self, variables, routine=None):
         output = []
-        allVars = sorted(variables.iterkeys(), key=itemgetter(0,1))
+        allVars = sorted(iter(variables.keys()), key=itemgetter(0,1))
         for nameTag in allVars:
             lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
             output.append(("%s^%s" %(nameTag[1], getRoutineHypeLinkByName(nameTag[0])),
@@ -2894,7 +2901,7 @@ class WebPageGenerator(object):
 
     def __convertFileManDbCallToTableData__(self, variables, routine=None):
         output = []
-        fileNos = variables.keys()
+        fileNos = list(variables.keys())
         fileNos.sort()
         for fileNo in fileNos:
             varInst, tags = variables[fileNo]
@@ -2976,7 +2983,7 @@ class WebPageGenerator(object):
         if self._generatePDFBundle:
             # 'Line Occurrences' column can be really long
             columns = 4
-            columnWidth = self.doc.width/columns
+            columnWidth = old_div(self.doc.width,columns)
             columnWidths = [columnWidth, columnWidth * 3]
             self.__writeGenericTablizedPDFData__(tableHeader, outputList,
                                                  pdfSection, columnWidths)
@@ -3152,7 +3159,7 @@ class WebPageGenerator(object):
         # Count total number of routines
         # TODO: Copy + paste from GraphGenerator::_generateRoutineDependencyGraph
         totalRoutines = 0
-        for callDict in data.itervalues():
+        for callDict in data.values():
             totalRoutines += len(callDict)
         if totalRoutines > 0 and totalRoutines <= MAX_DEPENDENCY_LIST_SIZE:
             self.__writeRoutineDepGraph__(routine, header, outputFile, pdfSection,
@@ -3189,7 +3196,7 @@ class WebPageGenerator(object):
                 imageFileName = packageName + "/" + fileNamePrefix + ".png"
                 outputFile.write("<img id=\"img_%s\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
                            % (routineSuffix,
-                              urllib.quote(imageFileName),
+                              urllib.parse.quote(imageFileName),
                               header,
                               fileNamePrefix))
                 if self._generatePDFBundle:
@@ -3223,7 +3230,7 @@ class WebPageGenerator(object):
             for depRoutine in sorted(data[depPackage].keys()):
                 totalNum += 1
                 if isDependency: # append tag information for called routines
-                    allTags = data[depPackage][depRoutine].keys()
+                    allTags = list(data[depPackage][depRoutine].keys())
                     allTags.sort()
                     # format the tag
                     tagString = ",".join(allTags)
@@ -3264,7 +3271,7 @@ class WebPageGenerator(object):
             paragraphs.append(Paragraph(subSectionHeader, styles['Heading3']))
             pdfTableData.append(generatePDFTableHeader(tableHeader, False))
             columns = 10
-            columnWidth = self.doc.width/columns
+            columnWidth = old_div(self.doc.width,columns)
             columnWidths = [columnWidth * 2, columnWidth, columnWidth * 7]
             t = self.__generatePDFTable__(pdfTableData, columnWidths)
             paragraphs.append(t)
@@ -3475,7 +3482,7 @@ class WebPageGenerator(object):
     def __generatePlatformDependentGenericRoutinePage__(self, genericRoutine, pdf):
         # Generate the subpage for each platform routines
         platformDepRoutines = genericRoutine.getAllPlatformDepRoutines()
-        for routineInfo in platformDepRoutines.itervalues():
+        for routineInfo in platformDepRoutines.values():
             routineInfo[0]._title = "Routine"
             self.__generateIndividualRoutinePage__(routineInfo[0], pdf,
                                                    routineInfo[1])
@@ -3498,7 +3505,7 @@ class WebPageGenerator(object):
                                     "DepRoutines", outputFile, pdf)
             tableRowList = []
             pdfTableRowList = []
-            for routineInfo in platformDepRoutines.itervalues():
+            for routineInfo in platformDepRoutines.values():
                 routineName = routineInfo[0].getName()
                 platform = routineInfo[1]
                 tableRowList.append([getRoutineHypeLinkByName(routineName), platform])
@@ -3580,8 +3587,8 @@ class WebPageGenerator(object):
     def generatePackageInformationPages(self):
         for keyVal in PACKAGE_COMPONENT_MAP:
             logger.info("Start generating all individual %s......" % keyVal)
-            for package in self._allPackages.itervalues():
-                for routine in package.getAllPackageComponents(keyVal).itervalues():
+            for package in self._allPackages.values():
+                for routine in package.getAllPackageComponents(keyVal).values():
                     routine._title = keyVal
                     package = routine.getPackage()
                     packageName = package.getName()
@@ -3604,8 +3611,8 @@ class WebPageGenerator(object):
         indexList.insert(0, '0-9')
         indexList.sort()
         components = []
-        for package in self._allPackages.itervalues():
-            for object in package.getAllPackageComponents(keyVal).itervalues():
+        for package in self._allPackages.values():
+            for object in package.getAllPackageComponents(keyVal).values():
                 components.append(object)
         sortedComponents = indexList + components
         sortedComponents = sorted(sortedComponents, key=lambda s: str(s).lower())
@@ -3634,7 +3641,7 @@ $( document ).ready(function() {
             self._writeIndexTitleBlock("Package Component", outputFile)
             outputFile.write(PC_LEGEND)
             outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
-            allObjects = PACKAGE_COMPONENT_MAP.keys()
+            allObjects = list(PACKAGE_COMPONENT_MAP.keys())
             allObjects.sort()
             outputFile.write("<select id='componentSelector'>")
             for objectKey in allObjects:
@@ -3651,9 +3658,9 @@ $( document ).ready(function() {
         logger.info("Start generating all individual Routines......")
         totalNoRoutines = len(self._allRoutines)
         routineIndex = 0
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             packageName = package.getName()
-            for routine in package.getAllRoutines().itervalues():
+            for routine in package.getAllRoutines().values():
                 if (routineIndex + 1) % PROGRESS_METER == 0:
                     logger.info("Processing %d of total %d" % (routineIndex, totalNoRoutines))
                 routineIndex += 1

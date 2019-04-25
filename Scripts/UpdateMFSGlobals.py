@@ -26,12 +26,15 @@
 
 from __future__ import with_statement
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import sys
 import os
 import re
 import glob
 import argparse
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from datetime import datetime
 import time
 

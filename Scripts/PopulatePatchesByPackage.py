@@ -101,10 +101,10 @@ def populate(input):
   patchOrder = patchOrderGen.generatePatchOrder(curDir)
   patchInfoDict = patchOrderGen.getPatchInfoDict()
   patchInfoSet = set(patchInfoDict.keys())
-  patchList = patchInfoDict.values()
+  patchList = list(patchInfoDict.values())
   noKidsInfoDict = patchOrderGen.getNoKidsBuildInfoDict()
   noKidsInfoSet = set(noKidsInfoDict.keys())
-  noKidsPatchList = noKidsInfoDict.values()
+  noKidsPatchList = list(noKidsInfoDict.values())
   leftoverTxtFiles = patchOrderGen.getInvalidInfoFiles()
   #---------------------------------------------------------------------------
   # place multiBuilds KIDS Build under MultiBuilds directory
@@ -129,7 +129,7 @@ def populate(input):
       place(src,dest)
 
   # Map by package namespace (prefix).
-  for ns in sorted(namespaces.keys(),order_long_to_short):
+  for ns in sorted(list(namespaces.keys()),order_long_to_short):
     path = namespaces[ns]
     nsPatchList = [x.installName for x in patchList if x.namespace==ns]
     for patch in nsPatchList:

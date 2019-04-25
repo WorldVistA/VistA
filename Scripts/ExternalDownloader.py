@@ -14,10 +14,12 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from future import standard_library
+standard_library.install_aliases()
 from builtins import object
 import sys
 import os
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from LoggerManager import logger, initConsoleLogging
 from ConvertToExternalData import generateExternalDataFileName
 from ConvertToExternalData import generateSha1Sum
@@ -73,7 +75,7 @@ class ExternalDataDownloader(object):
   @staticmethod
   def downloadExternalDataDirectly(dwnUrl, fileToSave):
     try:
-      urllib.urlretrieve(dwnUrl, fileToSave)
+      urllib.request.urlretrieve(dwnUrl, fileToSave)
       return True
     except Exception as ex:
       logger.error(ex)

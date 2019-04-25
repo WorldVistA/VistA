@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from builtins import str
+from builtins import range
 from builtins import object
 import os
 import sys
@@ -195,7 +197,7 @@ class FileManDataField(json.JSONEncoder):
 
 def sortSchemaByLocation(fileSchema):
   locFieldDict = {}
-  for fldAttr in fileSchema.getAllFileManFields().itervalues():
+  for fldAttr in fileSchema.getAllFileManFields().values():
     loc = fldAttr.getLocation()
     if not loc: continue
     locInfo = loc.split(';')
@@ -260,7 +262,7 @@ class FileManGlobalDataParser(object):
       return fileNo if found, otherwise return None
     """
     outLoc = normalizeGlobalLocation(glbLoc)
-    for key, value in self._glbLocMap.iteritems():
+    for key, value in self._glbLocMap.items():
       if value == outLoc:
         return key
     return None
@@ -404,7 +406,7 @@ class FileManGlobalDataParser(object):
 
   def _updateBuildReference(self):
     build = self._glbData['9.6']
-    for ien in sorted(build.dataEntries.keys(),key=lambda x: float(x)):
+    for ien in sorted(list(build.dataEntries.keys()),key=lambda x: float(x)):
       if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT:
         INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name] = {"ien":ien, "multi": -1}
       if '10' in build.dataEntries[ien].fields:
@@ -421,7 +423,7 @@ class FileManGlobalDataParser(object):
 
   def _updateHLOReference(self):
     hlo = self._glbData['779.2']
-    for ien in sorted(hlo.dataEntries.keys(),key=lambda x: float(x)):
+    for ien in sorted(list(hlo.dataEntries.keys()),key=lambda x: float(x)):
       hloEntry = hlo.dataEntries[ien]
       entryName = hloEntry.name
       namespace, package = \
@@ -433,7 +435,7 @@ class FileManGlobalDataParser(object):
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
     outJSON = {}
-    for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
+    for ien in sorted(list(protocol.dataEntries.keys()), key=lambda x: float(x)):
       protocolEntry = protocol.dataEntries[ien]
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
@@ -469,7 +471,7 @@ class FileManGlobalDataParser(object):
 
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
-    for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
+    for ien in sorted(list(rpcData.dataEntries.keys()), key=lambda x: float(x)):
       rpcEntry = rpcData.dataEntries[ien]
       rpcRoutine = None
       if rpcEntry.name:
@@ -538,7 +540,7 @@ class FileManGlobalDataParser(object):
     installJSONData = {}
     packageList = self._crossRef.getAllPackages()
     with open(output, 'w') as installDataOut:
-      for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
+      for ien in sorted(list(installData.dataEntries.keys()), key=lambda x: float(x)):
         installItem = {}
         installEntry = installData.dataEntries[ien]
         package = self._findInstallPackage(packageList, installEntry.name)
@@ -592,7 +594,7 @@ class FileManGlobalDataParser(object):
     for fileNo in self._pointerRef:
       if fileNo in self._glbData:
         fileData = self._glbData[fileNo]
-        for ien, fields in self._pointerRef[fileNo].iteritems():
+        for ien, fields in self._pointerRef[fileNo].items():
           if ien in fileData.dataEntries:
             name = fileData.dataEntries[ien].name
             if not name: name = str(ien)
@@ -626,7 +628,7 @@ class FileManGlobalDataParser(object):
           fieldDict = locFieldDict[locKey] # a dict of {pos: field}
           curDataRoot = dataEntry[locKey]
           if len(fieldDict) == 1:
-            fieldAttr = fieldDict.values()[0]
+            fieldAttr = list(fieldDict.values())[0]
             if fieldAttr.isSubFilePointerType(): # Multiple
               self._parseSubFileField(curDataRoot, fieldAttr, outDataEntry)
             else:
@@ -823,7 +825,7 @@ def run(args):
       fileSet.difference_update(value)
       if not fileSet:
         break
-    for i in xrange(0,idx+1):
+    for i in range(0,idx+1):
       fileSet = fileSet.union(sccSet[i])
       fileSet &= set(glbDataParser.allFiles.keys())
       fileSet.discard('757')

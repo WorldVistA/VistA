@@ -16,6 +16,7 @@
 #---------------------------------------------------------------------------
 
 from __future__ import print_function
+from builtins import range
 import os
 import re
 
@@ -47,7 +48,7 @@ def extract_m_source_dirs(var):
   tmpl = tmp.split(";")
   num_elements = len(tmpl)
   final_list = []
-  for ind in xrange(num_elements):
+  for ind in range(num_elements):
     element = tmpl[ind]
     element = element.strip(")")
     paren_check = [m.start() for m in re.finditer("\(",element)]

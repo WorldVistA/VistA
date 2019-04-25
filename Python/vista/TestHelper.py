@@ -27,6 +27,9 @@ Created on Mar 2, 2012
 '''
 from __future__ import print_function
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 from builtins import object
 import sys
 import csv
@@ -35,7 +38,7 @@ import argparse
 import os
 import errno
 import datetime
-import ConfigParser
+import configparser
 import traceback
 
 import RemoteConnection
@@ -122,7 +125,7 @@ class TestSuiteDriver(object):
         package_name = self.test_file[self.test_file.rfind('Packages')+9:self.test_file.rfind('/Testing/RAS/'+test_suite_name)]
 
         #TODO: move config parsing setup out of here
-        config = ConfigParser.RawConfigParser()
+        config = configparser.RawConfigParser()
         read_files = config.read(os.path.join(os.path.dirname(self.test_file), test_suite_name + '.cfg'))
         if read_files.__len__() != 1:
             raise IOError
@@ -316,7 +319,7 @@ class test_suite_details(object):
 
 def read_suite_config_file():
     #move to a module for parsing cfg values
-    config = ConfigParser.RawConfigParser()
+    config = configparser.RawConfigParser()
     from os.path import expanduser
     read_files = config.read(expanduser("~/.ATF/roles.cfg"))
     if read_files.__len__() != 1:

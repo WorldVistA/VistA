@@ -14,6 +14,7 @@
 # The following code is an extended version of paramikoe by Fotis Gimian (https://github.com/fgimian/paramiko-expect).
 #
 
+from builtins import str
 from builtins import object
 import sys
 import re
@@ -110,7 +111,7 @@ class SSHClientInteraction(object):
 
         # This function needs all regular expressions to be in the form of a list, so
         # if the user provided a string, let's convert it to a 1 item list.
-        if len(re_strings) != 0 and type(re_strings) == types.StringType:
+        if len(re_strings) != 0 and type(re_strings) == bytes:
             re_strings = [re_strings]
 
         # Loop until one of the expressions is matched or loop forever if nothing is expected (usually used for exit)
@@ -211,7 +212,7 @@ class SSHClientInteraction(object):
 
         # Set the channel timeout to the maximum integer the server allows, setting this to None
         # Breaks the KeyboardInterrupt exception and won't allow us to Ctrl+C out of teh script
-        self.channel.settimeout(sys.maxint)
+        self.channel.settimeout(sys.maxsize)
 
         # Create an empty line buffer and a line counter
         current_line = ''

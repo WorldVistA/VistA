@@ -16,7 +16,9 @@
 
 from __future__ import with_statement
 from __future__ import print_function
+from __future__ import division
 from builtins import object
+from past.utils import old_div
 import sys
 import os
 import argparse
@@ -95,7 +97,7 @@ class VistATaskmanUtil(object):
 
   def waitTaskmanToCurrent(self, vistAClient, timeOut=120):
     DEFAULT_POLL_INTERVAL = 1 # 1 seconds
-    MaxRetry = timeOut/DEFAULT_POLL_INTERVAL
+    MaxRetry = old_div(timeOut,DEFAULT_POLL_INTERVAL)
     startRetry = 0
     connection = vistAClient.getConnection()
     menuUtil = VistAMenuUtil(duz=1)

@@ -109,7 +109,7 @@ class InitCrossReferenceGenerator(object):
             routineDict[currentName] = []
         routineDict[currentName].append(line[-1])
       routineDict[currentName].append([line[1], line[2]])
-    for (routineName, mappingList) in routineDict.iteritems():
+    for (routineName, mappingList) in routineDict.items():
       crossRef.addPlatformDependentRoutineMapping(routineName,
                                                   mappingList[0],
                                                   mappingList[1:])
@@ -200,7 +200,7 @@ class InitCrossReferenceGenerator(object):
     logger.info("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
            (len(allPackages), len(allGlobals), len(skipFile), len(fileNoSet)))
 
-    sortedKeyList = sorted(allGlobals.keys(),
+    sortedKeyList = sorted(list(allGlobals.keys()),
                          key=lambda item: float(allGlobals[item].getFileNo()))
     for key in sortedKeyList:
       globalVar = allGlobals[key]

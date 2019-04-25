@@ -76,7 +76,7 @@ def convertExcelToCsv(input, output):
   isHeader = False
   data_row = 0
   fields = None
-  for row_index in xrange(sheet.nrows):
+  for row_index in range(sheet.nrows):
     row_types = sheet.row_types(row_index)
     assert len(row_types) == sheet.ncols
     """ Try to identify the header of file """
@@ -104,9 +104,9 @@ def convertExcelToCsv(input, output):
   with open(output, "wb") as outCsv:
     csvWrt = csv.writer(outCsv, lineterminator="\n")
     csvWrt.writerow(fields)
-    for row_index in xrange(data_row, sheet.nrows):
+    for row_index in range(data_row, sheet.nrows):
       curRow = []
-      for col_index in xrange(sheet.ncols):
+      for col_index in range(sheet.ncols):
         cell = sheet.cell(row_index, col_index)
         name = cellname(row_index, col_index)
         cType = typeDict.get(cell.ctype, "Unknown")

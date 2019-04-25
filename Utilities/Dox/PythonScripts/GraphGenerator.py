@@ -16,6 +16,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import str
 from builtins import object
 import argparse
 import os
@@ -46,7 +47,7 @@ class GraphGenerator(object):
 
         # Check for package directories once
         # TODO: Should delete empty directories after graphs are generated?
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             try:
                 packageName = package.getName()
                 dirName = os.path.join(self._outDir, packageName)
@@ -78,7 +79,7 @@ class GraphGenerator(object):
         # Make the Pool of workers
         pool = ThreadPool(4)
         # Create graphs in their own threads
-        pool.map(self._generatePackageDependencyGraph, self._allPackages.values())
+        pool.map(self._generatePackageDependencyGraph, list(self._allPackages.values()))
         # close the pool and wait for the work to finish
         pool.close()
         pool.join()
@@ -156,12 +157,12 @@ class GraphGenerator(object):
 
         # Make a list of all routines we want to process
         allRoutines = []
-        for package in self._allPackages.itervalues():
-            for routine in package.getAllRoutines().itervalues():
+        for package in self._allPackages.values():
+            for routine in package.getAllRoutines().values():
                 isPlatformGenericRoutine = self._crossRef.isPlatformGenericRoutineByName(routine.getName())
                 if self._isDependency and isPlatformGenericRoutine:
                     platformRoutines = routine.getAllPlatformDepRoutines()
-                    for routineInfo in platformRoutines.itervalues():
+                    for routineInfo in platformRoutines.values():
                         allRoutines.append(routineInfo[0])
                 else:
                     allRoutines.append(routine)
@@ -171,8 +172,8 @@ class GraphGenerator(object):
         #       WebPageGenerator::generatePackageInformationPages(),
         #       could be improved in both places
         for keyVal in PACKAGE_COMPONENT_MAP:
-            for package in self._allPackages.itervalues():
-                allRoutines.extend(package.getAllPackageComponents(keyVal).itervalues())
+            for package in self._allPackages.values():
+                allRoutines.extend(iter(package.getAllPackageComponents(keyVal).values()))
 
         # Make the Pool of workers
         pool = ThreadPool(4)
@@ -208,7 +209,7 @@ class GraphGenerator(object):
             return
         # Count total number of routines
         totalRoutines = 0
-        for callDict in depRoutines.itervalues():
+        for callDict in depRoutines.values():
             totalRoutines += len(callDict)
         if totalRoutines > MAX_DEPENDENCY_LIST_SIZE:
             logger.debug("Skipping... Found %d dep routines for routine:%s package:%s (max allowed %d)" %
@@ -232,7 +233,7 @@ class GraphGenerator(object):
                 output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
                 output.write("\t}\n")
 
-            for (depPackage, callDict) in depRoutines.iteritems():
+            for (depPackage, callDict) in depRoutines.items():
                 output.write("\tsubgraph \"cluster_%s\"{\n" % depPackage)
                 for depRoutine in callDict:
                     normalizedDepName = re.sub("[ /.*?&<>:]", '_', depRoutine.getName())

@@ -97,7 +97,7 @@ def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
     if newExceptions and not os.path.exists(packageDir):
         os.makedirs(packageDir)
     # Write out the new exceptions
-    for filename, exceptionList in newExceptions.iteritems():
+    for filename, exceptionList in newExceptions.items():
         absPath = os.path.join(packageDir, filename)
         with open(absPath, "ab") as file:  # Open in binary mode to preserve line endings
             file.write("\r\n".join(exceptionList))

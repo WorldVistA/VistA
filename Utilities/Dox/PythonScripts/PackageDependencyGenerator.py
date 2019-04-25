@@ -27,13 +27,13 @@ def outputAllPackageDependency(crossRef, outputFile):
     routines = {}
     files = {}
     fields = {}
-    for pkg in crossRef.getAllPackages().itervalues():
+    for pkg in crossRef.getAllPackages().values():
         pkgName = pkg.getName()
         routines[pkgName] = len(pkg.getAllRoutines())
         numFiles = 0
         numFields = 0
         allGlobals = pkg.getAllGlobals()
-        for globalVar in allGlobals.itervalues():
+        for globalVar in allGlobals.values():
             if globalVar.isFileManFile():
                 numFiles += 1
                 allFields = globalVar.getAllFileManFields()

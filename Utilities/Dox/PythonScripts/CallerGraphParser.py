@@ -17,6 +17,7 @@
 # limitations under the License.
 #----------------------------------------------------------------
 
+from builtins import range
 from builtins import object
 import glob
 import re
@@ -346,7 +347,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._curPackage = None
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in SECTION_HEADER_REGEX.iteritems():
+        for (regex, section) in SECTION_HEADER_REGEX.items():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -721,7 +722,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         return PRESS_RETURN.search(curLine) or CROSS_REF.search(curLine)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegex.iteritems():
+        for (regex, section) in self._sectionHeaderRegex.items():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -761,14 +762,14 @@ class CallerGraphLogFileParser(object):
     def outputPackageCSVFile(self, outputFile):
         output = csv.writer(open(outputFile, 'w'), lineterminator='\n')
         allPackages = self._crossRef.getAllPackages()
-        sortedPackage = sorted(allPackages.keys(),
+        sortedPackage = sorted(list(allPackages.keys()),
                              key=lambda item: allPackages[item].getOriginalName())
         for packageName in sortedPackage:
             package = allPackages[packageName]
             namespaceList = package.getNamespaces()
             globalnamespaceList = package.getGlobalNamespace()
             globals = package.getAllGlobals()
-            globalList = sorted(globals.values(),
+            globalList = sorted(list(globals.values()),
                               key=lambda item: float(item.getFileNo()))
             maxRows = max(len(namespaceList),
                         len(globalnamespaceList),

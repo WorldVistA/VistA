@@ -16,6 +16,7 @@ from __future__ import print_function
 #---------------------------------------------------------------------------
 
 ### set up the IO that is need by unit test
+from builtins import str
 import sys,os
 sys.path = [os.path.dirname(__file__)+'/../../Python/vista'] + sys.path
 

@@ -6,7 +6,13 @@
 # WinPexpect is copyright (c) 2008-2010 by the WinPexpect authors. See the
 # file "AUTHORS" for a complete overview.
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import chr
+from builtins import zip
+from builtins import str
 from builtins import range
+from past.builtins import basestring
 from builtins import object
 import os
 import sys
@@ -16,7 +22,7 @@ import random
 import time
 import signal
 
-from Queue import Queue, Empty
+from queue import Queue, Empty
 from threading import Thread, Lock
 
 from pexpect import spawn, ExceptionPexpect, EOF, TIMEOUT
@@ -60,7 +66,7 @@ try:
     from collections import namedtuple
 except ImportError:
     def namedtuple(name, fields):
-        d = dict(zip(fields, [None]*len(fields)))
+        d = dict(list(zip(fields, [None]*len(fields))))
         return type(name, (object,), d)
 
 # Compatbility wiht Python 3
@@ -389,8 +395,8 @@ def run (command, timeout=-1, withexitstatus=False, events=None, extra_args=None
     else:
         child = winspawn(command, timeout=timeout, maxread=2000, logfile=logfile, cwd=cwd, env=env, stub=None)
     if events is not None:
-        patterns = events.keys()
-        responses = events.values()
+        patterns = list(events.keys())
+        responses = list(events.values())
     else:
         patterns=None # We assume that EOF or TIMEOUT will save us.
         responses=None

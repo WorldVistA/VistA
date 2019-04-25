@@ -88,7 +88,7 @@ class testICRParser(unittest.TestCase):
                                args.patchRepositDir, generated_pdf_output_dir)
 
         # Check that expected subdirectories were generated
-        expected_dirs = EXPECTED_PDFS.keys()
+        expected_dirs = list(EXPECTED_PDFS.keys())
         expected_dirs.sort()
         generated_dirs = os.listdir(generated_pdf_output_dir)
         generated_dirs.sort()
@@ -125,7 +125,7 @@ class testICRParser(unittest.TestCase):
                 self.fail("%s is not the same as %s" % (expected_file, generated_file))
 
         # Check that expected subdirectories were generated
-        expected_pdf_dirs = EXPECTED_PDFS.keys()
+        expected_pdf_dirs = list(EXPECTED_PDFS.keys())
         expected_pdf_dirs.sort()
         generated_pdf_dirs = os.listdir(generated_pdf_output_dir)
         generated_pdf_dirs.sort()

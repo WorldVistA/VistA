@@ -14,10 +14,14 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
 import csv
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from PDFUtilityFunctions import *
 
@@ -186,7 +190,7 @@ def parseICRJson(icrJson):
   return parsedICRJSON
 
 def getRoutineHtmlFileName(routineName):
-    return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
+    return urllib.parse.quote(getRoutineHtmlFileNameUnquoted(routineName))
 
 def getRoutineHtmlFileNameUnquoted(routineName):
     return "Routine_%s.html" % routineName
@@ -200,7 +204,7 @@ def normalizeGlobalName(globalName):
     return base64.urlsafe_b64encode(globalName)
 
 def getPackageHtmlFileName(packageName):
-    return urllib.quote("Package_%s.html" %
+    return urllib.parse.quote("Package_%s.html" %
                         normalizePackageName(packageName))
 
 def normalizePackageName(packageName):
@@ -221,7 +225,7 @@ def normalizeName(name):
     return re.sub("[ /.*?&<>:]", '_', name)
 
 def getPackageObjHtmlFileName(functionName):
-    return urllib.quote(getPackageObjHtmlFileNameUnquoted(functionName))
+    return urllib.parse.quote(getPackageObjHtmlFileNameUnquoted(functionName))
 
 def getPackageDependencyHtmlFile(packageName, depPackageName):
     firstName = normalizePackageName(packageName)
@@ -311,7 +315,7 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
 def mergeAndSortDependencyListByPackage(package, isDependencyList):
     depPackageMerged = mergePackageDependenciesList(package, isDependencyList)
     # sort by the sum of the total # of routines
-    depPackages = sorted(depPackageMerged.keys(),
+    depPackages = sorted(list(depPackageMerged.keys()),
                        key=lambda item: sum(depPackageMerged[item][0:7:2]),
                        reverse=True)
     return (depPackages, depPackageMerged)
@@ -337,37 +341,37 @@ def mergePackageDependenciesList(package, isDependencies=True):
         fileManDeps = package.getPackageFileManFileDependents()
         dbCallDeps = package.getPackageFileManDbCallDependents()
         optionDeps = {}
-    for (package, depTuple) in routineDeps.iteritems():
+    for (package, depTuple) in routineDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][0] = len(depTuple[0])
         packageDepDict[package][1] = len(depTuple[1])
-    for (package, depTuple) in globalDeps.iteritems():
+    for (package, depTuple) in globalDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][2] = len(depTuple[0])
         packageDepDict[package][3] = len(depTuple[1])
-    for (package, depTuple) in fileManDeps.iteritems():
+    for (package, depTuple) in fileManDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][4] = len(depTuple[0])
         packageDepDict[package][5] = len(depTuple[1])
-    for (package, depTuple) in dbCallDeps.iteritems():
+    for (package, depTuple) in dbCallDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][6] = len(depTuple[0])
         packageDepDict[package][7] = len(depTuple[1])
-    for (package, depTuple) in optionDeps.iteritems():
+    for (package, depTuple) in optionDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][8] = len(depTuple[0])
         packageDepDict[package][9] = len(depTuple[1])
-    for (package, depTuple) in globalRtnDeps.iteritems():
+    for (package, depTuple) in globalRtnDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][10] = len(depTuple[0])
         packageDepDict[package][11] = len(depTuple[1])
-    for (package, depTuple) in globalGblDeps.iteritems():
+    for (package, depTuple) in globalGblDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][12] = len(depTuple[0])

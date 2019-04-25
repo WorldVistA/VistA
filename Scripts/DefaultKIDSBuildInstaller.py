@@ -14,8 +14,10 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+from __future__ import division
 
 from builtins import object
+from past.utils import old_div
 import sys
 import os
 import re
@@ -554,7 +556,7 @@ class DefaultKIDSBuildInstaller(object):
       logger.info("Import global file %s" % (glbFile))
       fileSize = os.path.getsize(glbFile)
       importTimeout = DEFAULT_GLOBAL_IMPORT_TIMEOUT
-      importTimeout += int(fileSize/GLOBAL_IMPORT_BYTE_PER_SEC)
+      importTimeout += int(old_div(fileSize,GLOBAL_IMPORT_BYTE_PER_SEC))
       globalImport.importGlobal(vistATestClient, glbFile, timeout=importTimeout)
 
   #---------------------------------------------------------------------------#

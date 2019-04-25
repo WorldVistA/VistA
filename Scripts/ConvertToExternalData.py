@@ -1,3 +1,4 @@
+from __future__ import division
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
 #
@@ -15,6 +16,7 @@
 #---------------------------------------------------------------------------
 
 from builtins import object
+from past.utils import old_div
 import sys
 import os
 import re
@@ -179,7 +181,7 @@ def generateSha1Sum(inputFilename):
   assert os.path.exists(inputFilename)
   fileSize = os.path.getsize(inputFilename)
   MAX_READ_SIZE = 20 * 1024 * 1024 # 20 MiB
-  buf = fileSize/50
+  buf = old_div(fileSize,50)
   if buf > MAX_READ_SIZE:
     buf = MAX_READ_SIZE
   with open(inputFilename, "r") as inputFile:

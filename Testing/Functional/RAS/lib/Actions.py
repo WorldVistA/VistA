@@ -27,6 +27,7 @@ Created on Apr 20, 2012
 '''
 from __future__ import print_function
 
+from builtins import str
 from builtins import object
 import time
 import sys

@@ -15,6 +15,7 @@
 #---------------------------------------------------------------------------
 from __future__ import print_function
 
+from builtins import str
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 from VistAMenuUtil import VistAMenuUtil
 import re

@@ -18,6 +18,7 @@
 # limitations under the License.
 #----------------------------------------------------------------
 
+from builtins import range
 from builtins import object
 import glob
 import re
@@ -378,7 +379,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field.setPointedToSubFile(subFile)
             CrossReference.addFileManSubFile(subFile)
             return
-        for (key, value) in self.StringTypeMappingDict.iteritems():
+        for (key, value) in self.StringTypeMappingDict.items():
             if fType.startswith(key):
                 self._field = FileManFieldFactory.createField(fieldNo, fName, value, fLocation)
                 break
@@ -596,7 +597,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 self._curParser.parseLine(line, self._curGlobal, self._crossRef)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegEx.iteritems():
+        for (regex, section) in self._sectionHeaderRegEx.items():
             if regex.search(curLine):
                 return section
         return None

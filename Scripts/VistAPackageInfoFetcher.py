@@ -16,6 +16,7 @@
 
 from __future__ import with_statement
 from __future__ import print_function
+from builtins import range
 from builtins import object
 import sys
 import re
@@ -239,7 +240,7 @@ class VistAPackageInfoFetcher(object):
   def getAllPackagesPatchHistory(self):
     self.createAllPackageMapping()
     self._packagePatchHist.clear()
-    for (namespace, package) in self._packageMapping.iteritems():
+    for (namespace, package) in self._packageMapping.items():
       logger.info("Parsing Package %s, namespace %s" % (package, namespace))
       #if not (package[0] == "PHARMACY" and package[1] == "PS"): continue
       self.getPackagePatchHistory(package, namespace)
@@ -253,7 +254,7 @@ class VistAPackageInfoFetcher(object):
       result = self._getPackageHistListByVer(packageName, version)
       if result:
         return result
-    for (namespace, package) in self._packageMapping.iteritems():
+    for (namespace, package) in self._packageMapping.items():
       if package == packageName:
         result = self.getPackagePatchHistory(package, namespace, version)
         return result
@@ -268,7 +269,7 @@ class VistAPackageInfoFetcher(object):
       else:
         return None
     else:
-      return verDict[sorted(verDict.keys(),reverse=True)[0]]
+      return verDict[sorted(list(verDict.keys()),reverse=True)[0]]
 
   def getPackagePatchHistByNamespace(self, namespace, version=None):
     if not self._packageMapping:
@@ -297,7 +298,7 @@ class VistAPackageInfoFetcher(object):
     return self._packageMapping.get(namespace)
 
   def getPackageNamespaceByName(self, pgkName):
-    for (namespace, packageName) in self._packageMapping.iteritems():
+    for (namespace, packageName) in self._packageMapping.items():
       if pgkName == packageName:
         return namespace
     return None
@@ -438,7 +439,7 @@ class VistAPackageInfoFetcher(object):
       print ("--- Package %s Patch History Info ---" % packageName)
       print ("-----------------------------------------")
       verDict = self._packagePatchHist[packageName]
-      for ver in sorted(verDict.keys(), reverse=True):
+      for ver in sorted(list(verDict.keys()), reverse=True):
         pprint.pprint(verDict[float(ver)].patchHistory)
 
   def printPackageLastPatch(self, packageName):
@@ -448,7 +449,7 @@ class VistAPackageInfoFetcher(object):
       print ("--- Package %s Last Patch Info ---" % packageName)
       print ("-----------------------------------------")
       verDict = self._packagePatchHist[packageName]
-      for ver in sorted(verDict.keys(), reverse=True):
+      for ver in sorted(list(verDict.keys()), reverse=True):
         pprint.pprint("VERSION: %s" % ver)
         pprint.pprint(verDict[float(ver)].patchHistory[-1])
 

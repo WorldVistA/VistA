@@ -174,20 +174,20 @@ class Routine(object):
 
     def getExternalReference(self):
         output = dict()
-        for routineDict in self._calledRoutines.itervalues():
-            for (routine, callTagDict) in routineDict.iteritems():
+        for routineDict in self._calledRoutines.values():
+            for (routine, callTagDict) in routineDict.items():
                 routineName = routine.getName()
-                for (callTag, lineOffsets) in callTagDict.iteritems():
+                for (callTag, lineOffsets) in callTagDict.items():
                     output[(routineName, callTag)] = lineOffsets
         return output
     def getFilteredExternalReference(self,filterList=None):
         if filterList:
           output = dict()
-          for routineDict in self._calledRoutines.itervalues():
-              for (routine, callTagDict) in routineDict.iteritems():
+          for routineDict in self._calledRoutines.values():
+              for (routine, callTagDict) in routineDict.items():
                   if routine.getName() in filterList:
                     routineName = routine.getName()
-                    for (callTag, lineOffsets) in callTagDict.iteritems():
+                    for (callTag, lineOffsets) in callTagDict.items():
                         output[(routineName, callTag)] = lineOffsets
                   else:
                     continue
@@ -1000,7 +1000,7 @@ class Package(object):
 
     def generateRoutineBasedDependencies(self):
         # build routine based dependencies
-        for globalEntry in self._globals.itervalues():
+        for globalEntry in self._globals.values():
             calledRoutines =  globalEntry.getCalledRoutines()
             for package in calledRoutines:
                 if package and package != self:
@@ -1017,7 +1017,7 @@ class Package(object):
                     package._globalRoutineDependendents[self][0].add(globalEntry)
                     package._globalRoutineDependendents[self][1].update(calledRoutines[package])
             referredGlobals = globalEntry.getReferredGlobal()
-            for globalVar in referredGlobals.itervalues():
+            for globalVar in referredGlobals.values():
                 package = globalVar.getPackage()
                 if package != self:
                     if package not in self._globalGlobalDependencies:
@@ -1028,7 +1028,7 @@ class Package(object):
                         package._globalGlobalDependendents[self] = (set(), set())
                     package._globalGlobalDependendents[self][0].add(globalEntry)
                     package._globalGlobalDependendents[self][1].add(globalVar)
-        for routine in self._routines.itervalues():
+        for routine in self._routines.values():
             calledRoutines = routine.getCalledRoutines()
             for package in calledRoutines:
                 if package and package != self:
@@ -1046,7 +1046,7 @@ class Package(object):
                     package._routineDependents[self][1].update(calledRoutines[package])
             referredGlobals = routine.getReferredGlobal()
             # based on referred Globals
-            for globalVar in referredGlobals.itervalues():
+            for globalVar in referredGlobals.values():
                 package = globalVar.getPackage()
                 if package != self:
                     if package not in self._globalDependencies:
@@ -1059,7 +1059,7 @@ class Package(object):
                     package._globalDependents[self][1].add(globalVar)
             # based on fileman db calls
             filemanDbCallGbls = routine.getFilemanDbCallGlobals()
-            for filemanDbGbl, tags in filemanDbCallGbls.itervalues():
+            for filemanDbGbl, tags in filemanDbCallGbls.values():
                 # find the package associated with the global
                 package = filemanDbGbl.getRootFile().getPackage()
                 if package != self:
@@ -1074,7 +1074,7 @@ class Package(object):
     def generateFileManFileBasedDependencies(self):
         # build fileman file based dependencies
         self.__correctFileManFilePointerDependencies__()
-        for Global in self._globals.itervalues():
+        for Global in self._globals.values():
             if not Global.isFileManFile(): # only care about the file man file now
                 continue
             pointerToFiles = Global.getAllReferredFileManFiles()
@@ -1090,7 +1090,7 @@ class Package(object):
                     package._fileManDependents[self][1].update(pointerToFiles[package])
     # this routine will correct any inconsistence caused by parsing logic
     def __correctFileManFilePointerDependencies__(self):
-        for Global in self._globals.itervalues():
+        for Global in self._globals.values():
             if not Global.isFileManFile(): # only care about the file man file now
                 continue
             self.__checkIndividualFileManPointers__(Global)
@@ -1100,7 +1100,7 @@ class Package(object):
         allFileManFields = currentGlobal.getAllFileManFields()
         # get all fields of the current global
         if allFileManFields:
-            for field in allFileManFields.itervalues():
+            for field in allFileManFields.values():
                 if field.isFilePointerType():
                     fileManFile = field.getPointedToFile()
                     self.__checkFileManPointerField__(field, fileManFile, Global, subFile)
@@ -1114,7 +1114,7 @@ class Package(object):
             # get all subfiles of current globals
             allSubFiles = Global.getAllSubFiles()
             if not allSubFiles: return
-            for subFile in allSubFiles.itervalues():
+            for subFile in allSubFiles.values():
                 self.__checkIndividualFileManPointers__(Global, subFile)
     def __checkFileManPointerField__(self, field, fileManFile, Global, subFile = None):
         if not fileManFile:
@@ -1440,7 +1440,7 @@ class CrossReference(object):
         return self.__categorizeVariableNameByNamespace__(globalName, True)
 
     def __categorizeVariableNameByNamespace__(self, variableName, isGlobal = False):
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             hasMatch = False
             matchNamespace = ""
             if isGlobal:
@@ -1463,10 +1463,10 @@ class CrossReference(object):
         return (None, None)
 
     def __generatePlatformDependentRoutineDependencies__(self):
-        for genericRoutine in self._platformDepRoutines.itervalues():
+        for genericRoutine in self._platformDepRoutines.values():
             genericRoutine.setHasSourceCode(False)
             callerRoutines = genericRoutine.getCallerRoutines()
-            for routineDict in callerRoutines.itervalues():
+            for routineDict in callerRoutines.values():
                 for routine in routineDict:
                     routineName = routine.getName()
                     if self.isPlatformDependentRoutineByName(routineName):
@@ -1482,5 +1482,5 @@ class CrossReference(object):
     def generateAllPackageDependencies(self):
         self.__fixPlatformDependentRoutines__()
         self.__generatePlatformDependentRoutineDependencies__()
-        for package in self._allPackages.itervalues():
+        for package in self._allPackages.values():
             package.generatePackageDependencies()

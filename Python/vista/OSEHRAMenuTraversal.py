@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import str
 from builtins import range
 import sys,os,re,time
 import TestHelper
