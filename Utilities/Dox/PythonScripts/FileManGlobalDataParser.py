@@ -321,7 +321,7 @@ class FileManGlobalDataParser(object):
   """
   Generate a map Field Value => IEN
   """
-  def generateFileFieldMap(self, inputFileName, fileNumber, fieldNo):
+  def generateFileFieldMap(self, inputFileList, fileNumber, fieldNo):
     schemaFile = self._allSchemaDict[fileNumber]
     if not schemaFile.hasField(fieldNo):
       logger.error("File does not have a [%s] field, ignore", fieldNo)
@@ -333,12 +333,13 @@ class FileManGlobalDataParser(object):
       return
     glbLoc = self._glbLocMap[fileNumber]
     fieldMap = {}
-    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-      if not dataRoot: continue
-      fileDataRoot = dataRoot
-      (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
-      if detail:
-        fieldMap[detail] = ien
+    for inputFileName in inputFileList:
+      for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
+        if not dataRoot: continue
+        fileDataRoot = dataRoot
+        (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
+        if detail:
+          fieldMap[detail] = ien
     return fieldMap
 
   def _getKeyNameBySchema(self, dataRoot, keyLoc, keyField):
@@ -782,7 +783,7 @@ class FileManGlobalDataParser(object):
 
 def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef, fileNo, fieldNo):
   glbDataParser = FileManGlobalDataParser(MRepositDir, crossRef)
-  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'], '1', '^DIC(')
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
   return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[fileNo]['path'], fileNo, fieldNo)
 
 def run(args):
