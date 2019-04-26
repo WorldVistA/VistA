@@ -88,8 +88,15 @@ PACKAGE_OBJECT_SECTION_HEADER_LIST = ["Name", "Field # of Occurrence",]
 LINE_TAG_PER_LINE = 10
 
 VIVIAN_URL = None
+DOX_URL = None
 
 ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
+# Complicated regex to avoid 'catastropic backtracking'
+# https://www.regular-expressions.info/catastrophic.html
+# https://stackoverflow.com/questions/13577372/do-python-regular-expressions-have-an-equivalent-to-rubys-atomic-grouping
+#
+routineCall = re.compile('[DG,$](?:[:].+?)? ?(?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?')# re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
+routineCallExpanded = re.compile('(?:DO|GOTO|\$) ?(?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?')# re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
 COMMENT  = re.compile("^ ; ")
 READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
 WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
@@ -151,11 +158,6 @@ COMMON_HEADER_PART = """
 SWAP_VIEW_HTML = """
 <button id="swapDisplay">Switch Display Mode</button>
 <script type="text/javascript\">
-  $(window).on("scroll",function(event) {
-    scrollLoc = 55 - $(this).scrollTop()
-    if(scrollLoc < 0) scrollLoc=0
-    $("#pageCommands").css('top',scrollLoc);
-  });
   $("#swapDisplay").click( function(event) {
     if ($("#terseDisplay").is(':visible')) {
       $("#terseDisplay").hide()
@@ -2085,6 +2087,7 @@ class WebPageGenerator:
             return
         packageName = package.getName()
         routineName = routine.getName()
+        calledRoutines = routine.getCalledRoutines()
         filename = os.path.join(self._outDir,
                                  getRoutineSourceHtmlFileNameUnquoted(sourceCodeName))
         with open(filename, 'w') as outputFile:
@@ -2096,15 +2099,15 @@ class WebPageGenerator:
                     self.__includeSourceHeader__(outputFile)
                     outputFile.write("<title id=\"pageTitle\">Routine: " + sourceCodeName + "</title>")
                     outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
-                    outputFile.write("<div id='pageCommands' style='position:fixed; top:55; background: white;'>")
+                    outputFile.write("<div id='pageCommands' style='background: white;'>")
                     outputFile.write("  <a href=\"%s\">Go to the documentation of this file.</a>" %
                                      getRoutineHtmlFileName(routineName))
                     if routine._structuredCode:
                       outputFile.write(SWAP_VIEW_HTML)
                     outputFile.write('</div>')
-                    outputFile.write("<xmp id=\"terseDisplay\" class=\"prettyprint lang-mumps linenums:1\">")
+                    outputFile.write("<div id=\"terseDisplay\">")
                     # Inititalize the new variables
-                    lineNo = 0
+                    lineNo = 1
                     entry = ""
                     entryOffset = 0
                     currentEntryPoint = routineName
@@ -2112,6 +2115,9 @@ class WebPageGenerator:
                     icrJson=[]
                     inComment=False
                     for line in sourceFile:
+                        idVal = ""
+                        line = line.replace("<", "&lt")
+                        line = line.replace(">", "&gt")
                         if lineNo <= 1:
                             routine.addComment(line)
                         if lineNo > 1 and ENTRY_POINT.search(line):
@@ -2126,7 +2132,7 @@ class WebPageGenerator:
                           else:
                             commentString = "@"
                             entry = line
-                          currentEntryPoint= entry
+                          currentEntryPoint = entry.split("(")[0]
                           entryOffset= 0
                           comment.append(commentString)
                           if not commentString.startswith(";"):
@@ -2134,6 +2140,7 @@ class WebPageGenerator:
                             # if No comment on the first line, assume no other comments will follow it
                             inComment =  False
                           icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
+                          idVal = "id=\"%s\"" % currentEntryPoint
                         # Check for more comments that are 1 space in from the beginning of the line
                         elif inComment and COMMENT.search(line):
                           comment.append(line)
@@ -2145,7 +2152,17 @@ class WebPageGenerator:
                             self.__parseReadCmd__(readCmdMatches, routine, currentEntryPoint+"+"+str(entryOffset))
                         if WRITE_CMD.search(line):
                             self.__parseWriteCmd__(line, routine, currentEntryPoint+"+"+str(entryOffset))
-                        outputFile.write(line)
+                        #if "^" in line:
+                        rtnLinks = routineCall.search(line)
+                        if rtnLinks:
+                          #  find captured groupings
+                          for pair in routineCall.findall(line):
+                          #  replace them with links to new pages
+                            for value in calledRoutines.values():
+                              if Routine(pair[1]) in value.keys():
+                                entryLink ="<a class=\"pln\"href=\"%sRoutine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
+                                line = line.replace("%s^%s" % pair, entryLink)
+                        outputFile.write("<pre style=\"padding:unset; border: none; margin:unset; display: inline;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>" % (idVal, lineNo,line))
                         lineNo += 1
                         entryOffset += 1
             except Exception, e:
@@ -2153,15 +2170,26 @@ class WebPageGenerator:
                 return
             routine.addEntryPoint(entry, comment, icrJson)
 
-            outputFile.write("</xmp>\n")
+            outputFile.write("</div>\n")
             if routine._structuredCode:
-              outputFile.write("<xmp id=\"expandedDisplay\" class=\"prettyprint lang-mumps linenums:1\" style='display:none;'>")
+              outputFile.write("<div id=\"expandedDisplay\" style='display:none;'>")
+              lineNo = 1
               for line in routine._structuredCode:
+                #if "^" in line:
+                rtnLinks = routineCallExpanded.search(line)
+                if rtnLinks:
+                  #  find captured groupings
+                  for pair in routineCallExpanded.findall(line):
+                  #  replace them with links to new pages
+                    for value in calledRoutines.values():
+                      if Routine(pair[1]) in value.keys():
+                        entryLink ="<a class=\"pln\"href=\"%sRoutine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
+                        line = line.replace("%s^%s" % pair, entryLink)
                 if len(line):
-                  outputFile.write("%s \n" % line)
-              outputFile.write("</xmp>\n")
+                  outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (lineNo, line))
+                  lineNo = lineNo + 1
+              outputFile.write("</div>\n")
             outputFile.write(FOOTER)
-
 
 #===============================================================================
 # Method to generate individual source code page for Platform Dependent Routines
@@ -3686,7 +3714,9 @@ $( document ).ready(function() {
 #===============================================================================
 def run(args):
     global VIVIAN_URL
+    global DOX_URL
     VIVIAN_URL = getViViaNURL(args.local)
+    DOX_URL = getDOXURL(args.local)
     icrJsonFile = os.path.abspath(args.icrJsonFile)
     parsedICRJSON = parseICRJson(icrJsonFile)
     crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,
