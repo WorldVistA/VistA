@@ -3020,7 +3020,7 @@ class WebPageGenerator:
                  }
       for key in entryDict:
         if key in entry:
-          outstring += "<li>%s %s</li>" % (entryDict[key],entry[key])
+          outstring += "<li>%s %s</li>" % (entryDict[key],entry[key].replace('<','&lt').replace('>','&gt'))
       outstring +=  "</ul>"
       return outstring
 
