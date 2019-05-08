@@ -348,17 +348,8 @@ def findRelevantIndex(sectionGenLst, existingOutFile):
       idxLst.append(idx)
   return indexList,idxLst
 
-def getGlobalPDFFileNameByName(globalName):
-    return ("Global_%s.pdf" %
-                        normalizeGlobalName(globalName))
-
 def getICRHtmlFileName(icrEntry):
     return ("%sICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
-
-def getGlobalHtmlFileName(globalVar):
-    if globalVar.isSubFile():
-        return getFileManSubFileHtmlFileNameByName(globalVar.getFileNo())
-    return getGlobalHtmlFileNameByName(globalVar.getName())
 
 def getGlobalDisplayName(globalVar):
     if globalVar.isFileManFile():
@@ -409,14 +400,6 @@ def getFileManFileHyperLinkWithNameFileNo(GlobalVar):
                                       "%s - [#%s]" % (GlobalVar.getName(),
                                       GlobalVar.getFileNo()))
 
-# sub fileman files related functions
-def getFileManSubFileHtmlFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.html" % subFileNo)
-def getFileManSubFilePDFFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.pdf" % subFileNo)
-
-def getFileManSubFileHtmlFileName(subFile):
-    return getFileManSubFileHtmlFileNameByName(subFile.getFileNo())
 def getFileManSubFileHypeLinkByName(subFileNo):
     return "<a href=\"%s\">%s</a>" % (getFileManSubFileHtmlFileNameByName(subFileNo),
                                       subFileNo)
@@ -425,16 +408,10 @@ def getFileManSubFileHypeLinkWithName(subFile):
             (getFileManSubFileHtmlFileName(subFile),
                                       subFile.getFileManName()))
 
-def getRoutinePdfFileNameUnquoted(routineName):
-    return "Routine_%s.pdf" % routineName
-
-def getPackagePdfFileName(packageName):
-    return urllib.quote("Package_%s.pdf" %
-                        normalizePackageName(packageName))
-
 def getRoutineHypeLinkByName(routineName):
-    return "<a href=\"%s\">%s</a>" % (getRoutineHtmlFileName(routineName),
+    return "<a href=\"%s\">%s</a>" % (getRoutineLink(routineName),
                                       routineName)
+
 def getGlobalHypeLinkByName(globalName):
     return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileNameByName(globalName),
                                       globalName)
@@ -452,20 +429,13 @@ def getRoutineSourceCodeFileByName(routineName, packageName, sourceDir):
                         os.path.sep +
                         routineName + ".m")
 
-def getRoutineSourceHtmlFileNameUnquoted(routineName):
-    return "Routine_%s_source.html" % routineName
-
-def getRoutineSourceHtmlFileName(routineName):
-    return urllib.quote(getRoutineSourceHtmlFileNameUnquoted(routineName))
-
-
 def getPackagePackageDependencyHyperLink(packageName, depPackageName, name,
                                          tooltip, dependency):
     if dependency:
         edgeLinkArch = packageName
     else:
         edgeLinkArch = depPackageName
-    packageDependencyHtmlFile = getPackageDependencyHtmlFile(packageName, depPackageName)
+    packageDependencyHtmlFile = getPackageDependencyHtmlFileName(packageName, depPackageName)
     return "<a href=\"%s#%s\", title=\"%s\">%s</a>" % (packageDependencyHtmlFile,
                                                        edgeLinkArch,
                                                        tooltip,
@@ -1184,7 +1154,8 @@ class WebPageGenerator:
                       self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
                                               "Found Entries", outputFile, pdf)
                       self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)),
-                                                    outputFile, self.getGlobalEntryHTML,
+                                                    outputFile,
+                                                    self.getGlobalEntryHTML,
                                                     nameFunc=self.getGlobalEntryName,
                                                     classid="gblEntry",
                                                     useColor=False,
@@ -1598,7 +1569,7 @@ class WebPageGenerator:
             index = 0
             for routine in sorted(routineSet):
                 routineData += ("<a class=\"e1\" href=\"%s\">%s" %
-                             (getRoutineHtmlFileName(routine.getName()),
+                             (getPackageComponentLink(routine),
                               routine.getName()))
                 if (index + 1) % 8 == 0:
                     routineData += "</a><BR>"
@@ -1694,8 +1665,8 @@ class WebPageGenerator:
 
     def _updatePackageDepDict(self, package, depDict, packDepDict):
         for depPack in depDict.iterkeys():
-            fileName = getPackageDependencyHtmlFile(package.getName(),
-                                                    depPack.getName())
+            fileName = getPackageDependencyHtmlFileName(package.getName(),
+                                                        depPack.getName())
             if fileName not in packDepDict:
                 packDepDict[fileName] = (package, depPack)
 
@@ -1819,8 +1790,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(callerRoutines),
                                               outputFile,
-                                              getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="callerRoutines",
                                               useColor=False)
             if calledRoutines:
@@ -1829,8 +1800,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(calledRoutines),
                                               outputFile,
-                                              getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="calledRoutines",
                                               useColor=False)
             writeSectionEnd(outputFile)
@@ -1855,8 +1826,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(globalRtnCalledRoutines),
                                               outputFile,
-                                              getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="gcalledRoutines",
                                               useColor=False)
             writeSectionEnd(outputFile)
@@ -1897,8 +1868,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(optionCallRoutines),
                                               outputFile,
-                                              getPackageObjHtmlFileName,
-                                              self.getPackageComponentDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getPackageComponentDisplayName,
                                               classid="PCObjects")
             if optionCalledRoutines:
                 header = "Called Routines in %s : %s" % \
@@ -1906,8 +1877,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(optionCalledRoutines),
                                               outputFile,
-                                              getPackageObjHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="PCcalledRoutines",
                                               useColor=False)
             writeSectionEnd(outputFile)
@@ -1923,8 +1894,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(referredRoutines),
                                               outputFile,
-                                              getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="referredRoutines",
                                               useColor=False)
             if referredGlobals:
@@ -1949,7 +1920,7 @@ class WebPageGenerator:
                 self.generateTablizedItemList(sorted(referredFileManFiles),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              getGlobalDisplayName,
+                                              nameFunc=getGlobalDisplayName,
                                               classid="referredFileManFiles")
             if referencedFileManFiles:
                 header = "Referenced FileMan Files List in %s : %s" % \
@@ -1958,7 +1929,7 @@ class WebPageGenerator:
                 self.generateTablizedItemList(sorted(referencedFileManFiles),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              getGlobalDisplayName,
+                                              nameFunc=getGlobalDisplayName,
                                               classid="referencedFileManFiles")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
@@ -1973,8 +1944,8 @@ class WebPageGenerator:
                 writeSubSectionHeader(header, outputFile)
                 self.generateTablizedItemList(sorted(dbCallRoutines),
                                               outputFile,
-                                              getRoutineHtmlFileName,
-                                              self.getRoutineDisplayName,
+                                              getPackageComponentLink,
+                                              nameFunc=self.getRoutineDisplayName,
                                               classid="dbCallRoutines",
                                               useColor=False)
             if dbCallFileManFiles:
@@ -2089,7 +2060,7 @@ class WebPageGenerator:
         routineName = routine.getName()
         calledRoutines = routine.getCalledRoutines()
         filename = os.path.join(self._outDir,
-                                 getRoutineSourceHtmlFileNameUnquoted(sourceCodeName))
+                                getRoutineSourceHtmlFileName(sourceCodeName))
         with open(filename, 'w') as outputFile:
             try:
                 sourcePath = getRoutineSourceCodeFileByName(sourceCodeName,
@@ -2101,7 +2072,7 @@ class WebPageGenerator:
                     outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
                     outputFile.write("<div id='pageCommands' style='background: white;'>")
                     outputFile.write("  <a href=\"%s\">Go to the documentation of this file.</a>" %
-                                     getRoutineHtmlFileName(routineName))
+                                     getPackageComponentLink(routine))
                     if routine._structuredCode:
                       outputFile.write(SWAP_VIEW_HTML)
                     outputFile.write('</div>')
@@ -2255,7 +2226,7 @@ class WebPageGenerator:
         sortedItems = sorted(sortedItems, key=lambda s: s.lower())
         totalCol = 4
         self._generateIndexPage("routines.html", "Routine", totalCol,
-                                sortedItems, getRoutineHtmlFileName,
+                                sortedItems, getRoutineLink,
                                 self.getRoutineDisplayNameByName, indexList)
 
     def getRoutineDisplayNameByName(self, routineName):
@@ -2452,7 +2423,7 @@ class WebPageGenerator:
 
 #===============================================================================
 # method to generate a tablized representation of data
-#===============================================================================
+#==============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile,
                                  htmlMappingFunc, nameFunc=None, totalCol=8,
                                  classid="", useColor=True, additionalDetailsURL=""):
@@ -2471,14 +2442,16 @@ class WebPageGenerator:
                 for i in range(totalCol):
                     position = index * totalCol + i
                     if position < totalNumRoutine:
-                        displayName = sortedItemList[position]
-                        linkName = htmlMappingFunc(displayName)
+                        item = sortedItemList[position]
+                        linkName = htmlMappingFunc(item)
                         if useColor:
-                            borderColorString = findDotColor(displayName)
+                            borderColorString = findDotColor(item)
                         else:
                             borderColorString = "black"
                         if nameFunc:
-                            displayName = nameFunc(displayName)
+                            displayName = nameFunc(item)
+                        else:
+                            displayName = item
                         outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
                                    % (borderColorString, linkName, displayName))
                         objectCount += 1
@@ -2736,7 +2709,7 @@ class WebPageGenerator:
                     # sorted by routine Name
                     sortedRoutinesList = sorted(routinesList, key=lambda item: item.getName())
                     self.generatePackageSection("Routines",
-                                                getRoutineHtmlFileName,
+                                                getPackageComponentLink,
                                                 self.getRoutineDisplayName,
                                                 "rtns", sortedRoutinesList,
                                                 outputFile, pdf)
@@ -2829,7 +2802,7 @@ class WebPageGenerator:
             sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
             componentType = keyVal.replace("_"," ")
             self.generatePackageSection(componentType,
-                                        getPackageObjHtmlFileName,
+                                        getPackageComponentLink,
                                         self.getPackageComponentDisplayName,
                                         keyVal+"_data", sortedComponents,
                                         outputFile, pdf, 8)
@@ -3267,7 +3240,7 @@ class WebPageGenerator:
                     if self._generatePDFBundle:
                         routineName += tagString
                 depRoutineName = depRoutine.getName()
-                routineNameLink += "<a href=%s>%s</a>" % (getPackageObjHtmlFileName(depRoutine),
+                routineNameLink += "<a href=%s>%s</a>" % (getPackageComponentLink(depRoutine),
                                                           depRoutineName)
                 routineNameLink += "&nbsp;&nbsp;"
                 if (index + 1) % 8 == 0:
@@ -3457,10 +3430,7 @@ class WebPageGenerator:
         if existingOutFile:
             outputFile = existingOutFile
         else:
-            if isPackageComponent:
-                htmlFileName = getPackageObjHtmlFileName(routine)
-            else:
-                htmlFileName = getRoutineHtmlFileNameUnquoted(routine)
+            htmlFileName = getPackageObjHtmlFileName(routine)
             outputFile = open(os.path.join(self._outDir, htmlFileName), 'w')
             self.__includeHeader__(outputFile)
         if isPackageComponent:
@@ -3517,8 +3487,7 @@ class WebPageGenerator:
         indexList = ["Platform Dependent Routines", "Caller Graph"]
         routineName = genericRoutine.getName()
         package = genericRoutine.getPackage()
-        filename = os.path.join(self._outDir,
-                                  getRoutineHtmlFileNameUnquoted(routineName))
+        filename = os.path.join(self._outDir, getPackageObjHtmlFileName(genericRoutine))
         with open(filename, 'w') as outputFile:
             self.__includeHeader__(outputFile)
             self.generateNavigationBar(outputFile, indexList, printList=indexList)
@@ -3563,7 +3532,8 @@ class WebPageGenerator:
     def __writePackageComponentSourceSection__(self, routine, data, header,
                                                link, outputFile, pdf, classid):
         fileNo = PACKAGE_COMPONENT_MAP[routine.getObjectType()]
-        sourcePath = os.path.join(self._outDir,"..",fileNo.replace(".",'_'),fileNo+"-"+routine.getIEN()+".html")
+        sourcePath = os.path.join(self._outDir, "..", fileNo.replace(".",'_'),
+                                  "%s-%s.html" % (fileNo, routine.getIEN()))
         self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
         try:
           with open(sourcePath, 'r') as file:
@@ -3645,7 +3615,7 @@ class WebPageGenerator:
 
         totalCol = 4
         self._writeIndex(outputFile, title, totalCol, sortedComponents,
-                         getPackageObjHtmlFileName,
+                         getPackageComponentLink,
                          self.getPackageComponentDisplayName, indexList,
                          indexSuffix="_%s" % keyVal)
         outputFile.write('</div>')
@@ -3701,7 +3671,7 @@ $( document ).ready(function() {
                     self.__generateIndividualRoutinePage__(routine, pdf)
 
                 if self._generatePDFBundle:
-                    pdfRoutineFileName = getRoutinePdfFileNameUnquoted(routine.getName())
+                    pdfRoutineFileName = getRoutinePdfFileName(routine.getName())
                     pdfPackageDir = self.__getPDFDirectory__(packageName)
                     pdfFileName = os.path.join(pdfPackageDir, pdfRoutineFileName)
                     self.__writePDFFile__(pdf, pdfFileName)

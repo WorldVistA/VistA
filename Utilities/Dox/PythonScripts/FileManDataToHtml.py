@@ -28,7 +28,7 @@ from ZWRGlobalParser import getKeys
 from json import JSONEncoder
 from CrossReference import FileManField
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
-from UtilityFunctions import getRoutineHtmlFileName
+from UtilityFunctions import getDataEntryHtmlFileName, getRoutineHRefLink
 from UtilityFunctions import getPackageHtmlFileName, normalizePackageName
 from FileManGlobalDataParser import FileManDataEntry, FileManDataField
 from FileManGlobalDataParser import FileManFileData
@@ -72,31 +72,23 @@ class OSEHRAEncoder(JSONEncoder):
     else:
       JSONEncoder.default(self,o)
 
-def getDataEntryHtmlFile(ien, fileNo):
-  return "%s-%s.html" % (fileNo, ien)
 
 def getFileHtmlLink(dataEntry, value, **kargs):
-  htmlFile = getDataEntryHtmlFile(dataEntry.ien, dataEntry.fileNo)
+  htmlFile = getDataEntryHtmlFileName(dataEntry.ien, dataEntry.fileNo)
   return "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, dataEntry.fileNo.replace(".","_"),htmlFile, value)
 
-def getRoutineName(inputString):
-  tagRoutine = inputString.split('^')
+def _getRoutineHRefLink(dataEntry, routineName, **kargs):
+  tagRoutine = routineName.split('^')
   if len(tagRoutine) == 1:
-    return inputString
+    rtnName = routineName
   else:
-    return tagRoutine[-1]
+    rtnName = tagRoutine[-1]
 
-def getRoutineHRefLink(dataEntry, routineName, **kargs):
-  rtnName = getRoutineName(routineName)
-  crossRef = None
-  if 'crossRef' in kargs:
-    crossRef = kargs['crossRef']
-    if crossRef and not crossRef.getRoutineByName(rtnName):
-      return routineName
+  link = getRoutineHRefLink(rtnName, DOX_URL, **kargs)
+  if link is None:
+    return routineName
   pos = routineName.find(rtnName)
-  return routineName[:pos] + "<a href=\"%s%s\">%s</a>" % (DOX_URL,
-                                                          getRoutineHtmlFileName(rtnName),
-                                                          rtnName) + routineName[pos+len(rtnName):]
+  return routineName[:pos] + link + routineName[pos+len(rtnName):]
 
 def getPackageHRefLink(pkgName):
   value = "<a href=\"%s%s\">%s</a>" % (DOX_URL,
@@ -111,7 +103,7 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
   if value:
     fields = value.split('^')
     if len(fields) == 3: # fileNo, ien, name
-      refFile = getDataEntryHtmlFile(fields[1], fields[0])
+      refFile = getDataEntryHtmlFileName(fields[1], fields[0])
       value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".","_"),refFile, fields[-1])
     elif len(fields) == 2:
       value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -164,7 +156,7 @@ fields and logic to convert to html for RPC List
 rpc_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Tag", '.02', None), # Tag
-       ("Routine", '.03', getRoutineHRefLink), # Routine
+       ("Routine", '.03', _getRoutineHRefLink), # Routine
        ("Availability", '.05', None),# Availability
        ("Description", '1', getWordProcessingDataBrief),# Description
    )
@@ -220,7 +212,7 @@ HLO_list_fields = (
        ("Package", '2', getFileManFilePointerLink), # Type
        ("HL7 Type Tag", '1/.01', "771.2/.01" ,getFreeTextLink), # Action Tag
        ("Action Tag", '1/.04', None), # Action Tag
-       ("Action Routine", '1/.05', getRoutineHRefLink), # Action Routine
+       ("Action Routine", '1/.05', _getRoutineHRefLink), # Action Routine
    )
 
 HLO_table_header_fields = (
@@ -277,7 +269,7 @@ def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   for routine, tag, start in getMumpsRoutine(inputString):
     if routine:
       output += (inputString[startpos:start] +
-                 getRoutineHRefLink(None, routine, crossRef=crosRef))
+                 _getRoutineHRefLink(None, routine, crossRef=crosRef))
       startpos = start + len(routine)
   if startpos < len(inputString):
     output += inputString[startpos:]
@@ -291,7 +283,7 @@ def convertFilePointerToHtml(inputValue):
   name = inputValue
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
-    refFile = getDataEntryHtmlFile(fields[1], fields[0])
+    refFile = getDataEntryHtmlFileName(fields[1], fields[0])
     value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".","_"), refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
@@ -757,7 +749,7 @@ class FileManDataToHtml(object):
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
       dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".","_"),
-                                                      getDataEntryHtmlFile(ien, fileNo),
+                                                      getDataEntryHtmlFileName(ien, fileNo),
                                                       str(name).replace("\xa0", ""))
       rows.append([dataHtmlLink, ien])
     return rows
@@ -778,7 +770,7 @@ class FileManDataToHtml(object):
       tName = "%s-%s" % (pathSafeFileManDataFileNo, ien)
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
-      outHtmlFileName = getDataEntryHtmlFile(ien, fileManDataFileNo)
+      outHtmlFileName = getDataEntryHtmlFileName(ien, fileManDataFileNo)
       with open(os.path.join(outDir, outHtmlFileName), 'w') as output:
         output.write ("<html>")
         outputDataRecordTableHeader(output, tName)
@@ -821,7 +813,7 @@ class FileManDataToHtml(object):
       if fieldType == FileManField.FIELD_TYPE_MUMPS:
         value = getMumpsRoutineHtmlLinks(value, self.crossRef)
       elif fieldType == FileManField.FIELD_TYPE_FREE_TEXT and name.find("ROUTINE") >=0:
-        value = getRoutineHRefLink(dataEntry, str(value), crossRef=self.crossRef)
+        value = _getRoutineHRefLink(dataEntry, str(value), crossRef=self.crossRef)
       elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
         if value and value.dataEntries:
           if isRoot:

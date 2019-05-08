@@ -73,6 +73,7 @@ class RequirementsConverter:
                 output.write ("<td>%s</td>\n" % fieldList[idx])
                 output.write ("<td>%s</td>\n" % value)
                 output.write ("</tr>\n")
+
     def _generateIndividualRequirementsPage(self,reqJSON):
         ien = reqJSON['busNeedId']
         outReqFile = os.path.join(self._outDir, 'BFFReq-' + str(ien) + '.html')
@@ -115,6 +116,7 @@ class RequirementsConverter:
         outDir = self._outDir
         listName = listName.strip()
         pkgName = pkgName.strip()
+        # TODO: Use Utility functions to generate filename name
         pkgHtmlName = pkgName.replace('/','_')
         outFilename = "%s/%s-%s.html" % (outDir, pkgName.replace('/','_'), listName)
         if not isForAll:
