@@ -804,6 +804,9 @@ def run(args):
 
   glbDataParser.outdir = args.outDir
 
+  if not os.path.exists(os.path.join(args.outDir, "dox")):
+    os.makedirs(os.path.join(args.outDir, "dox"))
+
   glbDataParser.patchDir = args.patchRepositDir
   htmlGen = FileManDataToHtml(crossRef, args.outDir, _doxURL, _vivianURL)
   isolatedFiles = glbDataParser.schemaParser.isolatedFiles
