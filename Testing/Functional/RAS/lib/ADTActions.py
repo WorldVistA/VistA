@@ -935,11 +935,10 @@ class ADTActions (Actions):
         self.VistA.wait_re('START WITH LOG IN DATE/TIME: FIRST//')
         self.VistA.write('')
         self.VistA.wait('DEVICE')
-        self.VistA.write('HOME')
+        self.VistA.write(';p-other;')
         if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
-        self.VistA.wait('-------------------------')
         self.VistA.wait('Disposition Outputs Menu')
         self.VistA.write('Disposition')
         index = self.VistA.multiwait(['EARLIEST REGISTRATION ON FILE IS','NO REGISTRATIONS ON FILE TO START WITH'])

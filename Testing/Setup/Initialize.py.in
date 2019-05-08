@@ -17,6 +17,7 @@ import sys
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
+import OSEHRASetup
 
 VistA=ConnectToMUMPS("${logfile}","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
 if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
@@ -52,5 +53,6 @@ VistA.wait('Select DEVICE NAME:')
 VistA.write('')
 VistA.wait('Select OPTION:')
 VistA.write('')
+OSEHRASetup.addMPILocalNumber(VistA)
 VistA.wait(PROMPT)
 VistA.write('h')
