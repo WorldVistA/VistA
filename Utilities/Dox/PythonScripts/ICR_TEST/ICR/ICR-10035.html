@@ -1,4 +1,7 @@
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html>
+<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+
 <link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
@@ -38,7 +41,9 @@
       });
 }); </script>
 
-<body id="dt_example"><div id="container" style="width:80%"><h1>PATIENT FILE &nbsp;&nbsp;  ICR (10035)</h1>
+<script type="text/javascript" src="../dox/PDF_Script.js"></script><div class="qindex">
+<a onclick="writeICRPDF()"                          class="qindex" href="#Print">Print Page as PDF</a></div><body id="dt_example"><div id="container" style="width:80%"><title  id="pageTitle">PATIENT FILE ICR (10035)</title>
+<h1>PATIENT FILE &nbsp;&nbsp;  ICR (10035)</h1>
 
 <div id="demo">
 <table id="SUNSLTEwMDM1" class="display">

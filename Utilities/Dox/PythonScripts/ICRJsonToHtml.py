@@ -363,7 +363,7 @@ def _generateICRSummaryPageImpl(inputJson, listName, pkgName, date, outDir,
         output.write("""<div id="container" style="width:80%">""")
 
         if isForAll:
-            output.write("<h1>%s %s</h1>" % (pkgName, listName))
+            output.write("<title id=\"pageTitle\">%s %s</title>" % (pkgName, listName))
         else:
             output.write("<h2 align=\"right\"><a href=\"./All-%s.html\">"
                          "All %s</a></h2>" % (listName, listName))
@@ -406,10 +406,23 @@ def _generateICRIndividualPage(icrJson, date, outDir, crossRef):
     outIcrFile = os.path.join(outDir, 'ICR-' + ien + '.html')
     tName = safeElementId("%s-%s" % ('ICR', ien))
     with open(outIcrFile, 'w') as output:
+        output.write("""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">""")
         output.write ("<html>")
+        output.write("""
+<script src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css" />
+""")
         outputDataRecordTableHeader(output, tName)
+        output.write("""<script type="text/javascript" src="../dox/PDF_Script.js"></script>""")
+
+        output.write("<div class=\"qindex\">\n")
+        output.write("<a onclick=\"writeICRPDF()\" \
+                         class=\"qindex\" href=\"#Print\">Print Page as PDF</a>")
+        output.write("</div>")
+
         output.write("<body id=\"dt_example\">")
         output.write("""<div id="container" style="width:80%">""")
+        output.write ("<title  id=\"pageTitle\">%s %s (%s)</title>\n" % (icrJson['NAME'], 'ICR', ien))
         output.write ("<h1>%s &nbsp;&nbsp;  %s (%s)</h1>\n" % (icrJson['NAME'], 'ICR', ien))
         outputFileEntryTableList(output, tName)
         # table body
