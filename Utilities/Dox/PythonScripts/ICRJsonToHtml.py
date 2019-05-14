@@ -33,8 +33,7 @@ from LogManager import logger
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, RPC_FILE_NO, RPC_NAME_FIELD_NO
 from ICRSchema import isSubFile, isWordProcessingField, SUBFILE_FIELDS
 from UtilityFunctions import getPackageHtmlFileName, getGlobalHtmlFileNameByName
-from UtilityFunctions import getRoutineHtmlFileName
-from UtilityFunctions import PACKAGE_MAP, normalizePackageName
+from UtilityFunctions import getRoutineHRefLink, PACKAGE_MAP, normalizePackageName
 from UtilityFunctions import generatePDFTableHeader
 from UtilityFunctions import getDOXURL, getViViaNURL
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
@@ -193,19 +192,10 @@ def _getFileManFileHRefLink(fileNo, icrEntry, **kargs):
 
 
 def _getRoutineHRefLink(rtnName, icrEntry, **kargs):
-    crossRef = None
-    if 'crossRef' in kargs:
-        crossRef = kargs['crossRef']
-    if crossRef:
-        routine = crossRef.getRoutineByName(rtnName)
-        if routine:
-            # _addToPackageMap(icrEntry, routine.getPackage().getName())
-            return '<a href=\"%s%s\">%s</a>' % (DOX_URL,
-                                                getRoutineHtmlFileName(routine.getName()),
-                                                rtnName)
-        else:
-            logger.debug('Cannot find routine [%s]', rtnName)
-    return rtnName
+    link = getRoutineHRefLink(rtnName, DOX_URL, **kargs)
+    if link is None:
+        link = rtnName
+    return link
 
 
 def _getRPCHRefLink(rpcName, icrEntry, **kargs):

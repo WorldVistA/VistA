@@ -45,10 +45,14 @@ def run(args):
       pastDataFileName = "oldRequirements.json"
 
     args.ReqJsonFile = os.path.join(args.outDir, "requirements.json")
+    requirementsDir = os.path.join(args.outDir, "requirements")
+    if not os.path.exists(requirementsDir):
+        os.mkdir(requirementsDir)
+
     filename = os.path.basename(xlsfileName)[:-5] # Remove '.txt'
     curDate = filename[filename.rfind("_")+1:]
     RequirementsXLStoJSON.convertExcelToJson(xlsfileName, args.ReqJsonFile, pastDataFileName, curDate)
-    converter = RequirementsJSONtoHTML.RequirementsConverter(os.path.join(args.outDir, "requirements"))
+    converter = RequirementsJSONtoHTML.RequirementsConverter(requirementsDir)
     converter.convertJsonToHtml(args.ReqJsonFile)
 
 if __name__ == '__main__':

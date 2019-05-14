@@ -28,8 +28,8 @@ from LogManager import logger, initLogging
 from CrossReferenceBuilder import CrossReferenceBuilder
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
 
-from UtilityFunctions import getPackageHtmlFileName, getPackageDependencyHtmlFile
-from UtilityFunctions import getPackageObjHtmlFileName, getPackageGraphEdgePropsByMetrics
+from UtilityFunctions import getPackageHtmlFileName, getPackageDependencyHtmlFileName
+from UtilityFunctions import getPackageComponentLink, getPackageGraphEdgePropsByMetrics
 from UtilityFunctions import mergeAndSortDependencyListByPackage, normalizePackageName
 from UtilityFunctions import normalizeName, parseICRJson, readIntoDictionary
 from UtilityFunctions import PACKAGE_COMPONENT_MAP, MAX_DEPENDENCY_LIST_SIZE
@@ -96,7 +96,6 @@ class GraphGenerator:
             logger.info("Nothing to do exiting... Package: %s Total: %d " %
                          (packageName, totalPackage))
             return
-
         dirName = os.path.join(self._outDir, packageName)
         if self._isDependency:
             packageSuffix = "_dependency"
@@ -120,7 +119,7 @@ class GraphGenerator:
                                                                     getPackageHtmlFileName(depPackageName)))
                 depMetricsList = depPackageMerged[depPackage]
                 edgeWeight = sum(depMetricsList[0:7:2])
-                edgeLinkURL = getPackageDependencyHtmlFile(normalizedName, normalizedDepPackName)
+                edgeLinkURL = getPackageDependencyHtmlFileName(normalizedName, normalizedDepPackName)
                 if self._isDependency:
                     edgeStartNode = normalizedName
                     edgeEndNode = normalizedDepPackName
@@ -194,10 +193,8 @@ class GraphGenerator:
         packageName = package.getName()
         if self._isDependency:
             depRoutines = routine.getCalledRoutines()
-            routineSuffix = "_called"
         else:
             depRoutines = routine.getCallerRoutines()
-            routineSuffix = "_caller"
 
         # do not generate graph if no dep routines or
         # total dep routines > max_dependency_list
@@ -216,12 +213,18 @@ class GraphGenerator:
 
         dirName = os.path.join(self._outDir, packageName)
         normalizedName = normalizeName(routineName)
-        normalizedName = normalizedName.replace("$","\$")
-        dotFilename = os.path.join(dirName, "%s%s.dot" % (normalizedName, routineSuffix))
+        if self._isDependency:
+            routineSuffix = "called"
+        else:
+            routineSuffix = "caller"
+        fileNameRoot = os.path.join(dirName, "%s_%s" % (normalizedName, routineSuffix))
+        dotFilename = "%s.dot" % fileNameRoot
+        pngFilename = "%s.png" % fileNameRoot
+        cmapxFilename = "%s.cmapx" % fileNameRoot
 
         with open(dotFilename, 'wb') as output:
-            escapedName = normalizedName.replace("%","\%")
-            output.write("digraph \"%s%s\" {\n" % (normalizedName, routineSuffix))
+            escapedName = re.escape(routineName)
+            output.write("digraph \"%s\" {\n" % fileNameRoot)
             output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
             output.write("\tnodesep=0.45;\n") # set the node sep to be 0.15
             output.write("\transsep=0.45;\n") # set the rank sep to be 0.75
@@ -233,20 +236,18 @@ class GraphGenerator:
 
             for (depPackage, callDict) in depRoutines.iteritems():
                 output.write("\tsubgraph \"cluster_%s\"{\n" % depPackage)
-                for depRoutine in callDict.keys():
-                    normalizedDepName = re.sub("[ /.*?&<>:]", '_', depRoutine.getName())
-                    escapedDepRoutineName = normalizedDepName.replace("%","\%")
+                for depRoutine in callDict:
+                    escapedDepRoutineName = re.escape(depRoutine.getName())
+                    htmlFileName = getPackageComponentLink(depRoutine)
                     output.write("\t\t\"%s\" [penwidth=2 color=black URL=\"%s\" tooltip=\"%s\"];\n" %
                                     (escapedDepRoutineName,
-                                     getPackageObjHtmlFileName(depRoutine),
-                                     getPackageObjHtmlFileName(depRoutine)))
+                                     htmlFileName, htmlFileName))
                     if str(depPackage) == packageName:
                         output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
                 output.write("\t\tlabel=\"%s\";\n" % depPackage)
                 output.write("\t}\n")
                 for depRoutine in callDict:
-                    normalizedDepName = re.sub("[ /.*?&<>:]", '_', depRoutine.getName())
-                    escapedDepRoutineName = normalizedDepName.replace("%","\%")
+                    escapedDepRoutineName = re.escape(depRoutine.getName())
                     if self._isDependency:
                         output.write("\t\t\"%s\"->\"%s\"" % (escapedName, escapedDepRoutineName))
                     else:
@@ -254,8 +255,6 @@ class GraphGenerator:
                     output.write(";\n")
             output.write("}\n")
 
-        pngFilename = os.path.join(dirName, "%s%s.png" % (normalizedName, routineSuffix))
-        cmapxFilename = os.path.join(dirName, "%s%s.cmapx" % (normalizedName, routineSuffix))
         self._generateImagesFromDotFile(pngFilename, cmapxFilename, dotFilename)
 
     #==========================================================================

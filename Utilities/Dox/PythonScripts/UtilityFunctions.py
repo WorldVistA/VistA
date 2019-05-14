@@ -185,11 +185,12 @@ def parseICRJson(icrJson):
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["OTHER"]["ENTRIES"].append(entry)
   return parsedICRJSON
 
-def getRoutineHtmlFileName(routineName):
-    return urllib.quote(getRoutineHtmlFileNameUnquoted(routineName))
+###############################################################################
 
-def getRoutineHtmlFileNameUnquoted(routineName):
-    return "Routine_%s.html" % routineName
+def getGlobalHtmlFileName(globalVar):
+    if globalVar.isSubFile():
+        return getFileManSubFileHtmlFileNameByName(globalVar.getFileNo())
+    return getGlobalHtmlFileNameByName(globalVar.getName())
 
 def getGlobalHtmlFileNameByName(globalName):
     return ("Global_%s.html" %
@@ -199,31 +200,28 @@ def normalizeGlobalName(globalName):
     import base64
     return base64.urlsafe_b64encode(globalName)
 
+def getGlobalPDFFileNameByName(globalName):
+    return ("Global_%s.pdf" %
+                        normalizeGlobalName(globalName))
+
+def getFileManSubFileHtmlFileName(subFile):
+    return getFileManSubFileHtmlFileNameByName(subFile.getFileNo())
+
+def getFileManSubFileHtmlFileNameByName(subFileNo):
+    return urllib.quote("SubFile_%s.html" % subFileNo)
+
+def getFileManSubFilePDFFileNameByName(subFileNo):
+    return urllib.quote("SubFile_%s.pdf" % subFileNo)
+
 def getPackageHtmlFileName(packageName):
     return urllib.quote("Package_%s.html" %
                         normalizePackageName(packageName))
 
-def normalizePackageName(packageName):
-    if packageName in PACKAGE_MAP:
-       packageName = PACKAGE_MAP[packageName]
-    newName = packageName.replace(' ', '_')
-    return newName.replace('-', "_").replace('.', '_').replace('/', '_')
+def getPackagePdfFileName(packageName):
+    return urllib.quote("Package_%s.pdf" %
+                        normalizePackageName(packageName))
 
-def getPackageObjHtmlFileNameUnquoted(optionName):
-    if "Global" in str(type(optionName)):
-        return getGlobalHtmlFileNameByName(optionName.getName())
-
-    title = optionName.getObjectType()
-    optionName = optionName.getName()
-    return "%s_%s.html" % (title, normalizeName(optionName))
-
-def normalizeName(name):
-    return re.sub("[ /.*?&<>:]", '_', name)
-
-def getPackageObjHtmlFileName(functionName):
-    return urllib.quote(getPackageObjHtmlFileNameUnquoted(functionName))
-
-def getPackageDependencyHtmlFile(packageName, depPackageName):
+def getPackageDependencyHtmlFileName(packageName, depPackageName):
     firstName = normalizePackageName(packageName)
     secondName = normalizePackageName(depPackageName)
     if firstName < secondName:
@@ -231,6 +229,57 @@ def getPackageDependencyHtmlFile(packageName, depPackageName):
         firstName = secondName
         secondName = temp
     return "Package_%s-%s_detail.html" % (firstName, secondName)
+
+def normalizePackageName(packageName):
+    if packageName in PACKAGE_MAP:
+       packageName = PACKAGE_MAP[packageName]
+    newName = packageName.replace(' ', '_')
+    return newName.replace('-', "_").replace('.', '_').replace('/', '_')
+
+# Note: 'option' is the object NOT the name string
+def getPackageObjHtmlFileName(option):
+    if "Global" in str(type(option)):
+        filename = getGlobalHtmlFileNameByName(option.getName())
+    else:
+        title = option.getObjectType()
+        optionName = option.getName()
+        filename = "%s_%s.html" % (title, normalizeName(optionName))
+    return filename
+
+def getPackageComponentLink(option):
+    return urllib.quote(getPackageObjHtmlFileName(option))
+
+def getRoutineLink(routineName):
+    filename = "Routine_%s.html" % normalizeName(routineName)
+    return urllib.quote(filename)
+
+def getRoutineHRefLink(rtnName, dox_url, **kargs):
+    crossRef = None
+    if 'crossRef' in kargs:
+        crossRef = kargs['crossRef']
+    if crossRef:
+        routine = crossRef.getRoutineByName(rtnName)
+        if routine:
+            return '<a href=\"%s%s\">%s</a>' % (dox_url,
+                                                getPackageComponentLink(routine),
+                                                rtnName)
+    return None
+
+def getRoutinePdfFileName(routineName):
+    filename = "Routine_%s.pdf" % normalizeName(routineName)
+    return urllib.quote(filename)
+
+def getRoutineSourceHtmlFileName(routineName):
+    filename = "Routine_%s_source.html" % normalizeName(routineName)
+    return urllib.quote(filename)
+
+def normalizeName(name):
+    return re.sub("[ /.*?&<>:\\\"|]", '_', name)
+
+def getDataEntryHtmlFileName(ien, fileNo):
+  return "%s-%s.html" % (fileNo, ien)
+
+###############################################################################
 
 #==============================================================================
 #  return a tuple of Edge Label, Edge ToolTip, Edge Style
