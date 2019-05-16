@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
 import os
 import sys
 import re
@@ -37,7 +38,6 @@ from LogManager import initLogging, logger
 from FileManDateTimeUtil import fmDtToPyDt
 from PatchOrderGenerator import PatchOrderGenerator
 import glob
-
 
 """ These are used to capture install entries that don't use the
 package prefix as their install name or have odd capitalization
@@ -790,58 +790,65 @@ def run(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
 
-  crossRef = parseCrossRefGeneratorWithArgs(args)
-  _doxURL = getDOXURL(args.local)
-  _vivianURL = getViViaNURL(args.local)
-  glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
-  assert '0' in glbDataParser.allFiles and '1' in glbDataParser.allFiles and set(args.fileNos).issubset(glbDataParser.allFiles)
-
-  # Populate glbDataParser.globalLocationMap
-  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
-  for fileNo in args.fileNos:
-    assert fileNo in glbDataParser.globalLocationMap
-  del glbDataParser.outFileManData['1']
-  glbDataParser.outdir = args.outDir
-
+  # Ensure that output directory exists
   if not os.path.exists(os.path.join(args.outDir, "dox")):
     os.makedirs(os.path.join(args.outDir, "dox"))
 
+  crossRef = parseCrossRefGeneratorWithArgs(args)
+
+  # Populate glbDataParse
+  glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
+  del glbDataParser.outFileManData['1']
+  glbDataParser.outdir = args.outDir
   glbDataParser.patchDir = args.patchRepositDir
-  htmlGen = FileManDataToHtml(crossRef, glbDataParser.schemaParser, args.outDir, _doxURL, _vivianURL)
-  isolatedFiles = glbDataParser.schemaParser.isolatedFiles
-  if not args.all or set(args.fileNos).issubset(isolatedFiles):
+
+  _doxURL = getDOXURL(args.local)
+  _vivianURL = getViViaNURL(args.local)
+  htmlGen = FileManDataToHtml(crossRef, glbDataParser.schemaParser,
+                              args.outDir, _doxURL, _vivianURL)
+
+  if not args.all:
+    assert set(args.fileNos).issubset(glbDataParser.allFiles)
     for fileNo in args.fileNos:
-      for gdFile in glbDataParser.allFiles[fileNo]['path']:
-        logger.info("Parsing file: %s at %s" % (fileNo, gdFile))
-        glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile, fileNo)
-      htmlGen.outputFileManDataAsHtml(fileNo, glbDataParser)
-      del glbDataParser.outFileManData[fileNo]
-      gc.collect()
+        assert fileNo in glbDataParser.globalLocationMap
+
+    processFiles(glbDataParser, htmlGen, args.fileNos)
   else:
-    # Generate all required files
-    sccSet = glbDataParser.schemaParser.sccSet
-    fileSet = set(args.fileNos)
-    for idx, value in enumerate(sccSet):
-      fileSet.difference_update(value)
-      if not fileSet:
-        break
-    for i in xrange(0,idx+1):
-      fileSet = fileSet.union(sccSet[i])
-      fileSet &= set(glbDataParser.allFiles.keys())
-    if len(fileSet) > 1:
-      for file in fileSet:
-        for zwrFile in glbDataParser.allFiles[file]['path']:
-          globalSub = glbDataParser.allFiles[file]['name']
-          glbDataParser.generateFileIndex(zwrFile, file)
+    # Start with 'Strongly connected components'
+    fileSet = glbDataParser.schemaParser.sccSet
+
+    # Add files we're specifically interested int
+    fileSet.add('101')    #Protocol
+    fileSet.add('8994')   #Remote Procedure
+    fileSet.add('19')     #Option
+    fileSet.add('779.2')  #HLO Application
+    fileSet.add('9.7')    #Install
+    fileSet.add('.5')     #Function
+    fileSet.add('409.61') #List Template
+    fileSet.add('19.1')   #Security Key
+    fileSet.add('9.2')    #Help Frame
+    fileSet.add('.403')   #Form
+    fileSet.add('.401')   #Sort Template
+    fileSet.add('771')    #HL7 APPLICATION PARAMETER
+
+    # Make sure to only use files that are in glbDataParser.allFiles.keys()
+    fileSet &= set(glbDataParser.allFiles.keys())
     for file in fileSet:
-        for zwrFile in glbDataParser.allFiles[file]['path']:
-          logger.info("Parsing file: %s at %s" % (file, zwrFile))
-          globalSub = glbDataParser.allFiles[file]['name']
-          glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
-        htmlGen.outputFileManDataAsHtml(file, glbDataParser)
-        glbDataParser.outFileManData.pop(file)
-        gc.collect()
+      for zwrFile in glbDataParser.allFiles[file]['path']:
+        glbDataParser.generateFileIndex(zwrFile, file)
+    processFiles(glbDataParser, htmlGen, fileSet)
+
   glbDataParser.outRtnReferenceDict()
+
+def processFiles(glbDataParser, htmlGen, files):
+  for file in files:
+    for zwrFile in glbDataParser.allFiles[file]['path']:
+      logger.info("Parsing file: %s at %s" % (file, zwrFile))
+      glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
+    htmlGen.outputFileManDataAsHtml(file, glbDataParser)
+    glbDataParser.outFileManData.pop(file)
+    gc.collect()
 
 def horologToDateTime(input):
   """
@@ -870,14 +877,16 @@ def createArgParser():
   initParser = createInitialCrossRefGenArgParser()
   parser = argparse.ArgumentParser(description='FileMan Global Data Parser',
                                    parents=[initParser])
-  parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
   parser.add_argument('-o', '--outDir', required=True,
                       help='top directory to generate output in html')
   parser.add_argument('-lf', '--logFileDir', required=True,
                       help='Logfile directory')
-  parser.add_argument('-all', action='store_true',
-                      help='generate all dependency files ')
   parser.add_argument('-local', help='Use links to local DOX pages')
+  # Require 'fileNos' or 'all'
+  group = parser.add_mutually_exclusive_group(required=True)
+  group.add_argument('-all', action='store_true',
+                      help='generate all dependency files ')
+  group.add_argument('-f', '--fileNos', help='FileMan File Numbers', nargs='+')
   return parser
 
 def main():
@@ -886,7 +895,6 @@ def main():
   initLogging(result.logFileDir, "FileManGlobalDataParser.log")
   logger.debug(result)
   run(result)
-  logger.debug("DONE")
 
 if __name__ == '__main__':
   main()

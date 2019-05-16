@@ -162,107 +162,42 @@ FIELD_TYPE_MAP_LIST = (
 class FileManSchemaParser(object):
   def __init__(self):
     self._allSchema = {} # a dict of all schema
-    self._ddRoot = None # global Root by reading the zwr file
     self._zeroFiles = ['0'] # all file and subfile WRT file zero
     self._subFiles = set() # all the subFiles
     self._noPointedToFiles = {} # global Name => global
     self._fileDep = {} # fileNo => list of files
-    self._sccSet = []
-    self._isolatedFile = set()
+    self._sccSet = set() # Set of 'Strongly Connected Components'
 
   @property
   def sccSet(self):
     return self._sccSet
 
-  @property
-  def isolatedFiles(self):
-    return self._isolatedFile
-
-  def _updateFileDepSet(self, file, deps, exclude):
-    for depFile in [x for x in deps]:
-      if depFile not in self._fileDep or depFile in exclude:
-        continue
-      exclude.add(depFile)
-      self._updateFileDepSet(depFile, self._fileDep[depFile], exclude)
-      deps.update(self._fileDep[depFile])
-
-  def _updateFileDep(self):
-    exclude = set()
-    for file in self._fileDep.iterkeys():
-      if file in exclude:
-        continue
-      exclude.add(file)
-      self._updateFileDepSet(file, deps, exclude)
-
-  def _generateNoPointerToFileList(self):
-    """
-      generate list of files that does not have any pointer
-      and is not pointed by any files
-    """
-    depDict = self._fileDep
-    allFiles = [x for x in self._allSchema if self._allSchema[x].isRootFile()]
-    logger.info("Total # of Files: %s" % len(allFiles))
-    allFilesWithPointedTo = [x for x in depDict if self._allSchema[x].isRootFile()]
-    allFilesWithoutPointedTo = sorted(set(allFiles) - set(allFilesWithPointedTo), key=lambda x: float(x))
-    logger.info("Total # of Files that is not pointed to by any files: %s" % len(allFilesWithoutPointedTo))
-    allFilePointerTo = reduce(set.union, depDict.itervalues())
-    allFileNoPointerTo = set(allFiles) - allFilePointerTo
-    logger.info("Total # of files that does not have file pointer: %s" % len(allFileNoPointerTo))
-    self._isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
-    logger.info("Total # of Isolated Files: %s" % len(self._isolatedFile))
-
-  def _updateFileDepByFile(self, file, exclude):
-    exclude.add(file)
-    return self._updateFileDepSet(file, self._fileDep[file], exclude)
-
-  def _topologicSort(self):
-    from PatchOrderGenerator import topologicSort
-    result = topologicSort(self._fileDep, '2')
-
   def _generateSCCSet(self):
     """
-      generate a list of set that contains
-      a group of files that are Strongly Connected Components
+      generate a set of set that contains
+      files that are Strongly Connected Components
     """
-    outList = self._sccSet
-    """ remove self dependency """
+    out = set()
     allFiles = set(self._fileDep.keys())
-    # special logic to reduce the dependency of file 101
     for key, values in self._fileDep.iteritems():
-      #if key == '101':
-      #  for item in ('200', '19', '9.4', '870', '123.5', '62.07', '62.05', '60', '61', '62', '123.1', '71', '19.1'):
-      #    values.discard(item)
-      #elif key == '771':
-      #  values.discard('3.8')
-      #elif '200' == key:
-      #  values = set()
       allFiles.update(values)
     for key in allFiles:
       self._fileDep.setdefault(key,set())
     for scc in strongly_connected_components(allFiles, self._fileDep):
-      outList.append(scc)
-    return outList
+      out |= scc
+    return out
 
   def parseSchemaDDFileV2(self, inputDDZWRFile):
     for ddRoot in readGlobalNodeFromZWRFileV2(inputDDZWRFile, '^DD'):
-      self._ddRoot = ddRoot
-      self._generateSchema()
+      files = getKeys(ddRoot, float) # sort files by float value
+      for file in files:
+        if file not in self._allSchema:
+          self._allSchema[file] = Global("", file, "")
+        self._generateFileSchema(ddRoot[file], self._allSchema[file])
     self._updateMultiple()
-    self._generateNoPointerToFileList()
-    outSCCLst = self._generateSCCSet()
-    totalFiles = 0
-    for idx, scc in enumerate(outSCCLst):
-      scc = scc - self._isolatedFile
-      totalFiles += len(scc)
+    self._sccSet = self._generateSCCSet()
     return self._allSchema
 
-
-  def _generateSchema(self):
-    files = getKeys(self._ddRoot, float) # sort files by float value
-    for file in files:
-      if file not in self._allSchema:
-        self._allSchema[file] = Global("", file, "")
-      self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
 
   def _parseSubFilesNode(self, rootNode, fileNo):
     """ Get the subFiles used in the file """
@@ -271,6 +206,7 @@ class FileManSchemaParser(object):
       assert self._allSchema[key].isSubFile()
       assert self._allSchema[key].getParentFile().getFileNo() == fileNo
       self._subFiles.add(key)
+
   def _generateFileSchema(self, rootNode, fileSchema):
     """
       handle the "PT" and "SB" subscript first
