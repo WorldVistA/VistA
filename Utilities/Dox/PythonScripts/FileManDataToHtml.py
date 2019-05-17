@@ -69,6 +69,8 @@ class OSEHRAEncoder(JSONEncoder):
                             o.getType(),
                             o.getSubType(),
                             o.getSpecifier()))
+    elif "datetime.datetime" in str(type(o)):
+      return o.isoformat() #.strftime("%m/%d/%Y, %H:%M:%S")
     else:
       JSONEncoder.default(self,o)
 
@@ -298,10 +300,11 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, outDir, doxURL, vivURL):
+  def __init__(self, crossRef, schemaParser, outDir, doxURL, vivURL):
     global DOX_URL
     global VIV_URL
     self.crossRef = crossRef
+    self.schemaParser = schemaParser
     self.outDir = outDir
     DOX_URL = doxURL
     VIV_URL = vivURL
@@ -311,7 +314,122 @@ class FileManDataToHtml(object):
     #
     self.synonymMap = {}
 
-  def outputFileManDataAsHtml(self, gblDataParser):
+  def outputFileManDataAsHtml(self, fileNo, gblDataParser):
+    """
+      This is the entry pointer to generate Html output
+      format based on FileMan Data object
+      @TODO: integrate with FileManFileOutputFormat.py
+    """
+    crossRef = self.crossRef
+    fileManDataMap = gblDataParser.outFileManData
+    self.dataMap = gblDataParser
+    fileManData = fileManDataMap[fileNo]
+    fileNoPathSafe = fileNo.replace('.','_')
+    fileNoOutDir = os.path.join(self.outDir, fileNoPathSafe)
+    if not os.path.exists(fileNoOutDir):
+      os.mkdir(fileNoOutDir)
+    if fileNo == '8994':
+      if crossRef:
+        allPackages = crossRef.getAllPackages()
+        allRpcs = []
+        for package in allPackages.itervalues():
+          if package.rpcs:
+            self._generateRPCListHtml(package.rpcs, package.getName(),
+                                      fileNoOutDir)
+            allRpcs.extend(package.rpcs)
+        if allRpcs:
+          self._generateRPCListHtml(allRpcs, "All", fileNoOutDir)
+    elif fileNo == '101':
+      menuOutDir = os.path.join(self.outDir, "menus", "101")
+      if not os.path.exists(menuOutDir):
+        os.makedirs(menuOutDir)
+      allProtoMenuList = []
+      if crossRef:
+        allPackages = crossRef.getAllPackages()
+        allHl7s = []
+        allProtocols = []
+        for ien in getKeys(fileManData.dataEntries.keys(), float):
+          dataEntry = fileManData.dataEntries[ien]
+          allProtocols.append(dataEntry)
+          fields = dataEntry.fields
+          if '4' in fields:
+            if fields['4'].value == 'menu':
+              allProtoMenuList.append(dataEntry)
+        for package in allPackages.itervalues():
+          if package.hl7:
+            self._generateHL7ListByPackage(package.hl7, package.getName(),
+                                           fileNoOutDir)
+            allHl7s.extend(package.hl7)
+          if package.protocol:
+            self._generateProtocolListByPackage(package.protocol,
+                                                package.getName(),
+                                                fileNoOutDir)
+        if allHl7s:
+          self._generateHL7ListByPackage(allHl7s, "All", fileNoOutDir)
+        if allProtocols:
+          self._generateProtocolListByPackage(allProtocols, "All",
+                                              fileNoOutDir)
+      self._generateMenuDependency(allProtoMenuList, allProtocols,menuOutDir)
+    elif fileNo == '779.2':
+      if crossRef:
+        allPackages = crossRef.getAllPackages()
+        allHLOs = []
+        for package in allPackages.itervalues():
+          if package.hlo:
+            self._generateHLOListByPackage(package.hlo, package.getName(),
+                                           gblDataParser, fileNoOutDir)
+            allHLOs.extend(package.hlo)
+        if allHLOs:
+          self._generateHLOListByPackage(allHLOs, "All", gblDataParser,
+                                         fileNoOutDir)
+    elif fileNo == '19':
+      allOptionList = []
+      allMenuList = []
+      serverMenuList = []
+      outJSON = {}
+      menuOutDir = os.path.join(self.outDir, "menus", "19")
+      if not os.path.exists(menuOutDir):
+        os.makedirs(menuOutDir)
+      for ien in getKeys(fileManData.dataEntries.keys(), float):
+        dataEntry = fileManData.dataEntries[ien]
+        allOptionList.append(dataEntry)
+        fields = dataEntry.fields
+        if '4' in fields:
+          if fields['4'].value == 'menu':
+            allMenuList.append(dataEntry)
+          # Seperate list for the "server" OPTIONS
+          elif fields['4'].value == 'server':
+            serverMenuList.append(dataEntry);
+        else:
+          logger.error("ien: %s of file 19 does not have a type" % ien)
+
+      self._generateDataListByPackage(allOptionList, "All",
+                                      option_list_fields, "Option",
+                                      [x[0] for x in option_list_fields],
+                                      ["Name", "Lock"], fileNoOutDir)
+      self._generateDataListByPackage(allMenuList, "All", menu_list_fields,
+                                      "menus",
+                                      [x[0] for x in menu_list_fields],
+                                      ["Name", "Menu Text", "Lock"],
+                                      fileNoOutDir)
+
+
+      self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
+      self._generateMenuDependency(allMenuList, allOptionList,menuOutDir)
+
+    allObjectsList = []
+    outJSON = {}
+    for ien in getKeys(fileManData.dataEntries.keys(), float):
+      dataEntry = fileManData.dataEntries[ien]
+      outJSON[ien] = dataEntry.fields
+      allObjectsList.append(dataEntry)
+    with open(os.path.join(self.outDir, "dox", "%s.json" % fileNoPathSafe), 'w') as output:
+      json.dump(outJSON, output, ensure_ascii=False, cls=OSEHRAEncoder)
+
+    self._generateDataTableHtml(fileManData, fileNo, fileNoOutDir)
+    self._convertFileManDataToHtml(fileManData)
+
+  def outputAllFileManDataAsHtml(self, gblDataParser):
     """
       This is the entry pointer to generate Html output
       format based on FileMan Data object
@@ -706,52 +824,49 @@ class FileManDataToHtml(object):
   def _generateDataTableHtml(self, fileManData, fileNo, outDir):
     isLargeFile = len(fileManData.dataEntries) > 4500
     tName = normalizePackageName(fileManData.name)
+    fieldNamesList =  self.schemaParser._allSchema[fileNo].getFieldNames()
     # Note: We are not normalizing fileNo here
     with open(os.path.join(outDir, "%s.html" % fileNo), 'w') as output:
       output.write("<html>\n")
-      if isLargeFile:
-        ajexSrc = "%s_array.txt" % fileNo
-        outputLargeDataListTableHeader(output, ajexSrc, tName)
-      else:
-        outputDataListTableHeader(output, tName)
+      # All files are now "large files" and need the ajexSrc file
+      ajexSrc = "%s_array.txt" % fileNo
+      outputLargeDataListTableHeader(output, ajexSrc, tName, columns=fieldNamesList, searchColumnNames=fieldNamesList, hideColumnNames=[""] )
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       output.write("<h1>File %s(%s) Data List</h1>" % (tName, fileNo))
-      writeTableListInfo(output, tName)
-      if not isLargeFile:
-        output.write("<tbody>\n")
-        rows = self._getTableRows(fileManData, fileNo)
-        for tableRow in rows:
-          output.write("<tr>\n")
-          for item in tableRow:
-            output.write("<td>%s</td>\n" % item)
-          output.write("</tr>\n")
+      outputDataTableHeader(output, fieldNamesList, tName)
+      output.write("<tbody>\n")
+      # Don't add rows to import from Ajex
       output.write("</tbody>\n")
       output.write("</table>\n")
       output.write("</div>\n")
       output.write("</div>\n")
       output.write ("</body></html>\n")
-    if isLargeFile:
-      logger.info("Writing Ajax file: %s" % ajexSrc)
-      """ Write out the data file in JSON format """
-      outJson = {"aaData": self._getTableRows(fileManData, fileNo)}
-      with open(os.path.join(outDir, ajexSrc), 'w') as output:
-        json.dump(outJson, output)
+    """ Write out the data file in JSON format """
+    outJson = {"aaData": self._getTableRows(fileManData, fileNo, fieldNamesList)}
+    with open(os.path.join(outDir, ajexSrc), 'w') as output:
+      # Ensure that the OSEHRA Encoder is used to write out data.
+      json.dump(outJson, output,ensure_ascii=False, cls=OSEHRAEncoder)
 
-  def _getTableRows(self, fileManData, fileNo):
+  def _getTableRows(self, fileManData, fileNo, fieldsList):
     rows = []
     for ien in getKeys(fileManData.dataEntries.keys(), float):
+      row = [""] * len(fieldsList)
+      row[0] = ien
       dataEntry = fileManData.dataEntries[ien]
-      if not dataEntry.name:
-        logger.warn("No name for %s" % dataEntry)
-        continue
       name = dataEntry.name
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
       dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".","_"),
                                                       getDataEntryHtmlFileName(ien, fileNo),
                                                       str(name).replace("\xa0", ""))
-      rows.append([dataHtmlLink, ien])
+      for field in dataEntry.fields:
+        # Use index of field name to place data correctly in row
+        row[fieldsList.index(dataEntry.fields[field].name)] = dataEntry.fields[field].value
+        if field == '.01':
+          row[fieldsList.index(dataEntry.fields[field].name)] = dataHtmlLink
+
+      rows.append(row)
     return rows
 
   def _convertFileManDataToHtml(self, fileManData):
