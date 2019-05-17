@@ -95,7 +95,7 @@ This is described in more detail `here <https://www.osehra.org/post/reports-and-
 CPRS Localization Strategy and Framework
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 At this point, we can send and receive data fully in UTF-8; but all the labels
-in the program are still in English. Our first "port of call" to was to check
+in the program are still in English. Our first "port of call" was to check
 the official translation framework provided by Delphi: The Integrated
 Translation Environment (ITE). It had a large amount of problems--we
 actually couldn't use it even if we wanted to due to these issues. In the end
@@ -290,7 +290,7 @@ than ASCII strings (BapiHelper.cs in VistA.DataLoader.Broker project).
 The VistA DataLoader source and install instructions can be found on `Github
 <https://github.com/OSEHRA/Vista-Dataloader>`__.
 
-The Plan VI presentation can be found `here <https://www.osehra.org/sites/default/files/Plan%20VI%20Meeting%202-26%20-%20VistA4Edu%20DataLoader%20for%20Korean%20.pptx`__ or `duplicated here <http://smh101.com/articles/p6/plan6-dataloader.pdf>`__.
+The Plan VI presentation can be found `here <https://www.osehra.org/sites/default/files/Plan%20VI%20Meeting%202-26%20-%20VistA4Edu%20DataLoader%20for%20Korean%20.pptx>`__ or `duplicated here <http://smh101.com/articles/p6/plan6-dataloader.pdf>`__.
 
 QEWD and Panorama
 ~~~~~~~~~~~~~~~~~
