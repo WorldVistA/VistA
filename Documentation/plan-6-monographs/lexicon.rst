@@ -288,7 +288,15 @@ connection between these files, but it's actually redundant as the same pointer
 can be found by going to the Expression file.
 
 For comparison, on page 18 of the `technical manual <https://www.va.gov/vdl/documents/Clinical/Lexicon_Utility/lextm2_0.pdf>`__,
-you can find the more complex VA diagram.
+you can find the more complex VA diagram, reproduced here:
+
+.. figure::
+   images/lexicon-08-va-rel.png
+   :align: center
+   :alt: Full Lexicon Diagram
+
+   Full Lexicon Diagram
+
 
 Here are three tables of the Anorexia concept that may be easier to understand;
 the codes table includes the code for each.
