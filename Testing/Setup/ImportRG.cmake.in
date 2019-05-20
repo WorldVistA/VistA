@@ -108,10 +108,8 @@ if("@VENDOR_NAME@" STREQUAL "GTM")
 endif()
 execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/GlobalImport.py" RESULT_VARIABLE return )
 CheckResult(return "Global Import Failed")
-if("@VENDOR_NAME@" STREQUAL "Cache")
-  message(STATUS "Initializing VistA...")
-  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/Initialize.py" )
-endif()
+message(STATUS "Initializing VistA...")
+execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/Initialize.py" )
 
 
 if(TEST_VISTA_SETUP)
