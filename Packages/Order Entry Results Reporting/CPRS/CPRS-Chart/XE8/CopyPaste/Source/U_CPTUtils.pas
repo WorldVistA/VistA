@@ -215,7 +215,7 @@ begin { FormatFMDateTime }
   Result := '';
   if not(ADateTime > 0) then
     Exit;
-  X := FloatToStrF(ADateTime, ffFixed, 15, 6) + '0000000';
+  X := FloatToStrF(ADateTime, ffFixed, 15, 6, TFormatSettings.Create('en-US')) + '0000000';
   Y := StrToIntDef(Copy(X, 1, 3), 0) + 1700;
   m := StrToIntDef(Copy(X, 4, 2), 0);
   d := StrToIntDef(Copy(X, 6, 2), 0);

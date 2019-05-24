@@ -214,8 +214,8 @@ var
   i: Integer;
   AProvider: TPCEProvider;
 begin
-  if (FloatToStrF(uEncPCEData.DateTime, ffFixed, 15, 4) =      // compensate rounding errors
-      FloatToStrF(Encounter.DateTime,   ffFixed, 15, 4)) and
+  if (FloatToStrF(uEncPCEData.DateTime, ffFixed, 15, 4, TFormatSettings.Create('en-US')) =      // compensate rounding errors
+      FloatToStrF(Encounter.DateTime,   ffFixed, 15, 4, TFormatSettings.Create('en-US'))) and
      (uEncPCEData.Location = Encounter.Location) and
      (Encounter.Provider > 0) then
   begin
