@@ -258,9 +258,11 @@ function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
 { converts a Fileman date/time (type double) to a Delphi date/time }
 var
   DatePart, TimePart: string;
+  FormatSettings: TFormatSettings;
 begin
-  DatePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6), '.', 1);
-  TimePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6), '.', 2) + '000000';
+  FormatSettings := TFormatSettings.Create('en-US');
+  DatePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6, FormatSettings), '.', 1);
+  TimePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6, FormatSettings), '.', 2) + '000000';
   Result   := FMDateTimeToDateTimeCommon(DatePart, TimePart);
 end;
 
@@ -311,7 +313,7 @@ begin
   if not (ADateTime > 0) then Exit;
   if ImpreciseFMDateTime(ADateTime) then
   begin
-    sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6);
+    sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6, TFormatSettings.Create('en-US'));
     year := StrToInt(Copy(sDateTime, 1, 3)) + 1700;
     month := StrToInt(Copy(sDateTime, 4, 2));
     if month > 0 then
@@ -331,8 +333,9 @@ function ImpreciseFMDateTime(ADateTime: TFMDateTime): boolean;
 var
   sDateTime: string;
   month, day: Integer;
+
 begin
-  sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6);
+  sDateTime := FloatToStrF(ADateTime, ffFixed, 14, 6, TFormatSettings.Create('en-US'));
   month := StrToInt(Copy(sDateTime, 4, 2));
   day   := StrToInt(Copy(sDateTime, 6, 2));
   if (month > 0) and (day > 0) then Result := False
@@ -366,7 +369,7 @@ end;
 function MakeFMDateTime(const AString: string): TFMDateTime;
 begin
   Result := -1;
-  if (Length(AString) > 0) and IsFMDateTime(AString) then Result := StrToFloat(AString);
+  if (Length(AString) > 0) and IsFMDateTime(AString) then Result := StrToFloat(AString, TFormatSettings.Create('en-US'));
 end;
 
 procedure SetListFMDateTime(AFormat: string; AList: TStringList; ADelim: Char;
@@ -408,7 +411,7 @@ end;
 
 function StrToFloatDef(const S: string; ADefault: Extended): Extended;
 begin
-  if not TextToFloat(PChar(S), Result, fvExtended) then
+  if not TextToFloat(PChar(S), Result, fvExtended, TFormatSettings.Create('en-US')) then
     Result := ADefault;
 end;
 

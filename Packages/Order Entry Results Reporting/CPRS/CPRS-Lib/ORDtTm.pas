@@ -376,7 +376,7 @@ begin
   if ActiveBroker then
     begin
       CallVistA('ORWU DT', ['NOW'], aStr);
-      Result := StrToFloat(aStr);
+      Result := StrToFloat(aStr, TFormatSettings.Create('en-US'));
     end
   else
     Result := DateTimeToFMDateTime(Now);
@@ -404,7 +404,7 @@ begin
   if ActiveBroker then
     begin
       CallVistA('ORWU DT', [AString, 'TSX'], aStr);
-      Result := StrToFloat(aStr);
+      Result := StrToFloat(aStr, TFormatSettings.Create('en-US'));
     end
   else Result := 0;
 end;

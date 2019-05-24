@@ -304,13 +304,13 @@ var
   x: string;
 begin
   x := sCallV('ORWU DT', [AString]);
-  Result := StrToFloat(x);
+  Result := StrToFloat(x, TFormatSettings.Create('en-US'));
 end;
 
 function ValidDateTimeStr(const AString, Flags: string): TFMDateTime;
 { use %DT to validate & convert a string to Fileman format, accepts %DT flags }
 begin
-  Result := StrToFloat(sCallV('ORWU VALDT', [AString, Flags]));
+  Result := StrToFloat(sCallV('ORWU VALDT', [AString, Flags]), TFormatSettings.Create('en-US'));
 end;
 
 procedure ListDateRangeClinic(Dest: TStrings);
