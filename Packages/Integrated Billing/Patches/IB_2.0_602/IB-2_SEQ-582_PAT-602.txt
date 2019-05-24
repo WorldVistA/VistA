@@ -1,0 +1,397 @@
+$TXT Created by                  at TAS-EINS-DEV.AAC.DOMAIN.EXT  (KIDS) on Thursday, 02/21/19 at 11:05
+=============================================================================
+Run Date: MAR 20, 2019                     Designation: IB*2*602
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #582                      Status: Released
+                  Compliance Date: APR 19, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*621    <<= must be installed BEFORE `IB*2*602'
+
+Subject: MCCF EDI TAS EINSURANCE BUILD 9
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 2 project.
+  
+  
+ 1. Added the ability for a VistA user to expire all subscriber policies
+    attached to an insurance group plan without the need to move them to
+    another plan. The user can also choose to inactivate the plan after 
+    the expiration process has completed. A bulletin detailing the changes
+    is sent to both the user initiating the process and the
+    "IB NEW INSURANCE" mail group. A new option was added,
+    "Expire Group Plan" [IBCN EXPIRE GROUP SUBSCRIBERS] with synonym [XPIR]
+    to the PATIENT INSURANCE MENU [IBCN INSURANCE MGMT MENU].
+  
+    Note: If a user enters only two digits for the expiration date of the
+    policy the software translates it as the year only. For example, "19"
+    will be translated to "00/00/19".
+  
+ 2. Adjusted the VistA Third Party Joint Inquiry option (TPJI) to correctly
+    display the date of death (DoD) information in the header so it is no
+    longer truncated when the patient name is extra-long.
+  
+ 3. Enhanced these Excel formatted reports to include the same identifying
+    header information (other than "Page:" and page number) as their Report
+    formatted counterparts:  
+  
+    a. "eIV Payer Link Report" [IBCNE IIV PAYER LINK REPORT]
+    b. "eIV Response Report" [IBCNE IIV RESPONSE REPORT]
+    c. "Insurance Buffer Activity" [IBCN OUTPUT INS BUFF ACTIVITY]
+    d. "Insurance Buffer Employee" [IBCN OUTPUT INS BUFF EMPLOYEE]
+    e. "Verification of No Coverage Report" [IBCN NO COVERAGE VERIFIED]
+    f. "User Edit Report" [IBCN USER EDIT RPT]
+    g. "Generate Insurance Company Listings" 
+       [IBCN ID DUP INSURANCE ENTRIES]
+    h. "List New Not Verified Policies" [IBCN LIST NEW NOT VER]
+  
+ 4. Adjusted the VistA software that purges eIV related inquiries and 
+    responses to correctly calculate the earliest possible purge date to
+    display to the user. IIV TRANSMISSION QUEUE (#365.1) file (TQ) records
+    linked to IIV Response File (#365) records whose "Do Not Purge" field
+    (#365,.11) is set to "1" (YES) will no longer be considered.  
+    Additionally, when examining IIV Response File (#365) records for
+    purging, VistA was modified to remove responses that have a TQ pointer
+    that points to a non-existent TQ record.
+  
+ 5. Adjusted the VistA software for the Fee Patient Inquiry [FBAA 
+    PATIENT INQUIRY] option, Preregister a Patient [DGPRE PRE-REGISTER 
+    OPTION] option and Register a Patient [DG REGISTER PATIENT] option to 
+    verify the proper field size for the Medicare (WNR) Subscriber ID and 
+    describe those requirements for the user via help text.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+                                 
+ File Name (Number)   Field Name (Number)           New/Modified/Deleted
+ ------------------- --------------------           --------------------
+ N/A 
+  
+  
+  
+ Forms Associated:
+                                                           
+ Form Name                    File #                New/Modified/Deleted
+ ---------                    ------                --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                         
+ Mail Group Name                                    New/Modified/Deleted
+ ---------------                                    --------------------
+ N/A
+  
+  
+ Options Associated:
+                                                           
+ Option Name                      Type              New/Modified/Deleted
+ -----------                      ----              --------------------
+ IBCN EXPIRE GROUP SUBSCRIBERS    RUN ROUTINE       New
+ IBCN HPID CLAIM RPT              RUN ROUTINE       Attached
+ IBCN ID DUP INSURANCE ENTRIES    RUN ROUTINE       Attached
+ IBCN INS PLANS MISSING DATA      RUN ROUTINE       Attached
+ IBCN INS RPTS                    MENU              Attached
+ IBCN INSURANCE BUFFER PROCESS    RUN ROUTINE       Attached
+ IBCN INSURANCE CO EDIT           RUN ROUTINE       Attached
+ IBCN INSURANCE EDI REPORT        RUN ROUTINE       Attached
+ IBCN INSURANCE MGMT MENU         MENU              Modified
+ IBCN INTERFACILITY INS UPDATE    RUN ROUTINE       Attached
+ IBCN LIST INACTIVE INS W/PAT     RUN ROUTINE       Attached
+ IBCN LIST NEW NOT VER            RUN ROUTINE       Attached
+ IBCN LIST PLANS BY INS CO        RUN ROUTINE       Attached
+ IBCN MOVE SUBSCRIB TO PLAN       RUN ROUTINE       Attached
+ IBCN NO COVERAGE VERIFIED        RUN ROUTINE       Attached
+ IBCN PATIENT INSURANCE           RUN ROUTINE       Attached
+ IBCN POL W/NO EFF DATE REPORT    RUN ROUTINE       Attached
+ IBCN PT W/WO INSURANCE REPORT    RUN ROUTINE       Attached
+ IBCN REMOTE INSURANCE QUERY      RUN ROUTINE       Attached
+ IBCN VIEW INSURANCE CO           RUN ROUTINE       Attached
+ IBCN VIEW PATIENT INSURANCE      RUN ROUTINE       Attached
+ IBCNE IIV MENU                   MENU              Attached
+ IBCNE PAYER MAINTENANCE MENU     MENU              Attached
+ IBCNR E-PHARMACY MENU            MENU              Attached
+  
+  
+ Protocols Associated:
+                                                          
+ Protocol Name                                      New/Modified/Deleted
+ -------------                                      --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                          
+ Security Key Name                                            
+ -----------------                                        
+ N/A
+  
+  
+ Templates Associated:
+                                                          
+ Template Name      Type      File Name (Number)    New/Modified/Deleted
+ -------------      ----      ------------------    --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ 1. N/A
+  
+ Problem:
+ -------
+ N/A 
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ CINCINNATI, OH
+ NORTH TEXAS HCS
+ WHITE RIVER JUNCTION, VT
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext 
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ https://www.domain.ext/vdl/
+  
+ Title                          File Name                     SFTP Mode
+ ----------------------------------------------------------------------
+  
+ Deployment, Installation,      IB_2_0_P602_IG.PDF            Binary
+  Back-out, and Rollback Guide
+  (IB*2.0*602) 
+  
+ Electronic Insurance           IB_2_0_P602_EIV_TM.PDF        Binary
+  Verification (eIV)
+  Technical Manual/Security Guide
+  
+ Integrated Billing (IB)        IB_2_0_P602_TM.PDF            Binary
+  V. 2.0 Technical Manual
+  
+ Integrated Billing (IB)        IB_2_0_P602_UM.PDF            Binary
+  V. 2.0 User Manual
+  
+  
+                                 
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install routine IBY602PO is tasked during installation and 
+ should NOT be deleted after installation. Refer to the post-installation
+ instructions for more details regarding what this routine specifically 
+ does.    
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ **************************************************************************
+ * Do not install this patch when the eIV NIGHTLY PROCESS [IBCNE IIV BATCH*
+ * PROCESS] background job is running or scheduled to run, which should be*
+ * 10:00 p.m. Local Time.                                                 *
+ **************************************************************************
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ This option should be disabled during the install:
+  
+         [IBCN INSURANCE MGMT MENU]
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the
+     patch #(ex. IB*2.0*602):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed. It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//' Answer YES
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+     NO//' Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//', enter YES. 
+  
+       When prompted 'Enter options you wish to mark as 'Out Of Order':
+       Enter the following option:
+  
+         [IBCN INSURANCE MGMT MENU]
+  
+       When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+       Press the Return or Enter key as there are no protocols that
+       needs to be marked as 'Out of Order'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post install will loop through the IIV RESPONSE file (#365) searching
+ for any records where the DATE/TIME CREATED (#.08) field is not populated.
+ For those records that were identified with this scenario the DATE/TIME 
+ CREATED (#.08) field will be set to the same value of the DATE/TIME
+ RECEIVED (#365,.07) field if it is populated. Otherwise, the DATE/TIME
+ CREATED field will be set to NOW. If any of these records were created 
+ within the past 6 months (TODAY-182) up to 5 of them can be included on 
+ the email referenced in the paragraph below.
+  
+ The post install will also locate any abnormal IIV TRANSMISSION QUEUE
+ (#365.1) records (TQ). For any of those found that are older than
+ TODAY-182 (aka T-182), the abnormal TQ record along with any corresponding
+ IIV RESPONSE (#365) record will be deleted. For any abnormal TQ records
+ found within T-182 through T-14, an email is sent to the eInsurance
+ team (vhaeinsurancerr@domain.ext) listing the TQ internal record number of the
+ first 10 entries discovered along with a total count. Additionally, if no
+ abnormal records were discovered, an email will still be sent to notify
+ the eInsurance team that none were found. The purpose of the email is to
+ provide the eInsurance team a sample of records (if any were found) that
+ could point to a potential problem with the existing eInsurance software.
+  
+ This is what constitutes an abnormal TQ record:
+   a. Any TQ record without a DATE/TIME CREATED (#365.1, .06)
+  
+   b. Any TQ record without a QUERY FLAG (#365.1,.11)
+  
+   c. Any TQ record with a QUERY FLAG (#365.1,.11) that is set to "I"
+      (Identification) and WHICH EXTRACT (#365.1,.1) is not equal to
+      "EICD".
+  
+   d. Any TQ record that has a TRANSMISSION STATUS (#365.1, .04) that is 
+      not equal to "Response Received" and not equal to "Communication
+      Failure" and not equal to "Cancelled".  There is no reason for any TQ
+      entry more than 6 months old to have any status other than those
+      listed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNAU3
+    Before: B12671484   After: B12969808  **528,602**
+Routine Name: IBCNBOA
+    Before: B66757822   After: B68100333  **82,305,528,602**
+Routine Name: IBCNBOE
+    Before:B109925669   After:B112716320  **82,528,602**
+Routine Name: IBCNBOF
+    Before: B32265412   After: B33394771  **82,528,602**
+Routine Name: IBCNEDE4
+    Before: B60089694   After: B61826620  **184,271,416,621,602**
+Routine Name: IBCNEHL3
+    Before:B172154152   After:B172950682  **300,416,497,506,595,621,602**
+Routine Name: IBCNEKIT
+    Before:B147072833   After:B164496028  **184,271,316,416,549,595,621,602**
+Routine Name: IBCNERP3
+    Before: B79824613   After:B102128247  **184,271,416,528,602**
+Routine Name: IBCNERPD
+    Before:B110303722   After:B126523871  **184,252,416,521,528,595,602**
+Routine Name: IBCNEUT5
+    Before: B63252821   After: B65444390  **184,284,271,416,621,602**
+Routine Name: IBCNSMM
+    Before: B19301339   After: B19438322  **103,133,184,516,601,595,602**
+Routine Name: IBCNSMM1
+    Before: B27818840   After: B27788048  **103,359,497,602**
+Routine Name: IBCNSMM2
+    Before: B16871457   After: B15234233  **103,133,602**
+Routine Name: IBCNSP
+    Before: B77034837   After: B77777224  **6,28,43,52,85,251,363,371,
+                                           416,497,516,528,549,602**
+Routine Name: IBCNSUR
+    Before: B24782605   After:B131418993  **103,276,506,516,549,602**
+Routine Name: IBCOC1
+    Before: B21404907   After: B24512676  **528,602**
+Routine Name: IBCOMD1
+    Before: B27677991   After: B37249446  **103,528,602**
+Routine Name: IBCOMN1
+    Before: B14298599   After: B18271189  **103,528,602**
+Routine Name: IBY602PO
+    Before:       n/a   After: B43687115  **602**
+ 
+Routine list of preceding patches: 621
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 17, 2017
+Completed By:                               Date Completed: MAR 20, 2019
+Released By :                               Date Released : MAR 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

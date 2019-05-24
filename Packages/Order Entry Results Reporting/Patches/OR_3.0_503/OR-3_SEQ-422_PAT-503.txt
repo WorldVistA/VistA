@@ -1,0 +1,185 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/23/19 at 18:22
+=============================================================================
+Run Date: APR 15, 2019                     Designation: OR*3*503
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #422                      Status: Released
+                  Compliance Date: MAY 16, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*332    <<= must be installed BEFORE `OR*3*503'
+                    (v)OR*3*350    <<= must be installed BEFORE `OR*3*503'
+
+Subject: OE/RR NOTIFICATONS (#100.9) FILE INDEX REBUILD AND LAB VBECS MODIFIER ISSUE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch addresses two (2) issues:
+  
+ 1. INC3314429 - "C" index issue
+ 2. INC4023164 - Lab VistA Blood Establishment Computer Software (VBECS) 
+ Modifier Issue
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ HITPS-6471 (INC4023164 - Lab VBECS Modifier Issue)
+  
+  
+ Blood Bank Review:
+ ------------------ 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3.0*503 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch OR*3.0*503 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.  INC3314429 - "C" index, which contains only the PACKAGE ID (#.02)
+ field, in the OE/RR NOTIFICATIONS (#100.9) file contains entries for the
+ NAME (#.01) field.
+  
+     Problem:
+     -------
+     During the investigation of INC3314429 it was questioned why the old
+     NAME was still in the "C" index after the NAME was changed (by patch
+     OR*3.0*350).  The "C" index only contains the PACKAGE ID (#.02) 
+     field. It was found that there should not be a "C" index for
+     the NAME (#.01) field.  This may have been leftover from original
+     development.  There is no data definition that associates the NAME 
+     (#.01) field with the "C" index.  The only issue this may cause is
+     that the old NAME could be entered when looking up notifications which
+     would find the record for the new name.
+  
+     Resolution:
+     -----------
+     This patch saves off the current "C" index for OE/RR  
+     NOTIFICATIONS(#100.9) file then deletes and rebuilds it.  This is
+     accomplished by use of a post install routine (ORPS503).
+  
+  
+  
+ 2.  INC4023164 - Lab VBECS Modifier Issue
+  
+     Problem:
+     -------
+     If the first component during a Computerized Patient Record 
+     System (CPRS) VBECS ordering session has a modifier
+     but any subsequent component(s) do not, the subsequent component(s)
+     will be filed with the first component's modifier.
+  
+     Resolution:
+     ----------
+     Modify routine ORCSEND2 to not file a modifier for a VBECS component
+     if one was not specified by the user during the CPRS ordering session.
+  
+ NOTE: An additional CPRS VBECS modifier issue will be addressed in 
+       OR*3.0*405 (CPRS version 32) under ticket INC3435911.  This issue 
+       involves the fact that if a component which has a modifier is
+       removed during the CPRS VBECS ordering session, modifiers will be
+       deleted from all components.  Since the resolution requires a 
+       Graphical User Interface (GUI) change, the resolution must be
+       included in OR*3.0*405.
+  
+ Test Sites:
+ -----------
+ Richard L. Roudebush VAMC (Indianapolis)
+ Milwaukee VAMC
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 1 minute to complete.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following 
+    options.  When prompted for INSTALL NAME, enter the patch OR*3.0*503.
+          
+    a. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is
+       installed.  It compares all components of this patch routines, DDs,
+       templates, etc.
+    b. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+    c. Backup a Transport Global - This option will preserve a copy of the 
+       routine exported in this patch prior to installation.  
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install (OR*3.0*503).
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?', enter 
+    "NO".
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols?', enter "NO".
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+  
+ INC3314429 Back-out:
+ -------------------- 
+ The index being rebuilt is saved to a XTMP global by the post install 
+ routine, ORPS503. If there is a need to restore the "C" index, contact the
+ help desk and request help restoring it.
+  
+ INC4023164 Back-out:
+ --------------------
+ The routine ORCSEND2 may be restored from the backup MailMan message 
+ which was created during patch install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSEND2
+    Before: B33762828   After: B33928599  **212,332,503**
+Routine Name: ORPS503
+    Before:       n/a   After:   B944446  **503**
+ 
+Routine list of preceding patches: 332
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 11, 2019
+Completed By:                               Date Completed: APR 12, 2019
+Released By :                               Date Released : APR 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

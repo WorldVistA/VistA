@@ -1,0 +1,231 @@
+$TXT Created by             R at TAS-EPHM-DEV.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 02/12/19 at 08:57
+=============================================================================
+Run Date: MAR 19, 2019                     Designation: BPS*1*25
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #23                      Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+Associated patches: (v)BPS*1*24    <<= must be installed BEFORE `BPS*1*25'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 7 & 8
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*25
+  
+  
+ This patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. The system will be updated to support new and modified data
+      elements from the National Council for Prescription Drug Programs
+      (NCPDP) Implementation Guide versions published through July 2018.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ BPS NCPDP RESULT OF SERVICE CODE (#9002313.22)              Modified
+  
+ BPS NCPDP REASON FOR SERVICE CODE (#9002313.23)             Modified
+  
+ BPS NCPDP CLARIFICATION CODES (#9002313.25)                 Modified
+  
+ BPS NCPDP PATIENT PAY COMPONENT QUALIFIER (#9002313.37)     Modified
+  
+ BPS NCPDP REJECT CODES (#9002313.93)                        Modified
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                  File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+ Additional Information:
+  
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ LEXINGTON VAMC-LEESTOWN (596)
+ HUNTER HOLMES MCGUIRE HOSPITAL - RICHMOND (652)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at:  https://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ ECME Deploy Install Rollback Guide (BPS*1*25)
+                                        BPS_1_0_P25_IG.PDF       Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ There is a pre-install routine associated with this patch named
+ EN^BPS25PRE. The purpose of the pre-install routine is to update
+ the description of one reject code in file# 9002313.93, BPS NCPDP
+ REJECT CODES.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch should take less than 2 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+  1.  Choose the PackMan message containing this patch. 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following option.  When prompted for the INSTALL enter the patch
+      identifier (BPS*1.0*25).
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//', enter NO.
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', enter NO.
+  
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', enter NO. 
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  9.  When prompted 'Device: HOME//', respond with the correct device.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ None.
+  
+ Back-Out Plan:
+ --------------
+ For a description of how to back-out this patch, please refer to the
+ ECME Deploy Install Rollback Guide listed above (BPS_1_0_P25_IG.PDF).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS25PRE
+    Before:       n/a   After:  B2359215  **24**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2018
+Completed By:                               Date Completed: MAR 19, 2019
+Released By :                               Date Released : MAR 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,216 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: XU*8*642
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #520                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)XU*8*580    <<= must be installed BEFORE `XU*8*642'
+                    (v)XU*8*605    <<= must be installed BEFORE `XU*8*642'
+                    (v)XU*8*609    <<= must be installed BEFORE `XU*8*642'
+
+Subject: KERNEL SUPPORT FOR ePCS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow-up to the release of the Drug Enforcement Agency
+ (DEA) e-Prescribing of Controlled Substances (CS) (ePCS) using Public Key
+ Infrastructure (PKI). Several issues were identified with the initial 
+ release. 
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 04/17/14
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*642 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*642 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+  
+  INC0000000854377 DEA# Expiration Date Not Being Checked
+  INC0000000894144 Infinite Loop
+  (no number) Issues with the provider validation reports
+  
+ 1. INC0000000854377 DEA# Expiration Date Not Being Checked
+  
+ Problem:
+ -------
+ VistA stores the facility/institutional DEA# and DEA EXPIRATION DATE in 
+ fields 53.2 and 747.44 of the NEW PERSON file (#200), but the expiration 
+ date for the facility DEA # is not checked when the provider's DEA# is
+ invalid, but a VA # exists.
+  
+ Resolution:
+ ----------
+ Modified the VA# validation in the API $$DEA^XUSER() to appropriately
+ evaluate the facility DEA# expiration date, and return a null value
+ instead of the DEA# when the DEA# is expired.
+  
+ 2. INC0000000894144 Infinite Loop
+  
+ Problem:
+ -------
+ Tag HELO in XUSC1C fails to terminate if CREAD^XUSC1S does not return 
+ data. The last loop will continue on forever (infinite loop) even if 
+ there is an error trapped.
+  
+ Resolution:
+ ----------
+ Added a loop counter in HELO^XUSC1C to break the loop if CREAD^XUSC1S 
+ fails to return data. In addition, the hard coded string comparison of IP 
+ addresses was replaced with the usage of a supported Application 
+ Program Interface call.
+  
+ 3. (no number) Issues with the provider validation reports
+  
+ Problem:
+ -------
+ The provider configuration reports were not accurately reporting the 
+ providers whose DEA # was expired, but they had a VA # on file.
+  
+ Resolution:
+ ----------
+ The API $$VDEA^XUSER was modified to return those users with no valid DEA
+ number (none on file, or expired expiration date) and a valid VA number as
+ valid DEA prescribers. The API was also changed to highlight those users
+ who are grandfathered, since grandfathering will be removed at some point
+ in the future.
+  
+  
+ Test Sites:
+ ----------
+ Jerry L. Pettis Memorial VA Medical Center - Loma Linda, CA (Site 605)
+ Louis Stokes VA Medical Center, Cleveland OH (Large, Site 541)
+ VA Heartland-West HCS, Kansas City, MO (Integrated, Site 589)
+ VA Heartland-East HCS, St. Louis, MO (Integrated, Site 657)
+ VA Palo Alto HCS, Palo Alto, CA (Integrated, Site 640)
+ VA San Diego HCS, San Diego, CA (Large, Site 664)
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ There were no Kernel documentation updates as a result of this patch. 
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSC1C
+    Before:  B8383983   After:  B9026863  **283,580,642**
+Routine Name: XUSER
+    Before: B48065845   After: B53243847  **75,97,99,150,226,267,288,330,
+                                           370,373,580,609,642**
+ 
+Routine list of preceding patches: 609
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 17, 2014
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

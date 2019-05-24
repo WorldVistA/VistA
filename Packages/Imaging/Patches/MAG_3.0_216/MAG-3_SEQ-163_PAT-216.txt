@@ -1,0 +1,441 @@
+
+=============================================================================
+Run Date: OCT 30, 2018                     Designation: MAG*3*216
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #163                      Status: Released
+                  Compliance Date: NOV 30, 2018
+=============================================================================
+
+
+Subject: Clinical Display Issues
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*188.
+  
+ Subject: CLINICAL DISPLAY ISSUES
+ ========
+  
+ Category: OTHER
+ =========
+  
+ Description:
+ ============
+ MAG*3.0*216 will resolve the Clinical Display Issue with Fee Basis Claims 
+ System (FBCS). After MAG*3.0*191 was installed at the sites, the users of 
+ the FBCS software started reporting errors. The 
+ C:\windows\Syswow64\tabctl32.ocx file that was deployed with the FBCS
+ application had to be re-registered. Additionally, some of the help 
+ screens in Clinical Display are displaying an error when the application 
+ is running on Windows 10.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 216_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P216_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software:
+ =========
+ File Name                                 Description
+ =========                                 ===========
+ MAG3_0P216.KID                            Kernel Installation and
+                                           Distribution System (KIDS) build
+                                           for Patch 216
+ MAG3_0P216_Clinical_Display_Setup.exe     Clinical Display client
+                                           installation file.
+ MAG3_0P216_CLINICAL_DISPLAY_INSTALL.MSI   Clinical Display push 
+                                           installation file.
+ MAG3_0P216_Patch_Description.pdf          Patch Description for P216
+  
+ Documentation:
+ ==============
+ This document, MAG3_0P216_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ ==========================
+ There are no forms associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch.  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1. Defect 750211 (Trouble Ticket INC0665500) FBCS Software Corruption
+ Problem:  
+ ========
+ MAG*3.0*216 will resolve the Clinical Display Issue with Fee Basis Claims 
+ System (FBCS). After MAG*3.0*191 was installed at the sites, users of the 
+ FBCS software started reporting errors. The errors in FBCS state the 
+ following:
+ Error #339(Component 'tabctl32.ocx' or one of its dependencies not 
+ correctly registered: a file is missing or invalid.)
+ The C:\windows\Syswow64\tabctl32.ocx file that was deployed with the FBCS 
+ application had to be re-registered. 
+  
+ Resolution: 
+ ===========
+ The installation of this patch will re-register the ocx file if needed. 
+ When the Clinical Display installer runs, an internal flag will be set if 
+ the C:\program files (x86)\vista\imaging\muse\tabctl32.ocx file exists 
+ (i.e. there is a version of Clinical Display installed that includes the 
+ C:\program files (x86)\vista\imaging\muse directory). Then after the 
+ Clinical Display installer has finished, an automatic post install action 
+ will re-register C:\windows\Syswow64\tabctl32.ocx if it exists and the 
+ internal flag has been set. If the flag has not been set or 
+ C:\windows\Syswow64\tabctl32.ocx does not exist then no attempt will be 
+ made to re-register C:\windows\Syswow64\tabctl32.ocx.
+  
+ 2. Defect 802092/815665 - Several of the help menu links are displaying an
+ error when running on the Windows 10 operating system
+  
+ Problem:  
+ ========
+ When running Clinical Display on Windows 10 operating system, the 
+ following help menu options are displaying the error when selected: Error 
+ opening Help in Windows-based programs: "Feature not included" or "Help 
+ not supported". 
+ On the System Manager Help Menu
+         System Manger Help
+         Screen Settings
+         Image Delete Help Screen
+ On the Image Delete Window Help Menu
+         Image Delete Window
+  
+ Resolution:  
+ ===========
+ The application has been fixed to provide an option to view the VistA 
+ Imaging Display User Guide which has all the help information in it. The 
+ menu items that were not working were removed.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+         VA Boston Health Care System 
+         VA Southern Nevada HCS (Las Vegas)
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location        Site
+ ========        ====
+ Hines           domain.ext 
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*216 is released, the list of supported versions of Clinical 
+ Display will change to the following:
+  
+ Supported Versions      No Longer Supported 
+ ==================      ===================
+ 3.0.216                 3.0.130 
+ 3.0.188                 3.0.149 
+ 3.0.191                 3.0.131 
+ 3.0.181                 3.0.122 
+ 3.0.167                 3.0.117 
+ 3.0.161                 3.0.106
+                         3.0.94
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*216 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+       system before installing MAG*3.0*216.
+  
+ VistA System (KIDS) Installation Instructions 
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and 
+    Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+       load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P216.KID) of 
+       the Patch 216 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A 
+       Distribution OK! message will be displayed when the load is
+       complete.
+ 4. After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+       want to create a backup message of any routines exported with the
+       patch.
+       It will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter "MAG*3.0*216".
+    c. Answer "NO" to the following prompts:
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 6.      When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time. If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+ Select Installation <TEST ACCOUNT> Option: install Package(s)
+ Select INSTALL NAME:  MAG*3.0*216  7/5/18@16:13:49
+    => VistA Imaging V3 - Patch 216  - Display install  ;Created on Jul 
+ 05, 2018@
+ 15:45:05
+  
+ This Distribution was loaded on Jul 05, 2018@16:13:49 with header of
+   VistA Imaging V3 - Patch 216  - Display install  ;Created on Jul 05, 
+ 2018@
+ 15:45:05
+   It consisted of the following Install(s):
+   MAG*3.0*216
+ Checking Install for Package MAG*3.0*216
+  
+ Install Questions for MAG*3.0*216
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  HERE
+  
+  Running Pre-Install Routine: PRE^MAGIP216
+  
+  Running Post-Install Routine: POS^MAGIP216
+  
+ Post Install Mail Message: Jul 05, 2018@16:13:59
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*216 Installed.
+         Jul 05, 2018@16:14
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+  100%
+ Complete
+  
+ Install Completed
+  
+  
+ VistA Imaging Clinical Display Client Installation Instructions
+ ===============================================================
+ The Clinical Imaging Display client software can be updated using one of 
+ the methods outlined below:
+         Manual installation
+         Automatic installation using other methods (SMS, PSexec, etc.).
+ Note: The Clinical Display Application is only supported on  Windows 7 
+       and 10 operating systems; other operating systems are not officially
+       supported.
+ Clinical Display is distributed with an MSI and EXE installation. The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool). The EXE is intended for use to install on a single 
+ workstation. 
+ After client installation is complete, log in to an updated workstation 
+ and use the Help | About menu option to verify that the version number is 
+ 3.0.216.1.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P216_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging System Installation Guide.
+  
+ Automatic Installation
+ ======================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Back Out Plan 
+ =============
+ KIDs Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*216 VistA KIDS, select the 
+ "Kernel Installation & Distribution System" menu option, "Backup a
+ Transport Global". (See Installation Steps section, Step 4c; this must be 
+ done before the patch is installed).
+ Administrators will need to use the PackMan function INSTALL/CHECK
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1. Select the message shown below:
+    Backup of MAG*3.0*216 install on <mmm dd, yyyy>  <user name>
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt. There is no need to back up the 
+    backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2   Message #43934   Unloading Routine  MAGBRTE4 (PACKMAN_BACKUP)
+ Line 249 Message #43934   Unloading Routine  MAGQBUT4 (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Uninstalling Clinical Display Client MAG*3.0*216
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*216 client, use the Uninstall 
+ option from Programs and Features within Windows Control Panel to 
+ Uninstall: "VistA Imaging Clinical Display".
+  
+ Then install the previous version of Clinical Display which was included 
+ in MAG*3.0*188.
+  
+ Routine Information:
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 1;Feb 15, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum      Checksum        Patch List
+                 Before        After
+ MAGGTU4D        5740596       5541945         **93, 94, 106, 117, 122, 
+                                               131, 149, 138, 156, 161,
+                                               167, 181,191, 188, 216**
+ MAGIP216        NA            4197285         **216**
+  
+ Routine MAGIP216 is an installation routine that is automatically deleted
+ after the KIDS installation. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 64;Jul 5, 2018
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTU4D
+    Before:  B5740596   After:  B5541945  **93,94,106,117,122,131,149,
+                                           138,156,161,167,181,191,188,
+                                           216**
+Routine Name: MAGIP216
+    Before:       n/a   After:  B4197285  **216**
+ 
+Routine list of preceding patches: 188
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 15, 2018
+Completed By:                               Date Completed: OCT 18, 2018
+Released By :                               Date Released : OCT 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

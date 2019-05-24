@@ -1,0 +1,164 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/02/19 at 10:38
+=============================================================================
+Run Date: MAR 27, 2019                     Designation: PSJ*5*382
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #328                      Status: Released
+                  Compliance Date: APR 27, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*254   <<= must be installed BEFORE `PSJ*5*382'
+
+Subject: COMPLEX CLINIC ORDER DISPLAYS AS IP MED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following Inpatient Medications issue.
+  
+ INC3249148 - Clinic order is displaying as an inpatient medication when 
+ user edits the order
+      
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------------------------
+ INC3249148 - Clinic order is displaying as an inpatient medication when 
+ user edits the order
+           
+ Problem: 
+ ------------
+ When a user enters a complex order as a clinic order for an outpatient 
+ and edits a part (child) of the order after finishing that part of the 
+ order, the order displays as an inpatient medication instead of 
+ displaying as a clinic order.
+      
+ Resolution:
+ ---------------
+ When a part of a clinic complex order is edited, a new order for that 
+ part of the order is created and the data that identifies an order as a 
+ clinic order is not copied over to the new order. In order to remedy 
+ this, the data that identifies the order as a clinical order is now 
+ copied from the original edited order to the newly created order so that 
+ the clinic order will be displayed as a clinic order and not as an 
+ inpatient medication order.
+   
+ Technical Resolution:
+ ---------------------
+ Modified api CHK+43^PSJOEA1 to copy the value of the "DSS" sub node in 
+ the scratch global ^TMP of the edited part (child) of the original order 
+ to the newly created order's "DSS" entry of ^TMP.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ HITPS-6451  
+         
+ Test Sites:
+ -----------
+ Northern Indiana HCS
+ New Orleans VAMC 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installtion and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSJ*5.0*382):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;[DATE];[BUILD NUMBER] 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJOEA1
+    Before: B29816523   After: B31393636  **110,127,133,171,254,382**
+ 
+Routine list of preceding patches: 254
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 24, 2018
+Completed By:                               Date Completed: MAR 27, 2019
+Released By :                               Date Released : MAR 27, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

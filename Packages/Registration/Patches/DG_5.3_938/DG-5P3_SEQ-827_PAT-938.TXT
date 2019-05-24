@@ -1,0 +1,129 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/08/17 at 11:47
+=============================================================================
+Run Date: AUG 01, 2017                     Designation: DG*5.3*938
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #827                    Status: Released
+                  Compliance Date: SEP 01, 2017
+=============================================================================
+
+Associated patches: (v)DG*5.3*508  <<= must be installed BEFORE `DG*5.3*938'
+
+Subject: ADD PROVINCE, POSTAL CODE AND COUNTRY FOR FOREIGN ADDRESS A01
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*938 addresses an issue with foreign address information not
+ being sent in the Patient Identification (PID) segment in the A01 event
+ Health Level Seven (HL7) messages.
+  
+  
+ ASSOCIATED CA TICKET: 
+ =====================
+ 1) R12079614FY17 - Foreign address information not sent from Registration
+                    on HL7 A01 PID segment.
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ West Palm Beach VAMC
+ VA Maryland HCS
+  
+   
+ CA TICKET OVERVIEW:
+ ===================
+ 1) R12079614FY17 - Foreign address information not sent from Registration 
+                    on HL7 A01 PID segment.
+  
+    Problem:
+    -------- 
+    Application Programming Interfaces (APIs), $$EN^VAFCPID and 
+    $$EN^VAFHLPID, were not designed to check if a patient's permanent 
+    address is foreign and to send province, postal code, and country
+    if it is foreign. HL7 A01 event PID segments for foreign addresses
+    are sending blank province, postal code and country.
+  
+    Resolution:
+    -----------
+    Routine VAFHLPI2 has been modified to send province, if state is blank,
+    to send postal code, if zip code is blank and to send country, if
+    country is not UNITED STATES.
+    
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options (when
+        prompted for INSTALL NAME, enter DG*5.3*938).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+     4. Use the Install Package(s) option and select the package DG*5.3*938
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//" respond YES.
+   
+        When prompted, 'Enter options you wish to mark as 'Out Of 
+        Order':', enter:
+              
+                   Admit a Patient  [DG ADMIT PATIENT]
+                   
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out Of
+        Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VAFHLPI2
+    Before: B10042427   After: B11770332  **508,938**
+ 
+Routine list of preceding patches: 508
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 01, 2017
+Completed By:                               Date Completed: JUL 28, 2017
+Released By :                               Date Released : AUG 01, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

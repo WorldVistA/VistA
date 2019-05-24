@@ -1,0 +1,229 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 08/24/18 at 11:41
+=============================================================================
+Run Date: FEB 05, 2019                     Designation: RMPR*3*198
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #174                      Status: Released
+                  Compliance Date: MAR 08, 2019
+=============================================================================
+
+Associated patches: (v)RMPR*3*182  <<= must be installed BEFORE `RMPR*3*198'
+                    (v)RMPR*3*193  <<= must be installed BEFORE `RMPR*3*198'
+
+Subject: INSTITUTION IEN FOR DISCONTINUED CONSULT; FIXES PURGED RECONCILED ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. An undefined error occurs when an Institution Internal 
+ Entry Number (IEN) for discontinued Inter-Facility Consults (IFC) is 
+ missing.
+  
+ 2. An undefined error occurs when an order is attempted to be Reconciled,
+ but the PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) file has been purged
+ for the order.
+  
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                             N/A                   N/A
+ Forms Associated:
+  
+ Form Name    File #    New/Modified/Deleted
+ ---------    ------    --------------------
+ N/A          N/A      N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1531325 - <UNDEFINED>F+2^DIED *RMPRSITIEN
+                   
+    Problem:
+    --------
+    When an Inter-Facility Consult (IFC) Subscriber Protocol (GRMC IFC
+    SUBSC) is triggered, an undefined error is received when a Prosthetics
+    Inter-Facility Consult (IFC) is discontinued. This error occurs
+    because the Internal Entry Number (IEN) is not defined.
+  
+    Resolution:
+    -----------
+    Routine RMPRFC3 has been modified so value for the institutions IEN is 
+    being set to the correct value prior to the use. The institutions IEN 
+    will be used for both New and Discontinued Inter-Facility Consults.
+  
+  
+ 2. INC1880108 - UNDEFINED>RECON+4^PRCH7C ^PRC(442
+                   
+    Problem:
+    --------
+    An undefined error is being received when a Prosthetics Reconcile/Close
+    Out Purchase Card Transaction [RMPR4 CLOSE OUT] menu option,
+    is attempted, but the Purchase Order in the PROCUREMENT & ACCOUNTING
+    TRANSACTIONS (#442) file has been purged.
+    
+  
+    Resolution:
+    -----------
+    The routine RMRR4E21 has been modified so the PROCUREMENT & 
+    ACCOUNTING TRANSACTIONS (#442) file is checked prior to a Reconcile 
+    on an order. A message will appear to inform the user the Purchase
+    Order does not exist in file so it cannot be Reconciled.
+  
+ Test Sites:
+ ----------
+ Orlando VAMC
+ VA Maryland HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter RMPR*3.0*198).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*198
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond NO.
+   
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+         Reconcile/Close Out Purchase Card Transaction   [RMPR4 CLOSE OUT]
+  
+       2) When prompted  "Enter protocols you wish to mark as 'Out Of
+            Order': just press <RETURN>.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed-up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR4E21
+    Before: B64344678   After: B67777687  **3,12,26,28,30,34,41,45,62,
+                                           111,78,114,118,133,137,182,198**
+Routine Name: RMPRFC3
+    Before:  B5993521   After:  B6817594  **83,193,198**
+ 
+Routine list of preceding patches: 182, 193
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 01, 2018
+Completed By:                               Date Completed: FEB 04, 2019
+Released By :                               Date Released : FEB 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,231 @@
+$TXT Created by ROCHA,MARCELO at CMNT.DOMAIN.EXT  (KIDS) on Friday, 09/25/15 at 16:58
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: IB*2*545
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #517                      Status: Released
+                  Compliance Date: AUG 06, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*176    <<= must be installed BEFORE `IB*2*545'
+
+Subject: GREATER THAN 90 DAYS SUPPLY ENHANCEMENT 
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Pharmacy Safety Updates project which was 
+ established to address specific New Service Requests (NSRs) as well as 
+ Remedy Ticket(s) and a Patient Safety Issue (PSI) related to the VistA
+ Pharmacy applications as approved by the Health Systems Enterprise Systems
+ Manager(ESM).
+  
+ This project is comprised of patches from five different applications, as
+ shown below:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+    INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  
+  
+ The following New service Requests (NSR) are related to this patch:
+  
+  NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+  ---------------------------------------------------------------------------
+  The Outpatient Pharmacy and supporting VistA applications are being modified
+  to allow dispensing of more than 90 day supply fill for outpatient 
+  prescriptions. The new limit will be 365 days and will be set for each drug
+  individually. See below for more information on specific menu 
+  options related to this enhancement.  
+  
+  NSR 20110308 Addition of a STRENGTH Property to IV ADDITIVES and Premixed 
+               IV SOLUTIONS
+  ----------------------------------------------------------------------------
+  Although patches PSJ*5*289 and PSS*1*174 introduced quite a few enhancements
+  to the IV Additives and IV Solutions ordering functionality they did not go
+  far enough in addressing all the issues originally in the NSR. Patches 
+  PSJ*5*313 and PSS*1*189 will extend the display of the IV Additive strength
+  to other parts of the Inpatient Medications and Pharmacy Data Management 
+  applications. In addition, it will also impose a new rule where an Orderable
+  Item can only have one IV Solution for a specific volume when it is marked
+  to be used in the CPRS IV Fluid Order Entry. 
+    
+ The following Integrated Billing copay functionality was modified:
+   
+ 1. Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD CHARGES] option
+    This menu option was modified to allow up to 12 copay units to be added
+    for a patient. Before the maximum limit was 3, given that 90 days supply
+    corresponded to 3 copay units (1 unit for each 30 days supply)
+   
+ 2. The upper limit for the value allowed for the DAYS SUPPLY field (#.06) in
+    the IB BILL/CLAIMS PRESCRIPTION REFILL file (#362.4) was changed from 90
+    to 365 in order to accommodate the new limit for this field in the
+    Outpatient Pharmacy application.
+  
+    
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)        Field Name (#)                       New/Modified/Deleted
+ ------------------   --------------------------------     --------------------
+ IB BILL/CLAIMS PRESCRIPTION REFILL (#362.4)         
+                      DAYS SUPPLY (#.06)                   Modified
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name        Type    File Name (#)                New/Modified/Deleted
+ -------------        -----   -------------------------    --------------------
+ N/A  
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ 20060601
+ 20111206
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A  
+  
+  
+ TEST Sites:
+ ===========
+ LOUISVILLE, KY
+ NEW YORK HARBOR HCS
+ HEARTLAND EAST
+      
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ No documentation associated with this patch.
+   
+  
+ Patch Installation: 
+  
+ Pre Installation Overview
+ --------------------------
+ This project is comprised of patches from five different applications as 
+ listed here.  The patches will get released together and the suggested 
+ installation order is as shown.  
+  
+ An installation guide released with patch PSS*1*189, discusses the 
+ installation process as PSS*1*189 is the patch that must be installed 
+ first.
+  
+  APPLICATION/VERSION                                  PATCH
+  -----------------------------------------------------------------
+  PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+  OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+  INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+  NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+  INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  -----------------------------------------------------------------
+  
+ Post Installation Overview
+ --------------------------
+ N/A
+  
+     
+ Installation Instructions
+ -------------------------
+ Although this installation will not take much time, it is recommended 
+ that it be installed overnight to prevent any disruption of service to 
+ other users.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter IB*2.0*545).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package IB*2.0*545.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBECEAU2
+    Before: B20338819   After: B20399416  **7,52,153,176,545**
+ 
+Routine list of preceding patches: 176
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

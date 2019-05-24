@@ -1,0 +1,726 @@
+$TXT Created by                 at TAS-EBIL-HF2.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 02/27/19 at 11:25
+=============================================================================
+Run Date: APR 08, 2019                     Designation: IB*2*608
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #583                      Status: Released
+                  Compliance Date: MAY 08, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*592    <<= must be installed BEFORE `IB*2*608'
+                    (v)IB*2*621    <<= must be installed BEFORE `IB*2*608'
+
+Subject: MCCF EDI TAS EBILLING BUILD 5/6
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Integrated Billing (IB) is a software module within Veterans Health
+ Information Systems and Technology Architecture (VistA) that provides
+ the ability for billing personnel to submit claims in either a paper or
+ electronic format to third-party payers.
+  
+ The following features of the IB software will be affected by this 
+ patch:
+  
+    * Transmitting SNF Claims with Appropriate Revenue Codes
+  
+      The IB VistA package has been modified to send Revenue Code 0022
+      and VA specific AAA00 RUG/Health Insurance Prospective Payment 
+      System (HIPPS) Skilled Nursing Facility (SNF) rate codes for
+      Medicare Primary Institutional Part A claims with bill types 21x,
+      22x or 23x. Due to this modification, the System will no longer use
+      the Financial Service Center (FSC) workaround.  Instead, the System
+      now has the ability to perform the identical checks that FSC used to
+      ensure that these SNF claims are sent. The System automatically
+      allows for this in the transmission of the flat file so that the
+      biller does not have to enter anything additional to have this
+      information transmitted.  In addition, the VistA flat file for
+      Institutional 837s has been updated and the "View/Print EDI Bill
+      Extract Data" [IBCE EDI VIEW/PRINT EXTRACT] (VPE) option screens
+      depict the change in the flat file for the end user to view in the
+      INS segment.
+  
+    * Add 'T' for Transmitted to RCB Screen
+  
+      The IB VistA package has been modified to be enable the user to see
+      "** T = Test Claim" (to explain what the "T" indicator represents)
+      in the legend of the "View/Resubmit Claims - Live or Test" [IBCE
+      PREV TRANSMITTED CLAIMS] (RCB) option screen when viewing previously
+      Printed claims.
+  
+    * Remove Ability to Define Insurance Company as non-EDI
+  
+      The IB VistA package has been modified so the "Insurance Company
+      Entry/Edit" [IBCN INSURANCE CO EDIT] (EI) option no longer provides
+      the user the ability to select "0 - NO" as an option for "EDI -
+      Transmit?" prompt under the EDI Parameters section of the screen.
+      In addition, a one-time report from each site showing the value of
+      the field to determine whether an Insurance Company is active for
+      Electronic Data Interchange (EDI) will be sent to the eBiz Rapid
+      Response group.
+  
+    * RCB Screen - Match COB Data to Payer Sequence
+  
+      The IB VistA package has been modified to be enable the user to
+      resubmit, to the Test queue, a claim using the "View/Resubmit Claims
+      - Live or Test" [IBCE PREV TRANSMITTED CLAIMS] (RCB) option and have
+      only the Coordination of Benefits (COB) data that is correct for the
+      payer sequence be included in the transaction.
+      If a user selects:
+         o  a Primary claim to resubmit and the claim has received an
+            EOB/MRA from the primary payer, VistA will not send the COB
+            data from the EOB/MRA and the amount billed will not be offset
+            by previous payments from the primary payer.
+         o  a Secondary claim to resubmit and the claim has received an
+            EOB/MRA from the secondary payer, VistA will not send the COB
+            data from the EOB/MRA and the amount billed will not be offset
+            by previous payments from the secondary payer.
+         o  a Tertiary claim to resubmit and the claim has received an
+            EOB/MRA from the tertiary payer, VistA will not send the COB
+            data from the EOB/MRA and the amount billed will not be offset
+            by previous payments from the tertiary payer.
+      If a user attempts to resubmit a claim(s) with EOB data in VistA to
+      the Production queue, the system will filter out the claim(s) and
+      not transmit it.  These non-transmitted claims will be listed on the
+      screen as "Skipped".
+  
+    * Non-MCCF Unbilled Amounts Report
+  
+      The IB VistA package has been modified so the "Re-Generate
+      Unbilled Amounts Report" [IBT RE-GEN UNBILLED REPORT] option now
+      allows the user to select the following additional search criteria:
+           (M)CCF, (N)on-MCCF (Outpatient Only), or (B)oth claims
+      Non-MCCF Rate Types include: CHAMPVA, CHAMPVA Reimb. Ins., TRICARE,
+      TRICARE Reimb. Ins., Interagency, Sharing Agreement and Ineligible.
+      Non-MCCF Appointment Types include: Employee and Sharing Agreement.
+      Non-MCCF Eligibility of Encounters include: CHAMPVA, TRICARE,
+      Employee, Ineligible and Sharing Agreement.
+  
+    * Non-MCCF Pay-To Address Rate Types
+  
+      The IB VistA package has been modified to allow the user to be able
+      to define one or more Rate Types for which the non-MCCF Pay-to
+      Address (formerly the TRICARE Pay-to Address) will be used on claims
+      with one of those Rate Types.  In addition, the following items are
+      capable:
+         o  An authorized user with access to the IB Site Parameters and
+            the TRICARE Pay-to security key will be able to add/delete
+            a Rate Type for which claims with that Rate Type will use the
+            non-MCCF Pay-to Address data.
+         o  The System will use the non-MCCF Pay-to Address data on claims
+            with specified Rate Types only when the non-MCCF Pay-to
+            Address is not exactly the same as the Billing Provider Name
+            and Address.
+         o  The System will transmit the TRICARE Pay-to Address data on
+            claims with specified Rate Types in the 837-I, 837-P or 837-D
+            when the non-MCCF Pay-to Address is not exactly the same as
+            the Billing Provider Name and Address.
+         o  The System will print the non-MCCF Pay-to Address data on
+            Institutional claims with specified Rate Types on the UB04
+            form (FL2) when the TRICARE Pay-to Address is not exactly
+            the same as the Billing Provider Name and Address.
+         o  The System will print the non-MCCF Pay-to Address data on
+            Professional claims with specified Rate Types on the CMS
+            1500 form (Box 33) when the non-MCCF Pay-to Address is not
+            exactly the same as the Billing Provider Name and Address.
+  
+    * Remove Fatal Error - Rendering Provider CMS 1500
+  
+      The IB VistA package has been modified so that the previously fatal
+      error that prevented a biller from submitting a Professional Claim
+      with no Rendering Provider has been removed and instead now a
+      non-fatal warning message appears to the user when a Professional
+      Claim does not contain a Rendering Provider.
+  
+  
+    * CMN Oxygen and EPN Nutrition
+  
+      The IB VistA package has been modified to enable the "Enter/Edit
+      Billing Information" [IB EDIT BILLING INFO] option to enter the
+      required data for an Oxygen Certificate of Medical Necessity (CMN)
+      (CMS-484.3) or an Enteral and Parenteral Nutrition CMN (CMS-10126)
+      when completing a professional bill for Durable Medical Equipment
+      (DME). In addition, the ability to transmit Professional claims has
+      been modified to include the CMN data in the proprietary 837-P
+      Transaction to the Financial Services Center (FSC).
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ INSURANCE COMPANY (#36)                                   Modified
+                       TRANSMIT ELECTRONICALLY (#3.01)     Modified
+ IB ERROR (#350.8)                                         Data Only
+      Screen: I $$INCLUDE^IBY608PR(8,Y)
+ IB SITE PARAMETERS (#350.9)                               Modified
+   CMN CPT CODES sub-file (#350.916)                       New
+   NON-MCCF RATE TYPES FOR PTP sub-file (#350.928)         New
+   TRICARE PAY-TO PROVIDERS sub-file (#350.929)            Modified
+                       TC FACILITY (#.01)                  Modified
+                       TC NAME (#.02)                      Modified
+                       TC FEDERAL TAX NUMBER (#.03)        Modified
+                       TC TELEPHONE NUMBER (#.04)          Modified
+                       TC PARENT PAY-TO PROVIDER (#.05)    Modified
+                       TC STREET ADDRESS 1 (#1.01)         Modified
+                       TC STREET ADDRESS 2 (#1.02)         Modified
+                       TC CITY (#1.03)                     Modified
+                       TC STATE (#1.04)                    Modified
+                       TC ZIP (#1.05)                      Modified
+ IB DATA ELEMENT DEFINITION (#364.5)                       Data Only
+      Screen: I $$INCLUDE^IBY608PR(5,Y)
+ IB FORM SKELETON DEFINITION (#364.6)                      Data Only
+      Screen: I $$INCLUDE^IBY608PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                            Data Only
+      Screen: I $$INCLUDE^IBY608PR(7,Y)
+ BILL/CLAIMS (#399)                                        Modified
+   PROCEDURES sub-file (#399.0304)                         Modified
+                       CMN REQUIRED? (#23)                 New
+                       CMN FORM TYPE (#24)                 New
+                       CMN CERTIFICATION TYPE (#24.01)     New
+                       CMN PATIENT HEIGHT (IN) (#24.02)    New
+                       CMN PATIENT WEIGHT (LBS) (#24.03)   New
+                       CMN MONTHS DME EQUIP NEEDED         New
+                         (#24.04) 
+                       CMN DATE THERAPY STARTED (#24.05)   New
+                       CMN LAST CERTIFICATION DATE         New
+                         (#24.06) 
+                       CMN RECERTIFICATION/REVISN DT       New
+                         (#24.07) 
+                       CMN REPLACEMENT ITEM? (#24.08)      New
+                       CMN ABG PO2 (MMHG) (#24.1)          New
+                       CMN O2 SATURATION % (#24.102)       New
+                       CMN DT LAST ABG PO2 AND O2 SAT      New
+                         (#24.103) 
+                       CMN EDEMA DUE TO CHF PRESENT?       New
+                         (#24.104) 
+                       CMN COR PULMONARY HYPERTENSN?       New
+                         (#24.105) 
+                       CMN HEMATOCRIT > 56%? (#24.106)     New
+                       CMN PT CONDITION AT TEST TIME       New
+                         (#24.107) 
+                       CMN TEST CONDITIONS (#24.108)       New
+                       CMN PORTABLE O2 INDICATOR (#24.109) New
+                       CMN HIGHEST O2 FLOW RATE (#24.11)   New
+                       CMN LAST 4 LPM ABG PO2 (MMHG)       New
+                         (#24.111) 
+                       CMN LAST 4 LPM O2 SATURATION %      New
+                         (#24.113) 
+                       CMN DATE OF LAST 4 LPM TESTS        New
+                         (#24.114) 
+                       CMN EQUIPMENT/COST DESCRIPTION      New
+                         (#24.115) 
+                       CMN SM BOWEL ABSORPTION DOC?        New
+                         (#24.201) 
+                       CMN ENTERAL NUTRITION BY TUBE?      New
+                         (#24.202) 
+                       CMN PROCEDURE A CALORIES (#24.203)    New
+                       CMN PROCEDURE A (#24.204)           New
+                       CMN METHOD OF ADMINISTRATION        New
+                         (#24.205) 
+                       CMN DAYS PER WEEK ADMINISTERED      New
+                         (#24.206) 
+                       CMN SEVERE MALABSORPTION DOC?       New
+                         (#24.207) 
+                       CMN AMINO ACID (ML/DAY) (#24.208)   New
+                       CMN AMINO ACID CONCENTRATION %      New
+                         (#24.209) 
+                       CMN AMINO ACID PROTEIN (GM/DY)      New
+                         (#24.21) 
+                       CMN DEXTROSE (ML/DAY) (#24.211)     New
+                       CMN DEXTROSE CONCENTRATION %        New
+                         (#24.212) 
+                       CMN LIPIDS (ML/DAY) (#24.213)       New
+                       CMN ROUTE OF ADMINISTRATION         New
+                         (#24.214) 
+                       CMN LIPIDS (DAYS/WEEK) (#24.215)    New
+                       CMN LIPIDS CONCENTRATE % (#24.216)  New
+                       CMN PARENTERAL/ENTERAL/BOTH         New
+                         (#24.217) 
+                       CMN PROCEDURE B CALORIES (#24.218)  New
+                       CMN PROCEDURE B (#24.219)           New
+ CMN FORM TYPES (#399.6)                                   New
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+  
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBJP IB NON-MCCF PAY-TO PROVIDERS MENU                    New
+ IBJP IB NON-MCCF RATE TYPE ADD                            New
+ IBJP IB NON-MCCF RATE TYPE DEL                            New
+ IBJP IB NON-MCCF RATE TYPES                               New
+ IBJP IB NON-MCCF RATE TYPES MENU                          New
+ IBJP IB TRICARE PAY-TO PROVIDER ADD                       Modified 
+ IBJP IB TRICARE PAY-TO PROVIDER DEL                       Modified 
+ IBJP IB TRICARE PAY-TO PROVIDER DIVISIONS                 Modified 
+ IBJP IB TRICARE PAY-TO PROVIDER EDIT                      Modified 
+ IBJP IB TRICARE PAY-TO PROVIDERS MENU                     Deleted
+ IBJPS CMN CPT ADD                                         New
+ IBJPS CMN CPT DEL                                         New
+ IBJPS CMN CPT MENU                                        New
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBEDIT INS CO1     Input     INSURANCE COMPANY (#36)      Modified 
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ IBJP IB NON-MCCF   List                                   New
+ RATE TYPES                                                
+ IBJP IB TRICARE    List                                   Modified 
+ PAY-TO PROVS                                              
+ IBJPS CMN CPTS     List                                   New
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+  
+ 1. INC4006791 - The option to add a Dental Payer ID and address in the
+ Insurance Company Editor is missing. This is a VA wide issue.
+  
+ Problem:
+ -------
+ The option to add a Dental Payer ID and address in the Insurance Company 
+ Entry/Edit [IBCN INSURANCE CO EDIT] is missing. This is a VA wide issue.
+  
+ Resolution:
+ ----------          
+ Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT] which
+ was enhanced in IB*2.0*592 to support the addition of electronic 
+ dental claims, EDI X12 837D, was overwritten in error in a subsequent
+ patch and is being restored in order to prompt users for Dental Payer ID 
+ and address.
+  
+  
+ Test Sites:
+ ----------
+ Dublin
+ Martinsburg
+ Orlando
+ Tomah
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  
+  
+ https://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,     ib_2_0_p608_ig.pdf              Binary
+  Back-out/Rollback Guide (IB*2.0*608)
+ EDI User Guide                ib_2_0_p608_edi_ug.pdf          Binary
+ Integrated Billing (IB) V.2.0 ib_2_0_p608_tm.pdf              Binary
+  Technical Manual            
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Of note, included in this patch is a modification to line 2 in the routine
+ IBCU7 to correct the patch sequencing that was entered as part of the
+ IB*2.0*592 patch.  This change has no effect on the functionality of the
+ routine and was only made to correct the patch sequencing of line 2.
+  
+ *************************************************************************
+ *                          IMPORTANT NOTE                               *
+ *  In PRODUCTION, there is one **MANDATORY** pre-installation activity  *
+ *  associated with this install.                                        *
+ *                                                                       *
+ *  The IB Staff MUST empty the 837 extract/transmission queue PRIOR to  *
+ *  the installation of this patch.                                      *
+ *************************************************************************
+     
+ INSTRUCTIONS ON HOW TO EMPTY THE 837 EXTRACT TRANSMISSION QUEUE:
+ ===============================================================
+ The site Information Resource Management (IRM) MUST coordinate with the
+ Billing Department to ensure that the 837 extract/transmission queue is
+ empty. Once the Billing Department has completed the instructions, the 
+ Billing department is to inform IRM that the patch installation may 
+ proceed.
+    
+ The instructions to empty the queue are as follows:
+ Select the option: TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL TRANSMIT]
+     
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+     
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+      
+   Upon selecting this option, you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+     
+   You should select 'A' for ALL
+      
+ There are no other mandatory pre-installation activities associated with
+ this patch.
+ ------------------------------------------------------------------------
+    
+ The Pre-install routine (IBY608PR) will automatically do the following:
+  *     Add/Update entries used by the Forms Output Utility [IBCE OUTPUT 
+        FORMATTER].
+  *     Add new entries in IB ERROR file (#350.8).
+    
+ The Post-install routine (IBY608PO) will automatically generate the one-
+ time Insurance Company EDI Parameter Report and send an email to the
+ eBiz Rapid Response Group ("VHAeBillingRR@domain.ext").  This report will
+ list all of the insurance companies that have the current setting for
+ the Transmit Electronically parameter set to ZERO which equals 'NO'.
+  
+ In addition, the Post-install routine will automatically add 50 CPT
+ codes to the new CMN CPT CODE INCLUSION IB Site Parameter.  This list of
+ codes is a basis of those CPT codes to be referenced in processing
+ claims which contain CMN Oxygen EPN Nutrition data.  This list of CPT
+ codes can be maintained when accessing the IB Site Parameters.
+  
+ Routines IBY608PO and IBY608PR may be manually deleted by IT/IRM upon
+ completion of the installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2
+ minutes to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (i.e., IB*2.0*608):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Press return to accept the default of NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Press return to accept the default of NO.
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ 8,  At the Device prompt enter where you wish the Install messages to
+     print. You can queue the install by entering a 'Q' at the device
+     prompt. Enter a '^' to abort the install.
+  
+     DEVICE: HOME//
+   
+   
+ Backout Procedure:
+ ------------------
+ The Backout procedure of this patch will be performed only with the
+ concurrence and participation of the appropriate VA site/region
+ personnel. The decision to back out the patch will be a joint decision
+ between VA site/region personnel and other appropriate VA personnel. For
+ more information pertaining to the Backout Procedure, please refer to the
+ "Deployment, Installation, Back-out/Rollback Guide" for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 90
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB1
+    Before:B127796820   After:B130250613  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432,447,
+                                           488,554,577,592,608**
+Routine Name: IBCBB12
+    Before:B136258580   After:B140177880  **432,592,608**
+Routine Name: IBCBB13
+    Before: B19726855   After: B52019184  **447,608**
+Routine Name: IBCCC2
+    Before:B130398035   After:B139322972  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433,432,447,
+                                           516,577,592,608**
+Routine Name: IBCE837B
+    Before:  B3184659   After:  B4349124  **137,191,197,320,608**
+Routine Name: IBCEF11
+    Before: B92999922   After:B100824598  **51,137,155,309,335,348,349,
+                                           371,432,447,473,516,577,592,
+                                           608**
+Routine Name: IBCEF2
+    Before: B81532163   After:B140185497  **52,85,51,137,232,155,296,349,
+                                           403,400,432,488,461,547,592,
+                                           608**
+Routine Name: IBCEF22
+    Before: B97383500   After:B107716996  **51,137,135,155,309,349,389,
+                                           432,488,516,577,608**
+Routine Name: IBCEF31
+    Before: B15832177   After: B67968602  **155,296,349,400,432,488,516,
+                                           592,608**
+Routine Name: IBCEFG7
+    Before: B51790981   After: B54668730  **52,84,96,51,137,191,320,608**
+Routine Name: IBCEPTC2
+    Before: B53543437   After: B56837195  **296,320,348,349,547,592,608**
+Routine Name: IBCEPTC3
+    Before: B64803891   After: B91463160  **320,547,608**
+Routine Name: IBCEU
+    Before:B116893464   After:B119764859  **51,137,207,232,349,432,592,608**
+Routine Name: IBCEU1
+    Before: B91847621   After:B117180629  **137,155,296,349,371,432,473,
+                                           547,608**
+Routine Name: IBCEU3
+    Before:B109051815   After:B109583745  **51,137,155,323,348,371,400,
+                                           432,488,519,592,608**
+Routine Name: IBCEU5
+    Before: B88027546   After: B88004916  **51,137,232,348,349,432,592,608**
+Routine Name: IBCF23A
+    Before: B50374642   After: B52551501  **51,432,516,547,577,592,608**
+Routine Name: IBCNSC01
+    Before: B75281286   After: B76348341  **52,137,191,184,232,320,349,
+                                           371,399,416,432,494,519,547,
+                                           592,608**
+Routine Name: IBCU7
+    Before:B175831153   After:B180096059  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516,522,577,604,616,592,
+                                           608**
+Routine Name: IBCU75
+    Before:       n/a   After: B79458011  **608**
+Routine Name: IBJPS
+    Before:  B6552900   After:  B6807999  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432,494,461,516,547,592,608**
+Routine Name: IBJPS2
+    Before: B56657157   After: B59492878  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432,
+                                           494,461,516,547,592,608**
+Routine Name: IBJPS3
+    Before:B122000376   After:B122116987  **400,432,516,577,608**
+Routine Name: IBJPS4
+    Before: B36439628   After: B37240589  **400,516,608**
+Routine Name: IBJPS7
+    Before:       n/a   After: B13118039  **608**
+Routine Name: IBJPS8
+    Before:       n/a   After:  B8772675  **608**
+Routine Name: IBTUBO
+    Before: B47033794   After: B73456123  **19,31,32,91,123,159,192,235,
+                                           248,155,516,547,608**
+Routine Name: IBTUBO3
+    Before: B42226483   After: B45102914  **123,159,192,155,277,516,547,608**
+Routine Name: IBTUBOA
+    Before: B37900623   After: B56520031  **19,31,32,91,123,159,192,155,
+                                           276,516,608**
+Routine Name: IBTUBOU
+    Before: B38728907   After: B42355876  **123,159,155,608**
+Routine Name: IBTUBUL
+    Before: B60799593   After: B63490597  **19,123,159,217,155,356,516,
+                                           547,608**
+Routine Name: IBY608PO
+    Before:       n/a   After: B25506190  **608**
+Routine Name: IBY608PR
+    Before:       n/a   After: B11561553  **608**
+ 
+Routine list of preceding patches: 592
+
+=============================================================================
+User Information:
+Entered By  :                HRISTOPHER     Date Entered  : SEP 19, 2017
+Completed By:                               Date Completed: APR 04, 2019
+Released By :                               Date Released : APR 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

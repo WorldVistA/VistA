@@ -359,8 +359,9 @@ class PatchOrderGenerator(object):
         firstPatch.otherKidsInfoList.append([nextPatchInfo.kidsInfoPath,
                                             nextPatchInfo.kidsInfoSha1])
         prevInstallName = installList[index - 1]
-        if prevInstallName not in nextPatchInfo.depKIDSBuild:
-          nextPatchInfo.depKIDSBuild.add(prevInstallName)
+        # Removing May 2019: Causes cyclical dependency - J.Snyder
+        #if prevInstallName not in nextPatchInfo.depKIDSBuild:
+        #  nextPatchInfo.depKIDSBuild.add(prevInstallName)
         #del patchList[installList[index]] #remove the other patch from the list
         logger.debug("%s:%s" % (nextPatchInfo.installName, nextPatchInfo.depKIDSBuild))
       """ remove the self dependencies of the first patch """
@@ -582,10 +583,12 @@ class PatchOrderGenerator(object):
 
     for csvFile in csvFileOrder:
       outOrderList.extend(self._patchOrderCSVDict[csvFile])
-    for idx in range(len(outOrderList)-1, 0, -1):
-      installName = outOrderList[idx].installName
-      prevInstallName = outOrderList[idx-1].installName
-      self._csvDepDict[installName] = prevInstallName
+    # Removing May 2019: Causes cyclical dependency - J.Snyder
+    #for idx in range(len(outOrderList)-1, 0, -1):
+    #  installName = outOrderList[idx].installName
+    #  prevInstallName = outOrderList[idx-1].installName
+    #  #if not outOrderList[idx].kidsFilePath == outOrderList[idx-1].kidsFilePath:
+    #  self._csvDepDict[installName] = prevInstallName
 
   def _removeNotInstalledKIDSBuild(self, installName):
     patchInfo = self._patchInfoDict.get(installName)

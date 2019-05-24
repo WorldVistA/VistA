@@ -1,0 +1,199 @@
+
+=============================================================================
+Run Date: OCT 29, 2018                     Designation: RMPR*3*196
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #172                      Status: Released
+                  Compliance Date: NOV 28, 2018
+=============================================================================
+
+
+Subject: PROSTHETICS GUI - WINDOWS 10 UPDATES
+
+Category: 
+  - Other
+  - Informational
+
+Description:
+============
+
+ Prosthetics Graphical User Interface (GUI) Windows 10 compatibility
+ updates.
+  
+  
+ Patch Components:
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+                              N/A                   N/A
+ Forms Associated:
+  
+ Form Name       File     #New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A             N/A      N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Rational Defect # 757017 - Prosthetics GUI Windows 10 compatibility
+  
+ Problem:
+ --------
+ The Prosthetics GUI help files need to be updated to be compatible with
+ Windows 10.
+  
+  
+ Resolution:
+ -----------
+ The Prosthetics GUI has been updated to utilize .CHM help files as 
+ .HLP help files are no longer supported in Windows 10. Additionally,
+ the Prosthetics GUI has been recompiled in Delphi XE 10.2 to meet 
+ current Technical Reference Model (TRM) requirements.
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Orlando VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+  Sites may retrieve the new Prosthetics executable directly using 
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+  directory at the following OI Field Offices:
+  
+  Hines:               domain.ext  
+  Salt Lake City:      domain.ext
+   
+  File Name               Title                   SFTP Mode
+  =========               =====                   =========
+  RMPR_3_196.ZIP          Contents below          BINARY
+  
+  
+  ZIP file contents                     Description
+  =================                     ===========
+  ProsMenu.exe                          Application executable                  
+  PROS_DOR_HELPFILE.CHM                 Help file
+  PROS_MENU_HELPFILE.CHM                Help file
+  PROS_NPPDDETAILDISPLAY.CHM            Help file
+  PROS_OWL_HELPFILE.CHM                 Help file
+  PROS_POC_HELPFILE.CHM                 Help file
+  PROS_VIEWBILLINGINFORMATION.CHM       Help file
+  
+   
+  NOTE: These files must be transferred using the binary (BIN) file 
+        transfer mode.  The size of the file (ProsMenu.exe) once downloaded will
+        be 6.86 MB.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Install Time - less than 2 minutes.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+  GUI Client Installation:
+  ------------------------
+  1. Extract all the files in the zip file to the folder where the
+     existing Prosthetics executable is installed. At your medical center the
+     location of the Prosthetics executable may be on a network drive or 
+     installed on each workstation under a program files folder like this 
+     example:
+   
+     C:\Program Files (x86)\Vista\Prosthetics 
+   
+  2. When asked to overwrite the existing file, answer Yes.
+  
+  3. The existing .hlp and .cnt files may be removed as they will no longer 
+     be used by this application.  
+   
+  4. Following successful extraction of the executable and .chm files you can 
+     delete the RMPR_3_196.ZIP file.
+   
+  5. When this version of ProsMenu.exe is launched it will show the version 
+     as "3.0.196" in the About section.
+  
+  
+  VistA Installation:
+  -------------------
+  N/A
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out by utilizing the previous Prosthetics GUI
+ executable and help (.HLP) files.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 04, 2018
+Completed By:                               Date Completed: OCT 29, 2018
+Released By :                               Date Released : OCT 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,134 @@
+$TXT Created by                  W at CHYSHR.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 01/18/19 at 14:45
+=============================================================================
+Run Date: MAR 11, 2019                     Designation: VPR*1*13
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1        SEQ #11                      Status: Released
+                  Compliance Date: APR 11, 2019
+=============================================================================
+
+Associated patches: (v)VPR*1*12    <<= must be installed BEFORE `VPR*1*13'
+
+Subject: PARTIAL FILL ON SAME DAY DOES NOT DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Virtual Patient 
+ Record (VPR) package:
+  
+ 1. INC3520840-If a patient receives more than one partial fill in a day,
+ only one of them is in the VPR XML output.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3520840 / RTC 885351 - If a patient receives more than one partial 
+ fill in a day, only one of them is in the VPR XML output.
+  
+ Problem:
+ --------
+ If two "One VA" connected sites each process a partial refill for the 
+ same prescription, only one fill appears in the VPR XML output.
+  
+ Resolution:
+ -----------
+ Routine VPRDPSO was modified so the XML return from VistA will now include
+ both fills in the fills tag.
+  
+ Test Sites:
+ -----------
+ Wilmington VAMC
+ Rocky Mountain Regional VAMC 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No special pre or post install steps needed, just install as normal.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, use the following option(s). When 
+ prompted for the INSTALL NAME enter the patch #(ex. VPR*1.0*13):
+   a. Backup a Transport Global - (Mandatory) This option will create a
+      backup message of any routines exported with this patch. It will not 
+      backup any other changes such as DDs or templates.
+   b. Compare Transport Global to Current System - (Optional) This 
+      option will (allow you to view all changes that will be made when
+      this patch  is installed.  It compares all components of this patch
+      routines, DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - (Optional) This option 
+      will allow you to ensure the integrity of the routines that are in
+      the transport global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+ Enter "No"
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//' Enter "No"
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0
+  
+ Post-Installation Instructions:
+ -------------------------------
+ No special post install steps, just install as normal.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRDPSO
+    Before: B17513089   After: B19297675  **1,4,12,13**
+Routine Name: VPRP13I
+    Before:       n/a   After:    B91407  **13**
+ 
+Routine list of preceding patches: 12
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2019
+Completed By:                               Date Completed: MAR 06, 2019
+Released By :                               Date Released : MAR 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

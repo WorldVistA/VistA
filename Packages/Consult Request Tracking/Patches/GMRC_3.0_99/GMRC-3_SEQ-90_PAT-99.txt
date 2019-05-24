@@ -1,0 +1,331 @@
+$TXT Created by                    VISTA-LOAD-AITC-1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 04/12/18 at 13:23
+=============================================================================
+Run Date: OCT 05, 2018                     Designation: GMRC*3*99
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #90                      Status: Released
+                  Compliance Date: NOV 05, 2018
+=============================================================================
+
+
+Subject: Community Care Referrals and Authorizations 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated patches:  (v)GMRC*3.0*75  <<= must be installed
+                      (v)GMRC*3.0*85  <<= must be installed
+                      (v)GMRC*3.0*96  <<= must be installed
+  
+ HealthShare Referral Manager (HSRM) is an enterprise-wide system in 
+ support of community care used by facility community care staff to 
+ generate referrals and authorizations for Veterans receiving care in the 
+ community. Clinical and Department of Veterans Affairs (VA) community 
+ care staff located at VA medical centers, outpatient clinics, 
+ community-based outpatient clinics, and Veterans Integrated Service 
+ Network offices use this solution to enhance Veteran access to care. HSRM 
+ is an integral component of the community care information technology 
+ (IT) architecture that allows Veterans to receive care from community 
+ providers. 
+  
+ HSRM allows VA to transition from what is currently a largely manual 
+ process to a more streamlined process that generates standardized 
+ referrals and authorizations according to clinical and business rules. 
+ HSRM supports clinical and administrative processes expected to:
+  
+ Seamlessly provide eligible Veterans with prompt referrals to a
+ community provider of their choice Provide community providers with
+ referrals and authorizations consistent with industry standards
+  
+ Decrease the administrative burden on VA clinical and facility
+ community care staff members by establishing clinical and business
+ pathways that reflect best practices, consistent outcomes, and reduced
+ turnaround times, along with a solution that automates those pathways
+  
+ Facilitate communication between facility community care staff and 
+ community providers via a unified platform that enables the secure 
+ exchange of medical information
+  
+ VistA patch GMRC*3.0*99 delivers capability to transmit Community Care
+ consult messages from Computerized Patient Record System (CPRS) as an HL7 
+ message to HSRM.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Bulletins:
+ ---------
+ N/A 
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ HL7 Links:
+ ---------
+ GMRCCCRA
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ New:
+ GMRCCCRA NOTIFICATIONS will send messages to the devops.ccra@domain.ext 
+ distribution list in the event problems are detected with sending 
+ messages.
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ New:
+ GMRC CCRA REF-I12 CLIENT
+ GMRC CCRA REF-I13 CLIENT
+ GMRC CCRA REF-I14 CLIENT
+ GMRC CCRA-HSRM REF-I12 SERVER
+ GMRC CCRA-HSRM REF-I13 SERVER
+ GMRC CCRA-HSRM REF-I14 SERVER
+ GMRC CONSULTS TO CCRA
+  
+ Modified:
+ GMRC EVSEND OR - Added the GMRC CONSULTS TO CCRA Protocol
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Lebanon, PA
+ Philadelphia, PA
+ Togus, MA
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+   
+     Hines:                        domain.ext   
+     Salt Lake City:               domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ .
+  
+ Title                          File Name                             SFTP
+                                                                      Mode
+ --------------------------------------------------------------------------
+ Community Care Referral and    CCRA_PATCH_99_TECHNICAL_MANUAL.PDF   Binary
+ Authorization Patch 99 
+ Technical Manual
+   
+ Consult/Request Tracking       constm.pdf or constm.doc             Binary
+ Technical Manual 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is distributed by PackMan.
+  
+ Backout and rollback Procedure:
+ -------------------------------
+ This patch consists of routines and HL7 Logical Link and HL7 Application 
+ Parameters and HL7 Protocols. The routines installed by this patch are new
+ routines. There are no changes to existing routines.
+  
+ If a backout or rollback is required, the site HL7 management team can 
+ stop the HL7 Link, GMRCCCRA. 
+  
+ Stopping the GMRCCCRA HL7 Logical Link will stop sending messages to the 
+ GMRC CCRA HealthShare server. 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Patch Installation:
+ ------------------
+  
+ Setup/Configuration Instructions:
+ ---------------------------------
+  
+ These steps can be completed with users on the system. This should take 
+ less than 15 minutes to configure. NOTE: Patches GMRC*3.0*75, GMRC*3.0*85,
+ and GMRC*3.0*96 must be installed in order to install this patch. This
+ patch should take less than 15 minutes to install.
+  
+ The IP address, port, and DNS name for the HealthShare Server will be 
+ provided when HealthShare Referral Manager is connected to the site.  If 
+ you have not been provided this information by the implementation manager 
+ you are instructed to enter the following:
+ IP address: 0.0.0.0
+ Port Number: 0000
+  
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the KIDS Menu, select the Installation Menu.  From this menu, 
+      you may elect to use the following options. When prompted for the
+      INSTALL NAME, enter GMRC*3.0*99.
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as Data Dictionaries (DDs) or
+          templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter GMRC*3.0*99.
+  
+  5.  At the prompt, "Enter the Coordinator for Mail Group 'GMRCCCRA 
+      NOTIFICATIONS:", enter the name of person responsible for 
+      populating this mail group with users. This VistA Mail Group will 
+      receive notifications when problems occur with transmitting consults.
+  
+  6.  At the prompt, "Enter the IP address for the HealthShare server", 
+      enter the IP address for the HealthShare server you will send the
+      NON-VA Consults to. The IP address and Port for the HealthShare 
+      Server will be provided when HealthShare Referral Manager is
+      connected to the site. If you have not been provided this information
+      by the implementation manager you are instructed to enter the
+      following:
+         IP address: 0.0.0.0
+         Port Number: 0000
+  
+  7.  At the prompt, "Enter the Port for the HealthShare server:", enter   
+      the port the HealthShare server is listening on.
+  
+  8.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond NO.
+    
+  9.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+  10.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO. 
+    
+  11.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+    
+  
+ Sample Install:
+ ---------------
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    GMRC*3.0*99    3/23/18@10:29:59
+      => GMRC*3.0*99
+  
+ This Distribution was loaded on Mar 23, 2018@10:29:59 with header of 
+    GMRC*3.0*99
+    It consisted of the following Install(s):
+     GMRC*3.0*99
+ Checking Install for Package GMRC*3.0*99
+  
+ Install Questions for GMRC*3.0*99
+  
+ Enter the Coordinator for Mail Group 'GMRCCCRA NOTIFICATIONS':  XXXX,XXX 
+ Enter the IP address for the HealthShare Server: 0.0.0.0
+ Enter the Port for the HealthShare server: 0000
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HOME  (CRT)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCACMT
+    Before: B28819867   After: B30071022  **4,14,18,20,22,29,35,47,55,75,99**
+Routine Name: GMRCCCRA
+    Before:       n/a   After:B153139098  **99**
+Routine Name: GMRCGUIB
+    Before: B54784294   After: B56103789  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46,75,86,90,91,99**
+Routine Name: GMRCP99
+    Before:       n/a   After: B10948260  **99**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 18, 2017
+Completed By:                               Date Completed: OCT 04, 2018
+Released By :                               Date Released : OCT 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

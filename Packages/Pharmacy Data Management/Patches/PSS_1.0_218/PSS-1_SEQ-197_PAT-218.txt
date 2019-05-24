@@ -1,0 +1,245 @@
+$TXT Created by                   CAS-RXSU2-S1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/25/18 at 14:54
+=============================================================================
+Run Date: OCT 25, 2018                     Designation: PSS*1*218
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #197                      Status: Released
+                  Compliance Date: NOV 25, 2018
+=============================================================================
+
+Associated patches: (v)PSS*1*192   <<= must be installed BEFORE `PSS*1*218'
+
+Subject: CAS-RXSU2 NEW LETTER CODE FOR DEA SPECIAL HDLG, IDENTIFIERS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has the following enhancements for Clinical Ancillary Services
+ (CAS)-Pharmacy Safety Updates (RxSU) Phase 2:
+  
+  
+  
+ 1. Update DEA SPECIAL HANDLING Field Documentation
+    
+    A new code letter "K" was added to for the DEA, SPECIAL HDLG (#3) in 
+    the DRUG file (#50) to document in VistA when providers renew
+    medications for patients that cannot be automatically renewed by the
+    patient via Audiocare.
+      
+    Help text added for this field during PSS DRUG ENTER/EDIT option:
+    
+          "K      Not Renewable (by telephone)
+  
+ 2. Manage Lookup List Inactive Entries
+  
+    The following files have added a new field identifier to their data 
+    dictionaries to indicate if they are marked as Inactive entries.
+  
+     a. ADMINISTRATION SCHEDULE file (#51.1) the INACTIVE field (#12).
+     b. DRUG TEXT file (#51.7) the INACTIVATION DATE field (#2).
+  
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)                    Field Name(#)        New/Modified/Deleted
+ ------------------------------   ----------------     --------------------
+ ADMINSTRATION SCHEDULE (#51.1)   INACTIVE (#12)                Modified
+ DRUG TEXT (#51.7)                INACTIVATION DATE (#2)        Modified
+  
+ Forms Associated:
+  
+ Form Name             File #                       New/Modified/Deleted
+ ---------             ------                       --------------------
+ N/A
+  
+  
+ Mail Groups Associated: 
+ Mail Group Name      New/Modified/Deleted
+ ---------------      -------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               --------------------
+ N/A
+   
+  
+ Protocols Associated:
+  
+ Protocol Name                 New/Modified/Deleted
+ -------------                 -------------------
+ N/A
+    
+  
+ Security Keys Associated:
+  
+ Security Key Name         New/Modified/Deleted
+ --------------------      -------------------
+ N/A 
+  
+  
+ Templates Associated:
+  
+ Template Name             Type    File Name (#)    New/Modified/Deleted
+ -------------             ----    -------------    -------------------  
+ N/A
+   
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20151007
+  
+  
+ Test Sites:
+ ===========
+ St Louis
+ Orlando
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   https://www.domain.ext/vdl.
+  
+  
+ File Description                       File Name                 FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Management User Manual   PSS_1_p218_UM.PDF          Binary
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ 1.  Use the INSTALL/CHECK MESSAGES option on the PackMan menu.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+ 3.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 4.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSS*1*218:
+  
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  If prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//,' respond Yes
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//,' respond No 
+  
+  
+ Post Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Backout Procedures
+ ------------------
+  
+ Backout Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow ticket to obtain
+ this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSS Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSS*1.0*218 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSS*1.0*218 in 
+ the [Patch List] section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDDUT2
+    Before:B173773291   After:B174697061  **3,21,61,81,95,127,126,139,
+                                           131,143,188,189,192,218**
+Routine Name: PSSJSV0
+    Before: B26342138   After: B26630523  **218**
+ 
+Routine list of preceding patches: 192
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2017
+Completed By:                               Date Completed: OCT 23, 2018
+Released By :                               Date Released : OCT 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

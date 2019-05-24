@@ -1,0 +1,492 @@
+$TXT Created by                    SCM.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 04/05/19 at 08:43
+=============================================================================
+Run Date: APR 22, 2019                     Designation: OR*3*444
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #423                      Status: Released
+                  Compliance Date: MAY 23, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `OR*3*444'
+                    (v)OR*3*441    <<= must be installed BEFORE `OR*3*444'
+                    (v)OR*3*456    <<= must be installed BEFORE `OR*3*444'
+                    (v)OR*3*471    <<= must be installed BEFORE `OR*3*444'
+
+Subject: CPRS MODIFICATION UNIFIED ACTION PROFILE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ **Note: This functionality is delivered with an On/Off switch parameter. 
+ (OR UNIFIED ACTION PROFILE OFF). The default setting is Off. Do not switch
+ this feature On until CPRS v.32 (OR*3.0*405) has been released and 
+ successfully installed.
+  
+ OR*3.0*444 enables a clinician to view existing inpatient and outpatient
+ medication orders from the local site on a single page when preparing to
+ discharge a patient. This order information is displayed on a new Unified
+ Action Profile (UAP) form available from the View menu on the Computerized
+ Patient Record System (CPRS) Orders tab.
+  
+ Duplicate orders can occur because outpatient orders remain in the system 
+ after a patient is admitted, and new inpatient orders are created after 
+ admission. When discharging a patient, a clinician must review all orders 
+ to avoid duplication, while ensuring the correct medication orders are 
+ continued for patient safety and care. The clinician must take the 
+ appropriate action for each medication order, deciding whether to 
+ continue, change, renew, or discontinue the order prior to discharge.
+  
+ Previously, when preparing to discharge a patient, a clinician had to 
+ switch between forms in order to review all medication orders. OR*3.0*444 
+ enables the clinician to review all medication orders at one time from the
+ new UAP form. This change both simplifies order reconciliation and reduces
+ the time and effort required from the clinician when making decisions on
+ each active inpatient and outpatient order. The UAP sorts orders by the
+ first orderable item name from the Orderable Items file (#101.43), so that
+ inpatient and outpatient medications are grouped together. Sorting orders
+ by the orderable item name ensures that the clinician sees all existing
+ orders for each drug when making decisions during reconciliation.
+  
+ Note: The Order Text field (#100.0081) in the Order file (#100) is a word 
+ processing field that is generated when an order is created. Additional 
+ Order Text fields are added each time the order is modified. When working 
+ with an order in CPRS, the content of the most recent Order Text field is 
+ displayed. UAP checks the first line of the Order Text field against the 
+ orderable item name. If this check detects that the first line of the 
+ Order Text field does not match the orderable item name, then the order is
+ sorted based on the first line of the most recent Order Text field.
+  
+ In the UAP view, Infusions are sorted alphabetically by the first 
+ orderable item identified as an additive; solutions are ignored for the 
+ purpose of sorting. The orderable items that display are reorganized based
+ on the orderable additive item used for sorting. This change supports
+ alphabetical sorting by a meaningful additive in the UAP, but does not
+ change the original order in the ORDER file (#100). Infusions usually have
+ more than one orderable item and sorting by the first additive ensures a
+ consistent alphabetized display of infusion orders in the UAP view.
+  
+ Infusion orders cannot be continued, changed, or renewed using UAP because
+ CPRS does not convert inpatient infusion orders to an outpatient order
+ when preparing for discharge. To prevent issues with discharge medication
+ orders, these options are grayed when performing UAP medication
+ reconciliation for an inpatient Infusion order.
+  
+ Note: When an order is modified by a pharmacist during prescription 
+ processing, the order is marked with an asterisk when displayed in CPRS. 
+ In the UAP view, this asterisk is hidden when displaying orders; this 
+ preserves the alphabetical sorting critical to the reconciliation process.
+  
+ The UAP includes a Reviewed column that displays the decision made by the 
+ clinician during review. A new "UAP Reviewed?" field (#.61) is added to
+ the order record in the ORDER file (#100). This field denotes whether an
+ order was reviewed ("1") or not reviewed ("0"). Two additional fields
+ store information about previous reviews: the "UAP Last Reviewed" 
+ field (#.62) stores the date an order was last reviewed using the UAP
+ form; the "UAP Last Reviewed By" field (#.63) stores identification
+ information for the last person to perform a review of the order using the
+ UAP view.
+  
+ This enhancement also adds a Discharge Meds Review form, which provides a 
+ summary of all medications being continued for the patient upon discharge.
+ This form is accessed by selecting the Discharge Meds view from the Orders
+ tab. The Discharge Meds Review form enables a clinician to see the full
+ list of medications prescribed for a discharged patient after the UAP
+ review is completed.
+  
+ This modification includes a new PHARMACY UAP Display Group, which 
+ includes the display members INPATIENT MEDICATIONS, OUTPATIENT 
+ MEDICATIONS, and NON-VA MEDICATIONS. If expected orders do not display in 
+ the UAP view, additional display members can be added to the group. For 
+ example, Supply orders are omitted from the UAP view by design, but they 
+ can be displayed if the SUPPLY Display Group is added as a member of the 
+ PHARMACY UAP Display Group. To add additional display group members to the
+ PHAMACY UAP Display Group, contact OIT for assistance; access to VistA
+ programmer mode and FileMan are required to modify display group members.
+  
+ A new parameter (OR UNIFIED ACTION PROFILE OFF) in VistA enables sites to 
+ turn the UAP functionality On/Off. This parameter is set at the facility 
+ level and is located in the PARAMETER DEFINITION file (#8989.51). 
+ Initially, this parameter is set to OFF ("0"). When the parameter is set 
+ to OFF, the two options used to access the Unified Action Profile 
+ functionality (Unified Action Profile (UAP) and Discharge Meds) are not
+ displayed on the CPRS View menu. To enable this functionality, set the
+ parameter to ON ("1") using the Edit Parameter Values function accessible
+ from the XPAR MENU TOOLS option in VistA.
+  
+ **Note: In addition to turning this new parameter ON, enabling UAP 
+ requires changing two settings for the Discharge Release Event using the 
+ CPRS Configuration (Clin Coord) menu in VistA. Both settings are 
+ accessible from the Event Delayed Orders option. First, activate the 
+ DISCHARGE Release Event by changing the Activate/Inactivate [AI] setting 
+ to ACTIVATE. Second, disable Copy Active Orders by changing the Copy 
+ Active Orders setting to NO. The medication reconciliation performed by 
+ UAP will not function as intended until the parameter is turned ON and 
+ these settings are configured. Refer to the Post-Installation Instructions
+ in this document for an example of how to modify these settings.
+  
+ BLOOD BANK Clearance:
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3.0*444 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch OR*3.0*444 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)             New/Modified/Deleted
+ ------------------  ------------------------------  --------------------
+ ORDER (#100)        UAP Reviewed? (#100,.61)           NEW         
+ ORDER (#100)        UAP Last Reviewed (#100,.62)       NEW         
+ ORDER (#100)        UAP Last Reviewed By (#100,.63)    NEW         
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type    New/Modified/Deleted
+ -----------       ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Parameters Associated:                        
+                  
+ Parameter Name                                      New/Modified/Deleted
+ -----------------------------                       --------------------
+ OR UNIFIED ACTION PROFILE OFF                       New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Remote Procedures(RPC)s Associated:
+  
+ RPC Name           ROUTINE    TAG         New/Modified/Deleted 
+ -------------      -------    --------    --------------------
+ ORTO SET UAP FLAG  ORTOULT4   SETUAPF     NEW
+ ORTO GETRVW        ORTOULT4   GETRVW      NEW
+ ORTO SETRVW        ORTOULT4   SETRVW      NEW 
+ ORTO UAPOFF        ORTOULT4   UAPOFF      NEW 
+ ORTO DGROUP        ORTOULT4   DGROUP      NEW
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20130714 CPRS Modification Unified Action Profile
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Portland Health Care System, Portland, OR
+ Milwaukee VA Medical Center, Milwaukee, WI
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from
+ FORUM.
+  
+ Documentation associated with the new functionality introduced by this
+ patch is available for downloading.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                               File Name                 FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version        cprsguium.pdf             Binary
+ CPRS User Guide: GUI Version        cprsguium.doc             Binary
+ CPRS Technical Manual GUI Version   cprsguitm.pdf             Binary
+ CPRS Technical Manual GUI Version   cprsguitm.doc             Binary
+  
+ The documentation may also be found in the VA Software Document Library
+ (VDL) at: https://www.domain.ext/vdl/
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ The post-installation routine ORUA444P runs automatically and is deleted 
+ after installation. This routine:
+  
+ - Adds the new DISCHARGE MEDS and PHARMACY UAP display groups to the
+ DISPLAY GROUPS file (#100.98); these groups are used during UAP
+ processing. Refer to the Post-Installation Instructions in this document
+ for information about adding new display group members to the PHARMACY UAP
+ display group. 
+ - Registers new Remote Procedure Calls (RPCs) ORTO SET UAP FLAG, ORTO
+ GETRVW, ORTO SETRVW, ORTO UAPOFF, and ORTO DGROUP to the OR CPRS GUI CHART
+ option.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ To install the patch:
+  
+     1. Choose the PackMan message containing this patch.
+  
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+     3. From the Kernel Installation and Distribution System (KIDS) menu,
+        select the Installation Menu. From this menu, you may elect to use
+        the following options. When prompted for the INSTALL NAME, enter
+        the patch number OR*3.0*444.
+  
+         a. Verify Checksums in Transport Global - This option will help
+            ensure the integrity of the routines that are in the transport
+            global.
+  
+         b. Print Transport Global - This option will enable viewing the
+            components of the KIDS build.
+  
+         c. Compare Transport Global to Current System - This option will
+            enable viewing all changes that will be made when this patch is
+            installed. It compares all components of this patch (routines,
+            data dictionaries, templates, etc.).
+  
+         d. Back up a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            back up any other changes such as data dictionaries or
+            templates.
+  
+     4. From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+  
+     5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', press <Enter>.
+  
+     6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', press <Enter>.
+  
+     7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+     8. If prompted 'Enter the Device you want to print the Install
+        messages. You can queue the install by enter a 'Q' at the device
+        prompt. Enter a '^' to abort the install. 
+        DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+  
+ Post-Installation Instructions:
+ --------------------------------------------------------------
+ **Note: This functionality requires CPRS v.32. Do not perform the 
+ following configuration steps until CPRS v.32 (OR*3.0*405) has been 
+ released and successfully installed.
+  
+ The functionality enabled by this patch requires that the feature Copy 
+ Active Orders is disabled and the Discharge Release Events is Activated.
+ Both configuration settings are controlled using the CPRS Clinical
+ Coordinator's menu in VistA.
+  
+ From the CPRS Clinical Coordinator's menu in VistA:
+  
+ 1. At the prompt, type "PE" to display CPRS Configuration (Clin Coord) 
+ options.
+  
+ 2. At the prompt, type "DO" to display the Event Delayed Orders Menu.
+  
+ 3. At the prompt, type "DO" to display Delayed Orders/Auto-DC Set-up 
+ options.
+  
+ 4. Select option 2, Release Events, to display a list of available Release
+ events.
+  
+ 5. At the prompt, type "DD" from the list of actions to open the Detailed
+ Display.
+  
+ 6. Select option 10, DISCHARGE, as the Release Event.
+  
+ 7. At the prompt, type "AI" to Activate/Inactivate the Discharge Event.
+ Confirm the selection to ACTIVATE at the "Are you sure you want to
+ ACTIVATE this entry? NO//YES" prompt by pressing Enter.
+  
+ 8. At the prompt, type "AE" to ADD/EDIT the Discharge event. 
+  
+ 9. Press Enter to move through the remaining prompts until the COPY ACTIVE
+ ORDERS prompt displays. Enter "NO" to disable Copy Active Orders. Verify
+ Copy Active Orders is set to NO.
+  
+ 10. The Write Orders List by Event options display, followed by the "Enter
+ selection:" prompt. This selection determines which users are affected by
+ the change. For example, to apply this setting to all CPRS users at a
+ particular site, type "System" at the prompt. Limit how broadly this
+ setting applies by selecting an alternate choice of User, Location,
+ Service, Division, instead of System.
+  
+ Note: The PHARMACY UAP Display Group is delivered with the members 
+ INPATIENT MEDICATIONS, OUTPATIENT MEDICATIONS, and NON-VA MEDICATIONS. If 
+ additional members must be added to this display group, contact OIT for 
+ assistance.
+  
+ The OIT representative must add new display group members to the PHARMACY 
+ UAP Display Group file (#100.98) using the following steps:
+  
+   1. Log in to VistA in programmer mode and then navigate to FileMan.
+  
+   2. Select the ENTER OR EDIT FILE ENTRIES option.
+  
+   3. At the "Input to what File: OPTION//" prompt, type DISPLAY GROUP.
+  
+   4. At the "EDIT WHICH FIELD: /ALL" prompt, type MEMBER.
+  
+   5. At the EDIT WHICH MEMBER SUB-FIELD: /ALL" prompt, press Enter.
+  
+   6. At the "Select DISPLAY GROUP NAME:" prompt, type PHARMACY UAP.
+  
+   7. At the "Select MEMBER: NON-VA MEDICATIONS//" prompt, type the 
+      name of the Display Group to add to the PHARMACY UAP Display Group. 
+      For example, type CLINIC MEDICATIONS to add the CLINIC MEDICATIONS
+      member to the PHARMACY UAP Display Group.
+  
+   8. At the "Are you adding 'CLINIC MEDICATIONS' as a new MEMBER? No//"
+      prompt, type Y (Yes).
+  
+   9. At the MEMBER SEQUENCE: 4//" prompt, press Enter to accept the 
+      default. Note: The member sequence is not used by the UAP code
+      modification.
+  
+  10. Repeat these steps to add each required display group to the 
+      PHARMACY UAP Display Group file.
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision to
+ back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not be
+ attempted. However, in the event that a site decides to back out this
+ patch, the site should contact the National Service Desk (NSD) to submit a
+ help desk ticket. The development team will need to issue one or more 
+ follow-on patches in order to comprehensively back out this patch, 
+ after coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the OR routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the OR routines have been backed
+ out, the first two lines of the routines will no longer contain the
+ designation of patch OR*3.0*444 on line 2 in the patch list section.
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 48
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQ1
+    Before: B10080837   After: B12018675  **27,72,78,141,190,215,444**
+Routine Name: ORQ11
+    Before: B65899286   After: B86143021  **7,27,48,72,78,99,94,148,141,
+                                           177,186,190,195,215,243,295,
+                                           322,350,444**
+Routine Name: ORQ12
+    Before: B41144852   After: B44346271  **12,27,78,92,116,190,220,215,
+                                           243,356,441,444**
+Routine Name: ORTOULT4
+    Before:       n/a   After: B55857069  **444**
+Routine Name: ORUA444P
+    Before:       n/a   After:  B6132340  **444**
+Routine Name: ORWORR
+    Before: B81663175   After: B88246015  **10,92,116,110,132,141,163,
+                                           189,195,215,243,280,306,471,
+                                           444**
+Routine Name: ORWORR1
+    Before:  B9884468   After: B14089076  **141,243,456,444**
+ 
+Routine list of preceding patches: 350, 441, 456, 471
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 10, 2016
+Completed By:                               Date Completed: APR 17, 2019
+Released By :                               Date Released : APR 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

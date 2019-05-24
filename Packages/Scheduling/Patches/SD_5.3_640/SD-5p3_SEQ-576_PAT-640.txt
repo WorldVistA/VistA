@@ -1,0 +1,383 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/17/18 at 12:15
+=============================================================================
+Run Date: OCT 16, 2018                     Designation: SD*5.3*640
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #576                    Status: Released
+                  Compliance Date: OCT 31, 2018
+=============================================================================
+
+Associated patches: (v)SD*5.3*47   <<= must be installed BEFORE `SD*5.3*640'
+                    (v)SD*5.3*68   <<= must be installed BEFORE `SD*5.3*640'
+                    (v)SD*5.3*416  <<= must be installed BEFORE `SD*5.3*640'
+                    (v)SD*5.3*466  <<= must be installed BEFORE `SD*5.3*640'
+
+Subject: DISABLE ACRP & APM HL7 TRANSMISSIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch SD*5.3*640 contains the shutdown of the Health Level-7 (HL7)
+ Ambulatory Care nightly transmission (ACRP) that goes out from each
+ Veteran Information Systems and Technology Architecture (VistA)
+ instance each day to the National Patient Care Database (NPCDB).  The
+ NPCDB is being shut down in Austin and the Corporate Data Warehouse
+ (CDW) is replacing the database as the authoritative source.  The
+ VistA extracts, done to populate the CDW, will replace the need for 
+ the HL7 transmission.
+  
+ Austin Information Technology Center (AITC) has also requested to stop
+ the transmission of the Monthly Additional Performance Monitors HL7 data
+ from VistA instances to Data Management Interface (DMI) at AITC.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Group Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC1039897 - DISABLE ACRP HL7 TRANSMISSION
+  
+    Problem:
+    --------
+    Austin Information Technology Center (AITC) requests the shutdown of
+    the HL7 Ambulatory Care Reporting Project (ACRP) nightly transmissions
+    from each Veterans Administration Medical Center (VAMC) to the 
+    National Patient Care Database (NPCDB).  The NPCDB is being shut
+    down in Austin and the Corporate Data Warehouse (CDW) is replacing
+    the database as the authoritative source.
+  
+    
+    Resolution:
+    -----------
+    A post-installation routine SCDXSTOP has been created that will:
+  
+    1. Disable current AMB-CARE logical link to HL7 for ACRP.
+  
+    2. Ensure that the Ambulatory Care Nightly Transmission to NPCDB [SCDX
+       AMBCAR NIGHTLY XMIT] option is not scheduled to run daily.
+  
+    3. Set the following menu options to out-of-order:
+  
+       3.1 Ambulatory Care Nightly Transmission to NPCDB
+           [SCDX AMBCAR NIGHTLY XMIT]
+       3.2 Retransmit Ambulatory Care Data by Date Range
+           [SCDX AMBCAR RETRANS BY DATE]
+       3.3 Retransmit Selected Error Code 
+           [SCDX AMBCAR RETRANS ERROR]
+       3.4 Selective Retransmission of NPCDB Rejections 
+           [SCDX AMBCAR RETRANS SEL REJ]
+  
+    A QUIT command will also be added to routines SCDXMSG, SCDXRT01, 
+    SCDXRT02, and SCDXRT03 to prevent the option from being executed
+    unintentionally.
+    
+ 2. INC1392254 - Discontinue Monthly Additional Performance Monitors HL7 
+                 data transmissions from 130 VistA instances to DMI at
+                 AITC
+  
+    Problem:
+    --------
+    AITC requests the shutdown of the Monthly Additional Performance 
+    Monitors HL7 data transmissions from VistA instances to DMI at AITC.
+  
+  
+    Resolution:
+    -----------
+    A post-installation routine SCDXSTOP has been created that will:
+    
+    1. Disable current SDPM logical link to HL7.
+  
+    2. Ensure that the Nightly job for PM data extract [SDOQM PM NIGHTLY 
+       JOB] option is not scheduled to run daily.
+  
+    3. Ensure the Schedule APM Performance Monitor Task [SCRPW APM TASK
+       JOB] option is not scheduled to run on a monthly basis.
+       
+    4. Set the following menu options to out-of-order:
+  
+       4.1 Schedule APM Performance Monitor Task
+           [SCRPW APM TASK JOB]
+  
+       4.2 Performance Monitor Retransmit Report (AAC)
+           [SCRPW PM RETRANSMIT REPORT]
+  
+       4.3 Nightly job for PM data extract
+           [SDOQM PM NIGHTLY JOB]
+  
+    A QUIT command will also be added to routines SDPMHLS and SDOQMP
+    to prevent the option from being executed unintentionally.
+  
+  
+ Test Sites:
+ -----------
+ Coatesville VAMC
+ West Palm Beach VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality introduced by this patch 
+ are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+ OI Field Offices:
+  
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext.vdl/
+  
+  
+ Title                           File Name                   FTP Mode
+ --------------------------------------------------------------------
+ For Ambulatory Care Reporting:
+  
+   Ambulatory Reporting Care     ACRPUSE.PDF                 BINARY
+   Menu                          
+  
+   Technical Manual              PIMSTM_ACR.PDF              BINARY
+                                 
+ For Scheduling:
+  
+   PIMS Technical Manual         PIMSTM_SCHED.PDF            BINARY
+                                 
+   PIMs User Manual - Menus,     PIMSSCHINTRO.PDF            BINARY
+   Intro & Orientation, etc.     
+  
+   User Manual - Ambulatory      ACR.PDF                     BINARY
+   Care Reporting                
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The installation may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.
+  
+ Please also ensure that the Ambulatory Care Nightly Transmission to NPCDB 
+ [SCDX AMBCAR NIGHTLY XMIT] option and Nightly job for PM data extract
+ [SDOQM PM NIGHTLY JOB] option are not scheduled to run daily and the
+ Schedule APM Performance Monitor Task [SCRPW APM TASK JOB] option is not
+ scheduled to run monthly.
+  
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+   1. Choose the PackMan message containing this patch.
+     
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+   3. From the Kernel Installation and Distribution System Menu, select 
+      the Installation Menu.  From this menu, you may elect to use the
+      following options.  When prompted for the INSTALL NAME enter
+      SD*5.3*640.
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+   
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+    
+      d. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not 
+         backup any other changes such as DD's or templates.
+  
+   4. From the Installation Menu, select the Install Package(s) option and 
+      choose the patch to install.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', answer YES.
+  
+         Ambulatory Care Nightly Transmission to NPCDB 
+             [SCDX AMBCAR NIGHTLY XMIT]
+         Retransmit Ambulatory Care Data by Date Range 
+             [SCDX AMBCAR RETRANS BY DATE]
+         Retransmit Selected Error Code
+             [SCDX AMBCAR RETRANS ERROR]
+         Selective Retransmission of NPCDB Rejections
+             [SCDX AMBCAR RETRANS SEL REJ]
+         Schedule APM Performance Monitor Task 
+             [SCRPW APM TASK JOB]
+         Performance Monitor Retransmit Report (AAC)
+             [SCRPW PM RETRANSMIT REPORT]
+         Nightly job for PM data extract 
+             [SDOQM PM NIGHTLY JOB] 
+       
+      When prompted, 'Enter protocols you wish to mark as 'Out of 
+      Order':', enter: <ENTER>.
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ 1. This patch can be backed out by installing the routines/PackMan 
+    message created from the installation instruction, step 3.d. Backup a
+    Transport Global.
+  
+ 2. Enable AMB-CARE logical link
+    
+    2.1. Enable AUTOSTART
+    2.2. Set SHUTDOWN LLP to NO
+  
+ 3. Enable SDPM logical link
+  
+    3.1. Enable AUTOSTART
+    3.2. Set SHUTDOWN LLP to NO
+  
+ 4. Schedule the following jobs in the OPTION SCHEDULING file (#19.2):
+  
+    4.1. Ambulatory Care Nightly Transmission to NPCDB 
+         [SCDX AMBCAR NIGHTLY XMIT]
+    4.2. Schedule APM Performance Monitor Task 
+         [SCRPW APM TASK JOB]
+    4.3. Nightly job for PM data extract
+         [SDOQM PM NIGHTLY JOB]
+  
+ 5. Remove OUT OF ORDER MESSAGE in the OPTION file (#19):
+  
+    5.1. Ambulatory Care Nightly Transmission to NPCDB 
+         [SCDX AMBCAR NIGHTLY XMIT]
+    5.2. Retransmit Ambulatory Care Data by Date Range 
+         [SCDX AMBCAR RETRANS BY DATE]
+    5.3. Retransmit Selected Error Code 
+         [SCDX AMBCAR RETRANS ERROR]
+    5.4. Selective Retransmission of NPCDB Rejections 
+         [SCDX AMBCAR RETRANS SEL REJ]
+    5.5. Schedule APM Performance Monitor Task 
+         [SCRPW APM TASK JOB]
+    5.6. Performance Monitor Retransmit Report (AAC) 
+         [SCRPW PM RETRANSMIT REPORT]
+    5.7. Nightly job for PM data extract
+         [SDOQM PM NIGHTLY JOB]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;SCHEDULING;**[Patch List]**;AUG 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCDXMSG
+    Before: B46406425   After: B47588941  **44,56,70,77,85,96,121,128,
+                                           66,247,245,387,466,640**
+Routine Name: SCDXRT01
+    Before: B27872204   After: B28530329  **44,640**
+Routine Name: SCDXRT02
+    Before: B48072799   After: B49367988  **68,640**
+Routine Name: SCDXRT03
+    Before:  B6148498   After:  B6481187  **215,247,640**
+Routine Name: SCDXSTOP
+    Before:       n/a   After: B10792724  **640**
+Routine Name: SDOQMP
+    Before: B27066112   After: B27996803  **47,640**
+Routine Name: SDPMHLS
+    Before: B35184132   After: B36919465  **313,371,416,640**
+ 
+Routine list of preceding patches: 47, 68, 416, 466
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 16, 2015
+Completed By:                               Date Completed: OCT 16, 2018
+Released By :                               Date Released : OCT 16, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

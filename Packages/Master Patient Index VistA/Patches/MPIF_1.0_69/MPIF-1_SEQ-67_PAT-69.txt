@@ -1,0 +1,307 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Wednesday, 01/16/19 at 11:57
+=============================================================================
+Run Date: APR 10, 2019                     Designation: MPIF*1*69
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #67                      Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - SUPPORT LONG NAMES IN VA MPI
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a
+       Veterans Affair Medical Center (VAMC) VistA system).
+  
+ There are NO required builds for patch MPIF*1.0*69.
+    
+ NOTE: Master Patient Index (MPI) 'Support for Long Names in VA MPI'
+       enhancements are being distributed in three VistA namespaces:
+       DG, MPIF and RG.
+       The only build enforced requirement for this set of related
+       patches is that MPIF*1.0*69 be installed before RG*1.0*71.
+       
+       (Do NOT install MPIF*1.0*69 or RG*1.0*71 on legacy sites
+        or on the FORUM CLAIMS system)
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*974 patch. MPIF*1.0*69 and RG*1.0*71 should NOT be
+       installed on legacy sites or on the FORUM CLAIMS system. 
+  
+ The following enhancement exported in this patch was needed to support
+ the collection of the patient's legal name in the Veteran Affairs (VA)
+ Master Person Index, which requires MPI to support storing patient
+ names and aliases greater than the VistA maximum of 30 characters in
+ length.  
+  
+ Enhancement
+ MPI as of patch MPI*1.0*125 will start supporting the collection of
+ an individual's legal name, which can now exceed VistA's limitation of
+ a maximum length of 30 characters on the name and/or alias fields. To
+ support this change on the MPI, VistA has been modified with the
+ following change so that it will NOT outright reject the value for
+ exceeding the 30-character maximum length:
+  
+   Created a new Remote Procedure Call (RPC) [MPIF UPDATE NAME COMP
+   FLAG] that will allow MPI to remotely retrieve and update the new
+   Name Components flag stored in the MPI ICN BUILD MANAGEMENT 
+   (#984.8) file, LAST PATIENT BUILT field (#3). This field value will
+   be stored in the new file entry identified as 'THREE' (NAME .01)
+   and will control how names passed in the Health Level Seven (HL7)
+   Admit Discharge Transfer (ADT) A31 (Update Person) messages are
+   processed.
+  
+    - NEW Name Components Flag is set to 0 or Null:
+      
+          The component parts of the name in the HL7 message are used
+          to build a name, possibly shortened to 30 characters and
+          filed into the PATIENT (#2) file NAME (#.01) field. The same
+          process is true for aliases in that the component parts of
+          any aliases are used to build the alias, possibly shortened
+          to 30 characters and filed into the ALIAS (#1) multiple
+          NAME (#.01) field in the PATIENT (#2) file.
+       
+          Note: The existing ANAM01 MUMPS cross-reference (X-REF) on the
+                NAME (#.01) field and the ANAM201 X-REF on the ALIAS (#1)
+                multiple NAME (#.01) field on the PATIENT (#2) file will
+                continue to update the corresponding NAME COMPONENTS (#20)
+                entry with the name components passed in the ADT-A31
+                Person Update HL7 message.
+      
+    - NEW Name Components Flag is set to 1:
+  
+          The component parts of the name or alias in the HL7 message are
+          filed directly into the NAME COMPONENTS (#20) file.
+      
+          Note: The existing ANAME MUMPS X-REF on the fields in the NAME
+                COMPONENTS (#20) file will continue to update the source
+                field [NAME (#.01) field or ALIAS (#1) multiple NAME (#.01)
+                field in the PATIENT (#2) file] with the formatted name.     
+    
+       
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ MPIF UPDATE NAME COMP FLAG        NEW
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Salt Lake City HCS
+   
+   
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*69):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+   
+ Back-Out Plan
+ -------------
+ The MPIF patch back-out procedure would consist of deleting the NEW
+ routine 'MPIFNAMC' and the RPC [MPIF UPDATE NAME COMP FLAG] from the
+ REMOTE PROCEDURE (#8994) file.
+   
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFNAMC
+    Before:       n/a   After:  B2728845  **69**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2018
+Completed By:                               Date Completed: APR 10, 2019
+Released By :                               Date Released : APR 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

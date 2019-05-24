@@ -1,0 +1,559 @@
+$TXT Created by               at DEVD-MHA.DOMAIN.EXT  (KIDS) on Wednesday, 02/13/19 at 22:31
+=============================================================================
+Run Date: MAR 05, 2019                     Designation: YS*5.01*123
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #105                   Status: Released
+                  Compliance Date: APR 05, 2019
+=============================================================================
+
+Associated patches: (v)YS*5.01*134 <<= must be installed BEFORE `YS*5.01*123'
+
+Subject: REDESIGN AND UPDATE TO INSTRUMENT SCORING AND MINOR BUG FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ The primary purpose of this patch is to move instruments previously 
+ scored in the YS_MHA_AUX DLL to VistA. The scoring changes result in MHA 
+ (Mental Health Assistant) scores being reported in Reminder Dialogs and 
+ the Health Summary for these instruments properly. The following 
+ instruments are now scored in VistA:
+  
+ Alcohol Use Disorders Identification Test Consumption            AUDC
+ Beck Anxiety Inventory                                           BAI
+ Brief Addiction Monitor - Consumption Items                      BAM-C
+ Brief Addiction Monitor - Revised                                BAM-R
+ Behavior and Symptom Identification Scale - 24                   BASIS-24
+ Beck Depression Inventory--Second Edition                        BDI2
+ Beck Hopelessness Scale                                          BHS
+ Beck Scale for Suicide Ideation (previous short name: BSI)       BSS
+ Clinical Dementia Rating                                         CDR
+ Functional Assessment Staging                                    FAST
+ Internalized Stigma of Mental Illness Inventory                  ISMI
+ Mini-Cog                                                         MINICOG
+ NEO Personality Inventory-3                                      NEO-PI-3
+ Minnesota Multiphasic Personality Inventory-2-Restructured Form  MMPI-2-RF
+ Primary Care PTSD Screen                                         PC PTSD
+ Patient Health Questionnaire-2                                   PHQ-2
+ Pain Outcomes Questionnaire                                      POQ
+ Quality of Life Inventory                                        QOLI
+ Short Test of Mental Status                                      STMS
+ Veterans RAND 12 Item Health Survey                              VR-12
+ World Health Organization Disability Assessment Schedule 2.0     WHODAS 2
+ West Haven-Yale Multidimensional Pain Inventory                  WHYMPI
+  
+ Additionally, the scoring algorithm was changed so that every instrument 
+ score is persistently stored in the MH RESULTS File (#601.92).  Should an 
+ instrument need to be rescored for any reason, there has been 
+ functionality added to retain previous scores.
+  
+ The Brief Addiction Monitor (BAM) has been retired.  The BAM-R and BAM-IOP
+ should be used instead.
+  
+ The BSI was renamed to the BSS.  Scoring the instrument was also 
+ modified.  Prior to this patch all questions were included in the score, 
+ now only questions 1-19 are included in the scoring so the maximum score 
+ for the instrument is 38.  The current scoring rule stipulates that if 
+ more than 5 questions are not answered the instrument would not be scored
+ has been removed.  The instrument will now be scored regardless of how 
+ many questions are skipped. Skip logic has been added so that if the 
+ response to Question 20 is "I have never attempted suicide" (0), question 
+ 21 is not asked.  The categories of risk have been removed from the 
+ report and the following text has been added:
+  
+   The BSS is intended to assess thoughts, plans and intent to die by 
+   suicide or attempt suicide over the past week.  Total scores can range
+   from 0-38. There is no specific cut-off score to classify severity or
+   guide patient management, however, increasing scores reflect greater
+   risk, and any positive response to any item may reflect the presence of
+   suicidal intention and should be investigated further.
+   
+ The VR-12, question 7 had incorrect responses.  The responses prior to 
+ the modification were:
+  
+ 1. All of the time    3. A good bit of the time    5. A little of the time
+ 2. Most of the time   4. Some of the time          6. None of the time
+  
+ The correct responses are:
+ 1. All of the time    3. Some of the time          5. None of the time
+ 2. Most of the time   4. A little of the time
+  
+ The responses have been changed to the correct responses.  Any previously 
+ administered instrument will have response #3 (A good bit of the time) 
+ mapped to response #2 (Most of the time) during the patch install.
+   
+ Additionally, the scoring algorithm for the VR-12 was modified to 
+ consider skipped questions in the administration.
+  
+ The Beck Depression Inventory--Second Edition (BDI2) results review
+ has been changed.  If the response to Item 9 (SUICIDAL THOUGHTS OR 
+ WISHES) is 1, 2, or 3 the following statement is added to the report 
+ after score:
+  
+   Responses consistent with the presence of suicidal ideation were 
+   endorsed in positive direction (item-9), additional clinical 
+   assessment is indicated.
+  
+ The Brief Addiction Monitor - Revised (BAM-R) was revised to correct a 
+ scoring error.  Prior to this patch question 17 was included in the 
+ Protective Factors Scale score rather than question 16 resulting in an 
+ incorrect scale score. Question 16 is now used in the calculation.
+  
+ The NEO Personality Inventory-3 (NEO-PI-3) Instrument Results Review was 
+ modified to display messages when it appears that the respondent answered 
+ the items in a random fashion resulting in an invalid administration.
+  
+ The West Haven-Yale Multidimensional Pain Inventory (WHYMPI) was revised 
+ to correct a scoring error.  The Affective Distress Scale did not 
+ properly reverse-score the response to question 6 prior to calculating 
+ the score and has been corrected. 
+  
+ The Patient Health Questionnaire-2 (PHQ-2) Instrument Results Review was 
+ modified. The statement that explains if the screening score indicates a 
+ positive or negative result was changed. Additionally, the 2 questions 
+ were made required.
+  
+ Currently an example statement is: A score of 4 or more indicates a 
+ positive screen. 
+  
+ The statement has been changed to: The score on this administration is 4, 
+ which indicates a positive screen on the Depression Scale over the past 
+ two weeks.
+  
+ Globally for any instrument with skip logic: the skip logic did not work 
+ correctly when an instrument was administered using the "One question at 
+ a time" function in the Instrument Administrator. If the next to last 
+ question should be skipped, MHA did not automatically move to the last 
+ question, rather it required the user to click on the 'Next Question' 
+ button.  Modifications were made so that the user is prompted for the 
+ last question.
+  
+ Instruments that have a 'checklist' box question such as the Suicide 
+ Behavior Report did not display the last choice in the list box.  While a 
+ user could select the item, arrow keys had to be used to see the item
+ although it was not intuitive to do so.  Modifications were made so that
+ all items are visible in a left justified list.
+  
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)              Field Name (Number)        New/Mod/Del
+ ------------------              -------------------        -----------
+ MH TESTS AND SURVEYS (#601.71)  Scoring Revision (#93)     New Field
+ MH ADMINISTRATIONS (#601.84)    Scoring Revision (#14)     New Field
+ MH RESULTS (#601.92)            Revision History (#11)     New Field
+                                  (Multiple-601.921)        New
+                                    Revision Date (#.01)    New
+                                    Scoring Revision (#2)   New
+                                    Prior Raw Score (#3)    New
+                                    Prior Transformed
+                                      Score 1 (#4)          New    
+                                    Prior Transformed
+                                      Score 2 (#5)          New    
+                                    Prior Transformed
+                                      Score 3 (#6)          New    
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A    
+  
+ Options Associated:
+ Option Name                                      Type         New/Mod/Del
+ -----------                                      ----         -----------
+ YS BROKER1 version 1.0.3.75~1.0.5.6~1.0.3.75    broker       Modified
+   [YS BROKER1]
+ YS*5.01*123 Re-scoring Monitor                   run routine  New
+   [YS123 RESCORING MONITOR]
+  
+ Protocols Associated: N/A
+  
+  
+ Remote Procedures Associated:
+ Remote Procedure Name                            New/Mod/Del
+ ---------------------                            -----------
+ YTQ GET RESULTS                                  New
+ YTQ GET SCRATCH SCORES                           New   
+  
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20150509: Posttraumatic Stress Disorder (PTSD) Checklist 5 (PCL-5) 
+ and Mental Health Assistant Stabilization (MHAS).
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 2497: Mental health instruments that use a complex scoring 
+ algorithm display an incorrect score when used in Health Summary and
+ Clinical Reminders. 
+  
+ NSD Ticket(s) & Overview:
+ -------------------------
+ I16022669FY17: If multiple instruments are selected and administered 
+ from tabs and a progress note is generated, the Line "URGENCY" is repeated
+ for each instrument, displaying multiple times in one note.  Modifications
+ were made so that URGENCY is only displayed once.
+  
+ I17997095FY18: Modifications made to the BSS, see description above.
+  
+ I99044951Y16: There is an error when generating a report for an 
+ instrument from the legacy score file for an administration that doesn't
+ exist. Modifications were made to YTQAPI8 to check for this condition and
+ not run the report preventing the error.
+  
+  
+ Test Sites:
+ ----------
+ Milwaukee 
+ Orlando
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+   MHA3 Installation Guide (YS*5.01*123)        YS_501_123_IG.pdf    
+   MHA3 Technical Manual and Security Guide     YS_MHA_TM.pdf    
+   MHA3 User Manual                             YS_MHA_UM.pdf
+   
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This patch is being distributed as a host file.  The name of the host 
+ file is YS_501_123.KID.  This file should be downloaded in ASCII 
+ format.
+   
+ The preferred method is to retrieve files from:
+   
+     download.vista.domain.ext.
+   
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+   
+ Sites may retrieve the software and install guide directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+   
+ The Install Guide is also available on the above servers.  It is 
+ available as .PDF format.  This file should be downloaded in BINARY 
+ format.  
+   
+     File Name:              Description:                    Protocol
+     ==========              ============                    =========
+     YS_501_123_IG.pdf       MHA3 Patch 123 Install Guide    BINARY
+     YS_501_123.KID          PATCH 123 Update Host File      ASCII
+     YS_501_123.ZIP          PATCH 123 MHA GUI V 1.0.3.73    BINARY
+     YS_MHA_TM.PDF               MHA3 Technical Manual           BINARY
+     YS_MHA_UM.PDF           MHA3 User Manual                BINARY
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:  http://www.domain.ext/vdl/
+  
+ Patch Installation
+ ==================
+  
+ Pre-installation Overview:
+ --------------------------
+ In the past, not all mental health instruments had scores recorded in the 
+ MH RESULTS file (#601.92).  This patch corrects that by starting a job in 
+ the background that will re-score any instruments that do not have
+ properly recorded scores.  IMPORTANT NOTE:  This will cause the number of
+ records stored in the MH RESULTS file (#601.92) to increase by about
+ 25%.  Prior to installing the patch, be sure there is enough space for the
+ ^YTT global to grow.  At test sites, the ^YTT global grew by about 3%. See
+ YS_501_123_IG.pdf for more information.
+  
+ Installation:
+ -------------
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install Guide, YS_501_123_IG.pdf 
+ for complete details.
+   
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+   
+     When prompted to enter a host file, type in YS_501_123.KID
+   
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+    
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use YS*5.01*123
+  
+ 4.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' enter No. 
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter NO.
+   
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' enter NO. 
+    
+ Back-Out Plan
+ -------------
+ For information about back out steps see this document:
+  
+   YS_501_123_IG.pdf
+  
+ in the VistA Documentation Library at: http://www.domain.ext/vdl/
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 73
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS123PST
+    Before:       n/a   After: B24739441  **123**
+Routine Name: YTQAPI11
+    Before: B25396570   After: B30048720  **85,96,123**
+Routine Name: YTQAPI2
+    Before: B24402405   After: B31600888  **85,96,119,121,123**
+Routine Name: YTQAPI2A
+    Before: B22322420   After: B14847821  **121,134,123**
+Routine Name: YTQAPI8
+    Before: B33168164   After: B47316797  **85,121,123**
+Routine Name: YTQCONS
+    Before: B22590519   After: B21604190  **103,123**
+Routine Name: YTQPXRM8
+    Before: B15837966   After: B54326910  **98,123**
+Routine Name: YTQTIU
+    Before: B22339305   After: B22796222  **85,96,123**
+Routine Name: YTSAUDTC
+    Before:       n/a   After:  B4359299  **123**
+Routine Name: YTSBAI
+    Before:       n/a   After: B10297958  **123**
+Routine Name: YTSBAMC
+    Before:       n/a   After:  B2786313  **123**
+Routine Name: YTSBAMR
+    Before:       n/a   After: B21293411  **123**
+Routine Name: YTSBAS24
+    Before:       n/a   After: B51609198  **123**
+Routine Name: YTSBDI2
+    Before:       n/a   After: B13999964  **123**
+Routine Name: YTSBHS
+    Before:       n/a   After: B16408480  **123**
+Routine Name: YTSBSS
+    Before:       n/a   After:  B9412524  **123**
+Routine Name: YTSCDR
+    Before:       n/a   After: B15820283  **123**
+Routine Name: YTSCORE
+    Before:     B5317   After: B54651706  **119,123**
+Routine Name: YTSCOREV
+    Before:       n/a   After: B57147321  **119,123**
+Routine Name: YTSFAST
+    Before:       n/a   After:  B5556501  **123**
+Routine Name: YTSISMI
+    Before:       n/a   After: B13349648  **123**
+Routine Name: YTSMINIC
+    Before:       n/a   After:  B7002619  **123**
+Routine Name: YTSMPI2
+    Before:       n/a   After: B33844449  **123**
+Routine Name: YTSMPI2E
+    Before:       n/a   After: B27428150  **123**
+Routine Name: YTSMPI2H
+    Before:       n/a   After: B30811677  **123**
+Routine Name: YTSMPI2P
+    Before:       n/a   After:  B8572910  **123**
+Routine Name: YTSMPI2S
+    Before:       n/a   After: B34423692  **123**
+Routine Name: YTSMPI2T
+    Before:       n/a   After: B46267603  **123**
+Routine Name: YTSMPI2U
+    Before:       n/a   After: B72823730  **123**
+Routine Name: YTSMPI2V
+    Before:       n/a   After: B23775047  **123**
+Routine Name: YTSMPI2Y
+    Before:       n/a   After: B14501308  **123**
+Routine Name: YTSMPIR
+    Before:       n/a   After: B25492700  **123**
+Routine Name: YTSMPIRD
+    Before:       n/a   After: B38704344  **123**
+Routine Name: YTSNEOP1
+    Before:       n/a   After: B60236597  **123**
+Routine Name: YTSNEOP2
+    Before:       n/a   After: B59142535  **123**
+Routine Name: YTSNEOP3
+    Before:       n/a   After: B87270089  **123**
+Routine Name: YTSNEOPI
+    Before:       n/a   After: B37891902  **123**
+Routine Name: YTSPHQ2
+    Before:       n/a   After:  B5651900  **123**
+Routine Name: YTSPOQ
+    Before:       n/a   After: B96628593  **123**
+Routine Name: YTSPSOCQ
+    Before:       n/a   After:  B5520119  **123**
+Routine Name: YTSPTSD
+    Before:       n/a   After:  B3936166  **123**
+Routine Name: YTSQOLI
+    Before:       n/a   After: B63479643  **123**
+Routine Name: YTSQOLI1
+    Before:       n/a   After: B44866396  **123**
+Routine Name: YTSSTMS
+    Before:       n/a   After:  B5369687  **123**
+Routine Name: YTSVR12
+    Before:       n/a   After: B33765075  **123**
+Routine Name: YTSVRM1
+    Before:       n/a   After:B101904148  **123**
+Routine Name: YTSVRM10
+    Before:       n/a   After:B110202549  **123**
+Routine Name: YTSVRM11
+    Before:       n/a   After:B110768739  **123**
+Routine Name: YTSVRM12
+    Before:       n/a   After:B111319692  **123**
+Routine Name: YTSVRM13
+    Before:       n/a   After:B110704605  **123**
+Routine Name: YTSVRM14
+    Before:       n/a   After:B112180326  **123**
+Routine Name: YTSVRM15
+    Before:       n/a   After:B113311749  **123**
+Routine Name: YTSVRM16
+    Before:       n/a   After:B105471044  **123**
+Routine Name: YTSVRM17
+    Before:       n/a   After:B104286520  **123**
+Routine Name: YTSVRM18
+    Before:       n/a   After:B108834336  **123**
+Routine Name: YTSVRM19
+    Before:       n/a   After:B112232029  **123**
+Routine Name: YTSVRM2
+    Before:       n/a   After:B107395949  **123**
+Routine Name: YTSVRM20
+    Before:       n/a   After:B109477746  **123**
+Routine Name: YTSVRM21
+    Before:       n/a   After:B113718493  **123**
+Routine Name: YTSVRM22
+    Before:       n/a   After:B112802373  **123**
+Routine Name: YTSVRM23
+    Before:       n/a   After:B112451696  **123**
+Routine Name: YTSVRM24
+    Before:       n/a   After:B111885516  **123**
+Routine Name: YTSVRM25
+    Before:       n/a   After:B112133328  **123**
+Routine Name: YTSVRM26
+    Before:       n/a   After:B116453086  **123**
+Routine Name: YTSVRM27
+    Before:       n/a   After:B103131418  **123**
+Routine Name: YTSVRM28
+    Before:       n/a   After:B107257258  **123**
+Routine Name: YTSVRM29
+    Before:       n/a   After: B59488015  **123**
+Routine Name: YTSVRM3
+    Before:       n/a   After:B107344511  **123**
+Routine Name: YTSVRM4
+    Before:       n/a   After:B110421934  **123**
+Routine Name: YTSVRM5
+    Before:       n/a   After:B109737134  **123**
+Routine Name: YTSVRM6
+    Before:       n/a   After:B109448573  **123**
+Routine Name: YTSVRM7
+    Before:       n/a   After:B109520267  **123**
+Routine Name: YTSVRM8
+    Before:       n/a   After:B114246719  **123**
+Routine Name: YTSVRM9
+    Before:       n/a   After:B109292953  **123**
+Routine Name: YTSVRP1
+    Before:       n/a   After:B108937936  **123**
+Routine Name: YTSVRP10
+    Before:       n/a   After:B109710265  **123**
+Routine Name: YTSVRP11
+    Before:       n/a   After:B110441274  **123**
+Routine Name: YTSVRP12
+    Before:       n/a   After:B115737130  **123**
+Routine Name: YTSVRP13
+    Before:       n/a   After:B112120292  **123**
+Routine Name: YTSVRP14
+    Before:       n/a   After:B114239947  **123**
+Routine Name: YTSVRP15
+    Before:       n/a   After:B114967433  **123**
+Routine Name: YTSVRP16
+    Before:       n/a   After:B112965310  **123**
+Routine Name: YTSVRP17
+    Before:       n/a   After:B110119447  **123**
+Routine Name: YTSVRP18
+    Before:       n/a   After:B110264488  **123**
+Routine Name: YTSVRP19
+    Before:       n/a   After:B112080883  **123**
+Routine Name: YTSVRP2
+    Before:       n/a   After:B109914546  **123**
+Routine Name: YTSVRP20
+    Before:       n/a   After:B108221298  **123**
+Routine Name: YTSVRP21
+    Before:       n/a   After:B113315435  **123**
+Routine Name: YTSVRP22
+    Before:       n/a   After:B112678239  **123**
+Routine Name: YTSVRP23
+    Before:       n/a   After:B118576259  **123**
+Routine Name: YTSVRP24
+    Before:       n/a   After:B110767524  **123**
+Routine Name: YTSVRP25
+    Before:       n/a   After:B112405922  **123**
+Routine Name: YTSVRP26
+    Before:       n/a   After:B113560290  **123**
+Routine Name: YTSVRP27
+    Before:       n/a   After:B111923844  **123**
+Routine Name: YTSVRP28
+    Before:       n/a   After:B100192560  **123**
+Routine Name: YTSVRP29
+    Before:       n/a   After:B119686539  **123**
+Routine Name: YTSVRP3
+    Before:       n/a   After:B110444755  **123**
+Routine Name: YTSVRP4
+    Before:       n/a   After:B110721614  **123**
+Routine Name: YTSVRP5
+    Before:       n/a   After:B111595130  **123**
+Routine Name: YTSVRP6
+    Before:       n/a   After:B110639774  **123**
+Routine Name: YTSVRP7
+    Before:       n/a   After:B111208936  **123**
+Routine Name: YTSVRP8
+    Before:       n/a   After:B113389193  **123**
+Routine Name: YTSVRP9
+    Before:       n/a   After:B107850960  **123**
+Routine Name: YTSWHODA
+    Before:       n/a   After: B73599481  **123**
+Routine Name: YTSWHYMP
+    Before:       n/a   After: B49407784  **123**
+Routine Name: YTXCHG
+    Before: B53596106   After: B65891565  **121,123**
+Routine Name: YTXCHGM
+    Before: B68668785   After: B69364359  **121,123**
+Routine Name: YTXCHGT
+    Before: B19049216   After: B22991016  **121,123**
+Routine Name: YTXCHGU
+    Before: B33209921   After: B38521815  **121,123**
+ 
+Routine list of preceding patches: 98, 103, 134
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2016
+Completed By:                               Date Completed: FEB 28, 2019
+Released By :                               Date Released : MAR 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

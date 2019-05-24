@@ -1,0 +1,235 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 12/14/18 at 14:12
+=============================================================================
+Run Date: APR 03, 2019                     Designation: RA*5*153
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #137                      Status: Released
+                  Compliance Date: MAY 06, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*56     <<= must be installed BEFORE `RA*5*153'
+                    (v)RA*5*99     <<= must be installed BEFORE `RA*5*153'
+                    (v)RA*5*124    <<= must be installed BEFORE `RA*5*153'
+
+Subject: REMOVING SCALED wRVU FUNCTIONALITY, ADDRESS ADD EXAM TO LAST VISIT W/PSETS
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ RA*5.0*153 was created to address the following issues:
+  
+ 1) INC4112622
+    ----------
+    Issue: The routine RAPXRM did not return imaging location or radiology
+    division information for a specified radiology study.
+    
+    Resolution: RAPXRM has been updated to include imaging location and 
+    the radiology division.
+  
+ 2) INC4113299
+    ----------
+    Issue: Scaled work Relative Value Units (wRVUs) are not relevant as a
+    metric by Radiology Program Office.
+  
+    Resolution: The option: 'Procedure Scaled wRVU/CPT Report'
+    [RA PROC CPTSWRVU] will be removed from the 'Special Reports'
+    [RA SPECRPTS] menu.
+    
+    The options 'Physician scaled wRVU Report by Imaging Type' [RA
+    WKLIPHY SWRVU ITYPE] & 'Physician scaled wRVU Report by CPT'
+    [RA WKLIPHY SWRVU CPT] will be removed from the 'Personnel
+    Workload Reports' [RA WKL] menu.
+  
+    Note: The options removed were exported under the RA WKL and
+    RA SPECRPTS menus. If those options to be removed reside on
+    different menus then those new menus should be identified   
+    and checked after the installation of RA*5.0*153. 
+  
+ 3) INC0565395
+    ----------
+    Issue: Two radiology studies with the same CPT (KNEE 2 VIEWS LEFT & 
+    KNEE 2 VIEWS RIGHT) are registered for the same patient at the same
+    date/time. When those studies are both completed Patient Care 
+    Encounter (PCE) has incorrect and missing data attributed to this 
+    encounter.
+    
+    Resolution: This patch will uniquely identify each study in the 
+    encounter such that PCE will be able to identify each study and 
+    correctly file those radiology study records within PCE.
+  
+ 4) INC3469724
+    ----------
+    Issue: Existing non-completed descendent exams, which are part of
+    a printset, have additional exams added to that visit. If those 
+    initial exams have report associations, the newly added exams may be
+    associated with an incorrect report.
+  
+    Resolution: This patch will file the report pointer on that new exam 
+    or exams by modifying the routine RAREG2 to correct this data filing issue.
+  
+  
+ SERVICE NOW TICKETS
+ -------------------
+ INC3469724
+ INC0565395
+ INC4112622
+ INC4113299
+  
+           
+ TEST SITES
+ ----------
+ Philadelphia, PA VAMC
+ Dayton, OH VAMC
+  
+           
+ Documentation Retrieval
+ -----------------------
+ There are two documentation changes associated with this patch:
+  
+ - Radiology/Nuclear Medicine User Manual
+  
+ - Radiology/Nuclear Medicine Technical Manual
+  
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices. These files should
+ be retrieved in binary format.
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to SFTP the files from
+     download.vista.domain.ext, which transmits the documents
+     from first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server as follows:
+  
+     Hines                 ftp.domain.ext
+     Salt Lake City        ftp.domain.ext
+  
+ The documentation distribution includes:
+  
+ File Name          Description                                  Protocol
+ ---------          -----------                                  --------
+ RA5_0TM.DOC        Radiology/Nuclear Medicine Technical Manual  BINARY
+ RA5_0UM.DOC        Radiology/Nuclear Medicine User Manual       BINARY
+  
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than two minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Access the KIDS main menu:
+      --------------------------
+    Start with the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*153):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+        'Add Exams to Last Visit' [RA ADDEXAM]
+        'Register Patient for Exams' [RA REG]
+  
+ Backout/Roll-back strategy
+ ==========================
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the ability
+ to be restored from the "backup" MailMan message that was generated.
+  
+ Back-out will be done only with the concurrence and participation of the
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel. A
+ national help desk ticket should be logged before attempting any backout
+ procedure.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAPCE
+    Before: B46739141   After: B47801899  **10,17,21,26,41,57,56,153**
+Routine Name: RAPXRM
+    Before: B16075069   After: B18223107  **33,56,153**
+Routine Name: RAREG
+    Before: B45671169   After: B43996898  **23,85,47,144,153**
+Routine Name: RAREG1
+    Before: B34544181   After: B32224086  **7,21,93,137,144,124,153**
+Routine Name: RAREG2
+    Before: B57844146   After: B58824366  **13,18,93,99,153**
+ 
+Routine list of preceding patches: 56, 99, 124
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2018
+Completed By:                               Date Completed: APR 02, 2019
+Released By :                               Date Released : APR 03, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

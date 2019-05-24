@@ -1,0 +1,229 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/26/18 at 08:17
+=============================================================================
+Run Date: FEB 25, 2019                     Designation: RMPR*3*199
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #175                      Status: Released
+                  Compliance Date: MAR 28, 2019
+=============================================================================
+
+Associated patches: (v)RMPR*3*62   <<= must be installed BEFORE `RMPR*3*199'
+
+Subject: TRANSACTION SEQ FULL MESSAGE DOES NOT DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated end user does not get the warning message, "<<NO>> open
+ sequence number available for ### for transaction entry", when creating an
+ eyeglass order in VistA.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:  N/A
+  
+ New Service Requests (NSRs):  N/A
+  
+ Patient Safety Issues (PSIs):  N/A
+  
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1.  INC2096056 - No open sequence # message does not display 
+  
+ Problem:
+ --------
+ Associated end user does not get the warning message, "<<NO>> open
+ sequence number available for ### for transaction entry", when creating an
+ eyeglass order using the 2914 Eyeglass Record [RMPR 2914 - EYEGLASS] menu
+ option and selecting an Obligation that has used all 9999 sequence
+ numbers. Also, the warning message letting the user know they are
+ running out of sequence numbers quickly scrolls on the screen, and
+ is not visible to the user unless they screen up on the VistA screen.
+  
+ Resolution:
+ -----------
+ Routine RMPR21 was modified to write the "<<NO>> open sequence number
+ available for ### for transaction entry" when the Obligation 
+ number is out of sequence numbers. Also, the software will now pause
+ after writing the warning messages to the screen, and require the user
+ to hit <Enter> to continue.
+  
+  
+ Test Sites:
+ -----------
+ Birmingham VAMC 
+ Manchester VAMC 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+  
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Menu Options to disable during installation:
+  
+ 2914 Eyeglass Record             [RMPR 2914 - EYEGLASS]
+  
+  
+ Installation Instructions:
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*199)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*199.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit enter.  
+  
+    6. When prompted 'Want to DISABLE Scheduled Options and Menu
+       Options and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+       enter:
+  
+       2914 Eyeglass Record             [RMPR 2914 - EYEGLASS]
+         
+       Enter protocols you wish to mark as 'Out Of Order':
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPR21
+    Before: B22480800   After: B24634995  **12,41,62,199**
+ 
+Routine list of preceding patches: 62
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2018
+Completed By:                               Date Completed: FEB 25, 2019
+Released By :                               Date Released : FEB 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

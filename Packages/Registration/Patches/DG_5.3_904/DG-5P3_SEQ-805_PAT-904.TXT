@@ -1,0 +1,207 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*904
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #805                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*624  <<= must be installed BEFORE `DG*5.3*904'
+
+Subject: BT FINANCIAL INDICATOR
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *************************************************************************
+  Note:  This patch is being released in support of the Enrollment Customer
+         Enhancements (ECE) and Enrollment System Enhancements projects and
+         Enrollment System (ES) 4.1 release.  DG*5.3*904 (Registration) is
+         released with DG*5.3*871 (Registration), DG*5.3*890 (Registration),
+         DG*5.3*891 (Registration), DG*5.3*901 (Registration), DG*5.3*906
+         (Registration), EAS*1*113 (Enrollment Application System) and
+         IVM*2*160 (Income Verification Match) in host file DG_53_P891.KID.
+   
+         It is imperative that this patch be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  
+  *************************************************************************
+  
+ The BT Beneficiary Travel- Financial Indicator (BTFI) signifies
+ a Veteran's eligibility for Beneficiary Travel based on their income.
+  
+ This patch modifies the Registration v5.3 application as described below:
+  
+ --   This patch will display a new Beneficiary Travel Financial Indicator
+      on the Means Test and Copay Test overview screens. The BT Financial
+      indicator will be sent from the Enrollment System and share with all
+      sites of record when the Income Verification Matching (IVM)
+      application has performed a Conversion and/or Reversal on an income
+      test where the Veteran had a BT award prior to the IVM action. A
+      bulletin will be generated and sent to the BT CLAIMS PROCESSING
+      Mailgroup to notify select members that there has been a change in
+      the Veteran's BT Financial Indicator status. The bulletin will be
+      released with EAS*1*113.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Forms Assocaited:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ ------------------         -------------------       --------------------
+ Annual Means Test #408.31  BT Financial Indicator #4    New
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                      N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A                    N/A                N/A
+  
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A                 N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A                 N/A      N/A        N/A       N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ CR13126/CCR13146
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ West Texas VA Health Care System, Big Spring, TX
+ Fargo VA Health Care System, Fargo, ND
+ Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3*901
+                                      DG*5.3*906
+  
+ Installation Instructions:
+ --------------------------
+  
+ Please see the DG*5.3*891 Patch Description for installation 
+ instructions.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGMTU23
+    Before: B30264819   After: B32516892  **33,182,254,272,420,435,456,
+                                           624,904**
+ 
+Routine list of preceding patches: 624
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : OCT 01, 2014
+Completed By:                               Date Completed: NOV 05, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

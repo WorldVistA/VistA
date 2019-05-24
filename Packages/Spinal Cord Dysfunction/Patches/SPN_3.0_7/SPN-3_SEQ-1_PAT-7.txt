@@ -1,0 +1,1206 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/11/19 at 08:09
+=============================================================================
+Run Date: MAR 11, 2019                     Designation: SPN*3*7
+Package : SPN - SPINAL CORD DYSFUNCTION       Priority: Mandatory
+Version : 3         SEQ #1                      Status: Released
+                  Compliance Date: APR 11, 2019
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*126<<= must be installed BEFORE `SPN*3*7'
+
+Subject: SPINAL CORD DYSFUNCTION DECOMMISSION
+
+Category: 
+  - Other
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Print Template
+
+Description:
+============
+
+ The Office of Spinal Cord Injury/Disorder (SCI/D) is requesting to 
+ decommission the VistA Spinal Cord Dysfunction (SCD) application and 
+ data. The VistA SCD application and stored data will be removed from 
+ VA's inventory of applications, saving unnecessary cost to maintain 
+ the system and data stored.
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ RTC Task 868618 - Spinal Cord Dysfunction Application Decommissioning
+  
+ Problem:
+ --------
+ The Office of Spinal Cord Injury/Disorder (SCI/D) is requesting to 
+ decommission VistA Spinal Cord Dysfunction (SCD) application and data. 
+ The VistA SCD application and stored data will be removed from VA's
+ inventory of applications, saving unnecessary cost to maintain the 
+ system and data stored.
+  
+ Resolution:
+ -----------
+ The patch build will take care of removing all of the SCD application 
+ components. The post install routine SPN7P will remove the data and 
+ data dictionary entries with the execution of API EN^DIU2. 
+ The following components will be removed from Vista:
+  
+  
+ Test Sites:
+ -----------
+ Pittsburg
+ Indianapolis
+   
+ Patch Components:
+  
+ Files to be deleted:
+  
+ File Name (Number)                               New/Modified/Deleted
+ ------------------                               --------------------
+ SCD (SPINAL CORD) REGISTRY  (#154)               Deleted
+ SCD NLOI CATEGORY (#154.01)                      Deleted
+ ETIOLOGY (#154.03)                               Deleted
+ OUTCOMES (#154.1)                                Deleted
+ FUNCTIONAL STATUS LEVEL (#154.11)                Deleted
+ SCD DISPOSITION CODES (#154.12)                  Deleted
+ SCD KURTZKE-EDSS (#154.2)                        Deleted
+ OUTCOME SCORE TYPES (#154.3)                     Deleted
+ PHYSICAL FACILITY (#154.7)                       Deleted
+ AD HOC MACRO (#154.8)                            Deleted
+ SCD SITE PARAMETERS (#154.91)                    Deleted
+ SCD FILTER (#154.92)                             Deleted
+ SPN ADMISSIONS (#154.991)                        Deleted
+  
+  
+ Forms to be deleted:
+  
+ Form Name                                        New/Modified/Deleted
+ ---------                                        --------------------
+ SPNE ENTER/EDIT SYNONYM                          Deleted     
+ SPNFFRM1                                         Deleted
+ SPNFFRM2                                         Deleted
+ SPNLP ASIA MES                                   Deleted
+ SPNLP CHART FM1                                  Deleted
+ SPNLP DIENER FM1                                 Deleted
+ SPNLP DUSOI FM1                                  Deleted
+ SPNLP FAM FM1                                    Deleted
+ SPNLP FIM FM1                                    Deleted
+ SPNLP FUN MES                                    Deleted
+ SPNLP MS FM1                                     Deleted
+ SPNLPFM1                                         Deleted
+ SPNLPFM2                                         Deleted
+  
+ Mail Groups to be deleted:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ SPNL SCD COORDINATOR                             Deleted
+  
+ Options to be deleted:
+  
+ Option Name                 
+ -----------                 
+ SPN AGG OUTCOMES REPORT         Aggregate Outcomes Report
+ SPN GENERAL USER RPC            General Spinal Cord Injury user
+ SPN ICD CODE SEARCH             ICD9 Code Search
+ SPN MAIN MENU                   Spinal Cord Dysfunction
+ SPN MS HELP                     Print MS Help Text
+ SPN PRINT ADMISSIONS            SCI/SCD Admissions
+ SPN PRINT APPLICAT              Applications for Inpatient Care
+ SPN PRINT DISCHARGE             SCI/SCD Discharges
+ SPN PRINT FIM                   Functional Independence Measures
+ SPN PRINT MS                    MS (Kurtzke) Measures
+ SPN PRINT OUT                   CHART/FAM/DIENER/DUSOI Scores
+ SPN PRINT SELF                  Self Report of Function
+ SPN REG INQ                     Inquire to a Registry Patient
+ SPN REPORT UTIL                 Utilization Reports
+ SPNF FIM DELETE                 Delete an Outcome Record
+ SPNF FIM EDIT                   Outcome Information
+ SPNF FIM SCORES                 Functional Status Scores
+ SPNINQ                          Inquire to an Outcome
+ SPNL ANN EVAL OUTCOMES          Annual Evaluation Outcomes
+ SPNL CLEANUP REPORT             Cleanup Report
+ SPNL CLINICAL REGISTRATION MOD  Clinical Information
+ SPNL CONT OF CARE OUTCOMES      Continuum of Care Outcomes
+ SPNL COORDINATOR                SCD Coordinator Menu
+ SPNL CURRENT INPT               Current Inpatients
+ SPNL ETIOLOGY SYN EDIT          Enter/Edit Etiology SYNONYM
+ SPNL F/U LAST REHAB EVAL        Follow-Up (Last Annual Rehab Eval Received
+ SPNL F/U LAST SEEN              Follow-Up (Last Seen)
+ SPNL FUTURE APPTS               Patients with Future Appointments
+ SPNL HEALTH SUMMARY             Health Summary
+ SPNL INPATIENT OUTCOMES         Inpatient Rehabilitation Outcomes
+ SPNL INPT/OPT ACTIVITY          Inpatient/Outpatient Activity
+ SPNL INPT/OPT SPECIFIC          Inpatient/Outpatient Activity (Specific)
+ SPNL INPUT ACTIVATE             Activate an SCD Registrant
+ SPNL INPUT INACTIVATE           Inactivate an SCD Registrant
+ SPNL INPUT/EDIT SCD REGISTRANT  Registration and Health Care Information
+ SPNL LAB UTIL                   Laboratory Utilization
+ SPNL LAB UTIL SPECIFIC          Laboratory Utilization (Specific)
+ SPNL MANAGEMENT                 SCD Package Management Menu
+ SPNL OUTPATIENT OUTCOMES        Outpatient Rehabilitation Outcomes
+ SPNL PARAMETERS                 Edit Site Parameters
+ SPNL PATIENT BREAKDOWN          Breakdown of Patients
+ SPNL PHARM UTIL                 Pharmacy Utilization
+ SPNL PHARM UTIL SPECIFIC        Pharmacy Utilization (Specific)
+ SPNL RADIOLOGY UTIL             Radiology Utilization
+ SPNL REGISTRANT GENERAL REPORT  Registrant General Report
+ SPNL REGISTRANT INJURY REPORT   Registrant Injury Report
+ SPNL REGISTRY DELETE            Delete Registry Record
+ SPNL REGISTRY SUMMARY           Patient Summary Report
+ SPNL SCD REPORT(FILTERED)       Filtered Report
+ SPNL SCD REPORTS                SCD Reports Menu
+ SPNL USER DIVISION              Change your Division Assignment
+ SPNLOLD                         Edit Non-conforming Outcome
+ SPNP ADHOC ASIA                 ASIA Ad Hoc Report
+ SPNP ADHOC CHART                CHART Ad Hoc Report
+ SPNP ADHOC CHART/FAM/DIENER     CHART/FAM/DIENER/DUSOI
+ SPNP ADHOC DIENER               DIENER Ad Hoc Report
+ SPNP ADHOC DUSOI                DUSOI Ad Hoc Report
+ SPNP ADHOC FAM                  FAM Ad Hoc Report
+ SPNP ADHOC FIM                  FIM Ad Hoc Report
+ SPNP ADHOC FUNCTIONAL           Comprehensive Outcomes Ad Hoc Report
+ SPNP ADHOC MENU                 SCD Ad Hoc Reports
+ SPNP ADHOC MS                   Multiple Sclerosis Ad Hoc Report
+ SPNP ADHOC REGISTRY             Registration Ad Hoc Report
+ SPNP ADHOC SELF REPORT          Self Report of Function Ad Hoc Report
+ SPNP BASIC PATIENT INFO         Basic Patient Information (132) Column
+ SPNP EXP PATIENT INFO           Expanded Patient List (255 Column)
+ SPNP LIST NEW SCI/SCD           New SCI/SCD Patients
+ SPNP MAIL LAB                   Mailing Labels
+ SPNP MS PATIENT LISTING         MS Patient Listing
+ SPNP PATIENT LIST               Patient Listing
+ SPNP PATIENT LIST(ST,COU)       Patient Listing (Sort by State and County)
+ SPNP SHOW SITES                 Show Sites Where Pt Has Been Treated
+ SPNSERVER                       SPN/SCD SERVER OPTION
+  
+ Protocols to be deleted:
+  
+ Protocol Name                   New/Modified/Deleted
+ -------------                   -------------------- 
+ SPN ALERT               SPN ALERT         Deleted
+ SPN REG STATUS DELETE   Notice of Date of Death Deletion Deleted
+ SPN REG STATUS UPDATE   Update Registration Status to Expired    Deleted
+ SPN-HL7-CLIENT          SPN HL7 CLIENT PROTOCOL              Deleted
+ SPN-HL7-SERVER          SPN HL7 SERVER        Deleted
+  
+  
+ Security Keys to be deleted:
+  
+ Security Key Name               New/Modified/Deleted
+ -----------------               --------------------
+ SPNL SCD MAIL                   Deleted
+ SPNL SCD MGT                    Deleted        
+ SPNL SCD PTS                    Deleted        
+ SPN_ADMIN                       Deleted
+ SPN_CATCHMENT                   Deleted
+ SPN_CLINICIAN                   Deleted
+ SPN_IRM                         Deleted        
+ SPN_RESEARCHER                  Deleted
+  
+  
+ Templates to be deleted:
+  
+ Template Name                Type        New/Modified/Deleted 
+ -------------                ----        --------------------
+ SPN PRINT DIE                Print       Deleted
+ SPN PRINT DUS                Print       Deleted
+ SPN PRINT FAM                Print       Deleted
+ SPN PRINT FIM                Print       Deleted
+ SPN PRINT MS                 Print       Deleted
+ SPN PRINT OUT                Print       Deleted
+ SPN PRINT SELF               Print       Deleted
+ SPNL REGISTRY DUMP           Print       Deleted
+ SPNLPT1                      Print       Deleted
+ SPNLPT2                      Print       Deleted
+ SPNL SCD NATIONAL REGISTRY   Input       Deleted
+ SPNL SCD SITE PARAMETERS     Input       Deleted
+  
+  
+ Routines to be deleted:
+  
+ Routines:
+ ---------
+ 1    SPN16E     2    SPN18E     3    SPN19E     4    SPN20E     
+ 5    SPN21E     6    SPN22E     7    SPN23E     8    SPN24E     
+ 9    SPNADF     10   SPNADF1    11   SPNADF2    12   SPNADF3    
+ 13   SPNADF4    14   SPNADF5    15   SPNADF6    16   SPNADF7    
+ 17   SPNADF8    18   SPNADF9    19   SPNADR     20   SPNADR1    
+ 21   SPNAGGA    22   SPNAGGC    23   SPNAGGE    24   SPNAGGEU   
+ 25   SPNAGGI    26   SPNAGGO    27   SPNAGGPC   28   SPNAGGPE   
+ 29   SPNAGGPI   30   SPNAGGPO   31   SPNAGGU    32   SPNAHOC0   
+ 33   SPNAHOC1   34   SPNAHOC2   35   SPNAHOC3   36   SPNAHOC4   
+ 37   SPNAHOC5   38   SPNAHOCH   39   SPNAHOCV   40   SPNAHOCW   
+ 41   SPNAHOCX   42   SPNAHOCY   43   SPNAHOCZ   44   SPNALERT   
+ 45   SPNCMR     46   SPNCMR1    47   SPNCMR2    48   SPNCMR3    
+ 49   SPNCMR5    50   SPNCTAA    51   SPNCTANN   52   SPNCTBLD   
+ 53   SPNCTCLS   54   SPNCTCON   55   SPNCTCUR   56   SPNCTINA   
+ 57   SPNCTINB   58   SPNCTOUA   59   SPNCTOUB   60   SPNCTPAA   
+ 61   SPNCTSHO   62   SPNCTSHW   63   SPNDDFM    64   SPNDDXFR   
+ 65   SPNDEATH   66   SPNDIV     67   SPNDOCA    68   SPNDODCK   
+ 69   SPNENPR    70   SPNETOBJ   71   SPNEVAL    72   SPNFAP1    
+ 73   SPNFEDI    74   SPNFEDT0   75   SPNFEDT1   76   SPNFEDT2   
+ 77   SPNFEDT3   78   SPNFEDT4   79   SPNFMENU   80   SPNFPLT0   
+ 81   SPNFPLT1   82   SPNFRMU    83   SPNFSRV0   84   SPNFSRV1   
+ 85   SPNFSRV2   86   SPNFUTL0   87   SPNGCHRH   88   SPNGCHRI   
+ 89   SPNGCOPY   90   SPNGDINA   91   SPNGDINB   92   SPNGDINH   
+ 93   SPNGFAMH   94   SPNGFAMI   95   SPNGFIMA   96   SPNGFIMB   
+ 97   SPNGFIMC   98   SPNGFIMD   99   SPNGFIME   100  SPNGFIMF   
+ 101  SPNGFIMG   102  SPNGFIMH   103  SPNGFIMI   104  SPNGFIMK   
+ 105  SPNGFIML   106  SPNGFIMM   107  SPNHL1     108  SPNHL2     
+ 109  SPNHL7     110  SPNHL71    111  SPNHPID    112  SPNHS0     
+ 113  SPNICD1    114  SPNICD2    115  SPNJRP4A   116  SPNJRPC0   
+ 117  SPNJRPC1   118  SPNJRPC2   119  SPNJRPC3   120  SPNJRPC4   
+ 121  SPNJRPC5   122  SPNJRPC6   123  SPNJRPC7   124  SPNJRPC8   
+ 125  SPNJRPC9   126  SPNJRPCC   127  SPNJRPCD   128  SPNJRPCE   
+ 129  SPNJRPCM   130  SPNJRPCP   131  SPNJRPCS   132  SPNJRPCX   
+ 133  SPNJRPDC   134  SPNJRPE2   135  SPNJRPET   136  SPNJRPFB   
+ 137  SPNJRPIC   138  SPNJRPIL   139  SPNJRPIP   140  SPNJRPIW   
+ 141  SPNJRPML   142  SPNJRPOP   143  SPNJRPP1   144  SPNJRPP2   
+ 145  SPNJRPPL   146  SPNJRPPM   147  SPNJRPPN   148  SPNJRPPR   
+ 149  SPNJRPRC   150  SPNJRPRE   151  SPNJRPSC   152  SPNJRPSD   
+ 153  SPNJRPSR   154  SPNJRPX2   155  SPNLCNTR   156  SPNLCNV0   
+ 157  SPNLCNV1   158  SPNLEDT1   159  SPNLEDT2   160  SPNLEGA    
+ 161  SPNLENV    162  SPNLGE     163  SPNLGEAA   164  SPNLGECH   
+ 165  SPNLGEDM   166  SPNLGEFM   167  SPNLGEIP   168  SPNLGEOP   
+ 169  SPNLGERA   170  SPNLGERX   171  SPNLGEUD   172  SPNLGICI   
+ 173  SPNLGICP   174  SPNLGIFU   175  SPNLGRCH   176  SPNLGRIP   
+ 177  SPNLGROP   178  SPNLGRPS   179  SPNLGRRA   180  SPNLGRRX   
+ 181  SPNLGSCH   182  SPNLGSIP   183  SPNLGSOP   184  SPNLGSRX   
+ 185  SPNLGU     186  SPNLGUCD   187  SPNLGUSN   188  SPNLPDM0   
+ 189  SPNLPIN    190  SPNLR      191  SPNLR1     192  SPNLRA     
+ 193  SPNLRB     194  SPNLRB1    195  SPNLRC     196  SPNLRD     
+ 197  SPNLRE     198  SPNLRF     199  SPNLRJ     200  SPNLRJI    
+ 201  SPNLRJO    202  SPNLRK     203  SPNLRK1    204  SPNLRK7    
+ 205  SPNLRK8    206  SPNLRL     207  SPNLRL1    208  SPNLRL2    
+ 209  SPNLRL3    210  SPNLRL7    211  SPNLRM     212  SPNLRM1    
+ 213  SPNLRM2    214  SPNLRM7    215  SPNLRM8    216  SPNLRM9    
+ 217  SPNLRQ     218  SPNLRQI    219  SPNLRQO    220  SPNLRR     
+ 221  SPNLRR1    222  SPNLRR7    223  SPNLRS     224  SPNLRS1    
+ 225  SPNLRS7    226  SPNLRU     227  SPNLRU1    228  SPNLRUDT   
+ 229  SPNLS      230  SPNLS1     231  SPNLS2     232  SPNLSCH    
+ 233  SPNLSCRN   234  SPNLSPAR   235  SPNLUTL0   236  SPNLUTL1   
+ 237  SPNLXMD    238  SPNMAIL    239  SPNMAIN    240  SPNMISS    
+ 241  SPNMISS2   242  SPNMSHLP   243  SPNMSR1    244  SPNMSR2    
+ 245  SPNNTEG    246  SPNNTEG0   247  SPNOBJ     248  SPNOGRDA   
+ 249  SPNP26     250  SPNPATUL   251  SPNPM1     252  SPNPM1D    
+ 253  SPNPM1N    254  SPNPM2     255  SPNPM2B    256  SPNPM2C    
+ 257  SPNPM2D    258  SPNPM2N    259  SPNPM4     260  SPNPM4N    
+ 261  SPNPMDX    262  SPNPOS19   263  SPNPOS22   264  SPNPPRE0   
+ 265  SPNPRI16   266  SPNPRI18   267  SPNPRI19   268  SPNPRI20   
+ 269  SPNPRI21   270  SPNPRT01   271  SPNPRT02   272  SPNPRT03   
+ 273  SPNPRT04   274  SPNPRT05   275  SPNPRT06   276  SPNPRT07   
+ 277  SPNPRT08   278  SPNPRT09   279  SPNPRT10   280  SPNPRT11   
+ 281  SPNPRT13   282  SPNPRTA2   283  SPNPRTA3   284  SPNPRTA4   
+ 285  SPNPRTA5   286  SPNPRTA6   287  SPNPRTA7   288  SPNPRTA8   
+ 289  SPNPRTA9   290  SPNPRTAF   291  SPNPRTAR   292  SPNPRTAU   
+ 293  SPNPRTMT   294  SPNPRTSR   295  SPNPRTUP   296  SPNPSFAC   
+ 297  SPNPSR00   298  SPNPSR01   299  SPNPSR02   300  SPNPSR03   
+ 301  SPNPSR04   302  SPNPSR05   303  SPNPSR06   304  SPNPSR07   
+ 305  SPNPSR08   306  SPNPSR09   307  SPNPSR10   308  SPNPSR11   
+ 309  SPNPSR12   310  SPNPSR13   311  SPNPSR14   312  SPNPSR15   
+ 313  SPNPSR16   314  SPNPSR17   315  SPNPSR18   316  SPNPSR19   
+ 317  SPNPSR20   318  SPNPSR21   319  SPNPSR22   320  SPNPSR23   
+ 321  SPNPSR24   322  SPNPSR25   323  SPNPSR26   324  SPNPSR27   
+ 325  SPNPSR28   326  SPNPSR29   327  SPNPSR31   328  SPNRPC03   
+ 329  SPNRPC1    330  SPNRPC10   331  SPNRPC13   332  SPNRPC4    
+ 333  SPNRPC4B   334  SPNRPC5    335  SPNRPC6    336  SPNRPC7    
+ 337  SPNRPC8    338  SPNRPC9    339  SPNRPCA1   340  SPNRPCB    
+ 341  SPNRPCC    342  SPNRPCD    343  SPNRPCE    344  SPNRPCF    
+ 345  SPNRPCG    346  SPNRPCH    347  SPNRPCI    348  SPNRPCIC   
+ 349  SPNRPCJ    350  SPNRPCL    351  SPNRPCM    352  SPNRPCN    
+ 353  SPNRPCO    354  SPNRPCQ    355  SPNRPCW    356  SPNRPCW2   
+ 357  SPNSERV    358  SPNUTL0    359  SPNUTL1    
+  
+ Remote Procedure Calls to be deleted:
+ ----------------------
+ SPN ADMISSIONS REPORT
+ SPN BUILD PICK LIST ENTRIES
+ SPN COMM DISCHARGES
+ SPN CURRENT INPATS
+ SPN FEE BASIS ICNS
+ SPN GET ADT DATA
+ SPN GET CLINIC STOPS
+ SPN GET ENROLLMENT
+ SPN GET ETHNICITY
+ SPN GET FUTURE APPTS
+ SPN GET LAST SEEN
+ SPN GET MAILING ADDRESS
+ SPN GET PAIN RATING
+ SPN GET PROS ITEMS
+ SPN GET RACE
+ SPN GET RAD REPORTS
+ SPN GET SCI COORDINATORS
+ SPN GET SPEC CODES
+ SPN GET VA STATUS
+ SPN ICD9 CODE SEARCH
+ SPN ICDS/CPTS & DESCRIPTIONS
+ SPN ICDS/CPTS W RAD COMMENTS
+ SPN ICN LOADER
+ SPN IDT DISCHARGE LOCATIONS
+ SPN INFLUENZA RPT
+ SPN INPAT CARE
+ SPN INPAT OUTPAT ACTIVITY
+ SPN INPAT OUTPAT SPECIFIC
+ SPN INPATIENT ICNS
+ SPN LAB COMPLETE BLOOD COUNT
+ SPN LAB MICRO BLOOD
+ SPN LAB MICRO URINE
+ SPN LAB SPUTUM
+ SPN LAB URINALYSIS
+ SPN LAB UTL REPORT
+ SPN LAB UTL SPECIFIC
+ SPN LIST ICDS/CPTS
+ SPN LIST PROGRESS NOTE TITLES
+ SPN MAILMAN NOTIFICATION
+ SPN MEANS & ELIGIBILITY
+ SPN MEDICATIONS ICNS
+ SPN MEDS 1ST 2-CHARS VA CLASS
+ SPN MEDS BY FULL VA CLASS
+ SPN NUTRITION PRECAUTIONS
+ SPN OUTPATIENT ICNS
+ SPN PAIN VITALS
+ SPN PAT BREAKDOWN
+ SPN PHARMACY UTL REPORT
+ SPN PROGRESS NOTES WRAPPER
+ SPN PROS UTL REPORT
+ SPN PROS UTL SPECIFIC
+ SPN PROSTHETICS ICNS
+ SPN PUT LAB COMPLETE BLOOD
+ SPN PUT LAB CYTOPATH
+ SPN PUT LAB MICRO
+ SPN PUT LAB SURG PATH
+ SPN PUT PROSTHETIC DEVICES
+ SPN RAD UTL REPORT
+ SPN READMISSIONS REPORT
+ SPN RECENT MED CENTERS
+ SPN RX UTILIZATION SPECIFIC
+ SPN SCI SCD DISCHARGES
+ SPN SCI USER ROLES
+ SPN SECONDARY ICDS
+ SPN SERVICE CONNECTED ICNS
+ SPN VADPT VALUES
+  
+ HL7 Application Parameters to be deleted:
+ --------------------------
+ SPN-HL7-APP
+  
+ HL Logical Links to be deleted:
+ ----------------
+ SPN
+  
+ Bulletins to be deleted:
+ ---------
+ SPNLBULLETIN
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-install routine SPN7P will run after the patch is installed. 
+ This routine will be automatically deleted after execution.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Patch GMTS*2.7*126 must be installed before SPN*3.0*7 may be installed.
+ Make a Back-up prior to installing this patch or ensure nightly backups 
+ are performed by your site in the event this patch may need to be backed 
+ out.
+ This patch may be installed at any time and should take less than 5
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch 
+     SPN*3.0*7:
+  
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will 
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.
+  
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch SPN*3.0*7 to install.
+  
+ 5.  When prompted, 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//', respond 'YES'.
+  
+ Back-out Procedures:
+ ====================
+ Back-out Procedures are only needed if there are major problems resulting 
+ from the installation of this patch. You must have concurrence from Health
+ Product Support before a rollback can occur. Enter a ServiceNow ticket to
+ obtain this concurrence. The development team will need to issue one or
+ more follow-up patches in order to comprehensively back out this patch,
+ after coordination with the VA Project Manager and Contracting Officer
+ Representative(COR.)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Spinal Cord Dysfunction;**[Patch List]**;Nov 08, 2018;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SPN16E
+    Before:  B1308502   After:    Delete  
+Routine Name: SPN18E
+    Before:  B2732440   After:    Delete  
+Routine Name: SPN19E
+    Before:  B1531005   After:    Delete  
+Routine Name: SPN20E
+    Before:  B1528620   After:    Delete  
+Routine Name: SPN21E
+    Before:  B1529030   After:    Delete  
+Routine Name: SPN22E
+    Before:  B1529417   After:    Delete  
+Routine Name: SPN23E
+    Before:  B1529462   After:    Delete  
+Routine Name: SPN24E
+    Before:  B1526668   After:    Delete  
+Routine Name: SPN7P
+    Before:       n/a   After:  B2061715  **7**
+Routine Name: SPNADF
+    Before: B29692116   After:    Delete  
+Routine Name: SPNADF1
+    Before: B35821176   After:    Delete  
+Routine Name: SPNADF2
+    Before: B22143652   After:    Delete  
+Routine Name: SPNADF3
+    Before:  B9264701   After:    Delete  
+Routine Name: SPNADF4
+    Before: B11528743   After:    Delete  
+Routine Name: SPNADF5
+    Before: B21723492   After:    Delete  
+Routine Name: SPNADF6
+    Before: B24509457   After:    Delete  
+Routine Name: SPNADF7
+    Before: B14322864   After:    Delete  
+Routine Name: SPNADF8
+    Before:  B6589421   After:    Delete  
+Routine Name: SPNADF9
+    Before:  B6554700   After:    Delete  
+Routine Name: SPNADR
+    Before: B23194684   After:    Delete  
+Routine Name: SPNADR1
+    Before:  B9769597   After:    Delete  
+Routine Name: SPNAGGA
+    Before:  B7731512   After:    Delete  
+Routine Name: SPNAGGC
+    Before: B80356092   After:    Delete  
+Routine Name: SPNAGGE
+    Before: B40608516   After:    Delete  
+Routine Name: SPNAGGEU
+    Before:  B7949619   After:    Delete  
+Routine Name: SPNAGGI
+    Before: B62554694   After:    Delete  
+Routine Name: SPNAGGO
+    Before: B80611571   After:    Delete  
+Routine Name: SPNAGGPC
+    Before: B26838227   After:    Delete  
+Routine Name: SPNAGGPE
+    Before: B24254757   After:    Delete  
+Routine Name: SPNAGGPI
+    Before: B28013576   After:    Delete  
+Routine Name: SPNAGGPO
+    Before: B18603624   After:    Delete  
+Routine Name: SPNAGGU
+    Before: B39243002   After:    Delete  
+Routine Name: SPNAHOC0
+    Before: B20933652   After:    Delete  
+Routine Name: SPNAHOC1
+    Before: B22805884   After:    Delete  
+Routine Name: SPNAHOC2
+    Before: B13192214   After:    Delete  
+Routine Name: SPNAHOC3
+    Before: B29062462   After:    Delete  
+Routine Name: SPNAHOC4
+    Before: B11778508   After:    Delete  
+Routine Name: SPNAHOC5
+    Before:  B7368494   After:    Delete  
+Routine Name: SPNAHOCH
+    Before: B32739879   After:    Delete  
+Routine Name: SPNAHOCV
+    Before: B23080918   After:    Delete  
+Routine Name: SPNAHOCW
+    Before: B25261796   After:    Delete  
+Routine Name: SPNAHOCX
+    Before:  B6980214   After:    Delete  
+Routine Name: SPNAHOCY
+    Before: B21938179   After:    Delete  
+Routine Name: SPNAHOCZ
+    Before:  B7650258   After:    Delete  
+Routine Name: SPNALERT
+    Before: B18463196   After:    Delete  
+Routine Name: SPNCMR
+    Before: B10388690   After:    Delete  
+Routine Name: SPNCMR1
+    Before: B10219567   After:    Delete  
+Routine Name: SPNCMR2
+    Before:  B5318216   After:    Delete  
+Routine Name: SPNCMR3
+    Before:  B3219218   After:    Delete  
+Routine Name: SPNCMR5
+    Before:  B1744098   After:    Delete  
+Routine Name: SPNCTAA
+    Before: B20570545   After:    Delete  
+Routine Name: SPNCTANN
+    Before:  B8879741   After:    Delete  
+Routine Name: SPNCTBLD
+    Before:  B5160975   After:    Delete  
+Routine Name: SPNCTCLS
+    Before:  B4263571   After:    Delete  
+Routine Name: SPNCTCON
+    Before:   B583510   After:    Delete  
+Routine Name: SPNCTCUR
+    Before:  B2396101   After:    Delete  
+Routine Name: SPNCTINA
+    Before: B15607387   After:    Delete  
+Routine Name: SPNCTINB
+    Before: B11500024   After:    Delete  
+Routine Name: SPNCTOUA
+    Before: B13617278   After:    Delete  
+Routine Name: SPNCTOUB
+    Before: B11481281   After:    Delete  
+Routine Name: SPNCTPAA
+    Before: B19583282   After:    Delete  
+Routine Name: SPNCTSHO
+    Before: B13517194   After:    Delete  
+Routine Name: SPNCTSHW
+    Before: B17267868   After:    Delete  
+Routine Name: SPNDDFM
+    Before:  B4434599   After:    Delete  
+Routine Name: SPNDDXFR
+    Before:  B2872323   After:    Delete  
+Routine Name: SPNDEATH
+    Before:  B1512582   After:    Delete  
+Routine Name: SPNDIV
+    Before:  B4422447   After:    Delete  
+Routine Name: SPNDOCA
+    Before:   B475380   After:    Delete  
+Routine Name: SPNDODCK
+    Before:  B4786660   After:    Delete  
+Routine Name: SPNENPR
+    Before:   B507575   After:    Delete  
+Routine Name: SPNETOBJ
+    Before:  B2460275   After:    Delete  
+Routine Name: SPNEVAL
+    Before:  B2036686   After:    Delete  
+Routine Name: SPNFAP1
+    Before: B39197527   After:    Delete  
+Routine Name: SPNFEDI
+    Before: B27414558   After:    Delete  
+Routine Name: SPNFEDT0
+    Before: B18483653   After:    Delete  
+Routine Name: SPNFEDT1
+    Before:  B4237120   After:    Delete  
+Routine Name: SPNFEDT2
+    Before:  B4735432   After:    Delete  
+Routine Name: SPNFEDT3
+    Before:  B6732514   After:    Delete  
+Routine Name: SPNFEDT4
+    Before: B16221555   After:    Delete  
+Routine Name: SPNFMENU
+    Before:  B9208049   After:    Delete  
+Routine Name: SPNFPLT0
+    Before:  B9515423   After:    Delete  
+Routine Name: SPNFPLT1
+    Before: B19160344   After:    Delete  
+Routine Name: SPNFRMU
+    Before:  B5416164   After:    Delete  
+Routine Name: SPNFSRV0
+    Before: B15606697   After:    Delete  
+Routine Name: SPNFSRV1
+    Before:  B6786678   After:    Delete  
+Routine Name: SPNFSRV2
+    Before:  B4316072   After:    Delete  
+Routine Name: SPNFUTL0
+    Before: B17674679   After:    Delete  
+Routine Name: SPNGCHRH
+    Before:  B5830734   After:    Delete  
+Routine Name: SPNGCHRI
+    Before:  B5355122   After:    Delete  
+Routine Name: SPNGCOPY
+    Before:  B2957841   After:    Delete  
+Routine Name: SPNGDINA
+    Before:  B8195068   After:    Delete  
+Routine Name: SPNGDINB
+    Before:  B4338817   After:    Delete  
+Routine Name: SPNGDINH
+    Before:  B6148078   After:    Delete  
+Routine Name: SPNGFAMH
+    Before:  B8988505   After:    Delete  
+Routine Name: SPNGFAMI
+    Before: B18346583   After:    Delete  
+Routine Name: SPNGFIMA
+    Before: B33579471   After:    Delete  
+Routine Name: SPNGFIMB
+    Before: B38415648   After:    Delete  
+Routine Name: SPNGFIMC
+    Before: B37223533   After:    Delete  
+Routine Name: SPNGFIMD
+    Before:  B4189187   After:    Delete  
+Routine Name: SPNGFIME
+    Before:  B2833786   After:    Delete  
+Routine Name: SPNGFIMF
+    Before:  B4190428   After:    Delete  
+Routine Name: SPNGFIMG
+    Before:  B4192080   After:    Delete  
+Routine Name: SPNGFIMH
+    Before: B13154862   After:    Delete  
+Routine Name: SPNGFIMI
+    Before: B21870243   After:    Delete  
+Routine Name: SPNGFIMK
+    Before:  B9791128   After:    Delete  
+Routine Name: SPNGFIML
+    Before:  B2166745   After:    Delete  
+Routine Name: SPNGFIMM
+    Before:  B3985083   After:    Delete  
+Routine Name: SPNHL1
+    Before: B20412880   After:    Delete  
+Routine Name: SPNHL2
+    Before: B21713902   After:    Delete  
+Routine Name: SPNHL7
+    Before: B11181819   After:    Delete  
+Routine Name: SPNHL71
+    Before:  B2308075   After:    Delete  
+Routine Name: SPNHPID
+    Before:   B309324   After:    Delete  
+Routine Name: SPNHS0
+    Before:  B7895959   After:    Delete  
+Routine Name: SPNICD1
+    Before: B16182002   After:    Delete  
+Routine Name: SPNICD2
+    Before:  B7784268   After:    Delete  
+Routine Name: SPNJRP4A
+    Before:  B1258600   After:    Delete  
+Routine Name: SPNJRPC0
+    Before:  B4797467   After:    Delete  
+Routine Name: SPNJRPC1
+    Before: B25695639   After:    Delete  
+Routine Name: SPNJRPC2
+    Before:  B8549659   After:    Delete  
+Routine Name: SPNJRPC3
+    Before: B53506814   After:    Delete  
+Routine Name: SPNJRPC4
+    Before: B38673987   After:    Delete  
+Routine Name: SPNJRPC5
+    Before: B14449910   After:    Delete  
+Routine Name: SPNJRPC6
+    Before:  B4635814   After:    Delete  
+Routine Name: SPNJRPC7
+    Before:   B352636   After:    Delete  
+Routine Name: SPNJRPC8
+    Before:  B1723581   After:    Delete  
+Routine Name: SPNJRPC9
+    Before: B17400459   After:    Delete  
+Routine Name: SPNJRPCC
+    Before:   B705728   After:    Delete  
+Routine Name: SPNJRPCD
+    Before: B26963457   After:    Delete  
+Routine Name: SPNJRPCE
+    Before:   B947821   After:    Delete  
+Routine Name: SPNJRPCM
+    Before:  B3844721   After:    Delete  
+Routine Name: SPNJRPCP
+    Before:   B454442   After:    Delete  
+Routine Name: SPNJRPCS
+    Before:   B842386   After:    Delete  
+Routine Name: SPNJRPCX
+    Before: B81896576   After:    Delete  
+Routine Name: SPNJRPDC
+    Before:  B7788443   After:    Delete  
+Routine Name: SPNJRPE2
+    Before:  B1830378   After:    Delete  
+Routine Name: SPNJRPET
+    Before:   B981420   After:    Delete  
+Routine Name: SPNJRPFB
+    Before:  B2618869   After:    Delete  
+Routine Name: SPNJRPIC
+    Before:  B7764384   After:    Delete  
+Routine Name: SPNJRPIL
+    Before:  B1214679   After:    Delete  
+Routine Name: SPNJRPIP
+    Before:  B4321660   After:    Delete  
+Routine Name: SPNJRPIW
+    Before: B77468632   After:    Delete  
+Routine Name: SPNJRPML
+    Before:  B5642555   After:    Delete  
+Routine Name: SPNJRPOP
+    Before:  B5917365   After:    Delete  
+Routine Name: SPNJRPP1
+    Before: B23248535   After:    Delete  
+Routine Name: SPNJRPP2
+    Before: B18150887   After:    Delete  
+Routine Name: SPNJRPPL
+    Before:  B1212848   After:    Delete  
+Routine Name: SPNJRPPM
+    Before: B12765608   After:    Delete  
+Routine Name: SPNJRPPN
+    Before:  B1907848   After:    Delete  
+Routine Name: SPNJRPPR
+    Before:  B3055124   After:    Delete  
+Routine Name: SPNJRPRC
+    Before:  B3460486   After:    Delete  
+Routine Name: SPNJRPRE
+    Before:  B5915306   After:    Delete  
+Routine Name: SPNJRPSC
+    Before:  B1441105   After:    Delete  
+Routine Name: SPNJRPSD
+    Before: B22832226   After:    Delete  
+Routine Name: SPNJRPSR
+    Before:  B2758801   After:    Delete  
+Routine Name: SPNJRPX2
+    Before: B33025054   After:    Delete  
+Routine Name: SPNLCNTR
+    Before:  B2581623   After:    Delete  
+Routine Name: SPNLCNV0
+    Before: B25324121   After:    Delete  
+Routine Name: SPNLCNV1
+    Before: B17710806   After:    Delete  
+Routine Name: SPNLEDT1
+    Before:  B1604952   After:    Delete  
+Routine Name: SPNLEDT2
+    Before:  B2050492   After:    Delete  
+Routine Name: SPNLEGA
+    Before:  B7526461   After:    Delete  
+Routine Name: SPNLENV
+    Before:  B3040752   After:    Delete  
+Routine Name: SPNLGE
+    Before:  B2715505   After:    Delete  
+Routine Name: SPNLGEAA
+    Before:  B3580780   After:    Delete  
+Routine Name: SPNLGECH
+    Before:  B7401129   After:    Delete  
+Routine Name: SPNLGEDM
+    Before:  B2337038   After:    Delete  
+Routine Name: SPNLGEFM
+    Before:  B6186824   After:    Delete  
+Routine Name: SPNLGEIP
+    Before: B10106276   After:    Delete  
+Routine Name: SPNLGEOP
+    Before:  B8539692   After:    Delete  
+Routine Name: SPNLGERA
+    Before:  B5568682   After:    Delete  
+Routine Name: SPNLGERX
+    Before:  B8334863   After:    Delete  
+Routine Name: SPNLGEUD
+    Before:  B7327459   After:    Delete  
+Routine Name: SPNLGICI
+    Before:  B4473038   After:    Delete  
+Routine Name: SPNLGICP
+    Before:   B623853   After:    Delete  
+Routine Name: SPNLGIFU
+    Before:  B1069056   After:    Delete  
+Routine Name: SPNLGRCH
+    Before:  B9837032   After:    Delete  
+Routine Name: SPNLGRIP
+    Before: B13320895   After:    Delete  
+Routine Name: SPNLGROP
+    Before: B19954300   After:    Delete  
+Routine Name: SPNLGRPS
+    Before:  B6813030   After:    Delete  
+Routine Name: SPNLGRRA
+    Before: B11172064   After:    Delete  
+Routine Name: SPNLGRRX
+    Before: B18449767   After:    Delete  
+Routine Name: SPNLGSCH
+    Before:  B5833114   After:    Delete  
+Routine Name: SPNLGSIP
+    Before:  B7267895   After:    Delete  
+Routine Name: SPNLGSOP
+    Before: B17735017   After:    Delete  
+Routine Name: SPNLGSRX
+    Before:  B8845143   After:    Delete  
+Routine Name: SPNLGU
+    Before:  B1473907   After:    Delete  
+Routine Name: SPNLGUCD
+    Before:   B199079   After:    Delete  
+Routine Name: SPNLGUSN
+    Before: B12461852   After:    Delete  
+Routine Name: SPNLPDM0
+    Before:  B2489787   After:    Delete  
+Routine Name: SPNLPIN
+    Before: B14061254   After:    Delete  
+Routine Name: SPNLR
+    Before: B11300055   After:    Delete  
+Routine Name: SPNLR1
+    Before: B10129478   After:    Delete  
+Routine Name: SPNLRA
+    Before:  B2114792   After:    Delete  
+Routine Name: SPNLRB
+    Before:  B7236264   After:    Delete  
+Routine Name: SPNLRB1
+    Before:  B8861320   After:    Delete  
+Routine Name: SPNLRC
+    Before:  B4432893   After:    Delete  
+Routine Name: SPNLRD
+    Before:  B7754398   After:    Delete  
+Routine Name: SPNLRE
+    Before: B10663932   After:    Delete  
+Routine Name: SPNLRF
+    Before:  B1354885   After:    Delete  
+Routine Name: SPNLRJ
+    Before:  B2175054   After:    Delete  
+Routine Name: SPNLRJI
+    Before: B20667167   After:    Delete  
+Routine Name: SPNLRJO
+    Before: B12563718   After:    Delete  
+Routine Name: SPNLRK
+    Before:  B3544931   After:    Delete  
+Routine Name: SPNLRK1
+    Before: B19593562   After:    Delete  
+Routine Name: SPNLRK7
+    Before:  B1438782   After:    Delete  
+Routine Name: SPNLRK8
+    Before: B15230861   After:    Delete  
+Routine Name: SPNLRL
+    Before:  B8452097   After:    Delete  
+Routine Name: SPNLRL1
+    Before: B19098772   After:    Delete  
+Routine Name: SPNLRL2
+    Before: B24652075   After:    Delete  
+Routine Name: SPNLRL3
+    Before: B16249663   After:    Delete  
+Routine Name: SPNLRL7
+    Before:  B3954554   After:    Delete  
+Routine Name: SPNLRM
+    Before:  B7055611   After:    Delete  
+Routine Name: SPNLRM1
+    Before: B24345451   After:    Delete  
+Routine Name: SPNLRM2
+    Before:  B8581249   After:    Delete  
+Routine Name: SPNLRM7
+    Before:  B3003178   After:    Delete  
+Routine Name: SPNLRM8
+    Before: B23501774   After:    Delete  
+Routine Name: SPNLRM9
+    Before:  B9152833   After:    Delete  
+Routine Name: SPNLRQ
+    Before:  B6199318   After:    Delete  
+Routine Name: SPNLRQI
+    Before:  B7523156   After:    Delete  
+Routine Name: SPNLRQO
+    Before:  B7162453   After:    Delete  
+Routine Name: SPNLRR
+    Before:  B3376796   After:    Delete  
+Routine Name: SPNLRR1
+    Before:  B5961514   After:    Delete  
+Routine Name: SPNLRR7
+    Before:  B9512592   After:    Delete  
+Routine Name: SPNLRS
+    Before:  B3116539   After:    Delete  
+Routine Name: SPNLRS1
+    Before:  B9594040   After:    Delete  
+Routine Name: SPNLRS7
+    Before: B19321322   After:    Delete  
+Routine Name: SPNLRU
+    Before:  B7816427   After:    Delete  
+Routine Name: SPNLRU1
+    Before:  B3672263   After:    Delete  
+Routine Name: SPNLRUDT
+    Before:  B9629844   After:    Delete  
+Routine Name: SPNLS
+    Before: B27468995   After:    Delete  
+Routine Name: SPNLS1
+    Before:  B7941274   After:    Delete  
+Routine Name: SPNLS2
+    Before:  B2804536   After:    Delete  
+Routine Name: SPNLSCH
+    Before:  B7952423   After:    Delete  
+Routine Name: SPNLSCRN
+    Before:   B194826   After:    Delete  
+Routine Name: SPNLSPAR
+    Before:  B7132308   After:    Delete  
+Routine Name: SPNLUTL0
+    Before: B27867929   After:    Delete  
+Routine Name: SPNLUTL1
+    Before: B14576586   After:    Delete  
+Routine Name: SPNLXMD
+    Before:  B9436037   After:    Delete  
+Routine Name: SPNMAIL
+    Before:   B402760   After:    Delete  
+Routine Name: SPNMAIN
+    Before:  B4469787   After:    Delete  
+Routine Name: SPNMISS
+    Before:  B6670725   After:    Delete  
+Routine Name: SPNMISS2
+    Before:  B9636018   After:    Delete  
+Routine Name: SPNMSHLP
+    Before: B74141303   After:    Delete  
+Routine Name: SPNMSR1
+    Before: B22140415   After:    Delete  
+Routine Name: SPNMSR2
+    Before:  B4564256   After:    Delete  
+Routine Name: SPNNTEG
+    Before: B19342145   After:    Delete  
+Routine Name: SPNNTEG0
+    Before:  B3077929   After:    Delete  
+Routine Name: SPNOBJ
+    Before: B15299316   After:    Delete  
+Routine Name: SPNOGRDA
+    Before: B13921914   After:    Delete  
+Routine Name: SPNP26
+    Before: B16072798   After:    Delete  
+Routine Name: SPNPATUL
+    Before:  B5972692   After:    Delete  
+Routine Name: SPNPM1
+    Before:  B6534265   After:    Delete  
+Routine Name: SPNPM1D
+    Before:  B5227754   After:    Delete  
+Routine Name: SPNPM1N
+    Before:  B1911406   After:    Delete  
+Routine Name: SPNPM2
+    Before: B21594507   After:    Delete  
+Routine Name: SPNPM2B
+    Before: B11032594   After:    Delete  
+Routine Name: SPNPM2C
+    Before:  B1639563   After:    Delete  
+Routine Name: SPNPM2D
+    Before: B11224987   After:    Delete  
+Routine Name: SPNPM2N
+    Before:  B4613922   After:    Delete  
+Routine Name: SPNPM4
+    Before: B11843953   After:    Delete  
+Routine Name: SPNPM4N
+    Before: B11135012   After:    Delete  
+Routine Name: SPNPMDX
+    Before:  B5579887   After:    Delete  
+Routine Name: SPNPOS19
+    Before:  B2092841   After:    Delete  
+Routine Name: SPNPOS22
+    Before:   B484992   After:    Delete  
+Routine Name: SPNPPRE0
+    Before:   B788053   After:    Delete  
+Routine Name: SPNPRI16
+    Before: B10039852   After:    Delete  
+Routine Name: SPNPRI18
+    Before:   B525467   After:    Delete  
+Routine Name: SPNPRI19
+    Before: B19952051   After:    Delete  
+Routine Name: SPNPRI20
+    Before:   B121408   After:    Delete  
+Routine Name: SPNPRI21
+    Before:   B118828   After:    Delete  
+Routine Name: SPNPRT01
+    Before:  B8844735   After:    Delete  
+Routine Name: SPNPRT02
+    Before: B16511507   After:    Delete  
+Routine Name: SPNPRT03
+    Before: B20922134   After:    Delete  
+Routine Name: SPNPRT04
+    Before: B15115262   After:    Delete  
+Routine Name: SPNPRT05
+    Before: B12786949   After:    Delete  
+Routine Name: SPNPRT06
+    Before: B20197674   After:    Delete  
+Routine Name: SPNPRT07
+    Before: B36458264   After:    Delete  
+Routine Name: SPNPRT08
+    Before: B14705758   After:    Delete  
+Routine Name: SPNPRT09
+    Before: B14667704   After:    Delete  
+Routine Name: SPNPRT10
+    Before: B11876839   After:    Delete  
+Routine Name: SPNPRT11
+    Before: B25959675   After:    Delete  
+Routine Name: SPNPRT13
+    Before: B22756998   After:    Delete  
+Routine Name: SPNPRTA2
+    Before:   B661354   After:    Delete  
+Routine Name: SPNPRTA3
+    Before:   B500755   After:    Delete  
+Routine Name: SPNPRTA4
+    Before:   B657200   After:    Delete  
+Routine Name: SPNPRTA5
+    Before:   B666380   After:    Delete  
+Routine Name: SPNPRTA6
+    Before:   B660901   After:    Delete  
+Routine Name: SPNPRTA7
+    Before:   B661055   After:    Delete  
+Routine Name: SPNPRTA8
+    Before:   B687628   After:    Delete  
+Routine Name: SPNPRTA9
+    Before:   B674246   After:    Delete  
+Routine Name: SPNPRTAF
+    Before:   B593433   After:    Delete  
+Routine Name: SPNPRTAR
+    Before:   B607258   After:    Delete  
+Routine Name: SPNPRTAU
+    Before:  B1065619   After:    Delete  
+Routine Name: SPNPRTMT
+    Before:  B8069969   After:    Delete  
+Routine Name: SPNPRTSR
+    Before:  B4563197   After:    Delete  
+Routine Name: SPNPRTUP
+    Before:  B2346348   After:    Delete  
+Routine Name: SPNPSFAC
+    Before:  B2654266   After:    Delete  
+Routine Name: SPNPSR00
+    Before:  B8849556   After:    Delete  
+Routine Name: SPNPSR01
+    Before:  B3647948   After:    Delete  
+Routine Name: SPNPSR02
+    Before:  B1885303   After:    Delete  
+Routine Name: SPNPSR03
+    Before:  B1913171   After:    Delete  
+Routine Name: SPNPSR04
+    Before:  B2554312   After:    Delete  
+Routine Name: SPNPSR05
+    Before:  B6067254   After:    Delete  
+Routine Name: SPNPSR06
+    Before:  B3504861   After:    Delete  
+Routine Name: SPNPSR07
+    Before:  B5722708   After:    Delete  
+Routine Name: SPNPSR08
+    Before:  B4917890   After:    Delete  
+Routine Name: SPNPSR09
+    Before:  B1885522   After:    Delete  
+Routine Name: SPNPSR10
+    Before:  B5132978   After:    Delete  
+Routine Name: SPNPSR11
+    Before:  B7117573   After:    Delete  
+Routine Name: SPNPSR12
+    Before:  B2295817   After:    Delete  
+Routine Name: SPNPSR13
+    Before:  B8559424   After:    Delete  
+Routine Name: SPNPSR14
+    Before:  B1672697   After:    Delete  
+Routine Name: SPNPSR15
+    Before: B12490729   After:    Delete  
+Routine Name: SPNPSR16
+    Before:  B3002808   After:    Delete  
+Routine Name: SPNPSR17
+    Before:  B6455637   After:    Delete  
+Routine Name: SPNPSR18
+    Before:  B7813731   After:    Delete  
+Routine Name: SPNPSR19
+    Before:  B8633209   After:    Delete  
+Routine Name: SPNPSR20
+    Before:  B5752830   After:    Delete  
+Routine Name: SPNPSR21
+    Before:  B4503681   After:    Delete  
+Routine Name: SPNPSR22
+    Before:  B2976728   After:    Delete  
+Routine Name: SPNPSR23
+    Before:  B4978764   After:    Delete  
+Routine Name: SPNPSR24
+    Before:  B3821550   After:    Delete  
+Routine Name: SPNPSR25
+    Before:  B3506757   After:    Delete  
+Routine Name: SPNPSR26
+    Before:  B2085349   After:    Delete  
+Routine Name: SPNPSR27
+    Before:  B2134974   After:    Delete  
+Routine Name: SPNPSR28
+    Before:  B2089311   After:    Delete  
+Routine Name: SPNPSR29
+    Before:  B2136871   After:    Delete  
+Routine Name: SPNPSR31
+    Before:  B2303333   After:    Delete  
+Routine Name: SPNRPC03
+    Before: B10552423   After:    Delete  
+Routine Name: SPNRPC1
+    Before: B17718596   After:    Delete  
+Routine Name: SPNRPC10
+    Before:  B2838928   After:    Delete  
+Routine Name: SPNRPC13
+    Before: B19205247   After:    Delete  
+Routine Name: SPNRPC4
+    Before: B51645622   After:    Delete  
+Routine Name: SPNRPC4B
+    Before: B46067512   After:    Delete  
+Routine Name: SPNRPC5
+    Before:   B609564   After:    Delete  
+Routine Name: SPNRPC6
+    Before:   B851415   After:    Delete  
+Routine Name: SPNRPC7
+    Before:  B3491672   After:    Delete  
+Routine Name: SPNRPC8
+    Before:  B1815443   After:    Delete  
+Routine Name: SPNRPC9
+    Before:  B2808690   After:    Delete  
+Routine Name: SPNRPCA1
+    Before:  B4948876   After:    Delete  
+Routine Name: SPNRPCB
+    Before:   B889413   After:    Delete  
+Routine Name: SPNRPCC
+    Before: B15974748   After:    Delete  
+Routine Name: SPNRPCD
+    Before: B17417590   After:    Delete  
+Routine Name: SPNRPCE
+    Before: B23315717   After:    Delete  
+Routine Name: SPNRPCF
+    Before: B23018946   After:    Delete  
+Routine Name: SPNRPCG
+    Before:  B9080936   After:    Delete  
+Routine Name: SPNRPCH
+    Before: B12245424   After:    Delete  
+Routine Name: SPNRPCI
+    Before: B18057216   After:    Delete  
+Routine Name: SPNRPCIC
+    Before:    B97795   After:    Delete  
+Routine Name: SPNRPCJ
+    Before: B16481640   After:    Delete  
+Routine Name: SPNRPCL
+    Before: B16794514   After:    Delete  
+Routine Name: SPNRPCM
+    Before: B21192373   After:    Delete  
+Routine Name: SPNRPCN
+    Before: B14508746   After:    Delete  
+Routine Name: SPNRPCO
+    Before: B12699717   After:    Delete  
+Routine Name: SPNRPCQ
+    Before:  B6960635   After:    Delete  
+Routine Name: SPNRPCW
+    Before: B13994447   After:    Delete  
+Routine Name: SPNRPCW2
+    Before: B20809166   After:    Delete  
+Routine Name: SPNSERV
+    Before: B18064018   After:    Delete  
+Routine Name: SPNUTL0
+    Before: B21833442   After:    Delete  
+Routine Name: SPNUTL1
+    Before: B18879157   After:    Delete  
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2018
+Completed By:                               Date Completed: MAR 08, 2019
+Released By :                               Date Released : MAR 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

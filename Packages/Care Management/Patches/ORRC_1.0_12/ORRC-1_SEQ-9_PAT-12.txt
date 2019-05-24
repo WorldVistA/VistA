@@ -1,0 +1,174 @@
+$TXT Created by                   A at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/16/19 at 14:31
+=============================================================================
+Run Date: FEB 01, 2019                     Designation: ORRC*1*12
+Package : ORRC - CARE MANAGEMENT              Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: MAR 04, 2019
+=============================================================================
+
+
+Subject: CARE MANAGEMENT DECOMMISSION
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch is designated for the decommissioning of the Care Management 
+ (CM) application. 
+  
+ The following options will be removed from Vista:
+   
+      1   ORRC CM MENU       Care Management Menu
+      2   ORRC ORD ACK INQ BY ORDER       ORDER ACKNOWLEDGEMENT INQUIRY BY 
+ ORDER
+      3   ORRC ORD ACK INQ BY PROV       ORDER ACKNOWLEDGEMENT INQUIRY BY 
+ PROVIDER
+      4   ORRCM CLIENT       Care Management Client Context
+      5   ORRCMC DASHBOARD       Care Management Dashboard 1.8.0
+      6   ORRCMC PATIENT TASK       Care Management Task 1.0
+      7  ORRCMC SIGN LIST       Sign List 1.0
+      8  ORRCMM CLINICIAN       Clinician Perspective Selector
+      9  ORRCMM CLINICIAN NURSE       Clinician Nurse and Sign List 
+ Perspectives
+      10  ORRCMM CLINICIAN QUERY       Clinician Dashboard and Query 
+ Selector
+      11  ORRCMM CM ALL       All Care Management Perspectives
+      12  ORRCMM NURSE QUERY       Nursing Dashboard and Query Selector
+      13  ORRCMM NURSING       Nursing Perspective Selector
+      14  ORRCMM TROUBLESHOOTER       Care Management Troubleshooter
+      15  ORRCMM TROUBLESHOOTER CLIN       CM Troubleshooter Clinician
+      16  ORRCMM TROUBLESHOOTER NURS       CM Troubleshooter Nursing
+      17  ORRCMP DASH CLINICIAN       clinicianDashboard
+      18  ORRCMP DASH NURSING       dashboard.nurseDashboard
+      19  ORRCMP RPC LOGGER       rpclogger
+      20  ORRCMP SIGN LIST       dashboard.signatureList
+  
+ The following remote procedure calls (RPCs) will be deactivated:
+  
+      1   ORRC ALERTS BY PATIENT  
+      2   ORRC APPTS BY PATIENT  
+      3   ORRC DASHBOARD PATIENTS  
+      4   ORRC EVENTS ACKNOWLEDGE  
+      5   ORRC EVENTS BY ID  
+      6   ORRC EVENTS BY PATIENT  
+      7   ORRC NURS DASHBD PATIENTS  
+      8   ORRC ORDERS BY ID  
+      9   ORRC ORDERS BY PATIENT  
+      10  ORRC ORDERS COMPLETE  
+      11  ORRC ORDERS VERIFY  
+      12  ORRC PHY DASHBD PATIENTS  
+      13  ORRC RESULTS ACKNOWLEDGE  
+      14  ORRC RESULTS BY DATE  
+      15  ORRC RESULTS BY ID  
+      16  ORRC RESULTS BY PATIENT  
+      17  ORRC SIGN  
+      18  ORRC TASK ADD  
+      19  ORRC TASK CANCEL  
+      20  ORRC TASK COMPLETE  
+      21  ORRC TASK EDIT  
+      22  ORRC TASK SUBJECTS BY PT  
+      23  ORRC TASKS BY ID  
+      24  ORRC TASKS BY PATIENT  
+      25  ORRC TASKS DUE BY PATIENT  
+      26  ORRC UNSIGNED BY ID  
+      27  ORRC VITALS BY ID  
+      28  ORRC VITALS BY PATIENT  
+  
+ The following Options/Remote Procedure Calls (RPC) have been preserved to 
+ maintain functionality of the CPRS Query Tool application.
+  
+ Options:
+      1   ORRCM REPORTING       CPRS Query/Reporting
+      2   ORRCMC QUERY TOOL       Query Tool 1.0.1
+      3   ORRCMP QUERY TOOL       queryTool
+      4   ORRCMC GENERAL       Clinical General 1.0.1
+  
+ RPCs:
+ 1       ORRC SYSID 
+ 2       ORRCQLPT PTDEMOS  
+ 3       ORRCQLPT PTDFN  
+  
+ The Care Management application also has an associated stand-alone Java 
+ client application installed on end-user workstations. The Java client 
+ application will be uninstalled by the Device & Desktop Engineering Team 
+ through their desktop configuration management system.
+  
+  
+  
+ Test Sites:
+ -----------
+ Oklahoma City - VAMC
+ Asheville, NC - VAMC
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       when prompted for INSTALL NAME, enter the package "ORRC*1.0*12" to
+ install.
+  
+    5. When prompted 'Rebuild Menu Tree Upon Completion?
+       YES//' respond YES. 
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    8. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+ Back-out Procedures:
+ ====================
+ Back-out Procedures are only needed if there are major problems resulting 
+ from the installation of this patch. You must have concurrence from Health
+ Product Support before a rollback can occur. Enter a ServiceNow ticket to
+ obtain this concurrence. The development team will need to issue one or
+ more follow-up patches in order to comprehensively back out this patch,
+ after coordination with the VA Project Manager and Contracting Officer
+ Representative(COR.)
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 24, 2018
+Completed By:                               Date Completed: FEB 01, 2019
+Released By :                               Date Released : FEB 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

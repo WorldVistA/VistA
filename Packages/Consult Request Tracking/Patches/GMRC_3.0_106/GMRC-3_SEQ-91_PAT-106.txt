@@ -1,0 +1,275 @@
+$TXT Created by                    VISTA-LOAD-AITC-5.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 09/26/18 at 10:22
+=============================================================================
+Run Date: OCT 05, 2018                     Designation: GMRC*3*106
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #91                      Status: Released
+                  Compliance Date: NOV 05, 2018
+=============================================================================
+
+
+Subject: CCRA Enhancements
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated patches:  (v)GMRC*3.0*99  <<= must be installed
+  
+ HealthShare Referral Manager (HSRM) is an enterprise-wide system in 
+ support of community care used by facility community care staff to 
+ generate referrals and authorizations for Veterans receiving care in the 
+ community. Clinical and Department of Veterans Affairs (VA) community 
+ care staff located at VA medical centers, outpatient clinics, 
+ community-based outpatient clinics, and Veterans Integrated Service 
+ Network offices use this solution to enhance Veteran access to care. HSRM 
+ is an integral component of the community care information technology 
+ (IT) architecture that allows Veterans to receive care from community 
+ providers. 
+  
+ HSRM allows VA to transition from what is currently a largely manual 
+ process to a more streamlined process that generates standardized 
+ referrals and authorizations according to clinical and business rules. 
+ HSRM supports clinical and administrative processes expected to:
+  
+ Seamlessly provide eligible Veterans with prompt referrals to a
+ community provider of their choice Provide community providers with
+ referrals and authorizations consistent with industry standards
+  
+ Decrease the administrative burden on VA clinical and facility
+ community care staff members by establishing clinical and business
+ pathways that reflect best practices, consistent outcomes, and reduced
+ turnaround times, along with a solution that automates those pathways
+  
+ Facilitate communication between facility community care staff and 
+ community providers via a unified platform that enables the secure 
+ exchange of medical information
+  
+ This patch contains changes to the code that generates the HL7 consult 
+ messages introduced by patch GRMC*3.0*99. The CCRA project required the
+ addition of the following information to the existing HL7 message to
+ support additional functionality in the HealthShare Referral Manager
+ (HSRM). These include:
+ a. The addition to IN1 segments to support Other Insurance Information 
+ (OHI)
+ b. The addition of the Reimbursable flag to the interface to communicate 
+ to HSRM that the VA may not be the primary insurance plan for the 
+ requested service
+ c. The addition of the division or site ID that is separate from the 
+ station ID of the site hosting the VistA instance. This is necessary for 
+ VistA instances supporting multiple division sites so that HSRM has the 
+ division identifier.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Bulletins:
+ ---------
+ N/A 
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Togus, ME
+ Lebanon, PA
+ Philadelphia, PA 
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+   
+     Hines:                        domain.ext   
+     Salt Lake City:               domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ .
+  
+ Title                          File Name                             SFTP
+                                                                      Mode
+ --------------------------------------------------------------------------
+ Community Care Referral and    CCRA_PATCH_99_TECHNICAL_MANUAL.PDF   Binary
+ Authorization Patch 99 
+ Technical Manual  
+  
+ Consult/Request Tracking       constm.pdf or constm.doc             Binary
+ Technical Manual
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is distrubited by PackMan.
+  
+ Backout and rollback Procedure:
+ -------------------------------
+ In order to back out this patch, sites must use the
+ KIDS option to Backup a Transport Global after loading
+ the patch. If this option is not used, then backing out
+ the patch is not possible.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Patch Installation:
+ ------------------
+  
+ Setup/Configuration Instructions:
+ ---------------------------------
+  
+ These steps can be completed with users on the system. This should take 
+ less than 15 minutes to configure. NOTE: Patch GMRC*3.0*99 must be 
+ installed in order to install this patch. This patch should take less than
+ 15 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the KIDS Menu, select the Installation Menu.  From this menu, 
+      you may elect to use the following options. When prompted for the
+      INSTALL NAME, enter GMRC*3.0*106.
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as Data Dictionaries (DDs) or
+          templates. In order to backout this patch, this option must be
+          used. 
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter GMRC*3.0*106.
+  
+  5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond NO.
+    
+  6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+  7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO. 
+    
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+    
+  
+ Sample Install:
+ ---------------
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;JUN 1, 2018;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCCCR1
+    Before:       n/a   After:  B1472478  **99,106**
+Routine Name: GMRCCCRA
+    Before:B153139098   After:B194373034  **99,106**
+ 
+Routine list of preceding patches: 99
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 10, 2018
+Completed By:                               Date Completed: OCT 04, 2018
+Released By :                               Date Released : OCT 05, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

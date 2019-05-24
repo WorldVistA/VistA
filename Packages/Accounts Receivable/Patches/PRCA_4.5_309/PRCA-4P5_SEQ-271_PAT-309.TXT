@@ -1,0 +1,180 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 12/04/15 at 15:13
+=============================================================================
+Run Date: JAN 13, 2016                     Designation: PRCA*4.5*309
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #271                    Status: Released
+                  Compliance Date: FEB 12, 2016
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*204<<= must be installed BEFORE `PRCA*4.5*309'
+
+Subject: SUSPENSE TYPES
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to (1) add the additional Suspense Types to
+ the SUSPENSION TYPE field (#90) of the AR TRANSACTION file (#433) for the
+ Suspend an AR bill [PRCAC TR SUSPENDED] option, and (2) use a function to
+ automatically generate the 'Brief Comment' for the selective suspension
+ type in the Brief Account Profile [PRCAY ACCOUNT PROFILE] option.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001224952 - Requesting the creation of additional suspense types
+ 2. I6653962FY16    - 'Brief Comment' not auto generated for the additional
+                      suspension types
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ BAY PINES VA HCS
+ MARTINSBURG VAMC
+ VA TEXAS VALLEY COASTAL BEND HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001224952 Requesting the creation of additional suspense types
+  
+ Problem:
+ --------
+ The Chief Business Office has requested a patch to add the following
+ Suspension Types for the Suspend an AR bill option: Administrative
+ Suspension, Compromise, Termination, Bankruptcy Chapter 7, Bankruptcy
+ Chapter 13, Bankruptcy Other, Probate, Choice and Dispute.
+  
+ Resolution:
+ -----------
+ The following Suspense Types ('3' to '11') with the help-prompt message
+ are added to the SUSPENSION TYPE field (#90) of the AR TRANSACTION file
+ (#433).
+  
+ DATA DICTIONARY:
+ ================
+  
+ BEFORE:
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 433,90        SUSPENSION TYPE        1;11 SET
+  
+                                 '0' FOR NON-COPAY SUSPENSION; 
+                                 '1' FOR INITIAL CO-PAY WAIVER; 
+                                 '2' FOR APPEAL CO-PAY WAIVER; 
+                                 
+ AFTER:
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 433,90        SUSPENSION TYPE        1;11 SET
+  
+                                 '0' FOR NON-COPAY SUSPENSION; 
+                                 '1' FOR INITIAL CO-PAY WAIVER; 
+                                 '2' FOR APPEAL CO-PAY WAIVER; 
+                                 '3' FOR ADMINISTRATIVE SUSPENSION; 
+                                 '4' FOR COMPROMISE; 
+                                 '5' FOR TERMINATION; 
+                                 '6' FOR BANKRUPTCY CHAP 7; 
+                                 '7' FOR BANKRUPTCY CHAP 13;
+                                 '8' FOR BANKRUPTCY OTHER; 
+                                 '9' FOR PROBATE; 
+                                 '10' FOR CHOICE;
+                                 '11' FOR DISPUTE;
+  
+ 2. I6653962FY16 'Brief Comment' not auto generated for the additional
+    suspension types
+  
+ Problem:
+ --------
+ A test site user found a bill being suspended with the suspension type of
+ 'ADMINISTRATIVE SUSPENSION' during the testing on the first issue, but
+ then the 'Brief Comment' automatically generated for the suspension type
+ of 'APPEAL FOR CO-PAY WAIVER' in the Brief Account Profile [PRCAY
+ ACCOUNT PROFILE] option.
+  
+ Resolution:
+ -----------
+ A new function with the suspension types is added to routine RCWROFF. It
+ will automatically set up the selective suspension type in the 'Brief
+ Comment' field (#5.02) of the AR Transaction file (#433) for the Brief
+ Account Profile option.
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+ This patch can be loaded with users on the system but it is recommended
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*309)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRCA*4.5*309.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond YES.
+  
+       a. When Prompted "Enter options you wish to mark as 'Out Of 
+          Order':", enter the following options:
+  
+                Suspend an AR bill    [PRCAC TR SUSPENDED]
+                Brief Account Profile [PRCAY ACCOUNT PROFILE]
+  
+       b. When Prompted "Enter protocols you wish to mark as 'Out 
+          Of Order':", Press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCWROFF
+    Before: B30058500   After: B34901459  **168,204,309**
+ 
+Routine list of preceding patches: 204
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 22, 2015
+Completed By:                               Date Completed: JAN 07, 2016
+Released By :                               Date Released : JAN 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,167 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/04/18 at 14:47
+=============================================================================
+Run Date: MAR 11, 2019                     Designation: GMTS*2.7*126
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #114                    Status: Released
+                  Compliance Date: APR 11, 2019
+=============================================================================
+
+
+Subject: SDC COMPONENT DECOMMISSION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Office of Spinal Cord Injury/Disorder (SCI/D) is requesting to 
+ decommission the VistA Spinal Cord Dysfunction (SCD) application and 
+ data. The VistA SCD application and stored data will be removed from 
+ VA's inventory of applications. Therefore, all Health Summary 
+ references to the SCD application will be removed.
+  
+ Entries in the following files of the Health Summary package that 
+ reference the Spinal Cord Dysfunction application will be removed
+ from VistA:
+  
+      Health Summary Type (file 142)
+      Health Summary Component (file 142.1)
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ RTC Task 868596 - Spine Cord Decommissioning: Health Summary 
+  
+ Problem:
+ --------
+ The Office of Spinal Cord Injury/Disorder (SCI/D) is requesting to 
+ decommission VistA Spinal Cord Dysfunction (SCD) application and data. 
+ The VistA SCD application and stored data will be removed from VA's
+ inventory of applications. Therefore, any reference to SCD must be
+ removed from the Health Summary package. 
+  
+ Resolution:
+ -----------
+ This patch will execute the post install routine GMTSP126 which will 
+ remove all Health Summary references of the SCD Application in VistA.
+  
+ The post install routine GMTSP126 will delete the following Spinal Cord
+ Dysfunction data from the Health Summary package:
+  
+     1) All entries in file Health Summary Type (file 142) where Name 
+        equals "SPINAL CORD DYSFUNCTION" and the associated cross
+        reference entries. 
+  
+     2) All entries in file Health Summary Component (file 142.1) where
+        Name equals "SPINAL CORD DYSFUNCTION" and the associated cross
+        reference entries.
+  
+ Test Sites:
+ ----------
+ Indianapolis
+ Pittsburg
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install routine GMTSP126 will run after the patch is installed. 
+ This routine will be automatically removed after execution.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. Make a Back-up prior to installing this 
+ patch or ensure nightly backups are performed by your site in the event
+ this patch may need to be backed out. This patch should take less than 2
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu.  From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME enter the patch 
+ GMTS*2.7*126:
+  
+ a.      Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will 
+ (allow you to view all changes that will be made when this patch        
+ is installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+ and choose the patch GMTS*2.7*126 to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO// NO' 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+ NO// NO'
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO// NO' 
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post install routine GMTSP126 will remove all applicable entries to 
+ the Health Summary package. No additional action is necessary.
+  
+ Back-out Procedures:
+ ====================
+ Back-out Procedures are only needed if there are major problems resulting 
+ from the installation of this patch. You must have concurrence from Health
+ Product Support before a rollback can occur. Enter a ServiceNow ticket to
+ obtain this concurrence. The development team will need to issue one or
+ more follow-up patches in order to comprehensively back out this patch,
+ after coordination with the VA Project Manager and Contracting Officer
+ Representative(COR.)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSP126
+    Before:       n/a   After:  B1187531  **126**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 13, 2018
+Completed By:                               Date Completed: MAR 11, 2019
+Released By :                               Date Released : MAR 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

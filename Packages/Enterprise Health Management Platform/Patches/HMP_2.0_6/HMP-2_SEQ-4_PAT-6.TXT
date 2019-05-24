@@ -1,0 +1,282 @@
+$TXT Created by                   at NHML19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 09/15/16 at 16:08
+=============================================================================
+Run Date: OCT 26, 2016                     Designation: HMP*2*6
+Package : HMP - HEALTH MANAGEMENT PLATFORM    Priority: EMERGENCY
+Version : 2         SEQ #4                      Status: Released
+                  Compliance Date: NOV 02, 2016
+=============================================================================
+
+Associated patches: (v)HMP*2*1     <<= must be installed BEFORE `HMP*2*6'
+
+Subject: eHMP EMERGENCY PATCH METASTAMP STUCK PATIENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Some sites experienced issues with syncing some patient records. While in
+ the eHMP user interface, the system errored out after being in the SYNC
+ process for approximately 5 minutes.
+  
+ Patch Components:
+ -----------------
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified fields or files.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms. 
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups. 
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options. 
+  
+ Protocols Associated:
+ ---------------------
+ There are no new or modified protocols. 
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys. 
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates. 
+  
+ Additional Information:
+ -----------------------
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no new or modified patient safety issues. 
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets assigned to this patch. 
+  
+ Defects:
+ --------
+ Defect Number           Routine         Description
+ -----------------------------------------------------
+ DE6574                  HMPUTIL1        Sync Failure  
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Antonio, TX
+ San Diego, CA
+ Loma Linda, CA 
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+  
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Invoke the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System Menu [XPD MAIN], 
+     select the Installation Menu [XPD INSTALLATION MENU].  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL NAME enter HMP*2.0*6
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a 
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System [XPD COMPARE TO 
+        SYSTEM]- This option will allow you to view all changes that will
+        be made when this patch is installed.  It compares all components
+        of this patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- This 
+        option will allow you to ensure the integrity of the routines that
+        are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) [XPD 
+     INSTALL BUILD] option and choose select the package HMP*2.0*6
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ Sample Installation:
+ --------------------
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME:    HMP*2.0*6    9/15/16@15:10:50
+      => EHMP EMERGENCY PATCH STUCK PT  ;Created on Sep 15, 2016@14:43:22
+  
+ This Distribution was loaded on Sep 15, 2016@15:10:50 with header of 
+    EHMP EMERGENCY PATCH STUCK PT  ;Created on Sep 15, 2016@14:43:22
+    It consisted of the following Install(s):
+       HMP*2.0*6
+ Checking Install for Package HMP*2.0*6
+  
+ Install Questions for HMP*2.0*6
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+ --------------------------------------------------------------------------
+  
+  Install Started for HMP*2.0*6 : 
+                Sep 15, 2016@15:12:57
+  
+ Build Distribution Date: Sep 15, 2016
+  
+  Installing Routines:
+                Sep 15, 2016@15:12:57
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  HMP*2.0*6 Installed. 
+                Sep 15, 2016@15:12:57
+  
+  
+ Install Completed
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routine contained in the patch.
+  
+ Sample of the first two lines
+ =============================
+ Select Routine Tools <TEST ACCOUNT> Option: FIRst Line Routine Print
+  
+ PRINTS FIRST LINES
+  
+ All Routines? No => No
+  
+ Routine: HMPUTIL1
+ Routine: 
+ 1 routine
+  
+ (A)lpha, (D)ate ,(P)atched, OR (S)ize ORDER: A//
+ Include line (2), Include lines 2&(3), (N)one: None//2
+ DEVICE: HOME//   TELNET PORT    Right Margin: 80// 
+  
+              FIRST LINE LIST   UCI: VISTA,ROU   10/19/2016
+ HMPUTIL1  ;SLC/AGP,ASMR/RRB,CPC - HMP utilities routine ;May 15, 2016 
+ 14:15
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**1,6**;May 15, 
+ 2016;Build 3
+  
+  
+               1 ROUTINES
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can 
+ be run to compare the routine checksum to what is documented in the patch 
+ description.
+  
+ Sample of calculating checksums
+ ===============================
+ Select Programmer Options <TEST ACCOUNT> Option: calculate and Show 
+ Checksum Val ues This option determines the current Old (CHECK^XTSUMBLD)
+ or New (CHECK1^XTSUMBLD) logic checksum of selected routine(s).
+  
+      Select one of the following:
+  
+           1         Old
+           2         New
+  
+ New or Old Checksums: New// 
+ New CheckSum CHECK1^XTSUMBLD:
+  
+ This option determines the current checksum of selected routine(s).
+ The Checksum of the routine is determined as follows:
+  
+ 1. Any comment line with a single semi-colon is presumed to be
+    followed by comments and only the line tag will be included.
+  
+ 2. Line 2 will be excluded from the count.
+  
+ 3. The total value of the routine is determined (excluding
+    exceptions noted above) by multiplying the ASCII value of each
+    character by its position on the line and position of the line in 
+    the routine being checked.
+  
+      Select one of the following:
+  
+           P         Package
+           B         Build
+  
+ Build from: b  Build
+  
+ This will check the routines from a BUILD file.
+ Select BUILD NAME: hmp*2.0*6       HEALTH MANAGEMENT PLATFORM
+ HMPUTIL1  value = 46959310
+ Done
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of ASM
+ and appropriate VA site/region personnel. The decision to back-out or
+ rollback software will be a joint decision between ASM, VA site/region
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install).  The message containing the backed up routines can be loaded
+ with the "Xtract PackMan" function at the Message Action prompt. The
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the HMP Routine contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT].  Once the routine contained in the
+ HMP*2.0*6 patch have been rolled back the first two lines of the routine
+ will now contain the following
+  
+ HMPUTIL1  ;SLC/AGP,ASMR/RRB,CPC - HMP utilities routine ;May 15, 2016 
+ 14:15
+           ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**1**;May 15, 
+ 2016;Build 3
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ENTERPRISE HEALTH MANAGEMENT PLATFORM;**[Patch List]**;May 15, 2016;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HMPUTIL1
+    Before: B46934983   After: B46959310  **1,6**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 15, 2016
+Completed By:                               Date Completed: OCT 25, 2016
+Released By :                               Date Released : OCT 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

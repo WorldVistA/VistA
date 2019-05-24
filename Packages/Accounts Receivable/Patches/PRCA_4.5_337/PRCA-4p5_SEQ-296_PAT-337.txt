@@ -1,0 +1,253 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 05/30/18 at 13:57
+=============================================================================
+Run Date: JUN 28, 2018                     Designation: PRCA*4.5*337
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #296                    Status: Released
+                  Compliance Date: JUL 03, 2018
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*307<<= must be installed BEFORE `PRCA*4.5*337'
+                    (v)PRCA*4.5*315<<= must be installed BEFORE `PRCA*4.5*337'
+                    (v)PRCA*4.5*327<<= must be installed BEFORE `PRCA*4.5*337'
+
+Subject: DUPLICATE TIER RATE DECREASES;BATCH WORK FILE PURGE CONTROL;TOP PURGE CONTROL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1. Ensure Tier Rate decreases do not flag non Tier Rate charges as
+    duplicate
+  
+ 2. Modify purging criteria for the weekly TCSP batch run
+  
+ 3. Modify purging criteria for the weekly TOP batch run
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) I18403815FY18 - Duplicate IB transactions flagged incorrectly in AR
+    DUP: I17919241FY18 - Account out of Balance due to false duplicates
+  
+ Problem:
+ --------
+ Sites have seen Accounts out of balance when Tier Rate decreases would 
+ flag a previous increase transaction as incomplete when matching criteria 
+ with a later decrease with a different transaction type.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to remove all duplicate decrease Tier Rate 
+ charge checking introduced in patch PRCA*4.5*307. The code was determined
+ not to be needed when VALID duplicates are sent to AR with the same date 
+ and for same amount. These "duplicate" looking charges are actually 
+ retroactive adjustments for previous visit similar rates, but all the
+ adjustments are not dated using date of service, BUT, the date the
+ adjustments occur, making them appear as duplicates.
+  
+ A bill lock was inserted to ensure transaction posting is stacked in a 
+ sequential manner rather than slamming the bill simultaneously. 
+  
+  
+ Routines: PRCASER1
+  
+  
+  
+ 2) I18833250FY18 - Weekly batch run temporary work files ^XTMP("RCTCSPD")
+                    and ^XTMP("RCTCSPDN") have the purge control node 
+                    incorrectly set causing the files to be purged the next
+                    day and they should be kept for 5 days.
+  
+ Problem:
+ --------
+ The ^XTMP weekly batch work files (RCTCSPD & RCTCSPDN) have an incorrect 
+ zero node set which controls the purging criteria for the XTMP batch work
+ files.  The batch work files are incorrectly purged the next day instead 
+ of after 5 days.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the creation of the ^XTMP batch work files
+ insuring that the purge control node is set properly to only purge the 
+ batch work file after 5 days, not the next day.
+  
+ Routines: RCTCSPD0
+  
+  
+ 3) I19435144FY18 - TOP weekly batch run temporary work file purge date
+  
+  
+ Problem:
+ --------
+ The TOP ^XTMP weekly batch work file (RCTOPD) has an incorrect zero node 
+ set which controls the purging criteria for the XTMP batch work file.
+ The TOP batch work file is incorrectly purged the next day instead 
+ of waiting for 5 days.
+  
+  
+ Resolution:
+ -----------
+ Modification has been made to the creation of the TOP ^XTMP batch work 
+ file ensuring that the purge control node is set properly to only purge
+ the TOP batch work file after 5 days, not the next day.
+  
+ Routines: RCTOPD
+  
+  
+ TEST SITES:
+ -----------
+ Upstate New York
+ Montana
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than five minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCA*4.5*337)
+   
+       a.  Verify Checksums in Transport Global - This option allows
+           you to ensure the integrity of the routines that are in the
+             transport global.
+       b.  Print Transport Global - This option allows you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option 
+           allows you to view all changes that are made when this 
+           patch is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option creates a backup
+           message of any routines exported with this patch. It will not
+  
+     4. Use the Install Package(s) option and select the package
+        PRCA*4.5*337.
+  
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+        respond NO.
+  
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", hit ENTER.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCASER1
+    Before: B18562527   After: B19502485  **48,104,165,233,301,307,337**
+Routine Name: RCTCSPD0
+    Before:  B8111368   After:  B8551366  **327,337**
+Routine Name: RCTOPD
+    Before: B71556644   After: B72886643  **141,187,224,236,229,301,315,337**
+ 
+Routine list of preceding patches: 307, 315, 327
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2018
+Completed By:                               Date Completed: JUN 28, 2018
+Released By :                               Date Released : JUN 28, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

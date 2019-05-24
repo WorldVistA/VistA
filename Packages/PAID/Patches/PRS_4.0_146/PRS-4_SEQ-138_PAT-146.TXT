@@ -1,0 +1,148 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/12/16 at 10:45
+=============================================================================
+Run Date: AUG 10, 2017                     Designation: PRS*4*146
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #138                      Status: Released
+                  Compliance Date: SEP 10, 2017
+=============================================================================
+
+Associated patches: (v)PRS*4*126   <<= must be installed BEFORE `PRS*4*146'
+
+Subject: DD CHANGE TO PAID EMPLOYEE/PAID PAYRUN DATA FILES, POC RECORD DATA FIX
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ Patch PRS*4.0*146 addresses two issues:
+  
+ 1. The UNIFORM ALLOWANCE AMT CPPD (#563) field of the PAID EMPLOYEE (#450)
+    file and the UNIFORM ALLOWANCE AMT CPPD (#109) field of the EMPLOYEE
+    (#459.01) sub-file of the PAID PAYRUN DATA (#459) file does not allow
+    a value greater than $999.99.
+  
+ 2. The NURSE T&L UNIT (#15) field of the POC DAILY ACTIVITY
+    EXTRACTION (#451.7) file is storing the wrong Time and Leave (T&L).
+  
+   ASSOCIATED Tickets: 
+   ==================
+   1) I8671166FY16 - DD Change request per conversation with Pam McClaran
+   2) I9871077FY16 - File 451.7, field 15, stores incorrect data
+   
+   ASSOCIATED NSR:
+   ==============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   ========================
+   Birmingham VA Medical Center
+   Lebanon VA Medical Center
+   
+   Ticket Overview:
+   ===============
+   1) I8671166FY16 - DD Change request per conversation with Pam McClaran
+                                                
+   Problem:
+   -------
+   The UNIFORM ALLOWANCE AMT CPPD (#563) field of the PAID EMPLOYEE (#450)
+   file and the UNIFORM ALLOWANCE AMT CPPD (#109) field of the EMPLOYEE
+   (#459.01) sub-file of the PAID PAYRUN DATA (#459) file does not allow
+   a value greater than $999.99. The field should allow a value up to
+   $9,999.99, and should not allow a negative value.
+  
+   Resolution:
+   ----------
+   The input transform of these fields will be modified to allow a numeric
+   value up to $9,999.99, and these fields will also no longer allow
+   negative values. Routine PRSDPR06 has been modified to extract 6
+   characters of field data instead of 5 to keep in line with the DD
+   changes to the UNIFORM ALLOWANCE AMT CPPD (#563) field.
+  
+   2) I9871077FY16 - File 451.7, field 15, stores incorrect data
+   
+   Problem:
+   -------
+   The NURSE T&L UNIT (#15) field of the POC DAILY ACTIVITY
+   EXTRACTION (#451.7) file is storing information incorrectly.
+  
+   Resolution:
+   ----------
+   The Approve Pay Period POC Records [PRSN APPROV POC PAYPD] option contains
+   a FileMan call that is storing T&L based on the IEN of the T&L instead of
+   the name. This call will be modified to store the correct T&L Unit.
+  
+  Installation Instructions:
+  -------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PRS*4.0*146).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the 
+            patch is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package PRS*4.0*146
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES. When prompted to select the
+         options you would like to place out of order, enter the following:
+         
+         a. When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+         
+            Approve Pay Period POC Records    [PRSN APPROV POC PAYPD]
+            Download Employee Data            [PRSD]
+  
+         b. When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSDPR06
+    Before: B32312276   After: B32608874  **146**
+Routine Name: PRSNCGR1
+    Before: B27388966   After: B28861586  **126,146**
+ 
+Routine list of preceding patches: 126
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 05, 2016
+Completed By:                               Date Completed: AUG 10, 2017
+Released By :                               Date Released : AUG 10, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

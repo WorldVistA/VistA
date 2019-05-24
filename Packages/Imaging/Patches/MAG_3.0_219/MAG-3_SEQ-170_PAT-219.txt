@@ -1,0 +1,396 @@
+
+=============================================================================
+Run Date: FEB 25, 2019                     Designation: MAG*3*219
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #170                      Status: Released
+                  Compliance Date: MAR 28, 2019
+=============================================================================
+
+
+Subject: Telereader Defect  Fix
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches:  This patch must be installed after MAG*3.0*182.
+ =================== 
+  
+ Subject:  TELEREADER UPDATE
+ ======== 
+  
+ Category:  OTHER
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*219, a patch that provides fixes to the 
+ TeleReader application.  This patch addresses the following issues:
+         Help Files will not open when running the TeleReader Application 
+         on Windows 10 operating system.
+         Corrected issues within the TeleReader User Manual.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 219_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P219_README.txt, if present, is an informative file associated with 
+ the patch released.
+  
+ Software & Documentation:
+ =========================
+ Table 1: Software & Documentation Files
+ File Name                           Description
+ =========                           ===========
+ MAG3_0P219.KID                      Kernel Installation and Distribution
+                                     System KIDS) build for Patch 219
+ MAG3_0P219_Telereader_Setup.exe     TeleReader client installation file.
+ MAG3_0P219_Telereader_Install.msi   TeleReader installation file.
+ MAG3_0P219_Patch_Description.pdf    Patch Description for MAG*3.0*219 
+ Mag_Telereader_User_Manual.pdf      TeleReader User Manual
+  
+ Documentation:
+ ==============
+ This document, MAG3_0219_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview
+ ===========================================
+ 1.  Defect 751777 - Help Files will not open when running the TeleReader
+     Application on Windows 10 operating system
+ Problem:  
+ ========
+ When using TeleReader in a Windows 10 environment the Help files will not
+ open. This application uses RoboHelp, a third-party product to display the
+ help files.  RoboHelp is not compatible with Windows 10 operating system.
+  
+ Resolution:   
+ ===========
+ Remove the TeleReader help menu items that use RoboHelp and add a new 
+ menu item that brings up the TeleReader User Manual.
+  
+ 2.  Defect 889446 - Fix issues within the TeleReader User Manual.
+ Problem:  
+ ========
+ During IOC testing it was discovered some of the hyperlinks were broken
+ and verbiage in the TeleReader User Manual needed updated.  
+  
+ Resolution:   
+ ===========
+ The TeleReader User Manual was fixed and added to the appropriate 
+ location in the code.  
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+          New Mexico VA Health Care System (Albuquerque)
+          VA St. Louis Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Location          Site
+ ========          ====
+ Hines             domain.ext 
+ Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ===================
+  
+ Supported Client Versions
+ ========================= 
+  
+ Supported Versions      No Longer Supported 
+ ==================      ===================
+ 3.0.219                 3.0.122
+ 3.0.182                 3.0.117
+ 3.0.127                 3.0.106
+                         3.0.94
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*219 KIDS must be installed on the VistA System prior to running 
+ the new executables.  This patch must be installed by the compliance date.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch may be loaded while the VistA Imaging System is 
+ active.  Installation will take less than one minute.
+  
+ Pre-Installation Instructions:
+ ==============================
+ If a previous version of the TeleReader has been installed on the 
+ workstation, it must be uninstalled before installing the new version. 
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+   
+ Note:  All released VistA Imaging Application patches must be installed 
+        on the VistA system before installing MAG*3.0*219.
+  
+ VistA System (KIDS) Installation Instructions
+ =============================================
+ Installation Steps 
+ ==================
+ 1. On the VistA system, access the Kernel Installation and 
+    Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+       load the KIDS distribution.
+    b. When prompted, enter the full path and file name (MAG3_0P219.KID)
+       of the MAG*3.0*219 KIDS file.
+    c. When prompted to continue with the load, enter "YES". A 
+       Distribution OK! message will be displayed when the load is
+       complete.
+ 4. After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed.  All components (routines, options, and
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you
+       want to create a backup message of any routines exported with the
+       patch.
+       It will NOT back up any of the other changes.
+ 5.    After performing the load and any optional verification steps,
+       install the KIDS file by performing the following steps:
+       a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+       b. When prompted for the install name, enter "MAG*3.0*219".
+       c. Answer "NO" to the following prompts, if they appear:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6.    When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*219    7/5/18@16:17:17
+      => VistA Imaging V3 - Patch 219 - Telereader   ;Created on Jul 05, 
+ 201
+  
+ This Distribution was loaded on Jul 05, 2018@16:17:17 with header of
+    VistA Imaging V3 - Patch 219 - Telereader   ;Created on Jul 05, 
+ 2018@15:46
+ :05
+    It consisted of the following Install(s):
+     MAG*3.0*219
+ Checking Install for Package MAG*3.0*219
+  
+ Install Questions for MAG*3.0*219
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+   
+  Running Pre-Install Routine: PRE^MAGIP219
+  
+  Running Post-Install Routine: POS^MAGIP219
+  
+ Post Install Mail Message: Jul 05, 2018@16:17:24
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*219 Installed.
+                Jul 05, 2018@16:17:24
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+   100%
+ Complete
+  
+ Install Completed 
+  NO Install Message sent
+  
+   100%
+ Complete
+  
+  
+ Install Completed
+  
+  
+ Installing the Telereader Client
+ ================================
+ For instructions on how to install the TeleReader application please 
+ refer to the VistA Imaging System Installation Guide section 2.5.5 
+ 'Install the VistA Imaging Workstation Software'.
+  
+  
+ Back Out Plan 
+ ============= 
+ Uninstalling the Application
+ ============================
+ If it is necessary to uninstall the MAG*3.0*219 client, use the Uninstall 
+ option from Windows Control Panel to Uninstall "VistA Imaging TeleReader".
+  
+ KIDS Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*219 VistA KIDS, select the 
+ "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global". (See Installation Steps section, Step 4c; this must be 
+ done before the patch is installed).
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+  
+ 1. Select the message shown below:
+ Backup of MAG*3.0*219 install on <mmm dd, yyyy>    <user name>
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter "Yes" at the prompt.
+ 5. Enter "No" at the backup prompt.  There is no need to back up the 
+ backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+           and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2    Message #43934     Unloading Routine   MAG219x (PACKMAN_BACKUP)
+ Line 249  Message #43934     Unloading Routine   MAG219x (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build nn;mm dd, yyyy
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine       Checksum      Checksum        Patch List
+               Before        After
+ MAGGTU4T      4714251       4911131         **93, 94, 106, 117, 122, 127,
+                                             182, 219**
+ MAGIP219      NEW           4215008         **219**
+  
+ Routine MAGIP219 is an installation routine that is automatically deleted 
+ after the KIDS installation.                
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 47;Jul 5, 2018
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTU4T
+    Before:  B4714251   After:  B4911131  **93,94,106,117,122,127,182,219**
+Routine Name: MAGIP219
+    Before:       n/a   After:  B4215008  **219**
+ 
+Routine list of preceding patches: 182
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 29, 2018
+Completed By:                               Date Completed: FEB 15, 2019
+Released By :                               Date Released : FEB 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

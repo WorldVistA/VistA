@@ -1,0 +1,180 @@
+$TXT Created by             at CLN1G2.AAC.DOMAIN.EXT  (KIDS) on Friday, 02/22/19 at 13:43
+=============================================================================
+Run Date: APR 05, 2019                     Designation: PSO*7*538
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #456                      Status: Released
+                  Compliance Date: MAY 05, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*538'
+                    (v)PSO*7*525   <<= must be installed BEFORE `PSO*7*538'
+
+Subject: CORRECT INAPPROPRIATE DATE ENTRY IN COPY FUNCTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+       
+ When using option Patient Prescription Processing [PSO LM BACKDOOR ORDERS]
+ Copy Function, a user has the ability to enter inappropriate ISSUE DATEs
+ such as 08/15/1818 or dates earlier than 6 months from the current date.
+           
+ New Service Requests (NSRs):
+ ----------------------------  
+      
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ HITPS-2523 - INC1491667
+                     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------   
+ ServiceNow Ticket Number
+ INC1491667 - Ability to enter inappropriate Issue Dates in PSO LM
+ BACKDOOR ORDERS copy function causes other issues to occur.
+      
+ Associated NSR(s):
+ =============
+ N/A
+       
+ Problem:
+ --------
+ Ability to enter inappropriate Issue Dates in Patient Prescription 
+ Processing [PSO LM BACKDOOR ORDERS] copy function causes other issues to
+ occur.
+      
+ Resolution:
+ ------------     
+ A modification will be made in routines PSOBKDED and PSOORED2
+ to not allow entry of an Issue Date earlier than 6 months before 
+ the current date.
+     
+ Test Sites:
+ ----------
+ Oklahoma City VAMC
+ Maryland HCS      
+      
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+     
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. It is recommended that Outpatient Pharmacy users be 
+ off the system. This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*538):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B95133055   After: B97742354  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282,450,402,518,
+                                           525,538**
+Routine Name: PSOORED2
+    Before: B76930084   After: B79410912  **2,51,46,78,102,114,117,133,
+                                           159,148,247,260,281,289,276,
+                                           358,251,385,427,538**
+ 
+Routine list of preceding patches: 427, 525
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2018
+Completed By:                               Date Completed: APR 04, 2019
+Released By :                               Date Released : APR 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

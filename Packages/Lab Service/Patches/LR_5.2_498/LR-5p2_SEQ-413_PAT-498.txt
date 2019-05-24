@@ -1,0 +1,189 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/30/18 at 17:45
+=============================================================================
+Run Date: OCT 26, 2018                     Designation: LR*5.2*498
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #413                    Status: Released
+                  Compliance Date: NOV 26, 2018
+=============================================================================
+
+Associated patches: (v)LR*5.2*486  <<= must be installed BEFORE `LR*5.2*498'
+
+Subject: LEDI HOST UID INCORRECTLY ASSIGNED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) VistA Laboratory issue:
+  
+ When a Laboratory Electronic Data Interchange (LEDI) host site adds a
+ lab test to an accessioned order received from a collection facility, the
+ universal identifier (UID) is improperly assigned with the collection
+ site's UID instead of the host site's UID.
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ None
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*498 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*498 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*498 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Participating Test Sites:
+ =========================
+ Boise VAMC
+ Puget Sound Health Care System
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ CA-SDM R17422198FY18 - Incorrect UID assigned when adding lab tests.
+  
+ Problem:
+ -------
+  
+ If the option LRADDTST (Lab add test(s) to an existing order) is used at 
+ a Laboratory Electronic Data Interchange (LEDI) host site (i.e. the site 
+ performing the tests) to add test to a LEDI order received from a 
+ collecting site (i.e. the site ordering the tests), the universal 
+ identifier (UID) assigned is the UID from the collecting site.  The UID 
+ should be a host site UID.
+  
+ Resolution:
+ ----------
+  
+ Modify routine LRCE so that a host site UID is assigned to the added test 
+ which is added at the host site.
+  
+ NOTE:  LRADDTST (Lab add test(s) to an existing order) cannot be used for 
+ tests at the collecting site for LEDI orders if the added tests will have 
+ results received from a host site. This option increments the UID and 
+ accession, so the UID and accession won't match the UID and accession 
+ received from the host site.
+  
+ The test added at the host site must be added at the collection site using
+ option LRADD TO ACC (Add tests to a given accession) before results are
+ verified for the original test. Otherwise, the UID will increment. This is
+ expected behavior.
+  
+ Documentation Update:
+ --------------------
+  
+ The Laboratory User Manual Version 5.2 has been updated to include the 
+ following clarification concerning option Lab add test(s) to an existing 
+ order:
+  
+ Lab add test(s) to an existing order
+  
+ Tests on additional specimens may be kept with the original order number 
+ using this option. Note that additional accession(s) will be created.
+ Note: Because additional accession(s) are created, this option may  
+ not be used at a LEDI collecting site to add tests to an order which has 
+ been accessioned. If this option is used, the results for the added test 
+ will not post through the LEDI interface.
+  
+ This document may be found at the following link in the VA Software 
+ Document Library (VDL):
+  
+ https://www.domain.ext/vdl/application.asp?appid=71
+  
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*498'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+  
+ Compare the checksum of routine LRCE to the "After" checksum listed in the
+ patch description.
+  
+ Backout Plan
+ ------------
+  
+ Restore the routine LRCE from the backup MailMan message which was
+ generated during patch install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCE
+    Before: B75653138   After: B78811816  **28,76,103,121,153,210,202,
+                                           263,350,416,486,498**
+ 
+Routine list of preceding patches: 486
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 18, 2017
+Completed By:                               Date Completed: OCT 26, 2018
+Released By :                               Date Released : OCT 26, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

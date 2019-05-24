@@ -1,0 +1,140 @@
+$TXT Created by                     CHEY113.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 08/28/17 at 09:51
+=============================================================================
+Run Date: AUG 31, 2017                     Designation: OR*3*458
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #380                      Status: Released
+                  Compliance Date: OCT 01, 2017
+=============================================================================
+
+Associated patches: (v)OR*3*415    <<= must be installed BEFORE `OR*3*458'
+
+Subject: NOTIFICATIONS SHOWING 'MANDATORY' WHEN THEY ARE NOT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address an issue in the CPRS GUI, 'Tools', 'Options', 
+ 'Notifications' tab, where some Notifications are showing 'Mandatory' in 
+ the Comments field when they should not.
+  
+ Associated CA SDM Tickets:
+ ==========================
+ 1) I13414555FY17 (RTC Defect 499678) 
+  
+ Associated NSR(s):
+ ==================
+ None
+  
+ Participating Test Sites:
+ =========================
+ Tuscaloosa VAMC, AL 
+ VA Boston HCS (Boston, MA)
+ VA Maryland HCS (Baltimore, MD)  
+  
+ Ticket Overview:
+ ================
+ 1) I13414555FY17 (RTC Defect 499678)
+  
+   Problem:
+   --------
+   If a notification has no parameter setting on any level, or if the name 
+   of the team, service, location, or Division contains the text
+   "Mandatory", the CPRS GUI (Graphical User Interface) will append the
+   text "Mandatory" in the Comments field next to the Notification even
+   though the notification is not actually Mandatory.
+  
+   This happens because the code is just checking for the existence of the
+   word "Mandatory" in the return text, and the text returned, if no
+   Parameter setting is set, is "No Mandatory/Disabled/Enabled values",
+   which contains the word 'Mandatory'.
+  
+   Resolution:
+   -----------
+   The code will no longer check for the word "Mandatory" in the return 
+   text, but instead, a new 'mandatory' variable will be set if the
+   notification is actually mandatory.
+  
+   Routine ORWTPR will create a new variable, ORMNDFLG, prior to calling 
+   routine ORB3USER.  Routine ORB3USER will set ORMNDFLG to "1" if the 
+   notification is actually mandatory and pass it back to ORWTPR.  Routine
+   ORWTPR will then check to see if the variable is set to "1".  If the 
+   variable is set to '1', "Mandatory" will display in the Comment field.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  
+ Installation time will be less than 2 minutes.
+    
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+    
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+    
+   Select Kernel Installation & Distribution System Option: Installation
+                                                            ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+    
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter OR*3.0*458):
+    
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+    
+   4.  Use the Install Package(s) option and select the package OR*3.0*458.
+    
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+           NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3USER
+    Before: B69213741   After: B73039956  **74,91,105,139,200,220,458**
+Routine Name: ORWTPR
+    Before: B16808481   After: B17067752  **85,173,215,243,280,415,458**
+ 
+Routine list of preceding patches: 220, 415
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 27, 2017
+Completed By:                               Date Completed: AUG 28, 2017
+Released By :                               Date Released : AUG 31, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,102 @@
+
+=============================================================================
+Run Date: OCT 03, 2018                     Designation: NHIN*1*19
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1        SEQ #17                      Status: Released
+                  Compliance Date: NOV 03, 2018
+=============================================================================
+
+
+Subject: eHealth Exchange Phase 2 Build 3 (v8.3.0.4)
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center 
+ (AITC) installed this enhancement release on the eHealth Exchange 
+ (formerly VLER and formerly NHIN) servers located there using a 
+ pre-approved Request for Change Order and Implementation Plan.  This 
+ Deployment took place on September 27, 2018 from 8:00 PM 
+ CST- 10:00 PM CST.
+  
+ No effort is required by local sites.  User Acceptance Test was by the 
+ direction of the eHealth Exchange Business Owner and no MOUs are required.
+ **************************************************************************
+ eHealth Exchange Phase 2 Build 3
+ Description: This build will deliver customer facing enhancements to the 
+ eHealth Exchange Adapter and eHealth Exchange system Architecture.  The 
+ build will include new and updated enhancements to the way consolidated 
+ clinical documents are displayed to the user and system architecture 
+ optimizations.
+  
+ eHealth Exchange Phase 2 Build 3 has the following features:
+  
+ 1 SE.18.01 HS Migration Phase 1
+ a) US.18.01.01 - Update legacy eHX so it uses HealthShare as the source of
+ documents for document query (DQ)
+ b) US.18.01.02 - Update legacy eHX so it uses HealthShare as the source of
+ documents for document generation (DR)
+  
+ 2 US.09.02.05 (CCM-348) Update Data Quality Export ZIP file creation 
+ process (High Priority for B3)
+  
+ 3 US.09.02.06 (CCM-342) Add batch ID to the data quality transmission  
+   emails
+  
+ 4 US.01.03.10 (CCM-347) Revise MHV Data Filter for Encounter Notes
+  
+ 5 US.09.02.07 (CCM-354) Purge Script for DQ_TRANSMISSION_LOG
+  
+ 6 US.05.03.05 (CCM-346) Reduce notifications to DAS for subscription 
+   service
+  
+  
+ Test sites:  CHYSHR and DAYTSHR test Vistas were used in the eHX SQA2 
+ Environment
+  
+ Internal Applications/Dependencies: 
+ DAS
+ Direct 
+ JLV
+ MHV 
+ VistAWeb 
+ VAP
+ HealthShare
+  
+ The upgraded software will be deployed to a centralized system at AITC.
+  
+ External Partner Test Sites:
+ There are 171 external clinical partners (Clinical Connect, Kaiser 
+ Permanente, Walgreens, etc.) who validate releases through normal 
+ business operations and report any issues.
+  
+ For eHXE enhancements testing SOAP UI Scripts mimics partner testing to 
+ allow select partners (KP, SSA, MedVA, MHV) to be tested regardless of 
+ partner system and resource availability but the majority of partner 
+ testing was performed end to end in the test system.
+  
+ Downstream Dependent System Testing: 
+ Testing efforts with MHV, DAS, JLV, VistAWeb, VAP, MVI systems were 
+ successful.
+  
+ CA SDM tickets: None
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 14, 2018
+Completed By:                               Date Completed: OCT 03, 2018
+Released By :                               Date Released : OCT 03, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

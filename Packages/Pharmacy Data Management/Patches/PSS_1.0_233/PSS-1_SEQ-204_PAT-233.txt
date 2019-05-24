@@ -1,0 +1,125 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/30/19 at 11:18
+=============================================================================
+Run Date: MAR 25, 2019                     Designation: PSS*1*233
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #204                      Status: Released
+                  Compliance Date: APR 25, 2019
+=============================================================================
+
+Associated patches: (v)PSS*1*214   <<= must be installed BEFORE `PSS*1*233'
+
+Subject: DISPLAY ISSUES IN THE LOOKUP INTO DISPENSE DRUG FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses some display issues in the Lookup into Dispense 
+ Drug File [PSS LOOK] option.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2027665  Display issues in the Lookup into Dispense Drug File [PSS 
+ LOOK] option
+    
+ Problem: 
+ --------
+ In various sections of the Lookup into Dispense Drug File [PSS LOOK]
+ option, the line wrapping is not displaying properly for the following:
+  
+ -      A long Veteran's Administration (VA) Product Name
+ -      A long Orderable Item Name
+ -      The New Warning Label Section
+  
+ When the New Warning Label goes longer than the current screen, the user
+ is prompted to Press Return to continue or "^" to exit.  If the user
+ enters "^" they will not exit from the New Warning Label display and
+ the process will continue.
+  
+ Resolution:
+ -----------
+ To resolve this issue, code was modified in routine PSSLOOK so the wrapping
+ is displaying properly.  PSSWRNE was modified to return the user's request
+ to exit back to PSSLOOK for proper processing.
+  
+ Test Sites:
+ -----------
+ Martinsburg VAMC
+ Oklahoma City VA HCS
+  
+ Installation Instructions:
+ -------------------------- 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSS*1.0*233.
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSLOOK
+    Before:B137686641   After:B140116759  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189,192,200,
+                                           195,213,227,220,214,233**
+Routine Name: PSSWRNE
+    Before: B30090017   After: B31443486  **87,233**
+ 
+Routine list of preceding patches: 214
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 30, 2018
+Completed By:                               Date Completed: MAR 21, 2019
+Released By :                               Date Released : MAR 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

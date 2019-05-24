@@ -1,0 +1,322 @@
+$TXT Created by                        at DEVVOO.DOMAIN.EXT  (KIDS) on Friday, 12/28/18 at 10:26
+=============================================================================
+Run Date: FEB 12, 2019                     Designation: IVM*2*177
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #147                      Status: Released
+                  Compliance Date: FEB 14, 2019
+=============================================================================
+
+Associated patches: (v)IVM*2*164   <<= must be installed BEFORE `IVM*2*177'
+
+Subject: AUTO UPLOAD PERMANENT MAILING ADDRESS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch IVM*2.0*177 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project.
+  
+ As part of the HL7 messaging from the Enrollment System (ES) to
+ Veterans Health Information System and Technology Architecture (VistA)
+ Registration, Eligibility & Enrollment (REE), patient demographic
+ information is sent to VistA sites where the patient is known.
+  
+ Since October 2018, over fifty-one thousand (51,000) Veterans had their 
+ addresses updated in ES more than four times. Based on spot checks, most 
+ of those updates were due to VistA rejecting the most recent address
+ updates and sending the old address back to ES as a new address update.
+  
+ Background Information:
+ -----------------------
+ When the Enrollment System (ES) receives a demographic update for a 
+ patient, an ORU-Z05, Demographic Data Transmission, is sent to all 
+ treating facilities where the patient is known.
+  
+ Currently, for patients with an active prescription, the Permanent Mailing
+ Address is uploaded to a temporary location for display and manual
+ verification in the DEMOGRAPHICS UPLOAD [IVM UPLOAD DEM] option. The
+ demographic data is retained for 14 days. If not reviewed and accepted by
+ a user within that timeframe, the address update is rejected, if the
+ patient still has an active prescription on file at the VistA site. The
+ IVM BACKGROUND JOB [IVM BACKGROUND JOB] handles the review process.
+ If the address is rejected by a user or if it is not reviewed within 14
+ days and the patient still has an active prescription, the Permanent
+ Mailing Address on file at the VistA site is sent back to ES with a
+ date/time stamp of the current day. ES processes the Z07 message as a new
+ address update for the patient. As a result, old address updates (instead
+ of the most current addresses) are propagated across the VA enterprise.
+  
+ New Functionality:
+ ------------------
+ With installation of patch IVM*2.0*177, the processing of the HL7 ORU-Z05 
+ message from ES is modified to eliminate the check for an active 
+ prescription. If an incoming Permanent Mailing Address change is 
+ determined to be the most current, the update(s) will be directly 
+ uploaded to the PATIENT file (#2). The BAD ADDRESS INDICATOR (#.121) field
+ is no longer considered in determining whether to upload the address.
+  
+ The DEMOGRAPHICS UPLOAD [IVM UPLOAD DEM] option should not be used to
+ accept or reject Permanent Mailing Address Updates.
+  
+ For those records still pending in the IVM UPLOAD DEMOGRAPHIC TOOL at the 
+ time the patch is installed, if an address change is rejected via the 
+ IVM BACKGROUND JOB, no HL7 message acknowledgement or HL7 ORU-Z07 address
+ update is sent to ES. The existing functionality is retained which removes
+ the pending address update record from the IVM PATIENT file (#301.5) 14
+ days after the update was received. Therefore, 14 days after patch
+ IVM*2.0*177 is installed, the IVM UPLOAD DEMOGRAPHIC TOOL will no longer
+ display any Permanent Mailing Addresses.
+  
+ Listing of Updates:
+ ===================
+ Patch IVM*2.0*177 makes the following changes to VistA REE:
+  
+ 1. The processing of the HL7 ORU-Z05 message from ES is modified to
+    eliminate the check for an active prescription and BAD ADDRESS 
+    INDICATOR (#.121) so that Permanent Mailing Address fields are 
+    automatically uploaded to the PATIENT file (#2) if the change date/time
+    is more recent than what is in the PATIENT file (#2). The Permanent
+    Mailing Address fields that are loaded are as follows:
+    a. ADDRESS CHANGE DT/TM (#.118) 
+    b. ADDRESS CHANGE SITE (#.12)
+    c. ADDRESS CHANGE SOURCE (#.119) 
+    d. CITY (#.114) 
+    e. COUNTY (#.117) 
+    f. COUNTRY (#.1173) 
+    g. POSTAL CODE (#.1172) (zip code)
+    h. PROVINCE (#.1171) 
+    i. STATE (#.115) 
+    j. STREET ADDRESS [LINE 1] (#.111) 
+    k. STREET ADDRESS [LINE 2] (#.112)
+    l. STREET ADDRESS [LINE 3] (#.113) 
+    m. STREET ADDRESS CASS INDICATOR (#.1118)
+    n. BAD ADDRESS INDICATOR (#.121) 
+  
+ 2. The IVM Background Job [IVM BACKGROUND JOB] is modified to no longer
+    trigger an ORU-Z07 message to ES after a pending address update is 
+    rejected due to the 14-day expiration. Per existing functionality, the 
+    pending address update is removed from the IVM PATIENT file (#301.5) 
+    after the 14-day expiration. Therefore, 14 days after patch IVM*2.0*177
+    is installed, the IVM UPLOAD DEMOGRAPHIC TOOL will no longer display
+    any Permanent Mailing Addresses.
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+  
+ Test Sites:
+ -----------
+ VISN 15 VA Kansas City Health Care System
+ VA Pittsburgh Healthcare System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         IVM_2_P177_RN.PDF        (binary)
+ IVM User Manual                       IVM_2_P177_UM.PDF        (binary) 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, however it is
+ recommended to install this patch during non-peak hours and before the IVM
+ BACKGROUND JOB [IVM BACKGROUND JOB] has run. This patch should NOT be
+ installed while the IVM BACKGROUND JOB [IVM BACKGROUND JOB] is running.
+ This patch should take less than 5 minutes to install.
+  
+ 1. The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled. Use
+    the Schedule/Unschedule Options [XUTM SCHEDULE] option on the Taskman
+    Management [XUTM MGR] menu. Note the currently scheduled date/time.
+  
+ 2. The Health Level Seven (HL7) incoming/outgoing filers should be 
+    stopped. Use the Stop All Messaging Background Processes [HL STOP ALL] 
+    option on the Filer and Link Management Options [HL MENU FILER LINK
+    MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+ 3. The following option should be disabled during installation:
+  
+    Demographics Upload                   [IVM UPLOAD DEM]
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(IVM*2.0*177):
+     a.  Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//' respond YES.
+  
+ 7.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     enter the following option:
+  
+     Demographics Upload                   [IVM UPLOAD DEM]
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ * The IVM BACKGROUND JOB [IVM BACKGROUND JOB] option should be
+   rescheduled. Use the Schedule/Unschedule Options [XUTM SCHEDULE] option
+   on the Taskman Management [XUTM MGR] menu.
+  
+ * The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+   Links and Filers [HL TASK RESTART] option on the Filer and Link 
+   Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu
+   [HL MAIN MENU].
+  
+  
+ Back-Out Plan:
+ --------------
+ During installation, if the option to back up routines was run as 
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated.
+  
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the above procedure.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMLDEM6
+    Before:B100336132   After: B99598805  **10,58,73,79,108,106,105,124,
+                                           115,152,164,177**
+Routine Name: IVMLDEM9
+    Before: B62902959   After: B65121028  **79,93,119,126,133,152,177**
+ 
+Routine list of preceding patches: 164
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 17, 2018
+Completed By:                               Date Completed: FEB 12, 2019
+Released By :                               Date Released : FEB 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

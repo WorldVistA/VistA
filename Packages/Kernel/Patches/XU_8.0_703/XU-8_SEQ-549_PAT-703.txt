@@ -1,0 +1,277 @@
+$TXT Created by                    at VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/03/19 at 12:48
+=============================================================================
+Run Date: FEB 20, 2019                     Designation: XU*8*703
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #549                      Status: Released
+                  Compliance Date: MAR 23, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*679    <<= must be installed BEFORE `XU*8*703'
+
+Subject: Error resolution for DEGREE field INPUT TRANSFORM in files #20 & #200
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ Patch XU*8.0*703 corrects issues found in patch XU*8.0*679 and 
+ reported in tickets INC2380289 and INC2422028. To resolve these issues,
+ the DEGREE field (#6) in the NAME COMPONENTS file (#20) and the DEGREE
+ field (#10.6) in the NEW PERSON file (#200) were modified. To resolve
+ INC2380289, an INPUT TRANSFORM correction was made to allow direct entry
+ of Degree codes in the NAME COMPONENTS file (#20). To resolve INC2422028,
+ an INPUT TRANSFORM test was added to check for multiple spaces entered
+ between Degree codes. The INPUT TRANSFORM also checks for leading or
+ trailing spaces. If multiple spaces are found between codes, or if spaces
+ are found at the beginning or end of the entry, then the entry is
+ rejected. The Help text now indicates that only one space is allowed
+ between codes, with no leading or trailing spaces.
+  
+ This patch also modifies routine XUSESIG3 to prevent entry of duplicate 
+ degrees in the NAME COMPONENTS file (#20)and the NEW PERSON file (#200).
+  
+  
+ BLOOD BANK Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*703 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*703 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ NEW PERSON (#200)       DEGREE (#10.6)          Modified
+ NAME COMPONENTS (#20)   DEGREE (#6)             Modified
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                 New/Modified/Deleted
+ ---------------                                 --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Parameters Associated:
+  
+ Parameter Name             New/Modified/Deleted
+ --------------             -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ ----------------- 
+  N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)  New/Modified/Deleted 
+ -------------       ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2380289 - The degree field in the NAME COMPONENTS file (#20) does not 
+ accept valid additions.
+  
+ INC2422028 - Using more than one space as a delimiter between Degree codes
+ causes subscript errors.
+  
+ Problem:
+ -------
+ INC2380289 reported that the DEGREE field (#6) in the NAME COMPONENTS 
+ file (#20) would not accept valid entries. This was caused by the use of 
+ $D in a test for an existing entry in the EDUCATION file. 
+  
+ INC2422028 reported subscript errors when more than one space was used as 
+ a delimiter between Degree codes.
+  
+ Resolution:
+ ----------
+ INC2380289 was resolved by changing $D to '$D in the INPUT TRANSFORM for 
+ the NAME COMPONENTS file (#20). 
+  
+ INC2422028 was resolved by adding !(X["  ") as a third condition at the 
+ beginning of the INPUT TRANSFORM to reject any entry that includes 
+ multiple spaces as a delimiter between Degree codes. Help text now 
+ indicates that only one space is allowed between codes.
+  
+  
+ Test Sites:
+ ----------
+ Bay Pines VA Healthcare System, Bay Pines, FL
+ Atlanta VA Medical Center, Decatur, GA
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is released as a PackMan message and is distributed from
+ FORUM.
+  
+ There are no VA Software Document Library (VDL) manuals associated with 
+ this patch release.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install.
+  
+ Note: This patch was designed for standard Class I production 
+ environments. Any local modifications or cross-references to the DEGREE 
+ field in the NEW PERSON file (#200), the NAME COMPONENTS file (#20), or 
+ the EDUCATION file (#20.11) should be disabled or removed prior to 
+ installation.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.      From the Kernel Installation and Distribution System (KIDS) menu, 
+         select the Installation Menu. From this menu, you may elect to use
+         the following options. When prompted for the INSTALL NAME, enter
+         the patch number XU*8.0*703.
+  
+         a. Verify Checksums in Transport Global - This option will help
+            ensure the integrity of the routines that are in the transport
+            global.
+  
+         b. Print Transport Global - This option will enable viewing the
+            components of the KIDS build.
+  
+         c. Compare Transport Global to Current System - This option will
+            enable viewing all changes that will be made when this patch is
+            installed. It compares all components of this patch (routines,
+            data dictionaries, templates, etc.).
+  
+         d. Back up a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            back up any other changes such as data dictionaries or
+            templates.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', press <Enter>.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', press <Enter>.
+  
+ 7.      If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8.      If prompted 'Enter the Device you want to print the Install 
+         messages. You can queue the install by enter a 'Q' at the device
+         prompt. Enter a '^' to abort the install. DEVICE: HOME//   HOME  
+         (CRT)', press <Enter>.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+ N/A
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Note: Due to the complexity of this patch, it is not recommended for 
+ backout, and a restore from a backup of the Transport Global should not 
+ be attempted. However, in the event that a site decides to back out this 
+ patch, the site should contact the National Service Desk (NSD) to submit 
+ a help desk ticket. The development team will need to issue one or more 
+ follow-up patches in order to comprehensively back out this patch, after 
+ coordination with the VA Project Manager and COR.
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the XU routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the XU routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch XU*8.0*703 on line 2 in the patch list section. 
+  
+ Note: This validation procedure only verifies that routine changes have 
+ been backed out; it does not confirm that other patch component changes 
+ have been backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;02/02/17;Build 35
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSESIG3
+    Before:  B5931967   After:  B7661999  **679,703**
+ 
+Routine list of preceding patches: 679
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2018
+Completed By:                               Date Completed: FEB 20, 2019
+Released By :                               Date Released : FEB 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

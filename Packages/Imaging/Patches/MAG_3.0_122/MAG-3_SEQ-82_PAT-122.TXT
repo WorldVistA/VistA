@@ -1,0 +1,1349 @@
+
+=============================================================================
+Run Date: NOV 14, 2012                     Designation: MAG*3*122
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #82                      Status: Released
+                  Compliance Date: DEC 15, 2012
+=============================================================================
+
+Associated patches: (v)MAG*3*49    <<= must be installed BEFORE `MAG*3*122'
+                    (v)MAG*3*104   <<= must be installed BEFORE `MAG*3*122'
+                    (v)MAG*3*108   <<= must be installed BEFORE `MAG*3*122'
+                    (v)MAG*3*117   <<= must be installed BEFORE `MAG*3*122'
+
+Subject: ANNOTATIONS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ MAG*3.0*122 Overview:
+ =====================
+ 
+ This document describes MAG*3.0*122, the VistA Imaging Annotations patch for 
+ Clinical Applications. 
+ 
+ The Department of Veterans Affairs (VA) has more than two billion medical 
+ images stored in its database and available online. Images are collected, 
+ captured, stored, and displayed using VistA Imaging applications. Each month, 
+ VistA Imaging serves more than 1.3 million patients, captures more than 39 
+ million new images, and displays nine to eleven million images for review and 
+ diagnosis.
+ 
+ Image annotations highlight features, details, and points of interest within 
+ an image. Annotations provide clinicians with tools to transcribe inscriptions,
+  callouts, symbols, and words and place them adjacent to areas of interest. 
+ Annotations become part of the patient's medical record. 
+ 
+ VistA Imaging includes a tool to annotate medical diagrams but not medical 
+ images, and VistARad provides functionality to annotate RAD package images. 
+ This patch expands Clinical Capture and Clinical Display to annotate images 
+ and save them. The diagram annotation tool will continue to be distributed 
+ but is not part of the scope of MAG*3.0*122 and will not be discussed further 
+ in this document. 
+ 
+ Major features of MAG*3.0*122 are summarized below: 
+ ===================================================
+ 
+      *  Allows annotating of images during the capture process in Clinical 
+         Capture. 
+ 
+      *  Allows annotating of images and viewing of images with their 
+         annotations in Clinical Display, in both the full resolution viewer 
+         and the radiology viewer.
+ 
+      *  Clinical Display provides a notification when viewing a radiology 
+         image or radiology group that has been annotated in VistARad.
+ 
+      *  Supports remote image view functionality. Annotated images can be 
+         viewed from remote VA sites (a remote site must have MAG*3.0*122 
+         installed). Annotations can be added to remote VA images if 
+         annotation permissions are granted.
+ 
+      *  An indicator   is displayed on abstracts, group abstracts, and in 
+         other summary areas to alert the clinician of images that have 
+         associated annotations.
+ 
+      *  The following image formats can be annotated:
+ 
+         - Bitmap
+         - DICOM (single image and multi-frame)
+         - JPEG
+         - PDF (single page and multi-page)
+         - TGA
+         - TIFF (single page and multi-page)
+ 
+      *  Annotations are image overlays and are stored only in VistA. They 
+         are not burned into the image, but they do remain a permanent part of 
+         the patient record.  In addition, annotations are not exportable. 
+ 
+      *  By default, users are restricted from creating annotations. Site 
+         administrators can alter permissions to allow users to create 
+         annotations according to system, division, service, and user 
+         parameters.
+ 
+      *  Saved annotations cannot be modified or deleted except with the MAG 
+          ANNOTATE MGR key.
+ 
+      *  The MAG ANNOTATE MGR key allows a designated user to change or delete 
+         saved annotations.
+ 
+      *  An annotation audit trail is created and stored. It tracks annotations 
+         by user, date created, and the user's service.
+ 
+      *  Annotations can be added before and after a progress note is signed or 
+         consult resulted, according to TIU business rules. 
+ 
+      *  Annotations can be printed with images.
+ 
+      *  Measurements can be created on images by using the ruler and 
+         protractor tools in both the full resolution viewer and the radiology 
+         viewer. 
+ 
+      *  Annotation global settings are stored with the user's preferences. 
+         Clinical Capture and Clinical Display have their own settings in the 
+         user's preferences. 
+ 
+      *  DICOM and PDF images can now be viewed in the Clinical Capture viewer 
+         when in Annotation Mode.
+ 
+ MAG*3.0*122 adds functionality to support the Indian Health Services (IHS) 
+ ==========================================================================
+ program:
+ ========
+ 
+      *  Allows searching for a patient by IHS Health Record Number (HRN) 
+         when the Agency Code is set to IHS in the Kernel System Parameters 
+         file.
+ 
+      *  Displayed screens and printed reports will use the IHS HRN as the 
+         patient ID.
+ 
+ Distribution of Software:
+ =========================
+ 
+ This patch can be downloaded from:
+ 
+ ftp.imaging.med.va.gov/Software/Released_Software/Mag3_0P122
+ 
+ Installation instructions are included in this document.
+ 
+ NOTE   Any late-breaking news about this patch will be found in a readme 
+        file. If present, this file will also be located in the MAG3_0P122 
+        directory.
+ 
+ Patch Contents:
+ ===============
+ 
+ This patch includes the following files:
+ 
+ Software:
+ =========
+ 
+      MAG3_0P122.KID - KIDS (Kernel Installation & Distribution System) package 
+      to be installed on the VistA System.
+ 
+      MAG3_0P122_Install.exe - Installation file for Clinical Display, Clinical 
+      Capture, and TeleReader client software.
+ 
+      Mag3_0P122_Install.msi - Installation file for sites using SMS or similar 
+      software.
+ 
+      Mag3_0P122_VIX_Setup.msi - Installation file to set up the MAG*3.0*122 
+      VIX.
+ 
+ NOTE   You must upgrade your VIX to the MAG*3.0*122 VIX immediately after 
+        installing the MAG*3.0*122 KIDS and before installing the client 
+        software.
+ 
+      MagAUShare.zip - Zip file containing files used by Auto-update sites. 
+      Contains MagASet.exe, MagSetup, and magnet.ini.
+ 
+ Documentation:
+ ==============
+ 
+      MAG3_0P122_Patch_Description.pdf - Patch Description.
+ 
+      MAG3_0P122_Technical_Manual_Changes.pdf - VistA Imaging Technical 
+      Manual
+ 
+      MAG3_0P122_Installation_Guide_Changes.pdf - MAG*3.0*122 Installation 
+      Instructions
+ 
+      MAG3_0P122_Security_Guide_Changes.pdf - VistA Imaging Security Guide
+ 
+      MAG3_0P122_Clinical_Capture_Changes.pdf - VistA Imaging System Clinical 
+      Capture User Manual 
+ 
+      MAG3_0P122_Clinical_Display_Changes.pdf - VistA Imaging System Clinical 
+      Display User Manual
+ 
+      MAG3_0P122_VIX_Installation_Guide.pdf - VistA Imaging System VIX Service 
+      Installation Guide
+ 
+ NOTE   Refer to Fact Sheet for MAG*3.0*122 VistA Imaging Annotations for 
+        more information. (URL = http://vaww.vhaco.va.gov/him/docscanning.html)
+ 
+ Before MAG*3.0*122 is installed, the following patches must be installed:
+ 
+      MAG*3.0*104
+      MAG*3.0*108
+      MAG*3.0*117
+      MAG*3.0*49
+ 
+ For a list of all released Imaging (MAG) patches, refer to the patch_list.txt
+ file available on the Imaging FTP server (go to ftp://ftp.imaging.med.va.gov,
+ then navigate to the \Docs\Imaging_Docs_Latest folder).
+ 
+ Test Sites:
+ ===========
+ 
+ The following sites are test sites for this patch:
+        
+      Fayetteville, NC (Large)
+      Mountain Home, TN (Medium)
+      St. Louis, MO (Integrated, Large)
+      VISN 2 (Integrated, Large)
+      West Haven, CT (Integrated, Large)
+      West Palm Beach, FL (Large)
+ 
+ Remedy Calls:
+ =============
+ 
+ This patch addresses the following Remedy help desk calls:
+ 
+ Tickets 488697, 484208, and 596007 
+ The QA Review query in VI Clinical Display will use a new cross reference. 
+ This will allow a much faster QA review.
+ 
+ Tickets 528992 and 530491
+ Restore the Cache Images function in Clinical Display that allows users to 
+ manually cache images in the background while the user views other images 
+ which take more time to retrieve.
+ 
+ Ticket 529824
+ Clinical Display queries the local treating facility list for the sites at 
+ which the patient has been seen. Previous versions of the client would 
+ query the DoD for any site entry that contains 200 including entries that 
+ do not represent the DoD. MAG*3.0*122 changes this to only query the DoD for
+ patient data when the patient has been seen at site 200 and no other 
+ variation of site 200 in the treating facility list.
+ 
+ Ticket 533466, 477116, 740194
+ Fix the 'Use Alternate PDF Viewer' preference in Clinical Display such that 
+ the functionality is restored and the PDF file will open in Adobe Reader or 
+ the viewer they use for PDFs.
+ 
+ Tickets 531950, 531487, 530326, 531108 
+ An Access Violation error message displays in Vista Imaging Capture (in 
+ module MagImageCapture.exe). 
+ 
+ Tickets 527026,533757,619468
+ MAG*3.0*122 sets the pointer in Clinical Capture to the BIG file only if the 
+ BIG file exists.
+ 
+ Ticket 539861,540859, 716678
+ MAG*3.0*122 uses the primary site station number when retrieving images from
+ remote VA sites with the VIX. This allows the CAPRI remote login method to 
+ work when the BSE method fails.
+ 
+ Ticket 528654
+ MAG*3.0*122 corrects the failure of Clinical Capture to maintain the Convert
+ to DICOM setting during a drag and drop import. 
+ 
+ Tickets 530056, 555163, 555768, 583850, 610256, 526399
+ MAG*3.0*122 eliminates the <Undef> error BRK+20^MAGGTRPT in the error log 
+ when a user selects a deleted image to view with Preview Report enabled. 
+ 
+ Ticket 626390
+ On some servers in the VA domain, applying a DENY ACL to the system drive 
+ root directory (usually c:\) will cause an exception to be thrown. The VIX 
+ installer has been modified to catch and log the exception, allowing the 
+ VIX installation to continue.
+ 
+ Tickets 716685, 717384, 717734, 718170
+ A problem was discovered in the field with Patch 104 where a VIX server would
+ not be able to communicate with other VIX servers. Eventually the listener 
+ threads on the VIX are all used up and no longer respond to requests. The fix
+ in Patch 122 resolves this issue.
+ 
+ Tickets 612929, 722131
+ This ticket requests to upgrade the EKG viewer to use the new MUSE 8 
+ interface.
+ 
+ New Service Requests:
+ =====================
+ 
+ 20080404 - Teledermatology Enhancements
+ 
+ 20090511 - Telehealth and Telepathology Enhancements
+ 
+ Patient Safety Issues:
+ ======================
+ 
+ There are no Patient Safety Issue (PSI) reports associated with this patch.
+  
+ MAG*3.0*122 Changes:
+ ====================
+ 
+ Summary:
+ ========
+ 
+ MAG*3.0*122 enables users with annotation permission to draw annotations 
+ directly on the image they are viewing in Clinical Capture or Clinical Display.
+  Although annotations are kept in an annotation layer and stored in VistA as 
+ an overlay, they are a permanent part of the patient record. By default, 
+ annotations always display when an image is viewed. A clinician can choose to 
+ hide and show annotations as needed. MAG*3.0*122 provides flexible user 
+ controls to draw, arrange, and present annotations. Annotations made to an 
+ image associated with a Text Integration Utility (TIU) note before the note is 
+ signed are visually different from annotations made after the note is signed. 
+ Annotations made before the note is signed have solid lines and normal text; 
+ annotations made after the note is signed have dashed lines and underlined 
+ text. For printing of images, annotations can be printed along with the image 
+ if desired (the user can determine if all or some or none of the annotations 
+ should be included in a print job). 
+ 
+ Clinical Display provides a notification when radiology images have been 
+ annotated in VistARad.
+ 
+ NOTE   Users cannot annotate non-radiology images viewed from the Department
+        of Defense (DoD).  DoD radiology images can have temporary measurement
+        annotations created (i.e., rulers and protractors).
+ 
+ Annotation Permissions:
+ =======================
+ 
+ Creating Annotations:
+ =====================
+ 
+ By default, when MAG*3.0*122 is installed, users cannot annotate images. Site
+ Administrators can update kernel parameter definitions to allow users to 
+ annotate images. Using these parameters, the site administrator has the 
+ flexibility to grant and deny annotation permission to individual users at 
+ the site, to all users of a particular service at that site, to an entire 
+ division associated with that site, or to all users at the site. For more 
+ information about the parameters and how to set them, see Annotation 
+ Permissions section.
+ 
+ Viewing Annotations:
+ ====================
+ 
+ Clinical Display users are able to view annotations associated with an image
+ when the image is displayed.
+ 
+ Editing and Deleting Annotations:
+ =================================
+ 
+ Only users who have the MAG ANNOTATE MGR key can edit or delete saved 
+ annotations. The MAG ANNOTATE MGR key is reserved for users who have an 
+ oversight role, for example, quality control. The MAG ANNOTATE MGR key is 
+ not intended for general distribution. 
+ 
+ Users who use remote image views and need to modify the annotations made by 
+ other users at a remote site must have the MAG ANNOTATE MGR key at the remote
+ site. 
+ 
+ NOTE    Please delete annotated images with care. It is recommended that 
+         annotated images destined for deletion be marked "Needs Review" for 
+         further QA consideration, since to delete an image permanently will 
+         also disassociate annotations and the annotation history from the 
+         deleted image. Even though an image may be recoverable, annotations 
+         and annotation history are not.  
+ 
+ Annotating Images at Remote Sites:
+ ==================================
+ 
+ Users can annotate images at a remote site if the remote Site Administrator 
+ grants the appropriate annotation permission.
+  
+ Audit History:
+ ==============
+ 
+ An annotation audit history is kept in VistA for each image when annotations 
+ are added during a session and saved. The audit history keeps a record of 
+ each annotation and stores the user name, date and time, and the user's 
+ service with the audit entry.
+ 
+ Clinical Capture Changes:
+ =========================
+ (For more information on the FIGURE samples please refer to the Patch 
+ Description document distributed with this patch). 
+ 
+ A new Annotations button has been added to Clinical Capture as shown in Figure
+ 1. The Annotations Button becomes enabled when an image is viewable and the 
+ user has annotation permission. When the user clicks the button a new 
+ Annotation Toolbar becomes visible. The toolbar will indicate that the user 
+ is in Annotation Mode. Annotations will be associated with an image when 
+ capture is completed and the image saved. When an image is saved with 
+ annotations, the annotations are stored in a separate file in VistA, apart 
+ from the image file. Annotations become a part of the permanent medical 
+ record and cannot be modified or deleted except by a user with the MAG 
+ ANNOTATE MGR Key. 
+ 
+ DICOM and PDF images can now be viewed in the Clinical Capture viewer when in 
+ Annotation Mode. 
+ 
+ The Annotations Button appears in the toolbar only if the user has annotation 
+ permissions. 
+  
+ Figure 1 - Annotations Button 
+ 
+ (For more information about the annotation figures please refer to the 
+ Patch Description distributed with this patch)
+ 
+ The Annotation Toolbar, shown in Figure 2 appears when the capture session 
+ is in Annotation Mode. Annotation Mode begins after pressing the Annotations 
+ button shown above.
+  
+ Figure 2 - Annotation Toolbar in Clinical Capture
+ 
+ The Clinical Capture Annotation Toolbar button functions are as follows:
+ 
+      Select Annotation button
+      Line button
+      Freehand button
+      Rectangle button
+      Text button
+      Ellipse button
+      Arrow button
+      Highlighter button
+      Ruler button
+      Protractor button
+      Annotation Property Editor button
+      Global Annotation Attributes button
+      Delete Annotations button
+      Exit Annotation Mode button
+ 
+ Annotations are drawn directly on the image as shown in Figure 3. The use of 
+ magnification and rotation tools will cause the annotation(s) to zoom and 
+ translate with the image. Annotation coordinates and aspect stay locked with 
+ the image.
+  
+ Figure 3 - Imported Image with Annotations
+ 
+ Clinical Display Changes:
+ =========================
+ 
+ Image annotation is now an integrated feature of the full resolution viewer 
+ and the radiology viewer. When the Annotations Button   is pressed, the 
+ Annotation Toolbar becomes visible and the image goes into Annotation Mode. 
+ On the full resolution viewer, Annotation Mode is started by clicking the 
+ Annotations Button on the toolbar or on the image title bar as seen in 
+ Figure 4. 
+ 
+ Figure 4 - Full Resolution Viewer Showing Annotations Buttons
+ 
+ On the radiology viewer, Annotation Mode is started by clicking the 
+ Annotations Button on the image title bar as seen in Figure 5.
+  
+ Figure 5 - Radiology Viewer Showing the Annotations Button
+ 
+ Annotation Mode is active until the Annotation toolbar is closed. While in 
+ Annotation Mode the image responds to drawing commands based on the tool 
+ selected or to other annotation commands based on the user selection. When 
+ annotations are created and the Annotation Toolbar is closed, the user 
+ will be prompted to save or abandon the changes or to continue annotating. 
+ 
+ When annotations are saved they form an annotation history layer. The 
+ annotation history layer is part of the audit history and is useful when a 
+ clinician wants to see how annotations were presented at a point in time. 
+ When an image is first opened and it has annotations, the most recently saved
+ history layer becomes the current view which can be further annotated and then 
+ saved as a new layer. 
+ 
+ Use of external viewers like the Adobe Acrobat Reader will display 
+ only the image, even if annotations are part of the image.
+ 
+ The radiology viewer supports annotation in a single or dual stack mode. 
+ Annotating is not supported in the radiology viewer's layout mode. DICOM 
+ multi-frame cine loops can be annotated one frame at a time.
+ 
+ In both the full resolution and radiology viewers, the image can be rotated, 
+ zoomed, inverted, and flipped and annotations will translate with the image.
+ 
+ Clinical Display Annotation Toolbar:
+ ====================================
+ 
+ When the Annotations Button is clicked in the full resolution or radiology 
+ viewer, the Annotation Toolbar will be displayed as shown in Figure 6, and 
+ the image will be in Annotation Mode until the Annotation Toolbar is closed.
+ While the Annotation Toolbar is visible it can be moved to any location on 
+ the screen. If more than one image is displayed in a viewer, the Annotation 
+ Toolbar will be associated with the image that has focus.
+   
+ Figure 6 - Clinical Display Annotation Toolbar
+ 
+ Following is a table of the annotation tools available in the Annotation 
+ Toolbar.
+     
+      Edit Annotations button
+      View Annotations button
+      Select Annotation button
+      Line button
+      Freehand button
+      Rectangle button
+      Text button
+      Ellipse button
+      Arrow button
+      Highlighter button
+      Ruler button 
+      Protractor button
+      Annotation Property Editor button
+      Global Annotation Attributes button
+      Audit History
+      Annotation Information
+ 
+ The User Information line in Figure 6 provides the following information (as 
+ setup by the current annotation session):
+ 
+      1.  Read-only indicator   (not shown in the illustration, but when it is 
+          shown, it is on the left side of the User Information line). This 
+          indicator tells the user that a selected annotation is read-only 
+          (i.e., created by someone else). If a group of annotations are 
+          multi-selected and one or more of them in the group belong to someone
+          else, the indicator will appear. This indicator will also appear when 
+          viewing RAD package images, DoD radiology images, or when the user 
+          does not have annotation permission. 
+ 
+      2.  The user permission setting 
+          a.  Read Only
+          b.  Read/Write Permission
+          c.  Master Key Permission
+          d.  RAD Package
+          e.  DoD
+ 
+      3.  The count of annotations on the page and the count of hidden 
+          annotations on the page. If the image is multi-paged, both counts 
+          span all of the pages.
+ 
+ The Status line will display the session state except when an annotation in 
+ the image is selected. Then it will display the annotator's name, annotator's 
+ service, and date/time when the annotation was last saved. When a name is 
+ displayed the user can hover over it and get a full listing. If the hover 
+ over information needs to be displayed longer, the user can click the 
+ Annotation Information button (be sure to select one or more or all of the 
+ annotations before clicking the button).
+ 
+ The Edit Annotations button Error! Reference source not found., pops up a 
+ submenu with the following choices: 
+  
+ Figure 7 - Edit Annotations Button
+ 
+ The View Annotations button Figure 8, pops up a submenu with the following 
+ choices:
+  
+ Figure 8 - View Annotation Button for Hide and Show
+ 
+ When the View Annotations button Hide or Show option is selected, a Choices 
+ Available popup list box will appear as shown in Figure 9. The figure below 
+ shows a series of dates for the annotations on the image. This example list 
+ appeared after selecting Hide/By Date. By clicking on a date entry, the 
+ annotations on the image that have the selected date will hide. The inverse 
+ is true for Show/By Date.
+  
+ Figure 9 - Choices Available Popup Selector
+ 
+ The Annotation Property Editor button changes the properties of an 
+ individually selected annotation. After an annotation is placed on the 
+ image, the owner of the annotation can select it and change items like line 
+ width, color, opacity, etc.
+ 
+ The Global Annotation Attributes button lets the user adjust settings for 
+ all of the annotation types (ellipses, lines, etc.). This affects all 
+ annotations placed on the image after the global settings are changed and 
+ saved. It will not affect annotations already drawn. To do that the user 
+ will need to use the Annotation Property Editor button. Global changes are 
+ saved to the user's preference settings.
+ 
+ The Audit History button will expand the Annotation toolbar window to 
+ display a tree view showing every annotation session that was saved. Except 
+ for the current annotation session, the Audit History layers are read-only. 
+ If one or more annotations were hidden rior to saving, the user can view 
+ the way the last annotator saved the session by selecting "As Last Viewed" 
+ when that node appears. If the "As Last Viewed" node is not available for 
+ an Audit History layer, the previous annotator did not save the session 
+ with hidden annotations.
+  
+ Clicking the Annotation Information button   displays information about the 
+ session state. The example below shows information for all of the annotations
+ on the page (Select All was used in this example prior to pressing the 
+ Annotation Information button).
+  
+ User Preference Setting Changes:
+ ================================
+ 
+ User Preferences has a new Annotation tab shown in Figure 10. The tab has a 
+ button to open the Global Annotation Attributes screen for Clinical Display,
+ as shown in Figure 11.
+ 
+ Figure 11 can also be accessed by selecting the Global Annotation Attributes 
+ button on the Annotation toolbar.
+  
+ Figure 10 - User Preferences Annotation Tab     
+ 
+ Figure 11 - Global Annotation Attributes
+ 
+ Selections made in the Global Annotation Attributes screen are stored as part 
+ of the user's preference settings. These settings will be applied as 
+ annotations are initially created. Changes made to global settings, at the 
+ time they are made, will not affect pre-existing annotations. Even though
+ default global settings are in effect when annotations are drawn, they can be 
+ individually modified at any point later. 
+ 
+ Clinical Capture and Clinical Display have their global settings kept in the 
+ Capture user preference file and in the Display user preference file, 
+ respectively.
+ 
+ Automatically Showing Annotations:
+ ==================================
+ 
+ Annotations, by default, are always shown if they exist for an image when the 
+ image is displayed. This is controlled by the checkbox as illustrated in 
+ Figure 12 below. The user can uncheck this option to not show annotations 
+ upon displaying an image. When this option is unchecked the user can manually 
+ show annotations. Whether this option is checked or not, the icon is always 
+ visible on abstracts, the tree view, and list view. If the option is unchecked 
+ and an annotated image is displayed, the user can selectively show existing 
+ annotations. This is done by entering Annotation Mode (click the Annotations 
+ button), clicking the View Annotations button in the Annotation toolbar and 
+ then choosing to show all of the annotations as desired.
+  
+ Figure 12 - Show Annotations Option
+ 
+ Clinical Display Image List Changes:
+ ====================================
+ 
+ The Clinical Display Image List window, shown in Figure 13, will display an 
+ annotation indicator to notify the user that annotations exist for the image.
+  
+ Figure 13 - Image List Window Annotation Indicators
+ 
+ In the abstract pane the icon indicates that annotations exist for the 
+ image. If the abstract is for a group, the icon indicates that one or more 
+ images in the group abstract window have annotations. In the tree view and 
+ in the list view the indicates that annotations exist for the single image 
+ while the icon indicates that a group has one or more images with 
+ annotations. When a group is selected and the group abstract window opens, 
+ the individual images of the group will display an annotation indicator when 
+ appropriate as shown in Figure 14.
+  
+ Figure 14 - Group Abstract Window Annotation Indicators
+ 
+ The image information window will indicate if annotations exist for an image
+ as shown in Figure 15.
+  
+ Figure 15 - Image Information Window
+ 
+ QA Review Window Changes:
+ =========================
+ 
+ The QA Review window allows annotating as shown below in Figure 16. 
+  
+ Figure 16 - QA Review Window Changes
+ 
+ Figure 17 shows the QA Review window in Annotation Mode with the Annotation 
+ toolbar visible.
+  
+ Figure 17 - QA Review Window in Annotation Mode
+  
+ Clinical Display Radiology Viewer Changes:
+ ==========================================
+ 
+ Annotations cannot been drawn on images associated with the RAD package with 
+ one exception: measurements can be made on RAD package images with the 
+ MAG*3.0*122 ruler and protractor tools, but not saved. These measurements 
+ are temporal measurements which do not get saved to VistA. RAD package images 
+ must be annotated in the VistARad application. RAD package image annotations
+ must be viewed in the VistARad application.
+ 
+ In Clinical Display, RAD package images are always viewable, but without 
+ annotations if present. However, Clinical Display does provide the clinician 
+ with notification that an image has been annotated in VistARad. Notification 
+ is provided through a hover-over hint when moving the mouse over the image 
+ in the abstract, tree, or list view. It is also available in the Image 
+ Information window when hovering over the abstract. 
+ 
+ When printing images in Clinical Display, a notification is printed along
+ with the image if the image contains VistARad annotations.
+ 
+ DICOM and TGA images that are displayed in the Radiology Viewer but are 
+ associated with other types of packages (e.g., MED, NOTE), can be annotated 
+ in Clinical Display and saved.
+ 
+ Remote radiology images from the Department of Defense cannot be annotated 
+ with permanent annotations. However, temporary measurements can be created 
+ with the ruler and protractor tools. Annotations that may have been drawn 
+ on a DoD image by a DoD application are not available to the VA for display 
+ and Clinical Display does not provide notification to VA clinicians of their 
+ existence. 
+ 
+ The Radiology Viewer toolbar has been modified to harmonize MAG*3.0*117 
+ measurement toolbar buttons and measurement submenu items to work with 
+ MAG*3.0*122. Three toolbar buttons have been removed from the Radiology 
+ Toolbar as shown in Figure 18. In MAG*3.0*122, access to the three removed 
+ buttons are available in the Annotation Toolbar. 
+  
+ Figure 18 - MAG*3.0*117 Radiology Toolbar
+ 
+ Three submenu items shown in Figure 19 have been replaced by a single button 
+ to the Annotation Toolbar as shown in Figure 17.
+  
+ Figure 19 - MAG*3.0*117 Submenu
+  
+ Figure 20 - MAG*3.0*122 Submenu
+ 
+ Deleting Images with Associated Annotations:
+ ============================================
+ 
+ Starting with MAG*3.0*122 and going forward, the concept of the "image" in 
+ the medical record is expanded. Prior to MAG*3.0*122 an image was a singular 
+ object consisting of the image and its image metadata (metadata describes 
+ characteristics and properties of the image). MAG*3.0*122 adds an annotation 
+ overlay and annotation history to theimage. The image is now a paired object 
+ and breaking them apart should be avoided to maintain medical record 
+ integrity.
+ 
+ Deleting an annotated image or deleting a group containing annotated images 
+ will disassociate the image from the annotation information. A deleted image 
+ is moved from IMAGE file (#2005) to IMAGE AUDIT file (#2005.1) and can be 
+ resurrected if necessary if the image is mistakenly deleted. However the 
+ annotation information cannot be easily or accurately reconstructed. For 
+ this reason HIMs has required that users who have the right to delete images 
+ be given an option to place an annotated image into a "Needs Review" status 
+ as shown in Figure 21. This gives HIM staff an opportunity to discuss the 
+ loss of annotation information with the annotation author. The "Needs Review" 
+ button will only show up when deleting an annotated image or an annotated 
+ group.
+  
+ Figure 21 - Delete an Annotated Image Dialog
+ 
+ An authorized user can choose to put an annotated image in "Needs Review" 
+ state, delete the annotated image from VistA, or cancel.
+ 
+ Printing Images with Annotations:
+ =================================
+ 
+ Images with annotations can be printed in two ways. The first method is by 
+ using the Print Image. option which is available from the File menu as shown 
+ in Figure 22 - Print Image Option.
+   
+ Figure 22 - Print Image Option
+ 
+ The image will print with the annotations showing. The user can elect to print 
+ all the annotations as is, or customize a view by selecting annotations to 
+ hide and show before printing. Printing in this manner is What You See is What 
+ You Get (WYSIWYG). If annotations are part of the image, the printed page will 
+ include a line of information as shown in Figure 23 - Print Image Example.
+ 
+ Annotated images will print a second line at the top of the printed page 
+ detailing the number of annotations, the number of hidden annotations that did 
+ not print because the user decided to hide some, and date the annotated image 
+ was printed. On radiology images, printing will also notify the user if there 
+ are annotations that must be viewed in VistARad. It will also tell the user if 
+ temporal measurements were printed on the paper but not stored in VistA.  
+ Figure 24 shows a printed radiology image with temporary measurements that 
+ were drawn in Clinical Display.
+ 
+ NOTE   When printing Radiology (DICOM) images to paper it must be understood 
+        that this product is not necessarily adequate for clinical purposes.
+  
+ Figure 23 - Print Image Example
+  
+ Figure 24 - Radiology Image with Temporary Measurement Annotations
+ 
+ The second method of printing is through the Release of Information (ROI) 
+ feature of Clinical Display. In ROI, images that are selected for printing 
+ will always print with annotations. The annotation layer that prints with the 
+ image is the latest annotation layer stored in VistA. Radiology images, even 
+ with annotations, do not print when creating pages through ROI.
+ 
+ VistA System Changes:
+ =====================
+ 
+ Data Dictionary:
+ ================
+ 
+ The following files and fields are included in this patch:
+ 
+ IMAGING ANNOTATION file (#2005.002) - New
+ 
+ This file contains an entry for each annotated image. The information includes 
+ the detail about each annotation, that is: annotator, date/time saved, tool 
+ version, source and XML data, and so on.
+ 
+ FIELDS
+ 
+      IMAGE (#.01)
+      This is the image being annotated.
+ 
+      ANNOTATION GROUP (#1) - Multiple field
+      These fields store the user annotations to the image.
+ 
+        ANNOTATOR (#.01)
+        This field stores the ID of the user who made the annotation. 
+ 
+        ANNOTATION SAVED DATE/TIME (#1)
+        Date and time the image was annotated /stored.
+ 
+        ANNOTATION VERSION (#2)
+        The annotation tool version used to create the annotated image.
+ 
+        SOURCE (#3)
+        The source of the annotation being created, for example: Imaging 
+        Clinic.
+ 
+        ANNOTATION LAYER DELETION (#4)
+        Indicates that an annotation layer has been marked as deleted.
+ 
+        ANNOTATION IMAGE LAYER (#5)
+        The field contains annotation XML raw data.
+ 
+        TIU NOTE COMPLETION (#6)
+        The completion status of the TIU document when saving a TIU image 
+        annotation.
+ 
+        SERVICE (#7)
+        Service/Section of annotator when the annotation was made.
+ 
+        SITE (#8)
+        The site/division at which the annotator logged in and annotated the 
+        image. 
+ 
+ IMAGING USER PREFERENCE file (#2006.18) - New Fields 
+ 
+      ANNOTATION CAPTURE FONT (#250)
+      This field defines the text font of the Capture annotation tools. The 
+      default is "Arial".
+ 
+      ANNOTATION CAPTURE FONT STYLE (#251)
+      This defines the text font style of the Capture annotation tools. The 
+      default is 'Regular'.
+ 
+      ANNOTATION CAPTURE FONT SIZE (#252)
+      This defines the text font size in points of the Capture annotation 
+      tools. Each point is 1/72nd of an inch. A font size of 72 results in 
+      letters 1 inch high. The default is 36.
+ 
+      ANNOTATION CAPTURE LINE WIDTH (#253)
+      This defines the line width of the Capture annotation tools The default 
+      is 5.
+ 
+      ANNOTATION CAPTURE COLOR (#254)
+      This defines the color of the Capture annotation tools. The default is 
+      32768 (GREEN).
+ 
+      ANNOTATION CAPTURE OPACITY (#255)
+      This defines the opacity of the Capture annotation tools. The default 
+      is 159. It is the degree to which light is not allowed to travel through 
+      Opaque context.
+ 
+      ANNOTATION CAPTURE ARROW STYLE (#256)
+      This defines the arrow style of the Capture annotation tools. The default
+      is 0 (Pointer). 
+        
+      ANNOTATION CAPTURE ARROW LENGTH (#257)
+      This defines the arrow length of the Capture annotation tools. The default
+      is 35. 
+ 
+      ANNOTATION CAPTURE ARROW ANGLE (#258)
+      This defines the arrow angle of the Capture annotation tools (10-60 
+      degrees). The default is 35 degrees.
+ 
+      ANNOTATION CAPTURE G WIN LEFT (#259)
+      This defines the global setting of the Capture annotation window left 
+      position on the screen (dot pixel).
+ 
+      ANNOTATION CAPTURE G WIN TOP (#260)
+      This defines the global setting of the Capture annotation window top 
+      position on the screen (dot pixel).
+ 
+      ANNOTATION DISPLAY FONT NAME (#270)
+      This field defines the text font of the Display annotation tools. The 
+      default is "Arial".
+ 
+      ANNOTATION DISPLAY FONT STYLE (#271)
+      This defines the text font style of the Display annotation tools. The 
+      default is 'Regular'.
+ 
+      ANNOTATION DISPLAY FONT SIZE (#272)
+      This defines the text font size in points of the Display annotation tools.
+      Each point is 1/72nd of an inch. A font size of 72 results in letters 1 
+      inch high. The default is 36.
+ 
+      ANNOTATION DISPLAY LINE WIDTH (#273) 
+      This defines the line width of the Display annotation tools. The default 
+      is 5.
+ 
+      ANNOTATION DISPLAY COLOR (#274)
+      This defines the color of the Display annotation tools. The default is 
+      32768  (Green).
+ 
+      ANNOTATION DISPLAY OPACITY (#275)
+      This defines the opacity of the Display annotation tools. The default is
+      159. It is the degree to which light is not allowed to travel through 
+      Opaque context.
+ 
+      ANNOTATION DISPLAY ARROW STYLE (#276)
+      This defines the arrow style of the Display annotation tools. The default
+      is 0 - Pointer.
+ 
+      ANNOTATION DISPLAY ARROW LENGTH (#277)
+      This defines the arrow length of the Display annotation tools. The default
+      is 35. 
+ 
+      ANNOTATION DISPLAY ARROW ANGLE (#278)
+      This defines the arrow angle of the Display annotation tools (10-60 
+      degrees). The default is 35 degrees.
+ 
+      ANNOTATION DISPLAY G WIN LEFT (#279)
+      This defines the global setting of the Display annotation window left 
+      position on the screen (dot pixel).
+ 
+      ANNOTATION DISPLAY G WIN TOP (#280)
+      This defines the global setting of the Display annotation window top 
+      position on the screen (dot pixel).
+ 
+      ANNOTATION DISPLAY AUTO SHOW (#281)
+      This defines the auto-show annotation of Display image. 
+ 
+ Controlling Permissions to Annotate Images:
+ ===========================================
+ 
+ The kernel parameter Definition MAG IMAGE ALLOW ANNOTATE is a new parameter in 
+ MAG*3.0*122. It is used to control the ability of users at a specific site to 
+ create annotations based on the following hierarchical levels:
+ 
+      *  User
+      *  Service 
+      *  Division
+      *  System
+ 
+ By default, when MAG*3.0*122 is installed, users at the site cannot create 
+ annotations (the MAG IMAGE ALLOW ANNOTATE value for the SYSTEM is NO).
+ 
+ The VistA administrator or Information Resources Management (IRM) personnel 
+ can allow users to create annotations by changing the value of the parameter 
+ MAG IMAGE ALLOW ANNOTATE for an individual user account, for the users of a 
+ specific service at the site, for the user accounts that are part of a 
+ division, or for the entire site.
+ 
+ Authorized users can access the MAG IMAGE ALLOW ANNOTATE parameter through 
+ the VistA menu option [XPAR EDIT PARAMETER].
+ 
+ Mail Groups:
+ ============
+ 
+ This patch contains no new or modified mail groups.
+ 
+ Forms:
+ ======
+ 
+ This patch contains no new forms.
+ 
+ Security Keys:
+ ==============
+ 
+ The following security keys are included in this patch:
+ 
+ MAG ANNOTATE MGR - New. This security key grants the key holder full 
+ annotation access at the local site to change and delete annotations made by 
+ someone else. This key is intended to support quality assurance checking. 
+ Changes made to any annotation will have the identification of the key holder 
+ kept with the annotation for audit purposes.
+ 
+ Remote Procedures:
+ ==================
+ 
+ This patch contains the following new remote procedure calls:
+ 
+ MAG ANNOT GET IMAGE
+ Gets the list of annotations for a particular image (given an image IEN). 
+ Returns the annotations in sorted order by saved date.
+ 
+ MAG ANNOT GET IMAGE DETAIL
+ Returns the details of image annotations.
+ 
+ MAG ANNOT STORE IMAGE DETAIL
+ Stores the annotation detail/XML into the IMAGING ANOTATION file (#2005.002).
+ 
+ MAG ANNOT IMAGE ALLOW
+ Checks if the annotation feature is allowed or if the user has the MAG 
+ ANNOTATE MGR key. 
+ 
+ MAG DICOM GET AGENCY
+ Checks if the site is VA or IHS agency to allow searching for a patient by 
+ IHS Health Record Number (HRN). 
+ 
+ Menu Options:
+ =============
+ 
+ This patch contains no new menu options.
+ 
+ Protocols:
+ ==========
+ 
+ This patch contains no new or modified protocols.
+ 
+ Templates:
+ ==========
+ 
+ This patch contains no new or modified templates.
+  
+ Installation:
+ =============
+ 
+ This patch is to be installed on the VistA System and on the clinical 
+ workstations.
+ 
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+ 
+ This patch may be loaded while users are on the system. Installation will take 
+ less than one minute. 
+ 
+ Installation Prerequisites:
+ ===========================
+ 
+ Before installing this patch, you will need to download the MAG*3.0*122 files 
+ from the Imaging FTP site to a local storage location.
+ 
+ Verify that the patches listed in the section Patch Contents on page 3 have 
+ been installed.
+ 
+ VistA System (KIDS) Installation:
+ =================================
+ 
+ Installation Steps:
+ 
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 
+ 3.  Load the KIDS file by performing the following steps.
+ 
+     a)  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+         the KIDS distribution.
+ 
+     b)  When prompted, enter the path and file name (MAG3_0P122.KID) of the 
+         MAG*3.0*122 KIDS file that you downloaded from the Imaging FTP server.
+ 
+     c)  When prompted to continue with the load, enter YES. 
+ 
+         A Distribution OK! message will be displayed when the load is complete.
+ 
+ 4.  After loading the KIDS file, use the following options to verify the 
+     contents of the patch and to back up any affected routines.
+ 
+     a)  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - run this 
+         option if you want to ensure the integrity of the routines in the 
+         patch. 
+ 
+      b)  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] 
+          - run this option if you want to view all changes that will be made 
+          when the patch is installed. All components (routines, options, and 
+          so on) in the patch will be compared. At this point it is a good idea 
+          to ensure there is an existing back up of the working version of 
+          affected routines.
+ 
+      c)  Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+          to create a backup of any routines exported with the patch. The 
+          option will NOT back up any of the other changes.
+ 
+ 5.  After performing the load and any optional verification steps, install 
+     the KIDS file by performing the following steps:
+ 
+      a)  Run the Install Package(s) [XPD INSTALL BUILD] option.
+ 
+      b)  When prompted for the install name, enter MAG*3.0*122.
+ 
+      c)  Answer NO to the following prompts:
+ 
+    Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//NO
+    Want KIDS to INHIBIT LOGONs during the install? No//NO
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+ 
+ 6.  When installation is finished, an Install Complete message will be 
+     displayed.
+ 
+ KIDS Installation Example:
+ ==========================
+ 
+ This sample shows the output when the KIDS file is installed for the first 
+ time. If you have already installed the patch and are installing the KIDS 
+ file in a namespace on which it has previously been installed, your output
+ may be different.
+ 
+ Select Installation Option: INStall Package(s)
+ Select INSTALL NAME:    MAG*3.0*122    8/27/12@15:17:26
+      => VistA Imaging V3.0 - Patch 122 - 08/02/2012 08:06AM  ;Created 
+ 
+ This Distribution was loaded on Aug 27, 2012@15:17:26 with header of 
+    VistA Imaging V3.0 - Patch 122 - 08/02/2012 08:06AM  ;Created on Aug 
+ 02, 2012@08:06:41
+    It consisted of the following Install(s):
+     MAG*3.0*122
+ Checking Install for Package MAG*3.0*122
+ 
+ Install Questions for MAG*3.0*122
+ 
+ Incoming Files:
+ 
+    2005.002  IMAGING ANNOTATION
+ 
+    2006.18   IMAGING USER PREFERENCE  (Partial Definition)
+ Note:  You already have the 'IMAGING USER PREFERENCE' File.
+ 
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ 
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt. 
+ Enter a '^' to abort the install.
+ 
+ DEVICE: HOME//   TELNET
+ Complete
+ 
+  Install Started for MAG*3.0*122 : 
+                Aug 27, 2012@15:19:20
+  
+ Build Distribution Date: Aug 02, 2012
+  
+  Installing Routines:
+                Aug 27, 2012@15:19:20
+  
+  Installing Data Dictionaries: 
+                Aug 27, 2012@15:19:21
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing PARAMETER DEFINITION
+                Aug 27, 2012@15:19:21
+  
+  Running Post-Install Routine: POST^MAGIP122
+  
+ Turn off MAG IMAGE Annotation by default - EDIT PARAMETER VALUES(OPTION NAME)
+  
+ Updating MAG WINDOWS: RPCs ******
+  
+ Post Install Mail Message: Aug 27, 2012@15:19:21
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*122 Installed. 
+                Aug 27, 2012@15:19:21   
+ 
+ Install Completed
+  
+ VIX Installation:
+ =================
+ 
+ Installation of the VIX is required and allows users at your site to view 
+ images from the DoD and to more efficiently view remote VA images.
+ 
+ Installation of the MAG*3.0*122 VIX must be done after installing the KIDS 
+ but before installing the client.
+ 
+ For instructions on how to install the VIX refer to the 
+ MAG_VIX_installation_guide.pdf. 
+ 
+ Annotation Permissions:
+ =======================
+ 
+ Authorized users can access the MAG IMAGE ALLOW ANNOTATE parameter through 
+ the VistA menu option [XPAR EDIT PARAMETER].
+ 
+ The following shows an example of how to set up the parameter definitions.
+ 
+ Select OPTION NAME: XPAR ED
+      1   XPAR EDIT BY TEMPLATE       Edit Parameter Values with Template
+      2   XPAR EDIT KEYWORD       Edit Parameter Definition Keyword
+      3   XPAR EDIT PARAMETER       Edit Parameter Values
+ CHOOSE 1-3: 3  XPAR EDIT PARAMETER     Edit Parameter Values
+ Edit Parameter Values
+                          --- Edit Parameter Values ---
+ 
+ Select PARAMETER DEFINITION NAME: MAG IMAGE ALLOW ANNOTATE     MAG IMAGE 
+ ALLOW ANNOTATE
+ 
+ MAG IMAGE ALLOW ANNOTATE may be set for the following:
+ 
+      1   User          USR    [choose from NEW PERSON]
+      2   Service       SRV    [choose from SERVICE/SECTION]
+      3   Division      DIV    [choose from INSTITUTION]
+      4   System        SYS    [IMGDEM01.MED.VA.GOV]
+ 
+ Enter selection: SERV  Service   SERVICE/SECTION
+ Select SERVICE/SECTION NAME: CARD
+      1   CARDIOLOGY       111A     MEDICINE
+      2   CARDIOLOGY  MEDICINE     111
+ CHOOSE 1-2: 1  CARDIOLOGY     111A     MEDICINE
+ 
+ --------- Setting MAG IMAGE ALLOW ANNOTATE  for Service: CARDIOLOGY ---------
+ Value: ?
+ 
+ Allow User, Service, Division or System to annotate the image.
+ 
+ Value: YES
+ 
+ Clinical Display and Clinical Capture Installation:
+ ===================================================
+ 
+ The Clinical Imaging client software (Display, Capture, and TeleReader) can be 
+ updated using one of the methods outlined below:
+ 
+ *  Manual Installation
+ 
+ *  Autoupdate Installation using VIIS (VistA Imaging Installation Service)
+ 
+ *  Automatic Installation using other methods (SMS, PSexec, etc.) 
+ 
+ After client installation is complete, log in to an updated workstation and use 
+ the Help | About menu option to verify that the version number is 3.0.122.15.
+ 
+ Manual Installation:
+ ====================
+ 
+ The Mag3_0P122_install.exe file can be installed manually on workstations as
+ described in Section "Single Workstation Installation" in the Clinical Imaging 
+ Installation Guide.
+ 
+ Autoupdate Installation:
+ ========================
+ 
+ These steps assume Autoupdate has already been implemented. For information 
+ about setting up Autoupdate, see Section "Setting Up and Using Autoupdate" in 
+ the Clinical Imaging Installation Guide.
+ 
+ 1.  Download MagAUShare.zip and magInstall.exe from the Imaging FTP server 
+ to a local storage location.
+ 
+ 2.  Rename Mag3_0P122_install.exe to MagInstall.exe.
+ 
+ 3.  Copy the new Mag3_0P122_install.exe file to the location specified in 
+     magautoupdate.bat. (magautoupdate.bat is typically stored in Program 
+     Files\VistA\Imaging\InstallationService on the system where VIIS is 
+     installed).
+ 
+ 4.  Perform the following steps to allow the new software to be pushed to 
+     designated test workstations:
+ 
+     a)  Extract the contents of the MagAUShare.zip file to the UPDATE\TEST 
+         folder.
+ 
+     b)  In the UPDATE\TEST folder, open magnet.ini and change the <server> 
+         placeholder for "InstallService" to reflect the server (or cluster 
+         name) where VIIS is installed. 
+ 
+         [update_mode]
+         ForceUpdateAll=FALSE
+         InstallFile=MagSetup.exe
+         InstallService=http://<SERVER>/imaging/install.asmx
+         <MachineName>=TRUE
+ 
+ 5.  Run Clinical Display and Clinical Capture on the test workstations for a 
+     period of time to ensure there are no problems with the software at your 
+     site.
+ 
+ 6.  When it is verified that the software is running properly, extract the 
+     contents of the MagAUShare.zip file to the UPDATE\DISTRIB folder.
+ 
+ 7.  In the UPDATE\DISTRIB folder, open magnet.ini and change the <server> 
+     placeholder for "InstallService" to reflect the server (or cluster name) 
+     where VIIS is installed. 
+ 
+     All workstations will be updated the next time Clinical Display or 
+     Clinical Capture is run.
+ 
+ Other Automatic Installation Methods (SMS, PSexec, etc.):
+ =========================================================
+ 
+ The following methods are available to push updated software to multiple 
+ workstations:
+ 
+ *  Remote push of Mag3_0P122_install.exe using PSexec and an administrator's 
+    account: For details, see section "Remote Push Installation using PSExec" 
+    in the current Clinical Imaging Installation Guide.
+ 
+ *  Remote push using Microsoft SMS or similar remote installation software: 
+    Either Mag3_0P122_install.exe or Mag3_0P122_install.msi can be used for 
+    this. Installation specifics will vary from site to site.
+ 
+ Routines:
+ =========
+ 
+ For each routine, the second line will contain the following information. 
+ 
+ ;;3.0;IMAGING;**[patch list]**;Mar 19, 2002; Build 92;Aug 02, 2012
+ 
+ New and modified routines for the VistA System are listed below. 
+ 
+ Please note that the "before" checksum may differ if any test software has 
+ been installed.
+ 
+ MAGIP122 routine is a post install routine and is deleted after the KIDS
+ install.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGDRPC1
+    Before: B46610398   After: B48033690  **11,30,51,50,54,49,122**
+Routine Name: MAGGA03Q
+    Before: B73673627   After: B82673839  **117,122**
+Routine Name: MAGGAII
+    Before:B120962526   After:B177433198  **93,94,122**
+Routine Name: MAGGI12
+    Before: B36188951   After: B97013744  **93,94,122**
+Routine Name: MAGGI13
+    Before: B43871753   After: B65233516  **93,117,122**
+Routine Name: MAGGNTI
+    Before: B68648040   After: B77235042  **10,8,59,93,108,122**
+Routine Name: MAGGTPT1
+    Before: B43431536   After: B51976467  **16,8,92,46,59,93,117,122**
+Routine Name: MAGGTRPT
+    Before: B43638944   After: B43148529  **8,48,93,122**
+Routine Name: MAGGTU4C
+    Before:  B4896018   After:  B5095269  **93,94,106,117,122**
+Routine Name: MAGGTU4D
+    Before:  B4901823   After:  B5101074  **93,94,106,117,122**
+Routine Name: MAGGTU4L
+    Before:  B4896099   After:  B5095350  **93,94,106,117,122**
+Routine Name: MAGGTU4T
+    Before:  B4896171   After:  B5095422  **93,94,106,117,122**
+Routine Name: MAGGTUP
+    Before: B24946997   After: B26333617  **7,8,48,45,59,93,94,117,122**
+Routine Name: MAGIP122
+    Before:       n/a   After:  B8703636  **122**
+Routine Name: MAGSANNO
+    Before:       n/a   After: B90488683  **122**
+Routine Name: MAGSPID
+    Before:       n/a   After:  B3911091  **122**
+ 
+Routine list of preceding patches: 49, 108, 117
+
+=============================================================================
+User Information:                          Hold Date     : NOV 01, 2012
+Entered By  : TROMBETTA,KATHY               Date Entered  : MAR 15, 2011
+Completed By: CASUGAY,ELSIE G               Date Completed: OCT 02, 2012
+Released By : DILORENZO,JOHN                Date Released : NOV 14, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,175 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/19/19 at 10:32
+=============================================================================
+Run Date: APR 03, 2019                     Designation: PSO*7*555
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #455                      Status: Released
+                  Compliance Date: MAY 03, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*537   <<= must be installed BEFORE `PSO*7*555'
+
+Subject: ERROR AFTER DOSE EDIT <UNDEFINED>DOSE1+2~PSOBKDED
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+    **************************** IMPORTANT *****************************
+    Please install this immediately after PSO*7*537 as it fixes an error
+    introduced by PSO*7*537.
+    ********************************************************************
+  
+ This patch addresses an error introduced by PSO*7.0*537.
+  
+ This error occurs after a user edits a dosage during the copy 
+ prescription secondary menu - CO   Copy (OP).   Error is also observed 
+ after dosage edit for TR,  Convert Titration Rx, and upon a drug edit 
+ change followed by the dosage edit
+  
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ None
+  
+ Participating Test Sites:
+ =========================
+ Erie VAMC
+ Palo Alto HCS
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ INC4153216 - <UNDEFINED>DOSE1+2^PSOBKDED *PSORXED("DOSE",2) error
+ INC4344758 - Duplicate
+ INC4444753 - Duplicate
+  
+ Problem:
+ --------
+ The error <UNDEFINED>DOSE1+2^PSOBKDED *PSORXED("DOSE" occurs when a user 
+ edits a dosage after the following actions: 
+  
+   1)  When simply editing a dosage
+   2)  After copying an outpatient medication
+   3)  After converting a titration to maintenance
+   4)  After editing the drug
+  
+ Resolution:
+ -----------
+ Modified routine PSOORED5 to reassign to the variable ENT based on the 
+ highest element of the array PSORXED("CONJUNCTION") and adding one to the 
+ value of the highest element of that array.
+  
+  
+ ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+    
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'PSO*7.0*555'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;** [PATCH LIST]**;[DATE];[BUILD NUMBER]
+   
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSS Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*555 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSO*1.0*555 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORED5
+    Before:B105365217   After:B105280160  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486,402,
+                                           500,507,525,537,555**
+ 
+Routine list of preceding patches: 537
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2019
+Completed By:                               Date Completed: APR 03, 2019
+Released By :                               Date Released : APR 03, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

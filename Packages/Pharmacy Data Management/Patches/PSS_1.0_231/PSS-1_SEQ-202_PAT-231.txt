@@ -1,0 +1,185 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 12/27/18 at 15:01
+=============================================================================
+Run Date: FEB 13, 2019                     Designation: PSS*1*231
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #202                      Status: Released
+                  Compliance Date: MAR 16, 2019
+=============================================================================
+
+Associated patches: (v)PSS*1*224   <<= must be installed BEFORE `PSS*1*231'
+
+Subject: FIX ERRORS CALLING DOSAGE CHECK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1)  Dosing check fails when values are added and then deleted from field  
+ DRUG(S) FOR DOSING CHK FREQ (#11.1) in the ADMINISTRATION SCHEDULE FILE 
+ (#51.1)
+  
+ 2)  Dosing check fails when an OLD SCHEDULE NAME(S) is used with a PRN 
+ designation.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1)  INC1605330 - Problem with Daily Dose Check when DRUGS FOR DOSING CHK 
+ are defined and then completely deleted.
+  
+ Problem
+ =======
+ When evaluating the Schedule for the Daily Dose Check, an entry in the 
+ DOSING CHECK FREQUENCY (#11) Field in the ADMINISTRATION SCHEDULE (#51.1) 
+ File takes precedence over the Number of Admin times for a Day of Week 
+ Schedule.  
+ The DOSING CHECK FREQUENCY value (if one exists) should be used if there 
+ are no Drugs entered in the DRUG(S) FOR DOSING CHK FREQ (#11.1) sub file 
+ of the ADMINISTRATION SCHEDULE (#51.1) File, or the Dispense Drug 
+ associated with the order is entered as a value in that multiple, or 
+ there is only an Orderable Item passed into the Dose check API call from 
+ CPRS, and all the active/available Drugs tied to that Orderable Item are 
+ in that multiple.
+ The problem scenario occurs if drugs are entered in that multiple, then 
+ all those drugs subsequently deleted. This causes the Daily Dose Check to 
+ not be executed.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSSSCHMS to check for entries in the 
+ DRUG(S) FOR DOSING CHK FREQ (#11.1) sub file, rather than just checking 
+ for a counter for that multiple.
+  
+  
+ 2)  INC1636522 - If an Old Schedule Name + PRN is used, the MOCHA dose
+ check cannot be performed. 
+  
+ Problem:
+ ========
+ Per the Dosing Check user manual, if an order has a schedule with PRN 
+ attached to it, it is supposed to strip off the PRN and then attempt to do
+ the order check. If an Old Schedule Name is used, the order check can be
+ performed. If PRN is appended to the Old Schedule Name, it cannot perform
+ the order check.
+  
+ Resolution:
+ ===========
+ A modification was made to routine PSSDSUTL to enable the PRNSCHD 
+ function to strip the PRN designation off both Schedule Names and Old 
+ Schedule Names. A modification was also made to PSSDSAPI to add the Old 
+ Schedule Name(s) translation to the Dose Check logic.
+  
+ Test Sites:
+ ===========
+ Manchester VAMC
+ Charleston VAMC
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions:
+ --------------------------
+ No options need to be disabled.  It is best to install this patch during
+ non-peak hours.
+  
+ This patch should take less than 2 minutes to install.
+  
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select 
+        the Installation Menu.  From this menu, you may elect to use the
+        following options. When prompted for the INSTALL NAME enter the
+        patch PSS*1.0*231.
+  
+   a.   Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.
+  
+   c.   Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the
+ patch number in the [PATCH LIST] section.
+  
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSS Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSS*1.0*231 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSS*1.0*231 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSDSUTL
+    Before:B133206578   After:B139786830  **201,178,206,224,231**
+Routine Name: PSSSCHMS
+    Before:B127350691   After:B128463744  **178,206,231**
+ 
+Routine list of preceding patches: 224
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 24, 2018
+Completed By:                               Date Completed: FEB 13, 2019
+Released By :                               Date Released : FEB 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

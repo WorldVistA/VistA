@@ -1,0 +1,567 @@
+Released PSS*1*232 SEQ #203
+Extracted from mail message
+**KIDS**:PSS*1.0*232^
+
+**INSTALL NAME**
+PSS*1.0*232
+"BLD",10936,0)
+PSS*1.0*232^PHARMACY DATA MANAGEMENT^0^3181016^y
+"BLD",10936,1,0)
+^^35^35^3181016^
+"BLD",10936,1,1,0)
+This patch will resolve the following issue.
+"BLD",10936,1,2,0)
+ 
+"BLD",10936,1,3,0)
+INC2574335 - Our drug file entry will not let me add the labs associated with
+"BLD",10936,1,4,0)
+             the drug Clozapine that needs labs attached so that drug checks
+"BLD",10936,1,5,0)
+             can be performed
+"BLD",10936,1,6,0)
+  
+"BLD",10936,1,7,0)
+      
+"BLD",10936,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",10936,1,9,0)
+--------------------------------------------
+"BLD",10936,1,10,0)
+INC2574335 - Our drug file entry will not let me add the labs associated with
+"BLD",10936,1,11,0)
+             the drug Clozapine that needs labs attached so that drug checks
+"BLD",10936,1,12,0)
+             can be performed
+"BLD",10936,1,13,0)
+          
+"BLD",10936,1,14,0)
+Problem: 
+"BLD",10936,1,15,0)
+--------
+"BLD",10936,1,16,0)
+Noth Texas VAMC reported a problem when trying to use the Drug Enter/Edit 
+"BLD",10936,1,17,0)
+[PSS DRUG ENTER/EDIT] option to mark a dispense drug a 'Clozapine' drug.
+"BLD",10936,1,18,0)
+After entering the lab test (WBC) and Specimen Type (BLOOD) they would get
+"BLD",10936,1,19,0)
+a double question mark (??) after answering 'YES' at the 'Is this Correct?'
+"BLD",10936,1,20,0)
+prompt. 
+"BLD",10936,1,21,0)
+       
+"BLD",10936,1,22,0)
+Resolution:
+"BLD",10936,1,23,0)
+-----------
+"BLD",10936,1,24,0)
+The problem was a result of an internal call to Fileman to save the lab test
+"BLD",10936,1,25,0)
+data. Fileman was getting lost because it found more than one match to the
+"BLD",10936,1,26,0)
+IEN for 'BLOOD' in the TOPOGRAPHY FIELD file (#61) because it did not 
+"BLD",10936,1,27,0)
+restrict the lookup to IEN only and other entries in that file had the 
+"BLD",10936,1,28,0)
+ABBREVIATION field (#6) set with a value that matched the IEN for 'BLOOD'.
+"BLD",10936,1,29,0)
+  
+"BLD",10936,1,30,0)
+Technical Resolution:
+"BLD",10936,1,31,0)
+---------------------
+"BLD",10936,1,32,0)
+Changed the routine PSSCLOZ at CLOZAD2+2 to use 4 slashes (////) instead of
+"BLD",10936,1,33,0)
+3 slashes (///) when saving SPECIMEN TYPE FIELD (#2), as shown below:
+"BLD",10936,1,34,0)
+ 
+"BLD",10936,1,35,0)
+ S DIC("DR")="2////"_PSSPTYN_";3///"_PSSTUFF
+"BLD",10936,4,0)
+^9.64PA^^
+"BLD",10936,6.3)
+1
+"BLD",10936,"ABPKG")
+n
+"BLD",10936,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10936,"KRN",.4,0)
+.4
+"BLD",10936,"KRN",.401,0)
+.401
+"BLD",10936,"KRN",.402,0)
+.402
+"BLD",10936,"KRN",.403,0)
+.403
+"BLD",10936,"KRN",.5,0)
+.5
+"BLD",10936,"KRN",.84,0)
+.84
+"BLD",10936,"KRN",3.6,0)
+3.6
+"BLD",10936,"KRN",3.8,0)
+3.8
+"BLD",10936,"KRN",9.2,0)
+9.2
+"BLD",10936,"KRN",9.8,0)
+9.8
+"BLD",10936,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10936,"KRN",9.8,"NM",1,0)
+PSSCLOZ^^0^B38095130
+"BLD",10936,"KRN",9.8,"NM","B","PSSCLOZ",1)
+
+"BLD",10936,"KRN",19,0)
+19
+"BLD",10936,"KRN",19.1,0)
+19.1
+"BLD",10936,"KRN",101,0)
+101
+"BLD",10936,"KRN",409.61,0)
+409.61
+"BLD",10936,"KRN",771,0)
+771
+"BLD",10936,"KRN",779.2,0)
+779.2
+"BLD",10936,"KRN",870,0)
+870
+"BLD",10936,"KRN",8989.51,0)
+8989.51
+"BLD",10936,"KRN",8989.52,0)
+8989.52
+"BLD",10936,"KRN",8994,0)
+8994
+"BLD",10936,"KRN","B",.4,.4)
+
+"BLD",10936,"KRN","B",.401,.401)
+
+"BLD",10936,"KRN","B",.402,.402)
+
+"BLD",10936,"KRN","B",.403,.403)
+
+"BLD",10936,"KRN","B",.5,.5)
+
+"BLD",10936,"KRN","B",.84,.84)
+
+"BLD",10936,"KRN","B",3.6,3.6)
+
+"BLD",10936,"KRN","B",3.8,3.8)
+
+"BLD",10936,"KRN","B",9.2,9.2)
+
+"BLD",10936,"KRN","B",9.8,9.8)
+
+"BLD",10936,"KRN","B",19,19)
+
+"BLD",10936,"KRN","B",19.1,19.1)
+
+"BLD",10936,"KRN","B",101,101)
+
+"BLD",10936,"KRN","B",409.61,409.61)
+
+"BLD",10936,"KRN","B",771,771)
+
+"BLD",10936,"KRN","B",779.2,779.2)
+
+"BLD",10936,"KRN","B",870,870)
+
+"BLD",10936,"KRN","B",8989.51,8989.51)
+
+"BLD",10936,"KRN","B",8989.52,8989.52)
+
+"BLD",10936,"KRN","B",8994,8994)
+
+"BLD",10936,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10936,"QUES",0)
+^9.62^^
+"BLD",10936,"REQB",0)
+^9.611^1^1
+"BLD",10936,"REQB",1,0)
+PSS*1.0*90^2
+"BLD",10936,"REQB","B","PSS*1.0*90",1)
+
+"MBREQ")
+0
+"PKG",586,-1)
+1^1
+"PKG",586,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",586,20,0)
+^9.402P^^
+"PKG",586,22,0)
+^9.49I^1^1
+"PKG",586,22,1,0)
+1.0^2970930^2971128^1
+"PKG",586,22,1,"PAH",1,0)
+232^3181016
+"PKG",586,22,1,"PAH",1,1,0)
+^^35^35^3181016
+"PKG",586,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",586,22,1,"PAH",1,1,2,0)
+ 
+"PKG",586,22,1,"PAH",1,1,3,0)
+INC2574335 - Our drug file entry will not let me add the labs associated with
+"PKG",586,22,1,"PAH",1,1,4,0)
+             the drug Clozapine that needs labs attached so that drug checks
+"PKG",586,22,1,"PAH",1,1,5,0)
+             can be performed
+"PKG",586,22,1,"PAH",1,1,6,0)
+  
+"PKG",586,22,1,"PAH",1,1,7,0)
+      
+"PKG",586,22,1,"PAH",1,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",586,22,1,"PAH",1,1,9,0)
+--------------------------------------------
+"PKG",586,22,1,"PAH",1,1,10,0)
+INC2574335 - Our drug file entry will not let me add the labs associated with
+"PKG",586,22,1,"PAH",1,1,11,0)
+             the drug Clozapine that needs labs attached so that drug checks
+"PKG",586,22,1,"PAH",1,1,12,0)
+             can be performed
+"PKG",586,22,1,"PAH",1,1,13,0)
+          
+"PKG",586,22,1,"PAH",1,1,14,0)
+Problem: 
+"PKG",586,22,1,"PAH",1,1,15,0)
+--------
+"PKG",586,22,1,"PAH",1,1,16,0)
+Noth Texas VAMC reported a problem when trying to use the Drug Enter/Edit 
+"PKG",586,22,1,"PAH",1,1,17,0)
+[PSS DRUG ENTER/EDIT] option to mark a dispense drug a 'Clozapine' drug.
+"PKG",586,22,1,"PAH",1,1,18,0)
+After entering the lab test (WBC) and Specimen Type (BLOOD) they would get
+"PKG",586,22,1,"PAH",1,1,19,0)
+a double question mark (??) after answering 'YES' at the 'Is this Correct?'
+"PKG",586,22,1,"PAH",1,1,20,0)
+prompt. 
+"PKG",586,22,1,"PAH",1,1,21,0)
+       
+"PKG",586,22,1,"PAH",1,1,22,0)
+Resolution:
+"PKG",586,22,1,"PAH",1,1,23,0)
+-----------
+"PKG",586,22,1,"PAH",1,1,24,0)
+The problem was a result of an internal call to Fileman to save the lab test
+"PKG",586,22,1,"PAH",1,1,25,0)
+data. Fileman was getting lost because it found more than one match to the
+"PKG",586,22,1,"PAH",1,1,26,0)
+IEN for 'BLOOD' in the TOPOGRAPHY FIELD file (#61) because it did not 
+"PKG",586,22,1,"PAH",1,1,27,0)
+restrict the lookup to IEN only and other entries in that file had the 
+"PKG",586,22,1,"PAH",1,1,28,0)
+ABBREVIATION field (#6) set with a value that matched the IEN for 'BLOOD'.
+"PKG",586,22,1,"PAH",1,1,29,0)
+  
+"PKG",586,22,1,"PAH",1,1,30,0)
+Technical Resolution:
+"PKG",586,22,1,"PAH",1,1,31,0)
+---------------------
+"PKG",586,22,1,"PAH",1,1,32,0)
+Changed the routine PSSCLOZ at CLOZAD2+2 to use 4 slashes (////) instead of
+"PKG",586,22,1,"PAH",1,1,33,0)
+3 slashes (///) when saving SPECIMEN TYPE FIELD (#2), as shown below:
+"PKG",586,22,1,"PAH",1,1,34,0)
+ 
+"PKG",586,22,1,"PAH",1,1,35,0)
+ S DIC("DR")="2////"_PSSPTYN_";3///"_PSSTUFF
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSSCLOZ")
+0^1^B38095130^B38089882
+"RTN","PSSCLOZ",1,0)
+PSSCLOZ ;BIR/TTH-CLOZAPINE DRUG ENTER/EDIT CLOZAPINE ; 01/25/99
+"RTN","PSSCLOZ",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**19,90,232**;9/30/97;Build 1
+"RTN","PSSCLOZ",3,0)
+ ;
+"RTN","PSSCLOZ",4,0)
+ ;Reference to ^LAB(60 supported by DBIA #10054
+"RTN","PSSCLOZ",5,0)
+ ;Reference to ^LAB(61 supported by DBIA #10055
+"RTN","PSSCLOZ",6,0)
+ ;
+"RTN","PSSCLOZ",7,0)
+ Q:'$D(DISPDRG)
+"RTN","PSSCLOZ",8,0)
+ N DA,DIC,DIE,DIK,DINUM,DIR,DR,PSSANS,PSSANS2,PSSCIM,PSSCLO,PSSCNT,PSSCRN,PSSIEN,PSSLAB1,PSSLAB2,PSSLT,PSSLTN,PSSNN,PSSNUM,PSSOPP,PSSPTY,PSSPTYN,PSSSUB,PSSTOT,PSSTUFF,PSSTYP0,PSSXX,X,Y
+"RTN","PSSCLOZ",9,0)
+ K DIRUT,DUOUT
+"RTN","PSSCLOZ",10,0)
+ ;Mark drug for Clozapine and create "ACLOZ" cross-reference.
+"RTN","PSSCLOZ",11,0)
+ S DA=DISPDRG,DIE=50,DR="17.5///^S X=""PSOCLO1""" D ^DIE K DA,DIE
+"RTN","PSSCLOZ",12,0)
+ ;
+"RTN","PSSCLOZ",13,0)
+CLOZBEG I $D(DIRUT)!($D(DUOUT)) Q
+"RTN","PSSCLOZ",14,0)
+ S (PSSIEN,PSSCNT)=0
+"RTN","PSSCLOZ",15,0)
+ I $O(^PSDRUG(DISPDRG,"CLOZ2",0)) F PSSIEN=0:0 S PSSIEN=$O(^PSDRUG(DISPDRG,"CLOZ2",PSSIEN)) Q:'PSSIEN  D
+"RTN","PSSCLOZ",16,0)
+ .S PSSSUB=$P($G(^PSDRUG(DISPDRG,"CLOZ2",PSSIEN,0)),U),PSSTYP0=$P($G(^(0)),U,4),PSSCIM=$P($G(^(0)),U,3)
+"RTN","PSSCLOZ",17,0)
+ .K PSSLAB1,PSSLAB2 S PSSLAB1=$$GET1^DIQ(60,PSSSUB,.01,"I"),PSSLAB2=$$GET1^DIQ(61,PSSCIM,.01,"I")
+"RTN","PSSCLOZ",18,0)
+ .S PSSCNT=PSSCNT+1,PSSCLO(PSSCNT)=$S($D(PSSLAB1):PSSLAB1,1:"**Unknown Lab Test**")_"^"_PSSSUB_"^"_PSSIEN_"^"_PSSTYP0_"^"_$S($D(PSSLAB2):PSSLAB2,1:"**Unknown Lab Test**")
+"RTN","PSSCLOZ",19,0)
+ W !!,"Prescription of Clozapine requires identification of two",!,"laboratory tests, WBC and Absolute Neutrophil Count (ANC).",!!
+"RTN","PSSCLOZ",20,0)
+ I PSSCNT=0 W "You do not have any laboratory tests identified." W !! S DIR(0)="SOA^WBC:WBC;ANC:ANC",DIR("B")="WBC" S DIR("A")="Select Laboratory Test Type: " D ^DIR Q:$D(DIRUT)  S PSSTUFF=Y K DIR,X,Y G CLOZBG2
+"RTN","PSSCLOZ",21,0)
+ I PSSCNT=1 W "You have one laboratory type of "_$S(PSSTYP0=1:"WBC",PSSTYP0=2:"ANC",1:"**Unknown**")_" test identified." S PSSTUFF=$S(PSSTYP0=2:1,1:2)
+"RTN","PSSCLOZ",22,0)
+ I PSSCNT>1 W "You currently have both laboratory tests identified."
+"RTN","PSSCLOZ",23,0)
+ ;
+"RTN","PSSCLOZ",24,0)
+ D DISPLAY
+"RTN","PSSCLOZ",25,0)
+ ;
+"RTN","PSSCLOZ",26,0)
+CLOZBG2 I PSSCNT=0 S PSSANS="A" D CLOZSEL Q
+"RTN","PSSCLOZ",27,0)
+ S DIR("?")="Enter the letter that correspond with the function."
+"RTN","PSSCLOZ",28,0)
+ I PSSCNT=1 D  Q:$D(DIRUT)
+"RTN","PSSCLOZ",29,0)
+ .S PSSOPP=$S(PSSTYP0=2:"WBC",PSSTYP0=1:"ANC",1:"**Data Missing**")
+"RTN","PSSCLOZ",30,0)
+ .W !!,"A second laboratory type of "_PSSOPP_" test should be added.",! S DIR(0)="SOA^A:ADD;E:EDIT;D:DELETE",DIR("A")="(A)dd, (E)dit, or (D)elete entry? " D ^DIR Q:$D(DIRUT)
+"RTN","PSSCLOZ",31,0)
+ I PSSCNT>1 W !! S DIR(0)="SOA^E:EDIT;D:DELETE",DIR("A")="(E)dit or (D)elete entry? " D ^DIR Q:$D(DIRUT)
+"RTN","PSSCLOZ",32,0)
+ S PSSANS=Y D CLOZSEL Q:$D(DIRUT)
+"RTN","PSSCLOZ",33,0)
+ ;
+"RTN","PSSCLOZ",34,0)
+END ;Kill variables.
+"RTN","PSSCLOZ",35,0)
+ K DIC,DIE,DIK,DIR,DR,PSSANS,PSSANS2,PSSCNT,PSSSUB,PSSXX,X,Y
+"RTN","PSSCLOZ",36,0)
+ Q
+"RTN","PSSCLOZ",37,0)
+ ;
+"RTN","PSSCLOZ",38,0)
+DISPLAY ;Display lab test.
+"RTN","PSSCLOZ",39,0)
+ W !!!,?2,"Type of",!,?2,"Test",?12,"Lab Test Monitor",?55,"Specimen Type",!,?2,"-------",?12,"----------------",?55,"-------------"
+"RTN","PSSCLOZ",40,0)
+ Q:'$O(PSSCLO(0))  W ! F PSSXX=0:0 S PSSXX=$O(PSSCLO(PSSXX)) Q:'PSSXX  D
+"RTN","PSSCLOZ",41,0)
+ .S PSSTOT=$P($G(PSSCLO(PSSXX)),U,4)
+"RTN","PSSCLOZ",42,0)
+ .W !,?2,PSSXX_".  "_$S(PSSTOT=1:"WBC",PSSTOT=2:"ANC",1:"**Unknown**"),?12,$P(PSSCLO(PSSXX),U),?55,$E($P(PSSCLO(PSSXX),U,5),1,20)
+"RTN","PSSCLOZ",43,0)
+ Q
+"RTN","PSSCLOZ",44,0)
+ ;
+"RTN","PSSCLOZ",45,0)
+CLOZSEL ;Execute add, edit or delete submodule.
+"RTN","PSSCLOZ",46,0)
+ I PSSCNT>1,($G(PSSANS)'="A") D CLOZASK Q:$D(DIRUT)
+"RTN","PSSCLOZ",47,0)
+ I PSSANS="D" D:PSSCNT=1 CLOZASK D CLOZDEL Q
+"RTN","PSSCLOZ",48,0)
+ I PSSANS="E" D:PSSCNT=1 CLOZASK D CLOZEDT Q
+"RTN","PSSCLOZ",49,0)
+ ;
+"RTN","PSSCLOZ",50,0)
+CLOZADD ;Add Clozapine sub-entry
+"RTN","PSSCLOZ",51,0)
+ Q:$D(DIRUT)
+"RTN","PSSCLOZ",52,0)
+ D DISPLY2 Q:$D(DIRUT)  I Y=0 D END Q:$G(DIRUT)  W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",53,0)
+CLOZAD2 K DIC,DD,DO S X=PSSLTN,DA(1)=DISPDRG,DIC="^PSDRUG("_DA(1)_",""CLOZ2"","
+"RTN","PSSCLOZ",54,0)
+ S DIC(0)="L",DIC("P")="50.02P"
+"RTN","PSSCLOZ",55,0)
+ S DIC("DR")="2////"_PSSPTYN_";3///"_PSSTUFF
+"RTN","PSSCLOZ",56,0)
+ D FILE^DICN K DD,DO I Y=-1 S (DUOUT,DIRUT)=1 K DIC,DA,X,Y Q
+"RTN","PSSCLOZ",57,0)
+ D END Q:$G(DIRUT)  W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",58,0)
+ Q
+"RTN","PSSCLOZ",59,0)
+ ;
+"RTN","PSSCLOZ",60,0)
+CLOZEDT ;Edit Clozapine sub-entry
+"RTN","PSSCLOZ",61,0)
+ Q:$D(DIRUT)  K DIE,DR,X,Y S DA=PSSANS2
+"RTN","PSSCLOZ",62,0)
+ S DIE="^PSDRUG(DISPDRG,""CLOZ2"","
+"RTN","PSSCLOZ",63,0)
+ S DR=".01;2;3///"_PSSTUFF D ^DIE I $D(Y) S (DUOUT,DIRUT)=1 D CLOZDXX K ^PSDRUG(DISPDRG,"CLOZ2"),DIE,DR,X,Y Q
+"RTN","PSSCLOZ",64,0)
+ D END Q:$G(DIRUT)  W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",65,0)
+ Q
+"RTN","PSSCLOZ",66,0)
+ ;
+"RTN","PSSCLOZ",67,0)
+CLOZDEL ;Delete Clozapine sub-entry
+"RTN","PSSCLOZ",68,0)
+ Q:$D(DIRUT)  I PSSCNT<3 W !,"You must have a test defined for WBC and ANC to dispense Clozapine.",!
+"RTN","PSSCLOZ",69,0)
+ S DIR("A")="Are you sure that you want to delete this test",DIR("?")="Enter YES to delete the laboratory test, NO to return to selection.",DIR(0)="Y",DIR("B")="NO" D ^DIR Q:$D(DIRUT)  I +Y=0 D END W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",70,0)
+ ;
+"RTN","PSSCLOZ",71,0)
+CLOZDXX K DIK,X,Y
+"RTN","PSSCLOZ",72,0)
+ S DA(1)=DISPDRG,DA=PSSANS2,DIK="^PSDRUG(DISPDRG,""CLOZ2"","
+"RTN","PSSCLOZ",73,0)
+ D ^DIK  K DIK,X,Y
+"RTN","PSSCLOZ",74,0)
+ I PSSANS="E",PSSCNT>1 Q
+"RTN","PSSCLOZ",75,0)
+ Q:PSSANS="A"  W !!,"Deleting "_$P(PSSCLO(PSSNUM),U)_"...."
+"RTN","PSSCLOZ",76,0)
+ D END Q:$G(DIRUT)  W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",77,0)
+ Q
+"RTN","PSSCLOZ",78,0)
+CLOZASK ;Select LAB Test number.
+"RTN","PSSCLOZ",79,0)
+ I $D(DIRUT)!($D(DUOUT)) Q
+"RTN","PSSCLOZ",80,0)
+ W ! K DIR,Y S DIR(0)="NA^1:"_PSSCNT_":1",DIR("A")="Select the Number of the test you want to "_$S(PSSANS="D":"delete",1:"edit")_" (1 or "_PSSCNT_"): "
+"RTN","PSSCLOZ",81,0)
+ S DIR("?")="Enter the number you want to delete or edit." D ^DIR Q:$D(DIRUT)
+"RTN","PSSCLOZ",82,0)
+ S PSSNUM=+Y,PSSANS2=$P(PSSCLO(PSSNUM),U,3) I PSSANS="E" S PSSTUFF=$P(PSSCLO(PSSNUM),U,4) I PSSCNT>1 D  Q:$D(DIRUT)  I Y=0 D END W !! K PSSCLO G CLOZBEG
+"RTN","PSSCLOZ",83,0)
+ .S PSSNN=$S(PSSNUM=1:2,1:1),PSSCRN=$P(PSSCLO(PSSNN),U,2)
+"RTN","PSSCLOZ",84,0)
+ .D DISPLY3 Q:$D(DIRUT)!(Y=0)
+"RTN","PSSCLOZ",85,0)
+ .D CLOZDXX ;Delete selected entry.
+"RTN","PSSCLOZ",86,0)
+ .D CLOZAD2 ;Add entry with new changes.
+"RTN","PSSCLOZ",87,0)
+ Q
+"RTN","PSSCLOZ",88,0)
+ ;
+"RTN","PSSCLOZ",89,0)
+DISPLY2 ;Display selection before adding to file.
+"RTN","PSSCLOZ",90,0)
+ Q:$D(DIRUT)  S PSSCRN=$P($G(PSSCLO(1)),U,2)
+"RTN","PSSCLOZ",91,0)
+DISPLY3 K DIR,X,Y W ! S DIR(0)="P^60:EMAQZ",DIR("S")="I PSSCRN'=+Y" D ^DIR Q:$D(DIRUT)  S PSSLTN=+Y,PSSLT=$P(Y,U,2)
+"RTN","PSSCLOZ",92,0)
+ K DIR,X,Y S DIR(0)="P^61:EMAQZ",DIR("A")="Select SPECIMEN TYPE" D ^DIR Q:$D(DIRUT)  S PSSPTYN=+Y,PSSPTY=$P(Y,U,2) K DIR,X,Y
+"RTN","PSSCLOZ",93,0)
+ W !!,"You have selected the following information for",!,"a Laboratory Type of "_$S(PSSTUFF=2:"ANC",1:"WBC")_" test."
+"RTN","PSSCLOZ",94,0)
+ W !!,?2,"Lab Test Monitor: "_PSSLT,!,?2,"Specimen Type   : "_PSSPTY
+"RTN","PSSCLOZ",95,0)
+ K DIR,X,Y W !! S DIR("A")="Is this correct",DIR("?")="Enter YES to accept, NO to reject.",DIR(0)="Y",DIR("B")="YES" D ^DIR
+"RTN","PSSCLOZ",96,0)
+ Q
+"RTN","PSSCLOZ",97,0)
+ ;
+"RTN","PSSCLOZ",98,0)
+CLOZMOV ;In File #50, move data CLOZ node to CLOZ2 node.
+"RTN","PSSCLOZ",99,0)
+ N PSSIEN,PSSGLO
+"RTN","PSSCLOZ",100,0)
+ S (PSSIEN,PSSGLO)=0
+"RTN","PSSCLOZ",101,0)
+ F PSSIEN=0:0 S PSSIEN=$O(^PSDRUG(PSSIEN)) Q:'PSSIEN  I $P($G(^PSDRUG(PSSIEN,"CLOZ1")),"^")="PSOCLO1" D
+"RTN","PSSCLOZ",102,0)
+ .S ^PSDRUG("ACLOZ",PSSIEN)="",PSSGLO=^PSDRUG(PSSIEN,"CLOZ")
+"RTN","PSSCLOZ",103,0)
+ .K DIC,DD,DO,X S (DA,DINUM)=1,DA(1)=PSSIEN,X=$P(PSSGLO,"^") Q:'X
+"RTN","PSSCLOZ",104,0)
+ .S DIC("P")="50.02P",DIC(0)="L"
+"RTN","PSSCLOZ",105,0)
+ .S DIC="^PSDRUG("_DA(1)_",""CLOZ2"","
+"RTN","PSSCLOZ",106,0)
+ .S DIC("DR")="1////"_$P(PSSGLO,"^",2)_";2////"_$P(PSSGLO,"^",3)_";3///1"
+"RTN","PSSCLOZ",107,0)
+ .D FILE^DICN K DIC,DA
+"RTN","PSSCLOZ",108,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10936,6)
+^203
+**END**
+**END**
+

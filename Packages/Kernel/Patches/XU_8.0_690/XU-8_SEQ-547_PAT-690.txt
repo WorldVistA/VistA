@@ -1,0 +1,492 @@
+$TXT Created by                  at PATTRW.DOMAIN.EXT  (KIDS) on Thursday, 08/09/18 at 13:23
+=============================================================================
+Run Date: OCT 11, 2018                     Designation: XU*8*690
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #547                      Status: Released
+                  Compliance Date: NOV 11, 2018
+=============================================================================
+
+Associated patches: (v)XU*8*443    <<= must be installed BEFORE `XU*8*690'
+                    (v)XU*8*602    <<= must be installed BEFORE `XU*8*690'
+                    (v)XU*8*631    <<= must be installed BEFORE `XU*8*690'
+
+Subject: KERNEL CRITICAL ALERT TEXT REPORT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  Current Functionality:
+  ---------------------
+   
+  1. The "Critical Alerts Count Report" [XQAL CRITICAL ALERT COUNT] and
+     "User Alerts Count Report" [XQAL USER ALERTS COUNT] options list
+     critical alerts based upon entries in the ALERT CRITICAL TEXT file
+     (#8992.3).
+   
+  2. The "Critical Alerts Count Report" [XQAL CRITICAL ALERT COUNT] and
+     "User Alerts Count Report" [XQAL USER ALERTS COUNT] options will screen
+     alerts from a critical designation when the alert contains text in
+     the ALERT CRITICAL TEST file that is preceded by the word "NOT".
+   
+  3. The "User Alerts Count Report" [XQAL USER ALERTS COUNT] and the
+     "Critical Alerts Count Report" [XQAL CRITICAL ALERT COUNT] options
+     report total and critical alerts for users.  The options allow
+     sorting by Name, Number, or Section/Service within a user selected
+     date range.
+  
+  4. The "User Alerts Count Report" [XQAL USER ALERTS COUNT] and the
+     "Critical Alerts Count Report" [XQAL CRITICAL ALERT COUNT] allow
+     sub-sorting Section/Service by Name or Number within a user selected
+     date range.
+   
+  5. The "List Alerts for a user from a specified date" [XQAL ALERT LIST
+     FROM DATE] option will report all alerts for a selected user within
+     a selected date range.
+   
+  6. The ALERT CRITICAL TEXT file (#8992.3) contains entries of text that
+     indicate information in an alert is critical.  This is a VistA
+     Infrastructure file designed to accommodate the addition of critical
+     alerts in VistA.
+   
+   
+  Patch Components:
+  -----------------
+   
+  Options Associated:
+   
+  Option Name                    Type                  New/Modified/Deleted
+  -----------                    ----                  -------------------- 
+  XQAL USER ALERTS COUNT         run routine           Modified
+  XQAL ALERT LIST FROM DATE      run routine           Modified
+  XQAL CRITICAL ALERT COUNT      run routine           Modified
+   
+   
+  Data Associated:
+   
+  File                             Data Entry          New/Modified/Deleted
+  ----                             ----------          --------------------
+  ALERT CRITICAL TEXT (#8992.3)    "ABNL IMA"          New
+   
+   
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+   
+  1. CA Ticket: I13903844FY17
+     XQAL REPORTS MENU CRITICAL ALERTS COUNT REPORT and XQAL USER ALERTS 
+     COUNT options displaying incorrect information.
+   
+     Problem:
+     -------
+     CPRS enhanced its' alerts and modified the alert text for 'Abnormal
+     Image' critical alerts to contain the text "ABNL IMA".  Because the
+     ALERT CRITICAL TEXT file (#8992.3) does not contain an entry for
+     "ABNL IMA", the Critical indicator on the "Critical Alerts Count Report"
+     [XQAL CRITICAL ALERT COUNT] and "User Alerts Count Report" [XQAL USER
+     ALERTS COUNT] do not include the 'ABNL IMAGING' critical alerts.
+   
+     Resolution:
+     ----------
+     This patch adds 'ABNL IMA' as a new entry in the ALERT CRITICAL TEXT
+     file (#8992.3) so that critical imaging alerts with the text "ABNL 
+     IMAGE" will be reported.
+  
+     XU8P690 adds "ABNL IMA" to the ALERT CRITICAL TEXT file (#8992.3).
+  
+   
+  2. CA Ticket: I13903844FY17
+     XQAL REPORTS MENU CRITICAL ALERTS COUNT REPORT and XQAL USER ALERTS 
+     COUNT options displaying incorrect information.
+   
+     Problem:
+     -------
+     CPRS enhanced its' alert system and modified some alerts to be indicated
+     as not critical by preceding alert text {entered in the ALERT CRITICAL
+     TEXT file (#8992.3)} with the word "NON".  The Kernel critical alert
+     reports, "Critical Alerts Count Report" [XQAL CRITICAL ALERT COUNT] and
+     "User Alerts Count Report" [XQAL USER ALERTS COUNT], only screen alerts
+     from critical reporting when the critical text is preceded by "NOT" in
+     the alert text.  Consequently, non-critical alerts containing critical
+     text preceded by "NON" are reported as critical.
+   
+     Resolution:
+     ---------- 
+     This patch changes the Kernel critical alert reports so alerts with
+     critical text preceded with "NON" will be screened from the Kernel
+     Critical Alert report.
+   
+     CHKCRIT+13^XQALSUR2 modified to check for "NON" in Critical Alert text.
+  
+   
+  3. Bugs discovered during patch development & testing
+   
+     Problem:
+     -------
+     During IOC testing, Charleston discovered that when the "Critical
+     Alerts Count Report" [XQAL CRITICAL ALERT COUNT] or the "User Alerts
+     Count Report" [XQAL USER ALERTS COUNT] options are displayed to the
+     screen, they do not pause to allow the user to read the end of the
+     report before returning to the menu.  Also the "User Alerts Count
+     Report" [XQAL USER ALERTS COUNT] will not pause after displaying each
+     page of the report to allow the user to read it before continuing to 
+     the next page.
+  
+     Resolution:
+     ----------
+     This patch adds a pause when displayed to the screen (Home device)
+     allowing the user to press <Enter> to continue displaying the next page
+     or the option menu.
+  
+     PRTNAME+2^XQARPRT1 added QUIT when user does not quit from the middle of
+     a screen display.
+      
+     PRTNUMBR+2^XQARPRT, PRTNUMBR+9^XQARPRT1 and PRTNUMBR+10^XQARPRT1 added
+     QUIT when user quits from the middle of a screen display.
+     PRTNUMBR+11^XQARPRT1 added a Parameter to call to PRINTVAL api to 
+     control screen display pause.
+      
+     PRTSERVC^XQARPRT1 api was reconstructed to include a pause at the end of
+     each page of a screen display.  The rework includes sending the result 
+     of $$CHKSRV as a new parameter in the PRINTVAL api.
+      
+     PRINTVAL^XQARPRT1 was modified to receive a parameter indicating whether
+     the page displayed to the screen needs to be paused with a prompt for 
+     the user to press <Enter> to continue or ^ to exit.
+  
+     DQ1+5^XQARPRT1 added DIR and executes when the report is not Queued
+     and the user quits from the middle of a screen display.
+  
+     XUPAUS^XQARPRT1 was added to display the pause prompt when displaying
+     the report to the screen.
+     
+     HEADER+2^XQARPRT1 and HEADER+3^XQARPRT1 added Formfeed control for
+     screen and printer output.
+  
+  
+     Problem:
+     -------
+     Also during IOC testing, Charleston discovered that when the user
+     enters the START DATE and END DATE while running the "Critical Alerts
+     Count Report" [XQAL CRITICAL ALERT COUNT] and the "User Alerts Count
+     Report" [XQAL USER ALERTS COUNT], the dates are not echoed to the
+     screen.
+  
+     Resolution:
+     ----------
+     This patch also changes the START DATE and END DATE entries so
+     that the entered dates are always echoed to the screen.  
+  
+     DATES+1^XQARPRT1 and DATES+4^XQARPRT1 modified DIR(0) to include "EX"
+     in the 2nd piece to require entry of an exact start and end date and 
+     echo those dates to the screen.
+  
+   
+     Problem:
+     -------
+     Finally, another problem was discovered during IOC testing.
+     Charleston and Martinsburg found that when the "Critical Alerts
+     Count Report" [XQAL CRITICAL ALERT COUNT] and the "User Alerts
+     Count Report" [XQAL USER ALERTS COUNT] attempt to list a user that does 
+     not have a SERVICE/SECTION field (#29) defined for their entry in the 
+     NEW PERSON file (#200), the reports abort and disconnect the user.  
+     The SERVICE/SECTION field is required but it was discovered that some 
+     applications create users directly in the NEW PERSON file without a 
+     complete definition.
+   
+     Resolution:
+     ----------
+     This patch will check for a users' SERVICE/SECTION definition before
+     reporting the user.  If the SERVICE/SECTION is missing, <No Service>
+     is reported for the user.  An error trap entry is added for users on
+     the report who are missing SERVICE/SECTION until the number of
+     "Undefined SERVICE/SECTION Err" errors exceeds the KERNEL SYSTEMS
+     PARAMETERS file (#8989.3) ERROR LIMIT field (#520.1) for the day.
+   
+     PRTSERVC^XQARPRT1 was modified to add parameters to the PRINTVAL call.
+     One of the parameters is the result of $$CHKSRV.
+  
+     PRINTVAL^XQARPT1 was modified to check if SERVICE/SECTION is undefined
+     for a user.  When SERVICE/SECTION is undefined, the local array XQANOTES
+     is defined with an explanation of the problem caused by the missing 
+     data.  An Error Trap is recorded up to the total allowed by the KERNEL 
+     SYSTEMS PARAMETERS file (#8989.3) ERROR LIMIT field (#520.1).  When the 
+     number of users missing SERVICE/SECTION exceeds the number allowed in 
+     the Error Trap, a message is included on the report that no more users
+     (missing SERVICE/SECTION) will be recorded in the Error Trap.
+  
+     CHKSRV^XQARPRT1 api was added to indicate a change to the currently
+     reported SERVICE/SECTION.  This is invoked by the PRTSERVC api.
+  
+     XQZMAXER^XQARRT1 was added to return the KERNEL SYSTEMS PARAMETERS file
+     (#8989.3) ERROR LIMIT field (#520.1) value.
+    
+  
+  4. SNOW Ticket: INC1741116
+     User receiving error on accessing Critical Alerts.
+   
+     Problem:
+     -------
+     Jackson reported a bug in the "Critical Alerts Count Report" [XQAL
+     CRITICAL ALERT COUNT] and the "User Alerts Count Report" [XQAL USER
+     ALERTS COUNT] reports.  When the "Critical Alerts Count Report"
+     [XQAL CRITICAL ALERT COUNT] or the "User Alerts Count Report" [XQAL
+     USER ALERTS COUNT] options are selected to sort by Section/Service
+     and then enter return when selecting sub-sort Name or Number, the
+     report will begin but abort with an error.
+   
+     Resolution:
+     ----------
+     This patch changes the sub-sort Name or Number selection so that
+     it is required.
+  
+     ORDER+12^XQARPRT1 was modified to require entry of Name or Number
+     selection and set XQAORDER=0 if the user enters '^' to exit.
+  
+    
+  5. Bugs discovered during patch development & testing
+   
+     Problem:
+     -------
+     The "List Alerts for a user from a specified date" [XQAL ALERT LIST
+     FROM DATE] option does not report the first Alert for a user when
+     the selected date range begins after the date of a users' first alert.
+   
+     Resolution:
+     ----------
+     This patch adjusts the entered start date so that all alerts are listed
+     for the user within the report date range.
+   
+     DQ1+5^XQARPRT2 was split into 2 lines and XQAIEN modified so $ORDER
+     begins at first multiple entry.
+     DQ1+11^XQARPRT2 was added to check for display to screen at end of
+     report and prompt the user to press <Enter> to continue.
+  
+   
+     Problem:
+     -------
+     During IOC testing, Charleston discovered a bug when a report is
+     displayed to the screen.  When displayed to the screen, the "List
+     Alerts for a user from a specified date" [XQAL ALERT LIST FROM DATE]
+     option does not pause to allow the user to read the end of the report
+     before returning to the menu.
+   
+     Resolution:
+     ----------
+     This report now checks for display to the screen.  If the report is 
+     being output to the screen, the user is prompted to press <Enter> to 
+     continue before completion and redisplay of the Kernel Menu.
+   
+     PRTNAME+2^XQARPRT1 added QUIT when user quits from the middle of a
+     screen display.
+      
+     PRTNUMBR+2^XQARPRT, PRTNUMBR+9^XQARPRT1 and PRTNUMBR+10^XQARPRT1 added
+     QUIT when user quits from the middle of a screen display.
+     PRTNUMBR+11^XQARPRT1 added a Parameter to call to PRINTVAL api to 
+     control screen display pause.
+      
+     PRTSERVC^XQARPRT1 api was reconstructed to include a pause at the end of
+     each page of a screen display.  The rework includes sending the result 
+     of $$CHKSRV as a new parameter in the PRINTVAL api.
+      
+     PRINTVAL^XQARPRT1 was modified to receive a parameter indicating whether
+     the page displayed to the screen needs to be paused with a prompt for 
+     the user to press <Enter> to continue or ^ to exit.
+  
+     DQ1+5^XQARPRT1 added DIR and executes when the report is not Queued
+     and the user quits from the middle of a screen display.
+  
+     XUPAUS^XQARPRT1 was added to display the pause prompt when displaying
+     the report to the screen.
+  
+     HEADER+2^XQARPRT1 and HEADER+3^XQARPRT1 added Formfeed control for
+     screen and printer output.
+  
+   
+     Problem:
+     -------
+     While testing the "List Alerts for a user from a specified date" [XQAL
+     ALERT LIST FROM DATE] option and sending the report to a printer,
+     it was discovered a FormFeed is executed before the report.  This wastes
+     a sheet of paper.
+   
+     Resolution:
+     ----------
+     This report now checks for a tasked job before writing a FormFeed to
+     the device.
+  
+     HEADER^XQARPRT2+1 was split to 2 lines and "IF '$D(ZTQUEUED) was added
+     before "W:DOFF @IOF"
+  
+   
+     Problem:
+     -------
+     During IOC testing, Charleston discovered a bug in the "List Alerts
+     for a user from a specified date" [XQAL ALERT LIST FROM DATE] option.
+     Entry of the report END DATE does not echo the date to the screen.
+   
+     Resolution:
+     ----------
+     Entry of the END DATE for the report will now echo the date to the
+     screen. 
+   
+     DATES+4^XQARPRT2 DIR(0) was changed to include "EX" in the 2nd piece to
+     require entry of an exact end date and to echo the entered end date to 
+     the screen.
+  
+   
+  6. Missing Integration Control
+   
+     Problem:
+     -------
+     VistA Infrastructure does not allow VistA applications to modify entries
+     in the ALERT CRITICAL TEXT file (#8992.3).
+   
+     Resolution:
+     ----------
+     Integration Control Registration #6869 ('ALERT CRITICAL TEXT LOOKUP AND
+     EDIT') is recorded to allow VistA application development teams to
+     release patches that update the ALERT CRITICAL TEXT file (#8992.3).
+  
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*690 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*690 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Test Sites:
+ ----------
+ Shreveport, LA
+ Charleston, SC
+ Martinsburg, WV
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released out of the Forum Patch module as a Packman message.
+  
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      https://www.domain.ext/vdl/application.asp?appid=10
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install adds the "ABNL IMA" entry to the ALERT CRITICAL TEXT file
+ (#8992.3).
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There is no pre-installation included with this patch.
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  There are no menu options or protocols that need to be 
+ disabled.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 1 minute to install. It may be queued for installation.
+ It will update two Kernel Alert routines and add an entry to the 
+ ALERT CRITICAL TEXT file (#8992.3).
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*690):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global. 
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The post-installation routine XU8P690 will run in the background to add
+ an entry to the ALERT CRITICAL TEXT file (#8992.3). The routine will 
+ not be deleted after patch installation.  It only needs to run once at
+ the site.  If it is run a 2nd time, it will not make any changes to
+ the ALERT CRITICAL TEXT file.
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch includes updates to the XQALSUR2, XQARPRT1 and XQARPRT2 routines.
+ The patch also adds a new entry in the ALERT CRITICAL TEXT file (#8992.3).
+  
+ If assistance is needed to rollback/backout the patch, please log a
+ ServiceNow (SNOW) ticket so the development team can assist in
+ this process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQALSUR2
+    Before:  B5665797   After:  B6427475  **366,513,602,690**
+Routine Name: XQARPRT1
+    Before: B87729690   After:B206434272  **316,338,631,690**
+Routine Name: XQARPRT2
+    Before: B75569961   After: B80045754  **316,443,690**
+Routine Name: XU8P690
+    Before:       n/a   After:  B3544198  **690**
+ 
+Routine list of preceding patches: 443, 602, 631
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 12, 2018
+Completed By:                               Date Completed: OCT 10, 2018
+Released By :                               Date Released : OCT 11, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

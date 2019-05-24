@@ -1,0 +1,139 @@
+
+=============================================================================
+Run Date: MAR 29, 2019                     Designation: MHV*1*41
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #33                      Status: Released
+                  Compliance Date: APR 29, 2019
+=============================================================================
+
+
+Subject:  MYHEALTHEVET MAJOR RELEASE MHV_2019.1.0.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MyHealtheVet Combined Core Development/Sustainment Major Release 
+ (MHV_2019.1.0.0.0) will be promoted to the MHV Production environment on 
+ Saturday, March 30th, 2019 starting at 10:00 PM EDT.
+ 
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ MHV ADMIN PORTAL ENHANCEMENTS
+  JAZZ 904828 Create new Help File link for User Profile portlet in MHV Admin
+              Portal
+ 
+ SM ADMIN PORTAL ENHANCEMENTS
+  JAZZ 772027 SM Admin Redesign -SM Admin redesign will move the Secure Messaging
+              functionality from the Legacy system to the modern, Technical 
+              Reference Model (TRM) compliant Liferay Content Management System.
+              The SM redesign effort is the first in a series of efforts to
+              bring MHV in compliance with the evolving TRM standards and 
+              modernization of the User Interface experience. SM Redesign will 
+              also be the first portion of My HealtheVet's transition in to a 
+              containerized service, which will serve the purpose of 
+              accommodating our goals of: highly flexible scalability; simpler 
+              and faster deployments to agnostic production platforms; and 
+              increased control over provisioning of application resources to 
+              maximize application efficiency. 
+ 
+ SM ADMIN PORTAL ENHANCEMENTS/DEFECTS
+  JAZZ 900776 UAT (PROD): Comments added in new line when a user is
+              automatically terminated due to inactivity or termination date 
+              in the Admin Portal
+ 
+  JAZZ 918181 Clean-up the unused SMAS_PORTLET, ADMIN_Portal_WS 
+              Component_Properties:  Deleted some of the unused properties from
+              the database as these properties are no longer required to be on
+              database table or application code. These properties were 
+              originally created for SM patient legacy application, we migrated
+              SM Patient legacy application to MHV national portal, so these 
+              properties are outdated/not actively being 
+              used. (Non-Veteran Facing)
+ 
+  JAZZ 904823 Update Existing Help File for Manage VA Staff - 5 Help Files 
+              updated based on new Profile fields added
+ 
+ DATABASE ENHANCEMENTS
+  JAZZ 787244 SM Admin re-engineering: Escalation Database batch job
+  JAZZ 817601 Database work to support SM work for JJWT Authentication 
+              Authorization Mechanism in Spring Security
+  JAZZ 821520 SM Admin redesign: Block a Patient's access GUI implementation
+  JAZZ 822166 Create Script/DG instructions for new properties required for
+              mhv_props and the sm-tgmgmt api module
+  JAZZ 822998 Moving private key properties to database
+  JAZZ 863010 Add database entries to properties table for SM Admin redesign
+              of View CPRS Progress Note Alerts
+  JAZZ 867704 SM Admin redesign: 'Manage User surrogates' GUI implementation
+  JAZZ 873547 SM Admin redesign: 'View Staff Member Messages' GUI implementation
+              Part 1
+  JAZZ 877662 SM Admin redesign: 'Search by Staff' GUI implementation
+  JAZZ 881850 Update SM_ALL_ROLE_VW view to all station numbers, not just
+              active ones
+  JAZZ 900776 Comments added in new line when a user is automatically terminated
+              due to inactivity or termination date in the admin portal
+  JAZZ 918181 Clean up the unused SMS_PORTLET, ADMIN_PORTAL_WS,
+              component_properties
+ 
+ ================================================================
+ I&I Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ N/A
+ 
+ ================================================================
+ Innovations Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ N/A
+ 
+ ================================================================
+ Technical Debt Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ 
+ N/A
+        
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+ 
+ MHV ADMIN PORTAL ENHANCEMENTS
+ JAZZ 933760 Users access Admin Portal, informed not authorized, then 
+             successfully access AP features    Haritha
+ 
+ 
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+   
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ MHV Documentation can be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 22, 2019
+Completed By:                               Date Completed: MAR 26, 2019
+Released By :                               Date Released : MAR 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

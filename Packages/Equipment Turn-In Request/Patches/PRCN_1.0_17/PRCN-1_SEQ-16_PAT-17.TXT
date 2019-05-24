@@ -1,0 +1,127 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Thursday, 06/23/16 at 14:19
+=============================================================================
+Run Date: OCT 13, 2016                     Designation: PRCN*1*17
+Package : PRCN - EQUIPMENT/TURN-IN REQUEST    Priority: Mandatory
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: NOV 13, 2016
+=============================================================================
+
+Associated patches: (v)PRCN*1*5    <<= must be installed BEFORE `PRCN*1*17'
+
+Subject: APPROVE EQUIPMENT REQUEST WILL NOT COMPLETE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Equipment Request will not update to COMPLETE status
+  
+ Associated Ticket(s):
+ =====================
+ 1. I8461549FY16 - Cannot COMPLETE an equipment request
+               
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Tennessee Valley
+ Salisbury
+ Detroit 
+  
+ Ticket Overview:
+ ================
+ 1. I8461549FY16 Cannot COMPLETE an equipment request
+  
+    Problem:
+    --------
+    Analysis found that when a user has a null Engineering Training Vendor
+    (or not defined in Vendor file) for a request during edit/approval,
+    the user will not see the 'Engineering Review Completed' status set 
+    properly.
+  
+    Resolution:
+    -----------                    
+    Modify the routine so that it ensures the lookup/edit of the 
+    Engineering Training Vendor and returns the FileMan lookup/edit from
+    the VENDOR file (#440) to the EQUIPMENT REQUEST file (#413) and
+    properly handles a null or miscellaneous vendor entry. This will make 
+    sure the subsequent edits (after the vendor lookup/edit) will update
+    the selected EQUIPMENT REQUEST in the Equipment Request file (#413),
+    and correctly set the status to 'Engineering Review Completed'.
+  
+    Routines: PRCNUTL1
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+    You may install this patch at any time without interruption to users. 
+    It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRCN*1.0*17)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRCN*1.0*17.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES. 
+  
+       When prompted "Enter options you wish to mark as "Out of Order":"
+       enter the following options:
+  
+       Approve Equipment Request (Engineering)    [PRCN NX ENG]
+  
+       When prompted "Enter protocols you wish to mark as "Out of Order":",
+       just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Equipment/Turn-In Request;**[Patch List]**;Sep 13, 1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCNUTL1
+    Before:  B4965192   After:  B5674942  **5,17**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 13, 2016
+Completed By:                               Date Completed: OCT 11, 2016
+Released By :                               Date Released : OCT 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

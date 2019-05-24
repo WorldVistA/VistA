@@ -1,0 +1,297 @@
+
+=============================================================================
+Run Date: FEB 19, 2019                     Designation: EAS*1*173
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #145                      Status: Released
+                  Compliance Date: MAR 22, 2019
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.5 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.5. This release, developed in Java
+ technology, contains Enrollment System Modernization (ESM) Phase 2 
+ development and upgrade efforts, including enhancements to support 
+ Community Care (CC) and ES Sustainment.
+  
+ ES 5.5 was successfully deployed on Saturday, February 16th, 2019.
+  
+ The following functionality is updated in this ES 5.5 release:
+  
+ ESM
+ 1. ES is modified to allow the storage, display, and transmission of the
+    Medal of Honor (MOH) Award Date. Changes include:
+      - Military Service Data Sharing (MSDS) interface reads and stores the
+        MOH award date
+      - The Administrative Data Repository (ADR) stores the MOH award date
+      - The ES user interface displays and allows modifications of the MOH
+        award date
+      - The Z11 Health Level 7 (HL7) message includes the MOH award date
+        and MOH status update date
+        - Note: VistA sites receive the MOH award date and MOH status
+          update date from ES and process MOH as Priority Group 1 after
+          installation of patch DG*5.3*972.
+  
+ 2. ES is enhanced to allow automatic population and manual sending of the 
+    Veterans Health Administration (VHA) Early Elective Delivery (EED)
+    60-Day Pre-Term and Eligibility letters listed below; display of a
+    60-Day countdown; and display of a 60-Day ineligible banner.
+      - VHA-EED Decision Notice 60-Day Pre-Term Initial Other Than Hon-DVA 
+        (IB 10-1206)
+      - VHA-EED Decision Notice 60-Day Pre-Term Initial Less Than 24 Months
+        (IB 10-1205)
+      - VHA-EED Decision Notice 60-Day Pre-Term Initial Active Duty For
+        Training (IB 10-1204)
+      - VHA-EED Decision Notice 60-Day Pre-Term Final Other Than Hon-DVA 
+        (IB 10-1203)
+      - VHA-EED Decision Notice Template-60-Day Final Less Than 24 Months 
+        (IB 10-1202)
+      - VHA-EED Decision Notice 60-Day Pre-Term Final Active Duty for 
+        Training (IB 10-1201)
+      - VHA-EED Decision Notice - Ineligible Less Than 24 Months (IB 
+        10-1208)   
+      - VHA-EED Decision Notice - Ineligible Other Than Hon-DVA (IB 
+        10-1207)
+      - VHA-EED Decision Notice - Ineligible Active Duty for Training (IB 
+        10-1200)
+      - VHA-EED Decision Notice 60-Day Pre-Term Status (IB 10-1199)
+  
+ Enrollment System Community Care (ESCC)
+ 1. ES is modified to include a Menu Option on the Main Menu titled 
+    "Letters" and two new screens titled "Manage Letters" and "Letter
+    Change History". This will enable an authorized ES Administrator User
+    to activate or deactivate the ESCC Letters. In addition, a history
+    screen, which follows similar patterns of history screens in ES,
+    showing the letter activations and deactivations, is implemented.
+ 2. The ES Eligibility and Enrollment (E&E) Web Service is modified to 
+    include the capability to share Community Care Eligibility Information
+    and Health Benefit Plans (HBPs) with other VA Systems.
+ 3. ES has optimized and sped up the Community Care Veteran Eligibility and
+    Enrollment process. Where possible, the Decision Flow has been changed 
+    to a rules-based process versus the existing extract, transform, load
+    (ETL) jobs process:
+      - Provide real-time Veterans Choice Eligibility (VCE) for a Veteran
+        that changes from eligible to ineligible so that users have access
+        to VCE information while updating the Veteran.
+      - Provide real-time VCE for Residential Address (Permanent Address if
+        Residential is not available) additions or changes so that users 
+        have access to VCE information while updating the Veteran.
+      - Provide real-time VCE for Enrollment Status additions or updates so
+        that users have access to VCE information while updating the 
+        Veteran.
+      - Make the VCE Determination information from backend processing
+        available to users throughout the day so that users don't have to 
+        wait a day for results.
+ 4. ES is enhanced to capture additional data requirements regarding 
+    rurality data and the display of this data in the E&E Web Services
+    graphical user interface (GUI) as well as implementation of backend
+    changes to the Administrative Data Repository (ADR) Database.
+  
+ Operational Decision Management (ODM)
+ 1. For the iLOG to ODM project, the 71 iLOG rule sets were transferred 
+    from iLOG to ODM.  A Mediation Framework was established to allow the
+    ES user to switch between the iLOG and ODM rules sets as the rules sets
+    are integrated into the ES application. ES 5.5 integrates rule sets
+    that support the Person Eligibility and Process Demographics
+    functionalities. Screen functionality is unchanged by the upgraded
+    rules.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 707138      Problem: The user is unable to see the 1010EZ PDF from the
+             Enrollment tab if the Health Care Application (HCA) had a
+             Future Discharge Date (FDD).
+             Resolution: Updated the template to the new 1010EZ form that 
+             will handle FDD.
+  
+ 713960      Problem: VCE determination not using driving distance if
+             Residential Line 1 is a P.O. Box.
+             Resolution: The P.O. Box rule is implemented in real-time VCE
+             rules. An address is considered P.O. Box only if the address 
+             line 1 contains P.O. Box/General Delivery or its variants, and
+             if the address line 2 and address line 3 are blank.
+  
+ 793995      Problem: Section 508: When input errors are automatically
+             detected, the item that is an error is not identified and
+             described to the user in text.
+             Resolution: Updated 508 text.
+  
+ 831926      Problem: ORU-Z05 should be triggered to all sites when an
+             Emergency Contact update is received via ORU-Z07.
+             Resolution: Change made in AssociationInputParameter.java and
+             MessageEventInputParameter.java.
+             MessageEventInputParameter.updateMessageEvents() modified to 
+             add ContactType instead of entity keys to determine the need
+             to trigger a Z05 message.
+  
+ 841215      Problem: Duplicate ORU-Z05 is triggered when personal email
+             address is added/updated from ES.
+             Resolution: Disabled Z05 message when the caller was UI and 
+             email type is personal as Z05 from this path was managed by
+             VET360.            
+  
+ 841264      Problem: Z07 update with non-demographics update removes and
+             inserts the email address that is on file, which in turn 
+             triggers a Z05.
+             Resolution: Updated method to find email by type when 
+             processing electronic address.
+  
+ 842415      Problem: Home phone numbers deleted from ES are being retained
+             in VistA.
+             Resolution: Implemented code changes for ES to send empty 
+             phone number in the PID segment in case of DELETE - if the
+             phone is not on file and if the most recent entry in the
+             history table for this type of phone is DELETE, then add an
+             empty phone in the PID.
+  
+ 854971      Problem: Incorrect phone format does not trigger a Z05.
+             Resolution: Added Z05 triggering when VET360 returns error on
+             phone.
+  
+ 871695      Problem: The Print 1010EZ Button in the Financials Screen is
+             displaying an outdated 1010EZ Form.
+             Resolution: The Print 1010EZ button in the Financials tab was
+             updated to use the 2017 version of the 1010EZ form. Mapping 
+             code for new fields was added where applicable.
+  
+ 871699      Problem: The Print 1010EZR Button in the Financials Screen is
+             displaying an outdated 1010EZR Form.
+             Resolution: The Print 1010EZR Button in the Financials tab was
+             updated to display the 2017 version of the 1010EZR form. 
+             Mapping code was implemented for new form fields where
+             applicable. 
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.5 Release Notes            ES_5_5_RN.PDF                  binary
+ ES 5.5 User Guide               ES_5_5_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 03, 2019
+Completed By:                               Date Completed: FEB 19, 2019
+Released By :                               Date Released : FEB 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

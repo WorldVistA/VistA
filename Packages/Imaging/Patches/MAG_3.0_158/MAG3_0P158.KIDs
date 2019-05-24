@@ -1,0 +1,628 @@
+KIDS Distribution saved on May 20, 2015@08:16:53
+VistA Imaging V3 - Patch 158 - Import OCX issues 
+**KIDS**:MAG*3.0*158^
+
+**INSTALL NAME**
+MAG*3.0*158
+"BLD",8078,0)
+MAG*3.0*158^IMAGING^0^3150520^y
+"BLD",8078,1,0)
+^^23^23^3150519^^^^
+"BLD",8078,1,1,0)
+VistA Imaging V3.0 Patch 158 - Import API OCX fix
+"BLD",8078,1,2,0)
+ - This patch tests the Modified Import OCX, new MagThumbnailMaker.exe
+"BLD",8078,1,3,0)
+   and new mag_MakeAbs.exe
+"BLD",8078,1,4,0)
+   Import OCX has been modified to perform the Copy to Network in a back
+"BLD",8078,1,5,0)
+   background thread.  This enables the main thread to maintain 
+"BLD",8078,1,6,0)
+   connection to the VistA Server.
+"BLD",8078,1,7,0)
+   MagThumbnailMaker.exe is a new abstract/thumbnail maker.  It will
+"BLD",8078,1,8,0)
+   be called by the new mag_MakeAbs.exe.
+"BLD",8078,1,9,0)
+   mag_MakeAbs.exe has been changed.  Instead of making the abstracts, 
+"BLD",8078,1,10,0)
+   it will send a windows message to MagThumbnailMaker, wait for a 
+"BLD",8078,1,11,0)
+   response back, then terminate itself.
+"BLD",8078,1,12,0)
+   This design will allow the BP to continue processing abstracts as
+"BLD",8078,1,13,0)
+   it does now.  no change to the BP application is needed.
+"BLD",8078,1,14,0)
+ 
+"BLD",8078,1,15,0)
+ 
+"BLD",8078,1,16,0)
+                 Checksums
+"BLD",8078,1,17,0)
+Routine         Old         New        Patch List
+"BLD",8078,1,18,0)
+MAGGSFT       8060991     12528057    **7,8,94,158**
+"BLD",8078,1,19,0)
+MAGIP158      n/a         4832681     **158**
+"BLD",8078,1,20,0)
+ 
+"BLD",8078,1,21,0)
+Note: routine MAGIP158 is deleted after the KIDS Build is installed.
+"BLD",8078,1,22,0)
+ 
+"BLD",8078,1,23,0)
+done
+"BLD",8078,4,0)
+^9.64PA^^0
+"BLD",8078,6.3)
+12
+"BLD",8078,"ABNS",0)
+^9.66A^^
+"BLD",8078,"ABPKG")
+n^n^G.IMAGING DEVELOPMENT TEAM@DOMAIN.EXT
+"BLD",8078,"INI")
+PRE^MAGIP158
+"BLD",8078,"INID")
+n^y^n
+"BLD",8078,"INIT")
+POS^MAGIP158
+"BLD",8078,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8078,"KRN",.4,0)
+.4
+"BLD",8078,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8078,"KRN",.401,0)
+.401
+"BLD",8078,"KRN",.402,0)
+.402
+"BLD",8078,"KRN",.403,0)
+.403
+"BLD",8078,"KRN",.5,0)
+.5
+"BLD",8078,"KRN",.84,0)
+.84
+"BLD",8078,"KRN",3.6,0)
+3.6
+"BLD",8078,"KRN",3.8,0)
+3.8
+"BLD",8078,"KRN",9.2,0)
+9.2
+"BLD",8078,"KRN",9.8,0)
+9.8
+"BLD",8078,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8078,"KRN",9.8,"NM",1,0)
+MAGIP158^^0^B4832681
+"BLD",8078,"KRN",9.8,"NM",2,0)
+MAGGSFT^^0^B12528057
+"BLD",8078,"KRN",9.8,"NM","B","MAGGSFT",2)
+
+"BLD",8078,"KRN",9.8,"NM","B","MAGIP158",1)
+
+"BLD",8078,"KRN",19,0)
+19
+"BLD",8078,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8078,"KRN",19.1,0)
+19.1
+"BLD",8078,"KRN",101,0)
+101
+"BLD",8078,"KRN",409.61,0)
+409.61
+"BLD",8078,"KRN",771,0)
+771
+"BLD",8078,"KRN",779.2,0)
+779.2
+"BLD",8078,"KRN",870,0)
+870
+"BLD",8078,"KRN",8989.51,0)
+8989.51
+"BLD",8078,"KRN",8989.52,0)
+8989.52
+"BLD",8078,"KRN",8994,0)
+8994
+"BLD",8078,"KRN","B",.4,.4)
+
+"BLD",8078,"KRN","B",.401,.401)
+
+"BLD",8078,"KRN","B",.402,.402)
+
+"BLD",8078,"KRN","B",.403,.403)
+
+"BLD",8078,"KRN","B",.5,.5)
+
+"BLD",8078,"KRN","B",.84,.84)
+
+"BLD",8078,"KRN","B",3.6,3.6)
+
+"BLD",8078,"KRN","B",3.8,3.8)
+
+"BLD",8078,"KRN","B",9.2,9.2)
+
+"BLD",8078,"KRN","B",9.8,9.8)
+
+"BLD",8078,"KRN","B",19,19)
+
+"BLD",8078,"KRN","B",19.1,19.1)
+
+"BLD",8078,"KRN","B",101,101)
+
+"BLD",8078,"KRN","B",409.61,409.61)
+
+"BLD",8078,"KRN","B",771,771)
+
+"BLD",8078,"KRN","B",779.2,779.2)
+
+"BLD",8078,"KRN","B",870,870)
+
+"BLD",8078,"KRN","B",8989.51,8989.51)
+
+"BLD",8078,"KRN","B",8989.52,8989.52)
+
+"BLD",8078,"KRN","B",8994,8994)
+
+"BLD",8078,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8078,"QUES",0)
+^9.62^^
+"BLD",8078,"REQB",0)
+^9.611^1^1
+"BLD",8078,"REQB",1,0)
+MAG*3.0*135^2
+"BLD",8078,"REQB","B","MAG*3.0*135",1)
+
+"INI")
+PRE^MAGIP158
+"INIT")
+POS^MAGIP158
+"MBREQ")
+0
+"PKG",454,-1)
+1^1
+"PKG",454,0)
+IMAGING^MAG^Imaging-V1 to release 
+"PKG",454,20,0)
+^9.402P^^
+"PKG",454,22,0)
+^9.49I^1^1
+"PKG",454,22,1,0)
+3.0^3020319^3020517^126
+"PKG",454,22,1,"PAH",1,0)
+158^3150520^126
+"PKG",454,22,1,"PAH",1,1,0)
+^^23^23^3150520
+"PKG",454,22,1,"PAH",1,1,1,0)
+VistA Imaging V3.0 Patch 158 - Import API OCX fix
+"PKG",454,22,1,"PAH",1,1,2,0)
+ - This patch tests the Modified Import OCX, new MagThumbnailMaker.exe
+"PKG",454,22,1,"PAH",1,1,3,0)
+   and new mag_MakeAbs.exe
+"PKG",454,22,1,"PAH",1,1,4,0)
+   Import OCX has been modified to perform the Copy to Network in a back
+"PKG",454,22,1,"PAH",1,1,5,0)
+   background thread.  This enables the main thread to maintain 
+"PKG",454,22,1,"PAH",1,1,6,0)
+   connection to the VistA Server.
+"PKG",454,22,1,"PAH",1,1,7,0)
+   MagThumbnailMaker.exe is a new abstract/thumbnail maker.  It will
+"PKG",454,22,1,"PAH",1,1,8,0)
+   be called by the new mag_MakeAbs.exe.
+"PKG",454,22,1,"PAH",1,1,9,0)
+   mag_MakeAbs.exe has been changed.  Instead of making the abstracts, 
+"PKG",454,22,1,"PAH",1,1,10,0)
+   it will send a windows message to MagThumbnailMaker, wait for a 
+"PKG",454,22,1,"PAH",1,1,11,0)
+   response back, then terminate itself.
+"PKG",454,22,1,"PAH",1,1,12,0)
+   This design will allow the BP to continue processing abstracts as
+"PKG",454,22,1,"PAH",1,1,13,0)
+   it does now.  no change to the BP application is needed.
+"PKG",454,22,1,"PAH",1,1,14,0)
+ 
+"PKG",454,22,1,"PAH",1,1,15,0)
+ 
+"PKG",454,22,1,"PAH",1,1,16,0)
+                 Checksums
+"PKG",454,22,1,"PAH",1,1,17,0)
+Routine         Old         New        Patch List
+"PKG",454,22,1,"PAH",1,1,18,0)
+MAGGSFT       8060991     12528057    **7,8,94,158**
+"PKG",454,22,1,"PAH",1,1,19,0)
+MAGIP158      n/a         4832681     **158**
+"PKG",454,22,1,"PAH",1,1,20,0)
+ 
+"PKG",454,22,1,"PAH",1,1,21,0)
+Note: routine MAGIP158 is deleted after the KIDS Build is installed.
+"PKG",454,22,1,"PAH",1,1,22,0)
+ 
+"PKG",454,22,1,"PAH",1,1,23,0)
+done
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MAGGSFT")
+0^2^B12528057
+"RTN","MAGGSFT",1,0)
+MAGGSFT ;WOIFO/GEK - Utilities  ; 26 May 2010 10:20 AM
+"RTN","MAGGSFT",2,0)
+ ;;3.0;IMAGING;**7,8,94,158**;Mar 19, 2002;Build 12;May 19, 2015
+"RTN","MAGGSFT",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGSFT",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGSFT",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGSFT",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGSFT",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGSFT",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGSFT",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGSFT",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGSFT",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGSFT",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGSFT",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGSFT",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGSFT",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGSFT",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGSFT",17,0)
+ ;;
+"RTN","MAGGSFT",18,0)
+ Q
+"RTN","MAGGSFT",19,0)
+LIST(MAGRY) ;RPC [MAG4 GET SUPPORTED EXTENSIONS]
+"RTN","MAGGSFT",20,0)
+ ;to return a list of supported image file extensions
+"RTN","MAGGSFT",21,0)
+ N I,Y,CT,MAGN0
+"RTN","MAGGSFT",22,0)
+ ;NAME [1F] ^ DESCRIPTION [2F] ^VIEWER [3S] ^ 
+"RTN","MAGGSFT",23,0)
+ ;       Bitmap for Abstract [4F] ^Abstract Created [5S] ^ Default Object Type [6P]
+"RTN","MAGGSFT",24,0)
+ ;
+"RTN","MAGGSFT",25,0)
+ ;  2nd "|" piece is system info = Ien of 2005.021 ^ NAME ^ Default Object Type [6P]
+"RTN","MAGGSFT",26,0)
+ S MAGRY(0)="0^Compiling list of supported extensions..."
+"RTN","MAGGSFT",27,0)
+ S MAGRY(1)="Ext^Description^Imaging Viewer^Abs Bitmap^Abs Created"
+"RTN","MAGGSFT",28,0)
+ S CT=1
+"RTN","MAGGSFT",29,0)
+ S I=0 F  S I=$O(^MAG(2005.021,I)) Q:'I  S MAGN0=^(I,0) D
+"RTN","MAGGSFT",30,0)
+ . I $P(^MAG(2005.021,I,0),"^",7)=0 Q
+"RTN","MAGGSFT",31,0)
+ . S CT=CT+1
+"RTN","MAGGSFT",32,0)
+ . S MAGRY(CT)=$P(MAGN0,U,1,5)_"|"_I_U_$P(MAGN0,U)_U_$P(MAGN0,U,6)
+"RTN","MAGGSFT",33,0)
+ S MAGRY(0)="1^Okay"
+"RTN","MAGGSFT",34,0)
+ Q
+"RTN","MAGGSFT",35,0)
+EXTSUPP(MAGRY,MAGEXT) ; Is the Extension supported 
+"RTN","MAGGSFT",36,0)
+ ; MAGRY(0) = 1|0 ^ message
+"RTN","MAGGSFT",37,0)
+ ; 
+"RTN","MAGGSFT",38,0)
+ N MAGIEN
+"RTN","MAGGSFT",39,0)
+ S MAGEXT=$$UP^XLFSTR(MAGEXT) ; IA #10104
+"RTN","MAGGSFT",40,0)
+ S MAGIEN=$O(^MAG(2005.021,"B",MAGEXT,""))
+"RTN","MAGGSFT",41,0)
+ I 'MAGIEN S MAGRY(0)="0^Unsupported File Extension : "_MAGEXT Q 0
+"RTN","MAGGSFT",42,0)
+ I $P(^MAG(2005.021,MAGIEN,0),"^",7)=0 S MAGRY(0)="0^No Longer Supported File Extension : "_MAGEXT Q 0
+"RTN","MAGGSFT",43,0)
+ S MAGRY(0)="1^OK"
+"RTN","MAGGSFT",44,0)
+ Q MAGIEN
+"RTN","MAGGSFT",45,0)
+ ;
+"RTN","MAGGSFT",46,0)
+INFO(MAGRY,MAGEXT) ;RPC [MAG4 GET FILE FORMAT INFO]
+"RTN","MAGGSFT",47,0)
+ ;IMAGE FILE TYPES FILE ^MAG(2005.021
+"RTN","MAGGSFT",48,0)
+ ;NAME [1F] ^ DESCRIPTION [2F] ^VIEWER [3S] ^ 
+"RTN","MAGGSFT",49,0)
+ ; Bitmap for Abstract [4F] ^Abstract Created [5S] ^ Default Object Type [6P]
+"RTN","MAGGSFT",50,0)
+ ;
+"RTN","MAGGSFT",51,0)
+ ;"Ext^Description^Imaging Viewer^Abs Bitmap^Abs Created"
+"RTN","MAGGSFT",52,0)
+ ; "|" IEN ^ NAME ^ Default Object Type [6P] 
+"RTN","MAGGSFT",53,0)
+ ; 
+"RTN","MAGGSFT",54,0)
+ N MAGN0,MAGIEN
+"RTN","MAGGSFT",55,0)
+ K MAGRY
+"RTN","MAGGSFT",56,0)
+ S MAGIEN=$$EXTSUPP(.MAGRY,MAGEXT) ; Set MAGRY(0) and get IEN
+"RTN","MAGGSFT",57,0)
+ I 'MAGIEN Q
+"RTN","MAGGSFT",58,0)
+ S MAGN0=^MAG(2005.021,MAGIEN,0)
+"RTN","MAGGSFT",59,0)
+ S MAGRY(1)=$P(MAGN0,U,1,5)_"|"_MAGIEN_U_$P(MAGN0,U)_U_$P(MAGN0,U,6)
+"RTN","MAGGSFT",60,0)
+ Q
+"RTN","MAGGSFT",61,0)
+ABS4IMAG(MAGIEN) ; True, False  If the Image (MAGIEN) has an abstract
+"RTN","MAGGSFT",62,0)
+ ;  We base this on the Extension of image, in the IMAGE FILE TYPES file.
+"RTN","MAGGSFT",63,0)
+ N X,FTIEN
+"RTN","MAGGSFT",64,0)
+ S X=$P($P($G(^MAG(2005,MAGIEN,0)),"^",2),".",2)
+"RTN","MAGGSFT",65,0)
+ I '$L(X) Q 0
+"RTN","MAGGSFT",66,0)
+ S FTIEN=$O(^MAG(2005.021,"B",X,""))
+"RTN","MAGGSFT",67,0)
+ I 'FTIEN Q 0
+"RTN","MAGGSFT",68,0)
+ Q $P(^MAG(2005.021,FTIEN,0),"^",5)
+"RTN","MAGGSFT",69,0)
+ ;
+"RTN","MAGGSFT",70,0)
+ABSPDFNO(VAL) ;PATCH 158 Backout routine.
+"RTN","MAGGSFT",71,0)
+ ; if a site needs to turn OFF creation of abstracts for PDF's, they
+"RTN","MAGGSFT",72,0)
+ ; can call this tag.
+"RTN","MAGGSFT",73,0)
+ ;  Called with VAL = ""     it will default to 0)
+"RTN","MAGGSFT",74,0)
+ ;  Called with VAL = 0      turn off creation of Abstracts for PDF's)
+"RTN","MAGGSFT",75,0)
+ ;  Called with VAL = 1      turn ON creation of Abstracts for PDF's)
+"RTN","MAGGSFT",76,0)
+ N PDFID
+"RTN","MAGGSFT",77,0)
+ S PDFID=$O(^MAG(2005.021,"B","PDF",""))
+"RTN","MAGGSFT",78,0)
+ I 'PDFID W !,"Error - PDF entry does not exist in IMAGE FILE TYPES File" Q
+"RTN","MAGGSFT",79,0)
+ S VAL=$G(VAL,0)
+"RTN","MAGGSFT",80,0)
+ ;   if turning off
+"RTN","MAGGSFT",81,0)
+ I 'VAL D  W !,"Abstracts for PDF's will not be created" Q
+"RTN","MAGGSFT",82,0)
+ . S $P(^MAG(2005.021,PDFID,0),"^",4)="magpdf.bmp" ;canned bitmap to use.
+"RTN","MAGGSFT",83,0)
+ . S $P(^MAG(2005.021,PDFID,0),"^",5)="0"          ; abstracts created = 0  NO
+"RTN","MAGGSFT",84,0)
+ . Q
+"RTN","MAGGSFT",85,0)
+ I VAL D  W !,"Abstracts for PDF's will be created" Q
+"RTN","MAGGSFT",86,0)
+ . S $P(^MAG(2005.021,PDFID,0),"^",4)=""     ; erase the canned bitmap.
+"RTN","MAGGSFT",87,0)
+ . S $P(^MAG(2005.021,PDFID,0),"^",5)="1"    ; abstracts created = 1  YES
+"RTN","MAGGSFT",88,0)
+ . Q
+"RTN","MAGGSFT",89,0)
+ Q
+"RTN","MAGIP158")
+0^1^B4832681
+"RTN","MAGIP158",1,0)
+MAGIP158 ;WOIFO/GEK - INSTALL CODE FOR MAG*3.0*158 Import OCX issues; 23 Feb 2015  2:23 PM
+"RTN","MAGIP158",2,0)
+ ;;3.0;IMAGING;**158**;Mar 19, 2002;Build 12;May 19, 2015
+"RTN","MAGIP158",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGIP158",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP158",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGIP158",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGIP158",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGIP158",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGIP158",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGIP158",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGIP158",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGIP158",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGIP158",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGIP158",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGIP158",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGIP158",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP158",17,0)
+ ;;
+"RTN","MAGIP158",18,0)
+ ; There are no environment checks here but the MAGIP158 has to be
+"RTN","MAGIP158",19,0)
+ ; referenced by the "Environment Check Routine" field of the KIDS
+"RTN","MAGIP158",20,0)
+ ; build so that entry points of the routine are available to the
+"RTN","MAGIP158",21,0)
+ ; KIDS during all installation phases.
+"RTN","MAGIP158",22,0)
+ ;
+"RTN","MAGIP158",23,0)
+ Q
+"RTN","MAGIP158",24,0)
+ ;
+"RTN","MAGIP158",25,0)
+ ;+++++ INSTALLATION ERROR HANDLING
+"RTN","MAGIP158",26,0)
+ERROR ;
+"RTN","MAGIP158",27,0)
+ S:$D(XPDNM) XPDABORT=1
+"RTN","MAGIP158",28,0)
+ ;--- Display the messages and store them to the INSTALL file
+"RTN","MAGIP158",29,0)
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+"RTN","MAGIP158",30,0)
+ Q
+"RTN","MAGIP158",31,0)
+ ;
+"RTN","MAGIP158",32,0)
+ ;***** POST-INSTALL CODE
+"RTN","MAGIP158",33,0)
+POS ;
+"RTN","MAGIP158",34,0)
+ N CALLBACK
+"RTN","MAGIP158",35,0)
+ D CLEAR^MAGUERR(1)
+"RTN","MAGIP158",36,0)
+ ;
+"RTN","MAGIP158",37,0)
+ ;--- Link new remote procedures to the Broker context option
+"RTN","MAGIP158",38,0)
+ ;*** None for 158 **
+"RTN","MAGIP158",39,0)
+ ;S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAG WINDOWS"))
+"RTN","MAGIP158",40,0)
+ ;I $$CP^MAGKIDS("MAG ATTACH RPCS",CALLBACK)<0  D ERROR  Q
+"RTN","MAGIP158",41,0)
+ ;
+"RTN","MAGIP158",42,0)
+ ;
+"RTN","MAGIP158",43,0)
+ ;--- Misc Updates
+"RTN","MAGIP158",44,0)
+ ;*** None for 158 **
+"RTN","MAGIP158",45,0)
+ ;I $$CP^MAGKIDS("MAG 158 MISC UPDATES ","$$UPDATE^"_$T(+0))<0 D ERROR Q
+"RTN","MAGIP158",46,0)
+ ;
+"RTN","MAGIP158",47,0)
+ D PDFMOD
+"RTN","MAGIP158",48,0)
+ ;--- Send the notification e-mail
+"RTN","MAGIP158",49,0)
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+"RTN","MAGIP158",50,0)
+ D INS^MAGQBUT4(XPDNM,DUZ,$$NOW^XLFDT,XPDA)
+"RTN","MAGIP158",51,0)
+ ;
+"RTN","MAGIP158",52,0)
+ Q
+"RTN","MAGIP158",53,0)
+ ;
+"RTN","MAGIP158",54,0)
+ ;***** PRE-INSTALL CODE
+"RTN","MAGIP158",55,0)
+PRE ;
+"RTN","MAGIP158",56,0)
+ ;
+"RTN","MAGIP158",57,0)
+ Q
+"RTN","MAGIP158",58,0)
+PDFMOD ;  modify the IMAGE FILE TYPES file.
+"RTN","MAGIP158",59,0)
+ ; we're now creating Abstracts/Thumbnails for PDF.
+"RTN","MAGIP158",60,0)
+ N PDFID
+"RTN","MAGIP158",61,0)
+ S PDFID=$O(^MAG(2005.021,"B","PDF",""))
+"RTN","MAGIP158",62,0)
+ S $P(^MAG(2005.021,PDFID,0),"^",4)=""
+"RTN","MAGIP158",63,0)
+ S $P(^MAG(2005.021,PDFID,0),"^",5)="1"
+"RTN","MAGIP158",64,0)
+ Q
+"VER")
+8.0^22.0
+**END**
+**END**

@@ -1,0 +1,352 @@
+$TXT Created by                 at CAS-RXSU2-S1.AAC.DOMAIN.EXT  (KIDS) on Friday, 08/31/18 at 13:42
+=============================================================================
+Run Date: OCT 25, 2018                     Designation: PSJ*5*353
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #319                      Status: Released
+                  Compliance Date: NOV 25, 2018
+=============================================================================
+
+Associated patches: (c)PSS*1*218       install with patch       `PSJ*5*353'
+                    (v)PSJ*5*58    <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*111   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*194   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*227   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*331   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*338   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*347   <<= must be installed BEFORE `PSJ*5*353'
+                    (v)PSJ*5*373   <<= must be installed BEFORE `PSJ*5*353'
+
+Subject: CAS-RXSU2 INP NEW HIDDEN ACTIONS AND INACTIVE IDENTIFIERS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has the following enhancements for the Clinical Ancillary 
+ Services (CAS)-Pharmacy Safety Updates (RxSU) Phase 2:
+  
+  
+ 1. Manage Lookup List Inactive Entries 
+  
+    Added the text "** INACTIVE **" to the end of the display of the
+    ADMINISTRATION SCHEDULE file (#51.1) entries while editing the Listman
+    screen field "8)  Schedule:" during Finishing an order or adding a New
+    Order in Pharmacy backdoor operations.
+  
+ 2. Manage Hidden Icons (Actions)  Inpatient 
+  
+    Two new hidden actions are provided for Inpatient Pharmacy's menu
+    option Inpatient Order Entry [PSJ OE].
+  
+    a. A new hidden action, "DM", had been added for displaying dispense
+       drug information during data entry actions. This hidden action will
+       display key information about the order to help aid in the
+       verification process of an order and also allow user to Enter
+       another drug if desired.  Key
+       information includes:
+  
+       For Example:
+  
+            DRUG NAME: xxxxxxxxxxxxxxxxxxx   (IEN: 3)
+             ORDERABLE ITEM TEXT:
+              xxx xx xxxxx xxxxx xx xxxxx
+              x xxxxxxxx xx xxxxxxxxxxxx
+  
+             MESSAGE:   xxxx xxx xx xxxxx x xxxxxxxx
+             QTY DISP MESSAGE:   x xxxxxxxx xx xxxxxxxxx xxxx
+  
+           Return to continue or
+           Select DRUG GENERIC NAME:
+  
+    b. A new hidden action, "VP", has been added for displaying Provider
+       information during data entry actions. This hidden action will
+       display key information about the PROVIDER to help aid in the
+       verification process of an order and also allow user to enter
+       another provider if desired.  Key information includes:
+  
+       For Example:
+  
+           PROVIDER TITLE:    xxxxxx
+   
+           PROVIDER REMARKS:  xxx xx xxxxxxx xxxx
+  
+           PROVIDER SPECIALTY:  xxxxxx
+  
+           Return to continue or
+           Select NEW PERSON NAME: 
+  
+  
+ 3. View Provider Information
+  
+    The Inpatient Pharmacy menu option Inpatient Order Entry [PSJ OE]
+    header Listman areas were changed to add two new fields: 1) ATTENDING
+    PHYSICIAN Field (#.104) and 2) TREATING SPECIALTY Field (#.103) for
+    both the Patient Information and Inpatient Order Entry Listman screens.
+  
+    Example of the Listman header screens:
+  
+  Inpatient Order Entry      Jan 22, 2018@15:16:14          Page:  1 of   1
+  INPATIENT,FIRSTNAME           Ward: xxx xxxx
+    PID: xxx-xx-xxxx        Room-Bed: x-xxx           Ht(cm): _____ (_____)
+    DOB: xx/xx/xx (xx)   Att:  Physician,Attend S     Wt(kg): _____ (_____)
+    Sex: MALE            TrSp: NEUROLOGY             Admitted: xx/xx/xx
+     Dx: TEST ICD CODE                    Last transferred: ********
+   CrCL: <Not Found>                              BSA (m2): __________   
+  -------------------------------------------------------------------------
+  
+  
+  Patient Information        Jan 25, 2018@15:09:18          Page:  1 of   1
+  INPATIENT,FIRSTNAME           Ward: xxx xxxx
+    PID: xxx-xx-xxxx        Room-Bed: x-xxx           Ht(cm): _____ (_____)
+    DOB: xx/xx/xx (xx)   Att:  Physician,Attend S     Wt(kg): _____ (_____)
+    Sex: MALE            TrSp: NEUROLOGY             Admitted: xx/xx/xx
+     Dx: TEST ICD CODE                    Last transferred: ********
+   CrCL: <Not Found>                              BSA (m2): __________   
+  -------------------------------------------------------------------------
+  
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----     -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                       New/Modified/Deleted
+ ------------------------------      -------------------- 
+ Order View Hidden Actions Menu      [PSJ LM ORDER VIEW HIDDEN ACTIONS]
+                                         Modified
+  
+ Disp Drug Lookup                    [PSJ LM DRUG LOOK]
+                                         New
+  
+ Provider Lookup                     [PSJ LM VIEW PROVIDER]
+                                         New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted 
+ -------------     ----     ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20151007
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ St Louis
+ Orlando
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   https://www.domain.ext/vdl/.
+  
+  
+ File Description                  File Name                       FTP Mode
+ --------------------------------------------------------------------------
+ Inpatient Medications Nurse's User Manual v5.0
+                                   PSJ_5_p353_NURSE_UM.PDF          Binary
+ Inpatient Medications Pharmacist's User Manual v5.0
+                                   PSJ_5_p353_PHAR_UM.PDF           Binary
+ Inpatient Medications Technical Manual/Security Guide v5.0
+                                   PSJ_5_p353_TM.PDF                Binary 
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch PSJ*5.0*353.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch
+     PSJ*5.0*353.
+  
+ 4.  Select the installation option Backup a Transport Global. This option
+     will create a backup message of any routines exported with this patch
+     in case you need to backout this patch. It will not backup any other
+     changes such as Data Dictionaries (DD's) or templates. It is important
+     this step be followed, because if backout of this patch is necessary,
+     having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post Installation Overview
+ --------------------------
+ The post-install rebuilds the parent Protocol menu PSJ LM ORDER VIEW
+ HIDDEN ACTIONS to insure display of the two new Hidden actions added by
+ this patch.
+  
+ Please delete the post install routine (PSJ5P353) after you have verified
+ that both DM and VP new hidden actions appear after entering ?? and
+ pressing Return and Enter to continue, during viewing an Inpatient order's
+ details in Inpatient Order Entry (IOE).
+  
+ If DM and VP actions do not display but still execute, then manually run
+ the Post Install again from programmer mode (D EN^PSJ5P353).
+  
+  
+ Backout Procedures
+ ------------------
+ Backout Procedures are only needed if there are major problems (examples
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow ticket to obtain
+ this concurrence. The development team will then assist with the backout
+ process.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message
+ containing the backed up routines can be loaded with the "Xtract PackMan"
+ function at the Message Action prompt. The Packman function "INSTALL/CHECK
+ MESSAGE" is then used to install the backed up routines onto the VistA
+ System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSS Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT].   Once the routines contained in the
+ PSJ*5.0*353 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSJ*5.0*353 in
+ the [Patch List] section on line 2.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 49
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGS0
+    Before: B83569329   After: B83004638  **12,25,26,50,63,74,83,116,110,
+                                           111,133,138,174,134,213,207,
+                                           190,113,245,227,256,347,358,
+                                           353**
+Routine Name: PSGSH
+    Before:  B9080011   After:  B9457310  **111,353**
+Routine Name: PSJ5P353
+    Before:       n/a   After:   B497694  **353**
+Routine Name: PSJDDUT
+    Before: B78714673   After: B79498515  **40,44,50,83,116,111,113,194,353**
+Routine Name: PSJLMHED
+    Before: B63213228   After: B64791709  **4,58,85,110,148,181,260,275,
+                                           331,256,353**
+Routine Name: PSJOE1
+    Before: B32599287   After: B33458884  **2,7,25,30,47,56,64,179,181,
+                                           252,281,315,338,373,353**
+Routine Name: PSJUTL3
+    Before: B11651580   After: B43541107  **58,353*
+ 
+Routine list of preceding patches: 194, 358, 373
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2017
+Completed By:                               Date Completed: OCT 23, 2018
+Released By :                               Date Released : OCT 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

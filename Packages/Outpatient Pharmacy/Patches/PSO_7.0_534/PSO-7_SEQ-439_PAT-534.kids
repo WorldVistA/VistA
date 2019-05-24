@@ -1,0 +1,503 @@
+Released PSO*7*534 SEQ #439
+Extracted from mail message
+**KIDS**:PSO*7.0*534^
+
+**INSTALL NAME**
+PSO*7.0*534
+"BLD",9779,0)
+PSO*7.0*534^OUTPATIENT PHARMACY^0^3180708^y
+"BLD",9779,1,0)
+^^1^1^3180708^
+"BLD",9779,1,1,0)
+One VA Pharmacy, redirect HL7 link PSORRXSEND from EMI to VIERS.
+"BLD",9779,4,0)
+^9.64PA^^0
+"BLD",9779,6)
+^388
+"BLD",9779,6.3)
+352
+"BLD",9779,"ABPKG")
+n
+"BLD",9779,"INIT")
+PST^PSORRVIE
+"BLD",9779,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9779,"KRN",.4,0)
+.4
+"BLD",9779,"KRN",.401,0)
+.401
+"BLD",9779,"KRN",.402,0)
+.402
+"BLD",9779,"KRN",.403,0)
+.403
+"BLD",9779,"KRN",.5,0)
+.5
+"BLD",9779,"KRN",.84,0)
+.84
+"BLD",9779,"KRN",3.6,0)
+3.6
+"BLD",9779,"KRN",3.8,0)
+3.8
+"BLD",9779,"KRN",9.2,0)
+9.2
+"BLD",9779,"KRN",9.8,0)
+9.8
+"BLD",9779,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9779,"KRN",9.8,"NM",1,0)
+PSORRVIE^^0^B21813537
+"BLD",9779,"KRN",9.8,"NM","B","PSORRVIE",1)
+
+"BLD",9779,"KRN",19,0)
+19
+"BLD",9779,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",9779,"KRN",19.1,0)
+19.1
+"BLD",9779,"KRN",101,0)
+101
+"BLD",9779,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",9779,"KRN",409.61,0)
+409.61
+"BLD",9779,"KRN",409.61,"NM",0)
+^9.68A^^0
+"BLD",9779,"KRN",771,0)
+771
+"BLD",9779,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",9779,"KRN",779.2,0)
+779.2
+"BLD",9779,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",9779,"KRN",870,0)
+870
+"BLD",9779,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",9779,"KRN",8989.51,0)
+8989.51
+"BLD",9779,"KRN",8989.52,0)
+8989.52
+"BLD",9779,"KRN",8994,0)
+8994
+"BLD",9779,"KRN","B",.4,.4)
+
+"BLD",9779,"KRN","B",.401,.401)
+
+"BLD",9779,"KRN","B",.402,.402)
+
+"BLD",9779,"KRN","B",.403,.403)
+
+"BLD",9779,"KRN","B",.5,.5)
+
+"BLD",9779,"KRN","B",.84,.84)
+
+"BLD",9779,"KRN","B",3.6,3.6)
+
+"BLD",9779,"KRN","B",3.8,3.8)
+
+"BLD",9779,"KRN","B",9.2,9.2)
+
+"BLD",9779,"KRN","B",9.8,9.8)
+
+"BLD",9779,"KRN","B",19,19)
+
+"BLD",9779,"KRN","B",19.1,19.1)
+
+"BLD",9779,"KRN","B",101,101)
+
+"BLD",9779,"KRN","B",409.61,409.61)
+
+"BLD",9779,"KRN","B",771,771)
+
+"BLD",9779,"KRN","B",779.2,779.2)
+
+"BLD",9779,"KRN","B",870,870)
+
+"BLD",9779,"KRN","B",8989.51,8989.51)
+
+"BLD",9779,"KRN","B",8989.52,8989.52)
+
+"BLD",9779,"KRN","B",8994,8994)
+
+"BLD",9779,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",9779,"QUES",0)
+^9.62^^
+"BLD",9779,"REQB",0)
+^9.611^^0
+"INIT")
+PST^PSORRVIE
+"MBREQ")
+0
+"PKG",206,-1)
+1^1
+"PKG",206,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",206,22,0)
+^9.49I^1^1
+"PKG",206,22,1,0)
+7.0^2971216^2990526^2441
+"PKG",206,22,1,"PAH",1,0)
+534^3180708
+"PKG",206,22,1,"PAH",1,1,0)
+^^1^1^3180708
+"PKG",206,22,1,"PAH",1,1,1,0)
+One VA Pharmacy, redirect HL7 link PSORRXSEND from EMI to VIERS.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSORRVIE")
+0^1^B21813537^n/a
+"RTN","PSORRVIE",1,0)
+PSORRVIE ;WISC/AS UPDATE LLP, PSORRXSEND ; 7/05/2018 4:57pm
+"RTN","PSORRVIE",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**534**;JULY 2018;Build 352
+"RTN","PSORRVIE",3,0)
+ ;
+"RTN","PSORRVIE",4,0)
+ Q
+"RTN","PSORRVIE",5,0)
+ ;
+"RTN","PSORRVIE",6,0)
+PST ;POST INSTALL
+"RTN","PSORRVIE",7,0)
+ ;Reference to ^HLCS(870, supported by IA#6409
+"RTN","PSORRVIE",8,0)
+ ;
+"RTN","PSORRVIE",9,0)
+ ;Output:
+"RTN","PSORRVIE",10,0)
+ ; - ^XTMP("PSORRVIE",0)=purge date_U_today's date_U_patch 
+"RTN","PSORRVIE",11,0)
+ ; - ^XTMP("PSORRVIE",1) = Link name ^ DNS ^ Port Number
+"RTN","PSORRVIE",12,0)
+ ; Do not delete XTMP file until 30 days from now
+"RTN","PSORRVIE",13,0)
+ ;
+"RTN","PSORRVIE",14,0)
+ ; By region number, Get LINK name, DNS name, and port number.
+"RTN","PSORRVIE",15,0)
+ N PSOA,PSOLNK,PSOPORT,PSODNS,PSOIP
+"RTN","PSORRVIE",16,0)
+ S U="^",PSOLNK="PSORRXSEND",PSOPORT=2200
+"RTN","PSORRVIE",17,0)
+ S PSODNS="vaausvrsprdlb1.aac.domain.ext",PSOIP="127.0.0.1"
+"RTN","PSORRVIE",18,0)
+ ;
+"RTN","PSORRVIE",19,0)
+ ;
+"RTN","PSORRVIE",20,0)
+ ; 1. If link is up, stop the link.
+"RTN","PSORRVIE",21,0)
+ ; 2. Save existing DNS, IP address, and Port
+"RTN","PSORRVIE",22,0)
+ ; 3. Update logical link.
+"RTN","PSORRVIE",23,0)
+ ; 4. If the link was shutdown by this patch, bring it up
+"RTN","PSORRVIE",24,0)
+ ;
+"RTN","PSORRVIE",25,0)
+ N X,PSOLLK,PSODP,PSOP4,PSOP0,PSOACTV,PSODAPP,X1,X2,HLJ
+"RTN","PSORRVIE",26,0)
+ S (PSODP,PSOLLK)=+$$FIND1^DIC(870,"","MX",PSOLNK)
+"RTN","PSORRVIE",27,0)
+ ;
+"RTN","PSORRVIE",28,0)
+ ; If link is not defined in the HL LOGICAL LINK (#870) file
+"RTN","PSORRVIE",29,0)
+ ;  *** Exit ***
+"RTN","PSORRVIE",30,0)
+ I PSOLLK=0 D  Q
+"RTN","PSORRVIE",31,0)
+ . D BMES^XPDUTL("Link '"_PSOLNK_"' does not exist. Update aborted.")
+"RTN","PSORRVIE",32,0)
+ . Q
+"RTN","PSORRVIE",33,0)
+ ;
+"RTN","PSORRVIE",34,0)
+ ; If link is locked by other process,
+"RTN","PSORRVIE",35,0)
+ ;  *** Exit ***
+"RTN","PSORRVIE",36,0)
+ L +^HLCS(870,PSOLLK):10 I '$T D  Q
+"RTN","PSORRVIE",37,0)
+ . D BMES^XPDUTL("Link '"_PSOLNK_"' was locked and unable to access. Update aborted.")
+"RTN","PSORRVIE",38,0)
+ . Q
+"RTN","PSORRVIE",39,0)
+ ; 
+"RTN","PSORRVIE",40,0)
+ S PSOP4=$G(^HLCS(870,PSODP,400)),PSOP0=$G(^HLCS(870,PSODP,0))
+"RTN","PSORRVIE",41,0)
+ S PSODAPP=$P(PSOP0,"^",1)
+"RTN","PSORRVIE",42,0)
+ ; 
+"RTN","PSORRVIE",43,0)
+ ;
+"RTN","PSORRVIE",44,0)
+ ; Save current LLP, Link Name^IP^Port#^DNS, to XTMP
+"RTN","PSORRVIE",45,0)
+ ;
+"RTN","PSORRVIE",46,0)
+ I '$G(PSORLBK) D
+"RTN","PSORRVIE",47,0)
+ . S DT=$$DT^XLFDT,X1=DT,X2=30 D C^%DTC
+"RTN","PSORRVIE",48,0)
+ . S ^XTMP("PSORRVIE",0)=X_U_DT_U_"PSO*7.0*534"
+"RTN","PSORRVIE",49,0)
+ . S ^XTMP("PSORRVIE",1)=$P(PSOP0,"^")_U_$P(PSOP4,U)_U_$P(PSOP4,U,2)
+"RTN","PSORRVIE",50,0)
+ . S ^XTMP("PSORRVIE",1)=^XTMP("PSORRVIE",1)_U_$P(PSOP0,"^",8)
+"RTN","PSORRVIE",51,0)
+ ;
+"RTN","PSORRVIE",52,0)
+ ; Shut Down LLP
+"RTN","PSORRVIE",53,0)
+ ;
+"RTN","PSORRVIE",54,0)
+ ;4=status,10=Time Stopped,9=Time Started,11=Task Number,3=Device Type
+"RTN","PSORRVIE",55,0)
+ ;DD14(P15)=0 means LLP was ON, OK to shutdown, piece 12=DD11 above
+"RTN","PSORRVIE",56,0)
+ ;
+"RTN","PSORRVIE",57,0)
+ ; If LLP status is SHUTDOWN, do nothing
+"RTN","PSORRVIE",58,0)
+ S PSOACTV=1
+"RTN","PSORRVIE",59,0)
+ I $P(PSOP0,U,15) D
+"RTN","PSORRVIE",60,0)
+ . D BMES^XPDUTL("LINK '"_PSOLNK_"' status was already shutdown.")
+"RTN","PSORRVIE",61,0)
+ . S PSOACTV=0
+"RTN","PSORRVIE",62,0)
+ ;
+"RTN","PSORRVIE",63,0)
+ ; If LLP status is ENABLED, shutdown the LLP
+"RTN","PSORRVIE",64,0)
+ N PSOER
+"RTN","PSORRVIE",65,0)
+ I '$P(PSOP0,U,15) D  Q:$D(PSOER)
+"RTN","PSORRVIE",66,0)
+ . S X="HLJ(870,"""_PSODP_","")",@X@(4)="Halting",@X@(10)=$$NOW^XLFDT
+"RTN","PSORRVIE",67,0)
+ . S (@X@(11),@X@(9))="@",@X@(14)=1
+"RTN","PSORRVIE",68,0)
+ . ; PSOP4 P3="C"LIENT, P4="N"ON-PERSISTANT, No task number
+"RTN","PSORRVIE",69,0)
+ . I $P(PSOP4,U,3)="C"&("N"[$P(PSOP4,U,4)),'$P(PSOP0,U,12) S @X@(4)="Shutdown"
+"RTN","PSORRVIE",70,0)
+ . D FILE^DIE("","HLJ","PSOER")
+"RTN","PSORRVIE",71,0)
+ . ;
+"RTN","PSORRVIE",72,0)
+ . ; if DIE unable to Shutdown LINK, EXIT
+"RTN","PSORRVIE",73,0)
+ . I $D(PSOER) D  Q
+"RTN","PSORRVIE",74,0)
+ .. D BMES^XPDUTL("LINK '"_PSOLNK_"' was NOT able to Shutdown!")
+"RTN","PSORRVIE",75,0)
+ .. D BMES^XPDUTL("Error: "_$G(PSOER("DIERR",1,"TEXT",1)))
+"RTN","PSORRVIE",76,0)
+ .. D BMES^XPDUTL("Please log a ticket to report this error")
+"RTN","PSORRVIE",77,0)
+ .. Q
+"RTN","PSORRVIE",78,0)
+ .. ;
+"RTN","PSORRVIE",79,0)
+ . D BMES^XPDUTL("LINK '"_PSOLNK_"' has been shutdown!")
+"RTN","PSORRVIE",80,0)
+ ;
+"RTN","PSORRVIE",81,0)
+ ; If Roll Back, retrieve previous saved Link data
+"RTN","PSORRVIE",82,0)
+ ;
+"RTN","PSORRVIE",83,0)
+ S PSOA=0 I $G(PSORLBK) D  Q:PSOA
+"RTN","PSORRVIE",84,0)
+ . S X=$G(^XTMP("PSORRVIE",1)) I X="" D  Q
+"RTN","PSORRVIE",85,0)
+ .. S PSOA=1
+"RTN","PSORRVIE",86,0)
+ .. D BMES^XPDUTL("PSO, no rollback data stored in ^XTMP('PSORRVIE') global")
+"RTN","PSORRVIE",87,0)
+ . S PSOIP=$P(X,U,2),PSODNS=$P(X,U,4),PSOPORT=$P(X,U,3)
+"RTN","PSORRVIE",88,0)
+ . I PSODNS="" S PSODNS="@"
+"RTN","PSORRVIE",89,0)
+ . I PSOPORT="" S PSOPORT="@"
+"RTN","PSORRVIE",90,0)
+ . I PSOIP="" S PSOIP="@"
+"RTN","PSORRVIE",91,0)
+ . S ^XTMP("PSORRVIE",2)="Roll back performed "_$$DT^XLFDT
+"RTN","PSORRVIE",92,0)
+ ;
+"RTN","PSORRVIE",93,0)
+ ; Update LINK
+"RTN","PSORRVIE",94,0)
+ ;
+"RTN","PSORRVIE",95,0)
+ S DIE="^HLCS(870,",DA=PSOLLK
+"RTN","PSORRVIE",96,0)
+ S DR="400.01///"_PSOIP
+"RTN","PSORRVIE",97,0)
+ S DR=DR_";400.02///"_PSOPORT_";.08///"_PSODNS
+"RTN","PSORRVIE",98,0)
+ D ^DIE
+"RTN","PSORRVIE",99,0)
+ K DIE,DA,DR
+"RTN","PSORRVIE",100,0)
+ S X="PSO, LINK PSORRXSEND "_$S($G(PSORLBK):"rolled back",1:"updated with VIERS data")
+"RTN","PSORRVIE",101,0)
+ D BMES^XPDUTL(X)
+"RTN","PSORRVIE",102,0)
+ S X="  - LOGICAL LINK "_PSOLNK_", DNS: "_PSODNS
+"RTN","PSORRVIE",103,0)
+ D BMES^XPDUTL(X)
+"RTN","PSORRVIE",104,0)
+ S X="  - TCP/IP ADDRESS: "_PSOIP_", PORT: "_PSOPORT
+"RTN","PSORRVIE",105,0)
+ D BMES^XPDUTL(X)
+"RTN","PSORRVIE",106,0)
+ ;
+"RTN","PSORRVIE",107,0)
+ I PSOACTV=0 D PSTEND Q
+"RTN","PSORRVIE",108,0)
+ ;
+"RTN","PSORRVIE",109,0)
+ ; Activate LLP
+"RTN","PSORRVIE",110,0)
+ ;
+"RTN","PSORRVIE",111,0)
+ K PSOER
+"RTN","PSORRVIE",112,0)
+ I $P(PSOP4,U,3)="C"&("N"[$P(PSOP4,U,4)) D  Q:$D(PSOER)
+"RTN","PSORRVIE",113,0)
+ . ;4=status 9=Time Started, 10=Time Stopped, 11=Task Number
+"RTN","PSORRVIE",114,0)
+ . ;14=Shutdown LLP, 3=Device Type, 18=Gross Errors
+"RTN","PSORRVIE",115,0)
+ . K HLJ
+"RTN","PSORRVIE",116,0)
+ . S X="HLJ(870,"""_PSODP_","")"
+"RTN","PSORRVIE",117,0)
+ . S @X@(4)="Enabled",@X@(9)=$$NOW^XLFDT,@X@(14)=0
+"RTN","PSORRVIE",118,0)
+ . D FILE^DIE("","HLJ","PSOER")
+"RTN","PSORRVIE",119,0)
+ . ;
+"RTN","PSORRVIE",120,0)
+ . ; if DIE unable to enable LINK, EXIT
+"RTN","PSORRVIE",121,0)
+ . I $D(PSOER) D  Q
+"RTN","PSORRVIE",122,0)
+ .. D BMES^XPDUTL("LINK '"_PSOLNK_"' was NOT enabled!")
+"RTN","PSORRVIE",123,0)
+ .. D BMES^XPDUTL("Error: "_$G(PSOER("DIERR",1,"TEXT",1)))
+"RTN","PSORRVIE",124,0)
+ .. D BMES^XPDUTL("Please log a ticket to report this error")
+"RTN","PSORRVIE",125,0)
+ .. Q
+"RTN","PSORRVIE",126,0)
+ .. ;
+"RTN","PSORRVIE",127,0)
+ . D BMES^XPDUTL("LINK '"_PSOLNK_"' has been enabled!")
+"RTN","PSORRVIE",128,0)
+ . Q
+"RTN","PSORRVIE",129,0)
+ ;
+"RTN","PSORRVIE",130,0)
+PSTEND L -^HLCS(870,PSOLLK)
+"RTN","PSORRVIE",131,0)
+ I '$G(PSORLBK) D BMES^XPDUTL("PSO, LOGICAL LINK '"_PSOLNK_"' NOW POINT TO VIERS SERVER.")
+"RTN","PSORRVIE",132,0)
+ ;
+"RTN","PSORRVIE",133,0)
+ Q
+"RTN","PSORRVIE",134,0)
+ ;
+"RTN","PSORRVIE",135,0)
+ROLLBAK ;
+"RTN","PSORRVIE",136,0)
+ N PSORLBK S PSORLBK=1
+"RTN","PSORRVIE",137,0)
+ D PST
+"RTN","PSORRVIE",138,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",9779,6)
+^439
+**END**
+**END**
+

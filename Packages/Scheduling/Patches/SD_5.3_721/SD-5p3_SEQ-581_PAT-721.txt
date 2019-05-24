@@ -1,0 +1,232 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/21/19 at 15:19
+=============================================================================
+Run Date: MAR 14, 2019                     Designation: SD*5.3*721
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #581                    Status: Released
+                  Compliance Date: APR 14, 2019
+=============================================================================
+
+
+Subject: EDIT COMPUTER GENERATED APPT OPTION UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue(s):
+  
+ 1. An undefined error occurs when running the Edit Computer
+ Generated Appointment Type [SDACS CGEDIT] option. This error
+ occurs because the OUTPATIENT ENCOUNTER (#409.68) file entry 
+ is missing the PATIENT (#.02) field.
+  
+ 2. The Edit Computer Generated Appointment Type [SDACS CGEDIT]
+ option does not contain the necessary patient information for
+ the affected end user (AEU) to determine the appointment type
+ for computer generated appointments.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:  N/A
+  
+ New Service Requests (NSRs):  N/A
+  
+ Patient Safety Issues (PSIs):  N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1.  INC3582232 - <UNDEFINED>DEMW+1^SDACSCG *VA("PID") at NYH
+  
+ Problem:
+ --------
+ An undefined error occurs when running the Edit Computer Generated
+ Appointment Type [SDACS CGEDIT] option. This error occurs because
+ the OUTPATIENT ENCOUNTER (#409.68) file entry is missing the
+ PATIENT (#.02) field.
+  
+ Resolution:
+ -----------
+ Routine SDACSCG was modified to ignore records that are missing the
+ PATIENT (#.02) field. These are not valid records since the PATIENT
+ (#.02) field is required for the OUTPATIENT ENCOUNTER (#409.68) file.
+  
+ 2.  INC3173455 - Issue with Computer Generated Error Report
+  
+ Problem:
+ --------
+ The Edit Computer Generated Appointment Type [SDACS CGEDIT] option
+ does not contain the necessary patient information for the affected
+ end user (AEU) to determine the appointment type for computer generated
+ appointments.
+  
+ Resolution:
+ -----------
+ Routine SDACSCG was modified to add the information requested by the
+ AEU(s) needed to determine the appointment type for computer generated
+ appointments. These entry fields include the division, clinic location,
+ stop code, service connected, rated disability information, primary
+ eligibility, secondary eligibility, and current eligibility for the
+ encounter.
+  
+ Test Sites:
+ -----------
+ Coatesville VAMC
+ VA New York Harbor HCS
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter SD*5.3*721)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       SD*5.3*721.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit enter.  
+  
+    6. When prompted 'Want to DISABLE Scheduled Options and Menu
+       Options and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+       enter:
+  
+            Edit Computer Generated Appointment Type  [SDACS CGEDIT]
+       
+       When prompted, 'Enter protocols you wish to mark as 'Out of 
+       Order':', enter: <ENTER>.
+       
+       Delay Install (Minutes):  (0-60): 0//
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDACSCG
+    Before: B24264677   After: B58932835  **16,22,132,202,721**
+ 
+Routine list of preceding patches: 202
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 24, 2018
+Completed By:                               Date Completed: MAR 14, 2019
+Released By :                               Date Released : MAR 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

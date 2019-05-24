@@ -1,0 +1,251 @@
+
+=============================================================================
+Run Date: OCT 20, 2016                     Designation: YS*5.01*119
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #97                   Status: Released
+                  Compliance Date: NOV 20, 2016
+=============================================================================
+
+Associated patches: (c)PXRM*2*62       install with patch       `YS*5.01*119'
+                    (c)GMTS*2.7*116    install with patch       `YS*5.01*119'
+                    (v)YS*5.01*105 <<= must be installed BEFORE `YS*5.01*119'
+
+Subject: PCL-5 UPDATE AND INSTRUMENT SCORING
+
+Category: 
+  - Other
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch will modify some of the prompts in the PCL-5 instrument to be 
+ consistent with the current wording of PCL-5.  The PCL-5 instrument will 
+ be activated so that it is available for selection in the Mental Health 
+ Assistant (MHA).  The PCLC, PCLM, PCLS, and NEOPI instruments are 
+ inactivated.  Also, possible scoring errors for the following instruments
+ have been corrected:  MMCI3, MMPI-2-RF, MOCA, MOCA Alt 1, and MOCA Alt 2.
+  
+ Additionally, the patch provides an interim solution for the problem 
+ where instruments with complex scoring algorithms display inaccurate 
+ scores in Clinical Reminders and Health Summary.  A filter is added that 
+ will prevent selection of these instruments in Clinical Reminders and 
+ Health Summary until a VistA based scoring algorithm can be deployed.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)              Field Name (Number)       New/Mod/Del
+ ------------------              -------------------       -----------
+ MH TESTS AND SURVEYS (#601.71)  TAG FOR SCORING (#91)     NEW
+ MH TESTS AND SURVEYS (#601.71)  ROUTINE FOR SCORING (#92) NEW
+  
+ Forms Associated:          N/A
+  
+ Mail Groups Associated:    N/A
+  
+ Options Associated:        N/A
+  
+ Protocols Associated:      N/A
+  
+ Security Keys Associated:  N/A
+  
+ Templates Associated:      N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150509: Posttraumatic Stress Disorder (PTSD) Checklist 5 (PCL-5) 
+ and Mental Health Assistant Stabilization (MHAS) 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 2497: Mental health instruments that use a complex scoring algorithm 
+ display an incorrect score when used in Health Summary and Clinical 
+ Reminders. 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ HD0000000391317 - Error Evaluating Clinical Reminder - local GAF reminder
+ Problem: In some instances, a utility in the YTQPXRM2 routine errors out
+ when evaluating a GAF clinical reminder because the time portion of the
+ date/time lookup value has trailing zeros.
+ Solution: The patch modifies the routine to strip off the trailing zeros .
+  
+ HD0000000807935 - Mental Health - MH Tests (excluding ASI) 
+ Problem: The scoring criteria for the MCMI3 instrument changed since it 
+ was first released.
+ Solution: The scoring criteria are updated.
+  
+ HD0000000922629 - Mental Health - Mental Health Assistant: scoring error 
+ MoCA, MoCA Alt1, and MoCA Alt2
+ HD0000000938421 - Mental Health - Mental Health Assistant
+ HD0000000964555 - MOCA calculation is off
+ Problem: There is an error in the way three instruments, MOCA, MOCA ALT1 
+ and MOCA ALT 2 are scored.
+ Solution: The scoring error is fixed for all three instruments . 
+  
+ HD0000000939794 - Mental Health - Mental Health Assistant
+ Problem: There is a scoring error in the BAI instrument. There is a MH 
+ SCALES (#601.87) file entry associated with this instrument that should
+ not be.
+ Solution: That entry is no longer associated with the instrument.
+  
+ INC000000616128 - Mental Health - Error Generating Report
+ Problem: There is an error when generating a report for an administration 
+ that doesn't exist.
+ Solution: Quit before generating the report if an instrument 
+ administration is not found.
+  
+ Test Sites:
+ ----------
+ Cleveland
+ Milwaukee
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This patch is being distributed as a host file.  The name of the host 
+ file is YS_PCL5_UPDATE.KID.  This file should be downloaded in ASCII 
+ format.
+  
+ The preferred method is to retrieve files from:
+  
+     download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and install guide directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ The Install Guide is also available on the above servers.  It is 
+ available as .PDF format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:              Description:                  Protocol
+     ==========              ============                  =========
+     YS_PCL5_UPDATE.PDF      PCL-5 Update Install Guide    BINARY
+     YS_PCL5_UPDATE.KID      PCL-5 Update Host File        ASCII
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:  http://www4.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install Guide, YS_PCL5_UPDATE.PDF, 
+ for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+  
+     When prompted to enter a host file, type in YS_PCL5_UPDATE.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use YS_PCL5_UPDATE 1.0
+  
+ 4.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter NO.
+  
+ 5.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' enter NO. 
+  
+ 6.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ If there are locally developer clinical reminders or reminder dialogs 
+ that use the PCLC or PCLM mental health instruments as findings, these 
+ findings need to be updated to use PCL-5 instead.  See the Install Guide 
+ for more details.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 42
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS119ENV
+    Before:       n/a   After:   B758133  **119**
+Routine Name: YS119PS0
+    Before:       n/a   After: B84859704  **119**
+Routine Name: YS119PS1
+    Before:       n/a   After: B96945006  **119**
+Routine Name: YS119PS2
+    Before:       n/a   After: B37329571  **119**
+Routine Name: YS119PS3
+    Before:       n/a   After:  B6484663  **119**
+Routine Name: YS119PST
+    Before:       n/a   After:B125294208  **119**
+Routine Name: YSGAFOBX
+    Before: B11099191   After: B11650834  **43,50,59,119**
+Routine Name: YTMCMI3
+    Before: B19369222   After: B33410425  **76,119**
+Routine Name: YTMCMI3R
+    Before:  B8684866   After:  B8911579  **76,119**
+Routine Name: YTQAPI1
+    Before: B27189337   After: B28272751  **85,119**
+Routine Name: YTQAPI14
+    Before: B29549616   After: B30749913  **85,97,96,103,119**
+Routine Name: YTQAPI15
+    Before: B29251831   After: B29683275  **85,97,119**
+Routine Name: YTQAPI16
+    Before: B13185422   After: B13492247  **85,119**
+Routine Name: YTQAPI2
+    Before: B23049934   After: B23429482  **85,96,119**
+Routine Name: YTQAPI9
+    Before: B29518632   After: B29675237  **85,96,119**
+Routine Name: YTQGMTS
+    Before:       n/a   After:  B5566936  **119**
+Routine Name: YTQPRT
+    Before: B29277675   After: B28892846  **85,97,119**
+Routine Name: YTQPXRM2
+    Before: B14658221   After: B15398130  **85,119**
+Routine Name: YTQPXRM5
+    Before: B19969917   After: B20461442  **85,119**
+Routine Name: YTQPXRM6
+    Before: B17034666   After: B17935617  **85,119**
+Routine Name: YTSCORE
+    Before:       n/a   After:     B5317  **119**
+ 
+Routine list of preceding patches: 59, 76, 103
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 12, 2015
+Completed By:                               Date Completed: OCT 19, 2016
+Released By :                               Date Released : OCT 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

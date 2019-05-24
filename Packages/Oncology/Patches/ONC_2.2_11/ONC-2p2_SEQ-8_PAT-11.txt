@@ -1,0 +1,209 @@
+
+=============================================================================
+Run Date: FEB 28, 2019                     Designation: ONC*2.2*11
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #8                    Status: Released
+                  Compliance Date: MAR 31, 2019
+=============================================================================
+
+Associated patches: (v)ONC*2.2*9   <<= must be installed BEFORE `ONC*2.2*11'
+
+Subject: Add TEXT word processing fields to Reports
+
+Category: 
+  - Print Template
+  - Routine
+
+Description:
+============
+
+ 1. Add the TEXT-STAGING and TEXT-SITE SPECIFIC DATA ITEMS fields to reports
+ The TEXT-STAGING (#165.5,#285) and TEXT-SITE SPECIFIC DATA ITEM (#165.5,#286)
+ fields were added to the Abstract Edit Primary [ONCO ABSTRACT-EDIT] option
+ in Patch ONC*2.2*9.  These fields will be added to the Print Abstract
+ QA (80c) [ONCO ABSTRACT QA] and Print Complete Abstract (132c) [ONCO
+ ABSTRACT-PRINT/EO132] options so that the data entered in the Primary
+ will display on these reports.
+ 
+ 
+ Test Sites: 
+ -----------
+ Asheville, NC VAMC 
+ Washington, DC VAMC  
+ West Haven, CT  
+  
+ PATCH COMPONENTS:
+ =================
+  
+ Routines:
+ ---------
+ ONCODIS
+ ONCOPA2A 
+  
+ Files & Fields Associated:
+ --------------------------                                    New/Modified/ 
+ File Name (#)                Field Name (#)                      Deleted 
+ -------------                ------------------               -----------------
+ N/A 
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ ONCQA                FILE #165.5     Type: Print Template
+ ONCQA1               FILE #165.5     Type: Print Template
+ ONCQA2               FILE #165.5     Type: Print Template
+ ONCQA3               FILE #165.5     Type: Print Template
+  
+ Documentation Retrieval:
+ ========================
+ There are no documentation changes with this patch but the existing 
+ Oncology documentation is available on the ANONYMOUS.SOFTWARE directory
+ at one of the following Office of Information (OI) Field Offices: 
+    Hines
+    Salt Lake City
+  
+ Sites may retrieve Oncology documentation in one of the following ways: 
+   (1) The preferred method is to SFTP the files from     
+       download.vista.domain.ext, which will transmit the files from 
+       the first available FTP server.
+   (2) Sites may also elect to retrieve documentation directly from a
+       specific server listed below: 
+         Hines          ftp.domain.ext
+         Salt Lake City ftp.domain.ext
+  
+ (3) Documentation can also be retrieved from the VistA Documentation  
+     Library (VDL) on the Internet at the following address, 
+     https://www.domain.ext/vdl.  
+  
+ Patch Installation:
+ =================== 
+ Pre/Post Installation Overview: 
+ -------------------------------
+ There is no pre-installation or post-installation routine for this patch.   
+  
+ Installation instructions:
+ -------------------------- 
+ This patch should be loaded with Oncology users off the system. 
+ Installation should take less than 5 minutes. The patch could also
+ be queued for installation.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P11.KID.
+     
+ Software Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT           
+   
+  The software distribution includes: 
+     
+ File Name                        Description                FTP Mode
+ --------------------------------------------------------------------------
+ ONC22P11.KID                      KIDS Build                 ASCII
+  
+  
+  1. Load the KIDS distribution file via the 'Load a Distribution' option 
+     on the KIDS Installation menu. 
+  
+  2. Prior to installing the patch you may want to make use of the 
+     following optional installation options located on the
+     KIDS Installation menu:
+   
+     a. Verify Checksums in Transport Global - This option will 
+        allow you to ensure the integrity of the routines that are in the
+        transport global. 
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this 
+        patch is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).  
+     c. Backup a Transport Global - This option will create a 
+        backup message of any routines exported with this patch. It will 
+        not backup any other changes such as DD's or templates.  
+  
+  3. Install the KIDS distribution via the 'Install Package(s)'  
+       option on the KIDS Installation menu.
+  
+       a. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+          of Install? NO//' Answer NO.      
+       b. When prompted 'Want KIDS to INHIBIT LOGONS during the install'
+          NO//' Answer NO.   
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+          and Protocols? NO//' Answer NO. 
+  
+ Back out/Rollback Plan
+ ----------------------
+  Backout of this patch will be performed only with the concurrence and 
+  participation of the appropriate VA site/region personnel. The decision 
+  to back out the patch will be a joint decision between VA site/region 
+  personnel and other appropriate VA personnel. 
+   
+  Prior to installing the updated KIDS package, the site/region should have 
+  saved a backup of the routines in a mail message using the Backup a 
+  Transport Global [XPD BACKUP] menu option. The message containing the 
+  backed up routines can be loaded with the "Xtract PackMan" function at 
+  the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+  then used to install the backed up routines onto the VistA system.
+  
+ Note: In the event that a site decides to back out this 
+  patch, the site should contact the National Service Desk (NSD) to submit 
+  an IT Service Desk ticket. The development team will then assist with the
+  backout process and restoration of the Print Templates.
+  
+ Validation of Backout Procedure of the Routines: 
+  -----------------------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+  the ONC routines contained in this patch using the option First Line 
+  Routine Print [XU FIRST LINE PRINT]. Once the ONC routines have been 
+  backed out, the first two lines of the routines will no longer contain 
+  the designation of patch ONC*2.2*11 on line 2 in the patch list section.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCODIS
+    Before:   B825697   After:   B795013  **1,4,7,5,8,6,9,11**
+Routine Name: ONCOPA2A
+    Before: B18422769   After: B20021874  **1,11**
+ 
+Routine list of preceding patches: 9
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2018
+Completed By:                               Date Completed: FEB 27, 2019
+Released By :                               Date Released : FEB 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

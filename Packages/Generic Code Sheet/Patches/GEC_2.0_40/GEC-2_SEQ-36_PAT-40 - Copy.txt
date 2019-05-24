@@ -1,0 +1,96 @@
+
+=============================================================================
+Run Date: JAN 17, 2018                     Designation: GEC*2*40
+Package : GEC - GENERIC CODE SHEET            Priority: Mandatory
+Version : 2        SEQ #36                      Status: Released
+                  Compliance Date: FEB 17, 2018
+=============================================================================
+
+Associated patches: (v)GEC*2*34    <<= must be installed BEFORE `GEC*2*40'
+
+Subject: FMS DOCUMENT CTL SEGMENT PAST/FUTURE DATE CONTROL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ NOTE: PRC*5.1*196 is being released along with GEC*2.0*40 in host file:
+       PRC_51_196.KID
+  
+ Modify Generic Code Sheet (GECS) Service Order (SO) and Miscellaneous 
+ Order (MO) documents for correct date in CTL segment for IFCAP orders and
+ 1358 when Date Committed not in current Fiscal Year.
+  
+  
+ Associated Ticket(s):
+ =====================
+ 1. I8219967FY16 - Modify Code Sheet creation (CTL segment) for IFCAP
+                   orders to use Date Committed in lieu of sent date
+  
+               
+ Associated NSR(s):
+ =================
+ N/A 
+  
+  
+ Participating Test Sites:
+ ========================
+ St. Cloud VAMC 
+  
+  
+ CA SDM TICKET OVERVIEW:
+ ======================= 
+ 1. I8219967FY16 - Modify Code Sheet creation (CTL segment) for IFCAP
+                   orders to use Date Committed in lieu of sent date
+  
+    Problem:
+    -------
+    Site reported that orders/1358s GECS SO and MO documents sent to 
+    Financial Management System (FMS) are rejecting when the transaction
+    date in the CTL segment of the document does not reconcile with the
+    fiscal year/quarter of the order/1358.
+  
+    Resolution:
+    ----------                    
+    Modify the process that creates the CTL segment of a SO or MO document
+    for orders and 1358s. The code that determines CTL segment
+    'transaction date' will now use the greater or lesser of the Date
+    Committed and the current date, keeping in mind that the date will 
+    fall into the fiscal year/quarter used for the order/1358.
+  
+    Routine: GECSUFMS
+  
+    ==================== INSTALLATION INSTRUCTIONS =====================
+  
+ Please see Patch Description for patch PRC*5.1*196 for installation
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;GCS;**[Patch List]**;MAR 14, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GECSUFMS
+    Before: B19913811   After: B23945626  **7,8,15,19,30,31,34,40**
+ 
+Routine list of preceding patches: 34
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2016
+Completed By:                               Date Completed: JAN 16, 2018
+Released By :                               Date Released : JAN 17, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

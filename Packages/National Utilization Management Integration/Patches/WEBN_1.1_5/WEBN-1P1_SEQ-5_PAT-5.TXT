@@ -1,0 +1,192 @@
+
+=============================================================================
+Run Date: AUG 04, 2017                     Designation: WEBN*1.1*5
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #5                    Status: Released
+                  Compliance Date: SEP 04, 2017
+=============================================================================
+
+
+Subject: NUMI VERSION 1.1.15.3 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch implements the following new features in the NUMI web 
+ application and synchronizer:
+  
+ 1.) Replace Medical Domain Web Services (MDWS) with VistA Integration 
+     Adapter (VIA) for accessing patient stay data from VistA. All MDWS 
+     web-service calls are replaced with corresponding VIA web-service
+     calls. NUMI web application and synchronizer configuration files are
+     updated with VIA connection configuration and MDWS configuration is
+     removed. VIA eliminates the need for the DEPARTMENT OF DEFENSE,USER
+     proxy user for NUMI, and this proxy user configuration is removed from
+     the configuration files.
+ 2.) The two-step NUMI application login screen is replaced with a 
+     single step login screen where the user selects the VistA site and
+     enters their access/verify code on the same page.
+ 3.) All security issues identified by the Fortify Scan tool are resolved
+     in the code. Here are the types of security vulnerabilities that were
+     resolved:
+      a. Cross site scripting
+      b. Often misused authentication
+      c. Password in configuration file
+      d. Privacy Violation - Heap Inspection
+      e. MIME Sniffing
+      f. SQL Injection
+      g. XML External entity injection
+      h. Cookie Security- Overly broad path
+      i. Dead code removed
+ 4.) Implements two factor authentication (2FA). Users will need to 
+     successfully authenticate using their PIV card before accessing
+     the NUMI application login page.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ None
+  
+ Participating Test Sites:
+ -------------------------
+ Orlando VAMC
+ Central Plains HCS
+ N. Florida/S. Georgia HSC
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ I10870693fY16: Convert VistA data retrieval from MDWS to VIA to end 
+ NUMI's dependency on unsecure anonymous access.
+  
+ V.15.3 is being released with known defects: 
+   
+ 1. i12648434fy17 (RTC Defect 492580): Timestamp 24:00 on stays does not 
+ sync correctly to NUMI. The 24:00 timestamp from VistA will display as 
+ 00:00 in NUMI and affected observation stays will display 24 more hours 
+ of elapsed time than they should.
+  
+ 2. i15033411fy17 (RTC Defect 512060): Users should be able to search 
+ patient by their full name, but this version of NUMI will only search by 
+ partial name and other methods such as SSN and last initial + last 4 
+ digits of SSN.
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation is available for this patch.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ FILE NAME                          DESCRIPTION
+ ---------                          -----------
+ numi_15_3_userguide.pdf            NUMI User Guide v15.3.
+ numi_15_3_serversetupguide.pdf     NUMI Server Setup Guide v15.3.
+ numi_15_3_sysmgmtguide.pdf         NUMI System Management Guide v15.3.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ It is highly recommended that the VIAB WEB SERVICES OPTION be added 
+ to the System Command Options [XUCOMMAND] menu in each site's VistA 
+ system. If you do not add this to the Common Menu, you will need to add 
+ it to the secondary menu of each individual NUMI user.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2017
+Completed By:                               Date Completed: JUN 22, 2017
+Released By :                               Date Released : AUG 04, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

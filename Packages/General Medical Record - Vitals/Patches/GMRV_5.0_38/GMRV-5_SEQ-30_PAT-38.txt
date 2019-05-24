@@ -1,0 +1,163 @@
+$TXT Created by                  CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 10/30/18 at 15:08
+=============================================================================
+Run Date: APR 21, 2019                     Designation: GMRV*5*38
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #30                      Status: Released
+                  Compliance Date: MAY 22, 2019
+=============================================================================
+
+Associated patches: (v)GMRV*5*36   <<= must be installed BEFORE `GMRV*5*38'
+                    (v)GMRV*5*37   <<= must be installed BEFORE `GMRV*5*38'
+
+Subject: HELP FILE UPDATE FOR WIN 10 AND DELPHI UPGRADE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch resolves the following issues in the Vitals Lite 
+ Dynamic-Link Library (DLL) file, and the Vitals Manager and Vitals
+ Standalone applications (altogether known as the Vitals Suite):
+  
+ 1. While evaluating Windows 10, it was discovered that the Help files
+ would not display correctly. This patch corrects this problem by
+ converting the help files to a new format.
+ 2. The Department of Veterans Affairs Office of Information and Technology
+ requires that applications remain compliant with the Technical Reference
+ Model (TRM) regarding the version of tools used for development. This
+ patch accomplishes this by updating the version of Delphi to XE10.2.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A - adaptive maintenance
+  
+  
+ Test Sites:
+ -----------
+ Tuscaloosa VAMC
+ VA Salt Lake City HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This software is being released with both a VistA component, and updated
+ Graphical User Interfaces (GUIs). Files and documentation pertaining to
+ this patch are available.
+  
+ The preferred method is to retrieve files from:
+  
+   download.vista.domain.ext.
+  
+ This transmits the files from the first available server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ The installation guide is available on the VA Software Document Library 
+ (VDL) at: https://www.domain.ext/vdl/
+  
+ Title                              File Name              FTP Mode
+ ------------------------------------------------------------------
+ GMRV*5.0*38 Vitals /               GMRV_5_0_P38_IG.PDF    Binary
+ Measurements Installation Guide
+ GUI Files                          GMRV_5_0_P38.ZIP       Binary
+ GUI Source Files                   GMRV_5_0_P38_SRC.ZIP   Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please reference the GMRV*5.0*38 Vitals / Measurements Installation 
+ Guide as this server install needs to be coordinated with the GUIs 
+ and GUI DLL installation.
+ Post-installation routine GMV38PST updates the expected version number 
+ for the Vitals Suite.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system (although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users) and needs to be installed at the same
+ time as the GUIs and GUI DLL installation.
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Select the INSTALL/CHECK MESSAGE option on the PackMan menu. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the 
+    patch: GMRV*5.0*38
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation menu, select the Install Package(s) option 
+    and enter the patch: GMRV*5.0*38
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Please reference the GMRV*5.0*38 Vitals / Measurements Installation Guide
+ for post install steps.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine included
+ in this patch prior to installation.
+  
+ Please reference the GMRV*5.0*38 Vitals / Measurements Installation Guide 
+ for back-out/rollback directions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV38PST
+    Before:       n/a   After:  B2513410  **38**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2018
+Completed By:                               Date Completed: APR 18, 2019
+Released By :                               Date Released : APR 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

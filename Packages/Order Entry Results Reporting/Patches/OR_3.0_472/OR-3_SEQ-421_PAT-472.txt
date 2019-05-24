@@ -1,0 +1,239 @@
+$TXT Created by                       at DEVA.DOMAIN.EXT  (KIDS) on Friday, 08/31/18 at 08:46
+=============================================================================
+Run Date: MAR 04, 2019                     Designation: OR*3*472
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #421                      Status: Released
+                  Compliance Date: APR 04, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*472'
+
+Subject: SUICIDE HIGH RISK PATIENT ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Mental Health Suicide Prevention - Suicide High Risk Patient 
+ Enhancements (SHRPE) effort incorporates enhancements that will modify the
+ VistA Registration application and Computerized Patient Record System
+ (CPRS).
+  
+ The Disruptive Behavior Reporting System (DBRS) record numbers can now be 
+ recorded in the Registration (DG) files that are related to Patient Record
+ Flags (PRF), providing a convenient reference between VistA and the DBRS.
+ The "Patient Record Flags" display on the cover sheet in CPRS is updated
+ to display DBRS numbers associated with the patient.
+  
+ This patch implements the functionality that allows CPRS to display the 
+ DBRS data stored in VistA Registration database.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ NSR20160415
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Syracuse
+ West Palm Beach
+ Iowa City
+ Des Moines
+ Omaha
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software is released as a packman patch message and is distributed 
+ via FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading from the Anonymous.software 
+ directories or from the VA Software Documentation Library.
+  
+ The preferred method is to retrieve the files from the 
+ directories is from download.vista.domain.ext. This transmits the files
+ from the first available server.
+  
+ Sites may elect to retrieve the software and/or documentation directly
+ using Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+  
+ Title                          File Name                    SFTP Mode
+ ---------------------------------------------------------------------
+ CPRS User Guide                cprsguium.pdf                Binary
+  
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch name
+     OR*3.0*472:
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+  
+  4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+  5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+   
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer NO.
+   
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer NO.
+  
+  8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  
+ Post-Installation Instructions:
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ The Back-Out Procedure consists of restoring routines. 
+ The back-out is to be performed by persons with programmer-level access,
+ and in conjunction with the SHRPE Team.
+  
+ The pre-patch versions of routines can be restored by using backup 
+ MailMan message that should be created during installation.
+  
+ Note: The routines can be modified by another patch that follows the 
+ OR*3.0*472 and released after the installation of the OR*3.0*472. In this
+ case restoring routines from the backup MailMan messages might cause 
+ issues. It is recommended that the sites contact the development team and
+ the National VistA Support team for specific solutions to their
+ unique problems prior to backing out the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORPRF
+    Before: B13135968   After: B16953522  **173,187,190,215,243,472**
+ 
+Routine list of preceding patches: 243
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 22, 2017
+Completed By:                               Date Completed: MAR 04, 2019
+Released By :                               Date Released : MAR 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

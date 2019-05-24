@@ -1,0 +1,2195 @@
+Released GMRV*5*30 SEQ #22
+Extracted from mail message
+**KIDS**:GMRV*5.0*30^
+
+**INSTALL NAME**
+GMRV*5.0*30
+"BLD",9729,0)
+GMRV*5.0*30^GEN. MED. REC. - VITALS^0^3160801^y
+"BLD",9729,1,0)
+^^41^41^3160308^
+"BLD",9729,1,1,0)
+This patch will include the creation of a new field that will incorporate 
+"BLD",9729,1,2,0)
+data from the respective Standards Development Organization (SDO) to the 
+"BLD",9729,1,3,0)
+Vitals Type (#120.51), Vitals Qualifier (#120.52) and Vitals Category 
+"BLD",9729,1,4,0)
+(#120.53) files. 
+"BLD",9729,1,5,0)
+The Vital Type, Vital Qualifier, and Vital Category  files will be 
+"BLD",9729,1,6,0)
+addressed during this effort due to the nature of the data within these 
+"BLD",9729,1,7,0)
+files that are necessary for referencing, reporting, and interoperability 
+"BLD",9729,1,8,0)
+purposes. 
+"BLD",9729,1,9,0)
+The following three files are associated with the Vital Signs Domain:
+"BLD",9729,1,10,0)
+Vitals Type File (#120.51): This file contains a list of vital 
+"BLD",9729,1,11,0)
+sign types, for example, height, weight, and temperature
+"BLD",9729,1,12,0)
+Vitals Qualifier File (#120.52): Description of how the patient 
+"BLD",9729,1,13,0)
+vital signs and measurements were taken. Categorized by location (e.g., 
+"BLD",9729,1,14,0)
+right arm, left leg), position (e.g., lying, sitting, standing), method 
+"BLD",9729,1,15,0)
+(e.g., cuff, Doppler, assisted ventilator, etc.), site (e.g., right, 
+"BLD",9729,1,16,0)
+left), quality (e.g., actual, estimated), and cuff size (e.g., adult, 
+"BLD",9729,1,17,0)
+small adult, pediatric).
+"BLD",9729,1,18,0)
+Vitals Category File (#120.53): This file contains the cuff size, 
+"BLD",9729,1,19,0)
+location, method, position, quality, and site of the vitals which are 
+"BLD",9729,1,20,0)
+simply ways of grouping qualifiers which store the important data.
+"BLD",9729,1,21,0)
+GMRV VITAL TYPE (#120.51) file shall be updated to include a new field to 
+"BLD",9729,1,22,0)
+store LOINC code field from the respective SDO. The new field s shall be 
+"BLD",9729,1,23,0)
+set as a multiple in order to accommodate the potential future need to 
+"BLD",9729,1,24,0)
+utilize an additional or different code type, such as CPT, for 
+"BLD",9729,1,25,0)
+association with a given Vital Type term. The data gathered from the 
+"BLD",9729,1,26,0)
+needed LOINC CT mapping effort will be used to populate this field.
+"BLD",9729,1,27,0)
+GMRV VITAL QUALIFIER (#120.52) file shall be updated to include a new 
+"BLD",9729,1,28,0)
+field to store the SNOMED CT code from the respective SDO. The new field 
+"BLD",9729,1,29,0)
+shall be set as a multiple in order to accommodate multiple SNOMED CT 
+"BLD",9729,1,30,0)
+codes per term within file 120.52, since there may be one-to-many 
+"BLD",9729,1,31,0)
+relationships in addition to one-to-one relationships when the active 
+"BLD",9729,1,32,0)
+terms in files 120.52 are associated to SNOMED CT codes. The data 
+"BLD",9729,1,33,0)
+gathered from the needed SNOMED CT mapping effort will be used to 
+"BLD",9729,1,34,0)
+populate this field.
+"BLD",9729,1,35,0)
+GMRV VITAL CATEGORY (#120.53) file shall be updated to include a new 
+"BLD",9729,1,36,0)
+field to store the SNOMED CT code from the respective SDO. The new field 
+"BLD",9729,1,37,0)
+shall be set as a multiple in order to accommodate multiple SNOMED CT 
+"BLD",9729,1,38,0)
+codes per term within file 120.53 since there may be one to many 
+"BLD",9729,1,39,0)
+relationships in addition to one to one when the active terms in files 
+"BLD",9729,1,40,0)
+120.53 are associated to SNOMED CT codes. The data gathered from the 
+"BLD",9729,1,41,0)
+needed SNOMED CT mapping effort will be used to populate this field.
+"BLD",9729,4,0)
+^9.64PA^120.53^3
+"BLD",9729,4,120.51,0)
+120.51
+"BLD",9729,4,120.51,222)
+y^y^f^^^^n
+"BLD",9729,4,120.52,0)
+120.52
+"BLD",9729,4,120.52,222)
+y^y^f^^^^n
+"BLD",9729,4,120.53,0)
+120.53
+"BLD",9729,4,120.53,222)
+y^y^f^^^^n
+"BLD",9729,4,"B",120.51,120.51)
+
+"BLD",9729,4,"B",120.52,120.52)
+
+"BLD",9729,4,"B",120.53,120.53)
+
+"BLD",9729,6.3)
+14
+"BLD",9729,"ABPKG")
+n
+"BLD",9729,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9729,"KRN",.4,0)
+.4
+"BLD",9729,"KRN",.401,0)
+.401
+"BLD",9729,"KRN",.402,0)
+.402
+"BLD",9729,"KRN",.403,0)
+.403
+"BLD",9729,"KRN",.5,0)
+.5
+"BLD",9729,"KRN",.84,0)
+.84
+"BLD",9729,"KRN",3.6,0)
+3.6
+"BLD",9729,"KRN",3.8,0)
+3.8
+"BLD",9729,"KRN",9.2,0)
+9.2
+"BLD",9729,"KRN",9.8,0)
+9.8
+"BLD",9729,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9729,"KRN",9.8,"NM",1,0)
+GMRVVZRT^^0^B27713164
+"BLD",9729,"KRN",9.8,"NM","B","GMRVVZRT",1)
+
+"BLD",9729,"KRN",19,0)
+19
+"BLD",9729,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9729,"KRN",19.1,0)
+19.1
+"BLD",9729,"KRN",101,0)
+101
+"BLD",9729,"KRN",409.61,0)
+409.61
+"BLD",9729,"KRN",771,0)
+771
+"BLD",9729,"KRN",779.2,0)
+779.2
+"BLD",9729,"KRN",870,0)
+870
+"BLD",9729,"KRN",8989.51,0)
+8989.51
+"BLD",9729,"KRN",8989.52,0)
+8989.52
+"BLD",9729,"KRN",8994,0)
+8994
+"BLD",9729,"KRN","B",.4,.4)
+
+"BLD",9729,"KRN","B",.401,.401)
+
+"BLD",9729,"KRN","B",.402,.402)
+
+"BLD",9729,"KRN","B",.403,.403)
+
+"BLD",9729,"KRN","B",.5,.5)
+
+"BLD",9729,"KRN","B",.84,.84)
+
+"BLD",9729,"KRN","B",3.6,3.6)
+
+"BLD",9729,"KRN","B",3.8,3.8)
+
+"BLD",9729,"KRN","B",9.2,9.2)
+
+"BLD",9729,"KRN","B",9.8,9.8)
+
+"BLD",9729,"KRN","B",19,19)
+
+"BLD",9729,"KRN","B",19.1,19.1)
+
+"BLD",9729,"KRN","B",101,101)
+
+"BLD",9729,"KRN","B",409.61,409.61)
+
+"BLD",9729,"KRN","B",771,771)
+
+"BLD",9729,"KRN","B",779.2,779.2)
+
+"BLD",9729,"KRN","B",870,870)
+
+"BLD",9729,"KRN","B",8989.51,8989.51)
+
+"BLD",9729,"KRN","B",8989.52,8989.52)
+
+"BLD",9729,"KRN","B",8994,8994)
+
+"BLD",9729,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",9729,"QUES",0)
+^9.62^^
+"BLD",9729,"REQB",0)
+^9.611^1^1
+"BLD",9729,"REQB",1,0)
+XU*8.0*664^2
+"BLD",9729,"REQB","B","XU*8.0*664",1)
+
+"FIA",120.51)
+GMRV VITAL TYPE
+"FIA",120.51,0)
+^GMRD(120.51,
+"FIA",120.51,0,0)
+120.51I
+"FIA",120.51,0,1)
+y^y^f^^^^n
+"FIA",120.51,0,10)
+
+"FIA",120.51,0,11)
+
+"FIA",120.51,0,"RLRO")
+
+"FIA",120.51,0,"VR")
+5.0^GMRV
+"FIA",120.51,120.51)
+0
+"FIA",120.51,120.518)
+0
+"FIA",120.51,120.5181)
+0
+"FIA",120.51,120.5199)
+0
+"FIA",120.52)
+GMRV VITAL QUALIFIER
+"FIA",120.52,0)
+^GMRD(120.52,
+"FIA",120.52,0,0)
+120.52
+"FIA",120.52,0,1)
+y^y^f^^^^n
+"FIA",120.52,0,10)
+
+"FIA",120.52,0,11)
+
+"FIA",120.52,0,"RLRO")
+
+"FIA",120.52,0,"VR")
+5.0^GMRV
+"FIA",120.52,120.52)
+0
+"FIA",120.52,120.521)
+0
+"FIA",120.52,120.522)
+0
+"FIA",120.52,120.5221)
+0
+"FIA",120.52,120.5299)
+0
+"FIA",120.53)
+GMRV VITAL CATEGORY
+"FIA",120.53,0)
+^GMRD(120.53,
+"FIA",120.53,0,0)
+120.53O
+"FIA",120.53,0,1)
+y^y^f^^^^n
+"FIA",120.53,0,10)
+
+"FIA",120.53,0,11)
+
+"FIA",120.53,0,"RLRO")
+
+"FIA",120.53,0,"VR")
+5.0^GMRV
+"FIA",120.53,120.53)
+0
+"FIA",120.53,120.531)
+0
+"FIA",120.53,120.532)
+0
+"FIA",120.53,120.5321)
+0
+"FIA",120.53,120.5399)
+0
+"IX",120.51,120.51,"AMASTERVUID",0)
+120.51^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^120.51^^^^^S
+"IX",120.51,120.51,"AMASTERVUID",.1,0)
+^^3^3^3050602
+"IX",120.51,120.51,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-refernce 
+"IX",120.51,120.51,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",120.51,120.51,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",120.51,120.51,"AMASTERVUID",1)
+S ^GMRD(120.51,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",120.51,120.51,"AMASTERVUID",2)
+K ^GMRD(120.51,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",120.51,120.51,"AMASTERVUID",2.5)
+K ^GMRD(120.51,"AMASTERVUID")
+"IX",120.51,120.51,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",120.51,120.51,"AMASTERVUID",11.1,1,0)
+1^F^120.51^99.99^30^1^F
+"IX",120.51,120.51,"AMASTERVUID",11.1,2,0)
+2^F^120.51^99.98^^2^F
+"IX",120.52,120.52,"AMASTERVUID",0)
+120.52^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^120.52^^^^^S
+"IX",120.52,120.52,"AMASTERVUID",.1,0)
+^^3^3^3050602
+"IX",120.52,120.52,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-refernce 
+"IX",120.52,120.52,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",120.52,120.52,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",120.52,120.52,"AMASTERVUID",1)
+S ^GMRD(120.52,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",120.52,120.52,"AMASTERVUID",2)
+K ^GMRD(120.52,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",120.52,120.52,"AMASTERVUID",2.5)
+K ^GMRD(120.52,"AMASTERVUID")
+"IX",120.52,120.52,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",120.52,120.52,"AMASTERVUID",11.1,1,0)
+1^F^120.52^99.99^30^1^F
+"IX",120.52,120.52,"AMASTERVUID",11.1,2,0)
+2^F^120.52^99.98^^2^F
+"IX",120.53,120.53,"AMASTERVUID",0)
+120.53^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^120.53^^^^^S
+"IX",120.53,120.53,"AMASTERVUID",.1,0)
+^^3^3^3050602
+"IX",120.53,120.53,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-refernce 
+"IX",120.53,120.53,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",120.53,120.53,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",120.53,120.53,"AMASTERVUID",1)
+S ^GMRD(120.53,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",120.53,120.53,"AMASTERVUID",2)
+K ^GMRD(120.53,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",120.53,120.53,"AMASTERVUID",2.5)
+K ^GMRD(120.53,"AMASTERVUID")
+"IX",120.53,120.53,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",120.53,120.53,"AMASTERVUID",11.1,1,0)
+1^F^120.53^99.99^30^1^F
+"IX",120.53,120.53,"AMASTERVUID",11.1,2,0)
+2^F^120.53^99.98^^2^F
+"MBREQ")
+0
+"PKG",222,-1)
+1^1
+"PKG",222,0)
+GEN. MED. REC. - VITALS^GMRV^Vitals/Measurements Module of General Medical Record.
+"PKG",222,20,0)
+^9.402P^^
+"PKG",222,22,0)
+^9.49I^1^1
+"PKG",222,22,1,0)
+5.0^3021028^3030521^568
+"PKG",222,22,1,"PAH",1,0)
+30^3160801^520651124
+"PKG",222,22,1,"PAH",1,1,0)
+^^41^41^3160801
+"PKG",222,22,1,"PAH",1,1,1,0)
+This patch will include the creation of a new field that will incorporate 
+"PKG",222,22,1,"PAH",1,1,2,0)
+data from the respective Standards Development Organization (SDO) to the 
+"PKG",222,22,1,"PAH",1,1,3,0)
+Vitals Type (#120.51), Vitals Qualifier (#120.52) and Vitals Category 
+"PKG",222,22,1,"PAH",1,1,4,0)
+(#120.53) files. 
+"PKG",222,22,1,"PAH",1,1,5,0)
+The Vital Type, Vital Qualifier, and Vital Category  files will be 
+"PKG",222,22,1,"PAH",1,1,6,0)
+addressed during this effort due to the nature of the data within these 
+"PKG",222,22,1,"PAH",1,1,7,0)
+files that are necessary for referencing, reporting, and interoperability 
+"PKG",222,22,1,"PAH",1,1,8,0)
+purposes. 
+"PKG",222,22,1,"PAH",1,1,9,0)
+The following three files are associated with the Vital Signs Domain:
+"PKG",222,22,1,"PAH",1,1,10,0)
+Vitals Type File (#120.51): This file contains a list of vital 
+"PKG",222,22,1,"PAH",1,1,11,0)
+sign types, for example, height, weight, and temperature
+"PKG",222,22,1,"PAH",1,1,12,0)
+Vitals Qualifier File (#120.52): Description of how the patient 
+"PKG",222,22,1,"PAH",1,1,13,0)
+vital signs and measurements were taken. Categorized by location (e.g., 
+"PKG",222,22,1,"PAH",1,1,14,0)
+right arm, left leg), position (e.g., lying, sitting, standing), method 
+"PKG",222,22,1,"PAH",1,1,15,0)
+(e.g., cuff, Doppler, assisted ventilator, etc.), site (e.g., right, 
+"PKG",222,22,1,"PAH",1,1,16,0)
+left), quality (e.g., actual, estimated), and cuff size (e.g., adult, 
+"PKG",222,22,1,"PAH",1,1,17,0)
+small adult, pediatric).
+"PKG",222,22,1,"PAH",1,1,18,0)
+Vitals Category File (#120.53): This file contains the cuff size, 
+"PKG",222,22,1,"PAH",1,1,19,0)
+location, method, position, quality, and site of the vitals which are 
+"PKG",222,22,1,"PAH",1,1,20,0)
+simply ways of grouping qualifiers which store the important data.
+"PKG",222,22,1,"PAH",1,1,21,0)
+GMRV VITAL TYPE (#120.51) file shall be updated to include a new field to 
+"PKG",222,22,1,"PAH",1,1,22,0)
+store LOINC code field from the respective SDO. The new field s shall be 
+"PKG",222,22,1,"PAH",1,1,23,0)
+set as a multiple in order to accommodate the potential future need to 
+"PKG",222,22,1,"PAH",1,1,24,0)
+utilize an additional or different code type, such as CPT, for 
+"PKG",222,22,1,"PAH",1,1,25,0)
+association with a given Vital Type term. The data gathered from the 
+"PKG",222,22,1,"PAH",1,1,26,0)
+needed LOINC CT mapping effort will be used to populate this field.
+"PKG",222,22,1,"PAH",1,1,27,0)
+GMRV VITAL QUALIFIER (#120.52) file shall be updated to include a new 
+"PKG",222,22,1,"PAH",1,1,28,0)
+field to store the SNOMED CT code from the respective SDO. The new field 
+"PKG",222,22,1,"PAH",1,1,29,0)
+shall be set as a multiple in order to accommodate multiple SNOMED CT 
+"PKG",222,22,1,"PAH",1,1,30,0)
+codes per term within file 120.52, since there may be one-to-many 
+"PKG",222,22,1,"PAH",1,1,31,0)
+relationships in addition to one-to-one relationships when the active 
+"PKG",222,22,1,"PAH",1,1,32,0)
+terms in files 120.52 are associated to SNOMED CT codes. The data 
+"PKG",222,22,1,"PAH",1,1,33,0)
+gathered from the needed SNOMED CT mapping effort will be used to 
+"PKG",222,22,1,"PAH",1,1,34,0)
+populate this field.
+"PKG",222,22,1,"PAH",1,1,35,0)
+GMRV VITAL CATEGORY (#120.53) file shall be updated to include a new 
+"PKG",222,22,1,"PAH",1,1,36,0)
+field to store the SNOMED CT code from the respective SDO. The new field 
+"PKG",222,22,1,"PAH",1,1,37,0)
+shall be set as a multiple in order to accommodate multiple SNOMED CT 
+"PKG",222,22,1,"PAH",1,1,38,0)
+codes per term within file 120.53 since there may be one to many 
+"PKG",222,22,1,"PAH",1,1,39,0)
+relationships in addition to one to one when the active terms in files 
+"PKG",222,22,1,"PAH",1,1,40,0)
+120.53 are associated to SNOMED CT codes. The data gathered from the 
+"PKG",222,22,1,"PAH",1,1,41,0)
+needed SNOMED CT mapping effort will be used to populate this field.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","GMRVVZRT")
+0^1^B27713164^n/a
+"RTN","GMRVVZRT",1,0)
+GMRVVZRT ;DAL/GT-NDS VITAL SIGNS-CALLABLE ENTRY POINTS FOR ZRT SEGEMENT ;3/21/16
+"RTN","GMRVVZRT",2,0)
+ ;;5.0;GEN. MED. REC. - VITALS;**30**;MAR 21, 2016;Build 14
+"RTN","GMRVVZRT",3,0)
+ ;
+"RTN","GMRVVZRT",4,0)
+ ; This routine uses the following IAs:
+"RTN","GMRVVZRT",5,0)
+ ;  #6360 - FILE 120.51 CODING SYSTEM
+"RTN","GMRVVZRT",6,0)
+ ;  #6361 - FILE 120.52 CODING SYSTEM
+"RTN","GMRVVZRT",7,0)
+ ;  #6362 - FILE 120.53 CODING SYSTEM
+"RTN","GMRVVZRT",8,0)
+ ;
+"RTN","GMRVVZRT",9,0)
+ Q
+"RTN","GMRVVZRT",10,0)
+ZRT ;Manipulate update of MFN ZRT segment for 120.51,120.52,120.53 files
+"RTN","GMRVVZRT",11,0)
+ I IEN,((NAME="Term")!(NAME="Status")) K XXIEN ;This is the indication that it's first update for any subfile
+"RTN","GMRVVZRT",12,0)
+ S:$D(HLNODE(1)) HLNODE=HLNODE_HLNODE(1)
+"RTN","GMRVVZRT",13,0)
+    G 12051:IFN=120.51,12052:IFN=120.52,12053:IFN=120.53
+"RTN","GMRVVZRT",14,0)
+ Q
+"RTN","GMRVVZRT",15,0)
+ ;
+"RTN","GMRVVZRT",16,0)
+12051 ;Manipulate update of MFN ZRT segment for 120.51 File
+"RTN","GMRVVZRT",17,0)
+ N X,XX,ERR,IENS,IEN1,IENX,X1,X2,X4,DA,DIK,I,FDAA
+"RTN","GMRVVZRT",18,0)
+ I IEN,NAME="VistA_Mapping_Target" D  Q  ;ZRT^VistA_CodingSystem_Mapping^LOINC:90701,90743
+"RTN","GMRVVZRT",19,0)
+ .S X=$P(HLNODE,HLFS,3) ;X=LOINC:90701,90743
+"RTN","GMRVVZRT",20,0)
+ .I '$L(X)!(X="""""") D DS(120.518,IEN) S OUT=1 Q  ;Q:$G(OUT)  ;If there is nothing coming from Push, wipe anything was there before
+"RTN","GMRVVZRT",21,0)
+ .I '$G(XXIEN(120.518)) D DS(120.518,IEN)  S XXIEN(120.518)=1 ;CLEAN SUBFILE ENTRY
+"RTN","GMRVVZRT",22,0)
+ .S X1=$P(X,":"),X2=$P(X,":",2)
+"RTN","GMRVVZRT",23,0)
+ .D DUP(120.518,X1,X2) ; Checup for duplicate coding system (ICD, 10D, CPT...) and codes
+"RTN","GMRVVZRT",24,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",25,0)
+ .S IENS=IEN_","
+"RTN","GMRVVZRT",26,0)
+ .S IEN1="+1,",FDAA(120.518,"+1,"_IENS,.01)=X1
+"RTN","GMRVVZRT",27,0)
+ .F I=2:1 S X4=$P(X2,",",I-1) Q:'$L(X4)   S IENX="+"_I_","_IEN1_IENS,FDAA(120.5181,IENX,.01)=X4
+"RTN","GMRVVZRT",28,0)
+ .D:$D(FDAA) UPDATE^DIE("","FDAA",,"ERR")
+"RTN","GMRVVZRT",29,0)
+ .I $D(ERR) D  Q
+"RTN","GMRVVZRT",30,0)
+ ..S ERROR="1^subfile update error SUBFILE#: 120.5181 HLNODE:"_HLNODE
+"RTN","GMRVVZRT",31,0)
+ ..D EM^XUMF1H(ERROR,.ERR)
+"RTN","GMRVVZRT",32,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",33,0)
+ .S OUT=1
+"RTN","GMRVVZRT",34,0)
+ Q
+"RTN","GMRVVZRT",35,0)
+ ;
+"RTN","GMRVVZRT",36,0)
+12052 ;Manipulate update of MFN ZRT segment
+"RTN","GMRVVZRT",37,0)
+ N X,XX,ERR,IENS,IEN1,IENX,X1,X2,X4,DA,DIK,I,FDAA
+"RTN","GMRVVZRT",38,0)
+ I IEN,NAME="VistA_Mapping_Target" D  Q  ;ZRT^VistA_CodingSystem_Mapping^SNOMED:90701,90743
+"RTN","GMRVVZRT",39,0)
+ .S X=$P(HLNODE,HLFS,3) ;X=SMOMED:90701,90743
+"RTN","GMRVVZRT",40,0)
+ .I '$L(X)!(X="""""") D DS(120.522,IEN) S OUT=1 Q  ;Q:$G(OUT)  ;If there is nothing coming from Push, wipe anything was there before
+"RTN","GMRVVZRT",41,0)
+ .I '$G(XXIEN(120.522)) D DS(120.522,IEN)  S XXIEN(120.522)=1 ;CLEAN SUBFILE ENTRY
+"RTN","GMRVVZRT",42,0)
+ .S X1=$P(X,":"),X2=$P(X,":",2)
+"RTN","GMRVVZRT",43,0)
+ .D DUP(120.522,X1,X2) ; Checup for duplicate coding system (ICD, 10D, CPT...) and codes
+"RTN","GMRVVZRT",44,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",45,0)
+ .S IENS=IEN_","
+"RTN","GMRVVZRT",46,0)
+ .S IEN1="+1,",FDAA(120.522,"+1,"_IENS,.01)=X1
+"RTN","GMRVVZRT",47,0)
+ .F I=2:1 S X4=$P(X2,",",I-1) Q:'$L(X4)   S IENX="+"_I_","_IEN1_IENS,FDAA(120.5221,IENX,.01)=X4
+"RTN","GMRVVZRT",48,0)
+ .D:$D(FDAA) UPDATE^DIE("","FDAA",,"ERR")
+"RTN","GMRVVZRT",49,0)
+ .I $D(ERR) D  Q
+"RTN","GMRVVZRT",50,0)
+ ..S ERROR="1^subfile update error SUBFILE#: 120.5221 HLNODE:"_HLNODE
+"RTN","GMRVVZRT",51,0)
+ ..D EM^XUMF1H(ERROR,.ERR)
+"RTN","GMRVVZRT",52,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",53,0)
+ .S OUT=1
+"RTN","GMRVVZRT",54,0)
+ ;I IEN,NAME="has_qualifier" D  Q  ;
+"RTN","GMRVVZRT",55,0)
+ ;.I $P(HLNODE,HLFS,3)="""""" D DS(120.521,IEN) S OUT=1 Q
+"RTN","GMRVVZRT",56,0)
+ ;.I '$G(XXIEN(120.521)) D DS(120.521,IEN)  S XXIEN(120.521)=1 ;CLEAN SUBFILE ENTRY
+"RTN","GMRVVZRT",57,0)
+ Q
+"RTN","GMRVVZRT",58,0)
+ ;
+"RTN","GMRVVZRT",59,0)
+12053 ;Manipulate update of MFN ZRT segment for 120.53 File
+"RTN","GMRVVZRT",60,0)
+ N X,XX,ERR,IENS,IEN1,IENX,X1,X2,X4,DA,DIK,I,FDAA
+"RTN","GMRVVZRT",61,0)
+ I IEN,NAME="VistA_Mapping_Target" D  Q  ;ZRT^VistA_CodingSystem_Mapping^SNOMED:90701,90743
+"RTN","GMRVVZRT",62,0)
+ .S X=$P(HLNODE,HLFS,3) ;X=SMOMED:90701,90743
+"RTN","GMRVVZRT",63,0)
+ .I '$L(X)!(X="""""") D DS(120.532,IEN) S OUT=1 Q  ;Q:$G(OUT)  ;If there is nothing coming from Push, wipe anything was there before
+"RTN","GMRVVZRT",64,0)
+ .I '$G(XXIEN(120.532)) D DS(120.532,IEN)  S XXIEN(120.532)=1 ;CLEAN SUBFILE ENTRY
+"RTN","GMRVVZRT",65,0)
+ .S X1=$P(X,":"),X2=$P(X,":",2)
+"RTN","GMRVVZRT",66,0)
+ .D DUP(120.532,X1,X2) ; Checup for duplicate coding system (ICD, 10D, CPT...) and codes
+"RTN","GMRVVZRT",67,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",68,0)
+ .S IENS=IEN_","
+"RTN","GMRVVZRT",69,0)
+ .S IEN1="+1,",FDAA(120.532,"+1,"_IENS,.01)=X1
+"RTN","GMRVVZRT",70,0)
+ .F I=2:1 S X4=$P(X2,",",I-1) Q:'$L(X4)  S IENX="+"_I_","_IEN1_IENS,FDAA(120.5321,IENX,.01)=X4
+"RTN","GMRVVZRT",71,0)
+ .D:$D(FDAA) UPDATE^DIE("","FDAA",,"ERR")
+"RTN","GMRVVZRT",72,0)
+ .I $D(ERR) D  Q
+"RTN","GMRVVZRT",73,0)
+ ..S ERROR="1^subfile update error SUBFILE#: 120.5321 HLNODE:"_HLNODE
+"RTN","GMRVVZRT",74,0)
+ ..D EM^XUMF1H(ERROR,.ERR)
+"RTN","GMRVVZRT",75,0)
+ .Q:$G(ERROR)
+"RTN","GMRVVZRT",76,0)
+ .S OUT=1
+"RTN","GMRVVZRT",77,0)
+ Q
+"RTN","GMRVVZRT",78,0)
+ ;
+"RTN","GMRVVZRT",79,0)
+DS(SUBFILE,IENS) ;Delete subfile
+"RTN","GMRVVZRT",80,0)
+ N ROOT,IDX,X
+"RTN","GMRVVZRT",81,0)
+ S ROOT=$$ROOT^DILFD(SUBFILE,","_IENS,1)
+"RTN","GMRVVZRT",82,0)
+ S IDX=0 F  S IDX=$O(@ROOT@(IDX)) Q:'IDX  D
+"RTN","GMRVVZRT",83,0)
+ .N DA,DIK,DIC S DA(1)=+IENS,DA=IDX,DIK=$P(ROOT,")")_"," D ^DIK
+"RTN","GMRVVZRT",84,0)
+ Q
+"RTN","GMRVVZRT",85,0)
+ ;
+"RTN","GMRVVZRT",86,0)
+DUP(SUB,X1,X2) ;
+"RTN","GMRVVZRT",87,0)
+ ;Checkup for duplicate coding system (ICD, 10D, CPT...)
+"RTN","GMRVVZRT",88,0)
+ D GETS^DIQ(IFN,IEN_",","**","","TMP") ;TMP(120.518 - .128,"1,7,",.01)=86485   X1=CPT   X2=1234,4567,7890
+"RTN","GMRVVZRT",89,0)
+ S II="" F  S II=$O(TMP(SUB,II)) Q:'II  S X3=$G(TMP(SUB,II,.01)) I $L(X3),X3=X1 D  Q
+"RTN","GMRVVZRT",90,0)
+ .S ERROR="1^Error - "_II_" Duplicate Coding System"_" File #: "_IFN_" HLNODE="_HLNODE
+"RTN","GMRVVZRT",91,0)
+ Q:$G(ERROR)
+"RTN","GMRVVZRT",92,0)
+ ;Checkup for duplicate codes. (CPT:90701,90743,90701)
+"RTN","GMRVVZRT",93,0)
+ N X6
+"RTN","GMRVVZRT",94,0)
+ F I=1:1 S X5=$P(X2,",",I) Q:'$L(X5)  S X6(X5)=$G(X6(X5))+1 I X6(X5)>1 D  Q
+"RTN","GMRVVZRT",95,0)
+ .S ERROR="1^Error - Duplicate Codes in Coding System"_" File #: "_IFN_" HLNODE="_HLNODE ;D ^%ZTER
+"RTN","GMRVVZRT",96,0)
+ Q
+"RTN","GMRVVZRT",97,0)
+M12051 ;Conversion of File: 120.51 FIELD: 8  CODING SYSTEM  From: CPT to CPT:00001,00002
+"RTN","GMRVVZRT",98,0)
+ ;TMP1(2,"120.518","1,7,",".01")="CPT"    D GETS^DIQ(X2,IENS,"*","","TMP1(LEV)")
+"RTN","GMRVVZRT",99,0)
+ N TMP,X4,X3,II
+"RTN","GMRVVZRT",100,0)
+ S X4=TMP1(LEV,X2,IENS,I)_":" ;X4=CPT:
+"RTN","GMRVVZRT",101,0)
+ D GETS^DIQ(120.518,IENS,"**","","TMP") ;TMP(120.5181,"1,1,7,",.01)=86485
+"RTN","GMRVVZRT",102,0)
+ S II="" F  S II=$O(TMP(120.5181,II)) Q:'II  S X3=$G(TMP(120.5181,II,.01)) S:$L(X3) X4=X4_X3_","
+"RTN","GMRVVZRT",103,0)
+ S:$L(X3) X4=$E(X4,1,$L(X4)-1) S TMP1(LEV,X2,IENS,I)=X4
+"RTN","GMRVVZRT",104,0)
+ Q
+"RTN","GMRVVZRT",105,0)
+M12052 ;Conversion of File:120.52 FIELD: 2  CODING SYSTEM  From: CPT to CPT:00001,00002
+"RTN","GMRVVZRT",106,0)
+ ;TMP1(2,"120.522","1,7,",".01")="CPT"    D GETS^DIQ(X2,IENS,"*","","TMP1(LEV)")
+"RTN","GMRVVZRT",107,0)
+ N TMP,X4,X3,II
+"RTN","GMRVVZRT",108,0)
+ S X4=TMP1(LEV,X2,IENS,I)_":" ;X4=CPT:
+"RTN","GMRVVZRT",109,0)
+ D GETS^DIQ(120.522,IENS,"**","","TMP") ;TMP(120.5221"1,1,7,",.01)=86485
+"RTN","GMRVVZRT",110,0)
+ S II="" F  S II=$O(TMP(120.5221,II)) Q:'II  S X3=$G(TMP(120.5221,II,.01)) S:$L(X3) X4=X4_X3_","
+"RTN","GMRVVZRT",111,0)
+ ;S X4=$S($L(X3):$E(X4,1,$L(X4)-1),1:"") S TMP1(LEV,X2,IENS,I)=X4
+"RTN","GMRVVZRT",112,0)
+ S:$L(X3) X4=$E(X4,1,$L(X4)-1) S TMP1(LEV,X2,IENS,I)=X4
+"RTN","GMRVVZRT",113,0)
+ Q
+"RTN","GMRVVZRT",114,0)
+M12053 ;Conversion of File:120.53 FIELD: 2  CODING SYSTEM  From: CPT to CPT:00001,00002
+"RTN","GMRVVZRT",115,0)
+ ;TMP1(2,"120.532","1,7,",".01")="CPT"    D GETS^DIQ(X2,IENS,"*","","TMP1(LEV)")
+"RTN","GMRVVZRT",116,0)
+ N TMP,X4,X3,II
+"RTN","GMRVVZRT",117,0)
+ S X4=TMP1(LEV,X2,IENS,I)_":" ;X4=CPT:
+"RTN","GMRVVZRT",118,0)
+ D GETS^DIQ(120.532,IENS,"**","","TMP") ;TMP(120.5321,"1,1,7,",.01)=86485
+"RTN","GMRVVZRT",119,0)
+ S II="" F  S II=$O(TMP(120.5321,II)) Q:'II  S X3=$G(TMP(120.5321,II,.01)) S:$L(X3) X4=X4_X3_","
+"RTN","GMRVVZRT",120,0)
+ ;S X4=$S($L(X3):$E(X4,1,$L(X4)-1),1:"") S TMP1(LEV,X2,IENS,I)=X4
+"RTN","GMRVVZRT",121,0)
+ S:$L(X3) X4=$E(X4,1,$L(X4)-1) S TMP1(LEV,X2,IENS,I)=X4
+"RTN","GMRVVZRT",122,0)
+ Q
+"SEC","^DIC",120.51,120.51,0,"AUDIT")
+@
+"SEC","^DIC",120.51,120.51,0,"DD")
+@
+"SEC","^DIC",120.51,120.51,0,"DEL")
+@
+"SEC","^DIC",120.51,120.51,0,"LAYGO")
+@
+"SEC","^DIC",120.51,120.51,0,"RD")
+
+"SEC","^DIC",120.51,120.51,0,"WR")
+@
+"SEC","^DIC",120.52,120.52,0,"AUDIT")
+@
+"SEC","^DIC",120.52,120.52,0,"DD")
+@
+"SEC","^DIC",120.52,120.52,0,"DEL")
+@
+"SEC","^DIC",120.52,120.52,0,"LAYGO")
+@
+"SEC","^DIC",120.52,120.52,0,"RD")
+
+"SEC","^DIC",120.52,120.52,0,"WR")
+@
+"SEC","^DIC",120.53,120.53,0,"AUDIT")
+@
+"SEC","^DIC",120.53,120.53,0,"DD")
+@
+"SEC","^DIC",120.53,120.53,0,"DEL")
+@
+"SEC","^DIC",120.53,120.53,0,"LAYGO")
+@
+"SEC","^DIC",120.53,120.53,0,"RD")
+
+"SEC","^DIC",120.53,120.53,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",120.51,120.51,0)
+FIELD^^99.991^10
+"^DD",120.51,120.51,0,"DDA")
+N
+"^DD",120.51,120.51,0,"DT")
+3050210
+"^DD",120.51,120.51,0,"ID",1)
+W "   ",$P(^(0),U,2)
+"^DD",120.51,120.51,0,"IX","APCE",120.51,7)
+
+"^DD",120.51,120.51,0,"IX","AVUID",120.51,99.99)
+
+"^DD",120.51,120.51,0,"IX","B",120.51,.01)
+
+"^DD",120.51,120.51,0,"IX","C",120.51,1)
+
+"^DD",120.51,120.51,0,"NM","GMRV VITAL TYPE")
+ 
+"^DD",120.51,120.51,0,"PT",120.5,.03)
+ 
+"^DD",120.51,120.51,0,"PT",120.521,.01)
+
+"^DD",120.51,120.51,0,"PT",120.531,.01)
+
+"^DD",120.51,120.51,0,"PT",142.14,.01)
+
+"^DD",120.51,120.51,0,"PT",801.41,15)
+
+"^DD",120.51,120.51,0,"PT",801.4118,.01)
+
+"^DD",120.51,120.51,0,"PT",801.43,.02)
+ 
+"^DD",120.51,120.51,0,"PT",810.31,.04)
+
+"^DD",120.51,120.51,0,"PT",810.32,.01)
+
+"^DD",120.51,120.51,0,"PT",811.52,.01)
+
+"^DD",120.51,120.51,0,"PT",811.902,.01)
+
+"^DD",120.51,120.51,0,"VRPK")
+GMRV
+"^DD",120.51,120.51,.01,0)
+NAME^RF^^0;1^K:$L(X)>50!($L(X)<2)!'(X'?1P.E) X
+"^DD",120.51,120.51,.01,1,0)
+^.1
+"^DD",120.51,120.51,.01,1,1,0)
+120.51^B
+"^DD",120.51,120.51,.01,1,1,1)
+S ^GMRD(120.51,"B",$E(X,1,30),DA)=""
+"^DD",120.51,120.51,.01,1,1,2)
+K ^GMRD(120.51,"B",$E(X,1,30),DA)
+"^DD",120.51,120.51,.01,1,1,"%D",0)
+^^1^1^2950926^^^
+"^DD",120.51,120.51,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.51,120.51,.01,3)
+ANSWER MUST BE 2-50 CHARACTERS IN LENGTH
+"^DD",120.51,120.51,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5,$C(7)")
+"^DD",120.51,120.51,.01,9)
+^
+"^DD",120.51,120.51,.01,21,0)
+^.001^1^1^3041223^^^^
+"^DD",120.51,120.51,.01,21,1,0)
+This field reflects a list of vital signs/physical measurement types.
+"^DD",120.51,120.51,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.51,120.51,.01,"DT")
+3041227
+"^DD",120.51,120.51,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.51,120.51,1,0)
+ABBREVIATION^RF^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>5!($L(X)<1)!'(X'?1P.E&(X'[";")) X
+"^DD",120.51,120.51,1,1,0)
+^.1
+"^DD",120.51,120.51,1,1,1,0)
+120.51^C
+"^DD",120.51,120.51,1,1,1,1)
+S ^GMRD(120.51,"C",$E(X,1,30),DA)=""
+"^DD",120.51,120.51,1,1,1,2)
+K ^GMRD(120.51,"C",$E(X,1,30),DA)
+"^DD",120.51,120.51,1,1,1,"%D",0)
+^^2^2^2950926^^^
+"^DD",120.51,120.51,1,1,1,"%D",1,0)
+This regular cross-reference is created to sort the file by the
+"^DD",120.51,120.51,1,1,1,"%D",2,0)
+ABBREVIATION and the associated NAME (.01).
+"^DD",120.51,120.51,1,3)
+Answer must be 1-5 characters in length.
+"^DD",120.51,120.51,1,9)
+^
+"^DD",120.51,120.51,1,21,0)
+^^1^1^2970108^^^^
+"^DD",120.51,120.51,1,21,1,0)
+This field contains an abbreviation for this vital type.
+"^DD",120.51,120.51,1,"DT")
+3050307
+"^DD",120.51,120.51,3,0)
+RATE^S^0:NO;1:YES;^0;4^Q
+"^DD",120.51,120.51,3,9)
+^
+"^DD",120.51,120.51,3,21,0)
+^^2^2^2940105^^^^
+"^DD",120.51,120.51,3,21,1,0)
+This field specifies whether or not the vital measurement record with
+"^DD",120.51,120.51,3,21,2,0)
+this vital type has a rate associated with it.
+"^DD",120.51,120.51,4,0)
+RATE INPUT TRANSFORM^K^^1;E1,245^K:$L(X)>245 X D:$D(X) ^DIM
+"^DD",120.51,120.51,4,3)
+This is Standard MUMPS code.
+"^DD",120.51,120.51,4,9)
+^
+"^DD",120.51,120.51,4,21,0)
+^^3^3^2960723^
+"^DD",120.51,120.51,4,21,1,0)
+If a rate is specified for a vital measurement record, this field checks
+"^DD",120.51,120.51,4,21,2,0)
+the data validity.  The code stored in this field should only be updated
+"^DD",120.51,120.51,4,21,3,0)
+by someone with programmer's access to the FileMan.
+"^DD",120.51,120.51,4,"DT")
+2960723
+"^DD",120.51,120.51,5,0)
+RATE HELP^F^^0;6^K:$L(X)>30!($L(X)<3)!'(X'?1P.E&(X?.ANP)) X
+"^DD",120.51,120.51,5,3)
+Answer must be 3-30 characters in length.
+"^DD",120.51,120.51,5,9)
+^
+"^DD",120.51,120.51,5,21,0)
+^^2^2^2960910^^^^
+"^DD",120.51,120.51,5,21,1,0)
+This field contains the name of the Help Frame associated with this
+"^DD",120.51,120.51,5,21,2,0)
+Vital Type.
+"^DD",120.51,120.51,5,"DT")
+2960718
+"^DD",120.51,120.51,7,0)
+PCE ABBREVIATION^F^^0;7^K:$L(X)>10!($L(X)<1) X
+"^DD",120.51,120.51,7,1,0)
+^.1
+"^DD",120.51,120.51,7,1,1,0)
+120.51^APCE
+"^DD",120.51,120.51,7,1,1,1)
+S ^GMRD(120.51,"APCE",$E(X,1,30),DA)=""
+"^DD",120.51,120.51,7,1,1,2)
+K ^GMRD(120.51,"APCE",$E(X,1,30),DA)
+"^DD",120.51,120.51,7,1,1,"%D",0)
+^^1^1^2970203^^
+"^DD",120.51,120.51,7,1,1,"%D",1,0)
+This is a regular cross-reference on the PCE Abbreviation field.
+"^DD",120.51,120.51,7,1,1,"DT")
+2960710
+"^DD",120.51,120.51,7,3)
+Answer must be 1-10 characters in length.
+"^DD",120.51,120.51,7,9)
+^
+"^DD",120.51,120.51,7,21,0)
+^^1^1^2960710^
+"^DD",120.51,120.51,7,21,1,0)
+This field contains the PCE Abbreviation for this Vital Type.
+"^DD",120.51,120.51,7,"DT")
+2960710
+"^DD",120.51,120.51,8,0)
+CODING SYSTEM^120.518^^2;0
+"^DD",120.51,120.51,8,21,0)
+^^2^2^3160308^
+"^DD",120.51,120.51,8,21,1,0)
+This multiple stores the coding system(s) associated with the codes 
+"^DD",120.51,120.51,8,21,2,0)
+identifying this GMRV VITAL TYPE.
+"^DD",120.51,120.51,99.98,0)
+MASTER ENTRY FOR VUID^RSI^0:NO;1:YES;^VUID;2^Q
+"^DD",120.51,120.51,99.98,9)
+^
+"^DD",120.51,120.51,99.98,21,0)
+^^2^2^3050210^
+"^DD",120.51,120.51,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",120.51,120.51,99.98,21,2,0)
+Term/Concept.
+"^DD",120.51,120.51,99.98,"DT")
+3050301
+"^DD",120.51,120.51,99.99,0)
+VUID^RFXI^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",120.51,120.51,99.99,1,0)
+^.1
+"^DD",120.51,120.51,99.99,1,1,0)
+120.51^AVUID
+"^DD",120.51,120.51,99.99,1,1,1)
+S ^GMRD(120.51,"AVUID",$E(X,1,30),DA)=""
+"^DD",120.51,120.51,99.99,1,1,2)
+K ^GMRD(120.51,"AVUID",$E(X,1,30),DA)
+"^DD",120.51,120.51,99.99,1,1,3)
+This cross-reference is by VUID.
+"^DD",120.51,120.51,99.99,1,1,"%D",0)
+^.101^2^2^3041227^^
+"^DD",120.51,120.51,99.99,1,1,"%D",1,0)
+This field and cross-reference are required for the Data Standardization 
+"^DD",120.51,120.51,99.99,1,1,"%D",2,0)
+project.
+"^DD",120.51,120.51,99.99,1,1,"DT")
+3041223
+"^DD",120.51,120.51,99.99,3)
+Answer must be 1-20 digits in length.
+"^DD",120.51,120.51,99.99,9)
+^
+"^DD",120.51,120.51,99.99,21,0)
+^.001^2^2^3050210^^
+"^DD",120.51,120.51,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",120.51,120.51,99.99,21,2,0)
+terms VHA wide.
+"^DD",120.51,120.51,99.99,"DT")
+3050301
+"^DD",120.51,120.51,99.991,0)
+EFFECTIVE DATE/TIME^120.5199DA^^TERMSTATUS;0
+"^DD",120.51,120.51,99.991,21,0)
+^^1^1^3050201^
+"^DD",120.51,120.51,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",120.51,120.518,0)
+CODING SYSTEM SUB-FIELD^^.02^2
+"^DD",120.51,120.518,0,"DT")
+3160308
+"^DD",120.51,120.518,0,"IX","B",120.518,.01)
+
+"^DD",120.51,120.518,0,"NM","CODING SYSTEM")
+
+"^DD",120.51,120.518,0,"UP")
+120.51
+"^DD",120.51,120.518,.01,0)
+CODING SYSTEM^MFa^^0;1^K:$L(X)>7!($L(X)<3) X
+"^DD",120.51,120.518,.01,1,0)
+^.1
+"^DD",120.51,120.518,.01,1,1,0)
+120.518^B
+"^DD",120.51,120.518,.01,1,1,1)
+S ^GMRD(120.51,DA(1),2,"B",$E(X,1,30),DA)=""
+"^DD",120.51,120.518,.01,1,1,2)
+K ^GMRD(120.51,DA(1),2,"B",$E(X,1,30),DA)
+"^DD",120.51,120.518,.01,3)
+Answer must be 3-7 characters in length.
+"^DD",120.51,120.518,.01,21,0)
+^^2^2^3160308^
+"^DD",120.51,120.518,.01,21,1,0)
+This field indicates the coding system associated with the codes 
+"^DD",120.51,120.518,.01,21,2,0)
+identifying this GMRV VITAL TYPE.
+"^DD",120.51,120.518,.01,"AUDIT")
+y
+"^DD",120.51,120.518,.01,"DT")
+3160729
+"^DD",120.51,120.518,.02,0)
+CODE^120.5181^^1;0
+"^DD",120.51,120.518,.02,21,0)
+^^2^2^3160308^
+"^DD",120.51,120.518,.02,21,1,0)
+This multiple stores the code(s) representing this GMRV VITAL TYPE within 
+"^DD",120.51,120.518,.02,21,2,0)
+this coding system.
+"^DD",120.51,120.5181,0)
+CODE SUB-FIELD^^.01^1
+"^DD",120.51,120.5181,0,"DT")
+3160308
+"^DD",120.51,120.5181,0,"IX","B",120.5181,.01)
+
+"^DD",120.51,120.5181,0,"NM","CODE")
+
+"^DD",120.51,120.5181,0,"UP")
+120.518
+"^DD",120.51,120.5181,.01,0)
+CODE^MMFa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",120.51,120.5181,.01,1,0)
+^.1
+"^DD",120.51,120.5181,.01,1,1,0)
+120.5181^B
+"^DD",120.51,120.5181,.01,1,1,1)
+S ^GMRD(120.51,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",120.51,120.5181,.01,1,1,2)
+K ^GMRD(120.51,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",120.51,120.5181,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",120.51,120.5181,.01,21,0)
+^^1^1^3160520^
+"^DD",120.51,120.5181,.01,21,1,0)
+This code represents this GMRV VITAL TYPE within this coding system.
+"^DD",120.51,120.5181,.01,"AUDIT")
+y
+"^DD",120.51,120.5181,.01,"DT")
+3160729
+"^DD",120.51,120.5199,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",120.51,120.5199,0,"DT")
+3050201
+"^DD",120.51,120.5199,0,"IX","B",120.5199,.01)
+
+"^DD",120.51,120.5199,0,"NM","EFFECTIVE DATE/TIME")
+ 
+"^DD",120.51,120.5199,0,"UP")
+120.51
+"^DD",120.51,120.5199,.01,0)
+EFFECTIVE DATE/TIME^RDI^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",120.51,120.5199,.01,1,0)
+^.1
+"^DD",120.51,120.5199,.01,1,1,0)
+120.5199^B
+"^DD",120.51,120.5199,.01,1,1,1)
+S ^GMRD(120.51,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",120.51,120.5199,.01,1,1,2)
+K ^GMRD(120.51,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",120.51,120.5199,.01,1,1,"%D",0)
+^^1^1^3050201^
+"^DD",120.51,120.5199,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",120.51,120.5199,.01,9)
+^
+"^DD",120.51,120.5199,.01,21,0)
+^^2^2^3050201^
+"^DD",120.51,120.5199,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",120.51,120.5199,.01,21,2,0)
+established.
+"^DD",120.51,120.5199,.01,"DT")
+3050301
+"^DD",120.51,120.5199,.02,0)
+STATUS^RSI^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",120.51,120.5199,.02,9)
+^
+"^DD",120.51,120.5199,.02,21,0)
+^^4^4^3050201^
+"^DD",120.51,120.5199,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",120.51,120.5199,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",120.51,120.5199,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",120.51,120.5199,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",120.51,120.5199,.02,"DT")
+3050301
+"^DD",120.52,120.52,0)
+FIELD^^99.991^7
+"^DD",120.52,120.52,0,"DDA")
+N
+"^DD",120.52,120.52,0,"DT")
+3050308
+"^DD",120.52,120.52,0,"IX","ACAT",120.521,.02)
+
+"^DD",120.52,120.52,0,"IX","ACHR",120.52,.01)
+
+"^DD",120.52,120.52,0,"IX","AOLD",120.52,999)
+ 
+"^DD",120.52,120.52,0,"IX","ATYP",120.521,.01)
+
+"^DD",120.52,120.52,0,"IX","AVUID",120.52,99.99)
+
+"^DD",120.52,120.52,0,"IX","B",120.52,.01)
+
+"^DD",120.52,120.52,0,"IX","BCAT",120.521,.02)
+
+"^DD",120.52,120.52,0,"IX","BCHR",120.52,.02)
+
+"^DD",120.52,120.52,0,"IX","BTYP",120.521,.01)
+
+"^DD",120.52,120.52,0,"IX","C",120.521,.01)
+
+"^DD",120.52,120.52,0,"IX","D",120.521,.02)
+
+"^DD",120.52,120.52,0,"NM","GMRV VITAL QUALIFIER")
+ 
+"^DD",120.52,120.52,0,"PT",120.505,.01)
+ 
+"^DD",120.52,120.52,0,"PT",120.531,.07)
+
+"^DD",120.52,120.52,0,"VRPK")
+GMRV
+"^DD",120.52,120.52,.01,0)
+QUALIFIER^RF^^0;1^K:$L(X)>50!($L(X)<2)!'(X'?1P.E) X
+"^DD",120.52,120.52,.01,1,0)
+^.1
+"^DD",120.52,120.52,.01,1,1,0)
+120.52^B
+"^DD",120.52,120.52,.01,1,1,1)
+S ^GMRD(120.52,"B",$E(X,1,30),DA)=""
+"^DD",120.52,120.52,.01,1,1,2)
+K ^GMRD(120.52,"B",$E(X,1,30),DA)
+"^DD",120.52,120.52,.01,1,1,"%D",0)
+^^1^1^2950301^^
+"^DD",120.52,120.52,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.52,120.52,.01,1,2,0)
+120.52^ACHR^MUMPS
+"^DD",120.52,120.52,.01,1,2,1)
+D ACHR^GMVFUT2(1,.DA,X)
+"^DD",120.52,120.52,.01,1,2,2)
+D ACHR^GMVFUT2(2,.DA,X)
+"^DD",120.52,120.52,.01,1,2,"%D",0)
+^^6^6^3010523^^
+"^DD",120.52,120.52,.01,1,2,"%D",1,0)
+This cross-reference sets the "AA" index on the GMRV Vital Qualifier
+"^DD",120.52,120.52,.01,1,2,"%D",2,0)
+(120.52) file.  The "AA" index has the following format:
+"^DD",120.52,120.52,.01,1,2,"%D",3,0)
+^GMRD(120.52,"AA",TYP,CAT,CHAR,DA(1),DA)="", where TYP=Vital Type (.01)
+"^DD",120.52,120.52,.01,1,2,"%D",4,0)
+field of Vital Type (120.521) sub-file, CAT=Category (.02) field of
+"^DD",120.52,120.52,.01,1,2,"%D",5,0)
+Vital Type (120.521) sub-file and CHAR=Name (.01) field of GMRV Vital
+"^DD",120.52,120.52,.01,1,2,"%D",6,0)
+Qualifier (120.52) file.
+"^DD",120.52,120.52,.01,1,2,"DT")
+3010523
+"^DD",120.52,120.52,.01,3)
+ANSWER MUST BE 2-50 CHARACTERS IN LENGTH
+"^DD",120.52,120.52,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5,$C(7)")
+"^DD",120.52,120.52,.01,8.5)
+^
+"^DD",120.52,120.52,.01,9)
+^
+"^DD",120.52,120.52,.01,21,0)
+^^2^2^2970123^^^^
+"^DD",120.52,120.52,.01,21,1,0)
+This field supplies a list of possible qualifiers for a vital measurement
+"^DD",120.52,120.52,.01,21,2,0)
+record.
+"^DD",120.52,120.52,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.52,120.52,.01,"DT")
+3010523
+"^DD",120.52,120.52,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.52,120.52,.02,0)
+SYNONYM^FX^^0;2^D SCREEN^GMVFSYN K:$L($G(X))>3!($L($G(X))<1) X
+"^DD",120.52,120.52,.02,1,0)
+^.1
+"^DD",120.52,120.52,.02,1,1,0)
+120.52^BCHR^MUMPS
+"^DD",120.52,120.52,.02,1,1,1)
+D BSYNO^GMVFSYN(1,.DA,X)
+"^DD",120.52,120.52,.02,1,1,2)
+D BSYNO^GMVFSYN(2,.DA,X)
+"^DD",120.52,120.52,.02,1,1,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.52,120.52,.02,1,1,"%D",1,0)
+This cross-reference sets the "BB" index on the GMRV Vital Qualifier
+"^DD",120.52,120.52,.02,1,1,"%D",2,0)
+(120.52) file.  The "BB" index has the following format:
+"^DD",120.52,120.52,.02,1,1,"%D",3,0)
+^GMRD(120.52,"BB",TYP,CAT,CHAR,DA(1),DA)="", where TYP=Vital Type (.01)
+"^DD",120.52,120.52,.02,1,1,"%D",4,0)
+field of Vital Type (120.52 1) sub-file, CAT=Category (.02) field of Vital
+"^DD",120.52,120.52,.02,1,1,"%D",5,0)
+Type (120.521) sub-file and CHAR=Name (.01) field of GMRV Vital Qualifier
+"^DD",120.52,120.52,.02,1,1,"%D",6,0)
+(120.52) file.
+"^DD",120.52,120.52,.02,1,1,"DT")
+3010523
+"^DD",120.52,120.52,.02,3)
+Answer must be 1-3 characters in length.
+"^DD",120.52,120.52,.02,9)
+^
+"^DD",120.52,120.52,.02,21,0)
+^.001^1^1^3050308^^^^
+"^DD",120.52,120.52,.02,21,1,0)
+This field contains the synonym for the qualifier.
+"^DD",120.52,120.52,.02,"DT")
+3050308
+"^DD",120.52,120.52,1,0)
+VITAL TYPE^120.521PA^^1;0
+"^DD",120.52,120.52,1,9)
+^
+"^DD",120.52,120.52,1,21,0)
+^^3^3^2970123^^^^
+"^DD",120.52,120.52,1,21,1,0)
+This multiple contains a list of vital types associated with this site.  
+"^DD",120.52,120.52,1,21,2,0)
+The site field on the vital measurement record is screened by the data
+"^DD",120.52,120.52,1,21,3,0)
+contained in the vital type field.
+"^DD",120.52,120.52,2,0)
+CODING SYSTEM^120.522^^2;0
+"^DD",120.52,120.52,2,21,0)
+^^2^2^3160520^
+"^DD",120.52,120.52,2,21,1,0)
+This multiple stores the code(s) representing this GMRV VITAL QUALIFIER 
+"^DD",120.52,120.52,2,21,2,0)
+within this coding system.
+"^DD",120.52,120.52,99.98,0)
+MASTER ENTRY FOR VUID^RSI^0:NO;1:YES;^VUID;2^Q
+"^DD",120.52,120.52,99.98,9)
+^
+"^DD",120.52,120.52,99.98,21,0)
+^^2^2^3050210^
+"^DD",120.52,120.52,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",120.52,120.52,99.98,21,2,0)
+Term/Concept.
+"^DD",120.52,120.52,99.98,"DT")
+3050210
+"^DD",120.52,120.52,99.99,0)
+VUID^RFXI^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",120.52,120.52,99.99,1,0)
+^.1
+"^DD",120.52,120.52,99.99,1,1,0)
+120.52^AVUID
+"^DD",120.52,120.52,99.99,1,1,1)
+S ^GMRD(120.52,"AVUID",$E(X,1,30),DA)=""
+"^DD",120.52,120.52,99.99,1,1,2)
+K ^GMRD(120.52,"AVUID",$E(X,1,30),DA)
+"^DD",120.52,120.52,99.99,1,1,3)
+This cross-reference is by VUID.
+"^DD",120.52,120.52,99.99,1,1,"%D",0)
+^.101^2^2^3041227^^
+"^DD",120.52,120.52,99.99,1,1,"%D",1,0)
+This field and cross-reference are required for the Data Standardization 
+"^DD",120.52,120.52,99.99,1,1,"%D",2,0)
+project.
+"^DD",120.52,120.52,99.99,1,1,"DT")
+3041223
+"^DD",120.52,120.52,99.99,3)
+Answer must be 1-20 digits in length.
+"^DD",120.52,120.52,99.99,9)
+^
+"^DD",120.52,120.52,99.99,21,0)
+^^2^2^3041227^
+"^DD",120.52,120.52,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",120.52,120.52,99.99,21,2,0)
+terms VHA wide.
+"^DD",120.52,120.52,99.99,"DT")
+3050210
+"^DD",120.52,120.52,99.991,0)
+EFFECTIVE DATE/TIME^120.5299DA^^TERMSTATUS;0
+"^DD",120.52,120.52,99.991,21,0)
+^^1^1^3050201^
+"^DD",120.52,120.52,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",120.52,120.521,0)
+VITAL TYPE SUB-FIELD^^.02^2
+"^DD",120.52,120.521,0,"DT")
+2970122
+"^DD",120.52,120.521,0,"IX","B",120.521,.01)
+
+"^DD",120.52,120.521,0,"NM","VITAL TYPE")
+ 
+"^DD",120.52,120.521,0,"UP")
+120.52
+"^DD",120.52,120.521,.01,0)
+VITAL TYPE^RP120.51'^GMRD(120.51,^0;1^Q
+"^DD",120.52,120.521,.01,1,0)
+^.1
+"^DD",120.52,120.521,.01,1,1,0)
+120.521^B
+"^DD",120.52,120.521,.01,1,1,1)
+S ^GMRD(120.52,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",120.52,120.521,.01,1,1,2)
+K ^GMRD(120.52,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",120.52,120.521,.01,1,1,"%D",0)
+^^1^1^2950926^^^
+"^DD",120.52,120.521,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.52,120.521,.01,1,2,0)
+120.52^C
+"^DD",120.52,120.521,.01,1,2,1)
+S ^GMRD(120.52,"C",$E(X,1,30),DA(1),DA)=""
+"^DD",120.52,120.521,.01,1,2,2)
+K ^GMRD(120.52,"C",$E(X,1,30),DA(1),DA)
+"^DD",120.52,120.521,.01,1,2,"%D",0)
+^^2^2^2970522^^^^
+"^DD",120.52,120.521,.01,1,2,"%D",1,0)
+This cross-reference is created to sort the file by VITAL TYPE and the
+"^DD",120.52,120.521,.01,1,2,"%D",2,0)
+associated vital site NAME (.01).
+"^DD",120.52,120.521,.01,1,3,0)
+120.52^ATYP^MUMPS
+"^DD",120.52,120.521,.01,1,3,1)
+D ATYP^GMVFUT2(1,.DA,X)
+"^DD",120.52,120.521,.01,1,3,2)
+D ATYP^GMVFUT2(2,.DA,X)
+"^DD",120.52,120.521,.01,1,3,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.52,120.521,.01,1,3,"%D",1,0)
+This cross-reference sets the "AA"index on the GMRV Vital Qualifier
+"^DD",120.52,120.521,.01,1,3,"%D",2,0)
+(120.52) file.  The index has the following format:
+"^DD",120.52,120.521,.01,1,3,"%D",3,0)
+^GMRD(120.52,"AA",TYP,CAT,CHAR,DA(1),DA)="",
+"^DD",120.52,120.521,.01,1,3,"%D",4,0)
+where TYP=Vital Type (.01) field of Vital Type (120.521) sub-file,
+"^DD",120.52,120.521,.01,1,3,"%D",5,0)
+CAT=Category (.02) field of Vital Type (120.521) sub-file, CHAR=Name (.01)
+"^DD",120.52,120.521,.01,1,3,"%D",6,0)
+field of GMRV Vital Qualifier (120.52) file.
+"^DD",120.52,120.521,.01,1,3,"DT")
+3010523
+"^DD",120.52,120.521,.01,1,4,0)
+120.52^BTYP^MUMPS
+"^DD",120.52,120.521,.01,1,4,1)
+D BTYP^GMVFSYN(1,.DA,X)
+"^DD",120.52,120.521,.01,1,4,2)
+D BTYP^GMVFSYN(2,.DA,X)
+"^DD",120.52,120.521,.01,1,4,"%D",0)
+^^6^6^3010523^^^^
+"^DD",120.52,120.521,.01,1,4,"%D",1,0)
+This cross-reference sets the "BB" index on the GMRV Vital Qualifier
+"^DD",120.52,120.521,.01,1,4,"%D",2,0)
+(120.52) file.  The "BB" index has the following format:
+"^DD",120.52,120.521,.01,1,4,"%D",3,0)
+^GMRD(120.52,"BB",TYP,CAT,CHAR,DA(1),DA)="", where TYP=Vital Type (.01)
+"^DD",120.52,120.521,.01,1,4,"%D",4,0)
+field of Vital Type (120.521) sub-file, CAT=Category (.02) field of Vital
+"^DD",120.52,120.521,.01,1,4,"%D",5,0)
+Type (120.521) sub-file and CHAR=Name (.01) field of GMRV Vital Qualifier
+"^DD",120.52,120.521,.01,1,4,"%D",6,0)
+(120.52) file.
+"^DD",120.52,120.521,.01,1,4,"DT")
+3010523
+"^DD",120.52,120.521,.01,8.5)
+^
+"^DD",120.52,120.521,.01,9)
+^
+"^DD",120.52,120.521,.01,21,0)
+^^2^2^2970122^^^^
+"^DD",120.52,120.521,.01,21,1,0)
+This field screens the vital measurement site field in the GMRV VITAL 
+"^DD",120.52,120.521,.01,21,2,0)
+MEASUREMENT (#120.5) file.
+"^DD",120.52,120.521,.01,"DT")
+3010523
+"^DD",120.52,120.521,.02,0)
+CATEGORY^RP120.53^GMRD(120.53,^0;2^Q
+"^DD",120.52,120.521,.02,1,0)
+^.1
+"^DD",120.52,120.521,.02,1,1,0)
+120.52^D
+"^DD",120.52,120.521,.02,1,1,1)
+S ^GMRD(120.52,"D",$E(X,1,30),DA(1),DA)=""
+"^DD",120.52,120.521,.02,1,1,2)
+K ^GMRD(120.52,"D",$E(X,1,30),DA(1),DA)
+"^DD",120.52,120.521,.02,1,1,"%D",0)
+^^3^3^2960719^
+"^DD",120.52,120.521,.02,1,1,"%D",1,0)
+This is a regular cross-reference of the Category (.02) field of the Vital
+"^DD",120.52,120.521,.02,1,1,"%D",2,0)
+Type (120.521) sub-file on the entire GMRV Vital Qualifier (120.52)
+"^DD",120.52,120.521,.02,1,1,"%D",3,0)
+file.
+"^DD",120.52,120.521,.02,1,1,"DT")
+2960719
+"^DD",120.52,120.521,.02,1,2,0)
+120.52^ACAT^MUMPS
+"^DD",120.52,120.521,.02,1,2,1)
+D ACAT^GMVFUT2(1,.DA,X)
+"^DD",120.52,120.521,.02,1,2,2)
+D ACAT^GMVFUT2(2,.DA,X)
+"^DD",120.52,120.521,.02,1,2,"%D",0)
+^^6^6^3010524^^^^
+"^DD",120.52,120.521,.02,1,2,"%D",1,0)
+This cross-reference sets the "AA" index on the GMRV Vital Qualifier
+"^DD",120.52,120.521,.02,1,2,"%D",2,0)
+(120.52) file.  The index has the following format:
+"^DD",120.52,120.521,.02,1,2,"%D",3,0)
+^GMRD(120.52,"AA",TYP,CAT,CHAR,DA(1),DA)="",
+"^DD",120.52,120.521,.02,1,2,"%D",4,0)
+where TYP=Vital Type (.01) field of Vital Type (120.521) sub-file,
+"^DD",120.52,120.521,.02,1,2,"%D",5,0)
+CAT=Category (.02) field of Vital Type (120.521) sub-file, CHAR=Name (.01)
+"^DD",120.52,120.521,.02,1,2,"%D",6,0)
+field of GMRV Vital Qualifier (120.52) file.
+"^DD",120.52,120.521,.02,1,2,"DT")
+3010523
+"^DD",120.52,120.521,.02,1,3,0)
+120.52^BCAT^MUMPS
+"^DD",120.52,120.521,.02,1,3,1)
+D BCAT^GMVFSYN(1,.DA,X)
+"^DD",120.52,120.521,.02,1,3,2)
+D BCAT^GMVFSYN(2,.DA,X)
+"^DD",120.52,120.521,.02,1,3,"%D",0)
+^^6^6^3010524^^^^
+"^DD",120.52,120.521,.02,1,3,"%D",1,0)
+This cross-reference sets the "BB" index on the GMRV Vital Qualifier
+"^DD",120.52,120.521,.02,1,3,"%D",2,0)
+(120.52) file.  The "BB" index has the following format:
+"^DD",120.52,120.521,.02,1,3,"%D",3,0)
+^GMRD(120.52,"BB",TYP,CAT,CHAR,DA(1),DA)="", where TYP=Vital Type (.01)
+"^DD",120.52,120.521,.02,1,3,"%D",4,0)
+field of Vital Type (120.521) sub-file, CAT=Category (.02) field of Vital
+"^DD",120.52,120.521,.02,1,3,"%D",5,0)
+Type (120.521) sub-file and CHAR=Name (.01) field of GMRV Vital Qualifier
+"^DD",120.52,120.521,.02,1,3,"%D",6,0)
+(120.52) file.
+"^DD",120.52,120.521,.02,1,3,"DT")
+3010523
+"^DD",120.52,120.521,.02,9)
+^
+"^DD",120.52,120.521,.02,21,0)
+^^2^2^2960726^^
+"^DD",120.52,120.521,.02,21,1,0)
+This field will contain the category for this characteristic for this
+"^DD",120.52,120.521,.02,21,2,0)
+vital type.
+"^DD",120.52,120.521,.02,"DT")
+3010523
+"^DD",120.52,120.522,0)
+CODING SYSTEM SUB-FIELD^^.02^2
+"^DD",120.52,120.522,0,"DT")
+3160308
+"^DD",120.52,120.522,0,"IX","B",120.522,.01)
+
+"^DD",120.52,120.522,0,"NM","CODING SYSTEM")
+
+"^DD",120.52,120.522,0,"UP")
+120.52
+"^DD",120.52,120.522,.01,0)
+CODING SYSTEM^MFa^^0;1^K:$L(X)>7!($L(X)<3) X
+"^DD",120.52,120.522,.01,1,0)
+^.1
+"^DD",120.52,120.522,.01,1,1,0)
+120.522^B
+"^DD",120.52,120.522,.01,1,1,1)
+S ^GMRD(120.52,DA(1),2,"B",$E(X,1,30),DA)=""
+"^DD",120.52,120.522,.01,1,1,2)
+K ^GMRD(120.52,DA(1),2,"B",$E(X,1,30),DA)
+"^DD",120.52,120.522,.01,3)
+Answer must be 3-7 characters in length.
+"^DD",120.52,120.522,.01,21,0)
+^^2^2^3160308^
+"^DD",120.52,120.522,.01,21,1,0)
+This field indicates the coding system associated with the codes 
+"^DD",120.52,120.522,.01,21,2,0)
+identifying this GMRV VITAL QUALIFIER.
+"^DD",120.52,120.522,.01,"AUDIT")
+y
+"^DD",120.52,120.522,.01,"DT")
+3160729
+"^DD",120.52,120.522,.02,0)
+CODE^120.5221^^1;0
+"^DD",120.52,120.522,.02,21,0)
+^^2^2^3160308^
+"^DD",120.52,120.522,.02,21,1,0)
+This multiple stores the code(s) representing this GMRV VITAL QUALIFIER 
+"^DD",120.52,120.522,.02,21,2,0)
+within this coding system.
+"^DD",120.52,120.5221,0)
+CODE SUB-FIELD^^.01^1
+"^DD",120.52,120.5221,0,"DT")
+3160308
+"^DD",120.52,120.5221,0,"IX","B",120.5221,.01)
+
+"^DD",120.52,120.5221,0,"NM","CODE")
+
+"^DD",120.52,120.5221,0,"UP")
+120.522
+"^DD",120.52,120.5221,.01,0)
+CODE^MFa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",120.52,120.5221,.01,1,0)
+^.1
+"^DD",120.52,120.5221,.01,1,1,0)
+120.5221^B
+"^DD",120.52,120.5221,.01,1,1,1)
+S ^GMRD(120.52,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",120.52,120.5221,.01,1,1,2)
+K ^GMRD(120.52,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",120.52,120.5221,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",120.52,120.5221,.01,21,0)
+^^1^1^3160520^
+"^DD",120.52,120.5221,.01,21,1,0)
+This code represents this GMRV VITAL QUALIFIER within this coding system.
+"^DD",120.52,120.5221,.01,"AUDIT")
+y
+"^DD",120.52,120.5221,.01,"DT")
+3160729
+"^DD",120.52,120.5299,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",120.52,120.5299,0,"DT")
+3050201
+"^DD",120.52,120.5299,0,"IX","B",120.5299,.01)
+
+"^DD",120.52,120.5299,0,"NM","EFFECTIVE DATE/TIME")
+ 
+"^DD",120.52,120.5299,0,"UP")
+120.52
+"^DD",120.52,120.5299,.01,0)
+EFFECTIVE DATE/TIME^RDI^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",120.52,120.5299,.01,1,0)
+^.1
+"^DD",120.52,120.5299,.01,1,1,0)
+120.5299^B
+"^DD",120.52,120.5299,.01,1,1,1)
+S ^GMRD(120.52,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",120.52,120.5299,.01,1,1,2)
+K ^GMRD(120.52,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",120.52,120.5299,.01,1,1,"%D",0)
+^^1^1^3050201^
+"^DD",120.52,120.5299,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",120.52,120.5299,.01,9)
+^
+"^DD",120.52,120.5299,.01,21,0)
+^^2^2^3050201^
+"^DD",120.52,120.5299,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",120.52,120.5299,.01,21,2,0)
+established.
+"^DD",120.52,120.5299,.01,"DT")
+3050201
+"^DD",120.52,120.5299,.02,0)
+STATUS^RSI^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",120.52,120.5299,.02,9)
+^
+"^DD",120.52,120.5299,.02,21,0)
+^^4^4^3050201^
+"^DD",120.52,120.5299,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",120.52,120.5299,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",120.52,120.5299,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",120.52,120.5299,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",120.52,120.5299,.02,"DT")
+3050201
+"^DD",120.53,120.53,0)
+FIELD^^99.991^6
+"^DD",120.53,120.53,0,"DDA")
+N
+"^DD",120.53,120.53,0,"DT")
+3050210
+"^DD",120.53,120.53,0,"IX","ACAT",120.53,.01)
+
+"^DD",120.53,120.53,0,"IX","AEDT",120.531,.06)
+
+"^DD",120.53,120.53,0,"IX","APRT",120.531,.05)
+
+"^DD",120.53,120.53,0,"IX","ATYP",120.531,.01)
+
+"^DD",120.53,120.53,0,"IX","AVUID",120.53,99.99)
+
+"^DD",120.53,120.53,0,"IX","B",120.53,.01)
+
+"^DD",120.53,120.53,0,"IX","C",120.531,.01)
+
+"^DD",120.53,120.53,0,"NM","GMRV VITAL CATEGORY")
+ 
+"^DD",120.53,120.53,0,"PT",120.521,.02)
+ 
+"^DD",120.53,120.53,0,"VRPK")
+GMRV
+"^DD",120.53,120.53,.01,0)
+CATEGORY^RF^^0;1^K:$L(X)>40!($L(X)<2)!'(X'?1P.E) X
+"^DD",120.53,120.53,.01,1,0)
+^.1
+"^DD",120.53,120.53,.01,1,1,0)
+120.53^B
+"^DD",120.53,120.53,.01,1,1,1)
+S ^GMRD(120.53,"B",$E(X,1,40),DA)=""
+"^DD",120.53,120.53,.01,1,1,2)
+K ^GMRD(120.53,"B",$E(X,1,40),DA)
+"^DD",120.53,120.53,.01,1,1,"%D",0)
+^^1^1^2950301^^
+"^DD",120.53,120.53,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on NAME field.
+"^DD",120.53,120.53,.01,1,2,0)
+120.53^ACAT^MUMPS
+"^DD",120.53,120.53,.01,1,2,1)
+D ACAT^GMVFUT3(1,.DA,X)
+"^DD",120.53,120.53,.01,1,2,2)
+D ACAT^GMVFUT3(2,.DA,X)
+"^DD",120.53,120.53,.01,1,2,"%D",0)
+^^6^6^3010524^^
+"^DD",120.53,120.53,.01,1,2,"%D",1,0)
+This cross-reference sets up the "AA" index on the GMRV Vital Category (120.53)
+"^DD",120.53,120.53,.01,1,2,"%D",2,0)
+file.  This index has the following format:
+"^DD",120.53,120.53,.01,1,2,"%D",3,0)
+^GMRD(120.53,"AA",TYPE,CAT,DA(1),DA)="", where TYPE=Vital Type (.01) field
+"^DD",120.53,120.53,.01,1,2,"%D",4,0)
+of Vital Type (120.531) sub-file, CAT=Name (.01) field of GMRV Category
+"^DD",120.53,120.53,.01,1,2,"%D",5,0)
+(120.53) file, is the entry in the GMRV Vital Category (120.53) file, and
+"^DD",120.53,120.53,.01,1,2,"%D",6,0)
+DA is the entry in the Vital Type (120.531) sub-file.
+"^DD",120.53,120.53,.01,1,2,"DT")
+3010524
+"^DD",120.53,120.53,.01,3)
+ANSWER MUST BE 2-40 CHARACTERS IN LENGTH
+"^DD",120.53,120.53,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5,$C(7)")
+"^DD",120.53,120.53,.01,9)
+^
+"^DD",120.53,120.53,.01,21,0)
+^^2^2^2961223^^^^
+"^DD",120.53,120.53,.01,21,1,0)
+This field provides a list of qualities that could be assigned to a given 
+"^DD",120.53,120.53,.01,21,2,0)
+vital measurement record.
+"^DD",120.53,120.53,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.53,120.53,.01,"DT")
+3010524
+"^DD",120.53,120.53,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5,$C(7)") I $D(XUMF)
+"^DD",120.53,120.53,1,0)
+VITAL TYPE^120.531P^^1;0
+"^DD",120.53,120.53,1,9)
+^
+"^DD",120.53,120.53,1,21,0)
+^^2^2^3010524^^^^
+"^DD",120.53,120.53,1,21,1,0)
+This multiple screens the possible quality entries for a given vital 
+"^DD",120.53,120.53,1,21,2,0)
+measurement record.
+"^DD",120.53,120.53,2,0)
+CODING SYSTEM^120.532^^2;0
+"^DD",120.53,120.53,2,21,0)
+^^2^2^3160308^
+"^DD",120.53,120.53,2,21,1,0)
+This multiple stores the coding system(s) associated with the codes 
+"^DD",120.53,120.53,2,21,2,0)
+identifying this GMRV VITAL CATEGORY.
+"^DD",120.53,120.53,99.98,0)
+MASTER ENTRY FOR VUID^RSI^0:NO;1:YES;^VUID;2^Q
+"^DD",120.53,120.53,99.98,9)
+^
+"^DD",120.53,120.53,99.98,21,0)
+^^2^2^3050210^
+"^DD",120.53,120.53,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",120.53,120.53,99.98,21,2,0)
+Term/Concept.
+"^DD",120.53,120.53,99.98,"DT")
+3050301
+"^DD",120.53,120.53,99.99,0)
+VUID^RFXI^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",120.53,120.53,99.99,1,0)
+^.1
+"^DD",120.53,120.53,99.99,1,1,0)
+120.53^AVUID
+"^DD",120.53,120.53,99.99,1,1,1)
+S ^GMRD(120.53,"AVUID",$E(X,1,30),DA)=""
+"^DD",120.53,120.53,99.99,1,1,2)
+K ^GMRD(120.53,"AVUID",$E(X,1,30),DA)
+"^DD",120.53,120.53,99.99,1,1,3)
+This cross-reference is by VUID.
+"^DD",120.53,120.53,99.99,1,1,"%D",0)
+^.101^2^2^3041227^^
+"^DD",120.53,120.53,99.99,1,1,"%D",1,0)
+This field and cross-reference are required for the Data Standardization 
+"^DD",120.53,120.53,99.99,1,1,"%D",2,0)
+project.
+"^DD",120.53,120.53,99.99,1,1,"DT")
+3041223
+"^DD",120.53,120.53,99.99,3)
+Answer must be 1-20 digits in length.
+"^DD",120.53,120.53,99.99,9)
+^
+"^DD",120.53,120.53,99.99,21,0)
+^^2^2^3041227^
+"^DD",120.53,120.53,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",120.53,120.53,99.99,21,2,0)
+terms VHA wide.
+"^DD",120.53,120.53,99.99,"DT")
+3050301
+"^DD",120.53,120.53,99.991,0)
+EFFECTIVE DATE/TIME^120.5399DA^^TERMSTATUS;0
+"^DD",120.53,120.53,99.991,21,0)
+^^1^1^3050201^
+"^DD",120.53,120.53,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",120.53,120.531,0)
+VITAL TYPE SUB-FIELD^^.07^5
+"^DD",120.53,120.531,0,"DT")
+2960723
+"^DD",120.53,120.531,0,"IX","B",120.531,.01)
+
+"^DD",120.53,120.531,0,"NM","VITAL TYPE")
+ 
+"^DD",120.53,120.531,0,"UP")
+120.53
+"^DD",120.53,120.531,.01,0)
+VITAL TYPE^MRP120.51'^GMRD(120.51,^0;1^Q
+"^DD",120.53,120.531,.01,1,0)
+^.1
+"^DD",120.53,120.531,.01,1,1,0)
+120.531^B
+"^DD",120.53,120.531,.01,1,1,1)
+S ^GMRD(120.53,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",120.53,120.531,.01,1,1,2)
+K ^GMRD(120.53,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",120.53,120.531,.01,1,1,"%D",0)
+^^1^1^2950301^^
+"^DD",120.53,120.531,.01,1,1,"%D",1,0)
+This cross-reference is automatically created on .01 field.
+"^DD",120.53,120.531,.01,1,2,0)
+120.53^C
+"^DD",120.53,120.531,.01,1,2,1)
+S ^GMRD(120.53,"C",$E(X,1,30),DA(1),DA)=""
+"^DD",120.53,120.531,.01,1,2,2)
+K ^GMRD(120.53,"C",$E(X,1,30),DA(1),DA)
+"^DD",120.53,120.531,.01,1,2,"%D",0)
+^^2^2^2950301^^
+"^DD",120.53,120.531,.01,1,2,"%D",1,0)
+This cross-reference is created to sort the file by the VITAL TYPE and 
+"^DD",120.53,120.531,.01,1,2,"%D",2,0)
+the associated vital qualifiers (NAME .01 field).
+"^DD",120.53,120.531,.01,1,3,0)
+120.53^ATYP^MUMPS
+"^DD",120.53,120.531,.01,1,3,1)
+D ATYP^GMVFUT3(1,.DA,X)
+"^DD",120.53,120.531,.01,1,3,2)
+D ATYP^GMVFUT3(2,.DA,X)
+"^DD",120.53,120.531,.01,1,3,"%D",0)
+^^10^10^3010524^^^
+"^DD",120.53,120.531,.01,1,3,"%D",1,0)
+This cross-reference sets up the "AA", "AEDIT" and "APRINT" indices on
+"^DD",120.53,120.531,.01,1,3,"%D",2,0)
+the GMRV Vital Category (120.53) file.  These indices have the following format:
+"^DD",120.53,120.531,.01,1,3,"%D",3,0)
+^GMRD(120.53,"AA",TYPE,CAT,DA(1),DA)="",
+"^DD",120.53,120.531,.01,1,3,"%D",4,0)
+^GMRD(120.53,"AEDIT",TYPE,EORD,DA(1),DA)="", and
+"^DD",120.53,120.531,.01,1,3,"%D",5,0)
+^GMRD(120.53,"APRINT",TYPE,PORD,DA(1),DA)="", where TYPE=Vital Type (.01)
+"^DD",120.53,120.531,.01,1,3,"%D",6,0)
+field of Vital Type (120.531) sub-file, CAT=Name (.01) field of GMRV
+"^DD",120.53,120.531,.01,1,3,"%D",7,0)
+Vital Category (120.53) file, EORD is the Edit Order (.06) field of the Vital
+"^DD",120.53,120.531,.01,1,3,"%D",8,0)
+Type (120.531) sub-file, PORD is the Print Order (.05) field of the Vital
+"^DD",120.53,120.531,.01,1,3,"%D",9,0)
+Type (120.531) sub-file, DA(1) is the entry in the GMRV Category (120.53)
+"^DD",120.53,120.531,.01,1,3,"%D",10,0)
+file, and DA is the entry in the (120.531) sub-file
+"^DD",120.53,120.531,.01,1,3,"DT")
+3010524
+"^DD",120.53,120.531,.01,9)
+^
+"^DD",120.53,120.531,.01,21,0)
+^^2^2^2940525^^^^
+"^DD",120.53,120.531,.01,21,1,0)
+This field screens the vital measurement quality field in the GMRV VITAL 
+"^DD",120.53,120.531,.01,21,2,0)
+MEASUREMENT file (#120.5).
+"^DD",120.53,120.531,.01,"DT")
+3010524
+"^DD",120.53,120.531,.03,0)
+MAXIMUM ENTRIES^NJ2,0^^0;3^K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+"^DD",120.53,120.531,.03,3)
+Type a Number between 1 and 99, 0 Decimal Digits
+"^DD",120.53,120.531,.03,9)
+^
+"^DD",120.53,120.531,.03,21,0)
+^^2^2^2960719^
+"^DD",120.53,120.531,.03,21,1,0)
+This field indicates the minimum number of characteristics that can
+"^DD",120.53,120.531,.03,21,2,0)
+be selected for a patient for this category for this vital type.
+"^DD",120.53,120.531,.03,"DT")
+2960719
+"^DD",120.53,120.531,.05,0)
+PRINT ORDER^NJ2,0^^0;5^K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+"^DD",120.53,120.531,.05,1,0)
+^.1
+"^DD",120.53,120.531,.05,1,1,0)
+120.53^APRT^MUMPS
+"^DD",120.53,120.531,.05,1,1,1)
+D APRT^GMVFUT3(1,.DA,X)
+"^DD",120.53,120.531,.05,1,1,2)
+D APRT^GMVFUT3(2,.DA,X)
+"^DD",120.53,120.531,.05,1,1,"%D",0)
+^^6^6^3010524^^^
+"^DD",120.53,120.531,.05,1,1,"%D",1,0)
+This cross-reference sets up the "APRINT" index  on the GMRV Vital Category
+"^DD",120.53,120.531,.05,1,1,"%D",2,0)
+(120.53) file.  This index has the following format:
+"^DD",120.53,120.531,.05,1,1,"%D",3,0)
+^GMRD(120.53,"APRINT",TYPE,PORD,DA(1),DA)="", where TYPE=Vital Type (.01)
+"^DD",120.53,120.531,.05,1,1,"%D",4,0)
+field of Vital Type (120.531) sub-file, PORD is the Print Order (.05)
+"^DD",120.53,120.531,.05,1,1,"%D",5,0)
+field of the Vital Type (120.531) sub-file, DA(1) is the entry in the GMRV
+"^DD",120.53,120.531,.05,1,1,"%D",6,0)
+Vital Category (120.53) file, and DA is the entry in the (120.531) sub-file.
+"^DD",120.53,120.531,.05,1,1,"DT")
+3010524
+"^DD",120.53,120.531,.05,3)
+Type a Number between 1 and 99, 0 Decimal Digits
+"^DD",120.53,120.531,.05,9)
+^
+"^DD",120.53,120.531,.05,21,0)
+^^2^2^2960719^
+"^DD",120.53,120.531,.05,21,1,0)
+This field contains the order in which this category of characteristics
+"^DD",120.53,120.531,.05,21,2,0)
+will display on reports for this category for this vital type.
+"^DD",120.53,120.531,.05,"DT")
+3010524
+"^DD",120.53,120.531,.06,0)
+EDIT ORDER^NJ2,0^^0;6^K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+"^DD",120.53,120.531,.06,1,0)
+^.1
+"^DD",120.53,120.531,.06,1,1,0)
+120.53^AEDT^MUMPS
+"^DD",120.53,120.531,.06,1,1,1)
+D AEDT^GMVFUT3(1,.DA,X)
+"^DD",120.53,120.531,.06,1,1,2)
+D AEDT^GMVFUT3(2,.DA,X)
+"^DD",120.53,120.531,.06,1,1,"%D",0)
+^^6^6^3010524^^
+"^DD",120.53,120.531,.06,1,1,"%D",1,0)
+This cross-reference sets up the "AEDIT" index  onthe GMRV Category
+"^DD",120.53,120.531,.06,1,1,"%D",2,0)
+(120.53) file.  This index has the following format:
+"^DD",120.53,120.531,.06,1,1,"%D",3,0)
+^GMRD(120.53,"AEDIT",TYPE,EORD,DA(1),DA)="", where TYPE=Vital Type (.01)
+"^DD",120.53,120.531,.06,1,1,"%D",4,0)
+field of Vital Type (120.531) sub-file, EORD is the Edit Order (.06)
+"^DD",120.53,120.531,.06,1,1,"%D",5,0)
+field of the Vital Type (120.531) sub-file, DA(1) is the entry in the GMRV
+"^DD",120.53,120.531,.06,1,1,"%D",6,0)
+Vital Category (120.53) file, and DA is the entry in the (120.531) sub-file.
+"^DD",120.53,120.531,.06,1,1,"DT")
+3010524
+"^DD",120.53,120.531,.06,3)
+Type a Number between 1 and 99, 0 Decimal Digits
+"^DD",120.53,120.531,.06,9)
+^
+"^DD",120.53,120.531,.06,21,0)
+^^2^2^2960719^
+"^DD",120.53,120.531,.06,21,1,0)
+This field contains the order in which this category for this vital type
+"^DD",120.53,120.531,.06,21,2,0)
+will be entered/edited in the Vitals/Measurements edit options.
+"^DD",120.53,120.531,.06,"DT")
+3010524
+"^DD",120.53,120.531,.07,0)
+DEFAULT QUALIFIER^*P120.52'X^GMRD(120.52,^0;7^S DIC("S")="I $$SCR07^GMVFUT3(.DA,Y)" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",120.53,120.531,.07,3)
+ 
+"^DD",120.53,120.531,.07,9)
+^
+"^DD",120.53,120.531,.07,12)
+Enter the name of appropriate qualifier
+"^DD",120.53,120.531,.07,12.1)
+S DIC("S")="I $$SCR07^GMVFUT3(.DA,Y)"
+"^DD",120.53,120.531,.07,21,0)
+^^2^2^3010524^^^^
+"^DD",120.53,120.531,.07,21,1,0)
+This field will denote the default qualifier to be used if the user
+"^DD",120.53,120.531,.07,21,2,0)
+does not specify one during data entry.
+"^DD",120.53,120.531,.07,"DT")
+3010524
+"^DD",120.53,120.532,0)
+CODING SYSTEM SUB-FIELD^^.02^2
+"^DD",120.53,120.532,0,"DT")
+3160308
+"^DD",120.53,120.532,0,"IX","B",120.532,.01)
+
+"^DD",120.53,120.532,0,"NM","CODING SYSTEM")
+
+"^DD",120.53,120.532,0,"UP")
+120.53
+"^DD",120.53,120.532,.01,0)
+CODING SYSTEM^MFa^^0;1^K:$L(X)>7!($L(X)<3) X
+"^DD",120.53,120.532,.01,1,0)
+^.1
+"^DD",120.53,120.532,.01,1,1,0)
+120.532^B
+"^DD",120.53,120.532,.01,1,1,1)
+S ^GMRD(120.53,DA(1),2,"B",$E(X,1,30),DA)=""
+"^DD",120.53,120.532,.01,1,1,2)
+K ^GMRD(120.53,DA(1),2,"B",$E(X,1,30),DA)
+"^DD",120.53,120.532,.01,3)
+Answer must be 3-7 characters in length.
+"^DD",120.53,120.532,.01,21,0)
+^^2^2^3160520^
+"^DD",120.53,120.532,.01,21,1,0)
+This field indicates the coding system associated with the codes 
+"^DD",120.53,120.532,.01,21,2,0)
+identifying this GMRV VITAL CATEGORY.
+"^DD",120.53,120.532,.01,"AUDIT")
+y
+"^DD",120.53,120.532,.01,"DT")
+3160729
+"^DD",120.53,120.532,.02,0)
+CODE^120.5321^^1;0
+"^DD",120.53,120.532,.02,21,0)
+^^2^2^3160308^
+"^DD",120.53,120.532,.02,21,1,0)
+This multiple stores the code(s) representing this GMRV VITAL CATEGORY 
+"^DD",120.53,120.532,.02,21,2,0)
+within this coding system.
+"^DD",120.53,120.5321,0)
+CODE SUB-FIELD^^.01^1
+"^DD",120.53,120.5321,0,"DT")
+3160308
+"^DD",120.53,120.5321,0,"IX","B",120.5321,.01)
+
+"^DD",120.53,120.5321,0,"NM","CODE")
+
+"^DD",120.53,120.5321,0,"UP")
+120.532
+"^DD",120.53,120.5321,.01,0)
+CODE^MFa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",120.53,120.5321,.01,1,0)
+^.1
+"^DD",120.53,120.5321,.01,1,1,0)
+120.5321^B
+"^DD",120.53,120.5321,.01,1,1,1)
+S ^GMRD(120.53,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",120.53,120.5321,.01,1,1,2)
+K ^GMRD(120.53,DA(2),2,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",120.53,120.5321,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",120.53,120.5321,.01,21,0)
+^^1^1^3160520^
+"^DD",120.53,120.5321,.01,21,1,0)
+This code represents this GMRV VITAL CATEGORY within this coding system.
+"^DD",120.53,120.5321,.01,"AUDIT")
+y
+"^DD",120.53,120.5321,.01,"DT")
+3160729
+"^DD",120.53,120.5399,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",120.53,120.5399,0,"DT")
+3050201
+"^DD",120.53,120.5399,0,"IX","B",120.5399,.01)
+
+"^DD",120.53,120.5399,0,"NM","EFFECTIVE DATE/TIME")
+ 
+"^DD",120.53,120.5399,0,"UP")
+120.53
+"^DD",120.53,120.5399,.01,0)
+EFFECTIVE DATE/TIME^RDI^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",120.53,120.5399,.01,1,0)
+^.1
+"^DD",120.53,120.5399,.01,1,1,0)
+120.5399^B
+"^DD",120.53,120.5399,.01,1,1,1)
+S ^GMRD(120.53,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",120.53,120.5399,.01,1,1,2)
+K ^GMRD(120.53,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",120.53,120.5399,.01,1,1,"%D",0)
+^^1^1^3050201^
+"^DD",120.53,120.5399,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",120.53,120.5399,.01,9)
+^
+"^DD",120.53,120.5399,.01,21,0)
+^^2^2^3050201^
+"^DD",120.53,120.5399,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",120.53,120.5399,.01,21,2,0)
+established.
+"^DD",120.53,120.5399,.01,"DT")
+3050301
+"^DD",120.53,120.5399,.02,0)
+STATUS^RSI^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",120.53,120.5399,.02,9)
+^
+"^DD",120.53,120.5399,.02,21,0)
+^^4^4^3050201^
+"^DD",120.53,120.5399,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",120.53,120.5399,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",120.53,120.5399,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",120.53,120.5399,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",120.53,120.5399,.02,"DT")
+3050301
+"^DIC",120.51,120.51,0)
+GMRV VITAL TYPE^120.51I
+"^DIC",120.51,120.51,0,"GL")
+^GMRD(120.51,
+"^DIC",120.51,120.51,"%",0)
+^1.005^2^2
+"^DIC",120.51,120.51,"%",1,0)
+GMTS
+"^DIC",120.51,120.51,"%",2,0)
+PXRM
+"^DIC",120.51,120.51,"%","B","GMTS",1)
+
+"^DIC",120.51,120.51,"%","B","PXRM",2)
+
+"^DIC",120.51,120.51,"%D",0)
+^1.001^11^11^3050223^^^^
+"^DIC",120.51,120.51,"%D",1,0)
+Per VHA Directive {pending directive #}, this file has been "locked down" 
+"^DIC",120.51,120.51,"%D",2,0)
+by Data Standardization (DS). The file definition (i.e. data dictionary) 
+"^DIC",120.51,120.51,"%D",3,0)
+shall not be modified. All additions, changes and deletions to entries in
+"^DIC",120.51,120.51,"%D",4,0)
+the file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",120.51,120.51,"%D",5,0)
+Master File Server (MFS), provided by Common Services (CS). Creating
+"^DIC",120.51,120.51,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",120.51,120.51,"%D",7,0)
+of locally defined fields that were created prior to VHA Directive
+"^DIC",120.51,120.51,"%D",8,0)
+{pending directive #} shall not be supported.
+"^DIC",120.51,120.51,"%D",9,0)
+ 
+"^DIC",120.51,120.51,"%D",10,0)
+This file contains a list of vital sign types, and various parameters
+"^DIC",120.51,120.51,"%D",11,0)
+which mold the data entry.
+"^DIC",120.51,"B","GMRV VITAL TYPE",120.51)
+
+"^DIC",120.52,120.52,0)
+GMRV VITAL QUALIFIER^120.52
+"^DIC",120.52,120.52,0,"GL")
+^GMRD(120.52,
+"^DIC",120.52,120.52,"%D",0)
+^1.001^10^10^3050223^^^
+"^DIC",120.52,120.52,"%D",1,0)
+Per VHA Directive {pending directive #}, this file has been "locked down" 
+"^DIC",120.52,120.52,"%D",2,0)
+by Data Standardization (DS). The file definition (i.e. data dictionary) 
+"^DIC",120.52,120.52,"%D",3,0)
+shall not be modified. All additions, changes and deletions to entries in
+"^DIC",120.52,120.52,"%D",4,0)
+the file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",120.52,120.52,"%D",5,0)
+Master File Server (MFS), provided by Common Services (CS). Creating
+"^DIC",120.52,120.52,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",120.52,120.52,"%D",7,0)
+of locally defined fields that were created prior to VHA Directive
+"^DIC",120.52,120.52,"%D",8,0)
+{pending directive #} shall not be supported.
+"^DIC",120.52,120.52,"%D",9,0)
+ 
+"^DIC",120.52,120.52,"%D",10,0)
+This file contains a list of qualifiers for vitals/measurements.
+"^DIC",120.52,"B","GMRV VITAL QUALIFIER",120.52)
+
+"^DIC",120.53,120.53,0)
+GMRV VITAL CATEGORY^120.53
+"^DIC",120.53,120.53,0,"GL")
+^GMRD(120.53,
+"^DIC",120.53,120.53,"%",0)
+^1.005^^0
+"^DIC",120.53,120.53,"%D",0)
+^1.001^11^11^3050223^^^^
+"^DIC",120.53,120.53,"%D",1,0)
+Per VHA Directive {pending directive #}, this file has been "locked down" 
+"^DIC",120.53,120.53,"%D",2,0)
+by Data Standardization (DS). The file definition (i.e. data dictionary) 
+"^DIC",120.53,120.53,"%D",3,0)
+shall not be modified. All additions, changes and deletions to entries in
+"^DIC",120.53,120.53,"%D",4,0)
+the file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",120.53,120.53,"%D",5,0)
+Master File Server (MFS), provided by Common Services (CS). Creating
+"^DIC",120.53,120.53,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",120.53,120.53,"%D",7,0)
+of locally defined fields that were created prior to VHA Directive
+"^DIC",120.53,120.53,"%D",8,0)
+{pending directive #} shall not be supported.
+"^DIC",120.53,120.53,"%D",9,0)
+ 
+"^DIC",120.53,120.53,"%D",10,0)
+This file contains a list of qualities or characteristics that can be 
+"^DIC",120.53,120.53,"%D",11,0)
+affixed to a vital measurement.
+"^DIC",120.53,"B","GMRV VITAL CATEGORY",120.53)
+
+"BLD",9729,6)
+^22
+**END**
+**END**
+

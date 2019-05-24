@@ -1,0 +1,209 @@
+$TXT Created by          at DEVICD.DOMAIN.EXT  (KIDS) on Sunday, 07/08/18 at 23:25
+=============================================================================
+Run Date: OCT 04, 2018                     Designation: PSO*7*534
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #439                      Status: Released
+                  Compliance Date: NOV 04, 2018
+=============================================================================
+
+
+Subject: ONEVA PHARMACY - HL LOGICAL LINK UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch updates the HL LOGICAL LINK file (870) entry PSORRXSEND.  The fields
+ TCP/IP ADDRESS, DNS DOMAIN, and PORT NUMBER are updated to the following
+ values for this entry.
+  
+     TCP/IP ADDRESS:   Installer is requested to run a fileman inquiry from
+                       (file #870) HL LOGICAL LINK for 'PRORRXSEND" and
+                       note down the IP address introduced by this patch
+                       for future reference.
+  
+     DNS DOMAIN:       vaausvrsprdlb1.aac.domain.ext
+  
+     TCP/IP PORT:      2200
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated: N/A
+  
+  
+  
+ Forms Associated: N/A
+  
+  
+  
+ Mail Groups Associated: N/A
+  
+  
+ Options Associated: N/A
+  
+  
+ Protocols Associated: N/A
+  
+  
+ Security Keys Associated: N/A
+  
+  
+  
+ Templates Associated: N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ HINES, IL
+ SALT LAKE CITY, UT 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+   
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ N/A                           
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ When this patch is installed, the entry PSORRXSEND will be updated. 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install. No Menu options need to be disabled.
+  
+ Installation Instructions:
+ --------------------------
+  When installing this patch, carefully follow the steps listed in the
+  instructions below as the default prompts may not match what should
+  be entered.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # PSO*7.0*534:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates. The backup 
+         transport global will allow a rollback to the prior version of
+         the routines released in this patch in the event a rollback is
+         required.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//' enter "NO". Menu trees do not need rebuilt.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+     enter "NO". You do not need to inhibit logons.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', enter "NO". You do not need to disable scheduled
+     options, menu options, and protocols.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ To back out this update, type "D ROLLBAK^PSORRVIE" at Mumps prompt within 30
+ days after the patch installation.
+   
+ >D ROLLBAK^PSORRVIE
+   
+ LINK 'PSORRXSEND' has been shutdown!
+  
+ PSO, LINK PSORRXSEND rolled back
+  
+   - LOGICAL LINK PSORRXSEND, DNS: vaausvrsprdlb1.aac.domain.ext
+  
+   - TCP/IP ADDRESS: @, PORT: 2200
+  
+ LINK 'PSORRXSEND' has been enabled!
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;JULY 2018;Build 352
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORRVIE
+    Before:       n/a   After: B21813537  **534**
+ Description of Changes:
+  Forms Associated: N/A
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 28, 2018
+Completed By:                               Date Completed: OCT 04, 2018
+Released By :                               Date Released : OCT 04, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,208 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/30/18 at 09:52
+=============================================================================
+Run Date: OCT 29, 2018                     Designation: IB*2*625
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #574                      Status: Released
+                  Compliance Date: NOV 18, 2018
+=============================================================================
+
+
+Subject: COST BASED & INTER AGENCY BILLING RATE UPDATES FOR FY18
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses updates for Cost Based and Inter Agency rates with an
+ effective date of 08/28/2018 in the CHARGE ITEM file (#363.2).
+  
+ Patch Components:
+ ----------------- 
+   
+ Files & Fields Associated:
+   
+   
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+   
+ Forms Associated:
+   
+   
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+   
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+   
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+   
+   
+ Protocols Associated:
+   
+   
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+   
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC1232584 Cost Based and Inter Agency Rate Updates for FY18
+  
+    Problem:
+    --------
+    The Office of Community Care has requested a patch to update the Cost
+    Based and Inter Agency rates to the Charge Master, with an effective date
+    of 08/28/2018.
+  
+    Resolution:
+    -----------
+    The post-init routine IB20P625 will add 68 Cost Based and Inter Agency
+    billing charges with an effective date of 08/28/2018 to the CHARGE ITEM
+    file (#363.2).
+  
+  
+ TEST SITES:
+ -----------
+ Boston HCS
+ Lebanon VAMC
+  
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+   
+   
+ Patch Installation:
+    
+   
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 5 minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+      
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+      
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch IB*2.0*625:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+      
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+      
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+      
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine IB20P625 from your production system after the 
+ patch has been successfully verified.
+   
+ Use the 'Install File Print' option to review the updates and ensure
+ that the install has been completed. For an example:
+  
+     IB*2.0*625 Post-Install .....
+    
+     >> 68 Cost Based/Interagency Charge Items added to CHARGE ITEM file (#363.2)
+   
+     IB*2.0*625 Post-Install Complete
+  
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed-up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed-up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P625
+    Before:       n/a   After: B38009836  **625**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 05, 2018
+Completed By:                               Date Completed: OCT 26, 2018
+Released By :                               Date Released : OCT 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

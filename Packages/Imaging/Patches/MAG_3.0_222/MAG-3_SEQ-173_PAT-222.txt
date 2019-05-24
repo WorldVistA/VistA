@@ -1,0 +1,593 @@
+
+=============================================================================
+Run Date: APR 12, 2019                     Designation: MAG*3*222
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #173                      Status: Released
+                  Compliance Date: MAY 13, 2019
+=============================================================================
+
+
+Subject: Background Procesor issues
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: This patch must be installed after MAG*3.0*214.
+ ===================
+  
+ Subject: Background Processor Issues
+ ======== 
+  
+ Category: Other
+ =========
+  
+ Description:
+ ============
+  
+ This document describes MAG*3.0*222, a patch that provides fixes to the 
+ BACKGROUND PROCESSOR. This patch addresses the following issues:
+     1.  Not enough logging to debug the Verifier when it has stopped 
+         working or has other issues.
+     2.  Unable to update the Default User Preferences field in the 
+         Imaging Site Parameters screen of the Background Processor.
+     3.  The icon on the About Imaging for Windows screen in both Queue
+         Processor and Purge is incorrect.
+     4.  Error when editing the Queue Pause (Delay) field.
+     5.  Import Queue Error.
+     6.  Test menu option is being displayed.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 222_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P222_README.txt, if present, is an informative file associated with 
+ the patch released.
+  
+ Software and Documentation:
+ ===========================
+  
+ Table 1: Software and Documentation Files
+ =========================================
+ File Name                                   Description
+ =========                                   ===========
+ MAG3_0P222.KID                              Kernel Installation and
+                                             Distribution System (KIDS)
+                                             build for Patch 222
+ MAG3_0P222_Background_Processor_Setup.exe   Background Processor client
+                                             installation file.
+ MAG3_0P222_Patch_Description.pdf            Patch Description for P222 
+ Mag_BP_User_Manual.pdf                      Background Processor User
+                                             Manual
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated: 
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated: 
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated: 
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated: 
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================= 
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Tickets
+ ==============================
+ 1.    Defect 779843 (Trouble Ticket # INC0203475) Not enough logging to 
+       debug the Verifier when it has stopped working or has other issues.
+  
+ Problem: 
+ ========
+ A site reported that the verifier had stopped working and the log files 
+ did not contain enough information to debug the issue.
+  
+ Resolution:  
+ ===========
+ The Verifier debugging functionality has changed in MAG*3.0*222. 
+ Previously, debug mode was only enabled when the Verifier was being run 
+ over a range of images. It was not available during auto verify or 
+ scheduled verify. In previous versions, debug information was logged for 
+ all Image IEN's that were processed. This constant logging produced very 
+ large debug logs. 
+ Errors that occur are usually the same error repeated each time an IEN is 
+ processed. In this version of the Verifier, debug information is only 
+ logged when an error occurs. After 30 errors,  debug mode is turned off. 
+ Turning off debug mode reduces the size of the Debug Log. This provides 
+ enough information to troubleshoot without filling up the local hard 
+ drive with repetitive data. 
+  
+ To turn debug mode on, the configuration file: C:\program files 
+ (x86)\vista\imaging\backproc\magBP.ini must be modified.   
+    1.   Open Microsoft Notepad as Administrator by right clicking the 
+         Notepad and selecting "Run as administrator".  
+    2.   Select File->Open from the menu bar and navigate to the 
+         C:\program files (x86)\vista\imaging\backproc\ directory.  
+    3.   Make sure All Files (*.*) is selected in the lower right-hand 
+         corner and select the magBP.ini file and click Open.
+    4.   Add '[Verifier] (if it isn't there) and add the line    
+ 'DebugToFile = TRUE'  
+ Example:
+ [Verifier]
+ DebugToFile=TRUE
+  
+ To enable debug mode for the Scheduled Verifier, set DebugToFile=TRUE. 
+ The verifier will create a 
+ .\imaging\backproc\log\verifier\VerifierDebugLog-<mmdd-hhmmss>.log file 
+ when the first error occurs. 
+  
+ If DebugToFile=FALSE, then debugging will be off when the Verifier 
+ starts. If the Verifier is started manually, then the debugging can be 
+ turned on by checking the menu item: 'Help | Debugging Log'.
+  
+ The VerifierDebugLog files will be stored in the local folder and will 
+ NOT be copied to the network log folder specified in the BP Server 
+ definition.
+  
+ 2.    Defect 778414 (Trouble Ticket # INC1210375) Unable to update the 
+       Default User Preferences field in the Imaging Site Parameters screen
+       of the Background Processor.
+  
+ Problem:
+ ======== 
+ In the Background Processor - Imaging Site Parameters screen, when the 
+ Default User Preference is updated it does not save when selecting the 
+ Apply or OK button.
+  
+ Resolution:  
+ ===========
+ The Default User Preference will now be saved when selecting Apply or OK 
+ button. 
+  
+ 3.    Defect 870794 (Trouble Ticket # INC3201421) The icon on the About 
+       Imaging for Windows screen in both Queue Processor and Purge is
+       incorrect.
+  
+ Problem:  
+ ========
+     1. The Icon on the About Imaging for windows screen that displays
+        when the user selects Help->About in the Queue Processor is showing
+        the wrong patch number.
+     2. The Icon on the About Imaging for windows screen that displays
+        when the user selects Help->About in the Purge utility is showing
+        the image.
+  
+ Resolution:   
+ ===========
+ This issue was fixed by:
+     1. Replacing the Queue Processor Icon with one that did not include
+        the patch number on it.
+     2. Replacing the old icon with a new icon labeled "PURGE".
+  
+ 4.    Defect 830511 (Trouble Ticket # INC2311522) Error when editing 
+       the Queue Pause (Delay) field.
+  
+ Problem:
+ ========  
+ The user is receiving an error when setting the Pause (Delay) field, 
+ which controls how fast a queue is processed. If the user tries to edit 
+ the field manually without using the drop-down list by deleting or 
+ backspacing to remove the entry, then multiple "is not a valid integer 
+ value" errors occur.  The Queue Process must be closed to stop the error. 
+  
+ Resolution:   
+ ===========
+ This defect is addressed by modifying the code to correct the error when 
+ the user deletes the value in the Pause (Delay) field.  If the Pause 
+ (Delay) field is empty, less than zero or contains alphanumeric 
+ characters, the Pause (Delay) field will be set to 1000 and an error is 
+ no longer displayed.
+  
+ 5.    Defect 899824: Import Queue Error.
+  
+ Problem:  
+ ========
+ After installing P222T1 sites started getting an Access Denied error 
+ message when running the Import Queue.
+  
+ Resolution:
+ ===========   
+ When adding the debugging logging code, variables were omitted causing an 
+ error in the Import Queue.  Two variables in the code were changed to 
+ static-class variables, eliminating the run time error that was being 
+ raised within the BP program.
+  
+ 6.    Defect 950835: Test menu option is being displayed.
+  
+ Problem:  
+ ========
+ After installing P222T2 sites reported that the test menu option was 
+ being displayed on the menu bar which is only used by developers for 
+ debugging.
+  
+ Resolution:   
+ ===========
+ The application was updated to remove the debug (Test) menu from user's 
+ view.  
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+         VA Southern Nevada HCS (Las Vegas)
+         VA Eastern Kansas Health Care System (Heartland West) Kansas City
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ OI Field Offices
+ ================
+ Location          Site
+ Hines             domain.ext 
+ Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Patch Installation
+ ===================
+  
+ Supported Client Versions:
+ ==========================
+ When MAG*3.0*222 is released, the list of supported versions of 
+ Background Processor will change:
+  
+ Supported Client Versions:
+ ==========================
+ Supported Versions      No Longer Supported
+ ==================      ===================
+ 3.0.222                 None
+ 3.0.214
+ 3.0.198
+ 3.0.196
+ 3.0.135
+  
+ Note: When a user enters invalid Access/Verify Codes while logging into 
+       VistA, the system gives them an error message.
+  
+ Figure 1: Invalid Access/Verify Code Error Message
+ ================================================== 
+ In patch 222, the Error message is hidden under the main Vista Sign-on 
+ window. The user has to move the VistA Sign-on window, then click 'OK' in 
+ the Error message window to be able to continue. A fix for this issue is 
+ scheduled for a future Background Processor patch.
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*222 KIDS must be installed on the VistA System prior to running 
+ the new executables. This patch must be installed by the compliance date. 
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch may be loaded while the VistA Imaging System is active. 
+ Installation will take less than one minute.
+  
+ Important: Any Background Processor applications that are running must be 
+            stopped and closed prior to the installation of the KIDS and
+            Client software. Any image capture application (Clinical
+            Capture and DICOM Gateway processing) can continue to run
+            during the installation.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed. 
+  
+ Note: All released VistA Imaging Background Processor patches must be 
+       installed on the VistA system before installing MAG*3.0*222.
+  
+ Important: Any Background Processor task that is running (Queue 
+            Processor, Verifier, Purge) must be stopped (applications must
+            be closed) prior to the installation of the KIDS file. However,
+            any image capture application (Clinical Capture and DICOM
+            Gateway processing) can continue to operate during the
+            installation.
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps: 
+ ===================
+ 1.  On the VistA system, access the Kernel Installation and 
+     Distribution System Menu [XPD MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the full path and file name (MAG3_0P222.KID)
+        of the MAG*3.0*222 KIDS file.
+     c. When prompted to continue with the load, enter "YES". A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4.  After loading the KIDS file, use the following options to verify 
+     the contents of the patch and to back up any affected routines.
+     a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+        this option to ensure the integrity of the routines in the patch. 
+     b. Compare Transport Global to Current System [XPD COMPARE TO 
+        SYSTEM] - Run this option to view all changes that will be made
+        when the patch is installed. All components (routines, options, and
+        so on) in the patch will be compared.
+     c. Backup a Transport Global [XPD BACKUP] - Run this option to 
+        create a backup message of any routines exported with the patch. It
+        will NOT back up any of the other changes.
+ 5.  After performing the load and any optional verification steps, 
+     install the KIDS file by performing the following steps:
+     a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b. When prompted for the install name, enter "MAG*3.0*222".
+     c. Answer "NO" to the following prompts, if they appear:
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 6.  When installation is finished, an Install Complete message will 
+     be displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If the patch has already been installed and the KIDS file is 
+ to be installed in a namespace on which it has been previously installed, 
+ then the output may be different.
+ Select Installation <TEST ACCOUNT> Option: Install Package(s)
+ Select INSTALL NAME:  MAG*3.0*222  8/24/18@10:17:29
+    => VistA Imaging V3 - Patch 222  - BP Issues. ;Created on Aug 24, 2018
+  
+ This Distribution was loaded on Aug 24, 2018@10:17:29 with header of
+ VistA Imaging V3 - Patch 222 - BP Issues. ;Created on Aug 24, 
+ 2018@10:10:13
+   It consisted of the following Install(s):
+   MAG*3.0*222
+ Checking Install for Package MAG*3.0*222
+  
+ Install Questions for MAG*3.0*222
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  HERE
+  
+  Installing REMOTE PROCEDURE
+         Aug 24, 2018@10:17:36
+  
+  Running Post-Install Routine: POS^MAGIP222
+  
+ Post Install Mail Message: Aug 24, 2018@10:17:36
+  
+  Updating Routine file...
+  
+ Installing the Background Processor Client: 
+ ===========================================
+ The Background Processor client can be installed while the VistA System 
+ is active. Installation takes less than two minutes. 
+ Important: Any Background Processor applications that are running must be 
+            stopped and closed prior to the installation of the KIDS and
+            Client software. Any image capture application (Clinical
+            Capture and DICOM Gateway processing) can continue to run
+            during the installation.
+ Important: The MAG*3.0*222 client is a full install of the BP suite of 
+            applications. 
+ The older Control Panel entries for Background Processor should be 
+ removed before installing MAG*3.0*222:
+  
+ Older Versions to Uninstall:
+ ============================
+ If the user is updating from MAG*3.0*214, then the user will need to 
+ Uninstall the following:
+ 1) MAG*3.0*214: VistA Imaging Background Processor 214       30.53.214.1
+  
+ If the user is updating from MAG*3.0*198, then the user will need to 
+ Uninstall the following:
+ 1) MAG*3.0*198: VistA Imaging Background Processor 198       30.52.198.1
+  
+ If the user is updating from MAG*3.0*196, then the user will need to 
+ Uninstall the following:
+ 1) MAG*3.0*135: MagBPSetup                                   30.50.135.10
+ 2) MAG*3.0*158: VistA Imaging Background Processor Utilities(P158)
+                                                              30.50.158.5
+ 3) MAG*3.0*196: VistA Imaging Background Processor 196       30.51.196.4
+  
+ For 64-bit OS installs: 
+ =======================
+ Log into the BP Server as an administrator. For Step 2 below, use the 
+ "Run as Administrator" option when installing BP storage software on a 
+ 64-bit Windows OS, such as Windows 2012 Server. 
+  
+ To install the MAG*3.0*222 Background Processor client:
+ 1. Remove any previously installed versions of the VistA Imaging 
+    Background Processor. The MAG*3.0*222 client is a full install of the
+    BP suite of applications.
+ 2. If a previous version of MAG*3.0*222 has been installed on the 
+    workstation, then it must be uninstalled before installing the new 
+    version of MAG*3.0*222.
+ 3. Locate and run the MAG3_0P222_Background_Processor_Setup.exe file. Use
+    the "Run as Administrator" option when installing BP storage software
+    on a 64-bit Windows OS, such as Windows 2012 Server.
+ 4. When the InstallShield wizard runs, accept the program defaults and
+    select "Next" until the Ready to Install the Program dialog is 
+    displayed. 
+ 5. Select "Install" to proceed with the installation. 
+ 6. When installation completes, select "Finish" to exit the installation
+    wizard. 
+ 7. Start the Background Processor (Start | Programs | VistA Imaging 
+    Programs | Background Processor | Queue Processor), then choose Help | 
+    About to confirm that the software version is 30.54.222.nn. 
+ 8. After the installation of MAG*3.0*222, there should be one entry 
+    in Control Panel | Programs and Features for the Background Processor 
+    applications:
+      MAG*3.0*222: VistA Imaging Background Processor 222     30.54.222.nn
+  
+ New Server Installation:
+ ========================
+ MAG*3.0*222 contains all the Background Processor and Background 
+ Processor utility applications. It will install on a new server that 
+ hasn't had a previous BP installed. 
+ Desktop shortcuts for the Purge, Verifier, and Background Processor Queue 
+ Processor are automatically created on the desktop. 
+  
+ If installing the BP Queue Processor, BP Verifier, and BP Purge on a 
+ 64-bit operating system such as Windows 2012 Server, then "Run as 
+ administrator" must be manually set using the check box in the Advanced 
+ Properties window on each of the desktop shortcuts and the menu options. 
+ Do this for all three client applications.
+  
+ If the MAG*3.0*222 Background Processor client is installed before 
+ installing the MAG*3.0*222 KIDS, then a message will display when the 
+ client is run that says, "the versions of the Background Processor client 
+ and the version of the VistA Imaging host system are not compatible." The 
+ user will be prompted to install compatible versions of the Background 
+ Processor client and the VistA system host software. If such a message 
+ displays, then complete the following steps: 
+ 1.  Shut down the Background Processor client. 
+ 2.  Install the MAG*3.0*222 KIDS. 
+ Now run the MAG*3.0*222 Background Processor client.
+  
+ Post-Installation Instructions: 
+ ===============================
+ Restart all Background Processor applications that were stopped for 
+ installation.
+  
+ Back Out Plan 
+ =============
+ Uninstalling the Application:
+ =============================
+ If it is necessary to uninstall the MAG*3.0*222 client, then use the 
+ Uninstall option from Windows Control Panel to Uninstall: "VistA Imaging 
+ Background Processor 222".
+ Then install the previous version of the Background Processor:
+   MAG*3.0*214: VistA Imaging Background Processor 214     30.53.214.1
+  
+ For additional information on installing, updating, or uninstalling the 
+ Background Processor, refer to the Background Processor User Manual.
+  
+ KIDS Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*222 VistA KIDS, then select 
+ the "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global". (See Installation Steps section, Step 4c; this must be 
+ done before the patch is installed).
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1.  Select the message shown below:
+     Backup of MAG*3.0*222 install on <mmm dd, yyyy>  <user name>
+ 2.  Select the Xtract PackMan option.
+ 3.  Select the Install/Check Message option.
+ 4.  Enter "Yes" at the prompt.
+ 5.  Enter "No" at the backup prompt. There is no need to back up the 
+     backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2  Message #43934   Unloading Routine  MAG222x (PACKMAN_BACKUP)
+ Line 249 Message #43934   Unloading Routine  MAG222x (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build nn;mm dd, yyyy
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine Checksums
+ =================
+ Routine       Checksum        Checksum            Patch List
+               Before          After
+ MAGBVAL       21406475        42531127            **214,222**
+ MAGQBUT4      97778946        97949082            **7,8,48,20,81,39,121,
+                                                   135,196,198,214,222**
+ MAGIP222      NEW             4110371             **222**
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 46;Aug 23, 2018
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGBVAL
+    Before: B21406475   After: B42531127  **214,222**
+Routine Name: MAGIP222
+    Before:       n/a   After:  B4110371  **222**
+Routine Name: MAGQBUT4
+    Before: B97778946   After: B97949082  **7,8,48,20,81,39,121,135,196,
+                                           198,214,222**
+ 
+Routine list of preceding patches: 214
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 27, 2018
+Completed By:                               Date Completed: APR 12, 2019
+Released By :                               Date Released : APR 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

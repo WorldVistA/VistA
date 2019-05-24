@@ -1,0 +1,177 @@
+
+=============================================================================
+Run Date: OCT 31, 2016                     Designation: WEBA*2.5*1
+Package : WEBA - VETERANS AUTHORIZATION AND P Priority: Mandatory
+Version : 2.5         SEQ #1                    Status: Released
+                  Compliance Date: NOV 24, 2016
+=============================================================================
+
+
+Subject: Veterans Authorization and Preferences (VAP) 2.5.0 Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ NOTE: Technical support staff at Austin Information Technology Center 
+ (AITC) will install this enhancement release on the NVP (formerly VLER 
+ and formerly NHIN) and NHI servers located there using a pre-approved 
+ Request for Change Order and Implementation Plan.  This deployment is 
+ scheduled to take place on October 24,2016 from 8:00 PM EST - 11:00 PM 
+ EST. No effort is required by local sites.  
+  
+  
+ Veteran Authorization and Enhancements (VAP) Release 2.5.0. contains 
+ enhancements to the VAP application (Version 2.5.0.11) and eHealth 
+ Exchange (Version 6.8.2.4).  These changes are Work Items that were 
+ recorded and tracked in the Veteran Authorization and Preferences area of 
+ Rational Team Concert, the VA-prescribed tool used for tracking 
+ requirements and associated test plans.  This release contains the Work 
+ Items completed during production deployment.
+  
+ This release consists of the following enhancements:
+ -       Enhancements to allow users to export reports within the VAP 
+ application to both Excel and CSV. Privacy reminders were added regarding 
+ VA's policy for safeguarding Personally Identifiable Information (PII) 
+ information. 
+ -       Addition of Partner Organization functionality allows VAP 
+ administrators to view list of VAP partners, check if a partner is 
+ active, edit partner details and view inactive partners. 
+ -       Enhancements were made to add workflow for placing a consent in a 
+ delayed status due to missing information. Letters can be generated for 
+ mailing to Veteran with reasons for delay and information needed, in 
+ addition to updates on expiring authorization and revocation consent 
+ letters. Reporting features are added to track consents in a delayed 
+ status for both summary and detailed level. 
+ -       Updates were completed to provide additional reporting options 
+ and filters. Additional features include searching by User ID, 
+ multi-selection of VISN and facilities in consent reports, filtering by 5 
+ digit code facilities, and differentiation in the User Interface (UI) 
+ between preferred facility and authenticating facility. The list of 
+ facilities within the VAP application was expanded to include 5-digit 
+ facilities. 
+ -       Addition of Organization ID (OID) displayed within Received 
+ eHealth Exchange and Patient Discovery report. Within the export files, 
+ additional columns are parsed from the details column to include User 
+ Facility Code, OID, User Facility Name. 
+ -       User role details, associated to a transaction, are displayed 
+ within selected reports. Changes were implemented on both VAP and 
+ Exchange to support functionality.
+ -       Enhancements were made to support filtering of reports by all 
+ patients, test patients, and real patients. 
+ -       Sorting functionality for report columns was expanded to include 
+ Opt-In and Patient Discovery Summary reports. 
+ -       Developed functionality for printing of accounting of disclosures 
+ for a specific patient
+ -       Functionality was developed for automatically opting-out patient 
+ whose authorizations have expired, until a new authorization is entered 
+ (nightly update)
+ -       Tool-tip (Hover Prompts) are provided within the user interface 
+ to provide descriptions of user fields and/or report column definitions
+ -       User-Friendly error messages are presented when an error occurs 
+ within the VAP application
+  
+ User Acceptance Test is by the direction of the Veteran Authorization and 
+ Prefereces (VAP) Business Owner and no MOUs are required. 
+  
+ Testing Process: Release 2.5.0.11 was fully tested though the Office of 
+ Information and Technology (OIT) Software Quality Assurance. The Veteran 
+ Authorization and Preferences (VAP) Business Owner and Stakeholders 
+ completed User Acceptance Testing of enhancements. 
+  
+ Downstream Dependently System Testing: Testing was done with eHealth 
+ Exchange, interfacing system. 
+ Patch Components: 
+ Not Applicable
+  
+ Files & Fields Associated: 
+ Not Applicable
+  
+ Forms Associated: 
+ Not Applicable
+  
+ Mail Groups Associated: 
+ Not Applicable
+  
+ Options Associated: 
+ Not Applicable
+  
+ Protocols Associated: 
+ Not Applicable
+  
+ Security Keys Associated: 
+ Not Applicable
+  
+ Templates Associated: Not Applicable
+  
+ New Service Requests (NSRs): 
+ Not Applicable
+  
+  
+ Patient Safety Issues (PSIs):N/A
+ -----------------------------
+  
+ Defect Tracking System Ticket(s) & Overview: N/A
+ --------------------------------------------
+  
+ Test Sites: Not Applicable. It is a centrally hosted system not 
+ Veteran-facing. 
+  
+ Software and Documentation Retrieval Instructions: 
+ --------------------------------------------
+  
+ The User Guide for VAP 2.5 documentation can be found on the TSPR site in 
+ the VAP area. This is hosted on: 
+ http://tspr.vista.domain.ext/warboard/ProjectDocs/VLER_Health_VA/VAP_User+
+ Guide_2.2_20150220.pdf
+  
+ The User Guide is also available within the application from the
+  "User Guide" link that is provided in the toolbar on the left side of
+ the screen.
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instruction:
+ --------------------------
+ The upgraded software will be deployed to a centralized system at AITC. 
+ The VAP application is a centrally managed web-based application
+ hosted at AITC and will be loaded to Production by AITC staff.  No 
+ software will be installed at the facilities.
+  
+ Reporting Problems:
+ -------------------
+ If there are problems associated with the VAP application they should be 
+ reported via CA Service Desk by contacting the National Service Desk 
+ (NSD) 1-855-673-4357 for assistance.
+  
+  
+ Routine Information:
+ ===================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : OCT 06, 2016
+Entered By  :                               Date Entered  : OCT 06, 2016
+Completed By:                               Date Completed: OCT 18, 2016
+Released By :                               Date Released : OCT 31, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

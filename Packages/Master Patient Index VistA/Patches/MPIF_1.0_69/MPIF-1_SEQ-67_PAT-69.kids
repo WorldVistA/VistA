@@ -1,0 +1,431 @@
+Released MPIF*1*69 SEQ #67
+Extracted from mail message
+**KIDS**:MPIF*1.0*69^
+
+**INSTALL NAME**
+MPIF*1.0*69
+"BLD",3373,0)
+MPIF*1.0*69^MASTER PATIENT INDEX VISTA^0^3190116^y
+"BLD",3373,1,0)
+^^3^3^3190116^
+"BLD",3373,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - SUPPORT LONG NAMES IN VA MPI
+"BLD",3373,1,2,0)
+Refer to patch MPIF*1.0*69 in the FORUM Patch Module for a complete
+"BLD",3373,1,3,0)
+description.
+"BLD",3373,4,0)
+^9.64PA^^
+"BLD",3373,6.3)
+1
+"BLD",3373,"KRN",0)
+^9.67PA^1.61^23
+"BLD",3373,"KRN",.4,0)
+.4
+"BLD",3373,"KRN",.401,0)
+.401
+"BLD",3373,"KRN",.402,0)
+.402
+"BLD",3373,"KRN",.403,0)
+.403
+"BLD",3373,"KRN",.5,0)
+.5
+"BLD",3373,"KRN",.84,0)
+.84
+"BLD",3373,"KRN",1.6,0)
+1.6
+"BLD",3373,"KRN",1.61,0)
+1.61
+"BLD",3373,"KRN",1.62,0)
+1.62
+"BLD",3373,"KRN",3.6,0)
+3.6
+"BLD",3373,"KRN",3.8,0)
+3.8
+"BLD",3373,"KRN",9.2,0)
+9.2
+"BLD",3373,"KRN",9.8,0)
+9.8
+"BLD",3373,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",3373,"KRN",9.8,"NM",1,0)
+MPIFNAMC^^0^B2728845
+"BLD",3373,"KRN",9.8,"NM","B","MPIFNAMC",1)
+
+"BLD",3373,"KRN",19,0)
+19
+"BLD",3373,"KRN",19.1,0)
+19.1
+"BLD",3373,"KRN",101,0)
+101
+"BLD",3373,"KRN",409.61,0)
+409.61
+"BLD",3373,"KRN",771,0)
+771
+"BLD",3373,"KRN",779.2,0)
+779.2
+"BLD",3373,"KRN",870,0)
+870
+"BLD",3373,"KRN",8989.51,0)
+8989.51
+"BLD",3373,"KRN",8989.52,0)
+8989.52
+"BLD",3373,"KRN",8994,0)
+8994
+"BLD",3373,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",3373,"KRN",8994,"NM",1,0)
+MPIF UPDATE NAME COMP FLAG^^0
+"BLD",3373,"KRN",8994,"NM","B","MPIF UPDATE NAME COMP FLAG",1)
+
+"BLD",3373,"KRN","B",.4,.4)
+
+"BLD",3373,"KRN","B",.401,.401)
+
+"BLD",3373,"KRN","B",.402,.402)
+
+"BLD",3373,"KRN","B",.403,.403)
+
+"BLD",3373,"KRN","B",.5,.5)
+
+"BLD",3373,"KRN","B",.84,.84)
+
+"BLD",3373,"KRN","B",1.6,1.6)
+
+"BLD",3373,"KRN","B",1.61,1.61)
+
+"BLD",3373,"KRN","B",1.62,1.62)
+
+"BLD",3373,"KRN","B",3.6,3.6)
+
+"BLD",3373,"KRN","B",3.8,3.8)
+
+"BLD",3373,"KRN","B",9.2,9.2)
+
+"BLD",3373,"KRN","B",9.8,9.8)
+
+"BLD",3373,"KRN","B",19,19)
+
+"BLD",3373,"KRN","B",19.1,19.1)
+
+"BLD",3373,"KRN","B",101,101)
+
+"BLD",3373,"KRN","B",409.61,409.61)
+
+"BLD",3373,"KRN","B",771,771)
+
+"BLD",3373,"KRN","B",779.2,779.2)
+
+"BLD",3373,"KRN","B",870,870)
+
+"BLD",3373,"KRN","B",8989.51,8989.51)
+
+"BLD",3373,"KRN","B",8989.52,8989.52)
+
+"BLD",3373,"KRN","B",8994,8994)
+
+"BLD",3373,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",3373,"QUES",0)
+^9.62^^
+"KRN",8994,725,-1)
+0^1
+"KRN",8994,725,0)
+MPIF UPDATE NAME COMP FLAG^UPDFLAG^MPIFNAMC^1^P^^^^1^^0
+"KRN",8994,725,1,0)
+^^24^24^3181121^
+"KRN",8994,725,1,1,0)
+This Remote Procedure updates or retrieves the Name Components flag in
+"KRN",8994,725,1,2,0)
+VistA, which controls how names passed in HL7 ADT-A31 messages to VistA
+"KRN",8994,725,1,3,0)
+are processed.
+"KRN",8994,725,1,4,0)
+ 
+"KRN",8994,725,1,5,0)
+If the flag is set to 0 or null, then the component parts of the name that
+"KRN",8994,725,1,6,0)
+are passed in the HL7 message are used to build a name, possibly shortened
+"KRN",8994,725,1,7,0)
+to 30 characters, and then filed into the PATIENT file (#2) NAME field 
+"KRN",8994,725,1,8,0)
+(#.01) The same is true for aliases. The components parts of any aliases
+"KRN",8994,725,1,9,0)
+are used to build a possibly shortened alias, and filed into the ALIAS 
+"KRN",8994,725,1,10,0)
+multiple (#1) NAME field (#.01) of the PATIENT file. MUMPS cross
+"KRN",8994,725,1,11,0)
+references on the PATIENT file (#2) NAME field (#.01) and the ALIAS
+"KRN",8994,725,1,12,0)
+multiple (#1) NAME field (#.01) will update the corresponding NAME
+"KRN",8994,725,1,13,0)
+COMPONENTS file (#20) entry with the name components passed in the ADT-A31
+"KRN",8994,725,1,14,0)
+message.
+"KRN",8994,725,1,15,0)
+ 
+"KRN",8994,725,1,16,0)
+If the Name Components flag is set to 1, then the component parts of the 
+"KRN",8994,725,1,17,0)
+name or alias are filed directly into the NAME COMPONENTS file. A MUMPS
+"KRN",8994,725,1,18,0)
+cross reference on the fields in the NAME COMPONENTS file will update the
+"KRN",8994,725,1,19,0)
+source field -- the Patient Name field (#.01) or the Alias multiple (#2)
+"KRN",8994,725,1,20,0)
+Name field (#.01) -- with a formatted name.
+"KRN",8994,725,1,21,0)
+ 
+"KRN",8994,725,1,22,0)
+The flag will be stored in the MPI ICN BUILD MANAGEMENT file (#984.8), 
+"KRN",8994,725,1,23,0)
+LAST PATIENT BUILT field (#3) of entry number 3, that has the NAME of 
+"KRN",8994,725,1,24,0)
+"THREE".
+"KRN",8994,725,2,0)
+^8994.02A^2^2
+"KRN",8994,725,2,1,0)
+FLAG^1^^^1
+"KRN",8994,725,2,1,1,0)
+^^4^4^3181121^
+"KRN",8994,725,2,1,1,1,0)
+This parameter contains a flag to control how the Remote Procedure works. 
+"KRN",8994,725,2,1,1,2,0)
+If it contains a "G", the Remote Procedure operates in "GET" mode, 
+"KRN",8994,725,2,1,1,3,0)
+and simply returns the value of the flag; otherwise, the flag is set 
+"KRN",8994,725,2,1,1,4,0)
+to the value passed in the VALUE parameter.
+"KRN",8994,725,2,2,0)
+VALUE^1^^^2
+"KRN",8994,725,2,2,1,0)
+^8994.021^5^5^3181121^^
+"KRN",8994,725,2,2,1,1,0)
+This is the value to set the flag to. A value of 0 indicates that the 
+"KRN",8994,725,2,2,1,2,0)
+Name and Aliases passed in an ADT-A31 should be filed into the NAME 
+"KRN",8994,725,2,2,1,3,0)
+field (#.01) or ALIAS multiple (#1) NAME field (#.01) of the PATIENT file 
+"KRN",8994,725,2,2,1,4,0)
+(#2). A value of 1 indicates that the Name and Aliases should be filed
+"KRN",8994,725,2,2,1,5,0)
+into the NAME COMPONENTS file (#20).
+"KRN",8994,725,2,"B","FLAG",1)
+
+"KRN",8994,725,2,"B","VALUE",2)
+
+"KRN",8994,725,2,"PARAMSEQ",1,1)
+
+"KRN",8994,725,2,"PARAMSEQ",2,2)
+
+"KRN",8994,725,3,0)
+^^13^13^3181121^
+"KRN",8994,725,3,1,0)
+If the FLAG parameter contains a "G": 
+"KRN",8994,725,3,2,0)
+ 
+"KRN",8994,725,3,3,0)
+        1^<value of parameter, 0 or 1>
+"KRN",8994,725,3,4,0)
+                    
+"KRN",8994,725,3,5,0)
+If the FLAG parameter does not contain a "G" one of three strings will be 
+"KRN",8994,725,3,6,0)
+returned:
+"KRN",8994,725,3,7,0)
+ 
+"KRN",8994,725,3,8,0)
+        1^Successfully added entry THREE and updated flag to <value> in
+"KRN",8994,725,3,9,0)
+          File #984.8
+"KRN",8994,725,3,10,0)
+ 
+"KRN",8994,725,3,11,0)
+        1^Successfully update flag to <value> in File #984.8
+"KRN",8994,725,3,12,0)
+ 
+"KRN",8994,725,3,13,0)
+        -1^<error message>
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;RPCE1^XPDIA1;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",282,-1)
+1^1
+"PKG",282,0)
+MASTER PATIENT INDEX VISTA^MPIF^Master Patient Index VistA side
+"PKG",282,22,0)
+^9.49I^1^1
+"PKG",282,22,1,0)
+1.0^2990428
+"PKG",282,22,1,"PAH",1,0)
+69^3190116
+"PKG",282,22,1,"PAH",1,1,0)
+^^3^3^3190116
+"PKG",282,22,1,"PAH",1,1,1,0)
+MASTER VETERAN INDEX VISTA ENHANCEMENTS - SUPPORT LONG NAMES IN VA MPI
+"PKG",282,22,1,"PAH",1,1,2,0)
+Refer to patch MPIF*1.0*69 in the FORUM Patch Module for a complete
+"PKG",282,22,1,"PAH",1,1,3,0)
+description.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","MPIFNAMC")
+0^1^B2728845^n/a
+"RTN","MPIFNAMC",1,0)
+MPIFNAMC ;OAKLAND OIFO/MKO-NAME COMPONENTS UPDATE FLAG ;21 Nov 2018  12:28 PM
+"RTN","MPIFNAMC",2,0)
+ ;;1.0;MASTER PATIENT INDEX VISTA;**69**;;Build 1
+"RTN","MPIFNAMC",3,0)
+ ;**69,Story 841921 (mko): New routine for the Name Components Update Flag
+"RTN","MPIFNAMC",4,0)
+ Q
+"RTN","MPIFNAMC",5,0)
+ ;
+"RTN","MPIFNAMC",6,0)
+UPDFLAG(RETURN,FLAG,VALUE) ;Remote Procedure MPIF UPDATE NAME COMP FLAG
+"RTN","MPIFNAMC",7,0)
+ ;Update the flag for entry THREE in File #984.8
+"RTN","MPIFNAMC",8,0)
+ ; FLAG : "G" - "GET" mode, the flag should be returned, not updated
+"RTN","MPIFNAMC",9,0)
+ ;        Otherwise, flag is updated with the value passed
+"RTN","MPIFNAMC",10,0)
+ ; VALUE : If FLAG'["G", VALUE is what the flag should be set to, 0 or 1.
+"RTN","MPIFNAMC",11,0)
+ N DIERR,DIHELP,DIMSG,FDA,VAL,IEN,MSG,X,Y
+"RTN","MPIFNAMC",12,0)
+ K RETURN
+"RTN","MPIFNAMC",13,0)
+ ;
+"RTN","MPIFNAMC",14,0)
+ I $G(FLAG)["G" S RETURN="1^"_$$GETFLAG Q
+"RTN","MPIFNAMC",15,0)
+ ;
+"RTN","MPIFNAMC",16,0)
+ S VAL=+$G(VALUE)'=0
+"RTN","MPIFNAMC",17,0)
+ S FDA(984.8,"?+1,",.01)="THREE"
+"RTN","MPIFNAMC",18,0)
+ S FDA(984.8,"?+1,",3)=VAL
+"RTN","MPIFNAMC",19,0)
+ S IEN(1)=3
+"RTN","MPIFNAMC",20,0)
+ D UPDATE^DIE("E","FDA","IEN","MSG")
+"RTN","MPIFNAMC",21,0)
+ I $G(DIERR) S RETURN="-1^"_$$BLDERR("MSG") Q
+"RTN","MPIFNAMC",22,0)
+ S RETURN="1^Successfully "_$S($G(IEN(1,0))="+":"added entry THREE and ",1:"")_"updated flag to "_VAL_" in File #984.8"
+"RTN","MPIFNAMC",23,0)
+ Q
+"RTN","MPIFNAMC",24,0)
+ ;
+"RTN","MPIFNAMC",25,0)
+GETFLAG() ;Get the value of the flag
+"RTN","MPIFNAMC",26,0)
+ Q $P($G(^MPIF(984.8,3,0)),"^",4)
+"RTN","MPIFNAMC",27,0)
+ ;
+"RTN","MPIFNAMC",28,0)
+DELTHREE(RETURN) ;Delete entry THREE in File #984.8
+"RTN","MPIFNAMC",29,0)
+ N DA,DIK,X,Y
+"RTN","MPIFNAMC",30,0)
+ I $D(^MPIF(984.8,3,0))[0 S RETURN="-1^Entry 3 doesn't exist." Q
+"RTN","MPIFNAMC",31,0)
+ S DIK="^MPIF(984.8,",DA=3 D ^DIK
+"RTN","MPIFNAMC",32,0)
+ S RETURN="1^Entry 3 deleted."
+"RTN","MPIFNAMC",33,0)
+ Q
+"RTN","MPIFNAMC",34,0)
+ ;
+"RTN","MPIFNAMC",35,0)
+BLDERR(MSGROOT) ;Build an error from the error message array
+"RTN","MPIFNAMC",36,0)
+ N ERRARR,ERRMSG,I
+"RTN","MPIFNAMC",37,0)
+ D MSG^DIALOG("AE",.ERRARR,"","",MSGROOT)
+"RTN","MPIFNAMC",38,0)
+ S ERRMSG="",I=0 F  S I=$O(ERRARR(I)) Q:'I  S ERRMSG=ERRMSG_$S(ERRMSG]"":" ",1:"")_$G(ERRARR(I))
+"RTN","MPIFNAMC",39,0)
+ Q ERRMSG
+"VER")
+8.0^22.2
+"BLD",3373,6)
+^67
+**END**
+**END**
+
