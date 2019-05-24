@@ -655,7 +655,7 @@ begin
   with FDialogCtrlList do for i := 0 to Count - 1 do with TDialogCtrl(Items[i]) do
   begin
     case DataType of
-    'D': Responses.Update(ID, 1, FloatToStr(TORDateBox(Editor).FMDateTime),
+    'D': Responses.Update(ID, 1, FloatToStr(TORDateBox(Editor).FMDateTime, TFormatSettings.Create('en-US')),
                                  TORDateBox(Editor).Text);
     'F': Responses.Update(ID, 1, TEdit(Editor).Text, TEdit(Editor).Text);
     'H': Responses.Update(ID, 1, IHidden, EHidden);

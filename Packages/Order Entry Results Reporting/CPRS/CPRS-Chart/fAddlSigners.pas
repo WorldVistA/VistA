@@ -104,7 +104,7 @@ begin
       FNoteIEN := NoteIEN;
       FRefDate := ARefDate;
       FastAssign(Exclusions, FExclusions);
-      FToday := FloatToStr(FMToday);
+      FToday := FloatToStr(FMToday, TFormatSettings.Create('en-US'));
       if FSigAction = SG_COSIGNER then
         begin
           pnlAdditional.Visible := False;

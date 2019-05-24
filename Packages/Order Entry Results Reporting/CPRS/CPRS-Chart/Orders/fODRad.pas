@@ -722,7 +722,7 @@ end;
 procedure TfrmODRad.calPreOpChange(Sender: TObject);
 begin
   inherited;
-  FPreOpDate := FloatToStr(calPreOp.FMDateTime);
+  FPreOpDate := FloatToStr(calPreOp.FMDateTime, TFormatSettings.Create('en-US'));
   ControlChange(Self);
 end;
 

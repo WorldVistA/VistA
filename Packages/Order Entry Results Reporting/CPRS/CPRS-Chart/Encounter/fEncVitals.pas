@@ -271,7 +271,7 @@ begin
   TmpDate := txtMeasDate.FMDateTime;
   Result := ValidVitalsDate(TmpDate);
   if Result then
-    AssignVitals2List(uVitalNew, TmpDate, FloatToStr(PCERPCEncLocation),
+    AssignVitals2List(uVitalNew, TmpDate, FloatToStr(PCERPCEncLocation, TFormatSettings.Create('en-US')),
                        txtMeasBP.text, txtMeasTemp.text, cboTemp.text,
                        txtMeasResp.text, txtMeasPulse.text, GetVitHTRate, cboHeight.text,
                        txtMeasWT.text, cboWeight.text, cboPain.ItemID);

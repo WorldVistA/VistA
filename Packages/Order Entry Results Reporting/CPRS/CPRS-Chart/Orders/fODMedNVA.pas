@@ -1513,10 +1513,10 @@ begin
     else UnitsPerDose := 0;
   if (UnitsPerDose > 1) and (Noun <> '') and (CharAt(Noun, Length(Noun)) <> 'S')
     then Noun := Noun + 'S';
-  Result := FloatToStr(ExtractFloat(ADose)) + '&' + Units + '&' + FloatToStr(UnitsPerDose)
-            + '&' + Noun + '&' + ADose + '&' + FDrugID + '&' + FloatToStr(Strength) + '&'
+  Result := FloatToStr(ExtractFloat(ADose), TFormatSettings.Create('en-US')) + '&' + Units + '&' + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'))
+            + '&' + Noun + '&' + ADose + '&' + FDrugID + '&' + FloatToStr(Strength, TFormatSettings.Create('en-US')) + '&'
             + Units;
-  if PrependName then Result := AName + U + FloatToStr(Strength) + Units + U + U +
+  if PrependName then Result := AName + U + FloatToStr(Strength, TFormatSettings.Create('en-US')) + Units + U + U +
                                 Result + U + ADose;
   Result := UpperCase(Result);
 end;
@@ -1555,11 +1555,11 @@ var
     DrugIndex := -1;
     for i := 0 to Pred(FoundDrugs.Count) do
       if AnsiSameText(Piece(FoundDrugs[i], U, 1), ADrug) then DrugIndex := i;
-    if DrugIndex = -1 then FoundDrugs.Add(ADrug + U + FloatToStr(UnitsPerDose)) else
+    if DrugIndex = -1 then FoundDrugs.Add(ADrug + U + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'))) else
     begin
       CurUnits := StrToFloatDef(Piece(FoundDrugs[DrugIndex], U, 2), 0);
       if UnitsPerDose > CurUnits
-        then FoundDrugs[DrugIndex] := ADrug + U + FloatToStr(UnitsPerDose);
+        then FoundDrugs[DrugIndex] := ADrug + U + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'));
     end;
   end;
 

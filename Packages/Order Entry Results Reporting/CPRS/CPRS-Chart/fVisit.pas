@@ -210,7 +210,7 @@ begin
       InfoBox(VST_DATETIME, VST_CAPTION, MB_OK);
       Exit;
     end;
-    if(pos('.',FloatToStr(FDateTime))=0) then
+    if(pos('.',FloatToStr(FDateTime, TFormatSettings.Create('en-US')))=0) then
     begin
       InfoBox(VST_NOTIME, VST_CAPTION, MB_OK);
       Exit;

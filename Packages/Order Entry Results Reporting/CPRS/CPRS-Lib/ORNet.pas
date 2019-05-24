@@ -161,7 +161,7 @@ begin
                 begin
                   TmpExt := VExtended^;
                   if (abs(TmpExt) < 0.0000000000001) then TmpExt := 0;
-                  Param[i].Value := FloatToStr(TmpExt);
+                  Param[i].Value := FloatToStr(TmpExt, TFormatSettings.Create('en-US'));
                 end;
               vtString: with Param[i] do
                   begin

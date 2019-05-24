@@ -2065,7 +2065,7 @@ begin
       if length(lblDateFloat.Caption) < 1
       then
       begin
-        lblDateFloat.Caption := FloatToStr(adatetime);
+        lblDateFloat.Caption := FloatToStr(adatetime, TFormatSettings.Create('en-US'));
         nexton := false;
       end
       else
@@ -5172,8 +5172,8 @@ begin
 
         TRemoteSite(Items[i]).CurrentReportQuery := 'Report' + Patient.DFN + ';'
           + Patient.ICN + '^' + AItem + '^^^' + ARpc + '^' + HSType +
-          '^' + DaysBack + '^' + ExamID + '^' + FloatToStr(Alpha) + '^' +
-          FloatToStr(Omega) + '^' + TRemoteSite(Items[i]).SiteID + '^' + AHSTag + '^' + AHDR;
+          '^' + DaysBack + '^' + ExamID + '^' + FloatToStr(Alpha, TFormatSettings.Create('en-US')) + '^' +
+          FloatToStr(Omega, TFormatSettings.Create('en-US')) + '^' + TRemoteSite(Items[i]).SiteID + '^' + AHSTag + '^' + AHDR;
         LocalHandle := '';
         Query := TRemoteSite(Items[i]).CurrentReportQuery;
         for j := 0 to RemoteReports.Count - 1 do

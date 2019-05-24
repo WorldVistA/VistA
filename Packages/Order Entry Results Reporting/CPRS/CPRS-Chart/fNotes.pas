@@ -2461,7 +2461,7 @@ begin
         with FEditNote do
         begin
           X := IntToStr(CreatedNote.IEN) + U + TitleName + U +
-            FloatToStr(FEditNote.DateTime) + U + Patient.Name + U +
+            FloatToStr(FEditNote.DateTime, TFormatSettings.Create('en-US')) + U + Patient.Name + U +
             IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' +
             U + U + U + U + U + U + U + U;
           // Link Note to PRF Action
@@ -2608,7 +2608,7 @@ begin
       with FEditNote do
       begin
         X := IntToStr(CreatedNote.IEN) + U + 'Addendum to ' + TitleName + U +
-          FloatToStr(DateTime) + U + Patient.Name + U + IntToStr(Author) + ';' +
+          FloatToStr(DateTime, TFormatSettings.Create('en-US')) + U + Patient.Name + U + IntToStr(Author) + ';' +
           AuthorName + U + LocationName + U + 'new' + U + U + U + U + U +
           U + U + U;
       end;
@@ -2904,7 +2904,7 @@ begin
     Changes.ReplaceSignState(CH_DOC, lstNotes.ItemID, CH_SIGN_YES);
   X := lstNotes.Items[EditingIndex];
   SetPiece(X, U, 2, lblNewTitle.Caption);
-  SetPiece(X, U, 3, FloatToStr(FEditNote.DateTime));
+  SetPiece(X, U, 3, FloatToStr(FEditNote.DateTime, TFormatSettings.Create('en-US')));
   tvNotes.Selected.Text := MakeNoteDisplayText(X);
   TORTreeNode(tvNotes.Selected).StringData := X;
   lstNotes.Items[EditingIndex] := X;

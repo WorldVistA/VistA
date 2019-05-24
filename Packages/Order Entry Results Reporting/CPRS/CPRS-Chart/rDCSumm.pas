@@ -394,12 +394,12 @@ begin
     Param[5].PType := list;
     with Param[5] do
     begin
-      Mult['.07']    := FloatToStr(DCSummRec.AdmitDateTime);
+      Mult['.07']    := FloatToStr(DCSummRec.AdmitDateTime, TFormatSettings.Create('en-US'));
       Mult['.09']    := DCSummRec.Urgency;
       Mult['1202']   := IntToStr(DCSummRec.Dictator);
       Mult['1205']   := IntToStr(Encounter.Location);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
-      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
+      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime, TFormatSettings.Create('en-US'));
+      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime, TFormatSettings.Create('en-US'));
       if DCSummRec.Cosigner > 0 then
         begin
           Mult['1208'] := IntToStr(DCSummRec.Cosigner);
@@ -456,8 +456,8 @@ begin
     begin
       Mult['.09']    := DCSummRec.Urgency;
       Mult['1202']   := IntToStr(DCSummRec.Dictator);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
-      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
+      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime, TFormatSettings.Create('en-US'));
+      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime, TFormatSettings.Create('en-US'));
       if DCSummRec.Cosigner > 0 then
         begin
           Mult['1208'] := IntToStr(DCSummRec.Cosigner);
@@ -516,7 +516,7 @@ begin
       if (DCSummRec.Status in [TIU_ST_UNREL(*, TIU_ST_UNVER*)]) then Mult['.05'] := IntToStr(DCSummRec.Status);
       Mult['1202']   := IntToStr(DCSummRec.Dictator);
       Mult['1209']   := IntToStr(DCSummRec.Attending);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);  
+      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime, TFormatSettings.Create('en-US'));  
       if DCSummRec.Cosigner > 0 then
         begin
           Mult['1208'] := IntToStr(DCSummRec.Cosigner);

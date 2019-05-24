@@ -1143,7 +1143,7 @@ begin
                    Trim(Copy(txtDays.Text, Pos('X', UpperCase(txtDays.Text)) + 1, 99));
               NoOfTimes := ExtractInteger(x);
               Days := NoOfTimes * Days;                                      // # days requested
-              if FloatToStr(NoOfTimes) <> x then
+              if FloatToStr(NoOfTimes, TFormatSettings.Create('en-US')) <> x then
                 SetError(TX_NO_ALPHA)
               else if NoOfTimes = 0 then
                 SetError(TX_NO_TIMES)
@@ -1162,7 +1162,7 @@ begin
                   if y = 0 then y := 1;
                   //if y > 0 then
                     SetError(TX_TOO_MANY_TIMES + IntToStr(y) + CRLF +
-                      '     (Every ' + FloatToStr(MsgTxt) + x + ' for a maximum of ' + IntToStr(DayMax) + ' days.)')
+                      '     (Every ' + FloatToStr(MsgTxt, TFormatSettings.Create('en-US')) + x + ' for a maximum of ' + IntToStr(DayMax) + ' days.)')
                   //else
                   //  Responses.Update('DAYS', 1, 'X1', 'X1');
                 end
@@ -1175,7 +1175,7 @@ begin
           else
             begin
               Days := ExtractInteger(txtDays.Text);
-              if FloatToStr(Days) <> Trim(txtDays.Text) then
+              if FloatToStr(Days, TFormatSettings.Create('en-US')) <> Trim(txtDays.Text) then
                 SetError(TX_NO_ALPHA)
                 //SetError(TX_NO_DAYS)    v18.6  (RV)
               else if (Days > DayMax) then
@@ -1857,7 +1857,7 @@ begin
      (Copy(UserEntry,1,2)='N+') then Result := UserEntry
   else
      for i := 0 to 3 do if Pos(FMDateResponses[i],UserEntry)>0 then Result := UserEntry ;
-  if Result = '' then Result := FloatToStr(StrToFMDateTime(UserEntry));
+  if Result = '' then Result := FloatToStr(StrToFMDateTime(UserEntry), TFormatSettings.Create('en-US'));
 end;
 
 procedure TfrmODLab.cboCollTimeExit(Sender: TObject);

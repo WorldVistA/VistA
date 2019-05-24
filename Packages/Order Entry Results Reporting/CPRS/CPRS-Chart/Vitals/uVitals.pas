@@ -246,7 +246,7 @@ begin
                 begin
                   if StrToFloat(VValue, TFormatSettings.Create('en-US')) > 0 then
                     //VValue := FloatToStr(StrToFloat(VValue, TFormatSettings.Create('en-US')) * 9.0 / 5.0 +32.0);
-                    VValue := FloatToStr(Round((StrToFloat(VValue, TFormatSettings.Create('en-US')) * 9.0 / 5.0 +32.0)*100)/100);
+                    VValue := FloatToStr(Round((StrToFloat(VValue, TFormatSettings.Create('en-US')) * 9.0 / 5.0 +32.0)*100)/100, TFormatSettings.Create('en-US'));
                   VUnit := 'F';
                 end;
 
@@ -254,7 +254,7 @@ begin
                 begin
                   if StrToFloat(VValue, TFormatSettings.Create('en-US')) > 0 then
                     //VValue := FloatToStr(StrtoFloat(VValue, TFormatSettings.Create('en-US')) / 2.54);
-                    VValue := FloatToStr(Round((StrtoFloat(VValue, TFormatSettings.Create('en-US')) / 2.54)*1000)/1000);
+                    VValue := FloatToStr(Round((StrtoFloat(VValue, TFormatSettings.Create('en-US')) / 2.54)*1000)/1000, TFormatSettings.Create('en-US'));
                   VUnit := 'IN';
                 end;
 
@@ -268,7 +268,7 @@ begin
                     // this probably shouldn't even be done here - it should be done by the
                     // vitals package - KCM
                     //
-                    VValue := FloatToStr(Round(StrtoFloat(VValue, TFormatSettings.Create('en-US')) * 2.2{046} *1000)/1000);
+                    VValue := FloatToStr(Round(StrtoFloat(VValue, TFormatSettings.Create('en-US')) * 2.2{046} *1000)/1000, TFormatSettings.Create('en-US'));
                   VUnit := 'LB';
                 end;
   end;
@@ -317,7 +317,7 @@ begin
   with List do
   begin
     UserStr := GetVitalUser;
-    DateStr := FloatToStr(ADateTime);
+    DateStr := FloatToStr(ADateTime, TFormatSettings.Create('en-US'));
     clear;
 
     Add(VitalDateStr     + DateStr);
@@ -464,7 +464,7 @@ begin
       v := v + (StrTofloat(feetstr, TFormatSettings.Create('en-US'))*12);
     if(inchstr <> '') then
       v := v + StrToFloat(inchstr, TFormatSettings.Create('en-US'));
-    result := floatToStr(v);
+    result := floatToStr(v, TFormatSettings.Create('en-US'));
     //add here to convert to CM if CM is the unit
 
   end
@@ -537,14 +537,14 @@ begin
               dbl := dbl * (9/5);
               dbl := dbl + 32;
               dbl := round(dbl * 10) / 10;
-              Result := FloatToStr(dbl) + ' F (' + Result + ' C)';
+              Result := FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' F (' + Result + ' C)';
             end
             else
             begin
               dbl := dbl - 32;
               dbl := dbl * (5/9);
               dbl := round(dbl * 10) / 10;
-              Result := Result + ' F (' + FloatToStr(dbl) + ' C)';
+              Result := Result + ' F (' + FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' C)';
             end;
           end;
 
@@ -554,13 +554,13 @@ begin
             begin
               dbl := dbl / 2.54;
               dbl := round(dbl * 10) / 10;
-              Result := FloatToStr(dbl) + ' in [' + Result + ' cm)';
+              Result := FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' in [' + Result + ' cm)';
             end
             else
             begin
               dbl := dbl * 2.54;
               dbl := round(dbl * 10) / 10;
-              Result := Result + ' in [' + FloatToStr(dbl) + ' cm)';
+              Result := Result + ' in [' + FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' cm)';
             end;
           end;
 
@@ -570,13 +570,13 @@ begin
             begin
               dbl := dbl * 2.2;
               dbl := round(dbl * 10) / 10;
-              Result := FloatToStr(dbl) + ' lb (' + Result + ' kg)';
+              Result := FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' lb (' + Result + ' kg)';
             end
             else
             begin
               dbl := dbl / 2.2;
               dbl := round(dbl * 10) / 10;
-              Result := Result + ' lb (' + FloatToStr(dbl) + ' kg)';
+              Result := Result + ' lb (' + FloatToStr(dbl, TFormatSettings.Create('en-US')) + ' kg)';
             end;
           end;
       end;
@@ -716,7 +716,7 @@ end;
 
 function TVital.DelimitedStr: string;
 begin
-  Result := 'VIT' + U + Typ + U + U + U + FloatToStr(Value) + U +
+  Result := 'VIT' + U + Typ + U + U + U + FloatToStr(Value, TFormatSettings.Create('en-US')) + U +
     IntToStr(Provider) + U + Unt;
 end;
 *)

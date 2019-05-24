@@ -872,9 +872,9 @@ begin
               end;
             with FEditNote do
               begin
-                x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(DateTime) + U +
+                x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(DateTime, TFormatSettings.Create('en-US')) + U +
                      Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
-                     'Adm: ' + FormatFMDateTime('dddddd', VisitDate) + ';' + FloatToStr(VisitDate) + U + U +
+                     'Adm: ' + FormatFMDateTime('dddddd', VisitDate) + ';' + FloatToStr(VisitDate, TFormatSettings.Create('en-US')) + U + U +
                      U + U + U + U + U + U;
               end;
             lstNotes.Items.Insert(0, x);
@@ -1009,7 +1009,7 @@ begin
     begin
       with FEditNote do
         begin
-          x := IntToStr(CreatedNote.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DateTime) + U +
+          x := IntToStr(CreatedNote.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DateTime, TFormatSettings.Create('en-US')) + U +
                Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
                U + U + U + U + U + U + U + U;
         end;
@@ -3991,7 +3991,7 @@ begin
     else Changes.ReplaceSignState(CH_CON, lstNotes.ItemID, CH_SIGN_YES);
   x := lstNotes.Items[EditingIndex];
   SetPiece(x, U, 2, lblNewTitle.Caption);
-  SetPiece(x, U, 3, FloatToStr(FEditNote.DateTime));
+  SetPiece(x, U, 3, FloatToStr(FEditNote.DateTime, TFormatSettings.Create('en-US')));
   tvCsltNotes.Selected.Text := MakeConsultNoteDisplayText(x);
   TORTreeNode(tvCsltNotes.Selected).StringData := x;
   lstNotes.Items[EditingIndex] := x;

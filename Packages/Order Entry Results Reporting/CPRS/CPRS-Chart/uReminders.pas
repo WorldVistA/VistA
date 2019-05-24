@@ -5241,7 +5241,7 @@ var
         if UIEN <= 0 then
           UIEN := User.DUZ;
         SetPiece(x, U, pnumMST, Prompt.GetValue + ';' + // MST Code
-                                  FloatToStr(RemForm.PCEObj.VisitDateTime) + ';' +
+                                  FloatToStr(RemForm.PCEObj.VisitDateTime, TFormatSettings.Create('en-US')) + ';' +
                                   IntToStr(UIEN) + ';' + //
                                   Prompt.FMiscText); // IEN of Exam, if any
       end;
@@ -5257,7 +5257,7 @@ var
           v := Prompt.VitalType;
           unt := Prompt.VitalUnitValue;
           ConvertVital(v, rte, unt);
-          //txt := U + VitalCodes[v] + U + rte + U + FloatToStr(RemForm.PCEObj.VisitDateTime);  AGP Change 26.1 commented out
+          //txt := U + VitalCodes[v] + U + rte + U + FloatToStr(RemForm.PCEObj.VisitDateTime, TFormatSettings.Create('en-US'));  AGP Change 26.1 commented out
           txt := U + VitalCodes[v] + U + rte + U + '0'; //AGP Change 26.1 Use for Vital date/time
           if(not Finishing) then
             txt := Char(ord('A')+ord(v)) + FormatVitalForNote(txt);  // Add vital sort char
@@ -5356,7 +5356,7 @@ var
             TestDate := Trunc(FParent.FReminder.PCEDataObj.VisitDateTime);
             if(IsGAF = '1') then
               ValidateGAFDate(TestDate);
-            x := U + Nar + U + IsGAF + U + FloatToStr(TestDate) + U +
+            x := U + Nar + U + IsGAF + U + FloatToStr(TestDate, TFormatSettings.Create('en-US')) + U +
                  IntToSTr(FParent.FReminder.PCEDataObj.Providers.PCEProvider);
           end;
         end
@@ -5626,7 +5626,7 @@ begin
               dte := dte - 10000;
               NeedRedraw := TRUE;
             end;
-            TmpValue := FloatToStr(dte);
+            TmpValue := FloatToStr(dte, TFormatSettings.Create('en-US'));
             if(TmpValue = '1000000') then
               TmpValue := '0';
           end;

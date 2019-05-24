@@ -106,14 +106,14 @@ var
 begin
   dfn := Patient.DFN;
   if (aRPC = 'ORQQPL DETAIL') then
-    dfn := dfn + U + FloatToStr(Encounter.DateTime);
+    dfn := dfn + U + FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US'));
   CallV(aRPC, [dfn, IEN, ID]);
   Result := RPCBrokerV.Results;
 end;
 
 function DetailProblem(IEN: Integer): TStrings;
 begin
-  CallV('ORQQPL DETAIL', [Patient.DFN + U + FloatToStr(Encounter.DateTime), IEN, '']);
+  CallV('ORQQPL DETAIL', [Patient.DFN + U + FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US')), IEN, '']);
   Result := RPCBrokerV.Results;
 end;
 
@@ -210,7 +210,7 @@ begin
   Param[1] := '';
   // v30 - for Problem List, concatenate Enc Date/Time as 2nd '^'-piece of Param[0]
   if (AID = '10') and (Encounter.DateTime <> 0) then
-    Param[0] := Param[0] + U + FloatToStr(Encounter.DateTime);
+    Param[0] := Param[0] + U + FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US'));
 
   if AID = '50' then
     begin
@@ -279,7 +279,7 @@ var
   i: integer;
   x0, x2: string;
 begin
-  CallV('ORQQPL LIST', [Patient.DFN + U + FloatToStr(Encounter.DateTime), ACTIVE_PROBLEMS]);
+  CallV('ORQQPL LIST', [Patient.DFN + U + FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US')), ACTIVE_PROBLEMS]);
   MixedCaseList(RPCBrokerV.Results);
   FastAssign(RPCBrokerV.Results, Dest);
   for i := 0 to Dest.Count - 1 do

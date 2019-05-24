@@ -323,7 +323,7 @@ begin
             FCPRSClipBoard[I].SaveForDocument :=
               (FCPRSClipBoard[I].CopiedFromIEN <> ItemIEN);
             FCPRSClipBoard[I].DateTimeOfPaste :=
-              FloatToStr(DateTimeToFMDateTime(Now));
+              FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
             FCPRSClipBoard[I].CopiedFromPackage := FCPRSClipBoard[I]
               .CopiedFromPackage; // ????????
             FCPRSClipBoard[I].PercentMatch := 100.00;
@@ -405,9 +405,9 @@ begin
             end;
             PasteToIEN := ItemIEN;
             PasteDBID := -1;
-            DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now));
+            DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
             SaveForDocument := true;
-            DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now));
+            DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
             SaveToTheBuffer := true;
             CopiedText := TStringList.Create;
 
@@ -452,7 +452,7 @@ begin
             begin
 
               LogText('PASTE', 'Partial Match: %' +
-                FloatToStr(round(LastPertToCheck)));
+                FloatToStr(round(LastPertToCheck), TFormatSettings.Create('en-US'));
               LogText('PASTE', 'Pasted Text IEN(' + IntToStr(ItemIEN) + ')');
               LogText('TEXT', 'Pasted Text:' + #13#10 + CompareText.Text);
               LogText('PASTE', 'Matched to Text IEN(' +
@@ -476,9 +476,9 @@ begin
                   + ';' + FCPRSClipBoard[PosToUSe].CopiedFromPackage;
                 PasteToIEN := ItemIEN;
                 PasteDBID := -1;
-                DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now));
+                DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
                 SaveForDocument := true;
-                DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now));
+                DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
                 SaveToTheBuffer := true;
                 CopiedText := TStringList.Create;
                 CopiedText.Text := CompareText.Text;
@@ -548,9 +548,9 @@ begin
               end;
               PasteToIEN := ItemIEN;
               PasteDBID := -1;
-              DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now));
+              DateTimeOfCopy := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
               SaveForDocument := true;
-              DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now));
+              DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now), TFormatSettings.Create('en-US'));
               SaveToTheBuffer := true;
               CopiedText := TStringList.Create;
               CopiedText.Text := CompareText.Text;
@@ -618,7 +618,7 @@ begin
               SaveList.Add(IntToStr(SaveCnt) + ',0=' + IntToStr(UserDuz) + '^' +
                 FCPRSClipBoard[I].DateTimeOfPaste + '^' + IntToStr(ItemIEN) +
                 ';' + RelatedPackage + '^' + IntToStr(IEN2Use) + ';' +
-                Package2Use + '^' + FloatToStr(FCPRSClipBoard[I].PercentMatch) +
+                Package2Use + '^' + FloatToStr(FCPRSClipBoard[I].PercentMatch, TFormatSettings.Create('en-US')) +
                 '^' + FCPRSClipBoard[I].ApplicationName + '^-1^');
 
               // Line Count (w/out OUR line breaks for size - code below)
@@ -859,7 +859,7 @@ begin
         FCPRSClipBoard[High(FCPRSClipBoard)].ApplicationName :=
           MonitoringApplication;
         FCPRSClipBoard[High(FCPRSClipBoard)].DateTimeOfCopy :=
-          FloatToStr(DateTimeToFMDateTime(Now));
+          FloatToStr(DateTimeToFMDateTime(Now, TFormatSettings.Create('en-US')));
         FCPRSClipBoard[High(FCPRSClipBoard)].PasteDBID := -1;
         FCPRSClipBoard[High(FCPRSClipBoard)].SaveForDocument := false;
         FCPRSClipBoard[High(FCPRSClipBoard)].SaveToTheBuffer := true;
@@ -1377,8 +1377,8 @@ begin
 
     // Log the properties
     LogText('PROP', 'Loading properties' + #13#10 + 'Number of words:' +
-      FloatToStr(FNumberOfWords) + #13#10 + 'Percent to verify:' +
-      FloatToStr(PercentToVerify));
+      FloatToStr(FNumberOfWords, TFormatSettings.Create('en-US')) + #13#10 + 'Percent to verify:' +
+      FloatToStr(PercentToVerify, TFormatSettings.Create('en-US')));
 
   end;
   FLoadedProperties := true;

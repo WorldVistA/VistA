@@ -1728,7 +1728,7 @@ var
         SetLength(EditMonitor.PasteText, Length(EditMonitor.PasteText) + 1);
         with EditMonitor.PasteText[High(EditMonitor.PasteText)] do
         begin
-          DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now));
+          DateTimeOfPaste := FloatToStr(DateTimeToFMDateTime(Now, TFormatSettings.Create('en-US')));
           Status := PasteNew;
           PastedText := TStringList.Create;
           PastedText.Assign(EditMonitor.CopyMonitor.CPRSClipBoard[I]

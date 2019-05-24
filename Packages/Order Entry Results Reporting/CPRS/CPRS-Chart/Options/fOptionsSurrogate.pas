@@ -104,8 +104,8 @@ begin
       info := '';
       info := info + IntToStr(Surrogate.IEN) + '^';
       info := info + Surrogate.Name + '^';
-      info := info + FloatToStr(Surrogate.Start) + '^';
-      info := info + FloatToStr(Surrogate.Stop) + '^';
+      info := info + FloatToStr(Surrogate.Start, TFormatSettings.Create('en-US')) + '^';
+      info := info + FloatToStr(Surrogate.Stop, TFormatSettings.Create('en-US')) + '^';
     end;
   finally
     frmOptionsSurrogate.Release;
@@ -176,8 +176,8 @@ begin
   ok := TRUE;
   info := '';
   info := info + IntToStr(TempSurrogate.IEN) + '^';
-  info := info + FloatToStr(TempSurrogate.Start) + '^';
-  info := info + FloatToStr(TempSurrogate.Stop) + '^';
+  info := info + FloatToStr(TempSurrogate.Start, TFormatSettings.Create('en-US')) + '^';
+  info := info + FloatToStr(TempSurrogate.Stop, TFormatSettings.Create('en-US')) + '^';
   rpcSetSurrogateInfo(info, ok, msg);
   if not ok then
   begin

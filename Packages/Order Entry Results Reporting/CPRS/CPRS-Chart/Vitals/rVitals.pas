@@ -93,7 +93,7 @@ var
   EncDate,IDString: String;
 begin
   IDString := patientid;  //*DFN*
-  EncDate := FloatToStr(DateTime);
+  EncDate := FloatToStr(DateTime, TFormatSettings.Create('en-US'));
   CallV('ORQQVI VITALS', [IDString, EncDate]);
   FastAssign(RPCBrokerV.Results, Dest);
 end;

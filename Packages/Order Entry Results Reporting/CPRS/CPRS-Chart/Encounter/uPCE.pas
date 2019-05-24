@@ -1125,7 +1125,7 @@ begin
   //Result := 'SK' + Result + U + results + U + IntToStr(Provider) + U +
   Result := 'SK' + Result + U + results + U + U +
    IntToStr(Reading) + U + U + U + IntToStr(UNxtCommSeqNum); 
-    //+ FloatToStr(DTRead) + U + FloatToStr(DTGiven);
+    //+ FloatToStr(DTRead, TFormatSettings.Create('en-US')) + U + FloatToStr(DTGiven, TFormatSettings.Create('en-US'));
 end;
 
 (*function TPCESkin.delimitedStrC: string;
@@ -1776,7 +1776,7 @@ end;
 
 function TPCEData.GetVisitString: string;
 begin
-  Result :=  IntToStr(FEncLocation) + ';' + FloatToStr(VisitDateTime) + ';' + FEncSvcCat;
+  Result :=  IntToStr(FEncLocation) + ';' + FloatToStr(VisitDateTime, TFormatSettings.Create('en-US')) + ';' + FEncSvcCat;
 end;
 
 function TPCEData.GetCPTRequired: Boolean;
@@ -1893,7 +1893,7 @@ begin
   if(IsSecondaryVisit and (FEncLocation > 0)) then
   begin
     FileIEN := USE_CURRENT_VISITSTR;
-    FileVStr := IntToStr(FEncLocation) + ';' + FloatToStr(FNoteDateTime) + ';' +
+    FileVStr := IntToStr(FEncLocation) + ';' + FloatToStr(FNoteDateTime, TFormatSettings.Create('en-US')) + ';' +
                                                GetLocSecondaryVisitCode(FEncLocation);
     DoRestore := TRUE;
     FRestDate := FEncDateTime;
@@ -2093,11 +2093,11 @@ begin
         FileDate := FEncDateTime;
         FileNoteIEN := 0;
       end;
-      AVisitStr :=  IntToStr(FEncLocation) + ';' + FloatToStr(FileDate) + ';' + FileCat;
+      AVisitStr :=  IntToStr(FEncLocation) + ';' + FloatToStr(FileDate, TFormatSettings.Create('en-US')) + ';' + FileCat;
       Add('HDR^' + BOOLCHAR[FEncInpatient] + U + U + AVisitStr);
 //      Add('HDR^' + BOOLCHAR[FEncInpatient] + U + BOOLCHAR[FNoteHasCPT] + U + AVisitStr);
       // set up list that can be passed via broker to set up array for DATA2PCE
-      Add('VST^DT^' + FloatToStr(FileDate));  // Encounter Date/Time
+      Add('VST^DT^' + FloatToStr(FileDate, TFormatSettings.Create('en-US')));  // Encounter Date/Time
       Add('VST^PT^' + Patient.DFN);               // Encounter Patient    //*DFN*
       if(FEncLocation > 0) then
         Add('VST^HL^' + IntToStr(FEncLocation));    // Encounter Location

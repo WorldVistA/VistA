@@ -207,7 +207,7 @@ begin
           if Originator > 0 then
             Mult['"GMRAORIG"'] := IntToStr(Originator);
           if Originated > 0 then
-            Mult['"GMRAORDT"'] := FloatToStr(Originated);
+            Mult['"GMRAORDT"'] := FloatToStr(Originated, TFormatSettings.Create('en-US'));
           with SignsSymptoms do if Count > 0 then
             begin
               Mult['"GMRASYMP",0'] := IntToStr(Count);
@@ -219,12 +219,12 @@ begin
           //if Verifier > 0 then
           //  Mult['"GMRAVERF"'] := IntToStr(Verifier);
           //if VerifiedDateTime > 0 then
-          //  Mult['"GMRAVERD"'] := FloatToStr(VerifiedDateTime);
+          //  Mult['"GMRAVERD"'] := FloatToStr(VerifiedDateTime, TFormatSettings.Create('en-US'));
           if EnteredInError then
             begin
               Mult['"GMRAERR"']  := NO_YES[EnteredInError];
               Mult['"GMRAERRBY"']  := IntToStr(UserEnteringInError);
-              Mult['"GMRAERRDT"']  := FloatToStr(DateEnteredInError);
+              Mult['"GMRAERRDT"']  := FloatToStr(DateEnteredInError, TFormatSettings.Create('en-US'));
               with ErrorComments do if Count > 0 then
                 begin
                   Mult['"GMRAERRCMTS",0'] := IntToStr(Count);
@@ -248,7 +248,7 @@ begin
           if Length(Observed_Historical) > 0 then
             Mult['"GMRAOBHX"'] :=  Observed_Historical;
           if ReactionDate > 0 then
-            Mult['"GMRARDT"']  :=  FloatToStr(ReactionDate);
+            Mult['"GMRARDT"']  :=  FloatToStr(ReactionDate, TFormatSettings.Create('en-US'));
           if Length(Severity) > 0 then
             Mult['"GMRASEVR"'] :=  Severity;
           with NewComments do if Count > 0 then
@@ -390,7 +390,7 @@ end;
 
 function GetAllergyTitleText: string;
 begin
-    Result := FormatFMDateTime('dddddd', MakeFMDateTime(floatToStr(FMToday))) +
+    Result := FormatFMDateTime('dddddd', MakeFMDateTime(floatToStr(FMToday, TFormatSettings.Create('en-US')))) +
               '  ' + 'Adverse React/Allergy' + ', ' + Encounter.LocationName + ', ' + User.Name;
 end;
 

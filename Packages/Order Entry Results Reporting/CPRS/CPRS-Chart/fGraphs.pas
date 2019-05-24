@@ -540,7 +540,7 @@ begin
   FItemsSortedBottom := false;
   FItemsSortedTop := false;
   FMouseDown := false;
-  FMTimestamp := floattostr(FMNow);
+  FMTimestamp := floattostr(FMNow, TFormatSettings.Create('en-US'));
   FMToday := DateTimeToFMDateTime(Date);
   FNonNumerics := false;
   FOnLegend := BIG_NUMBER;
@@ -1470,7 +1470,7 @@ var
   dfntype, listline: string;
 begin
   Application.ProcessMessages;
-  FMTimestamp := floattostr(FMNow);
+  FMTimestamp := floattostr(FMNow, TFormatSettings.Create('en-US'));
   //SourcesDefault;
   //FastAssign(FSourcesDefault, FSources);
   for i := 0 to GtslTypes.Count - 1 do
@@ -1895,7 +1895,7 @@ begin
   SizeDates(chartDatelineBottom, SmallTime, BigTime);
   if FMouseDown and aChart.Zoomed then
   begin
-    datehx := FloatToStr(SmallTime) + '^' + FloatToStr(BigTime);
+    datehx := FloatToStr(SmallTime, TFormatSettings.Create('en-US')) + '^' + FloatToStr(BigTime, TFormatSettings.Create('en-US'));
     GtslZoomHistoryFloat.Add(datehx);
     mnuPopGraphZoomBack.Enabled := true;
     FMouseDown := false;
@@ -3767,10 +3767,10 @@ begin
   FPointClick := true;
   tmpOtherList := TStringList.Create;
   templist := TStringList.Create;
-  datex1 := floattostr(DateTimeToFMDateTime(aDate));
+  datex1 := floattostr(DateTimeToFMDateTime(aDate), TFormatSettings.Create('en-US'));
   datex1 := Piece(datex1, '.', 1);
   if aDate <> aDate2 then
-    datex2 := Piece(floattostr(DateTimeToFMDateTime(aDate2)), '.', 1) + '.23595959'
+    datex2 := Piece(floattostr(DateTimeToFMDateTime(aDate2), TFormatSettings.Create('en-US')), '.', 1) + '.23595959'
   else
     datex2 := datex1 + '.23595959';
   dt1 := strtofloatdef(datex1, BIG_NUMBER);
@@ -4705,7 +4705,7 @@ begin
             dateranges :=
               '^' + UpperCase(TextOfStart) + ' to ' + UpperCase(TextOfStop) +
               '^^^' + RelativeStart + ';' + RelativeStop +
-              '^' + floattostr(FMDateStart) + '^' + floattostr(FMDateStop);
+              '^' + floattostr(FMDateStart, TFormatSettings.Create('en-US')) + '^' + floattostr(FMDateStop, TFormatSettings.Create('en-US'));
             cboDateRange.Items.Append(dateranges);
             cboDateRange.ItemIndex := cboDateRange.Items.Count - 1;
           end
@@ -4755,7 +4755,7 @@ begin
           if (manualstart <> '') and (length(Piece(manualstart, '.', 2)) = 0) then
           begin
             FMStartDate := FMDateTimeOffsetBy(FMStartDate, -1);
-            manualstart := floattostr(FMStartDate) + '.2359';
+            manualstart := floattostr(FMStartDate, TFormatSettings.Create('en-US')) + '.2359';
             FMStartDate := MakeFMDateTime(manualstart);
           end;
         end;
@@ -4779,7 +4779,7 @@ begin
         if (manualstart <> '') and (length(Piece(manualstart, '.', 2)) = 0) then
         begin
           FMStartDate := FMDateTimeOffsetBy(FMStartDate, -1);
-          manualstart := floattostr(FMStartDate) + '.2359';
+          manualstart := floattostr(FMStartDate, TFormatSettings.Create('en-US')) + '.2359';
           FMStartDate := MakeFMDateTime(manualstart);
         end;
       end;
@@ -5884,7 +5884,7 @@ begin
   if item2 <> -BIG_NUMBER then
   begin
     item2 := round(item2);
-    aItem := floattostr(item2);
+    aItem := floattostr(item2, TFormatSettings.Create('en-US'));
   end;
   itemspec := aItem + '^' + aSpec;
   for i := 0 to GtslTestSpec.Count - 1 do
@@ -6030,7 +6030,7 @@ var
 begin
   Result := '';
   fmdatetime := datetimetofmdatetime(aDateTime);
-  fmstring := floattostr(fmdatetime);
+  fmstring := floattostr(fmdatetime, TFormatSettings.Create('en-US'));
   for i := 0 to GtslData.Count - 1 do
   begin
     datastring := GtslData[i];
@@ -6424,7 +6424,7 @@ var
   astring: string;
 begin
   noncnt := noncnt + 1;
-  astring := floattostr(adatetime) + '^' + inttostr(aChart.Tag) + '^'
+  astring := floattostr(adatetime, TFormatSettings.Create('en-US')) + '^' + inttostr(aChart.Tag) + '^'
            + inttostr(newcnt) + '^' + inttostr(noncnt) + '^^' + aTitle + '^'
            + aSection + '^^' + GtslTemp[aIndex];
   GtslNonNum.Add(astring);
@@ -6863,7 +6863,7 @@ begin
   if typenum <> '63' then exit;
   itemnum := Piece(aTypeItem, '^', 2);
   fmdatetime := datetimetofmdatetime(aDateTime);
-  fmstring := floattostr(fmdatetime);
+  fmstring := floattostr(fmdatetime, TFormatSettings.Create('en-US'));
   resultcheck := aResult;
   if Copy(resultcheck, 1, 2) = '0.' then   // graph values preface decimals with 0.#
     resultcheckz := '.' + Piece(resultcheck, '.', 2);
@@ -6982,7 +6982,7 @@ begin
       serDatelineTopGetMarkText(Sender.Series[SeriesNum], ValueIndex, resultstring);
     end
     else
-      resultstring := floattostr(aSeries.YValue[ValueIndex]);
+      resultstring := floattostr(aSeries.YValue[ValueIndex], TFormatSettings.Create('en-US'));
   end
   else if typenum <> '120.5' then
   begin
@@ -6990,7 +6990,7 @@ begin
     partitem := copy(item, 1, 4);
     //if (partitem = 'M;A;') then     //or (partitem = 'M;T;') then   tb antibiotic on 1st piece
     begin
-      fmdatecheck := floattostr(DateTimeToFMDateTime(aSeries.XValue[ValueIndex]));
+      fmdatecheck := floattostr(DateTimeToFMDateTime(aSeries.XValue[ValueIndex]), TFormatSettings.Create('en-US'));
       for i := 0 to GtslData.Count - 1 do
       begin
         astring := GtslData[i];
@@ -7014,7 +7014,7 @@ begin
     if seriestitle = 'Blood Pressure' then
       resultstring := BPValue(aSeries.XValue[ValueIndex])
     else
-      resultstring := floattostr(aSeries.YValue[ValueIndex]);
+      resultstring := floattostr(aSeries.YValue[ValueIndex], TFormatSettings.Create('en-US'));
   end;
 end;
 

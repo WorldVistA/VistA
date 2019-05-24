@@ -10,9 +10,8 @@ inherited frmReports: TfrmReports
   ClientHeight = 627
   ClientWidth = 889
   HelpFile = 'qnoback'
-  OnDestroy = FormDestroy
   ExplicitWidth = 905
-  ExplicitHeight = 665
+  ExplicitHeight = 666
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape

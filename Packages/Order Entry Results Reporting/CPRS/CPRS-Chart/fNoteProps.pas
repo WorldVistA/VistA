@@ -215,7 +215,7 @@ begin
     with frmNoteProperties do
     begin
       // setup common fields (title, reference date, author)
-      FToday := FloatToStr(FMToday);
+      FToday := FloatToStr(FMToday, TFormatSettings.Create('en-US'));
       FCallingTab := CallingTab;
       FIDNoteTitlesOnly := IDNoteTitlesOnly;
       FClassName := AClassName;

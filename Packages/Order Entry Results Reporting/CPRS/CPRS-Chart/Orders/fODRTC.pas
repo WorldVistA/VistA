@@ -479,7 +479,7 @@ begin
         CIDC := self.dateCIDC.FMDateTime;
         if CIDC <> -1 then
           begin
-            stop := FloatToStr(FMDateTimeOffsetBy(CIDC,self.OffSet));
+            stop := FloatToStr(FMDateTimeOffsetBy(CIDC,self.OffSet), TFormatSettings.Create('en-US'));
             if self.chkTimeSensitve.Checked = TRUE then
             begin
               Responses.Update('YN', 1, '1', 'Yes');
@@ -488,7 +488,7 @@ begin
 
               {if str contains T+N save str instead of FLoatToStr}
                 if ((pos('T+',UpperCase(str))>0) or (pos('NOW',UpperCase(str))>0)) then Responses.Update('CLINICALLY', 1, str, str)
-                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC), str);
+                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC, TFormatSettings.Create('en-US')), str);
             end
             else
               begin
@@ -499,7 +499,7 @@ begin
 
                 {if str contains T+N save str instead of FLoatToStr}
                 if ((pos('T+',UpperCase(str))>0) or (pos('NOW',UpperCase(str))>0)) then Responses.Update('CLINICALLY', 1, str, str)
-                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC), str);
+                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC, TFormatSettings.Create('en-US')), str);
               end;
 //            Responses.Update('STOP', 1, stop, ext);
           end;

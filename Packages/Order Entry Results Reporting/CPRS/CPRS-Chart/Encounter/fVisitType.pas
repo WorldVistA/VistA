@@ -314,7 +314,7 @@ begin
     cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction))
   else
     cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                     FloatToStr(uEncPCEData.PersonClassDate)));
+                                     FloatToStr(uEncPCEData.PersonClassDate, TFormatSettings.Create('en-US'))));
 end;
 
 procedure TfrmVisitType.lbProvidersChange(Sender: TObject);

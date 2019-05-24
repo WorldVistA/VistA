@@ -710,7 +710,7 @@ begin
     Param[1].PType := literal;
     Param[1].Value := IntToStr(NoteRec.Title);
     Param[2].PType := literal;
-    Param[2].Value := ''; //FloatToStr(Encounter.DateTime);
+    Param[2].Value := ''; //FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US'));
     Param[3].PType := literal;
     Param[3].Value := ''; //IntToStr(Encounter.Location);
     Param[4].PType := literal;
@@ -720,7 +720,7 @@ begin
     begin
       //Mult['.11'] := BOOLCHAR[NoteRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
       Mult['1202'] := IntToStr(NoteRec.Author);
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
+      Mult['1301'] := FloatToStr(NoteRec.DateTime, TFormatSettings.Create('en-US'));
       Mult['1205'] := IntToStr(Encounter.Location);
       if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
       if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
@@ -767,7 +767,7 @@ begin
     with Param[1] do
     begin
       Mult['1202'] := IntToStr(NoteRec.Author);
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
+      Mult['1301'] := FloatToStr(NoteRec.DateTime, TFormatSettings.Create('en-US'));
       if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
 (*      if NoteRec.Lines <> nil then
         for i := 0 to NoteRec.Lines.Count - 1 do
@@ -816,10 +816,10 @@ begin
       Mult['1202'] := IntToStr(NoteRec.Author);
       if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
       if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
+      Mult['1301'] := FloatToStr(NoteRec.DateTime, TFormatSettings.Create('en-US'));
       Mult['1701'] := FilteredString(Copy(NoteRec.Subject, 1, 80));
       if NoteRec.ClinProcSummCode > 0 then Mult['70201'] := IntToStr(NoteRec.ClinProcSummCode);
-      if NoteRec.ClinProcDateTime > 0 then Mult['70202'] := FloatToStr(NoteRec.ClinProcDateTime);
+      if NoteRec.ClinProcDateTime > 0 then Mult['70202'] := FloatToStr(NoteRec.ClinProcDateTime, TFormatSettings.Create('en-US'));
 (*      for i := 0 to NoteRec.Lines.Count - 1 do
         Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
     end;

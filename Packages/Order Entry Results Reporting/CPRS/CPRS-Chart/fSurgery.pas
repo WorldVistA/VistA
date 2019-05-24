@@ -955,7 +955,7 @@ begin
         //7348^Note Title^3000913^NERD, YOURA  (N0165)^1329;Rich Vertigan;VERTIGAN,RICH^8E REHAB MED^complete^Adm: 11/05/98;2981105.095547^        ;^^0^^^2
         with FEditNote do
           begin
-            x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(FEditNote.DateTime) + U +
+            x := IntToStr(CreatedNote.IEN) + U + TitleName + U + FloatToStr(FEditNote.DateTime, TFormatSettings.Create('en-US')) + U +
                  Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
                  U + U + U + U + U + U + U;
           end;
@@ -1072,7 +1072,7 @@ begin
     begin
       with FEditNote do
         begin
-          x := IntToStr(CreatedNote.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DateTime) + U +
+          x := IntToStr(CreatedNote.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DateTime, TFormatSettings.Create('en-US')) + U +
                Patient.Name + U + IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' + U +
                U + U + PkgRef + U + U + U + U + U;
         end;
@@ -1370,7 +1370,7 @@ begin
     else Changes.ReplaceSignState(CH_SUR, lstNotes.ItemID, CH_SIGN_YES);
   x := lstNotes.Items[EditingIndex];
   SetPiece(x, U, 2, lblNewTitle.Caption);
-  SetPiece(x, U, 3, FloatToStr(FEditNote.DateTime));
+  SetPiece(x, U, 3, FloatToStr(FEditNote.DateTime, TFormatSettings.Create('en-US')));
   tvSurgery.Selected.Text := MakeNoteDisplayText(x);
   TORTreeNode(tvSurgery.Selected).StringData := x;
   lstNotes.Items[EditingIndex] := x;

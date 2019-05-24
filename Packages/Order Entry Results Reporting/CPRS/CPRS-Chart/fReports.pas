@@ -412,7 +412,7 @@ begin
       aStopTime   :=  Piece(aQualifier,';',2);
       adddaterange := true;
       aNewLine := '^' + aStartTime + ' to ' + aStopTime +'^^^' + aStartTime + ';' +  aStopTime +
-        '^' + floattostr(strtofmdatetime(aStartTime)) + '^' + floattostr(strtofmdatetime(aStopTime));
+        '^' + floattostr(strtofmdatetime(aStartTime), TFormatSettings.Create('en-US')) + '^' + floattostr(strtofmdatetime(aStopTime), TFormatSettings.Create('en-US'));
       aQualAdd := aStartTime + ';' + aStopTime + '^' + aStartTime + ' to ' + aStopTime;
       for i := 0 to GraphForm.cboDateRange.Items.Count - 1 do
         if GraphForm.cboDateRange.Items[i] = aNewLine then
@@ -2155,8 +2155,8 @@ begin
 
         TRemoteSite(Items[i]).CurrentReportQuery := 'Report' + Patient.DFN + ';'
           + Patient.ICN + '^' + AItem + '^^^' + ARpc + '^' + HSType +
-          '^' + DaysBack + '^' + ExamID + '^' + FloatToStr(Alpha) + '^' +
-          FloatToStr(Omega) + '^' + TRemoteSite(Items[i]).SiteID + '^' + AHSTag + '^' + AHDR;
+          '^' + DaysBack + '^' + ExamID + '^' + FloatToStr(Alpha, TFormatSettings.Create('en-US')) + '^' +
+          FloatToStr(Omega, TFormatSettings.Create('en-US')) + '^' + TRemoteSite(Items[i]).SiteID + '^' + AHSTag + '^' + AHDR;
         LocalHandle := '';
         Query := TRemoteSite(Items[i]).CurrentReportQuery;
         for j := 0 to RemoteReports.Count - 1 do

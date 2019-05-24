@@ -1026,7 +1026,7 @@ begin
   PLlist.Add('GMPFLD(.01)='+'"' +BADxIEN+ '^'+Piece(pDxCode,U,1)+'"');
   PLlist.Add('GMPFLD(.03)=' +'"'+'0^' +'"');
   PLlist.Add('GMPFLD(.05)=' + '"' +'^'+Piece(pDxCode,U,2)+ '"');
-  PLlist.Add('GMPFLD(.08)=' + '"'+ '^'+FloatToStr(FMToday)+'"');
+  PLlist.Add('GMPFLD(.08)=' + '"'+ '^'+FloatToStr(FMToday, TFormatSettings.Create('en-US'))+'"');
   PLlist.Add('GMPFLD(.12)=' + '"' + 'A^ACTIVE'+ '"');
   PLlist.Add('GMPFLD(.13)=' + '"' + '^'+ '"');
   PLlist.Add('GMPFLD(1.01)=' + '"'+ Piece(pDxCode,U,2) + '"');
@@ -1035,7 +1035,7 @@ begin
   PLlist.Add('GMPFLD(1.04)=' + '"'+ BAProviderStr + '^' + BAProviderName + '"');
   PLlist.Add('GMPFLD(1.05)=' + '"'+ BAProviderStr + '^' + BAProviderName + '"');
   PLlist.Add('GMPFLD(1.08)=' +'"' + IntToStr(BALocation) + '^' + Encounter.LocationName + '"');
-  PLlist.Add('GMPFLD(1.09)=' + '"'+ FloatToStr(FMToday) +'"');
+  PLlist.Add('GMPFLD(1.09)=' + '"'+ FloatToStr(FMToday, TFormatSettings.Create('en-US')) +'"');
   PLlist.Add('GMPFLD(10,0)=' + '"'+'0'+ '"');
   Result := PLlist;
   

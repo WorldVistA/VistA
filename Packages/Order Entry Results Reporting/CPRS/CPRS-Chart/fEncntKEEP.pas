@@ -231,7 +231,7 @@ begin
   inherited;
   case FFilter of
     NPF_PROVIDER:  cboPtProvider.ForDataUse(SubSetOfProviders(StartFrom, Direction));
-//    NPF_ENCOUNTER: cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FloatToStr(FPCDate)));
+//    NPF_ENCOUNTER: cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FloatToStr(FPCDate, TFormatSettings.Create('en-US'))));
     else cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction));
   end;
 end;
@@ -356,7 +356,7 @@ begin
   msg := '';
   if FLocation = 0 then msg := TX_NO_LOC;
   if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
-  else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
+  else if(pos('.',FloatToStr(FDateTime, TFormatSettings.Create('en-US'))) = 0) then msg := msg + CRLF + TX_NO_TIME;
   if(msg <> '') then
   begin
     InfoBox(msg, TC_MISSING, MB_OK);

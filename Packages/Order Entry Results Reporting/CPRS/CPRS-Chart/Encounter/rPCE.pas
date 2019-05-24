@@ -1220,7 +1220,7 @@ function CheckActivePerson(provider:String;DateTime:TFMDateTime): boolean;
 var
   RetVal: String;
 begin
-  Callv('ORWPCE ACTIVE PROV',[provider,FloatToStr(DateTime)]);
+  Callv('ORWPCE ACTIVE PROV',[provider,FloatToStr(DateTime, TFormatSettings.Create('en-US'))]);
   retval := RPCBrokerV.Results[0];
   if StrToInt(RetVal) = 1 then result := true
   else result := false;
@@ -1395,7 +1395,7 @@ begin
       begin
         Mult['"DFN"'] := Patient.DFN;
         Mult['"GAF"'] := IntToStr(Score);
-        Mult['"DATE"'] := FloatToStr(GAFDate);
+        Mult['"DATE"'] := FloatToStr(GAFDate, TFormatSettings.Create('en-US'));
         Mult['"STAFF"'] := IntToStr(Staff);
       end;
       CallBroker;

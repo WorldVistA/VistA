@@ -1384,7 +1384,7 @@ begin
                           begin
                             CurDate := Piece(TmpData[i], U, pnumVisitDate);
                             CurLoc := Piece(TmpData[i], U, pnumVisitLoc);
-                            if(CurDate = '') then CurDate := FloatToStr(Encounter.DateTime);
+                            if(CurDate = '') then CurDate := FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US'));
                             if(LastDate <> CurDate) or (LastLoc <> CurLoc) then
                             begin
                               if(assigned(HistData)) then
@@ -1456,7 +1456,7 @@ begin
                                       if (not StoreVitals) then break;
                                     end;
 
-                                    Tmp := GetVitalStr(v, Piece(TmpData[i], U, 3), '', UserStr, FloatToStr(FVitalsDate));
+                                    Tmp := GetVitalStr(v, Piece(TmpData[i], U, 3), '', UserStr, FloatToStr(FVitalsDate, TFormatSettings.Create('en-US')));
                                     if(Tmp <> '') then
                                       VitalList.Add(Tmp);
                                     break;
@@ -1516,7 +1516,7 @@ begin
 
                 if(StoreVitals) and (VitalList.Count > 0) then
                 begin
-                  VitalList.Insert(0, VitalDateStr     + FloatToStr(FVitalsDate));
+                  VitalList.Insert(0, VitalDateStr     + FloatToStr(FVitalsDate, TFormatSettings.Create('en-US')));
                   VitalList.Insert(1, VitalPatientStr  + Patient.DFN);
                   if IntToStr(Encounter.Location) <> '0' then //AGP change 26.9
                      VitalList.Insert(2, VitalLocationStr + IntToStr(Encounter.Location))
@@ -1563,7 +1563,7 @@ begin
                           if Encounter.Location <> FReminder.PCEDataObj.Location then
                             MHLoc := FReminder.PCEDataObj.Location
                             else MHLoc := Encounter.Location;
-                          saveMHTest(Piece(MHList[i],U,2), FloattoStr(FReminder.PCEDataObj.VisitDateTime), InttoStr(MHLoc));
+                          saveMHTest(Piece(MHList[i],U,2), FloattoStr(FReminder.PCEDataObj.VisitDateTime, TFormatSettings.Create('en-US')), InttoStr(MHLoc));
                         end
                       else
                       SaveMentalHealthTest(Piece(MHList[i],U,2), TestDate, TestStaff,

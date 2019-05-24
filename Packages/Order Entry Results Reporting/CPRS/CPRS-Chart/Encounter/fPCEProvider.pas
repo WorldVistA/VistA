@@ -117,7 +117,7 @@ begin
     cboPrimary.ForDataUse(SubSetOfPersons(StartFrom, Direction))
   else
     cboPrimary.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                                 FloatToStr(FPCEData.PersonClassDate)));
+                                                 FloatToStr(FPCEData.PersonClassDate, TFormatSettings.Create('en-US'))));
 end;
 
 procedure TfrmPCEProvider.cboPrimaryChange(Sender: TObject);

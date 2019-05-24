@@ -317,7 +317,7 @@ end;
 //  If encounter.provider is not defined (=0) then use User.DUZ to store vitals.
 procedure TFrmVit.AssignVitals;
 begin
-  AssignVitals2List(uVitalNew, txtMeasDate.FMDateTime, FloatToStr(uVitalLocation),
+  AssignVitals2List(uVitalNew, txtMeasDate.FMDateTime, FloatToStr(uVitalLocation, TFormatSettings.Create('en-US')),
                        txtMeasBP.text, txtMeasTemp.text, cboTemp.text,
                        txtMeasResp.text, txtMeasPulse.text, GetVitHTRate, cboHeight.text,
                        txtMeasWT.text, cboWeight.text, cboPain.ItemID);

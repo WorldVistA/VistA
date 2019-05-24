@@ -359,7 +359,7 @@ begin
 {$WARN SYMBOL_DEPRECATED ON}
     SetLength(PasteText, Length(PasteText) + 1);
     PasteText[High(PasteText)].DateTimeOfPaste :=
-      FloatToStr(DateTimeToFMDateTime(Now));
+      FloatToStr(DateTimeToFMDateTime(Now, TFormatSettings.Create('en-US')));
     PasteText[High(PasteText)].Status := PasteNew;
     PasteText[High(PasteText)].PasteDBID := -1;
     PasteText[High(PasteText)].PasteNoteIEN := ItemIEN;

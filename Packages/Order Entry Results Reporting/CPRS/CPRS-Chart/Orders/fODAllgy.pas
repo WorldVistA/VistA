@@ -282,7 +282,7 @@ begin
             with calObservedDate do
               begin
                 tmpDate := ValidDateTimeStr(calObservedDate.Text, 'TS');
-                if tmpDate   > 0 then Responses.Update('START',     1, FloatToStr(tmpDate), Text);
+                if tmpDate   > 0 then Responses.Update('START',     1, FloatToStr(tmpDate, TFormatSettings.Create('en-US')), Text);
               end;
             with cboSeverity         do if ItemID     <> '' then Responses.Update('SEVERITY',     1, ItemID, Text);
             with cboOriginator       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
@@ -498,7 +498,7 @@ begin
       if dlgReactionDateTime.FMDateTime > FMNow then
         InfoBox(TX_NO_FUTURE_DATES, TX_CAP_FUTURE, MB_OK)
       else
-        Items[ItemIndex] := Items[ItemIndex] + U + FloatToStr(dlgReactionDateTime.FMDateTime) + U + FormatFMDateTime('yyyy/mm/dd@hh:nn', dlgReactionDateTime.FMDateTime);
+        Items[ItemIndex] := Items[ItemIndex] + U + FloatToStr(dlgReactionDateTime.FMDateTime, TFormatSettings.Create('en-US')) + U + FormatFMDateTime('yyyy/mm/dd@hh:nn', dlgReactionDateTime.FMDateTime);
     end;
 end;
 

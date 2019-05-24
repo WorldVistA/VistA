@@ -2161,7 +2161,7 @@ begin
      (Copy(UserEntry,1,2)='N+') then Result := UserEntry
   else
      for i := 0 to 3 do if Pos(FMDateResponses[i],UserEntry)>0 then Result := UserEntry ;
-  if Result = '' then Result := FloatToStr(StrToFMDateTime(UserEntry));
+  if Result = '' then Result := FloatToStr(StrToFMDateTime(UserEntry), TFormatSettings.Create('en-US'));
 end;
 
 procedure TfrmODBBank.GetAllCollSamples(AComboBox: TORComboBox);

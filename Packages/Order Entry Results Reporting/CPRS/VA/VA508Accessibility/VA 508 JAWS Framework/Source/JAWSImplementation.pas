@@ -361,7 +361,7 @@ begin
   begin
     for i := Low(JawsRecord) to High(JawsRecord) do
     begin
-      VersionNum := FloatToStr(JawsRecord[i].Version);
+      VersionNum := FloatToStr(JawsRecord[i].Version, TFormatSettings.Create('en-US'));
       if Pos('.', VersionNum) > 0 then
         VersionNum := Copy(VersionNum, 1, Pos('.', VersionNum) - 1);
       if FindCommandSwitch('FORCEUPD' + VersionNum) then
@@ -1539,7 +1539,7 @@ var
       MakeFileWritable(ToFile);
       CheckOverwrite := TRUE;
 
-      VersionNum := FloatToStr(ThisJawsRec.Version);
+      VersionNum := FloatToStr(ThisJawsRec.Version, TFormatSettings.Create('en-US'));
       if Pos('.', VersionNum) > 0 then
         VersionNum := Copy(VersionNum, 1, Pos('.', VersionNum) - 1);
       if FindCommandSwitch('FORCEUPD') or
@@ -1704,7 +1704,7 @@ var
           if FileExists(ToFile) then
           begin
             // add force for rebuild
-            VersionNum := FloatToStr(ThisJawsRec.Version);
+            VersionNum := FloatToStr(ThisJawsRec.Version, TFormatSettings.Create('en-US'));
             if Pos('.', VersionNum) > 0 then
               VersionNum := Copy(VersionNum, 1, Pos('.', VersionNum) - 1);
 
@@ -1861,8 +1861,8 @@ begin
   Result := FALSE;
   for ArryCnt := Low(JawsRecord) to High(JawsRecord) do
   begin
-    StatText := 'Processing JAWS ' + FloatToStr(JawsRecord[ArryCnt].Version);
-    LogInterface.LogText('JAWS ' + FloatToStr(JawsRecord[ArryCnt].Version), '');
+    StatText := 'Processing JAWS ' + FloatToStr(JawsRecord[ArryCnt].Version, TFormatSettings.Create('en-US'));
+    LogInterface.LogText('JAWS ' + FloatToStr(JawsRecord[ArryCnt].Version, TFormatSettings.Create('en-US')), '');
     UserSplash.TaskTitle := StatText;
     ScriptFileChanges := FALSE;
     if JAWSManager.RequiredFilesFound then

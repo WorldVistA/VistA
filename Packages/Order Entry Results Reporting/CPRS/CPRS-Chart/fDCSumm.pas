@@ -803,10 +803,10 @@ begin
             //7348^Discharge Summary^3000913^NERD, YOURA  (N0165)^1329;Rich Vertigan;VERTIGAN,RICH^8E REHAB MED^unverified^Adm: 11/05/98;2981105.095547^        ;^^0^^^2
             with FEditDCSumm do
               begin
-                x := IntToStr(CreatedSumm.IEN) + U + TitleName + U + FloatToStr(DischargeDateTime) + U +
+                x := IntToStr(CreatedSumm.IEN) + U + TitleName + U + FloatToStr(DischargeDateTime, TFormatSettings.Create('en-US')) + U +
                      Patient.Name + U + IntToStr(Dictator) + ';' + DictatorName + U + LocationName + U + 'new' + U +
-                     'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
-                     'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
+                     'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime, TFormatSettings.Create('en-US')) + U +
+                     'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime, TFormatSettings.Create('en-US')) +
                      U + U + U + U + U + U;
               end;
             lstSumms.Items.Insert(0, x);
@@ -906,7 +906,7 @@ begin
         Location     := uPCEEdit.Location;
         LocationName := ExternalName(uPCEEdit.Location, 44);
         AdmitDateTime    := uPCEEdit.DateTime;
-        DischargeDateTime := StrToFMDateTime(GetDischargeDate(Patient.DFN, FloatToStr(AdmitDateTime)));
+        DischargeDateTime := StrToFMDateTime(GetDischargeDate(Patient.DFN, FloatToStr(AdmitDateTime, TFormatSettings.Create('en-US'))));
         if DischargeDateTime <= 0 then DischargeDateTime := FMNow;
       end;
     PutDCAddendum(CreatedSumm, FEditDCSumm, FEditDCSumm.Addend);
@@ -917,10 +917,10 @@ begin
     begin
       with FEditDCSumm do
         begin
-          x := IntToStr(CreatedSumm.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DischargeDateTime) + U +
+          x := IntToStr(CreatedSumm.IEN) + U + 'Addendum to ' + TitleName + U + FloatToStr(DischargeDateTime, TFormatSettings.Create('en-US')) + U +
                Patient.Name + U + IntToStr(Dictator) + ';' + DictatorName + U + LocationName + U + 'new' + U +
-               'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime) + U +
-               'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime) +
+               'Adm: ' + FormatFMDateTime('dddddd', AdmitDateTime) + ';' + FloatToStr(AdmitDateTime, TFormatSettings.Create('en-US')) + U +
+               'Dis: ' + FormatFMDateTime('dddddd', DischargeDateTime) + ';' + FloatToStr(DischargeDateTime, TFormatSettings.Create('en-US')) +
                U + U + U + U + U + U;
         end;
       lstSumms.Items.Insert(0, x);
@@ -2492,7 +2492,7 @@ begin
     else Changes.ReplaceSignState(CH_SUM, lstSumms.ItemID, CH_SIGN_YES);
   x := lstSumms.Items[EditingIndex];
   SetPiece(x, U, 2, lblNewTitle.Caption);
-  SetPiece(x, U, 3, FloatToStr(FEditDCSumm.DischargeDateTime));
+  SetPiece(x, U, 3, FloatToStr(FEditDCSumm.DischargeDateTime, TFormatSettings.Create('en-US')));
   tvSumms.Selected.Text := MakeDCSummDisplayText(x);
   TORTreeNode(tvSumms.Selected).StringData := x;
   lstSumms.Items[EditingIndex] := x;

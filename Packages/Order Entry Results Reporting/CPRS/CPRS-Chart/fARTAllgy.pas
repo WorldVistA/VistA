@@ -498,7 +498,7 @@ begin
       else
         begin
           x := Items[ItemIndex];
-          x := ORFn.Pieces(x, U, 1, 2) + U + FloatToStr(SymptomDateBox.FMDateTime) + U +
+          x := ORFn.Pieces(x, U, 1, 2) + U + FloatToStr(SymptomDateBox.FMDateTime, TFormatSettings.Create('en-US')) + U +
                             FormatFMDateTime('yyyy/mm/dd@hh:nn', SymptomDateBox.FMDateTime);
           Items[ItemIndex] := x;
         end;
@@ -834,10 +834,10 @@ begin
                 end;
               NewRec.ChartMarked.Clear;
               if ckChartMarked.Checked then
-                ChartMarked.Add(FloatToStr(MyFMNow));
+                ChartMarked.Add(FloatToStr(MyFMNow, TFormatSettings.Create('en-US')));
               NewRec.IDBandMarked.Clear;
               if ckIDBand.Checked then
-                IDBandMarked.Add(FloatToStr(MyFMNow));
+                IDBandMarked.Add(FloatToStr(MyFMNow, TFormatSettings.Create('en-US')));
               with grpObsHist do
                 if ItemIndex   > -1 then
                   begin

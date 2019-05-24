@@ -1562,7 +1562,7 @@ begin
   if not OrderForInpatient then
   begin
     calOPTFStart.FMDateTime := StrToFloatDef(cboOPTFRecurringMeals.ItemID, 0);
-    Responses.Update('DATETIME', 1, FloatToStr(calOPTFStart.FMDateTime), calOPTFStart.Text);
+    Responses.Update('DATETIME', 1, FloatToStr(calOPTFStart.FMDateTime, TFormatSettings.Create('en-US')), calOPTFStart.Text);
   end;
   memOrder.Text := Responses.OrderText;
 end;
@@ -1895,7 +1895,7 @@ begin
   if not OrderForInpatient then
     begin
       calOPAOStart.FMDateTime := StrToFloatDef(cboOPAORecurringMeals.ItemID, 0);
-      Responses.Update('DATETIME', 1, FloatToStr(calOPAOStart.FMDateTime), calOPAOStart.Text);
+      Responses.Update('DATETIME', 1, FloatToStr(calOPAOStart.FMDateTime, TFormatSettings.Create('en-US')), calOPAOStart.Text);
     end;
   memOrder.Text := Responses.OrderText;
 end;

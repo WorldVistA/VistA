@@ -272,8 +272,8 @@ var
   i: Integer;
   x, date1, date2: string;
 begin
-  if Early <= 0 then date1 := '' else date1 := FloatToStr(Early) ;
-  if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late)  ;
+  if Early <= 0 then date1 := '' else date1 := FloatToStr(Early, TFormatSettings.Create('en-US')) ;
+  if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late, TFormatSettings.Create('en-US'))  ;
   CallV('ORQQCN LIST', [Patient.DFN, date1, date2, Service, Status]);
   with RPCBrokerV do
    begin
@@ -753,7 +753,7 @@ begin
                 Mult['10,' + IntToStr(i+1)] := NewComments.Strings[i];
             end;
           if ClinicallyIndicatedDate > 0 then
-             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate);  //wat renamed v28
+             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate, TFormatSettings.Create('en-US'));  //wat renamed v28
         end;
       CallBroker;
       Result := '0';

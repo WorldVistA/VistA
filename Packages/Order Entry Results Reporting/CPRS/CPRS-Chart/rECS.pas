@@ -97,8 +97,8 @@ begin
     Alpha := StrToFMDateTime('T-' + DaysBack);
     Omega := StrToFMDateTime('T');
   end;
-  AnECSRpt.ReportStart := FloatToStr(Alpha);
-  AnECSRpt.ReportEnd   := FloatToStr(Omega);
+  AnECSRpt.ReportStart := FloatToStr(Alpha, TFormatSettings.Create('en-US'));
+  AnECSRpt.ReportEnd   := FloatToStr(Omega, TFormatSettings.Create('en-US'));
 end;
 
 procedure LoadECSReportText(Dest: TStrings; AnECSRpt: TECSReport);

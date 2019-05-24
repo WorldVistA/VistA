@@ -1947,7 +1947,7 @@ begin
         end
       else
       if(Ctrl is TORDateCombo) then
-        Result := TORDateCombo(Ctrl).Text + ':' + FloatToStr(TORDateCombo(Ctrl).FMDate)
+        Result := TORDateCombo(Ctrl).Text + ':' + FloatToStr(TORDateCombo(Ctrl).FMDate, TFormatSettings.Create('en-US'))
       else
      {!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
       if(Ctrl is TORDateBox) then begin

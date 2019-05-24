@@ -1214,9 +1214,9 @@ begin
   with AnEvent do
   begin
     if isNewEvent then
-      DelayEvent := '0;'+ EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective)
+      DelayEvent := '0;'+ EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective, TFormatSettings.Create('en-US'))
     else
-      DelayEvent := IntToStr(AnEvent.PtEventIFN) + ';' + EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective);
+      DelayEvent := IntToStr(AnEvent.PtEventIFN) + ';' + EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective, TFormatSettings.Create('en-US'));
   end;
   x := Patient.DFN                  + U +   // 1
        IntToStr(Encounter.Location) + U +   // 2
@@ -1558,7 +1558,7 @@ begin
     Param[5].PType := literal;
     Param[5].Value := IntToStr(IsComplex);
     Param[6].PType := literal;
-    Param[6].Value := FloatToStr(AnIMOOrderAppt);
+    Param[6].Value := FloatToStr(AnIMOOrderAppt, TFormatSettings.Create('en-US'));
     CallBroker;
     SetOrderFromResults(AnOrder);
 

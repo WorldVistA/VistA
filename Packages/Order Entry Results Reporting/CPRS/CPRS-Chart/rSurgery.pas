@@ -174,8 +174,8 @@ CASE #^Operative Procedure^Date/Time of Operation^Surgeon;Surgeon name^^^^^^^^^+
 var
   date1, date2: string;
 begin
-  if Early <= 0 then date1 := '' else date1 := FloatToStr(Early) ;
-  if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late)  ;
+  if Early <= 0 then date1 := '' else date1 := FloatToStr(Early, TFormatSettings.Create('en-US')) ;
+  if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late, TFormatSettings.Create('en-US'))  ;
   CallV('ORWSR LIST', [Patient.DFN, date1, date2, Context, Max]);
   with RPCBrokerV do
    begin

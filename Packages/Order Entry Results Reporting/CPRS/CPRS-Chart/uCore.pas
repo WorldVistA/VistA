@@ -952,7 +952,7 @@ end;
 
 function TEncounter.GetVisitStr: string;
 begin
-  Result :=  IntToStr(FLocation) + ';' + FloatToStr(FDateTime) + ';' + VisitCategory;
+  Result :=  IntToStr(FLocation) + ';' + FloatToStr(FDateTime, TFormatSettings.Create('en-US')) + ';' + VisitCategory;
   // use VisitCategory property to insure non-null character
 end;
 

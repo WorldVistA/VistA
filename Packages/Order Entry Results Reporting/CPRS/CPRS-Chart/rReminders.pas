@@ -261,7 +261,7 @@ begin
     Param[0].PType := list;
     Param[0].Mult['"DFN"'] := Patient.DFN;
     Param[0].Mult['"CODE"'] := TestName;
-    Param[0].Mult['"ADATE"'] := FloatToStr(ADate);
+    Param[0].Mult['"ADATE"'] := FloatToStr(ADate, TFormatSettings.Create('en-US'));
     Param[0].Mult['"STAFF"'] := IntToStr(AProvider);
     R := 0;
     tmp := '';

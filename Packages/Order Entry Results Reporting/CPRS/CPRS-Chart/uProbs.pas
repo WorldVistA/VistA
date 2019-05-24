@@ -432,7 +432,7 @@ end;
 function TPLPt.Today:string;
 {returns string in DHCP^mmm dd yyyy format}
 begin
-  result := Piece(FloatToStr(FMToday),'.',1) + u + FormatFMDateTime('dddddd',FMToday) ;
+  result := Piece(FloatToStr(FMToday, TFormatSettings.Create('en-US')),'.',1) + u + FormatFMDateTime('dddddd',FMToday) ;
 end;
 
 {-------------------- TUserParams -------------------------------}
@@ -762,7 +762,7 @@ procedure TProbRec.AddNewComment(Txt:string);
 var
   cor:TComment;
 begin
-  cor := TComment.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday) + '^' + IntToStr(User.DUZ));
+  cor := TComment.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday, TFormatSettings.Create('en-US')) + '^' + IntToStr(User.DUZ));
   fComments.add(cor);
   fFieldList.addObject('10,"NEW",' + inttostr(fComments.count),cor);
 end;
@@ -771,7 +771,7 @@ procedure TProbRec.AddNewCoordExpr(txt: string);
 var
   ce: TCoordExpr;
 begin
-  ce := TCoordExpr.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday) + '^' + IntToStr(User.DUZ));
+  ce := TCoordExpr.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday, TFormatSettings.Create('en-US')) + '^' + IntToStr(User.DUZ));
   fCoordExprs.add(ce);
   fFieldList.addObject('10,"NEW",' + inttostr(fComments.count), ce);
 end;
@@ -821,7 +821,7 @@ begin
         end
       else
         begin
-          df.intern := Piece(FloatToStr(fmresult),'.',1);
+          df.intern := Piece(FloatToStr(fmresult, TFormatSettings.Create('en-US')),'.',1);
           df.extern := FormatFMDateTime('dddddd',fmresult);
         end ;
     end;
@@ -876,7 +876,7 @@ end;
 procedure TProbrec.SetDate(datefld:TKeyVal;dt:TDateTime);
 begin
   datefld.extern := DatetoStr(dt);
-  datefld.intern := FloatToStr(DateTimetoFMDateTime(dt));
+  datefld.intern := FloatToStr(DateTimetoFMDateTime(dt), TFormatSettings.Create('en-US'));
 end;
 
 function TProbrec.GetSCProblem:String;

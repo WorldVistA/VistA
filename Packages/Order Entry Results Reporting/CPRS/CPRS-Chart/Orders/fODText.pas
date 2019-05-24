@@ -116,8 +116,8 @@ begin
   //the following is commented out because should be using relative times
   //if AnErrMsg = '' then
   //begin
-  //  Responses.Update('START', 1, FloatToStr(StartTime), txtStart.Text);
-  //  Responses.Update('STOP', 1, FloatToStr(StopTime), txtStop.Text);
+  //  Responses.Update('START', 1, FloatToStr(StartTime, TFormatSettings.Create('en-US')), txtStart.Text);
+  //  Responses.Update('STOP', 1, FloatToStr(StopTime, TFormatSettings.Create('en-US')), txtStop.Text);
   //end;
 end;
 

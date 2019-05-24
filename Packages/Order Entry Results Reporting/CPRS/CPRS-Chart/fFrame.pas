@@ -1501,7 +1501,7 @@ begin
     DisplayEncounterText;
     SetShareNode(DFN, Handle);
     with Patient do
-      NotifyOtherApps(NAE_NEWPT, SSN + U + FloatToStr(DOB) + U + Name);
+      NotifyOtherApps(NAE_NEWPT, SSN + U + FloatToStr(DOB, TFormatSettings.Create('en-US')) + U + Name);
     SelectMsg := '';
     if MeansTestRequired(Patient.DFN, AMsg) then SelectMsg := AMsg;
     if HasLegacyData(Patient.DFN, AMsg)     then SelectMsg := SelectMsg + CRLF + AMsg;

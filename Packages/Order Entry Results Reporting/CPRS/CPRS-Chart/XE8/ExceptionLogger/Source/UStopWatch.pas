@@ -78,9 +78,9 @@ end;
 
 function TStopWatch.GetElapsed: string;
 begin
-  Result := FloatToStr(ElapsedMilliseconds / 1000) + ' Sec / ' +
-    FloatToStr(ElapsedMilliseconds) + ' Ms / ' +
-    FloatToStr(ElapsedNanoSeconds) + ' Ns';
+  Result := FloatToStr(ElapsedMilliseconds / 1000, TFormatSettings.Create('en-US')) + ' Sec / ' +
+    FloatToStr(ElapsedMilliseconds, TFormatSettings.Create('en-US')) + ' Ms / ' +
+    FloatToStr(ElapsedNanoSeconds, TFormatSettings.Create('en-US')) + ' Ns';
 end;
 
 function TStopWatch.GetElapsedMilliseconds: TLargeInteger;

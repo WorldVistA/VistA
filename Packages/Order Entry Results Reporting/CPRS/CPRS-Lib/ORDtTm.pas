@@ -1889,7 +1889,7 @@ var
   tmp, fmt, m: string;
 begin
   Result := '';
-  tmp := FloatToStr(FMDate);
+  tmp := FloatToStr(FMDate, TFormatSettings.Create('en-US'));
   if (tmp <> '') and (tmp <> '0') and (Length(tmp) >= 7) then
   begin
     if FLongMonths then

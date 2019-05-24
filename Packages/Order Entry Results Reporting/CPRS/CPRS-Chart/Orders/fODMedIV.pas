@@ -2472,13 +2472,13 @@ begin
   if (CharAt(aValue,1)= 'w') or (CharAt(aValue,1)= 'W') then  //L, ml
   begin
      tempval  := Piece(aValue,' ',4);
-     limitValue := FloatToStr(ExtractFloat(tempVal));
+     limitValue := FloatToStr(ExtractFloat(tempVal), TFormatSettings.Create('en-US'));
      limitUnit  := Copy(tempVal,length(limitValue)+1,Length(tempVal));
   end;
   if isNumeric(CharAt(aValue,1)) then
   begin
     if LeftStr(avalue,1) = '0' then AValue := Copy(aValue,2,Length(aValue));
-    limitValue := FloatToStr(ExtractFloat(aValue));
+    limitValue := FloatToStr(ExtractFloat(aValue), TFormatSettings.Create('en-US'));
     limitUnit  := Copy(aValue,length(limitValue)+1,Length(aValue));
     if limitUnit = 'D' then limitUnit := 'days'
     else if limitUnit = 'H' then limitUnit := 'hours'

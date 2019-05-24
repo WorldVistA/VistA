@@ -509,14 +509,14 @@ begin
     if CharInSet(ConstructOrder.DelayEvent, ['A','D','T','M','O']) then
       Param[7].Mult['"OREVENT"'] := ConstructOrder.PTEventPtr;
     if ConstructOrder.LogTime > 0
-      then Param[7].Mult['"ORSLOG"'] := FloatToStr(ConstructOrder.LogTime);
+      then Param[7].Mult['"ORSLOG"'] := FloatToStr(ConstructOrder.LogTime, TFormatSettings.Create('en-US'));
     Param[7].Mult['"ORTS"'] := IntToStr(Patient.Specialty);  // pass in treating specialty for ORTS
     Param[8].PType := literal;
     Param[8].Value := ConstructOrder.DigSig;
     if (Constructorder.IsIMODialog) or (ConstructOrder.DGroup = ClinDisp) or (ConstructOrder.DGroup = ClinIVDisp) then
     begin
       Param[9].PType := literal;                       //IMO
-      Param[9].Value := FloatToStr(Encounter.DateTime);
+      Param[9].Value := FloatToStr(Encounter.DateTime, TFormatSettings.Create('en-US'));
     end else
     begin
       Param[9].PType := literal;                       //IMO

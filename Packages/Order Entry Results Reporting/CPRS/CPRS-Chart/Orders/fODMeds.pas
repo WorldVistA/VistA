@@ -2064,7 +2064,7 @@ begin
       if Length(IValueFor('QTY',1))>0 then
       begin
         FQOQuantity := StrToFloat(IValueFor('QTY',1), TFormatSettings.Create('en-US'));
-        txtQuantity.Text := FloatToStr(FQOQuantity);
+        txtQuantity.Text := FloatToStr(FQOQuantity, TFormatSettings.Create('en-US'));
       end;
       SetControl(txtQuantity, 'QTY',     1);
       SetControl(txtRefills,  'REFILLS', 1);
@@ -2843,7 +2843,7 @@ begin
        if (FISQuickOrder = true) and (txtQuantity.Text = '0') and (FLastQuantity > 0) and (FLastQuantity <> StrtoInt64(txtQuantity.text)) then
          begin
            Changing := True;
-           txtQuantity.Text := FloattoStr(FLastQuantity);
+           txtQuantity.Text := FloattoStr(FLastQuantity, TFormatSettings.Create('en-US'));
            Changing := False;
          end;
        Exit;
@@ -2996,10 +2996,10 @@ begin
     else UnitsPerDose := 0;
   if (UnitsPerDose > 1) and (Noun <> '') and (CharAt(Noun, Length(Noun)) <> 'S')
     then Noun := Noun + 'S';
-  Result := FloatToStr(ExtractFloat(ADose)) + '&' + Units + '&' + FloatToStr(UnitsPerDose)
-            + '&' + Noun + '&' + ADose + '&' + FDrugID + '&' + FloatToStr(Strength) + '&'
+  Result := FloatToStr(ExtractFloat(ADose), TFormatSettings.Create('en-US')) + '&' + Units + '&' + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'))
+            + '&' + Noun + '&' + ADose + '&' + FDrugID + '&' + FloatToStr(Strength, TFormatSettings.Create('en-US')) + '&'
             + Units;
-  if PrependName then Result := AName + U + FloatToStr(Strength) + Units + U + U +
+  if PrependName then Result := AName + U + FloatToStr(Strength, TFormatSettings.Create('en-US')) + Units + U + U +
                                 Result + U + ADose;
   Result := UpperCase(Result);
 end;
@@ -3080,11 +3080,11 @@ var
     DrugIndex := -1;
     for i := 0 to Pred(FoundDrugs.Count) do
       if AnsiSameText(Piece(FoundDrugs[i], U, 1), ADrug) then DrugIndex := i;
-    if DrugIndex = -1 then FoundDrugs.Add(ADrug + U + FloatToStr(UnitsPerDose)) else
+    if DrugIndex = -1 then FoundDrugs.Add(ADrug + U + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'))) else
     begin
       CurUnits := StrToFloatDef(Piece(FoundDrugs[DrugIndex], U, 2), 0);
       if UnitsPerDose > CurUnits
-        then FoundDrugs[DrugIndex] := ADrug + U + FloatToStr(UnitsPerDose);
+        then FoundDrugs[DrugIndex] := ADrug + U + FloatToStr(UnitsPerDose, TFormatSettings.Create('en-US'));
     end;
   end;
 
@@ -4450,9 +4450,9 @@ begin
       begin
        //spnQuantity.Position := CurQuantity;
        if txtQuantity.Text <> '' then
-        txtQuantity.Text := FloatToStr(CurQuantity);
+        txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
        if (txtQuantity.Text = '') or (StrToInt(txtQuantity.Text) <> CurQuantity) then
-         txtQuantity.Text := FloatToStr(CurQuantity);
+         txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
       end;
       SkipQtyCheck := TRUE;
     end;
@@ -4474,9 +4474,9 @@ begin
       begin
        //spnQuantity.Position := CurQuantity;
        if (txtQuantity.Text <> '') and (CurQuantity > 0) then
-        txtQuantity.Text := FloatToStr(CurQuantity);
+        txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
        if (txtQuantity.Text = '') or (StrToInt(txtQuantity.Text) <> CurQuantity) and (CurQuantity > 0)  then
-         txtQuantity.Text := FloatToStr(CurQuantity);
+         txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
       end;
     end;
 end;
@@ -4537,12 +4537,12 @@ begin
   UPD_QUANTITY : begin
                    if FIsQuickOrder and (CurQuantity > 0) and FQOInitial then
                    begin
-                     txtQuantity.Text := FloatToStr(CurQuantity);
+                     txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
                      Exit;
                    end;
                    CurQuantity := DaysToQty(CurSupply,   CurUnits, CurSchedule, CurDuration, ADrug);
                    if (CurQuantity >= 0) then
-                     txtQuantity.Text := FloatToStr(CurQuantity);
+                     txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
                  end;
   UPD_SUPPLY   : begin
                    CurSupply   := QtyToDays(CurQuantity, CurUnits, CurSchedule, CurDuration, ADrug);
@@ -4554,18 +4554,18 @@ begin
                    tmpQuantity := DaysToQty(CurSupply,   CurUnits, CurSchedule, CurDuration, ADrug);
                    if FIsQuickOrder and (CurQuantity > 0) and FQOInitial then
                       begin
-                        txtQuantity.Text := FloatToStr(CurQuantity);
+                        txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
                         Exit;
                       end;
                   (* if FIsQuickOrder and (CurQuantity > 0) and (tmpQuantity = 0) and FQOInitial then
                    begin
-                     txtQuantity.Text := FloatToStr(CurQuantity);
+                     txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
                      Exit;
                    end;  *)
                    //CurQuantity := DaysToQty(CurSupply,   CurUnits, CurSchedule, CurDuration, ADrug);
                    CurQuantity := tmpQuantity;
                    if CurQuantity >= 0 then
-                     txtQuantity.Text := FloatToStr(CurQuantity);
+                     txtQuantity.Text := FloatToStr(CurQuantity, TFormatSettings.Create('en-US'));
                  end;
   end;
   if UpdateControl > UPD_NONE then FUpdated := True;
@@ -4902,7 +4902,7 @@ begin
   FLastQuantity := CurQuantity;
   FLastSupply   := CurSupply;
   if (not FNoZERO) and (txtQuantity.Text = '') and (FLastQuantity = 0) then
-    txtQuantity.Text := FloatToStr(FLastQuantity);
+    txtQuantity.Text := FloatToStr(FLastQuantity, TFormatSettings.Create('en-US'));
   if (not FNoZERO) and (txtSupply.Text = '') and (FLastSupply = 0) then
      txtSupply.Text := IntToStr(FLastSupply);
   if (ActiveControl <> nil) and (ActiveControl.Parent <> cboDosage)
@@ -5379,7 +5379,7 @@ begin
         if fNum = 0.75 then
           fltS := 'THREE-FOURTHS';
         if (fNum > 0) AND (Length(fltS)<1) then  //SMT Add a default for unaccounted values (Remedy HD396719)
-          fltS := FloatToStr(fNum);
+          fltS := FloatToStr(fNum, TFormatSettings.Create('en-US'));
 
         Case iNum of
           0: intS := '';

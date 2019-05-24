@@ -224,7 +224,7 @@ begin
             Location := FLocation;
             LocationName := FLocationName;
             VisitStr := IntToStr(Location) + ';' +
-              FloatToStr(AdmitDateTime) + ';H';
+              FloatToStr(AdmitDateTime, TFormatSettings.Create('en-US')) + ';H';
           end;
           EditIEN := FEditIEN;
           if FEditIEN > 0 then

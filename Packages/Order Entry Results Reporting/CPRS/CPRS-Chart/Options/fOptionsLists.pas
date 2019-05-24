@@ -317,7 +317,7 @@ begin
       visitbegin := FMDateTimeOffsetBy(visittoday, LowerOf(visitstart, visitstop));
       visitend := FMDateTimeOffsetBy(visittoday, HigherOf(visitstart, visitstop));
       aList := TStringList.Create;
-      ListPtByClinic(lstListPats.Items, strtointdef(ien, 0), floattostr(visitbegin), floattostr(visitend));
+      ListPtByClinic(lstListPats.Items, strtointdef(ien, 0), floattostr(visitbegin, TFormatSettings.Create('en-US')), floattostr(visitend, TFormatSettings.Create('en-US')));
       for i := 0 to aList.Count - 1 do
         AddIfUnique(aList[i], lstListPats);
       aList.Free;

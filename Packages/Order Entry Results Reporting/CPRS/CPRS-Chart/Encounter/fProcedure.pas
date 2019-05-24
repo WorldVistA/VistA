@@ -552,7 +552,7 @@ begin
     cboProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction))
   else
     cboProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                     FloatToStr(uEncPCEData.PersonClassDate)));
+                                     FloatToStr(uEncPCEData.PersonClassDate, TFormatSettings.Create('en-US'))));
 end;
 
 function TfrmProcedures.OK2SaveProcedures: boolean;
