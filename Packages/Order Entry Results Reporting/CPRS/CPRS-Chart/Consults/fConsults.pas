@@ -3141,7 +3141,7 @@ begin
     begin
       if not LockConsultRequestAndNote(ItemIEN) then Exit;
       Exclusions := GetCurrentSigners(ItemIEN);
-      ARefDate := StrToFloat(Piece(Items[ItemIndex], U, 3));
+      ARefDate := StrToFloat(Piece(Items[ItemIndex], U, 3), TFormatSettings.Create('en-US'));
       SelectAdditionalSigners(Font.Size, ItemIEN, SigAction, Exclusions, SignerList, CT_CONSULTS, ARefDate);
     end;
   with SignerList do

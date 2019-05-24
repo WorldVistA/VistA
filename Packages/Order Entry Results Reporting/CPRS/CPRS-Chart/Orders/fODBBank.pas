@@ -1909,7 +1909,7 @@ begin
   aWantDateTime := calWantTime.FMDateTime;
   aSpecimenDate := aSpecimen;
   aExpiredSpecimenDate := 0;
-  if Length(aSpecimenDate) > 0 then aExpiredSpecimenDate := StrToFloat(aSpecimenDate);
+  if Length(aSpecimenDate) > 0 then aExpiredSpecimenDate := StrToFloat(aSpecimenDate, TFormatSettings.Create('en-US'));
   for i := 0 to OutList.Count - 1 do
     begin
       if (IntToStr(aLabTest.ItemID) = piece(OutList[i],'^',1)) and (piece(OutList[i],'^',2) = '1') then

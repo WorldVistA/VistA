@@ -2049,17 +2049,17 @@ begin
       begin
         DisplayDate := Piece(tmpList[0], '^', 3);
         if length(DisplayDate) > 7 then
-          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(DisplayDate))
+          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(DisplayDate, TFormatSettings.Create('en-US')))
         else if length(DisplayDate) > 0 then
-          lblDate.Caption := FormatFMDateTime('dddddd', strtofloat(DisplayDate))
+          lblDate.Caption := FormatFMDateTime('dddddd', strtofloat(DisplayDate, TFormatSettings.Create('en-US')))
         else
           if length(lblDateFloat.Caption) > 0 then
-            lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption));
+            lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption, TFormatSettings.Create('en-US')));
       end
       else                             // If no lab patch in const "PSI_05_118", continue as is
       begin
         if length(lblDateFloat.Caption) > 0 then
-          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption));
+          lblDate.Caption := FormatFMDateTime('dddddd hh:nn', strtofloat(lblDateFloat.Caption, TFormatSettings.Create('en-US')));
       end;
       //------------------------------------------------------------------------------------------
       if length(lblDateFloat.Caption) < 1
@@ -2205,7 +2205,7 @@ begin
   inherited;
   HadFocus := Screen.ActiveControl = cmdNext;
   StatusText('Retrieving next lab data...');
-  if Length(lblDateFloat.Caption) > 0 then GetInterimGrid(strtofloat(lblDateFloat.Caption), -1);
+  if Length(lblDateFloat.Caption) > 0 then GetInterimGrid(strtofloat(lblDateFloat.Caption, TFormatSettings.Create('en-US')), -1);
   StatusText('');
   if HadFocus then begin
     if cmdNext.Enabled then cmdNext.SetFocus
@@ -2233,7 +2233,7 @@ begin
   inherited;
   HadFocus := Screen.ActiveControl = cmdPrev;
   StatusText('Retrieving previous lab data...');
-  if Length(lblDateFloat.Caption) > 0 then GetInterimGrid(strtofloat(lblDateFloat.Caption), 1);
+  if Length(lblDateFloat.Caption) > 0 then GetInterimGrid(strtofloat(lblDateFloat.Caption, TFormatSettings.Create('en-US')), 1);
   StatusText('');
   if HadFocus then begin
     if cmdPrev.Enabled then cmdPrev.SetFocus
@@ -2344,14 +2344,14 @@ begin
     if OKFloatValue(high) then
     begin
 //      inc(refcount);
-      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
-      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
     end;
     if OKFloatValue(low) then
     begin
 //      inc(refcount);
-      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low), '',clTeeColor);
-      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low, TFormatSettings.Create('en-US')), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low, TFormatSettings.Create('en-US')), '',clTeeColor);
     end;
     numspec := Piece(specimen, '^', 1);
     chtChart.Legend.Color := grdLab.Color;
@@ -2368,7 +2368,7 @@ begin
           value := Piece(aitems[i], '^', 3);
           if OkFloatValue(value) then
           begin
-            labvalue := strtofloat(value);
+            labvalue := strtofloat(value, TFormatSettings.Create('en-US'));
             datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
             serTest.AddXY(datevalue, labvalue, '', clTeeColor);
             inc(valuecount);
@@ -2516,13 +2516,13 @@ begin
     serHigh.Clear;  serLow.Clear;  serTest.Clear;
     if high <> '' then
     begin
-      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
-      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(start), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
+      serHigh.AddXY(FMDateTimeToDateTime(stop), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
     end;
     if low <> '' then
     begin
-      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low), '',clTeeColor);
-      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(start), strtofloat(low, TFormatSettings.Create('en-US')), '',clTeeColor);
+      serLow.AddXY(FMDateTimeToDateTime(stop), strtofloat(low, TFormatSettings.Create('en-US')), '',clTeeColor);
     end;
     chtChart.LeftAxis.Title.Caption := units;
     serTest.Title := Piece(test, '^', 2) + '  (' + MixedCase(specimen) + ')';
@@ -2531,7 +2531,7 @@ begin
     for i := 1 to numvalues do
     begin
       value := Piece(aitems[i], '^', 2);
-      labvalue := strtofloat(value);
+      labvalue := strtofloat(value, TFormatSettings.Create('en-US'));
       datevalue := FMDateTimeToDateTime(Piece(aitems[i], '^', 1));
       serTest.AddXY(datevalue, labvalue, '', clTeeColor);
     end;

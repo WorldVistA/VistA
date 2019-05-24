@@ -1425,7 +1425,7 @@ begin
   StartStr := Piece(Responses.IValueFor('START', 1), '.', 1);
   if not IsFMDateTime(StartStr)
     then StartDt := StrToFMDateTime(StartStr)
-    else StartDt := StrToFloat(StartStr);
+    else StartDt := StrToFloat(StartStr, TFormatSettings.Create('en-US'));
   if (StartDt > 0) and (StartDt < FMToday)
     then AnErrMsg := 'The start date may not be earlier than the present.';
   //frmFrame.UpdatePtInfoOnRefresh;

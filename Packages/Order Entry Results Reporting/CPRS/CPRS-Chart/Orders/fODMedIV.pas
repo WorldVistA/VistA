@@ -764,7 +764,7 @@ begin
         SetError(TX_NO_BASE);
     for i := 0 to RowCount - 1 do
     begin
-      if (Objects[0, i] <> nil) and ((Length(Cells[1, i]) = 0) or (StrToFloat(Cells[1,i])=0))
+      if (Objects[0, i] <> nil) and ((Length(Cells[1, i]) = 0) or (StrToFloat(Cells[1,i], TFormatSettings.Create('en-US'))=0))
         then SetError(TX_NO_AMOUNT + Cells[0, i]);
       if (Objects[0, i] <> nil) and (Length(Cells[2, i]) = 0)
         then SetError(TX_NO_UNITS + Cells[0, i]);
@@ -2592,7 +2592,7 @@ begin
   if (txtXDuration.Text <> '0') and (txtXDuration.Text <> '') then
   begin
     try
-      code := StrToFloat(txtXDuration.Text);
+      code := StrToFloat(txtXDuration.Text, TFormatSettings.Create('en-US'));
     except
       code := 0;
     end;
@@ -2605,7 +2605,7 @@ begin
     end;
   end;
   try
-    if (Length(txtXDuration.Text)>0) and (StrToFloat(txtXDuration.Text)<0) then
+    if (Length(txtXDuration.Text)>0) and (StrToFloat(txtXDuration.Text, TFormatSettings.Create('en-US'))<0) then
     begin
       ShowMsg('Can not save order.' + #13#10 + 'Reason: Invalid Duration or total volume!');
       txtXDuration.Text := '';

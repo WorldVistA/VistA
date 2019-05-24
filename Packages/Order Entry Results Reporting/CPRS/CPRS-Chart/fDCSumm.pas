@@ -2105,7 +2105,7 @@ begin
   Exclusions := GetCurrentSigners(lstSumms.ItemIEN);
   ARefDate := ExtractFloat(Piece(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 9), ';', 2));
   if ARefDate = 0 then        //no discharge date, so use note date
-    ARefDate := StrToFloat(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 3));
+    ARefDate := StrToFloat(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 3), TFormatSettings.Create('en-US'));
   SelectAdditionalSigners(Font.Size, lstSumms.ItemIEN, SigAction, Exclusions, SignerList, CT_DCSUMM, ARefDate);
   with SignerList do
     begin

@@ -194,7 +194,7 @@ end;
 function  GetDefaultImmCollTime: TFMDateTime;
 begin
   CallV('ORWDLR32 IC DEFAULT',[nil]);
-  Result := StrToFloat(Piece(RPCBrokerV.Results[0], U, 1));
+  Result := StrToFloat(Piece(RPCBrokerV.Results[0], U, 1), TFormatSettings.Create('en-US'));
 end;
 
 function  ValidImmCollTime(CollTime: TFMDateTime): string;

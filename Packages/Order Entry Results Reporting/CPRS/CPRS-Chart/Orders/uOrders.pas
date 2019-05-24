@@ -1430,7 +1430,7 @@ begin
                       x := uOrderDialog.Responses.IValueFor('CONJ', i);
                       tempDur := tempDur + x + U;
                    end;
-                 if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur, tempOI, StrtoInt(tempSupply), StrtoInt(tempRefills), StrToFloat(tempQuantity)) = false then Exit;
+                 if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur, tempOI, StrtoInt(tempSupply), StrtoInt(tempRefills), StrToFloat(tempQuantity, TFormatSettings.Create('en-US'))) = false then Exit;
                end;
              if ((ResolvedDialog.DisplayGroup = CsltDisp) and (ResolvedDialog.QuickLevel = QL_AUTO)) then
              begin

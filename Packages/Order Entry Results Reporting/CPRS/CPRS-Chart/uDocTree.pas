@@ -637,8 +637,8 @@ begin
                     //(Piece(PDocTreeObject(ANode.Data)^.Author, ';', 1) = IntToStr(Author));
     '4':  Result := (Piece(PDocTreeObject(ANode.Data)^.Author, ';', 1) = IntToStr(Author));
     '5':  if PDocTreeObject(ANode.Data)^.DocHasChildren = '%' then Result := False
-          else Result := (StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate) >= AContext.FMBeginDate) and
-                         (Trunc(StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate)) <= AContext.FMEndDate); 
+          else Result := (StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate, TFormatSettings.Create('en-US')) >= AContext.FMBeginDate) and
+                         (Trunc(StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate, TFormatSettings.Create('en-US'))) <= AContext.FMEndDate); 
     'N':  Result := True;     // NEW NOTE
     'E':  Result := True;     // EDITING NOTE
     'A':  Result := True;     // NEW ADDENDUM or processing alert

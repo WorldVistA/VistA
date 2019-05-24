@@ -2063,7 +2063,7 @@ begin
       //if spnSupply.Position <> 0 then txtSupply.Tag   := 1;
       if Length(IValueFor('QTY',1))>0 then
       begin
-        FQOQuantity := StrToFloat(IValueFor('QTY',1));
+        FQOQuantity := StrToFloat(IValueFor('QTY',1), TFormatSettings.Create('en-US'));
         txtQuantity.Text := FloatToStr(FQOQuantity);
       end;
       SetControl(txtQuantity, 'QTY',     1);

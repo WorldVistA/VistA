@@ -1537,7 +1537,7 @@ begin
                 for i := 0 to MHList.Count-1 do
                 begin
                   try
-                    TestDate := StrToFloat(Piece(MHList[i],U,4));
+                    TestDate := StrToFloat(Piece(MHList[i],U,4), TFormatSettings.Create('en-US'));
                   except
                     on EConvertError do
                       TestDate := 0

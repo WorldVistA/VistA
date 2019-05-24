@@ -258,43 +258,43 @@ begin
     begin
       lblLastTemp.Caption := piece(strings[i],U,3);
       lblDateTemp.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'P' then
     begin
       lblLastPulse.Caption := piece(strings[i],U,3);
       lblDatePulse.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'R' then
     begin
       lblLastResp.Caption := piece(strings[i],U,3);
       lblDateResp.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'BP' then
     begin
       lblLastBP.Caption := piece(strings[i],U,3);
       lblDateBP.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'HT' then
     begin
       lblLastHeight.Caption := piece(strings[i],U,3);
       lblDateHeight.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'WT' then
     begin
       lblLastWeight.Caption := piece(strings[i],U,3);
       lblDateWeight.Caption := FormatFMDateTime('dddddd',
-        StrToFloat(piece(strings[i],U,4)));
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));
     end;
     if piece(strings[i],U,2) = 'PN' then             {*RAB*}
     begin
       lblLastPain.Caption := piece(strings[i],U,3);  {*RAB*}
       lblDatePain.Caption := FormatFMDateTime('dddddd', {*RAB*}
-        StrToFloat(piece(strings[i],U,4)));           {*RAB*}
+        StrToFloat(piece(strings[i],U,4), TFormatSettings.Create('en-US')));           {*RAB*}
 
     end;
   end;

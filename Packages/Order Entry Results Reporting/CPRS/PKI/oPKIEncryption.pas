@@ -385,7 +385,7 @@ var
 begin
   try
     aDateTime := 0;
-    aFMDateString := Format('%0.6f', [StrToFloat(aFMDateTime) + 0.0000001]);
+    aFMDateString := Format('%0.6f', [StrToFloat(aFMDateTime, TFormatSettings.Create('en-US')) + 0.0000001]);
     aYear := StrToIntDef(Copy(aFMDateString, 1, 3), -1);
     if aYear > 0 then
       inc(aYear, 1700);

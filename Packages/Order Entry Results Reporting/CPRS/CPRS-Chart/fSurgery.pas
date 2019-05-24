@@ -2098,7 +2098,7 @@ begin
     end;
 
   Exclusions := GetCurrentSigners(lstNotes.ItemIEN);
-  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
+  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3), TFormatSettings.Create('en-US'));
   SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions, SignerList, CT_NOTES, ARefDate);
   with SignerList do
     begin

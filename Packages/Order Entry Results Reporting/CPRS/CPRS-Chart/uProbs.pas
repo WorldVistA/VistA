@@ -370,7 +370,7 @@ end;
 
 function TComment.GetExtDateAdd:String;
 begin
-  result := FormatFMDateTime('dddddd',StrToFloat(DateAdd)) ;
+  result := FormatFMDateTime('dddddd',StrToFloat(DateAdd, TFormatSettings.Create('en-US'))) ;
 end;
 
 function TComment.Getage:boolean;

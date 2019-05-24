@@ -244,31 +244,31 @@ begin
   case VType of
     vtTemp:     if(VUnit = 'C') then  //if metric, convert to standard
                 begin
-                  if StrToFloat(VValue) > 0 then
-                    //VValue := FloatToStr(StrToFloat(VValue) * 9.0 / 5.0 +32.0);
-                    VValue := FloatToStr(Round((StrToFloat(VValue) * 9.0 / 5.0 +32.0)*100)/100);
+                  if StrToFloat(VValue, TFormatSettings.Create('en-US')) > 0 then
+                    //VValue := FloatToStr(StrToFloat(VValue, TFormatSettings.Create('en-US')) * 9.0 / 5.0 +32.0);
+                    VValue := FloatToStr(Round((StrToFloat(VValue, TFormatSettings.Create('en-US')) * 9.0 / 5.0 +32.0)*100)/100);
                   VUnit := 'F';
                 end;
 
     vtHeight:   if VUnit = 'CM' then
                 begin
-                  if StrToFloat(VValue) > 0 then
-                    //VValue := FloatToStr(StrtoFloat(VValue) / 2.54);
-                    VValue := FloatToStr(Round((StrtoFloat(VValue) / 2.54)*1000)/1000);
+                  if StrToFloat(VValue, TFormatSettings.Create('en-US')) > 0 then
+                    //VValue := FloatToStr(StrtoFloat(VValue, TFormatSettings.Create('en-US')) / 2.54);
+                    VValue := FloatToStr(Round((StrtoFloat(VValue, TFormatSettings.Create('en-US')) / 2.54)*1000)/1000);
                   VUnit := 'IN';
                 end;
 
     vtWeight:   if VUnit = 'KG' then
                 begin
-                  if StrToFloat(VValue) > 0 then
-                    //VValue := FloatToStr(StrtoFloat(VValue) * 2.2046);
+                  if StrToFloat(VValue, TFormatSettings.Create('en-US')) > 0 then
+                    //VValue := FloatToStr(StrtoFloat(VValue, TFormatSettings.Create('en-US')) * 2.2046);
                     //
                     // the vitals package uses 2.2 (not 2.2046), so the GUI needs to use the
                     // same so conversions back & forth don't lead to errors
                     // this probably shouldn't even be done here - it should be done by the
                     // vitals package - KCM
                     //
-                    VValue := FloatToStr(Round(StrtoFloat(VValue) * 2.2{046} *1000)/1000);
+                    VValue := FloatToStr(Round(StrtoFloat(VValue, TFormatSettings.Create('en-US')) * 2.2{046} *1000)/1000);
                   VUnit := 'LB';
                 end;
   end;
@@ -461,9 +461,9 @@ begin
       end;
     v := 0;
     if (feetstr <> '') then
-      v := v + (StrTofloat(feetstr)*12);
+      v := v + (StrTofloat(feetstr, TFormatSettings.Create('en-US'))*12);
     if(inchstr <> '') then
-      v := v + StrToFloat(inchstr);
+      v := v + StrToFloat(inchstr, TFormatSettings.Create('en-US'));
     result := floatToStr(v);
     //add here to convert to CM if CM is the unit
 
@@ -505,7 +505,7 @@ begin
       if(v = vtPain) and (Value = '99') then
         Value := 'Unable to respond.';
       Result := VitalFormatedDesc[v] + Value + '    ' +
-      FormatFmDateTime('dddddd hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate))));
+      FormatFmDateTime('dddddd hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate), TFormatSettings.Create('en-US'))));
     end
   end;
 end;
@@ -519,7 +519,7 @@ begin
   if(VitalType in [vtTemp, vtHeight, vtWeight]) then
   begin
     try
-      dbl := StrToFloat(Value);
+      dbl := StrToFloat(Value, TFormatSettings.Create('en-US'));
     except
       on EConvertError do
         dbl := 0
@@ -709,7 +709,7 @@ end;
 Procedure TVital.SetFromString(const X: string);
 begin
   Typ      := Piece(x, U, 2);
-  Value    := StrToFloat(Piece(x, U, 5));
+  Value    := StrToFloat(Piece(x, U, 5), TFormatSettings.Create('en-US'));
   Provider := StrToInt(Piece(x, U, 6));
   Unt      := Piece(x, U, 7);
 end;

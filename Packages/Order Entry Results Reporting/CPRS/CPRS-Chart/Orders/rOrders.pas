@@ -833,8 +833,8 @@ begin
     Filter    := StrToIntDef(Piece(x, ';', 3), 0);
     InvChrono := Piece(x, ';', 6) = 'R';
     ByService := Piece(x, ';', 7) = '1';
-    TimeFrom  := StrToFloat(Piece(x, ';', 1));
-    TimeThru  := StrToFloat(Piece(x, ';', 2));
+    TimeFrom  := StrToFloat(Piece(x, ';', 1), TFormatSettings.Create('en-US'));
+    TimeThru  := StrToFloat(Piece(x, ';', 2), TFormatSettings.Create('en-US'));
     CtxtTime  := 0;
     TextView  := 0;
     ViewName  := Piece(x, ';', 8);

@@ -337,7 +337,7 @@ begin
       ID        := Piece(Results[i], U, 1);
       IEN       := StrToIntDef(Piece(Results[i], U, 2), 0);
       if Length(Piece(Results[i], U, 3)) > 0
-        then Sequence := StrToFloat(Piece(Results[i], U, 3))
+        then Sequence := StrToFloat(Piece(Results[i], U, 3), TFormatSettings.Create('en-US'))
         else Sequence := 0;
       FmtCode   := Piece(Results[i], U, 4);
       Omit      := Piece(Results[i], U, 5);

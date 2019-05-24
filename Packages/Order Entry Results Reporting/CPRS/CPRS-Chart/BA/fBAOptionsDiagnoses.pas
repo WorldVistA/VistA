@@ -226,7 +226,7 @@ begin
          else if (Piece(problems.Strings[i], U, 10) =  '') then                  // no inactive date for code
            DxList.add(Piece(Problems.Strings[i],U,3) + U +
              Piece(Problems.Strings[i],U,2))
-         else if (Trunc(StrToFloat(Piece(Problems.Strings[i], U, 10))) > EncDT) then     // code active as of EncDt
+         else if (Trunc(StrToFloat(Piece(Problems.Strings[i], U, 10), TFormatSettings.Create('en-US'))) > EncDT) then     // code active as of EncDt
            DxList.add(Piece(Problems.Strings[i],U,3) + U +
              Piece(Problems.Strings[i],U,2))
          else

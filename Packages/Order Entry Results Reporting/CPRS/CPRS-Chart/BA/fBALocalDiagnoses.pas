@@ -387,7 +387,7 @@ begin
         end
         else if (Piece(uproblems.Strings[i], U, 10) =  '') then                  // no inactive date for code
            BADiagnosis.add(ProblemListTFactors)
-        else if (Trunc(StrToFloat(Piece(uProblems.Strings[i], U, 10))) > EncDT) then     // code active as of EncDt
+        else if (Trunc(StrToFloat(Piece(uProblems.Strings[i], U, 10), TFormatSettings.Create('en-US'))) > EncDT) then     // code active as of EncDt
            BADiagnosis.add(Piece(uProblems.Strings[i],U,3) + U +
                            ProblemListTFactors )
         else

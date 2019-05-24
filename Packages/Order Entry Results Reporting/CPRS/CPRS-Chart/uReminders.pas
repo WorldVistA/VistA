@@ -4048,7 +4048,7 @@ var
                 Ctrl.dt.LongMonths := TRUE;
                 try
                   DefaultDate := Ctrl.dt.FMDate;
-                  Ctrl.dt.FMDate := StrToFloat(Prompt.Value);
+                  Ctrl.dt.FMDate := StrToFloat(Prompt.Value, TFormatSettings.Create('en-US'));
                 except
                   on EConvertError do
                     Ctrl.dt.FMDate := DefaultDate;
@@ -6428,7 +6428,7 @@ begin
     else
     begin
       try
-        if(StrToFloat(Value) > FMToday) then
+        if(StrToFloat(Value, TFormatSettings.Create('en-US')) > FMToday) then
         begin
           Value := '0';
           InfoBox('Can not enter a future date for a historical event.',
@@ -6559,7 +6559,7 @@ begin
       ptVisitDate:
         begin
           try
-            (FCurrentControl as TORDateCombo).FMDate := StrToFloat(GetValue);
+            (FCurrentControl as TORDateCombo).FMDate := StrToFloat(GetValue, TFormatSettings.Create('en-US'));
           except
             on EConvertError do
               (FCurrentControl as TORDateCombo).FMDate := 0;

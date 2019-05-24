@@ -477,15 +477,15 @@ begin
             if OkFloatValue(value1) and OKFloatValue(value2) then
             begin
               high := value1;
-              labvalue1 := strtofloat(value1);
-              labvalue2 := strtofloat(value2);
+              labvalue1 := strtofloat(value1, TFormatSettings.Create('en-US'));
+              labvalue2 := strtofloat(value2, TFormatSettings.Create('en-US'));
               datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
               serTest.AddXY(datevalue, labvalue1, '', clTeeColor);
               serTestX.AddXY(datevalue, labvalue2, '', clTeeColor);
               inc(valuecount);
               if OKFloatValue(value3) then
               begin
-                labvalue3 := strtofloat(value3);
+                labvalue3 := strtofloat(value3, TFormatSettings.Create('en-US'));
                 serTestY.AddXY(datevalue, labvalue3, '', clTeeColor);
                 serTestY.Active := true;
               end;
@@ -505,7 +505,7 @@ begin
             if OkFloatValue(value) then
             begin
               high := value;
-              labvalue := strtofloat(value);
+              labvalue := strtofloat(value, TFormatSettings.Create('en-US'));
               datevalue := FMDateTimeToDateTime(Piece(aitems[numtest + strtoint(Piece(aitems[i], '^', 1))], '^', 2));
               serTest.AddXY(datevalue, labvalue, '', clTeeColor);
               inc(valuecount);
@@ -513,8 +513,8 @@ begin
           end;
         serTest.Title := lstVitals.Items[lstVitals.ItemIndex];
       end;   // not blood pressure
-      serTime.AddXY(FMDateTimeToDateTime(start), strtofloat(high), '',clTeeColor);
-      serTime.AddXY(FMDateTimeToDateTime(stop), strtofloat(high), '',clTeeColor);
+      serTime.AddXY(FMDateTimeToDateTime(start), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
+      serTime.AddXY(FMDateTimeToDateTime(stop), strtofloat(high, TFormatSettings.Create('en-US')), '',clTeeColor);
     end;   // numtest > 0
     if chkZoom.Checked and chtChart.Visible then
     begin

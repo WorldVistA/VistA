@@ -2075,7 +2075,7 @@ begin
     end;
     try
       begin
-        Number := StrToFloat(TabletNum);
+        Number := StrToFloat(TabletNum, TFormatSettings.Create('en-US'));
         if Number = 0.5 then
           ToWord := 'ONE-HALF';
         if ( Number >= 0.333 ) and  ( Number <= 0.334 ) then

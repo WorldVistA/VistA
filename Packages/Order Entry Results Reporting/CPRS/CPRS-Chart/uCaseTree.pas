@@ -123,7 +123,7 @@ begin
                           x1 := '** No Date **';
                         end
                       else
-                        x1 := FormatFMDateTime('dddddd', StrToFloat(x2));  // Proc date
+                        x1 := FormatFMDateTime('dddddd', StrToFloat(x2, TFormatSettings.Create('en-US')));  // Proc date
                       if MyParent = IntToStr(Context) then
                         SetPiece(x, U, 14, MyParent + x2);
                       x3 := x2 + U + MixedCase(x1) + U + IntToStr(Context);

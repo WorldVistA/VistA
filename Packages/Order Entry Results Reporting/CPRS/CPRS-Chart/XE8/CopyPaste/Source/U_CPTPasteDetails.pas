@@ -387,7 +387,7 @@ begin
       else if PasteText[I].VisibleOnList then
         PasteText[I].InfoPanelIndex :=
           Items.Add(FormatFMDateTime('mmm dd,yyyy hh:nn',
-          StrToFloat(PasteText[I].DateTimeOfPaste)));
+          StrToFloat(PasteText[I].DateTimeOfPaste, TFormatSettings.Create('en-US'))));
     end;
     FInfoMessage.TabOrder := FMonitorObject.TabOrder + 2;
   end;
@@ -629,7 +629,7 @@ begin
             FInfoMessage.SelText := 'Document created on: ';
             FInfoMessage.SelAttributes.Style := [];
             FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
-              StrToFloat(PasteText[I].DateTimeOfOriginalDoc));
+              StrToFloat(PasteText[I].DateTimeOfOriginalDoc, TFormatSettings.Create('en-US')));
             FInfoMessage.Lines.Add('');
           end;
 
@@ -735,7 +735,7 @@ begin
             FInfoMessage.SelText := 'Date: ';
             FInfoMessage.SelAttributes.Style := [];
             FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
-              StrToFloat(PasteText[I].DateTimeOfPaste));
+              StrToFloat(PasteText[I].DateTimeOfPaste, TFormatSettings.Create('en-US')));
             FInfoMessage.Lines.Add('');
           end;
 

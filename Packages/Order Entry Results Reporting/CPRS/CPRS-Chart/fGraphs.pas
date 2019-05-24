@@ -4570,8 +4570,8 @@ begin
       if (filenum = '52') or (filenum = '55') or (filenum = '55NVA')
       or (filenum = '9999911') or (filenum = '405') or (filenum = '9000010') then
       begin
-        aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)));
-        aDate1 := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 4)));
+        aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)), TFormatSettings.Create('en-US'));
+        aDate1 := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 4)), TFormatSettings.Create('en-US'));
         if (aDate < FGraphSetting.FMStopDate) and (aDate > FGraphSetting.FMStartDate) then
           GtslTemp.Add(GtslData[i])
         else if (aDate < FGraphSetting.FMStopDate) and (aDate1 > FGraphSetting.FMStartDate) then
@@ -4581,7 +4581,7 @@ begin
       end
       else if Piece(itemdata, '^', 3) <> '' then
       begin
-        aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)));
+        aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)), TFormatSettings.Create('en-US'));
         if (aDate < FGraphSetting.FMStopDate) and (aDate > FGraphSetting.FMStartDate) then
           if Copy(itemdata, 1, 4) = '63MI' then
             GtslTemp.Add(Pieces(GtslData[i], '^', 1, 4))
@@ -6774,7 +6774,7 @@ begin
   SetRefNonNum(nonvalue);
   if length(specimen) > 0 then
     typeitemname := typeitemname + ' (' + LowerCase(specimen) + ')';
-  datestart := strtofloat(date1);
+  datestart := strtofloat(date1, TFormatSettings.Create('en-US'));
   resultdate := FormatDateTime('mmm d, yyyy  h:nn am/pm', datestart);
   otherdate := FormatDateTime('mm/dd/yy hh:nn', datestart);
   moreinfo := itemnum + '^' +
@@ -7297,8 +7297,8 @@ var
   BigTime, SmallTime: TDateTime;
 begin
   lastzoom := GtslZoomHistoryFloat[GtslZoomHistoryFloat.Count - 1];
-  SmallTime := StrToFloat(Piece(lastzoom, '^', 1));
-  BigTime := StrToFloat(Piece(lastzoom, '^', 2));
+  SmallTime := StrToFloat(Piece(lastzoom, '^', 1), TFormatSettings.Create('en-US'));
+  BigTime := StrToFloat(Piece(lastzoom, '^', 2), TFormatSettings.Create('en-US'));
   ZoomTo(SmallTime, BigTime);
   ZoomUpdateInfo(SmallTime, BigTime);
 end;

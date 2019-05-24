@@ -1213,7 +1213,7 @@ begin
   if not LockConsultRequestAndNote(lstNotes.ItemIEN) then
     exit;
   Exclusions := GetCurrentSigners(lstNotes.ItemIEN);
-  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
+  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3), TFormatSettings.Create('en-US'));
   SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions,
     SignerList, CT_NOTES, ARefDate);
   case SigAction of
@@ -2170,7 +2170,7 @@ begin
   acViewVisits.Enabled := frmFrame.pnlVisit.Enabled;
 end;
 
-procedure TfrmNotes.acSignedExecute(Sender: TObject);             
+procedure TfrmNotes.acSignedExecute(Sender: TObject);
 { changes the list of notes available for viewing }
 var
   AuthCtxt: TAuthorContext;
