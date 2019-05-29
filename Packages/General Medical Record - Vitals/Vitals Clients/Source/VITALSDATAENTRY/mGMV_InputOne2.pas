@@ -1146,7 +1146,7 @@ begin
     end;
   try
 //AAN 07/03/2002---------------------------------------------------------- Begin
-    tmpDouble := StrToFloat(cbxInput.Text);
+    tmpDouble := StrToFloat(cbxInput.Text, TFormatSettings.Create('en-US'));
     if ckbMetric.Checked then
       tmpDouble := ConvertmmHGtoCMH20(tmpDouble);
     if (tmpDouble >= GMVVitalLoRange[vtCVP]) and
@@ -1297,7 +1297,7 @@ function TfraGMV_InputOne2.ValidTemperature: Boolean;
 begin
   Result := False;
   try
-    tmpDouble := StrToFloat(cbxInput.Text);
+    tmpDouble := StrToFloat(cbxInput.Text, TFormatSettings.Create('en-US'));
     if ckbMetric.Checked then
       tmpDouble := ConvertCToF(tmpDouble);
     if (tmpDouble >= GMVVitalLoRange[vtTemp]) and
@@ -1373,7 +1373,7 @@ var
       Result := aValue
     else
       begin
-        ddd := StrToFloat(aValue);
+        ddd := StrToFloat(aValue, TFormatSettings.Create('en-US'));
         ddd := ConvertLbsToKgs(ddd);
         Result := FloatToStr(ddd);//+ 'kg';
       end;
@@ -1382,7 +1382,7 @@ var
 begin
   Result := False;
   try
-    tmpDouble := StrToFloat(cbxInput.Text);
+    tmpDouble := StrToFloat(cbxInput.Text, TFormatSettings.Create('en-US'));
     if ckbMetric.Checked then
       tmpDouble := ConvertKgsToLbs(tmpDouble);
     if (tmpDouble >= GMVVitalLoRange[vtWeight]) and
@@ -1458,8 +1458,8 @@ begin
         try
           fFeet := 0;
           fInches := 0;
-          if sFeet <> '' then fFeet := StrToFloat(sFeet);
-          if sInches <> '' then fInches := StrToFloat(sInches);
+          if sFeet <> '' then fFeet := StrToFloat(sFeet, TFormatSettings.Create('en-US'));
+          if sInches <> '' then fInches := StrToFloat(sInches, TFormatSettings.Create('en-US'));
 
           if (sFeet <> '') and (fInches > 12) then
             begin
@@ -1476,7 +1476,7 @@ begin
         end;
       end
     else
-      _Double := StrToFloat(aString);
+      _Double := StrToFloat(aString, TFormatSettings.Create('en-US'));
   Result := _Double;
 end;
 
@@ -1495,7 +1495,7 @@ var
       Result := aValue
     else
       begin
-        ddd := StrToFloat(aValue);
+        ddd := StrToFloat(aValue, TFormatSettings.Create('en-US'));
         ddd := ConvertInToCm(ddd);
         Result := FloatToStr(ddd);//+ 'cm';
       end;
@@ -1566,9 +1566,9 @@ begin
 //{$IFDEF R144925}
     tmpDouble := getLength(cbxInput.Text,ckbMetric.Checked);
 //{$ELSE}
-//    tmpDouble := StrToFloat(cbxInput.Text);
+//    tmpDouble := StrToFloat(cbxInput.Text, TFormatSettings.Create('en-US'));
 //{$ENDIF}
-//    tmpDouble := StrToFloat(cbxInput.Text);
+//    tmpDouble := StrToFloat(cbxInput.Text, TFormatSettings.Create('en-US'));
     if ckbMetric.Checked then
       tmpDouble := ConvertCmToIn(tmpDouble);
     if (tmpDouble >= GMVVitalLoRange[vtCircum]) and

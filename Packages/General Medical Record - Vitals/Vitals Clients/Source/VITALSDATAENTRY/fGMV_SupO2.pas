@@ -264,7 +264,7 @@ begin
       end;
     end;
   try
-    d := StrToFloat(Value);
+    d := StrToFloat(Value, TFormatSettings.Create('en-US'));
     if d > 20.0 then Value := '20';
     if d < 0.5 then Value := '0.5';
   except
@@ -288,7 +288,7 @@ begin
       end;
     end;
   try
-    d := StrToFloat(Value);
+    d := StrToFloat(Value, TFormatSettings.Create('en-US'));
     if d > 100.0 then Value := '100';
     if d < 21.0 then Value := '21';
   except
@@ -401,7 +401,7 @@ begin
   try
     f := 0;
     if edtFlow.Text <> '' then
-      f := StrToFloat(edtFlow.Text);
+      f := StrToFloat(edtFlow.Text, TFormatSettings.Create('en-US'));
   except
     s := 'Error value for the flow rate entered: <'+ edtFlow.Text+'>'+#13+
         'Valid values are from 0.5 to 20'+#13+#13+'Try again?';
@@ -460,7 +460,7 @@ var
   d: Double;
 begin
   try
-    d := StrToFloat(edtFlow.Text);
+    d := StrToFloat(edtFlow.Text, TFormatSettings.Create('en-US'));
     if d > 20.0 then
       begin
         ShowMessage('Flow rate value '+edtFlow.Text+' is out of range (.5-20)');
@@ -477,7 +477,7 @@ var
 begin
   if edtFlow.Text = '' then Exit;
   try
-    d := StrToFloat(edtFlow.Text);
+    d := StrToFloat(edtFlow.Text, TFormatSettings.Create('en-US'));
     if (d > 20.0) or (d < 0.5) then
       begin
         ShowMessage('Flow rate value '+edtFlow.Text+' is out of range (.5-20)');
@@ -494,7 +494,7 @@ var
   d: Double;
 begin
   try
-    d := StrToFloat(edtO2Con.Text);
+    d := StrToFloat(edtO2Con.Text, TFormatSettings.Create('en-US'));
     if d > 100.0 then
       begin
         ShowMessage('Flow rate value '+edtO2Con.Text+' is out of range (21-100)');
@@ -511,7 +511,7 @@ var
 begin
   if edtO2Con.Text = '' then Exit;
   try
-    d := StrToFloat(edtO2Con.Text);
+    d := StrToFloat(edtO2Con.Text, TFormatSettings.Create('en-US'));
     if (d > 100.0) or (d < 21.0) then
       begin
         ShowMessage('O2 concentration value '+edtO2Con.Text+' is out of range (21-100)');

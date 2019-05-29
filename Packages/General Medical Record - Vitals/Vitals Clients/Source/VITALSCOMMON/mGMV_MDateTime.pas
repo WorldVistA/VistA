@@ -211,7 +211,7 @@ end;
 procedure TMDateTime.setSMDateTime(aDateTime:String);
 begin
   try
-    FDateTime := FMDateTimeToWindowsDateTime(StrToFloat(aDateTime));
+    FDateTime := FMDateTimeToWindowsDateTime(StrToFloat(aDateTime, TFormatSettings.Create('en-US')));
   except
   end;
 end;

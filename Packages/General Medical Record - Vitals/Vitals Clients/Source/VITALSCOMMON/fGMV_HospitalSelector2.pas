@@ -250,7 +250,7 @@ begin
 // uncomment the next line to correlate search delay with user preference value
 //  GMVSearchDelay := GMVUser.Setting[usSearchDelay];// zzzzzzandria 2007-10-04
 
-  iCycle := round(StrToFloat(GMVSearchDelay)*2);
+  iCycle := round(StrToFloat(GMVSearchDelay, TFormatSettings.Create('en-US'))*2);
 //  iCycle := 3;
 //  tmSearch.Interval := 1000;
   tmSearch.Interval := 500;

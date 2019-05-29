@@ -1592,21 +1592,21 @@ begin
   if pos('*',s)=Length(s) then s := copy(s,1,Length(s)-1);
   case _Row_ of
     1:try //Temperature
-          f := StrToFloat(S);
+          f := StrToFloat(S, TFormatSettings.Create('en-US'));
           f := (f-32)/9*5;
           s := format('%-8.1f (C)',[f]);
           Result := s;
         except
         end;
     7:try //Weight
-          f := StrToFloat(S);
+          f := StrToFloat(S, TFormatSettings.Create('en-US'));
           f := f*0.4535924;
           s := format('%-8.2f (kg)',[f]);
           Result := s;
       except
       end;
     9,10: try //Height, C/G
-          f := StrToFloat(S);
+          f := StrToFloat(S, TFormatSettings.Create('en-US'));
           f := f*2.54;
           s := format('%-8.2f (cm)',[f]);
           Result := s;

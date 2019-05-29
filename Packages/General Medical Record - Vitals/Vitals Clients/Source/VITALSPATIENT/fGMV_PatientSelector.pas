@@ -450,7 +450,7 @@ end;
 procedure TfrmGMV_PatientSelector.SetTimerInterval(sInterval:String);
 begin
   sSecondsToStart := sInterval;
-  iMSecondsToStart := round(StrToFloat(GMVSearchDelay)*1000.0);
+  iMSecondsToStart := round(StrToFloat(GMVSearchDelay, TFormatSettings.Create('en-US'))*1000.0);
 end;
 
 procedure TfrmGMV_PatientSelector.SetPatientIEN(const Value: string);

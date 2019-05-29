@@ -86,7 +86,7 @@ begin
   else
     begin
       try
-        Result := StrToFloat(Str);
+        Result := StrToFloat(Str, TFormatSettings.Create('en-US'));
       except
         on EConvertError do
           Result := Def

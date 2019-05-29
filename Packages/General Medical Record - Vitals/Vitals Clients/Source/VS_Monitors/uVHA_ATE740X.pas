@@ -236,7 +236,7 @@ var
     f: Double;
   begin
     try
-      f := strToFloat(aValue);
+      f := strToFloat(aValue, TFormatSettings.Create('en-US'));
     except
       on E: Exception do
         f := 0.0;

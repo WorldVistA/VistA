@@ -999,7 +999,7 @@ begin
   while (StrToIntDef(Copy(gStr, i, 1), -1) > -1)
      or (Copy(gStr, i, 1) = '.') do  inc(i);
   try
-    Result := StrToFloat(Copy(gStr, 1, i - 1));
+    Result := StrToFloat(Copy(gStr, 1, i - 1), TFormatSettings.Create('en-US'));
 //      Result := StrToFloat(Piece(gStr, ' ',1));
 
   except

@@ -533,7 +533,7 @@ begin
 
   try
     sDateTime := getCurrentDateTime;
-    CurrentServerDateTime := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime)); // 10/08/2002 AAN
+    CurrentServerDateTime := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime, TFormatSettings.Create('en-US'))); // 10/08/2002 AAN
   except
     on E: Exception do
       begin
@@ -1102,8 +1102,8 @@ begin
 
     try
       sDateTime := getCurrentDateTime;
-      dtpDate.Date := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime)); // 10/08/2002 AAN
-      dtpTime.DateTime := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime));
+      dtpDate.Date := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime, TFormatSettings.Create('en-US'))); // 10/08/2002 AAN
+      dtpTime.DateTime := FMDateTimeToWindowsDateTime(StrToFloat(sDateTime, TFormatSettings.Create('en-US')));
 {$IFDEF DLL}
       chkbCloseOnSave.Visible := False; // zzzzzzandria 050209
       btnSaveAndExit.Visible := True;
@@ -2515,7 +2515,7 @@ begin
                 anIn.cbxInput.Text := sTemp
               else
                 begin
-                  rTemp := StrToFloat(sTemp);
+                  rTemp := StrToFloat(sTemp, TFormatSettings.Create('en-US'));
                   if sTempUnit = 'C' then
                     rr := ConvertCtoF(rTemp)
                   else

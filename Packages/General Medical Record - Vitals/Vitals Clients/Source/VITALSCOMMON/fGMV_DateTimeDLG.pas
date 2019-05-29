@@ -179,7 +179,7 @@ begin
     s := getCurrentDateTime;
     if s <> '' then
     try
-      f := StrToFloat(s);
+      f := StrToFloat(s, TFormatSettings.Create('en-US'));
       f := FMDateTimeToWindowsDateTime(f);
       dltTime := aNow - f;
       aNow := f;

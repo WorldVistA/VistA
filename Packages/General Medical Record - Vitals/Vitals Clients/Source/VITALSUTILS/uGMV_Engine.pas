@@ -403,7 +403,7 @@ end;
 function getServerWDateTime: TDateTime;
 begin
   try
-    Result := FMDateTimeToWindowsDateTime(StrToFloat(getCurrentDateTime));
+    Result := FMDateTimeToWindowsDateTime(StrToFloat(getCurrentDateTime, TFormatSettings.Create('en-US')));
   except
     on E: Exception do
       Result := 0;
@@ -413,7 +413,7 @@ end;
 function getServerWDateTimeString: string;
 begin
   try
-    Result := FormatDateTime(GMV_DateTimeFormat, FMDateTimeToWindowsDateTime(StrToFloat(getCurrentDateTime)));
+    Result := FormatDateTime(GMV_DateTimeFormat, FMDateTimeToWindowsDateTime(StrToFloat(getCurrentDateTime, TFormatSettings.Create('en-US'))));
   except
     on E: Exception do
       Result := '';

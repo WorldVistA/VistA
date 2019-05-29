@@ -336,7 +336,7 @@ begin
   SearchDirection := 1;
   Margin := '132';
   sDateTime := getCurrentDateTime;
-  ServerTime := StrToFloat(sDateTime);
+  ServerTime := StrToFloat(sDateTime, TFormatSettings.Create('en-US'));
 
   dtpPrintTime.DateTime :=    FMDateTimeToWindowsDateTime(ServerTime);
   dtpPrintDate.Date :=    FMDateTimeToWindowsDateTime(ServerTime);
