@@ -361,7 +361,7 @@ begin
             x := '';
             if ckbOnPass.Checked then
               begin
-                x := FloatToStr(dt) + '^' +
+                x := FloatToStr(dt, TFormatSettings.Create('en-US')) + '^' +
                   FDFN + '^' +
                   VitalIEN + ';Pass;' + '^' +
                   FHospitalIEN + '^' +
@@ -369,7 +369,7 @@ begin
               end else
             if ckbUnavailable.Checked then
               begin
-                x := FloatToStr(dt) + '^' +
+                x := FloatToStr(dt, TFormatSettings.Create('en-US')) + '^' +
                   FDFN + '^' +
                   VitalIEN + ';Unavailable;' + '^' +
                   FHospitalIEN + '^' +
@@ -383,7 +383,7 @@ begin
                   s2 := ''
                 else
                   s2 := VitalsQualifiers;
-                  x := FloatToStr(dt) + '^' +
+                  x := FloatToStr(dt, TFormatSettings.Create('en-US')) + '^' +
                   FDFN + '^' +
                   s1{VitalsRate} + '^' +
                   FHospitalIEN + '^' +

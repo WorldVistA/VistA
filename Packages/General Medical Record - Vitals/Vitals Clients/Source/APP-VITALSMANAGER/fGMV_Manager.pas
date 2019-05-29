@@ -709,7 +709,7 @@ var
 begin
   if GetKernelDevice(x, y) then
     begin
-      x := printQualifierTable(X,FloatToStr(y));
+      x := printQualifierTable(X,FloatToStr(y, TFormatSettings.Create('en-US')));
       if Piece(x, '^', 1) = '-1' then
         MessageDlg(Piece(x, '^', 2), mtError, [mbOk], 0)
       else

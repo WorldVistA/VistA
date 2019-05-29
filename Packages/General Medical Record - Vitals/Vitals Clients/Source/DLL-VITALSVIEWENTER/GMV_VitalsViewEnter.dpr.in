@@ -220,7 +220,7 @@ begin
     'Location:   '+aLocation,
     'Template:   '+aTemplate,
     'Signature:  '+aSignature,
-    'DateTime:   '+FloatToStr(aDateTime),
+    'DateTime:   '+FloatToStr(aDateTime, TFormatSettings.Create('en-US')),
     'Name:       '+aPatientName,
     'Info:       '+aPatientInfo],
     nil,

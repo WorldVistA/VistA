@@ -136,7 +136,7 @@ var
 begin
   try
     d :=WindowsDateTimeToFMDateTime(FDateTime);
-    result := FloatToStr(trunc(d));
+    result := FloatToStr(trunc(d, TFormatSettings.Create('en-US')));
   except
     Result := '';
   end;
@@ -148,7 +148,7 @@ var
 begin
   try
     d :=WindowsDateTimeToFMDateTime(FDateTime);
-    result := FloatToStr(frac(d));
+    result := FloatToStr(frac(d, TFormatSettings.Create('en-US')));
   except
     Result := '';
   end;
@@ -157,7 +157,7 @@ end;
 function TMDateTime.getSMDateTime:String;
 begin
   try
-    result := FloatToStr(WindowsDateTimeToFMDateTime(FDateTime));
+    result := FloatToStr(WindowsDateTimeToFMDateTime(FDateTime, TFormatSettings.Create('en-US')));
   except
     Result := '';
   end;

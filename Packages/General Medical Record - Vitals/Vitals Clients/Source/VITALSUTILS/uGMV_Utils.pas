@@ -76,7 +76,7 @@ begin
   if (tmp = 0) then
     Value := ''
   else
-    Value := FloatToStrF(tmp, ffFixed, 8, Decml);
+    Value := FloatToStrF(tmp, ffFixed, 8, Decml, TFormatSettings.Create('en-US'));
 end;
 
 function StrToFloatDef(const Str: string; Def: extended): extended;

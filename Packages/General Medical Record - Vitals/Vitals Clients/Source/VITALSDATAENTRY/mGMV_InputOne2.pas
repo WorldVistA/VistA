@@ -432,8 +432,8 @@ begin
 // zzzzzzandria 050706 added blank line to the pain list
         cbxInput.Items.CommaText := '"","0 - no pain","1 - slightly uncomfortable",2,3,4,5,6,7,8,9,"10 - worst imaginable","99 - unable to respond"';
         cbxInput.ItemIndex := -1;
-        cbxInput.Hint := 'Enter a value from '+FloatToStr(GMVVitalLoRange[FTemplateVitalType])+
-          ' to '+ FloatToStr(GMVVitalHiRange[FTemplateVitalType])+' or 99';//AAN 04/15/2003
+        cbxInput.Hint := 'Enter a value from '+FloatToStr(GMVVitalLoRange[FTemplateVitalType], TFormatSettings.Create('en-US'))+
+          ' to '+ FloatToStr(GMVVitalHiRange[FTemplateVitalType], TFormatSettings.Create('en-US'))+' or 99';//AAN 04/15/2003
         bbtnQualifiers.Visible := False;
         lblQualifiers.Caption := '';
       end;
@@ -473,7 +473,7 @@ begin
       end;
     end;
   Result := 'Please enter a value from  '+
-    FloatToStr(fLow) + ' to ' +  FloatToStr(fHigh);
+    FloatToStr(fLow, TFormatSettings.Create('en-US')) + ' to ' +  FloatToStr(fHigh, TFormatSettings.Create('en-US'));
 end;
 
 procedure TfraGMV_InputOne2.OutOfRange(aVitalType:String='');
@@ -647,30 +647,30 @@ begin
           begin
            if (cbxInput.Text <> '') then
               if IsMetric then
-                  cbxInput.Text := FloatToStr(convertFToC(FValueDbl))
+                  cbxInput.Text := FloatToStr(convertFToC(FValueDbl, TFormatSettings.Create('en-US')))
               else
-                  cbxInput.Text := FloatToStr(FValueDbl);
+                  cbxInput.Text := FloatToStr(FValueDbl, TFormatSettings.Create('en-US'));
           end;
         vtWeight:
           begin
             if IsMetric then
-                cbxInput.Text := FloatToStr(ConvertLbsToKgs(FValueDbl))
+                cbxInput.Text := FloatToStr(ConvertLbsToKgs(FValueDbl, TFormatSettings.Create('en-US')))
             else
-                cbxInput.Text := FloatToStr(FValueDbl);
+                cbxInput.Text := FloatToStr(FValueDbl, TFormatSettings.Create('en-US'));
           end;
         vtHeight:
           begin
             if IsMetric then
-                cbxInput.Text := FloatToStr(ConvertInToCm(FValueDbl))
+                cbxInput.Text := FloatToStr(ConvertInToCm(FValueDbl, TFormatSettings.Create('en-US')))
             else
-                cbxInput.Text := FloatToStr(FValueDbl);
+                cbxInput.Text := FloatToStr(FValueDbl, TFormatSettings.Create('en-US'));
           end;
         vtCircum:
           begin
             if IsMetric then
-                cbxInput.Text := FloatToStr(ConvertInToCm(FValueDbl))
+                cbxInput.Text := FloatToStr(ConvertInToCm(FValueDbl, TFormatSettings.Create('en-US')))
             else
-                cbxInput.Text := FloatToStr(FValueDbl);
+                cbxInput.Text := FloatToStr(FValueDbl, TFormatSettings.Create('en-US'));
           end;
 // zzzzzzandria 07/03/2002 ----------------------------------------------- Begin
         vtCVP:
@@ -743,11 +743,11 @@ begin
       Result := GMVVitalTypeIEN[FTemplateVitalType] + s + ';';
     end
   else if FTemplateVitalType = vtTemp then
-    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl)
+    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl, TFormatSettings.Create('en-US'))
   else if FTemplateVitalType = vtWeight then
-    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl)
+    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl, TFormatSettings.Create('en-US'))
   else if FTemplateVitalType = vtHeight then
-    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl)
+    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl, TFormatSettings.Create('en-US'))
   else if FTemplateVitalType = vtPain then
     begin
       if pos('-',cbxInput.Text) <> 0 then
@@ -763,7 +763,7 @@ begin
   else if FTemplateVitalType = vtBP then
     Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + cbxInput.Text
   else
-    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl);
+    Result := GMVVitalTypeIEN[FTemplateVitalType] + ';' + FloatToStr(FValueDbl, TFormatSettings.Create('en-US'));
 end;
 
 function TfraGMV_InputOne2.VitalsQualifiers: string;
@@ -1375,7 +1375,7 @@ var
       begin
         ddd := StrToFloat(aValue, TFormatSettings.Create('en-US'));
         ddd := ConvertLbsToKgs(ddd);
-        Result := FloatToStr(ddd);//+ 'kg';
+        Result := FloatToStr(ddd, TFormatSettings.Create('en-US'));//+ 'kg';
       end;
   end;
 
@@ -1394,7 +1394,7 @@ begin
         else
           begin
             s := getClosestReading(DFN,
-              FloatToStr(WindowsDateTimeToFMDateTime(aDT)),
+              FloatToStr(WindowsDateTimeToFMDateTime(aDT), TFormatSettings.Create('en-US')),
               GMVVitalTypeAbbv[fTemplateVitalType],'0');
 
             sCode := Piece(s,'^',1);
@@ -1405,7 +1405,7 @@ begin
             else if sCode = '-2' then
               begin
                 sMsg := Format(fmtDoubleCheck,['weight',cWeightDelta,
-                   cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT)),
+                   cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT, TFormatSettings.Create('en-US'))),
                     sValue,sUnits,sDateTime]);
                 Result :=  MessageDialog('Warning',sMsg,mtWarning,[mbNo,mbYes],mrNo,0)=mrYes;
               end
@@ -1417,7 +1417,7 @@ begin
                     sValue := FormatValue(sValue);
                     sDateTime := FMDateTimeStr(sCode);
                     sMsg := Format(fmtDoubleCheck,['weight',cWeightDelta,
-                       cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT)),
+                       cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT, TFormatSettings.Create('en-US'))),
                         sValue,cbxUnits.Text,sDateTime]);
                     Result :=  MessageDialog('Warning',sMsg,mtWarning,[mbNo,mbYes],mrNo,0)=mrYes;
                   end
@@ -1497,7 +1497,7 @@ var
       begin
         ddd := StrToFloat(aValue, TFormatSettings.Create('en-US'));
         ddd := ConvertInToCm(ddd);
-        Result := FloatToStr(ddd);//+ 'cm';
+        Result := FloatToStr(ddd, TFormatSettings.Create('en-US'));//+ 'cm';
       end;
   end;
 
@@ -1516,7 +1516,7 @@ begin
           Result := True
         else
           begin
-            s := getClosestReading(DFN,FloatToStr(WindowsDateTimeToFMDateTime(aDT)),
+            s := getClosestReading(DFN,FloatToStr(WindowsDateTimeToFMDateTime(aDT), TFormatSettings.Create('en-US')),
               GMVVitalTypeAbbv[fTemplateVitalType],'0');
 
             sCode := Piece(s,'^',1);
@@ -1527,7 +1527,7 @@ begin
             else if sCode = '-2' then
               begin
                 sMsg := Format(fmtDoubleCheck,['height',cHeightDelta,
-                   cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT)),
+                   cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT, TFormatSettings.Create('en-US'))),
                     sValue,sUnits,sDateTime]);
                 Result :=  MessageDialog('Warning',sMsg,mtWarning,[mbNo,mbYes],mrNo,0)=mrYes;
               end
@@ -1539,7 +1539,7 @@ begin
                     sValue := FormatValue(sValue);
                     sDateTime := FMDateTimeStr(sCode);
                     sMsg := Format(fmtDoubleCheck,['height',cHeightDelta,
-                       cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT)),
+                       cbxInput.Text,cbxUnits.Text, FMDateTimeStr(FloatToStr(aDT, TFormatSettings.Create('en-US'))),
                         sValue,cbxUnits.Text,sDateTime]);
                     Result :=  MessageDialog('Warning',sMsg,mtWarning,[mbNo,mbYes],mrNo,0)=mrYes;
                   end

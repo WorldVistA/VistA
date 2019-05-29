@@ -439,7 +439,7 @@ var
   FMString: string;
   Year, Month, Day: Word;
 begin
-  FMString := FloatToStr(FMDate);
+  FMString := FloatToStr(FMDate, TFormatSettings.Create('en-US'));
   try
     Year := StrToInt(Copy(FMString, 1, 3)) + 1700;
     Month := StrToInt(Copy(FMString, 4, 2));
@@ -470,7 +470,7 @@ var
   FMString: string;
   Hour, Min, Sec: Word;
 begin
-  FMString := FLoatToStr(FMDateTime);
+  FMString := FLoatToStr(FMDateTime, TFormatSettings.Create('en-US'));
   Result := FMDateToWindowsDate(FMDateTime);
   Hour := StrToIntDef(Copy(FMString, 9, 2), 0);
   Min := StrToIntDef(Copy(FMString, 11, 2), 0);

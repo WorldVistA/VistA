@@ -219,7 +219,7 @@ begin
   ClearList;
   dt := WindowsDateToFMDate(dtpDate.Date);
 
-  RetList := getGMVRecord(FPatientIEN + '^' + FloatToStr(dt) + '^^' + FloatToStr(dt));
+  RetList := getGMVRecord(FPatientIEN + '^' + FloatToStr(dt, TFormatSettings.Create('en-US')) + '^^' + FloatToStr(dt, TFormatSettings.Create('en-US')));
 
   if (RetList.Count > 0) and (Piece(RetList[0], '^', 1) <> '0') then
     for i := 0 to RetList.Count - 1 do

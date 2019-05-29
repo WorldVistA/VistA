@@ -666,9 +666,9 @@ begin
       mtInformation,[mbOK],0)
   else
     begin
-      FromDate := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpFromDate.Date) + (dtpFromTime.Time - trunc(dtpFromTime.Date))));
-      ToDate := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpToDate.Date) + (dtpToTime.Time - trunc(dtpToTime.Date))));
-      PrintDT := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpPrintDate.Date) + (dtpPrintTime.Time - trunc(dtpPrintTime.Date))));
+      FromDate := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpFromDate.Date) + (dtpFromTime.Time - trunc(dtpFromTime.Date))), TFormatSettings.Create('en-US'));
+      ToDate := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpToDate.Date) + (dtpToTime.Time - trunc(dtpToTime.Date))), TFormatSettings.Create('en-US'));
+      PrintDT := FloatToStr(WindowsDateTimeToFMDateTime(trunc(dtpPrintDate.Date) + (dtpPrintTime.Time - trunc(dtpPrintTime.Date))), TFormatSettings.Create('en-US'));
 
       Wardstr := '';
       WardIEN := '';

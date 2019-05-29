@@ -182,7 +182,7 @@ begin
   CallServer(
     GMVBroker,
     'GMV EXTRACT REC',
-    [FPatientIEN + '^' + FloatToStr(dt) + '^^' + FloatToStr(dt)],
+    [FPatientIEN + '^' + FloatToStr(dt, TFormatSettings.Create('en-US')) + '^^' + FloatToStr(dt, TFormatSettings.Create('en-US'))],
     nil, RetList);
 
   if Piece(RetList[0], '^', 1) <> '0' then
