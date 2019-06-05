@@ -117,15 +117,15 @@ COLOR_MAP = {
 
 def getDOXURL(local):
     if local:
-        return "../dox/"
+        return "../dox"
     else:
-        return "https://code.osehra.org/dox/"
+        return "https://code.osehra.org/dox"
 
 def getViViaNURL(local):
     if local:
         return local
     else:
-        return "https://code.osehra.org/vivian/files/"
+        return "https://code.osehra.org/vivian/files"
 
 ###############################################################################
 
@@ -260,7 +260,7 @@ def getRoutineHRefLink(rtnName, dox_url, **kargs):
     if crossRef:
         routine = crossRef.getRoutineByName(rtnName)
         if routine:
-            return '<a href=\"%s%s\">%s</a>' % (dox_url,
+            return '<a href=\"%s/%s\">%s</a>' % (dox_url,
                                                 getPackageComponentLink(routine),
                                                 rtnName)
     return None
