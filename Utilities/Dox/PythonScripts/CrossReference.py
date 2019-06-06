@@ -198,8 +198,9 @@ class Routine(object):
         else:
             depRoutines = self._callerRoutines
         package = depRoutine.getPackage()
-        if package == None:
-          package = self.getPackageByName("Uncategorized")
+        if package is None:
+            logger.error("No package for " + depRoutine.getName())
+            return
         if package not in depRoutines:
             depRoutines[package] = dict()
         if depRoutine not in depRoutines[package]:
