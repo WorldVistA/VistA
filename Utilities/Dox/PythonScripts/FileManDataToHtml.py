@@ -93,7 +93,7 @@ def _getRoutineHRefLink(dataEntry, routineName, **kargs):
   return routineName[:pos] + link + routineName[pos+len(rtnName):]
 
 def getPackageHRefLink(pkgName):
-  value = "<a href=\"%s%s\">%s</a>" % (DOX_URL,
+  value = "<a href=\"%s/%s\">%s</a>" % (DOX_URL,
                                        getPackageHtmlFileName(pkgName),
                                        pkgName)
   return value
