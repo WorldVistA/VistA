@@ -1,6 +1,7 @@
 {
   Most of Code is Public Domain.
   Modified by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2018
+  Number Formats modified by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2019
   Don't change - to / here; send from server with / already.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.

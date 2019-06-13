@@ -1,5 +1,7 @@
 {
   Most of Code is Public Domain.
+  Date Formats modified by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2019
+  Number Formats modified by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2019
   MaxDate bug fix by OSEHRA/Sam Habiel (OSE/SMH) for Plan VI (c) Sam Habiel 2018
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
