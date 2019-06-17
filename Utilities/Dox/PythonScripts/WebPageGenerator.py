@@ -2131,7 +2131,7 @@ class WebPageGenerator:
                           #  replace them with links to new pages
                             for value in calledRoutines.values():
                               if Routine(pair[1]) in value.keys():
-                                entryLink ="<a class=\"pln\"href=\"%sRoutine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
+                                entryLink ="<a class=\"pln\"href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
                                 line = line.replace("%s^%s" % pair, entryLink)
                         outputFile.write("<pre style=\"padding:unset; border: none; margin:unset; display: inline;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>" % (idVal, lineNo,line))
                         lineNo += 1
@@ -2154,7 +2154,7 @@ class WebPageGenerator:
                   #  replace them with links to new pages
                     for value in calledRoutines.values():
                       if Routine(pair[1]) in value.keys():
-                        entryLink ="<a class=\"pln\"href=\"%sRoutine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
+                        entryLink ="<a class=\"pln\"href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
                         line = line.replace("%s^%s" % pair, entryLink)
                 if len(line):
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (lineNo, line))
