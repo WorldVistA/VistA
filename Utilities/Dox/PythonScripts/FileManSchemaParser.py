@@ -313,7 +313,7 @@ class FileManSchemaParser(object):
       else:
         logger.warn("No subfile is set for file:%s, field:%r 0-index:%s" %
                      (fileSchema.getFileNo(), fileField, zeroFields))
-    elif fileField.getType() == FileManField.FIELD_TYPE_SET and not subFile:
+    elif fileField.getType() == FileManField.FIELD_TYPE_SET and not subFile and zeroFields[2]:
       setDict = dict([x.split(':') for x in zeroFields[2].rstrip(';').split(';')])
       fileField.setSetMembers(setDict)
     elif fileField.getType() == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER:
